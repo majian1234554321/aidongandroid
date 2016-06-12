@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">爱动健身</string>
+    <string name="net_error">请求失败</string>
+</resources>
