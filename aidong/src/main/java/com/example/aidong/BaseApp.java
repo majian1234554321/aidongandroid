@@ -5,6 +5,10 @@ import android.content.Context;
 
 import com.example.aidong.model.UserCoach;
 import com.example.aidong.utils.SharePrefUtils;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 public class BaseApp extends Application{
 
@@ -19,6 +23,22 @@ public class BaseApp extends Application{
         super.onCreate();
         mInstance = this;
         context = getApplicationContext();
+        initConfig();
+    }
+
+    private void initConfig() {
+        initImageLoader(getApplicationContext());
+    }
+
+    public static void initImageLoader(Context context) {
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
+                .threadPriority(Thread.NORM_PRIORITY - 2)
+                .denyCacheImageMultipleSizesInMemory()
+                .diskCacheFileNameGenerator(new Md5FileNameGenerator())
+                .tasksProcessingOrder(QueueProcessingType.LIFO)
+                .writeDebugLogs()
+                .build();
+        ImageLoader.getInstance().init(config);
     }
 
     public boolean isLogin() {
