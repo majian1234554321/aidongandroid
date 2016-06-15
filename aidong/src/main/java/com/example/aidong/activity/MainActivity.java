@@ -17,6 +17,8 @@ import org.apache.http.message.BasicNameValuePair;
 import java.util.ArrayList;
 
 import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.onekeyshare.OnekeyShare;
+
 
 public class MainActivity extends BaseActivity implements IHttpCallback {
 
@@ -42,6 +44,9 @@ public class MainActivity extends BaseActivity implements IHttpCallback {
 
     private void initConfig() {
         ShareSDK.initSDK(this);
+        OnekeyShare oks = new OnekeyShare();
+        //关闭sso授权
+        oks.disableSSOWhenAuthorize();
     }
 
     @Override
