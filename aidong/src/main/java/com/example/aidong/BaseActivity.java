@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import com.leyuan.commonlibrary.http.IHttpCallback;
 import com.leyuan.commonlibrary.http.IHttpTask;
 import com.leyuan.commonlibrary.http.IHttpToastCallBack;
-import com.example.aidong.activity.MainActivity;
 import com.example.aidong.http.Logic;
 
 public class BaseActivity extends AppCompatActivity implements IHttpToastCallBack {
