@@ -48,7 +48,6 @@ apk/
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.ear
 
@@ -61,5 +60,4 @@ settings.gradle
 
 # juce lib
 #/*/*/*/*/juce
-/*/*/*/libs
 /*/*/*/obj
