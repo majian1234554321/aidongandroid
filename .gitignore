@@ -56,7 +56,6 @@ hs_err_pid*
 
 .dust
 assetimage
-settings.gradle
 
 # juce lib
 #/*/*/*/*/juce
