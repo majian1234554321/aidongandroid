@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.example.aidong.BaseActivity;
 import com.example.aidong.MainActivity;
-import com.leyuan.commonlibrary.manager.UIManager;
+import com.leyuan.commonlibrary.manager.UiManager;
 
 public class SplashActivity extends BaseActivity{
 
@@ -21,6 +21,7 @@ public class SplashActivity extends BaseActivity{
     }
 
     private void initData() {
-        UIManager.activityJump(this, MainActivity.class);
+        UiManager.activityJump(this, MainActivity.class);
+        finish();
     }
 }

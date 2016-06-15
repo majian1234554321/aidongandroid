@@ -8,6 +8,10 @@ import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.example.aidong.fragment.FoundFragment;
+import com.example.aidong.fragment.HomeFragment;
+import com.example.aidong.fragment.MineFragment;
+import com.example.aidong.fragment.SportCircleFragment;
 import com.example.aidong.model.result.MsgResult;
 import com.leyuan.commonlibrary.http.IHttpCallback;
 import com.leyuan.commonlibrary.util.ToastUtil;
@@ -25,7 +29,7 @@ public class MainActivity extends BaseActivity implements IHttpCallback, View.On
     private RelativeLayout tabContactorLayout;
     private RelativeLayout tabMineLayout;
 
-    private List<Fragment> mFragments = new ArrayList<Fragment>();
+    private List<Fragment> mFragments = new ArrayList<>();
     private FragmentManager fm;
     private FragmentTransaction ft;
 
@@ -50,11 +54,15 @@ public class MainActivity extends BaseActivity implements IHttpCallback, View.On
         tabFoundLayout.setOnClickListener(this);
         tabContactorLayout.setOnClickListener(this);
         tabMineLayout.setOnClickListener(this);
-        initDefaultFragment();
+        initFragments();
     }
 
-    private void initDefaultFragment() {
+    private void initFragments() {
         fm = getFragmentManager();
+        mFragments.add(new HomeFragment());
+        mFragments.add(new FoundFragment());
+        mFragments.add(new  SportCircleFragment());
+        mFragments.add(new MineFragment());
     }
 
     @Override
