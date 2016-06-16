@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 import com.example.aidong.fragment.FoundFragment;
 import com.example.aidong.fragment.HomeFragment;
 import com.example.aidong.fragment.MineFragment;
-import com.example.aidong.fragment.SportCircleFragment;
+import com.example.aidong.fragment.TabFoundDynamicFragment;
 import com.example.aidong.model.result.MsgResult;
 import com.leyuan.commonlibrary.http.IHttpCallback;
 import com.leyuan.commonlibrary.util.ToastUtil;
@@ -61,7 +61,8 @@ public class MainActivity extends BaseActivity implements IHttpCallback, View.On
         fm = getFragmentManager();
         mFragments.add(new HomeFragment());
         mFragments.add(new FoundFragment());
-        mFragments.add(new  SportCircleFragment());
+//        mFragments.add(new  SportCircleFragment());
+        mFragments.add(new TabFoundDynamicFragment());
         mFragments.add(new MineFragment());
     }
 

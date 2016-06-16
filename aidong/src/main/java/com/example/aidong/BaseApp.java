@@ -11,6 +11,7 @@ import com.baidu.mapapi.SDKInitializer;
 import com.example.aidong.common.MXLog;
 import com.example.aidong.model.UserCoach;
 import com.example.aidong.utils.SharePrefUtils;
+import com.lidroid.xutils.DbUtils;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -28,6 +29,8 @@ public class BaseApp extends Application{
     public static String city;
     public static String AddrStr;
 
+    public DbUtils db;
+
     public LocationClient mLocationClient = null;
     public BDLocationListener myListener = new MyLocationListener();
     @Override
@@ -42,6 +45,15 @@ public class BaseApp extends Application{
         initBaiduLoc();
         SDKInitializer.initialize(this);
         initImageLoader(getApplicationContext());
+        initDbUtils();
+    }
+
+    private void initDbUtils() {
+        try {
+            db = DbUtils.create(this, "mxing.db");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void initBaiduLoc() {

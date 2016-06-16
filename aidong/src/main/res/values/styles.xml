@@ -33,4 +33,31 @@
         <item name="android:textSize">16dp</item>
         <item name="android:gravity">center_vertical</item>
     </style>
+
+    <style name="listDistanceTextStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/color_list_distance</item>
+        <item name="android:textSize">@dimen/pref_14dp</item>
+        <item name="android:gravity">center_vertical|left</item>
+    </style>
+
+    <style name="listTimeTextStyle" parent="@style/listDistanceTextStyle"></style>
+
+    <style name="listUsernameTextStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/color_black</item>
+        <item name="android:textSize">@dimen/pref_15dp</item>
+        <item name="android:gravity">center_vertical|left</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="listSubjectTextStyle" parent="@style/listUsernameTextStyle">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">@dimen/pref_15dp</item>
+    </style>
 </resources>
