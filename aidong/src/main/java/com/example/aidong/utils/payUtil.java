@@ -3,6 +3,7 @@ package com.example.aidong.utils;
 import android.app.Activity;
 
 import com.example.aidong.alipay.Payextends;
+import com.example.aidong.simcpux.WXPayUtil;
 
 import java.text.DecimalFormat;
 
@@ -19,6 +20,13 @@ public class payUtil {
 
         payextends.pay(name, description, df.format(dunble) + "", partner, seller, private_key, orderId);
 
+    }
+
+    public void weixinPay(Activity activity, String price, String api_key, String orderId, String communname, String mch_id, String orderType) {
+        Double dunble = Double.parseDouble(price);
+        double f = Double.parseDouble(df.format(dunble)) * 100;
+        int total_fee = (int) f;
+        new WXPayUtil(activity, api_key, orderId).prePay(total_fee, communname, mch_id, orderType);
     }
 
 
