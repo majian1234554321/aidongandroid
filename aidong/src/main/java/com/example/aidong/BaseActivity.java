@@ -18,7 +18,7 @@ public class BaseActivity extends AppCompatActivity implements IHttpToastCallBac
         logic = new Logic();
     }
 
-    public void addTask(MainActivity callBack, IHttpTask tsk, int method,
+    public void addTask(IHttpCallback callBack, IHttpTask tsk, int method,
                         int requestCode) {
         logic.doLogic(callBack, tsk, method, requestCode, this);
     }

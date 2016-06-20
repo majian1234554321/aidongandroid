@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/individual_dynamic"
+                android:background="@color/color_light_white" >
+
+    <RelativeLayout
+        android:id="@+id/realtivelayout_title_the_individual_dynamic"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_50dp"
+        android:background="@color/new_background_one" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/the_individual_dynamic"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/pref_17dp" />
+
+        <ImageView
+            android:id="@+id/imageview_the_individual_dynamic_back"
+            android:layout_width="@dimen/pref_35dp"
+            android:layout_height="@dimen/pref_35dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/pref_10dp"
+            android:src="@drawable/back" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/realtivelayout_title_the_individual_dynamic" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <RelativeLayout
+                android:id="@+id/relativelayout_the_individual_dynamic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:background="@color/color_white" >
+
+                <EditText
+                    android:id="@+id/edittext_the_individual_dynamic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:gravity="top|left"
+                    android:hint="@string/the_coach_said"
+                    android:padding="@dimen/pref_10dp"
+                    android:textColor="@color/color_black"
+                    android:minHeight="190dp" />
+
+                <TextView
+                    android:id="@+id/textview_the_individuality_signature_zishu1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/edittext_the_individual_dynamic"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="@dimen/pref_10dp"
+                    android:layout_marginRight="@dimen/pref_10dp"
+                    android:text="@string/hundred1"
+                    android:textColor="@color/color_txt_gray1"
+                    android:textSize="@dimen/pref_14dp" />
+
+                <TextView
+                    android:id="@+id/textview_the_individuality_signature_zishu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/textview_the_individuality_signature_zishu1"
+                    android:layout_alignBottom="@+id/textview_the_individuality_signature_zishu1"
+                    android:layout_toLeftOf="@+id/textview_the_individuality_signature_zishu1"
+                    android:text="@string/thousand"
+                    android:textColor="@color/color_txt_gray1"
+                    android:textSize="@dimen/pref_14dp" />
+            </RelativeLayout>
+
+            <GridView
+                android:id="@+id/noScrollgridview"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_170dp"
+                android:layout_below="@+id/relativelayout_the_individual_dynamic"
+                android:layout_marginBottom="@dimen/pref_5dp"
+                android:layout_marginLeft="@dimen/pref_25dp"
+                android:layout_marginRight="@dimen/pref_5dp"
+                android:layout_marginTop="@dimen/pref_5dp"
+                android:horizontalSpacing="@dimen/pref_3dp"
+                android:numColumns="3"
+                android:paddingBottom="@dimen/pref_5dp"
+                android:scrollbars="none"
+                android:verticalSpacing="@dimen/pref_5dp" >
+            </GridView>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_0.5dp"
+                android:layout_below="@id/relativelayout_the_individual_dynamic"
+                android:background="@color/color_list_distance" />
+
+            <TextView
+                android:id="@+id/textview_the_individual_dynamic_to_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/noScrollgridview"
+                android:layout_marginLeft="@dimen/pref_15dp"
+                android:layout_marginTop="13dp"
+                android:text="@string/share_zhi"
+                android:textColor="@color/color_txt_gray1"
+                android:textSize="@dimen/pref_16dp" />
+
+            <Button
+                android:id="@+id/button_the_individual_dynamic_release"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_50dp"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/textview_the_individual_dynamic_to_share"
+                android:layout_marginLeft="@dimen/pref_10dp"
+                android:layout_marginRight="@dimen/pref_10dp"
+                android:layout_marginTop="@dimen/pref_50dp"
+                android:background="@drawable/btn_shape_green"
+                android:text="@string/release"
+                android:textColor="@color/color_white"
+                android:textSize="@dimen/pref_16dp" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/pref_30dip"
+                android:layout_below="@id/button_the_individual_dynamic_release" >
+            </View>
+
+            <CheckBox
+                android:id="@+id/imageview_the_individual_dynamic_xinlang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@+id/button_the_individual_dynamic_release"
+                android:layout_alignTop="@+id/textview_the_individual_dynamic_to_share"
+                android:button="@drawable/weibo_selector" />
+
+        </RelativeLayout>
+    </ScrollView>
+    <RelativeLayout
+        android:id="@+id/rl_rotate_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:layout_below="@id/realtivelayout_title_the_individual_dynamic"
+        >
+        <RelativeLayout
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:layout_centerInParent="true"
+            android:background="#77000000"
+
+            >
+            <ImageView
+                android:id="@+id/img_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@drawable/progress_1"
+
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/img_progress"
+                android:layout_centerHorizontal="true"
+                android:textColor="#77000000"
+                android:textSize="12sp"
+                android:text="正在压缩视频"
+
+                />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -7,6 +7,8 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.hardware.Camera;
+import android.hardware.Camera.Size;
 import android.os.Build;
 import android.os.Handler;
 import android.telephony.TelephonyManager;
@@ -22,10 +24,11 @@ import java.io.File;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 
 public class Utils {
 	public static final String TAKEPHOTO_SDPATH = Constants.FILE_FOLDER + "/"
@@ -302,4 +305,22 @@ public class Utils {
 		return context.getResources().getDisplayMetrics().density;
 	}
 
+	public static List<Camera.Size> getResolutionList(Camera camera)
+	{
+		Camera.Parameters parameters = camera.getParameters();
+		List<Camera.Size> previewSizes = parameters.getSupportedPreviewSizes();
+		return previewSizes;
+	}
+
+	public static class ResolutionComparator implements Comparator<Camera.Size> {
+
+		@Override
+		public int compare(Size lhs, Size rhs) {
+			if(lhs.height!=rhs.height)
+				return lhs.height-rhs.height;
+			else
+				return lhs.width-rhs.width;
+		}
+
+	}
 }

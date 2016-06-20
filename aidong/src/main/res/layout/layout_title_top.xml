@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/layoutTitleTop"
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:background="@color/new_background_one" >
+
+    <ImageView
+        android:id="@+id/btnBack"
+        style="@style/styleImageBack"
+        android:layout_centerVertical="true"
+        android:visibility="gone" >
+    </ImageView>
+
+    <TextView
+        android:id="@+id/txtTopLeft"
+        style="@style/titleTextStyle"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/pref_15dp"
+        android:text="@string/cancel"
+        android:textColor="@color/color_white"
+        android:textSize="@dimen/pref_16dp"
+        android:visibility="gone" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/txtTopRight"
+        style="@style/titleTextStyle"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/pref_15dp"
+        android:text="@string/filter"
+        android:textColor="@color/color_white"
+        android:visibility="gone" >
+    </TextView>
+
+    <RelativeLayout
+        android:id="@+id/rel_imgmessgae"
+        android:layout_width="@dimen/pref_30dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/pref_10dp"
+        >
+        <!--
+             <ImageView
+            android:id="@+id/img_message"
+            android:layout_width="@dimen/pref_24dp"
+            android:layout_height="@dimen/pref_24dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/tab_msg_nosel" />
+        -->
+        <ImageButton
+            android:id="@+id/btnTopRight"
+            android:layout_width="@dimen/pref_24dp"
+            android:layout_height="@dimen/pref_24dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:visibility="gone"
+            android:background="@null"
+            android:scaleType="fitCenter"
+            >
+        </ImageButton>
+
+        <View
+            android:id="@+id/tabMsgCircleLayout"
+            android:layout_width="@dimen/pref_10dp"
+            android:layout_height="@dimen/pref_10dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/btnTopRight"
+            android:visibility="gone"
+            android:background="@drawable/circle_msg_tip" >
+        </View>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/txtTopTitle"
+        style="@style/titleTextStyle"
+        android:layout_centerInParent="true"
+        android:textColor="@color/color_white"
+        android:textSize="@dimen/pref_17dp" >
+    </TextView>
+
+</RelativeLayout>

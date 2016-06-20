@@ -1,4 +1,4 @@
-package com.example.aidong.activity;
+package com.example.aidong.activity.media;
 
 import com.example.aidong.BaseActivity;
 

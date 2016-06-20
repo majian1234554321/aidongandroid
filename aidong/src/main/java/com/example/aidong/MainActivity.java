@@ -3,18 +3,28 @@ package com.example.aidong;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.example.aidong.activity.media.TabTheIndividualDynaminActivity;
+import com.example.aidong.activity.mine.LoginActivity;
 import com.example.aidong.fragment.FoundFragment;
 import com.example.aidong.fragment.HomeFragment;
 import com.example.aidong.fragment.MineFragment;
 import com.example.aidong.fragment.TabFoundDynamicFragment;
 import com.example.aidong.model.result.MsgResult;
+import com.example.aidong.utils.Utils;
 import com.leyuan.commonlibrary.http.IHttpCallback;
 import com.leyuan.commonlibrary.util.ToastUtil;
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
+import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +38,7 @@ public class MainActivity extends BaseActivity implements IHttpCallback, View.On
     private RelativeLayout tabFoundLayout;
     private RelativeLayout tabContactorLayout;
     private RelativeLayout tabMineLayout;
+    private View hazy_view;
 
     private List<Fragment> mFragments = new ArrayList<>();
     private FragmentManager fm;
@@ -47,14 +58,139 @@ public class MainActivity extends BaseActivity implements IHttpCallback, View.On
         tabFoundLayout = (RelativeLayout) findViewById(R.id.tabFoundLayout);
         tabContactorLayout = (RelativeLayout) findViewById(R.id.tabContactorLayout);
         tabMineLayout = (RelativeLayout) findViewById(R.id.tabMineLayout);
+        hazy_view = findViewById(R.id.hazy_view);
+
     }
 
     private void initData() {
+        initFragments();
+        initHazyView();
         tabNearLayout.setOnClickListener(this);
         tabFoundLayout.setOnClickListener(this);
         tabContactorLayout.setOnClickListener(this);
         tabMineLayout.setOnClickListener(this);
-        initFragments();
+    }
+
+    private void initHazyView() {
+        int redActionButtonSize = getResources().getDimensionPixelSize(
+                R.dimen.pref_56dp);
+        int redActionMenuRadius = getResources().getDimensionPixelSize(
+                R.dimen.pref_150dp);
+        int blueSubActionButtonSize = getResources().getDimensionPixelSize(
+                R.dimen.pref_80dp);
+
+        final ImageView fabIconNew = new ImageView(this);
+        fabIconNew.setImageDrawable(getResources().getDrawable(
+                R.drawable.cerma_big));
+        FloatingActionButton.LayoutParams cParams = new FloatingActionButton.LayoutParams(
+                redActionButtonSize, redActionButtonSize);
+        fabIconNew.setLayoutParams(cParams);
+        FloatingActionButton.LayoutParams cbParams = new FloatingActionButton.LayoutParams(
+                FloatingActionButton.LayoutParams.WRAP_CONTENT,
+                FloatingActionButton.LayoutParams.WRAP_CONTENT);
+        cbParams.setMargins(0, 0, 0, 0);
+
+        FloatingActionButton rightLowerButton = new FloatingActionButton.Builder(
+                this).setContentView(fabIconNew, cParams)
+                .setPosition(FloatingActionButton.POSITION_BOTTOM_CENTER)
+                .setLayoutParams(cbParams).build();
+        rightLowerButton.setBackgroundDrawable(null);
+
+        SubActionButton.Builder rLSubBuilder = new SubActionButton.Builder(this);
+        rLSubBuilder.setBackgroundDrawable(getResources().getDrawable(
+                R.drawable.sub_selector));
+        FrameLayout.LayoutParams blueParams = new FrameLayout.LayoutParams(
+                blueSubActionButtonSize, blueSubActionButtonSize);
+        rLSubBuilder.setLayoutParams(blueParams);
+
+        ImageView rlIcon1 = new ImageView(this);
+        ImageView rlIcon3 = new ImageView(this);
+
+        rlIcon1.setImageDrawable(getResources().getDrawable(
+                R.drawable.icon_albm));
+        rlIcon3.setImageDrawable(getResources().getDrawable(
+                R.drawable.icon_photograph));
+
+        TextView tv1 = new TextView(this);
+        TextView tv3 = new TextView(this);
+
+        tv1.setText("照片");
+        tv1.setPadding(Utils.dip2px(getApplicationContext(), 0),
+                Utils.dip2px(getApplicationContext(), 0),
+                Utils.dip2px(getApplicationContext(), 0),
+                Utils.dip2px(getApplicationContext(), 15));
+        tv1.setTextColor(getResources().getColor(R.color.color_white));
+        tv3.setText("视频");
+        tv3.setPadding(Utils.dip2px(getApplicationContext(), 0),
+                Utils.dip2px(getApplicationContext(), 0),
+                Utils.dip2px(getApplicationContext(), 0),
+                Utils.dip2px(getApplicationContext(), 15));
+        tv3.setTextColor(getResources().getColor(R.color.color_white));
+
+        SubActionButton tcSub1 = rLSubBuilder.setContentView(rlIcon1,
+                blueParams).build();
+        SubActionButton tcSub3 = rLSubBuilder.setContentView(rlIcon3,
+                blueParams).build();
+
+        final FloatingActionMenu rightLowerMenu = new FloatingActionMenu.Builder(
+                this)
+                .addSubActionView(tcSub1)
+                .addSubActionView(tcSub3)
+//                .addSubTextView(rLSubBuilder.setContentView(tv1, null).build())
+//                .addSubTextView(rLSubBuilder.setContentView(tv3, null).build())
+                .attachTo(rightLowerButton).setRadius(redActionMenuRadius)
+                .setStartAngle(-120).setEndAngle(-60).build();
+
+        tcSub1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                if (BaseApp.mInstance.isLogin()) {
+                    Intent intent = new Intent(MainActivity.this,
+                            TabTheIndividualDynaminActivity.class);
+                    intent.putExtra("type", 1);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(MainActivity.this,
+                            LoginActivity.class);
+                    startActivity(intent);
+                }
+                rightLowerMenu.close(true);
+
+            }
+        });
+
+        tcSub3.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                if (BaseApp.mInstance.isLogin()) {
+                    Intent intent = new Intent(MainActivity.this,
+                            TabTheIndividualDynaminActivity.class);
+                    intent.putExtra("type", 3);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(MainActivity.this,
+                            LoginActivity.class);
+                    startActivity(intent);
+                }
+                rightLowerMenu.close(true);
+            }
+        });
+
+        rightLowerMenu
+                .setStateChangeListener(new FloatingActionMenu.MenuStateChangeListener() {
+                    @Override
+                    public void onMenuOpened(FloatingActionMenu menu) {
+                        hazy_view.setVisibility(View.VISIBLE);
+                        fabIconNew.setImageResource(R.drawable.btn_close);
+                    }
+
+                    @Override
+                    public void onMenuClosed(FloatingActionMenu menu) {
+                        hazy_view.setVisibility(View.GONE);
+                        fabIconNew.setImageResource(R.drawable.cerma_big);
+                    }
+                });
     }
 
     private void initFragments() {

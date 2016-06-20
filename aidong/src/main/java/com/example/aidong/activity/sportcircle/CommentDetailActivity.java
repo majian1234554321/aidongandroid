@@ -1,4 +1,4 @@
-package com.example.aidong.activity.lovesportcircle;
+package com.example.aidong.activity.sportcircle;
 
 import com.example.aidong.BaseActivity;
 

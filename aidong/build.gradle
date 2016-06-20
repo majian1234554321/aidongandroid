@@ -15,7 +15,7 @@ android {
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.example.aidong"
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 23
         versionCode 18
         versionName "4.22"
@@ -54,6 +54,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.6.2'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     compile 'com.loopeer.android.thirdparty.pulltorefresh:Android-PullToRefresh:2.1.1'
+    compile 'com.oguzdev:CircularFloatingActionMenu:1.0.2'
     compile project(':commonlibrary')
 }
 //buildscript {

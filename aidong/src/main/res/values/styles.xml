@@ -60,4 +60,41 @@
         <item name="android:ellipsize">end</item>
         <item name="android:textSize">@dimen/pref_15dp</item>
     </style>
+
+    <style name="album_checkbox" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/alnum_selector</item>
+    </style>
+
+    <style name="styleImageBack">
+        <!-- <item name="android:layout_width">@dimen/pref_35dp</item>
+        <item name="android:layout_height">@dimen/pref_35dp</item> -->
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginLeft">@dimen/pref_10dp</item>
+        <item name="android:src">@drawable/back</item>
+    </style>
+
+    <style name="titleTextStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@drawable/txt_title_sel</item>
+        <item name="android:textSize">@dimen/pref_15dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="popuStyle">
+        <item name="android:windowEnterAnimation">@anim/popup_anim_in</item>
+        <item name="android:windowExitAnimation">@anim/popup_anim_out</item>
+    </style>
+
+    <style name="MyProgressBar" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal</item>
+    </style>
+
+    <style name="popupDownStyle">
+        <item name="android:windowEnterAnimation">@anim/popup_anim_down</item>
+        <item name="android:windowExitAnimation">@anim/popup_anim_up</item>
+    </style>
 </resources>
