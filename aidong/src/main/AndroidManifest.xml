@@ -109,8 +109,6 @@
             android:value="oOUovyobUoONSmPB8qGjG4Lq"/>
 
 
-
-
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"

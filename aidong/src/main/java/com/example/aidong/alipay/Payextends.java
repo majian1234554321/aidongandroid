@@ -70,7 +70,7 @@ public class Payextends {
 
 
     /**
-     * call payUtil sdk payUtil. 调用SDK支付
+     * call PayUtil sdk PayUtil. 调用SDK支付
      */
     public void pay(String product_name, String product_description, String product_price, String partner, String seller, String rsa_privite, String orderId) {
 
@@ -113,7 +113,7 @@ public class Payextends {
     }
 
     /**
-     * check whether the device has authentication payUtil account.
+     * check whether the device has authentication PayUtil account.
      * 查询终端设备是否存在支付宝认证账户
      */
     public void check(View v) {
@@ -173,7 +173,7 @@ public class Payextends {
                 + "\"";
 
         // 服务接口名称， 固定值
-        orderInfo += "&service=\"mobile.securitypay.payUtil\"";
+        orderInfo += "&service=\"mobile.securitypay.PayUtil\"";
 
         // 支付类型， 固定值
         orderInfo += "&payment_type=\"1\"";
@@ -192,7 +192,7 @@ public class Payextends {
         // orderInfo += "&extern_token=" + "\"" + extern_token + "\"";
 
         // 支付宝处理完请求后，当前页面跳转到商户指定页面的路径，可空
-        orderInfo += "&return_url=\"m.payUtil.com\"";
+        orderInfo += "&return_url=\"m.PayUtil.com\"";
 
         // 调用银行卡支付，需配置此参数，参与签名， 固定值 （需要签约《无线银行卡快捷支付》才能使用）
         // orderInfo += "&paymethod=\"expressGateway\"";
