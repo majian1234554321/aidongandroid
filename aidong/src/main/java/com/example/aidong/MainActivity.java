@@ -13,7 +13,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.aidong.activity.media.TabTheIndividualDynaminActivity;
-import com.example.aidong.activity.mine.LoginActivity;
 import com.example.aidong.fragment.FoundFragment;
 import com.example.aidong.fragment.HomeFragment;
 import com.example.aidong.fragment.MineFragment;
@@ -144,16 +143,16 @@ public class MainActivity extends BaseActivity implements IHttpCallback, View.On
         tcSub1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                if (BaseApp.mInstance.isLogin()) {
+//                if (BaseApp.mInstance.isLogin()) {
                     Intent intent = new Intent(MainActivity.this,
                             TabTheIndividualDynaminActivity.class);
                     intent.putExtra("type", 1);
                     startActivity(intent);
-                } else {
-                    Intent intent = new Intent(MainActivity.this,
-                            LoginActivity.class);
-                    startActivity(intent);
-                }
+//                } else {
+//                    Intent intent = new Intent(MainActivity.this,
+//                            LoginActivity.class);
+//                    startActivity(intent);
+//                }
                 rightLowerMenu.close(true);
 
             }
@@ -163,16 +162,16 @@ public class MainActivity extends BaseActivity implements IHttpCallback, View.On
 
             @Override
             public void onClick(View arg0) {
-                if (BaseApp.mInstance.isLogin()) {
+//                if (BaseApp.mInstance.isLogin()) {
                     Intent intent = new Intent(MainActivity.this,
                             TabTheIndividualDynaminActivity.class);
                     intent.putExtra("type", 3);
                     startActivity(intent);
-                } else {
-                    Intent intent = new Intent(MainActivity.this,
-                            LoginActivity.class);
-                    startActivity(intent);
-                }
+//                } else {
+//                    Intent intent = new Intent(MainActivity.this,
+//                            LoginActivity.class);
+//                    startActivity(intent);
+//                }
                 rightLowerMenu.close(true);
             }
         });

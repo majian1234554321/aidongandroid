@@ -149,11 +149,11 @@ public class TabTheIndividualDynaminActivity extends BaseActivity implements
 //        dialog = ProgressDialog.show(this, "提示", "加载中...");
 //    }
 //
-//    public void stoploadingDialog() {
-//        if (dialog != null) {
-//            dialog.dismiss();
-//        }
-//    }
+    public void stoploadingDialog() {
+        if (dialog != null) {
+            dialog.dismiss();
+        }
+    }
 //
 //    public void setLoadingDialog(String string) {
 //        dialog = ProgressDialog.show(this, "提示", string);
@@ -1137,6 +1137,7 @@ public class TabTheIndividualDynaminActivity extends BaseActivity implements
 
     @Override
     public void onGetData(Object data, int requestCode, String response) {
+        stoploadingDialog();
         switch (requestCode) {
             case DYNAMICS:
                 MsgResult msgResult = (MsgResult) data;

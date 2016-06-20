@@ -98,6 +98,16 @@
             />
         <activity android:name=".activity.media.TabTheIndividualDynaminActivity"
             />
+        <activity android:name=".activity.media.MyRecorderVideoActivity"
+            />
+        <activity android:name=".activity.media.PreviewViedoShowActivity"
+            />
+        <activity android:name=".activity.media.SelectVideoActivity"
+            />
+        <activity android:name=".activity.media.SelectVideoCoverActivity"
+            />
+        <activity android:name=".activity.media.TabVideoShowActivity"
+            />
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"
