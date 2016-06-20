@@ -111,4 +111,8 @@
     <color name="possible_result_points">#c0ffff00</color>
 
     <color name="line_color">#e9eaf0</color>
+    <color name="transparent">#00000000</color>
+    <color name="text_black">#333333</color>
+
+    <color name="main_background">#f2f2f2</color>
 </resources>
