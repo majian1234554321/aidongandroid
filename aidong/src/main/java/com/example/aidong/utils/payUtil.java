@@ -10,19 +10,17 @@ import java.text.DecimalFormat;
 /**
  * Created by Administrator on 2016/6/16.
  */
-public class payUtil {
-    private DecimalFormat df = new DecimalFormat("0.00");
+public class PayUtil {
 
-    public void aliPay(Activity activity, String name, String description, String price, String partner, String seller, String private_key, String orderId) {
+    public static void aliPay(Activity activity, String name, String description, String price, String partner, String seller, String private_key, String orderId) {
+        DecimalFormat df = new DecimalFormat("0.00");
         Payextends payextends = new Payextends(activity);
-
         Double dunble = Double.parseDouble(price);
-
         payextends.pay(name, description, df.format(dunble) + "", partner, seller, private_key, orderId);
-
     }
 
-    public void weixinPay(Activity activity, String price, String api_key, String orderId, String communname, String mch_id, String orderType) {
+    public static void weixinPay(Activity activity, String price, String api_key, String orderId, String communname, String mch_id, String orderType) {
+        DecimalFormat df = new DecimalFormat("0.00");
         Double dunble = Double.parseDouble(price);
         double f = Double.parseDouble(df.format(dunble)) * 100;
         int total_fee = (int) f;

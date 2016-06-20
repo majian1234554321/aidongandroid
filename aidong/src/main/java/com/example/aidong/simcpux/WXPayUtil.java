@@ -44,7 +44,7 @@ public class WXPayUtil {
     private StringBuffer sb;
     private int total_fee;
     private String body, mch_id, api_key;
-    //    private String notify_url = Urls.PAY_URL+"/wxpayreturn.action";
+    private String notify_url = "www.baidu.com";
     private String time_start, time_expire;
 
     public WXPayUtil(Context context, String api_key, String orderId) {
@@ -252,7 +252,7 @@ public class WXPayUtil {
             packageParams.add(new BasicNameValuePair("nonce_str", nonceStr));
             //            packageParams.add(new BasicNameValuePair("time_start", time_start));
             //            packageParams.add(new BasicNameValuePair("time_expire", time_expire));
-            //            packageParams.add(new BasicNameValuePair("notify_url", notify_url));
+            packageParams.add(new BasicNameValuePair("notify_url", notify_url));
             packageParams.add(new BasicNameValuePair("out_trade_no", orderId));
             packageParams.add(new BasicNameValuePair("spbill_create_ip", "127.0.0.1"));
             packageParams.add(new BasicNameValuePair("total_fee", total_fee + ""));
