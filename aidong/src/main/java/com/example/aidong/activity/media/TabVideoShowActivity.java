@@ -36,14 +36,12 @@ import com.example.aidong.model.AttributeFilm;
 import com.example.aidong.model.AttributeVideo;
 import com.example.aidong.model.result.MsgResult;
 import com.example.aidong.model.result.NewDynamicResult;
-import com.example.aidong.utils.Constants;
 import com.example.aidong.utils.FileUtil;
 import com.example.aidong.utils.PopupWindowUitls;
 import com.example.aidong.utils.photo.Bimp;
 import com.leyuan.commonlibrary.http.IHttpCallback;
 import com.leyuan.commonlibrary.http.IHttpTask;
 import com.leyuan.commonlibrary.util.ToastUtil;
-import com.mob.tools.utils.UIHandler;
 
 import org.apache.http.message.BasicNameValuePair;
 
@@ -53,15 +51,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cn.sharesdk.framework.Platform;
-import cn.sharesdk.framework.Platform.ShareParams;
-import cn.sharesdk.framework.PlatformActionListener;
-import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.sina.weibo.SinaWeibo;
+//import com.mob.tools.utils.UIHandler;
+
+//import cn.sharesdk.framework.Platform;
+//import cn.sharesdk.framework.Platform.ShareParams;
+//import cn.sharesdk.framework.PlatformActionListener;
+//import cn.sharesdk.framework.ShareSDK;
+//import cn.sharesdk.sina.weibo.SinaWeibo;
 
 
 public class TabVideoShowActivity extends BaseActivity implements
-        OnClickListener, IHttpCallback, PlatformActionListener, Callback {
+        OnClickListener, IHttpCallback, Callback {
 
     private ImageView img_back;
     private EditText video_title;
@@ -86,8 +86,8 @@ public class TabVideoShowActivity extends BaseActivity implements
     private static final int POST_VIDEO = 5;
     private static final int NEWDYNAMICS = 6;
     private boolean isShare;
-    private ShareParams sp;
-    private Platform weibo;
+//    private ShareParams sp;
+//    private Platform weibo;
     private PopupWindowUitls popup;
     protected byte currentPosition;
 
@@ -102,7 +102,7 @@ public class TabVideoShowActivity extends BaseActivity implements
     }
 
     protected void setupView() {
-        ShareSDK.initSDK(this);
+//        ShareSDK.initSDK(this);
         setContentView(R.layout.layout_tab_video_show);
         initView();
         setClick();
@@ -123,7 +123,7 @@ public class TabVideoShowActivity extends BaseActivity implements
         img_video_cover = (ImageView) findViewById(R.id.img_video_cover);
         img_video_play = (ImageView) findViewById(R.id.img_video_play);
         img_popup = (ImageView) findViewById(R.id.img_popup);
-        sp = new ShareParams();
+//        sp = new ShareParams();
     }
 
     private void setClick() {
@@ -168,9 +168,9 @@ public class TabVideoShowActivity extends BaseActivity implements
                     unshare();
                 } else {
                     isShare = true;
-                    if (weibo != null) {
-                        weibo.setPlatformActionListener(this);
-                    }
+//                    if (weibo != null) {
+//                        weibo.setPlatformActionListener(this);
+//                    }
                 }
                 break;
 
@@ -187,8 +187,8 @@ public class TabVideoShowActivity extends BaseActivity implements
     private void unshare() {
         isShare = false;
         check_share.setChecked(false);
-        sp = null;
-        weibo = null;
+//        sp = null;
+//        weibo = null;
     }
 
     //	private File file;
@@ -514,37 +514,37 @@ public class TabVideoShowActivity extends BaseActivity implements
                             // 正式平台 http://www.e-mxing.com/share/
                             buffer.append(BaseUrlLink.SHARE_URL);
                             String titleUrl = buffer.toString();
-                            sp.setTitleUrl(titleUrl);
-                            if (BaseApp.mInstance.isLogin()) {
-                                if (video_describe.getText().toString().length() > 30) {
-                                    sp.setText("我的美型号"
-                                            + BaseApp.mInstance.getUser().getMxid()
-                                            + ",我在美型健身app发布了最新动态,求围观,求100个赞:\""
-                                            + video_describe.getText().toString()
-                                            .substring(0, 30)
-                                            + BaseUrlLink.WAP_URL + "(来自#美型#)");
-                                } else {
-                                    sp.setText("我的美型号"
-                                            + BaseApp.mInstance.getUser().getMxid()
-                                            + ",我在美型健身app发布了最新动态,求围观,求100个赞:\""
-                                            + video_describe.getText().toString()
-                                            + BaseUrlLink.WAP_URL + "(来自#美型#)");
-                                }
-                            }
-                            if (dynamicResult.getData().getDynamic().getImage() != null
-                                    || dynamicResult.getData().getDynamic()
-                                    .getImage().equals("")) {
-                                sp.setImageUrl(dynamicResult.getData().getDynamic()
-                                        .getImage());
-                            } else {
-                                Bitmap bitmap = BitmapFactory.decodeResource(
-                                        getResources(), R.drawable.icon_albm);
-                                String path = FileUtil.stringPath(bitmap,
-                                        Constants.FILE_FOLDER, "logo.jpg");
-                                sp.setImagePath(path);
-                            }
-                            weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
-                            weibo.share(sp);
+//                            sp.setTitleUrl(titleUrl);
+//                            if (BaseApp.mInstance.isLogin()) {
+//                                if (video_describe.getText().toString().length() > 30) {
+//                                    sp.setText("我的美型号"
+//                                            + BaseApp.mInstance.getUser().getMxid()
+//                                            + ",我在美型健身app发布了最新动态,求围观,求100个赞:\""
+//                                            + video_describe.getText().toString()
+//                                            .substring(0, 30)
+//                                            + BaseUrlLink.WAP_URL + "(来自#美型#)");
+//                                } else {
+//                                    sp.setText("我的美型号"
+//                                            + BaseApp.mInstance.getUser().getMxid()
+//                                            + ",我在美型健身app发布了最新动态,求围观,求100个赞:\""
+//                                            + video_describe.getText().toString()
+//                                            + BaseUrlLink.WAP_URL + "(来自#美型#)");
+//                                }
+//                            }
+//                            if (dynamicResult.getData().getDynamic().getImage() != null
+//                                    || dynamicResult.getData().getDynamic()
+//                                    .getImage().equals("")) {
+//                                sp.setImageUrl(dynamicResult.getData().getDynamic()
+//                                        .getImage());
+//                            } else {
+//                                Bitmap bitmap = BitmapFactory.decodeResource(
+//                                        getResources(), R.drawable.icon_albm);
+//                                String path = FileUtil.stringPath(bitmap,
+//                                        Constants.FILE_FOLDER, "logo.jpg");
+//                                sp.setImagePath(path);
+//                            }
+//                            weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
+//                            weibo.share(sp);
                         }
                         //					if (lastClass != null) {
                         //						Intent i = new Intent(getApplicationContext(),
@@ -584,53 +584,53 @@ public class TabVideoShowActivity extends BaseActivity implements
         }
 
     }
-
-    @Override
-    public void onCancel(Platform platform, int action) {
-        Message msg = new Message();
-        msg.what = MSG_ACTION_CCALLBACK;
-        msg.arg1 = 3;
-        msg.arg2 = action;
-        msg.obj = platform;
-        unshare();
-        UIHandler.sendMessage(msg, this);
-    }
-
-    @Override
-    public void onComplete(Platform platform, int action,
-                           HashMap<String, Object> res) {
-        Message msg = new Message();
-        msg.what = MSG_ACTION_CCALLBACK;
-        msg.arg1 = 1;
-        msg.arg2 = action;
-        msg.obj = platform;
-
-        if (platform.getName().equals(SinaWeibo.NAME)) {
-
-        }
-        UIHandler.sendMessage(msg, this);
-        System.out.println(res);
-        // 获取资料
-        platform.getDb().getUserName();// 获取用户名字
-        platform.getDb().getUserIcon(); // 获取用户头像
-        platform.getDb().getToken();
-        platform.getDb().getUserId();
-    }
-
-    @Override
-    public void onError(Platform platform, int action, Throwable t) {
-        Message msg = new Message();
-        msg.what = MSG_ACTION_CCALLBACK;
-        msg.arg1 = 2;
-        msg.arg2 = action;
-        msg.obj = t;
-        unshare();
-        isShare = true;
-        check_share.setChecked(true);
-        UIHandler.sendMessage(msg, this);
-        // 分享失败的统计
-        ShareSDK.logDemoEvent(4, platform);
-    }
+//
+//    @Override
+//    public void onCancel(Platform platform, int action) {
+//        Message msg = new Message();
+//        msg.what = MSG_ACTION_CCALLBACK;
+//        msg.arg1 = 3;
+//        msg.arg2 = action;
+//        msg.obj = platform;
+//        unshare();
+//        UIHandler.sendMessage(msg, this);
+//    }
+//
+//    @Override
+//    public void onComplete(Platform platform, int action,
+//                           HashMap<String, Object> res) {
+//        Message msg = new Message();
+//        msg.what = MSG_ACTION_CCALLBACK;
+//        msg.arg1 = 1;
+//        msg.arg2 = action;
+//        msg.obj = platform;
+//
+//        if (platform.getName().equals(SinaWeibo.NAME)) {
+//
+//        }
+//        UIHandler.sendMessage(msg, this);
+//        System.out.println(res);
+//        // 获取资料
+//        platform.getDb().getUserName();// 获取用户名字
+//        platform.getDb().getUserIcon(); // 获取用户头像
+//        platform.getDb().getToken();
+//        platform.getDb().getUserId();
+//    }
+//
+//    @Override
+//    public void onError(Platform platform, int action, Throwable t) {
+//        Message msg = new Message();
+//        msg.what = MSG_ACTION_CCALLBACK;
+//        msg.arg1 = 2;
+//        msg.arg2 = action;
+//        msg.obj = t;
+//        unshare();
+//        isShare = true;
+//        check_share.setChecked(true);
+//        UIHandler.sendMessage(msg, this);
+//        // 分享失败的统计
+//        ShareSDK.logDemoEvent(4, platform);
+//    }
 
     @Override
     public boolean handleMessage(Message msg) {

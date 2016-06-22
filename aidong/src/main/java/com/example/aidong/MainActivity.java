@@ -16,7 +16,7 @@ import com.example.aidong.activity.media.TabTheIndividualDynaminActivity;
 import com.example.aidong.fragment.FoundFragment;
 import com.example.aidong.fragment.HomeFragment;
 import com.example.aidong.fragment.MineFragment;
-import com.example.aidong.fragment.TabFoundDynamicFragment;
+import com.example.aidong.fragment.SportCircleFragment;
 import com.example.aidong.model.result.MsgResult;
 import com.example.aidong.utils.Utils;
 import com.leyuan.commonlibrary.http.IHttpCallback;
@@ -27,8 +27,6 @@ import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.sharesdk.framework.ShareSDK;
 
 
 public class MainActivity extends BaseActivity implements IHttpCallback, View.OnClickListener {
@@ -196,9 +194,11 @@ public class MainActivity extends BaseActivity implements IHttpCallback, View.On
         fm = getFragmentManager();
         mFragments.add(new HomeFragment());
         mFragments.add(new FoundFragment());
-//        mFragments.add(new  SportCircleFragment());
-        mFragments.add(new TabFoundDynamicFragment());
+        mFragments.add(new SportCircleFragment());
+//        mFragments.add(new TabFoundDynamicFragment());
         mFragments.add(new MineFragment());
+        setTabSelection(0);
+        showFragment(0);
     }
 
     @Override
@@ -212,7 +212,7 @@ public class MainActivity extends BaseActivity implements IHttpCallback, View.On
     }
 
     private void initConfig() {
-        ShareSDK.initSDK(this);
+//        ShareSDK.initSDK(this);
     }
 
     @Override

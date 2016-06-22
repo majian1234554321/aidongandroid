@@ -174,4 +174,5 @@
     <dimen name="pref_361dp">361dp</dimen>
 
 
+    <dimen name="length28">15sp</dimen>
 </resources>

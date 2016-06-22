@@ -58,7 +58,6 @@ import android.widget.Toast;
 
 import com.example.aidong.BaseActivity;
 import com.example.aidong.BaseApp;
-import com.example.aidong.BaseUrlLink;
 import com.example.aidong.R;
 import com.example.aidong.common.Constant;
 import com.example.aidong.common.MXLog;
@@ -69,14 +68,12 @@ import com.example.aidong.model.AttributeVideo;
 import com.example.aidong.model.location.ImageItem;
 import com.example.aidong.model.result.MsgResult;
 import com.example.aidong.model.result.NewDynamicResult;
-import com.example.aidong.utils.Constants;
 import com.example.aidong.utils.FileUtil;
 import com.example.aidong.utils.photo.Bimp;
 import com.example.aidong.utils.photo.Res;
 import com.leyuan.commonlibrary.http.IHttpCallback;
 import com.leyuan.commonlibrary.http.IHttpTask;
 import com.leyuan.commonlibrary.util.ToastUtil;
-import com.mob.tools.utils.UIHandler;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -91,14 +88,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cn.sharesdk.framework.Platform;
-import cn.sharesdk.framework.Platform.ShareParams;
-import cn.sharesdk.framework.PlatformActionListener;
-import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.sina.weibo.SinaWeibo;
 
 public class TabTheIndividualDynaminActivity extends BaseActivity implements
-        IHttpCallback, Callback, PlatformActionListener {
+        IHttpCallback, Callback {
     protected ImageView mimageview_the_individual_dynamic_back;
     protected Button button_the_individual_dynamic_release;
     protected PopupWindow window = null;
@@ -122,8 +114,6 @@ public class TabTheIndividualDynaminActivity extends BaseActivity implements
     protected static final int NEWDYNAMICS = 1;
     protected File cover;
     protected Intent intent;
-    protected Platform weibo;
-    protected ShareParams sp;
     protected static final int REQUEST_SELECT_VIDEO = 11;
     /**
      * 视频相关数据
@@ -172,7 +162,6 @@ public class TabTheIndividualDynaminActivity extends BaseActivity implements
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Res.init(this);
-        ShareSDK.initSDK(this);
         MAX_COUNT = 1000;
         isfirst = true;
         switch (getIntent().getIntExtra("type", 0)) {
@@ -326,7 +315,6 @@ public class TabTheIndividualDynaminActivity extends BaseActivity implements
         //		setMaxPhotoNum(MAX_PHOTO_DYNAMIC_COUNT);
         if (!getIntent().getBooleanExtra("isalbum", false))
             freeSelectBitmap();
-        sp = new ShareParams();
         mimageview_the_individual_dynamic_xinlang = (CheckBox) findViewById(R.id.imageview_the_individual_dynamic_xinlang);
         edittext_the_individual_dynamic = (EditText) findViewById(R.id.edittext_the_individual_dynamic);
         button_the_individual_dynamic_release = (Button) findViewById(R.id.button_the_individual_dynamic_release);
@@ -695,9 +683,7 @@ public class TabTheIndividualDynaminActivity extends BaseActivity implements
                             unshare();
                         } else {
                             isShare = true;
-                            if (weibo != null) {
-                                weibo.setPlatformActionListener(TabTheIndividualDynaminActivity.this);
-                            }
+                           //微博分享
                         }
                     }
                 });
@@ -1131,8 +1117,7 @@ public class TabTheIndividualDynaminActivity extends BaseActivity implements
     private void unshare() {
         isShare = false;
         mimageview_the_individual_dynamic_xinlang.setChecked(false);
-        sp = null;
-        weibo = null;
+
     }
 
     @Override
@@ -1158,39 +1143,41 @@ public class TabTheIndividualDynaminActivity extends BaseActivity implements
                             && dynamicResult.getData().getDynamic() != null) {
                         if (isShare) {
                             StringBuffer buffer = new StringBuffer();
+                            //分享
                             // 正式平台 http://www.e-mxing.com/share/
-                            buffer.append(BaseUrlLink.SHARE_URL);
-                            String titleUrl = buffer.toString();
-                            sp.setTitleUrl(titleUrl);
-                            if (BaseApp.mInstance.isLogin()) {
-                                if (edittext_the_individual_dynamic.getText().toString().length() > 30) {
-                                    sp.setText("我的美型号" + BaseApp.mInstance.getUser().getMxid() + ",我在美型健身app发布了最新动态,求围观,求100个赞:\"" + edittext_the_individual_dynamic.getText().toString().substring(0, 30) + BaseUrlLink.WAP_URL + "(来自#美型#)");
-                                } else {
-                                    sp.setText("我的美型号" + BaseApp.mInstance.getUser().getMxid() + ",我在美型健身app发布了最新动态,求围观,求100个赞:\"" + edittext_the_individual_dynamic.getText().toString() + BaseUrlLink.WAP_URL + "(来自#美型#)");
-                                }
-                            }
-                            if (dynamicResult.getData().getDynamic()
-                                    .getImage() != null || dynamicResult.getData().getDynamic().getImage().equals("")) {
-                                sp.setImageUrl(dynamicResult.getData().getDynamic()
-                                        .getImage());
-                            } else {
-                                Bitmap bitmap = BitmapFactory.decodeResource(getResources(),
-                                        R.drawable.ic_launcher);
-                                String path = FileUtil.stringPath(bitmap, Constants.FILE_FOLDER,
-                                        "logo.jpg");
-                                sp.setImagePath(path);
-                            }
-                            weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
-                            weibo.share(sp);
-                        }
-                        //                        if (lastClass != null) {
-                        //                            Intent i = new Intent(getApplicationContext(),
-                        //                                    lastClass);
-                        //                            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        //                            startActivity(i);
-                        //                        }
-                        else {
-                            finish();
+                            //                            buffer.append(BaseUrlLink.SHARE_URL);
+                            //                            String titleUrl = buffer.toString();
+                            //                            sp.setTitleUrl(titleUrl);
+                            //                            if (BaseApp.mInstance.isLogin()) {
+                            //                                if (edittext_the_individual_dynamic.getText().toString().length() > 30) {
+                            //                                    sp.setText("我的美型号" + BaseApp.mInstance.getUser().getMxid() + ",我在美型健身app发布了最新动态,求围观,求100个赞:\"" + edittext_the_individual_dynamic.getText().toString().substring(0, 30) + BaseUrlLink.WAP_URL + "(来自#美型#)");
+                            //                                } else {
+                            //                                    sp.setText("我的美型号" + BaseApp.mInstance.getUser().getMxid() + ",我在美型健身app发布了最新动态,求围观,求100个赞:\"" + edittext_the_individual_dynamic.getText().toString() + BaseUrlLink.WAP_URL + "(来自#美型#)");
+                            //                                }
+                            //                            }
+                            //                            if (dynamicResult.getData().getDynamic()
+                            //                                    .getImage() != null || dynamicResult.getData().getDynamic().getImage().equals("")) {
+                            //                                sp.setImageUrl(dynamicResult.getData().getDynamic()
+                            //                                        .getImage());
+                            //                            } else {
+                            //                                Bitmap bitmap = BitmapFactory.decodeResource(getResources(),
+                            //                                        R.drawable.ic_launcher);
+                            //                                String path = FileUtil.stringPath(bitmap, Constants.FILE_FOLDER,
+                            //                                        "logo.jpg");
+                            //                                sp.setImagePath(path);
+                            //                            }
+                            //                            weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
+                            //                            weibo.share(sp);
+                            //                        }
+                            //                        if (lastClass != null) {
+                            //                            Intent i = new Intent(getApplicationContext(),
+                            //                                    lastClass);
+                            //                            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            //                            startActivity(i);
+                            //                        }
+                            //                        else {
+                            //                            finish();
+                            //                        }
                         }
                     }
                 }
@@ -1439,53 +1426,7 @@ public class TabTheIndividualDynaminActivity extends BaseActivity implements
                 .toString());
     }
 
-    @Override
-    public void onCancel(Platform platform, int action) {
-        Message msg = new Message();
-        msg.what = MSG_ACTION_CCALLBACK;
-        msg.arg1 = 3;
-        msg.arg2 = action;
-        msg.obj = platform;
-        unshare();
-        UIHandler.sendMessage(msg, this);
 
-    }
-
-    @Override
-    public void onComplete(Platform platform, int action, HashMap<String, Object> res) {
-        Message msg = new Message();
-        msg.what = MSG_ACTION_CCALLBACK;
-        msg.arg1 = 1;
-        msg.arg2 = action;
-        msg.obj = platform;
-
-        if (platform.getName().equals(SinaWeibo.NAME)) {
-
-        }
-        UIHandler.sendMessage(msg, this);
-        System.out.println(res);
-        // 获取资料
-        platform.getDb().getUserName();// 获取用户名字
-        platform.getDb().getUserIcon(); // 获取用户头像
-        platform.getDb().getToken();
-        platform.getDb().getUserId();
-
-    }
-
-    @Override
-    public void onError(Platform platform, int action, Throwable t) {
-        Message msg = new Message();
-        msg.what = MSG_ACTION_CCALLBACK;
-        msg.arg1 = 2;
-        msg.arg2 = action;
-        msg.obj = t;
-        unshare();
-        isShare = true;
-        mimageview_the_individual_dynamic_xinlang.setChecked(true);
-        UIHandler.sendMessage(msg, this);
-        // 分享失败的统计
-        ShareSDK.logDemoEvent(4, platform);
-    }
 
     @Override
     public boolean handleMessage(Message msg) {

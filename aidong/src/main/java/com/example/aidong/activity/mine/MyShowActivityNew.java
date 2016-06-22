@@ -77,8 +77,8 @@ import org.apache.http.message.BasicNameValuePair;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.sharesdk.onekeyshare.OnekeyShare;
-import cn.sharesdk.onekeyshare.OnekeyShareTheme;
+//import cn.sharesdk.onekeyshare.OnekeyShare;
+//import cn.sharesdk.onekeyshare.OnekeyShareTheme;
 
 public class MyShowActivityNew extends BaseActivity implements IHttpCallback, OnClickListener, OnRefreshListener2<ListView> {
     //	ViewPager viewPager;
@@ -133,7 +133,7 @@ public class MyShowActivityNew extends BaseActivity implements IHttpCallback, On
     private ArrayList<AttributeImages> imageArray = new ArrayList<AttributeImages>();
     private int page = 1;
 
-    private OnekeyShare oks;
+//    private OnekeyShare oks;
     private Integer currentPosition;
     protected int goodNo;
     private ImageView bg_imageView;
@@ -156,7 +156,7 @@ public class MyShowActivityNew extends BaseActivity implements IHttpCallback, On
 
     protected void setupView() {
         setContentView(R.layout.my_show_layout_new2);
-        oks = new OnekeyShare();
+//        oks = new OnekeyShare();
 
         user = (UserCoach) getIntent().getSerializableExtra("user");
         if (BaseApp.mInstance.isLogin()) {
@@ -603,40 +603,40 @@ public class MyShowActivityNew extends BaseActivity implements IHttpCallback, On
                 buffer.append(dynamic.getId());
                 buffer.append("/dynamics");
                 String titleUrl = buffer.toString();
-                oks.setTitleUrl(titleUrl);
-                if (BaseApp.mInstance.isLogin()) {
-                    oks.setText("我的美型号" + BaseApp.mInstance.getUser().getMxid()
-                            + "这里都是型男美女“小鲜肉”，全民老公vs梦中女神，速速围观" + titleUrl);
-                } else {
-                    oks.setText("这里都是型男美女“小鲜肉”，全民老公vs梦中女神，速速围观" + titleUrl);
-                }
-                oks.setUrl(titleUrl);
-                oks.setTheme(OnekeyShareTheme.CLASSIC);
-                oks.show(MyShowActivityNew.this);
-                oks.setTitle(titleUrl);
-                if (dynamic.getContent() == null
-                        || dynamic.getContent().intern()
-                        .equals("")) {
-                    oks.setTitle("最近用美型App，国内首家健身社交App");
-                } else {
-                    if (dynamic.getContent().length() > 30) {
-                        oks.setTitle(dynamic.getContent()
-                                .substring(0, 30));
-                    } else {
-                        oks.setTitle(dynamic.getContent());
-                    }
-
-                }
-
-                if (dynamic.getImage() != null
-                        && dynamic.getImage().size() > 0) {
-                    oks.setImageUrl(dynamic.getImage().get(0).getUrl());
-                } else if (dynamic.getFilm() != null) {
-                    oks.setImageUrl(dynamic.getFilm().getCover());
-
-                } else {
-
-                }
+//                oks.setTitleUrl(titleUrl);
+//                if (BaseApp.mInstance.isLogin()) {
+//                    oks.setText("我的美型号" + BaseApp.mInstance.getUser().getMxid()
+//                            + "这里都是型男美女“小鲜肉”，全民老公vs梦中女神，速速围观" + titleUrl);
+//                } else {
+//                    oks.setText("这里都是型男美女“小鲜肉”，全民老公vs梦中女神，速速围观" + titleUrl);
+//                }
+//                oks.setUrl(titleUrl);
+//                oks.setTheme(OnekeyShareTheme.CLASSIC);
+//                oks.show(MyShowActivityNew.this);
+//                oks.setTitle(titleUrl);
+//                if (dynamic.getContent() == null
+//                        || dynamic.getContent().intern()
+//                        .equals("")) {
+//                    oks.setTitle("最近用美型App，国内首家健身社交App");
+//                } else {
+//                    if (dynamic.getContent().length() > 30) {
+//                        oks.setTitle(dynamic.getContent()
+//                                .substring(0, 30));
+//                    } else {
+//                        oks.setTitle(dynamic.getContent());
+//                    }
+//
+//                }
+//
+//                if (dynamic.getImage() != null
+//                        && dynamic.getImage().size() > 0) {
+//                    oks.setImageUrl(dynamic.getImage().get(0).getUrl());
+//                } else if (dynamic.getFilm() != null) {
+//                    oks.setImageUrl(dynamic.getFilm().getCover());
+//
+//                } else {
+//
+//                }
 
             }
         });
