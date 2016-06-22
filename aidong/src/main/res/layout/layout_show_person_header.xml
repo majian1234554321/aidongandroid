@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/bg_imageView"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:scaleType="fitXY" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <RelativeLayout
+                android:id="@+id/rel_title_picture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" >
+
+                <com.example.aidong.view.PhotoGridView
+                    android:id="@+id/gridview_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="5dp"
+                    android:horizontalSpacing="5dp"
+                    android:numColumns="4"
+                    android:scrollbars="none"
+                    android:verticalSpacing="5dp" >
+                </com.example.aidong.view.PhotoGridView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:layout_below="@id/gridview_title" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rel_add_picture"
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:visibility="gone" >
+
+                <LinearLayout
+                    android:id="@+id/linear_add_picture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/icon_add_picture" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="添加照片"
+                        android:textColor="@color/color_white"
+                        android:textSize="16dp" />
+                </LinearLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_radius_five"
+            android:orientation="vertical"
+            android:paddingBottom="20dp" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="10dp" >
+
+                <com.example.aidong.view.CircleImageView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/img_head_portrait"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/icon_avatar_default"
+                    app:border_color="@color/color_black"
+                    app:border_width="0dp" />
+
+                <TextView
+                    android:id="@+id/txt_identify_coach"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginRight="15dp"
+                    android:text="认证教练"
+                    android:textColor="#333333"
+                    android:textSize="15dp"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/img_identify_coach"
+                    android:layout_width="18dp"
+                    android:layout_height="19dp"
+                    android:layout_marginRight="6dp"
+                    android:layout_toLeftOf="@id/txt_identify_coach"
+                    android:background="@drawable/renzheng"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="14dp" >
+
+                <TextView
+                    android:id="@+id/txt_user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="xingming"
+                    android:textColor="#333333"
+                    android:textSize="14dp" />
+
+                <RelativeLayout
+                    android:id="@+id/age_bg_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/txt_user_name"
+                    android:background="@drawable/shape_bg_light_red" >
+
+                    <ImageView
+                        android:id="@+id/img_gender"
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginTop="1dp"
+                        android:src="@drawable/zhinv" />
+
+                    <TextView
+                        android:id="@+id/txt_age"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="2dp"
+                        android:layout_toRightOf="@id/img_gender"
+                        android:paddingRight="2dp"
+                        android:text="24"
+                        android:textColor="#ffffff"
+                        android:textSize="10dp" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/txt_user_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:padding="0dp"
+                android:text="ID "
+                android:textColor="#8d97a6"
+                android:textSize="13dp" />
+
+            <LinearLayout
+                android:id="@+id/xing_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal" >
+
+                <RatingBar
+                    android:id="@+id/shopXing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/pref_15dp"
+                    android:isIndicator="true"
+                    android:numStars="5"
+                    android:progressDrawable="@drawable/food_rating_bar_full"
+                    android:rating="4.5"
+                    android:stepSize="1" />
+
+                <TextView
+                    android:id="@+id/txt_stat_level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:text="4.5"
+                    android:textColor="#8d97a6"
+                    android:textSize="13dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/address_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#8d97a6"
+                android:textSize="13dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:visibility="gone" />
+            <TextView
+                android:id="@+id/signature_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#8d97a6"
+                android:textSize="13dp"
+                android:layout_gravity="center_horizontal"
+                android:visibility="gone" />
+
+
+            <RelativeLayout
+                android:id="@+id/rel_like"
+                android:layout_width="82dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/shape_edge_orange" >
+
+                <ImageView
+                    android:id="@+id/img_like"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="4dp"
+                    android:src="@drawable/icon_lesson_like" />
+
+                <TextView
+                    android:id="@+id/txt_like_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="8dp"
+                    android:layout_toRightOf="@id/img_like"
+                    android:text="0"
+                    android:textColor="#ff572f"
+                    android:textSize="15dp" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

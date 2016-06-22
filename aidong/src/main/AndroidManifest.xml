@@ -108,6 +108,24 @@
             />
         <activity android:name=".activity.media.TabVideoShowActivity"
             />
+        <activity android:name=".activity.media.ImageShowerActivity"
+            />
+        <activity android:name=".activity.mine.MyShowActivityNew"
+            />
+        <activity android:name=".activity.mine.TabMinePersonalDataActivity"
+            />
+        <activity android:name=".activity.mine.TabMinePersonalDataFitnessGoalsActivity"
+            />
+        <activity android:name=".activity.mine.TabMinePersonalDataFitnessIsGoodActivity"
+            />
+        <activity android:name=".activity.mine.TabMinePersonalDataIndividualitySignatureActivity"
+            />
+        <activity android:name=".activity.mine.TabMinePersonalDataNicknameActivity"
+            />
+        <activity android:name=".activity.mine.TabMinePersonalDataOftenGymActivity"
+            />
+        <activity android:name=".activity.sportcircle.UserWhoClickLikeActivity"
+            />
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"

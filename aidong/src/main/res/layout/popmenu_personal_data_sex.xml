@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/personal_data_sex_popmenu"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/color_light_white"
+              android:gravity="bottom"
+              android:orientation="vertical" >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_0.5dp"
+        android:background="@color/color_list_distance" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/pref_10dp"
+        android:background="@color/color_white"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:id="@+id/popmenu_personal_data_sex_2_rel"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/pref_45dp" >
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true" >
+
+                <TextView
+                    android:id="@+id/popmenu_personal_data_sex_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/pref_3dp"
+                    android:background="@color/color_white"
+                    android:text="@string/men"
+                    android:textColor="@color/color_black"
+                    android:textSize="@dimen/pref_16dp" />
+
+                <ImageView
+                    android:id="@+id/popmenu_personal_data_sex_2_img"
+                    android:layout_width="@dimen/pref_20dp"
+                    android:layout_height="@dimen/pref_20dp"
+                    android:layout_toRightOf="@id/popmenu_personal_data_sex_2"
+                    android:src="@drawable/zhinan" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/pref_0.5dp"
+            android:layout_below="@id/popmenu_personal_data_sex_2_rel"
+            android:layout_marginTop="@dimen/pref__1dp"
+            android:background="@color/e_five" />
+
+        <RelativeLayout
+            android:id="@+id/popmenu_personal_data_sex_3_rel"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/pref_45dp"
+            android:layout_below="@id/popmenu_personal_data_sex_2_rel"
+            android:layout_marginBottom="@dimen/pref_20dp" >
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true" >
+
+                <TextView
+                    android:id="@+id/popmenu_personal_data_sex_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/pref_3dp"
+                    android:background="@color/color_white"
+                    android:text="@string/women"
+                    android:textColor="@color/color_black"
+                    android:textSize="@dimen/pref_16dp" />
+
+                <ImageView
+                    android:id="@+id/popmenu_personal_data_sex_3_img"
+                    android:layout_width="@dimen/pref_20dp"
+                    android:layout_height="@dimen/pref_20dp"
+                    android:layout_toRightOf="@id/popmenu_personal_data_sex_3"
+                    android:src="@drawable/zhinv" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/pref_0.5dp"
+            android:layout_below="@id/popmenu_personal_data_sex_3_rel"
+            android:layout_marginTop="-21dp"
+            android:background="@color/color_list_distance" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/pref_0.5dp"
+            android:layout_below="@id/popmenu_personal_data_sex_3_rel"
+            android:layout_marginTop="@dimen/pref__1dp"
+            android:background="@color/color_list_distance" />
+
+        <Button
+            android:id="@+id/popmenu_personal_data_sex_5"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/pref_45dp"
+            android:layout_below="@id/popmenu_personal_data_sex_3_rel"
+            android:layout_marginBottom="@dimen/pref_10dp"
+            android:background="@color/color_white"
+            android:text="@string/cancel"
+            android:textColor="@color/color_black"
+            android:textSize="@dimen/pref_16dp" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/pref_0.5dp"
+            android:layout_below="@id/popmenu_personal_data_sex_5"
+            android:layout_marginTop="-11dp"
+            android:background="@color/color_list_distance" />
+    </RelativeLayout>
+
+</LinearLayout>
