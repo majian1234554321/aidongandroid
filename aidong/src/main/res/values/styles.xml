@@ -33,6 +33,92 @@
         <item name="android:textSize">16dp</item>
         <item name="android:gravity">center_vertical</item>
     </style>
+
+    <style name="listDistanceTextStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/color_list_distance</item>
+        <item name="android:textSize">@dimen/pref_14dp</item>
+        <item name="android:gravity">center_vertical|left</item>
+    </style>
+
+    <style name="listTimeTextStyle" parent="@style/listDistanceTextStyle"></style>
+
+    <style name="listUsernameTextStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/color_black</item>
+        <item name="android:textSize">@dimen/pref_15dp</item>
+        <item name="android:gravity">center_vertical|left</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="listSubjectTextStyle" parent="@style/listUsernameTextStyle">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">@dimen/pref_15dp</item>
+    </style>
+
+    <style name="album_checkbox" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/alnum_selector</item>
+    </style>
+
+    <style name="styleImageBack">
+        <!-- <item name="android:layout_width">@dimen/pref_35dp</item>
+        <item name="android:layout_height">@dimen/pref_35dp</item> -->
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginLeft">@dimen/pref_10dp</item>
+        <item name="android:src">@drawable/back</item>
+    </style>
+
+    <style name="titleTextStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@drawable/txt_title_sel</item>
+        <item name="android:textSize">@dimen/pref_15dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="popuStyle">
+        <item name="android:windowEnterAnimation">@anim/popup_anim_in</item>
+        <item name="android:windowExitAnimation">@anim/popup_anim_out</item>
+    </style>
+
+    <style name="MyProgressBar" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal</item>
+    </style>
+
+    <style name="popupDownStyle">
+        <item name="android:windowEnterAnimation">@anim/popup_anim_down</item>
+        <item name="android:windowExitAnimation">@anim/popup_anim_up</item>
+    </style>
+
+    <style name="ImageloadingDialogStyle" parent="android:Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- 对话框是否有遮盖 -->
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="AlertDialogStyle" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
     <style name="myTransparent">
         <item name="android:windowBackground">@color/transparent</item>
         <item name="android:windowNoTitle">true</item>

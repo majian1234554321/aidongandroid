@@ -1,0 +1,776 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/color_light_white" >
+
+    <RelativeLayout
+        android:id="@+id/layout_tab_mine_personal_data_title"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/pref_50dp"
+        android:background="@color/new_background_one" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/personal_data"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/pref_17dp" />
+
+        <ImageView
+            android:id="@+id/layout_tab_mine_personal_data_title_img_cancel"
+            android:layout_width="@dimen/pref_35dp"
+            android:layout_height="@dimen/pref_35dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/pref_10dp"
+            android:src="@drawable/back" />
+
+        <TextView
+            android:id="@+id/layout_tab_mine_personal_data_title_txt_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/pref_15dp"
+            android:text="@string/update"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/pref_15dp" />
+
+        <TextView
+            android:id="@+id/layout_tab_mine_personal_data_title_txt_complete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/pref_15dp"
+            android:text="@string/complete"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/pref_15dp"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/scrollview_layout_tab_mine_personal_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/layout_tab_mine_personal_data_title" >
+
+        <RelativeLayout
+            android:id="@+id/layout_tab_mine_personal_data_rel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/layout_tab_mine_personal_data_individuality_singnature_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/pref_15dp"
+                android:layout_marginTop="@dimen/pref_15dp"
+                android:text="@string/individuality_signature"
+                android:textColor="@color/typeface_five"
+                android:textSize="@dimen/pref_13dp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_0.5dp"
+                android:layout_below="@id/layout_tab_mine_personal_data_individuality_singnature_txt"
+                android:layout_marginTop="@dimen/pref_9dp"
+                android:background="@color/color_list_distance" />
+
+            <RelativeLayout
+                android:id="@+id/layout_tab_mine_personal_data_individuality_singnature_rel"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_45dp"
+                android:layout_below="@id/layout_tab_mine_personal_data_individuality_singnature_txt"
+                android:layout_marginTop="@dimen/pref_10dp"
+                android:background="@color/color_white" >
+
+                <TextView
+                    android:id="@+id/layout_tab_mine_personal_data_individuality_singnature_content_txt1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/pref_15dp"
+                    android:background="@null"
+                    android:gravity="center|left"
+                    android:singleLine="true"
+                    android:textColor="@color/color_black"
+                    android:textSize="@dimen/pref_16dp" />
+
+                <ImageView
+                    android:id="@+id/layout_tab_mine_personal_data_individuality_singnature_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/pref_15dp"
+                    android:src="@drawable/jiantou_two"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_0.5dp"
+                android:layout_below="@id/layout_tab_mine_personal_data_individuality_singnature_rel"
+                android:background="@color/color_list_distance" />
+
+            <TextView
+                android:id="@+id/layout_tab_mine_the_basic_information_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layout_tab_mine_personal_data_individuality_singnature_rel"
+                android:layout_marginLeft="@dimen/pref_15dp"
+                android:layout_marginTop="@dimen/pref_15dp"
+                android:text="@string/the_basic_information"
+                android:textColor="@color/typeface_five"
+                android:textSize="@dimen/pref_13dp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_0.5dp"
+                android:layout_below="@id/layout_tab_mine_the_basic_information_txt"
+                android:layout_marginTop="@dimen/pref_9dp"
+                android:background="@color/color_list_distance" />
+
+            <RelativeLayout
+                android:id="@+id/layout_tab_mine_personal_data_the_basic_information_rel"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_60dp"
+                android:layout_below="@id/layout_tab_mine_the_basic_information_txt"
+                android:layout_marginTop="@dimen/pref_10dp"
+                android:background="@color/color_white" >
+
+                <TextView
+                    android:id="@+id/layout_tab_mine_personal_data_head_portrait_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/pref_15dp"
+                    android:text="@string/head_portrait"
+                    android:textColor="@color/color_txt_gray1"
+                    android:textSize="@dimen/pref_16dp" />
+
+                <com.example.aidong.view.CircleImageView
+                    android:id="@+id/layout_tab_mine_personal_data_head_portrait_img"
+                    android:layout_width="@dimen/pref_40dp"
+                    android:layout_height="@dimen/pref_40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginBottom="@dimen/pref_5dp"
+                    android:layout_marginRight="@dimen/pref_35dp"
+                    android:layout_marginTop="@dimen/pref_5dp"
+                    android:src="@drawable/icon_picture" />
+
+                <ImageView
+                    android:id="@+id/layout_tab_mine_personal_data_portrait_img_go"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/pref_15dp"
+                    android:src="@drawable/jiantou_two"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_0.5dp"
+                android:layout_below="@id/layout_tab_mine_personal_data_the_basic_information_rel"
+                android:layout_marginLeft="@dimen/pref_15dp"
+                android:layout_marginTop="@dimen/pref__1dp"
+                android:background="@color/e_five" />
+
+            <RelativeLayout
+                android:id="@+id/layout_tab_mine_personal_data_nickname_rel"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_45dp"
+                android:layout_below="@id/layout_tab_mine_personal_data_the_basic_information_rel"
+                android:background="@color/color_white" >
+
+                <TextView
+                    android:id="@+id/layout_tab_mine_personal_data_nickname_txt"
+                    android:layout_width="@dimen/pref_150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/pref_15dp"
+                    android:text="@string/nickname"
+                    android:textColor="@color/color_txt_gray1"
+                    android:textSize="@dimen/pref_16dp" />
+
+                <RelativeLayout
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/layout_tab_mine_personal_data_nickname_txt" >
+
+                    <TextView
+                        android:id="@+id/layout_tab_mine_personal_data_nickname_txt1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:background="@null"
+                        android:text="@string/layout_tab_found_mx_txt_number"
+                        android:textColor="@color/color_black"
+                        android:textSize="@dimen/pref_16dp" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/layout_tab_mine_personal_data_nickname_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/pref_15dp"
+                    android:src="@drawable/jiantou_two"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_0.5dp"
+                android:layout_below="@id/layout_tab_mine_personal_data_nickname_rel"
+                android:layout_marginLeft="@dimen/pref_15dp"
+                android:layout_marginTop="@dimen/pref__1dp"
+                android:background="@color/e_five" />
+
+            <RelativeLayout
+                android:id="@+id/layout_tab_mine_personal_data_mxhao_rel"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_45dp"
+                android:layout_below="@id/layout_tab_mine_personal_data_nickname_rel"
+                android:background="@color/color_white" >
+
+                <TextView
+                    android:id="@+id/layout_tab_mine_personal_data_mxhao_txt"
+                    android:layout_width="@dimen/pref_150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/pref_15dp"
+                    android:text="@string/mxhao"
+                    android:textColor="@color/color_txt_gray1"
+                    android:textSize="@dimen/pref_16dp" />
+
+                <RelativeLayout
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/layout_tab_mine_personal_data_mxhao_txt" >
+
+                    <TextView
+                        android:id="@+id/layout_tab_mine_personal_data_mxhao_txt1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:background="@null"
+                        android:text="@string/layout_tab_found_mx_txt_number"
+                        android:textColor="@color/color_black"
+                        android:textSize="@dimen/pref_16dp" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_0.5dp"
+                android:layout_below="@id/layout_tab_mine_personal_data_mxhao_rel"
+                android:layout_marginLeft="@dimen/pref_15dp"
+                android:layout_marginTop="@dimen/pref__1dp"
+                android:background="@color/e_five" />
+
+            <RelativeLayout
+                android:id="@+id/layout_tab_mine_personal_data_sex_rel"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_45dp"
+                android:layout_below="@id/layout_tab_mine_personal_data_mxhao_rel"
+                android:background="@color/color_white" >
+
+                <TextView
+                    android:id="@+id/layout_tab_mine_personal_data_sex_txt"
+                    android:layout_width="@dimen/pref_150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/pref_15dp"
+                    android:text="@string/sex"
+                    android:textColor="@color/color_txt_gray1"
+                    android:textSize="@dimen/pref_16dp" />
+
+                <RelativeLayout
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/layout_tab_mine_personal_data_sex_txt" >
+
+                    <ImageView
+                        android:id="@+id/img_tab_mine_personal_data"
+                        android:layout_width="@dimen/pref_20dp"
+                        android:layout_height="@dimen/pref_20dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/zhinv" />
+
+                    <TextView
+                        android:id="@+id/layout_tab_mine_personal_data_sex_txt1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/img_tab_mine_personal_data"
+                        android:layout_marginLeft="@dimen/pref_2dp"
+                        android:layout_toRightOf="@+id/img_tab_mine_personal_data"
+                        android:background="@null"
+                        android:text="@string/women"
+                        android:textColor="@color/color_black"
+                        android:textSize="@dimen/pref_16dp" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/layout_tab_mine_personal_data_sex_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/pref_15dp"
+                    android:src="@drawable/jiantou_two"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_0.5dp"
+                android:layout_below="@id/layout_tab_mine_personal_data_sex_rel"
+                android:layout_marginLeft="@dimen/pref_15dp"
+                android:layout_marginTop="@dimen/pref__1dp"
+                android:background="@color/e_five" />
+
+            <RelativeLayout
+                android:id="@+id/layout_tab_mine_personal_data_id_rel"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_45dp"
+                android:layout_below="@id/layout_tab_mine_personal_data_sex_rel"
+                android:background="@color/color_white" >
+
+                <TextView
+                    android:id="@+id/layout_tab_mine_personal_data_id_txt"
+                    android:layout_width="@dimen/pref_150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/pref_15dp"
+                    android:text="@string/id"
+                    android:textColor="@color/color_txt_gray1"
+                    android:textSize="@dimen/pref_16dp" />
+
+                <RelativeLayout
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/layout_tab_mine_personal_data_id_txt" >
+
+                    <TextView
+                        android:id="@+id/layout_tab_mine_personal_data_id_txt1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:background="@null"
+                        android:text="@string/men"
+                        android:textColor="@color/color_black"
+                        android:textSize="@dimen/pref_16dp" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_0.5dp"
+                android:layout_below="@id/layout_tab_mine_personal_data_id_rel"
+                android:layout_marginLeft="@dimen/pref_15dp"
+                android:layout_marginTop="@dimen/pref__1dp"
+                android:background="@color/e_five" />
+
+            <RelativeLayout
+                android:id="@+id/layout_tab_mine_personal_data_age_rel"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_45dp"
+                android:layout_below="@id/layout_tab_mine_personal_data_id_rel"
+                android:background="@color/color_white" >
+
+                <TextView
+                    android:id="@+id/layout_tab_mine_personal_data_age_txt"
+                    android:layout_width="@dimen/pref_150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/pref_15dp"
+                    android:text="@string/age"
+                    android:textColor="@color/color_txt_gray1"
+                    android:textSize="@dimen/pref_16dp" />
+
+                <ImageView
+                    android:id="@+id/layout_tab_mine_personal_data_age_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/pref_15dp"
+                    android:src="@drawable/jiantou_two"
+                    android:visibility="gone" />
+
+                <RelativeLayout
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/layout_tab_mine_personal_data_age_txt" >
+
+                    <TextView
+                        android:id="@+id/layout_tab_mine_personal_data_age_txt1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:background="@null"
+                        android:text="@string/men"
+                        android:textColor="@color/color_black"
+                        android:textSize="@dimen/pref_16dp" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_0.5dp"
+                android:layout_below="@id/layout_tab_mine_personal_data_age_rel"
+                android:layout_marginLeft="@dimen/pref_15dp"
+                android:layout_marginTop="@dimen/pref__1dp"
+                android:background="@color/e_five" />
+
+            <RelativeLayout
+                android:id="@+id/layout_tab_mine_personal_data_the_host_city_rel"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_45dp"
+                android:layout_below="@id/layout_tab_mine_personal_data_age_rel"
+                android:background="@color/color_white" >
+
+                <TextView
+                    android:id="@+id/layout_tab_mine_personal_data_the_host_city_txt"
+                    android:layout_width="@dimen/pref_150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/pref_15dp"
+                    android:text="@string/the_host_city"
+                    android:textColor="@color/color_txt_gray1"
+                    android:textSize="@dimen/pref_16dp" />
+
+                <RelativeLayout
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/layout_tab_mine_personal_data_the_host_city_txt" >
+
+                    <TextView
+                        android:id="@+id/layout_tab_mine_personal_data_the_host_city_txt1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:background="@null"
+                        android:text="@string/men"
+                        android:textColor="@color/color_black"
+                        android:textSize="@dimen/pref_15dp" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/layout_tab_mine_personal_data_the_host_city_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/pref_15dp"
+                    android:src="@drawable/jiantou_two"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_0.5dp"
+                android:layout_below="@id/layout_tab_mine_personal_data_the_host_city_rel"
+                android:background="@color/color_list_distance" />
+
+            <TextView
+                android:id="@+id/layout_tab_mine_personal_data_the_fitness_field_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layout_tab_mine_personal_data_the_host_city_rel"
+                android:layout_marginLeft="@dimen/pref_15dp"
+                android:layout_marginTop="@dimen/pref_15dp"
+                android:text="@string/the_fitness_field"
+                android:textColor="@color/typeface_five"
+                android:textSize="@dimen/pref_13dp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_0.5dp"
+                android:layout_below="@id/layout_tab_mine_personal_data_the_fitness_field_txt"
+                android:layout_marginTop="@dimen/pref_9dp"
+                android:background="@color/color_list_distance" />
+
+            <RelativeLayout
+                android:id="@+id/layout_tab_mine_personal_data_the_purpose_of_body_building_rel"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_45dp"
+                android:layout_below="@id/layout_tab_mine_personal_data_the_fitness_field_txt"
+                android:layout_marginTop="@dimen/pref_10dp"
+                android:background="@color/color_white"
+                android:visibility="gone" >
+
+                <TextView
+                    android:id="@+id/layout_tab_mine_personal_data_the_purpose_of_body_building_txt"
+                    android:layout_width="@dimen/pref_150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/pref_15dp"
+                    android:text="@string/the_purpose_of_body_building"
+                    android:textColor="@color/color_txt_gray1"
+                    android:textSize="@dimen/pref_16dp" />
+
+                <RelativeLayout
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/layout_tab_mine_personal_data_the_purpose_of_body_building_txt" >
+
+                    <TextView
+                        android:id="@+id/layout_tab_mine_personal_data_the_purpose_of_body_building_txt1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:background="@null"
+                        android:singleLine="true"
+                        android:text="@string/men"
+                        android:textColor="@color/color_black"
+                        android:textSize="@dimen/pref_16dp" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/layout_tab_mine_personal_data_the_purpose_of_body_building_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/pref_15dp"
+                    android:src="@drawable/jiantou_two"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_0.5dp"
+                android:layout_below="@id/layout_tab_mine_personal_data_the_purpose_of_body_building_rel"
+                android:layout_marginLeft="@dimen/pref_15dp"
+                android:layout_marginTop="@dimen/pref__1dp"
+                android:background="@color/e_five"
+                android:visibility="gone"/>
+
+            <RelativeLayout
+                android:id="@+id/layout_tab_mine_personal_data_fitness_is_good_at_rel"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_45dp"
+                android:layout_below="@id/layout_tab_mine_personal_data_the_purpose_of_body_building_rel"
+                android:background="@color/color_white"
+                android:visibility="gone" >
+
+                <TextView
+                    android:id="@+id/layout_tab_mine_personal_data_fitness_is_good_at_txt"
+                    android:layout_width="@dimen/pref_150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/pref_15dp"
+                    android:text="@string/fitness_is_good_at"
+                    android:textColor="@color/color_txt_gray1"
+                    android:textSize="@dimen/pref_16dp" />
+
+                <ImageView
+                    android:id="@+id/layout_tab_mine_personal_data_fitness_is_good_at_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/pref_15dp"
+                    android:src="@drawable/jiantou_two"
+                    android:visibility="gone" />
+
+                <RelativeLayout
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/layout_tab_mine_personal_data_fitness_is_good_at_txt" >
+
+                    <TextView
+                        android:id="@+id/layout_tab_mine_personal_data_fitness_is_good_at_txt1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:background="@null"
+                        android:singleLine="true"
+                        android:text="@string/men"
+                        android:textColor="@color/color_black"
+                        android:textSize="@dimen/pref_16dp" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_0.5dp"
+                android:layout_below="@id/layout_tab_mine_personal_data_fitness_is_good_at_rel"
+                android:layout_marginLeft="@dimen/pref_15dp"
+                android:layout_marginTop="@dimen/pref__1dp"
+                android:background="@color/e_five"
+                android:visibility="gone" />
+
+            <RelativeLayout
+                android:id="@+id/layout_tab_mine_personal_data_often_go_to_the_gym_rel"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_45dp"
+                android:layout_below="@id/layout_tab_mine_personal_data_fitness_is_good_at_rel"
+                android:background="@color/color_white"
+                android:visibility="gone" >
+
+                <TextView
+                    android:id="@+id/layout_tab_mine_personal_data_often_go_to_the_gym_txt"
+                    android:layout_width="@dimen/pref_150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/pref_15dp"
+                    android:text="@string/often_go_to_the_gym"
+                    android:textColor="@color/color_txt_gray1"
+                    android:textSize="@dimen/pref_16dp" />
+
+                <ImageView
+                    android:id="@+id/layout_tab_mine_personal_data_often_go_to_the_gym_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/pref_15dp"
+                    android:src="@drawable/jiantou_two"
+                    android:visibility="gone" />
+
+                <RelativeLayout
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/layout_tab_mine_personal_data_often_go_to_the_gym_txt" >
+
+                    <TextView
+                        android:id="@+id/layout_tab_mine_personal_data_often_go_to_the_gym_txt1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:background="@null"
+                        android:singleLine="true"
+                        android:text="@string/men"
+                        android:textColor="@color/color_black"
+                        android:textSize="@dimen/pref_16dp" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_0.5dp"
+                android:layout_below="@id/layout_tab_mine_personal_data_often_go_to_the_gym_rel"
+                android:layout_marginLeft="@dimen/pref_15dp"
+                android:layout_marginTop="@dimen/pref__1dp"
+                android:background="@color/e_five"
+                android:visibility="gone" />
+
+            <RelativeLayout
+                android:id="@+id/layout_tab_mine_personal_data_interest_in_fitness_rel"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_45dp"
+                android:layout_below="@id/layout_tab_mine_personal_data_often_go_to_the_gym_rel"
+                android:layout_marginBottom="@dimen/pref_25dp"
+                android:background="@color/color_white"
+                android:layout_marginTop="@dimen/pref_10dp" >
+
+                <TextView
+                    android:id="@+id/layout_tab_mine_personal_data_interest_in_fitness_txt"
+                    android:layout_width="@dimen/pref_150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/pref_15dp"
+                    android:text="@string/interest_in_fitness"
+                    android:textColor="@color/color_txt_gray1"
+                    android:textSize="@dimen/pref_16dp" />
+
+
+                <Gallery
+                    android:id="@+id/layout_tab_mine_personal_data_interest_in_fitness_gallery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/pref_25dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/pref_40dp"
+                    android:layout_toRightOf="@id/layout_tab_mine_personal_data_interest_in_fitness_txt"
+                    android:spacing="@dimen/pref_6dp"
+                    android:clickable="false" />
+
+                <ImageView
+                    android:id="@+id/layout_tab_mine_personal_data_interest_in_fitness_img_go"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/pref_15dp"
+                    android:src="@drawable/jiantou_two"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_0.5dp"
+                android:layout_below="@id/layout_tab_mine_personal_data_interest_in_fitness_rel"
+                android:layout_marginTop="-30dp"
+                android:background="@color/color_list_distance" />
+        </RelativeLayout>
+    </ScrollView>
+
+    <ImageView
+        android:id="@+id/imageview_tab_mine_personal_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@color/popwindow"
+        android:visibility="gone" />
+
+</RelativeLayout>

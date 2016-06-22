@@ -1,6 +1,9 @@
 package com.example.aidong.common;
 
 import android.os.Environment;
+import android.provider.MediaStore;
+
+import com.example.aidong.utils.FileUtil;
 
 public class Constant {
 
@@ -73,5 +76,66 @@ public class Constant {
 	public static final int CHATTYPE_CHATROOM = 3;
 
 	public static final String COPY_IMAGE = "EASEMOBIMG";
+
+
+
+
+
+
+
+
+
+
+	public static final int REPORT_USER = 1;
+	public static final int REPORT_DYNAMIC = 2;
+	public static final int REPORT_GROUP = 3;
+	public static final String[] THUMB_COLUMNS = {
+			MediaStore.Video.Thumbnails.DATA,
+			MediaStore.Video.Thumbnails.VIDEO_ID };
+	public static final short RS_SELFFILTER = 101;
+	public static final short RC_FITTYPE = 102;
+	public static final short RS_FITTYPE = 103;
+	public static final short RC_TAKEVIDEO = 104;
+	public static final short RC_TAKEPHOTO = 106;
+	public static final short RC_SELECTABLUMN = 108;
+	public static final short RC_SELECTVIDEO = 110;
+	public static final String BUNDLE_PHOTOWALL_POSITION = "BUNDLE_PHOTOWALL_POSITION";
+	public static final String BUNDLE_CLASS = "BUNDLE_CLASS";
+	public static final String BUNDLE_GENDER = "BUNDLE_GENDER";
+	public static final String BUNDLE_SEARCH_KEY_WORD = "BUNDLE_SEARCH_KEY_WORD";
+	public static final String ACTION_ADD_OFFICAL = "ACTION_ADD_OFFICAL";
+	public static final String ACTION_ADD_FRIEND = "ACTION_ADD_FRIEND";
+	public static final String ACTION_ADD_FRIEND_BY_ECHAT = "ACTION_ADD_FRIEND_BY_ECHAT";
+	public static final String ACTION_ADD_GROUP = "ACTION_ADD_GROUP";
+	public static final String BUNDLE_IDNETITY = "BUNDLE_IDNETITY";
+	public static final String BUNDLE_CHAT_TYPE = "BUNDLE_CHAT_TYPE";
+	public static final String BUNDLE_CHAT_SUB_TYPE = "BUNDLE_CHAT_SUB_TYPE";
+	public static final String BUNDLE_USER = "BUNDLE_USER";
+	public static final String ACTION_EDIT_GROUP_INFO = "ACTION_EDIT_GROUP_INFO";
+	public static final String ACTION_EDIT_GROUP_PHOTO_AND_INFO = "ACTION_EDIT_GROUP_PHOTO_AND_INFO";
+	public static final String BUNDLE_BIGIMAGEITEM = "BUNDLE_BIGIMAGEITEM";
+	public static final String BUNDLE_VIDEO_URL = "BUNDLE_VIDEO_URL";
+	public static final String BUNDLE_GROUP_ID = "BUNDLE_GROUP_ID";
+	public static final String ACTION_DEL_GROUP = "ACTION_DEL_GROUP";
+	public static final String BUNDLE_GROUP_NAME = "BUNDLE_GROUP_NAME";
+	public static final String BUNDLE_FIT_INTEREST = "BUNDLE_FIT_INTEREST";
+	public static final String ACTION_EDIT_GROUP_PHOTO = "ACTION_EDIT_GROUP_PHOTO";
+	public static final String BUNDLE_FILM = "BUNDLE_FILM";
+	public static final String BUNDLE_TOKEN = "BUNDLE_TOKEN";
+	public static final String ACTION_EDIT_GROUP_FRIEND = "ACTION_EDIT_GROUP_INFO";
+	public static final byte CHATSUBTYPE_USER = 1;
+	public static final byte CHATSUBTYPE_SERVICES = 2;
+	public static final String BUNDLE_VIDEO_PATH = "BUNDLE_VIDEO_PATH";
+	public static FileUtil MxFileUtil;
+	//	protected LoadingDialog loadingDialog;
+	public static final byte MAX_PHOTO_WALL_COUNT = 8;
+	public static final byte MAX_PHOTO_DYNAMIC_COUNT = 6;
+	public static final short RC_BIND = 112;
+	public static byte Num = MAX_PHOTO_DYNAMIC_COUNT;
+	public static final byte RIGHT = 0;
+	public static final byte LEFT = 1;
+	public static final byte MAX_INDIC = 3;
+	public static final String BUNDLE_URL = "BUNDLE_URL";
+	public static final String BUNDLE_BIGIMAGEITEM_INDEX = "BUNDLE_BIGIMAGEITEM_INDEX";
 
 }

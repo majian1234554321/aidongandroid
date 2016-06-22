@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/popmenu_report"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/popwindow"
+              android:gravity="bottom"
+              android:orientation="vertical" >
+    <LinearLayout
+        android:id="@+id/ll_popup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_light_white"
+        android:orientation="vertical"
+        android:gravity="bottom"
+
+        >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/pref_0.5dp"
+            android:background="@color/color_list_distance" />
+
+        <Button
+            android:id="@+id/popmenu_report_1"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/pref_45dp"
+            android:background="@color/color_white"
+            android:text="@string/popmenu_report_1"
+            android:textColor="@color/color_black"
+            android:textSize="@dimen/pref_16dp" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/pref_0.5dp"
+            android:layout_marginTop="@dimen/pref__1dp"
+            android:background="@color/e_five" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_light_white"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/popmenu_report_2"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/pref_45dp"
+                android:background="@color/color_white"
+                android:text="@string/popmenu_report_2"
+                android:textColor="@color/color_black"
+                android:textSize="@dimen/pref_16dp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_0.5dp"
+                android:layout_below="@id/popmenu_report_2"
+                android:layout_marginTop="@dimen/pref__1dp"
+                android:background="@color/e_five" />
+
+            <Button
+                android:id="@+id/popmenu_report_3"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/pref_45dp"
+                android:layout_below="@id/popmenu_report_2"
+                android:background="@color/color_white"
+                android:text="@string/popmenu_report_3"
+                android:textColor="@color/color_black"
+                android:textSize="@dimen/pref_16dp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_0.5dp"
+                android:layout_below="@id/popmenu_report_3"
+                android:layout_marginTop="@dimen/pref__1dp"
+                android:background="@color/e_five" />
+
+            <Button
+                android:id="@+id/popmenu_report_4"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/pref_45dp"
+                android:layout_below="@id/popmenu_report_3"
+                android:background="@color/color_white"
+                android:text="@string/popmenu_report_4"
+                android:textColor="@color/color_black"
+                android:textSize="@dimen/pref_16dp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_0.5dp"
+                android:layout_below="@id/popmenu_report_4"
+                android:layout_marginTop="@dimen/pref__1dp"
+                android:background="@color/e_five" />
+
+            <Button
+                android:id="@+id/popmenu_report_5"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/pref_45dp"
+                android:layout_below="@id/popmenu_report_4"
+                android:background="@color/color_white"
+                android:text="@string/popmenu_report_5"
+                android:textColor="@color/color_black"
+                android:textSize="@dimen/pref_16dp"
+                />
+            <View
+                android:id="@+id/view_divider"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_below="@id/popmenu_report_5"
+                android:background="@color/color_light_white"
+                />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_0.5dp"
+                android:layout_below="@id/view_divider"
+                android:layout_marginTop="-21dp"
+                android:background="@color/color_list_distance" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_0.5dp"
+                android:layout_below="@id/view_divider"
+                android:layout_marginTop="@dimen/pref__1dp"
+                android:background="@color/color_list_distance" />
+
+            <Button
+                android:id="@+id/popmenu_report_6"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/pref_45dp"
+                android:layout_below="@id/view_divider"
+                android:background="@color/color_white"
+                android:text="@string/cancel"
+                android:textColor="@color/color_black"
+                android:textSize="@dimen/pref_16dp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_0.5dp"
+                android:layout_below="@id/popmenu_report_6"
+                android:layout_marginTop="@dimen/pref__1dp"
+                android:background="@color/color_list_distance" />
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/color_light_white"
+            />
+
+    </LinearLayout>
+</LinearLayout>

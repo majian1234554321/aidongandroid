@@ -74,7 +74,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="7dp"
                 android:gravity="center"
-                android:text="@string/tabService"
+                android:text="@string/tabFound"
                 android:textSize="11dp">
             </TextView>
         </RelativeLayout>
@@ -132,7 +132,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="7dp"
                 android:gravity="center"
-                android:text="@string/tabFound"
+                android:text="@string/sportCircle"
                 android:textSize="11dp">
             </TextView>
         </RelativeLayout>
