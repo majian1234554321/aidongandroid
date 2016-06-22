@@ -25,6 +25,7 @@ public class SplashActivity extends BaseActivity{
             }
         }
     };
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,5 +41,11 @@ public class SplashActivity extends BaseActivity{
     private void initData() {
         mHandler.sendEmptyMessageDelayed(1,2000);
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mHandler.removeCallbacksAndMessages(null);
     }
 }

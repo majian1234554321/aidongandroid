@@ -93,6 +93,7 @@
         <activity android:name=".activity.sportcircle.CommentDetailActivity"
             />
         <activity android:name=".activity.media.AlbumActivity"
+                  android:hardwareAccelerated="true"
             />
         <activity android:name=".activity.media.TabPhotoWallActivity"
             />
@@ -125,6 +126,14 @@
         <activity android:name=".activity.mine.TabMinePersonalDataOftenGymActivity"
             />
         <activity android:name=".activity.sportcircle.UserWhoClickLikeActivity"
+            />
+        <activity android:name=".activity.account.PasswordForgetActivity"
+            />
+        <activity android:name=".activity.account.PasswordRegistActivity"
+            />
+        <activity android:name=".activity.account.SMSRegistActivity"
+            />
+        <activity android:name=".activity.account.UserAgreementActivity"
             />
         <activity
             android:name=".wxapi.WXPayEntryActivity"

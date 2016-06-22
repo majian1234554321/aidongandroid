@@ -126,4 +126,20 @@
         <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
     </style>
 
+    <style name="loginTextStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/pref_17dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="loginEditStyle">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">@dimen/pref_5dp</item>
+        <item name="android:paddingRight">@dimen/pref_5dp</item>
+    </style>
+
 </resources>
