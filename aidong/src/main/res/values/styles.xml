@@ -142,4 +142,14 @@
         <item name="android:paddingRight">@dimen/pref_5dp</item>
     </style>
 
+    <style name="listHobbyTextStyle">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/color_txt_gray1</item>
+        <item name="android:textSize">@dimen/pref_16dp</item>
+        <item name="android:gravity">center_vertical|left</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
 </resources>

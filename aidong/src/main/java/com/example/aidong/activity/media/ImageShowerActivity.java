@@ -90,9 +90,9 @@ public class ImageShowerActivity extends BaseActivity implements
 	protected void setupView() {
 		setContentView(R.layout.imageshower);
 		options = new DisplayImageOptions.Builder()
-//		.showImageOnLoading(R.drawable.icon_picture)
-//		.showImageForEmptyUri(R.drawable.icon_picture)
-//		.showImageOnFail(R.drawable.icon_picture)
+		.showImageOnLoading(R.drawable.icon_picture)
+		.showImageForEmptyUri(R.drawable.icon_picture)
+		.showImageOnFail(R.drawable.icon_picture)
 		.cacheInMemory(true)
 		.cacheOnDisk(true).considerExifParams(true)
 		.bitmapConfig(Bitmap.Config.RGB_565).build();

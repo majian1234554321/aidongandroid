@@ -40,6 +40,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.leyuan.commonlibrary.http.IHttpCallback;
 import com.leyuan.commonlibrary.http.IHttpTask;
+import com.leyuan.commonlibrary.util.ToastUtil;
 
 import org.apache.http.message.BasicNameValuePair;
 
@@ -209,8 +210,8 @@ public class SportCircleFragment extends BaseFragment implements
 									initParamsZan(String.valueOf(goodNo)),
 									MsgResult.class), HttpConfig.POST, ZAN);
 				} else {
-//					showShortToast(getResources().getString(
-//							R.string.tip_has_good));
+					ToastUtil.show(getResources().getString(
+							R.string.tip_has_good),getActivity());
 				}
 			} else {
 				Intent i = new Intent(getActivity(), LoginActivity.class);
@@ -224,10 +225,7 @@ public class SportCircleFragment extends BaseFragment implements
 			currentPosition = (Integer) v.getTag();
 			  Dynamic dynamic = array.get(currentPosition);
 			AttributeFindDynamics localDynamic = dynamic.translationToAttribute();
-			
-			
-			
-			
+
 			Intent i = new Intent(getActivity(), CommentDetailActivity.class);
 			i.putExtra("localDynamic", localDynamic);
 			startActivity(i);
