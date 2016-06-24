@@ -13,6 +13,7 @@ import com.example.aidong.BaseActivity;
 import com.example.aidong.R;
 import com.example.aidong.adapter.SubjectListContentAdapter;
 import com.example.aidong.view.MyListView;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ import java.util.List;
 /**
  * Created by pc1 on 2016/6/23.
  */
-public class SubjectListActivity extends BaseActivity implements View.OnClickListener {
+public class SubjectListActivity extends BaseActivity implements View.OnClickListener, PullToRefreshBase.OnRefreshListener2 {
     private ImageView img_subject_list_back, img_subject_list_type_cancle, img_subject_list_filter_tip_1, img_subject_list_filter_tip_2, img_subject_list_filter_tip_3;
     private TextView txt_subject_list_type_name, txt_subject_list_filter_name_1, txt_subject_list_filter_name_2, txt_subject_list_filter_name_3;
     private LinearLayout layout_subject_list_filter_1, layout_subject_list_filter_2, layout_subject_list_filter_3;
@@ -55,6 +56,8 @@ public class SubjectListActivity extends BaseActivity implements View.OnClickLis
         layout_subject_list_filter_2 = (LinearLayout) findViewById(R.id.layout_subject_list_filter_2);
         layout_subject_list_filter_3 = (LinearLayout) findViewById(R.id.layout_subject_list_filter_3);
         list_subject_list_content = (MyListView) findViewById(R.id.list_subject_list_content);
+        scrollview = (PullToRefreshScrollView) findViewById(R.id.scrollview);
+        scrollview.setMode(PullToRefreshBase.Mode.BOTH);
 
     }
 
@@ -70,11 +73,12 @@ public class SubjectListActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void setClick() {
+        scrollview.setOnRefreshListener(this);
         img_subject_list_back.setOnClickListener(this);
         list_subject_list_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(SubjectListActivity.this,SubjectDetailActivity.class);
+                Intent intent = new Intent(SubjectListActivity.this, SubjectDetailActivity.class);
                 startActivity(intent
                 );
             }
@@ -92,5 +96,15 @@ public class SubjectListActivity extends BaseActivity implements View.OnClickLis
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onPullDownToRefresh(PullToRefreshBase refreshView) {
+        scrollview.onRefreshComplete();
+    }
+
+    @Override
+    public void onPullUpToRefresh(PullToRefreshBase refreshView) {
+        scrollview.onRefreshComplete();
     }
 }

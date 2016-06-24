@@ -16,6 +16,7 @@ import com.example.aidong.R;
 import com.example.aidong.model.HomeTuijianData;
 import com.example.aidong.view.MyListView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,7 +92,8 @@ public class HomeTJContentAdapter extends AbstractCommonAdapter {
         holder.layout_item_home_tuijian_2.setVisibility(View.GONE);
         if (mData.get(position).getType() == 1) {
             holder.layout_item_home_tuijian_1.setVisibility(View.VISIBLE);
-
+            ImageLoader.getInstance().displayImage("http://180.163.110.50:8989/pic/1001/764248.jpg",
+                    holder.img_home_ad_tuijian, options);
             tuijianAdapter = new HomeTuijianAdapter(context, tuijianList);
             holder.recycler_home_time.setAdapter(tuijianAdapter);
         } else if (mData.get(position).getType() == 2) {

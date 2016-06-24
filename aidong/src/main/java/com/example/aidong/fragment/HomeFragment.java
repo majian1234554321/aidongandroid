@@ -9,11 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.example.aidong.BaseFragment;
 import com.example.aidong.R;
@@ -25,21 +23,22 @@ import com.example.aidong.model.HomeTuijianData;
 import com.example.aidong.view.CustomViewPager;
 import com.example.aidong.view.MultiGridView;
 import com.example.aidong.view.MyListView;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements PullToRefreshBase.OnRefreshListener2 {
     private View view;
-    private TextView txt_home_area;
     private ImageView img_home_seach, img_home_saoma, img_home_ad_tuijian;
-    private EditText edt_home_seach_content;
     private LinearLayout layout_home_tip;
     private CustomViewPager viewpager_home_ad;
     private GridView gridview_button;
     private MyListView list_home_tuijian;
+    private PullToRefreshScrollView scrollview;
 
     private HomeAdAdapter adAdapter;
     private HomeButtonAdapter buttonAdapter;
@@ -67,16 +66,15 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void initView() {
-        txt_home_area = (TextView) view.findViewById(R.id.txt_home_area);
+        scrollview = (PullToRefreshScrollView) view.findViewById(R.id.scrollview);
         img_home_seach = (ImageView) view.findViewById(R.id.img_home_seach);
         img_home_saoma = (ImageView) view.findViewById(R.id.img_home_saoma);
-        edt_home_seach_content = (EditText) view.findViewById(R.id.edt_home_seach_content);
         layout_home_tip = (LinearLayout) view.findViewById(R.id.layout_home_tip);
         viewpager_home_ad = (CustomViewPager) view.findViewById(R.id.viewpager_home_ad);
         gridview_button = (MultiGridView) view.findViewById(R.id.gridview_button);
         img_home_ad_tuijian = (ImageView) view.findViewById(R.id.img_home_ad_tuijian);
         list_home_tuijian = (MyListView) view.findViewById(R.id.list_home_tuijian);
-
+        scrollview.setMode(PullToRefreshBase.Mode.BOTH);
     }
 
     private void initData() {
@@ -109,6 +107,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void setClick() {
+        scrollview.setOnRefreshListener(this);
         gridview_button.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -191,6 +190,16 @@ public class HomeFragment extends BaseFragment {
             viewpager_home_ad.setScanScroll(true);
             layout_home_tip.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void onPullDownToRefresh(PullToRefreshBase refreshView) {
+        scrollview.onRefreshComplete();
+    }
+
+    @Override
+    public void onPullUpToRefresh(PullToRefreshBase refreshView) {
+        scrollview.onRefreshComplete();
     }
 
     /**
