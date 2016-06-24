@@ -15,6 +15,7 @@ import com.example.aidong.R;
 import com.example.aidong.adapter.SubjectFilterTypeAdapter;
 import com.example.aidong.adapter.SubjectTimeAdapter;
 import com.example.aidong.view.MyListView;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ import java.util.List;
 /**
  * Created by pc1 on 2016/6/23.
  */
-public class SubjectFilterActivity extends BaseActivity implements View.OnClickListener {
+public class SubjectFilterActivity extends BaseActivity implements View.OnClickListener,PullToRefreshBase.OnRefreshListener2{
     private ImageView img_subject_filter_back;
     private TextView txt_subject_filter_title;
     private RecyclerView recycler_subject_filter_time;
@@ -53,6 +54,8 @@ public class SubjectFilterActivity extends BaseActivity implements View.OnClickL
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(SubjectFilterActivity.this, LinearLayoutManager.HORIZONTAL, false);
         recycler_subject_filter_time.setLayoutManager(layoutManager);
         list_subject_filter_content = (MyListView) findViewById(R.id.list_subject_filter_content);
+        scrollview = (PullToRefreshScrollView)findViewById(R.id.scrollview);
+        scrollview.setMode(PullToRefreshBase.Mode.BOTH);
 
     }
 
@@ -72,6 +75,7 @@ public class SubjectFilterActivity extends BaseActivity implements View.OnClickL
     }
 
     private void setClick() {
+        scrollview.setOnRefreshListener(this);
         img_subject_filter_back.setOnClickListener(this);
         list_subject_filter_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -93,5 +97,15 @@ public class SubjectFilterActivity extends BaseActivity implements View.OnClickL
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onPullDownToRefresh(PullToRefreshBase refreshView) {
+        scrollview.onRefreshComplete();
+    }
+
+    @Override
+    public void onPullUpToRefresh(PullToRefreshBase refreshView) {
+        scrollview.onRefreshComplete();
     }
 }

@@ -19,6 +19,8 @@ import com.example.aidong.adapter.SubjectDetailNumAdapter;
 import com.example.aidong.adapter.SubjectDetailTopAdapter;
 import com.example.aidong.view.CircleImageView;
 import com.example.aidong.view.CustomViewPager;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -35,6 +37,7 @@ public class SubjectDetailActivity extends BaseActivity implements View.OnClickL
     private CircleImageView img_subject_detail_head;
     private LinearLayout layout_subject_detail_addr, layout_subject_detail_tip;
     private CustomViewPager viewpager_subject_detail_top;
+    private PullToRefreshScrollView scrollview;
 
     private SubjectDetailTopAdapter topAdapter;
     private SubjectDetailNumAdapter numAdapter;
@@ -82,6 +85,8 @@ public class SubjectDetailActivity extends BaseActivity implements View.OnClickL
         layout_subject_detail_addr = (LinearLayout) findViewById(R.id.layout_subject_detail_addr);
         layout_subject_detail_tip = (LinearLayout) findViewById(R.id.layout_subject_detail_tip);
         viewpager_subject_detail_top = (CustomViewPager) findViewById(R.id.viewpager_subject_detail_top);
+        scrollview = (PullToRefreshScrollView) findViewById(R.id.scrollview);
+        scrollview.setMode(PullToRefreshBase.Mode.DISABLED);
     }
 
     private void initData() {
