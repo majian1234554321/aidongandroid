@@ -1,4 +1,4 @@
-package com.example.aidong.activity.mine;
+package com.example.aidong.activity.account;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -27,8 +27,6 @@ import android.widget.Toast;
 import com.example.aidong.BaseActivity;
 import com.example.aidong.BaseApp;
 import com.example.aidong.R;
-import com.example.aidong.activity.account.PasswordForgetActivity;
-import com.example.aidong.activity.account.SMSRegistActivity;
 import com.example.aidong.common.Constant;
 import com.example.aidong.common.UrlLink;
 import com.example.aidong.http.HttpConfig;
@@ -273,7 +271,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
 				
 				if(BaseApp.mInstance.getUser()==null){
 					BaseApp.mInstance.setUser(res.getData().getUser());
-					SharePrefUtils.setLogin(this,true);
 					SharePrefUtils.setLogin(this,true);
 					addTask(this, new IHttpTask(UrlLink.FIND_UPLOAD_URL, new ArrayList<BasicNameValuePair>(), MsgResult.class), HttpConfig.PUT, FIND_UPLOAD_CODE);
 					addTask(this, new IHttpTask(UrlLink.PRIVACY_URL, paramsstealth(), MsgResult.class), HttpConfig.PUT, STEALTH_CODE);

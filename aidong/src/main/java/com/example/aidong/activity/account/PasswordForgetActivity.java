@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.example.aidong.BaseActivity;
 import com.example.aidong.BaseApp;
 import com.example.aidong.R;
-import com.example.aidong.activity.mine.LoginActivity;
 import com.example.aidong.common.UrlLink;
 import com.example.aidong.http.HttpConfig;
 import com.example.aidong.model.UserCoach;

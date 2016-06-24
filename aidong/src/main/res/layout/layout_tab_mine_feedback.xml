@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/feedback"
+                android:background="@color/color_light_white" >
+
+    <RelativeLayout
+        android:id="@+id/layout_tab_mine_feedback_title_rel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_50dp"
+        android:background="@color/new_background_one" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/feedback"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/pref_17dp" />
+
+        <ImageView
+            android:id="@+id/layout_tab_mine_feedback_img_back"
+            android:layout_width="@dimen/pref_35dp"
+            android:layout_height="@dimen/pref_35dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/pref_10dp"
+            android:src="@drawable/back" />
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/layout_tab_mine_feedback_edit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_150dp"
+        android:layout_below="@+id/layout_tab_mine_feedback_title_rel"
+        android:background="@color/color_white"
+        android:gravity="top|left"
+        android:hint="@string/thank_mx"
+        android:paddingLeft="@dimen/pref_15dp"
+        android:paddingTop="@dimen/pref_10dp"
+        android:textColor="@color/color_black"
+        android:textSize="@dimen/pref_14dp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_0.5dp"
+        android:layout_below="@id/layout_tab_mine_feedback_edit"
+        android:background="@color/color_list_distance" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_0.5dp"
+        android:layout_below="@id/layout_tab_mine_feedback_edit"
+        android:layout_marginTop="@dimen/pref_19dp"
+        android:background="@color/color_list_distance" />
+
+    <RelativeLayout
+        android:id="@+id/layout_tab_mine_feedback_input_rel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_45dp"
+        android:layout_below="@id/layout_tab_mine_feedback_edit"
+        android:layout_marginTop="@dimen/pref_20dp"
+        android:background="@color/color_white" >
+
+        <EditText
+            android:id="@+id/layout_tab_mine_feedback_input_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="true"
+            android:background="@null"
+            android:gravity="center"
+            android:hint="@string/input_email_phone"
+            android:textColor="@color/color_black"
+            android:textSize="@dimen/pref_16dp" />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_0.5dp"
+        android:layout_below="@id/layout_tab_mine_feedback_input_rel"
+        android:background="@color/color_list_distance" />
+
+    <Button
+        android:id="@+id/layout_feedback_btn_commit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/layout_tab_mine_feedback_input_rel"
+        android:layout_marginLeft="@dimen/pref_12dp"
+        android:layout_marginRight="@dimen/pref_12dp"
+        android:layout_marginTop="@dimen/pref_35dp"
+        android:background="@drawable/btn_shape_green"
+        android:text="@string/commit"
+        android:textColor="@color/color_white"
+        android:textSize="@dimen/pref_16dp" />
+
+</RelativeLayout>

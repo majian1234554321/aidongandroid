@@ -26,7 +26,6 @@ import com.example.aidong.BaseActivity;
 import com.example.aidong.BaseApp;
 import com.example.aidong.MainActivity;
 import com.example.aidong.R;
-import com.example.aidong.activity.mine.LoginActivity;
 import com.example.aidong.common.Constant;
 import com.example.aidong.common.MXLog;
 import com.example.aidong.common.UrlLink;

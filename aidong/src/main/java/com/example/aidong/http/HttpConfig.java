@@ -7,6 +7,7 @@ import com.example.aidong.R;
 import com.example.aidong.common.MXLog;
 import com.example.aidong.model.result.MsgResult;
 import com.example.aidong.utils.ImageFactory;
+import com.example.aidong.utils.Utils;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.leyuan.commonlibrary.http.IHttpCallback;
@@ -139,7 +140,7 @@ public class HttpConfig {
                 RequestParams params = new RequestParams();
                 if (BaseApp.mInstance.isLogin() && BaseApp.mInstance.getUser() != null) {
                     MXLog.out("t:" + BaseApp.mInstance.getUser().getToken());
-                    params.addHeader("token", BaseApp.mInstance.getToken());
+                    params.addHeader("token", BaseApp.mInstance.getUser().getToken());
                 }
                 if (task.getHeaderMap() != null) {
                     for (String key : task.getHeaderMap().keySet()) {
@@ -153,11 +154,11 @@ public class HttpConfig {
                     if (parls == null) {
                         parls = new ArrayList<>();
                     }
-//                    parls.add(0, new BasicNameValuePair("device", Utils.getIMEI(BaseApp.mInstance)));
-//                    //					parls.add(new BasicNameValuePair("channel", ""));
-//                    parls.add(0, new BasicNameValuePair("version", Utils.getVersion(BaseApp.mInstance)));
-//                    parls.add(0, new BasicNameValuePair("lng", "" + BaseApp.mInstance.lon));
-//                    parls.add(0, new BasicNameValuePair("lat", "" + BaseApp.mInstance.lat));
+                    parls.add(0, new BasicNameValuePair("device", Utils.getIMEI(BaseApp.mInstance)));
+                    //					parls.add(new BasicNameValuePair("channel", ""));
+                    parls.add(0, new BasicNameValuePair("version", Utils.getVersion(BaseApp.mInstance)));
+                    parls.add(0, new BasicNameValuePair("lng", "" + BaseApp.mInstance.lon));
+                    parls.add(0, new BasicNameValuePair("lat", "" + BaseApp.mInstance.lat));
                     if (BaseApp.mInstance.getToken() != null) {
                         parls.add(0, new BasicNameValuePair("token", BaseApp.mInstance.getToken()));
                     }

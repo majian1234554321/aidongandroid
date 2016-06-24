@@ -43,7 +43,7 @@ import com.example.aidong.BaseUrlLink;
 import com.example.aidong.R;
 import com.example.aidong.activity.media.ImageShowerActivity;
 import com.example.aidong.activity.media.VideoPlayerActivity;
-import com.example.aidong.activity.mine.LoginActivity;
+import com.example.aidong.activity.account.LoginActivity;
 import com.example.aidong.adapter.DynamicPhotoGridAdapter;
 import com.example.aidong.adapter.ExpressionAdapter;
 import com.example.aidong.adapter.ExpressionPagerAdapter;

@@ -133,12 +133,15 @@ public class BaseApp extends Application{
         SharePrefUtils.setUser(context, user);
     }
 
+    @Deprecated
     public String getToken(){
         if(token == null){
             token = SharePrefUtils.getString(context, "token", null);
         }
         return token;
     }
+
+    @Deprecated
     public void setToken(String token){
         this.token =token;
         SharePrefUtils.putString(context, "token", token);
