@@ -126,6 +126,13 @@
             />
         <activity android:name=".activity.sportcircle.UserWhoClickLikeActivity"
             />
+
+        <activity android:name=".activity.subject.SubjectFilterActivity"
+            />
+        <activity android:name=".activity.subject.SubjectListActivity"
+            />
+        <activity android:name=".activity.subject.SubjectDetailActivity"
+            />
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
