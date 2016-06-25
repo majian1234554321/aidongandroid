@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/color_white" >
+
+    <ImageView
+        android:id="@+id/bigImage"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter" />
+
+    <RelativeLayout
+        android:id="@+id/introduction1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/pref_65dp"
+        android:visibility="gone" >
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/introduction2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/pref_65dp"
+        android:visibility="gone" >
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/introduction3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/pref_65dp"
+        android:visibility="gone" >
+    </RelativeLayout>
+
+    <!--
+    <RelativeLayout
+        android:id="@+id/introduction4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/pref_50dp"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:maxEms="15"
+            android:text="@string/introduction4"
+            android:textColor="@color/adadad"
+            android:textSize="@dimen/pref_15dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/introduction5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/pref_80dp"
+        android:visibility="gone"
+        >
+
+        <ImageView
+            android:id="@+id/img_start_mx"
+            android:layout_width="@dimen/pref_115dp"
+            android:layout_height="@dimen/pref_47dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/start_mx" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/img_start_mx"
+            android:layout_marginTop="@dimen/pref_65dp"
+            android:gravity="center"
+            android:text="@string/introduction5"
+            android:textColor="@color/adadad"
+            android:textSize="@dimen/pref_15dp" />
+    </RelativeLayout>
+    -->
+
+    <Button
+        android:id="@+id/btn_tiao"
+        android:layout_width="@dimen/pref_53dp"
+        android:layout_height="@dimen/pref_25dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="@dimen/pref_15dp"
+        android:layout_marginTop="@dimen/pref_15dp"
+        android:background="@drawable/btn_setup"
+        android:text="@string/tiaoguo"
+        android:textColor="@color/color_white"
+        android:textSize="@dimen/pref_14dp" />
+
+</RelativeLayout>

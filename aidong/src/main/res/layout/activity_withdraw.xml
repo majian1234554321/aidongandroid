@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#f2f2f2"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/top_hight"
+        android:background="@color/main_tophead">
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/back_icon"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="提现"
+            android:textColor="@color/white"
+            android:textSize="@dimen/length34"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="20dp"
+        android:background="#d9d9d9"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/img_alipay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="28dp"
+            android:src="@drawable/icon_integral_alipay"
+            />
+
+        <TextView
+            android:id="@+id/txt_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="14dp"
+            android:layout_toRightOf="@id/img_alipay"
+            android:text="账户"
+            android:textColor="#333333"
+            android:textSize="@dimen/length34"
+            />
+
+        <EditText
+            android:id="@+id/edit_account"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@id/txt_account"
+            android:background="@android:color/transparent"
+            android:gravity="end|center"
+            android:hint="支付宝账户/手机号"
+            android:maxLength="20"
+            android:paddingRight="20dp"
+            android:singleLine="true"
+            android:textColor="#333333"
+            android:textColorHint="#999999"
+            android:textSize="@dimen/length28"
+            />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="#d9d9d9"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/img_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="28dp"
+            android:src="@drawable/icon_integral_user_name"
+            />
+
+        <TextView
+            android:id="@+id/txt_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="14dp"
+            android:layout_toRightOf="@id/img_user"
+            android:text="姓名"
+            android:textColor="#333333"
+            android:textSize="@dimen/length34"
+            />
+
+        <EditText
+            android:id="@+id/edit_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@id/txt_name"
+            android:background="@android:color/transparent"
+            android:gravity="end|center"
+            android:hint="真实姓名"
+            android:maxLength="20"
+            android:paddingRight="20dp"
+            android:singleLine="true"
+            android:textColor="#333333"
+            android:textColorHint="#999999"
+            android:textSize="@dimen/length28"
+            />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#d9d9d9"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="13dp"
+        android:background="#d9d9d9"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="28dp"
+            android:text="￥"
+            android:textColor="#333333"
+            android:textSize="@dimen/length34"
+            />
+
+        <EditText
+            android:id="@+id/edit_money"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="100dp"
+            android:background="@android:color/transparent"
+            android:gravity="end|center"
+            android:hint="输入可提现人民币整数"
+            android:inputType="number"
+            android:maxLength="20"
+            android:paddingRight="20dp"
+            android:singleLine="true"
+            android:textColor="#333333"
+            android:textColorHint="#999999"
+            android:textSize="@dimen/length28"
+            />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#d9d9d9"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="17dp"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="可提现人民币金额:"
+            android:textColor="#999999"
+            android:textSize="@dimen/length28"
+            />
+
+        <TextView
+            android:id="@+id/txt_valid_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:text="640元"
+            android:textColor="#ff7674"
+            android:textSize="@dimen/length28"
+            />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button_withdraw"
+        android:layout_width="match_parent"
+        android:layout_height="59dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/shape_withdraw"
+        android:gravity="center"
+        android:text="确认提现"
+        android:textColor="@color/white"
+        android:textSize="@dimen/length28"
+        />
+</LinearLayout>

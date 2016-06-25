@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/color_search_bg1" >
+
+    <RelativeLayout
+        android:id="@+id/layout_about_mx_title_rel"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/pref_50dp"
+        android:background="@color/new_background_one" >
+
+        <ImageView
+            android:id="@+id/layout_tab_about_mx_title_img"
+            android:layout_width="@dimen/pref_35dp"
+            android:layout_height="@dimen/pref_35dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/pref_10dp"
+            android:src="@drawable/back" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/about_mx"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/pref_17dp" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/img_about_mx_logo"
+        android:layout_width="230dp"
+        android:layout_height="122dp"
+        android:layout_below="@+id/layout_about_mx_title_rel"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/ic_launcher" />
+    <ImageView
+        android:id="@+id/img_about_mx_ma"
+        android:layout_width="205dp"
+        android:layout_height="205dp"
+        android:layout_below="@+id/img_about_mx_logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="47dp"
+        android:src="@drawable/qr_code" />
+
+    <TextView
+        android:id="@+id/txt_sweep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/img_about_mx_ma"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/pref_15dp"
+        android:text="@string/sweep"
+        android:textColor="@color/black"
+        android:textSize="@dimen/pref_16dp" />
+
+    <RelativeLayout
+        android:id="@+id/rel_copyright"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true" >
+
+        <ImageView
+            android:id="@+id/img_copyright"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_launcher" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textview_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/img_about_mx_logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="21dp"
+        android:text="@string/about_mx_version"
+        android:textColor="@color/color_txt_gray1" />
+
+</RelativeLayout>

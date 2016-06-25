@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/color_light_white" >
+
+    <RelativeLayout
+        android:id="@+id/layout_bingding_community_title_rel"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/pref_50dp"
+        android:background="@color/new_background_one" >
+
+        <ImageView
+            android:id="@+id/layout_bingding_community_title_img"
+            android:layout_width="@dimen/pref_35dp"
+            android:layout_height="@dimen/pref_35dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/pref_10dp"
+            android:src="@drawable/back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/bingding_community"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/pref_17dp" />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_0.5dp"
+        android:layout_below="@+id/layout_bingding_community_title_rel"
+        android:layout_marginTop="@dimen/pref_19dp"
+        android:background="@color/color_list_distance" />
+
+    <RelativeLayout
+        android:id="@+id/relativelayout_bingding_community"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_45dp"
+        android:layout_below="@+id/layout_bingding_community_title_rel"
+        android:layout_marginTop="@dimen/pref_20dp"
+        android:background="@color/color_white" >
+
+        <TextView
+            android:id="@+id/textview_bingding_community"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/pref_15dp"
+            android:text="@string/sinaweibo"
+            android:textColor="@color/color_black"
+            android:textSize="@dimen/pref_16dp" />
+
+        <com.example.aidong.view.UISwitchButton
+            xmlns:switch="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/switch_weibo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/pref_10dp"
+            android:layout_toLeftOf="@+id/imageview_bingding_community_go"
+            switch:bmHeight="@dimen/pref_30dp"
+            switch:bmWidth="@dimen/pref_45dp" />
+
+        <ImageView
+            android:id="@+id/imageview_bingding_community_go"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/pref_15dp"
+            android:src="@drawable/jiantou" />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_0.5dp"
+        android:layout_below="@+id/relativelayout_bingding_community"
+        android:background="@color/color_list_distance" />
+
+</RelativeLayout>

@@ -1,5 +1,7 @@
 package com.example.aidong.utils;
 
+import com.example.aidong.R;
+
 import java.util.HashMap;
 
 
@@ -9,9 +11,9 @@ public class Constants {
 	public static final String STR_SPLITE_DOT = ",";
 	public static final String FILE_FOLDER = "MX";
 	public static final int IDENTITY_RES[] = {
-//		R.string.identity_user,
-//		R.string.identity_coach,
-//		R.string.identity_service,
+		R.string.identity_user,
+		R.string.identity_coach,
+		R.string.identity_service,
 	};
 
 	public static final HashMap<Integer, Boolean> FILTER_GENDER_ORI = new HashMap<Integer, Boolean>() {

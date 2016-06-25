@@ -13,15 +13,22 @@ import com.leyuan.commonlibrary.http.IHttpCallback;
 import com.leyuan.commonlibrary.http.IHttpTask;
 import com.leyuan.commonlibrary.http.IHttpToastCallBack;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class BaseActivity extends AppCompatActivity implements IHttpToastCallBack {
     protected Logic logic;
     protected TextView txtTopTitle, txtTopLeft, txtTopRight;
     protected ImageView btnBack;
     protected ImageButton btnTopRight;
+    public final static List<BaseActivity> mActivities = new LinkedList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        synchronized (mActivities) {
+            mActivities.add(this);
+        }
         logic = new Logic();
     }
 
@@ -139,5 +146,23 @@ public class BaseActivity extends AppCompatActivity implements IHttpToastCallBac
 
     protected void rightImageOnClick() {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        synchronized (mActivities) {
+            mActivities.remove(this);
+        }
+    }
+
+    public void exitApp(){
+        List<BaseActivity> copy;
+        synchronized (mActivities) {
+            copy = new LinkedList<>(mActivities);
+        }
+        for (BaseActivity activity : copy) {
+            activity.finish();
+        }
     }
 }

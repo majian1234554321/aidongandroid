@@ -9,7 +9,7 @@ import android.widget.ListView;
 import com.example.aidong.BaseActivity;
 import com.example.aidong.BaseApp;
 import com.example.aidong.R;
-import com.example.aidong.activity.mine.LoginActivity;
+import com.example.aidong.activity.mine.account.LoginActivity;
 import com.example.aidong.adapter.Adapter_user_who_click_like_list;
 import com.example.aidong.common.Constant;
 import com.example.aidong.common.UrlLink;

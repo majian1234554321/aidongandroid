@@ -2,6 +2,7 @@ package com.example.aidong.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.text.Layout;
@@ -30,6 +31,8 @@ import android.widget.VideoView;
 import com.example.aidong.AbstractCommonAdapter;
 import com.example.aidong.BaseApp;
 import com.example.aidong.R;
+import com.example.aidong.activity.media.ImageShowerActivity;
+import com.example.aidong.activity.sportcircle.UserWhoClickLikeActivity;
 import com.example.aidong.common.Constant;
 import com.example.aidong.interfaces.OnCommentAndLikeClickListenner;
 import com.example.aidong.interfaces.OnMoreCommentClickListenner;
@@ -89,9 +92,9 @@ public class ListAdapterDynamic extends AbstractCommonAdapter {
 	.bitmapConfig(Bitmap.Config.RGB_565).build();
 	
 	private DisplayImageOptions option_head = new DisplayImageOptions.Builder()
-//	.showImageOnLoading(R.drawable.icon_avatar_default)
-//	.showImageForEmptyUri(R.drawable.icon_avatar_default)
-//	.showImageOnFail(R.drawable.icon_avatar_default)
+	.showImageOnLoading(R.drawable.icon_avatar_default)
+	.showImageForEmptyUri(R.drawable.icon_avatar_default)
+	.showImageOnFail(R.drawable.icon_avatar_default)
 	.cacheInMemory(true)
 	.cacheOnDisk(true).considerExifParams(true)
 	.bitmapConfig(Bitmap.Config.RGB_565).build();
@@ -658,9 +661,9 @@ public class ListAdapterDynamic extends AbstractCommonAdapter {
 										.startShowActivity(context, like_user.get(position).getUser());
 									}
 									else{
-//										Intent intent = new Intent(context, UserWhoClickLikeActivity.class);
-//										intent.putExtra("id", dynamicId);
-//										context.startActivity(intent);
+										Intent intent = new Intent(context, UserWhoClickLikeActivity.class);
+										intent.putExtra("id", dynamicId);
+										context.startActivity(intent);
 //										Toast.makeText(context, "跳到like我的人界面", 0).show();
 									}
 									
@@ -732,11 +735,11 @@ public class ListAdapterDynamic extends AbstractCommonAdapter {
 
 	public void showBigImage(ArrayList<AttributeImages> imageArray,
 			int currentPosition) {
-//		Intent i = new Intent(context, ImageShowerActivity.class);
-//		i.putParcelableArrayListExtra(BaseActivity.BUNDLE_BIGIMAGEITEM,
-//				imageArray);
-//		i.putExtra(BaseActivity.BUNDLE_BIGIMAGEITEM_INDEX, currentPosition);
-//		context.startActivity(i);
+		Intent i = new Intent(context, ImageShowerActivity.class);
+		i.putParcelableArrayListExtra(Constant.BUNDLE_BIGIMAGEITEM,
+				imageArray);
+		i.putExtra(Constant.BUNDLE_BIGIMAGEITEM_INDEX, currentPosition);
+		context.startActivity(i);
 	}
 
 	private class ViewHolder {

@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/color_light_white">
+
+    <RelativeLayout
+        android:id="@+id/layout_tab_mine_message_reminder_title_rel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_50dp"
+        android:background="@color/new_background_one">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/message_reminder"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/pref_17dp"/>
+
+        <ImageView
+            android:id="@+id/layout_tab_mine_message_reminder_img_back"
+            android:layout_width="@dimen/pref_35dp"
+            android:layout_height="@dimen/pref_35dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/pref_10dp"
+            android:src="@drawable/back"/>
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_0.5dp"
+        android:layout_below="@+id/layout_tab_mine_message_reminder_title_rel"
+        android:layout_marginTop="@dimen/pref_19dp"
+        android:background="@color/color_list_distance"/>
+
+    <RelativeLayout
+        android:id="@+id/layout_tab_mine_message_reminder_accept_the_new_message_rel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_45dp"
+        android:layout_below="@+id/layout_tab_mine_message_reminder_title_rel"
+        android:layout_marginTop="@dimen/pref_20dp"
+        android:background="@color/color_white">
+
+        <TextView
+            android:id="@+id/layout_tab_mine_message_reminder_accept_the_new_message_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="@string/accept_the_new_message"
+            android:textColor="@color/color_black"
+            android:textSize="@dimen/pref_16dp"/>
+
+        <com.example.aidong.view.SwitchButton
+            xmlns:switch="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/switch1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/pref_10dp"
+            android:layout_toLeftOf="@+id/layout_tab_mine_message_reminder_accept_the_new_message_img_go"
+            switch:bmHeight="@dimen/pref_30dp"
+            switch:bmWidth="@dimen/pref_45dp"/>
+
+        <ImageView
+            android:id="@+id/layout_tab_mine_message_reminder_accept_the_new_message_img_go"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/pref_15dp"
+            android:src="@drawable/jiantou"/>
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_0.5dp"
+        android:layout_below="@+id/layout_tab_mine_message_reminder_accept_the_new_message_rel"
+        android:layout_marginLeft="@dimen/pref_15dp"
+        android:layout_marginTop="@dimen/pref__1dp"
+        android:background="@color/e_five"/>
+
+    <RelativeLayout
+        android:id="@+id/layout_tab_mine_message_reminder_voice_rel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_45dp"
+        android:layout_below="@+id/layout_tab_mine_message_reminder_accept_the_new_message_rel"
+        android:background="@color/color_white">
+
+        <TextView
+            android:id="@+id/layout_tab_mine_message_reminder_voice_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/pref_15dp"
+            android:text="@string/voice"
+            android:textColor="@color/color_black"
+            android:textSize="@dimen/pref_16dp"/>
+
+        <com.example.aidong.view.SwitchButton
+            xmlns:switch="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/switch2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/pref_10dp"
+            android:layout_toLeftOf="@+id/layout_tab_mine_message_reminder_voice_img_go"
+            switch:bmHeight="@dimen/pref_30dp"
+            switch:bmWidth="@dimen/pref_45dp"/>
+
+        <ImageView
+            android:id="@+id/layout_tab_mine_message_reminder_voice_img_go"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/pref_15dp"
+            android:src="@drawable/jiantou"/>
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_0.5dp"
+        android:layout_below="@+id/layout_tab_mine_message_reminder_voice_rel"
+        android:layout_marginLeft="@dimen/pref_15dp"
+        android:layout_marginTop="@dimen/pref__1dp"
+        android:background="@color/e_five"/>
+
+    <RelativeLayout
+        android:id="@+id/layout_tab_mine_message_reminder_vibration_rel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_45dp"
+        android:layout_below="@+id/layout_tab_mine_message_reminder_voice_rel"
+        android:background="@color/color_white">
+
+        <TextView
+            android:id="@+id/layout_tab_mine_message_reminder_vibration_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/pref_15dp"
+            android:text="@string/vibration"
+            android:textColor="@color/color_black"
+            android:textSize="@dimen/pref_16dp"/>
+
+        <com.example.aidong.view.SwitchButton
+            xmlns:switch="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/switch3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/pref_10dp"
+            android:layout_toLeftOf="@+id/layout_tab_mine_message_reminder_vibration_img_go"
+            switch:bmHeight="@dimen/pref_30dp"
+            switch:bmWidth="@dimen/pref_45dp"/>
+
+        <ImageView
+            android:id="@+id/layout_tab_mine_message_reminder_vibration_img_go"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/pref_15dp"
+            android:src="@drawable/jiantou"/>
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_0.5dp"
+        android:layout_below="@+id/layout_tab_mine_message_reminder_vibration_rel"
+        android:background="@color/color_list_distance"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_0.5dp"
+        android:layout_below="@id/layout_tab_mine_message_reminder_vibration_rel"
+        android:layout_marginTop="@dimen/pref_19dp"
+        android:background="@color/color_list_distance"
+        android:visibility="gone"/>
+
+    <RelativeLayout
+        android:id="@+id/layout_tab_mine_message_reminder_do_not_disturb_period_rel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_45dp"
+        android:layout_below="@id/layout_tab_mine_message_reminder_vibration_rel"
+        android:layout_marginTop="@dimen/pref_20dp"
+        android:background="@color/color_white"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/layout_tab_mine_message_reminder_do_not_disturb_period_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/pref_15dp"
+            android:text="@string/do_not_disturb_period"
+            android:textColor="@color/color_black"
+            android:textSize="@dimen/pref_16dp"/>
+
+        <ImageView
+            android:id="@+id/layout_tab_mine_message_reminder_do_not_disturb_period_img_go"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/pref_15dp"
+            android:src="@drawable/jiantou_two"/>
+
+        <TextView
+            android:id="@+id/layout_tab_mine_message_reminder_do_not_disturb_period_not_set_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/pref_10dp"
+            android:layout_toLeftOf="@+id/layout_tab_mine_message_reminder_do_not_disturb_period_img_go"
+            android:text="@string/no_set"
+            android:textColor="@color/color_txt_gray1"
+            android:textSize="@dimen/pref_16dp"/>
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_0.5dp"
+        android:layout_below="@+id/layout_tab_mine_message_reminder_do_not_disturb_period_rel"
+        android:background="@color/color_list_distance"/>
+
+</RelativeLayout>

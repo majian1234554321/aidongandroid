@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -133,24 +134,24 @@ public class MainActivity extends BaseActivity implements IHttpCallback, View.On
                 this)
                 .addSubActionView(tcSub1)
                 .addSubActionView(tcSub3)
-//                .addSubTextView(rLSubBuilder.setContentView(tv1, null).build())
-//                .addSubTextView(rLSubBuilder.setContentView(tv3, null).build())
+                //                .addSubTextView(rLSubBuilder.setContentView(tv1, null).build())
+                //                .addSubTextView(rLSubBuilder.setContentView(tv3, null).build())
                 .attachTo(rightLowerButton).setRadius(redActionMenuRadius)
                 .setStartAngle(-120).setEndAngle(-60).build();
 
         tcSub1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-//                if (BaseApp.mInstance.isLogin()) {
-                    Intent intent = new Intent(MainActivity.this,
-                            TabTheIndividualDynaminActivity.class);
-                    intent.putExtra("type", 1);
-                    startActivity(intent);
-//                } else {
-//                    Intent intent = new Intent(MainActivity.this,
-//                            LoginActivity.class);
-//                    startActivity(intent);
-//                }
+                //                if (BaseApp.mInstance.isLogin()) {
+                Intent intent = new Intent(MainActivity.this,
+                        TabTheIndividualDynaminActivity.class);
+                intent.putExtra("type", 1);
+                startActivity(intent);
+                //                } else {
+                //                    Intent intent = new Intent(MainActivity.this,
+                //                            LoginActivity.class);
+                //                    startActivity(intent);
+                //                }
                 rightLowerMenu.close(true);
 
             }
@@ -160,16 +161,16 @@ public class MainActivity extends BaseActivity implements IHttpCallback, View.On
 
             @Override
             public void onClick(View arg0) {
-//                if (BaseApp.mInstance.isLogin()) {
-                    Intent intent = new Intent(MainActivity.this,
-                            TabTheIndividualDynaminActivity.class);
-                    intent.putExtra("type", 3);
-                    startActivity(intent);
-//                } else {
-//                    Intent intent = new Intent(MainActivity.this,
-//                            LoginActivity.class);
-//                    startActivity(intent);
-//                }
+                //                if (BaseApp.mInstance.isLogin()) {
+                Intent intent = new Intent(MainActivity.this,
+                        TabTheIndividualDynaminActivity.class);
+                intent.putExtra("type", 3);
+                startActivity(intent);
+                //                } else {
+                //                    Intent intent = new Intent(MainActivity.this,
+                //                            LoginActivity.class);
+                //                    startActivity(intent);
+                //                }
                 rightLowerMenu.close(true);
             }
         });
@@ -195,7 +196,7 @@ public class MainActivity extends BaseActivity implements IHttpCallback, View.On
         mFragments.add(new HomeFragment());
         mFragments.add(new FoundFragment());
         mFragments.add(new SportCircleFragment());
-//        mFragments.add(new TabFoundDynamicFragment());
+        //        mFragments.add(new TabFoundDynamicFragment());
         mFragments.add(new MineFragment());
         setTabSelection(0);
         showFragment(0);
@@ -212,7 +213,7 @@ public class MainActivity extends BaseActivity implements IHttpCallback, View.On
     }
 
     private void initConfig() {
-//        ShareSDK.initSDK(this);
+        //        ShareSDK.initSDK(this);
     }
 
     @Override
@@ -309,5 +310,19 @@ public class MainActivity extends BaseActivity implements IHttpCallback, View.On
         tabFoundLayout.setClickable(true);
         tabContactorLayout.setClickable(true);
         tabMineLayout.setClickable(true);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            exitApp();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/bingding_mobile_phone"
+                android:background="@color/color_light_white" >
+
+    <RelativeLayout
+        android:id="@+id/layout_tab_mine_binding_mobile_phone_title_rel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_50dp"
+        android:background="@color/new_background_one" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/binding_mobile_phone"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/pref_17dp" />
+
+        <ImageView
+            android:id="@+id/layout_tab_mine_binding_mobile_phone_img_back"
+            android:layout_width="@dimen/pref_35dp"
+            android:layout_height="@dimen/pref_35dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/pref_10dp"
+            android:src="@drawable/back" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_0.5dp"
+        android:layout_below="@+id/layout_tab_mine_binding_mobile_phone_title_rel"
+        android:layout_marginTop="@dimen/pref_19dp"
+        android:background="@color/color_list_distance" />
+
+    <RelativeLayout
+        android:id="@+id/layout_tab_mine_binding_mobile_phone_rel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_45dp"
+        android:layout_below="@+id/layout_tab_mine_binding_mobile_phone_title_rel"
+        android:layout_marginTop="@dimen/pref_20dp"
+        android:background="@color/color_white" >
+
+        <EditText
+            android:id="@+id/layout_tab_mine_bingding_dianhua"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/pref_15dp"
+            android:background="@null"
+            android:ems="13"
+            android:hint="@string/input_binding_mobile_phone_number" />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_0.5dp"
+        android:layout_below="@+id/layout_tab_mine_binding_mobile_phone_rel"
+        android:background="@color/e_five" />
+
+    <Button
+        android:id="@+id/layout_tab_mine_input_phone_number_btn"
+        android:layout_width="@dimen/pref_109dp"
+        android:layout_height="@dimen/pref_45dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/layout_tab_mine_binding_mobile_phone_rel"
+        android:layout_marginRight="@dimen/pref_20dp"
+        android:background="@color/color_white"
+        android:text="@string/getActiveCode"
+        android:textColor="@color/background_one" />
+
+    <View
+        android:layout_width="@dimen/pref_0.5dp"
+        android:layout_height="@dimen/pref_45dp"
+        android:layout_alignTop="@+id/layout_tab_mine_input_phone_number_btn"
+        android:layout_toLeftOf="@+id/layout_tab_mine_input_phone_number_btn"
+        android:background="@color/color_list_distance" />
+
+    <RelativeLayout
+        android:id="@+id/layout_tab_mine_enter_the_verification_code_rel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_45dp"
+        android:layout_below="@+id/layout_tab_mine_binding_mobile_phone_rel"
+        android:layout_marginTop="@dimen/pref_1dp"
+        android:background="@color/color_white" >
+
+        <EditText
+            android:id="@+id/layout_tab_mine_enter_the_verification_code_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/pref_15dp"
+            android:background="@null"
+            android:ems="10"
+            android:hint="@string/txtInputRegistActiveCode" >
+
+            <requestFocus />
+        </EditText>
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_0.5dp"
+        android:layout_below="@+id/layout_tab_mine_enter_the_verification_code_rel"
+        android:background="@color/color_list_distance" />
+
+    <Button
+        android:id="@+id/layout_tab_mine_submit_binding_btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pref_50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/layout_tab_mine_enter_the_verification_code_rel"
+        android:layout_marginLeft="@dimen/pref_10dp"
+        android:layout_marginRight="@dimen/pref_10dp"
+        android:layout_marginTop="@dimen/pref_35dp"
+        android:background="@drawable/btn_shape_green"
+        android:text="@string/submit_binding"
+        android:textColor="@color/color_white" />
+
+</RelativeLayout>

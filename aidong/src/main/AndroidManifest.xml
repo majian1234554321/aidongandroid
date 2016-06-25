@@ -88,11 +88,13 @@
             />
         <activity android:name=".activity.media.VideoPlayerActivity"
             />
-        <activity android:name=".activity.mine.LoginActivity"
+        <activity android:name=".activity.mine.account.LoginActivity"
             />
         <activity android:name=".activity.sportcircle.CommentDetailActivity"
             />
-        <activity android:name=".activity.media.AlbumActivity"
+        <activity
+            android:name=".activity.media.AlbumActivity"
+            android:hardwareAccelerated="true"
             />
         <activity android:name=".activity.media.TabPhotoWallActivity"
             />
@@ -126,6 +128,43 @@
             />
         <activity android:name=".activity.sportcircle.UserWhoClickLikeActivity"
             />
+        <activity android:name=".activity.mine.account.PasswordForgetActivity"
+            />
+        <activity android:name=".activity.mine.account.PasswordRegistActivity"
+            />
+        <activity android:name=".activity.mine.account.SMSRegistActivity"
+            />
+        <activity android:name=".activity.mine.account.UserAgreementActivity"
+            />
+        <activity android:name=".activity.mine.AboutMxActivity"
+            />
+        <activity android:name=".activity.mine.BingdingCommunityActivity"
+            />
+        <activity android:name=".activity.mine.PrivacyActivity"
+            />
+        <activity android:name=".activity.mine.TabHelpActivity"
+            />
+        <activity android:name=".activity.mine.TabMineBingdingMobilePhoneActivity"
+            />
+        <activity android:name=".activity.mine.TabMineChangePasswordActivity"
+            />
+        <activity android:name=".activity.mine.TabMineDoNotDisturbPeriodActivity"
+            />
+        <activity android:name=".activity.mine.TabMineFeedBackActivity"
+            />
+        <activity android:name=".activity.mine.TabMineMessageReminderActivity"
+            />
+        <activity android:name=".activity.mine.TabMinePersonalSettingsActivity"
+            />
+        <activity android:name=".activity.mine.VersionOfTheIntroductionActivity"
+            />
+        <activity android:name=".activity.mine.lovecoin.LoveCoinActivity"
+            />
+        <activity android:name=".activity.mine.lovecoin.LoveCoinHelpActivity"
+            />
+        <activity android:name=".activity.mine.lovecoin.PaymentsDetailActivity"
+            />
+        <activity android:name=".activity.mine.lovecoin.WithDrawActivity"/>
 
         <activity android:name=".activity.subject.SubjectFilterActivity"
             />
@@ -155,7 +194,6 @@
                 <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP"/>
             </intent-filter>
         </receiver>
-
 
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"

@@ -15,10 +15,10 @@ android {
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.example.aidong"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 23
-        versionCode 18
-        versionName "4.22"
+        versionCode 20
+        versionName "5.0.0.1"
 //        multiDexEnabled true
     }
 //    dexOptions {
