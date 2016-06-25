@@ -787,4 +787,17 @@
     <string name="allevaluation">全部评价</string>
     <item type="id" name="tag_first"></item>
     <string name="search_venues">请输入场馆名/场馆地址</string>
+
+    <string name="txt_home_area">上海</string>
+    <string name="txt_home_title">爱动</string>
+    <string name="txt_home_item_1">小团体课</string>
+    <string name="txt_home_item_2">营养品</string>
+    <string name="txt_home_item_3">健康餐饮</string>
+    <string name="txt_home_item_4">活动</string>
+    <string name="txt_home_item_5">装备</string>
+    <string name="txt_home_item_6">赛事</string>
+    <string name="txt_home_hot_subject">热门课程</string>
+    <string name="txt_home_hot_saishi">推荐赛事</string>
+    <string name="txt_subject_detail_jianjie">课程简介</string>
+    <string name="txt_subject_detail_yibao">已报学员</string>
 </resources>

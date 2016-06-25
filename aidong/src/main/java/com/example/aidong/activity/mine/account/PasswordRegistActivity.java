@@ -1,4 +1,4 @@
-package com.example.aidong.activity.account;
+package com.example.aidong.activity.mine.account;
 
 import android.app.ProgressDialog;
 import android.content.Intent;

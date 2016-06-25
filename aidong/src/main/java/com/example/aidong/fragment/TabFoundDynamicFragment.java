@@ -16,7 +16,7 @@ import com.example.aidong.BaseUrlLink;
 import com.example.aidong.R;
 import com.example.aidong.activity.media.VideoPlayerActivity;
 import com.example.aidong.activity.sportcircle.CommentDetailActivity;
-import com.example.aidong.activity.account.LoginActivity;
+import com.example.aidong.activity.mine.account.LoginActivity;
 import com.example.aidong.adapter.ListAdapterDynamic;
 import com.example.aidong.common.MXLog;
 import com.example.aidong.common.UrlLink;

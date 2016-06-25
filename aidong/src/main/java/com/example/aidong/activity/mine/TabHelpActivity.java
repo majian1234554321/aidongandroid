@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 
 import com.example.aidong.BaseActivity;
 import com.example.aidong.R;
-import com.example.aidong.activity.account.UserAgreementActivity;
+import com.example.aidong.activity.mine.account.UserAgreementActivity;
 
 public class TabHelpActivity extends BaseActivity {
 	private ImageView mlayout_tab_help_img_back;
