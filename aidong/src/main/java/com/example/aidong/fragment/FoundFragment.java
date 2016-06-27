@@ -82,9 +82,6 @@ public class FoundFragment extends BaseFragment implements View.OnClickListener 
                 case 1:
                     viewpager.setCurrentItem(currIndex);
                     break;
-                case 2:
-                    viewpager.setCurrentItem(currIndex);
-                    break;
 
                 default:
                     break;
