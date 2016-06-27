@@ -172,6 +172,12 @@
             />
         <activity android:name=".activity.subject.SubjectDetailActivity"
             />
+        <activity android:name=".scan.activity.MipcaActivityCapture"
+            />
+        <activity android:name=".scan.activity.ScanResultActivity"
+            />
+        <activity android:name=".scan.activity.ScanActivity"
+            />
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
