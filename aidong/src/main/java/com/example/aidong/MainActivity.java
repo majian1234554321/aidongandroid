@@ -1,11 +1,11 @@
 package com.example.aidong;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -192,7 +192,7 @@ public class MainActivity extends BaseActivity implements IHttpCallback, View.On
     }
 
     private void initFragments() {
-        fm = getFragmentManager();
+        fm = getSupportFragmentManager();
         mFragments.add(new HomeFragment());
         mFragments.add(new FoundFragment());
         mFragments.add(new SportCircleFragment());

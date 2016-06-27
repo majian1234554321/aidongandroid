@@ -63,6 +63,7 @@ dependencies {
     compile 'com.oguzdev:CircularFloatingActionMenu:1.0.2'
     compile project(':commonlibrary')
     compile files('libs/android-support-v7-recyclerview.jar')
+    compile 'com.google.zxing:core:3.2.1'
 }
 //buildscript {
 //    repositories {

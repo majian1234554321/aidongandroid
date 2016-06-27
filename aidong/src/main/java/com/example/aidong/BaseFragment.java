@@ -1,11 +1,12 @@
 package com.example.aidong;
 
-import android.app.Fragment;
 
+import android.support.v4.app.Fragment;
+
+import com.example.aidong.http.Logic;
 import com.leyuan.commonlibrary.http.IHttpCallback;
 import com.leyuan.commonlibrary.http.IHttpTask;
 import com.leyuan.commonlibrary.http.IHttpToastCallBack;
-import com.example.aidong.http.Logic;
 
 public class BaseFragment extends Fragment implements IHttpToastCallBack {
     protected Logic logic;

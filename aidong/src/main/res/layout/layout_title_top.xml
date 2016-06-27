@@ -3,7 +3,7 @@
                 android:id="@+id/layoutTitleTop"
                 android:layout_width="fill_parent"
                 android:layout_height="50dp"
-                android:background="@color/new_background_one" >
+                android:background="@color/color_black" >
 
     <ImageView
         android:id="@+id/btnBack"
