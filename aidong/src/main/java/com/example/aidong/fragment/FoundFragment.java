@@ -25,6 +25,7 @@ public class FoundFragment extends BaseFragment implements View.OnClickListener 
     private CustomViewPager viewpager;
 
     private int currIndex;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,12 +39,12 @@ public class FoundFragment extends BaseFragment implements View.OnClickListener 
     private void initView(View veiw) {
         button_cg = (Button) veiw.findViewById(R.id.button_cg);
         button_people = (Button) veiw.findViewById(R.id.button_people);
-        viewpager= (CustomViewPager) veiw.findViewById(R.id.viewpager);
+        viewpager = (CustomViewPager) veiw.findViewById(R.id.viewpager);
         button_cg.setOnClickListener(this);
         button_people.setOnClickListener(this);
         arenaFragment = new ArenaFragment();
         peoPleFragment = new PeoPleFragment();
-        mFragments=new ArrayList<>();
+        mFragments = new ArrayList<>();
         mFragments.add(arenaFragment);
         mFragments.add(peoPleFragment);
 
@@ -101,14 +102,15 @@ public class FoundFragment extends BaseFragment implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button_cg:
+                viewpager.setCurrentItem(0);
                 break;
             case R.id.button_people:
+                viewpager.setCurrentItem(1);
                 break;
         }
 
 
     }
-
 
 
     private void resetTabBtn() {
