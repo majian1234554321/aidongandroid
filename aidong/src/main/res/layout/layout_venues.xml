@@ -643,9 +643,104 @@
                         </LinearLayout>
 
 
+                        <RadioGroup
+                            android:id="@+id/radio_group"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/title_bar"
+                            android:layout_gravity="center"
+                            android:background="@color/white"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+
+                            <RadioButton
+                                android:id="@+id/kc_radio"
+                                android:layout_width="wrap_content"
+                                android:layout_height="50dp"
+                                android:layout_weight="1"
+                                android:tag="radio_button0"
+                                android:text="课程"
+                                android:textColor="#333333"
+                                android:textSize="@dimen/length28"></RadioButton>
+
+                            <RadioButton
+                                android:id="@+id/sj_radio"
+                                android:layout_width="wrap_content"
+                                android:layout_height="50dp"
+                                android:layout_weight="1"
+                                android:tag="radio_button1"
+                                android:text="私教"
+                                android:textColor="#333333"
+                                android:textSize="@dimen/length28"></RadioButton>
+                        </RadioGroup>
+
+
+                        <ViewFlipper
+                            android:id="@+id/view_flipper"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_below="@+id/radio_group">
+
+
+
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                >
+
+
+                                <android.support.v7.widget.RecyclerView
+                                    android:id="@+id/recycler_subject_time"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/pref_80dp"
+                                    android:background="@color/white"
+                                    android:scrollbars="none"/>
+
+                                <com.example.aidong.view.InSListView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/listView_kc">
+
+
+                                </com.example.aidong.view.InSListView>
+
+
+
+
+
+
+                            </LinearLayout>
+
+
+
+                            <com.example.aidong.view.InSListView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/listView_sj">
+
+
+                            </com.example.aidong.view.InSListView>
+
+
+
+
+                        </ViewFlipper>
+
+
+
+
+
+
+
+
+
                     </LinearLayout>
 
-                    <com.jianshi.mx_c_app.view.CircleImageView
+                    <com.example.aidong.view.CircleImageView
                         android:id="@+id/avatar_iv"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
