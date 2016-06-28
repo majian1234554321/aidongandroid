@@ -1,5 +1,6 @@
 package com.example.aidong.fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.aidong.BaseFragment;
 import com.example.aidong.R;
+import com.example.aidong.activity.venues.VenuesDetailsActivity;
 import com.example.aidong.adapter.ArenaListAdapter;
 import com.example.aidong.adapter.ListViewPinPaiAdapter;
 import com.example.aidong.model.ArenaBean;
@@ -32,7 +34,7 @@ import java.util.List;
 * 场馆
 *
 * */
-public class ArenaFragment extends BaseFragment implements
+public class VenuesFragment extends BaseFragment implements
         OnRefreshListener2<ListView>, View.OnClickListener {
 
     private View view;
@@ -76,6 +78,14 @@ public class ArenaFragment extends BaseFragment implements
         }
         adapter = new ArenaListAdapter(getActivity(),arenaBeanList);
         mListView.setAdapter(adapter);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent  intent=new Intent(getActivity(),VenuesDetailsActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
