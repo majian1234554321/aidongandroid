@@ -1,5 +1,6 @@
 package com.example.aidong.activity.subject;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -103,6 +104,7 @@ public class SubjectDetailActivity extends BaseActivity implements View.OnClickL
 
     private void setClick() {
         img_subject_detail_back.setOnClickListener(this);
+        txt_subject_detail_baoming.setOnClickListener(this);
     }
 
     @Override
@@ -111,6 +113,10 @@ public class SubjectDetailActivity extends BaseActivity implements View.OnClickL
         switch (id) {
             case R.id.img_subject_detail_back:
                 finish();
+                break;
+            case R.id.txt_subject_detail_baoming:
+                Intent intent = new Intent(SubjectDetailActivity.this,PayInfoActivity.class);
+                startActivity(intent);
                 break;
         }
     }

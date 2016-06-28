@@ -172,6 +172,10 @@
             />
         <activity android:name=".activity.subject.SubjectDetailActivity"
             />
+        <activity android:name=".activity.subject.PayInfoActivity"
+            />
+        <activity android:name=".activity.commodity.CommodityHomeActivity"
+            />
         <activity android:name=".scan.activity.MipcaActivityCapture"
             />
         <activity android:name=".scan.activity.ScanResultActivity"

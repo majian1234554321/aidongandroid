@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 
 import com.example.aidong.BaseFragment;
 import com.example.aidong.R;
+import com.example.aidong.activity.commodity.CommodityHomeActivity;
 import com.example.aidong.activity.subject.SubjectFilterActivity;
 import com.example.aidong.adapter.HomeAdAdapter;
 import com.example.aidong.adapter.HomeButtonAdapter;
@@ -118,12 +119,19 @@ public class HomeFragment extends BaseFragment implements PullToRefreshBase.OnRe
                         startActivity(intent);
                         break;
                     case 1:
+                        intent = new Intent(getActivity(), CommodityHomeActivity.class);
+                        intent.putExtra("from",1);
+                        startActivity(intent);
                         break;
                     case 2:
+
                         break;
                     case 3:
                         break;
                     case 4:
+                        intent = new Intent(getActivity(), CommodityHomeActivity.class);
+                        intent.putExtra("from",2);
+                        startActivity(intent);
                         break;
                     case 5:
                         break;
