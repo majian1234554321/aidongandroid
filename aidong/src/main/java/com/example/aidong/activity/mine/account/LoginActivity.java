@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.text.Html;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,6 +29,7 @@ import com.example.aidong.BaseActivity;
 import com.example.aidong.BaseApp;
 import com.example.aidong.R;
 import com.example.aidong.common.Constant;
+import com.example.aidong.common.MXLog;
 import com.example.aidong.common.UrlLink;
 import com.example.aidong.http.HttpConfig;
 import com.example.aidong.model.UserCoach;
@@ -37,6 +39,7 @@ import com.example.aidong.model.result.MsgResult;
 import com.example.aidong.utils.SharePrefUtils;
 import com.leyuan.commonlibrary.http.IHttpCallback;
 import com.leyuan.commonlibrary.http.IHttpTask;
+import com.mob.tools.utils.UIHandler;
 
 import org.apache.http.message.BasicNameValuePair;
 
@@ -45,8 +48,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qq.QQ;
+import cn.sharesdk.wechat.friends.Wechat;
+
 public class LoginActivity extends BaseActivity implements OnClickListener,
-		Callback, IHttpCallback {
+		Callback, IHttpCallback, PlatformActionListener {
 	String TAG = "LoginActivity";
 	private EditText mEditUserName, mPassWord;
 	private ImageView btnLoginWeixin; 
@@ -66,7 +77,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
 	private ImageView btnExit;
 	private Intent intent;
 	private TextView textForgetPassword;
-//	OnekeyShare onekeyShare;
+	OnekeyShare onekeyShare;
 	private ProgressDialog dialog_weixin;
 	private ProgressDialog dialog;
 
@@ -79,7 +90,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
 
 	protected void setupView() {
 		setContentView(R.layout.layout_login);
-//		ShareSDK.initSDK(this);
+		ShareSDK.initSDK(this);
 		initView();
 		boolean isInstall = isInstalled(this, "com.tencent.mm");
 		if (isInstall) {
@@ -198,32 +209,30 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
 			startActivity(intent);
 			break;
 		case R.id.btnLoginQQ: 
-//			platform = ShareSDK.getPlatform(QQ.NAME);
-//			platform.SSOSetting(false);
-//			MXLog.i(TAG, "QQ登录");
+			platform = ShareSDK.getPlatform(QQ.NAME);
+			platform.SSOSetting(false);
+			MXLog.i(TAG, "QQ登录");
 			break;
 		case R.id.btnLoginSina:
-//			MobclickAgent.onEvent(LoginActivity.this,"3signin_weibo");
-//			platform = ShareSDK.getPlatform(SinaWeibo.NAME);
-//			MXLog.i(TAG, "新浪登录");
-//			platform.SSOSetting(false);
+			platform = ShareSDK.getPlatform(SinaWeibo.NAME);
+			MXLog.i(TAG, "新浪登录");
+			platform.SSOSetting(false);
 			break;
 		case R.id.btnLoginWeixin:
-//			MobclickAgent.onEvent(LoginActivity.this,"3signin_weixin");
-//			platform = ShareSDK.getPlatform(Wechat.NAME);
-//			// showHttpToast("暂时无法验证微信签名");
-//			MXLog.i(TAG, "微信登录");
-//
-//			dialog_weixin = ProgressDialog.show(this, "提示", "读取中...");
+			platform = ShareSDK.getPlatform(Wechat.NAME);
+			// showHttpToast("暂时无法验证微信签名");
+			MXLog.i(TAG, "微信登录");
+
+			dialog_weixin = ProgressDialog.show(this, "提示", "读取中...");
 			
 			break;
 		}
-//		if (platform != null) {
-//			platform.setPlatformActionListener(this);
-//			platform.removeAccount(true);
-//			platform.showUser(null);
-//			ShareSDK.removeCookieOnAuthorize(true);// 清理cookie
-//       }
+		if (platform != null) {
+			platform.setPlatformActionListener(this);
+			platform.removeAccount(true);
+			platform.showUser(null);
+			ShareSDK.removeCookieOnAuthorize(true);// 清理cookie
+       }
 	}
 
 	public List<BasicNameValuePair> paramsinit() {
@@ -545,93 +554,93 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
 	// return super.onKeyDown(keyCode, event);
 	// }
 
-//	@Override
-//	public void onCancel(Platform platform, int action) {
-//		if (dialog_weixin != null) {
-//			dialog_weixin.dismiss();
-//		}
-//		Message msg = new Message();
-//		msg.what = MSG_ACTION_CCALLBACK;
-//		msg.arg1 = 3;
-//		msg.arg2 = action;
-//		msg.obj = platform;
+	@Override
+	public void onCancel(Platform platform, int action) {
+		if (dialog_weixin != null) {
+			dialog_weixin.dismiss();
+		}
+		Message msg = new Message();
+		msg.what = MSG_ACTION_CCALLBACK;
+		msg.arg1 = 3;
+		msg.arg2 = action;
+		msg.obj = platform;
+		UIHandler.sendMessage(msg, this);
+		Log.e(TAG, "onCancel");
+	}
+
+	@Override
+	public void onComplete(Platform platform, int action,
+			HashMap<String, Object> res) {
+		if (dialog_weixin != null) {
+			dialog_weixin.dismiss();
+		}
+		Message msg = new Message();
+		msg.what = MSG_ACTION_CCALLBACK;
+		msg.arg1 = 1;
+		msg.arg2 = action;
+		msg.obj = platform;
+
+		if (platform.getName().equals(QQ.NAME)) {
+			sns_name = "QQ";
+		}
+		if (platform.getName().equals(Wechat.NAME)) {
+			sns_name = "WeChat";
+		}
+		if (platform.getName().equals(SinaWeibo.NAME)) {
+			sns_name = "sina";
+		}
+
+		sns_userid = platform.getDb().getUserId();
+		sns_username = platform.getDb().getUserName();
+		sns_usericon = platform.getDb().getUserIcon();
+		sns_usergender = platform.getDb().getUserGender();
+
+
+		addTask(LoginActivity.this,
+				new IHttpTask(UrlLink.LOGINSNS_URL, paramsinitLoginSns(
+						sns_name, sns_userid, sns_username,
+						sns_usergender, sns_usericon, sns_userbirthday),
+						LoginResult.class), HttpConfig.POST, LOGINSNS);
+
+
+
+
+//		String str="ID: "+sns_userid+";\n"+
+//		           "用户名： "+sns_username+";\n"+
+//		  	         "用户头像地址："+sns_usericon;
+//		Log.e("userinfo------", str);
+//		System.out.println(res);
 //		UIHandler.sendMessage(msg, this);
-//		Log.e(TAG, "onCancel");
-//	}
-//
-//	@Override
-//	public void onComplete(Platform platform, int action,
-//			HashMap<String, Object> res) {
-//		if (dialog_weixin != null) {
-//			dialog_weixin.dismiss();
-//		}
-//		Message msg = new Message();
-//		msg.what = MSG_ACTION_CCALLBACK;
-//		msg.arg1 = 1;
-//		msg.arg2 = action;
-//		msg.obj = platform;
-//
-//		if (platform.getName().equals(QQ.NAME)) {
-//			sns_name = "QQ";
-//		}
-//		if (platform.getName().equals(Wechat.NAME)) {
-//			sns_name = "WeChat";
-//		}
-//		if (platform.getName().equals(SinaWeibo.NAME)) {
-//			sns_name = "sina";
-//		}
-//
-//		sns_userid = platform.getDb().getUserId();
-//		sns_username = platform.getDb().getUserName();
-//		sns_usericon = platform.getDb().getUserIcon();
-//		sns_usergender = platform.getDb().getUserGender();
-//
-//
-//		addTask(LoginActivity.this,
-//				new IHttpTask(UrlLink.LOGINSNS_URL, paramsinitLoginSns(
-//						sns_name, sns_userid, sns_username,
-//						sns_usergender, sns_usericon, sns_userbirthday),
-//						LoginResult.class), HttpConfig.POST, LOGINSNS);
-//
-//
-//
-//
-////		String str="ID: "+sns_userid+";\n"+
-////		           "用户名： "+sns_username+";\n"+
-////		  	         "用户头像地址："+sns_usericon;
-////		Log.e("userinfo------", str);
-////		System.out.println(res);
-////		UIHandler.sendMessage(msg, this);
-//
-//		Log.e(TAG, "onComplete");
-//	}
-//
-//
-//
-//
-//
-//
-//
-//
-//	@Override
-//	public void onError(Platform platform, int action, Throwable t) {
-//			if (dialog_weixin != null) {
-//				dialog_weixin.dismiss();
-//			}
-//
-//		t.printStackTrace();
-//		Message msg = new Message();
-//		msg.what = MSG_ACTION_CCALLBACK;
-//		msg.arg1 = 2;
-//		msg.arg2 = action;
-//		msg.obj = platform;
-//		UIHandler.sendMessage(msg, this);
-//		// 分享失败的统计
-//		ShareSDK.logDemoEvent(4, platform);
-//		Log.e(TAG, "errer");
-//	}
-//
-//	Platform platform = null;
+
+		Log.e(TAG, "onComplete");
+	}
+
+
+
+
+
+
+
+
+	@Override
+	public void onError(Platform platform, int action, Throwable t) {
+			if (dialog_weixin != null) {
+				dialog_weixin.dismiss();
+			}
+
+		t.printStackTrace();
+		Message msg = new Message();
+		msg.what = MSG_ACTION_CCALLBACK;
+		msg.arg1 = 2;
+		msg.arg2 = action;
+		msg.obj = platform;
+		UIHandler.sendMessage(msg, this);
+		// 分享失败的统计
+		ShareSDK.logDemoEvent(4, platform);
+		Log.e(TAG, "errer");
+	}
+
+	Platform platform = null;
 	String sns_name = "";
 	String sns_userid = "";
 	String sns_username = "";
