@@ -19,7 +19,7 @@ public class FoundFragment extends BaseFragment implements View.OnClickListener 
 
     private View rootView;
     private Button button_cg, button_people;
-    private ArenaFragment arenaFragment;
+    private VenuesFragment arenaFragment;
     private PeoPleFragment peoPleFragment;
     private ArrayList<android.support.v4.app.Fragment> mFragments;
     private CustomViewPager viewpager;
@@ -42,7 +42,7 @@ public class FoundFragment extends BaseFragment implements View.OnClickListener 
         viewpager = (CustomViewPager) veiw.findViewById(R.id.viewpager);
         button_cg.setOnClickListener(this);
         button_people.setOnClickListener(this);
-        arenaFragment = new ArenaFragment();
+        arenaFragment = new VenuesFragment();
         peoPleFragment = new PeoPleFragment();
         mFragments = new ArrayList<>();
         mFragments.add(arenaFragment);
