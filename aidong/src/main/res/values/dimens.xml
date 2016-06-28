@@ -167,6 +167,7 @@
     <dimen name="pref_160dp">160dp</dimen>
     <dimen name="pref_168dp">168dp</dimen>
     <dimen name="pref_170dp">170dp</dimen>
+    <dimen name="pref_200dp">200dp</dimen>
     <dimen name="pref_221dp">221dp</dimen>
     <dimen name="pref_230dp">230dp</dimen>
     <dimen name="pref_235dp">235dp</dimen>
