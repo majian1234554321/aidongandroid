@@ -242,7 +242,6 @@ public class MainActivity extends BaseActivity implements IHttpCallback, View.On
                 setTabSelection(1);
                 showFragment(1);
                 break;
-
             case R.id.tabContactorLayout:
                 setTabSelection(2);
                 showFragment(2);
