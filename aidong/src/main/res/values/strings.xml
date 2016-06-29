@@ -821,4 +821,7 @@
     <string name="txt_commodity_tuijian_tip">为你推荐</string>
     <string name="txt_commodity_tuijian_more">更多商品</string>
 
+    <string name="txt_foodhome_item_shicai">主要食材</string>
+    <string name="txt_foodhome_item_renqun">推荐人群</string>
+
 </resources>

@@ -1,4 +1,4 @@
-package com.example.aidong.activity.commodity;
+package com.example.aidong.activity.home.commodity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
