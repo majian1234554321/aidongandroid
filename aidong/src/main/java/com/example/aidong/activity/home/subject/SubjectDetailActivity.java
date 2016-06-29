@@ -1,4 +1,4 @@
-package com.example.aidong.activity.subject;
+package com.example.aidong.activity.home.subject;
 
 import android.content.Intent;
 import android.graphics.Bitmap;

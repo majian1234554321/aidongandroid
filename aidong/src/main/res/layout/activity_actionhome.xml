@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/main_background"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_top_bar"
+        android:background="@color/color_txt_gray2"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/img_actionhome_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/back"/>
+
+        <RelativeLayout
+            android:layout_width="@dimen/pref_0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/pref_2dp"
+            android:layout_weight="1"
+            android:background="@color/line_gray">
+
+            <LinearLayout
+                android:id="@+id/layout_actionhome_select"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/pref_5dp"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txt_actionhome_type_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_txt_gray1"
+                    android:textSize="@dimen/font_16sp"/>
+
+                <ImageView
+                    android:id="@+id/img_actionhome_type_cancle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/pref_10dp"
+                    android:padding="@dimen/pref_5dp"
+                    android:src="@drawable/btn_video_close_black"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="@dimen/pref_20dp"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        xmlns:ptr="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/color_white"
+        android:divider="@color/transparent"
+        android:dividerHeight="@dimen/pref_10dp"
+        android:fadingEdge="none"
+        android:listSelector="@color/transparent"
+        ptr:ptrAnimationStyle="flip"
+        ptr:ptrDrawable="@drawable/default_ptr_flip"
+        ptr:ptrHeaderBackground="@color/color_white"
+        ptr:ptrHeaderTextColor="@color/e_five">
+    </com.handmark.pulltorefresh.library.PullToRefreshListView>
+
+</LinearLayout>
