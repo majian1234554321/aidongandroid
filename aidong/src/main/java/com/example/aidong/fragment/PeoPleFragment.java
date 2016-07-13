@@ -68,6 +68,7 @@ public class PeopleFragment extends BaseFragment implements OnRefreshListener2<G
 		stopLoading();
 		switch (requestCode) {
 			case PULL_DOWN_TO_REFRESH:
+
 				FoundDynamicResult result_down = (FoundDynamicResult) data;
 				if (result_down.getCode() ==1) {
 					if (result_down.getData() != null) {

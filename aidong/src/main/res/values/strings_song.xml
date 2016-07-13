@@ -2,4 +2,8 @@
     <string name="find_venues">场馆</string>
     <string name="find_people">人</string>
     <string name="select">筛选</string>
+    <string name="bust">胸围/</string>
+    <string name="waist">腰围/</string>
+    <string name="hit">臀围/</string>
+    <string name="at_most_threes">最多选3个</string>
 </resources>

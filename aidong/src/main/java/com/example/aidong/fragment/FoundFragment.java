@@ -1,5 +1,6 @@
 package com.example.aidong.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.aidong.BaseFragment;
 import com.example.aidong.R;
+import com.example.aidong.activity.found.SelectPeopleActivity;
 import com.example.aidong.adapter.FoundFragmentAdapter;
 import com.example.aidong.interfaces.SimpleOnTabSelectedListener;
 import com.example.aidong.view.CustomViewPager;
@@ -60,6 +62,14 @@ public class FoundFragment extends BaseFragment{
                     viewpager.setCurrentItem(1);
                     tvSelect.setVisibility(View.VISIBLE);
                 }
+            }
+        });
+
+        tvSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), SelectPeopleActivity.class);
+                getActivity().startActivity(intent);
             }
         });
     }

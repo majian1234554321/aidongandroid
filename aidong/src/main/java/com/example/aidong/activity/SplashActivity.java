@@ -39,7 +39,7 @@ public class SplashActivity extends BaseActivity{
     }
 
     private void initData() {
-        mHandler.sendEmptyMessageDelayed(1,2000);
+        mHandler.sendEmptyMessageDelayed(1,200);
 
     }
 
