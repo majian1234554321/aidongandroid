@@ -1,37 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
     <RelativeLayout
-        android:id="@+id/rel_top"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center_horizontal">
+        android:layout_height="wrap_content">
 
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp"
+            android:background="@color/transparent"
+            app:tabIndicatorColor="@color/white"
+            app:tabSelectedTextColor="@color/gray_normal"
+            app:tabTextColor="@color/white">
+        </android.support.design.widget.TabLayout>
 
-        <Button
-            android:id="@+id/button_cg"
+        <TextView
+            android:id="@+id/tv_select"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/transparent"
-            android:text="场馆" />
-
-        <Button
-            android:id="@+id/button_people"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/button_cg"
-            android:background="@color/transparent"
-            android:text="人" />
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="12dp"
+            android:layout_alignParentTop="true"
+            android:clickable="true"
+            android:text="@string/select"
+            android:gravity="center_vertical"
+            android:visibility="gone"/>
     </RelativeLayout>
 
     <com.example.aidong.view.CustomViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
+        android:layout_height="match_parent" />
 
 </LinearLayout>
