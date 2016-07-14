@@ -6,13 +6,16 @@ import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.aidong.R;
+import com.example.aidong.adapter.FilterAroundPeopleAdapter;
 import com.example.aidong.adapter.TagAdapter;
 import com.example.aidong.model.TagBean;
 import com.example.aidong.view.ActionSheet;
@@ -25,13 +28,14 @@ import com.example.aidong.view.wheelcity.WheelView;
 import com.leyuan.commonlibrary.util.ToastUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * 筛选附近的人
  * @author song
  */
-public class SelectPeopleActivity extends LoadAddressDataActivity implements View.OnClickListener,OnWheelChangedListener{
+public class FilterAroundPeopleActivity extends LoadAddressDataActivity implements View.OnClickListener,OnWheelChangedListener{
 
     //top bar
     private TextView tvCancel;
@@ -161,23 +165,19 @@ public class SelectPeopleActivity extends LoadAddressDataActivity implements Vie
                 showAddressPopupWindow();
                 break;
             case R.id.rl_age:
-                data = getResources().getStringArray(R.array.age);
-                showDialog(data);
+                showListPopup(Arrays.asList(getResources().getStringArray(R.array.age)));
                 break;
             case R.id.rl_height:
-                data = getResources().getStringArray(R.array.height);
-                showDialog(data);
+                showListPopup(Arrays.asList(getResources().getStringArray(R.array.height)));
                 break;
             case R.id.rl_constellation:
-                data = getResources().getStringArray(R.array.constellation);
-                showDialog(data);
+                showListPopup(Arrays.asList(getResources().getStringArray(R.array.constellation)));
                 break;
             case R.id.rl_bwh:       //三围
                 showBwhPopupWindow();
                 break;
             case R.id.rl_times:
-                data = getResources().getStringArray(R.array.sportTimes);
-                showDialog(data);
+                showListPopup(Arrays.asList(getResources().getStringArray(R.array.sportTimes)));
                 break;
             case R.id.bt_sure:
                 break;
@@ -193,14 +193,51 @@ public class SelectPeopleActivity extends LoadAddressDataActivity implements Vie
         sheet.setItemClickListener(new ActionSheet.MenuItemClickListener() {
             @Override
             public void onItemClick(int itemPosition) {
-                ToastUtil.show("点击了" + date[itemPosition],SelectPeopleActivity.this);
+                ToastUtil.show("点击了" + date[itemPosition],FilterAroundPeopleActivity.this);
             }
         });
         sheet.setCancelableOnTouchMenuOutside(true);
         sheet.showMenu();
     }
 
-    
+
+
+    private PopupWindow listPopup;
+
+    private void showListPopup(final List<String> list){
+        View view = getLayoutInflater().inflate(R.layout.popup_list, null);
+        ListView listView = (ListView) view.findViewById(R.id.lv_container);
+        TextView tvCancel = (TextView)view.findViewById(R.id.tv_cancel);
+        FilterAroundPeopleAdapter adapter = new FilterAroundPeopleAdapter();
+        listView.setAdapter(adapter);
+        adapter.setList(list);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                ToastUtil.show("click" + list.get(i),FilterAroundPeopleActivity.this);
+            }
+        });
+
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listPopup.dismiss();
+            }
+        });
+
+        listPopup = new PopupWindow(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
+        listPopup.setFocusable(true);
+        listPopup.setContentView(view);
+        listPopup.setAnimationStyle(R.style.popup_style);
+        listPopup.setBackgroundDrawable(new BitmapDrawable());
+        if (listPopup.isShowing()) {
+            listPopup.dismiss();
+        } else {
+            listPopup.showAtLocation(root, Gravity.BOTTOM, 0, 0);
+        }
+    }
+
     private PopupWindow addressPopup;
     private WheelView wvProvince;
     private WheelView wvCity;
@@ -256,7 +293,7 @@ public class SelectPeopleActivity extends LoadAddressDataActivity implements Vie
 
     private void fillAddressData() {
         loadAddressFromLocal();
-        wvProvince.setViewAdapter(new ArrayWheelAdapter<>(SelectPeopleActivity.this, provinceData));
+        wvProvince.setViewAdapter(new ArrayWheelAdapter<>(FilterAroundPeopleActivity.this, provinceData));
         wvProvince.setVisibleItems(7);
         wvCity.setVisibleItems(7);
         wvDistrict.setVisibleItems(7);
@@ -300,7 +337,6 @@ public class SelectPeopleActivity extends LoadAddressDataActivity implements Vie
             currentDistrictName = areaDataMap.get(currentCityName)[newValue];
         }
     }
-
 
 
     private PopupWindow bwhPopup;

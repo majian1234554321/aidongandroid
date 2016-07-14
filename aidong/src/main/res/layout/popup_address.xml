@@ -35,7 +35,7 @@
             android:padding="10dp"
             android:gravity="center"
             android:text="完成"
-            android:textColor="@color/text_blue"
+            android:textColor="@color/gray_normal"
             android:textSize="@dimen/length28" />
 
         <TextView
@@ -46,7 +46,7 @@
             android:padding="10dp"
             android:gravity="center"
             android:text="关闭"
-            android:textColor="@color/text_blue"
+            android:textColor="@color/gray_normal"
             android:textSize="@dimen/length28" />
 
     </RelativeLayout>
@@ -55,7 +55,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_cancel"
-        android:background="@color/white"
+        android:background="@color/gray_normal"
         android:orientation="horizontal">
 
         <com.example.aidong.view.wheelcity.WheelView
@@ -69,14 +69,16 @@
             android:id="@+id/id_city"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="@color/gray_normal">
         </com.example.aidong.view.wheelcity.WheelView>
 
         <com.example.aidong.view.wheelcity.WheelView
             android:id="@+id/id_district"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="@color/gray_normal">
         </com.example.aidong.view.wheelcity.WheelView>
     </LinearLayout>
 </LinearLayout>

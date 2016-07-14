@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.example.aidong.BaseFragment;
 import com.example.aidong.R;
-import com.example.aidong.activity.found.SelectPeopleActivity;
+import com.example.aidong.activity.found.FilterAroundPeopleActivity;
 import com.example.aidong.adapter.FoundFragmentAdapter;
 import com.example.aidong.interfaces.SimpleOnTabSelectedListener;
 import com.example.aidong.view.CustomViewPager;
@@ -68,7 +68,7 @@ public class FoundFragment extends BaseFragment{
         tvSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), SelectPeopleActivity.class);
+                Intent intent = new Intent(getActivity(), FilterAroundPeopleActivity.class);
                 getActivity().startActivity(intent);
             }
         });

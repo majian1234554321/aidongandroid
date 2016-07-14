@@ -3,12 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-    <ImageView
-        android:id="@+id/img_ad_content"
+    <com.example.aidong.view.MyListView
+        android:id="@+id/lv_recommend"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@color/white" />
-
+        android:layout_height="wrap_content"/>
 </LinearLayout>

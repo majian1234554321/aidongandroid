@@ -1,0 +1,59 @@
+package com.example.aidong.adapter;
+
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.example.aidong.R;
+import com.example.aidong.model.GoodsBean;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 首页推荐商品的RecyclerView适配器
+ * Created by song on 2016/7/14.
+ */
+public class RecommendGoodsListAdapter extends RecyclerView.Adapter<RecommendGoodsListAdapter.RecommendGoodsListViewHolder>{
+
+    List<GoodsBean> date = new ArrayList<>();
+    ImageLoader imageLoader = ImageLoader.getInstance();
+
+    public RecommendGoodsListAdapter(List<GoodsBean> date) {
+        this.date = date;
+    }
+
+    @Override
+    public int getItemCount() {
+        return date.size();
+    }
+
+    @Override
+    public RecommendGoodsListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = View.inflate(parent.getContext(),R.layout.item_goods,null);
+        return new RecommendGoodsListViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(RecommendGoodsListViewHolder holder, int position) {
+        GoodsBean bean = date.get(position);
+        imageLoader.displayImage(bean.cover,holder.image);
+        holder.name.setText(bean.name);
+        holder.price.setText(bean.price);
+    }
+
+     static class RecommendGoodsListViewHolder extends RecyclerView.ViewHolder{
+        ImageView image;
+        TextView name;
+        TextView price;
+        public RecommendGoodsListViewHolder(View itemView) {
+            super(itemView);
+            image = (ImageView) itemView.findViewById(R.id.iv_goods);
+            name = (TextView)itemView.findViewById(R.id.tv_name);
+            price = (TextView)itemView.findViewById(R.id.tv_price);
+        }
+    }
+}
