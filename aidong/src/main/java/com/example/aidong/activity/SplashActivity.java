@@ -10,18 +10,17 @@ import com.example.aidong.MainActivity;
 import com.example.aidong.R;
 import com.leyuan.commonlibrary.manager.UiManager;
 
-public class SplashActivity extends BaseActivity{
+public class SplashActivity extends BaseActivity {
 
-    private Handler mHandler = new Handler(){
+    private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what){
+            switch (msg.what) {
                 case 1:
                     UiManager.activityJump(SplashActivity.this, MainActivity.class);
                     finish();
                     break;
-
             }
         }
     };
@@ -39,7 +38,7 @@ public class SplashActivity extends BaseActivity{
     }
 
     private void initData() {
-        mHandler.sendEmptyMessageDelayed(1,2000);
+        mHandler.sendEmptyMessageDelayed(1, 2000);
 
     }
 
