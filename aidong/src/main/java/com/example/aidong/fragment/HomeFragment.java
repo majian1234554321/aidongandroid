@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 
 import com.example.aidong.BaseFragment;
 import com.example.aidong.R;
+import com.example.aidong.activity.home.NurtureActivity;
 import com.example.aidong.activity.home.action.ActionHomeActivity;
 import com.example.aidong.activity.home.commodity.CommodityHomeActivity;
 import com.example.aidong.activity.home.food.FoodHomeActivity;
@@ -121,7 +122,7 @@ public class HomeFragment extends BaseFragment implements PullToRefreshBase.OnRe
                         startActivity(intent);
                         break;
                     case 1:
-                        intent = new Intent(getActivity(), CommodityHomeActivity.class);
+                        intent = new Intent(getActivity(), NurtureActivity.class);
                         intent.putExtra("from", 1);
                         startActivity(intent);
                         break;

@@ -4,10 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.app.Fragment;
 import android.widget.TextView;
 
 import com.example.aidong.BaseFragment;
@@ -19,7 +19,11 @@ import com.example.aidong.view.CustomViewPager;
 
 import java.util.ArrayList;
 
-public class FoundFragment extends BaseFragment{
+/**
+ * 发现界面
+ * @author song
+ */
+public class FindFragment extends BaseFragment{
 
     private TabLayout tabLayout;
     private CustomViewPager viewpager;
@@ -39,8 +43,8 @@ public class FoundFragment extends BaseFragment{
         viewpager = (CustomViewPager) view.findViewById(R.id.viewpager);
 
         ArrayList<Fragment> fragments = new ArrayList<>();
-        VenuesFragment venuesFragment = new VenuesFragment();
-        PeopleFragment peopleFragment = new PeopleFragment();
+        FindVenuesFragment venuesFragment = new FindVenuesFragment();
+        FindPeopleFragment peopleFragment = new FindPeopleFragment();
         fragments.add(venuesFragment);
         fragments.add(peopleFragment);
 

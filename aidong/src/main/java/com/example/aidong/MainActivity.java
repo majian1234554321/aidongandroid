@@ -14,8 +14,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.aidong.activity.media.TabTheIndividualDynaminActivity;
-import com.example.aidong.fragment.FoundFragment;
-import com.example.aidong.fragment.HomePageFragment;
+import com.example.aidong.fragment.FindFragment;
+import com.example.aidong.fragment.HomeFragment;
 import com.example.aidong.fragment.MineFragment;
 import com.example.aidong.fragment.SportCircleFragment;
 import com.example.aidong.model.result.MsgResult;
@@ -195,8 +195,8 @@ public class MainActivity extends BaseActivity implements IHttpCallback, View.On
 
     private void initFragments() {
         fm = getSupportFragmentManager();
-        mFragments.add(new HomePageFragment());
-        mFragments.add(new FoundFragment());
+        mFragments.add(new HomeFragment());
+        mFragments.add(new FindFragment());
         mFragments.add(new SportCircleFragment());
         //        mFragments.add(new TabFoundDynamicFragment());
         mFragments.add(new MineFragment());

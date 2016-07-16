@@ -4,6 +4,7 @@ import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,7 +12,7 @@ import java.util.List;
  * Created by song on 2016/7/14.
  */
 public class HomeViewPagerAdapter extends PagerAdapter{
-    private List<View> views ;
+    private List<View> views = new ArrayList<>();
 
     public HomeViewPagerAdapter(List<View> views) {
         this.views = views;
@@ -29,6 +30,9 @@ public class HomeViewPagerAdapter extends PagerAdapter{
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
+        if(views.isEmpty()){
+            return null;
+        }
         final int pos = views.size() % position;
         try {
              container.addView(views.get(position));

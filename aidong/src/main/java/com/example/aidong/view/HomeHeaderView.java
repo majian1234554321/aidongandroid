@@ -47,7 +47,7 @@ public class HomeHeaderView extends RelativeLayout implements View.OnClickListen
 
     public void init(Context context) {
         options = new ImageLoadConfig().getOptions(R.drawable.renzheng);
-        View header = inflate(context, R.layout.inc_home_header, this);
+        View header = inflate(context, R.layout.header_home, this);
         viewPager = (ViewPager) header.findViewById(R.id.vp_home);
         dotLayout = (LinearLayout)header.findViewById(R.id.ll_dot);
         header.findViewById(R.id.tv_course).setOnClickListener(this);
@@ -56,6 +56,10 @@ public class HomeHeaderView extends RelativeLayout implements View.OnClickListen
         header.findViewById(R.id.tv_activity).setOnClickListener(this);
         header.findViewById(R.id.tv_equipmen).setOnClickListener(this);
         header.findViewById(R.id.tv_competition).setOnClickListener(this);
+
+        for (int i = 0; i < 5; i++) {
+            adList.add("http://180.163.110.50:8989/pic/1001/764248.jpg");
+        }
 
         for (int i = 0; i < adList.size(); i++) {
             ImageView view = new ImageView(context);
@@ -82,7 +86,8 @@ public class HomeHeaderView extends RelativeLayout implements View.OnClickListen
                 dotArray[i].setBackgroundResource(R.drawable.page_indicator_unfocused);
             }
 
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams
+                    (new ViewGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
             layoutParams.leftMargin = 5;
             layoutParams.rightMargin = 5;
             dotLayout.addView(imageView, layoutParams);

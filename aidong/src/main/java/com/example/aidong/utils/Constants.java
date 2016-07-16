@@ -6,8 +6,10 @@ import java.util.HashMap;
 
 
 public class Constants {
-	private static final int PULL_DOWN_TO_REFRESH = 1;
-	private static final int PULL_UP_LOAD_MORE = 2;
+	public static final int CODE_OK = 1;
+	public static final int PULL_DOWN_TO_REFRESH = 10;
+	public static final int PULL_UP_LOAD_MORE = 11;
+	public static final int NORMAL_LOAD = 12;
 
 	public static final String NO_STR = "";
 	public static final String STR_SPACE = " ";

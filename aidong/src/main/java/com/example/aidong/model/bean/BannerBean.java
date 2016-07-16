@@ -1,4 +1,4 @@
-package com.example.aidong.model;
+package com.example.aidong.model.bean;
 
 /**
  * 首页ViewPager广告实体

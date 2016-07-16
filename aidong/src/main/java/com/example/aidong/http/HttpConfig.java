@@ -7,6 +7,7 @@ import com.example.aidong.R;
 import com.example.aidong.common.MXLog;
 import com.example.aidong.model.result.MsgResult;
 import com.example.aidong.utils.ImageFactory;
+import com.example.aidong.utils.LogUtils;
 import com.example.aidong.utils.Utils;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -195,6 +196,7 @@ public class HttpConfig {
                         }
                         http.configCurrentHttpCacheExpiry(200);
                         MXLog.out("url:" + sb.toString());
+                        LogUtils.e("url",sb.toString());
                         http.send(getOrdeteteMethod, sb.toString(), params,
                                 requestCallBack);
 

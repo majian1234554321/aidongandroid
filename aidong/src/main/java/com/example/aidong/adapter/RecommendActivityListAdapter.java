@@ -5,14 +5,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.aidong.R;
-import com.example.aidong.model.ActivityBean;
+import com.example.aidong.model.bean.HomeItemBean;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * 首页推荐活动列表适配器
  * Created by song on 2016/7/14.
  */
-public class RecommendActivityListAdapter extends BaseAdapter<ActivityBean>{
+public class RecommendActivityListAdapter extends BaseAdapter<HomeItemBean>{
     ImageLoader imageLoader = ImageLoader.getInstance();
 
     @Override
@@ -23,7 +23,7 @@ public class RecommendActivityListAdapter extends BaseAdapter<ActivityBean>{
     @Override
     public void initView(View view, int position, ViewGroup parent) {
         ImageView image = getView(view,R.id.iv_recommend_activity);
-        ActivityBean bean = getItem(position);
-        imageLoader.displayImage(bean.cover,image);
+        HomeItemBean bean = getItem(position);
+        imageLoader.displayImage(bean.getCover(),image);
     }
 }
