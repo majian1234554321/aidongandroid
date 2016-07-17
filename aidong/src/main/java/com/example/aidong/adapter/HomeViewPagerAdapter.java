@@ -29,17 +29,14 @@ public class HomeViewPagerAdapter extends PagerAdapter{
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
-        if(views.isEmpty()){
-            return null;
-        }
-        final int pos = views.size() % position;
+    public Object instantiateItem(ViewGroup container, int pos) {
+        final int position = pos % views.size();
         try {
-             container.addView(views.get(position));
+            container.addView(views.get(position));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return views.get(pos);
+        return views.get(position);
     }
 
     @Override

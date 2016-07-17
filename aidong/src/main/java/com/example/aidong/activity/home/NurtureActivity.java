@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -12,7 +13,9 @@ import android.view.View;
 import com.example.aidong.BaseActivity;
 import com.example.aidong.R;
 import com.example.aidong.adapter.NurtureAdapter;
+import com.example.aidong.adapter.TypeOfNurtureAdapter;
 import com.example.aidong.model.bean.NurtureBean;
+import com.example.aidong.model.bean.TypeOfNurtureBean;
 import com.example.aidong.utils.Constants;
 import com.example.aidong.utils.NetworkUtils;
 import com.example.aidong.view.endlessrecyclerview.EndlessRecyclerOnScrollListener;
@@ -46,17 +49,13 @@ public class NurtureActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nurture_and_equipment);
-
         swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.refreshLayout);
         recyclerView = (RecyclerView)findViewById(R.id.rv_recommend);
-
         getNurtureData(Constants.NORMAL_LOAD);
-
         initSwipeRefreshLayout();
         initRecyclerView();
-        //initHeaderView();
+        initHeaderView();
     }
-
 
     private void initSwipeRefreshLayout() {
         swipeRefreshLayout.setColorSchemeResources(R.color.refresh_blue,
@@ -72,13 +71,15 @@ public class NurtureActivity extends BaseActivity {
         manager.setSpanSizeLookup(new HeaderSpanSizeLookup((HeaderAndFooterRecyclerViewAdapter) recyclerView.getAdapter(), manager.getSpanCount()));
         recyclerView.setLayoutManager(manager);
         recyclerView.addOnScrollListener(onScrollListener);
-        RecyclerViewUtils.setHeaderView(recyclerView, View.inflate(this,R.layout.header_nurture,null));
     }
 
     private void initHeaderView(){
         View header = View.inflate(this,R.layout.header_nurture,null);
-       /* RecyclerView rvType = (RecyclerView) header.findViewById(R.id.rv_type);
-        List<TypeOfNurtureBean> list = new ArrayList<>();
+        RecyclerView rvType = (RecyclerView) header.findViewById(R.id.rv_type);
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        rvType.setLayoutManager(manager);
+        ArrayList<TypeOfNurtureBean> list = new ArrayList<>();
         for(int i = 0; i <10; i++){
             TypeOfNurtureBean bean = new TypeOfNurtureBean();
             if(i%2 == 0){
@@ -92,7 +93,6 @@ public class NurtureActivity extends BaseActivity {
         }
         TypeOfNurtureAdapter a = new TypeOfNurtureAdapter(list);
         rvType.setAdapter(a);
-        a.notifyDataSetChanged();*/
         RecyclerViewUtils.setHeaderView(recyclerView, header);
     }
 
@@ -127,8 +127,6 @@ public class NurtureActivity extends BaseActivity {
 
 
     public void getNurtureData(int requestCode){
-
-
         switch (requestCode){
             case Constants.NORMAL_LOAD:
                 for(int i = 0; i <10; i++){

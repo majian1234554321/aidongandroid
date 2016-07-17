@@ -11,7 +11,6 @@ import com.example.aidong.model.bean.TypeOfNurtureBean;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 营养品界面头部类别RecyclerView适配器
@@ -19,13 +18,13 @@ import java.util.List;
  */
 public class TypeOfNurtureAdapter extends RecyclerView.Adapter<TypeOfNurtureAdapter.TypeOfNurtureViewHolder>{
     private ImageLoader loader = ImageLoader.getInstance();
-    private List<TypeOfNurtureBean> data = new ArrayList<>();
+    private ArrayList<TypeOfNurtureBean> data = new ArrayList<>();
 
-    public TypeOfNurtureAdapter(List<TypeOfNurtureBean> data) {
+    public TypeOfNurtureAdapter(ArrayList<TypeOfNurtureBean> data) {
         this.data = data;
     }
 
-    public void setData(List<TypeOfNurtureBean> data) {
+    public void setData(ArrayList<TypeOfNurtureBean> data) {
         this.data = data;
     }
 

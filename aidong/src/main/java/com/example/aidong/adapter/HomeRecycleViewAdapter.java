@@ -24,11 +24,13 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public static final int TYPE_RECOMMEND_ACTIVITY = 1;
     public static final int TYPE_RECOMMEND_GOODS = 2;
 
+    private Context context;
     private ImageLoader imageLoader = ImageLoader.getInstance();
     private List<HomeBean> data = new ArrayList<>();
 
-    public HomeRecycleViewAdapter(List<HomeBean> data) {
+    public HomeRecycleViewAdapter(List<HomeBean> data,Context context) {
         this.data = data;
+        this.context = context;
     }
 
     public void setData(List<HomeBean> data) {
@@ -37,11 +39,7 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     @Override
     public int getItemCount() {
-        if(data != null && !data.isEmpty()){
-            return data.size();
-        }else{
-            return  0;
-        }
+        return data.size();
     }
 
     @Override
@@ -63,7 +61,7 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             return holder;
         }else if(viewType == TYPE_RECOMMEND_GOODS){
             View view = View.inflate(parent.getContext(),R.layout.item_recommend_goods_rv,null);
-            RecommendGoodsViewHolder holder = new RecommendGoodsViewHolder(view,parent.getContext());
+            RecommendGoodsViewHolder holder = new RecommendGoodsViewHolder(view);
             return holder;
         }
         return null;
@@ -79,6 +77,7 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }else if(holder instanceof  RecommendGoodsViewHolder){
             imageLoader.displayImage(bean.getCategory().get(position).getCover(),((RecommendGoodsViewHolder) holder).imageView);
             RecommendGoodsListAdapter adapter = new RecommendGoodsListAdapter(bean.getCategory().get(position).getItem());
+            ((RecommendGoodsViewHolder) holder).recyclerView.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false));
             ((RecommendGoodsViewHolder) holder).recyclerView.setAdapter(adapter);
         }
     }
@@ -91,13 +90,10 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         ImageView imageView;
         RecyclerView recyclerView;
 
-        public RecommendGoodsViewHolder (View itemView,Context context) {
+        public RecommendGoodsViewHolder (View itemView) {
             super(itemView);
             imageView = (ImageView) itemView.findViewById(R.id.iv_recommend);
             recyclerView = (RecyclerView) itemView.findViewById(R.id.rv_recommend);
-            LinearLayoutManager manager = new LinearLayoutManager(context);
-            manager.setOrientation(LinearLayoutManager.HORIZONTAL);
-            recyclerView.setLayoutManager(manager);
         }
     }
 

@@ -52,24 +52,23 @@ public class HomePageFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.sr_refresh);
-        recyclerView = (RecyclerView) view.findViewById(R.id.rv_home);
-       // getHomeData(Constants.NORMAL_LOAD);
-        //initSwipeRefreshLayout();
-        //initRecyclerView();
+        getHomeData(Constants.NORMAL_LOAD);
+        initSwipeRefreshLayout(view);
+        initRecyclerView(view);
     }
 
-    private void initRecyclerView() {
-        adapter = new HomeRecycleViewAdapter(data);
+    private void initRecyclerView(View view) {
+        recyclerView = (RecyclerView) view.findViewById(R.id.rv_home);
+        adapter = new HomeRecycleViewAdapter(data,getActivity());
         headerAndFooterRecyclerViewAdapter = new HeaderAndFooterRecyclerViewAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(headerAndFooterRecyclerViewAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addOnScrollListener(onScrollListener);
         RecyclerViewUtils.setHeaderView(recyclerView, new HomeHeaderView(getContext()));
     }
 
-
-    private void initSwipeRefreshLayout() {
+    private void initSwipeRefreshLayout(View view) {
+        swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.sr_refresh);
         swipeRefreshLayout.setColorSchemeResources(R.color.refresh_blue,
                 R.color.refresh_green, R.color.refresh_orange, R.color.refresh_red);
         swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
