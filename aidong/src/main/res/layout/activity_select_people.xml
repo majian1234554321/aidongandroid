@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relativeLayout_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/top_hight"
+        android:background="@color/black">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="筛选"
+            android:textColor="@color/white"
+            android:textSize="@dimen/length34" />
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:text="取消条件"
+            android:textColor="@color/white"
+            android:textSize="@dimen/length28" />
+
+        <TextView
+            android:id="@+id/tv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/pref_10dp"
+            android:text="关闭"
+            android:textColor="@color/white"
+            android:textSize="@dimen/length28" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/relativeLayout"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rl_sex"
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentLeft="true"
+                android:background="@color/white">
+
+                <TextView
+                    style="@style/myInformationText"
+                    android:text="性别" />
+
+                <TextView
+                    android:id="@+id/tv_sex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/transparent"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@drawable/right_icon"
+                    android:text=""
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/length22" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dp"
+                android:src="@color/list_line_color" />
+
+            <RelativeLayout
+
+                android:id="@+id/rl_address"
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentLeft="true"
+                android:background="@color/white">
+
+                <TextView
+                    style="@style/myInformationText"
+                    android:text="所在地区" />
+
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/transparent"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@drawable/right_icon"
+                    android:text=""
+                    android:textColor="@color/btn_gray_normal"
+                    android:textSize="@dimen/length22" />
+
+
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dp"
+                android:src="@color/list_line_color" />
+
+            <RelativeLayout
+
+                android:id="@+id/rl_age"
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentLeft="true"
+
+                android:background="@color/white">
+
+                <TextView
+                    style="@style/myInformationText"
+                    android:text="年龄范围" />
+
+                <TextView
+                    android:id="@+id/tv_age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/transparent"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@drawable/right_icon"
+                    android:text=""
+                    android:textColor="@color/btn_gray_normal"
+                    android:textSize="@dimen/length22" />
+
+
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dp"
+                android:src="@color/list_line_color" />
+
+            <RelativeLayout
+
+                android:id="@+id/rl_height"
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentLeft="true"
+
+                android:background="@color/white">
+
+                <TextView
+                    style="@style/myInformationText"
+                    android:text="身高范围" />
+
+                <TextView
+                    android:id="@+id/tv_height"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/transparent"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@drawable/right_icon"
+                    android:text=""
+                    android:textColor="@color/btn_gray_normal"
+                    android:textSize="@dimen/length22" />
+
+
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dp"
+                android:src="@color/list_line_color" />
+
+            <RelativeLayout
+
+                android:id="@+id/rl_constellation"
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentLeft="true"
+
+                android:background="@color/white">
+
+                <TextView
+                    style="@style/myInformationText"
+                    android:text="星座" />
+
+                <TextView
+                    android:id="@+id/tv_constellation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/transparent"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@drawable/right_icon"
+                    android:text=""
+                    android:textColor="@color/btn_gray_normal"
+                    android:textSize="@dimen/length22" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="10dp"
+                android:src="@color/list_line_color" />
+
+            <RelativeLayout
+
+                android:id="@+id/rl_bwh"
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentLeft="true"
+
+                android:background="@color/white">
+
+                <TextView
+                    style="@style/myInformationText"
+                    android:text="三围" />
+
+                <TextView
+                    android:id="@+id/tv_bwh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/transparent"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@drawable/right_icon"
+                    android:text=""
+                    android:textColor="@color/btn_gray_normal"
+                    android:textSize="@dimen/length22" />
+
+
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dp"
+                android:src="@color/list_line_color" />
+
+            <RelativeLayout
+
+                android:id="@+id/rl_times"
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentLeft="true"
+
+                android:background="@color/white">
+
+                <TextView
+                    style="@style/myInformationText"
+                    android:text="运动频次" />
+
+                <TextView
+                    android:id="@+id/tv_times"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/transparent"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@drawable/right_icon"
+                    android:text=""
+                    android:textColor="@color/btn_gray_normal"
+                    android:textSize="@dimen/length22" />
+            </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="个性标签 (最多选3个)"
+                android:textColor="@color/btn_gray_normal"
+                android:textSize="@dimen/length28" />
+
+            <com.example.aidong.view.MultiGridView
+                android:id="@+id/gv_character_tag"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:listSelector="@color/transparent"
+                android:numColumns="4" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="运动标签 (最多选3个)"
+                android:textColor="@color/btn_gray_normal"
+                android:textSize="@dimen/length28" />
+
+            <com.example.aidong.view.MultiGridView
+                android:id="@+id/gv_sport_tag"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:listSelector="@color/transparent"
+                android:numColumns="4" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="魅力部位 (最多选3个)"
+                android:textColor="@color/btn_gray_normal"
+                android:textSize="@dimen/length28" />
+
+            <com.example.aidong.view.MultiGridView
+                android:id="@+id/gv_body_tag"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="50dp"
+                android:listSelector="@color/transparent"
+                android:numColumns="4" />
+        </LinearLayout>
+    </ScrollView>
+
+
+    <Button
+        android:id="@+id/bt_sure"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="确定"
+        android:textColor="@color/white"
+        android:textSize="@dimen/length28" />
+
+</RelativeLayout>

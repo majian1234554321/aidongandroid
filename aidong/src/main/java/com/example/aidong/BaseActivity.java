@@ -3,6 +3,7 @@ package com.example.aidong;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -30,6 +31,7 @@ public class BaseActivity extends AppCompatActivity implements IHttpToastCallBac
             mActivities.add(this);
         }
         logic = new Logic();
+        Log.w("className",getClass().getSimpleName());
     }
 
     public void addTask(IHttpCallback callBack, IHttpTask tsk, int method,

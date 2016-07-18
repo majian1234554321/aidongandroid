@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        >
+
+        <com.example.aidong.view.RoundAngleImageView
+            android:id="@+id/img_view"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="23dp"
+            android:scaleType="centerCrop"
+            />
+
+        <TextView
+            android:id="@+id/txt_venues_list_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/img_view"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="14dp"
+            android:singleLine="true"
+            android:text="长风店"
+            android:textColor="#ff5000"
+            android:textSize="20dp"
+            />
+
+        <TextView
+            android:id="@+id/txt_venues_list_item_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_venues_list_item_name"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:singleLine="true"
+            android:text="dslfjasdlkfjsadlkfjdjkslafjkkjl"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            />
+
+        <TextView
+            android:id="@+id/txt_venues_list_item_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_venues_list_item_address"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="14dp"
+            android:singleLine="true"
+            android:text="2.9 km"
+            android:textColor="#999999"
+            android:textSize="17sp"
+            />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_venues_list_item_distance"
+            android:layout_marginTop="2dp"
+            android:src="@drawable/venues_divider"
+            />
+    </RelativeLayout>
+
+</FrameLayout>

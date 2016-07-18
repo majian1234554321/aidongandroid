@@ -10,7 +10,7 @@ import java.text.DecimalFormat;
 /**
  * Created by Administrator on 2016/6/16.
  */
-public class PayUtil {
+class PayUtil {
 
     public static void aliPay(Activity activity, String name, String description, String price, String partner, String seller, String private_key, String orderId) {
         DecimalFormat df = new DecimalFormat("0.00");

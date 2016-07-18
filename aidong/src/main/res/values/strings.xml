@@ -824,4 +824,8 @@
     <string name="txt_foodhome_item_shicai">主要食材</string>
     <string name="txt_foodhome_item_renqun">推荐人群</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="find_your_club">在这里, 找到属于你的俱乐部</string>
+
 </resources>
