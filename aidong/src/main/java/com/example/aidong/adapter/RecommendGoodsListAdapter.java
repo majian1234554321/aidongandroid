@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.aidong.R;
-import com.example.aidong.model.GoodsBean;
+import com.example.aidong.model.bean.GoodsBean;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -40,9 +40,9 @@ public class RecommendGoodsListAdapter extends RecyclerView.Adapter<RecommendGoo
     @Override
     public void onBindViewHolder(RecommendGoodsListViewHolder holder, int position) {
         GoodsBean bean = date.get(position);
-        imageLoader.displayImage(bean.cover,holder.image);
-        holder.name.setText(bean.name);
-        holder.price.setText(bean.price);
+        imageLoader.displayImage(bean.getCover(),holder.image);
+        holder.name.setText(bean.getName());
+        holder.price.setText(bean.getPrice());
     }
 
      static class RecommendGoodsListViewHolder extends RecyclerView.ViewHolder{

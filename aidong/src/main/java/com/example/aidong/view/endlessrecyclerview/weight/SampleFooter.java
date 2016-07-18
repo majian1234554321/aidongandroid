@@ -31,6 +31,6 @@ public class SampleFooter extends RelativeLayout {
 
     public void init(Context context) {
 
-        inflate(context, R.layout.sample_footer, this);
+        inflate(context, R.layout.recyclerview_sample_footer, this);
     }
 }

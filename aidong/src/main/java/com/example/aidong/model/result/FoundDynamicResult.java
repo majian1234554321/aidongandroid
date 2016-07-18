@@ -27,6 +27,7 @@ public class FoundDynamicResult extends MsgResult {
 		public void setDynamic(ArrayList<Dynamic> dynamic) {
 			this.dynamic = dynamic;
 		}
+
 		
 		
 	}

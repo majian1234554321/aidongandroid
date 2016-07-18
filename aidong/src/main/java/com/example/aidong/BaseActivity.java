@@ -3,6 +3,7 @@ package com.example.aidong;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -10,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.aidong.http.Logic;
+import com.example.aidong.view.endlessrecyclerview.utils.RecyclerViewStateUtils;
+import com.example.aidong.view.endlessrecyclerview.weight.LoadingFooter;
 import com.leyuan.commonlibrary.http.IHttpCallback;
 import com.leyuan.commonlibrary.http.IHttpTask;
 import com.leyuan.commonlibrary.http.IHttpToastCallBack;
@@ -167,4 +170,23 @@ public class BaseActivity extends AppCompatActivity implements IHttpToastCallBac
             activity.finish();
         }
     }
+
+    /**
+     * 给RecyclerView添加正在加载的脚布局
+     * @param recyclerView RecyclerView引用
+     * @param size  数据大小
+     */
+    public void showLoadFooterView(RecyclerView recyclerView, int size) {
+        RecyclerViewStateUtils.setFooterViewState(this, recyclerView, size, LoadingFooter.State.Loading, null);
+    }
+
+
+    /**
+     * 隐藏RecyclerView的脚布局
+     * @param recyclerView
+     */
+    public void hideFooterView(RecyclerView recyclerView) {
+        RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.Normal);
+    }
+
 }

@@ -59,6 +59,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.jiechic.library:xUtils:2.6.14'
     compile 'com.android.support:design:23.4.0'
+    compile 'com.android.support:recyclerview-v7:23.4.0'
     compile 'com.google.code.gson:gson:2.6.2'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     compile 'com.loopeer.android.thirdparty.pulltorefresh:Android-PullToRefresh:2.1.1'

@@ -126,5 +126,5 @@ public class UrlLink extends BaseUrlLink {
 	public static final String MEMBER_SIGN_IN= URL + "mine/cards/";
 
 
-
+	public static final String HOME= URL + "home";
 }

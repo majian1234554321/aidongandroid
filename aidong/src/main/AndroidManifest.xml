@@ -180,7 +180,8 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name=".activity.found.FilterAroundPeopleActivity" />
-        <activity android:name=".view.wheelcity.LoadAddressDataActivity"></activity>
+        <activity android:name=".view.wheelcity.LoadAddressDataActivity" />
+        <activity android:name=".activity.home.NurtureActivity"></activity>
     </application>
 
 </manifest>

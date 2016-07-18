@@ -3,9 +3,6 @@ package com.example.aidong.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.view.View;
-
-import com.example.aidong.fragment.FoundFragment;
 
 import java.util.List;
 

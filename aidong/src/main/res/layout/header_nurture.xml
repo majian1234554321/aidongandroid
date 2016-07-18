@@ -2,13 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+
     android:orientation="vertical">
-    <ImageView
-        android:id="@+id/iv_recommend"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/pref_50dp" />
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_recommend"
+        android:id="@+id/rv_type"
         android:layout_width="match_parent"
-        android:layout_height="50dp"/>
+        android:layout_height="100dp">
+    </android.support.v7.widget.RecyclerView>
 </LinearLayout>
