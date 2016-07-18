@@ -124,4 +124,6 @@
     <color name="refresh_green">#ff99cc00</color>
     <color name="color_ff">#F0F0F0</color>
     <color name="color_00">#8A000000</color>
+    <color name="base_theme">#ebebeb</color>
+    <color name="mine_divider">#dfe0e6</color>
 </resources>

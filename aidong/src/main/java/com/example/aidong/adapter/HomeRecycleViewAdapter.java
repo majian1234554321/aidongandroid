@@ -9,12 +9,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.aidong.R;
+import com.example.aidong.model.RecycleviewItemBean;
 import com.example.aidong.model.bean.HomeBean;
 import com.example.aidong.view.MyListView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * 首页RecycleView适配器
