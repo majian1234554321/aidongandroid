@@ -126,6 +126,9 @@
         <activity android:name=".scan.activity.ScanResultActivity" />
         <activity android:name=".scan.activity.ScanActivity" />
         <activity android:name=".activity.venues.VenuesDetailsActivity" />
+        <activity android:name="com.leyuan.support.ui.DemoActivity" />
+
+
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"

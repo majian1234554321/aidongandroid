@@ -138,7 +138,7 @@ public class HomePageFragment extends BaseFragment {
 
         @Override
         public void onError(String reason, int requestCode) {
-            ToastUtil.show("请求发生错误...", getActivity());
+
         }
     }
 
