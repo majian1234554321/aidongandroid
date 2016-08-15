@@ -13,7 +13,7 @@ public interface CoursesActivityPresent {
      * @param category 课程类型
      * @param day 从当前开始向后天数
      */
-    void pullToRefreshData(RecyclerView recyclerView,int category,int day);
+    void pullToRefreshData(RecyclerView recyclerView, int category, int day);
 
 
     /**
@@ -24,5 +24,5 @@ public interface CoursesActivityPresent {
      * @param day 从当前开始向后天数
      * @param page 页码
      */
-    void requestMoreData(RecyclerView recyclerView, int pageSize,int category,int day, int page);
+    void requestMoreData(RecyclerView recyclerView, int pageSize, int category, int day, int page);
 }

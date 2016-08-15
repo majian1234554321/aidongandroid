@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.aidong.R;
-import com.example.aidong.model.bean.GoodsBean;
+import com.leyuan.support.entity.GoodsBean;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;

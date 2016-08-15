@@ -5,7 +5,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.aidong.R;
-import com.example.aidong.model.bean.HomeItemBean;
+import com.leyuan.support.entity.HomeItemBean;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**

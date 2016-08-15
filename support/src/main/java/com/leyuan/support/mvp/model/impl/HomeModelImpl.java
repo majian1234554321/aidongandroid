@@ -15,7 +15,7 @@ import rx.Subscriber;
  * 首页
  * Created by song on 2016/8/13.
  */
-public class HomeModelImpl implements HomeModel{
+public class HomeModelImpl implements HomeModel {
     private HomeService homeService;
 
     public HomeModelImpl() {

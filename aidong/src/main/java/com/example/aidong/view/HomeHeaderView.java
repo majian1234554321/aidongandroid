@@ -17,7 +17,7 @@ import com.example.aidong.activity.home.NurtureActivity;
 import com.example.aidong.adapter.HomeViewPagerAdapter;
 import com.example.aidong.utils.ImageLoadConfig;
 import com.leyuan.commonlibrary.util.ToastUtil;
-import com.leyuan.support.ui.DemoActivity;
+
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -122,8 +122,7 @@ public class HomeHeaderView extends RelativeLayout implements View.OnClickListen
         Intent intent;
         switch (view.getId()){
             case R.id.tv_course:
-                intent = new Intent(context,DemoActivity.class);
-                context.startActivity(intent);
+
 
                 break;
             case R.id.tv_nurture:

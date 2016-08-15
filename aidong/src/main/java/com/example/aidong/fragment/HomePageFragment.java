@@ -1,7 +1,6 @@
 package com.example.aidong.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,144 +11,128 @@ import android.view.ViewGroup;
 import com.example.aidong.BaseFragment;
 import com.example.aidong.R;
 import com.example.aidong.adapter.HomeRecycleViewAdapter;
-import com.example.aidong.common.UrlLink;
-import com.example.aidong.http.HttpConfig;
-import com.example.aidong.model.bean.HomeBean;
-import com.example.aidong.model.result.HomeResult;
-import com.example.aidong.utils.Constants;
-import com.example.aidong.utils.LogUtils;
 import com.example.aidong.view.HomeHeaderView;
-import com.example.aidong.view.endlessrecyclerview.EndlessRecyclerOnScrollListener;
-import com.example.aidong.view.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
-import com.example.aidong.view.endlessrecyclerview.RecyclerViewUtils;
-import com.example.aidong.view.endlessrecyclerview.utils.RecyclerViewStateUtils;
-import com.example.aidong.view.endlessrecyclerview.weight.LoadingFooter;
-import com.leyuan.commonlibrary.http.IHttpCallback;
-import com.leyuan.commonlibrary.http.IHttpTask;
-import com.leyuan.commonlibrary.util.ToastUtil;
+import com.leyuan.support.entity.HomeBean;
+import com.leyuan.support.mvp.presenter.HomeFragmentPresent;
+import com.leyuan.support.mvp.presenter.impl.HomeFragmentPresentImpl;
+import com.leyuan.support.mvp.view.HomeFragmentView;
+import com.leyuan.support.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
+import com.leyuan.support.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
+import com.leyuan.support.widget.endlessrecyclerview.RecyclerViewUtils;
+import com.leyuan.support.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
+import com.leyuan.support.widget.endlessrecyclerview.weight.LoadingFooter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 首页
  * @author song
  */
-public class HomePageFragment extends BaseFragment {
-    private RecyclerView recyclerView;
-    private SwipeRefreshLayout swipeRefreshLayout;
+public class HomePageFragment extends BaseFragment implements HomeFragmentView{
+    public static final int PAGE_SIZE = 20;
 
-    private int page = 1;
+    private RecyclerView recyclerView;
+    private SwipeRefreshLayout refreshLayout;
+
+    private int currPage = 1;
     private ArrayList<HomeBean> data = new ArrayList<>();
     private HeaderAndFooterRecyclerViewAdapter headerAndFooterRecyclerViewAdapter;
-    private HomeRecycleViewAdapter adapter;
-
+    private HomeRecycleViewAdapter homeAdapter;
+    private HomeFragmentPresent present;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return View.inflate(getActivity(), R.layout.fragment_home_page, null);
+    public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_home_page, null);
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getHomeData(Constants.NORMAL_LOAD);
+        present = new HomeFragmentPresentImpl(getContext(),this);
         initSwipeRefreshLayout(view);
         initRecyclerView(view);
     }
 
     private void initRecyclerView(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_home);
-        adapter = new HomeRecycleViewAdapter(data,getActivity());
-        headerAndFooterRecyclerViewAdapter = new HeaderAndFooterRecyclerViewAdapter(adapter);
-        recyclerView.setAdapter(headerAndFooterRecyclerViewAdapter);
+        data = new ArrayList<>();
+        homeAdapter = new HomeRecycleViewAdapter(getActivity());
+        headerAndFooterRecyclerViewAdapter = new HeaderAndFooterRecyclerViewAdapter(homeAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(headerAndFooterRecyclerViewAdapter);
         recyclerView.addOnScrollListener(onScrollListener);
         RecyclerViewUtils.setHeaderView(recyclerView, new HomeHeaderView(getContext()));
     }
 
     private void initSwipeRefreshLayout(View view) {
-        swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.sr_refresh);
-        swipeRefreshLayout.setColorSchemeResources(R.color.refresh_blue,
-                R.color.refresh_green, R.color.refresh_orange, R.color.refresh_red);
-        swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
+        refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.sr_refresh);
+        setColorSchemeResources(refreshLayout);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                currPage = 1;
+                present.pullToRefreshData(recyclerView);
+            }
+        });
+
+        refreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                refreshLayout.setRefreshing(true);
+                present.pullToRefreshData(recyclerView);
+            }
+        });
     }
 
-    private void getHomeData(int requestCode) {
-        addTask(new DataCallBack(), new IHttpTask(UrlLink.HOME, paramsInit(page), HomeResult.class),
-                HttpConfig.GET,requestCode);
-    }
-
-    /**下拉刷新*/
-    private SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener(){
-        @Override
-        public void onRefresh() {
-            ToastUtil.show("refresh...", getActivity());
-            page = 1;
-            getHomeData(Constants.PULL_DOWN_TO_REFRESH);
-        }
-    };
-
-    /**加载下一页*/
-    public EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener() {
+    private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
         @Override
         public void onLoadNextPage(View view) {
-            ToastUtil.show("more...", getActivity());
-            if (data != null && data.size() > 0) {
-                showLoadFooterView();
-                page ++;
-                getHomeData(Constants.PULL_UP_LOAD_MORE);
+            currPage ++;
+            if (data != null && !data.isEmpty()) {
+                present.requestMoreData(recyclerView,PAGE_SIZE,currPage);
             }
         }
     };
 
-    private class DataCallBack implements IHttpCallback {
-        @Override
-        public void onGetData(Object result, int requestCode, String response) {
-            hideFooterView();
-            LogUtils.e("home", result.toString());
-            HomeResult homeResult = (HomeResult) result;
-            if (homeResult.getCode() != Constants.CODE_OK){
-                ToastUtil.show("code_error",getContext());
-                return;
-            }
-            switch (requestCode){
-                case Constants.NORMAL_LOAD:
-                    if (homeResult.getData() != null && homeResult.getData().home != null) {
-                        data.addAll(homeResult.getData().home);
-                    }
-                    break;
-                case Constants.PULL_DOWN_TO_REFRESH:
-                    if (homeResult.getData() != null && homeResult.getData().home != null) {
-                        data.clear();
-                        data.addAll(homeResult.getData().home);
-                        adapter.setData(data);
-                        headerAndFooterRecyclerViewAdapter.notifyDataSetChanged();
-                    }
-                    break;
-                case Constants.PULL_UP_LOAD_MORE:
-                    if (homeResult.getData() != null && homeResult.getData().home != null) {
-                        data.addAll(homeResult.getData().home);
-                        adapter.setData(data);
-                        headerAndFooterRecyclerViewAdapter.notifyDataSetChanged();
-                    }
-                    break;
-            }
+    @Override
+    public void updateRecyclerView(List<HomeBean> homeBeanList) {
+        if(refreshLayout.isRefreshing()){
+            data.clear();
+            refreshLayout.setRefreshing(false);
         }
-
-        @Override
-        public void onError(String reason, int requestCode) {
-
-        }
+        data.addAll(homeBeanList);
+        homeAdapter.setData(data);
+        headerAndFooterRecyclerViewAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void showEmptyView() {
 
-    public void showLoadFooterView() {
-        RecyclerViewStateUtils.setFooterViewState(getActivity(), recyclerView, data.size(), LoadingFooter.State.Loading, null);
     }
 
+    @Override
+    public void hideEmptyView() {
 
-    public void hideFooterView() {
-        RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.Normal);
     }
 
+    @Override
+    public void showRecyclerView() {
+
+    }
+
+    @Override
+    public void hideRecyclerView() {
+
+    }
+
+    @Override
+    public void showErrorView() {
+
+    }
+
+    @Override
+    public void showEndFooterView() {
+        RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
+    }
 }

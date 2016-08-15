@@ -23,7 +23,7 @@ public class HomeFragmentPresentImpl implements HomeFragmentPresent{
     private HomeFragmentView homeFragmentView;
     private HomeModel homeModel;
 
-    public HomeFragmentPresentImpl(Context context, HomeFragmentView homeFragmentView, HomeModel homeModel) {
+    public HomeFragmentPresentImpl(Context context, HomeFragmentView homeFragmentView) {
         this.context = context;
         this.homeFragmentView = homeFragmentView;
         homeModel = new HomeModelImpl();
@@ -43,7 +43,7 @@ public class HomeFragmentPresentImpl implements HomeFragmentPresent{
                     homeFragmentView.updateRecyclerView(homeBeanList);
                 }
             }
-        },Constant.FIRST_PAGE);
+        }, Constant.FIRST_PAGE);
     }
 
     @Override

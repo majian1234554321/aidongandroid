@@ -9,9 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.aidong.R;
-import com.example.aidong.model.RecycleviewItemBean;
-import com.example.aidong.model.bean.HomeBean;
 import com.example.aidong.view.MyListView;
+import com.leyuan.support.entity.HomeBean;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -30,8 +29,8 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private ImageLoader imageLoader = ImageLoader.getInstance();
     private List<HomeBean> data = new ArrayList<>();
 
-    public HomeRecycleViewAdapter(List<HomeBean> data,Context context) {
-        this.data = data;
+
+    public HomeRecycleViewAdapter(Context context) {
         this.context = context;
     }
 
@@ -58,7 +57,7 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if(viewType == TYPE_RECOMMEND_ACTIVITY){
-            View view = View.inflate(parent.getContext(),R.layout.item_recommend_activity_rv,null);
+            View view = View.inflate(parent.getContext(), R.layout.item_recommend_activity_rv,null);
             RecommendActivityViewHolder holder = new RecommendActivityViewHolder(view);
             return holder;
         }else if(viewType == TYPE_RECOMMEND_GOODS){

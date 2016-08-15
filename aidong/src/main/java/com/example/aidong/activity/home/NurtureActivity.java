@@ -18,13 +18,13 @@ import com.example.aidong.model.bean.NurtureBean;
 import com.example.aidong.model.bean.TypeOfNurtureBean;
 import com.example.aidong.utils.Constants;
 import com.example.aidong.utils.NetworkUtils;
-import com.example.aidong.view.endlessrecyclerview.EndlessRecyclerOnScrollListener;
-import com.example.aidong.view.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
-import com.example.aidong.view.endlessrecyclerview.HeaderSpanSizeLookup;
-import com.example.aidong.view.endlessrecyclerview.RecyclerViewUtils;
-import com.example.aidong.view.endlessrecyclerview.utils.RecyclerViewStateUtils;
-import com.example.aidong.view.endlessrecyclerview.weight.LoadingFooter;
 import com.leyuan.commonlibrary.util.ToastUtil;
+import com.leyuan.support.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
+import com.leyuan.support.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
+import com.leyuan.support.widget.endlessrecyclerview.HeaderSpanSizeLookup;
+import com.leyuan.support.widget.endlessrecyclerview.RecyclerViewUtils;
+import com.leyuan.support.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
+import com.leyuan.support.widget.endlessrecyclerview.weight.LoadingFooter;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -117,7 +117,7 @@ public class NurtureActivity extends BaseActivity {
                 Log.d("@Cundong", "the state is Loading, just wait..");
                 return;
             }
-            showLoadFooterView(recyclerView,10);
+          //  showLoadFooterView(recyclerView,10);
             page ++;
             requestData();
 
@@ -181,7 +181,7 @@ public class NurtureActivity extends BaseActivity {
                 }
 
                 adapter.setData(data);
-                hideFooterView(recyclerView);
+                //hideFooterView(recyclerView);
                 headerAndFooterRecyclerViewAdapter.notifyDataSetChanged();
 
                 if(page > 3){

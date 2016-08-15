@@ -43,7 +43,7 @@ public class CoursesActivityPresentImpl implements CoursesActivityPresent{
                    coursesActivityView.updateRecyclerView(courseBeanList);
                }
            }
-       },category,day,Constant.FIRST_PAGE);
+       },category,day, Constant.FIRST_PAGE);
     }
 
     @Override

@@ -2,11 +2,9 @@ package com.example.aidong;
 
 
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.widget.SwipeRefreshLayout;
 
 import com.example.aidong.http.Logic;
-import com.example.aidong.view.endlessrecyclerview.utils.RecyclerViewStateUtils;
-import com.example.aidong.view.endlessrecyclerview.weight.LoadingFooter;
 import com.leyuan.commonlibrary.http.IHttpCallback;
 import com.leyuan.commonlibrary.http.IHttpTask;
 import com.leyuan.commonlibrary.http.IHttpToastCallBack;
@@ -45,20 +43,10 @@ public class BaseFragment extends Fragment implements IHttpToastCallBack {
     }
 
     /**
-     * 给RecyclerView添加正在加载的脚布局
-     * @param recyclerView RecyclerView引用
-     * @param size  数据大小
+     * 设置下拉刷新颜色
+     * @param refreshLayout
      */
-    public void showLoadFooterView(RecyclerView recyclerView, int size) {
-        RecyclerViewStateUtils.setFooterViewState(getActivity(), recyclerView, size, LoadingFooter.State.Loading, null);
-    }
-
-
-    /**
-     * 隐藏RecyclerView的脚布局
-     * @param recyclerView
-     */
-    public void hideFooterView(RecyclerView recyclerView) {
-        RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.Normal);
+    protected void setColorSchemeResources(SwipeRefreshLayout refreshLayout){
+        refreshLayout.setColorSchemeResources(com.leyuan.support.R.color.orange, com.leyuan.support.R.color.red, com.leyuan.support.R.color.black, com.leyuan.support.R.color.gray);
     }
 }

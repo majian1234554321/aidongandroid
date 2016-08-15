@@ -14,11 +14,11 @@ import com.example.aidong.R;
 import com.example.aidong.adapter.FindPeopleAdapter;
 import com.example.aidong.model.bean.PeopleBean;
 import com.example.aidong.utils.Constants;
-import com.example.aidong.view.endlessrecyclerview.EndlessRecyclerOnScrollListener;
-import com.example.aidong.view.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
-import com.example.aidong.view.endlessrecyclerview.utils.RecyclerViewStateUtils;
-import com.example.aidong.view.endlessrecyclerview.weight.LoadingFooter;
 import com.leyuan.commonlibrary.util.ToastUtil;
+import com.leyuan.support.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
+import com.leyuan.support.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
+import com.leyuan.support.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
+import com.leyuan.support.widget.endlessrecyclerview.weight.LoadingFooter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -112,11 +112,11 @@ public class FindPeopleFragment extends BaseFragment{
                 }
 
                 adapter.setData(data);
-                hideFooterView(recyclerView);
+                //hideFooterView(recyclerView);
                 headerAndFooterRecyclerViewAdapter.notifyDataSetChanged();
 
                 if(page > 3){
-                    RecyclerViewStateUtils.setFooterViewState(recyclerView,LoadingFooter.State.TheEnd);
+                    RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
                     return;
                 }
 
@@ -156,7 +156,7 @@ public class FindPeopleFragment extends BaseFragment{
         public void onLoadNextPage(View view) {
             ToastUtil.show("more...", getActivity());
             if (data != null && data.size() > 0) {
-                showLoadFooterView(recyclerView,10);
+                //showLoadFooterView(recyclerView,10);
                 page ++;
                 getPeopleData(Constants.PULL_UP_LOAD_MORE);
             }

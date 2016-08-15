@@ -15,7 +15,7 @@ import rx.Subscriber;
  * 课程
  * Created by song on 2016/8/13.
  */
-public class CourseModelImpl implements CourseModel{
+public class CourseModelImpl implements CourseModel {
     private CourseService courseService;
 
     public CourseModelImpl() {

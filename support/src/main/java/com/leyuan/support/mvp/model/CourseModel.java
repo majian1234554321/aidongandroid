@@ -20,7 +20,7 @@ public interface CourseModel {
      * @param day 从当前开始向后天数
      * @param page 页码
      */
-    void getCourses(Subscriber<List<CourseBean>> subscriber, int cat,int day,int page);
+    void getCourses(Subscriber<List<CourseBean>> subscriber, int cat, int day, int page);
 
     /**
      * 获取课程详情
