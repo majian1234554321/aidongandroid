@@ -23,7 +23,7 @@ import static android.support.v4.view.ViewPager.OnPageChangeListener;
 /**
  * ViewPager指示条
  */
-public class CircleIndicator extends LinearLayout {
+public class ViewPagerIndicator extends LinearLayout {
 
     private final static int DEFAULT_INDICATOR_WIDTH = 5;
     private ViewPager mViewpager;
@@ -32,8 +32,8 @@ public class CircleIndicator extends LinearLayout {
     private int mIndicatorHeight = -1;
     private int mAnimatorResId = R.animator.scale_with_alpha;
     private int mAnimatorReverseResId = 0;
-    private int mIndicatorBackgroundResId = R.drawable.white_radius;
-    private int mIndicatorUnselectedBackgroundResId = R.drawable.white_radius;
+    private int mIndicatorBackgroundResId = R.drawable.dot_white_radius;
+    private int mIndicatorUnselectedBackgroundResId = R.drawable.dot_white_radius;
     private Animator mAnimatorOut;
     private Animator mAnimatorIn;
     private Animator mImmediateAnimatorOut;
@@ -41,23 +41,23 @@ public class CircleIndicator extends LinearLayout {
 
     private int mLastPosition = -1;
 
-    public CircleIndicator(Context context) {
+    public ViewPagerIndicator(Context context) {
         super(context);
         init(context, null);
     }
 
-    public CircleIndicator(Context context, AttributeSet attrs) {
+    public ViewPagerIndicator(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public CircleIndicator(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ViewPagerIndicator(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public CircleIndicator(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public ViewPagerIndicator(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(context, attrs);
     }
@@ -72,17 +72,17 @@ public class CircleIndicator extends LinearLayout {
             return;
         }
 
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CircleIndicator);
-        mIndicatorWidth = typedArray.getDimensionPixelSize(R.styleable.CircleIndicator_ci_width, -1);
-        mIndicatorHeight = typedArray.getDimensionPixelSize(R.styleable.CircleIndicator_ci_height, -1);
-        mIndicatorMargin = typedArray.getDimensionPixelSize(R.styleable.CircleIndicator_ci_margin, -1);
-        mAnimatorResId = typedArray.getResourceId(R.styleable.CircleIndicator_ci_animator,R.animator.scale_with_alpha);
-        mAnimatorReverseResId = typedArray.getResourceId(R.styleable.CircleIndicator_ci_animator_reverse, 0);
-        mIndicatorBackgroundResId = typedArray.getResourceId(R.styleable.CircleIndicator_ci_drawable, R.drawable.white_radius);
-        mIndicatorUnselectedBackgroundResId = typedArray.getResourceId(R.styleable.CircleIndicator_ci_drawable_unselected,mIndicatorBackgroundResId);
-        int orientation = typedArray.getInt(R.styleable.CircleIndicator_ci_orientation, -1);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ViewPagerIndicator);
+        mIndicatorWidth = typedArray.getDimensionPixelSize(R.styleable.ViewPagerIndicator_ci_width, -1);
+        mIndicatorHeight = typedArray.getDimensionPixelSize(R.styleable.ViewPagerIndicator_ci_height, -1);
+        mIndicatorMargin = typedArray.getDimensionPixelSize(R.styleable.ViewPagerIndicator_ci_margin, -1);
+        mAnimatorResId = typedArray.getResourceId(R.styleable.ViewPagerIndicator_ci_animator,R.animator.scale_with_alpha);
+        mAnimatorReverseResId = typedArray.getResourceId(R.styleable.ViewPagerIndicator_ci_animator_reverse, 0);
+        mIndicatorBackgroundResId = typedArray.getResourceId(R.styleable.ViewPagerIndicator_ci_drawable, R.drawable.dot_white_radius);
+        mIndicatorUnselectedBackgroundResId = typedArray.getResourceId(R.styleable.ViewPagerIndicator_ci_drawable_unselected,mIndicatorBackgroundResId);
+        int orientation = typedArray.getInt(R.styleable.ViewPagerIndicator_ci_orientation, -1);
         setOrientation(orientation == VERTICAL ? VERTICAL : HORIZONTAL);
-        int gravity = typedArray.getInt(R.styleable.CircleIndicator_ci_gravity, -1);
+        int gravity = typedArray.getInt(R.styleable.ViewPagerIndicator_ci_gravity, -1);
         setGravity(gravity >= 0 ? gravity : Gravity.CENTER);
         typedArray.recycle();
     }
@@ -92,7 +92,7 @@ public class CircleIndicator extends LinearLayout {
      */
     public void configureIndicator(int indicatorWidth, int indicatorHeight, int indicatorMargin) {
         configureIndicator(indicatorWidth, indicatorHeight, indicatorMargin,
-                R.animator.scale_with_alpha, 0, R.drawable.white_radius, R.drawable.white_radius);
+                R.animator.scale_with_alpha, 0, R.drawable.dot_white_radius, R.drawable.dot_white_radius);
     }
 
     public void configureIndicator(int indicatorWidth, int indicatorHeight, int indicatorMargin, @AnimatorRes int animatorId, @AnimatorRes int animatorReverseId,
@@ -119,7 +119,7 @@ public class CircleIndicator extends LinearLayout {
         mAnimatorIn = createAnimatorIn(context);
         mImmediateAnimatorIn = createAnimatorIn(context);
         mImmediateAnimatorIn.setDuration(0);
-        mIndicatorBackgroundResId = (mIndicatorBackgroundResId == 0) ? R.drawable.white_radius : mIndicatorBackgroundResId;
+        mIndicatorBackgroundResId = (mIndicatorBackgroundResId == 0) ? R.drawable.dot_white_radius : mIndicatorBackgroundResId;
         mIndicatorUnselectedBackgroundResId = (mIndicatorUnselectedBackgroundResId == 0) ? mIndicatorBackgroundResId : mIndicatorUnselectedBackgroundResId;
     }
 
@@ -255,7 +255,12 @@ public class CircleIndicator extends LinearLayout {
         Indicator.setLayoutParams(lp);
 
         animator.setTarget(Indicator);
-        animator.start();
+        try {
+            animator.start();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     private class ReverseInterpolator implements Interpolator {

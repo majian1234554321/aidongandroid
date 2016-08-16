@@ -7,7 +7,7 @@ import android.view.ViewStub;
 import android.widget.RelativeLayout;
 
 import com.leyuan.support.R;
-import com.wang.avi.AVLoadingIndicatorView;
+import com.leyuan.support.widget.loadingindicator.AVLoadingIndicatorView;
 
 
 /**
@@ -41,7 +41,7 @@ public class LoadingFooter extends RelativeLayout {
 
     public void init(Context context) {
 
-        inflate(context, R.layout.sample_common_list_footer, this);
+        inflate(context, R.layout.list_footer, this);
         setOnClickListener(null);
 
         setState(State.Normal, true);
@@ -95,7 +95,7 @@ public class LoadingFooter extends RelativeLayout {
                 }
 
                 if (mLoadingView == null) {
-                    ViewStub viewStub = (ViewStub) findViewById(R.id.loading_viewstub);
+                    ViewStub viewStub = (ViewStub) findViewById(R.id.vs_loading);
                     mLoadingView = viewStub.inflate();
                     aviView = (AVLoadingIndicatorView)mLoadingView.findViewById(R.id.avi);
                 } else {
@@ -116,7 +116,7 @@ public class LoadingFooter extends RelativeLayout {
                 }
 
                 if (mTheEndView == null) {
-                    ViewStub viewStub = (ViewStub) findViewById(R.id.end_viewstub);
+                    ViewStub viewStub = (ViewStub) findViewById(R.id.vs_end);
                     mTheEndView = viewStub.inflate();
                 } else {
                     mTheEndView.setVisibility(VISIBLE);
@@ -135,7 +135,7 @@ public class LoadingFooter extends RelativeLayout {
                 }
 
                 if (mNetworkErrorView == null) {
-                    ViewStub viewStub = (ViewStub) findViewById(R.id.network_error_viewstub);
+                    ViewStub viewStub = (ViewStub) findViewById(R.id.vs_network_error);
                     mNetworkErrorView = viewStub.inflate();
                 } else {
                     mNetworkErrorView.setVisibility(VISIBLE);

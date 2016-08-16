@@ -1,6 +1,7 @@
 package com.example.aidong.fragment;
 
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,11 +12,12 @@ import android.view.ViewGroup;
 import com.example.aidong.BaseFragment;
 import com.example.aidong.R;
 import com.example.aidong.adapter.HomeRecycleViewAdapter;
-import com.example.aidong.view.HomeHeaderView;
+import com.example.aidong.adapter.SamplePagerAdapter;
 import com.leyuan.support.entity.HomeBean;
 import com.leyuan.support.mvp.presenter.HomeFragmentPresent;
 import com.leyuan.support.mvp.presenter.impl.HomeFragmentPresentImpl;
 import com.leyuan.support.mvp.view.HomeFragmentView;
+import com.leyuan.support.widget.customview.ViewPagerIndicator;
 import com.leyuan.support.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.support.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.support.widget.endlessrecyclerview.RecyclerViewUtils;
@@ -31,6 +33,10 @@ import java.util.List;
  */
 public class HomePageFragment extends BaseFragment implements HomeFragmentView{
     public static final int PAGE_SIZE = 20;
+
+    private View headerView;
+    private ViewPager viewPager;
+
 
     private RecyclerView recyclerView;
     private SwipeRefreshLayout refreshLayout;
@@ -50,8 +56,20 @@ public class HomePageFragment extends BaseFragment implements HomeFragmentView{
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         present = new HomeFragmentPresentImpl(getContext(),this);
+        initHeaderView();
         initSwipeRefreshLayout(view);
         initRecyclerView(view);
+    }
+
+    private void initHeaderView(){
+        headerView = View.inflate(getContext(),R.layout.header_home,null);
+        viewPager = (ViewPager) headerView.findViewById(R.id.vp_home);
+        ViewPagerIndicator indicator = (ViewPagerIndicator)headerView.findViewById(R.id.vp_indicator);
+        SamplePagerAdapter pagerAdapter = new SamplePagerAdapter();
+        //HomeViewPagerAdapter pagerAdapter = new HomeViewPagerAdapter(imageList);
+        viewPager.setAdapter(pagerAdapter);
+        indicator.setViewPager(viewPager);
+        pagerAdapter.registerDataSetObserver(indicator.getDataSetObserver());
     }
 
     private void initRecyclerView(View view) {
@@ -62,7 +80,7 @@ public class HomePageFragment extends BaseFragment implements HomeFragmentView{
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(headerAndFooterRecyclerViewAdapter);
         recyclerView.addOnScrollListener(onScrollListener);
-        RecyclerViewUtils.setHeaderView(recyclerView, new HomeHeaderView(getContext()));
+        RecyclerViewUtils.setHeaderView(recyclerView, headerView);
     }
 
     private void initSwipeRefreshLayout(View view) {

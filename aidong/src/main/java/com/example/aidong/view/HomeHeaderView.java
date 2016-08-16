@@ -2,22 +2,17 @@ package com.example.aidong.view;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.example.aidong.R;
 import com.example.aidong.activity.home.NurtureActivity;
-import com.example.aidong.adapter.HomeViewPagerAdapter;
+import com.example.aidong.adapter.SamplePagerAdapter;
 import com.example.aidong.utils.ImageLoadConfig;
-import com.leyuan.commonlibrary.util.ToastUtil;
-
+import com.leyuan.support.widget.customview.ViewPagerIndicator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -31,16 +26,13 @@ import java.util.List;
 public class HomeHeaderView extends RelativeLayout implements View.OnClickListener{
     private Context context;
     private ViewPager viewPager;
-    private LinearLayout dotLayout;
-    private ImageView[] dotArray;
+    private ViewPagerIndicator indicator;
+
     private List<View> imageList = new ArrayList<>();
     private List<String> adList = new ArrayList<>();
     private DisplayImageOptions options;
     private ImageLoader loader;
 
-    private int currentPage;
-    private boolean isStop = false;     //是否停止轮播
-    private static final  int LOOP_GAP = 5000;
 
     public HomeHeaderView(Context context) {
         this(context,null,0);
@@ -61,7 +53,8 @@ public class HomeHeaderView extends RelativeLayout implements View.OnClickListen
         options = new ImageLoadConfig().getOptions(R.drawable.renzheng);
         View header = inflate(context, R.layout.header_home, this);
         viewPager = (ViewPager) header.findViewById(R.id.vp_home);
-        dotLayout = (LinearLayout)header.findViewById(R.id.ll_dot);
+        indicator = (ViewPagerIndicator)header.findViewById(R.id.vp_indicator);
+
         header.findViewById(R.id.tv_course).setOnClickListener(this);
         header.findViewById(R.id.tv_nurture).setOnClickListener(this);
         header.findViewById(R.id.tv_food).setOnClickListener(this);
@@ -69,52 +62,13 @@ public class HomeHeaderView extends RelativeLayout implements View.OnClickListen
         header.findViewById(R.id.tv_equipmen).setOnClickListener(this);
         header.findViewById(R.id.tv_competition).setOnClickListener(this);
 
-        for (int i = 0; i < 5; i++) {
-            if (i % 2 == 0){
-                adList.add("http://180.163.110.50:8989/pic/1001/764248.jpg");
-            }else{
-                adList.add("http://f.hiphotos.baidu.com/baike/pic/item/6159252dd42a2834b1c7cf5b59b5c9ea15cebf79.jpg");
-            }
-        }
 
-        int size = adList.size();
-        for (int i = 0; i < size; i++) {
-            ImageView image = new ImageView(context);
-            image.setScaleType(ImageView.ScaleType.FIT_XY);
-            loader.displayImage(adList.get(i),image,options);
-            image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ToastUtil.show("click",context);
-                }
-            });
-            imageList.add(image);
-        }
-
-        //将点加入到ViewGroup中
-        dotArray = new ImageView[adList.size()];
-        dotLayout.removeAllViews();
-        for (int i = 0; i < dotArray.length; i++) {
-            ImageView imageView = new ImageView(context);
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(10, 10));
-            dotArray[i] = imageView;
-            if (i == 0) {
-                dotArray[i].setBackgroundResource(R.drawable.page_indicator_focused);
-            } else {
-                dotArray[i].setBackgroundResource(R.drawable.page_indicator_unfocused);
-            }
-
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams
-                    (new ViewGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
-            layoutParams.leftMargin = 10;
-            layoutParams.rightMargin = 10;
-            dotLayout.addView(imageView, layoutParams);
-        }
-
-        HomeViewPagerAdapter pagerAdapter = new HomeViewPagerAdapter(imageList);
+        SamplePagerAdapter pagerAdapter = new SamplePagerAdapter();
+        //HomeViewPagerAdapter pagerAdapter = new HomeViewPagerAdapter(imageList);
         viewPager.setAdapter(pagerAdapter);
-        viewPager.addOnPageChangeListener(new OnPageChangeListenerImpl());
-        new PointThread().start();
+        indicator.setViewPager(viewPager);
+        viewPager.setCurrentItem(0);
+        //viewPager.addOnPageChangeListener(new OnPageChangeListenerImpl());
     }
 
     @Override
@@ -122,7 +76,6 @@ public class HomeHeaderView extends RelativeLayout implements View.OnClickListen
         Intent intent;
         switch (view.getId()){
             case R.id.tv_course:
-
 
                 break;
             case R.id.tv_nurture:
@@ -140,51 +93,5 @@ public class HomeHeaderView extends RelativeLayout implements View.OnClickListen
         }
     }
 
-    /**ViewPager滑动时更新指示点*/
-    private  class OnPageChangeListenerImpl extends ViewPager.SimpleOnPageChangeListener {
-        @Override
-        public void onPageSelected(int position) {
-            currentPage = position;
-            position = position % imageList.size();
-            for (int i = 0; i < imageList.size(); i++) {
-                if (i == position) {
-                    dotArray[i].setBackgroundResource(R.drawable.page_indicator_focused);
-                } else {
-                    dotArray[i].setBackgroundResource(R.drawable.page_indicator_unfocused);
-                }
-            }
-        }
-    }
 
-    //TODO handler泄露
-    private final Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            if (null != viewPager) {
-                viewPager.setCurrentItem(msg.what);
-            }
-            super.handleMessage(msg);
-        }
-    };
-
-    /**焦点图循环 */
-    private class PointThread extends Thread {
-        @Override
-        public void run() {
-            while (!isStop) {
-                try {
-                    Thread.sleep(LOOP_GAP);
-                    currentPage++;
-                    handler.sendEmptyMessage(currentPage);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    /**停止焦点图循环*/
-    public void setStop(boolean stop) {
-        isStop = stop;
-    }
 }
