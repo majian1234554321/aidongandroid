@@ -2,9 +2,9 @@ package com.leyuan.support.http.api;
 
 
 import com.leyuan.support.entity.BaseBean;
+import com.leyuan.support.entity.BrandBean;
 import com.leyuan.support.entity.HomeBean;
 import com.leyuan.support.entity.SearchResultBean;
-import com.leyuan.support.entity.TypeDetailBean;
 
 import java.util.List;
 
@@ -25,8 +25,9 @@ public interface HomeService {
     Observable<BaseBean<List<HomeBean>>> getRecommendList(@Query("page") int page);
 
     @GET("home/{id}")
-    Observable<BaseBean<TypeDetailBean>> getTypeDetail(@Path("id") int id, @Query("page") int page);
+    Observable<BaseBean<BrandBean>> getTypeDetail(@Path("id") int id, @Query("page") int page);
 
     @POST("search")
     Observable<BaseBean<SearchResultBean>> search(@Field("keyword") String keyword, @Field("cat") String category, @Field("page") String page);
+
 }

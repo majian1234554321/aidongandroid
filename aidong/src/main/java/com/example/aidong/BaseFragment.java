@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BaseFragment extends Fragment implements IHttpToastCallBack {
+    protected int pageSize; //分页数据量
+
     protected Logic logic;
 
     public void addTask(IHttpCallback callBack, IHttpTask tsk, int method,

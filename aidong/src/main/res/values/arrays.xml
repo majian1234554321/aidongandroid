@@ -101,4 +101,10 @@
         <item>脚部</item>
     </string-array>
 
+    <string-array name="courseCondition">
+        <item>时间</item>
+        <item>课程分类</item>
+        <item>商圈</item>
+    </string-array>
+
 </resources>

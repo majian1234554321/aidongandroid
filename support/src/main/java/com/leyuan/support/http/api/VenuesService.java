@@ -32,6 +32,4 @@ public interface VenuesService {
     @GET("gyms/{id}")
     Observable<BaseBean<VenuesDetailBean>> getVenuesDetail(@Part("id") int id);
 
-
-
 }

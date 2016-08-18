@@ -2,6 +2,7 @@ package com.example.aidong;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +19,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class BaseActivity extends AppCompatActivity implements IHttpToastCallBack {
+    protected int pageSize; //分页数据量
     protected Logic logic;
     protected TextView txtTopTitle, txtTopLeft, txtTopRight;
     protected ImageView btnBack;
@@ -33,6 +35,7 @@ public class BaseActivity extends AppCompatActivity implements IHttpToastCallBac
         logic = new Logic();
         Log.w("className",getClass().getSimpleName());
     }
+
 
     public void addTask(IHttpCallback callBack, IHttpTask tsk, int method,
                         int requestCode) {
@@ -168,6 +171,13 @@ public class BaseActivity extends AppCompatActivity implements IHttpToastCallBac
         }
     }
 
+    /**
+     * 设置下拉刷新颜色
+     * @param refreshLayout
+     */
+    protected void setColorSchemeResources(SwipeRefreshLayout refreshLayout){
+        refreshLayout.setColorSchemeResources(com.leyuan.support.R.color.orange, com.leyuan.support.R.color.red, com.leyuan.support.R.color.black, com.leyuan.support.R.color.gray);
+    }
 
 
 }

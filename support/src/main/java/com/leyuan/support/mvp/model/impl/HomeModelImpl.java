@@ -1,7 +1,7 @@
 package com.leyuan.support.mvp.model.impl;
 
+import com.leyuan.support.entity.BrandBean;
 import com.leyuan.support.entity.HomeBean;
-import com.leyuan.support.entity.TypeDetailBean;
 import com.leyuan.support.http.RetrofitHelper;
 import com.leyuan.support.http.RxHelper;
 import com.leyuan.support.http.api.HomeService;
@@ -30,9 +30,9 @@ public class HomeModelImpl implements HomeModel {
     }
 
     @Override
-    public void getTypeDetail(Subscriber<TypeDetailBean> subscriber, int id, int page) {
+    public void getBrandDetail(Subscriber<BrandBean> subscriber, int id, int page) {
         homeService.getTypeDetail(id,page)
-                .compose(RxHelper.<TypeDetailBean>transform())
+                .compose(RxHelper.<BrandBean>transform())
                 .subscribe(subscriber);
 
     }

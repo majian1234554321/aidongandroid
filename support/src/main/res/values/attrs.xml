@@ -93,4 +93,21 @@
         <attr name="rv_zoomScale" format="float" />
 
     </declare-styleable>
+
+    <declare-styleable name="ExtendTextView">
+        <attr name="text_height" format="dimension" />
+        <attr name="padding_left" format="dimension" />
+        <attr name="padding_right" format="dimension"/>
+        <attr name="left_text_color" format="color"/>
+        <attr name="right_text_color" format="color" />
+        <attr name="left_text_size" format="dimension" />
+        <attr name="right_text_size" format="dimension" />
+        <attr name="line_color" format="color" />
+    </declare-styleable>
+
+
+    <declare-styleable name="SimpleTitleBar">
+        <attr name="stb_title" format="string" />
+    </declare-styleable>
+
 </resources>

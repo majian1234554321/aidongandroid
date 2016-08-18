@@ -5,6 +5,7 @@ import com.leyuan.support.entity.CourseBean;
 import java.util.List;
 
 /**
+ * 课程列表
  * Created by song on 2016/8/13.
  */
 public interface CoursesActivityView {

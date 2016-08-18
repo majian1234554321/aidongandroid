@@ -5,12 +5,11 @@ import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.example.aidong.R;
 import com.example.aidong.activity.home.NurtureActivity;
-import com.example.aidong.adapter.SamplePagerAdapter;
+import com.example.aidong.activity.home.adapter.SamplePagerAdapter;
 import com.example.aidong.utils.ImageLoadConfig;
 import com.leyuan.support.widget.customview.ViewPagerIndicator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;

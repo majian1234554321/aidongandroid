@@ -19,9 +19,9 @@
         android:id="@+id/loading_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_4"
+        android:layout_marginLeft="4dp"
         android:text="@string/list_footer_loading"
         android:visibility="gone"
-        android:textColor="@color/color_00"
-        android:textSize="@dimen/sp_14" />
+        android:textColor="@color/black"
+        android:textSize="14sp" />
 </LinearLayout>

@@ -10,19 +10,19 @@
     <ViewStub
         android:id="@+id/vs_loading"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_60"
+        android:layout_height="60dp"
         android:layout="@layout/list_footer_loading" />
 
     <ViewStub
         android:id="@+id/vs_end"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_60"
+        android:layout_height="60dp"
         android:layout="@layout/list_footer_end" />
 
     <ViewStub
         android:id="@+id/vs_network_error"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_60"
+        android:layout_height="60dp"
         android:layout="@layout/list_footer_network_error" />
 
 </LinearLayout>

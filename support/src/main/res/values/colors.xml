@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-
-
+    <color name="colorPrimary">#FFA500</color>
+    <color name="colorPrimaryDark">#FFA500</color>
 
     <color name="white">#FFFFFF</color><!--白色 -->
     <color name="orange">#FFA500</color><!--橙色 -->
@@ -12,22 +10,6 @@
     <color name="red">#FF0000</color><!--红色 -->
     <color name="black">#000000</color>
 
-    <color name="colorAccent">#FF4081</color>
-
-    <color name="color_ff">#F0F0F0</color>
-    <color name="color_00">#8A000000</color>
-    <color name="foldername_highlight">#e7e7e7</color>
-
-    <color name="weibo_holo_bg">#f2f2f2</color>
-
-
-    <color name="bg_toast">#f79f43</color>
-
-
-    <color name="popup_main_background">#b0000000</color>
-    <color name="item_press_color">#f4f4f4</color>
-
-
     <color name="drop_down_selected">#7B1FA2</color>
     <color name="drop_down_unselected">#111111</color>
 
@@ -35,5 +17,6 @@
     <color name="check_bg">#f2f2f2</color>
     <color name="un_press_color">#9C27B0</color>
 
-    <color name="rippelColor">#FFFFFF</color>
+    <color name="rippleColor">#808080</color>
+    <color name="lineColor">#808080</color>
 </resources>

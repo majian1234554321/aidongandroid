@@ -1,7 +1,7 @@
 package com.leyuan.support.mvp.model;
 
+import com.leyuan.support.entity.BrandBean;
 import com.leyuan.support.entity.HomeBean;
-import com.leyuan.support.entity.TypeDetailBean;
 
 import java.util.List;
 
@@ -25,6 +25,7 @@ public interface HomeModel {
      * @param id 小分类id
      * @param page 页码
      */
-    void getTypeDetail(Subscriber<TypeDetailBean> subscriber, int id, int page);
+    void getBrandDetail(Subscriber<BrandBean> subscriber, int id, int page);
+
 
 }

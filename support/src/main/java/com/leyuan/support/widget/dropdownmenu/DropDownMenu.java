@@ -27,12 +27,14 @@ public class DropDownMenu extends LinearLayout {
 
     //顶部菜单布局
     private LinearLayout tabMenuView;
+
     //底部容器，包含popupMenuViews，maskView
     private FrameLayout containerView;
     //弹出菜单父布局
     private FrameLayout popupMenuViews;
     //遮罩半透明View，点击可关闭DropDownMenu
     private View maskView;
+
     //tabMenuView里面选中的tab位置，-1表示未选中
     private int current_tab_position = -1;
 

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_top_bar">
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back"
+            android:padding="5dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vP_food"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <com.leyuan.support.widget.customview.ViewPagerIndicator
+            android:id="@+id/vp_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="推荐自提"
+        android:drawableLeft="@drawable/back"
+        android:drawableRight="@drawable/back"
+        android:drawablePadding="5dp"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_horizontal"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_recommend_venue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        android:background="@color/line_color"/>
+
+</LinearLayout>

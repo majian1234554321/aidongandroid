@@ -126,4 +126,7 @@
     <color name="color_00">#8A000000</color>
     <color name="base_theme">#ebebeb</color>
     <color name="mine_divider">#dfe0e6</color>
+
+
+    <color name="main_red">#FF5000</color>
 </resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="165dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:paddingBottom="15dp"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/iv_cover"
+        android:layout_width="165dp"
+        android:layout_height="165dp"
+        android:scaleType="fitXY"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/ic_launcher"/>
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textSize="15sp"
+        android:text=""
+        android:layout_alignLeft="@+id/iv_goods"
+        android:layout_alignRight="@+id/iv_goods"
+        android:layout_below="@+id/iv_goods"
+        android:gravity="center_vertical|left"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textColor="@color/text_black"/>
+
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/main_red"
+        android:layout_below="@+id/tv_name"
+        android:layout_marginTop="6dp"
+        android:layout_alignLeft="@+id/iv_goods"
+        android:layout_alignRight="@+id/iv_goods"
+        android:gravity="center_vertical|left"
+        android:text=""
+        android:singleLine="true"
+        android:textSize="15sp"/>
+
+</RelativeLayout>
