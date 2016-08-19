@@ -14,18 +14,18 @@ import com.leyuan.support.widget.tabLayout.widget.MsgView;
  * 数字两位,圆角矩形,圆角是高度的一半
  * 数字超过两位,显示99+
  */
-public class UnreadMsgUtils {
+public class TipMessageUtils {
     public static void show(MsgView msgView, int num) {
         if (msgView == null) {
             return;
         }
+
         RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) msgView.getLayoutParams();
         DisplayMetrics dm = msgView.getResources().getDisplayMetrics();
         msgView.setVisibility(View.VISIBLE);
         if (num <= 0) {//圆点,设置默认宽高
             msgView.setStrokeWidth(0);
             msgView.setText("");
-
             lp.width = (int) (5 * dm.density);
             lp.height = (int) (5 * dm.density);
             msgView.setLayoutParams(lp);
@@ -33,11 +33,11 @@ public class UnreadMsgUtils {
             lp.height = (int) (18 * dm.density);
             if (num > 0 && num < 10) {//圆
                 lp.width = (int) (2 * dm.density);
-                msgView.setText("(" + num + ")");
+                msgView.setText("("+num+")");
             } else if (num > 9 && num < 100) {//圆角矩形,圆角是高度的一半,设置默认padding
                 lp.width = RelativeLayout.LayoutParams.WRAP_CONTENT;
                 msgView.setPadding((int) (2 * dm.density), 0, (int) (2 * dm.density), 0);
-                msgView.setText("(" + num + ")");
+                msgView.setText("("+num+")");
             } else {//数字超过两位,显示99+
                 lp.width = RelativeLayout.LayoutParams.WRAP_CONTENT;
                 msgView.setPadding(0, 0, 0, 0);
