@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 
 import com.leyuan.support.entity.CampaignBean;
 import com.leyuan.support.http.subscriber.RefreshSubscriber;
-import com.leyuan.support.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.support.mvp.model.CampaignModel;
 import com.leyuan.support.mvp.model.impl.CampaignModelImpl;
 import com.leyuan.support.mvp.presenter.CampaignActivityPresent;
@@ -39,7 +38,7 @@ public class CampaignActivityPresentImpl implements CampaignActivityPresent{
             }
         }, Constant.FIRST_PAGE);
     }
-
+/*
     @Override
     public void requestMoreData(RecyclerView recyclerView, final int pageSize, int page) {
         campaignModel.getCampaigns(new RequestMoreSubscriber<List<CampaignBean>>(context,recyclerView,pageSize) {
@@ -55,5 +54,5 @@ public class CampaignActivityPresentImpl implements CampaignActivityPresent{
                 }
             }
         },page);
-    }
+    }*/
 }

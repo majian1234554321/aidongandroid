@@ -32,7 +32,7 @@ public class CampaignModelImpl implements CampaignModel{
 
     @Override
     public void getCampaignDetail(Subscriber<CampaignDetailBean> subscriber, int id) {
-        campaignService.getgetCampaignDetail(id)
+        campaignService.getCampaignDetail(id)
                 .compose(RxHelper.<CampaignDetailBean>transform())
                 .subscribe(subscriber);
     }

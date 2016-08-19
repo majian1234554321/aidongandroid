@@ -4,6 +4,8 @@ package com.leyuan.support.http.api;
 import com.leyuan.support.entity.BaseBean;
 import com.leyuan.support.entity.UserBean;
 
+import java.util.List;
+
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.GET;
@@ -24,7 +26,7 @@ public interface FollowService {
      * @return 用户集合
      */
     @GET("mine/followings")
-    Observable<BaseBean<UserBean>> getFollowings(@Query("page") int page);
+    Observable<BaseBean<List<UserBean>>> getFollowings(@Query("page") int page);
 
     /**
      * 关注我的人
@@ -32,7 +34,7 @@ public interface FollowService {
      * @return 用户集合
      */
     @GET("mine/followers")
-    Observable<BaseBean<UserBean>> getFollowers(@Query("page") int page);
+    Observable<BaseBean<List<UserBean>>> getFollowers(@Query("page") int page);
 
     /**
      * 添加关注

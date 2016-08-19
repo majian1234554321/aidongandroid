@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.aidong.BaseActivity;
 import com.example.aidong.R;
 import com.example.aidong.activity.home.adapter.NurtureFilterAdapter;
+import com.leyuan.support.entity.NurtureBean;
 import com.leyuan.support.mvp.presenter.NurtureActivityPresent;
 import com.leyuan.support.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.support.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;

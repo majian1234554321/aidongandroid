@@ -20,5 +20,5 @@ public interface CampaignActivityPresent {
      * @param pageSize 每页刷新的数据量
      * @param page 页码
      */
-    void requestMoreData(RecyclerView recyclerView, int pageSize, int page);
+    //void requestMoreData(RecyclerView recyclerView, int pageSize, int page);
 }

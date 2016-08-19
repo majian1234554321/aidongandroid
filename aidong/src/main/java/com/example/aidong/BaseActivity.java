@@ -14,12 +14,16 @@ import com.example.aidong.http.Logic;
 import com.leyuan.commonlibrary.http.IHttpCallback;
 import com.leyuan.commonlibrary.http.IHttpTask;
 import com.leyuan.commonlibrary.http.IHttpToastCallBack;
+import com.leyuan.support.util.ScreenUtil;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class BaseActivity extends AppCompatActivity implements IHttpToastCallBack {
     protected int pageSize; //分页数据量
+    protected int screenWidth;
+    protected int screenHeight;
+
     protected Logic logic;
     protected TextView txtTopTitle, txtTopLeft, txtTopRight;
     protected ImageView btnBack;
@@ -29,6 +33,8 @@ public class BaseActivity extends AppCompatActivity implements IHttpToastCallBac
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        screenWidth = ScreenUtil.getScreenWidth(this);
+        screenHeight = ScreenUtil.getScreenHeight(this);
         synchronized (mActivities) {
             mActivities.add(this);
         }
