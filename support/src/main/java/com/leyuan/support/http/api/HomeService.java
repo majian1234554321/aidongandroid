@@ -6,8 +6,6 @@ import com.leyuan.support.entity.BrandBean;
 import com.leyuan.support.entity.HomeBean;
 import com.leyuan.support.entity.SearchResultBean;
 
-import java.util.List;
-
 import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -22,7 +20,7 @@ import rx.Observable;
 public interface HomeService {
 
     @GET("home")
-    Observable<BaseBean<List<HomeBean>>> getRecommendList(@Query("page") int page);
+    Observable<BaseBean<HomeBean>> getRecommendList(@Query("page") int page);
 
     @GET("home/{id}")
     Observable<BaseBean<BrandBean>> getTypeDetail(@Path("id") int id, @Query("page") int page);

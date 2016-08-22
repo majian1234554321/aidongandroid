@@ -1,5 +1,6 @@
 package com.example.aidong.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -11,9 +12,10 @@ import android.view.ViewGroup;
 
 import com.example.aidong.BaseFragment;
 import com.example.aidong.R;
+import com.example.aidong.activity.home.FoodActivity;
 import com.example.aidong.activity.home.adapter.HomeRecycleViewAdapter;
 import com.example.aidong.activity.home.adapter.SamplePagerAdapter;
-import com.leyuan.support.entity.HomeBean;
+import com.leyuan.support.entity.HomeItemBean;
 import com.leyuan.support.mvp.presenter.HomeFragmentPresent;
 import com.leyuan.support.mvp.presenter.impl.HomeFragmentPresentImpl;
 import com.leyuan.support.mvp.view.HomeFragmentView;
@@ -41,7 +43,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView{
     private SwipeRefreshLayout refreshLayout;
 
     private int currPage = 1;
-    private ArrayList<HomeBean> data = new ArrayList<>();
+    private ArrayList<HomeItemBean> data = new ArrayList<>();
     private HeaderAndFooterRecyclerViewAdapter headerAndFooterRecyclerViewAdapter;
     private HomeRecycleViewAdapter homeAdapter;
     private HomeFragmentPresent present;
@@ -70,6 +72,14 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView{
         viewPager.setAdapter(pagerAdapter);
         indicator.setViewPager(viewPager);
         pagerAdapter.registerDataSetObserver(indicator.getDataSetObserver());
+
+        headerView.findViewById(R.id.tv_food).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), FoodActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initRecyclerView(View view) {
@@ -114,7 +124,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView{
     };
 
     @Override
-    public void updateRecyclerView(List<HomeBean> homeBeanList) {
+    public void updateRecyclerView(List<HomeItemBean> homeBeanList) {
         if(refreshLayout.isRefreshing()){
             data.clear();
             refreshLayout.setRefreshing(false);

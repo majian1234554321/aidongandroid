@@ -10,8 +10,11 @@ import android.view.View;
 import com.example.aidong.BaseActivity;
 import com.example.aidong.R;
 import com.example.aidong.activity.home.adapter.FoodAdapter;
+import com.example.aidong.activity.home.adapter.RecommendVenuesAdapter;
 import com.example.aidong.activity.home.adapter.SamplePagerAdapter;
+import com.leyuan.support.entity.FoodAndVenuesBean;
 import com.leyuan.support.entity.FoodBean;
+import com.leyuan.support.entity.VenuesBean;
 import com.leyuan.support.mvp.presenter.FoodActivityPresenter;
 import com.leyuan.support.mvp.presenter.impl.FoodActivityPresentImpl;
 import com.leyuan.support.mvp.view.FoodActivityView;
@@ -30,15 +33,19 @@ import java.util.List;
  * Created by song on 2016/8/18.
  */
 public class FoodActivity extends BaseActivity implements FoodActivityView{
-
+    // header
     private View headerView;
     private ViewPager viewPager;
+    private RecyclerView venuesRecyclerView;
+    private List<VenuesBean> venuesList;
+    private RecommendVenuesAdapter venuesAdapter;
+    //private CoordinatorLayout
 
-    private RecyclerView recyclerView;
+    private RecyclerView foodRecyclerView;
     private SwipeRefreshLayout refreshLayout;
 
     private int currPage = 1;
-    private ArrayList<FoodBean> data = new ArrayList<>();
+    private ArrayList<FoodBean> foodList = new ArrayList<>();
     private HeaderAndFooterRecyclerViewAdapter wrapAdapter;
     private FoodAdapter foodAdapter;
     private FoodActivityPresenter present;
@@ -61,7 +68,7 @@ public class FoodActivity extends BaseActivity implements FoodActivityView{
             @Override
             public void onRefresh() {
                 currPage = 1;
-                present.pullToRefreshData(recyclerView);
+                present.pullToRefreshData(foodRecyclerView);
             }
         });
 
@@ -69,7 +76,7 @@ public class FoodActivity extends BaseActivity implements FoodActivityView{
             @Override
             public void run() {
                 refreshLayout.setRefreshing(true);
-                present.pullToRefreshData(recyclerView);
+                present.pullToRefreshData(foodRecyclerView);
             }
         });
     }
@@ -77,21 +84,27 @@ public class FoodActivity extends BaseActivity implements FoodActivityView{
     private void initHeaderView(){
         headerView = View.inflate(this,R.layout.header_food,null);
         viewPager = (ViewPager) headerView.findViewById(R.id.vP_food);
+        venuesRecyclerView = (RecyclerView)headerView.findViewById(R.id.rv_recommend_venue);
         ViewPagerIndicator indicator = (ViewPagerIndicator)headerView.findViewById(R.id.vp_indicator);
         SamplePagerAdapter pagerAdapter = new SamplePagerAdapter();
         viewPager.setAdapter(pagerAdapter);
         indicator.setViewPager(viewPager);
+
+        venuesList = new ArrayList<>();
+        venuesAdapter = new RecommendVenuesAdapter();
+        venuesRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        venuesRecyclerView.setAdapter(venuesAdapter);
     }
 
     private void initRecyclerView() {
-        recyclerView = (RecyclerView)findViewById(R.id.rv_food);
-        data = new ArrayList<>();
+        foodRecyclerView = (RecyclerView)findViewById(R.id.rv_food);
+        foodList = new ArrayList<>();
         foodAdapter = new FoodAdapter();
         wrapAdapter = new HeaderAndFooterRecyclerViewAdapter(foodAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(wrapAdapter);
-        recyclerView.addOnScrollListener(onScrollListener);
-        RecyclerViewUtils.setHeaderView(recyclerView, headerView);
+        foodRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        foodRecyclerView.setAdapter(wrapAdapter);
+        foodRecyclerView.addOnScrollListener(onScrollListener);
+        RecyclerViewUtils.setHeaderView(foodRecyclerView, headerView);
     }
 
 
@@ -99,20 +112,23 @@ public class FoodActivity extends BaseActivity implements FoodActivityView{
         @Override
         public void onLoadNextPage(View view) {
             currPage ++;
-            if (data != null && !data.isEmpty()) {
-                present.requestMoreData(recyclerView,pageSize,currPage);
+            if (foodList != null && !foodList.isEmpty()) {
+                present.requestMoreData(foodRecyclerView,pageSize,currPage);
             }
         }
     };
 
     @Override
-    public void updateRecyclerView(List<FoodBean> foodBeanList) {
+    public void updateRecyclerView(FoodAndVenuesBean foodAndVenuesBean) {
         if(refreshLayout.isRefreshing()){
-            data.clear();
+            venuesList.clear();
+            foodList.clear();
             refreshLayout.setRefreshing(false);
         }
-        data.addAll(data);
-       // foodAdapter.setData(data);
+        venuesList.addAll(foodAndVenuesBean.getPick_up_gym());
+        foodList.addAll(foodAndVenuesBean.getFood());
+        venuesAdapter.setData(venuesList);
+        foodAdapter.setData(foodList);
         wrapAdapter.notifyDataSetChanged();
     }
 
@@ -143,6 +159,6 @@ public class FoodActivity extends BaseActivity implements FoodActivityView{
 
     @Override
     public void showEndFooterView() {
-        RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
+        RecyclerViewStateUtils.setFooterViewState(foodRecyclerView, LoadingFooter.State.TheEnd);
     }
 }

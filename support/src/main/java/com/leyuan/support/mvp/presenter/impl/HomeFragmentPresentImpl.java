@@ -12,8 +12,6 @@ import com.leyuan.support.mvp.presenter.HomeFragmentPresent;
 import com.leyuan.support.mvp.view.HomeFragmentView;
 import com.leyuan.support.util.Constant;
 
-import java.util.List;
-
 /**
  * 首页
  * Created by song on 2016/8/13.
@@ -31,16 +29,16 @@ public class HomeFragmentPresentImpl implements HomeFragmentPresent{
 
     @Override
     public void pullToRefreshData(final RecyclerView recyclerView) {
-        homeModel.getRecommendList(new RefreshSubscriber<List<HomeBean>>(context,recyclerView) {
+        homeModel.getRecommendList(new RefreshSubscriber<HomeBean>(context,recyclerView) {
             @Override
-            public void onNext(List<HomeBean> homeBeanList) {
-                if(homeBeanList != null && homeBeanList.isEmpty()){
-                    homeFragmentView.showEmptyView();
-                    homeFragmentView.hideRecyclerView();
-                }else {
+            public void onNext(HomeBean homeBean) {
+                if(homeBean != null && homeBean.getHome() != null &&!homeBean.getHome().isEmpty()){
                     homeFragmentView.hideEmptyView();
                     homeFragmentView.showRecyclerView();
-                    homeFragmentView.updateRecyclerView(homeBeanList);
+                    homeFragmentView.updateRecyclerView(homeBean.getHome());
+                }else {
+                    homeFragmentView.showEmptyView();
+                    homeFragmentView.hideRecyclerView();
                 }
             }
         }, Constant.FIRST_PAGE);
@@ -48,15 +46,15 @@ public class HomeFragmentPresentImpl implements HomeFragmentPresent{
 
     @Override
     public void requestMoreData(RecyclerView recyclerView, final int pageSize, int page) {
-        homeModel.getRecommendList(new RequestMoreSubscriber<List<HomeBean>>(context,recyclerView,pageSize) {
+        homeModel.getRecommendList(new RequestMoreSubscriber<HomeBean>(context,recyclerView,pageSize) {
             @Override
-            public void onNext(List<HomeBean> homeBeanList) {
-                if(homeBeanList != null && !homeBeanList.isEmpty()){
-                    homeFragmentView.updateRecyclerView(homeBeanList);
+            public void onNext(HomeBean homeBean) {
+                if(homeBean != null && homeBean.getHome()!= null && !homeBean.getHome().isEmpty()){
+                    homeFragmentView.updateRecyclerView(homeBean.getHome());
                 }
 
                 //没有更多数据了显示到底提示
-                if(homeBeanList != null && homeBeanList.size() < pageSize){
+                if(homeBean != null && homeBean.getHome()!= null && homeBean.getHome().size() < pageSize){
                     homeFragmentView.showEndFooterView();
                 }
             }

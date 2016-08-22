@@ -32,11 +32,11 @@ public class RxHelper {
                 return tObservable.flatMap(new Func1<BaseBean<T>, Observable<T>>() {
                     @Override
                     public Observable<T> call(BaseBean<T> result) {
-                        Log.i("http","result from network : " + result);
-                        if (result.getCode() == 1) {
+                        Log.i("retrofit","result from network : " + result);
+                        if (result.getStatus() == 1) {
                             return createDataObservable(result.getData());
                         } else {
-                            return Observable.error(new ServerException(result.getCode()));
+                            return Observable.error(new ServerException(result.getStatus()));
                         }
                     }
                 }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());

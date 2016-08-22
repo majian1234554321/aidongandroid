@@ -1,6 +1,6 @@
 package com.leyuan.support.mvp.view;
 
-import com.leyuan.support.entity.HomeBean;
+import com.leyuan.support.entity.HomeItemBean;
 
 import java.util.List;
 
@@ -11,9 +11,9 @@ import java.util.List;
 public interface HomeFragmentView {
     /**
      * 更新列表
-     * @param homeBeanList
+     * @param homeCategoryBean
      */
-    void updateRecyclerView(List<HomeBean> homeBeanList);
+    void updateRecyclerView(List<HomeItemBean> homeCategoryBean);
 
     /**
      * 显示空值界面

@@ -3,12 +3,11 @@ package com.example.aidong.activity.home.adapter;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.aidong.R;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.support.entity.GoodsBean;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,13 +16,13 @@ import java.util.List;
  * 首页推荐商品的RecyclerView适配器
  * Created by song on 2016/7/14.
  */
-public class RecommendGoodsAdapter extends RecyclerView.Adapter<RecommendGoodsAdapter.RecommendGoodsListViewHolder>{
+public class RecommendGoodsAdapter extends RecyclerView.Adapter<RecommendGoodsAdapter.RecommendGoodsViewHolder>{
 
-    List<GoodsBean> date = new ArrayList<>();
-    ImageLoader imageLoader = ImageLoader.getInstance();
+    private List<GoodsBean> date = new ArrayList<>();
 
-    public RecommendGoodsAdapter(List<GoodsBean> date) {
+    public void setDate(List<GoodsBean> date) {
         this.date = date;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -32,26 +31,26 @@ public class RecommendGoodsAdapter extends RecyclerView.Adapter<RecommendGoodsAd
     }
 
     @Override
-    public RecommendGoodsListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecommendGoodsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = View.inflate(parent.getContext(),R.layout.item_goods,null);
-        return new RecommendGoodsListViewHolder(view);
+        return new RecommendGoodsViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(RecommendGoodsListViewHolder holder, int position) {
+    public void onBindViewHolder(RecommendGoodsViewHolder holder, int position) {
         GoodsBean bean = date.get(position);
-        imageLoader.displayImage(bean.getCover(),holder.image);
+        holder.image.setImageURI(bean.getCover());
         holder.name.setText(bean.getName());
         holder.price.setText(bean.getPrice());
     }
 
-     static class RecommendGoodsListViewHolder extends RecyclerView.ViewHolder{
-        ImageView image;
+     static class RecommendGoodsViewHolder extends RecyclerView.ViewHolder{
+        SimpleDraweeView image;
         TextView name;
         TextView price;
-        public RecommendGoodsListViewHolder(View itemView) {
+        public RecommendGoodsViewHolder(View itemView) {
             super(itemView);
-            image = (ImageView) itemView.findViewById(R.id.iv_goods);
+            image = (SimpleDraweeView) itemView.findViewById(R.id.dv_goods);
             name = (TextView)itemView.findViewById(R.id.tv_name);
             price = (TextView)itemView.findViewById(R.id.tv_price);
         }

@@ -13,7 +13,7 @@
         android:layout_height="165dp"
         android:scaleType="fitXY"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/ic_launcher"/>
+        android:src="@drawable/icon_place_holder"/>
 
     <TextView
         android:id="@+id/tv_name"

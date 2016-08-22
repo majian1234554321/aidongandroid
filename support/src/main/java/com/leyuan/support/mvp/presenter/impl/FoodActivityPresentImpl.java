@@ -3,7 +3,7 @@ package com.leyuan.support.mvp.presenter.impl;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
-import com.leyuan.support.entity.FoodBean;
+import com.leyuan.support.entity.FoodAndVenuesBean;
 import com.leyuan.support.http.subscriber.RefreshSubscriber;
 import com.leyuan.support.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.support.mvp.model.FoodModel;
@@ -11,8 +11,6 @@ import com.leyuan.support.mvp.model.impl.FoodModelImpl;
 import com.leyuan.support.mvp.presenter.FoodActivityPresenter;
 import com.leyuan.support.mvp.view.FoodActivityView;
 import com.leyuan.support.util.Constant;
-
-import java.util.List;
 
 /**
  * 健康餐饮
@@ -31,16 +29,16 @@ public class FoodActivityPresentImpl implements FoodActivityPresenter {
 
     @Override
     public void pullToRefreshData(RecyclerView recyclerView) {
-        foodModel.getFoods(new RefreshSubscriber<List<FoodBean>>(context,recyclerView) {
+        foodModel.getFoods(new RefreshSubscriber<FoodAndVenuesBean>(context,recyclerView) {
             @Override
-            public void onNext(List<FoodBean> foodBeanList) {
-                if(foodBeanList != null && foodBeanList.isEmpty()){
-                    foodActivityView.showEmptyView();
-                    foodActivityView.hideRecyclerView();
-                }else {
+            public void onNext(FoodAndVenuesBean bean) {
+                if(bean != null && bean.getFood() != null&&!bean.getFood().isEmpty()){
                     foodActivityView.hideEmptyView();
                     foodActivityView.showRecyclerView();
-                    foodActivityView.updateRecyclerView(foodBeanList);
+                    foodActivityView.updateRecyclerView(bean);
+                }else {
+                    foodActivityView.showEmptyView();
+                    foodActivityView.hideRecyclerView();
                 }
             }
         }, Constant.FIRST_PAGE);
@@ -48,15 +46,15 @@ public class FoodActivityPresentImpl implements FoodActivityPresenter {
 
     @Override
     public void requestMoreData(RecyclerView recyclerView, final int pageSize, int page) {
-        foodModel.getFoods(new RequestMoreSubscriber<List<FoodBean>>(context,recyclerView,pageSize) {
+        foodModel.getFoods(new RequestMoreSubscriber<FoodAndVenuesBean>(context,recyclerView,pageSize) {
             @Override
-            public void onNext(List<FoodBean> foodBeanList) {
-                if(foodBeanList != null && !foodBeanList.isEmpty()){
-                    foodActivityView.updateRecyclerView(foodBeanList);
+            public void onNext(FoodAndVenuesBean bean) {
+                if(bean != null && bean.getFood() != null &&!bean.getFood().isEmpty()){
+                    foodActivityView.updateRecyclerView(bean);
                 }
 
                 //没有更多数据了显示到底提示
-                if(foodBeanList != null && foodBeanList.size() < pageSize){
+                if( bean!= null && bean.getFood() != null && bean.getFood().size() < pageSize){
                     foodActivityView.showEndFooterView();
                 }
             }

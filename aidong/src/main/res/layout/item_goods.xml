@@ -5,8 +5,8 @@
     android:orientation="vertical"
     android:gravity="center">
     
-    <ImageView
-        android:id="@+id/iv_goods"
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/dv_goods"
         android:layout_width="@dimen/pref_40dp"
         android:layout_height="80dp"
         android:src="@drawable/renzheng"/>

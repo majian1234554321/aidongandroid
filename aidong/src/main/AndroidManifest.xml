@@ -115,18 +115,12 @@
         <activity android:name=".activity.mine.lovecoin.LoveCoinHelpActivity" />
         <activity android:name=".activity.mine.lovecoin.PaymentsDetailActivity" />
         <activity android:name=".activity.mine.lovecoin.WithDrawActivity" />
-        <activity android:name=".activity.home.subject.SubjectFilterActivity" />
-        <activity android:name=".activity.home.subject.SubjectListActivity" />
         <activity android:name=".activity.home.SubjectDetailActivity" />
-        <activity android:name=".activity.home.subject.PayInfoActivity" />
-        <activity android:name=".activity.home.commodity.CommodityHomeActivity" />
-        <activity android:name=".activity.home.action.ActionHomeActivity" />
-        <activity android:name=".activity.home.food.FoodHomeActivity" />
         <activity android:name=".scan.activity.MipcaActivityCapture" />
         <activity android:name=".scan.activity.ScanResultActivity" />
         <activity android:name=".scan.activity.ScanActivity" />
         <activity android:name=".activity.venues.VenuesDetailsActivity" />
-
+        <activity android:name=".activity.home.FoodActivity"/>
 
         <activity
             android:name=".wxapi.WXPayEntryActivity"

@@ -5,7 +5,7 @@ package com.leyuan.support.entity;
  * Created by song on 2016/7/14.
  */
 public class GoodsBean {
-    private String sku_code;      //商品编码
+    private  String sku_code;      //商品编码
     private  String cover;         //商品封面
     private  String name;          //商品名字
     private  String price;         //商品售价

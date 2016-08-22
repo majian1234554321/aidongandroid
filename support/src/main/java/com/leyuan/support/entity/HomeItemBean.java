@@ -4,53 +4,44 @@ import java.util.ArrayList;
 
 /**
  * 首页item实体
- * Created by song on 2016/7/15.
+ * Created by song on 2016/7/14.
  */
 public class HomeItemBean {
-    private String id;           //小分类编号
-    private String type;         // 小分类类型
-    private String cover;        // 封面
-    private ArrayList<GoodsBean> item;   //推荐列表商品
 
-    public String getId() {
-        return id;
+    private ArrayList<HomeCategoryBean> category; //所有样式及数据集合
+    private String name;                      //大分类名字
+    private String display;                   //展示样式类型
+
+    public ArrayList<HomeCategoryBean> getCategory() {
+        return category;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setCategory(ArrayList<HomeCategoryBean> category) {
+        this.category = category;
     }
 
-    public String getType() {
-        return type;
+    public String getName() {
+        return name;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getCover() {
-        return cover;
+    public String getDisplay() {
+        return display;
     }
 
-    public void setCover(String cover) {
-        this.cover = cover;
-    }
-
-    public ArrayList<GoodsBean> getItem() {
-        return item;
-    }
-
-    public void setItem(ArrayList<GoodsBean> item) {
-        this.item = item;
+    public void setDisplay(String display) {
+        this.display = display;
     }
 
     @Override
     public String toString() {
         return "HomeItemBean{" +
-                "id='" + id + '\'' +
-                ", type='" + type + '\'' +
-                ", cover='" + cover + '\'' +
-                ", item=" + item +
+                "category=" + category +
+                ", name='" + name + '\'' +
+                ", display='" + display + '\'' +
                 '}';
     }
 }

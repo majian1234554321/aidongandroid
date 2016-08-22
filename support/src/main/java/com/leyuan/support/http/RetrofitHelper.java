@@ -14,7 +14,7 @@ public class RetrofitHelper {
             synchronized (RetrofitHelper.class) {
                 if (singleton == null) {
                     Retrofit.Builder builder = new Retrofit.Builder();
-                    builder.baseUrl("http://gank.io/")
+                    builder.baseUrl("http://192.168.50.128/")
                             .addConverterFactory(GsonConverterFactory.create())//设置远程地址
                             .addCallAdapterFactory(RxJavaCallAdapterFactory.create());
                     singleton = builder.build();

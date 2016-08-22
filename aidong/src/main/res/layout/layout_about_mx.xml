@@ -36,7 +36,7 @@
         android:layout_below="@+id/layout_about_mx_title_rel"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
-        android:src="@drawable/ic_launcher" />
+        android:src="@drawable/icon_place_holder" />
     <ImageView
         android:id="@+id/img_about_mx_ma"
         android:layout_width="205dp"
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/icon_place_holder" />
     </RelativeLayout>
 
     <TextView

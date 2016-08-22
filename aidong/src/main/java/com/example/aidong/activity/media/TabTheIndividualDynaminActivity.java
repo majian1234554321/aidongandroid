@@ -1161,7 +1161,7 @@ public class TabTheIndividualDynaminActivity extends BaseActivity implements
                             //                                        .getImage());
                             //                            } else {
                             //                                Bitmap bitmap = BitmapFactory.decodeResource(getResources(),
-                            //                                        R.drawable.ic_launcher);
+                            //                                        R.drawable.icon_place_holder);
                             //                                String path = FileUtil.stringPath(bitmap, Constants.FILE_FOLDER,
                             //                                        "logo.jpg");
                             //                                sp.setImagePath(path);

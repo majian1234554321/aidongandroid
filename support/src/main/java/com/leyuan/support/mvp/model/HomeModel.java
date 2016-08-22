@@ -3,8 +3,6 @@ package com.leyuan.support.mvp.model;
 import com.leyuan.support.entity.BrandBean;
 import com.leyuan.support.entity.HomeBean;
 
-import java.util.List;
-
 import rx.Subscriber;
 
 /**
@@ -17,7 +15,7 @@ public interface HomeModel {
      * @param subscriber Subscriber
      * @param page 页码
      */
-    void getRecommendList(Subscriber<List<HomeBean>> subscriber, int page);
+    void getRecommendList(Subscriber<HomeBean> subscriber, int page);
 
     /**
      * 获取首页分类详情

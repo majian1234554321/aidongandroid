@@ -11,6 +11,7 @@ import com.baidu.mapapi.SDKInitializer;
 import com.example.aidong.common.MXLog;
 import com.example.aidong.model.UserCoach;
 import com.example.aidong.utils.SharePrefUtils;
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.lidroid.xutils.DbUtils;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -27,7 +28,7 @@ public class BaseApp extends Application{
     public static double lat;
     public static double lon;
     public static String city;
-    public static String AddrStr;
+    public static String addressStr;
 
     public DbUtils db;
 
@@ -39,6 +40,7 @@ public class BaseApp extends Application{
         mInstance = this;
         context = getApplicationContext();
         initConfig();
+        Fresco.initialize(this);
     }
 
     private void initConfig() {
@@ -101,7 +103,7 @@ public class BaseApp extends Application{
             if(location.getCity()!= null)
                 city = location.getCity().replace("市", "");
             if(location.getAddrStr()!=null)
-                AddrStr = location.getAddrStr();
+                addressStr = location.getAddrStr();
             if(city!=null){
                 mLocationClient.stop();
             }

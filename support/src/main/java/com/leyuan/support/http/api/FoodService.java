@@ -2,10 +2,8 @@ package com.leyuan.support.http.api;
 
 
 import com.leyuan.support.entity.BaseBean;
-import com.leyuan.support.entity.FoodBean;
 import com.leyuan.support.entity.FoodDetailBean;
-
-import java.util.List;
+import com.leyuan.support.entity.FoodAndVenuesBean;
 
 import retrofit2.http.Field;
 import retrofit2.http.GET;
@@ -21,7 +19,7 @@ import rx.Observable;
 public interface FoodService {
 
     @GET("market/foods")
-    Observable<BaseBean<List<FoodBean>>>getFoods(@Query("page") int page);
+    Observable<BaseBean<FoodAndVenuesBean>>getFoods(@Query("page") int page);
 
     @GET("market/foods/{id}")
     Observable<BaseBean<FoodDetailBean>>getFoodDetail(@Path("id") int id);

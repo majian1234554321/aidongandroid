@@ -145,9 +145,9 @@ public class TabMinePersonalDataActivity extends BaseActivity implements
 		setContentView(R.layout.layout_tab_mine_personal_data);
 		init();
 		options = new DisplayImageOptions.Builder()
-				.showImageOnLoading(R.drawable.ic_launcher)
-				.showImageForEmptyUri(R.drawable.ic_launcher)
-				.showImageOnFail(R.drawable.ic_launcher).cacheInMemory(true)
+				.showImageOnLoading(R.drawable.icon_place_holder)
+				.showImageForEmptyUri(R.drawable.icon_place_holder)
+				.showImageOnFail(R.drawable.icon_place_holder).cacheInMemory(true)
 				.cacheOnDisk(true).considerExifParams(true)
 				.bitmapConfig(Bitmap.Config.RGB_565).build();
 	}

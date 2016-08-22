@@ -8,7 +8,7 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_home"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="200dp"
         android:background="@color/orange"/>
     
     <com.leyuan.support.widget.customview.ViewPagerIndicator
@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_alignBottom="@+id/vp_home"
-        android:layout_marginBottom="@dimen/pref_20dip"/>
+        android:layout_marginBottom="@dimen/pref_10dip"/>
 
 
     <LinearLayout

@@ -6,8 +6,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.aidong.R;
-import com.example.aidong.model.bean.VenuesBean;
 import com.example.aidong.view.RoundAngleImageView;
+import com.leyuan.support.entity.VenuesBean;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ public class FindVenuesAdapter extends RecyclerView.Adapter<FindVenuesAdapter.Fi
     @Override
     public void onBindViewHolder(FindVenuesViewHolder holder, int position) {
         VenuesBean bean = data.get(position);
-        loader.displayImage(bean.getCover(),holder.cover);
+        loader.displayImage(bean.getLogo(),holder.cover);
         holder.name.setText(bean.getName());
         holder.address.setText(bean.getAddress());
         holder.price.setText(bean.getPrice());

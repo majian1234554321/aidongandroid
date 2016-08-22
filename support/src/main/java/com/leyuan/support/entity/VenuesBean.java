@@ -4,21 +4,19 @@ package com.leyuan.support.entity;
  * Created by pc on 2016/8/2.
  */
 public class VenuesBean {
-    private String id;              //场馆编号
+    private String gym_id;           //场馆编号
     private String name;            //场馆名字
-    private String cover;           //场馆封面
+    private String logo;            //场馆封面
     private String address;         //场馆地址
     private String distance;        //距离
-    private String coaches_count;   //私教数量
-    private String courses_count;   //课程数量
     private String price;           //价格
 
-    public String getId() {
-        return id;
+    public String getGym_id() {
+        return gym_id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setGym_id(String gym_id) {
+        this.gym_id = gym_id;
     }
 
     public String getName() {
@@ -29,12 +27,12 @@ public class VenuesBean {
         this.name = name;
     }
 
-    public String getCover() {
-        return cover;
+    public String getLogo() {
+        return logo;
     }
 
-    public void setCover(String cover) {
-        this.cover = cover;
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 
     public String getAddress() {
@@ -53,27 +51,23 @@ public class VenuesBean {
         this.distance = distance;
     }
 
-    public String getCoaches_count() {
-        return coaches_count;
-    }
-
-    public void setCoaches_count(String coaches_count) {
-        this.coaches_count = coaches_count;
-    }
-
-    public String getCourses_count() {
-        return courses_count;
-    }
-
-    public void setCourses_count(String courses_count) {
-        this.courses_count = courses_count;
-    }
-
     public String getPrice() {
         return price;
     }
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "VenuesBean{" +
+                "gym_id='" + gym_id + '\'' +
+                ", name='" + name + '\'' +
+                ", logo='" + logo + '\'' +
+                ", address='" + address + '\'' +
+                ", distance='" + distance + '\'' +
+                ", price='" + price + '\'' +
+                '}';
     }
 }

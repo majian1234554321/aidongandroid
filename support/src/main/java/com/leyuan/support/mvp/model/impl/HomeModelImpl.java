@@ -7,8 +7,6 @@ import com.leyuan.support.http.RxHelper;
 import com.leyuan.support.http.api.HomeService;
 import com.leyuan.support.mvp.model.HomeModel;
 
-import java.util.List;
-
 import rx.Subscriber;
 
 /**
@@ -23,9 +21,9 @@ public class HomeModelImpl implements HomeModel {
     }
 
     @Override
-    public void getRecommendList(Subscriber<List<HomeBean>> subscriber, int page) {
+    public void getRecommendList(Subscriber<HomeBean> subscriber, int page) {
         homeService.getRecommendList(page)
-                .compose(RxHelper.<List<HomeBean>>transform())
+                .compose(RxHelper.<HomeBean>transform())
                 .subscribe(subscriber);
     }
 

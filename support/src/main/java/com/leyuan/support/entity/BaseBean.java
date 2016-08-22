@@ -3,15 +3,15 @@ package com.leyuan.support.entity;
 
 public class BaseBean<T> {
 
-    private int code;
+    private int status;
     private T data;
 
-    public int getCode() {
-        return code;
+    public int getStatus() {
+        return status;
     }
 
-    public void setCode(int code) {
-        this.code = code;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public T getData() {
@@ -20,5 +20,13 @@ public class BaseBean<T> {
 
     public void setData(T data) {
         this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return "BaseBean{" +
+                "status=" + status +
+                ", data=" + data +
+                '}';
     }
 }

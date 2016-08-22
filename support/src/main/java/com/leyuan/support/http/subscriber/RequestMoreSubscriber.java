@@ -7,7 +7,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.leyuan.support.util.NetUtil;
-import com.leyuan.support.util.ToastUtil;
 import com.leyuan.support.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
 import com.leyuan.support.widget.endlessrecyclerview.weight.LoadingFooter;
 
@@ -69,7 +68,6 @@ public abstract class RequestMoreSubscriber<T> extends Subscriber<T>{
      */
     @Override
     public void onStart() {
-        ToastUtil.show(context,"onStart",500);
         showLoadingFooterView();
     }
 

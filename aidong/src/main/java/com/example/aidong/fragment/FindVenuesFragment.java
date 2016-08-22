@@ -12,9 +12,9 @@ import android.view.ViewGroup;
 import com.example.aidong.BaseFragment;
 import com.example.aidong.R;
 import com.example.aidong.adapter.FindVenuesAdapter;
-import com.example.aidong.model.bean.VenuesBean;
 import com.example.aidong.utils.Constants;
 import com.leyuan.commonlibrary.util.ToastUtil;
+import com.leyuan.support.entity.VenuesBean;
 import com.leyuan.support.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.support.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.support.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
@@ -77,12 +77,12 @@ public class FindVenuesFragment extends BaseFragment{
                 for(int i = 0; i <10; i++){
                     VenuesBean bean = new VenuesBean();
                     if(i%2 == 0){
-                        bean.setCover("http://photocdn.sohu.com/20151013/mp35457482_1444738684139_2.png");
+                        bean.setLogo("http://photocdn.sohu.com/20151013/mp35457482_1444738684139_2.png");
                         bean.setName("爱动运动");
                         bean.setAddress("闵行区万源路");
                         bean.setDistance("1000m");
                     }else{
-                        bean.setCover("http://photocdn.sohu.com/20151013/mp35457482_1444738684139_2.png");
+                        bean.setLogo("http://photocdn.sohu.com/20151013/mp35457482_1444738684139_2.png");
                         bean.setName("极限挑战");
                         bean.setAddress("闵行区万源路");
                         bean.setDistance("88m");
@@ -96,12 +96,12 @@ public class FindVenuesFragment extends BaseFragment{
                 for(int i = 0; i <10; i++){
                     VenuesBean bean = new VenuesBean();
                     if(i%2 == 0){
-                        bean.setCover("http://photocdn.sohu.com/20151013/mp35457482_1444738684139_2.png");
+                        bean.setLogo("http://photocdn.sohu.com/20151013/mp35457482_1444738684139_2.png");
                         bean.setName("爱动运动");
                         bean.setAddress("闵行区万源路");
                         bean.setDistance("1000m");
                     }else{
-                        bean.setCover("http://photocdn.sohu.com/20151013/mp35457482_1444738684139_2.png");
+                        bean.setLogo("http://photocdn.sohu.com/20151013/mp35457482_1444738684139_2.png");
                         bean.setName("极限挑战");
                         bean.setAddress("闵行区万源路");
                         bean.setDistance("88m");
@@ -116,12 +116,12 @@ public class FindVenuesFragment extends BaseFragment{
                 for(int i = 0; i <9; i++){
                     VenuesBean bean = new VenuesBean();
                     if(i%2 == 0){
-                        bean.setCover("http://photocdn.sohu.com/20151013/mp35457482_1444738684139_2.png");
+                        bean.setLogo("http://photocdn.sohu.com/20151013/mp35457482_1444738684139_2.png");
                         bean.setName("爱动运动");
                         bean.setAddress("闵行区万源路");
                         bean.setDistance("1000m");
                     }else{
-                        bean.setCover("http://photocdn.sohu.com/20151013/mp35457482_1444738684139_2.png");
+                        bean.setLogo("http://photocdn.sohu.com/20151013/mp35457482_1444738684139_2.png");
                         bean.setName("极限挑战");
                         bean.setAddress("闵行区万源路");
                         bean.setDistance("88m");

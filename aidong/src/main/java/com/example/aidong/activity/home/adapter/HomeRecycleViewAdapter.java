@@ -6,12 +6,11 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.example.aidong.R;
 import com.example.aidong.view.MyListView;
-import com.leyuan.support.entity.HomeBean;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.leyuan.support.entity.HomeItemBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,15 +25,14 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public static final int TYPE_RECOMMEND_GOODS = 2;
 
     private Context context;
-    private ImageLoader imageLoader = ImageLoader.getInstance();
-    private List<HomeBean> data = new ArrayList<>();
+    private List<HomeItemBean> data = new ArrayList<>();
 
 
     public HomeRecycleViewAdapter(Context context) {
         this.context = context;
     }
 
-    public void setData(List<HomeBean> data) {
+    public void setData(List<HomeItemBean> data) {
         this.data = data;
     }
 
@@ -46,9 +44,9 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     @Override
     public int getItemViewType(int position) {
         if(TextUtils.equals("list",data.get(position).getDisplay())){
-            return TYPE_RECOMMEND_ACTIVITY;
-        }else if(TextUtils.equals("cover",data.get(position).getDisplay())){
             return TYPE_RECOMMEND_GOODS;
+        }else if(TextUtils.equals("cover",data.get(position).getDisplay())){
+            return TYPE_RECOMMEND_ACTIVITY;
         }else {
             return 0;
         }
@@ -57,29 +55,29 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if(viewType == TYPE_RECOMMEND_ACTIVITY){
-            View view = View.inflate(parent.getContext(), R.layout.item_recommend_activity_rv,null);
-            RecommendActivityViewHolder holder = new RecommendActivityViewHolder(view);
-            return holder;
+            View view = View.inflate(parent.getContext(), R.layout.item_recommend_activity,null);
+            return new RecommendActivityViewHolder(view);
         }else if(viewType == TYPE_RECOMMEND_GOODS){
-            View view = View.inflate(parent.getContext(),R.layout.item_recommend_goods_rv,null);
-            RecommendGoodsViewHolder holder = new RecommendGoodsViewHolder(view);
-            return holder;
+            View view = View.inflate(parent.getContext(),R.layout.item_recommend_goods,null);
+            return new RecommendGoodsViewHolder(view);
         }
         return null;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        HomeBean bean = data.get(position);
-        if(holder instanceof  RecommendActivityViewHolder){
+        HomeItemBean bean = data.get(position);
+        if(holder instanceof RecommendActivityViewHolder){
             RecommendCampaignsAdapter adapter = new RecommendCampaignsAdapter();
-            adapter.setList(bean.getCategory());
             ((RecommendActivityViewHolder) holder).listView.setAdapter(adapter);
+            adapter.addList(bean.getCategory());
         }else if(holder instanceof  RecommendGoodsViewHolder){
-            imageLoader.displayImage(bean.getCategory().get(position).getCover(),((RecommendGoodsViewHolder) holder).imageView);
-            RecommendGoodsAdapter adapter = new RecommendGoodsAdapter(bean.getCategory().get(position).getItem());
+            //ImageLoader.getInstance().displayImage(bean.getCategory().get(0).getCover(),((RecommendGoodsViewHolder) holder).cover);
+            ((RecommendGoodsViewHolder) holder).cover.setImageURI(bean.getCategory().get(0).getCover());
+            RecommendGoodsAdapter adapter = new RecommendGoodsAdapter();
             ((RecommendGoodsViewHolder) holder).recyclerView.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false));
             ((RecommendGoodsViewHolder) holder).recyclerView.setAdapter(adapter);
+            adapter.setDate(bean.getCategory().get(0).getItem());
         }
     }
 
@@ -88,13 +86,13 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
      * 推荐商品ViewHolder
      */
     private static class RecommendGoodsViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView;
+        SimpleDraweeView cover;
         RecyclerView recyclerView;
 
         public RecommendGoodsViewHolder (View itemView) {
             super(itemView);
-            imageView = (ImageView) itemView.findViewById(R.id.iv_recommend);
-            recyclerView = (RecyclerView) itemView.findViewById(R.id.rv_recommend);
+            cover = (SimpleDraweeView) itemView.findViewById(R.id.dv_recommend_good);
+            recyclerView = (RecyclerView) itemView.findViewById(R.id.rv_recommend_good);
         }
     }
 

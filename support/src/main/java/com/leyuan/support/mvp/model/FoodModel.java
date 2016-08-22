@@ -1,9 +1,7 @@
 package com.leyuan.support.mvp.model;
 
-import com.leyuan.support.entity.FoodBean;
 import com.leyuan.support.entity.FoodDetailBean;
-
-import java.util.List;
+import com.leyuan.support.entity.FoodAndVenuesBean;
 
 import rx.Subscriber;
 
@@ -17,7 +15,7 @@ public interface FoodModel {
      * @param subscriber Subscriber
      * @param page 页码
      */
-    void getFoods(Subscriber<List<FoodBean>> subscriber, int page);
+    void getFoods(Subscriber<FoodAndVenuesBean> subscriber, int page);
 
     /**
      * 获取健康餐饮详情

@@ -1,8 +1,6 @@
 package com.leyuan.support.mvp.view;
 
-import com.leyuan.support.entity.FoodBean;
-
-import java.util.List;
+import com.leyuan.support.entity.FoodAndVenuesBean;
 
 /**
  * 健康餐饮
@@ -11,9 +9,9 @@ import java.util.List;
 public interface FoodActivityView {
     /**
      * 更新列表
-     * @param foodBeanList
+     * @param foodAndVenuesBean 健康餐饮界面实体
      */
-    void updateRecyclerView(List<FoodBean> foodBeanList);
+    void updateRecyclerView(FoodAndVenuesBean foodAndVenuesBean);
 
     /**
      * 显示空值界面

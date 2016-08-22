@@ -91,8 +91,8 @@ public class ActivityTool implements TabChoniceInterface {
 		}
 	};
 
-	public static final int INDIC_IMAGE_ARRAY[] = { R.drawable.ic_launcher,
-			R.drawable.ic_launcher, R.drawable.ic_launcher,
+	public static final int INDIC_IMAGE_ARRAY[] = { R.drawable.icon_place_holder,
+			R.drawable.icon_place_holder, R.drawable.icon_place_holder,
 			 };
 	 public static ActivityClass getRecommendActivityClass(int index) {
 	 return RECOMMEND_CLASS[index];
