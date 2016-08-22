@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -12,7 +13,7 @@ import android.widget.TextView;
 import com.leyuan.support.R;
 
 /**
- * 简单自定义属性头布局,包含回退按钮和标题
+ * 简单自定义属性标题栏,包含回退按钮和标题
  * Created by song on 2016/8/18.
  */
 public class SimpleTitleBar extends RelativeLayout{
@@ -48,7 +49,7 @@ public class SimpleTitleBar extends RelativeLayout{
     }
 
     private void setAttr(Context context){
-        View view = View.inflate(context,R.layout.simple_title_bar,null);
+        View view = LayoutInflater.from(context).inflate(R.layout.simple_title_bar,this, true);
         ImageView ivBack = (ImageView)view.findViewById(R.id.iv_back);
         tvTitle = (TextView)view.findViewById(R.id.tv_title);
         tvTitle.setText(title);
