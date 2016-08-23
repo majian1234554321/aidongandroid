@@ -1,39 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/iv_campaign_cover"
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/dv_campaign_cover"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"/>
+        fresco:placeholderImage="@drawable/icon_place_holder"
+        fresco:actualImageScaleType="centerCrop"/>
 
     <TextView
         android:id="@+id/tv_campaign_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="time"
-        android:layout_centerInParent="true"
+        android:layout_above="@+id/tv_campaign_name"
+       android:layout_centerInParent="true"
         android:textColor="@color/white"
-        android:textSize="13sp"/>
+        android:textSize="@dimen/item_min_text_size"/>
 
     <TextView
         android:id="@+id/tv_campaign_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="name"
-        android:layout_centerInParent="true"
+        android:layout_above="@+id/tv_campaign_address"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="17dp"
         android:textColor="@color/white"
-        android:textSize="13sp"/>
+        android:textSize="22sp"/>
 
     <TextView
         android:id="@+id/tv_campaign_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="address"
-        android:layout_centerInParent="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="27dp"
         android:textColor="@color/white"
-        android:textSize="13sp"/>
+        android:textSize="16sp"/>
 
 </RelativeLayout>

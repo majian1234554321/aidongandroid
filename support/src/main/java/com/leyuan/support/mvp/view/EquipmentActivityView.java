@@ -1,19 +1,19 @@
 package com.leyuan.support.mvp.view;
 
-import com.leyuan.support.entity.HomeBean;
+import com.leyuan.support.entity.EquipmentBean;
 
 import java.util.List;
 
 /**
- * 首页
- * Created by song on 2016/8/13.
+ * 装备
+ * Created by song on 2016/8/15.
  */
-public interface HomeFragmentView {
+public interface EquipmentActivityView {
     /**
      * 更新列表
-     * @param homeCategoryBean
+     * @param equipmentBeanList
      */
-    void updateRecyclerView(List<HomeBean> homeCategoryBean);
+    void updateRecyclerView(List<EquipmentBean> equipmentBeanList);
 
     /**
      * 显示空值界面

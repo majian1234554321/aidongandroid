@@ -1,9 +1,7 @@
 package com.leyuan.support.mvp.model;
 
-import com.leyuan.support.entity.CampaignBean;
+import com.leyuan.support.entity.CampaignDataBean;
 import com.leyuan.support.entity.CampaignDetailBean;
-
-import java.util.List;
 
 import rx.Subscriber;
 
@@ -17,7 +15,7 @@ public interface CampaignModel {
      * @param subscriber Subscriber
      * @param page 页码
      */
-    void getCampaigns(Subscriber<List<CampaignBean>> subscriber, int page);
+    void getCampaigns(Subscriber<CampaignDataBean> subscriber, int page);
 
     /**
      * 获取活动详情

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.example.aidong.R;
 import com.example.aidong.view.MyListView;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.leyuan.support.entity.HomeItemBean;
+import com.leyuan.support.entity.HomeBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,14 +25,14 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public static final int TYPE_RECOMMEND_GOODS = 2;
 
     private Context context;
-    private List<HomeItemBean> data = new ArrayList<>();
+    private List<HomeBean> data = new ArrayList<>();
 
 
     public HomeRecycleViewAdapter(Context context) {
         this.context = context;
     }
 
-    public void setData(List<HomeItemBean> data) {
+    public void setData(List<HomeBean> data) {
         this.data = data;
     }
 
@@ -66,7 +66,7 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        HomeItemBean bean = data.get(position);
+        HomeBean bean = data.get(position);
         if(holder instanceof RecommendActivityViewHolder){
             RecommendCampaignsAdapter adapter = new RecommendCampaignsAdapter();
             ((RecommendActivityViewHolder) holder).listView.setAdapter(adapter);

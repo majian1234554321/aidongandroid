@@ -3,12 +3,13 @@ package com.example.aidong.activity.home.adapter;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.aidong.R;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.support.entity.NurtureBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -18,7 +19,7 @@ import java.util.List;
  */
 public class NurtureAdapter extends RecyclerView.Adapter<NurtureAdapter.NurtureViewHolder>{
 
-    private List<NurtureBean> data;
+    private List<NurtureBean> data = new ArrayList<>();
 
     public void setData(List<NurtureBean> data) {
         this.data = data;
@@ -26,35 +27,34 @@ public class NurtureAdapter extends RecyclerView.Adapter<NurtureAdapter.NurtureV
 
     @Override
     public int getItemCount() {
-        if(data == null){
-            return 0;
-        }
         return data.size();
     }
 
     @Override
     public NurtureViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = View.inflate(parent.getContext(), R.layout.item_recommend_nurture,null);
-        return  new NurtureViewHolder(view);
+        return new NurtureViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(NurtureViewHolder holder, int position) {
         NurtureBean bean = data.get(position);
-
+        holder.cover.setImageURI(bean.getCover());
+        holder.name.setText(bean.getName());
+        holder.price.setText(bean.getPrice());
     }
 
 
     static class NurtureViewHolder extends RecyclerView.ViewHolder{
-        ImageView  cover;
+        SimpleDraweeView cover;
         TextView name;
         TextView price;
 
         public NurtureViewHolder(View itemView) {
             super(itemView);
-            cover = (ImageView)itemView.findViewById(R.id.iv_cover);
-            name = (TextView)itemView.findViewById(R.id.tv_good_name);
-            price = (TextView)itemView.findViewById(R.id.tv_goods_price);
+            cover = (SimpleDraweeView)itemView.findViewById(R.id.dv_nurture_cover);
+            name = (TextView)itemView.findViewById(R.id.tv_nurture_name);
+            price = (TextView)itemView.findViewById(R.id.tv_nurture_price);
         }
     }
 }

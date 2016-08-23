@@ -121,6 +121,8 @@
         <activity android:name=".scan.activity.ScanActivity" />
         <activity android:name=".activity.venues.VenuesDetailsActivity" />
         <activity android:name=".activity.home.FoodActivity"/>
+        <activity android:name=".activity.home.CampaignActivity"/>
+
 
         <activity
             android:name=".wxapi.WXPayEntryActivity"

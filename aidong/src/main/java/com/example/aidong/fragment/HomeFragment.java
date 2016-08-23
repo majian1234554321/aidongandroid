@@ -12,10 +12,12 @@ import android.view.ViewGroup;
 
 import com.example.aidong.BaseFragment;
 import com.example.aidong.R;
+import com.example.aidong.activity.home.CampaignActivity;
 import com.example.aidong.activity.home.FoodActivity;
+import com.example.aidong.activity.home.NurtureActivity;
 import com.example.aidong.activity.home.adapter.HomeRecycleViewAdapter;
 import com.example.aidong.activity.home.adapter.SamplePagerAdapter;
-import com.leyuan.support.entity.HomeItemBean;
+import com.leyuan.support.entity.HomeBean;
 import com.leyuan.support.mvp.presenter.HomeFragmentPresent;
 import com.leyuan.support.mvp.presenter.impl.HomeFragmentPresentImpl;
 import com.leyuan.support.mvp.view.HomeFragmentView;
@@ -43,7 +45,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView{
     private SwipeRefreshLayout refreshLayout;
 
     private int currPage = 1;
-    private ArrayList<HomeItemBean> data = new ArrayList<>();
+    private ArrayList<HomeBean> data = new ArrayList<>();
     private HeaderAndFooterRecyclerViewAdapter headerAndFooterRecyclerViewAdapter;
     private HomeRecycleViewAdapter homeAdapter;
     private HomeFragmentPresent present;
@@ -77,6 +79,22 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), FoodActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        headerView.findViewById(R.id.tv_activity).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CampaignActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        headerView.findViewById(R.id.tv_nurture).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), NurtureActivity.class);
                 startActivity(intent);
             }
         });
@@ -124,7 +142,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView{
     };
 
     @Override
-    public void updateRecyclerView(List<HomeItemBean> homeBeanList) {
+    public void updateRecyclerView(List<HomeBean> homeBeanList) {
         if(refreshLayout.isRefreshing()){
             data.clear();
             refreshLayout.setRefreshing(false);

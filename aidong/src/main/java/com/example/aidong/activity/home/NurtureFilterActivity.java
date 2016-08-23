@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.example.aidong.BaseActivity;
 import com.example.aidong.R;
 import com.example.aidong.activity.home.adapter.NurtureFilterAdapter;
-import com.leyuan.support.entity.NurtureBean;
+import com.leyuan.support.entity.NurtureDataBean;
 import com.leyuan.support.mvp.presenter.NurtureActivityPresent;
 import com.leyuan.support.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.support.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -38,7 +38,7 @@ public class NurtureFilterActivity extends BaseActivity implements View.OnClickL
     private RecyclerView recyclerView;
 
     private int currPage = 1;
-    private List<NurtureBean> data;
+    private List<NurtureDataBean> data;
     private HeaderAndFooterRecyclerViewAdapter wrapAdapter;
     private NurtureFilterAdapter nurtureAdapter;
     private NurtureActivityPresent present;

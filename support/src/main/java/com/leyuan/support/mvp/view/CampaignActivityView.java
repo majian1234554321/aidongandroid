@@ -11,7 +11,7 @@ import java.util.List;
 public interface CampaignActivityView {
     /**
      * 更新列表
-     * @param campaignBean
+     * @param campaignBean CampaignBean
      */
     void updateRecyclerView(List<CampaignBean> campaignBean);
 

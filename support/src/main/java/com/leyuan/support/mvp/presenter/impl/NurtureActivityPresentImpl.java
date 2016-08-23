@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
 import com.leyuan.support.entity.NurtureBean;
+import com.leyuan.support.entity.NurtureDataBean;
 import com.leyuan.support.http.subscriber.RefreshSubscriber;
 import com.leyuan.support.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.support.mvp.model.NurtureModel;
@@ -12,6 +13,7 @@ import com.leyuan.support.mvp.presenter.NurtureActivityPresent;
 import com.leyuan.support.mvp.view.NurtureActivityView;
 import com.leyuan.support.util.Constant;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,6 +24,7 @@ public class NurtureActivityPresentImpl implements NurtureActivityPresent{
     private Context context;
     private NurtureModel nurtureModel;
     private NurtureActivityView nurtureActivityView;
+    private List<NurtureBean> nurtureBeanList = new ArrayList<>();
 
     public NurtureActivityPresentImpl(NurtureActivityView nurtureActivityView, Context context) {
         this.context = context;
@@ -31,10 +34,14 @@ public class NurtureActivityPresentImpl implements NurtureActivityPresent{
 
     @Override
     public void pullToRefreshData(RecyclerView recyclerView) {
-        nurtureModel.getNurtures(new RefreshSubscriber<List<NurtureBean>>(context,recyclerView) {
+        nurtureModel.getNurtures(new RefreshSubscriber<NurtureDataBean>(context,recyclerView) {
             @Override
-            public void onNext(List<NurtureBean> nurtureBeanList) {
-                if(nurtureBeanList != null && nurtureBeanList.isEmpty()){
+            public void onNext(NurtureDataBean nurtureDataBean) {
+                if(null != nurtureDataBean){
+                    nurtureBeanList = nurtureDataBean.getNutrition();
+                }
+
+                if(nurtureBeanList.isEmpty()){
                     nurtureActivityView.showEmptyView();
                     nurtureActivityView.hideRecyclerView();
                 }else {
@@ -48,12 +55,17 @@ public class NurtureActivityPresentImpl implements NurtureActivityPresent{
 
     @Override
     public void requestMoreData(RecyclerView recyclerView, final int pageSize, int page) {
-        nurtureModel.getNurtures(new RequestMoreSubscriber<List<NurtureBean>>(context,recyclerView,pageSize) {
+        nurtureModel.getNurtures(new RequestMoreSubscriber<NurtureDataBean>(context,recyclerView,pageSize) {
             @Override
-            public void onNext(List<NurtureBean> nurtureBeanList) {
-                if(nurtureBeanList != null && !nurtureBeanList.isEmpty()){
+            public void onNext(NurtureDataBean nurtureDataBean) {
+                if(null != nurtureDataBean){
+                    nurtureBeanList = nurtureDataBean.getNutrition();
+                }
+
+                if(!nurtureBeanList.isEmpty()){
                     nurtureActivityView.updateRecyclerView(nurtureBeanList);
                 }
+
                 //没有更多数据了显示到底提示
                 if(nurtureBeanList != null && nurtureBeanList.size() < pageSize){
                     nurtureActivityView.showEndFooterView();

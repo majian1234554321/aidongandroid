@@ -3,7 +3,7 @@ package com.leyuan.support.mvp.presenter.impl;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
-import com.leyuan.support.entity.HomeBean;
+import com.leyuan.support.entity.HomeDataBean;
 import com.leyuan.support.http.subscriber.RefreshSubscriber;
 import com.leyuan.support.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.support.mvp.model.HomeModel;
@@ -29,9 +29,9 @@ public class HomeFragmentPresentImpl implements HomeFragmentPresent{
 
     @Override
     public void pullToRefreshData(final RecyclerView recyclerView) {
-        homeModel.getRecommendList(new RefreshSubscriber<HomeBean>(context,recyclerView) {
+        homeModel.getRecommendList(new RefreshSubscriber<HomeDataBean>(context,recyclerView) {
             @Override
-            public void onNext(HomeBean homeBean) {
+            public void onNext(HomeDataBean homeBean) {
                 if(homeBean != null && homeBean.getHome() != null &&!homeBean.getHome().isEmpty()){
                     homeFragmentView.hideEmptyView();
                     homeFragmentView.showRecyclerView();
@@ -46,9 +46,9 @@ public class HomeFragmentPresentImpl implements HomeFragmentPresent{
 
     @Override
     public void requestMoreData(RecyclerView recyclerView, final int pageSize, int page) {
-        homeModel.getRecommendList(new RequestMoreSubscriber<HomeBean>(context,recyclerView,pageSize) {
+        homeModel.getRecommendList(new RequestMoreSubscriber<HomeDataBean>(context,recyclerView,pageSize) {
             @Override
-            public void onNext(HomeBean homeBean) {
+            public void onNext(HomeDataBean homeBean) {
                 if(homeBean != null && homeBean.getHome()!= null && !homeBean.getHome().isEmpty()){
                     homeFragmentView.updateRecyclerView(homeBean.getHome());
                 }

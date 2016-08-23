@@ -20,6 +20,8 @@ import com.leyuan.support.widget.dropdownmenu.adapter.ListWithFlagAdapter;
 import com.leyuan.support.widget.dropdownmenu.adapter.SimpleListAdapter;
 import com.leyuan.support.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.support.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
+import com.leyuan.support.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
+import com.leyuan.support.widget.endlessrecyclerview.weight.LoadingFooter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -194,6 +196,6 @@ public class CourseActivity extends BaseActivity implements CoursesActivityView{
 
     @Override
     public void showEndFooterView() {
-
+        RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
     }
 }

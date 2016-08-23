@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.example.aidong.R;
 import com.leyuan.support.entity.NurtureCategoryBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ import java.util.List;
  * Created by song on 2016/8/17.
  */
 public class NurtureCategoryAdapter extends RecyclerView.Adapter<NurtureCategoryAdapter.FoodViewHolder>{
-    private List<NurtureCategoryBean> data;
+    private List<NurtureCategoryBean> data = new ArrayList<>();
 
     public void setData(List<NurtureCategoryBean> data) {
         this.data = data;

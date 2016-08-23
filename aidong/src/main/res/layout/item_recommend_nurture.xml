@@ -1,47 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="165dp"
+<com.leyuan.support.widget.customview.RippleView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="180dp"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@color/white"
     android:paddingBottom="15dp"
-    android:gravity="center">
+    android:gravity="center"
+    app:rv_type="rectangle"
+    app:rv_centered="false"
+    app:rv_rippleDuration="300">
 
-    <ImageView
-        android:id="@+id/iv_cover"
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/dv_nurture_cover"
         android:layout_width="165dp"
         android:layout_height="165dp"
-        android:scaleType="fitXY"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/icon_place_holder"/>
+        app:placeholderImage="@drawable/icon_place_holder"
+        app:actualImageScaleType="centerCrop"
+        android:layout_gravity="center_horizontal"/>
 
     <TextView
-        android:id="@+id/tv_name"
+        android:id="@+id/tv_nurture_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:textSize="15sp"
         android:text=""
-        android:layout_alignLeft="@+id/iv_goods"
-        android:layout_alignRight="@+id/iv_goods"
-        android:layout_below="@+id/iv_goods"
+        android:layout_alignLeft="@+id/dv_nurture_cover"
+        android:layout_alignRight="@+id/dv_nurture_cover"
+        android:layout_below="@+id/dv_nurture_cover"
         android:gravity="center_vertical|left"
         android:ellipsize="end"
         android:singleLine="true"
         android:textColor="@color/text_black"/>
 
     <TextView
-        android:id="@+id/tv_price"
+        android:id="@+id/tv_nurture_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/main_red"
-        android:layout_below="@+id/tv_name"
+        android:layout_below="@+id/tv_nurture_name"
         android:layout_marginTop="6dp"
-        android:layout_alignLeft="@+id/iv_goods"
-        android:layout_alignRight="@+id/iv_goods"
+        android:layout_alignLeft="@+id/dv_nurture_cover"
+        android:layout_alignRight="@+id/dv_nurture_cover"
         android:gravity="center_vertical|left"
         android:text=""
         android:singleLine="true"
         android:textSize="15sp"/>
 
-</RelativeLayout>
+</com.leyuan.support.widget.customview.RippleView>

@@ -2,6 +2,7 @@ package com.example.aidong.activity.home;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -17,6 +18,10 @@ import com.leyuan.support.mvp.view.NurtureActivityView;
 import com.leyuan.support.widget.customview.SimpleTitleBar;
 import com.leyuan.support.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.support.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
+import com.leyuan.support.widget.endlessrecyclerview.HeaderSpanSizeLookup;
+import com.leyuan.support.widget.endlessrecyclerview.RecyclerViewUtils;
+import com.leyuan.support.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
+import com.leyuan.support.widget.endlessrecyclerview.weight.LoadingFooter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +38,8 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
     private RecyclerView recommendRecyclerView;
 
     private int currPage = 1;
-    private List<NurtureBean> data;
-    private HeaderAndFooterRecyclerViewAdapter wrapAdapter;
+    private List<NurtureBean> nurtureList;
+    private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private NurtureAdapter nurtureAdapter;
     private NurtureActivityPresent present;
 
@@ -87,13 +92,16 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
 
 
     private void initRecommendRecyclerView() {
-        recommendRecyclerView = (RecyclerView)findViewById(R.id.rv_food);
-        data = new ArrayList<>();
+        recommendRecyclerView = (RecyclerView)findViewById(R.id.rv_recommend);
+        nurtureList = new ArrayList<>();
         nurtureAdapter = new NurtureAdapter();
-        wrapAdapter = new HeaderAndFooterRecyclerViewAdapter(nurtureAdapter);
-        recommendRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recommendRecyclerView.setAdapter(wrapAdapter);
+        wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(nurtureAdapter);
+        recommendRecyclerView.setAdapter(wrapperAdapter);
+        GridLayoutManager manager = new GridLayoutManager(this,2);
+        manager.setSpanSizeLookup(new HeaderSpanSizeLookup((HeaderAndFooterRecyclerViewAdapter)recommendRecyclerView.getAdapter(), manager.getSpanCount()));
+        recommendRecyclerView.setLayoutManager(manager);
         recommendRecyclerView.addOnScrollListener(onScrollListener);
+        RecyclerViewUtils.setHeaderView(recommendRecyclerView,View.inflate(this,R.layout.header_nurture,null));
     }
 
 
@@ -101,15 +109,21 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
         @Override
         public void onLoadNextPage(View view) {
             currPage ++;
-            if (data != null && !data.isEmpty()) {
+            if (nurtureList != null && !nurtureList.isEmpty()) {
                 present.requestMoreData(recommendRecyclerView,pageSize,currPage);
             }
         }
     };
 
     @Override
-    public void updateRecyclerView(List<com.leyuan.support.entity.NurtureBean> nurtureBeanList) {
-
+    public void updateRecyclerView(List<NurtureBean> nurtureBeanList) {
+        if(refreshLayout.isRefreshing()){
+            nurtureList.clear();
+            refreshLayout.setRefreshing(false);
+        }
+        nurtureList.addAll(nurtureBeanList);
+        nurtureAdapter.setData(nurtureList);
+        wrapperAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -139,6 +153,6 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
 
     @Override
     public void showEndFooterView() {
-
+        RecyclerViewStateUtils.setFooterViewState(recommendRecyclerView, LoadingFooter.State.TheEnd);
     }
 }

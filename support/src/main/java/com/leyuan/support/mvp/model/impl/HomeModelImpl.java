@@ -1,7 +1,7 @@
 package com.leyuan.support.mvp.model.impl;
 
 import com.leyuan.support.entity.BrandBean;
-import com.leyuan.support.entity.HomeBean;
+import com.leyuan.support.entity.HomeDataBean;
 import com.leyuan.support.http.RetrofitHelper;
 import com.leyuan.support.http.RxHelper;
 import com.leyuan.support.http.api.HomeService;
@@ -21,9 +21,9 @@ public class HomeModelImpl implements HomeModel {
     }
 
     @Override
-    public void getRecommendList(Subscriber<HomeBean> subscriber, int page) {
+    public void getRecommendList(Subscriber<HomeDataBean> subscriber, int page) {
         homeService.getRecommendList(page)
-                .compose(RxHelper.<HomeBean>transform())
+                .compose(RxHelper.<HomeDataBean>transform())
                 .subscribe(subscriber);
     }
 
