@@ -26,7 +26,7 @@ public class CourseDetailActivityPresentImpl implements CourseDetailActivityPres
     }
 
     @Override
-    public void getCourseDetail(int id) {
+    public void getCourseDetail(String id) {
         courseModel.getCourseDetail(new ProgressSubscriber<CourseDetailBean>(context) {
             @Override
             public void onNext(CourseDetailBean courseDetailBean) {

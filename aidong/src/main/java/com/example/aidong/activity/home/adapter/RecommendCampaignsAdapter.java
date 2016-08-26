@@ -1,9 +1,11 @@
 package com.example.aidong.activity.home.adapter;
 
+import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.aidong.R;
+import com.example.aidong.activity.home.CampaignDetailActivity;
 import com.example.aidong.adapter.BaseAdapter;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.support.entity.HomeItemBean;
@@ -13,6 +15,11 @@ import com.leyuan.support.entity.HomeItemBean;
  * Created by song on 2016/7/14.
  */
 public class RecommendCampaignsAdapter extends BaseAdapter<HomeItemBean> {
+    private Context context;
+
+    public RecommendCampaignsAdapter(Context context) {
+        this.context = context;
+    }
 
     @Override
     public int getContentView() {
@@ -24,5 +31,12 @@ public class RecommendCampaignsAdapter extends BaseAdapter<HomeItemBean> {
         SimpleDraweeView image = getView(view,R.id.dv_recommend_activity);
         HomeItemBean bean = getItem(position);
         image.setImageURI(bean.getCover());
+
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CampaignDetailActivity.newInstance(context,"1");
+            }
+        });
     }
 }

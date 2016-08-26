@@ -110,7 +110,7 @@
     <color name="result_view">#b0000000</color>
     <color name="possible_result_points">#c0ffff00</color>
 
-    <color name="line_color">#e9eaf0</color>
+    <color name="line_color">#ebebeb</color>
     <color name="transparent">#00000000</color>
     <color name="text_black">#333333</color>
 
@@ -127,7 +127,9 @@
     <color name="base_theme">#ebebeb</color>
     <color name="mine_divider">#dfe0e6</color>
 
-
+    <color name="main_gray">#c8c7cc</color>
     <color name="main_red">#FF5000</color>
+    <color name="color_image_press">#55F1F1F1</color>
+    <color name="c3">#333333</color>
     <color name="c9">#999999</color>
 </resources>

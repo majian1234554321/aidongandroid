@@ -1,13 +1,11 @@
 package com.leyuan.support.mvp.model.impl;
 
-import com.leyuan.support.entity.EquipmentBean;
-import com.leyuan.support.entity.EquipmentDetailBean;
+import com.leyuan.support.entity.data.EquipmentData;
+import com.leyuan.support.entity.data.EquipmentDetailData;
 import com.leyuan.support.http.RetrofitHelper;
 import com.leyuan.support.http.RxHelper;
 import com.leyuan.support.http.api.EquipmentService;
 import com.leyuan.support.mvp.model.EquipmentModel;
-
-import java.util.List;
 
 import rx.Subscriber;
 
@@ -23,16 +21,16 @@ public class EquipmentModelImpl implements EquipmentModel {
     }
 
     @Override
-    public void getEquipments(Subscriber<List<EquipmentBean>> subscriber, int page) {
+    public void getEquipments(Subscriber<EquipmentData> subscriber, int page) {
         equipmentService.getEquipments(page)
-                .compose(RxHelper.<List<EquipmentBean>>transform())
+                .compose(RxHelper.<EquipmentData>transform())
                 .subscribe(subscriber);
     }
 
     @Override
-    public void getEquipmentDetail(Subscriber<EquipmentDetailBean> subscriber, int id) {
+    public void getEquipmentDetail(Subscriber<EquipmentDetailData> subscriber, int id) {
         equipmentService.getEquipmentDetail(id)
-                .compose(RxHelper.<EquipmentDetailBean>transform())
+                .compose(RxHelper.<EquipmentDetailData>transform())
                 .subscribe(subscriber);
     }
 }

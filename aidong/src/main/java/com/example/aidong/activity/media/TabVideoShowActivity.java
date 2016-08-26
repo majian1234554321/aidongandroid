@@ -531,11 +531,11 @@ public class TabVideoShowActivity extends BaseActivity implements
 //                                            + BaseUrlLink.WAP_URL + "(来自#美型#)");
 //                                }
 //                            }
-//                            if (dynamicResult.getData().getDynamic().getImage() != null
+//                            if (dynamicResult.getData().getDynamic().getCover() != null
 //                                    || dynamicResult.getData().getDynamic()
-//                                    .getImage().equals("")) {
+//                                    .getCover().equals("")) {
 //                                sp.setImageUrl(dynamicResult.getData().getDynamic()
-//                                        .getImage());
+//                                        .getCover());
 //                            } else {
 //                                Bitmap bitmap = BitmapFactory.decodeResource(
 //                                        getResources(), R.drawable.icon_albm);

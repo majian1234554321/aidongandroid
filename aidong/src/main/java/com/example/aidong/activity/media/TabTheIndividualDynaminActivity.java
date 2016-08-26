@@ -1156,12 +1156,12 @@ public class TabTheIndividualDynaminActivity extends BaseActivity implements
                             //                                }
                             //                            }
                             //                            if (dynamicResult.getData().getDynamic()
-                            //                                    .getImage() != null || dynamicResult.getData().getDynamic().getImage().equals("")) {
+                            //                                    .getCover() != null || dynamicResult.getData().getDynamic().getCover().equals("")) {
                             //                                sp.setImageUrl(dynamicResult.getData().getDynamic()
-                            //                                        .getImage());
+                            //                                        .getCover());
                             //                            } else {
                             //                                Bitmap bitmap = BitmapFactory.decodeResource(getResources(),
-                            //                                        R.drawable.icon_place_holder);
+                            //                                        R.drawable.place_holder_logo);
                             //                                String path = FileUtil.stringPath(bitmap, Constants.FILE_FOLDER,
                             //                                        "logo.jpg");
                             //                                sp.setImagePath(path);

@@ -629,9 +629,9 @@ public class MyShowActivityNew extends BaseActivity implements IHttpCallback, On
 //
 //                }
 //
-//                if (dynamic.getImage() != null
-//                        && dynamic.getImage().size() > 0) {
-//                    oks.setImageUrl(dynamic.getImage().get(0).getUrl());
+//                if (dynamic.getCover() != null
+//                        && dynamic.getCover().size() > 0) {
+//                    oks.setImageUrl(dynamic.getCover().get(0).getUrl());
 //                } else if (dynamic.getFilm() != null) {
 //                    oks.setImageUrl(dynamic.getFilm().getCover());
 //

@@ -1,4 +1,6 @@
-package com.leyuan.support.entity;
+package com.leyuan.support.entity.data;
+
+import com.leyuan.support.entity.CampaignBean;
 
 import java.util.ArrayList;
 
@@ -6,7 +8,7 @@ import java.util.ArrayList;
  * 活动数据实体
  * Created by song on 2016/8/18.
  */
-public class CampaignDataBean {
+public class CampaignData {
     private ArrayList<CampaignBean> campaign;
 
     public ArrayList<CampaignBean> getCampaign() {
@@ -19,7 +21,7 @@ public class CampaignDataBean {
 
     @Override
     public String toString() {
-        return "CampaignDataBean{" +
+        return "CampaignData{" +
                 "campaign=" + campaign +
                 '}';
     }

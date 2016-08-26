@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
 import com.leyuan.support.entity.NurtureBean;
-import com.leyuan.support.entity.NurtureDataBean;
+import com.leyuan.support.entity.data.NurtureData;
 import com.leyuan.support.http.subscriber.RefreshSubscriber;
 import com.leyuan.support.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.support.mvp.model.NurtureModel;
@@ -34,9 +34,9 @@ public class NurtureActivityPresentImpl implements NurtureActivityPresent{
 
     @Override
     public void pullToRefreshData(RecyclerView recyclerView) {
-        nurtureModel.getNurtures(new RefreshSubscriber<NurtureDataBean>(context,recyclerView) {
+        nurtureModel.getNurtures(new RefreshSubscriber<NurtureData>(context,recyclerView) {
             @Override
-            public void onNext(NurtureDataBean nurtureDataBean) {
+            public void onNext(NurtureData nurtureDataBean) {
                 if(null != nurtureDataBean){
                     nurtureBeanList = nurtureDataBean.getNutrition();
                 }
@@ -55,9 +55,9 @@ public class NurtureActivityPresentImpl implements NurtureActivityPresent{
 
     @Override
     public void requestMoreData(RecyclerView recyclerView, final int pageSize, int page) {
-        nurtureModel.getNurtures(new RequestMoreSubscriber<NurtureDataBean>(context,recyclerView,pageSize) {
+        nurtureModel.getNurtures(new RequestMoreSubscriber<NurtureData>(context,recyclerView,pageSize) {
             @Override
-            public void onNext(NurtureDataBean nurtureDataBean) {
+            public void onNext(NurtureData nurtureDataBean) {
                 if(null != nurtureDataBean){
                     nurtureBeanList = nurtureDataBean.getNutrition();
                 }

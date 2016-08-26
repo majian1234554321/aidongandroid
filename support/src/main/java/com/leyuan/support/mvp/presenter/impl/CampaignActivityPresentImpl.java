@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
 import com.leyuan.support.entity.CampaignBean;
-import com.leyuan.support.entity.CampaignDataBean;
+import com.leyuan.support.entity.data.CampaignData;
 import com.leyuan.support.http.subscriber.RefreshSubscriber;
 import com.leyuan.support.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.support.mvp.model.CampaignModel;
@@ -33,9 +33,9 @@ public class CampaignActivityPresentImpl implements CampaignActivityPresent{
 
     @Override
     public void pullToRefreshData(RecyclerView recyclerView) {
-        campaignModel.getCampaigns(new RefreshSubscriber<CampaignDataBean>(context,recyclerView) {
+        campaignModel.getCampaigns(new RefreshSubscriber<CampaignData>(context,recyclerView) {
             @Override
-            public void onNext(CampaignDataBean campaignBean) {
+            public void onNext(CampaignData campaignBean) {
                 if(campaignBean != null){
                     campaignBeanList = campaignBean.getCampaign();
                 }
@@ -47,9 +47,9 @@ public class CampaignActivityPresentImpl implements CampaignActivityPresent{
 
     @Override
     public void requestMoreData(RecyclerView recyclerView, final int pageSize, int page) {
-        campaignModel.getCampaigns(new RequestMoreSubscriber<CampaignDataBean>(context,recyclerView,pageSize) {
+        campaignModel.getCampaigns(new RequestMoreSubscriber<CampaignData>(context,recyclerView,pageSize) {
             @Override
-            public void onNext(CampaignDataBean campaignDataBean) {
+            public void onNext(CampaignData campaignDataBean) {
                 if(campaignDataBean != null){
                     campaignBeanList = campaignDataBean.getCampaign();
                 }else{

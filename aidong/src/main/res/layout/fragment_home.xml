@@ -35,7 +35,7 @@
                     android:id="@+id/img_home_seach"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/icon_place_holder"/>
+                    android:src="@drawable/place_holder_logo"/>
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -66,7 +66,7 @@
                     android:id="@+id/img_home_saoma"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/icon_place_holder"/>
+                    android:src="@drawable/place_holder_logo"/>
             </LinearLayout>
 
             <RelativeLayout

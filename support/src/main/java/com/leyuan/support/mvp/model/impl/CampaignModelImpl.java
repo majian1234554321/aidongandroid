@@ -1,7 +1,7 @@
 package com.leyuan.support.mvp.model.impl;
 
-import com.leyuan.support.entity.CampaignDataBean;
-import com.leyuan.support.entity.CampaignDetailBean;
+import com.leyuan.support.entity.data.CampaignData;
+import com.leyuan.support.entity.data.CampaignDetailData;
 import com.leyuan.support.http.RetrofitHelper;
 import com.leyuan.support.http.RxHelper;
 import com.leyuan.support.http.api.CampaignService;
@@ -22,16 +22,16 @@ public class CampaignModelImpl implements CampaignModel{
 
 
     @Override
-    public void getCampaigns(Subscriber<CampaignDataBean> subscriber, int page) {
+    public void getCampaigns(Subscriber<CampaignData> subscriber, int page) {
         campaignService.getCampaigns(page)
-                .compose(RxHelper.<CampaignDataBean>transform())
+                .compose(RxHelper.<CampaignData>transform())
                 .subscribe(subscriber);
     }
 
     @Override
-    public void getCampaignDetail(Subscriber<CampaignDetailBean> subscriber, int id) {
+    public void getCampaignDetail(Subscriber<CampaignDetailData> subscriber, int id) {
         campaignService.getCampaignDetail(id)
-                .compose(RxHelper.<CampaignDetailBean>transform())
+                .compose(RxHelper.<CampaignDetailData>transform())
                 .subscribe(subscriber);
     }
 

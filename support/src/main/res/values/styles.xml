@@ -32,5 +32,11 @@
         <item name="indicatorName">BallPulseIndicator</item>
     </style>
 
-
+    <style name="Progress.Dialog" parent="@android:style/Theme.Holo.Light.Dialog">
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+       <!--<item name="android:windowNoTitle">true</item>-->
+        <!--<item name="android:windowIsFloating">true</item>-->
+       <item name="android:backgroundDimEnabled">true</item>
+    </style>
 </resources>

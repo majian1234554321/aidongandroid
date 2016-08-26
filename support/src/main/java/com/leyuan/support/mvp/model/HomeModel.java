@@ -1,7 +1,7 @@
 package com.leyuan.support.mvp.model;
 
 import com.leyuan.support.entity.BrandBean;
-import com.leyuan.support.entity.HomeDataBean;
+import com.leyuan.support.entity.data.HomeData;
 
 import rx.Subscriber;
 
@@ -15,7 +15,7 @@ public interface HomeModel {
      * @param subscriber Subscriber
      * @param page 页码
      */
-    void getRecommendList(Subscriber<HomeDataBean> subscriber, int page);
+    void getRecommendList(Subscriber<HomeData> subscriber, int page);
 
     /**
      * 获取首页分类详情

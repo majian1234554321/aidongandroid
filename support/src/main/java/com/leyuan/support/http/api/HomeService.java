@@ -3,7 +3,7 @@ package com.leyuan.support.http.api;
 
 import com.leyuan.support.entity.BaseBean;
 import com.leyuan.support.entity.BrandBean;
-import com.leyuan.support.entity.HomeDataBean;
+import com.leyuan.support.entity.data.HomeData;
 import com.leyuan.support.entity.SearchResultBean;
 
 import retrofit2.http.Field;
@@ -20,7 +20,7 @@ import rx.Observable;
 public interface HomeService {
 
     @GET("home")
-    Observable<BaseBean<HomeDataBean>> getRecommendList(@Query("page") int page);
+    Observable<BaseBean<HomeData>> getRecommendList(@Query("page") int page);
 
     @GET("home/{id}")
     Observable<BaseBean<BrandBean>> getTypeDetail(@Path("id") int id, @Query("page") int page);

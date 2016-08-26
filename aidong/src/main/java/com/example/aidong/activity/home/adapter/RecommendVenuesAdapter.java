@@ -1,5 +1,6 @@
 package com.example.aidong.activity.home.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +8,7 @@ import android.widget.TextView;
 
 import com.example.aidong.R;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.leyuan.commonlibrary.util.ToastUtil;
 import com.leyuan.support.entity.VenuesBean;
 
 import java.util.ArrayList;
@@ -17,7 +19,12 @@ import java.util.List;
  * Created by song on 2016/8/22.
  */
 public class RecommendVenuesAdapter extends RecyclerView.Adapter<RecommendVenuesAdapter.VenuesViewHolder>{
+    private Context context;
     private List<VenuesBean> data = new ArrayList<>();
+
+    public RecommendVenuesAdapter(Context context) {
+        this.context = context;
+    }
 
     public void setData(List<VenuesBean> data) {
         this.data = data;
@@ -40,7 +47,14 @@ public class RecommendVenuesAdapter extends RecyclerView.Adapter<RecommendVenues
         VenuesBean bean = data.get(position);
         holder.cover.setImageURI(bean.getLogo());
         holder.name.setText(bean.getName());
-        holder.distance.setText(bean.getDistance());
+        holder.distance.setText(String.format(context.getString(R.string.distance_km),bean.getDistance()));
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtil.show("场馆详情",context);
+            }
+        });
     }
 
     class VenuesViewHolder extends RecyclerView.ViewHolder {

@@ -19,4 +19,13 @@
     <string name="home_activity">活动</string>
     <string name="home_equipment">装备</string>
     <string name="home_competition">赛事</string>
+
+    <string name="applicant_count">已参加(%1$d/%2$s)</string>
+    <string name="rmb_price">¥ %1$s</string>
+    <string name="time_with_line">%1$s—%2$s</string>
+    <string name="course_count">&#160;(%1$s/%2$s&#160;人)&#160;&#160;/&#160;&#160;</string>
+    <string name="distance_km"> %1$s km </string>
+
+    <string name="campaign_detail">活动详情</string>
+    <string name="food_material">主要食材: %1$s</string>
 </resources>

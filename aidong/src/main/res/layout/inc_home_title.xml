@@ -7,7 +7,7 @@
         android:id="@+id/iv_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/linyu"
+        android:src="@drawable/app_logo"
         android:layout_centerInParent="true"/>
     <TextView
         android:id="@+id/tv_location"
@@ -27,5 +27,6 @@
         android:src="@drawable/linyu"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/pref_12dp"/>
+        android:layout_marginRight="@dimen/pref_12dp"
+        android:visibility="gone"/>
 </RelativeLayout>

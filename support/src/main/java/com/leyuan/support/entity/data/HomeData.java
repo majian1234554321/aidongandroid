@@ -1,4 +1,6 @@
-package com.leyuan.support.entity;
+package com.leyuan.support.entity.data;
+
+import com.leyuan.support.entity.HomeBean;
 
 import java.util.List;
 
@@ -6,7 +8,7 @@ import java.util.List;
  * 首页数据实体
  * Created by song on 2016/8/22.
  */
-public class HomeDataBean {
+public class HomeData {
     private List<HomeBean> home;
 
     public List<HomeBean> getHome() {
@@ -19,7 +21,7 @@ public class HomeDataBean {
 
     @Override
     public String toString() {
-        return "HomeDataBean{" +
+        return "HomeData{" +
                 "home=" + home +
                 '}';
     }

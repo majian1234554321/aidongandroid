@@ -7,6 +7,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.View;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.leyuan.support.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
 import com.leyuan.support.widget.endlessrecyclerview.weight.LoadingFooter;
 
@@ -92,11 +93,10 @@ public class EndlessRecyclerOnScrollListener extends RecyclerView.OnScrollListen
         }
         switch (newState) {
             case RecyclerView.SCROLL_STATE_DRAGGING:
-                //TODO chang the load picture tool
-               // ImageLoader.getInstance().pause();
+                Fresco.getImagePipeline().pause();
                 break;
             case RecyclerView.SCROLL_STATE_IDLE:
-               // ImageLoader.getInstance().resume();
+                Fresco.getImagePipeline().resume();
                 break;
         }
     }

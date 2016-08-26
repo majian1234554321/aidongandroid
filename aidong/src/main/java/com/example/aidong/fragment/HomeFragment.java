@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import com.example.aidong.BaseFragment;
 import com.example.aidong.R;
 import com.example.aidong.activity.home.CampaignActivity;
+import com.example.aidong.activity.home.CourseActivity;
+import com.example.aidong.activity.home.EquipmentActivity;
 import com.example.aidong.activity.home.FoodActivity;
 import com.example.aidong.activity.home.NurtureActivity;
 import com.example.aidong.activity.home.adapter.HomeRecycleViewAdapter;
@@ -46,7 +48,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView{
 
     private int currPage = 1;
     private ArrayList<HomeBean> data = new ArrayList<>();
-    private HeaderAndFooterRecyclerViewAdapter headerAndFooterRecyclerViewAdapter;
+    private HeaderAndFooterRecyclerViewAdapter wapper;
     private HomeRecycleViewAdapter homeAdapter;
     private HomeFragmentPresent present;
 
@@ -98,17 +100,22 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView{
                 startActivity(intent);
             }
         });
-    }
+        headerView.findViewById(R.id.tv_equipment).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), EquipmentActivity.class);
+                startActivity(intent);
+            }
+        });
 
-    private void initRecyclerView(View view) {
-        recyclerView = (RecyclerView) view.findViewById(R.id.rv_home);
-        data = new ArrayList<>();
-        homeAdapter = new HomeRecycleViewAdapter(getActivity());
-        headerAndFooterRecyclerViewAdapter = new HeaderAndFooterRecyclerViewAdapter(homeAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(headerAndFooterRecyclerViewAdapter);
-        recyclerView.addOnScrollListener(onScrollListener);
-        RecyclerViewUtils.setHeaderView(recyclerView, headerView);
+        headerView.findViewById(R.id.tv_course).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CourseActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void initSwipeRefreshLayout(View view) {
@@ -131,6 +138,17 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView{
         });
     }
 
+    private void initRecyclerView(View view) {
+        recyclerView = (RecyclerView) view.findViewById(R.id.rv_home);
+        data = new ArrayList<>();
+        homeAdapter = new HomeRecycleViewAdapter(getActivity());
+        wapper = new HeaderAndFooterRecyclerViewAdapter(homeAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(wapper);
+        recyclerView.addOnScrollListener(onScrollListener);
+        RecyclerViewUtils.setHeaderView(recyclerView, headerView);
+    }
+
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
         @Override
         public void onLoadNextPage(View view) {
@@ -149,7 +167,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView{
         }
         data.addAll(homeBeanList);
         homeAdapter.setData(data);
-        headerAndFooterRecyclerViewAdapter.notifyDataSetChanged();
+        wapper.notifyDataSetChanged();
     }
 
     @Override

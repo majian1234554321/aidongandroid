@@ -1,4 +1,6 @@
-package com.leyuan.support.entity;
+package com.leyuan.support.entity.data;
+
+import com.leyuan.support.entity.NurtureBean;
 
 import java.util.ArrayList;
 
@@ -6,7 +8,7 @@ import java.util.ArrayList;
  * 营养品数据实体
  * Created by song on 2016/8/15.
  */
-public class NurtureDataBean {
+public class NurtureData {
     private ArrayList<NurtureBean> nutrition;
 
     public ArrayList<NurtureBean> getNutrition() {
@@ -19,7 +21,7 @@ public class NurtureDataBean {
 
     @Override
     public String toString() {
-        return "NurtureDataBean{" +
+        return "NurtureData{" +
                 "nutrition=" + nutrition +
                 '}';
     }

@@ -120,9 +120,10 @@
         <activity android:name=".scan.activity.ScanResultActivity" />
         <activity android:name=".scan.activity.ScanActivity" />
         <activity android:name=".activity.venues.VenuesDetailsActivity" />
-        <activity android:name=".activity.home.FoodActivity"/>
-        <activity android:name=".activity.home.CampaignActivity"/>
-
+        <activity android:name=".activity.home.FoodActivity" />
+        <activity android:name=".activity.home.CampaignActivity" />
+        <activity android:name=".activity.home.CourseActivity" />
+        <activity android:name=".activity.home.CourseDetailActivity" />
 
         <activity
             android:name=".wxapi.WXPayEntryActivity"
@@ -179,7 +180,10 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name=".activity.found.FilterAroundPeopleActivity" />
         <activity android:name=".view.wheelcity.LoadAddressDataActivity" />
-        <activity android:name=".activity.home.NurtureActivity"></activity>
+        <activity android:name=".activity.home.NurtureActivity" />
+        <activity android:name=".activity.home.CampaignDetailActivity" />
+        <activity android:name=".activity.WebActivity" />
+        <activity android:name=".activity.home.EquipmentActivity"></activity>
     </application>
 
 </manifest>

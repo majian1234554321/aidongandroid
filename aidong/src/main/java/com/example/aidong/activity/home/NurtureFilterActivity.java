@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.example.aidong.BaseActivity;
 import com.example.aidong.R;
 import com.example.aidong.activity.home.adapter.NurtureFilterAdapter;
-import com.leyuan.support.entity.NurtureDataBean;
+import com.leyuan.support.entity.data.NurtureData;
 import com.leyuan.support.mvp.presenter.NurtureActivityPresent;
 import com.leyuan.support.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.support.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -38,8 +38,8 @@ public class NurtureFilterActivity extends BaseActivity implements View.OnClickL
     private RecyclerView recyclerView;
 
     private int currPage = 1;
-    private List<NurtureDataBean> data;
-    private HeaderAndFooterRecyclerViewAdapter wrapAdapter;
+    private List<NurtureData> data;
+    private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private NurtureFilterAdapter nurtureAdapter;
     private NurtureActivityPresent present;
 
@@ -91,10 +91,10 @@ public class NurtureFilterActivity extends BaseActivity implements View.OnClickL
     private void initRecyclerView() {
         recyclerView = (RecyclerView)findViewById(R.id.rv_nurture);
         data = new ArrayList<>();
-        nurtureAdapter = new NurtureFilterAdapter();
-        wrapAdapter = new HeaderAndFooterRecyclerViewAdapter(nurtureAdapter);
+        nurtureAdapter = new NurtureFilterAdapter(this);
+        wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(nurtureAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(wrapAdapter);
+        recyclerView.setAdapter(wrapperAdapter);
         recyclerView.addOnScrollListener(onScrollListener);
     }
 

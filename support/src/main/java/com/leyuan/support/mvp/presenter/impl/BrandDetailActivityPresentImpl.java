@@ -45,7 +45,7 @@ public class BrandDetailActivityPresentImpl implements BrandDetailActivityPresen
             @Override
             public void onNext(BrandBean brandBean) {
                 /*if(brandBean != null && !brandBean.isEmpty()){
-                    homeFragmentView.updateRecyclerView(homeBeanList);
+                    homeFragmentView.refreshData(homeBeanList);
                 }
 
                 //没有更多数据了显示到底提示

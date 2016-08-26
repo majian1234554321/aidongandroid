@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
+
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/dv_recommend_activity"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:background="@color/green"/>
+        fresco:placeholderImage="@drawable/place_holder_logo"
+        fresco:pressedStateOverlayImage="@drawable/selector_image_ripple"
+        fresco:placeholderImageScaleType="fitCenter"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line_color"/>
 </LinearLayout>

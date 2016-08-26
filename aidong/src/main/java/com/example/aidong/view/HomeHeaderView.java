@@ -58,7 +58,7 @@ public class HomeHeaderView extends RelativeLayout implements View.OnClickListen
         header.findViewById(R.id.tv_nurture).setOnClickListener(this);
         header.findViewById(R.id.tv_food).setOnClickListener(this);
         header.findViewById(R.id.tv_activity).setOnClickListener(this);
-        header.findViewById(R.id.tv_equipmen).setOnClickListener(this);
+        header.findViewById(R.id.tv_equipment).setOnClickListener(this);
         header.findViewById(R.id.tv_competition).setOnClickListener(this);
 
 
@@ -85,7 +85,7 @@ public class HomeHeaderView extends RelativeLayout implements View.OnClickListen
                 break;
             case R.id.tv_activity:
                 break;
-            case R.id.tv_equipmen:
+            case R.id.tv_equipment:
                 break;
             case R.id.tv_competition:
                 break;

@@ -94,14 +94,14 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
     private void initRecommendRecyclerView() {
         recommendRecyclerView = (RecyclerView)findViewById(R.id.rv_recommend);
         nurtureList = new ArrayList<>();
-        nurtureAdapter = new NurtureAdapter();
+        nurtureAdapter = new NurtureAdapter(this);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(nurtureAdapter);
         recommendRecyclerView.setAdapter(wrapperAdapter);
         GridLayoutManager manager = new GridLayoutManager(this,2);
         manager.setSpanSizeLookup(new HeaderSpanSizeLookup((HeaderAndFooterRecyclerViewAdapter)recommendRecyclerView.getAdapter(), manager.getSpanCount()));
         recommendRecyclerView.setLayoutManager(manager);
         recommendRecyclerView.addOnScrollListener(onScrollListener);
-        RecyclerViewUtils.setHeaderView(recommendRecyclerView,View.inflate(this,R.layout.header_nurture,null));
+        RecyclerViewUtils.setHeaderView(recommendRecyclerView,View.inflate(this,R.layout.header_nurture_or_equipment,null));
     }
 
 

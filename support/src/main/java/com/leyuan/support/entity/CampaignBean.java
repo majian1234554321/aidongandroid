@@ -7,7 +7,7 @@ package com.leyuan.support.entity;
 public class CampaignBean {
     private String campaign_id;
     private String name;
-    private String image;
+    private String cover;
     private String start_time;
     private String landmart;
 
@@ -27,12 +27,12 @@ public class CampaignBean {
         this.name = name;
     }
 
-    public String getImage() {
-        return image;
+    public String getCover() {
+        return cover;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setCover(String cover) {
+        this.cover = cover;
     }
 
     public String getStart_time() {
@@ -56,7 +56,7 @@ public class CampaignBean {
         return "CampaignBean{" +
                 "campaign_id='" + campaign_id + '\'' +
                 ", name='" + name + '\'' +
-                ", image='" + image + '\'' +
+                ", cover='" + cover + '\'' +
                 ", start_time='" + start_time + '\'' +
                 ", landmart='" + landmart + '\'' +
                 '}';

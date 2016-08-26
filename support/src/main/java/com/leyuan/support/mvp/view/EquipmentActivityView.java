@@ -8,22 +8,23 @@ import java.util.List;
  * 装备
  * Created by song on 2016/8/15.
  */
-public interface EquipmentActivityView {
+public interface EquipmentActivityView{
+
     /**
      * 更新列表
-     * @param equipmentBeanList
+     * @param equipmentBeanList 装备列表实体数据集合
      */
     void updateRecyclerView(List<EquipmentBean> equipmentBeanList);
 
     /**
-     * 显示空值界面
+     * 显示装备列表空值界面
      */
-    void showEmptyView();
+    void showListEmptyView();
 
     /**
-     * 隐藏空值界面
+     * 隐藏装备列表空值界面
      */
-    void hideEmptyView();
+    void hideListEmptyView();
 
     /**
      * 显示RecyclerView

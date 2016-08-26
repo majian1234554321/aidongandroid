@@ -1,6 +1,6 @@
 package com.leyuan.support.mvp.model;
 
-import com.leyuan.support.entity.NurtureDataBean;
+import com.leyuan.support.entity.data.NurtureData;
 import com.leyuan.support.entity.NurtureDetailBean;
 
 import rx.Subscriber;
@@ -16,7 +16,7 @@ public interface NurtureModel {
      * @param subscriber Subscribers
      * @param page 页码
      */
-    void getNurtures(Subscriber<NurtureDataBean> subscriber, int page);
+    void getNurtures(Subscriber<NurtureData> subscriber, int page);
 
     /**
      * 获取营养品详情

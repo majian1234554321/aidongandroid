@@ -1,64 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.leyuan.support.widget.customview.RippleView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:rv_zoom="true"
-    app:rv_type="doubleRipple"
-    app:rv_color="@color/rippleColor">
-    
+    android:background="@color/white">
+
     <View
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="@color/line_color"/>
+        android:background="@color/line_color" />
 
-    <ImageView
-        android:id="@+id/iv_cover"
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/dv_course_cover"
         android:layout_width="match_parent"
         android:layout_height="160dp"
-        android:src="@drawable/icon_avatar_default"
-        android:scaleType="centerCrop"
-        android:layout_below="@+id/line"/>
-    <TextView
-        android:id="@+id/tv_course_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="name"
-        android:textSize="20dp"
-        android:textColor="@color/black"
-        android:layout_below="@+id/iv_cover"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:singleLine="true"
-        android:ellipsize="end"/>
+        android:layout_below="@+id/line"
+        app:pressedStateOverlayImage="@color/color_image_press"
+        app:actualImageScaleType="centerCrop"
+        app:placeholderImage="@drawable/place_holder_logo" />
 
     <TextView
-        android:id="@+id/tv_address"
+        android:id="@+id/tv_course_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="name"
-        android:textSize="14dp"
-        android:textColor="@color/black"
-        android:layout_below="@+id/tv_course_name"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:singleLine="true"
-        android:ellipsize="end"/>
+        android:layout_alignBottom="@+id/dv_course_cover"
+        android:layout_marginBottom="10dp"
+        android:paddingLeft="14dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="7dp"
+        android:background="@drawable/shape_solid_black"
+        android:paddingTop="7dp"
+        android:text="@string/rmb_price"
+        android:textColor="@color/white"
+        android:textSize="17sp" />
 
-    <TextView
-        android:id="@+id/tv_date"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="哈哈哈"
-        android:textSize="14dp"
-        android:textColor="@color/black"
-        android:layout_below="@+id/tv_address"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dp"
-        android:singleLine="true"
-        android:ellipsize="end"/>
+        android:layout_below="@+id/dv_course_cover"
+        android:background="?selectableItemBackground"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingBottom="18dp">
 
-</com.leyuan.support.widget.customview.RippleView>
+        <TextView
+            android:id="@+id/tv_course_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="name"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/tv_course_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="name"
+            android:textColor="@color/black"
+            android:textSize="14dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_course_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/time_with_line"
+                android:textColor="@color/c9"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/tv_course_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/course_count"
+                android:textColor="@color/c9"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/tv_course_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1.0"
+                android:textColor="@color/c9"
+                android:textSize="14dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

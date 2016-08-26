@@ -2,7 +2,7 @@
 <resources>
     <string name="ssdk_weibo_oauth_regiseter">Authorization</string>
     <string name="ssdk_website">http://www.mob.com</string>
-    <string name="ssdk_weibo_upload_content">share image</string>
+    <string name="ssdk_weibo_upload_content">share cover</string>
     <string name="ssdk_wechat_client_inavailable">Wechat client not exists or the version is too low</string>
     <string name="ssdk_google_plus_client_inavailable">Google+ client not exists or the version is too low</string>
     <string name="ssdk_qq_client_inavailable">Mobile QQ client not exists or the version is too low</string>

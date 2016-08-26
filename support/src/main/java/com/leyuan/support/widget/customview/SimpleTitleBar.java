@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -50,7 +50,7 @@ public class SimpleTitleBar extends RelativeLayout{
 
     private void setAttr(Context context){
         View view = LayoutInflater.from(context).inflate(R.layout.simple_title_bar,this, true);
-        ImageView ivBack = (ImageView)view.findViewById(R.id.iv_back);
+        ImageButton ivBack = (ImageButton)view.findViewById(R.id.iv_back);
         tvTitle = (TextView)view.findViewById(R.id.tv_title);
         tvTitle.setText(title);
         ivBack.setOnClickListener(new OnClickListener() {

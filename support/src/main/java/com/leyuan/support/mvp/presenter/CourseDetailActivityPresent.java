@@ -10,5 +10,5 @@ public interface CourseDetailActivityPresent {
      * 获取课程详情信息
      * @param id 课程id
      */
-    void getCourseDetail(int id);
+    void getCourseDetail(String id);
 }

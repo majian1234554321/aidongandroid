@@ -1,9 +1,7 @@
 package com.leyuan.support.mvp.model;
 
-import com.leyuan.support.entity.EquipmentBean;
-import com.leyuan.support.entity.EquipmentDetailBean;
-
-import java.util.List;
+import com.leyuan.support.entity.data.EquipmentData;
+import com.leyuan.support.entity.data.EquipmentDetailData;
 
 import rx.Subscriber;
 
@@ -18,12 +16,12 @@ public interface EquipmentModel {
      * @param subscriber Subscribers
      * @param page 页码
      */
-    void getEquipments(Subscriber<List<EquipmentBean>> subscriber, int page);
+    void getEquipments(Subscriber<EquipmentData> subscriber, int page);
 
     /**
      * 获取装备详情
      * @param subscriber Subscribers
      * @param id id
      */
-    void getEquipmentDetail(Subscriber<EquipmentDetailBean> subscriber, int id);
+    void getEquipmentDetail(Subscriber<EquipmentDetailData> subscriber, int id);
 }

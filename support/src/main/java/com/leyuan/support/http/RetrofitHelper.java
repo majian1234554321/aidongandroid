@@ -1,5 +1,7 @@
 package com.leyuan.support.http;
 
+import com.leyuan.support.util.Constant;
+
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -14,7 +16,7 @@ public class RetrofitHelper {
             synchronized (RetrofitHelper.class) {
                 if (singleton == null) {
                     Retrofit.Builder builder = new Retrofit.Builder();
-                    builder.baseUrl("http://192.168.50.128/")
+                    builder.baseUrl(Constant.BASE_URL)
                             .addConverterFactory(GsonConverterFactory.create())//设置远程地址
                             .addCallAdapterFactory(RxJavaCallAdapterFactory.create());
                     singleton = builder.build();

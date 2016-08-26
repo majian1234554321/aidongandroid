@@ -22,22 +22,21 @@
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:text="推荐自提"
-        android:drawableLeft="@drawable/back"
-        android:drawableRight="@drawable/back"
+        android:drawableLeft="@drawable/point_black"
+        android:drawableRight="@drawable/point_black"
         android:drawablePadding="5dp"
         android:gravity="center_vertical"
+        android:textColor="@color/black"
+        android:textSize="16sp"
         android:layout_gravity="center_horizontal"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_recommend_venue"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <View
-        android:layout_width="wrap_content"
-        android:layout_height="10dp"
-        android:background="@color/line_color"/>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="13.5dp"
+        android:layout_marginRight="13.5dp"/>
 
 </LinearLayout>

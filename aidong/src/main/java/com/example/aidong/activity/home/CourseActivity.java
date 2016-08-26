@@ -40,7 +40,7 @@ public class CourseActivity extends BaseActivity implements CoursesActivityView{
 
     private int currPage = 1;
     private CourseAdapter courseAdapter;
-    private HeaderAndFooterRecyclerViewAdapter wrapAdapter;
+    private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private CoursesActivityPresent present;
     private ArrayList<CourseBean> data = new ArrayList<>();
 
@@ -51,13 +51,14 @@ public class CourseActivity extends BaseActivity implements CoursesActivityView{
     private SimpleListAdapter groupAdapter;     //商圈一级列表适配器
     private ListWithFlagAdapter childrenAdapter;//商圈二级列表适配器
 
-    private int day;
-    private int category;
+    private int day = 3;
+    private int category ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course);
+        pageSize = 20;
         present = new CoursesActivityPresentImpl(this,this);
         initDropDownMenu();
         initSwipeRefreshLayout();
@@ -88,6 +89,9 @@ public class CourseActivity extends BaseActivity implements CoursesActivityView{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 dateAdapter.setCheckItem(position);
+                day = 4;
+                currPage = 1;
+                present.pullToRefreshData(recyclerView,category,day);
                 //dropDownMenu.setTabText(position == 0 ? conditionHeaders[0] : citys[position]);
                 dropDownMenu.closeMenu();
             }
@@ -146,10 +150,10 @@ public class CourseActivity extends BaseActivity implements CoursesActivityView{
     private void initRecyclerView() {
         recyclerView = (RecyclerView)contentView.findViewById(R.id.rv_course);
         data = new ArrayList<>();
-        courseAdapter = new CourseAdapter();
-        wrapAdapter = new HeaderAndFooterRecyclerViewAdapter(courseAdapter);
+        courseAdapter = new CourseAdapter(this);
+        wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(courseAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(wrapAdapter);
+        recyclerView.setAdapter(wrapperAdapter);
         recyclerView.addOnScrollListener(onScrollListener);
     }
 
@@ -166,7 +170,16 @@ public class CourseActivity extends BaseActivity implements CoursesActivityView{
 
     @Override
     public void updateRecyclerView(List<CourseBean> courseList) {
+        if(refreshLayout.isRefreshing()){
+            data.clear();
+            refreshLayout.setRefreshing(false);
+        }
 
+            data.addAll(courseList);
+
+
+        courseAdapter.setData(data);
+        wrapperAdapter.notifyDataSetChanged();
     }
 
     @Override

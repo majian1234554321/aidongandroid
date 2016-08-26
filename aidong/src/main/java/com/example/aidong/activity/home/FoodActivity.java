@@ -6,6 +6,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.LinearLayout;
 
 import com.example.aidong.BaseActivity;
 import com.example.aidong.R;
@@ -39,14 +41,13 @@ public class FoodActivity extends BaseActivity implements FoodActivityView{
     private RecyclerView venuesRecyclerView;
     private List<VenuesBean> venuesList;
     private RecommendVenuesAdapter venuesAdapter;
-    //private CoordinatorLayout
 
     private RecyclerView foodRecyclerView;
     private SwipeRefreshLayout refreshLayout;
 
     private int currPage = 1;
     private ArrayList<FoodBean> foodList = new ArrayList<>();
-    private HeaderAndFooterRecyclerViewAdapter wrapAdapter;
+    private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private FoodAdapter foodAdapter;
     private FoodActivityPresenter present;
 
@@ -59,6 +60,22 @@ public class FoodActivity extends BaseActivity implements FoodActivityView{
         initHeaderView();
         initSwipeRefreshLayout();
         initRecyclerView();
+    }
+
+    private void initHeaderView(){
+        headerView = View.inflate(this,R.layout.header_food,null);
+        headerView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
+        viewPager = (ViewPager) headerView.findViewById(R.id.vP_food);
+        venuesRecyclerView = (RecyclerView)headerView.findViewById(R.id.rv_recommend_venue);
+        ViewPagerIndicator indicator = (ViewPagerIndicator)headerView.findViewById(R.id.vp_indicator);
+        SamplePagerAdapter pagerAdapter = new SamplePagerAdapter();
+        viewPager.setAdapter(pagerAdapter);
+        indicator.setViewPager(viewPager);
+
+        venuesList = new ArrayList<>();
+        venuesAdapter = new RecommendVenuesAdapter(this);
+        venuesRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        venuesRecyclerView.setAdapter(venuesAdapter);
     }
 
     private void initSwipeRefreshLayout() {
@@ -81,28 +98,13 @@ public class FoodActivity extends BaseActivity implements FoodActivityView{
         });
     }
 
-    private void initHeaderView(){
-        headerView = View.inflate(this,R.layout.header_food,null);
-        viewPager = (ViewPager) headerView.findViewById(R.id.vP_food);
-        venuesRecyclerView = (RecyclerView)headerView.findViewById(R.id.rv_recommend_venue);
-        ViewPagerIndicator indicator = (ViewPagerIndicator)headerView.findViewById(R.id.vp_indicator);
-        SamplePagerAdapter pagerAdapter = new SamplePagerAdapter();
-        viewPager.setAdapter(pagerAdapter);
-        indicator.setViewPager(viewPager);
-
-        venuesList = new ArrayList<>();
-        venuesAdapter = new RecommendVenuesAdapter();
-        venuesRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
-        venuesRecyclerView.setAdapter(venuesAdapter);
-    }
-
     private void initRecyclerView() {
         foodRecyclerView = (RecyclerView)findViewById(R.id.rv_food);
         foodList = new ArrayList<>();
-        foodAdapter = new FoodAdapter();
-        wrapAdapter = new HeaderAndFooterRecyclerViewAdapter(foodAdapter);
+        foodAdapter = new FoodAdapter(this);
+        wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(foodAdapter);
         foodRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        foodRecyclerView.setAdapter(wrapAdapter);
+        foodRecyclerView.setAdapter(wrapperAdapter);
         foodRecyclerView.addOnScrollListener(onScrollListener);
         RecyclerViewUtils.setHeaderView(foodRecyclerView, headerView);
     }
@@ -126,10 +128,11 @@ public class FoodActivity extends BaseActivity implements FoodActivityView{
             refreshLayout.setRefreshing(false);
         }
         venuesList.addAll(foodAndVenuesBean.getPick_up_gym());
+        venuesList.add(foodAndVenuesBean.getPick_up_gym().get(0));
         foodList.addAll(foodAndVenuesBean.getFood());
         venuesAdapter.setData(venuesList);
         foodAdapter.setData(foodList);
-        wrapAdapter.notifyDataSetChanged();
+        wrapperAdapter.notifyDataSetChanged();
     }
 
     @Override

@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.leyuan.support.widget.customview.RippleView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="?selectableItemBackground"
     android:orientation="vertical"
     android:layout_width="116dp"
     android:layout_height="match_parent"
     android:paddingLeft="13dp"
     android:paddingRight="13dp"
-    app:rv_centered="true"
-    app:rv_rippleDuration="300"
-    app:rv_type="rectangle"
-    app:rv_framerate="20">
+    android:paddingBottom="10dp" >
 
-    
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/dv_venues_cover"
         android:layout_width="90dp"
         android:layout_height="90dp"
-        app:placeholderImage="@drawable/icon_place_holder"/>
+        android:layout_centerHorizontal="true"
+        app:placeholderImage="@drawable/place_holder_logo"/>
+
     
     <TextView
         android:id="@+id/tv_venues_name"
@@ -25,10 +24,11 @@
         android:singleLine="true"
         android:textSize="14sp"
         android:text=""
-        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
         android:layout_marginTop="10dp"
-        android:textColor="@color/black"
-        android:layout_below="@+id/dv_venues_cover"/>
+        android:textColor="@color/black"/>
+
 
     <TextView
         android:id="@+id/tv_venues_distance"
@@ -37,8 +37,6 @@
         android:singleLine="true"
         android:textSize="14sp"
         android:text=""
-        android:layout_below="@+id/tv_venues_name"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
         android:textColor="@color/c9"/>
-</com.leyuan.support.widget.customview.RippleView>
+</LinearLayout>
