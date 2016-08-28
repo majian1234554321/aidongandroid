@@ -8,14 +8,17 @@ import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.View;
 
 import com.example.aidong.BaseActivity;
 import com.example.aidong.R;
 import com.example.aidong.activity.home.adapter.SamplePagerAdapter;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.leyuan.commonlibrary.util.ToastUtil;
 import com.leyuan.support.entity.CourseDetailBean;
 import com.leyuan.support.http.subscriber.ProgressSubscriber;
 import com.leyuan.support.mvp.model.impl.CourseModelImpl;
+import com.leyuan.support.util.DensityUtil;
 import com.leyuan.support.widget.customview.ViewPagerIndicator;
 
 /**
@@ -102,6 +105,14 @@ public class CourseDetailActivity extends BaseActivity{
             int maxScroll = appBarLayout.getTotalScrollRange();
             float percentage = (float) Math.abs(verticalOffset) / (float) maxScroll;
             toolbar.setBackgroundColor(Color.argb((int) (percentage * 255), 0, 0, 0));
+
+            if(maxScroll - Math.abs(verticalOffset) < DensityUtil.dp2px(CourseDetailActivity.this,35)){
+                ToastUtil.show("hide",CourseDetailActivity.this);
+                avatar.setVisibility(View.GONE);
+            }else {
+                ToastUtil.show("show",CourseDetailActivity.this);
+                avatar.setVisibility(View.VISIBLE);
+            }
         }
     }
 

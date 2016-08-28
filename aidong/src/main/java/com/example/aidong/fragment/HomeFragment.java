@@ -12,11 +12,11 @@ import android.view.ViewGroup;
 
 import com.example.aidong.BaseFragment;
 import com.example.aidong.R;
-import com.example.aidong.activity.home.CampaignActivity;
 import com.example.aidong.activity.home.CourseActivity;
+import com.example.aidong.activity.home.CourseDetailActivity;
 import com.example.aidong.activity.home.EquipmentActivity;
-import com.example.aidong.activity.home.FoodActivity;
 import com.example.aidong.activity.home.NurtureActivity;
+import com.example.aidong.activity.home.VenuesDetailActivity;
 import com.example.aidong.activity.home.adapter.HomeRecycleViewAdapter;
 import com.example.aidong.activity.home.adapter.SamplePagerAdapter;
 import com.leyuan.support.entity.HomeBean;
@@ -80,7 +80,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView{
         headerView.findViewById(R.id.tv_food).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), FoodActivity.class);
+                Intent intent = new Intent(getActivity(), VenuesDetailActivity.class);
                 startActivity(intent);
             }
         });
@@ -88,7 +88,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView{
         headerView.findViewById(R.id.tv_activity).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CampaignActivity.class);
+                Intent intent = new Intent(getActivity(), CourseDetailActivity.class);
                 startActivity(intent);
             }
         });
