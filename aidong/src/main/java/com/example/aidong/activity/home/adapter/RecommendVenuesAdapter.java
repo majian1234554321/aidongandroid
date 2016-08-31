@@ -1,14 +1,15 @@
 package com.example.aidong.activity.home.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.aidong.R;
+import com.example.aidong.activity.home.CampaignDetailActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.leyuan.commonlibrary.util.ToastUtil;
 import com.leyuan.support.entity.VenuesBean;
 
 import java.util.ArrayList;
@@ -52,7 +53,8 @@ public class RecommendVenuesAdapter extends RecyclerView.Adapter<RecommendVenues
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtil.show("场馆详情",context);
+                Intent intent = new Intent(context, CampaignDetailActivity.class);
+                context.startActivity(intent);
             }
         });
     }

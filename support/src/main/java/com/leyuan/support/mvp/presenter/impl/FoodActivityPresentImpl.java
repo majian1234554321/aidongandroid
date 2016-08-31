@@ -32,13 +32,8 @@ public class FoodActivityPresentImpl implements FoodActivityPresenter {
         foodModel.getFoods(new RefreshSubscriber<FoodAndVenuesBean>(context,recyclerView) {
             @Override
             public void onNext(FoodAndVenuesBean bean) {
-                if(bean != null && bean.getFood() != null&&!bean.getFood().isEmpty()){
-                    foodActivityView.hideEmptyView();
-                    foodActivityView.showRecyclerView();
+                if(bean != null && bean.getFood() != null){
                     foodActivityView.updateRecyclerView(bean);
-                }else {
-                    foodActivityView.showEmptyView();
-                    foodActivityView.hideRecyclerView();
                 }
             }
         }, Constant.FIRST_PAGE);

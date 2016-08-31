@@ -24,12 +24,13 @@ public class EquipmentActivityPresentImpl implements EquipmentActivityPresent{
     private Context context;
     private EquipmentModel equipmentModel;
     private EquipmentActivityView equipmentActivityView;
-    private List<EquipmentBean> equipmentBeanList = new ArrayList<>();
+    private List<EquipmentBean> equipmentBeanList;
 
     public EquipmentActivityPresentImpl(Context context,EquipmentActivityView equipmentActivityView) {
         this.context = context;
         this.equipmentActivityView = equipmentActivityView;
         equipmentModel = new EquipmentModelImpl();
+        equipmentBeanList = new ArrayList<>();
     }
 
     @Override
@@ -37,17 +38,17 @@ public class EquipmentActivityPresentImpl implements EquipmentActivityPresent{
         equipmentModel.getEquipments(new RefreshSubscriber<EquipmentData>(context,recyclerView) {
             @Override
             public void onNext(EquipmentData equipmentData) {
-                if(equipmentData != null){
+                if( equipmentData != null){
                     equipmentBeanList = equipmentData.getEquipment();
-                    equipmentActivityView.updateRecyclerView(equipmentBeanList);
                 }
 
-                if(equipmentBeanList != null && equipmentBeanList.size() > 0){
-                    equipmentActivityView.showRecyclerView();
-                    equipmentActivityView.hideListEmptyView();
-                } else {
+                if(equipmentBeanList.isEmpty()){
                     equipmentActivityView.showListEmptyView();
                     equipmentActivityView.hideRecyclerView();
+                }else {
+                    equipmentActivityView.hideListEmptyView();
+                    equipmentActivityView.showRecyclerView();
+                    equipmentActivityView.updateRecyclerView(equipmentBeanList);
                 }
             }
         },Constant.FIRST_PAGE);
@@ -58,8 +59,11 @@ public class EquipmentActivityPresentImpl implements EquipmentActivityPresent{
         equipmentModel.getEquipments(new RequestMoreSubscriber<EquipmentData>(context,recyclerView,pageSize) {
             @Override
             public void onNext(EquipmentData equipmentData) {
-                if(equipmentData != null){
+                if(null != equipmentData){
                     equipmentBeanList = equipmentData.getEquipment();
+                }
+
+                if(!equipmentBeanList.isEmpty()){
                     equipmentActivityView.updateRecyclerView(equipmentBeanList);
                 }
 

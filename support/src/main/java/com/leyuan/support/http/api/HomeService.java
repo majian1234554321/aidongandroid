@@ -3,6 +3,7 @@ package com.leyuan.support.http.api;
 
 import com.leyuan.support.entity.BaseBean;
 import com.leyuan.support.entity.BrandBean;
+import com.leyuan.support.entity.data.BannerData;
 import com.leyuan.support.entity.data.HomeData;
 import com.leyuan.support.entity.SearchResultBean;
 
@@ -28,4 +29,6 @@ public interface HomeService {
     @POST("search")
     Observable<BaseBean<SearchResultBean>> search(@Field("keyword") String keyword, @Field("cat") String category, @Field("page") String page);
 
+    @GET("banners")
+    Observable<BaseBean<BannerData>> getBanners(@Query("site") String site);
 }

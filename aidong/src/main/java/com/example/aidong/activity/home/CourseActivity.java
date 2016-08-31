@@ -123,7 +123,7 @@ public class CourseActivity extends BaseActivity implements CoursesActivityView{
         popupViews.add(dateView);
         popupViews.add(categoryView);
         popupViews.add(addressView);
-        contentView = View.inflate(this,R.layout.dropdownmenu_course,null);
+        contentView = View.inflate(this,R.layout.dropdownmenu_content,null);
         dropDownMenu.setDropDownMenu(Arrays.asList(conditionHeaders), popupViews, contentView);
     }
 
@@ -148,7 +148,7 @@ public class CourseActivity extends BaseActivity implements CoursesActivityView{
     }
 
     private void initRecyclerView() {
-        recyclerView = (RecyclerView)contentView.findViewById(R.id.rv_course);
+        recyclerView = (RecyclerView)contentView.findViewById(R.id.recycler_view);
         data = new ArrayList<>();
         courseAdapter = new CourseAdapter(this);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(courseAdapter);

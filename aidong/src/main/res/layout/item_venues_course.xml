@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="25dp"
+    android:background="@color/white">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/line_color"/>
+
+    <TextView
+        android:id="@+id/tv_course_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginTop="25dp"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/black"
+        android:text="钢管舞"/>
+
+
+    <TextView
+        android:id="@+id/tv_course_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:layout_marginTop="13dp"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/main_red"
+        android:text="100"/>
+
+    <TextView
+        android:id="@+id/tv_course_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:layout_marginTop="14dp"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/black"
+        android:text="陆家嘴"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_course_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/time_with_line"
+            android:textColor="@color/c9"
+            android:textSize="14dp" />
+
+        <TextView
+            android:id="@+id/tv_course_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/course_count"
+            android:textColor="@color/c9"
+            android:textSize="14dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

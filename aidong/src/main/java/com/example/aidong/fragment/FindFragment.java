@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.example.aidong.BaseFragment;
 import com.example.aidong.R;
-import com.example.aidong.activity.found.FilterAroundPeopleActivity;
+import com.example.aidong.activity.discover.FilterAroundPeopleActivity;
 import com.example.aidong.adapter.FoundFragmentAdapter;
 import com.example.aidong.interfaces.SimpleOnTabSelectedListener;
 import com.example.aidong.view.CustomViewPager;

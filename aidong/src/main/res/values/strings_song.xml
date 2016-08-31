@@ -1,6 +1,7 @@
 <resources>
     <string name="find_venues">场馆</string>
     <string name="find_people">人</string>
+
     <string name="select">筛选</string>
     <string name="bust">胸围/</string>
     <string name="waist">腰围/</string>
@@ -28,4 +29,18 @@
 
     <string name="campaign_detail">活动详情</string>
     <string name="food_material">主要食材: %1$s</string>
+
+    <string name="coupon_available">可使用</string>
+    <string name="coupon_used">已使用</string>
+    <string name="coupon_overdue">已过期</string>
+
+    <string name="order_all">全部</string>
+    <string name="order_express">快递</string>
+    <string name="order_self_pick_up">自提</string>
+    <string name="order_unpaid">待支付</string>
+
+    <string name="appointment_all">全部</string>
+    <string name="appointment_joined">已参加</string>
+    <string name="appointment_un_joined">待参加</string>
+
 </resources>

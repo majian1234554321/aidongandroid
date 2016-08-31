@@ -3,7 +3,9 @@ package com.leyuan.support.mvp.presenter.impl;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
+import com.leyuan.support.entity.data.BannerData;
 import com.leyuan.support.entity.data.HomeData;
+import com.leyuan.support.http.subscriber.ProgressSubscriber;
 import com.leyuan.support.http.subscriber.RefreshSubscriber;
 import com.leyuan.support.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.support.mvp.model.HomeModel;
@@ -59,5 +61,16 @@ public class HomeFragmentPresentImpl implements HomeFragmentPresent{
                 }
             }
         }, 1);
+    }
+
+    @Override
+    public void getBanners() {
+        homeModel.getBanners(new ProgressSubscriber<BannerData>(context,false) {
+            @Override
+            public void onNext(BannerData bannerData) {
+                if (bannerData != null && bannerData.getBanners() != null && !bannerData.getBanners().isEmpty())
+                homeFragmentView.updateBanner(bannerData.getBanners());
+            }
+        });
     }
 }

@@ -12,13 +12,15 @@ import android.view.ViewGroup;
 
 import com.example.aidong.BaseFragment;
 import com.example.aidong.R;
+import com.example.aidong.activity.home.CampaignActivity;
 import com.example.aidong.activity.home.CourseActivity;
-import com.example.aidong.activity.home.CourseDetailActivity;
 import com.example.aidong.activity.home.EquipmentActivity;
+import com.example.aidong.activity.home.FoodActivity;
 import com.example.aidong.activity.home.NurtureActivity;
-import com.example.aidong.activity.home.VenuesDetailActivity;
+import com.example.aidong.activity.home.adapter.BannerAdapter;
 import com.example.aidong.activity.home.adapter.HomeRecycleViewAdapter;
-import com.example.aidong.activity.home.adapter.SamplePagerAdapter;
+import com.example.aidong.activity.mine.AppointmentActivity;
+import com.leyuan.support.entity.BannerBean;
 import com.leyuan.support.entity.HomeBean;
 import com.leyuan.support.mvp.presenter.HomeFragmentPresent;
 import com.leyuan.support.mvp.presenter.impl.HomeFragmentPresentImpl;
@@ -41,14 +43,14 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView{
 
     private View headerView;
     private ViewPager viewPager;
-
+    private BannerAdapter bannerAdapter;
 
     private RecyclerView recyclerView;
     private SwipeRefreshLayout refreshLayout;
 
     private int currPage = 1;
     private ArrayList<HomeBean> data = new ArrayList<>();
-    private HeaderAndFooterRecyclerViewAdapter wapper;
+    private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private HomeRecycleViewAdapter homeAdapter;
     private HomeFragmentPresent present;
 
@@ -71,16 +73,16 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView{
         headerView = View.inflate(getContext(),R.layout.header_home,null);
         viewPager = (ViewPager) headerView.findViewById(R.id.vp_home);
         ViewPagerIndicator indicator = (ViewPagerIndicator)headerView.findViewById(R.id.vp_indicator);
-        SamplePagerAdapter pagerAdapter = new SamplePagerAdapter();
+        bannerAdapter = new BannerAdapter(getContext());
         //HomeViewPagerAdapter pagerAdapter = new HomeViewPagerAdapter(imageList);
-        viewPager.setAdapter(pagerAdapter);
+        viewPager.setAdapter(bannerAdapter);
         indicator.setViewPager(viewPager);
-        pagerAdapter.registerDataSetObserver(indicator.getDataSetObserver());
+        bannerAdapter.registerDataSetObserver(indicator.getDataSetObserver());
 
         headerView.findViewById(R.id.tv_food).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), VenuesDetailActivity.class);
+                Intent intent = new Intent(getActivity(), FoodActivity.class);
                 startActivity(intent);
             }
         });
@@ -88,7 +90,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView{
         headerView.findViewById(R.id.tv_activity).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CourseDetailActivity.class);
+                Intent intent = new Intent(getActivity(), CampaignActivity.class);
                 startActivity(intent);
             }
         });
@@ -116,6 +118,15 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView{
             }
         });
 
+        headerView.findViewById(R.id.tv_competition).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AppointmentActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        present.getBanners();
     }
 
     private void initSwipeRefreshLayout(View view) {
@@ -142,9 +153,9 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView{
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_home);
         data = new ArrayList<>();
         homeAdapter = new HomeRecycleViewAdapter(getActivity());
-        wapper = new HeaderAndFooterRecyclerViewAdapter(homeAdapter);
+        wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(homeAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(wapper);
+        recyclerView.setAdapter(wrapperAdapter);
         recyclerView.addOnScrollListener(onScrollListener);
         RecyclerViewUtils.setHeaderView(recyclerView, headerView);
     }
@@ -160,6 +171,11 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView{
     };
 
     @Override
+    public void updateBanner(List<BannerBean> bannerBeanList) {
+        bannerAdapter.setData(bannerBeanList);
+    }
+
+    @Override
     public void updateRecyclerView(List<HomeBean> homeBeanList) {
         if(refreshLayout.isRefreshing()){
             data.clear();
@@ -167,7 +183,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView{
         }
         data.addAll(homeBeanList);
         homeAdapter.setData(data);
-        wapper.notifyDataSetChanged();
+        wrapperAdapter.notifyDataSetChanged();
     }
 
     @Override

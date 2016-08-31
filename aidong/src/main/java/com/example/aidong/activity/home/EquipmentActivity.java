@@ -20,6 +20,8 @@ import com.leyuan.support.widget.endlessrecyclerview.EndlessRecyclerOnScrollList
 import com.leyuan.support.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.support.widget.endlessrecyclerview.HeaderSpanSizeLookup;
 import com.leyuan.support.widget.endlessrecyclerview.RecyclerViewUtils;
+import com.leyuan.support.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
+import com.leyuan.support.widget.endlessrecyclerview.weight.LoadingFooter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,6 +91,7 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
     }
 
     private void initRecommendRecyclerView() {
+
         recommendRecyclerView = (RecyclerView)findViewById(R.id.rv_recommend);
         equipmentList = new ArrayList<>();
         equipmentAdapter = new EquipmentAdapter(this);
@@ -105,7 +108,7 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
         @Override
         public void onLoadNextPage(View view) {
             currPage ++;
-            if (equipmentList != null && !equipmentList.isEmpty()) {
+            if (equipmentList != null && equipmentList.size() >= pageSize) {
                 present.requestMoreData(recommendRecyclerView,pageSize,currPage);
             }
         }
@@ -149,6 +152,6 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
 
     @Override
     public void showEndFooterView() {
-
+        RecyclerViewStateUtils.setFooterViewState(recommendRecyclerView, LoadingFooter.State.TheEnd);
     }
 }

@@ -78,6 +78,26 @@ public class AttributeDynamics implements Serializable{
 		public void setUser(UserCoach user) {
 			this.user = user;
 		}
+
+		@Override
+		public String toString() {
+			return "LikeUser{" +
+					"user=" + user +
+					'}';
+		}
 	}
-	
+
+	@Override
+	public String toString() {
+		return "AttributeDynamics{" +
+				"no=" + no +
+				", content='" + content + '\'' +
+				", likes=" + likes +
+				", created=" + created +
+				", comments=" + comments +
+				", film=" + film +
+				", images=" + images +
+				", like_user=" + like_user +
+				'}';
+	}
 }

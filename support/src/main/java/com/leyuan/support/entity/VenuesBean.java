@@ -1,10 +1,11 @@
 package com.leyuan.support.entity;
 
 /**
+ * 场馆实体
  * Created by pc on 2016/8/2.
  */
 public class VenuesBean {
-    private String gym_id;           //场馆编号
+    private String gym_id;          //场馆编号
     private String name;            //场馆名字
     private String logo;            //场馆封面
     private String address;         //场馆地址

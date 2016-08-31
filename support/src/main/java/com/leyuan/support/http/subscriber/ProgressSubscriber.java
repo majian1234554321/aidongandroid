@@ -20,10 +20,17 @@ import rx.Subscriber;
 public abstract class ProgressSubscriber<T> extends Subscriber<T> implements ProgressDialogHandler.ProgressCancelListener{
 
     private Context context;
+    private boolean showDialog = true;
     private ProgressDialogHandler progressDialogHandler;
 
     public ProgressSubscriber(Context context) {
         this.context = context;
+        progressDialogHandler = new ProgressDialogHandler(context, this, true);
+    }
+
+    public ProgressSubscriber(Context context,boolean showDialog) {
+        this.context = context;
+        this.showDialog = showDialog;
         progressDialogHandler = new ProgressDialogHandler(context, this, true);
     }
 
@@ -45,7 +52,10 @@ public abstract class ProgressSubscriber<T> extends Subscriber<T> implements Pro
      */
     @Override
     public void onStart() {
-        showProgressDialog();
+        if(showDialog){
+            showProgressDialog();
+        }
+
     }
 
     /**

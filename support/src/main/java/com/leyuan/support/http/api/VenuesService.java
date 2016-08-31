@@ -1,13 +1,13 @@
 package com.leyuan.support.http.api;
 
 import com.leyuan.support.entity.BaseBean;
-import com.leyuan.support.entity.VenuesBean;
-import com.leyuan.support.entity.VenuesDetailBean;
-
-import java.util.List;
+import com.leyuan.support.entity.data.CoachData;
+import com.leyuan.support.entity.data.CourseData;
+import com.leyuan.support.entity.data.VenuesData;
+import com.leyuan.support.entity.data.VenuesDetailData;
 
 import retrofit2.http.GET;
-import retrofit2.http.Part;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -22,14 +22,29 @@ public interface VenuesService {
      * @return 场馆集合
      */
     @GET("gyms")
-    Observable<BaseBean<List<VenuesBean>>> getVenues(@Query("page") int page);
+    Observable<BaseBean<VenuesData>> getVenues(@Query("page") int page);
 
     /**
-     * 获取场馆列表
+     * 获取场馆详情
      * @param id 场馆id
      * @return 场馆详情实体
      */
     @GET("gyms/{id}")
-    Observable<BaseBean<VenuesDetailBean>> getVenuesDetail(@Part("id") int id);
+    Observable<BaseBean<VenuesDetailData>> getVenuesDetail(@Path("id") int id);
 
+    /**
+     * 获取场馆中教练列表(暂不考虑分页)
+     * @param id 场馆id
+     * @return
+     */
+    @GET("gyms/{id}/coaches")
+    Observable<BaseBean<CoachData>> getCoaches(@Path("id") int id);
+
+    /**
+     * 获取场馆中课程列表(暂不考虑分页)
+     * @param id 场馆id
+     * @return
+     */
+    @GET("gyms/{id}/courses")
+    Observable<BaseBean<CourseData>> getCourses(@Path("id") int id);
 }

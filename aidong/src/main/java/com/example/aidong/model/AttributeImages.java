@@ -156,4 +156,16 @@ public class AttributeImages implements Serializable, Parcelable {
 		caption = in.readString();
 		url = in.readString();
 	}
+
+	@Override
+	public String toString() {
+		return "AttributeImages{" +
+				"thumb='" + thumb + '\'' +
+				", original='" + original + '\'' +
+				", no=" + no +
+				", caption='" + caption + '\'' +
+				", url='" + url + '\'' +
+				", id=" + id +
+				'}';
+	}
 }

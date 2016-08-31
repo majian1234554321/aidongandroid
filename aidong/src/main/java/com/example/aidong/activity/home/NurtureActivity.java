@@ -15,6 +15,7 @@ import com.leyuan.support.entity.NurtureBean;
 import com.leyuan.support.mvp.presenter.NurtureActivityPresent;
 import com.leyuan.support.mvp.presenter.impl.NurtureActivityPresentImpl;
 import com.leyuan.support.mvp.view.NurtureActivityView;
+import com.leyuan.support.util.LogUtil;
 import com.leyuan.support.widget.customview.SimpleTitleBar;
 import com.leyuan.support.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.support.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -77,6 +78,7 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
             @Override
             public void onRefresh() {
                 currPage = 1;
+                LogUtil.d("retrofit","NurtureActivity下拉刷新");
                 present.pullToRefreshData(recommendRecyclerView);
             }
         });
@@ -109,6 +111,7 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
         @Override
         public void onLoadNextPage(View view) {
             currPage ++;
+            LogUtil.d("retrofit","NurtureActivity加载更多");
             if (nurtureList != null && !nurtureList.isEmpty()) {
                 present.requestMoreData(recommendRecyclerView,pageSize,currPage);
             }

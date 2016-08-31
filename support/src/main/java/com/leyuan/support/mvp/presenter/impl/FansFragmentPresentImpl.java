@@ -38,10 +38,9 @@ public class FansFragmentPresentImpl implements FansFragmentPresent{
             public void onNext(List<UserBean> userBeanList) {
                 if(userBeanList != null && userBeanList.isEmpty()){
                     fansFragmentView.showEmptyView();
-                    fansFragmentView.hideRecyclerView();
                 }else {
                     fansFragmentView.hideEmptyView();
-                    fansFragmentView.showRecyclerView();
+
                     fansFragmentView.updateRecyclerView(userBeanList);
                 }
             }

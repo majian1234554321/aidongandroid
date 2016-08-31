@@ -136,26 +136,6 @@ public class FoodActivity extends BaseActivity implements FoodActivityView{
     }
 
     @Override
-    public void showEmptyView() {
-
-    }
-
-    @Override
-    public void hideEmptyView() {
-
-    }
-
-    @Override
-    public void showRecyclerView() {
-
-    }
-
-    @Override
-    public void hideRecyclerView() {
-
-    }
-
-    @Override
     public void showErrorView() {
 
     }

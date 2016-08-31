@@ -28,8 +28,18 @@ public class FoundDynamicResult extends MsgResult {
 			this.dynamic = dynamic;
 		}
 
-		
-		
+		@Override
+		public String toString() {
+			return "Data{" +
+					"dynamic=" + dynamic +
+					'}';
+		}
 	}
 
+	@Override
+	public String toString() {
+		return "FoundDynamicResult{" +
+				"data=" + data +
+				'}';
+	}
 }

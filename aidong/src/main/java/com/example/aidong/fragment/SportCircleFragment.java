@@ -41,6 +41,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.leyuan.commonlibrary.http.IHttpCallback;
 import com.leyuan.commonlibrary.http.IHttpTask;
 import com.leyuan.commonlibrary.util.ToastUtil;
+import com.leyuan.support.util.LogUtil;
 
 import org.apache.http.message.BasicNameValuePair;
 
@@ -304,7 +305,7 @@ public class SportCircleFragment extends BaseFragment implements
 	@Override
 	public void onGetData(Object data, int requestCode, String response) {
 		stopLoading();
-
+		LogUtil.d("111",data.toString());
 		switch (requestCode) {
 		case DYAMICS_DOWN:
 			FoundDynamicResult result_down = (FoundDynamicResult) data;

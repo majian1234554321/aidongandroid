@@ -1,6 +1,7 @@
 package com.leyuan.support.mvp.model.impl;
 
 import com.leyuan.support.entity.BrandBean;
+import com.leyuan.support.entity.data.BannerData;
 import com.leyuan.support.entity.data.HomeData;
 import com.leyuan.support.http.RetrofitHelper;
 import com.leyuan.support.http.RxHelper;
@@ -33,5 +34,12 @@ public class HomeModelImpl implements HomeModel {
                 .compose(RxHelper.<BrandBean>transform())
                 .subscribe(subscriber);
 
+    }
+
+    @Override
+    public void getBanners(Subscriber<BannerData> subscriber) {
+        homeService.getBanners("homepage")
+                .compose(RxHelper.<BannerData>transform())
+                .subscribe(subscriber);
     }
 }

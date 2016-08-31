@@ -1,10 +1,10 @@
 package com.leyuan.support.mvp.model;
 
 
-import com.leyuan.support.entity.VenuesBean;
-import com.leyuan.support.entity.VenuesDetailBean;
-
-import java.util.List;
+import com.leyuan.support.entity.data.CoachData;
+import com.leyuan.support.entity.data.CourseData;
+import com.leyuan.support.entity.data.VenuesData;
+import com.leyuan.support.entity.data.VenuesDetailData;
 
 import rx.Subscriber;
 
@@ -19,12 +19,27 @@ public interface VenuesModel {
      * @param subscriber 返回Subscriber
      * @param page 页码
      */
-     void getVenues(Subscriber<List<VenuesBean>> subscriber, int page);
+     void getVenues(Subscriber<VenuesData> subscriber, int page);
 
     /**
      * 获取场馆详情
      * @param subscribe 返回Subscriber
      * @param id 场馆id
      */
-     void getVenuesDetail(Subscriber<VenuesDetailBean> subscribe, int id);
+     void getVenuesDetail(Subscriber<VenuesDetailData> subscribe, int id);
+
+    /**
+     * 获取场馆教练列表
+     * @param subscriber 返回Subscriber
+     * @param id  场馆id
+     */
+     void getCoaches(Subscriber<CoachData> subscriber,int id);
+
+    /**
+     * 获取场馆课程列表
+     * @param subscriber 返回Subscriber
+     * @param id  场馆id
+     */
+    void getCourses(Subscriber<CourseData> subscriber, int id);
+
 }

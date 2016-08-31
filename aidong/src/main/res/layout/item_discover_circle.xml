@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:background="@color/white">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:drawableLeft="@drawable/point_black"
+        android:drawableRight="@drawable/point_black"
+        android:drawablePadding="5dp"
+        android:text="爱动圈"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_vertical"
+        android:textColor="@color/black"
+        android:textSize="16sp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_discover_circle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="7.5dp"
+        android:layout_marginRight="7.5dp"/>
+
+</LinearLayout>

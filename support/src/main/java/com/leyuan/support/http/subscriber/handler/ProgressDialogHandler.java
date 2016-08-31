@@ -50,7 +50,7 @@ public class ProgressDialogHandler extends Handler {
     }
 
     private void dismissProgressDialog(){
-        if (pd != null) {
+        if (pd != null && pd.isShowing()) {
             pd.dismiss();
             pd = null;
         }

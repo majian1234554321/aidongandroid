@@ -1,6 +1,7 @@
 package com.leyuan.support.mvp.model;
 
 import com.leyuan.support.entity.BrandBean;
+import com.leyuan.support.entity.data.BannerData;
 import com.leyuan.support.entity.data.HomeData;
 
 import rx.Subscriber;
@@ -25,5 +26,9 @@ public interface HomeModel {
      */
     void getBrandDetail(Subscriber<BrandBean> subscriber, int id, int page);
 
-
+    /**
+     * 获取Banner
+     * @param subscriber Subscriber
+     */
+    void getBanners(Subscriber<BannerData> subscriber);
 }

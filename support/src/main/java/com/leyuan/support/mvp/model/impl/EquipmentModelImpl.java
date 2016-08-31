@@ -6,6 +6,7 @@ import com.leyuan.support.http.RetrofitHelper;
 import com.leyuan.support.http.RxHelper;
 import com.leyuan.support.http.api.EquipmentService;
 import com.leyuan.support.mvp.model.EquipmentModel;
+import com.leyuan.support.util.LogUtil;
 
 import rx.Subscriber;
 
@@ -22,6 +23,7 @@ public class EquipmentModelImpl implements EquipmentModel {
 
     @Override
     public void getEquipments(Subscriber<EquipmentData> subscriber, int page) {
+        LogUtil.d("retrofit","EquipmentModelImpl page:"+page);
         equipmentService.getEquipments(page)
                 .compose(RxHelper.<EquipmentData>transform())
                 .subscribe(subscriber);

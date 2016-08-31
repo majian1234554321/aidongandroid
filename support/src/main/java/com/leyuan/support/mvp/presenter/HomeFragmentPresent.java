@@ -23,4 +23,9 @@ public interface HomeFragmentPresent {
      */
     void requestMoreData(RecyclerView recyclerView, int pageSize, int page);
 
+    /**
+     * 获取Banner
+     */
+    void getBanners();
+
 }

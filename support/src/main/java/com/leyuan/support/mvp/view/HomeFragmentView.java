@@ -1,5 +1,6 @@
 package com.leyuan.support.mvp.view;
 
+import com.leyuan.support.entity.BannerBean;
 import com.leyuan.support.entity.HomeBean;
 
 import java.util.List;
@@ -9,9 +10,16 @@ import java.util.List;
  * Created by song on 2016/8/13.
  */
 public interface HomeFragmentView {
+
+    /**
+     * 更新Banner
+     * @param bannerBeanList BannerBean集合
+     */
+    void updateBanner(List<BannerBean> bannerBeanList);
+
     /**
      * 更新列表
-     * @param homeCategoryBean
+     * @param homeCategoryBean HomeBean集合
      */
     void updateRecyclerView(List<HomeBean> homeCategoryBean);
 

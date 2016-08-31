@@ -134,10 +134,21 @@ public class Dynamic implements Serializable{
 		
 		return dynamic;
 	}
-	
-	
-	
 
-	
 
+	@Override
+	public String toString() {
+		return "Dynamic{" +
+				"id=" + id +
+				", comments=" + comments +
+				", content='" + content + '\'' +
+				", created=" + created +
+				", film=" + film +
+				", image=" + image +
+				", images=" + images +
+				", like_user=" + like_user +
+				", likes=" + likes +
+				", publisher=" + publisher +
+				'}';
+	}
 }

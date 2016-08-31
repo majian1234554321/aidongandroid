@@ -12,18 +12,18 @@ import java.util.Random;
 public class SamplePagerAdapter extends PagerAdapter {
 
     private final Random random = new Random();
-    private int mSize;
+    private int size;
 
     public SamplePagerAdapter() {
-        mSize = 5;
+        size = 5;
     }
 
     public SamplePagerAdapter(int count) {
-        mSize = count;
+        size = count;
     }
 
     @Override public int getCount() {
-        return mSize;
+        return size;
     }
 
     @Override public boolean isViewFromObject(View view, Object object) {
