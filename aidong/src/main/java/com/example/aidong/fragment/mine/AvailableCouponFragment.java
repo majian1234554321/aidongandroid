@@ -57,10 +57,7 @@ public class AvailableCouponFragment extends BaseFragment implements CouponFragm
 
     }
 
-    @Override
-    public void showErrorView() {
 
-    }
 
     @Override
     public void showEndFooterView() {

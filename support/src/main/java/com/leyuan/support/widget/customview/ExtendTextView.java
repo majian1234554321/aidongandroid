@@ -3,6 +3,7 @@ package com.leyuan.support.widget.customview;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import com.leyuan.support.util.DensityUtil;
 public class ExtendTextView extends RelativeLayout{
     private TextView rightTextView;
 
+    private String leftText;
     private int height;
     private int leftPadding;
     private int rightPadding;
@@ -50,11 +52,12 @@ public class ExtendTextView extends RelativeLayout{
         }
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ExtendTextView);
-        height = typedArray.getDimensionPixelSize(R.styleable.ExtendTextView_text_height, DensityUtil.dp2px(context,44));
+        height = typedArray.getDimensionPixelSize(R.styleable.ExtendTextView_text_height, DensityUtil.dp2px(context,30));
+        leftText = typedArray.getString(R.styleable.ExtendTextView_left_text);
         leftPadding = typedArray.getDimensionPixelSize(R.styleable.ExtendTextView_padding_left, DensityUtil.dp2px(context,12));
         rightPadding = typedArray.getDimensionPixelSize(R.styleable.ExtendTextView_padding_right, DensityUtil.dp2px(context,12));
-        leftTextSize = typedArray.getDimensionPixelSize(R.styleable.ExtendTextView_left_text_size, DensityUtil.sp2px(context,14));
-        rightTextSize = typedArray.getDimensionPixelSize(R.styleable.ExtendTextView_right_text_size, DensityUtil.sp2px(context,14));
+        leftTextSize = typedArray.getDimensionPixelSize(R.styleable.ExtendTextView_left_text_size, 14);
+        rightTextSize = typedArray.getDimensionPixelSize(R.styleable.ExtendTextView_right_text_size, 14);
         leftTextColor = typedArray.getColor(R.styleable.ExtendTextView_left_text_color, getResources().getColor(R.color.black));
         rightTextColor = typedArray.getColor(R.styleable.ExtendTextView_right_text_color, getResources().getColor(R.color.black));
         lineColor = typedArray.getColor(R.styleable.ExtendTextView_line_color, getResources().getColor(R.color.black));
@@ -62,7 +65,7 @@ public class ExtendTextView extends RelativeLayout{
     }
 
     private void setAttr(Context context){
-        View view = View.inflate(context,R.layout.extend_textview,null);
+        View view = LayoutInflater.from(context).inflate(R.layout.extend_textview,this,true);
         RelativeLayout root = (RelativeLayout)view.findViewById(R.id.root);
         TextView leftTextView = (TextView)view.findViewById(R.id.tv_left);
         rightTextView = (TextView)view.findViewById(R.id.tv_right);
@@ -71,6 +74,7 @@ public class ExtendTextView extends RelativeLayout{
         root.getLayoutParams().height = height;
         leftTextView.setTextColor(leftTextColor);
         leftTextView.setTextSize(leftTextSize);
+        leftTextView.setText(leftText);
         rightTextView.setTextColor(rightTextColor);
         rightTextView.setTextSize(rightTextSize);
         line.setBackgroundColor(lineColor);

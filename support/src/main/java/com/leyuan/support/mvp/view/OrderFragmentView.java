@@ -1,20 +1,19 @@
 package com.leyuan.support.mvp.view;
 
-import com.leyuan.support.entity.CouponBean;
+import com.leyuan.support.entity.OrderBean;
 
 import java.util.List;
 
 /**
- * 可用优惠劵
- * Created by song on 2016/8/31.
+ * 订单
+ * Created by song on 2016/9/1.
  */
-public interface CouponFragmentView {
-
+public interface OrderFragmentView {
     /**
      * 更新列表
-     * @param couponBeanList
+     * @param orderBeanList
      */
-    void updateRecyclerView(List<CouponBean> couponBeanList);
+    void updateRecyclerView(List<OrderBean> orderBeanList);
 
     /**
      * 显示空值界面

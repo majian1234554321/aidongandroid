@@ -1,5 +1,7 @@
 package com.leyuan.support.entity;
 
+import java.util.ArrayList;
+
 /**
  * 首页商品实体
  * Created by song on 2016/7/14.
@@ -10,6 +12,11 @@ public class GoodsBean {
     private  String name;          //商品名字
     private  String price;         //商品售价
     private  String  market_price; //商品市场价
+
+    /******订单商品中需要用到的字段******/
+    private ArrayList<String> spec_name;
+    private ArrayList<String> spec_value;
+    private String amount;
 
     public String getSku_code() {
         return sku_code;
@@ -51,6 +58,30 @@ public class GoodsBean {
         this.market_price = market_price;
     }
 
+    public ArrayList<String> getSpec_name() {
+        return spec_name;
+    }
+
+    public void setSpec_name(ArrayList<String> spec_name) {
+        this.spec_name = spec_name;
+    }
+
+    public ArrayList<String> getSpec_value() {
+        return spec_value;
+    }
+
+    public void setSpec_value(ArrayList<String> spec_value) {
+        this.spec_value = spec_value;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
+
     @Override
     public String toString() {
         return "GoodsBean{" +
@@ -59,6 +90,9 @@ public class GoodsBean {
                 ", name='" + name + '\'' +
                 ", price='" + price + '\'' +
                 ", market_price='" + market_price + '\'' +
+                ", spec_name=" + spec_name +
+                ", spec_value=" + spec_value +
+                ", amount='" + amount + '\'' +
                 '}';
     }
 }

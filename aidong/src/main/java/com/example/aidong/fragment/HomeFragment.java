@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.example.aidong.BaseFragment;
 import com.example.aidong.R;
+import com.example.aidong.activity.WebActivity;
 import com.example.aidong.activity.home.CampaignActivity;
 import com.example.aidong.activity.home.CourseActivity;
 import com.example.aidong.activity.home.EquipmentActivity;
@@ -19,7 +20,6 @@ import com.example.aidong.activity.home.FoodActivity;
 import com.example.aidong.activity.home.NurtureActivity;
 import com.example.aidong.activity.home.adapter.BannerAdapter;
 import com.example.aidong.activity.home.adapter.HomeRecycleViewAdapter;
-import com.example.aidong.activity.mine.AppointmentActivity;
 import com.leyuan.support.entity.BannerBean;
 import com.leyuan.support.entity.HomeBean;
 import com.leyuan.support.mvp.presenter.HomeFragmentPresent;
@@ -121,7 +121,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView{
         headerView.findViewById(R.id.tv_competition).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AppointmentActivity.class);
+                Intent intent = new Intent(getActivity(), WebActivity.class);
                 startActivity(intent);
             }
         });

@@ -13,6 +13,9 @@ import android.widget.TextView;
 
 import com.example.aidong.BaseFragment;
 import com.example.aidong.R;
+import com.example.aidong.activity.mine.AppointmentActivity;
+import com.example.aidong.activity.mine.CouponActivity;
+import com.example.aidong.activity.mine.OrderActivity;
 import com.example.aidong.activity.mine.TabMinePersonalSettingsActivity;
 import com.example.aidong.view.AidongMineItem;
 import com.example.aidong.view.CircleImageView;
@@ -115,16 +118,16 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 UiManager.activityJump(getActivity(), TabMinePersonalSettingsActivity.class);
                 break;
             case R.id.relativeLayout_yuyue:
-                UiManager.activityJump(getActivity(), TabMinePersonalSettingsActivity.class);
+                UiManager.activityJump(getActivity(), AppointmentActivity.class);
                 break;
             case R.id.relativeLayout_dingdang:
-                UiManager.activityJump(getActivity(), TabMinePersonalSettingsActivity.class);
+                UiManager.activityJump(getActivity(), OrderActivity.class);
                 break;
             case R.id.item_my_coin:
                 UiManager.activityJump(getActivity(), TabMinePersonalSettingsActivity.class);
                 break;
             case R.id.item_my_coupon:
-                UiManager.activityJump(getActivity(), TabMinePersonalSettingsActivity.class);
+                UiManager.activityJump(getActivity(), CouponActivity.class);
                 break;
             case R.id.item_sport_timing:
                 UiManager.activityJump(getActivity(), TabMinePersonalSettingsActivity.class);

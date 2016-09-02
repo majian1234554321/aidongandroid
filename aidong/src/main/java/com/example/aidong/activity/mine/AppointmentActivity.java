@@ -8,9 +8,7 @@ import android.support.v4.view.ViewPager;
 import com.example.aidong.BaseActivity;
 import com.example.aidong.R;
 import com.example.aidong.adapter.FoundFragmentAdapter;
-import com.example.aidong.fragment.mine.AllAppointmentFragment;
-import com.example.aidong.fragment.mine.JoinedAppointmentFragment;
-import com.example.aidong.fragment.mine.UnJoinedAppointmentFragment;
+import com.example.aidong.fragment.mine.AppointmentFragment;
 import com.example.aidong.interfaces.SimpleOnTabSelectedListener;
 import com.leyuan.support.widget.customview.SimpleTitleBar;
 
@@ -23,7 +21,7 @@ import java.util.ArrayList;
 public class AppointmentActivity extends BaseActivity {
     private static final int APPOINTMENT_ALL = 0;
     private static final int APPOINTMENT_JOINED = 1;
-    private static final int APPOINTMENT_UNJOINED = 2;
+    private static final int APPOINTMENT_UN_JOINED = 2;
 
     private SimpleTitleBar titleBar;
     private TabLayout tabLayout;
@@ -40,9 +38,9 @@ public class AppointmentActivity extends BaseActivity {
         viewPager = (ViewPager) findViewById(R.id.vp_content);
 
         ArrayList<Fragment> fragments = new ArrayList<>();
-        AllAppointmentFragment all = new AllAppointmentFragment();
-        JoinedAppointmentFragment joined = new JoinedAppointmentFragment();
-        UnJoinedAppointmentFragment unJoined = new UnJoinedAppointmentFragment();
+        AppointmentFragment all = new AppointmentFragment();
+        AppointmentFragment joined = new AppointmentFragment();
+        AppointmentFragment unJoined = new AppointmentFragment();
 
         fragments.add(all);
         fragments.add(joined);
@@ -73,7 +71,7 @@ public class AppointmentActivity extends BaseActivity {
                 } else if (tab.equals(tabLayout.getTabAt(APPOINTMENT_JOINED))) {
                     viewPager.setCurrentItem(APPOINTMENT_JOINED);
                 } else {
-                    viewPager.setCurrentItem(APPOINTMENT_UNJOINED);
+                    viewPager.setCurrentItem(APPOINTMENT_UN_JOINED);
                 }
             }
         });

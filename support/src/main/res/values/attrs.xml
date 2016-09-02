@@ -103,6 +103,7 @@
         <attr name="left_text_size" format="dimension" />
         <attr name="right_text_size" format="dimension" />
         <attr name="line_color" format="color" />
+        <attr name="left_text" format="string" />
     </declare-styleable>
 
 

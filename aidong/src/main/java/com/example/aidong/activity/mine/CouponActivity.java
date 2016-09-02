@@ -9,7 +9,7 @@ import com.example.aidong.BaseActivity;
 import com.example.aidong.R;
 import com.example.aidong.adapter.FoundFragmentAdapter;
 import com.example.aidong.fragment.mine.AvailableCouponFragment;
-import com.example.aidong.fragment.mine.OverdueCouponFragment;
+import com.example.aidong.fragment.mine.ExpireCouponFragment;
 import com.example.aidong.fragment.mine.UsedCouponFragment;
 import com.example.aidong.interfaces.SimpleOnTabSelectedListener;
 import com.leyuan.support.widget.customview.SimpleTitleBar;
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public class CouponActivity extends BaseActivity{
     private static final int COUPON_AVAILABLE = 0;
     private static final int COUPON_USED = 1;
-    private static final int COUPON_OVERDUE = 2;
+    private static final int COUPON_EXPIRE = 2;
 
     private SimpleTitleBar titleBar;
     private TabLayout tabLayout;
@@ -41,7 +41,7 @@ public class CouponActivity extends BaseActivity{
         ArrayList<Fragment> fragments = new ArrayList<>();
         AvailableCouponFragment available = new AvailableCouponFragment();
         UsedCouponFragment used = new UsedCouponFragment();
-        OverdueCouponFragment overdue = new OverdueCouponFragment();
+        ExpireCouponFragment overdue = new ExpireCouponFragment();
         fragments.add(available);
         fragments.add(used);
         fragments.add(overdue);
@@ -49,7 +49,7 @@ public class CouponActivity extends BaseActivity{
         ArrayList<String> titles = new ArrayList<>();
         titles.add(getString(R.string.coupon_available));
         titles.add(getString(R.string.coupon_used));
-        titles.add(getString(R.string.coupon_overdue));
+        titles.add(getString(R.string.coupon_expire));
 
         viewPager.setAdapter(new FoundFragmentAdapter(getSupportFragmentManager(),fragments,titles));
         viewPager.setOffscreenPageLimit(2);
@@ -71,7 +71,7 @@ public class CouponActivity extends BaseActivity{
                 }else if(tab.equals(tabLayout.getTabAt(COUPON_USED))){
                     viewPager.setCurrentItem(COUPON_USED);
                 }else {
-                    viewPager.setCurrentItem(COUPON_OVERDUE);
+                    viewPager.setCurrentItem(COUPON_EXPIRE);
                 }
             }
         });
