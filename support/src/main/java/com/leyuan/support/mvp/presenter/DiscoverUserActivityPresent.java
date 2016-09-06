@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
  * 发现 - 人
  * Created by song on 2016/8/29.
  */
-public interface DiscoverUserPresent {
+public interface DiscoverUserActivityPresent {
 
     void pullToRefreshData(RecyclerView recyclerView, double lat, double lng, String gender, String type);
 

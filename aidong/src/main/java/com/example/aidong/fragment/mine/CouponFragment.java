@@ -4,46 +4,41 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.LayoutParams;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.aidong.BaseFragment;
 import com.example.aidong.R;
-import com.example.aidong.activity.mine.adapter.OrderAdapter;
-import com.leyuan.support.entity.OrderBean;
-import com.leyuan.support.mvp.presenter.OrderFragmentPresent;
-import com.leyuan.support.mvp.presenter.impl.OrderFragmentPresentImpl;
-import com.leyuan.support.mvp.view.OrderFragmentView;
+import com.example.aidong.activity.mine.adapter.CouponAdapter;
+import com.leyuan.support.entity.CouponBean;
+import com.leyuan.support.mvp.presenter.NurtureActivityPresent;
+import com.leyuan.support.mvp.view.CouponFragmentView;
 import com.leyuan.support.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.support.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
-import com.leyuan.support.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
-import com.leyuan.support.widget.endlessrecyclerview.weight.LoadingFooter;
+import com.leyuan.support.widget.endlessrecyclerview.RecyclerViewUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 订单
+ * 优惠劵
  * Created by song on 2016/8/31.
  */
-public class OrderFragment extends BaseFragment implements OrderFragmentView{
-    public static final String ALL = "all";
-    public static final String UN_PAID = "unpaid";
-    public static final String SELF_DELIVERY = "self-delivery";
-    public static final String EXPRESS_DELIVERY = "express-delivery";
+public class CouponFragment extends BaseFragment implements CouponFragmentView{
 
-    private String type;
-
+    private View headerView;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
 
     private int currPage = 1;
-    private List<OrderBean> data;
+    private List<CouponBean> data;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
-    private OrderAdapter orderAdapter;
+    private CouponAdapter couponAdapter;
+    private NurtureActivityPresent present;
 
-    private OrderFragmentPresent present;
+    private String type;
 
     /**
      * 设置传递给Fragment的参数
@@ -51,25 +46,36 @@ public class OrderFragment extends BaseFragment implements OrderFragmentView{
      */
     public void setArguments(String type){
         Bundle bundle=new Bundle();
-        bundle.putString(type, type);
-        OrderFragment.this.setArguments(bundle);
+        bundle.putString("type", type);
+        this.setArguments(bundle);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_order,null);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_coupon,null);
     }
 
     @Override
-    public void onViewCreated(View view,  Bundle savedInstanceState) {
-        if (getArguments().containsKey(type)) {
-            type = getArguments().getString(type);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        if (getArguments() != null && getArguments().containsKey("type")) {
+            type = getArguments().getString("type");
         }
-        type = ALL;
         pageSize = 20;
-        present = new OrderFragmentPresentImpl(getContext(),this);
+
+        initHeaderView();
         initSwipeRefreshLayout(view);
         initRecyclerView(view);
+    }
+
+    private void initHeaderView(){
+        headerView = View.inflate(getContext(),R.layout.header_coupon,null);
+        headerView.setLayoutParams(new RecyclerView.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
+        headerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Intent intent = new Intent(getActivity(),)
+            }
+        });
     }
 
     private void initSwipeRefreshLayout(View view) {
@@ -79,7 +85,7 @@ public class OrderFragment extends BaseFragment implements OrderFragmentView{
             @Override
             public void onRefresh() {
                 currPage = 1;
-                present.pullToRefreshData(recyclerView,type);
+                //present.pullToRefreshData(recyclerView,type);
             }
         });
 
@@ -87,40 +93,39 @@ public class OrderFragment extends BaseFragment implements OrderFragmentView{
             @Override
             public void run() {
                 refreshLayout.setRefreshing(true);
-                present.pullToRefreshData(recyclerView,type);
+                //present.pullToRefreshData(recyclerView,type);
             }
         });
     }
 
     private void initRecyclerView(View view) {
-        recyclerView = (RecyclerView) view.findViewById(R.id.rv_order);
+        recyclerView = (RecyclerView) view.findViewById(R.id.rv_coupon);
         data = new ArrayList<>();
-        orderAdapter = new OrderAdapter(getContext());
-        wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(orderAdapter);
+        couponAdapter = new CouponAdapter(getContext());
+        wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(couponAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(wrapperAdapter);
         recyclerView.addOnScrollListener(onScrollListener);
+
+        if( "available".equals(type)){
+            RecyclerViewUtils.setHeaderView(recyclerView,headerView);
+        }
     }
+
 
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
         @Override
         public void onLoadNextPage(View view) {
             currPage ++;
             if (data != null && data.size() >= pageSize) {
-                present.requestMoreData(recyclerView,type,pageSize,currPage);
+                //present.requestMoreData(recyclerView,type,pageSize,currPage);
             }
         }
     };
 
     @Override
-    public void updateRecyclerView(List<OrderBean> orderBeanList) {
-        if(refreshLayout.isRefreshing()){
-            data.clear();
-            refreshLayout.setRefreshing(false);
-        }
-        data.addAll(orderBeanList);
-        orderAdapter.setData(data);
-        wrapperAdapter.notifyDataSetChanged();
+    public void updateRecyclerView(List<CouponBean> couponBeanList) {
+
     }
 
     @Override
@@ -133,8 +138,10 @@ public class OrderFragment extends BaseFragment implements OrderFragmentView{
 
     }
 
+
+
     @Override
     public void showEndFooterView() {
-        RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
+
     }
 }

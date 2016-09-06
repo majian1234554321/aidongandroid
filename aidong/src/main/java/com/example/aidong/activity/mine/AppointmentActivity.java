@@ -42,6 +42,10 @@ public class AppointmentActivity extends BaseActivity {
         AppointmentFragment joined = new AppointmentFragment();
         AppointmentFragment unJoined = new AppointmentFragment();
 
+        all.setArguments(AppointmentFragment.ALL);
+        joined.setArguments(AppointmentFragment.ALL);
+        unJoined.setArguments(AppointmentFragment.ALL);
+
         fragments.add(all);
         fragments.add(joined);
         fragments.add(unJoined);

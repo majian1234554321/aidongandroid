@@ -8,9 +8,7 @@ import android.support.v4.view.ViewPager;
 import com.example.aidong.BaseActivity;
 import com.example.aidong.R;
 import com.example.aidong.adapter.FoundFragmentAdapter;
-import com.example.aidong.fragment.mine.AvailableCouponFragment;
-import com.example.aidong.fragment.mine.ExpireCouponFragment;
-import com.example.aidong.fragment.mine.UsedCouponFragment;
+import com.example.aidong.fragment.mine.CouponFragment;
 import com.example.aidong.interfaces.SimpleOnTabSelectedListener;
 import com.leyuan.support.widget.customview.SimpleTitleBar;
 
@@ -39,12 +37,14 @@ public class CouponActivity extends BaseActivity{
         viewPager = (ViewPager) findViewById(R.id.vp_content);
 
         ArrayList<Fragment> fragments = new ArrayList<>();
-        AvailableCouponFragment available = new AvailableCouponFragment();
-        UsedCouponFragment used = new UsedCouponFragment();
-        ExpireCouponFragment overdue = new ExpireCouponFragment();
+        CouponFragment available = new CouponFragment();
+        CouponFragment used = new CouponFragment();
+        CouponFragment overdue = new CouponFragment();
         fragments.add(available);
         fragments.add(used);
         fragments.add(overdue);
+
+        available.setArguments("available");
 
         ArrayList<String> titles = new ArrayList<>();
         titles.add(getString(R.string.coupon_available));

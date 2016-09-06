@@ -13,8 +13,8 @@ import com.example.aidong.BaseApp;
 import com.example.aidong.R;
 import com.example.aidong.activity.discover.adapter.VenuesAdapter;
 import com.leyuan.support.entity.VenuesBean;
-import com.leyuan.support.mvp.presenter.DiscoverVenuesPresent;
-import com.leyuan.support.mvp.presenter.impl.DiscoverVenuesPresentImpl;
+import com.leyuan.support.mvp.presenter.DiscoverVenuesActivityPresent;
+import com.leyuan.support.mvp.presenter.impl.DiscoverVenuesActivityPresentImpl;
 import com.leyuan.support.mvp.view.DiscoverVenuesActivityView;
 import com.leyuan.support.widget.customview.SimpleTitleBar;
 import com.leyuan.support.widget.dropdownmenu.DropDownMenu;
@@ -45,7 +45,7 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
     private int currPage = 1;
     private VenuesAdapter venuesAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
-    private DiscoverVenuesPresent present;
+    private DiscoverVenuesActivityPresent present;
     private ArrayList<VenuesBean> data = new ArrayList<>();
 
     private String conditionHeaders[];
@@ -61,7 +61,7 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
         setContentView(R.layout.activity_discover_venues);
 
         pageSize = 20;
-        present = new DiscoverVenuesPresentImpl(this,this);
+        present = new DiscoverVenuesActivityPresentImpl(this,this);
         initDropDownMenu();
         initSwipeRefreshLayout();
         initRecyclerView();

@@ -26,13 +26,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder>{
 
     public UserAdapter(Context context) {
         this.context = context;
-        UserBean bean = new UserBean();
+       /* UserBean bean = new UserBean();
         bean.setAvatar("https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png");
         bean.setDistance("200");
         bean.setName("谁啊这是");
         for(int i=0; i<20;i++){
             this.data.add(bean);
-        }
+        }*/
         notifyDataSetChanged();
     }
 

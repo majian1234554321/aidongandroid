@@ -9,7 +9,7 @@ import com.leyuan.support.http.subscriber.RefreshSubscriber;
 import com.leyuan.support.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.support.mvp.model.DiscoverModel;
 import com.leyuan.support.mvp.model.impl.DiscoverModelImpl;
-import com.leyuan.support.mvp.presenter.DiscoverUserPresent;
+import com.leyuan.support.mvp.presenter.DiscoverUserActivityPresent;
 import com.leyuan.support.mvp.view.DiscoverUserActivityView;
 import com.leyuan.support.util.Constant;
 
@@ -20,13 +20,13 @@ import java.util.List;
  * 发现 - 人
  * Created by song on 2016/8/29.
  */
-public class DiscoverUserPresentImpl implements DiscoverUserPresent{
+public class DiscoverUserActivityPresentImpl implements DiscoverUserActivityPresent {
     private Context context;
     private DiscoverUserActivityView discoverUserActivityView;
     private DiscoverModel discoverModel;
     private List<UserBean> userBeanList;
 
-    public DiscoverUserPresentImpl(Context context, DiscoverUserActivityView discoverUserActivityView) {
+    public DiscoverUserActivityPresentImpl(Context context, DiscoverUserActivityView discoverUserActivityView) {
         this.context = context;
         this.discoverUserActivityView = discoverUserActivityView;
         discoverModel = new DiscoverModelImpl();
@@ -44,11 +44,9 @@ public class DiscoverUserPresentImpl implements DiscoverUserPresent{
 
                 if(userBeanList != null && !userBeanList.isEmpty()){
                     discoverUserActivityView.hideEmptyView();
-                    discoverUserActivityView.showRecyclerView();
                     discoverUserActivityView.updateRecyclerView(userBeanList);
                 }else {
                     discoverUserActivityView.showEmptyView();
-                    discoverUserActivityView.hideRecyclerView();
                 }
             }
         },lat,lng, Constant.FIRST_PAGE,gender,type);

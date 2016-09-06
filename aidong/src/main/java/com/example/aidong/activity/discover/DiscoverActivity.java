@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.example.aidong.BaseActivity;
 import com.example.aidong.R;
-import com.example.aidong.activity.discover.adapter.DiscoverAdapter;
+import com.example.aidong.activity.discover.adapter.DynamicAdapter;
 import com.leyuan.support.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 
 /**
@@ -16,7 +16,7 @@ import com.leyuan.support.widget.endlessrecyclerview.HeaderAndFooterRecyclerView
 public class DiscoverActivity extends BaseActivity{
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView  recyclerView;
-    private DiscoverAdapter adapter;
+    private DynamicAdapter adapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
 
 

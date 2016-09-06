@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?selectableItemBackground"
-    android:orientation="vertical"
-  >
+    android:orientation="vertical">
 
     <include layout="@layout/inc_bold_line" />
 
@@ -18,29 +17,15 @@
         android:textColor="@color/main_red"
         android:textSize="15sp" />
 
-    <LinearLayout
-        android:id="@+id/ll_paid"
+    <TextView
+        android:id="@+id/tv_id_or_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:text="订单号:201630"
+        android:textColor="@color/c9"
+        android:textSize="13sp" />
 
-        <TextView
-            android:id="@+id/tv_id_or_time_tip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="订单号: "
-            android:textColor="@color/c9"
-            android:textSize="13sp" />
-
-        <TextView
-            android:id="@+id/tv_id_or_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="201630"
-            android:textColor="@color/c9"
-            android:textSize="13sp" />
-    </LinearLayout>
 
     <include layout="@layout/inc_line" />
 
@@ -49,6 +34,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <include layout="@layout/inc_order_bottom_info"/>
+    <include layout="@layout/inc_order_bottom_info" />
 
 </LinearLayout>

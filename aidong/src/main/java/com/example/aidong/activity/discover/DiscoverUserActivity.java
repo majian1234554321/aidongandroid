@@ -6,14 +6,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.aidong.BaseActivity;
 import com.example.aidong.BaseApp;
 import com.example.aidong.R;
 import com.example.aidong.activity.discover.adapter.UserAdapter;
 import com.leyuan.support.entity.UserBean;
-import com.leyuan.support.mvp.presenter.DiscoverUserPresent;
-import com.leyuan.support.mvp.presenter.impl.DiscoverUserPresentImpl;
+import com.leyuan.support.mvp.presenter.DiscoverUserActivityPresent;
+import com.leyuan.support.mvp.presenter.impl.DiscoverUserActivityPresentImpl;
 import com.leyuan.support.mvp.view.DiscoverUserActivityView;
 import com.leyuan.support.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.support.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -31,23 +32,26 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
     private Toolbar toolbar;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
-    private DiscoverUserPresent userPresent;
+    private DiscoverUserActivityPresent userPresent;
 
     private int currPage = 1;
     private List<UserBean> data;
     private UserAdapter userAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
 
+    private TextView noContent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover_user);
         pageSize = 20;
-        userPresent = new DiscoverUserPresentImpl(this,this);
+        userPresent = new DiscoverUserActivityPresentImpl(this,this);
 
         initToolbar();
         initSwipeRefreshLayout();
         initRecyclerView();
+
+        noContent = (TextView) findViewById(R.id.no_content);
     }
 
     private void initToolbar() {
@@ -112,23 +116,14 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
 
     @Override
     public void showEmptyView() {
-
+        noContent.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideEmptyView() {
-
+        noContent.setVisibility(View.GONE);
     }
 
-    @Override
-    public void showRecyclerView() {
-
-    }
-
-    @Override
-    public void hideRecyclerView() {
-
-    }
 
     @Override
     public void showErrorView() {

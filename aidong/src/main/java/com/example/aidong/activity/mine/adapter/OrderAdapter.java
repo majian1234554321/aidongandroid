@@ -20,7 +20,7 @@ import java.util.List;
  * 订单适配器
  * Created by song on 2016/9/1.
  */
-public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>{
+public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder> {
     private static final String UN_PAID = "0";          //待付款
     private static final String UN_DELIVERY = "1";      //待发货
     private static final String DELIVERIED = "2";       //已发货
@@ -48,7 +48,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
 
     @Override
     public OrderHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = View.inflate(context, R.layout.item_order,null);
+        View view = View.inflate(context, R.layout.item_order, null);
         return new OrderHolder(view);
     }
 
@@ -56,13 +56,13 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
     public void onBindViewHolder(OrderHolder holder, int position) {
         OrderBean bean = data.get(position);
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        holder.recyclerView.setAdapter(new OrderGoodAdapter(context,bean.getItem()));
+        holder.recyclerView.setAdapter(new OrderGoodAdapter(context, bean.getItem()));
 
-        if(UN_PAID.equals(bean.getStatus())){
-            holder.timeOrNumTip.setText(context.getString(R.string.pay_time_tip));
+        if (UN_PAID.equals(bean.getStatus())) {
+
             holder.payTip.setText(context.getString(R.string.need_pay));
-        }else {
-            holder.timeOrNumTip.setText(context.getString(R.string.order_num_tip));
+        } else {
+
             holder.payTip.setText(context.getString(R.string.true_pay));
         }
 
@@ -76,9 +76,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
         });
     }
 
-    class OrderHolder extends RecyclerView.ViewHolder{
+    class OrderHolder extends RecyclerView.ViewHolder {
         TextView state;                 //订单状态
-        TextView timeOrNumTip;          //支付时间或者订单号文字
         TextView timeOrNum;             //实际支付时间或者订单号
         RecyclerView recyclerView;      //商品
         TextView count;                 //商品数量
@@ -89,16 +88,15 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
 
         public OrderHolder(View itemView) {
             super(itemView);
-            state = (TextView)itemView.findViewById(R.id.tv_state);
-            timeOrNumTip = (TextView)itemView.findViewById(R.id.tv_id_or_time_tip);
-            timeOrNum = (TextView)itemView.findViewById(R.id.tv_id_or_time);
-            recyclerView = (RecyclerView)itemView.findViewById(R.id.rv_good);
-            count = (TextView)itemView.findViewById(R.id.tv_count);
-            payTip = (TextView)itemView.findViewById(R.id.tv_pay_tip);
-            price = (TextView)itemView.findViewById(R.id.tv_price);
-            leftButton = (TextView)itemView.findViewById(R.id.tv_left_button);
-            rightButton = (TextView)itemView.findViewById(R.id.tv_right_button);
-            itemView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
+            state = (TextView) itemView.findViewById(R.id.tv_state);
+            timeOrNum = (TextView) itemView.findViewById(R.id.tv_id_or_time);
+            recyclerView = (RecyclerView) itemView.findViewById(R.id.rv_good);
+            count = (TextView) itemView.findViewById(R.id.tv_count);
+            payTip = (TextView) itemView.findViewById(R.id.tv_pay_tip);
+            price = (TextView) itemView.findViewById(R.id.tv_price);
+            leftButton = (TextView) itemView.findViewById(R.id.tv_left_button);
+            rightButton = (TextView) itemView.findViewById(R.id.tv_right_button);
+            itemView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         }
     }
 }

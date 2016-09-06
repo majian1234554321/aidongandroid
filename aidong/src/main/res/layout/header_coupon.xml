@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.TextInputLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <AutoCompleteTextView
+    <TextView
         android:id="@+id/tv_coupon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="输入优惠劵兑换码"
+        android:text="输入优惠劵兑换码"
         android:gravity="center_horizontal"
         android:maxLines="1"
-        android:singleLine="true"
-        />
+        android:background="@color/white"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"/>
 
-</android.support.design.widget.TextInputLayout>
+</LinearLayout>

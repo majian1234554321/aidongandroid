@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
  * 发现 - 场馆
  * Created by song on 2016/8/29.
  */
-public interface DiscoverVenuesPresent {
+public interface DiscoverVenuesActivityPresent {
 
     /**
      * 下拉刷新

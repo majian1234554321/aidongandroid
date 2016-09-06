@@ -129,6 +129,7 @@
         <activity android:name=".activity.mine.AppointmentActivity" />
         <activity android:name=".activity.mine.CouponActivity" />
         <activity android:name=".activity.mine.OrderDetailActivity" />
+        <activity android:name=".activity.mine.AppointmentDetailActivity" />
 
         <activity
             android:name=".wxapi.WXPayEntryActivity"

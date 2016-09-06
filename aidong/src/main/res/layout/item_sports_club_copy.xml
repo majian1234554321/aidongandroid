@@ -120,12 +120,6 @@
             android:layout_height="match_parent"
             android:visibility="gone" >
 
-            <!-- <VideoView
-                android:id="@+id/videoView"
-                android:layout_width="match_parent"
-                android:layout_height="375dp"
-                android:layout_centerInParent="true" /> -->
-
             <ImageView
                 android:id="@+id/video_image"
                 android:layout_width="match_parent"

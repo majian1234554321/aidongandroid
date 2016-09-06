@@ -19,6 +19,6 @@ public class WebActivity extends AppCompatActivity {
 
         //wView.loadUrl("file:///android_asset/index.html");
         //wView.loadUrl("content://com.android.htmlfileprovider/sdcard/index.html");
-        webView.loadUrl("http://192.168.50.106:4000/orders/mobile");
+        webView.loadUrl("http://m1.aidong.me/customer_service/index.html?aidongid=11");
     }
 }

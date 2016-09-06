@@ -9,7 +9,7 @@ import com.leyuan.support.http.subscriber.RefreshSubscriber;
 import com.leyuan.support.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.support.mvp.model.DiscoverModel;
 import com.leyuan.support.mvp.model.impl.DiscoverModelImpl;
-import com.leyuan.support.mvp.presenter.DiscoverVenuesPresent;
+import com.leyuan.support.mvp.presenter.DiscoverVenuesActivityPresent;
 import com.leyuan.support.mvp.view.DiscoverVenuesActivityView;
 import com.leyuan.support.util.Constant;
 
@@ -20,13 +20,13 @@ import java.util.List;
  * 发现 - 人
  * Created by song on 2016/8/29.
  */
-public class DiscoverVenuesPresentImpl implements DiscoverVenuesPresent{
+public class DiscoverVenuesActivityPresentImpl implements DiscoverVenuesActivityPresent {
     private Context context;
     private DiscoverVenuesActivityView discoverVenuesActivityView;
     private DiscoverModel discoverModel;
     private List<VenuesBean> venuesBeanList;
 
-    public DiscoverVenuesPresentImpl(Context context, DiscoverVenuesActivityView discoverVenuesActivityView) {
+    public DiscoverVenuesActivityPresentImpl(Context context, DiscoverVenuesActivityView discoverVenuesActivityView) {
         this.context = context;
         this.discoverVenuesActivityView = discoverVenuesActivityView;
         discoverModel = new DiscoverModelImpl();

@@ -42,6 +42,12 @@ public class OrderActivity extends BaseActivity{
         OrderFragment unpaid = new OrderFragment();
         OrderFragment selfPickUp = new OrderFragment();
         OrderFragment express = new OrderFragment();
+
+        all.setArguments(OrderFragment.ALL);
+        unpaid.setArguments(OrderFragment.UN_PAID);
+        selfPickUp.setArguments(OrderFragment.SELF_DELIVERY);
+        express.setArguments(OrderFragment.EXPRESS_DELIVERY);
+
         fragments.add(all);
         fragments.add(unpaid);
         fragments.add(selfPickUp);
