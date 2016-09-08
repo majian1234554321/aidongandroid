@@ -19,5 +19,5 @@ public interface CampaignService {
     Observable<BaseBean<CampaignData>> getCampaigns(@Query("page") int page);
 
     @GET("market/campaigns/{id}")
-    Observable<BaseBean<CampaignDetailData>> getCampaignDetail(@Path("id") int id);
+    Observable<BaseBean<CampaignDetailData>> getCampaignDetail(@Path("id") String id);
 }

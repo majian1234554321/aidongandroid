@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical|center_horizontal"
+    android:gravity="center_vertical|fill_vertical|center_horizontal|fill_horizontal|clip_vertical|clip_horizontal" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/exception_wrapper"
+            android:layout_width ="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="vertical"
+            android:padding="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="*_*"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="12sp"
+                android:textColor="@color/gray"
+                android:text="休息一下,网络好像飞走了" />
+
+            <Button
+                android:id="@+id/bt_retry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="重试"
+                android:layout_below="@+id/exception_wrapper"
+                android:layout_centerHorizontal="true" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</RelativeLayout>

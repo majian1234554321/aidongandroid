@@ -15,7 +15,8 @@ import rx.Subscriber;
 
 /**
  * 用于上拉加载更多时的Http请求,
- * 在onNext中返回需要的数据,
+ * 在onStart中重置FooterView的状态,
+ * onNext中返回需要的数据,
  * onError中对错误进行统一处理,其他方法空实现
  * 目前只支持RecyclerView
  */
@@ -52,6 +53,8 @@ public abstract class RefreshSubscriber<T> extends Subscriber<T> {
         } else {
             Toast.makeText(context, "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
+
+        onErrorView();
     }
 
     /**
@@ -61,4 +64,11 @@ public abstract class RefreshSubscriber<T> extends Subscriber<T> {
     @Override
     public abstract void onNext(T t);
 
+    /**
+     * 需要显示错误提示的界面可以自己重写该方法,
+     * 默认空实现
+     */
+    public void onErrorView(){
+
+    }
 }

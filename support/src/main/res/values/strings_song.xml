@@ -33,4 +33,16 @@
     <string name="connect_break">连接中断,请检查网络设置</string>
     <string name="connect_timeout">连接超时,请检查网络设置</string>
 
+    <string name="empty_string">empty</string>
+    <string name="dynamicbox_retry">Retry</string>
+
+    <string name="dynamicbox_loading_title"></string>
+    <string name="dynamicbox_loading_message"></string>
+
+    <string name="dynamicbox_internet_off_title">错误</string>
+    <string name="dynamicbox_internet_off_message">网络飞走了,重新连接试试</string>
+
+    <string name="dynamicbox_exception_title">Error</string>
+    <string name="dynamicbox_exception_message">An error has occurred, retry again</string>
+
 </resources>

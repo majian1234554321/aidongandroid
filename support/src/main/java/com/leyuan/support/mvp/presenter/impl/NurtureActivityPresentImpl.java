@@ -43,10 +43,7 @@ public class NurtureActivityPresentImpl implements NurtureActivityPresent{
 
                 if(nurtureBeanList.isEmpty()){
                     nurtureActivityView.showEmptyView();
-                    nurtureActivityView.hideRecyclerView();
                 }else {
-                    nurtureActivityView.hideEmptyView();
-                    nurtureActivityView.showRecyclerView();
                     nurtureActivityView.updateRecyclerView(nurtureBeanList);
                 }
             }

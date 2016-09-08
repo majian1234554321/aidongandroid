@@ -16,24 +16,14 @@ public interface NurtureActivityView {
     void updateRecyclerView(List<NurtureBean> nurtureBeanList);
 
     /**
+     * 显示加载到的内容布局
+     */
+    void showContentView();
+
+    /**
      * 显示空值界面
      */
     void showEmptyView();
-
-    /**
-     * 隐藏空值界面
-     */
-    void hideEmptyView();
-
-    /**
-     * 显示RecyclerView
-     */
-    void showRecyclerView();
-
-    /**
-     * 隐藏RecyclerView
-     */
-    void hideRecyclerView();
 
     /**
      * 整体界面显示无网络界面

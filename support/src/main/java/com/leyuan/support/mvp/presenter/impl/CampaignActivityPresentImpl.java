@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 
 import com.leyuan.support.entity.CampaignBean;
 import com.leyuan.support.entity.data.CampaignData;
-import com.leyuan.support.http.subscriber.RefreshSubscriber;
 import com.leyuan.support.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.support.mvp.model.CampaignModel;
 import com.leyuan.support.mvp.model.impl.CampaignModelImpl;
@@ -14,6 +13,8 @@ import com.leyuan.support.mvp.view.CampaignActivityView;
 import com.leyuan.support.util.Constant;
 
 import java.util.List;
+
+import rx.Subscriber;
 
 /**
  * 活动
@@ -33,16 +34,32 @@ public class CampaignActivityPresentImpl implements CampaignActivityPresent{
 
     @Override
     public void pullToRefreshData(RecyclerView recyclerView) {
-        campaignModel.getCampaigns(new RefreshSubscriber<CampaignData>(context,recyclerView) {
+        campaignModel.getCampaigns(new Subscriber<CampaignData>() {
+
             @Override
-            public void onNext(CampaignData campaignBean) {
-                if(campaignBean != null){
-                    campaignBeanList = campaignBean.getCampaign();
-                }
-                //不考虑空值情况
-                campaignActivityView.updateRecyclerView(campaignBeanList);
+            public void onStart() {
+                campaignActivityView.showLoadingView();
             }
-        }, Constant.FIRST_PAGE);
+
+            @Override
+            public void onError(Throwable e) {
+                campaignActivityView.showErrorView();
+            }
+
+            @Override
+            public void onNext(CampaignData campaignData) {
+                if(campaignData.getCampaign() != null && !campaignData.getCampaign().isEmpty()){
+                    campaignActivityView.updateRecyclerView(campaignData.getCampaign());
+                }else{
+                    campaignActivityView.showEmptyView();
+                }
+            }
+
+            @Override
+            public void onCompleted() {
+                campaignActivityView.showContentView();
+            }
+        },Constant.FIRST_PAGE);
     }
 
     @Override

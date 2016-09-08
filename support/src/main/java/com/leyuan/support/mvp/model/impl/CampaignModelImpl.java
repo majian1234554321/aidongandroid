@@ -29,11 +29,9 @@ public class CampaignModelImpl implements CampaignModel{
     }
 
     @Override
-    public void getCampaignDetail(Subscriber<CampaignDetailData> subscriber, int id) {
+    public void getCampaignDetail(Subscriber<CampaignDetailData> subscriber, String id) {
         campaignService.getCampaignDetail(id)
                 .compose(RxHelper.<CampaignDetailData>transform())
                 .subscribe(subscriber);
     }
-
-
 }

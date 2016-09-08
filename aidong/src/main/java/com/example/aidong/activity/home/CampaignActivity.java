@@ -13,6 +13,7 @@ import com.leyuan.support.entity.CampaignBean;
 import com.leyuan.support.mvp.presenter.CampaignActivityPresent;
 import com.leyuan.support.mvp.presenter.impl.CampaignActivityPresentImpl;
 import com.leyuan.support.mvp.view.CampaignActivityView;
+import com.leyuan.support.widget.customview.SwitcherLayout;
 import com.leyuan.support.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.support.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.support.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
@@ -27,7 +28,7 @@ import java.util.List;
  */
 public class CampaignActivity extends BaseActivity implements CampaignActivityView {
 
-
+    private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
     private CampaignActivityPresent campaignActivityPresent;
@@ -44,9 +45,10 @@ public class CampaignActivity extends BaseActivity implements CampaignActivityVi
         pageSize = 10;
         campaignActivityPresent = new CampaignActivityPresentImpl(this,this);
 
-
         initSwipeRefreshLayout();
         initRecyclerView();
+        switcherLayout = new SwitcherLayout(this,findViewById(R.id.refreshLayout));
+        campaignActivityPresent.pullToRefreshData(recyclerView);
     }
 
     private void initSwipeRefreshLayout(){
@@ -56,14 +58,6 @@ public class CampaignActivity extends BaseActivity implements CampaignActivityVi
             @Override
             public void onRefresh() {
                 currPage = 1;
-                campaignActivityPresent.pullToRefreshData(recyclerView);
-            }
-        });
-
-        refreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                refreshLayout.setRefreshing(true);
                 campaignActivityPresent.pullToRefreshData(recyclerView);
             }
         });
@@ -80,8 +74,6 @@ public class CampaignActivity extends BaseActivity implements CampaignActivityVi
         recyclerView.addOnScrollListener(onScrollListener);
     }
 
-
-
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
         @Override
         public void onLoadNextPage(View view) {
@@ -91,8 +83,6 @@ public class CampaignActivity extends BaseActivity implements CampaignActivityVi
             }
         }
     };
-
-
 
     @Override
     public void updateRecyclerView(List<CampaignBean> campaignBeanList){
@@ -108,12 +98,33 @@ public class CampaignActivity extends BaseActivity implements CampaignActivityVi
     }
 
     @Override
-    public void showErrorView() {
+    public void showLoadingView() {
+        switcherLayout.showLoadingLayout();
+    }
 
+    @Override
+    public void showContentView() {
+        switcherLayout.showNormalContentView();
+    }
+
+    @Override
+    public void showEmptyView() {
+        switcherLayout.showEmptyLayout();
+    }
+
+    @Override
+    public void showErrorView() {
+        switcherLayout.showExceptionLayout();
+    }
+
+    @Override
+    public void showErrorFooterView() {
+        RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.NetWorkError);
     }
 
     @Override
     public void showEndFooterView() {
         RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
     }
+
 }

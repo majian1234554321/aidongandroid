@@ -22,6 +22,6 @@ public interface CampaignModel {
      * @param subscriber Subscriber
      * @param id 活动id
      */
-    void getCampaignDetail(Subscriber<CampaignDetailData> subscriber, int id);
+    void getCampaignDetail(Subscriber<CampaignDetailData> subscriber, String id);
 
 }

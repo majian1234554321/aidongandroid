@@ -129,23 +129,15 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
         wrapperAdapter.notifyDataSetChanged();
     }
 
+
+
+    @Override
+    public void showContentView() {
+
+    }
+
     @Override
     public void showEmptyView() {
-
-    }
-
-    @Override
-    public void hideEmptyView() {
-
-    }
-
-    @Override
-    public void showRecyclerView() {
-
-    }
-
-    @Override
-    public void hideRecyclerView() {
 
     }
 
