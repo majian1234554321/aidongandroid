@@ -16,11 +16,6 @@ public interface NurtureActivityView {
     void updateRecyclerView(List<NurtureBean> nurtureBeanList);
 
     /**
-     * 显示空值界面
-     */
-    void showEmptyView();
-
-    /**
      * 显示FooterView，提示没有任何内容了
      */
     void showEndFooterView();

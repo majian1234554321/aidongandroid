@@ -24,13 +24,6 @@ public abstract class CommonSubscriber<T> extends Subscriber<T> {
         switcherLayout.showLoadingLayout();
     }
 
-    /**
-     * 正常加载完成，隐藏其他界面显示正常结果界面
-     */
-    @Override
-    public void onCompleted() {
-        switcherLayout.showNormalContentView();
-    }
 
     /**
      * 显示错误提示界面
@@ -48,5 +41,10 @@ public abstract class CommonSubscriber<T> extends Subscriber<T> {
      */
     @Override
     public abstract void onNext(T t);
+
+    @Override
+    public void onCompleted() {
+
+    }
 
 }

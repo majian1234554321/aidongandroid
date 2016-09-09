@@ -35,7 +35,7 @@ public class AppointmentFragmentPresentImpl implements AppointmentFragmentPresen
     }
 
     @Override
-    public void commonLoadData(SwitcherLayout switcherLayout, String type) {
+    public void commonLoadData(final SwitcherLayout switcherLayout, String type) {
         appointmentModel.getAppointments(new CommonSubscriber<AppointmentData>(switcherLayout) {
             @Override
             public void onNext(AppointmentData appointmentData) {
@@ -45,6 +45,7 @@ public class AppointmentFragmentPresentImpl implements AppointmentFragmentPresen
                 if(appointmentBeanList.isEmpty()){
                     appointmentFragmentView.showEmptyView();
                 }else{
+                    switcherLayout.showContentLayout();
                     appointmentFragmentView.updateRecyclerView(appointmentBeanList);
                 }
             }

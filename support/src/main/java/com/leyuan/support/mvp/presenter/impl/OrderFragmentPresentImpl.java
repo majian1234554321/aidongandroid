@@ -35,17 +35,17 @@ public class OrderFragmentPresentImpl implements OrderFragmentPresent{
     }
 
     @Override
-    public void commonLoadData(SwitcherLayout switcherLayout,String list) {
+    public void commonLoadData(final SwitcherLayout switcherLayout,String list) {
         orderModel.getOrders(new CommonSubscriber<OrderData>(switcherLayout) {
             @Override
             public void onNext(OrderData orderData) {
                 if(orderData != null){
                     orderBeanList = orderData.getOrder();
                 }
-
                 if(orderBeanList.isEmpty()){
                     orderFragmentView.showEmptyView();
                 }else{
+                    switcherLayout.showContentLayout();
                     orderFragmentView.updateRecyclerView(orderBeanList);
                 }
             }

@@ -4,9 +4,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.TextView;
 
 import com.example.aidong.BaseActivity;
 import com.example.aidong.BaseApp;
@@ -16,6 +14,7 @@ import com.leyuan.support.entity.UserBean;
 import com.leyuan.support.mvp.presenter.DiscoverUserActivityPresent;
 import com.leyuan.support.mvp.presenter.impl.DiscoverUserActivityPresentImpl;
 import com.leyuan.support.mvp.view.DiscoverUserActivityView;
+import com.leyuan.support.widget.customview.SwitcherLayout;
 import com.leyuan.support.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.support.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.support.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
@@ -29,7 +28,8 @@ import java.util.List;
  * Created by song on 2016/8/29.
  */
 public class DiscoverUserActivity extends BaseActivity implements DiscoverUserActivityView{
-    private Toolbar toolbar;
+
+    private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
     private DiscoverUserActivityPresent userPresent;
@@ -39,7 +39,6 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
     private UserAdapter userAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
 
-    private TextView noContent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,22 +46,15 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
         pageSize = 20;
         userPresent = new DiscoverUserActivityPresentImpl(this,this);
 
-        initToolbar();
         initSwipeRefreshLayout();
         initRecyclerView();
 
-
-    }
-
-    private void initToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("");
-        toolbar.setNavigationIcon(R.drawable.back);
-        setSupportActionBar(toolbar);
+        userPresent.commonLoadData(switcherLayout,0.00,0.00,"","");
     }
 
     private void initSwipeRefreshLayout(){
         refreshLayout = (SwipeRefreshLayout)findViewById(R.id.refreshLayout);
+        switcherLayout = new SwitcherLayout(this,refreshLayout);
         setColorSchemeResources(refreshLayout);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -71,14 +63,6 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
                 //userPresent.pullToRefreshData(recyclerView,BaseApp.lat,BaseApp.lon,"","");
             }
         });
-
-     /* refreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                refreshLayout.setRefreshing(true);
-                userPresent.pullToRefreshData(recyclerView,BaseApp.lat,BaseApp.lon,"","");
-            }
-        });*/
     }
 
     private void initRecyclerView() {
@@ -116,17 +100,6 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
 
     @Override
     public void showEmptyView() {
-        noContent.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hideEmptyView() {
-        noContent.setVisibility(View.GONE);
-    }
-
-
-    @Override
-    public void showErrorView() {
 
     }
 

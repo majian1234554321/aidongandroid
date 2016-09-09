@@ -36,14 +36,15 @@ public class CampaignActivityPresentImpl implements CampaignPresent {
     }
 
     @Override
-    public void commonLoadData(SwitcherLayout switcherLayout) {
+    public void commonLoadData(final SwitcherLayout switcherLayout) {
         campaignModel.getCampaigns(new CommonSubscriber<CampaignData>(switcherLayout) {
             @Override
             public void onNext(CampaignData campaignData) {
                 if(campaignData.getCampaign() != null && !campaignData.getCampaign().isEmpty()){
                     campaignActivityView.updateRecyclerView(campaignData.getCampaign());
+                    switcherLayout.showContentLayout();
                 }else{
-                    campaignActivityView.showEmptyView();
+                    switcherLayout.showEmptyLayout();
                 }
             }
         },Constant.FIRST_PAGE);
@@ -71,11 +72,9 @@ public class CampaignActivityPresentImpl implements CampaignPresent {
                 }else{
                     campaignActivityView.showEndFooterView();
                 }
-
                 if(!campaignBeanList.isEmpty()){
                     campaignActivityView.updateRecyclerView(campaignBeanList);
                 }
-
                 //没有更多数据了显示到底提示
                 if( campaignBeanList.size() < pageSize){
                     campaignActivityView.showEndFooterView();

@@ -206,7 +206,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
 
     @Override
     public void showContent() {
-        switcherLayout.showNormalContentView();
+        switcherLayout.showContentLayout();
     }
 
     @Override

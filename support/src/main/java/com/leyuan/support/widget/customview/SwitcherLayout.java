@@ -169,11 +169,11 @@ public class SwitcherLayout {
         show(TAG_EXCEPTION);
     }
 
-    public void showCustomView(String tag){
+    public void showCustomLayout(String tag){
         show(tag);
     }
 
-    public void showNormalContentView(){
+    public void showContentLayout(){
         ArrayList<View> views =  new ArrayList<>(mDefaultViews);
         views.addAll(mCustomViews);
         for(View view : views){

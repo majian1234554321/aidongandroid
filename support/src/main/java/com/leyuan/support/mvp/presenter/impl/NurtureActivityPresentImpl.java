@@ -35,7 +35,7 @@ public class NurtureActivityPresentImpl implements NurtureActivityPresent{
     }
 
     @Override
-    public void commonLoadData(SwitcherLayout switcherLayout) {
+    public void commonLoadData(final SwitcherLayout switcherLayout) {
         nurtureModel.getNurtures(new CommonSubscriber<NurtureData>(switcherLayout) {
             @Override
             public void onNext(NurtureData nurtureDataBean) {
@@ -44,8 +44,9 @@ public class NurtureActivityPresentImpl implements NurtureActivityPresent{
                 }
                 if(!nurtureBeanList.isEmpty()){
                     nurtureActivityView.updateRecyclerView(nurtureBeanList);
+                    switcherLayout.showContentLayout();
                 }else{
-                    nurtureActivityView.showEmptyView();
+                    switcherLayout.showEmptyLayout();
                 }
             }
         },Constant.FIRST_PAGE);

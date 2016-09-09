@@ -17,11 +17,6 @@ public interface EquipmentActivityView{
     void updateRecyclerView(List<EquipmentBean> equipmentBeanList);
 
     /**
-     * 显示装备列表空值界面
-     */
-    void showEmptyView();
-
-    /**
      * 显示FooterView，提示没有任何内容了
      */
     void showEndFooterView();

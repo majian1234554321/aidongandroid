@@ -132,11 +132,6 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
     }
 
     @Override
-    public void showEmptyView() {
-        switcherLayout.showEmptyLayout();
-    }
-
-    @Override
     public void showEndFooterView() {
         RecyclerViewStateUtils.setFooterViewState(recommendRecyclerView, LoadingFooter.State.TheEnd);
     }

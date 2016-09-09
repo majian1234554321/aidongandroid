@@ -129,11 +129,6 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
     }
 
     @Override
-    public void showEmptyView() {
-        switcherLayout.showEmptyLayout();
-    }
-
-    @Override
     public void showEndFooterView() {
         RecyclerViewStateUtils.setFooterViewState(recommendRecyclerView, LoadingFooter.State.TheEnd);
     }

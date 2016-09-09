@@ -36,7 +36,7 @@ public class EquipmentActivityPresentImpl implements EquipmentActivityPresent{
     }
 
     @Override
-    public void commonLoadData(SwitcherLayout switcherLayout) {
+    public void commonLoadData(final SwitcherLayout switcherLayout) {
         equipmentModel.getEquipments(new CommonSubscriber<EquipmentData>(switcherLayout) {
             @Override
             public void onNext(EquipmentData equipmentData) {
@@ -45,8 +45,9 @@ public class EquipmentActivityPresentImpl implements EquipmentActivityPresent{
                 }
                 if(!equipmentBeanList.isEmpty()){
                     equipmentActivityView.updateRecyclerView(equipmentBeanList);
+                    switcherLayout.showContentLayout();
                 }else{
-                    equipmentActivityView.showEmptyView();
+                    switcherLayout.showEmptyLayout();
                 }
             }
         },Constant.FIRST_PAGE);

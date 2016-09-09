@@ -138,13 +138,6 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
             }
         });
 
-        refreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                refreshLayout.setRefreshing(true);
-                present.pullToRefreshData(BaseApp.lat,BaseApp.lon);
-            }
-        });
     }
 
     private void initRecyclerView() {
@@ -173,7 +166,6 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
             data.clear();
             refreshLayout.setRefreshing(false);
         }
-
         data.addAll(venuesBeanList);
         venuesAdapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();
@@ -181,26 +173,6 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
 
     @Override
     public void showEmptyView() {
-
-    }
-
-    @Override
-    public void hideEmptyView() {
-
-    }
-
-    @Override
-    public void showRecyclerView() {
-
-    }
-
-    @Override
-    public void hideRecyclerView() {
-
-    }
-
-    @Override
-    public void showErrorView() {
 
     }
 
