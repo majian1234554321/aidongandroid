@@ -1,40 +1,62 @@
 package com.example.aidong.activity.home.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.aidong.R;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.leyuan.support.entity.GoodsBean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 品牌商品列表适配器
  * Created by song on 2016/8/17.
  */
-public class BrandDetailAdapter extends RecyclerView.Adapter<BrandDetailAdapter.BrandViewHolder>{
+public class BrandDetailAdapter extends RecyclerView.Adapter<BrandDetailAdapter.GoodsHolder>{
+    private Context context;
+    private List<GoodsBean> data= new ArrayList<>();
+
+    public BrandDetailAdapter(Context context) {
+        this.context = context;
+    }
+
+    public void setData(List<GoodsBean> data) {
+        this.data = data;
+    }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return data.size();
     }
 
     @Override
-    public BrandViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+    public GoodsHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = View.inflate(context, R.layout.item_recommend_goods,null);
+        return new GoodsHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(BrandViewHolder holder, int position) {
+    public void onBindViewHolder(GoodsHolder holder, int position) {
+
 
     }
 
-    class BrandViewHolder extends RecyclerView.ViewHolder {
-        ImageView cover;
-        TextView name;
-        TextView address;
-        TextView time;
+    class GoodsHolder extends RecyclerView.ViewHolder {
+         SimpleDraweeView dvGoods;
+         TextView tvName;
+         TextView tvPrice;
 
-        public BrandViewHolder (View itemView) {
+        public GoodsHolder(View itemView) {
             super(itemView);
+
+            dvGoods = (SimpleDraweeView)itemView.findViewById(R.id.dv_goods);
+            tvName = (TextView) itemView.findViewById(R.id.tv_name);
+            tvPrice = (TextView)itemView. findViewById(R.id.tv_price);
         }
     }
 }

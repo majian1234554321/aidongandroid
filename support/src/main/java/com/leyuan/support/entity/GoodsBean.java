@@ -18,6 +18,8 @@ public class GoodsBean {
     private ArrayList<String> spec_value;
     private String amount;
 
+    public boolean isChecked = false;        //标记是否被选中
+
     public String getSku_code() {
         return sku_code;
     }
@@ -82,6 +84,7 @@ public class GoodsBean {
         this.amount = amount;
     }
 
+
     @Override
     public String toString() {
         return "GoodsBean{" +
@@ -93,6 +96,7 @@ public class GoodsBean {
                 ", spec_name=" + spec_name +
                 ", spec_value=" + spec_value +
                 ", amount='" + amount + '\'' +
+                ", isChecked=" + isChecked +
                 '}';
     }
 }

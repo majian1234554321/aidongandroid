@@ -108,7 +108,7 @@ public class BrandDetailActivity extends BaseActivity implements BrandDetailActi
     private void initRecyclerView() {
         recyclerView = (RecyclerView)findViewById(R.id.rv_brand_detail);
         data = new ArrayList<>();
-        brandAdapter = new BrandDetailAdapter();
+        brandAdapter = new BrandDetailAdapter(this);
         wrapAdapter = new HeaderAndFooterRecyclerViewAdapter(brandAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(wrapAdapter);

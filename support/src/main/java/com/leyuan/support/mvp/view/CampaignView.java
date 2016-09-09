@@ -8,7 +8,7 @@ import java.util.List;
  * 活动
  * Created by song on 2016/8/18.
  */
-public interface CampaignActivityView {
+public interface CampaignView {
     /**
      * 更新列表
      * @param campaignBean CampaignBean

@@ -5,13 +5,15 @@ import android.support.v7.widget.RecyclerView;
 
 import com.leyuan.support.entity.CampaignBean;
 import com.leyuan.support.entity.data.CampaignData;
+import com.leyuan.support.http.subscriber.RefreshSubscriber;
 import com.leyuan.support.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.support.mvp.model.CampaignModel;
 import com.leyuan.support.mvp.model.impl.CampaignModelImpl;
-import com.leyuan.support.mvp.presenter.CampaignActivityPresent;
-import com.leyuan.support.mvp.view.CampaignActivityView;
+import com.leyuan.support.mvp.presenter.CampaignPresent;
+import com.leyuan.support.mvp.view.CampaignView;
 import com.leyuan.support.util.Constant;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import rx.Subscriber;
@@ -20,20 +22,21 @@ import rx.Subscriber;
  * 活动
  * Created by song on 2016/8/18.
  */
-public class CampaignActivityPresentImpl implements CampaignActivityPresent{
+public class CampaignActivityPresentImpl implements CampaignPresent {
     private Context context;
-    private CampaignActivityView campaignActivityView;
+    private CampaignView campaignActivityView;
     private CampaignModel campaignModel;
     private List<CampaignBean> campaignBeanList;
 
-    public CampaignActivityPresentImpl(Context context, CampaignActivityView campaignActivityView) {
+    public CampaignActivityPresentImpl(Context context, CampaignView campaignActivityView) {
         this.context = context;
         this.campaignActivityView = campaignActivityView;
         campaignModel = new CampaignModelImpl();
+        campaignBeanList = new ArrayList<>();
     }
 
     @Override
-    public void pullToRefreshData(RecyclerView recyclerView) {
+    public void normalLoadingData() {
         campaignModel.getCampaigns(new Subscriber<CampaignData>() {
 
             @Override
@@ -63,6 +66,18 @@ public class CampaignActivityPresentImpl implements CampaignActivityPresent{
     }
 
     @Override
+    public void pullToRefreshData(RecyclerView recyclerView) {
+        campaignModel.getCampaigns(new RefreshSubscriber<CampaignData>(context,recyclerView) {
+            @Override
+            public void onNext(CampaignData campaignBean) {
+                if(campaignBean != null && !campaignBean.getCampaign().isEmpty()){
+                    campaignActivityView.updateRecyclerView(campaignBean.getCampaign());
+                }
+            }
+        }, Constant.FIRST_PAGE);
+    }
+
+    @Override
     public void requestMoreData(RecyclerView recyclerView, final int pageSize, int page) {
         campaignModel.getCampaigns(new RequestMoreSubscriber<CampaignData>(context,recyclerView,pageSize) {
             @Override
@@ -73,12 +88,12 @@ public class CampaignActivityPresentImpl implements CampaignActivityPresent{
                     campaignActivityView.showEndFooterView();
                 }
 
-                if(campaignBeanList != null && !campaignBeanList.isEmpty()){
+                if(!campaignBeanList.isEmpty()){
                     campaignActivityView.updateRecyclerView(campaignBeanList);
                 }
 
                 //没有更多数据了显示到底提示
-                if(campaignBeanList != null && campaignBeanList.size() < pageSize){
+                if( campaignBeanList.size() < pageSize){
                     campaignActivityView.showEndFooterView();
                 }
             }

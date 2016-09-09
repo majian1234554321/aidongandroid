@@ -61,7 +61,7 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             View view = View.inflate(parent.getContext(), R.layout.item_recommend_activity,null);
             return new RecommendActivityViewHolder(view);
         }else if(viewType == TYPE_RECOMMEND_GOODS){
-            View view = View.inflate(parent.getContext(),R.layout.item_recommend_goods,null);
+            View view = View.inflate(parent.getContext(),R.layout.item_home_recommend_goods,null);
             return new RecommendGoodsViewHolder(view);
         }
         return null;

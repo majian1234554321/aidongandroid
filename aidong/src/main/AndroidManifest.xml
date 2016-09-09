@@ -122,9 +122,10 @@
         <activity android:name=".scan.activity.ScanActivity" />
         <activity android:name=".activity.venues.VenuesDetailsActivity" />
         <activity android:name=".activity.home.FoodActivity" />
-        <activity android:name=".activity.home.CampaignActivity" />
+        <activity android:name=".activity.home.PastCampaignActivity" />
         <activity android:name=".activity.home.CourseActivity" />
         <activity android:name=".activity.home.CourseDetailActivity" />
+        <activity android:name=".activity.home.CampaignActivity"/>
         <activity android:name=".activity.mine.OrderActivity" />
         <activity android:name=".activity.mine.AppointmentActivity" />
         <activity android:name=".activity.mine.CouponActivity" />

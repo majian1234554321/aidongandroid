@@ -2,21 +2,46 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:id="@+id/ll_campaign"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <com.leyuan.support.widget.customview.SimpleTitleBar
+    android:layout_height="match_parent"
+    android:background="@color/white">
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
-        app:stb_title="活动"/>
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/refreshLayout"
+        android:orientation="horizontal"
+        android:background="@color/black">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back"
+            android:padding="10dp"/>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            app:tabTextColor="@color/gray"
+            app:tabSelectedTextColor="@color/white"
+            app:tabIndicatorColor="@color/main_red"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="40dp"/>
+
+        <TextView
+            android:id="@+id/tv_post"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="往期"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/right_margin"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+    </LinearLayout>
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_campaign"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </android.support.v7.widget.RecyclerView>
-    </android.support.v4.widget.SwipeRefreshLayout>
+        android:layout_height="match_parent"/>
 </LinearLayout>

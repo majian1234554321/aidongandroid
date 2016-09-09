@@ -100,4 +100,18 @@ public class RecyclerViewStateUtils {
             }
         }
     }
+
+    /**
+     * 重置RecyclerView.FooterView的状态为Normal
+     * @param recyclerView RecyclerView
+     */
+    public static void resetFootetViewState(RecyclerView recyclerView) {
+        RecyclerView.Adapter outerAdapter = recyclerView.getAdapter();
+        if (outerAdapter != null && outerAdapter instanceof HeaderAndFooterRecyclerViewAdapter) {
+            if (((HeaderAndFooterRecyclerViewAdapter) outerAdapter).getFooterViewsCount() > 0) {
+                LoadingFooter footerView = (LoadingFooter) ((HeaderAndFooterRecyclerViewAdapter) outerAdapter).getFooterView();
+                footerView.setState(LoadingFooter.State.Normal);
+            }
+        }
+    }
 }

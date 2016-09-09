@@ -19,19 +19,26 @@ import rx.Subscriber;
  * onNext中返回需要的数据,
  * onError中对错误进行统一处理,其他方法空实现
  * 目前只支持RecyclerView
+ * 慎用
  */
 public abstract class RefreshSubscriber<T> extends Subscriber<T> {
     private Context context;
     private RecyclerView recyclerView;
 
-    public RefreshSubscriber(Context context,RecyclerView recyclerView) {
+    public RefreshSubscriber(Context context) {
+        this.context = context;
+    }
+
+    public RefreshSubscriber(Context context, RecyclerView recyclerView) {
         this.context = context;
         this.recyclerView = recyclerView;
     }
 
     @Override
     public void onStart() {
-        RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.Normal);
+        if(recyclerView != null){
+            RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.Normal);
+        }
     }
 
 

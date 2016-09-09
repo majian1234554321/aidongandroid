@@ -1,130 +1,77 @@
 package com.example.aidong.activity.home;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.aidong.BaseActivity;
 import com.example.aidong.R;
-import com.example.aidong.activity.home.adapter.CampaignAdapter;
-import com.leyuan.support.entity.CampaignBean;
-import com.leyuan.support.mvp.presenter.CampaignActivityPresent;
-import com.leyuan.support.mvp.presenter.impl.CampaignActivityPresentImpl;
-import com.leyuan.support.mvp.view.CampaignActivityView;
-import com.leyuan.support.widget.customview.SwitcherLayout;
-import com.leyuan.support.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
-import com.leyuan.support.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
-import com.leyuan.support.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
-import com.leyuan.support.widget.endlessrecyclerview.weight.LoadingFooter;
+import com.example.aidong.adapter.FoundFragmentAdapter;
+import com.example.aidong.fragment.CampaignFragment;
+import com.example.aidong.interfaces.SimpleOnTabSelectedListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 活动
- * Created by song on 2016/8/19.
+ * Created by song on 2016/9/9.
  */
-public class CampaignActivity extends BaseActivity implements CampaignActivityView {
+public class CampaignActivity extends BaseActivity{
+    private static  final int CAMPAIGN_FREE = 0;
+    private static  final int CAMPAIGN_PAY = 1;
 
-    private SwitcherLayout switcherLayout;
-    private SwipeRefreshLayout refreshLayout;
-    private RecyclerView recyclerView;
-    private CampaignActivityPresent campaignActivityPresent;
-
-    private int currPage = 1;
-    private List<CampaignBean> data;
-    private CampaignAdapter campaignAdapter;
-    private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private TextView tvPost;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_campaign);
-        pageSize = 10;
-        campaignActivityPresent = new CampaignActivityPresentImpl(this,this);
 
-        initSwipeRefreshLayout();
-        initRecyclerView();
-        switcherLayout = new SwitcherLayout(this,findViewById(R.id.refreshLayout));
-        campaignActivityPresent.pullToRefreshData(recyclerView);
-    }
+        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        viewPager = (ViewPager) findViewById(R.id.vp_content);
+        tvPost = (TextView)findViewById(R.id.tv_post);
 
-    private void initSwipeRefreshLayout(){
-        refreshLayout = (SwipeRefreshLayout)findViewById(R.id.refreshLayout);
-        setColorSchemeResources(refreshLayout);
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        ArrayList<Fragment> fragments = new ArrayList<>();
+        CampaignFragment free = new CampaignFragment();
+        CampaignFragment pay = new CampaignFragment();
+
+        free.setArguments(CampaignFragment.FREE);
+        pay.setArguments(CampaignFragment.PAY);
+
+        fragments.add(free);
+        fragments.add(pay);
+
+        ArrayList<String> titles = new ArrayList<>();
+        titles.add(getString(R.string.campaign_free));
+        titles.add(getString(R.string.campaign_pay));
+
+        viewPager.setAdapter(new FoundFragmentAdapter(getSupportFragmentManager(),fragments,titles));
+        viewPager.setOffscreenPageLimit(2);
+        tabLayout.setupWithViewPager(viewPager);
+
+        tvPost.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onRefresh() {
-                currPage = 1;
-                campaignActivityPresent.pullToRefreshData(recyclerView);
+            public void onClick(View v) {
+                Intent intent = new Intent(CampaignActivity.this,PastCampaignActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        tabLayout.setOnTabSelectedListener(new SimpleOnTabSelectedListener(){
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if(tab.equals(tabLayout.getTabAt(CAMPAIGN_FREE))){
+                    viewPager.setCurrentItem(CAMPAIGN_FREE);
+                }else{
+                    viewPager.setCurrentItem(CAMPAIGN_PAY);
+                }
             }
         });
     }
-
-
-    private void initRecyclerView() {
-        recyclerView = (RecyclerView)findViewById(R.id.rv_campaign);
-        data = new ArrayList<>();
-        campaignAdapter = new CampaignAdapter(this);
-        wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(campaignAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(wrapperAdapter);
-        recyclerView.addOnScrollListener(onScrollListener);
-    }
-
-    private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
-        @Override
-        public void onLoadNextPage(View view) {
-            currPage ++;
-            if (data != null && !data.isEmpty()) {
-                campaignActivityPresent.requestMoreData(recyclerView,pageSize,currPage);
-            }
-        }
-    };
-
-    @Override
-    public void updateRecyclerView(List<CampaignBean> campaignBeanList){
-        if(refreshLayout.isRefreshing()){
-            data.clear();
-            refreshLayout.setRefreshing(false);
-        }
-        for(int i=0;i<10;i++){
-            data.addAll(campaignBeanList);
-        }
-        campaignAdapter.setData(data);
-        wrapperAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void showLoadingView() {
-        switcherLayout.showLoadingLayout();
-    }
-
-    @Override
-    public void showContentView() {
-        switcherLayout.showNormalContentView();
-    }
-
-    @Override
-    public void showEmptyView() {
-        switcherLayout.showEmptyLayout();
-    }
-
-    @Override
-    public void showErrorView() {
-        switcherLayout.showExceptionLayout();
-    }
-
-    @Override
-    public void showErrorFooterView() {
-        RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.NetWorkError);
-    }
-
-    @Override
-    public void showEndFooterView() {
-        RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
-    }
-
 }

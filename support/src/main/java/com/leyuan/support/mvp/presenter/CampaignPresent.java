@@ -6,7 +6,12 @@ import android.support.v7.widget.RecyclerView;
  * 活动
  * Created by song on 2016/8/18.
  */
-public interface CampaignActivityPresent {
+public interface CampaignPresent {
+    /**
+     * 第一次正常加载数据
+     */
+    void normalLoadingData();
+
     /**
      * 下拉刷新
      * @param recyclerView 执行刷新的RecyclerView

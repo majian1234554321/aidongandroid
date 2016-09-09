@@ -1,30 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    android:layout_width="165dp"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="?selectableItemBackground"
+    android:paddingBottom="15dp"
+    android:gravity="center">
 
     <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/dv_recommend_good"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:id="@+id/dv_goods"
+        android:layout_width="165dp"
+        android:layout_height="165dp"
+        android:layout_gravity="center_horizontal"
         fresco:actualImageScaleType="centerCrop"
-        fresco:placeholderImage="@drawable/place_holder_logo"
-        fresco:pressedStateOverlayImage="@color/color_image_press"/>
+        fresco:placeholderImage="@drawable/place_holder_logo" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_recommend_good"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:paddingLeft="2.5dp"
-        android:paddingRight="2.5dp"/>
+        android:layout_marginTop="10dp"
+        android:textSize="15sp"
+        android:text="商品名"
+        android:layout_alignLeft="@+id/dv_goods"
+        android:layout_alignRight="@+id/dv_goods"
+        android:layout_below="@+id/dv_goods"
+        android:gravity="center_vertical|left"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textColor="@color/text_black"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="@color/line_color"/>
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/main_red"
+        android:layout_below="@+id/tv_name"
+        android:layout_marginTop="6dp"
+        android:layout_alignLeft="@+id/dv_goods"
+        android:layout_alignRight="@+id/dv_goods"
+        android:gravity="center_vertical|left"
+        android:text="价格"
+        android:singleLine="true"
+        android:textSize="15sp"/>
 
-</LinearLayout>
+</RelativeLayout>

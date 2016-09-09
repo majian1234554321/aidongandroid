@@ -53,17 +53,6 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <TextView
-        android:id="@+id/no_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="没有人..."
-        android:textColor="@color/white"
-        android:gravity="center"
-        android:textSize="20sp"
-        android:background="@color/main_red"
-        android:clickable="false"/>
-
 </android.support.design.widget.CoordinatorLayout>
 
 
