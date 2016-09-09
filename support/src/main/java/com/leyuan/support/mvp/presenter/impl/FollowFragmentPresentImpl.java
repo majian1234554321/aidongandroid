@@ -32,8 +32,8 @@ public class FollowFragmentPresentImpl implements FollowFragmentPresent{
     }
 
     @Override
-    public void pullToRefreshData(RecyclerView recyclerView) {
-        followModel.getFollowings(new RefreshSubscriber<List<UserBean>>(context,recyclerView) {
+    public void pullToRefreshData() {
+        followModel.getFollowings(new RefreshSubscriber<List<UserBean>>(context) {
             @Override
             public void onNext(List<UserBean> userBeanList) {
                 if(userBeanList != null && userBeanList.isEmpty()){

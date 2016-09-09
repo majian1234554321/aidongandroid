@@ -16,6 +16,7 @@ import com.leyuan.support.mvp.presenter.EquipmentActivityPresent;
 import com.leyuan.support.mvp.presenter.impl.EquipmentActivityPresentImpl;
 import com.leyuan.support.mvp.view.EquipmentActivityView;
 import com.leyuan.support.widget.customview.SimpleTitleBar;
+import com.leyuan.support.widget.customview.SwitcherLayout;
 import com.leyuan.support.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.support.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.support.widget.endlessrecyclerview.HeaderSpanSizeLookup;
@@ -34,6 +35,7 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
     private SimpleTitleBar titleBar;
     private RecyclerView categoryRecyclerView;
 
+    private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recommendRecyclerView;
 
@@ -53,6 +55,8 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
         initTopLayout();
         initSwipeRefreshLayout();
         initRecommendRecyclerView();
+
+        present.commonLoadData(switcherLayout);
     }
 
     private void initTopLayout(){
@@ -72,26 +76,25 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
 
     private void initSwipeRefreshLayout() {
         refreshLayout = (SwipeRefreshLayout)findViewById(R.id.refreshLayout);
+        switcherLayout = new SwitcherLayout(this,refreshLayout);
         setColorSchemeResources(refreshLayout);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 currPage = 1;
-                present.pullToRefreshData(recommendRecyclerView);
+                present.pullToRefreshData();
             }
         });
 
-        refreshLayout.post(new Runnable() {
+        switcherLayout.setOnRetryListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                refreshLayout.setRefreshing(true);
-                present.pullToRefreshData(recommendRecyclerView);
+            public void onClick(View v) {
+                present.commonLoadData(switcherLayout);
             }
         });
     }
 
     private void initRecommendRecyclerView() {
-
         recommendRecyclerView = (RecyclerView)findViewById(R.id.rv_recommend);
         equipmentList = new ArrayList<>();
         equipmentAdapter = new EquipmentAdapter(this);
@@ -126,28 +129,8 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
     }
 
     @Override
-    public void showListEmptyView() {
-
-    }
-
-    @Override
-    public void hideListEmptyView() {
-
-    }
-
-    @Override
-    public void showRecyclerView() {
-
-    }
-
-    @Override
-    public void hideRecyclerView() {
-
-    }
-
-    @Override
-    public void showErrorView() {
-
+    public void showEmptyView() {
+        switcherLayout.showEmptyLayout();
     }
 
     @Override

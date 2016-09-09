@@ -15,8 +15,8 @@ import com.leyuan.support.entity.NurtureBean;
 import com.leyuan.support.mvp.presenter.NurtureActivityPresent;
 import com.leyuan.support.mvp.presenter.impl.NurtureActivityPresentImpl;
 import com.leyuan.support.mvp.view.NurtureActivityView;
-import com.leyuan.support.util.LogUtil;
 import com.leyuan.support.widget.customview.SimpleTitleBar;
+import com.leyuan.support.widget.customview.SwitcherLayout;
 import com.leyuan.support.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.support.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.support.widget.endlessrecyclerview.HeaderSpanSizeLookup;
@@ -35,6 +35,7 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
     private SimpleTitleBar titleBar;
     private RecyclerView categoryRecyclerView;
 
+    private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recommendRecyclerView;
 
@@ -54,6 +55,8 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
         initTopLayout();
         initSwipeRefreshLayout();
         initRecommendRecyclerView();
+
+        present.commonLoadData(switcherLayout);
     }
 
     private void initTopLayout(){
@@ -73,21 +76,21 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
 
     private void initSwipeRefreshLayout() {
         refreshLayout = (SwipeRefreshLayout)findViewById(R.id.refreshLayout);
+        switcherLayout = new SwitcherLayout(this,refreshLayout);
         setColorSchemeResources(refreshLayout);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                RecyclerViewStateUtils.resetFooterViewState(recommendRecyclerView);
                 currPage = 1;
-                LogUtil.d("retrofit","NurtureActivity下拉刷新");
-                present.pullToRefreshData(recommendRecyclerView);
+                present.pullToRefreshData();
             }
         });
 
-        refreshLayout.post(new Runnable() {
+        switcherLayout.setOnRetryListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                refreshLayout.setRefreshing(true);
-                present.pullToRefreshData(recommendRecyclerView);
+            public void onClick(View v) {
+                present.commonLoadData(switcherLayout);
             }
         });
     }
@@ -111,7 +114,6 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
         @Override
         public void onLoadNextPage(View view) {
             currPage ++;
-            LogUtil.d("retrofit","NurtureActivity加载更多");
             if (nurtureList != null && !nurtureList.isEmpty()) {
                 present.requestMoreData(recommendRecyclerView,pageSize,currPage);
             }
@@ -129,21 +131,9 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
         wrapperAdapter.notifyDataSetChanged();
     }
 
-
-
-    @Override
-    public void showContentView() {
-
-    }
-
     @Override
     public void showEmptyView() {
-
-    }
-
-    @Override
-    public void showErrorView() {
-
+        switcherLayout.showEmptyLayout();
     }
 
     @Override

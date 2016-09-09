@@ -20,6 +20,7 @@ import com.leyuan.support.entity.VenuesBean;
 import com.leyuan.support.mvp.presenter.FoodActivityPresenter;
 import com.leyuan.support.mvp.presenter.impl.FoodActivityPresentImpl;
 import com.leyuan.support.mvp.view.FoodActivityView;
+import com.leyuan.support.widget.customview.SwitcherLayout;
 import com.leyuan.support.widget.customview.ViewPagerIndicator;
 import com.leyuan.support.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.support.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -42,8 +43,9 @@ public class FoodActivity extends BaseActivity implements FoodActivityView{
     private List<VenuesBean> venuesList;
     private RecommendVenuesAdapter venuesAdapter;
 
-    private RecyclerView foodRecyclerView;
+    private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
+    private RecyclerView foodRecyclerView;
 
     private int currPage = 1;
     private ArrayList<FoodBean> foodList = new ArrayList<>();
@@ -60,6 +62,7 @@ public class FoodActivity extends BaseActivity implements FoodActivityView{
         initHeaderView();
         initSwipeRefreshLayout();
         initRecyclerView();
+        present.commonLoadData(switcherLayout);
     }
 
     private void initHeaderView(){
@@ -80,20 +83,13 @@ public class FoodActivity extends BaseActivity implements FoodActivityView{
 
     private void initSwipeRefreshLayout() {
         refreshLayout = (SwipeRefreshLayout)findViewById(R.id.refreshLayout);
+        switcherLayout = new SwitcherLayout(this,refreshLayout);
         setColorSchemeResources(refreshLayout);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 currPage = 1;
-                present.pullToRefreshData(foodRecyclerView);
-            }
-        });
-
-        refreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                refreshLayout.setRefreshing(true);
-                present.pullToRefreshData(foodRecyclerView);
+                present.pullToRefreshData();
             }
         });
     }
@@ -136,8 +132,8 @@ public class FoodActivity extends BaseActivity implements FoodActivityView{
     }
 
     @Override
-    public void showErrorView() {
-
+    public void showEmptyView() {
+        switcherLayout.showEmptyLayout();
     }
 
     @Override

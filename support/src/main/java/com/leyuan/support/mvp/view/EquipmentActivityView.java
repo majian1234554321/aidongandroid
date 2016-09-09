@@ -19,28 +19,7 @@ public interface EquipmentActivityView{
     /**
      * 显示装备列表空值界面
      */
-    void showListEmptyView();
-
-    /**
-     * 隐藏装备列表空值界面
-     */
-    void hideListEmptyView();
-
-    /**
-     * 显示RecyclerView
-     */
-    void showRecyclerView();
-
-    /**
-     * 隐藏RecyclerView
-     */
-    void hideRecyclerView();
-
-    /**
-     * 整体界面显示无网络界面
-     * 对于有缓存的界面空实现该方法即可
-     */
-    void showErrorView();
+    void showEmptyView();
 
     /**
      * 显示FooterView，提示没有任何内容了

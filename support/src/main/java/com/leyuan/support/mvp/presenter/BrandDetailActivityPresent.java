@@ -10,9 +10,8 @@ public interface BrandDetailActivityPresent {
 
     /**
      * 下拉刷新
-     * @param recyclerView 执行刷新的RecyclerView
      */
-    void pullToRefreshData(RecyclerView recyclerView,int id);
+    void pullToRefreshData(int id);
 
 
     /**

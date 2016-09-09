@@ -91,7 +91,7 @@ public class CourseActivity extends BaseActivity implements CoursesActivityView{
                 dateAdapter.setCheckItem(position);
                 day = 4;
                 currPage = 1;
-                present.pullToRefreshData(recyclerView,category,day);
+                present.pullToRefreshData(category,day);
                 //dropDownMenu.setTabText(position == 0 ? conditionHeaders[0] : citys[position]);
                 dropDownMenu.closeMenu();
             }
@@ -134,7 +134,7 @@ public class CourseActivity extends BaseActivity implements CoursesActivityView{
             @Override
             public void onRefresh() {
                 currPage = 1;
-                present.pullToRefreshData(recyclerView,category,day);
+                present.pullToRefreshData(category,day);
             }
         });
 
@@ -142,7 +142,7 @@ public class CourseActivity extends BaseActivity implements CoursesActivityView{
             @Override
             public void run() {
                 refreshLayout.setRefreshing(true);
-                present.pullToRefreshData(recyclerView,category,day);
+                present.pullToRefreshData(category,day);
             }
         });
     }

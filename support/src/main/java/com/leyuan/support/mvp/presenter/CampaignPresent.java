@@ -2,22 +2,24 @@ package com.leyuan.support.mvp.presenter;
 
 import android.support.v7.widget.RecyclerView;
 
+import com.leyuan.support.widget.customview.SwitcherLayout;
+
 /**
  * 活动
  * Created by song on 2016/8/18.
  */
 public interface CampaignPresent {
+
     /**
      * 第一次正常加载数据
+     * @param switcherLayout SwitcherLayout
      */
-    void normalLoadingData();
+    void commonLoadData(SwitcherLayout switcherLayout);
 
     /**
      * 下拉刷新
-     * @param recyclerView 执行刷新的RecyclerView
      */
-    void pullToRefreshData(RecyclerView recyclerView);
-
+    void pullToRefreshData();
 
     /**
      * 上拉加载更多

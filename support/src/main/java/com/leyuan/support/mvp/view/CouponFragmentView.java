@@ -5,7 +5,7 @@ import com.leyuan.support.entity.CouponBean;
 import java.util.List;
 
 /**
- * 可用优惠劵
+ * 优惠劵
  * Created by song on 2016/8/31.
  */
 public interface CouponFragmentView {
@@ -20,11 +20,6 @@ public interface CouponFragmentView {
      * 显示空值界面
      */
     void showEmptyView();
-
-    /**
-     * 隐藏空值界面
-     */
-    void hideEmptyView();
 
     /**
      * 显示FooterView，提示没有任何内容了

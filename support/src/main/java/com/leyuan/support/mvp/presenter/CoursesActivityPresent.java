@@ -9,11 +9,10 @@ import android.support.v7.widget.RecyclerView;
 public interface CoursesActivityPresent {
     /**
      * 下拉刷新
-     * @param recyclerView 执行刷新的RecyclerView
      * @param category 课程类型
      * @param day 从当前开始向后天数
      */
-    void pullToRefreshData(RecyclerView recyclerView, int category, int day);
+    void pullToRefreshData(int category, int day);
 
 
     /**

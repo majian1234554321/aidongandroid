@@ -34,8 +34,8 @@ public class CoursesActivityPresentImpl implements CoursesActivityPresent{
     }
 
     @Override
-    public void pullToRefreshData(RecyclerView recyclerView,int category,int day) {
-       courseModel.getCourses(new RefreshSubscriber<CourseData>(context,recyclerView) {
+    public void pullToRefreshData(int category,int day) {
+       courseModel.getCourses(new RefreshSubscriber<CourseData>(context) {
            @Override
            public void onNext(CourseData courseData) {
                if(courseData != null){

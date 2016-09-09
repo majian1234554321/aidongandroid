@@ -134,13 +134,6 @@ public class CouponFragment extends BaseFragment implements CouponFragmentView{
     }
 
     @Override
-    public void hideEmptyView() {
-
-    }
-
-
-
-    @Override
     public void showEndFooterView() {
 
     }

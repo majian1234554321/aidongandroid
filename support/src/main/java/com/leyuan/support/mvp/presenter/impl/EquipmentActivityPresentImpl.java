@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.leyuan.support.entity.EquipmentBean;
 import com.leyuan.support.entity.data.EquipmentData;
+import com.leyuan.support.http.subscriber.CommonSubscriber;
 import com.leyuan.support.http.subscriber.RefreshSubscriber;
 import com.leyuan.support.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.support.mvp.model.EquipmentModel;
@@ -12,6 +13,7 @@ import com.leyuan.support.mvp.model.impl.EquipmentModelImpl;
 import com.leyuan.support.mvp.presenter.EquipmentActivityPresent;
 import com.leyuan.support.mvp.view.EquipmentActivityView;
 import com.leyuan.support.util.Constant;
+import com.leyuan.support.widget.customview.SwitcherLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,20 +36,31 @@ public class EquipmentActivityPresentImpl implements EquipmentActivityPresent{
     }
 
     @Override
-    public void pullToRefreshData(RecyclerView recyclerView) {
-        equipmentModel.getEquipments(new RefreshSubscriber<EquipmentData>(context,recyclerView) {
+    public void commonLoadData(SwitcherLayout switcherLayout) {
+        equipmentModel.getEquipments(new CommonSubscriber<EquipmentData>(switcherLayout) {
+            @Override
+            public void onNext(EquipmentData equipmentData) {
+                if(equipmentData != null){
+                    equipmentBeanList = equipmentData.getEquipment();
+                }
+                if(!equipmentBeanList.isEmpty()){
+                    equipmentActivityView.updateRecyclerView(equipmentBeanList);
+                }else{
+                    equipmentActivityView.showEmptyView();
+                }
+            }
+        },Constant.FIRST_PAGE);
+    }
+
+    @Override
+    public void pullToRefreshData() {
+        equipmentModel.getEquipments(new RefreshSubscriber<EquipmentData>(context) {
             @Override
             public void onNext(EquipmentData equipmentData) {
                 if( equipmentData != null){
                     equipmentBeanList = equipmentData.getEquipment();
                 }
-
-                if(equipmentBeanList.isEmpty()){
-                    equipmentActivityView.showListEmptyView();
-                    equipmentActivityView.hideRecyclerView();
-                }else {
-                    equipmentActivityView.hideListEmptyView();
-                    equipmentActivityView.showRecyclerView();
+                if(!equipmentBeanList.isEmpty()){
                     equipmentActivityView.updateRecyclerView(equipmentBeanList);
                 }
             }
@@ -59,14 +72,12 @@ public class EquipmentActivityPresentImpl implements EquipmentActivityPresent{
         equipmentModel.getEquipments(new RequestMoreSubscriber<EquipmentData>(context,recyclerView,pageSize) {
             @Override
             public void onNext(EquipmentData equipmentData) {
-                if(null != equipmentData){
+                if(equipmentData != null){
                     equipmentBeanList = equipmentData.getEquipment();
                 }
-
                 if(!equipmentBeanList.isEmpty()){
                     equipmentActivityView.updateRecyclerView(equipmentBeanList);
                 }
-
                 //没有更多数据了显示到底提示
                 if(equipmentBeanList != null && equipmentBeanList.size() < pageSize){
                     equipmentActivityView.showEndFooterView();

@@ -30,8 +30,8 @@ public class HomeFragmentPresentImpl implements HomeFragmentPresent{
     }
 
     @Override
-    public void pullToRefreshData(final RecyclerView recyclerView) {
-        homeModel.getRecommendList(new RefreshSubscriber<HomeData>(context,recyclerView) {
+    public void pullToRefreshData() {
+        homeModel.getRecommendList(new RefreshSubscriber<HomeData>(context) {
             @Override
             public void onNext(HomeData homeBean) {
                 if(homeBean != null && homeBean.getHome() != null &&!homeBean.getHome().isEmpty()){

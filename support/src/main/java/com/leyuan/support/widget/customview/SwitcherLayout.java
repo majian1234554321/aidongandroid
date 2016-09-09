@@ -216,7 +216,7 @@ public class SwitcherLayout {
         return view;
     }
 
-    public void setClickListener(View.OnClickListener clickListener){
+    public void setOnRetryListener(View.OnClickListener clickListener){
         this.mClickListener = clickListener;
 
         for(View view : mDefaultViews){

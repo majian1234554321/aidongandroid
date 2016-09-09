@@ -47,7 +47,7 @@ public class PastCampaignActivity extends BaseActivity implements CampaignView {
 
         initSwipeRefreshLayout();
         initRecyclerView();
-        campaignActivityPresent.normalLoadingData();
+        campaignActivityPresent.commonLoadData(switcherLayout);
     }
 
     private void initSwipeRefreshLayout(){
@@ -58,7 +58,7 @@ public class PastCampaignActivity extends BaseActivity implements CampaignView {
             @Override
             public void onRefresh() {
                 currPage = 1;
-                campaignActivityPresent.pullToRefreshData(recyclerView);
+                campaignActivityPresent.pullToRefreshData();
             }
         });
     }
@@ -97,28 +97,8 @@ public class PastCampaignActivity extends BaseActivity implements CampaignView {
     }
 
     @Override
-    public void showLoadingView() {
-        switcherLayout.showLoadingLayout();
-    }
-
-    @Override
-    public void showContentView() {
-        switcherLayout.showNormalContentView();
-    }
-
-    @Override
     public void showEmptyView() {
         switcherLayout.showEmptyLayout();
-    }
-
-    @Override
-    public void showErrorView() {
-        switcherLayout.showExceptionLayout();
-    }
-
-    @Override
-    public void showErrorFooterView() {
-        RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.NetWorkError);
     }
 
     @Override

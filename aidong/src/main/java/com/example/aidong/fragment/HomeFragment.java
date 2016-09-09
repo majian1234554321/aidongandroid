@@ -136,7 +136,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView{
             @Override
             public void onRefresh() {
                 currPage = 1;
-                present.pullToRefreshData(recyclerView);
+                present.pullToRefreshData();
             }
         });
 
@@ -144,7 +144,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView{
             @Override
             public void run() {
                 refreshLayout.setRefreshing(true);
-                present.pullToRefreshData(recyclerView);
+                present.pullToRefreshData();
             }
         });
     }

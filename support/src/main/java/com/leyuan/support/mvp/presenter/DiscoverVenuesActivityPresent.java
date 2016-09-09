@@ -10,11 +10,10 @@ public interface DiscoverVenuesActivityPresent {
 
     /**
      * 下拉刷新
-     * @param recyclerView RecyclerView
      * @param lat 纬度
      * @param lng 经度
      */
-    void pullToRefreshData(RecyclerView recyclerView, double lat, double lng);
+    void pullToRefreshData(double lat, double lng);
 
     /**
      * 上拉加载更多

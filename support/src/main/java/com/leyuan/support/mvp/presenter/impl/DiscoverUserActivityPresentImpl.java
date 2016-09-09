@@ -34,8 +34,8 @@ public class DiscoverUserActivityPresentImpl implements DiscoverUserActivityPres
     }
 
     @Override
-    public void pullToRefreshData(RecyclerView recyclerView, double lat, double lng, String gender, String type) {
-        discoverModel.getUsers(new RefreshSubscriber<DiscoverUserData>(context,recyclerView) {
+    public void pullToRefreshData( double lat, double lng, String gender, String type) {
+        discoverModel.getUsers(new RefreshSubscriber<DiscoverUserData>(context) {
             @Override
             public void onNext(DiscoverUserData discoverUserData) {
                 if(discoverUserData != null){

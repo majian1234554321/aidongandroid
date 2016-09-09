@@ -75,7 +75,7 @@ public class NurtureFilterActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onRefresh() {
                 currPage = 1;
-                present.pullToRefreshData(recyclerView);
+                present.pullToRefreshData();
             }
         });
 
@@ -83,7 +83,7 @@ public class NurtureFilterActivity extends BaseActivity implements View.OnClickL
             @Override
             public void run() {
                 refreshLayout.setRefreshing(true);
-                present.pullToRefreshData(recyclerView);
+                present.pullToRefreshData();
             }
         });
     }

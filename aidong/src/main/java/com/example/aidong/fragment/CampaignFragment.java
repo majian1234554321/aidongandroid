@@ -70,7 +70,7 @@ public class CampaignFragment extends BaseFragment implements CampaignView {
         initSwipeRefreshLayout(view);
         initRecyclerView(view);
 
-        campaignPresent.normalLoadingData();
+        campaignPresent.commonLoadData(switcherLayout);
     }
 
     private void initSwipeRefreshLayout(View view){
@@ -81,8 +81,8 @@ public class CampaignFragment extends BaseFragment implements CampaignView {
             @Override
             public void onRefresh() {
                 currPage = 1;
-                RecyclerViewStateUtils.resetFootetViewState(recyclerView);
-                campaignPresent.pullToRefreshData(recyclerView);
+                RecyclerViewStateUtils.resetFooterViewState(recyclerView);
+                campaignPresent.pullToRefreshData();
             }
         });
     }
@@ -120,30 +120,13 @@ public class CampaignFragment extends BaseFragment implements CampaignView {
         wrapperAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void showLoadingView() {
-        switcherLayout.showLoadingLayout();
-    }
 
-    @Override
-    public void showContentView() {
-        switcherLayout.showNormalContentView();
-    }
 
     @Override
     public void showEmptyView() {
         switcherLayout.showEmptyLayout();
     }
 
-    @Override
-    public void showErrorView() {
-        switcherLayout.showExceptionLayout();
-    }
-
-    @Override
-    public void showErrorFooterView() {
-        RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.NetWorkError);
-    }
 
     @Override
     public void showEndFooterView() {

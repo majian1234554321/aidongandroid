@@ -34,8 +34,8 @@ public class DiscoverVenuesActivityPresentImpl implements DiscoverVenuesActivity
     }
 
     @Override
-    public void pullToRefreshData(RecyclerView recyclerView, double lat, double lng) {
-        discoverModel.getVenues(new RefreshSubscriber<DiscoverVenuesData>(context,recyclerView) {
+    public void pullToRefreshData(double lat, double lng) {
+        discoverModel.getVenues(new RefreshSubscriber<DiscoverVenuesData>(context) {
             @Override
             public void onNext(DiscoverVenuesData discoverVenuesData) {
                 if(discoverVenuesData != null){

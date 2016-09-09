@@ -1,7 +1,5 @@
 package com.leyuan.support.mvp.presenter;
 
-import android.support.v7.widget.RecyclerView;
-
 import com.leyuan.support.widget.customview.SwitcherLayout;
 
 /**
@@ -18,9 +16,8 @@ public interface CartActivityPresent {
 
     /**
      * 下拉刷新
-     * @param recyclerView RecyclerView
      */
-    void pullToRefreshData(RecyclerView recyclerView);
+    void pullToRefreshData();
 
 
     /**

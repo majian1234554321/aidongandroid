@@ -10,9 +10,8 @@ public interface FansFragmentPresent {
 
     /**
      * 下拉刷新
-     * @param recyclerView RecyclerView
      */
-    void pullToRefreshData(RecyclerView recyclerView);
+    void pullToRefreshData();
 
     /**
      * 上拉加载更多

@@ -5,14 +5,14 @@ import com.leyuan.support.widget.customview.SwitcherLayout;
 import rx.Subscriber;
 
 /**
- * 用于普通Http请求时 第一次正常加载数据
+ * 用于第一次正常加载数据时的Http请求
  * 慎用:该Subscriber需与SwitcherLayout结合使用
  */
-public abstract class NormalSubscriber<T> extends Subscriber<T> {
+public abstract class CommonSubscriber<T> extends Subscriber<T> {
 
     private SwitcherLayout switcherLayout;
 
-    public NormalSubscriber(SwitcherLayout switcherLayout) {
+    public CommonSubscriber(SwitcherLayout switcherLayout) {
         this.switcherLayout = switcherLayout;
     }
 

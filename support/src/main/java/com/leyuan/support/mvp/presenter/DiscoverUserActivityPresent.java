@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
  */
 public interface DiscoverUserActivityPresent {
 
-    void pullToRefreshData(RecyclerView recyclerView, double lat, double lng, String gender, String type);
+    void pullToRefreshData(double lat, double lng, String gender, String type);
 
     /**
      * 上拉加载更多

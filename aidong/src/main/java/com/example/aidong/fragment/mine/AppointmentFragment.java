@@ -15,6 +15,7 @@ import com.leyuan.support.entity.AppointmentBean;
 import com.leyuan.support.mvp.presenter.AppointmentFragmentPresent;
 import com.leyuan.support.mvp.presenter.impl.AppointmentFragmentPresentImpl;
 import com.leyuan.support.mvp.view.AppointmentFragmentView;
+import com.leyuan.support.widget.customview.SwitcherLayout;
 import com.leyuan.support.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.support.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.support.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
@@ -32,9 +33,7 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
     public static final String JOINED = "joined";
     public static final String UN_JOIN = "unJoin";
 
-
-    private String type;
-
+    private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
 
@@ -44,6 +43,7 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
     private AppointmentAdapter appointmentAdapter;
 
     private AppointmentFragmentPresent present;
+    private String type;
 
     /**
      * 设置传递给Fragment的参数
@@ -70,24 +70,25 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
         present = new AppointmentFragmentPresentImpl(getContext(),this);
         initSwipeRefreshLayout(view);
         initRecyclerView(view);
+        present.commonLoadData(switcherLayout,type);
     }
 
     private void initSwipeRefreshLayout(View view) {
         refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.refreshLayout);
+        switcherLayout = new SwitcherLayout(getContext(),refreshLayout);
         setColorSchemeResources(refreshLayout);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 currPage = 1;
-                present.pullToRefreshData(recyclerView,type);
+                present.pullToRefreshData(type);
             }
         });
 
-        refreshLayout.post(new Runnable() {
+        switcherLayout.setOnRetryListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                refreshLayout.setRefreshing(true);
-                present.pullToRefreshData(recyclerView,type);
+            public void onClick(View v) {
+                present.commonLoadData(switcherLayout,type);
             }
         });
     }
@@ -112,7 +113,6 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
         }
     };
 
-
     @Override
     public void updateRecyclerView(List<AppointmentBean> appointmentBeanList) {
         if(refreshLayout.isRefreshing()){
@@ -126,12 +126,7 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
 
     @Override
     public void showEmptyView() {
-
-    }
-
-    @Override
-    public void hideEmptyView() {
-
+        switcherLayout.showEmptyLayout();
     }
 
     @Override

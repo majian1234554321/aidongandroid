@@ -92,7 +92,7 @@ public class BrandDetailActivity extends BaseActivity implements BrandDetailActi
             @Override
             public void onRefresh() {
                 currPage = 1;
-                present.pullToRefreshData(recyclerView,id);
+                present.pullToRefreshData(id);
             }
         });
 
@@ -100,7 +100,7 @@ public class BrandDetailActivity extends BaseActivity implements BrandDetailActi
             @Override
             public void run() {
                 refreshLayout.setRefreshing(true);
-                present.pullToRefreshData(recyclerView,id);
+                present.pullToRefreshData(id);
             }
         });
     }

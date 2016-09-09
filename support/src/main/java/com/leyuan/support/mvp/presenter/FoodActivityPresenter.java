@@ -2,6 +2,8 @@ package com.leyuan.support.mvp.presenter;
 
 import android.support.v7.widget.RecyclerView;
 
+import com.leyuan.support.widget.customview.SwitcherLayout;
+
 /**
  * 健康餐饮
  * Created by song on 2016/8/15.
@@ -9,10 +11,15 @@ import android.support.v7.widget.RecyclerView;
 public interface FoodActivityPresenter {
 
     /**
-     * 下拉刷新
-     * @param recyclerView RecyclerView
+     * 第一次进入界面加载数据
+     * @param switcherLayout SwitcherLayout
      */
-    void pullToRefreshData(RecyclerView recyclerView);
+    void commonLoadData(SwitcherLayout switcherLayout);
+
+    /**
+     * 下拉刷新
+     */
+    void pullToRefreshData();
 
     /**
      * 上拉加载更多

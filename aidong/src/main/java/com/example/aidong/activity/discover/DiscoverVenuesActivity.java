@@ -134,7 +134,7 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
             @Override
             public void onRefresh() {
                 currPage = 1;
-                present.pullToRefreshData(recyclerView, BaseApp.lat,BaseApp.lon);
+                present.pullToRefreshData(BaseApp.lat,BaseApp.lon);
             }
         });
 
@@ -142,7 +142,7 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
             @Override
             public void run() {
                 refreshLayout.setRefreshing(true);
-                present.pullToRefreshData(recyclerView, BaseApp.lat,BaseApp.lon);
+                present.pullToRefreshData(BaseApp.lat,BaseApp.lon);
             }
         });
     }

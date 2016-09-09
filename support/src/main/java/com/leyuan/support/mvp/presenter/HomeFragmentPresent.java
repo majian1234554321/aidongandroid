@@ -10,9 +10,8 @@ public interface HomeFragmentPresent {
 
     /**
      * 下拉刷新
-     * @param recyclerView 执行刷新的RecyclerView
      */
-    void pullToRefreshData(RecyclerView recyclerView);
+    void pullToRefreshData();
 
 
     /**

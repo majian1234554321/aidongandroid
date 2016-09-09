@@ -129,7 +129,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
 
     private void setListener() {
         appBarLayout.addOnOffsetChangedListener(new MyOnOffsetChangedListener());
-        switcherLayout.setClickListener(retryListener);
+        switcherLayout.setOnRetryListener(retryListener);
         toolbar.setNavigationOnClickListener(this);
         recyclerView.setOnClickListener(this);
         applyLayout.setOnClickListener(this);

@@ -15,6 +15,7 @@ import com.leyuan.support.entity.OrderBean;
 import com.leyuan.support.mvp.presenter.OrderFragmentPresent;
 import com.leyuan.support.mvp.presenter.impl.OrderFragmentPresentImpl;
 import com.leyuan.support.mvp.view.OrderFragmentView;
+import com.leyuan.support.widget.customview.SwitcherLayout;
 import com.leyuan.support.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.support.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.support.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
@@ -33,8 +34,7 @@ public class OrderFragment extends BaseFragment implements OrderFragmentView{
     public static final String SELF_DELIVERY = "self-delivery";
     public static final String EXPRESS_DELIVERY = "express-delivery";
 
-    private String type;
-
+    private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
 
@@ -44,6 +44,7 @@ public class OrderFragment extends BaseFragment implements OrderFragmentView{
     private OrderAdapter orderAdapter;
 
     private OrderFragmentPresent present;
+    private String type;
 
     /**
      * 设置传递给Fragment的参数
@@ -70,24 +71,26 @@ public class OrderFragment extends BaseFragment implements OrderFragmentView{
         present = new OrderFragmentPresentImpl(getContext(),this);
         initSwipeRefreshLayout(view);
         initRecyclerView(view);
+        present.commonLoadData(switcherLayout,type);
     }
 
     private void initSwipeRefreshLayout(View view) {
         refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.refreshLayout);
+        switcherLayout = new SwitcherLayout(getContext(), refreshLayout);
         setColorSchemeResources(refreshLayout);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 currPage = 1;
-                present.pullToRefreshData(recyclerView,type);
+                RecyclerViewStateUtils.resetFooterViewState(recyclerView);
+                present.pullToRefreshData(type);
             }
         });
 
-        refreshLayout.post(new Runnable() {
+        switcherLayout.setOnRetryListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                refreshLayout.setRefreshing(true);
-                present.pullToRefreshData(recyclerView,type);
+            public void onClick(View v) {
+                present.commonLoadData(switcherLayout,type);
             }
         });
     }
@@ -123,14 +126,10 @@ public class OrderFragment extends BaseFragment implements OrderFragmentView{
         wrapperAdapter.notifyDataSetChanged();
     }
 
+
     @Override
     public void showEmptyView() {
-
-    }
-
-    @Override
-    public void hideEmptyView() {
-
+        switcherLayout.showEmptyLayout();
     }
 
     @Override

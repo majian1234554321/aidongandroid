@@ -30,8 +30,8 @@ public class BrandDetailActivityPresentImpl implements BrandDetailActivityPresen
 
 
     @Override
-    public void pullToRefreshData(RecyclerView recyclerView,int id) {
-        homeModel.getBrandDetail(new RefreshSubscriber<BrandBean>(context,recyclerView) {
+    public void pullToRefreshData(int id) {
+        homeModel.getBrandDetail(new RefreshSubscriber<BrandBean>(context) {
             @Override
             public void onNext(BrandBean brandBean) {
                 brandDetailActivityView.updateRecyclerView(brandBean);
@@ -41,7 +41,7 @@ public class BrandDetailActivityPresentImpl implements BrandDetailActivityPresen
 
     @Override
     public void requestMoreData(RecyclerView recyclerView, int pageSize, int page, int id) {
-        homeModel.getBrandDetail(new RefreshSubscriber<BrandBean>(context,recyclerView) {
+        homeModel.getBrandDetail(new RefreshSubscriber<BrandBean>(context) {
             @Override
             public void onNext(BrandBean brandBean) {
                 /*if(brandBean != null && !brandBean.isEmpty()){

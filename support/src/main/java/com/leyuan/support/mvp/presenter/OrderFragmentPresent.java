@@ -2,6 +2,8 @@ package com.leyuan.support.mvp.presenter;
 
 import android.support.v7.widget.RecyclerView;
 
+import com.leyuan.support.widget.customview.SwitcherLayout;
+
 /**
  * 订单
  * Created by song on 2016/9/1.
@@ -9,11 +11,17 @@ import android.support.v7.widget.RecyclerView;
 public interface OrderFragmentPresent {
 
     /**
+     * 第一次加载数据
+     * @param switcherLayout SwitcherLayout
+     * @param list list all: 全部 self-delivery: 自提 express-delivery: 快递
+     */
+    void commonLoadData(SwitcherLayout switcherLayout,String list);
+
+    /**
      * 下拉刷新
-     * @param recyclerView RecyclerView
      * @param list all: 全部 self-delivery: 自提 express-delivery: 快递
      */
-    void pullToRefreshData(RecyclerView recyclerView,String list);
+    void pullToRefreshData(String list);
 
     /**
      * 上拉加载更多

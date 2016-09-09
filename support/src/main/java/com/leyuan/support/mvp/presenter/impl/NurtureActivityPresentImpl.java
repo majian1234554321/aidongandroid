@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.leyuan.support.entity.NurtureBean;
 import com.leyuan.support.entity.data.NurtureData;
+import com.leyuan.support.http.subscriber.CommonSubscriber;
 import com.leyuan.support.http.subscriber.RefreshSubscriber;
 import com.leyuan.support.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.support.mvp.model.NurtureModel;
@@ -12,6 +13,7 @@ import com.leyuan.support.mvp.model.impl.NurtureModelImpl;
 import com.leyuan.support.mvp.presenter.NurtureActivityPresent;
 import com.leyuan.support.mvp.view.NurtureActivityView;
 import com.leyuan.support.util.Constant;
+import com.leyuan.support.widget.customview.SwitcherLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,17 +35,31 @@ public class NurtureActivityPresentImpl implements NurtureActivityPresent{
     }
 
     @Override
-    public void pullToRefreshData(RecyclerView recyclerView) {
-        nurtureModel.getNurtures(new RefreshSubscriber<NurtureData>(context,recyclerView) {
+    public void commonLoadData(SwitcherLayout switcherLayout) {
+        nurtureModel.getNurtures(new CommonSubscriber<NurtureData>(switcherLayout) {
             @Override
             public void onNext(NurtureData nurtureDataBean) {
                 if(null != nurtureDataBean){
                     nurtureBeanList = nurtureDataBean.getNutrition();
                 }
-
-                if(nurtureBeanList.isEmpty()){
+                if(!nurtureBeanList.isEmpty()){
+                    nurtureActivityView.updateRecyclerView(nurtureBeanList);
+                }else{
                     nurtureActivityView.showEmptyView();
-                }else {
+                }
+            }
+        },Constant.FIRST_PAGE);
+    }
+
+    @Override
+    public void pullToRefreshData() {
+        nurtureModel.getNurtures(new RefreshSubscriber<NurtureData>(context) {
+            @Override
+            public void onNext(NurtureData nurtureDataBean) {
+                if(null != nurtureDataBean){
+                    nurtureBeanList = nurtureDataBean.getNutrition();
+                }
+                if(!nurtureBeanList.isEmpty()){
                     nurtureActivityView.updateRecyclerView(nurtureBeanList);
                 }
             }
@@ -58,11 +74,9 @@ public class NurtureActivityPresentImpl implements NurtureActivityPresent{
                 if(null != nurtureDataBean){
                     nurtureBeanList = nurtureDataBean.getNutrition();
                 }
-
                 if(!nurtureBeanList.isEmpty()){
                     nurtureActivityView.updateRecyclerView(nurtureBeanList);
                 }
-
                 //没有更多数据了显示到底提示
                 if(nurtureBeanList != null && nurtureBeanList.size() < pageSize){
                     nurtureActivityView.showEndFooterView();

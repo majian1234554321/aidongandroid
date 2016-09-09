@@ -32,8 +32,8 @@ public class FansFragmentPresentImpl implements FansFragmentPresent{
     }
 
     @Override
-    public void pullToRefreshData(RecyclerView recyclerView) {
-        followModel.getFollows(new RefreshSubscriber<List<UserBean>>(context,recyclerView) {
+    public void pullToRefreshData() {
+        followModel.getFollows(new RefreshSubscriber<List<UserBean>>(context) {
             @Override
             public void onNext(List<UserBean> userBeanList) {
                 if(userBeanList != null && userBeanList.isEmpty()){

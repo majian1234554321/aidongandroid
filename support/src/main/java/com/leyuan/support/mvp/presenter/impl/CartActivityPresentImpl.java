@@ -1,11 +1,10 @@
 package com.leyuan.support.mvp.presenter.impl;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 
 import com.leyuan.support.entity.BaseBean;
 import com.leyuan.support.entity.GoodsBean;
-import com.leyuan.support.http.subscriber.NormalSubscriber;
+import com.leyuan.support.http.subscriber.CommonSubscriber;
 import com.leyuan.support.mvp.model.CartModel;
 import com.leyuan.support.mvp.model.impl.CartModelImpl;
 import com.leyuan.support.mvp.presenter.CartActivityPresent;
@@ -33,7 +32,7 @@ public class CartActivityPresentImpl implements CartActivityPresent{
 
     @Override
     public void normalLoadingData(final SwitcherLayout switcherLayout) {
-        cartModel.getCart(new NormalSubscriber<List<GoodsBean>>(switcherLayout) {
+        cartModel.getCart(new CommonSubscriber<List<GoodsBean>>(switcherLayout) {
             @Override
             public void onNext(List<GoodsBean> goodsBeanList) {
                 if(goodsBeanList == null ||goodsBeanList.isEmpty()){
@@ -46,7 +45,7 @@ public class CartActivityPresentImpl implements CartActivityPresent{
     }
 
     @Override
-    public void pullToRefreshData(RecyclerView recyclerView) {
+    public void pullToRefreshData() {
 
     }
 

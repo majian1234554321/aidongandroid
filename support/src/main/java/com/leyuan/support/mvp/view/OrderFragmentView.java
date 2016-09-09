@@ -11,19 +11,14 @@ import java.util.List;
 public interface OrderFragmentView {
     /**
      * 更新列表
-     * @param orderBeanList
+     * @param orderBeanList OrderBean
      */
     void updateRecyclerView(List<OrderBean> orderBeanList);
 
     /**
-     * 显示空值界面
+     * 显示空值界面布局
      */
     void showEmptyView();
-
-    /**
-     * 隐藏空值界面
-     */
-    void hideEmptyView();
 
     /**
      * 显示FooterView，提示没有任何内容了
