@@ -3,9 +3,9 @@ package com.leyuan.support.mvp.presenter.impl;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
-import com.leyuan.support.entity.BaseBean;
 import com.leyuan.support.entity.UserBean;
-import com.leyuan.support.http.subscriber.ProgressSubscriber;
+import com.leyuan.support.entity.data.FollowerData;
+import com.leyuan.support.http.subscriber.CommonSubscriber;
 import com.leyuan.support.http.subscriber.RefreshSubscriber;
 import com.leyuan.support.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.support.mvp.model.FollowModel;
@@ -13,7 +13,9 @@ import com.leyuan.support.mvp.model.impl.FollowModelImpl;
 import com.leyuan.support.mvp.presenter.FansFragmentPresent;
 import com.leyuan.support.mvp.view.FansFragmentView;
 import com.leyuan.support.util.Constant;
+import com.leyuan.support.widget.customview.SwitcherLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,6 +26,7 @@ public class FansFragmentPresentImpl implements FansFragmentPresent{
     private Context context;
     private FollowModel followModel;
     private FansFragmentView fansFragmentView;
+    private List<UserBean> fansList = new ArrayList<>();
 
     public FansFragmentPresentImpl(FansFragmentView fansFragmentView, Context context) {
         this.context = context;
@@ -32,16 +35,34 @@ public class FansFragmentPresentImpl implements FansFragmentPresent{
     }
 
     @Override
-    public void pullToRefreshData() {
-        followModel.getFollows(new RefreshSubscriber<List<UserBean>>(context) {
+    public void commonLoadData(final SwitcherLayout switcherLayout) {
+        followModel.getFollows(new CommonSubscriber<FollowerData>(switcherLayout) {
             @Override
-            public void onNext(List<UserBean> userBeanList) {
-                if(userBeanList != null && userBeanList.isEmpty()){
-                    fansFragmentView.showEmptyView();
-                }else {
-                    fansFragmentView.hideEmptyView();
+            public void onNext(FollowerData followerData) {
+                if(followerData != null){
+                    fansList = followerData.getFollower();
+                }
+                if(!fansList.isEmpty()){
+                    fansFragmentView.updateRecyclerView(fansList);
+                    switcherLayout.showContentLayout();
+                }else{
+                    switcherLayout.showEmptyLayout();
+                }
+            }
+        },Constant.FIRST_PAGE);
+    }
 
-                    fansFragmentView.updateRecyclerView(userBeanList);
+    @Override
+    public void pullToRefreshData() {
+        followModel.getFollows(new RefreshSubscriber<FollowerData>(context) {
+            @Override
+            public void onNext(FollowerData followerData) {
+                if(followerData != null){
+                    fansList = followerData.getFollower();
+                }
+
+                if(!fansList.isEmpty()) {
+                    fansFragmentView.updateRecyclerView(fansList);
                 }
             }
         }, Constant.FIRST_PAGE);
@@ -49,15 +70,16 @@ public class FansFragmentPresentImpl implements FansFragmentPresent{
 
     @Override
     public void requestMoreData(RecyclerView recyclerView, final int pageSize, int page) {
-        followModel.getFollows(new RequestMoreSubscriber<List<UserBean>>(context,recyclerView,pageSize) {
+        followModel.getFollows(new RequestMoreSubscriber<FollowerData>(context,recyclerView,pageSize) {
             @Override
-            public void onNext(List<UserBean> userBeanList) {
-                if(userBeanList != null && !userBeanList.isEmpty()){
-                    fansFragmentView.updateRecyclerView(userBeanList);
+            public void onNext(FollowerData followerData) {
+                if(followerData != null){
+                    fansList = followerData.getFollower();
                 }
-
-                //没有更多数据了显示到底提示
-                if(userBeanList != null && userBeanList.size() < pageSize){
+                if(!fansList.isEmpty()) {
+                    fansFragmentView.updateRecyclerView(fansList);
+                }
+                if(fansList.size() < pageSize){
                     fansFragmentView.showEndFooterView();
                 }
             }
@@ -66,21 +88,11 @@ public class FansFragmentPresentImpl implements FansFragmentPresent{
 
     @Override
     public void addFollow(int id) {
-        followModel.addFollow(new ProgressSubscriber<BaseBean>(context) {
-            @Override
-            public void onNext(BaseBean baseBean) {
 
-            }
-        },id);
     }
 
     @Override
     public void cancelFollow(int id) {
-        followModel.cancelFollow(new ProgressSubscriber<BaseBean>(context) {
-            @Override
-            public void onNext(BaseBean baseBean) {
 
-            }
-        },id);
     }
 }

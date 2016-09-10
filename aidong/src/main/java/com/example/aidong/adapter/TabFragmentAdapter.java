@@ -7,15 +7,15 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.List;
 
 /**
- * 发现模块TabLayout适配器
+ * TabLayout适配器
  * Created by song on 2016/7/12.
  */
-public class FoundFragmentAdapter extends FragmentPagerAdapter{
+public class TabFragmentAdapter extends FragmentPagerAdapter{
 
     private List<Fragment> children;                         //fragment列表
     private List<String> titles;                              //tab名的列表
 
-    public FoundFragmentAdapter(FragmentManager fm,List<Fragment> children,List<String> titles) {
+    public TabFragmentAdapter(FragmentManager fm, List<Fragment> children, List<String> titles) {
         super(fm);
         this.children = children;
         this.titles = titles;

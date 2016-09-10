@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.example.aidong.BaseActivity;
 import com.example.aidong.R;
 import com.example.aidong.activity.home.adapter.SamplePagerAdapter;
-import com.example.aidong.adapter.FoundFragmentAdapter;
+import com.example.aidong.adapter.TabFragmentAdapter;
 import com.example.aidong.fragment.discover.VenuesCoachFragment;
 import com.example.aidong.fragment.discover.VenuesCourseFragment;
 import com.leyuan.support.util.DensityUtil;
@@ -99,7 +99,7 @@ public class VenuesDetailActivity extends BaseActivity {
         titles.add("课程");
         titles.add("教练");
 
-        tabViewPager.setAdapter(new FoundFragmentAdapter(getSupportFragmentManager(), fragments, titles));
+        tabViewPager.setAdapter(new TabFragmentAdapter(getSupportFragmentManager(), fragments, titles));
         tabViewPager.setOffscreenPageLimit(2);
         tabLayout.setupWithViewPager(tabViewPager);
     }

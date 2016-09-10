@@ -7,7 +7,7 @@ import android.support.v4.view.ViewPager;
 
 import com.example.aidong.BaseActivity;
 import com.example.aidong.R;
-import com.example.aidong.adapter.FoundFragmentAdapter;
+import com.example.aidong.adapter.TabFragmentAdapter;
 import com.example.aidong.fragment.mine.OrderFragment;
 import com.example.aidong.interfaces.SimpleOnTabSelectedListener;
 import com.leyuan.support.widget.customview.SimpleTitleBar;
@@ -59,7 +59,7 @@ public class OrderActivity extends BaseActivity{
         titles.add(getString(R.string.order_self_pick_up));
         titles.add(getString(R.string.order_express));
 
-        viewPager.setAdapter(new FoundFragmentAdapter(getSupportFragmentManager(),fragments,titles));
+        viewPager.setAdapter(new TabFragmentAdapter(getSupportFragmentManager(),fragments,titles));
         viewPager.setOffscreenPageLimit(2);
         tabLayout.setupWithViewPager(viewPager);
 

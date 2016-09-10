@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15dp"
+        android:text="state"
+        android:textColor="@color/black"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_time_or_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="10dp"
+        android:text="订单号:2252"
+        android:textColor="@color/c9"
+        android:textSize="13sp" />
+
+    <include layout="@layout/inc_line_black" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="84dp"
+        android:paddingLeft="@dimen/left_margin"
+        android:paddingRight="@dimen/right_margin">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/dv_goods_cover"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            app:actualImageScaleType="centerCrop"
+            app:placeholderImage="@drawable/place_holder_logo"
+            app:pressedStateOverlayImage="@color/color_image_press" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="21dp"
+            android:layout_toRightOf="@+id/dv_goods_cover"
+            android:singleLine="true"
+            android:text="阿迪达斯-举重"
+            android:textColor="@color/c3"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tv_name"
+            android:layout_below="@+id/tv_name"
+            android:layout_marginTop="15dp"
+            android:text="爱动"
+            android:textColor="@color/c9"
+            android:textSize="13sp" />
+
+    </RelativeLayout>
+
+    <!--二维码布局-->
+    <LinearLayout
+        android:id="@+id/ll_qr_code"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:orientation="vertical"
+        android:paddingBottom="30dp">
+
+        <TextView
+            android:id="@+id/tv_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:text="88777"
+            android:textColor="@color/black"
+            android:textSize="30sp" />
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/dv_qr"
+            android:layout_width="294dp"
+            android:layout_height="73dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="25dp"
+            app:actualImageScaleType="centerCrop"
+            app:placeholderImage="@drawable/place_holder_logo"
+            app:pressedStateOverlayImage="@color/color_image_press" />
+    </LinearLayout>
+</LinearLayout>

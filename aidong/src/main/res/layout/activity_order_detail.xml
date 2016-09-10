@@ -21,177 +21,67 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_state"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="15dp"
-                android:text="state"
-                android:textColor="@color/black"
-                android:textSize="15sp" />
+            <!-- 订单状态信息-->
+            <include layout="@layout/inc_order_state_info"/>
 
-            <TextView
-                android:id="@+id/tv_time_or_num"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="15dp"
-                android:layout_marginTop="10dp"
-                android:text="订单号:2252"
-                android:textColor="@color/c9"
-                android:textSize="13sp" />
+            <!--收货信息-->
+            <include  layout="@layout/inc_receiver_info" />
 
-            <include layout="@layout/inc_line_black" />
+            <!--订单信息-->
+            <include  layout="@layout/inc_order_info" />
 
-            <RelativeLayout
-                android:id="@+id/rl_express"
-                android:layout_width="match_parent"
-                android:layout_height="60dp">
-
-                <com.facebook.drawee.view.SimpleDraweeView
-                    android:id="@+id/dv_express"
-                    android:layout_width="23dp"
-                    android:layout_height="19dp"
-                    app:actualImageScaleType="centerCrop"
-                    android:layout_marginLeft="17dp"
-                    android:layout_centerVertical="true"/>
-
-                <TextView
-                    android:id="@+id/tv_express_address"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="运送中.."
-                    android:textColor="@color/black"
-                    android:textSize="15sp"
-                    android:layout_marginTop="13dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_toRightOf="@+id/dv_express"/>
-
-                <TextView
-                    android:id="@+id/tv_express_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="运送中.."
-                    android:textColor="@color/c9"
-                    android:textSize="13sp"
-                    android:layout_marginTop="11dp"
-                    android:layout_below="@+id/tv_express_address"
-                    android:layout_alignLeft="@+id/tv_express_address"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/icon_right_arrow"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/right_margin"
-                    android:layout_alignParentRight="true"/>
-            </RelativeLayout>
-
+            <!--支付信息-->
             <LinearLayout
-                android:id="@+id/ll_qr_code"
-                android:orientation="vertical"
+                android:id="@+id/ll_pay"
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:paddingBottom="30dp" >
-
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
                 <TextView
-                    android:id="@+id/tv_num"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="52dp"
+                    android:layout_marginLeft="@dimen/left_margin"
+                    android:gravity="center_vertical"
+                    android:text="支付方式"
                     android:textColor="@color/black"
-                    android:textSize="30sp"
-                    android:text="88777"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="30dp"/>
+                    android:textSize="16sp" />
 
-                <com.facebook.drawee.view.SimpleDraweeView
-                    android:id="@+id/dv_qr"
-                    android:layout_width="294dp"
-                    android:layout_height="73dp"
-                    app:actualImageScaleType="centerCrop"
-                    app:placeholderImage="@drawable/place_holder_logo"
-                    app:pressedStateOverlayImage="@color/color_image_press"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="25dp"/>
+                <include layout="@layout/inc_line_black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="支付宝"/>
+
+                    <CheckBox
+                        android:id="@+id/cb_alipay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="微信"/>
+
+                    <CheckBox
+                        android:id="@+id/cb_weixin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
             </LinearLayout>
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="54dp"
-                android:layout_marginLeft="@dimen/left_margin"
-                android:gravity="center_vertical"
-                android:text="收货信息"
-                android:textColor="@color/c3"
-                android:textSize="16sp" />
-
-            <include layout="@layout/inc_line_black" />
-
-            <com.leyuan.support.widget.customview.ExtendTextView
-                android:id="@+id/tv_consignee"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:left_text="收货人:" />
-
-            <com.leyuan.support.widget.customview.ExtendTextView
-                android:id="@+id/tv_phone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:left_text="联系方式:" />
-
-            <com.leyuan.support.widget.customview.ExtendTextView
-                android:id="@+id/tv_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:left_text="收货地址:" />
-
-            <com.leyuan.support.widget.customview.ExtendTextView
-                android:id="@+id/tv_invoice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:left_text="发票信息:" />
-
-            <com.leyuan.support.widget.customview.ExtendTextView
-                android:id="@+id/tv_remarks"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:left_text="备注:" />
-            
-           <RelativeLayout
-               android:layout_width="match_parent"
-               android:layout_height="50dp"
-               android:orientation="horizontal"
-               android:layout_marginLeft="@dimen/left_margin"
-               android:layout_marginRight="@dimen/right_margin">
-               
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:textSize="16sp"
-                   android:layout_centerVertical="true"
-                   android:textColor="@color/c3"
-                   android:text="快递/自提"/>
-
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:textSize="16sp"
-                   android:layout_centerVertical="true"
-                   android:layout_alignParentRight="true"
-                   android:textColor="@color/c3"
-                   android:text="快递/自提"/>
-
-           </RelativeLayout>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_goods"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-            <include layout="@layout/inc_order_info" />
-
-            <include layout="@layout/inc_order_bottom_info" />
+            <!--底部操作按钮信息-->
+            <include layout="@layout/inc_order_bottom_state_info" />
 
         </LinearLayout>
     </ScrollView>

@@ -1,9 +1,8 @@
 package com.leyuan.support.mvp.model;
 
 import com.leyuan.support.entity.BaseBean;
-import com.leyuan.support.entity.UserBean;
-
-import java.util.List;
+import com.leyuan.support.entity.data.FollowerData;
+import com.leyuan.support.entity.data.FollowingData;
 
 import rx.Subscriber;
 
@@ -18,14 +17,14 @@ public interface FollowModel {
      * @param subscriber Subscriber
      * @param page 页码
      */
-    void getFollows(Subscriber<List<UserBean>> subscriber, int page);
+    void getFollows(Subscriber<FollowerData> subscriber, int page);
 
     /**
      * 获取我关注的用户列表
      * @param subscriber Subscriber
      * @param page 页码
      */
-    void getFollowings(Subscriber<List<UserBean>> subscriber, int page);
+    void getFollowings(Subscriber<FollowingData> subscriber, int page);
 
     /**
      * 添加关注

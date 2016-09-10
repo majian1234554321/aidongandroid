@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.example.aidong.BaseActivity;
 import com.example.aidong.R;
-import com.example.aidong.adapter.FoundFragmentAdapter;
+import com.example.aidong.adapter.TabFragmentAdapter;
 import com.example.aidong.fragment.CampaignFragment;
 import com.example.aidong.interfaces.SimpleOnTabSelectedListener;
 
@@ -51,7 +51,7 @@ public class CampaignActivity extends BaseActivity{
         titles.add(getString(R.string.campaign_free));
         titles.add(getString(R.string.campaign_pay));
 
-        viewPager.setAdapter(new FoundFragmentAdapter(getSupportFragmentManager(),fragments,titles));
+        viewPager.setAdapter(new TabFragmentAdapter(getSupportFragmentManager(),fragments,titles));
         viewPager.setOffscreenPageLimit(2);
         tabLayout.setupWithViewPager(viewPager);
 

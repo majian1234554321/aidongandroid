@@ -1,13 +1,12 @@
 package com.leyuan.support.mvp.model.impl;
 
 import com.leyuan.support.entity.BaseBean;
-import com.leyuan.support.entity.UserBean;
+import com.leyuan.support.entity.data.FollowerData;
+import com.leyuan.support.entity.data.FollowingData;
 import com.leyuan.support.http.RetrofitHelper;
 import com.leyuan.support.http.RxHelper;
 import com.leyuan.support.http.api.FollowService;
 import com.leyuan.support.mvp.model.FollowModel;
-
-import java.util.List;
 
 import rx.Subscriber;
 
@@ -23,18 +22,20 @@ public class FollowModelImpl implements FollowModel{
     }
 
     @Override
-    public void getFollows(Subscriber<List<UserBean>> subscriber, int page) {
+    public void getFollows(Subscriber<FollowerData> subscriber, int page) {
         followService.getFollowers(page)
-                .compose(RxHelper.<List<UserBean>>transform())
+                .compose(RxHelper.<FollowerData>transform())
                 .subscribe(subscriber);
     }
 
     @Override
-    public void getFollowings(Subscriber<List<UserBean>> subscriber, int page) {
+    public void getFollowings(Subscriber<FollowingData> subscriber, int page) {
         followService.getFollowings(page)
-                .compose(RxHelper.<List<UserBean>>transform())
+                .compose(RxHelper.<FollowingData>transform())
                 .subscribe(subscriber);
     }
+
+
 
     @Override
     public void addFollow(Subscriber<BaseBean> subscriber, int id) {

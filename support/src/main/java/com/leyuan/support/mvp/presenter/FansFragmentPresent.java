@@ -2,11 +2,19 @@ package com.leyuan.support.mvp.presenter;
 
 import android.support.v7.widget.RecyclerView;
 
+import com.leyuan.support.widget.customview.SwitcherLayout;
+
 /**
  * 粉丝
  * Created by song on 2016/8/19.
  */
 public interface FansFragmentPresent {
+
+    /**
+     * 第一次正常加载数据
+     * @param switcherLayout SwitcherLayout
+     */
+    void commonLoadData(SwitcherLayout switcherLayout);
 
     /**
      * 下拉刷新

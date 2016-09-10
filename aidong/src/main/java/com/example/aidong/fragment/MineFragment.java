@@ -15,6 +15,7 @@ import com.example.aidong.BaseFragment;
 import com.example.aidong.R;
 import com.example.aidong.activity.mine.AppointmentActivity;
 import com.example.aidong.activity.mine.CouponActivity;
+import com.example.aidong.activity.mine.FollowActivity;
 import com.example.aidong.activity.mine.OrderActivity;
 import com.example.aidong.activity.mine.TabMinePersonalSettingsActivity;
 import com.example.aidong.view.AidongMineItem;
@@ -143,6 +144,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.item_setting:
                 UiManager.activityJump(getActivity(), TabMinePersonalSettingsActivity.class);
+                break;
+            case  R.id.linearLayout_guanzhu:
+                UiManager.activityJump(getActivity(), FollowActivity.class);
                 break;
         }
     }

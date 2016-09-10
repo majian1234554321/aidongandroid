@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.example.aidong.BaseFragment;
 import com.example.aidong.R;
 import com.example.aidong.activity.discover.FilterAroundPeopleActivity;
-import com.example.aidong.adapter.FoundFragmentAdapter;
+import com.example.aidong.adapter.TabFragmentAdapter;
 import com.example.aidong.interfaces.SimpleOnTabSelectedListener;
 import com.example.aidong.view.CustomViewPager;
 
@@ -52,7 +52,7 @@ public class FindFragment extends BaseFragment{
         titles.add(getString(R.string.find_venues));
         titles.add(getString(R.string.find_people));
 
-        viewpager.setAdapter(new FoundFragmentAdapter(getChildFragmentManager(),fragments,titles));
+        viewpager.setAdapter(new TabFragmentAdapter(getChildFragmentManager(),fragments,titles));
         viewpager.setOffscreenPageLimit(2);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
         tabLayout.setupWithViewPager(viewpager);

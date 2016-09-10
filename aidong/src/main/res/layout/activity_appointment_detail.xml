@@ -11,7 +11,6 @@
         android:layout_height="@dimen/height_top_bar"
         app:stb_title="预约详情"/>
 
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -20,208 +19,166 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_state"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="15dp"
-                android:text="state"
-                android:textColor="@color/black"
-                android:textSize="15sp" />
+            <!--预约状态布局-->
+            <include layout="@layout/inc_appointment_state_info"/>
 
-            <TextView
-                android:id="@+id/tv_time_or_num"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="15dp"
-                android:layout_marginTop="10dp"
-                android:text="订单号:2252"
-                android:textColor="@color/c9"
-                android:textSize="13sp" />
-
-            <include layout="@layout/inc_line_black" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="84dp"
-                android:paddingLeft="@dimen/left_margin"
-                android:paddingRight="@dimen/right_margin">
-
-                <com.facebook.drawee.view.SimpleDraweeView
-                    android:id="@+id/dv_goods_cover"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    app:actualImageScaleType="centerCrop"
-                    android:layout_centerVertical="true"
-                    app:placeholderImage="@drawable/place_holder_logo"
-                    app:pressedStateOverlayImage="@color/color_image_press"/>
-
-                <TextView
-                    android:id="@+id/tv_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="阿迪达斯-举重"
-                    android:singleLine="true"
-                    android:textSize="16sp"
-                    android:textColor="@color/c3"
-                    android:layout_marginTop="21dp"
-                    android:layout_toRightOf="@+id/dv_goods_cover"
-                    android:layout_marginLeft="10dp"/>
-
-                <TextView
-                    android:id="@+id/tv_info"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="爱动"
-                    android:textSize="13sp"
-                    android:textColor="@color/c9"
-                    android:layout_marginTop="15dp"
-                    android:layout_below="@+id/tv_name"
-                    android:layout_alignLeft="@+id/tv_name"/>
-
-            </RelativeLayout>
-
-            <!--二维码布局-->
+            <!--课程预约信息布局-->
             <LinearLayout
-                android:id="@+id/ll_qr_code"
+                android:id="@+id/ll_course_info"
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:paddingBottom="30dp"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
-
                 <TextView
-                    android:id="@+id/tv_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="54dp"
+                    android:layout_marginLeft="@dimen/left_margin"
+                    android:gravity="center_vertical"
+                    android:text="预约信息"
+                    android:textColor="@color/c3"
+                    android:textSize="16sp" />
+
+                <include layout="@layout/inc_line_black" />
+
+                <com.leyuan.support.widget.customview.ExtendTextView
+                    android:id="@+id/tv_course_user"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="30sp"
-                    android:text="88777"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="30dp"/>
+                    app:left_text="预约人:" />
 
-                <com.facebook.drawee.view.SimpleDraweeView
-                    android:id="@+id/dv_qr"
-                    android:layout_width="294dp"
-                    android:layout_height="73dp"
-                    app:actualImageScaleType="centerCrop"
-                    app:placeholderImage="@drawable/place_holder_logo"
-                    app:pressedStateOverlayImage="@color/color_image_press"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="25dp"/>
+                <com.leyuan.support.widget.customview.ExtendTextView
+                    android:id="@+id/tv_course_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:left_text="手机:" />
+
+                <com.leyuan.support.widget.customview.ExtendTextView
+                    android:id="@+id/tv_venues"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:left_text="上课场馆:" />
+
+                <com.leyuan.support.widget.customview.ExtendTextView
+                    android:id="@+id/tv_course_room"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:left_text="上课教室:" />
+
+                <com.leyuan.support.widget.customview.ExtendTextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:left_text="课程时间:" />
+
+                <com.leyuan.support.widget.customview.ExtendTextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:left_text="上课地址:" />
             </LinearLayout>
 
-            <!--预约信息布局-->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="54dp"
-                android:layout_marginLeft="@dimen/left_margin"
-                android:gravity="center_vertical"
-                android:text="预约信息"
-                android:textColor="@color/c3"
-                android:textSize="16sp" />
-
-            <include layout="@layout/inc_line_black" />
-
-            <com.leyuan.support.widget.customview.ExtendTextView
-                android:id="@+id/tv_user"
-                android:layout_width="wrap_content"
+            <!--活动预约信息布局-->
+            <LinearLayout
+                android:id="@+id/ll_campaign_info"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:left_text="预约人:" />
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="54dp"
+                    android:layout_marginLeft="@dimen/left_margin"
+                    android:gravity="center_vertical"
+                    android:text="预约信息"
+                    android:textColor="@color/c3"
+                    android:textSize="16sp" />
 
-            <com.leyuan.support.widget.customview.ExtendTextView
-                android:id="@+id/tv_phone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:left_text="手机:" />
+                <include layout="@layout/inc_line_black" />
 
-            <com.leyuan.support.widget.customview.ExtendTextView
-                android:id="@+id/tv_organization"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:left_text="主办方:" />
+                <com.leyuan.support.widget.customview.ExtendTextView
+                    android:id="@+id/tv_campaign_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:left_text="预约人:" />
 
-            <com.leyuan.support.widget.customview.ExtendTextView
-                android:id="@+id/tv_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:left_text="课程时间:" />
+                <com.leyuan.support.widget.customview.ExtendTextView
+                    android:id="@+id/tv_campaign_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:left_text="手机:" />
 
-            <com.leyuan.support.widget.customview.ExtendTextView
-                android:id="@+id/tv_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:left_text="上课地址:" />
+                <com.leyuan.support.widget.customview.ExtendTextView
+                    android:id="@+id/tv_campaign_organization"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:left_text="主办方:" />
 
+                <com.leyuan.support.widget.customview.ExtendTextView
+                    android:id="@+id/tv_campaign_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:left_text="活动时间:" />
+
+                <com.leyuan.support.widget.customview.ExtendTextView
+                    android:id="@+id/tv_campaign_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:left_text="上课地址:" />
+            </LinearLayout>
 
             <!--订单信息-->
             <include layout="@layout/inc_order_info"/>
 
-            <!--底部信息-->
+            <!--支付信息-->
             <LinearLayout
+                android:id="@+id/ll_pay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="17dp"
-                android:layout_marginBottom="18dp"
-                android:gravity="center_horizontal">
-
+                android:orientation="vertical">
                 <TextView
-                    android:id="@+id/tv_pay_tip"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="实付款:"
-                    android:textColor="@color/c3"
-                    android:textSize="16sp"
-                    android:layout_marginLeft="11dp"/>
+                    android:layout_height="52dp"
+                    android:layout_marginLeft="@dimen/left_margin"
+                    android:gravity="center_vertical"
+                    android:text="支付方式"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/tv_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="¥300.00"
-                    android:textColor="@color/c3"
-                    android:textSize="17sp"
-                    android:layout_marginLeft="10dp"/>
+                <include layout="@layout/inc_line_black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="支付宝"/>
+
+                    <CheckBox
+                        android:id="@+id/cb_alipay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="微信"/>
+
+                    <CheckBox
+                        android:id="@+id/cb_weixin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingBottom="10dp"
-                android:gravity="center_horizontal">
-
-                <TextView
-                    android:id="@+id/tv_left_button"
-                    android:layout_width="168dp"
-                    android:layout_height="wrap_content"
-                    android:text="取消订单"
-                    android:textSize="14sp"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
-                    android:gravity="center"
-                    android:background="@drawable/shape_bg_white"
-                    android:textColor="@color/c3"/>
-
-                <TextView
-                    android:id="@+id/tv_right_button"
-                    android:layout_width="168dp"
-                    android:layout_height="wrap_content"
-                    android:text="立即支付"
-                    android:textSize="14sp"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
-                    android:gravity="center"
-                    android:visibility="visible"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/shape_bg_red"
-                    android:textColor="@color/main_red"/>
-
-            </LinearLayout>
+            <!--底部操作按钮信息-->
+            <include layout="@layout/inc_order_bottom_state_info" />
 
         </LinearLayout>
-
     </ScrollView>
 </LinearLayout>
