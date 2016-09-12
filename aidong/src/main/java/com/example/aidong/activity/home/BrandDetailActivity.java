@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.example.aidong.BaseActivity;
 import com.example.aidong.R;
-import com.example.aidong.activity.home.adapter.BrandDetailAdapter;
+import com.example.aidong.activity.home.adapter.RecommendAdapter;
 import com.leyuan.support.entity.BrandBean;
 import com.leyuan.support.entity.GoodsBean;
 import com.leyuan.support.mvp.presenter.BrandDetailActivityPresent;
@@ -41,7 +41,7 @@ public class BrandDetailActivity extends BaseActivity implements BrandDetailActi
     private int currPage = 1;
     private ArrayList<GoodsBean> data;
     private HeaderAndFooterRecyclerViewAdapter wrapAdapter;
-    private BrandDetailAdapter brandAdapter;
+    private RecommendAdapter brandAdapter;
     private BrandDetailActivityPresent present;
 
     private int id;
@@ -108,7 +108,7 @@ public class BrandDetailActivity extends BaseActivity implements BrandDetailActi
     private void initRecyclerView() {
         recyclerView = (RecyclerView)findViewById(R.id.rv_brand_detail);
         data = new ArrayList<>();
-        brandAdapter = new BrandDetailAdapter(this);
+        brandAdapter = new RecommendAdapter(this);
         wrapAdapter = new HeaderAndFooterRecyclerViewAdapter(brandAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(wrapAdapter);

@@ -14,14 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 品牌商品列表适配器
+ * 推荐商品列表适配器
  * Created by song on 2016/8/17.
  */
-public class BrandDetailAdapter extends RecyclerView.Adapter<BrandDetailAdapter.GoodsHolder>{
+public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.GoodsHolder>{
     private Context context;
     private List<GoodsBean> data= new ArrayList<>();
 
-    public BrandDetailAdapter(Context context) {
+    public RecommendAdapter(Context context) {
         this.context = context;
     }
 

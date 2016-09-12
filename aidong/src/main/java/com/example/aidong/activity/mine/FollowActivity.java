@@ -42,7 +42,8 @@ public class FollowActivity extends BaseActivity{
 
         ArrayList<String> titles = new ArrayList<>();
         titles.add(getString(R.string.follow));
-        titles.add(getString(R.string.fans));
+        titles.add(
+                getString(R.string.fans));
 
         viewPager.setAdapter(new TabFragmentAdapter(getSupportFragmentManager(),fragments,titles));
         viewPager.setOffscreenPageLimit(2);

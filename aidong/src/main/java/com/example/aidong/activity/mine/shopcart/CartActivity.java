@@ -9,7 +9,7 @@ import android.view.View;
 
 import com.example.aidong.BaseActivity;
 import com.example.aidong.R;
-import com.example.aidong.activity.home.adapter.BrandDetailAdapter;
+import com.example.aidong.activity.home.adapter.RecommendAdapter;
 import com.example.aidong.activity.mine.adapter.CartShopAdapter;
 import com.leyuan.support.entity.GoodsBean;
 import com.leyuan.support.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -32,7 +32,7 @@ public class CartActivity extends BaseActivity{
     private RecyclerView recyclerView;
 
     private List<GoodsBean> data;
-    private BrandDetailAdapter recommendAdapter;
+    private RecommendAdapter recommendAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
 
     @Override
@@ -67,7 +67,7 @@ public class CartActivity extends BaseActivity{
     private void initRecyclerView() {
         recyclerView = (RecyclerView)findViewById(R.id.rv_goods);
         data = new ArrayList<>();
-        recommendAdapter = new BrandDetailAdapter(this);
+        recommendAdapter = new RecommendAdapter(this);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(recommendAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(this,2));
         recyclerView.setAdapter(wrapperAdapter);

@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.Locale;
 
 /**
- * 动态显示加载中,加载失败,正常加载的布局
+ * 动态显示加载中,加载失败,无内容,正常数据显示的布局
  * @author Mehdi Sakout
  * @author Danny Tsegai
  */
