@@ -12,7 +12,7 @@ public interface CouponFragmentView {
 
     /**
      * 更新列表
-     * @param couponBeanList
+     * @param couponBeanList CouponBean集合
      */
     void updateRecyclerView(List<CouponBean> couponBeanList);
 

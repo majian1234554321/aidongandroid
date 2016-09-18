@@ -5,11 +5,8 @@ import com.leyuan.support.entity.BaseBean;
 import com.leyuan.support.entity.BrandBean;
 import com.leyuan.support.entity.data.BannerData;
 import com.leyuan.support.entity.data.HomeData;
-import com.leyuan.support.entity.SearchResultBean;
 
-import retrofit2.http.Field;
 import retrofit2.http.GET;
-import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -25,9 +22,6 @@ public interface HomeService {
 
     @GET("home/{id}")
     Observable<BaseBean<BrandBean>> getTypeDetail(@Path("id") int id, @Query("page") int page);
-
-    @POST("search")
-    Observable<BaseBean<SearchResultBean>> search(@Field("keyword") String keyword, @Field("cat") String category, @Field("page") String page);
 
     @GET("banners")
     Observable<BaseBean<BannerData>> getBanners(@Query("site") String site);

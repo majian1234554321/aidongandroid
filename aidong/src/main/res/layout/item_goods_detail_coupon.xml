@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:foreground="?selectableItemBackground"
+    android:paddingLeft="7.5dp"
+    android:paddingRight="7.5dp">
+
+    <RelativeLayout
+        android:id="@+id/rl_coupon"
+        android:layout_width="137dp"
+        android:layout_height="84dp"
+        android:background="@drawable/bg_goods_detail_coupon">
+
+        <TextView
+            android:id="@+id/tv_rmb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="10dp"
+            android:text="¥"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="3dp"
+            android:layout_toRightOf="@+id/tv_rmb"
+            android:text="15"
+            android:textColor="@color/white"
+            android:textSize="40sp" />
+
+        <TextView
+            android:id="@+id/tv_user_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="12dp"
+            android:layout_toRightOf="@+id/tv_price"
+            android:text="满300使用"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_get"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="6dp"
+            android:text="点击领取"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+    </RelativeLayout>
+</RelativeLayout>

@@ -9,20 +9,17 @@ import com.example.aidong.BaseActivity;
 import com.example.aidong.R;
 import com.example.aidong.adapter.TabFragmentAdapter;
 import com.example.aidong.fragment.mine.AppointmentFragment;
-import com.example.aidong.interfaces.SimpleOnTabSelectedListener;
 import com.leyuan.support.widget.customview.SimpleTitleBar;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 我的预约
  * Created by song on 2016/8/31.
  */
 public class AppointmentActivity extends BaseActivity {
-    private static final int APPOINTMENT_ALL = 0;
-    private static final int APPOINTMENT_JOINED = 1;
-    private static final int APPOINTMENT_UN_JOINED = 2;
-
     private SimpleTitleBar titleBar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -50,11 +47,7 @@ public class AppointmentActivity extends BaseActivity {
         fragments.add(joined);
         fragments.add(unJoined);
 
-        ArrayList<String> titles = new ArrayList<>();
-        titles.add(getString(R.string.appointment_all));
-        titles.add(getString(R.string.appointment_joined));
-        titles.add(getString(R.string.appointment_un_joined));
-
+        List<String> titles = Arrays.asList(getResources().getStringArray(R.array.appointmentTab));
         viewPager.setAdapter(new TabFragmentAdapter(getSupportFragmentManager(), fragments, titles));
         viewPager.setOffscreenPageLimit(2);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
@@ -64,19 +57,6 @@ public class AppointmentActivity extends BaseActivity {
             @Override
             public void onBack() {
                 finish();
-            }
-        });
-
-        tabLayout.setOnTabSelectedListener(new SimpleOnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                if (tab.equals(tabLayout.getTabAt(APPOINTMENT_ALL))) {
-                    viewPager.setCurrentItem(APPOINTMENT_ALL);
-                } else if (tab.equals(tabLayout.getTabAt(APPOINTMENT_JOINED))) {
-                    viewPager.setCurrentItem(APPOINTMENT_JOINED);
-                } else {
-                    viewPager.setCurrentItem(APPOINTMENT_UN_JOINED);
-                }
             }
         });
     }

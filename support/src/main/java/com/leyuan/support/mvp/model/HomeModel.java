@@ -31,4 +31,6 @@ public interface HomeModel {
      * @param subscriber Subscriber
      */
     void getBanners(Subscriber<BannerData> subscriber);
+
+
 }

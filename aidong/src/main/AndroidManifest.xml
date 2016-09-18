@@ -126,6 +126,7 @@
         <activity android:name=".activity.home.CourseActivity" />
         <activity android:name=".activity.home.CourseDetailActivity" />
         <activity android:name=".activity.home.CampaignActivity"/>
+        <activity android:name=".activity.home.SearchActivity"/>
         <activity android:name=".activity.mine.OrderActivity" />
         <activity android:name=".activity.mine.AppointmentActivity" />
         <activity android:name=".activity.mine.CouponActivity" />

@@ -9,19 +9,17 @@ import com.example.aidong.BaseActivity;
 import com.example.aidong.R;
 import com.example.aidong.adapter.TabFragmentAdapter;
 import com.example.aidong.fragment.mine.CouponFragment;
-import com.example.aidong.interfaces.SimpleOnTabSelectedListener;
 import com.leyuan.support.widget.customview.SimpleTitleBar;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 我的优惠劵
  * Created by song on 2016/8/31.
  */
 public class CouponActivity extends BaseActivity{
-    private static final int COUPON_AVAILABLE = 0;
-    private static final int COUPON_USED = 1;
-    private static final int COUPON_EXPIRE = 2;
 
     private SimpleTitleBar titleBar;
     private TabLayout tabLayout;
@@ -44,13 +42,9 @@ public class CouponActivity extends BaseActivity{
         fragments.add(used);
         fragments.add(overdue);
 
-        available.setArguments("available");
+        available.setArguments("valid");
 
-        ArrayList<String> titles = new ArrayList<>();
-        titles.add(getString(R.string.coupon_available));
-        titles.add(getString(R.string.coupon_used));
-        titles.add(getString(R.string.coupon_expire));
-
+        List<String> titles = Arrays.asList(getResources().getStringArray(R.array.couponTab));
         viewPager.setAdapter(new TabFragmentAdapter(getSupportFragmentManager(),fragments,titles));
         viewPager.setOffscreenPageLimit(2);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
@@ -63,17 +57,6 @@ public class CouponActivity extends BaseActivity{
             }
         });
 
-        tabLayout.setOnTabSelectedListener(new SimpleOnTabSelectedListener(){
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                if(tab.equals(tabLayout.getTabAt(COUPON_AVAILABLE))){
-                    viewPager.setCurrentItem(COUPON_AVAILABLE);
-                }else if(tab.equals(tabLayout.getTabAt(COUPON_USED))){
-                    viewPager.setCurrentItem(COUPON_USED);
-                }else {
-                    viewPager.setCurrentItem(COUPON_EXPIRE);
-                }
-            }
-        });
+
     }
 }

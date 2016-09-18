@@ -12,7 +12,8 @@ import com.example.aidong.BaseFragment;
 import com.example.aidong.R;
 import com.example.aidong.activity.discover.adapter.VenuesAdapter;
 import com.leyuan.support.entity.VenuesBean;
-import com.leyuan.support.mvp.presenter.OrderFragmentPresent;
+import com.leyuan.support.mvp.presenter.SearchFragmentPresent;
+import com.leyuan.support.mvp.presenter.impl.SearchVenuesFragmentPresentImpl;
 import com.leyuan.support.mvp.view.SearchVenuesFragmentView;
 import com.leyuan.support.widget.customview.SwitcherLayout;
 import com.leyuan.support.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
@@ -27,7 +28,7 @@ import java.util.List;
  * 场馆搜索结果
  * Created by song on 2016/9/12.
  */
-public class SearchVenuesFragment extends BaseFragment implements SearchVenuesFragmentView{
+public class SearchVenuesFragment extends BaseFragment implements SearchVenuesFragmentView {
 
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
@@ -38,20 +39,34 @@ public class SearchVenuesFragment extends BaseFragment implements SearchVenuesFr
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private VenuesAdapter venuesAdapter;
 
-    private OrderFragmentPresent present;
+    private SearchFragmentPresent present;
+    private String  keyword ;
+
+
+    public static SearchVenuesFragment newInstance(String searchContent){
+        Bundle bundle = new Bundle();
+        bundle.putString("keyword", searchContent);
+        SearchVenuesFragment fragment = new SearchVenuesFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_search_venues,null);
+        pageSize = 20;
+        present = new SearchVenuesFragmentPresentImpl(getContext(),this);
+        Bundle bundle = getArguments();
+        if(bundle != null){
+            keyword = bundle.getString("keyword");
+        }
+        return inflater.inflate(R.layout.fragment_result,null);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-
-        pageSize = 20;
-       // present = new OrderFragmentPresentImpl(this,this);
         initSwipeRefreshLayout(view);
         initRecyclerView(view);
+        present.commonLoadData(switcherLayout,keyword);
     }
 
     private void initSwipeRefreshLayout(View view) {
@@ -63,20 +78,20 @@ public class SearchVenuesFragment extends BaseFragment implements SearchVenuesFr
             public void onRefresh() {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-                //present.pullToRefreshData(type);
+                present.pullToRefreshData(keyword);
             }
         });
 
         switcherLayout.setOnRetryListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //present.commonLoadData(switcherLayout,type);
+                present.commonLoadData(switcherLayout,keyword);
             }
         });
     }
 
     private void initRecyclerView(View view) {
-        recyclerView = (RecyclerView) view.findViewById(R.id.rv_order);
+        recyclerView = (RecyclerView) view.findViewById(R.id.rv_result);
         data = new ArrayList<>();
         venuesAdapter = new VenuesAdapter(getContext());
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(venuesAdapter);
@@ -90,19 +105,20 @@ public class SearchVenuesFragment extends BaseFragment implements SearchVenuesFr
         public void onLoadNextPage(View view) {
             currPage ++;
             if (data != null && data.size() >= pageSize) {
-                //present.requestMoreData(recyclerView,type,pageSize,currPage);
+                present.requestMoreData(recyclerView,keyword,pageSize,currPage);
             }
         }
     };
 
     @Override
     public void updateRecyclerView(List<VenuesBean> venuesBeanList) {
-
-    }
-
-    @Override
-    public void showEmptyView() {
-
+        if(refreshLayout.isRefreshing()){
+            data.clear();
+            refreshLayout.setRefreshing(false);
+        }
+        data.addAll(venuesBeanList);
+        venuesAdapter.setData(data);
+        wrapperAdapter.notifyDataSetChanged();
     }
 
     @Override

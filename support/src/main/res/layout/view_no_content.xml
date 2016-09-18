@@ -24,16 +24,17 @@
             android:padding="15dp" >
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/the_end"/>
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@mipmap/empty_content"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="还没有内容"
-                android:textSize="12sp"/>
+                android:layout_marginTop="20dp"
+                android:text="还没有内容..."
+                android:textSize="14sp"
+                android:textColor="@color/gray"/>
 
         </LinearLayout>
 

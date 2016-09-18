@@ -79,7 +79,7 @@ public class NurtureActivityPresentImpl implements NurtureActivityPresent{
                     nurtureActivityView.updateRecyclerView(nurtureBeanList);
                 }
                 //没有更多数据了显示到底提示
-                if(nurtureBeanList != null && nurtureBeanList.size() < pageSize){
+                if( nurtureBeanList.size() < pageSize){
                     nurtureActivityView.showEndFooterView();
                 }
             }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -19,7 +20,8 @@
             app:duration="300"
             app:percent="0.4">
 
-            <ScrollView
+            <com.example.aidong.view.ObserveScrollView
+                android:id="@+id/scrollview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -107,20 +109,22 @@
                             android:id="@+id/rv_coupon"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="15dp"
                             android:layout_marginLeft="7.5dp"
                             android:layout_marginRight="7.5dp"
-                            android:layout_marginTop="20dp" />
+                            android:layout_marginBottom="15dp"/>
+
 
                         <include layout="@layout/inc_bold_line" />
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/ll_goods_info"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:layout_marginLeft="@dimen/left_margin"
-                        android:layout_marginRight="@dimen/right_margin"
-                        android:orientation="horizontal">
+                        android:paddingLeft="@dimen/left_margin"
+                        android:paddingRight="@dimen/right_margin"
+                        android:orientation="horizontal"
+                        android:background="?selectableItemBackground">
 
                         <TextView
                             android:layout_width="0dp"
@@ -146,11 +150,13 @@
                     <include layout="@layout/inc_line" />
 
                     <LinearLayout
+                        android:id="@+id/ll_recommend_code"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:layout_marginLeft="@dimen/left_margin"
-                        android:layout_marginRight="@dimen/right_margin"
-                        android:orientation="horizontal">
+                        android:paddingLeft="@dimen/left_margin"
+                        android:paddingRight="@dimen/right_margin"
+                        android:orientation="horizontal"
+                        android:background="?selectableItemBackground">
 
                         <TextView
                             android:layout_width="0dp"
@@ -161,7 +167,7 @@
                             android:textColor="@color/black"
                             android:textSize="15sp" />
 
-                        <EditText
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -177,11 +183,13 @@
                     <include layout="@layout/inc_line" />
 
                     <LinearLayout
+                        android:id="@+id/ll_address"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:layout_marginLeft="@dimen/left_margin"
-                        android:layout_marginRight="@dimen/right_margin"
-                        android:orientation="horizontal">
+                        android:paddingLeft="@dimen/left_margin"
+                        android:paddingRight="@dimen/right_margin"
+                        android:orientation="horizontal"
+                        android:background="?selectableItemBackground">
 
                         <TextView
                             android:layout_width="0dp"
@@ -220,24 +228,127 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
+                        android:layout_height="90dp"
                         android:orientation="horizontal">
 
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:gravity="center_horizontal">
+
+                            <ImageView
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                android:src="@drawable/icon_self_delivery"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:textSize="12sp"
+                                android:gravity="center_horizontal"
+                                android:layout_marginTop="10dp"
+                                android:textColor="@color/black"
+                                android:text="门店自提" />
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:gravity="center_horizontal">
+
+                            <ImageView
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                android:src="@drawable/icon_return"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:textSize="12sp"
+                                android:gravity="center_horizontal"
+                                android:layout_marginTop="10dp"
+                                android:textColor="@color/black"
+                                android:text="七天退货" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:gravity="center_horizontal">
+
+                            <ImageView
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                android:src="@drawable/icon_genuine"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:textSize="12sp"
+                                android:gravity="center_horizontal"
+                                android:layout_marginTop="10dp"
+                                android:textColor="@color/black"
+                                android:text="正品保障" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:gravity="center_horizontal">
+
+                            <ImageView
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                android:src="@drawable/icon_gabalnara"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:textSize="12sp"
+                                android:gravity="center_horizontal"
+                                android:layout_marginTop="10dp"
+                                android:textColor="@color/black"
+                                android:text="全场包邮" />
+
+                        </LinearLayout>
                     </LinearLayout>
 
                     <include layout="@layout/inc_bold_line" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center_horizontal"
-                        android:drawableLeft="@drawable/icon_arrow_up"
-                        android:gravity="center"
-                        android:text="上拉查看商品详情"
-                        android:textColor="@color/c3"
-                        android:textSize="15sp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_top_bar"
+                        android:gravity="center_horizontal">
+
+                        <ImageView
+                            android:id="@+id/iv_arrow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/icon_arrow_up"
+                            android:layout_gravity="center"/>
+
+                        <TextView
+                            android:id="@+id/tv_tip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="上拉查看商品图文详情"
+                            android:textColor="@color/c3"
+                            android:textSize="15sp" />
+
+                    </LinearLayout>
+
                 </LinearLayout>
-            </ScrollView>
+            </com.example.aidong.view.ObserveScrollView>
 
             <LinearLayout
                 android:id="@+id/slide_details_behind"
@@ -246,45 +357,46 @@
                 android:background="@color/white"
                 android:orientation="vertical">
 
-                <RadioGroup
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginTop="50dp"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="@dimen/height_top_bar"
+                    android:orientation="horizontal"
+                    android:background="@color/white">
 
-                    <RadioButton
+                    <TextView
+                        android:id="@+id/tv_desc"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/selector_radio_bg"
                         android:button="@null"
                         android:gravity="center"
                         android:text="商品详情"
                         android:textColor="@color/black"
                         android:textSize="15sp" />
 
-                    <RadioButton
+                    <TextView
+                        android:id="@+id/tv_question"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/selector_radio_bg"
                         android:button="@null"
                         android:gravity="center"
                         android:text="常见问题"
                         android:textColor="@color/black"
                         android:textSize="15sp" />
 
-                    <RadioButton
+                    <TextView
+                        android:id="@+id/tv_service"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/selector_radio_bg"
                         android:button="@null"
                         android:gravity="center"
                         android:text="售后服务"
                         android:textColor="@color/black"
                         android:textSize="15sp" />
-                </RadioGroup>
+                </LinearLayout>
 
                 <WebView
                     android:id="@+id/web_view"
@@ -296,9 +408,28 @@
         </com.example.aidong.view.SlideDetailsLayout>
 
         <RelativeLayout
+            android:id="@+id/rl_title"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/black">
+            android:layout_height="@dimen/height_top_bar">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_back"
+                android:layout_centerVertical="true"
+                android:background="?selectableItemBackground"
+                android:padding="5dp"/>
+
+            <ImageView
+                android:id="@+id/iv_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_share"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="?selectableItemBackground"
+                android:padding="5dp"/>
 
         </RelativeLayout>
 
@@ -309,12 +440,19 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/tv_cart"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/icon_cart"
+            android:scaleType="centerInside"
+            android:background="@color/black"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/gray"
+            android:background="@color/c3"
             android:gravity="center"
             android:text="加入购物车"
             android:textColor="@color/white"

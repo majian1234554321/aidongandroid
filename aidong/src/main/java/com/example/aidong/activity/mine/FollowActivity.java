@@ -10,7 +10,6 @@ import com.example.aidong.R;
 import com.example.aidong.adapter.TabFragmentAdapter;
 import com.example.aidong.fragment.mine.FansFragment;
 import com.example.aidong.fragment.mine.FollowFragment;
-import com.example.aidong.interfaces.SimpleOnTabSelectedListener;
 
 import java.util.ArrayList;
 
@@ -19,8 +18,6 @@ import java.util.ArrayList;
  * Created by song on 2016/9/10.
  */
 public class FollowActivity extends BaseActivity{
-    private static  final int FOLLOW = 0;
-    private static  final int FANS = 1;
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -42,22 +39,11 @@ public class FollowActivity extends BaseActivity{
 
         ArrayList<String> titles = new ArrayList<>();
         titles.add(getString(R.string.follow));
-        titles.add(
-                getString(R.string.fans));
+        titles.add(getString(R.string.fans));
 
         viewPager.setAdapter(new TabFragmentAdapter(getSupportFragmentManager(),fragments,titles));
         viewPager.setOffscreenPageLimit(2);
         tabLayout.setupWithViewPager(viewPager);
 
-        tabLayout.setOnTabSelectedListener(new SimpleOnTabSelectedListener(){
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                if(tab.equals(tabLayout.getTabAt(FOLLOW))){
-                    viewPager.setCurrentItem(FOLLOW);
-                }else {
-                    viewPager.setCurrentItem(FANS);
-                }
-            }
-        });
     }
 }

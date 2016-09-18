@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="78dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/tv_good_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="112dp"
+                android:layout_marginTop="17dp"
+                android:text="GNC健安喜浓缩葡萄籽"
+                android:textColor="@color/c3"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tv_goods_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/tv_good_name"
+                android:layout_below="@+id/tv_good_name"
+                android:layout_marginTop="10dp"
+                android:text="¥188.00"
+                android:textColor="@color/main_red"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:id="@+id/tv_cancel"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="14dp"
+                android:layout_marginTop="14dp"
+                android:src="@drawable/icon_cancel" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/line_color" />
+        </RelativeLayout>
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="@dimen/left_margin"
+            fresco:actualImageScaleType="centerCrop"
+            fresco:backgroundImage="@color/blue" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginLeft="@dimen/left_margin"
+            android:gravity="center_vertical"
+            android:text="口味"
+            android:textColor="@color/c9"
+            android:textSize="14sp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rl_goods_taste"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7.5dp"
+            android:layout_marginRight="7.5dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:paddingLeft="@dimen/left_margin"
+        android:paddingRight="@dimen/right_margin"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="数量"
+            android:textColor="@color/c9"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/iv_minus"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+
+            android:src="@drawable/icon_minus" />
+
+        <TextView
+            android:id="@+id/tv_count"
+            android:layout_width="44dp"
+            android:layout_height="32dp"
+            android:gravity="center"
+            android:background="@drawable/shape_bg_black"
+            android:text="1" />
+
+        <ImageView
+            android:id="@+id/iv_add"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/icon_add" />
+    </LinearLayout>
+
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="76dp"
+       android:background="@color/white">
+
+       <View
+           android:layout_width="match_parent"
+           android:layout_height="0.5dp"
+           android:layout_marginLeft="@dimen/left_margin"
+           android:layout_marginRight="@dimen/right_margin"
+           android:background="@color/line_color"/>
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="50dp"
+           android:layout_alignParentBottom="true"
+           android:orientation="horizontal">
+
+           <TextView
+               android:layout_width="0dp"
+               android:layout_height="match_parent"
+               android:layout_weight="1"
+               android:gravity="center"
+               android:text="确认"
+               android:textColor="@color/white"
+               android:textSize="16sp"
+               android:background="@color/main_red"
+               android:visibility="gone"/>
+
+           <TextView
+               android:layout_width="0dp"
+               android:layout_height="match_parent"
+               android:layout_weight="1"
+               android:background="@color/c3"
+               android:gravity="center"
+               android:text="加入购物车"
+               android:textColor="@color/white"
+               android:textSize="16sp" />
+
+           <TextView
+               android:layout_width="0dp"
+               android:layout_height="match_parent"
+               android:layout_weight="1"
+               android:background="@color/main_red"
+               android:gravity="center"
+               android:text="立即购买"
+               android:textColor="@color/white"
+               android:textSize="16sp" />
+       </LinearLayout>
+   </RelativeLayout>
+</LinearLayout>

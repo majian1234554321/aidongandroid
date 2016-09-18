@@ -27,21 +27,10 @@
     <string name="course_count">&#160;(%1$s/%2$s&#160;人)&#160;&#160;/&#160;&#160;</string>
     <string name="distance_km"> %1$s km </string>
 
+    <string name="use_price">满%1$s使用</string>
+
     <string name="campaign_detail">活动详情</string>
     <string name="food_material">主要食材: %1$s</string>
-
-    <string name="coupon_available">可使用</string>
-    <string name="coupon_used">已使用</string>
-    <string name="coupon_expire">已过期</string>
-
-    <string name="order_all">全部</string>
-    <string name="order_express">快递</string>
-    <string name="order_self_pick_up">自提</string>
-    <string name="order_unpaid">待支付</string>
-
-    <string name="appointment_all">全部</string>
-    <string name="appointment_joined">已参加</string>
-    <string name="appointment_un_joined">待参加</string>
 
     <string name="campaign_free">免费</string>
     <string name="campaign_pay">付费</string>
@@ -58,4 +47,7 @@
 
     <string name="true_pay">实付款：</string>
     <string name="need_pay">需付款：</string>
+
+    <string name="tip_open">上拉查看图文详情</string>
+    <string name="tip_close">下拉查看商品信息</string>
 </resources>

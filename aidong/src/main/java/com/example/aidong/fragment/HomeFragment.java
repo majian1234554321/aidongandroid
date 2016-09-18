@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.aidong.BaseFragment;
 import com.example.aidong.R;
@@ -18,6 +20,7 @@ import com.example.aidong.activity.home.EquipmentActivity;
 import com.example.aidong.activity.home.FoodActivity;
 import com.example.aidong.activity.home.GoodsDetailActivity;
 import com.example.aidong.activity.home.NurtureActivity;
+import com.example.aidong.activity.home.SearchActivity;
 import com.example.aidong.activity.home.adapter.BannerAdapter;
 import com.example.aidong.activity.home.adapter.HomeRecycleViewAdapter;
 import com.leyuan.support.entity.BannerBean;
@@ -39,7 +42,9 @@ import java.util.List;
  * 首页
  * @author song
  */
-public class HomeFragment extends BaseFragment implements HomeFragmentView{
+public class HomeFragment extends BaseFragment implements HomeFragmentView,View.OnClickListener{
+    private TextView tvLocation;
+    private ImageView ivSearch;
 
     private View headerView;
     private ViewPager viewPager;
@@ -64,10 +69,15 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView{
         super.onViewCreated(view, savedInstanceState);
         pageSize = 20;
         present = new HomeFragmentPresentImpl(getContext(),this);
+
+        tvLocation = (TextView)view.findViewById(R.id.tv_location);
+        ivSearch = (ImageView) view.findViewById(R.id.iv_search);
         initHeaderView();
         initSwipeRefreshLayout(view);
         initRecyclerView(view);
+        setListener();
     }
+
 
     private void initHeaderView(){
         headerView = View.inflate(getContext(),R.layout.header_home,null);
@@ -160,6 +170,11 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView{
         RecyclerViewUtils.setHeaderView(recyclerView, headerView);
     }
 
+    private void setListener(){
+        tvLocation.setOnClickListener(this);
+        ivSearch.setOnClickListener(this);
+    }
+
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
         @Override
         public void onLoadNextPage(View view) {
@@ -185,6 +200,19 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView{
         if(!data.isEmpty()){
             homeAdapter.setData(data);
             wrapperAdapter.notifyDataSetChanged();
+        }
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.iv_search:
+                Intent intent = new Intent(getContext(), SearchActivity.class);
+                startActivity(intent);
+                break;
+            default:
+                break;
         }
     }
 

@@ -9,20 +9,18 @@ import com.example.aidong.BaseActivity;
 import com.example.aidong.R;
 import com.example.aidong.adapter.TabFragmentAdapter;
 import com.example.aidong.fragment.mine.OrderFragment;
-import com.example.aidong.interfaces.SimpleOnTabSelectedListener;
 import com.leyuan.support.widget.customview.SimpleTitleBar;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 订单
  * Created by song on 2016/8/31.
  */
 public class OrderActivity extends BaseActivity{
-    private static  final int ORDER_ALL = 0;
-    private static  final int ORDER_UNPAID = 1;
-    private static  final int ORDER_SELF_PICK_UP = 2;
-    private static  final int ORDER_EXPRESS = 3;
+
 
     private SimpleTitleBar titleBar;
     private TabLayout tabLayout;
@@ -53,12 +51,7 @@ public class OrderActivity extends BaseActivity{
         fragments.add(selfPickUp);
         fragments.add(express);
 
-        ArrayList<String> titles = new ArrayList<>();
-        titles.add(getString(R.string.order_all));
-        titles.add(getString(R.string.order_unpaid));
-        titles.add(getString(R.string.order_self_pick_up));
-        titles.add(getString(R.string.order_express));
-
+        List<String> titles = Arrays.asList(getResources().getStringArray(R.array.orderTab));
         viewPager.setAdapter(new TabFragmentAdapter(getSupportFragmentManager(),fragments,titles));
         viewPager.setOffscreenPageLimit(2);
         tabLayout.setupWithViewPager(viewPager);
@@ -70,19 +63,6 @@ public class OrderActivity extends BaseActivity{
             }
         });
 
-        tabLayout.setOnTabSelectedListener(new SimpleOnTabSelectedListener(){
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                if(tab.equals(tabLayout.getTabAt(ORDER_ALL))){
-                    viewPager.setCurrentItem(ORDER_ALL);
-                }else if(tab.equals(tabLayout.getTabAt(ORDER_UNPAID))){
-                    viewPager.setCurrentItem(ORDER_UNPAID);
-                }else if(tab.equals(tabLayout.getTabAt(ORDER_SELF_PICK_UP))){
-                    viewPager.setCurrentItem(ORDER_SELF_PICK_UP);
-                }else {
-                    viewPager.setCurrentItem(ORDER_EXPRESS);
-                }
-            }
-        });
+
     }
 }

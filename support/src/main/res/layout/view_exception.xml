@@ -20,25 +20,25 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp" >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="*_*"
-                android:textSize="14sp"/>
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@mipmap/empty_network"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:textSize="12sp"
+                android:layout_marginTop="20dp"
+                android:textSize="14sp"
                 android:textColor="@color/gray"
-                android:text="休息一下,网络好像飞走了" />
+                android:text="休息一下,网络好像飞走了..." />
 
             <Button
                 android:id="@+id/bt_retry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="重试"
+                android:layout_marginTop="10dp"
                 android:layout_below="@+id/exception_wrapper"
                 android:layout_centerHorizontal="true" />
         </LinearLayout>

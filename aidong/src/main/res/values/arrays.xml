@@ -107,4 +107,30 @@
         <item>商圈</item>
     </string-array>
 
+    <string-array name="searchTab">
+        <item>场馆</item>
+        <item>小团体课</item>
+        <item>健康餐饮</item>
+        <item>活动</item>
+        <item>用户</item>
+    </string-array>
+
+    <string-array name="orderTab">
+        <item>全部</item>
+        <item>快递</item>
+        <item>自提</item>
+        <item>待支付</item>
+    </string-array>
+
+    <string-array name="appointmentTab">
+        <item>全部</item>
+        <item>已参加</item>
+        <item>待参加</item>
+    </string-array>
+
+    <string-array name="couponTab">
+        <item>可使用</item>
+        <item>已使用</item>
+        <item>已过期</item>
+    </string-array>
 </resources>
