@@ -19,5 +19,5 @@ public interface AppointmentService {
     Observable<BaseBean<AppointmentData>> getAppointments(@Query("type") String type, @Query("page") int page);
 
     @GET("mine/appointments/{id}")
-    Observable<BaseBean<AppointmentDetailData>> getAppointmentDetail(@Path("id") int id);
+    Observable<BaseBean<AppointmentDetailData>> getAppointmentDetail(@Path("id") String id);
 }

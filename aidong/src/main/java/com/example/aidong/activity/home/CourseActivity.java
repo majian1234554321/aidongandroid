@@ -13,7 +13,7 @@ import com.example.aidong.R;
 import com.example.aidong.activity.home.adapter.CourseAdapter;
 import com.leyuan.support.entity.CourseBean;
 import com.leyuan.support.mvp.presenter.CoursePresent;
-import com.leyuan.support.mvp.presenter.impl.CoursesActivityPresentImpl;
+import com.leyuan.support.mvp.presenter.impl.CoursePresentImpl;
 import com.leyuan.support.mvp.view.CoursesActivityView;
 import com.leyuan.support.widget.dropdownmenu.DropDownMenu;
 import com.leyuan.support.widget.dropdownmenu.adapter.ListWithFlagAdapter;
@@ -59,7 +59,7 @@ public class CourseActivity extends BaseActivity implements CoursesActivityView{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course);
         pageSize = 20;
-        present = new CoursesActivityPresentImpl(this,this);
+        present = new CoursePresentImpl(this,this);
         initDropDownMenu();
         initSwipeRefreshLayout();
         initRecyclerView();

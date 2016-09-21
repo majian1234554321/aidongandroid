@@ -15,8 +15,5 @@ public interface OrderDetailActivityView {
     void setOrderDetail(OrderDetailBean orderDetailBean);
 
 
-    /**
-     * 显示无网络界面
-     */
-    void showErrorView();
+
 }

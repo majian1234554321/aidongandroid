@@ -4,13 +4,16 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
 import com.leyuan.support.entity.AppointmentBean;
+import com.leyuan.support.entity.AppointmentDetailBean;
 import com.leyuan.support.entity.data.AppointmentData;
+import com.leyuan.support.entity.data.AppointmentDetailData;
 import com.leyuan.support.http.subscriber.CommonSubscriber;
 import com.leyuan.support.http.subscriber.RefreshSubscriber;
 import com.leyuan.support.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.support.mvp.model.AppointmentModel;
 import com.leyuan.support.mvp.model.impl.AppointmentModelImpl;
 import com.leyuan.support.mvp.presenter.AppointmentPresent;
+import com.leyuan.support.mvp.view.AppointmentDetailActivityView;
 import com.leyuan.support.mvp.view.AppointmentFragmentView;
 import com.leyuan.support.util.Constant;
 import com.leyuan.support.widget.customview.SwitcherLayout;
@@ -25,13 +28,29 @@ import java.util.List;
 public class AppointmentPresentImpl implements AppointmentPresent {
     private Context context;
     private AppointmentModel appointmentModel;
-    private AppointmentFragmentView appointmentFragmentView;
-    private List<AppointmentBean> appointmentBeanList = new ArrayList<>();
 
-    public AppointmentPresentImpl(Context context, AppointmentFragmentView appointmentFragmentView) {
+    //预约列表View层
+    private AppointmentFragmentView appointmentFragmentView;
+    private List<AppointmentBean> appointmentBeanList ;
+
+    //预约详情View层
+    private AppointmentDetailActivityView appointmentDetailActivityView;
+
+    public AppointmentPresentImpl(Context context, AppointmentFragmentView view) {
         this.context = context;
-        this.appointmentFragmentView = appointmentFragmentView;
-        appointmentModel = new AppointmentModelImpl();
+        this.appointmentFragmentView = view;
+        appointmentBeanList = new ArrayList<>();
+        if(appointmentModel == null){
+            appointmentModel = new AppointmentModelImpl();
+        }
+    }
+
+    public AppointmentPresentImpl(Context context, AppointmentDetailActivityView view) {
+        this.context = context;
+        this.appointmentDetailActivityView = view;
+        if(appointmentModel == null){
+            appointmentModel = new AppointmentModelImpl();
+        }
     }
 
     @Override
@@ -84,5 +103,24 @@ public class AppointmentPresentImpl implements AppointmentPresent {
                 }
             }
         },type,page);
+    }
+
+    @Override
+    public void getAppointmentDetail(final SwitcherLayout switcherLayout, String id) {
+        appointmentModel.getAppointmentDetail(new CommonSubscriber<AppointmentDetailData>(switcherLayout) {
+            @Override
+            public void onNext(AppointmentDetailData appointmentDetailData) {
+                AppointmentDetailBean appointmentDetailBean = null;
+                if(appointmentDetailData != null ){
+                    appointmentDetailBean = appointmentDetailData.getAppoint();
+                }
+                if(appointmentDetailBean != null){
+                    switcherLayout.showContentLayout();
+                    appointmentDetailActivityView.setAppointmentDetail(appointmentDetailBean);
+                }else {
+                    switcherLayout.showEmptyLayout();
+                }
+            }
+        },id);
     }
 }

@@ -65,7 +65,12 @@
     <string name="coupon_used">%1$s 已使用</string>
     <string name="coupon_expired">%1$s 到期</string>
     <string name="coupon_time">%1$s - %2$s</string>
-
-
     <string name="add_address">%1$s&#160;&#160;%2$s&#160;&#160;%3$s</string>
+
+    <string name="exchange_coupon_success">兑换成功</string>
+    <string name="exchange_coupon_fail">兑换码无效</string>
+    <string name="delete_confirm">确认要删除吗?</string>
+    <string name="delete_fail">删除失败</string>
+
+    <string name="update_address">更新地址</string>
 </resources>

@@ -29,22 +29,28 @@ public class OrderPresentImpl implements OrderPresent {
     private Context context;
     private OrderModel orderModel;
 
+    //订单列表View层对象
     private OrderFragmentView orderFragmentView;
     private List<OrderBean> orderBeanList;
 
+    //订单详情View层对象
     private OrderDetailActivityView orderDetailActivityView;
 
-    public OrderPresentImpl(Context context, OrderFragmentView orderFragmentView) {
+    public OrderPresentImpl(Context context, OrderFragmentView view) {
         this.context = context;
-        this.orderFragmentView = orderFragmentView;
-        orderModel = new OrderModelImpl();
+        this.orderFragmentView = view;
         orderBeanList = new ArrayList<>();
+        if(orderModel == null){
+            orderModel = new OrderModelImpl();
+        }
     }
 
-    public OrderPresentImpl(Context context, OrderDetailActivityView orderDetailActivityView) {
+    public OrderPresentImpl(Context context, OrderDetailActivityView view) {
         this.context = context;
-        this.orderDetailActivityView = orderDetailActivityView;
-        orderModel = new OrderModelImpl();
+        this.orderDetailActivityView = view;
+        if(orderModel == null){
+            orderModel = new OrderModelImpl();
+        }
     }
 
     @Override
@@ -107,7 +113,7 @@ public class OrderPresentImpl implements OrderPresent {
                 }
                 if(orderDetailBean != null){
                     switcherLayout.showContentLayout();
-                    orderDetailActivityView.setOrderDetail(orderDetailData.getItem());
+                    orderDetailActivityView.setOrderDetail(orderDetailBean);
                 }else {
                     switcherLayout.showEmptyLayout();
                 }

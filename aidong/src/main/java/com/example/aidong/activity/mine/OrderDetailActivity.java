@@ -1,6 +1,7 @@
 package com.example.aidong.activity.mine;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
@@ -9,14 +10,31 @@ import android.widget.TextView;
 
 import com.example.aidong.BaseActivity;
 import com.example.aidong.R;
+import com.example.aidong.activity.mine.adapter.CartShopAdapter;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.leyuan.support.entity.OrderDetailBean;
+import com.leyuan.support.mvp.presenter.OrderPresent;
+import com.leyuan.support.mvp.presenter.impl.OrderPresentImpl;
+import com.leyuan.support.mvp.view.OrderDetailActivityView;
 import com.leyuan.support.widget.customview.ExtendTextView;
+import com.leyuan.support.widget.customview.SwitcherLayout;
 
 /**
  * 订单详情
  * Created by song on 2016/9/1.
  */
-public class OrderDetailActivity extends BaseActivity{
+public class OrderDetailActivity extends BaseActivity implements OrderDetailActivityView{
+    private static final String UN_PAID = "0";          //待付款
+    private static final String UN_DELIVERY = "1";      //待发货
+    private static final String DELIVERED = "2";        //已发货
+    private static final String FINISH = "3";           //已完成
+    private static final String CLOSE = "4";            //已关闭
+    private static final String UN_SELF_DELIVERY = "5"; //待自提
+    private static final String SELF_DELIVERED = "6";   //已自提
+
+    //切换加载中 无内容,无网络控件
+    private SwitcherLayout switcherLayout;
+    private LinearLayout contentLayout;
 
     //订单状态
     private TextView tvState;
@@ -35,7 +53,8 @@ public class OrderDetailActivity extends BaseActivity{
     private ExtendTextView tvAddress;
     private ExtendTextView tvInvoice;
     private ExtendTextView tvRemarks;
-    private RecyclerView rvGoods;
+    private RecyclerView goodsRecyclerView;
+    private CartShopAdapter cartShopAdapter;
 
     //订单信息
     private ExtendTextView tvTotalPrice;
@@ -52,18 +71,34 @@ public class OrderDetailActivity extends BaseActivity{
     private CheckBox cbAliPay;
     private CheckBox cbWeixinPay;
 
-    //底部操作按钮及商品总信息
+    //支付状态按钮及商品总信息
     private TextView tvGoodsCount;
+    private TextView tvPayTip;
     private TextView tvPrice;
-    private TextView tvLeftButton;
-    private TextView tvRightButton;
+    private TextView tvCancel;
+    private TextView tvPay;
+    private TextView tvExpress;
+    private TextView tvReceiving;
+    private TextView tvDelete;
+    private TextView tvAgainBuy;
 
-
+    //Present层对象
+    private OrderPresent orderPresent;
+    private String orderId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_detail);
+        orderPresent = new OrderPresentImpl(this,this);
+
+        initView();
+        orderPresent.getOrderDetail(orderId,switcherLayout);
+    }
+
+    private void initView(){
+        contentLayout = (LinearLayout)findViewById(R.id.ll_content);
+        switcherLayout = new SwitcherLayout(this,contentLayout);
 
         tvState = (TextView) findViewById(R.id.tv_state);
         tvTimeOrNum = (TextView) findViewById(R.id.tv_time_or_num);
@@ -80,7 +115,10 @@ public class OrderDetailActivity extends BaseActivity{
         tvAddress = (ExtendTextView) findViewById(R.id.tv_address);
         tvInvoice = (ExtendTextView) findViewById(R.id.tv_invoice);
         tvRemarks = (ExtendTextView) findViewById(R.id.tv_remarks);
-        rvGoods = (RecyclerView) findViewById(R.id.rv_goods);
+        goodsRecyclerView = (RecyclerView) findViewById(R.id.rv_goods);
+        goodsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        cartShopAdapter = new CartShopAdapter(this);
+        goodsRecyclerView.setAdapter(cartShopAdapter);
 
         tvTotalPrice = (ExtendTextView) findViewById(R.id.tv_total_price);
         tvExpressPrice = (ExtendTextView) findViewById(R.id.tv_express_price);
@@ -96,7 +134,49 @@ public class OrderDetailActivity extends BaseActivity{
         cbWeixinPay = (CheckBox)findViewById(R.id.cb_weixin);
 
         tvGoodsCount = (TextView) findViewById(R.id.tv_goods_count);
+        tvPayTip = (TextView) findViewById(R.id.tv_pay_tip);
         tvPrice = (TextView) findViewById(R.id.tv_price);
-
+        tvCancel = (TextView) findViewById(R.id.tv_cancel);
+        tvPay = (TextView) findViewById(R.id.tv_pay);
+        tvExpress = (TextView) findViewById(R.id.tv_express);
+        tvReceiving = (TextView) findViewById(R.id.tv_receiving);
+        tvDelete = (TextView) findViewById(R.id.tv_delete);
+        tvAgainBuy = (TextView) findViewById(R.id.tv_again_buy);
     }
+
+    @Override
+    public void setOrderDetail(OrderDetailBean orderDetailBean) {
+        //与订单状态无关: 收货信息 订单信息
+        //tvBuyer.setRightTextContent(orderDetailBean.);
+
+        //与订单状态有关:订单状态 支付方式 支付状态按钮及商品总信息
+        switch (orderDetailBean.getStatus()){
+            case UN_PAID:
+
+                break;
+            case UN_DELIVERY:
+
+                break;
+            case DELIVERED:
+
+                break;
+            case FINISH:
+
+                break;
+            case CLOSE:
+
+                break;
+            case UN_SELF_DELIVERY:
+
+                break;
+            case SELF_DELIVERED:
+
+                break;
+            default:
+                break;
+        }
+    }
+
+
+
 }

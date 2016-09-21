@@ -11,24 +11,31 @@ import com.leyuan.support.widget.customview.SwitcherLayout;
 public interface CouponPresent {
 
     /**
-     * 第一次加载数据
+     * 第一次加载优惠劵列表
      * @param switcherLayout SwitcherLayout
      * @param type valid: 有效的 used: 已使用的 expired:已过期的
      */
     void commonLoadData(SwitcherLayout switcherLayout, String type);
 
     /**
-     * 下拉刷新
+     * 下拉刷新优惠劵列表
      * @param type valid: 有效的 used: 已使用的 expired:已过期的
      */
     void pullToRefreshData(String type);
 
     /**
-     * 上拉加载更多
+     * 上拉加载更多优惠劵列表
      * @param recyclerView RecyclerView
      * @param type valid: 有效的 used: 已使用的 expired:已过期的
      * @param pageSize 每页加载数
      * @param page 页码
      */
     void requestMoreData(RecyclerView recyclerView, String type, int pageSize, int page);
+
+    /**
+     * 领取优惠劵
+     * @param switcherLayout SwitcherLayout
+     * @param id 优惠劵编号
+     */
+    void obtainCoupon(SwitcherLayout switcherLayout,String id);
 }

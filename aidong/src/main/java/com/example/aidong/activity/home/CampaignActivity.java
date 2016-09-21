@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.example.aidong.BaseActivity;
 import com.example.aidong.R;
 import com.example.aidong.adapter.TabFragmentAdapter;
-import com.example.aidong.fragment.CampaignFragment;
+import com.example.aidong.fragment.home.CampaignFragment;
 import com.example.aidong.interfaces.SimpleOnTabSelectedListener;
 
 import java.util.ArrayList;

@@ -11,8 +11,8 @@ import com.example.aidong.BaseApp;
 import com.example.aidong.R;
 import com.example.aidong.activity.discover.adapter.UserAdapter;
 import com.leyuan.support.entity.UserBean;
-import com.leyuan.support.mvp.presenter.DiscoverUserActivityPresent;
-import com.leyuan.support.mvp.presenter.impl.DiscoverUserActivityPresentImpl;
+import com.leyuan.support.mvp.presenter.DiscoverPresent;
+import com.leyuan.support.mvp.presenter.impl.DiscoverPresentImpl;
 import com.leyuan.support.mvp.view.DiscoverUserActivityView;
 import com.leyuan.support.widget.customview.SwitcherLayout;
 import com.leyuan.support.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
@@ -32,7 +32,7 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
-    private DiscoverUserActivityPresent userPresent;
+    private DiscoverPresent userPresent;
 
     private int currPage = 1;
     private List<UserBean> data;
@@ -44,7 +44,7 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover_user);
         pageSize = 20;
-        userPresent = new DiscoverUserActivityPresentImpl(this,this);
+        userPresent = new DiscoverPresentImpl(this,this);
 
         initSwipeRefreshLayout();
         initRecyclerView();
@@ -60,7 +60,7 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
             @Override
             public void onRefresh() {
                 currPage = 1;
-                //userPresent.pullToRefreshData(recyclerView,BaseApp.lat,BaseApp.lon,"","");
+                //userPresent.pullToRefreshHomeData(recyclerView,BaseApp.lat,BaseApp.lon,"","");
             }
         });
     }

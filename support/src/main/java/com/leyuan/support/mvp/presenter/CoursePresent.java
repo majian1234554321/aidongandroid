@@ -8,6 +8,11 @@ import android.support.v7.widget.RecyclerView;
  */
 public interface CoursePresent {
     /**
+     * 第一次加载数据
+     */
+    void commendLoadData();
+
+    /**
      * 下拉刷新
      * @param category 课程类型
      * @param day 从当前开始向后天数
@@ -24,4 +29,10 @@ public interface CoursePresent {
      * @param page 页码
      */
     void requestMoreData(RecyclerView recyclerView, int pageSize, int category, int day, int page);
+
+    /**
+     * 获取课程详情
+     * @param id 课程id
+     */
+    void getCourseDetail(String id);
 }

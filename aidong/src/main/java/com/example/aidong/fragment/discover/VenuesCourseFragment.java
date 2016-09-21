@@ -12,8 +12,8 @@ import com.example.aidong.R;
 import com.example.aidong.activity.discover.adapter.DateAdapter;
 import com.example.aidong.activity.discover.adapter.VenuesCourseAdapter;
 import com.leyuan.support.entity.CourseBean;
-import com.leyuan.support.mvp.presenter.VenuesCourseFragmentPresent;
-import com.leyuan.support.mvp.presenter.impl.VenuesCourseFragmentPresentImpl;
+import com.leyuan.support.mvp.presenter.VenuesPresent;
+import com.leyuan.support.mvp.presenter.impl.VenuesPresentImpl;
 import com.leyuan.support.mvp.view.VenuesCourseFragmentView;
 
 import java.util.List;
@@ -36,7 +36,7 @@ public class VenuesCourseFragment extends BaseFragment implements VenuesCourseFr
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        VenuesCourseFragmentPresent present = new VenuesCourseFragmentPresentImpl(getContext(),this);
+        VenuesPresent present = new VenuesPresentImpl(getContext(),this);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv_venues_course);
         courseAdapter = new VenuesCourseAdapter(getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

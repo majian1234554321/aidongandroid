@@ -31,4 +31,11 @@ public interface AppointmentPresent {
      * @param page 页码
      */
     void requestMoreData(RecyclerView recyclerView, String type, int pageSize, int page);
+
+    /**
+     * 获取预约详情
+     * @param switcherLayout SwitcherLayout
+     * @param id 预约id
+     */
+    void getAppointmentDetail(SwitcherLayout switcherLayout, String id);
 }

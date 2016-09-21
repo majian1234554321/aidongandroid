@@ -146,7 +146,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
             @Override
             public void onRefresh() {
                 currPage = 1;
-                present.pullToRefreshData();
+                present.pullToRefreshHomeData();
             }
         });
 
@@ -154,7 +154,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
             @Override
             public void run() {
                 refreshLayout.setRefreshing(true);
-                present.pullToRefreshData();
+                present.pullToRefreshHomeData();
             }
         });
     }
@@ -180,7 +180,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
         public void onLoadNextPage(View view) {
             currPage ++;
             if (data != null && !data.isEmpty()) {
-                present.requestMoreData(recyclerView,pageSize,currPage);
+                present.requestMoreHomeData(recyclerView,pageSize,currPage);
             }
         }
     };

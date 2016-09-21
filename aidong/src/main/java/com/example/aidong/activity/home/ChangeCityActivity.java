@@ -53,7 +53,7 @@ public class ChangeCityActivity extends BaseActivity{
             @Override
             public void onRefresh() {
                 currPage = 1;
-                //present.pullToRefreshData(recyclerView);
+                //present.pullToRefreshHomeData(recyclerView);
             }
         });
 
@@ -61,7 +61,7 @@ public class ChangeCityActivity extends BaseActivity{
             @Override
             public void run() {
                 refreshLayout.setRefreshing(true);
-                //present.pullToRefreshData(recyclerView);
+                //present.pullToRefreshHomeData(recyclerView);
             }
         });
     }
@@ -82,7 +82,7 @@ public class ChangeCityActivity extends BaseActivity{
         public void onLoadNextPage(View view) {
             currPage ++;
             if (data != null && !data.isEmpty()) {
-               // present.requestMoreData(recyclerView,pageSize,currPage);
+               // present.requestMoreHomeData(recyclerView,pageSize,currPage);
             }
         }
     };

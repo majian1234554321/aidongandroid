@@ -196,7 +196,7 @@
         <activity android:name=".activity.home.GoodsDetailActivity" />
         <activity android:name=".activity.WebActivity" />
         <activity android:name=".activity.home.EquipmentActivity" />
-        <activity android:name=".activity.discover.VenuesDetailActivity" />
+        <activity android:name=".activity.discover.VenuesDetailOldActivity" />
         <activity android:name=".activity.discover.DiscoverUserActivity" />
 
     </application>

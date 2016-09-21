@@ -28,7 +28,7 @@ public class OrderModelImpl implements OrderModel{
     }
 
     @Override
-    public void getOrderDetail(Subscriber<OrderDetailData> subscriber, int id) {
+    public void getOrderDetail(Subscriber<OrderDetailData> subscriber, String id) {
         orderService.getOrderDetail(id)
                 .compose(RxHelper.<OrderDetailData>transform())
                 .subscribe(subscriber);

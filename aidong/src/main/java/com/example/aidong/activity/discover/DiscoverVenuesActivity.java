@@ -9,12 +9,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.aidong.BaseActivity;
-import com.example.aidong.BaseApp;
 import com.example.aidong.R;
 import com.example.aidong.activity.discover.adapter.VenuesAdapter;
 import com.leyuan.support.entity.VenuesBean;
-import com.leyuan.support.mvp.presenter.DiscoverVenuesActivityPresent;
-import com.leyuan.support.mvp.presenter.impl.DiscoverVenuesActivityPresentImpl;
+import com.leyuan.support.mvp.presenter.VenuesPresent;
+import com.leyuan.support.mvp.presenter.impl.VenuesPresentImpl;
 import com.leyuan.support.mvp.view.DiscoverVenuesActivityView;
 import com.leyuan.support.widget.customview.SimpleTitleBar;
 import com.leyuan.support.widget.dropdownmenu.DropDownMenu;
@@ -45,7 +44,7 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
     private int currPage = 1;
     private VenuesAdapter venuesAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
-    private DiscoverVenuesActivityPresent present;
+    private VenuesPresent present;
     private ArrayList<VenuesBean> data = new ArrayList<>();
 
     private String conditionHeaders[];
@@ -61,7 +60,7 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
         setContentView(R.layout.activity_discover_venues);
 
         pageSize = 20;
-        present = new DiscoverVenuesActivityPresentImpl(this,this);
+        present = new VenuesPresentImpl(this,this);
         initDropDownMenu();
         initSwipeRefreshLayout();
         initRecyclerView();
@@ -134,7 +133,7 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
             @Override
             public void onRefresh() {
                 currPage = 1;
-                present.pullToRefreshData(BaseApp.lat,BaseApp.lon);
+                present.pullToRefreshData();
             }
         });
 
@@ -155,7 +154,7 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
         public void onLoadNextPage(View view) {
             currPage ++;
             if (data != null && !data.isEmpty()) {
-                present.requestMoreData(recyclerView,BaseApp.lat,BaseApp.lon,pageSize,currPage);
+                present.requestMoreData(recyclerView,pageSize,currPage);
             }
         }
     };

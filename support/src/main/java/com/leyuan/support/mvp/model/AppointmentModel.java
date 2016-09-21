@@ -25,5 +25,5 @@ public interface AppointmentModel {
      * @param subscriber Subscriber
      * @param id 订单id
      */
-    void getAppointmentDetail(Subscriber<AppointmentDetailData> subscriber, int id);
+    void getAppointmentDetail(Subscriber<AppointmentDetailData> subscriber, String id);
 }

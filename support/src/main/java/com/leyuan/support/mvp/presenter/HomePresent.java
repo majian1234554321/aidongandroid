@@ -9,22 +9,35 @@ import android.support.v7.widget.RecyclerView;
 public interface HomePresent {
 
     /**
-     * 下拉刷新
+     * 首页列表下拉刷新
      */
-    void pullToRefreshData();
+    void pullToRefreshHomeData();
 
 
     /**
-     * 上拉加载更多
+     * 首页列表上拉加载更多
      * @param recyclerView 执行刷新的RecyclerView
      * @param pageSize 每页刷新的数据量
      * @param page 页码
      */
-    void requestMoreData(RecyclerView recyclerView, int pageSize, int page);
+    void requestMoreHomeData(RecyclerView recyclerView, int pageSize, int page);
+
+    /**
+     * 品牌商品列表详情下拉刷新
+     */
+    void pullToRefreshBrandData(int id);
+
+    /**
+     * 品牌商品列表上拉加载更多
+     * @param recyclerView 执行刷新的RecyclerView
+     * @param pageSize 每页刷新的数据量
+     * @param page 页码
+     * @param id 小分类id
+     */
+    void requestMorBrandeData(RecyclerView recyclerView, int pageSize, int page,int id);
 
     /**
      * 获取Banner
      */
     void getBanners();
-
 }

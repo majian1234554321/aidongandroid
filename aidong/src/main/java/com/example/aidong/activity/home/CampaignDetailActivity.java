@@ -20,8 +20,8 @@ import com.example.aidong.R;
 import com.example.aidong.activity.home.adapter.ApplicantAdapter;
 import com.example.aidong.activity.home.adapter.SamplePagerAdapter;
 import com.leyuan.support.entity.CampaignDetailBean;
-import com.leyuan.support.mvp.presenter.CampaignDetailActivityPresent;
-import com.leyuan.support.mvp.presenter.impl.CampaignDetailActivityPresentImpl;
+import com.leyuan.support.mvp.presenter.CampaignPresent;
+import com.leyuan.support.mvp.presenter.impl.CampaignPresentImpl;
 import com.leyuan.support.mvp.view.CampaignDetailActivityView;
 import com.leyuan.support.widget.customview.SwitcherLayout;
 import com.leyuan.support.widget.customview.ViewPagerIndicator;
@@ -53,7 +53,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
     private String id ;                         //活动详情id
     private boolean isFinishLoad = false;       //数据是否完成加载
     private ApplicantAdapter applicantAdapter;
-    private CampaignDetailActivityPresent campaignDetailPresent;
+    private CampaignPresent campaignPresent;
 
     /**
      * 跳转活动界面
@@ -69,7 +69,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_campaign_detail);
-        campaignDetailPresent = new CampaignDetailActivityPresentImpl(this,this);
+        campaignPresent = new CampaignPresentImpl(this,this);
         Intent intent = getIntent();
         if(intent != null){
             id = intent.getStringExtra("id");
@@ -79,7 +79,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
         setListener();
 
         id = "1";
-        campaignDetailPresent.getCampaignDetail(id);
+        campaignPresent.getCampaignDetail(id);
     }
 
 
@@ -139,7 +139,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
     private View.OnClickListener retryListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            campaignDetailPresent.getCampaignDetail(id);
+            campaignPresent.getCampaignDetail(id);
         }
     };
 

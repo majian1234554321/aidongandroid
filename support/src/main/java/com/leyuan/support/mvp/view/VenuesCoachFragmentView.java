@@ -16,8 +16,4 @@ public interface VenuesCoachFragmentView {
      */
     void setCoaches(List<CoachBean> coachBeanList);
 
-    /**
-     * 显示无教练列表界面
-     */
-    void showNoCoachView();
 }

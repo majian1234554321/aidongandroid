@@ -15,13 +15,29 @@ public interface SearchPresent {
      * @param switcherLayout SwitcherLayout
      * @param keyword 关键字
      */
-    void commonLoadData(SwitcherLayout switcherLayout, String keyword);
+    void commonLoadCampaignData(SwitcherLayout switcherLayout, String keyword);
+
+    void commonLoadCourseData(SwitcherLayout switcherLayout, String keyword);
+
+    void commonLoadFoodData(SwitcherLayout switcherLayout, String keyword);
+
+    void commonUserData(SwitcherLayout switcherLayout, String keyword);
+
+    void commonLoadVenuesData(SwitcherLayout switcherLayout, String keyword);
 
     /**
      * 下拉刷新
      * @param keyword 关键字
      */
-    void pullToRefreshData(String keyword);
+    void pullToRefreshCampaignData(String keyword);
+
+    void pullToRefreshCourseData(String keyword);
+
+    void pullToRefreshFoodData(String keyword);
+
+    void pullToRefreshUserData(String keyword);
+
+    void pullToRefreshVenuesData(String keyword);
 
     /**
      * 上拉加载更多
@@ -30,5 +46,13 @@ public interface SearchPresent {
      * @param pageSize 每页加载数
      * @param page 页码
      */
-    void requestMoreData(RecyclerView recyclerView, String keyword, int pageSize, int page);
+    void requestMoreCampaignData(RecyclerView recyclerView, String keyword, int pageSize, int page);
+
+    void requestMoreCourseData(RecyclerView recyclerView, String keyword, int pageSize, int page);
+
+    void requestMoreFoodData(RecyclerView recyclerView, String keyword, int pageSize, int page);
+
+    void requestMoreUserData(RecyclerView recyclerView, String keyword, int pageSize, int page);
+
+    void requestMoreVenuesData(RecyclerView recyclerView, String keyword, int pageSize, int page);
 }

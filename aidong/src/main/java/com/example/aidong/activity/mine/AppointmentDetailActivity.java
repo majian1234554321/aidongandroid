@@ -8,13 +8,27 @@ import android.widget.TextView;
 import com.example.aidong.BaseActivity;
 import com.example.aidong.R;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.leyuan.support.entity.AppointmentDetailBean;
+import com.leyuan.support.mvp.presenter.AppointmentPresent;
+import com.leyuan.support.mvp.presenter.impl.AppointmentPresentImpl;
+import com.leyuan.support.mvp.view.AppointmentDetailActivityView;
 import com.leyuan.support.widget.customview.ExtendTextView;
+import com.leyuan.support.widget.customview.SwitcherLayout;
 
 /**
  * 预约详情
  * Created by song on 2016/9/2.
  */
-public class AppointmentDetailActivity extends BaseActivity{
+public class AppointmentDetailActivity extends BaseActivity implements AppointmentDetailActivityView{
+    private static final String UN_PAID = "0";          //待付款
+    private static final String UN_JOIN= "1";           //待参加
+    private static final String JOINED = "2";           //已参加
+    private static final String CLOSE = "3";            //已关闭
+
+    //切换加载中 无内容,无网络控件
+    private SwitcherLayout switcherLayout;
+    private LinearLayout contentLayout;
+
     //预约状态信息
     private TextView tvState;
     private TextView tvTimeOrNum;
@@ -57,16 +71,34 @@ public class AppointmentDetailActivity extends BaseActivity{
     private CheckBox cbAlipay;
     private CheckBox cbWeixin;
 
-    //底部操作状态及价格信息
+    //底部预约操作状态及价格信息
     private TextView tvGoodsCount;
     private TextView tvPrice;
-    private TextView tvLeftButton;
-    private TextView tvRightButton;
+    private TextView tvPayTip;
+    private TextView tvCancel;
+    private TextView tvPay;
+    private TextView tvExpress;
+    private TextView tvReceiving;
+    private TextView tvDelete;
+    private TextView tvAgainBuy;
+
+    //Present层对象
+    private AppointmentPresent appointmentPresent;
+    private String appointmentId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appointment_detail);
+        appointmentPresent = new AppointmentPresentImpl(this,this);
+
+        initView();
+        appointmentPresent.getAppointmentDetail(switcherLayout,appointmentId);
+    }
+
+    private void initView() {
+        contentLayout = (LinearLayout)findViewById(R.id.ll_content);
+        switcherLayout = new SwitcherLayout(this,contentLayout);
 
         tvState = (TextView) findViewById(R.id.tv_state);
         tvTimeOrNum = (TextView) findViewById(R.id.tv_time_or_num);
@@ -107,6 +139,32 @@ public class AppointmentDetailActivity extends BaseActivity{
 
         tvGoodsCount = (TextView) findViewById(R.id.tv_goods_count);
         tvPrice = (TextView) findViewById(R.id.tv_price);
+        tvPayTip = (TextView) findViewById(R.id.tv_pay_tip);
+        tvCancel = (TextView) findViewById(R.id.tv_cancel);
+        tvPay = (TextView) findViewById(R.id.tv_pay);
+        tvExpress = (TextView) findViewById(R.id.tv_express);
+        tvReceiving = (TextView) findViewById(R.id.tv_receiving);
+        tvDelete = (TextView) findViewById(R.id.tv_delete);
+        tvAgainBuy = (TextView) findViewById(R.id.tv_again_buy);
+    }
 
+    @Override
+    public void setAppointmentDetail(AppointmentDetailBean bean) {
+        //与订单状态无关: 订单信息
+        //tvBuyer.setRightTextContent(orderDetailBean.);
+
+        //与订单状态有关: 预约状态信息 课程预约信息/活动预约信息 支付方式信息 底部预约操作状态及价格信息
+        switch (bean.getStatus()){
+            case UN_PAID:
+                break;
+            case UN_JOIN:
+                break;
+            case JOINED:
+                break;
+            case CLOSE:
+                break;
+            default:
+                break;
+        }
     }
 }

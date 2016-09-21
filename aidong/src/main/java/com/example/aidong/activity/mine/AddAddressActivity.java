@@ -1,5 +1,7 @@
 package com.example.aidong.activity.mine;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 import com.example.aidong.BaseActivity;
 import com.example.aidong.R;
 import com.example.aidong.activity.mine.view.AddressPopupWindow;
+import com.leyuan.support.entity.AddressBean;
 
 /**
  * 新增地址
@@ -29,15 +32,28 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
     private RadioButton rbDefault;
 
     private AddressPopupWindow addressPopup;
+    private AddressBean addressBean;
+
+    public static void actionStart(Context context, AddressBean address){
+        Intent intent = new Intent(context, AddAddressActivity.class);
+        intent.putExtra("address",address);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_asddress);
+        if(getIntent() != null){
+            addressBean = getIntent().getParcelableExtra("address");
+        }
 
         initView();
         setListener();
 
+        if(addressBean != null){
+            showUpdateAddressView() ;
+        }
     }
 
     private void initView(){
@@ -56,10 +72,16 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
         ivBack.setOnClickListener(this);
         tvFinish.setOnClickListener(this);
         tvAddress.setOnClickListener(this);
+        rbDefault.setOnClickListener(this);
     }
 
-    public void setAddress(String address) {
-        tvAddress.setText(address);
+    //更新地址
+    private void showUpdateAddressView(){
+        tvTitle.setText(getString(R.string.update_address));
+        etUsername.setText(addressBean.getName());
+        etPhone.setText(addressBean.getMobile());
+        tvAddress.setText(addressBean.getAddress());
+        etDescAddress.setText(addressBean.getAddress());
     }
 
     @Override
@@ -75,8 +97,14 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
                 }
                 addressPopup.showAtLocation(rootLayout, Gravity.BOTTOM,0,0);
                 break;
+            case R.id.rb_default:
+                break;
             default:
                 break;
         }
+    }
+
+    public void setAddress(String address){
+        tvAddress.setText(address);
     }
 }

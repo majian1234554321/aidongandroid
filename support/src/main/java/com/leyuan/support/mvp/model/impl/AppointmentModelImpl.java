@@ -20,18 +20,17 @@ public class AppointmentModelImpl implements AppointmentModel{
         appointmentService = RetrofitHelper.createApi(AppointmentService.class);
     }
 
-
-    @Override
-    public void getAppointmentDetail(Subscriber<AppointmentDetailData> subscriber, int id) {
-        appointmentService.getAppointmentDetail(id)
-                .compose(RxHelper.<AppointmentDetailData>transform())
-                .subscribe(subscriber);
-    }
-
     @Override
     public void getAppointments(Subscriber<AppointmentData> subscriber, String type, int page) {
         appointmentService.getAppointments(type,page)
                 .compose(RxHelper.<AppointmentData>transform())
+                .subscribe(subscriber);
+    }
+
+    @Override
+    public void getAppointmentDetail(Subscriber<AppointmentDetailData> subscriber, String id) {
+        appointmentService.getAppointmentDetail(id)
+                .compose(RxHelper.<AppointmentDetailData>transform())
                 .subscribe(subscriber);
     }
 }

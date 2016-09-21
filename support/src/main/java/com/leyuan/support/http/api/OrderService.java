@@ -19,6 +19,6 @@ public interface OrderService {
     Observable<BaseBean<OrderData>> getOrders(@Query("list") String list,@Query("page") int page);
 
     @GET("mine/orders/{id}")
-    Observable<BaseBean<OrderDetailData>> getOrderDetail(@Path("id") int id);
+    Observable<BaseBean<OrderDetailData>> getOrderDetail(@Path("id") String id);
 
 }

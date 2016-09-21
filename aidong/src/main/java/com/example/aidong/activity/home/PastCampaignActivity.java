@@ -11,7 +11,7 @@ import com.example.aidong.R;
 import com.example.aidong.activity.home.adapter.CampaignAdapter;
 import com.leyuan.support.entity.CampaignBean;
 import com.leyuan.support.mvp.presenter.CampaignPresent;
-import com.leyuan.support.mvp.presenter.impl.CampaignActivityPresentImpl;
+import com.leyuan.support.mvp.presenter.impl.CampaignPresentImpl;
 import com.leyuan.support.mvp.view.CampaignFragmentView;
 import com.leyuan.support.widget.customview.SwitcherLayout;
 import com.leyuan.support.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
@@ -43,7 +43,7 @@ public class PastCampaignActivity extends BaseActivity implements CampaignFragme
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_past_campaign);
         pageSize = 10;
-        campaignActivityPresent = new CampaignActivityPresentImpl(this,this);
+        campaignActivityPresent = new CampaignPresentImpl(this,this);
 
         initSwipeRefreshLayout();
         initRecyclerView();

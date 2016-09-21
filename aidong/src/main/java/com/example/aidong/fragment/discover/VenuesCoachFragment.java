@@ -11,8 +11,8 @@ import com.example.aidong.BaseFragment;
 import com.example.aidong.R;
 import com.example.aidong.activity.discover.adapter.VenuesCoachAdapter;
 import com.leyuan.support.entity.CoachBean;
-import com.leyuan.support.mvp.presenter.VenuesCoachFragmentPresent;
-import com.leyuan.support.mvp.presenter.impl.VenuesCoachFragmentPresentImpl;
+import com.leyuan.support.mvp.presenter.VenuesPresent;
+import com.leyuan.support.mvp.presenter.impl.VenuesPresentImpl;
 import com.leyuan.support.mvp.view.VenuesCoachFragmentView;
 
 import java.util.List;
@@ -32,7 +32,7 @@ public class VenuesCoachFragment extends BaseFragment implements VenuesCoachFrag
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        VenuesCoachFragmentPresent present = new VenuesCoachFragmentPresentImpl(getContext(),this);
+        VenuesPresent present = new VenuesPresentImpl(getContext(),this);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv_venues_coach);
         coachAdapter = new VenuesCoachAdapter(getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -45,8 +45,4 @@ public class VenuesCoachFragment extends BaseFragment implements VenuesCoachFrag
         coachAdapter.setData(coachBeanList);
     }
 
-    @Override
-    public void showNoCoachView() {
-
-    }
 }
