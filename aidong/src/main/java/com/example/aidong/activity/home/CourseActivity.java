@@ -12,7 +12,7 @@ import com.example.aidong.BaseActivity;
 import com.example.aidong.R;
 import com.example.aidong.activity.home.adapter.CourseAdapter;
 import com.leyuan.support.entity.CourseBean;
-import com.leyuan.support.mvp.presenter.CoursesActivityPresent;
+import com.leyuan.support.mvp.presenter.CoursePresent;
 import com.leyuan.support.mvp.presenter.impl.CoursesActivityPresentImpl;
 import com.leyuan.support.mvp.view.CoursesActivityView;
 import com.leyuan.support.widget.dropdownmenu.DropDownMenu;
@@ -41,7 +41,7 @@ public class CourseActivity extends BaseActivity implements CoursesActivityView{
     private int currPage = 1;
     private CourseAdapter courseAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
-    private CoursesActivityPresent present;
+    private CoursePresent present;
     private ArrayList<CourseBean> data = new ArrayList<>();
 
     private String conditionHeaders[];

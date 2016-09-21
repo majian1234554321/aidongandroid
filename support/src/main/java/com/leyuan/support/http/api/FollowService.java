@@ -2,8 +2,7 @@ package com.leyuan.support.http.api;
 
 
 import com.leyuan.support.entity.BaseBean;
-import com.leyuan.support.entity.data.FollowerData;
-import com.leyuan.support.entity.data.FollowingData;
+import com.leyuan.support.entity.data.FollowData;
 
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
@@ -20,20 +19,13 @@ import rx.Observable;
 public interface FollowService {
 
     /**
-     * 我关注的人
+     * 关注和粉丝
      * @param page 第几页
+     * @param type followings:我关注的人 followers:关注我的人
      * @return 用户集合
      */
-    @GET("mine/followings")
-    Observable<BaseBean<FollowingData>> getFollowings(@Query("page") int page);
-
-    /**
-     * 关注我的人
-     * @param page 第几页
-     * @return 用户集合
-     */
-    @GET("mine/followers")
-    Observable<BaseBean<FollowerData>> getFollowers(@Query("page") int page);
+    @GET("mine/{type}")
+    Observable<BaseBean<FollowData>> getFollow(@Path("type") String type, @Query("page") int page);
 
     /**
      * 添加关注

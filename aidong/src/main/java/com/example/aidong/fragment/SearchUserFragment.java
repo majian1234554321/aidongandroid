@@ -12,7 +12,7 @@ import com.example.aidong.BaseFragment;
 import com.example.aidong.R;
 import com.example.aidong.activity.discover.adapter.UserAdapter;
 import com.leyuan.support.entity.UserBean;
-import com.leyuan.support.mvp.presenter.SearchFragmentPresent;
+import com.leyuan.support.mvp.presenter.SearchPresent;
 import com.leyuan.support.mvp.presenter.impl.SearchUserFragmentPresentImpl;
 import com.leyuan.support.mvp.view.SearchUserFragmentView;
 import com.leyuan.support.widget.customview.SwitcherLayout;
@@ -39,7 +39,7 @@ public class SearchUserFragment extends BaseFragment implements SearchUserFragme
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private UserAdapter userAdapter;
 
-    private SearchFragmentPresent present;
+    private SearchPresent present;
     private String keyword;
 
     public static SearchUserFragment newInstance(String searchContent){

@@ -24,6 +24,7 @@ import com.example.aidong.BaseActivity;
 import com.example.aidong.R;
 import com.example.aidong.activity.home.adapter.GoodsDetailCouponAdapter;
 import com.example.aidong.activity.home.adapter.SamplePagerAdapter;
+import com.example.aidong.activity.home.view.GoodsInfoPopupWindow;
 import com.example.aidong.view.ObserveScrollView;
 import com.example.aidong.view.SlideDetailsLayout;
 import com.leyuan.support.entity.CouponBean;

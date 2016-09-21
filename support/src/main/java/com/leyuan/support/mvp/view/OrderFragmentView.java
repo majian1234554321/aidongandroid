@@ -5,7 +5,7 @@ import com.leyuan.support.entity.OrderBean;
 import java.util.List;
 
 /**
- * 订单
+ * 订单列表
  * Created by song on 2016/9/1.
  */
 public interface OrderFragmentView {

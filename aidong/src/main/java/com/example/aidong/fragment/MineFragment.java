@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.aidong.BaseFragment;
 import com.example.aidong.R;
+import com.example.aidong.activity.mine.AddressActivity;
 import com.example.aidong.activity.mine.AppointmentActivity;
 import com.example.aidong.activity.mine.CouponActivity;
 import com.example.aidong.activity.mine.FollowActivity;
@@ -134,7 +135,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 UiManager.activityJump(getActivity(), TabMinePersonalSettingsActivity.class);
                 break;
             case R.id.item_address:
-                UiManager.activityJump(getActivity(), TabMinePersonalSettingsActivity.class);
+                UiManager.activityJump(getActivity(), AddressActivity.class);
                 break;
             case R.id.item_recommend_friend:
                 UiManager.activityJump(getActivity(), TabMinePersonalSettingsActivity.class);

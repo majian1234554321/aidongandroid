@@ -12,8 +12,8 @@ import com.example.aidong.BaseFragment;
 import com.example.aidong.R;
 import com.example.aidong.activity.mine.adapter.AppointmentAdapter;
 import com.leyuan.support.entity.AppointmentBean;
-import com.leyuan.support.mvp.presenter.AppointmentFragmentPresent;
-import com.leyuan.support.mvp.presenter.impl.AppointmentFragmentPresentImpl;
+import com.leyuan.support.mvp.presenter.AppointmentPresent;
+import com.leyuan.support.mvp.presenter.impl.AppointmentPresentImpl;
 import com.leyuan.support.mvp.view.AppointmentFragmentView;
 import com.leyuan.support.widget.customview.SwitcherLayout;
 import com.leyuan.support.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
@@ -25,13 +25,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 已参加预约
+ * 预约
  * Created by song on 2016/8/31.
  */
 public class AppointmentFragment extends BaseFragment implements AppointmentFragmentView{
     public static final String ALL = "all";
     public static final String JOINED = "joined";
     public static final String UN_JOIN = "unJoin";
+    private String type;
 
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
@@ -39,52 +40,53 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
 
     private int currPage = 1;
     private List<AppointmentBean> data;
-    private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private AppointmentAdapter appointmentAdapter;
+    private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
 
-    private AppointmentFragmentPresent present;
-    private String type;
+    private AppointmentPresent present;
 
-    /**
-     * 设置传递给Fragment的参数
-     * @param type 预约类型
-     */
-    public void setArguments(String type){
-        Bundle bundle=new Bundle();
-        bundle.putString(type, type);
-        AppointmentFragment.this.setArguments(bundle);
+    public static AppointmentFragment newInstance(String type){
+        Bundle bundle = new Bundle();
+        bundle.putString("type", type);
+        AppointmentFragment fragment = new AppointmentFragment();
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState){
+        pageSize = 20;
+        present = new AppointmentPresentImpl(getContext(),this);
+        Bundle bundle = getArguments();
+        if(bundle != null){
+            type = bundle.getString("type");
+        }
         return inflater.inflate(R.layout.fragment_appointment,null);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        if (getArguments().containsKey(type)) {
-            type = getArguments().getString(type);
-        }
-        type = ALL;
-        pageSize = 20;
-        present = new AppointmentFragmentPresentImpl(getContext(),this);
         initSwipeRefreshLayout(view);
+        initSwitcherLayout();
         initRecyclerView(view);
         present.commonLoadData(switcherLayout,type);
     }
 
     private void initSwipeRefreshLayout(View view) {
         refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.refreshLayout);
-        switcherLayout = new SwitcherLayout(getContext(),refreshLayout);
         setColorSchemeResources(refreshLayout);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 currPage = 1;
+                RecyclerViewStateUtils.resetFooterViewState(recyclerView);
                 present.pullToRefreshData(type);
             }
         });
+    }
 
+    private void initSwitcherLayout(){
+        switcherLayout = new SwitcherLayout(getContext(),refreshLayout);
         switcherLayout.setOnRetryListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

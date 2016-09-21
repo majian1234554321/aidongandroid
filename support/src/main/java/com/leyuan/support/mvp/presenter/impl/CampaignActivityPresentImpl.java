@@ -11,7 +11,7 @@ import com.leyuan.support.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.support.mvp.model.CampaignModel;
 import com.leyuan.support.mvp.model.impl.CampaignModelImpl;
 import com.leyuan.support.mvp.presenter.CampaignPresent;
-import com.leyuan.support.mvp.view.CampaignView;
+import com.leyuan.support.mvp.view.CampaignFragmentView;
 import com.leyuan.support.util.Constant;
 import com.leyuan.support.widget.customview.SwitcherLayout;
 
@@ -24,11 +24,11 @@ import java.util.List;
  */
 public class CampaignActivityPresentImpl implements CampaignPresent {
     private Context context;
-    private CampaignView campaignActivityView;
+    private CampaignFragmentView campaignActivityView;
     private CampaignModel campaignModel;
     private List<CampaignBean> campaignBeanList;
 
-    public CampaignActivityPresentImpl(Context context, CampaignView campaignActivityView) {
+    public CampaignActivityPresentImpl(Context context, CampaignFragmentView campaignActivityView) {
         this.context = context;
         this.campaignActivityView = campaignActivityView;
         campaignModel = new CampaignModelImpl();

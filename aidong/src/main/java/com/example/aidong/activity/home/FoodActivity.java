@@ -17,8 +17,8 @@ import com.example.aidong.activity.home.adapter.SamplePagerAdapter;
 import com.leyuan.support.entity.FoodAndVenuesBean;
 import com.leyuan.support.entity.FoodBean;
 import com.leyuan.support.entity.VenuesBean;
-import com.leyuan.support.mvp.presenter.FoodActivityPresenter;
-import com.leyuan.support.mvp.presenter.impl.FoodActivityPresentImpl;
+import com.leyuan.support.mvp.presenter.FoodPresenter;
+import com.leyuan.support.mvp.presenter.impl.FoodPresentImpl;
 import com.leyuan.support.mvp.view.FoodActivityView;
 import com.leyuan.support.widget.customview.SwitcherLayout;
 import com.leyuan.support.widget.customview.ViewPagerIndicator;
@@ -51,14 +51,14 @@ public class FoodActivity extends BaseActivity implements FoodActivityView{
     private ArrayList<FoodBean> foodList = new ArrayList<>();
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private FoodAdapter foodAdapter;
-    private FoodActivityPresenter present;
+    private FoodPresenter present;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food);
         pageSize = 20;
-        present = new FoodActivityPresentImpl(this,this);
+        present = new FoodPresentImpl(this,this);
         initHeaderView();
         initSwipeRefreshLayout();
         initRecyclerView();

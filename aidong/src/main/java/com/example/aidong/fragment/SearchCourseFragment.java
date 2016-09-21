@@ -12,7 +12,7 @@ import com.example.aidong.BaseFragment;
 import com.example.aidong.R;
 import com.example.aidong.activity.home.adapter.CourseAdapter;
 import com.leyuan.support.entity.CourseBean;
-import com.leyuan.support.mvp.presenter.SearchFragmentPresent;
+import com.leyuan.support.mvp.presenter.SearchPresent;
 import com.leyuan.support.mvp.presenter.impl.SearchCourseFragmentPresentImpl;
 import com.leyuan.support.mvp.view.SearchCourseFragmentView;
 import com.leyuan.support.widget.customview.SwitcherLayout;
@@ -39,7 +39,7 @@ public class SearchCourseFragment extends BaseFragment implements SearchCourseFr
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private CourseAdapter courseAdapter;
 
-    private SearchFragmentPresent present;
+    private SearchPresent present;
     private String  keyword;
 
     public static SearchCourseFragment newInstance(String searchContent){

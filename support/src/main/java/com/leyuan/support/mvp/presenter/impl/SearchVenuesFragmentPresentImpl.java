@@ -10,7 +10,7 @@ import com.leyuan.support.http.subscriber.RefreshSubscriber;
 import com.leyuan.support.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.support.mvp.model.SearchModel;
 import com.leyuan.support.mvp.model.impl.SearchModelImpl;
-import com.leyuan.support.mvp.presenter.SearchFragmentPresent;
+import com.leyuan.support.mvp.presenter.SearchPresent;
 import com.leyuan.support.mvp.view.SearchVenuesFragmentView;
 import com.leyuan.support.util.Constant;
 import com.leyuan.support.widget.customview.SwitcherLayout;
@@ -22,7 +22,7 @@ import java.util.List;
  * 搜索场馆
  * Created by song on 2016/9/18.
  */
-public class SearchVenuesFragmentPresentImpl implements SearchFragmentPresent{
+public class SearchVenuesFragmentPresentImpl implements SearchPresent {
     private Context context;
     private SearchModel searchModel;
     private SearchVenuesFragmentView searchView;

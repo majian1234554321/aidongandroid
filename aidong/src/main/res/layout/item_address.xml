@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?selectableItemBackground">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:paddingRight="@dimen/right_margin"
+        android:paddingLeft="@dimen/left_margin"
+        android:background="@color/white">
+        <RadioButton
+            android:id="@+id/rb_default"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:id="@+id/tv_default"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="设为默认"
+            android:textSize="13sp"
+            android:gravity="center_vertical"
+            android:textColor="@color/c3"
+            android:layout_toRightOf="@+id/rb_default"/>
+
+        <TextView
+            android:id="@+id/tv_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="编辑"
+            android:layout_toRightOf="@+id/tv_default"
+            android:textSize="14sp"
+            android:textColor="@color/c3"
+            android:layout_marginLeft="20dp"
+            android:gravity="center_vertical"/>
+
+        <ImageView
+            android:id="@+id/iv_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/icon_fire"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical" />
+    </RelativeLayout>
+
+    <include layout="@layout/inc_line"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="@dimen/right_margin"
+        android:paddingLeft="@dimen/left_margin"
+        android:background="@color/white"
+        android:paddingBottom="10dp">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="姓名"
+            android:textColor="@color/c3"
+            android:textSize="14sp"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:id="@+id/tv_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_name"
+            android:text="13280145242"
+            android:textColor="@color/c3"
+            android:textSize="14sp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/c3"
+            android:layout_below="@+id/tv_name"
+            android:text="上海市闵行区莲花路"
+            android:layout_marginTop="20dp"/>
+    </RelativeLayout>
+
+</LinearLayout>

@@ -97,7 +97,6 @@ public class OrderDetailActivity extends BaseActivity{
 
         tvGoodsCount = (TextView) findViewById(R.id.tv_goods_count);
         tvPrice = (TextView) findViewById(R.id.tv_price);
-        tvLeftButton = (TextView) findViewById(R.id.tv_left_button);
-        tvRightButton = (TextView) findViewById(R.id.tv_right_button);
+
     }
 }

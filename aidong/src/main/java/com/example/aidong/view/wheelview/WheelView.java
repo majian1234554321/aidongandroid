@@ -32,7 +32,6 @@ import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.util.AttributeSet;
-import android.util.FloatMath;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
@@ -704,7 +703,7 @@ public class WheelView extends View {
 
 		if (itemsWidth > 0) {
 			canvas.save();
-			// Skip padding space and hide a part of top and bottom items
+			// Skip padding space and hideCategoryList a part of top and bottom items
 			canvas.translate(PADDING, -ITEM_OFFSET);
 			drawItems(canvas);
 			drawValue(canvas);

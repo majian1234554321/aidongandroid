@@ -15,7 +15,9 @@
     distributed under the License is distributed on an "AS IS" BASIS,
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
-    limitations under the License.
+    limitations under the License.
+
+
 -->
 
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
@@ -24,13 +26,13 @@
         <shape android:shape="rectangle" >
             <gradient
                 android:angle="0"
-                android:centerColor="#FFFFFFFF"
-                android:endColor="#FFFFFFFF"
-                android:startColor="#FFFFFFFF" />
+                android:centerColor="#ebebeb"
+                android:endColor="#ebebeb"
+                android:startColor="#ebebeb" />
 
             <stroke
                 android:width="1dp"
-                android:color="#FFFFFFFF" />
+                android:color="#ebebeb" />
         </shape>
     </item>
     <item
@@ -41,9 +43,9 @@
         <shape android:shape="rectangle" >
             <gradient
                 android:angle="0"
-                android:centerColor="#FFFFFFFF"
-                android:endColor="#FFFFFFFF"
-                android:startColor="#FFFFFFFF" />
+                android:centerColor="#ebebeb"
+                android:endColor="#ebebeb"
+                android:startColor="#ebebeb" />
         </shape>
     </item>
 

@@ -12,7 +12,7 @@ import com.example.aidong.BaseFragment;
 import com.example.aidong.R;
 import com.example.aidong.activity.discover.adapter.VenuesAdapter;
 import com.leyuan.support.entity.VenuesBean;
-import com.leyuan.support.mvp.presenter.SearchFragmentPresent;
+import com.leyuan.support.mvp.presenter.SearchPresent;
 import com.leyuan.support.mvp.presenter.impl.SearchVenuesFragmentPresentImpl;
 import com.leyuan.support.mvp.view.SearchVenuesFragmentView;
 import com.leyuan.support.widget.customview.SwitcherLayout;
@@ -39,7 +39,7 @@ public class SearchVenuesFragment extends BaseFragment implements SearchVenuesFr
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private VenuesAdapter venuesAdapter;
 
-    private SearchFragmentPresent present;
+    private SearchPresent present;
     private String  keyword ;
 
 

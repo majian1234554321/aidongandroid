@@ -12,7 +12,7 @@ import com.example.aidong.BaseFragment;
 import com.example.aidong.R;
 import com.example.aidong.activity.home.adapter.CampaignAdapter;
 import com.leyuan.support.entity.CampaignBean;
-import com.leyuan.support.mvp.presenter.SearchFragmentPresent;
+import com.leyuan.support.mvp.presenter.SearchPresent;
 import com.leyuan.support.mvp.presenter.impl.SearchCampaignFragmentPresentImpl;
 import com.leyuan.support.mvp.view.SearchCampaignFragmentView;
 import com.leyuan.support.widget.customview.SwitcherLayout;
@@ -39,7 +39,7 @@ public class SearchCampaignFragment extends BaseFragment implements SearchCampai
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private CampaignAdapter campaignAdapter;
 
-    private SearchFragmentPresent present;
+    private SearchPresent present;
     private String keyword;
 
     public static SearchCampaignFragment newInstance(String searchContent){

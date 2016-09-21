@@ -14,8 +14,7 @@
         fresco:roundAsCircle="true"
         android:layout_centerVertical="true"
         fresco:actualImageScaleType="centerCrop"
-        fresco:backgroundImage="@color/blue"
-        fresco:placeholderImage="@drawable/place_holder_logo"
+        fresco:placeholderImage="@drawable/place_holder_user"
         fresco:pressedStateOverlayImage="@color/color_image_press"/>
 
     <ImageView

@@ -25,5 +25,5 @@ public interface OrderModel {
      * @param subscriber Subscriber
      * @param id 订单id
      */
-    void getOrderDetail(Subscriber<OrderDetailData> subscriber,int id);
+    void getOrderDetail(Subscriber<OrderDetailData> subscriber,String id);
 }

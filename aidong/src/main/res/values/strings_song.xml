@@ -28,6 +28,7 @@
     <string name="distance_km"> %1$s km </string>
 
     <string name="use_price">满%1$s使用</string>
+    <string name="real_pay">实付款：¥%1$s</string>
 
     <string name="campaign_detail">活动详情</string>
     <string name="food_material">主要食材: %1$s</string>
@@ -48,6 +49,23 @@
     <string name="true_pay">实付款：</string>
     <string name="need_pay">需付款：</string>
 
-    <string name="tip_open">上拉查看图文详情</string>
-    <string name="tip_close">下拉查看商品信息</string>
+    <string name="tip_open">上拉查看更多详情</string>
+    <string name="tip_close">下拉回到顶部</string>
+
+    <string name="un_paid">待付款</string>
+    <string name="un_delivery">待发货</string>
+    <string name="delivered">已发货</string>
+    <string name="order_finish">已完成</string>
+    <string name="order_close">已关闭</string>
+    <string name="un_self_delivery">待自提</string>
+    <string name="self_delivered">已自提</string>
+    <string name="appointment_joined">已参加</string>
+    <string name="appointment_un_joined">待参加</string>
+
+    <string name="coupon_used">%1$s 已使用</string>
+    <string name="coupon_expired">%1$s 到期</string>
+    <string name="coupon_time">%1$s - %2$s</string>
+
+
+    <string name="add_address">%1$s&#160;&#160;%2$s&#160;&#160;%3$s</string>
 </resources>

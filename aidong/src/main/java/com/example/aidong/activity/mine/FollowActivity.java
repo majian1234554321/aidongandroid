@@ -8,10 +8,11 @@ import android.support.v4.view.ViewPager;
 import com.example.aidong.BaseActivity;
 import com.example.aidong.R;
 import com.example.aidong.adapter.TabFragmentAdapter;
-import com.example.aidong.fragment.mine.FansFragment;
 import com.example.aidong.fragment.mine.FollowFragment;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 关注和粉丝
@@ -31,19 +32,12 @@ public class FollowActivity extends BaseActivity{
         viewPager = (ViewPager) findViewById(R.id.vp_content);
 
         ArrayList<Fragment> fragments = new ArrayList<>();
-        FollowFragment followFragment = new FollowFragment();
-        FansFragment fansFragment = new FansFragment();
-
+        FollowFragment followFragment = FollowFragment.newInstance(FollowFragment.FOLLOW);
+        FollowFragment fansFragment = FollowFragment.newInstance(FollowFragment.FANS);
         fragments.add(followFragment);
         fragments.add(fansFragment);
-
-        ArrayList<String> titles = new ArrayList<>();
-        titles.add(getString(R.string.follow));
-        titles.add(getString(R.string.fans));
-
+        List<String> titles = Arrays.asList(getResources().getStringArray(R.array.followTab));
         viewPager.setAdapter(new TabFragmentAdapter(getSupportFragmentManager(),fragments,titles));
-        viewPager.setOffscreenPageLimit(2);
         tabLayout.setupWithViewPager(viewPager);
-
     }
 }

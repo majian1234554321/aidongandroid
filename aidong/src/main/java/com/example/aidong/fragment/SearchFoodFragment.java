@@ -12,7 +12,7 @@ import com.example.aidong.BaseFragment;
 import com.example.aidong.R;
 import com.example.aidong.activity.home.adapter.FoodAdapter;
 import com.leyuan.support.entity.FoodBean;
-import com.leyuan.support.mvp.presenter.SearchFragmentPresent;
+import com.leyuan.support.mvp.presenter.SearchPresent;
 import com.leyuan.support.mvp.presenter.impl.SearchFoodFragmentPresentImpl;
 import com.leyuan.support.mvp.view.SearchFoodFragmentView;
 import com.leyuan.support.widget.customview.SwitcherLayout;
@@ -39,7 +39,7 @@ public class SearchFoodFragment extends BaseFragment implements SearchFoodFragme
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private FoodAdapter foodAdapter;
 
-    private SearchFragmentPresent present;
+    private SearchPresent present;
     private String keyword;
 
     public static SearchFoodFragment newInstance(String searchContent){

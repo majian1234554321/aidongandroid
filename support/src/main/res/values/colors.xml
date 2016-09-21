@@ -19,4 +19,5 @@
 
     <color name="rippleColor">#808080</color>
     <color name="lineColor">#808080</color>
+    <color name="c9">#999999</color>
 </resources>

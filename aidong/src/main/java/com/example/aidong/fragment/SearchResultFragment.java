@@ -50,7 +50,7 @@ public class SearchResultFragment extends BaseFragment{
         viewPager = (ViewPager)view.findViewById(R.id.vp_search_result);
 
         ArrayList<Fragment> fragments = new ArrayList<>();
-        SearchVenuesFragment venues = new SearchVenuesFragment();
+        SearchVenuesFragment venues =  SearchVenuesFragment.newInstance(keyword);
         SearchCourseFragment course = new SearchCourseFragment();
         SearchFoodFragment food = new SearchFoodFragment();
         SearchCampaignFragment campaign = new SearchCampaignFragment();

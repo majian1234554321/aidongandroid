@@ -10,10 +10,10 @@ import android.view.View;
 import com.example.aidong.BaseActivity;
 import com.example.aidong.R;
 import com.example.aidong.activity.home.adapter.NurtureAdapter;
-import com.example.aidong.activity.home.adapter.NurtureCategoryAdapter;
+import com.example.aidong.activity.home.adapter.CategoryAdapter;
 import com.leyuan.support.entity.NurtureBean;
-import com.leyuan.support.mvp.presenter.NurtureActivityPresent;
-import com.leyuan.support.mvp.presenter.impl.NurtureActivityPresentImpl;
+import com.leyuan.support.mvp.presenter.NurturePresent;
+import com.leyuan.support.mvp.presenter.impl.NurturePresentImpl;
 import com.leyuan.support.mvp.view.NurtureActivityView;
 import com.leyuan.support.widget.customview.SimpleTitleBar;
 import com.leyuan.support.widget.customview.SwitcherLayout;
@@ -43,14 +43,14 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
     private List<NurtureBean> nurtureList;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private NurtureAdapter nurtureAdapter;
-    private NurtureActivityPresent present;
+    private NurturePresent present;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nurture);
         pageSize = 20;
-        present = new NurtureActivityPresentImpl(this,this);
+        present = new NurturePresentImpl(this,this);
 
         initTopLayout();
         initSwipeRefreshLayout();
@@ -62,7 +62,7 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
     private void initTopLayout(){
         titleBar = (SimpleTitleBar)findViewById(R.id.title_bar);
         categoryRecyclerView = (RecyclerView)findViewById(R.id.rv_category);
-        NurtureCategoryAdapter categoryAdapter = new NurtureCategoryAdapter();
+        CategoryAdapter categoryAdapter = new CategoryAdapter();
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
         categoryRecyclerView.setLayoutManager(layoutManager);
         categoryRecyclerView.setAdapter(categoryAdapter);

@@ -10,10 +10,10 @@ import android.view.View;
 import com.example.aidong.BaseActivity;
 import com.example.aidong.R;
 import com.example.aidong.activity.home.adapter.EquipmentAdapter;
-import com.example.aidong.activity.home.adapter.NurtureCategoryAdapter;
+import com.example.aidong.activity.home.adapter.CategoryAdapter;
 import com.leyuan.support.entity.EquipmentBean;
-import com.leyuan.support.mvp.presenter.EquipmentActivityPresent;
-import com.leyuan.support.mvp.presenter.impl.EquipmentActivityPresentImpl;
+import com.leyuan.support.mvp.presenter.EquipmentPresent;
+import com.leyuan.support.mvp.presenter.impl.EquipmentPresentImpl;
 import com.leyuan.support.mvp.view.EquipmentActivityView;
 import com.leyuan.support.widget.customview.SimpleTitleBar;
 import com.leyuan.support.widget.customview.SwitcherLayout;
@@ -35,6 +35,7 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
     private SimpleTitleBar titleBar;
     private RecyclerView categoryRecyclerView;
 
+
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recommendRecyclerView;
@@ -43,14 +44,14 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
     private List<EquipmentBean> equipmentList;
     private EquipmentAdapter equipmentAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
-    private EquipmentActivityPresent present;
+    private EquipmentPresent present;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment);
         pageSize = 20;
-        present = new EquipmentActivityPresentImpl(this,this);
+        present = new EquipmentPresentImpl(this,this);
 
         initTopLayout();
         initSwipeRefreshLayout();
@@ -62,7 +63,7 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
     private void initTopLayout(){
         titleBar = (SimpleTitleBar)findViewById(R.id.title_bar);
         categoryRecyclerView = (RecyclerView)findViewById(R.id.rv_category);
-        NurtureCategoryAdapter categoryAdapter = new NurtureCategoryAdapter();
+        CategoryAdapter categoryAdapter = new CategoryAdapter();
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
         categoryRecyclerView.setLayoutManager(layoutManager);
         categoryRecyclerView.setAdapter(categoryAdapter);

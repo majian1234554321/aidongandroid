@@ -140,4 +140,5 @@ public class BasePopupWindow extends PopupWindow {
         layoutParams.alpha = alpha;
         window.setAttributes(layoutParams);
     }
+
 }

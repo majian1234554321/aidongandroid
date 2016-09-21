@@ -12,8 +12,8 @@ import com.example.aidong.BaseFragment;
 import com.example.aidong.R;
 import com.example.aidong.activity.mine.adapter.FollowAdapter;
 import com.leyuan.support.entity.UserBean;
-import com.leyuan.support.mvp.presenter.FollowFragmentPresent;
-import com.leyuan.support.mvp.presenter.impl.FollowFragmentPresentImpl;
+import com.leyuan.support.mvp.presenter.FollowPresent;
+import com.leyuan.support.mvp.presenter.impl.FollowPresentImpl;
 import com.leyuan.support.mvp.view.FollowFragmentView;
 import com.leyuan.support.widget.customview.SwitcherLayout;
 import com.leyuan.support.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
@@ -29,48 +29,67 @@ import java.util.List;
  * Created by song on 2016/9/10.
  */
 public class FollowFragment extends BaseFragment implements FollowFragmentView{
+    public static final String FOLLOW = "followings";
+    public static final String FANS = "followers";
+    private String type;
+
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
 
     private int currPage = 1;
     private List<UserBean> data;
-    private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private FollowAdapter followAdapter;
+    private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
 
-    private FollowFragmentPresent present;
+    private FollowPresent present;
+
+    public static FollowFragment newInstance(String type){
+        Bundle bundle = new Bundle();
+        bundle.putString("type", type);
+        FollowFragment fragment = new FollowFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
+        pageSize = 20;
+        present = new FollowPresentImpl(getContext(),this);
+        Bundle bundle = getArguments();
+        if(bundle != null){
+            type = bundle.getString("type");
+        }
         return inflater.inflate(R.layout.fragment_follow,null);
     }
 
     @Override
     public void onViewCreated(View view,Bundle savedInstanceState) {
-        pageSize = 20;
-        present = new FollowFragmentPresentImpl(getContext(),this);
         initSwipeRefreshLayout(view);
+        initSwitcherLayout();
         initRecyclerView(view);
-        present.commonLoadData(switcherLayout);
+        present.commonLoadData(switcherLayout,type);
     }
 
     private void initSwipeRefreshLayout(View view) {
         refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.refreshLayout);
-        switcherLayout = new SwitcherLayout(getContext(), refreshLayout);
         setColorSchemeResources(refreshLayout);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-                present.pullToRefreshData();
+                present.pullToRefreshData(type);
             }
         });
+    }
 
+    private void initSwitcherLayout(){
+        switcherLayout = new SwitcherLayout(getContext(), refreshLayout);
         switcherLayout.setOnRetryListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                present.commonLoadData(switcherLayout);
+                present.commonLoadData(switcherLayout,type);
             }
         });
     }
@@ -78,7 +97,7 @@ public class FollowFragment extends BaseFragment implements FollowFragmentView{
     private void initRecyclerView(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_follow);
         data = new ArrayList<>();
-        followAdapter = new FollowAdapter();
+        followAdapter = new FollowAdapter(getContext());
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(followAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(wrapperAdapter);
@@ -90,7 +109,7 @@ public class FollowFragment extends BaseFragment implements FollowFragmentView{
         public void onLoadNextPage(View view) {
             currPage ++;
             if (data != null && data.size() >= pageSize) {
-                present.requestMoreData(recyclerView,pageSize,currPage);
+                present.requestMoreData(recyclerView,pageSize,type,currPage);
             }
         }
     };
@@ -102,7 +121,7 @@ public class FollowFragment extends BaseFragment implements FollowFragmentView{
             refreshLayout.setRefreshing(false);
         }
         data.addAll(userBeanList);
-        //followAdapter.setData(data);
+        followAdapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();
     }
 

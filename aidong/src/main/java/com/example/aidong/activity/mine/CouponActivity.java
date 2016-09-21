@@ -20,7 +20,6 @@ import java.util.List;
  * Created by song on 2016/8/31.
  */
 public class CouponActivity extends BaseActivity{
-
     private SimpleTitleBar titleBar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -35,18 +34,15 @@ public class CouponActivity extends BaseActivity{
         viewPager = (ViewPager) findViewById(R.id.vp_content);
 
         ArrayList<Fragment> fragments = new ArrayList<>();
-        CouponFragment available = new CouponFragment();
-        CouponFragment used = new CouponFragment();
-        CouponFragment overdue = new CouponFragment();
-        fragments.add(available);
+        CouponFragment valid = CouponFragment.newInstance(CouponFragment.VALID);
+        CouponFragment used = CouponFragment.newInstance(CouponFragment.USED);
+        CouponFragment expired = CouponFragment.newInstance(CouponFragment.EXPIRED);
+        fragments.add(valid);
         fragments.add(used);
-        fragments.add(overdue);
-
-        available.setArguments("valid");
+        fragments.add(expired);
 
         List<String> titles = Arrays.asList(getResources().getStringArray(R.array.couponTab));
         viewPager.setAdapter(new TabFragmentAdapter(getSupportFragmentManager(),fragments,titles));
-        viewPager.setOffscreenPageLimit(2);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -56,7 +52,5 @@ public class CouponActivity extends BaseActivity{
                 finish();
             }
         });
-
-
     }
 }

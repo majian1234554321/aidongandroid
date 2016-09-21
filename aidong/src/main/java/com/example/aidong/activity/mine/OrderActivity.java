@@ -21,7 +21,6 @@ import java.util.List;
  */
 public class OrderActivity extends BaseActivity{
 
-
     private SimpleTitleBar titleBar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -36,15 +35,10 @@ public class OrderActivity extends BaseActivity{
         viewPager = (ViewPager) findViewById(R.id.vp_content);
 
         ArrayList<Fragment> fragments = new ArrayList<>();
-        OrderFragment all = new OrderFragment();
-        OrderFragment unpaid = new OrderFragment();
-        OrderFragment selfPickUp = new OrderFragment();
-        OrderFragment express = new OrderFragment();
-
-        all.setArguments(OrderFragment.ALL);
-        unpaid.setArguments(OrderFragment.UN_PAID);
-        selfPickUp.setArguments(OrderFragment.SELF_DELIVERY);
-        express.setArguments(OrderFragment.EXPRESS_DELIVERY);
+        OrderFragment all = OrderFragment.newInstance(OrderFragment.ALL);
+        OrderFragment unpaid = OrderFragment.newInstance(OrderFragment.UN_PAID);
+        OrderFragment selfPickUp = OrderFragment.newInstance(OrderFragment.SELF_DELIVERY);
+        OrderFragment express = OrderFragment.newInstance(OrderFragment.EXPRESS_DELIVERY);
 
         fragments.add(all);
         fragments.add(unpaid);
@@ -53,7 +47,6 @@ public class OrderActivity extends BaseActivity{
 
         List<String> titles = Arrays.asList(getResources().getStringArray(R.array.orderTab));
         viewPager.setAdapter(new TabFragmentAdapter(getSupportFragmentManager(),fragments,titles));
-        viewPager.setOffscreenPageLimit(2);
         tabLayout.setupWithViewPager(viewPager);
 
         titleBar.setBackListener(new SimpleTitleBar.OnBackClickListener() {
@@ -62,7 +55,5 @@ public class OrderActivity extends BaseActivity{
                 finish();
             }
         });
-
-
     }
 }

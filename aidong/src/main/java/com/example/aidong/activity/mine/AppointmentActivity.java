@@ -29,19 +29,14 @@ public class AppointmentActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appointment);
 
-
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.vp_content);
 
         ArrayList<Fragment> fragments = new ArrayList<>();
-        AppointmentFragment all = new AppointmentFragment();
-        AppointmentFragment joined = new AppointmentFragment();
-        AppointmentFragment unJoined = new AppointmentFragment();
-
-        all.setArguments(AppointmentFragment.ALL);
-        joined.setArguments(AppointmentFragment.ALL);
-        unJoined.setArguments(AppointmentFragment.ALL);
+        AppointmentFragment all = AppointmentFragment.newInstance(AppointmentFragment.ALL);
+        AppointmentFragment joined = AppointmentFragment.newInstance(AppointmentFragment.JOINED);
+        AppointmentFragment unJoined = AppointmentFragment.newInstance(AppointmentFragment.UN_JOIN);
 
         fragments.add(all);
         fragments.add(joined);
@@ -49,7 +44,6 @@ public class AppointmentActivity extends BaseActivity {
 
         List<String> titles = Arrays.asList(getResources().getStringArray(R.array.appointmentTab));
         viewPager.setAdapter(new TabFragmentAdapter(getSupportFragmentManager(), fragments, titles));
-        viewPager.setOffscreenPageLimit(2);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
         tabLayout.setupWithViewPager(viewPager);
 

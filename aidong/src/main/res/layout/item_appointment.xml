@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?selectableItemBackground">
 
     <include layout="@layout/inc_bold_line" />
 
@@ -22,6 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="订单号/待支付"
+        android:layout_marginTop="10dp"
         android:textColor="@color/c9"
         android:textSize="13sp" />
 
@@ -30,6 +33,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="84dp"
+        android:layout_marginTop="18dp"
         android:paddingLeft="@dimen/left_margin"
         android:paddingRight="@dimen/right_margin">
 
@@ -69,64 +73,5 @@
 
     <include layout="@layout/inc_line"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="17dp"
-        android:layout_marginBottom="18dp"
-        android:gravity="center_horizontal">
-
-        <TextView
-            android:id="@+id/tv_pay_tip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="实付款:"
-            android:textColor="@color/c3"
-            android:textSize="16sp"
-            android:layout_marginLeft="11dp"/>
-
-        <TextView
-            android:id="@+id/tv_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="¥300.00"
-            android:textColor="@color/c3"
-            android:textSize="17sp"
-            android:layout_marginLeft="10dp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal">
-
-        <TextView
-            android:id="@+id/tv_left_button"
-            android:layout_width="168dp"
-            android:layout_height="wrap_content"
-            android:text="取消订单"
-            android:textSize="14sp"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:gravity="center"
-            android:background="@drawable/shape_bg_white"
-            android:textColor="@color/c3"/>
-
-        <TextView
-            android:id="@+id/tv_right_button"
-            android:layout_width="168dp"
-            android:layout_height="wrap_content"
-            android:text="立即支付"
-            android:textSize="14sp"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:gravity="center"
-            android:visibility="visible"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/shape_bg_red"
-            android:textColor="@color/main_red"/>
-
-    </LinearLayout>
+    <include layout="@layout/inc_appointment_bottom_state"/>
 </LinearLayout>

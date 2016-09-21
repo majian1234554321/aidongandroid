@@ -9,7 +9,7 @@ import com.leyuan.support.http.subscriber.RefreshSubscriber;
 import com.leyuan.support.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.support.mvp.model.CourseModel;
 import com.leyuan.support.mvp.model.impl.CourseModelImpl;
-import com.leyuan.support.mvp.presenter.CoursesActivityPresent;
+import com.leyuan.support.mvp.presenter.CoursePresent;
 import com.leyuan.support.mvp.view.CoursesActivityView;
 import com.leyuan.support.util.Constant;
 
@@ -20,7 +20,7 @@ import java.util.List;
  * 课程列表
  * Created by song on 2016/8/13.
  */
-public class CoursesActivityPresentImpl implements CoursesActivityPresent{
+public class CoursesActivityPresentImpl implements CoursePresent {
     private Context context;
     private CoursesActivityView coursesActivityView;
     private CourseModel courseModel;

@@ -81,7 +81,7 @@
 
 
             <!--底部操作按钮信息-->
-            <include layout="@layout/inc_order_bottom_state_info" />
+            <include layout="@layout/inc_order_bottom_state" />
 
         </LinearLayout>
     </ScrollView>

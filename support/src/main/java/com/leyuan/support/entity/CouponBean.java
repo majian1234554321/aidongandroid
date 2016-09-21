@@ -1,5 +1,7 @@
 package com.leyuan.support.entity;
 
+import java.util.List;
+
 /**
  * 优惠劵
  * Created by song on 2016/8/31.
@@ -11,6 +13,9 @@ public class CouponBean {
     private String min;                 //订单最小金额可用
     private String start_date;          //有效期-开始时间
     private String end_date;            //有效期－结束时间
+    private String use_date;            //使用时间
+    private List<String> desc;          //优惠劵展开描述信息
+
 
     public String getCoupon_id() {
         return coupon_id;
@@ -60,6 +65,22 @@ public class CouponBean {
         this.end_date = end_date;
     }
 
+    public String getUse_date() {
+        return use_date;
+    }
+
+    public void setUse_date(String use_date) {
+        this.use_date = use_date;
+    }
+
+    public List<String> getDesc() {
+        return desc;
+    }
+
+    public void setDesc(List<String> desc) {
+        this.desc = desc;
+    }
+
     @Override
     public String toString() {
         return "CouponBean{" +
@@ -69,6 +90,7 @@ public class CouponBean {
                 ", min='" + min + '\'' +
                 ", start_date='" + start_date + '\'' +
                 ", end_date='" + end_date + '\'' +
+                ", use_date='" + use_date + '\'' +
                 '}';
     }
 }

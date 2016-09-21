@@ -245,9 +245,9 @@ public class FilterAroundPeopleActivity extends LoadAddressDataActivity implemen
 
     private void showAddressPopupWindow(){
         View view = getLayoutInflater().inflate(R.layout.popup_address, null);
-        wvProvince = (WheelView) view.findViewById(R.id.id_province);
-        wvCity = (WheelView) view.findViewById(R.id.id_city);
-        wvDistrict = (WheelView) view.findViewById(R.id.id_district);
+        wvProvince = (WheelView) view.findViewById(R.id.wv_province);
+        wvCity = (WheelView) view.findViewById(R.id.wv_city);
+        wvDistrict = (WheelView) view.findViewById(R.id.wv_district);
         TextView sure = (TextView) view.findViewById(R.id.btn_confirm);
         sure.setOnClickListener(new View.OnClickListener() {
             @Override

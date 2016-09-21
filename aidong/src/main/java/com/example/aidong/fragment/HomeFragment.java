@@ -20,13 +20,13 @@ import com.example.aidong.activity.home.EquipmentActivity;
 import com.example.aidong.activity.home.FoodActivity;
 import com.example.aidong.activity.home.GoodsDetailActivity;
 import com.example.aidong.activity.home.NurtureActivity;
-import com.example.aidong.activity.home.SearchActivity;
+import com.example.aidong.activity.home.GoodsFilterActivity;
 import com.example.aidong.activity.home.adapter.BannerAdapter;
 import com.example.aidong.activity.home.adapter.HomeRecycleViewAdapter;
 import com.leyuan.support.entity.BannerBean;
 import com.leyuan.support.entity.HomeBean;
-import com.leyuan.support.mvp.presenter.HomeFragmentPresent;
-import com.leyuan.support.mvp.presenter.impl.HomeFragmentPresentImpl;
+import com.leyuan.support.mvp.presenter.HomePresent;
+import com.leyuan.support.mvp.presenter.impl.HomePresentImpl;
 import com.leyuan.support.mvp.view.HomeFragmentView;
 import com.leyuan.support.widget.customview.ViewPagerIndicator;
 import com.leyuan.support.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
@@ -57,7 +57,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
     private ArrayList<HomeBean> data = new ArrayList<>();
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private HomeRecycleViewAdapter homeAdapter;
-    private HomeFragmentPresent present;
+    private HomePresent present;
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
@@ -68,7 +68,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         pageSize = 20;
-        present = new HomeFragmentPresentImpl(getContext(),this);
+        present = new HomePresentImpl(getContext(),this);
 
         tvLocation = (TextView)view.findViewById(R.id.tv_location);
         ivSearch = (ImageView) view.findViewById(R.id.iv_search);
@@ -208,7 +208,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.iv_search:
-                Intent intent = new Intent(getContext(), SearchActivity.class);
+                Intent intent = new Intent(getContext(), GoodsFilterActivity.class);
                 startActivity(intent);
                 break;
             default:

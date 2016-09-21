@@ -12,7 +12,7 @@ import com.example.aidong.activity.home.adapter.CampaignAdapter;
 import com.leyuan.support.entity.CampaignBean;
 import com.leyuan.support.mvp.presenter.CampaignPresent;
 import com.leyuan.support.mvp.presenter.impl.CampaignActivityPresentImpl;
-import com.leyuan.support.mvp.view.CampaignView;
+import com.leyuan.support.mvp.view.CampaignFragmentView;
 import com.leyuan.support.widget.customview.SwitcherLayout;
 import com.leyuan.support.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.support.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -26,7 +26,7 @@ import java.util.List;
  * 往期活动
  * Created by song on 2016/8/19.
  */
-public class PastCampaignActivity extends BaseActivity implements CampaignView {
+public class PastCampaignActivity extends BaseActivity implements CampaignFragmentView {
 
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
