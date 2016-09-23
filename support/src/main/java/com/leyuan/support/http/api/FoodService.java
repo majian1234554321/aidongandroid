@@ -2,8 +2,8 @@ package com.leyuan.support.http.api;
 
 
 import com.leyuan.support.entity.BaseBean;
-import com.leyuan.support.entity.FoodDetailBean;
 import com.leyuan.support.entity.FoodAndVenuesBean;
+import com.leyuan.support.entity.data.FoodDetailData;
 
 import retrofit2.http.Field;
 import retrofit2.http.GET;
@@ -22,7 +22,7 @@ public interface FoodService {
     Observable<BaseBean<FoodAndVenuesBean>>getFoods(@Query("page") int page);
 
     @GET("market/foods/{id}")
-    Observable<BaseBean<FoodDetailBean>>getFoodDetail(@Path("id") int id);
+    Observable<BaseBean<FoodDetailData>>getFoodDetail(@Path("id") String id);
 
     //生成健康餐饮订单
     @POST("market/foods/{id}")

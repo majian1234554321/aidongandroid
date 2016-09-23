@@ -1,17 +1,20 @@
 package com.leyuan.support.entity.data;
 
+import com.leyuan.support.entity.EquipmentDetailBean;
+
 /**
  * 活动详情数据实体
  * Created by song on 2016/8/18.
  */
 public class EquipmentDetailData {
-    private EquipmentDetailData equipment;
+    private EquipmentDetailBean equipment;
 
-    public EquipmentDetailData getEquipment() {
+
+    public EquipmentDetailBean getEquipment() {
         return equipment;
     }
 
-    public void setEquipment(EquipmentDetailData equipment) {
+    public void setEquipment(EquipmentDetailBean equipment) {
         this.equipment = equipment;
     }
 

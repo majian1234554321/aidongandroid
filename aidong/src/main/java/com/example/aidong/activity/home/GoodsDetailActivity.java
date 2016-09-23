@@ -1,6 +1,7 @@
 package com.example.aidong.activity.home;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,7 +29,12 @@ import com.example.aidong.activity.home.view.GoodsInfoPopupWindow;
 import com.example.aidong.view.ObserveScrollView;
 import com.example.aidong.view.SlideDetailsLayout;
 import com.leyuan.support.entity.CouponBean;
+import com.leyuan.support.entity.GoodsDetailBean;
+import com.leyuan.support.mvp.presenter.GoodsDetailPresent;
+import com.leyuan.support.mvp.presenter.impl.GoodDetailPresentImpl;
+import com.leyuan.support.mvp.view.GoodsDetailActivityView;
 import com.leyuan.support.util.DensityUtil;
+import com.leyuan.support.widget.customview.SwitcherLayout;
 import com.leyuan.support.widget.customview.ViewPagerIndicator;
 
 import java.util.ArrayList;
@@ -38,8 +44,10 @@ import java.util.List;
  * 商品详情
  * Created by song on 2016/9/12.
  */
-public class GoodsDetailActivity extends BaseActivity implements ObserveScrollView.ScrollViewListener, View.OnClickListener{
+public class GoodsDetailActivity extends BaseActivity implements ObserveScrollView.ScrollViewListener, View.OnClickListener,GoodsDetailActivityView{
     private SlideDetailsLayout detailsLayout;
+    private SwitcherLayout switcherLayout;
+    private LinearLayout contentLayout;
 
     private ObserveScrollView scrollView;
     private ViewPager viewPager;
@@ -52,12 +60,11 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
 
     private GoodsInfoPopupWindow goodInfoPopup;
     private LinearLayout rootLayout;
-    private PopupWindow goodsInfoPopup;
+    private PopupWindow goodsInfoPopup = null;
 
     private RecyclerView couponRecyclerView;
     private List<CouponBean> couponBeanList;
     private GoodsDetailCouponAdapter couponAdapter;
-
 
     private TextView tvDesc;
     private TextView tvQuestion;
@@ -66,22 +73,27 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
     private ImageView ivArrow;
     private TextView tvTip;
 
-
-
+    private String id = "1";
+    private String type = "nurture";
+    private GoodsDetailPresent goodsDetailPresent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_detail);
+        goodsDetailPresent = new GoodDetailPresentImpl(this);
 
         initView();
-
         setListener();
+        goodsDetailPresent.getGoodsDetail(switcherLayout,type,id);
     }
 
 
     private void initView() {
         detailsLayout = (SlideDetailsLayout)findViewById(R.id.slide_details_layout);
+        contentLayout = (LinearLayout)findViewById(R.id.ll_content);
+        switcherLayout = new SwitcherLayout(this,contentLayout);
+
         scrollView = (ObserveScrollView)findViewById(R.id.scrollview);
         titleLayout = (RelativeLayout)findViewById(R.id.rl_title);
         viewPager = (ViewPager) findViewById(R.id.vp_photo);
@@ -168,9 +180,8 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
         tvDesc.setOnClickListener(this);
         tvQuestion.setOnClickListener(this);
         tvService.setOnClickListener(this);
-
-
     }
+
 
     @Override
     public void onClick(View v) {
@@ -179,17 +190,14 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
                 inputRecommendCodeDialog();
                 break;
             case R.id.ll_goods_info:
-
-
                 if(goodsInfoPopup == null){
-                    goodInfoPopup = new GoodsInfoPopupWindow(this);
+                    goodInfoPopup = new GoodsInfoPopupWindow(this,false);
                 }
                 goodInfoPopup.showAtLocation(rootLayout,Gravity.BOTTOM,0,0);
-
-
                 break;
             case R.id.ll_address:
-
+                Intent intent = new Intent(this,DeliveryInfoActivity.class);
+                startActivity(intent);
                 break;
 
             case R.id.tv_desc:
@@ -253,5 +261,10 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
                 ivArrow.setBackgroundResource(R.drawable.icon_arrow_up);
             }
         }
+    }
+
+    @Override
+    public void setGoodsDetail(GoodsDetailBean goodsDetailBean) {
+
     }
 }

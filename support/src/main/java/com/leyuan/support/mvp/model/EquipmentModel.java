@@ -23,5 +23,5 @@ public interface EquipmentModel {
      * @param subscriber Subscribers
      * @param id id
      */
-    void getEquipmentDetail(Subscriber<EquipmentDetailData> subscriber, int id);
+    void getEquipmentDetail(Subscriber<EquipmentDetailData> subscriber, String id);
 }

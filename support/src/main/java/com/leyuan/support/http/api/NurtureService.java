@@ -3,7 +3,7 @@ package com.leyuan.support.http.api;
 
 import com.leyuan.support.entity.BaseBean;
 import com.leyuan.support.entity.data.NurtureData;
-import com.leyuan.support.entity.NurtureDetailBean;
+import com.leyuan.support.entity.data.NurtureDetailData;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -20,5 +20,5 @@ public interface NurtureService {
     Observable<BaseBean<NurtureData>>  getNurtures(@Query("page") int page);
 
     @GET("market/nutrition/{id}")
-    Observable<BaseBean<NurtureDetailBean>>  getNurtureDetail(@Path("id") int id);
+    Observable<BaseBean<NurtureDetailData>>  getNurtureDetail(@Path("id") String id);
 }

@@ -1,7 +1,7 @@
 package com.leyuan.support.mvp.model.impl;
 
-import com.leyuan.support.entity.FoodDetailBean;
 import com.leyuan.support.entity.FoodAndVenuesBean;
+import com.leyuan.support.entity.data.FoodDetailData;
 import com.leyuan.support.http.RetrofitHelper;
 import com.leyuan.support.http.RxHelper;
 import com.leyuan.support.http.api.FoodService;
@@ -28,9 +28,9 @@ public class FoodModelImpl implements FoodModel{
     }
 
     @Override
-    public void getFoodDetail(Subscriber<FoodDetailBean> subscriber, int id) {
+    public void getFoodDetail(Subscriber<FoodDetailData> subscriber, String id) {
         foodService.getFoodDetail(id)
-                .compose(RxHelper.<FoodDetailBean>transform())
+                .compose(RxHelper.<FoodDetailData>transform())
                 .subscribe(subscriber);
     }
 }

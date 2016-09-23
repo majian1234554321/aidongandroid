@@ -1,5 +1,6 @@
 package com.example.aidong.activity.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -61,8 +62,8 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void  initTopLayout(){
-        tvSearch = (TextView)findViewById(R.id.et_search);
-
+        tvSearch = (TextView)findViewById(R.id.tv_search);
+        tvSearch.setOnClickListener(this);
         filterView = (GoodsFilterView)findViewById(R.id.view_filter);
         filterView.setCategoryList(Arrays.asList(getResources().getStringArray(R.array.characterTag)));
         filterView.setOnFilterClickListener(new GoodsFilterView.OnFilterClickListener() {
@@ -133,7 +134,10 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-
+            case R.id.tv_search:
+                Intent intent = new Intent(this,SearchActivity.class);
+                startActivity(intent);
+                break;
 
             default:
                 break;

@@ -1,7 +1,7 @@
 package com.leyuan.support.mvp.model;
 
 import com.leyuan.support.entity.data.NurtureData;
-import com.leyuan.support.entity.NurtureDetailBean;
+import com.leyuan.support.entity.data.NurtureDetailData;
 
 import rx.Subscriber;
 
@@ -23,5 +23,5 @@ public interface NurtureModel {
      * @param subscriber Subscribers
      * @param id id
      */
-    void getNurtureDetail(Subscriber<NurtureDetailBean> subscriber, int id);
+    void getNurtureDetail(Subscriber<NurtureDetailData> subscriber, String id);
 }

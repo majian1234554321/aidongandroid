@@ -3,7 +3,7 @@ package com.leyuan.support.entity;
 import java.util.ArrayList;
 
 /**
- * 首页商品实体
+ * 商品实体 当前包含营养品、 健康餐饮、 装备
  * Created by song on 2016/7/14.
  */
 public class GoodsBean {

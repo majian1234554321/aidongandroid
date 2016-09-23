@@ -1,7 +1,7 @@
 package com.leyuan.support.mvp.model;
 
-import com.leyuan.support.entity.FoodDetailBean;
 import com.leyuan.support.entity.FoodAndVenuesBean;
+import com.leyuan.support.entity.data.FoodDetailData;
 
 import rx.Subscriber;
 
@@ -22,7 +22,7 @@ public interface FoodModel {
      * @param subscriber Subscriber
      * @param id 餐饮id
      */
-    void getFoodDetail(Subscriber<FoodDetailBean> subscriber, int id);
+    void getFoodDetail(Subscriber<FoodDetailData> subscriber, String id);
 
-    //void createFoodOrder();
+
 }

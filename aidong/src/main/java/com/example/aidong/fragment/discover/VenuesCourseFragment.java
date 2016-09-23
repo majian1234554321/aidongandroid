@@ -50,15 +50,8 @@ public class VenuesCourseFragment extends BaseFragment implements VenuesCourseFr
         present.getCourses(1);
     }
 
-
-    @Override
-    public void showNoCourseView() {
-
-    }
-
     @Override
     public void setCourses(List<CourseBean> courseBeanList) {
         courseAdapter.setData(courseBeanList);
-
     }
 }

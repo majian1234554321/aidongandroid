@@ -35,4 +35,14 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
+
+    <TextView
+        android:id="@+id/tv_appointment"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="预约场馆"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:background="@color/main_red"
+        android:textColor="@color/white"/>
 </LinearLayout>

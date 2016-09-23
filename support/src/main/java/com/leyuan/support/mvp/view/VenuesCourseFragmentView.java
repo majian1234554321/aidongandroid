@@ -16,8 +16,5 @@ public interface VenuesCourseFragmentView {
      */
     void setCourses(List<CourseBean> courseBeanList);
 
-    /**
-     * 显示无课程列表界面
-     */
-    void showNoCourseView();
+
 }

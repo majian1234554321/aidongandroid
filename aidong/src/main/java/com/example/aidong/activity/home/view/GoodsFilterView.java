@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 营养品和装备更多商品筛选使徒
+ * 营养品和装备更多商品筛选控件
  * Created by song on 2016/9/19.
  */
 public class GoodsFilterView extends LinearLayout implements View.OnClickListener {

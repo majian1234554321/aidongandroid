@@ -30,7 +30,7 @@ public class EquipmentModelImpl implements EquipmentModel {
     }
 
     @Override
-    public void getEquipmentDetail(Subscriber<EquipmentDetailData> subscriber, int id) {
+    public void getEquipmentDetail(Subscriber<EquipmentDetailData> subscriber, String id) {
         equipmentService.getEquipmentDetail(id)
                 .compose(RxHelper.<EquipmentDetailData>transform())
                 .subscribe(subscriber);

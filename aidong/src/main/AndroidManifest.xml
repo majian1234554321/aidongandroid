@@ -117,17 +117,6 @@
         <activity android:name=".activity.mine.lovecoin.LoveCoinHelpActivity" />
         <activity android:name=".activity.mine.lovecoin.PaymentsDetailActivity" />
         <activity android:name=".activity.mine.lovecoin.WithDrawActivity" />
-        <activity android:name=".scan.activity.MipcaActivityCapture" />
-        <activity android:name=".scan.activity.ScanResultActivity" />
-        <activity android:name=".scan.activity.ScanActivity" />
-        <activity android:name=".activity.venues.VenuesDetailsActivity" />
-        <activity android:name=".activity.home.FoodActivity" />
-        <activity android:name=".activity.home.PastCampaignActivity" />
-        <activity android:name=".activity.home.CourseActivity" />
-        <activity android:name=".activity.home.CourseDetailActivity" />
-        <activity android:name=".activity.home.CampaignActivity" />
-        <activity android:name=".activity.home.SearchActivity" />
-        <activity android:name=".activity.home.GoodsFilterActivity" />
         <activity android:name=".activity.mine.OrderActivity" />
         <activity android:name=".activity.mine.AppointmentActivity" />
         <activity android:name=".activity.mine.CouponActivity" />
@@ -136,6 +125,31 @@
         <activity android:name=".activity.mine.FollowActivity" />
         <activity android:name=".activity.mine.AddAddressActivity" />
         <activity android:name=".activity.mine.AddressActivity" />
+        <activity android:name=".scan.activity.MipcaActivityCapture" />
+        <activity android:name=".scan.activity.ScanResultActivity" />
+        <activity android:name=".scan.activity.ScanActivity" />
+        <activity android:name=".activity.home.FoodActivity" />
+        <activity android:name=".activity.home.PastCampaignActivity" />
+        <activity android:name=".activity.home.CourseActivity" />
+        <activity android:name=".activity.home.CourseDetailActivity" />
+        <activity android:name=".activity.home.CampaignActivity" />
+        <activity android:name=".activity.home.SearchActivity" />
+        <activity android:name=".activity.home.GoodsFilterActivity" />
+        <activity android:name=".activity.home.NurtureActivity" />
+        <activity android:name=".activity.home.CampaignDetailActivity" />
+        <activity android:name=".activity.home.GoodsDetailActivity" />
+        <activity android:name=".activity.home.EquipmentActivity" />
+        <activity android:name=".activity.home.DeliveryInfoActivity" />
+        <activity android:name=".activity.home.SelfDeliveryShopActivity" />
+        <activity android:name=".activity.home.GoodsConfirmActivity" />
+        <activity android:name=".activity.home.AppointmentInfoActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.discover.VenuesDetailActivity"/>
+        <activity android:name=".activity.discover.VenuesDetailOldActivity" />
+        <activity android:name=".activity.discover.DiscoverUserActivity" />
+        <activity android:name=".activity.discover.FilterAroundPeopleActivity" />
+
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
@@ -189,16 +203,8 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name=".activity.discover.FilterAroundPeopleActivity" />
         <activity android:name=".view.wheelcity.LoadAddressDataActivity" />
-        <activity android:name=".activity.home.NurtureActivity" />
-        <activity android:name=".activity.home.CampaignDetailActivity" />
-        <activity android:name=".activity.home.GoodsDetailActivity" />
         <activity android:name=".activity.WebActivity" />
-        <activity android:name=".activity.home.EquipmentActivity" />
-        <activity android:name=".activity.discover.VenuesDetailOldActivity" />
-        <activity android:name=".activity.discover.DiscoverUserActivity" />
-
     </application>
 
 </manifest>

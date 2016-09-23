@@ -1,13 +1,18 @@
 package com.example.aidong.activity.home;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.example.aidong.BaseActivity;
 import com.example.aidong.R;
 import com.example.aidong.activity.home.adapter.SearchHistoryAdapter;
+import com.example.aidong.fragment.home.SearchResultFragment;
 
 /**
  * 搜索
@@ -30,5 +35,22 @@ public class SearchActivity extends BaseActivity{
         historyAdapter = new SearchHistoryAdapter(this);
         recyclerView.setAdapter(historyAdapter);
 
+        etSearch.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // 先隐藏键盘
+                ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
+                        .hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
+
+                SearchResultFragment fragment = new SearchResultFragment();
+                FragmentManager fm = getSupportFragmentManager();
+                fm.beginTransaction().replace(R.id.fl_container,fragment).commit();
+
+                return false;
+            }
+        });
+
     }
+
 }

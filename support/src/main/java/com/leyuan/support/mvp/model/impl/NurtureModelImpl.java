@@ -1,7 +1,7 @@
 package com.leyuan.support.mvp.model.impl;
 
 import com.leyuan.support.entity.data.NurtureData;
-import com.leyuan.support.entity.NurtureDetailBean;
+import com.leyuan.support.entity.data.NurtureDetailData;
 import com.leyuan.support.http.RetrofitHelper;
 import com.leyuan.support.http.RxHelper;
 import com.leyuan.support.http.api.NurtureService;
@@ -28,9 +28,9 @@ public class NurtureModelImpl implements NurtureModel {
     }
 
     @Override
-    public void getNurtureDetail(Subscriber subscriber, int id) {
+    public void getNurtureDetail(Subscriber<NurtureDetailData> subscriber, String id) {
         nurtureService.getNurtureDetail(id)
-                .compose(RxHelper.<NurtureDetailBean>transform())
+                .compose(RxHelper.<NurtureDetailData>transform())
                 .subscribe(subscriber);
     }
 }

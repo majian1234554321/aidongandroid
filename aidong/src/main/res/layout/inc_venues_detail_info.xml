@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -111,6 +111,64 @@
             android:textSize="15sp" />
     </LinearLayout>
 
-    <include layout="@layout/inc_bold_line" />
+    <include layout="@layout/inc_line"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="@dimen/left_margin"
+        android:layout_marginRight="@dimen/right_margin"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:drawableLeft="@drawable/icon_time"
+            android:drawablePadding="15dp"
+            android:gravity="center_vertical"
+            android:text="营业时间"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawablePadding="15dp"
+            android:gravity="center_vertical|right"
+            android:text="全年无休"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <include layout="@layout/inc_line"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="@dimen/left_margin"
+        android:layout_marginRight="@dimen/right_margin"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:drawableLeft="@drawable/icon_venues"
+            android:drawablePadding="15dp"
+            android:gravity="center_vertical"
+            android:text="分店"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawablePadding="15dp"
+            android:drawableRight="@drawable/icon_right_arrow"
+            android:gravity="center_vertical|right"
+            android:text="共三家"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+    </LinearLayout>
 </LinearLayout>

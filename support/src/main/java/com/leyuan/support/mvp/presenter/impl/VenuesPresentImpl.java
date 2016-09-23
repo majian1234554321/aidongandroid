@@ -142,8 +142,6 @@ public class VenuesPresentImpl implements VenuesPresent{
             public void onNext(CourseData courseData) {
                 if(courseData != null && courseData.getCourse() != null && !courseData.getCourse().isEmpty()){
                     venuesCourseFragmentView.setCourses(courseData.getCourse());
-                }else {
-                    venuesCourseFragmentView.showNoCourseView();
                 }
             }
         },id);

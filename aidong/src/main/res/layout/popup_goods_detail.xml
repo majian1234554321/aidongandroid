@@ -37,13 +37,15 @@
                 android:textSize="15sp" />
 
             <ImageView
-                android:id="@+id/tv_cancel"
-                android:layout_width="17dp"
-                android:layout_height="17dp"
+                android:id="@+id/iv_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="14dp"
-                android:layout_marginTop="14dp"
-                android:src="@drawable/icon_cancel" />
+                android:padding="14dp"
+                android:scaleType="center"
+                android:src="@drawable/icon_cancel"
+                android:background="?selectableItemBackground"/>
+
 
             <View
                 android:layout_width="match_parent"
@@ -53,14 +55,16 @@
         </RelativeLayout>
 
         <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/dv_goods_cover"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginLeft="@dimen/left_margin"
             fresco:actualImageScaleType="centerCrop"
-            fresco:backgroundImage="@color/blue" />
+            fresco:backgroundImage="@drawable/place_holder_logo" />
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/ll_taste"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -142,6 +146,7 @@
            android:orientation="horizontal">
 
            <TextView
+               android:id="@+id/tv_confirm"
                android:layout_width="0dp"
                android:layout_height="match_parent"
                android:layout_weight="1"
@@ -153,6 +158,7 @@
                android:visibility="gone"/>
 
            <TextView
+               android:id="@+id/tv_add"
                android:layout_width="0dp"
                android:layout_height="match_parent"
                android:layout_weight="1"
@@ -163,6 +169,7 @@
                android:textSize="16sp" />
 
            <TextView
+               android:id="@+id/tv_buy"
                android:layout_width="0dp"
                android:layout_height="match_parent"
                android:layout_weight="1"
