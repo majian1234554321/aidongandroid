@@ -45,9 +45,9 @@ import java.util.List;
  * Created by song on 2016/9/12.
  */
 public class GoodsDetailActivity extends BaseActivity implements ObserveScrollView.ScrollViewListener, View.OnClickListener,GoodsDetailActivityView{
-    private SlideDetailsLayout detailsLayout;
     private SwitcherLayout switcherLayout;
-    private LinearLayout contentLayout;
+    private RelativeLayout contentLayout;
+    private SlideDetailsLayout detailsLayout;
 
     private ObserveScrollView scrollView;
     private ViewPager viewPager;
@@ -91,10 +91,12 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
 
     private void initView() {
         detailsLayout = (SlideDetailsLayout)findViewById(R.id.slide_details_layout);
-        contentLayout = (LinearLayout)findViewById(R.id.ll_content);
-        switcherLayout = new SwitcherLayout(this,contentLayout);
+        contentLayout = (RelativeLayout) findViewById(R.id.rl_content);
+
 
         scrollView = (ObserveScrollView)findViewById(R.id.scrollview);
+
+        switcherLayout = new SwitcherLayout(this,scrollView);
         titleLayout = (RelativeLayout)findViewById(R.id.rl_title);
         viewPager = (ViewPager) findViewById(R.id.vp_photo);
         indicator = (ViewPagerIndicator) findViewById(R.id.vp_indicator);

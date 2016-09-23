@@ -29,6 +29,7 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
 
     public void setData(List<GoodsBean> data) {
         this.data = data;
+        notifyDataSetChanged();
     }
 
     @Override

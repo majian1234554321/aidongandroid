@@ -125,6 +125,7 @@
         <activity android:name=".activity.mine.FollowActivity" />
         <activity android:name=".activity.mine.AddAddressActivity" />
         <activity android:name=".activity.mine.AddressActivity" />
+        <activity android:name=".activity.mine.CartActivity" />
         <activity android:name=".scan.activity.MipcaActivityCapture" />
         <activity android:name=".scan.activity.ScanResultActivity" />
         <activity android:name=".scan.activity.ScanActivity" />
@@ -141,7 +142,7 @@
         <activity android:name=".activity.home.EquipmentActivity" />
         <activity android:name=".activity.home.DeliveryInfoActivity" />
         <activity android:name=".activity.home.SelfDeliveryShopActivity" />
-        <activity android:name=".activity.home.GoodsConfirmActivity" />
+        <activity android:name=".activity.home.ConfirmGoodsActivity" />
         <activity android:name=".activity.home.AppointmentInfoActivity"
             android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait"/>

@@ -1,6 +1,7 @@
 package com.example.aidong.activity.home.view;
 
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -8,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.aidong.R;
+import com.example.aidong.activity.home.adapter.GoodsDetailTasteAdapter;
 import com.example.aidong.view.BasePopupWindow;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -24,7 +26,7 @@ public class GoodsInfoPopupWindow extends BasePopupWindow implements View.OnClic
     private SimpleDraweeView dvGoodsCover;
 
     private LinearLayout tasteLayout;
-    private RecyclerView recyclerView;
+    private RecyclerView tasteView;
     private ImageView ivMinus;
     private TextView tvCount;
     private ImageView ivAdd;
@@ -56,13 +58,16 @@ public class GoodsInfoPopupWindow extends BasePopupWindow implements View.OnClic
         ivCancel = (ImageView) view.findViewById(R.id.iv_cancel);
         dvGoodsCover = (SimpleDraweeView) view.findViewById(R.id.dv_goods_cover);
         tasteLayout = (LinearLayout) view.findViewById(R.id.ll_taste);
-        recyclerView = (RecyclerView) view.findViewById(R.id.rl_goods_taste);
         ivMinus = (ImageView) view.findViewById(R.id.iv_minus);
         tvCount = (TextView) view.findViewById(R.id.tv_count);
         ivAdd = (ImageView) view.findViewById(R.id.iv_add);
         tvConfirm = (TextView) view.findViewById(R.id.tv_confirm);
         tvAdd = (TextView) view.findViewById(R.id.tv_add);
         tvBuy = (TextView) view.findViewById(R.id.tv_buy);
+
+        tasteView = (RecyclerView) view.findViewById(R.id.rl_goods_taste);
+        tasteView.setAdapter(new GoodsDetailTasteAdapter(null));
+        tasteView.setLayoutManager(new LinearLayoutManager(context));
 
         tvConfirm.setVisibility( isConfirmDeliveryWay ? View.GONE :View.VISIBLE);
         tvAdd.setVisibility( isConfirmDeliveryWay ? View.VISIBLE :View.GONE);

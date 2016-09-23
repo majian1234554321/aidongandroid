@@ -1,10 +1,13 @@
 package com.leyuan.support.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * 用户
  * Created by song on 2016/8/2.
  */
-public class UserBean {
+public class UserBean implements Parcelable{
     //发现-人
     private String id;          //编号
     private String name;        //名字
@@ -50,5 +53,54 @@ public class UserBean {
 
     public void setDistance(String distance) {
         this.distance = distance;
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.avatar);
+        dest.writeString(this.gender);
+        dest.writeString(this.distance);
+    }
+
+    public UserBean() {
+    }
+
+    protected UserBean(Parcel in) {
+        this.id = in.readString();
+        this.name = in.readString();
+        this.avatar = in.readString();
+        this.gender = in.readString();
+        this.distance = in.readString();
+    }
+
+    public static final Creator<UserBean> CREATOR = new Creator<UserBean>() {
+        @Override
+        public UserBean createFromParcel(Parcel source) {
+            return new UserBean(source);
+        }
+
+        @Override
+        public UserBean[] newArray(int size) {
+            return new UserBean[size];
+        }
+    };
+
+    @Override
+    public String toString() {
+        return "UserBean{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", gender='" + gender + '\'' +
+                ", distance='" + distance + '\'' +
+                '}';
     }
 }

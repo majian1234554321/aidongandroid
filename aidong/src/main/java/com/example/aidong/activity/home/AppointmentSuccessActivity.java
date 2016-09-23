@@ -13,6 +13,7 @@ import com.example.aidong.R;
 import com.example.aidong.activity.home.adapter.RecommendAdapter;
 import com.leyuan.support.widget.customview.SimpleTitleBar;
 import com.leyuan.support.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
+import com.leyuan.support.widget.endlessrecyclerview.RecyclerViewUtils;
 
 /**
  * 预约成功界面
@@ -59,6 +60,7 @@ public class AppointmentSuccessActivity extends BaseActivity implements View.OnC
         recommendAdapter = new RecommendAdapter(this);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(recommendAdapter);
         recyclerView.setAdapter(wrapperAdapter);
+        RecyclerViewUtils.setHeaderView(recyclerView,headerView);
 
         tvTime.setText(time);
         returnHome.setOnClickListener(this);

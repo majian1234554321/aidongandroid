@@ -14,7 +14,7 @@ import com.example.aidong.R;
  * 商品确认
  * Created by song on 2016/9/22.
  */
-public class GoodsConfirmActivity extends BaseActivity implements View.OnClickListener{
+public class ConfirmGoodsActivity extends BaseActivity implements View.OnClickListener{
     private ImageView tvBack;
 
     //口味和数量

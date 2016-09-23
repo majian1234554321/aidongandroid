@@ -39,7 +39,7 @@ public class CourseDetailActivity extends BaseActivity{
      * 跳转课程详情界面
      * @param id 课程id
      */
-    public static void newInstance(Context context, String id){
+    public static void actionStart(Context context, String id){
         Intent intent = new Intent(context,CourseDetailActivity.class);
         intent.putExtra("id",id);
         context.startActivity(intent);
@@ -56,9 +56,6 @@ public class CourseDetailActivity extends BaseActivity{
         if(intent != null){
             id = intent.getStringExtra("id");
         }
-
-
-
     }
 
     @Override

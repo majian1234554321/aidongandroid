@@ -15,10 +15,10 @@ import android.widget.TextView;
 import com.example.aidong.BaseFragment;
 import com.example.aidong.R;
 import com.example.aidong.activity.home.CampaignActivity;
+import com.example.aidong.activity.home.CampaignDetailActivity;
 import com.example.aidong.activity.home.CourseActivity;
 import com.example.aidong.activity.home.EquipmentActivity;
 import com.example.aidong.activity.home.FoodActivity;
-import com.example.aidong.activity.home.GoodsDetailActivity;
 import com.example.aidong.activity.home.GoodsFilterActivity;
 import com.example.aidong.activity.home.NurtureActivity;
 import com.example.aidong.activity.home.adapter.BannerAdapter;
@@ -131,7 +131,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
         headerView.findViewById(R.id.tv_competition).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), GoodsDetailActivity.class);
+                Intent intent = new Intent(getActivity(), CampaignDetailActivity.class);
                 startActivity(intent);
             }
         });

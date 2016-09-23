@@ -1,4 +1,4 @@
-package com.example.aidong.activity.mine.shopcart;
+package com.example.aidong.activity.mine;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,6 +13,7 @@ import com.example.aidong.activity.home.adapter.RecommendAdapter;
 import com.example.aidong.activity.mine.adapter.CartShopAdapter;
 import com.leyuan.support.entity.GoodsBean;
 import com.leyuan.support.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
+import com.leyuan.support.widget.endlessrecyclerview.HeaderSpanSizeLookup;
 import com.leyuan.support.widget.endlessrecyclerview.RecyclerViewUtils;
 
 import java.util.ArrayList;
@@ -24,12 +25,12 @@ import java.util.List;
  */
 public class CartActivity extends BaseActivity{
     private View headerView;
-    private RecyclerView shopRecyclerView;
+    private RecyclerView shopView;
     private CartShopAdapter shopAdapter;
 
 
     private SwipeRefreshLayout refreshLayout;
-    private RecyclerView recyclerView;
+    private RecyclerView recommendView;
 
     private List<GoodsBean> data;
     private RecommendAdapter recommendAdapter;
@@ -47,10 +48,10 @@ public class CartActivity extends BaseActivity{
 
     private void initHeaderView() {
         headerView = View.inflate(this,R.layout.header_cart,null);
-        shopRecyclerView = (RecyclerView) headerView.findViewById(R.id.rv_cart_header);
-        shopRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        shopView = (RecyclerView) headerView.findViewById(R.id.rv_cart_header);
+        shopView.setLayoutManager(new LinearLayoutManager(this));
         shopAdapter = new CartShopAdapter(this);
-        shopRecyclerView.setAdapter(shopAdapter);
+        shopView.setAdapter(shopAdapter);
     }
 
     private void initSwipeRefreshLayout(){
@@ -65,13 +66,15 @@ public class CartActivity extends BaseActivity{
     }
 
     private void initRecyclerView() {
-        recyclerView = (RecyclerView)findViewById(R.id.rv_goods);
+        recommendView = (RecyclerView)findViewById(R.id.rv_goods);
         data = new ArrayList<>();
         recommendAdapter = new RecommendAdapter(this);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(recommendAdapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
-        recyclerView.setAdapter(wrapperAdapter);
-        RecyclerViewUtils.setHeaderView(recyclerView,headerView);
-        RecyclerViewUtils.setFooterView(recyclerView,View.inflate(this,R.layout.list_footer_end,null));
+        recommendView.setAdapter(wrapperAdapter);
+        GridLayoutManager manager = new GridLayoutManager(this, 2);
+        manager.setSpanSizeLookup(new HeaderSpanSizeLookup((HeaderAndFooterRecyclerViewAdapter) recommendView.getAdapter(), manager.getSpanCount()));
+        recommendView.setLayoutManager(manager);
+        RecyclerViewUtils.setHeaderView(recommendView,headerView);
+        RecyclerViewUtils.setFooterView(recommendView,View.inflate(this,R.layout.list_footer_end,null));
     }
 }

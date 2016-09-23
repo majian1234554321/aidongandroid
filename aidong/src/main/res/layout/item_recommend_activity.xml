@@ -14,8 +14,8 @@
         android:gravity="center"
         android:layout_gravity="center"
         android:drawablePadding="5dp"
-        android:drawableLeft="@drawable/point_black"
-        android:drawableRight="@drawable/point_black"/>
+        android:drawableLeft="@drawable/icon_black_point"
+        android:drawableRight="@drawable/icon_black_point"/>
 
     <com.example.aidong.view.MyListView
         android:id="@+id/lv_recommend"

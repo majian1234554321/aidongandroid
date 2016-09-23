@@ -9,12 +9,14 @@
         android:layout_height="50dp"
         android:orientation="horizontal"
         android:gravity="center_vertical">
+
         <RadioButton
             android:id="@+id/rb_check"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
         <TextView
-            android:id="@+id/tv_delivery_from"
+            android:id="@+id/tv_shop_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="仓库发货"/>

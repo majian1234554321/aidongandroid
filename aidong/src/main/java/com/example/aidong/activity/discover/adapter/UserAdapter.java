@@ -24,6 +24,11 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder>{
     private Context context;
     private List<UserBean> data = new ArrayList<>();
 
+    public UserAdapter(Context context, List<UserBean> data) {
+        this.context = context;
+        this.data = data;
+    }
+
     public UserAdapter(Context context) {
         this.context = context;
         UserBean bean = new UserBean();

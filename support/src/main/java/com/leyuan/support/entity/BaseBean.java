@@ -4,7 +4,16 @@ package com.leyuan.support.entity;
 public class BaseBean<T> {
 
     private int status;
+    private String message;
     private T data;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public int getStatus() {
         return status;
@@ -26,6 +35,7 @@ public class BaseBean<T> {
     public String toString() {
         return "BaseBean{" +
                 "status=" + status +
+                ", message='" + message + '\'' +
                 ", data=" + data +
                 '}';
     }

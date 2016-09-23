@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class RetrofitHelper {
-    private static final int DEFAULT_TIMEOUT = 30;
+    private static final int DEFAULT_TIMEOUT = 5;
     private static Retrofit singleton;
 
     public static <T> T createApi( Class<T> clazz) {

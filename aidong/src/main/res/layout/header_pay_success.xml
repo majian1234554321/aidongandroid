@@ -77,7 +77,7 @@
             android:id="@+id/tv_appointment"
             android:layout_width="168dp"
             android:layout_height="wrap_content"
-            android:text="查看预约"
+            android:text="查看订单"
             android:textSize="14sp"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"

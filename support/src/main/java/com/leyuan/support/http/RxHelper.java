@@ -36,7 +36,8 @@ public class RxHelper {
                         if (result.getStatus() == 1) {
                             return createDataObservable(result.getData());
                         } else {
-                            return Observable.error(new ServerException(result.getStatus()));
+                            // the exception will callback at Observable's onError
+                            return Observable.error(new ServerException(result.getMessage()));
                         }
                     }
                 }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
