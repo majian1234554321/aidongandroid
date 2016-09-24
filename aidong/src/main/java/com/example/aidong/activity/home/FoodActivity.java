@@ -67,7 +67,8 @@ public class FoodActivity extends BaseActivity implements FoodActivityView{
 
     private void initHeaderView(){
         headerView = View.inflate(this,R.layout.header_food,null);
-        headerView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
+        headerView.setLayoutParams(new LinearLayout.LayoutParams
+                (LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
         viewPager = (ViewPager) headerView.findViewById(R.id.vP_food);
         venuesRecyclerView = (RecyclerView)headerView.findViewById(R.id.rv_recommend_venue);
         ViewPagerIndicator indicator = (ViewPagerIndicator)headerView.findViewById(R.id.vp_indicator);

@@ -19,7 +19,9 @@ public class GoodsDetailTasteAdapter extends RecyclerView.Adapter<GoodsDetailTas
     private List<String> data = new ArrayList<>();
 
     public GoodsDetailTasteAdapter(List<String> data) {
-        this.data = data;
+        if(data != null){
+            this.data = data;
+        }
     }
 
     @Override

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.aidong.R;
-import com.example.aidong.activity.WebActivity;
+import com.example.aidong.activity.home.GoodsDetailActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.support.entity.EquipmentBean;
 
@@ -53,7 +53,7 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.Equi
         holder.cover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, WebActivity.class);
+                Intent intent = new Intent(context, GoodsDetailActivity.class);
                 context.startActivity(intent);
             }
         });

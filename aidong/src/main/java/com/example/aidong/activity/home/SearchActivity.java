@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ScrollView;
 
 import com.example.aidong.BaseActivity;
 import com.example.aidong.R;
@@ -22,12 +23,13 @@ public class SearchActivity extends BaseActivity{
     private EditText etSearch;
     private RecyclerView recyclerView;
     private SearchHistoryAdapter historyAdapter;
-
+    ScrollView
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
 
         etSearch = (EditText) findViewById(R.id.et_search);
         recyclerView = (RecyclerView) findViewById(R.id.rv_search_history);

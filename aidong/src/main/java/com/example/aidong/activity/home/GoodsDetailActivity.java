@@ -85,7 +85,7 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
 
         initView();
         setListener();
-        goodsDetailPresent.getGoodsDetail(switcherLayout,type,id);
+        //goodsDetailPresent.getGoodsDetail(switcherLayout,type,id);
     }
 
 

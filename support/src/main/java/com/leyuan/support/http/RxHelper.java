@@ -13,9 +13,9 @@ import rx.schedulers.Schedulers;
 
 /**
  * Rx帮助类
- * 将服务器返回的带有状态码的结果进行处理
+ * 将服务器返回的带有状态码的结果进行预处理
  * 若状态异常,返回带异常信息的可观察者
- * 若状态正常,返回带有调用者传入的实体观察者
+ * 若状态正常,返回与处理过(去掉了实体的外层包装)的可观察者
  * Created by song on 2016/8/12.
  */
 public class RxHelper {
@@ -36,7 +36,7 @@ public class RxHelper {
                         if (result.getStatus() == 1) {
                             return createDataObservable(result.getData());
                         } else {
-                            // the exception will callback at Observable's onError
+                            // the exception will callback at Subscriber's onError
                             return Observable.error(new ServerException(result.getMessage()));
                         }
                     }

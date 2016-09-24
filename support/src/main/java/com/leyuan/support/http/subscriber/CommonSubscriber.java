@@ -1,5 +1,7 @@
 package com.leyuan.support.http.subscriber;
 
+import android.util.Log;
+
 import com.leyuan.support.widget.customview.SwitcherLayout;
 
 import rx.Subscriber;
@@ -31,6 +33,7 @@ public abstract class CommonSubscriber<T> extends Subscriber<T> {
      */
     @Override
     public void onError(Throwable e) {
+        Log.e("CommonSubscriber","onError:" + e.toString());
         switcherLayout.showExceptionLayout();
     }
 
