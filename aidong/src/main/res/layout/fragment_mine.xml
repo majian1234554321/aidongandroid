@@ -54,7 +54,7 @@
                     android:visibility="visible">
 
 
-                    <com.example.aidong.view.CircleImageView
+                    <com.example.aidong.widget.customview.CircleImageView
                         android:id="@+id/imageView_head"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
@@ -360,7 +360,7 @@
                 android:layout_height="1dp"
                 android:background="@color/mine_divider"/>
 
-            <com.example.aidong.view.AidongMineItem
+            <com.example.aidong.widget.customview.AidongMineItem
                 android:id="@+id/item_my_coin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -368,7 +368,7 @@
                 app:txt_name="我的爱币"
                 app:divider_visible="true"
                 />
-            <com.example.aidong.view.AidongMineItem
+            <com.example.aidong.widget.customview.AidongMineItem
                 android:id="@+id/item_my_coupon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -376,7 +376,7 @@
                 app:txt_name="我的优惠券"
                 app:divider_visible="true"
                 />
-            <com.example.aidong.view.AidongMineItem
+            <com.example.aidong.widget.customview.AidongMineItem
                 android:id="@+id/item_sport_timing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -384,14 +384,14 @@
                 app:txt_name="爱动时刻"
                 app:divider_visible="true"
                 />
-            <com.example.aidong.view.AidongMineItem
+            <com.example.aidong.widget.customview.AidongMineItem
                 android:id="@+id/item_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:img_tag="@drawable/mine_shopping_address"
                 app:txt_name="收货地址"
                 />
-            <com.example.aidong.view.AidongMineItem
+            <com.example.aidong.widget.customview.AidongMineItem
                 android:id="@+id/item_recommend_friend"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -400,7 +400,7 @@
                 app:txt_name="推荐好友"
                 app:divider_visible="true"
                 />
-            <com.example.aidong.view.AidongMineItem
+            <com.example.aidong.widget.customview.AidongMineItem
                 android:id="@+id/item_after_sale"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -408,7 +408,7 @@
                 app:txt_name="售后/退款"
                 app:divider_visible="true"
                 />
-            <com.example.aidong.view.AidongMineItem
+            <com.example.aidong.widget.customview.AidongMineItem
                 android:id="@+id/item_setting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

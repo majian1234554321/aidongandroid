@@ -5,7 +5,7 @@
     android:id="@+id/ll_campaign"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.leyuan.support.widget.customview.SimpleTitleBar
+    <com.example.aidong.widget.customview.SimpleTitleBar
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
         app:stb_title="往期活动"/>

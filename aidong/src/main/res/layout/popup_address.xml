@@ -58,27 +58,27 @@
         android:background="@color/gray_normal"
         android:orientation="horizontal">
 
-        <com.example.aidong.view.wheelcity.WheelView
+        <com.example.aidong.widget.wheelcity.WheelView
             android:id="@+id/wv_province"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1">
-        </com.example.aidong.view.wheelcity.WheelView>
+        </com.example.aidong.widget.wheelcity.WheelView>
 
-        <com.example.aidong.view.wheelcity.WheelView
+        <com.example.aidong.widget.wheelcity.WheelView
             android:id="@+id/wv_city"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/gray_normal">
-        </com.example.aidong.view.wheelcity.WheelView>
+        </com.example.aidong.widget.wheelcity.WheelView>
 
-        <com.example.aidong.view.wheelcity.WheelView
+        <com.example.aidong.widget.wheelcity.WheelView
             android:id="@+id/wv_district"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/gray_normal">
-        </com.example.aidong.view.wheelcity.WheelView>
+        </com.example.aidong.widget.wheelcity.WheelView>
     </LinearLayout>
 </LinearLayout>

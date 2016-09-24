@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.aidong.R;
-import com.example.aidong.interfaces.AutoLinefeedChildViews;
+import com.example.aidong.utils.interfaces.AutoLinefeedChildViews;
 
 import java.util.ArrayList;
 

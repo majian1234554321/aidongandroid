@@ -14,14 +14,14 @@
         android:paddingLeft="12dp"
         android:paddingRight="12dp" >
 
-        <com.example.aidong.view.wheelcity.WheelView
+        <com.example.aidong.widget.wheelcity.WheelView
             android:id="@+id/wheelcity_country"
             android:layout_width="wrap_content"
             android:layout_height="120dp"
             android:layout_gravity="center_vertical"
             android:layout_weight="1" />
 
-        <com.example.aidong.view.wheelcity.WheelView
+        <com.example.aidong.widget.wheelcity.WheelView
             android:id="@+id/wheelcity_city"
             android:layout_width="wrap_content"
             android:layout_height="120dp"
@@ -29,7 +29,7 @@
             android:layout_marginLeft="5dp"
             android:layout_weight="1" />
 
-        <com.example.aidong.view.wheelcity.WheelView
+        <com.example.aidong.widget.wheelcity.WheelView
             android:id="@+id/wheelcity_ccity"
             android:layout_width="wrap_content"
             android:layout_height="120dp"

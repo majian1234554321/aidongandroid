@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.aidong.R;
-import com.example.aidong.model.location.RecorderVideoInformation;
+import com.example.aidong.entity.model.location.RecorderVideoInformation;
 
 import java.util.ArrayList;
 

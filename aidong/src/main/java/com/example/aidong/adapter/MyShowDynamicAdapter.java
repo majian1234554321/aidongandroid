@@ -29,30 +29,29 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
-import com.example.aidong.AbstractCommonAdapter;
-import com.example.aidong.BaseApp;
+import com.example.aidong.ui.BaseApp;
 import com.example.aidong.R;
-import com.example.aidong.activity.media.ImageShowerActivity;
-import com.example.aidong.activity.sportcircle.UserWhoClickLikeActivity;
-import com.example.aidong.common.Constant;
-import com.example.aidong.interfaces.OnCommentAndLikeClickListenner;
-import com.example.aidong.interfaces.OnMoreCommentClickListenner;
-import com.example.aidong.model.AttributeCommentItem;
-import com.example.aidong.model.AttributeDynamics;
-import com.example.aidong.model.AttributeFilm;
-import com.example.aidong.model.AttributeImages;
-import com.example.aidong.model.Dynamic;
-import com.example.aidong.model.UserCoach;
+import com.example.aidong.ui.activity.vedio.media.ImageShowerActivity;
+import com.example.aidong.ui.activity.discover.UserWhoClickLikeActivity;
+import com.example.aidong.utils.common.Constant;
+import com.example.aidong.utils.interfaces.OnCommentAndLikeClickListenner;
+import com.example.aidong.utils.interfaces.OnMoreCommentClickListenner;
+import com.example.aidong.entity.model.AttributeCommentItem;
+import com.example.aidong.entity.model.AttributeDynamics;
+import com.example.aidong.entity.model.AttributeFilm;
+import com.example.aidong.entity.model.AttributeImages;
+import com.example.aidong.entity.model.Dynamic;
+import com.example.aidong.entity.model.UserCoach;
 import com.example.aidong.utils.ActivityTool;
 import com.example.aidong.utils.Constants;
 import com.example.aidong.utils.MyDbUtils;
 import com.example.aidong.utils.SmileUtils;
 import com.example.aidong.utils.Utils;
-import com.example.aidong.view.AutoLinefeedViewGroup;
-import com.example.aidong.view.CircleImageView;
-import com.example.aidong.view.HorizontalListView;
-import com.example.aidong.view.PhotoGridView;
-import com.example.aidong.view.SquareRelativeLayout;
+import com.example.aidong.widget.customview.AutoLinefeedViewGroup;
+import com.example.aidong.widget.customview.CircleImageView;
+import com.example.aidong.widget.customview.HorizontalListView;
+import com.example.aidong.widget.customview.PhotoGridView;
+import com.example.aidong.widget.customview.SquareRelativeLayout;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -700,7 +699,7 @@ private int type = 0;
 						if (like_user.size() > 0) {
 							holder.layout_like_user.setVisibility(View.VISIBLE);
 							holder.list_horizontal
-									.setAdapter(new HorizontalListAdapterLikeUser(
+									.setAdapter(new LikeUserHorizontalListAdapter(
 											context, like_user));
 							holder.list_horizontal.setOnItemClickListener(new OnItemClickListener() {
 

@@ -8,7 +8,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
 
-import com.example.aidong.activity.media.TabPhotoWallActivity;
+import com.example.aidong.ui.activity.vedio.media.TabPhotoWallActivity;
 
 import java.io.BufferedInputStream;
 import java.io.File;

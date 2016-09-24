@@ -4,11 +4,11 @@
                 android:layout_height="fill_parent"
                 android:background="@color/color_black" >
 
-    <com.example.aidong.view.MybigImageViewPager
+    <com.example.aidong.widget.customview.MybigImageViewPager
         android:id="@+id/viewPager"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
-    </com.example.aidong.view.MybigImageViewPager>
+    </com.example.aidong.widget.customview.MybigImageViewPager>
 
     <RelativeLayout
         android:id="@+id/layout_tab"

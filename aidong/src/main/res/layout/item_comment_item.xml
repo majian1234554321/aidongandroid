@@ -11,13 +11,13 @@
         android:layout_marginTop="10dp"
         >
 
-        <com.example.aidong.view.CircleImageView
+        <com.example.aidong.widget.customview.CircleImageView
             android:id="@+id/imageView"
             android:layout_width="@dimen/pref_45dp"
             android:layout_height="@dimen/pref_45dp"
             android:layout_marginLeft="@dimen/pref_15dp"
             android:src="@drawable/icon_picture" >
-        </com.example.aidong.view.CircleImageView>
+        </com.example.aidong.widget.customview.CircleImageView>
 
         <RelativeLayout
             android:id="@+id/rel"

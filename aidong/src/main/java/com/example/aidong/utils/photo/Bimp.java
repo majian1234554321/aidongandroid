@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 
-import com.example.aidong.model.location.ImageItem;
+import com.example.aidong.entity.model.location.ImageItem;
 
 import java.io.BufferedInputStream;
 import java.io.File;

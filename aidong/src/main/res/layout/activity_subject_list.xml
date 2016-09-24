@@ -150,7 +150,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <com.example.aidong.view.MyListView
+            <com.example.aidong.widget.customview.MyListView
                 android:id="@+id/list_subject_list_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

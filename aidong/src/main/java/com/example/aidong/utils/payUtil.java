@@ -2,8 +2,8 @@ package com.example.aidong.utils;
 
 import android.app.Activity;
 
-import com.example.aidong.alipay.Payextends;
-import com.example.aidong.simcpux.WXPayUtil;
+import com.example.aidong.module.pay.alipay.Payextends;
+import com.example.aidong.module.pay.weixinpay.WXPayUtil;
 
 import java.text.DecimalFormat;
 

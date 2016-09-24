@@ -14,12 +14,12 @@ import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.example.aidong.BaseApp;
+import com.example.aidong.ui.BaseApp;
 import com.example.aidong.R;
-import com.example.aidong.activity.mine.MyShowActivityNew;
-import com.example.aidong.common.Constant;
-import com.example.aidong.interfaces.TabChoniceInterface;
-import com.example.aidong.model.UserCoach;
+import com.example.aidong.ui.activity.mine.MyShowActivityNew;
+import com.example.aidong.utils.common.Constant;
+import com.example.aidong.utils.interfaces.TabChoniceInterface;
+import com.example.aidong.entity.model.UserCoach;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;

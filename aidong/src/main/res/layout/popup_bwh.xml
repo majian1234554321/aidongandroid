@@ -61,26 +61,26 @@
             android:layout_below="@+id/line"
             android:orientation="horizontal">
 
-            <com.example.aidong.view.PickerView
+            <com.example.aidong.widget.customview.PickerView
                 android:id="@+id/pv_bust"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
-            </com.example.aidong.view.PickerView>
+            </com.example.aidong.widget.customview.PickerView>
 
-            <com.example.aidong.view.PickerView
+            <com.example.aidong.widget.customview.PickerView
                 android:id="@+id/pv_waist"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
-            </com.example.aidong.view.PickerView>
+            </com.example.aidong.widget.customview.PickerView>
 
-            <com.example.aidong.view.PickerView
+            <com.example.aidong.widget.customview.PickerView
                 android:id="@+id/pv_hip"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
-            </com.example.aidong.view.PickerView>
+            </com.example.aidong.widget.customview.PickerView>
         </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

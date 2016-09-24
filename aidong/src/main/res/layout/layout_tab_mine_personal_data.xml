@@ -154,7 +154,7 @@
                     android:textColor="@color/color_txt_gray1"
                     android:textSize="@dimen/pref_16dp" />
 
-                <com.example.aidong.view.CircleImageView
+                <com.example.aidong.widget.customview.CircleImageView
                     android:id="@+id/layout_tab_mine_personal_data_head_portrait_img"
                     android:layout_width="@dimen/pref_40dp"
                     android:layout_height="@dimen/pref_40dp"

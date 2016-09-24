@@ -12,9 +12,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.aidong.R;
-import com.example.aidong.model.Comment;
+import com.example.aidong.entity.model.Comment;
 import com.example.aidong.utils.SmileUtils;
-import com.example.aidong.view.CircleImageView;
+import com.example.aidong.widget.customview.CircleImageView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 

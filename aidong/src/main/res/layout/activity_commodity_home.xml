@@ -89,7 +89,7 @@
                     android:textSize="@dimen/font_16sp"/>
             </LinearLayout>
 
-            <com.example.aidong.view.MultiGridView
+            <com.example.aidong.widget.customview.MultiGridView
                 android:id="@+id/gridview_commodity_home_tuijian"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

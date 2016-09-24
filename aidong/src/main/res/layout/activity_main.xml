@@ -22,7 +22,7 @@
 
         <include
             android:id="@+id/tabLayout"
-            layout="@layout/layout_tab_bottom" >
+            layout="@layout/layout_home_tab_bottom" >
         </include>
     </LinearLayout>
 

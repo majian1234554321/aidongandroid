@@ -15,8 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.aidong.R;
-import com.example.aidong.activity.media.AlbumActivity;
-import com.example.aidong.model.location.ImageItem;
+import com.example.aidong.ui.activity.vedio.media.AlbumActivity;
+import com.example.aidong.entity.model.location.ImageItem;
 import com.example.aidong.utils.photo.BitmapCache;
 
 /**

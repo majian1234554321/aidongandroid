@@ -5,7 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import com.example.aidong.BaseApp;
+import com.example.aidong.ui.BaseApp;
 
 public class ImageUtil {
 	// 使用BitmapFactory.Options的inSampleSize参数来缩放

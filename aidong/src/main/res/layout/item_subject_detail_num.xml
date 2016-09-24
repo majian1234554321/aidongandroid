@@ -5,7 +5,7 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <com.example.aidong.view.CircleImageView
+    <com.example.aidong.widget.customview.CircleImageView
         android:id="@+id/img_subject_detail_num_tu"
         android:layout_width="@dimen/pref_40dp"
         android:layout_height="@dimen/pref_40dp"

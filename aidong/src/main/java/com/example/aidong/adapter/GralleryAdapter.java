@@ -7,8 +7,6 @@ import android.view.ViewGroup;
 import android.widget.Gallery.LayoutParams;
 import android.widget.ImageView;
 
-import com.example.aidong.AbstractCommonAdapter;
-
 import java.util.ArrayList;
 
 

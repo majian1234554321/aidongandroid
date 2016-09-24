@@ -59,7 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/pref_130dp">
 
-        <com.example.aidong.view.CustomViewPager
+        <com.example.aidong.widget.customview.CustomViewPager
             android:id="@+id/viewpager_foodhome_top"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
@@ -126,7 +126,7 @@
             </LinearLayout>
 
 
-            <com.example.aidong.view.MyListView
+            <com.example.aidong.widget.customview.MyListView
                 android:id="@+id/list_foodhome_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

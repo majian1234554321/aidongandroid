@@ -4,7 +4,7 @@
               android:layout_height="match_parent"
               android:orientation="vertical" >
 
-    <com.example.aidong.view.ExpandGridView
+    <com.example.aidong.widget.customview.ExpandGridView
         android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

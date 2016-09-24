@@ -6,9 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.aidong.AbstractCommonAdapter;
 import com.example.aidong.R;
-import com.example.aidong.model.AttributeImages;
+import com.example.aidong.entity.model.AttributeImages;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
 import java.util.List;

@@ -8,9 +8,9 @@ import android.provider.MediaStore.Images.Media;
 import android.provider.MediaStore.Images.Thumbnails;
 import android.util.Log;
 
-import com.example.aidong.common.MXLog;
-import com.example.aidong.model.location.ImageBucket;
-import com.example.aidong.model.location.ImageItem;
+import com.example.aidong.utils.common.MXLog;
+import com.example.aidong.entity.model.location.ImageBucket;
+import com.example.aidong.entity.model.location.ImageItem;
 
 import java.util.ArrayList;
 import java.util.HashMap;

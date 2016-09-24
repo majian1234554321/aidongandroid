@@ -1,10 +1,10 @@
 package com.example.aidong.utils;
 
-import com.example.aidong.BaseApp;
-import com.example.aidong.model.Like;
-import com.example.aidong.model.Wallet;
-import com.example.aidong.model.Zan;
-import com.example.aidong.model.ZanVideo;
+import com.example.aidong.ui.BaseApp;
+import com.example.aidong.entity.model.Like;
+import com.example.aidong.entity.model.Wallet;
+import com.example.aidong.entity.model.Zan;
+import com.example.aidong.entity.model.ZanVideo;
 import com.lidroid.xutils.db.sqlite.Selector;
 import com.lidroid.xutils.db.sqlite.WhereBuilder;
 

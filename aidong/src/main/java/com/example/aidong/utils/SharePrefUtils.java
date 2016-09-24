@@ -4,7 +4,7 @@ package com.example.aidong.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.aidong.model.UserCoach;
+import com.example.aidong.entity.model.UserCoach;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 

@@ -52,13 +52,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <com.example.aidong.view.MyListView
+            <com.example.aidong.widget.customview.MyListView
                 android:id="@+id/list_subject_filter_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scrollbars="none">
 
-            </com.example.aidong.view.MyListView>
+            </com.example.aidong.widget.customview.MyListView>
         </LinearLayout>
     </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 

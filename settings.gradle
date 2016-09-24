@@ -1,1 +1,1 @@
-include ':aidong', ':commonlibrary', ':support'
+include ':aidong', ':commonlibrary'

@@ -294,7 +294,7 @@
                 android:textColor="@color/btn_gray_normal"
                 android:textSize="@dimen/length28" />
 
-            <com.example.aidong.view.MultiGridView
+            <com.example.aidong.widget.customview.MultiGridView
                 android:id="@+id/gv_character_tag"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -311,7 +311,7 @@
                 android:textColor="@color/btn_gray_normal"
                 android:textSize="@dimen/length28" />
 
-            <com.example.aidong.view.MultiGridView
+            <com.example.aidong.widget.customview.MultiGridView
                 android:id="@+id/gv_sport_tag"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -328,7 +328,7 @@
                 android:textColor="@color/btn_gray_normal"
                 android:textSize="@dimen/length28" />
 
-            <com.example.aidong.view.MultiGridView
+            <com.example.aidong.widget.customview.MultiGridView
                 android:id="@+id/gv_body_tag"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"

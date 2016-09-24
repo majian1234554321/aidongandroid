@@ -55,7 +55,7 @@
             android:textColor="@color/color_black"
             android:textSize="@dimen/pref_16dp"/>
 
-        <com.example.aidong.view.SwitchButton
+        <com.example.aidong.widget.customview.SwitchButton
             xmlns:switch="http://schemas.android.com/apk/res-auto"
             android:id="@+id/switch1"
             android:layout_width="wrap_content"
@@ -102,7 +102,7 @@
             android:textColor="@color/color_black"
             android:textSize="@dimen/pref_16dp"/>
 
-        <com.example.aidong.view.SwitchButton
+        <com.example.aidong.widget.customview.SwitchButton
             xmlns:switch="http://schemas.android.com/apk/res-auto"
             android:id="@+id/switch2"
             android:layout_width="wrap_content"
@@ -149,7 +149,7 @@
             android:textColor="@color/color_black"
             android:textSize="@dimen/pref_16dp"/>
 
-        <com.example.aidong.view.SwitchButton
+        <com.example.aidong.widget.customview.SwitchButton
             xmlns:switch="http://schemas.android.com/apk/res-auto"
             android:id="@+id/switch3"
             android:layout_width="wrap_content"

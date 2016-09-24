@@ -73,4 +73,39 @@
     <string name="delete_fail">删除失败</string>
 
     <string name="update_address">更新地址</string>
+
+    <!-- Time -->
+    <string name="just_now">刚刚</string>
+    <string name="min">分钟前</string>
+    <string name="hour">小时前</string>
+    <string name="year">年前</string>
+    <string name="today">今天</string>
+    <string name="yesterday">昨天</string>
+    <string name="the_day_before_yesterday">前天</string>
+
+    <!--Main-->
+    <string name="main_home">首页</string>
+    <string name="main_video">视界</string>
+    <string name="main_discover">发现</string>
+    <string name="main_mine">我的</string>
+    <string name="sure_logout">确定要退出吗？</string>
+    <string name="sure">确定</string>
+
+
+    <!--network-->
+    <string name="connect_break">连接中断,请检查网络设置</string>
+    <string name="connect_timeout">连接超时,请检查网络设置</string>
+
+    <string name="empty_string">empty</string>
+    <string name="dynamicbox_retry">Retry</string>
+
+    <string name="dynamicbox_loading_title"></string>
+    <string name="dynamicbox_loading_message"></string>
+
+    <string name="dynamicbox_internet_off_title">错误</string>
+    <string name="dynamicbox_internet_off_message">网络飞走了,重新连接试试</string>
+
+    <string name="dynamicbox_exception_title">Error</string>
+    <string name="dynamicbox_exception_message">An error has occurred, retry again</string>
+
 </resources>

@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.aidong.R;
-import com.example.aidong.model.TagBean;
+import com.example.aidong.entity.model.TagBean;
 import com.leyuan.commonlibrary.util.ToastUtil;
 
 /**

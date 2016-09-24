@@ -4,6 +4,13 @@
     <dimen name="item_max_text_size">16dp</dimen>
     <dimen name="item_min_text_size">13dp</dimen>
 
+    <!--屏幕左右间隙-->
+    <dimen name="left_margin">12dp</dimen>
+    <dimen name="right_margin">12dp</dimen>
+
+    <!--分割线高度-->
+    <dimen name="line_height">0.5dp</dimen>
+
     <dimen name="padding_search_bar">5dp</dimen>
     <dimen name="height_row_weixin">65dp</dimen>
     <dimen name="size_avatar">50dp</dimen>
@@ -199,4 +206,6 @@
     <dimen name="sp_12">12sp</dimen>
     <dimen name="sp_14">14sp</dimen>
     <dimen name="sp_16">16sp</dimen>
+
+
 </resources>

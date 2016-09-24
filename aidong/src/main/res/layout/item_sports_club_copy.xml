@@ -14,7 +14,7 @@
         android:layout_marginTop="10dp"
         android:orientation="horizontal" >
 
-        <com.example.aidong.view.CircleImageView
+        <com.example.aidong.widget.customview.CircleImageView
             android:id="@+id/imgIconView"
             android:layout_width="@dimen/pref_40dp"
             android:layout_height="@dimen/pref_40dp"
@@ -114,7 +114,7 @@
 
         <!-- 有视频的的布局 -->
 
-        <com.example.aidong.view.SquareRelativeLayout
+        <com.example.aidong.widget.customview.SquareRelativeLayout
             android:id="@+id/videoLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -136,7 +136,7 @@
                 android:adjustViewBounds="true"
                 android:background="@drawable/play_small"
                 android:scaleType="centerCrop" />
-        </com.example.aidong.view.SquareRelativeLayout>
+        </com.example.aidong.widget.customview.SquareRelativeLayout>
 
       
         <!-- 三张图片的布局  -->  
@@ -189,7 +189,7 @@
 
         <!-- 1 2 4 ，5的上面2张，6张图片的布局 -->
 
-        <com.example.aidong.view.PhotoGridView
+        <com.example.aidong.widget.customview.PhotoGridView
             android:id="@+id/girdview_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -261,7 +261,7 @@
             android:layout_centerVertical="true"
             android:src="@drawable/icon_like_dynamic_copy" />
 
-        <com.example.aidong.view.HorizontalListView
+        <com.example.aidong.widget.customview.HorizontalListView
             android:layout_toRightOf="@id/img_like_tag"
             android:id="@+id/list_horizontal"
             android:layout_width="wrap_content"
@@ -269,7 +269,7 @@
             android:layout_marginLeft="10dp"
               android:layout_centerVertical="true"
             android:listSelector="@color/color_white" >
-        </com.example.aidong.view.HorizontalListView>
+        </com.example.aidong.widget.customview.HorizontalListView>
 
  <!-- 
   <GridView 

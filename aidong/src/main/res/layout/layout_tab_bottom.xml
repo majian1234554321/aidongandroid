@@ -1,186 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/bottomTabLayout"
-              android:layout_width="fill_parent"
-              android:layout_height="55dp"
-              android:background="@color/color_home_tab_bg"
-              android:baselineAligned="false">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false">
 
-    <RelativeLayout
-        android:id="@+id/tabNearLayout"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:gravity="center">
+    <LinearLayout
+        android:id="@+id/ll_tap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical">
 
-        <RelativeLayout
+        <TextView
+            android:id="@+id/tv_tab_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true">
-
-            <ImageView
-                android:id="@+id/tabNearImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:gravity="center">
-            </ImageView>
-
-            <TextView
-                android:id="@+id/tabNearTextView"
-                style="@style/tabTextStyle"
-                android:layout_below="@id/tabNearImageView"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="7dp"
-                android:gravity="center"
-                android:text="@string/tabhome"
-                android:textSize="11dp">
-            </TextView>
-        </RelativeLayout>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-        </View>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/tabFoundLayout"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:clickable="false"
-        android:gravity="center">
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true">
-
-            <ImageView
-                android:id="@+id/tabFoundImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:gravity="center">
-            </ImageView>
-
-            <TextView
-                android:id="@+id/tabFoundTextView"
-                style="@style/tabTextStyle"
-                android:layout_below="@id/tabFoundImageView"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="7dp"
-                android:gravity="center"
-                android:text="@string/tabFound"
-                android:textSize="11dp">
-            </TextView>
-        </RelativeLayout>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-        </View>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/tabMsgLayout"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:clickable="false"
-        android:gravity="center">
+            android:singleLine="true"/>
 
         <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/tabContactorLayout"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:clickable="false"
-        android:gravity="center">
-
-        <RelativeLayout
+            android:id="@+id/iv_tab_icon"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true">
+            android:layout_height="wrap_content"/>
 
-            <ImageView
-                android:id="@+id/tabContactorImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:gravity="center">
-            </ImageView>
+    </LinearLayout>
 
-            <TextView
-                android:id="@+id/tabContactorTextView"
-                style="@style/tabTextStyle"
-                android:layout_below="@id/tabContactorImageView"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="7dp"
-                android:gravity="center"
-                android:text="@string/sportCircle"
-                android:textSize="11dp">
-            </TextView>
-        </RelativeLayout>
+    <com.flyco.tablayout.widget.MsgView
+        android:id="@+id/rtv_msg_tip"
+        xmlns:mv="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/ll_tap"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:textSize="11.5sp"
+        android:visibility="gone"
+        mv:mv_backgroundColor="#FD481F"
+        mv:mv_isRadiusHalfHeight="true"
+        mv:mv_strokeColor="#ffffff"
+        mv:mv_strokeWidth="1dp"/>
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-        </View>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/tabMineLayout"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:clickable="false"
-        android:gravity="center">
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true">
-
-            <ImageView
-                android:id="@+id/tabMineImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:gravity="center">
-            </ImageView>
-
-            <TextView
-                android:id="@+id/tabMineTextView"
-                style="@style/tabTextStyle"
-                android:layout_below="@id/tabMineImageView"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="7dp"
-                android:gravity="center"
-                android:text="@string/tabMine"
-                android:textSize="11dp">
-            </TextView>
-        </RelativeLayout>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-        </View>
-    </RelativeLayout>
-
-</LinearLayout>
+</RelativeLayout>

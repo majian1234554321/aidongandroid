@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.example.aidong.common.Constant;
+import com.example.aidong.utils.common.Constant;
 
 import java.io.File;
 import java.io.IOException;

@@ -87,7 +87,7 @@
                 android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"/>
 
-            <com.example.aidong.view.CircleImageView
+            <com.example.aidong.widget.customview.CircleImageView
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:src="@drawable/icon_avatar_default"

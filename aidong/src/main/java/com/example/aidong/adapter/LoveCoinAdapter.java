@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.aidong.R;
-import com.example.aidong.model.IntegralDetailInfo;
+import com.example.aidong.entity.model.IntegralDetailInfo;
 
 import java.util.ArrayList;
 

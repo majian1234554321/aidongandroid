@@ -2,10 +2,10 @@ package com.example.aidong.http;
 
 import android.graphics.Bitmap;
 
-import com.example.aidong.BaseApp;
+import com.example.aidong.ui.BaseApp;
 import com.example.aidong.R;
-import com.example.aidong.common.MXLog;
-import com.example.aidong.model.result.MsgResult;
+import com.example.aidong.utils.common.MXLog;
+import com.example.aidong.entity.model.result.MsgResult;
 import com.example.aidong.utils.ImageFactory;
 import com.example.aidong.utils.LogUtils;
 import com.example.aidong.utils.Utils;

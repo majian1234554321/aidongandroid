@@ -11,9 +11,8 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 
-import com.example.aidong.AbstractCommonAdapter;
 import com.example.aidong.R;
-import com.example.aidong.model.location.ImageItem;
+import com.example.aidong.entity.model.location.ImageItem;
 import com.example.aidong.utils.photo.BitmapCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
