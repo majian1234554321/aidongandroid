@@ -73,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/pref_200dip">
 
-                <com.example.aidong.widget.customview.CustomViewPager
+                <com.leyuan.aidong.widget.customview.CustomViewPager
                     android:id="@+id/viewpager_home_ad"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
@@ -88,7 +88,7 @@
                     android:orientation="horizontal"/>
             </RelativeLayout>
 
-            <com.example.aidong.widget.customview.MultiGridView
+            <com.leyuan.aidong.widget.customview.MultiGridView
                 android:id="@+id/gridview_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -100,7 +100,7 @@
                 android:scrollbars="none"
                 android:verticalSpacing="@dimen/pref_2dp"/>
 
-            <com.example.aidong.widget.customview.MyListView
+            <com.leyuan.aidong.widget.customview.MyListView
                 android:id="@+id/list_home_tuijian"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

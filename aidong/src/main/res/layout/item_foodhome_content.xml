@@ -42,7 +42,7 @@
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/font_14sp"/>
 
-            <com.example.aidong.widget.customview.MultiGridView
+            <com.leyuan.aidong.widget.customview.MultiGridView
                 android:id="@+id/gridview_item_foodhome_content_shicai"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/font_14sp"/>
 
-            <com.example.aidong.widget.customview.MultiGridView
+            <com.leyuan.aidong.widget.customview.MultiGridView
                 android:id="@+id/gridview_item_foodhome_content_renqun"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

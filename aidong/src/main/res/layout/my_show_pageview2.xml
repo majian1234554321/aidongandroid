@@ -87,12 +87,12 @@
             android:layout_marginTop="2dp"
             android:textColor="@color/store"
             android:layout_weight="0.25" />
-        <com.example.aidong.widget.customview.AutoLinefeedViewGroup
+        <com.leyuan.aidong.widget.customview.AutoLinefeedViewGroup
             android:id="@+id/view_auto"
             android:layout_width="1dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.75"
-            ></com.example.aidong.widget.customview.AutoLinefeedViewGroup>
+            ></com.leyuan.aidong.widget.customview.AutoLinefeedViewGroup>
 
     </LinearLayout>
 

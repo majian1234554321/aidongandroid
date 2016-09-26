@@ -32,7 +32,7 @@
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop" />
 
-                <com.example.aidong.widget.customview.ViewPagerIndicator
+                <com.leyuan.aidong.widget.customview.ViewPagerIndicator
                     android:id="@+id/vp_indicator"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"

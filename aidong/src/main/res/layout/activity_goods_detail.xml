@@ -13,7 +13,7 @@
         android:layout_weight="1">
 
 
-        <com.example.aidong.widget.customview.SlideDetailsLayout
+        <com.leyuan.aidong.widget.customview.SlideDetailsLayout
             android:id="@+id/slide_details_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
             app:duration="300"
             app:percent="0.4">
 
-            <com.example.aidong.widget.customview.ObserveScrollView
+            <com.leyuan.aidong.widget.customview.ObserveScrollView
                 android:id="@+id/scrollview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -41,7 +41,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" />
 
-                        <com.example.aidong.widget.customview.ViewPagerIndicator
+                        <com.leyuan.aidong.widget.customview.ViewPagerIndicator
                             android:id="@+id/vp_indicator"
                             android:layout_width="match_parent"
                             android:layout_height="20dp"
@@ -349,7 +349,7 @@
                     </LinearLayout>
 
                 </LinearLayout>
-            </com.example.aidong.widget.customview.ObserveScrollView>
+            </com.leyuan.aidong.widget.customview.ObserveScrollView>
 
             <LinearLayout
                 android:id="@+id/slide_details_behind"
@@ -406,7 +406,7 @@
             </LinearLayout>
 
 
-        </com.example.aidong.widget.customview.SlideDetailsLayout>
+        </com.leyuan.aidong.widget.customview.SlideDetailsLayout>
 
         <RelativeLayout
             android:id="@+id/rl_title"

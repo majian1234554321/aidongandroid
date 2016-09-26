@@ -15,31 +15,31 @@
 
     <include layout="@layout/inc_line_black" />
 
-    <com.example.aidong.widget.customview.ExtendTextView
+    <com.leyuan.aidong.widget.customview.ExtendTextView
         android:id="@+id/tv_buyer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:left_text="收货人:" />
 
-    <com.example.aidong.widget.customview.ExtendTextView
+    <com.leyuan.aidong.widget.customview.ExtendTextView
         android:id="@+id/tv_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:left_text="联系方式:" />
 
-    <com.example.aidong.widget.customview.ExtendTextView
+    <com.leyuan.aidong.widget.customview.ExtendTextView
         android:id="@+id/tv_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:left_text="收货地址:" />
 
-    <com.example.aidong.widget.customview.ExtendTextView
+    <com.leyuan.aidong.widget.customview.ExtendTextView
         android:id="@+id/tv_invoice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:left_text="发票信息:" />
 
-    <com.example.aidong.widget.customview.ExtendTextView
+    <com.leyuan.aidong.widget.customview.ExtendTextView
         android:id="@+id/tv_remarks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

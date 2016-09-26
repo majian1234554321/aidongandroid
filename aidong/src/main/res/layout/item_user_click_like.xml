@@ -10,7 +10,7 @@
         android:layout_marginRight="11dp"
         >
 
-        <com.example.aidong.widget.customview.CircleImageView
+        <com.leyuan.aidong.widget.customview.CircleImageView
             android:id="@+id/img_head_portrait"
             android:layout_width="40dp"
             android:layout_height="40dp"

@@ -31,7 +31,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/pref_300dip">
 
-                    <com.example.aidong.widget.customview.CustomViewPager
+                    <com.leyuan.aidong.widget.customview.CustomViewPager
                         android:id="@+id/viewpager_subject_detail_top"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"/>
@@ -113,7 +113,7 @@
                         android:textColor="@color/color_txt_gray2"
                         android:textSize="@dimen/font_16sp"/>
 
-                    <com.example.aidong.widget.customview.CircleImageView
+                    <com.leyuan.aidong.widget.customview.CircleImageView
                         android:id="@+id/img_subject_detail_head"
                         android:layout_width="@dimen/pref_70dp"
                         android:layout_height="@dimen/pref_70dp"

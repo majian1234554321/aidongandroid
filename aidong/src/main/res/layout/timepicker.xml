@@ -5,31 +5,31 @@
               android:layout_height="fill_parent"
               android:orientation="horizontal" >
 
-    <com.example.aidong.widget.wheelview.WheelView
+    <com.leyuan.aidong.widget.wheelview.WheelView
         android:id="@+id/year"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1" />
 
-    <com.example.aidong.widget.wheelview.WheelView
+    <com.leyuan.aidong.widget.wheelview.WheelView
         android:id="@+id/month"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1" />
 
-    <com.example.aidong.widget.wheelview.WheelView
+    <com.leyuan.aidong.widget.wheelview.WheelView
         android:id="@+id/day"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1" />
 
-    <com.example.aidong.widget.wheelview.WheelView
+    <com.leyuan.aidong.widget.wheelview.WheelView
         android:id="@+id/hour"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1" />
 
-    <com.example.aidong.widget.wheelview.WheelView
+    <com.leyuan.aidong.widget.wheelview.WheelView
         android:id="@+id/min"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -4,13 +4,13 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.example.aidong.widget.customview.SimpleTitleBar
+    <com.leyuan.aidong.widget.customview.SimpleTitleBar
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
         app:stb_title="小团体课"/>
 
-    <com.example.aidong.widget.dropdownmenu.DropDownMenu
+    <com.leyuan.aidong.widget.dropdownmenu.DropDownMenu
         android:id="@+id/drop_down_menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

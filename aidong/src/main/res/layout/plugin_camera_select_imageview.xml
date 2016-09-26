@@ -5,7 +5,7 @@
                 android:descendantFocusability="blocksDescendants"
     >
 
-    <com.example.aidong.widget.customview.SquareRelativeLayout
+    <com.leyuan.aidong.widget.customview.SquareRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
@@ -46,6 +46,6 @@
             android:layout_marginTop="10dp"
             />
 
-    </com.example.aidong.widget.customview.SquareRelativeLayout>
+    </com.leyuan.aidong.widget.customview.SquareRelativeLayout>
 
 </RelativeLayout>

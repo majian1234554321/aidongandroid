@@ -6,7 +6,7 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <com.example.aidong.widget.customview.SimpleTitleBar
+    <com.leyuan.aidong.widget.customview.SimpleTitleBar
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
@@ -182,37 +182,37 @@
 
             <include layout="@layout/inc_line_black" />
 
-            <com.example.aidong.widget.customview.ExtendTextView
+            <com.leyuan.aidong.widget.customview.ExtendTextView
                 android:id="@+id/tv_total_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="商品总额:" />
 
-            <com.example.aidong.widget.customview.ExtendTextView
+            <com.leyuan.aidong.widget.customview.ExtendTextView
                 android:id="@+id/tv_express_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="运费:" />
 
-            <com.example.aidong.widget.customview.ExtendTextView
+            <com.leyuan.aidong.widget.customview.ExtendTextView
                 android:id="@+id/tv_coupon_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="优惠劵:" />
 
-            <com.example.aidong.widget.customview.ExtendTextView
+            <com.leyuan.aidong.widget.customview.ExtendTextView
                 android:id="@+id/tv_discount_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="商品优惠:" />
 
-            <com.example.aidong.widget.customview.ExtendTextView
+            <com.leyuan.aidong.widget.customview.ExtendTextView
                 android:id="@+id/tv_aibi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="爱币:" />
 
-            <com.example.aidong.widget.customview.ExtendTextView
+            <com.leyuan.aidong.widget.customview.ExtendTextView
                 android:id="@+id/tv_aidou"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

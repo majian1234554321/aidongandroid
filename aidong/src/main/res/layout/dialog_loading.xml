@@ -6,7 +6,7 @@
     android:background="@color/red"
     android:layout_height="match_parent">
 
-    <com.example.aidong.widget.loadingindicator.AVLoadingIndicatorView
+    <com.leyuan.aidong.widget.loadingindicator.AVLoadingIndicatorView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/avi"
         android:layout_width="wrap_content"

@@ -71,7 +71,7 @@
                 android:layout_weight="1"/>
         </LinearLayout>
 
-        <com.example.aidong.widget.customview.MyListView
+        <com.leyuan.aidong.widget.customview.MyListView
             android:id="@+id/list_home_hot_tuijian"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

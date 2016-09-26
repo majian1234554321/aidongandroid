@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone" >
 
-                <com.example.aidong.widget.customview.PhotoGridView
+                <com.leyuan.aidong.widget.customview.PhotoGridView
                     android:id="@+id/gridview_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
                     android:numColumns="4"
                     android:scrollbars="none"
                     android:verticalSpacing="5dp" >
-                </com.example.aidong.widget.customview.PhotoGridView>
+                </com.leyuan.aidong.widget.customview.PhotoGridView>
 
                 <View
                     android:layout_width="match_parent"
@@ -86,7 +86,7 @@
                 android:layout_height="70dp"
                 android:layout_marginTop="10dp" >
 
-                <com.example.aidong.widget.customview.CircleImageView
+                <com.leyuan.aidong.widget.customview.CircleImageView
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/img_head_portrait"
                     android:layout_width="70dp"
