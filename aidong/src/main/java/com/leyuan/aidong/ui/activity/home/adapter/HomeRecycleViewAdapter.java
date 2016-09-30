@@ -8,12 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 
-import com.leyuan.aidong.R;
-import com.leyuan.aidong.widget.customview.MyListView;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.leyuan.commonlibrary.util.ToastUtil;
+import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.entity.HomeBean;
+import com.leyuan.aidong.widget.customview.MyListView;
+import com.leyuan.aidong.widget.overscroll.IOverScrollDecor;
+import com.leyuan.aidong.widget.overscroll.IOverScrollUpdateListener;
+import com.leyuan.commonlibrary.util.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,6 +87,7 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             RecommendGoodsAdapter adapter = new RecommendGoodsAdapter(context);
             ((RecommendGoodsViewHolder) holder).recyclerView.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false));
             ((RecommendGoodsViewHolder) holder).recyclerView.setAdapter(adapter);
+           
 
             ArrayList<GoodsBean> list = new ArrayList<>();
             for(int i =0; i<10;i++){
@@ -100,8 +103,8 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 }
                 list.add(bean1);
             }
-            adapter.setDate(list);
-           // adapter.setDate(bean.getCategory().get(0).getItem());
+            adapter.setData(list);
+           // adapter.setData(bean.getCategory().get(0).getItem());
         }
     }
 
