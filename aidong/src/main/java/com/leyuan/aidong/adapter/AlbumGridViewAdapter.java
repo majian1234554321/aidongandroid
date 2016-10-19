@@ -198,7 +198,7 @@ public class AlbumGridViewAdapter extends AbstractCommonAdapter {
 			}
 
 			//
-			// if (viewHolder.check_box.isChecked()) {
+			// if (viewHolder.check_box.checked()) {
 			// viewHolder.view_stroke_album.setVisibility(View.VISIBLE);
 			// //
 			// viewHolder.check_box.setBackgroundResource(R.drawable.btn_select_camera_pressed);
@@ -253,7 +253,7 @@ public class AlbumGridViewAdapter extends AbstractCommonAdapter {
 
 				// boolean last_is_selected = (Boolean)
 				// box.getTag(R.id.tag_first);
-				// if (last_is_selected != isChecked) {
+				// if (last_is_selected != checked) {
 				if (mOncheckListener != null) {
 					Log.e("album", "执行了chenckbox代码");
 					mOncheckListener.onCheckBoxClick(box, isChecked, position,

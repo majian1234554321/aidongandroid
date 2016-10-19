@@ -16,7 +16,7 @@ public interface CartActivityView {
     void updateRecyclerView(List<GoodsBean> goodsBeanList);
 
     /**
-     * 显示没有数据布局
+     * 显示购物车没有数据布局
      */
     void showEmptyView();
 }

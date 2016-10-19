@@ -21,9 +21,6 @@ import com.leyuan.aidong.utils.photo.BitmapCache;
 
 /**
  * 这个是显示所有包含图片的文件夹的适配器
- * 
- * @author king
- * @version 2014年10月18日 下午11:49:44
  */
 public class FolderAdapter extends BaseAdapter {
 

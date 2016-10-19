@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -19,7 +20,7 @@ import java.util.List;
  * 购物车中单条商品适配器
  * Created by song on 2016/9/8.
  */
-public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.GoodsHolder>{
+public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.GoodsHolder> implements View.OnClickListener{
     private Context context;
     private List<GoodsBean> data = new ArrayList<>();
 
@@ -46,20 +47,63 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
     @Override
     public void onBindViewHolder(final GoodsHolder holder, int position) {
         final GoodsBean bean = data.get(position);
-        holder.check.setChecked(bean.isChecked);
         holder.cover.setImageURI(bean.getCover());
         holder.name.setText(bean.getName());
         holder.desc.setText(bean.getName());
         holder.price.setText(bean.getPrice());
         holder.count.setText(bean.getAmount());
 
+        holder.check.setChecked(bean.isChecked());
         holder.check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.check.setChecked(!bean.isChecked);
-                bean.isChecked = !bean.isChecked;
+                bean.setChecked(!bean.isChecked());
+                holder.check.setChecked(!bean.isChecked());
+
+                boolean allChecked = true;
+                for (GoodsBean goodsBean : data) {
+                    if(!goodsBean.isChecked()){
+                        allChecked = false;
+                    }
+                }
+
+                if(allChecked){
+                    Toast.makeText(context,"店子全选",Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context,"取消店子全选",Toast.LENGTH_SHORT).show();
+                }
             }
         });
+
+        holder.add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.count.setText(Integer.parseInt(holder.count.getText().toString()) + 1);
+            }
+        });
+
+        holder.minus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(Integer.parseInt(holder.count.getText().toString()) >1){
+                    holder.count.setText(Integer.parseInt(holder.count.getText().toString()) - 1);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.iv_add:
+                break;
+            case R.id.iv_minus:
+                break;
+            case R.id.rb_check:
+                break;
+            default:
+                break;
+        }
     }
 
     class GoodsHolder extends RecyclerView.ViewHolder {

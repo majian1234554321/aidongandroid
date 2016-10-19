@@ -10,7 +10,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.leyuan.aidong.ui.BaseApp;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.utils.common.BaseUrlLink;
 import com.leyuan.aidong.R;
@@ -130,8 +130,8 @@ public class SportCircleFragment extends BaseFragment implements
 				buffer.append("/dynamics");
 				String titleUrl = buffer.toString();
 				oks.setTitleUrl(titleUrl);
-				if (BaseApp.mInstance.isLogin()) {
-					oks.setText("我的美型号" + BaseApp.mInstance.getUser().getMxid()
+				if (App.mInstance.isLogin()) {
+					oks.setText("我的美型号" + App.mInstance.getUser().getMxid()
 							+ "这里都是型男美女“小鲜肉”，全民老公vs梦中女神，速速围观" + titleUrl);
 				} else {
 					oks.setText("这里都是型男美女“小鲜肉”，全民老公vs梦中女神，速速围观" + titleUrl);
@@ -193,7 +193,7 @@ public class SportCircleFragment extends BaseFragment implements
 	private OnCommentAndLikeClickListenner mOnCommentAndLikeClickListenner = new OnCommentAndLikeClickListenner() {
 		@Override
 		public void onLikeClick(View v) {
-			if (BaseApp.mInstance.isLogin()) {
+			if (App.mInstance.isLogin()) {
 				currentPosition = (Integer) v.getTag();
 				Dynamic dynamic = array
 						.get(currentPosition);
@@ -206,7 +206,7 @@ public class SportCircleFragment extends BaseFragment implements
 					dynamic.setLikes(goodCount);
 					ArrayList<AttributeDynamics.LikeUser> like = dynamic.getLike_user();
 					AttributeDynamics.LikeUser user =  new AttributeDynamics().new LikeUser();
-					user.setUser(BaseApp.mInstance.getUser());
+					user.setUser(App.mInstance.getUser());
 					like.add(0, user);
 					adapter.freshData(array);
 					addTask(SportCircleFragment.this,

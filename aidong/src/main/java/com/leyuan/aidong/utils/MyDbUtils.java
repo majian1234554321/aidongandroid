@@ -1,6 +1,6 @@
 package com.leyuan.aidong.utils;
 
-import com.leyuan.aidong.ui.BaseApp;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.entity.model.Like;
 import com.leyuan.aidong.entity.model.Wallet;
 import com.leyuan.aidong.entity.model.Zan;
@@ -22,17 +22,17 @@ public class MyDbUtils {
 	public static void saveZan(String dynamicid, boolean iszan){
 		
 		try {
-			Zan zan = BaseApp.mInstance.db.findFirst(Selector.from(Zan.class).where("mxid", "=", ""+BaseApp.mInstance.getUser().getMxid()).and("dynamicid", "=", dynamicid));
+			Zan zan = App.mInstance.db.findFirst(Selector.from(Zan.class).where("mxid", "=", ""+ App.mInstance.getUser().getMxid()).and("dynamicid", "=", dynamicid));
 			
 			if(zan==null){
 				zan = new Zan();
-				zan.setMxid(""+BaseApp.mInstance.getUser().getMxid());
+				zan.setMxid(""+ App.mInstance.getUser().getMxid());
 				zan.setDynamicid(dynamicid);
 				zan.setIszan(iszan);
-				BaseApp.mInstance.db.save(zan);
+				App.mInstance.db.save(zan);
 			}else{
 				zan.setIszan(iszan);
-				BaseApp.mInstance.db.saveOrUpdate(zan);
+				App.mInstance.db.saveOrUpdate(zan);
 			}
 			zanmap.put(dynamicid,iszan);
 		} catch (Exception e) {
@@ -46,7 +46,7 @@ public class MyDbUtils {
 			return zanmap.get(dynamicid);
 		}else{
 			try {
-				Zan zan = BaseApp.mInstance.db.findFirst(Selector.from(Zan.class).where("mxid", "=", ""+BaseApp.mInstance.getUser().getMxid()).and("dynamicid", "=", dynamicid));
+				Zan zan = App.mInstance.db.findFirst(Selector.from(Zan.class).where("mxid", "=", ""+ App.mInstance.getUser().getMxid()).and("dynamicid", "=", dynamicid));
 				
 				if(zan==null){
 					zanmap.put(dynamicid,false);
@@ -78,17 +78,17 @@ public class MyDbUtils {
 	public static void saveVideoZan(String videoid, boolean iszan){
 		saveZan(videoid, iszan);
 		try {
-			ZanVideo zan = BaseApp.mInstance.db.findFirst(Selector.from(ZanVideo.class).where("mxid", "=", ""+BaseApp.mInstance.getUser().getMxid()).and("videoid", "=", videoid));
+			ZanVideo zan = App.mInstance.db.findFirst(Selector.from(ZanVideo.class).where("mxid", "=", ""+ App.mInstance.getUser().getMxid()).and("videoid", "=", videoid));
 			
 			if(zan==null){
 				zan = new ZanVideo();
-				zan.setMxid(""+BaseApp.mInstance.getUser().getMxid());
+				zan.setMxid(""+ App.mInstance.getUser().getMxid());
 				zan.setVideoid(videoid);
 				zan.setIszan(iszan);
-				BaseApp.mInstance.db.save(zan);
+				App.mInstance.db.save(zan);
 			}else{
 				zan.setIszan(iszan);
-				BaseApp.mInstance.db.saveOrUpdate(zan);
+				App.mInstance.db.saveOrUpdate(zan);
 			}
 			videozanmap.put(videoid,iszan);
 		} catch (Exception e) {
@@ -102,7 +102,7 @@ public class MyDbUtils {
 			return videozanmap.get(videoid);
 		}else{
 			try {
-				ZanVideo zan = BaseApp.mInstance.db.findFirst(Selector.from(ZanVideo.class).where("mxid", "=", ""+BaseApp.mInstance.getUser().getMxid()).and("videoid", "=", videoid));
+				ZanVideo zan = App.mInstance.db.findFirst(Selector.from(ZanVideo.class).where("mxid", "=", ""+ App.mInstance.getUser().getMxid()).and("videoid", "=", videoid));
 				
 				if(zan==null){
 					videozanmap.put(videoid,false);
@@ -126,17 +126,17 @@ public class MyDbUtils {
 			Calendar c=Calendar.getInstance();
 			int year = c.get(Calendar.YEAR);
 			int month = c.get(Calendar.MONTH);
-			Like like = BaseApp.mInstance.db.findFirst(Selector.from(Like.class).where("mxid", "=", ""+BaseApp.mInstance.getUser().getMxid()).and("omxid", "=", omxid));
+			Like like = App.mInstance.db.findFirst(Selector.from(Like.class).where("mxid", "=", ""+ App.mInstance.getUser().getMxid()).and("omxid", "=", omxid));
 			
 			if(like==null){
 				like = new Like();
-				like.setMxid(""+BaseApp.mInstance.getUser().getMxid());
+				like.setMxid(""+ App.mInstance.getUser().getMxid());
 				like.setOmxid(omxid);
 				like.setLiketime(year+"."+month);
-				BaseApp.mInstance.db.save(like);
+				App.mInstance.db.save(like);
 			}else{
 				like.setLiketime(year+"."+month);
-				BaseApp.mInstance.db.saveOrUpdate(like);
+				App.mInstance.db.saveOrUpdate(like);
 			}
 			likemap.put(omxid,year+"."+month);
 		} catch (Exception e) {
@@ -147,7 +147,7 @@ public class MyDbUtils {
 	
 	public static void deleteLike(String omxid){
 		try {
-			BaseApp.mInstance.db.delete(Like.class, WhereBuilder.b("mxid", "=", ""+BaseApp.mInstance.getUser().getMxid()).and("omxid", "=", omxid));
+			App.mInstance.db.delete(Like.class, WhereBuilder.b("mxid", "=", ""+ App.mInstance.getUser().getMxid()).and("omxid", "=", omxid));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -165,7 +165,7 @@ public class MyDbUtils {
 			if(likemap.containsKey(omxid)){
 				stime = likemap.get(omxid);
 			}else{
-				Like like = BaseApp.mInstance.db.findFirst(Selector.from(Like.class).where("mxid", "=", ""+BaseApp.mInstance.getUser().getMxid()).and("omxid", "=", omxid));
+				Like like = App.mInstance.db.findFirst(Selector.from(Like.class).where("mxid", "=", ""+ App.mInstance.getUser().getMxid()).and("omxid", "=", omxid));
 				
 				if(like==null){
 					return false;
@@ -191,7 +191,7 @@ public class MyDbUtils {
 			int month = c.get(Calendar.MONTH);
 			int day = c.get(Calendar.DAY_OF_MONTH);
 			wallet.setSigntime(year+"."+month+"."+day);
-			BaseApp.mInstance.db.saveOrUpdate(wallet);
+			App.mInstance.db.saveOrUpdate(wallet);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

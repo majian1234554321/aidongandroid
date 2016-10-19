@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <com.leyuan.aidong.widget.customview.SimpleTitleBar
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_top_bar"
+        app:stb_title="申请售后"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="52dp"
+        android:paddingLeft="@dimen/left_margin"
+        android:gravity="center_vertical"
+        android:text="确定收发联系信息"
+        android:textColor="@color/black"
+        android:textSize="16sp"/>
+
+   <include layout="@layout/inc_line_black"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp">
+
+        <ImageView
+            android:id="@+id/iv_default"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_default"
+            android:layout_marginLeft="@dimen/left_margin"/>
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="陈细木"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_toRightOf="@+id/iv_default"
+            android:layout_marginLeft="20dp"/>
+
+        <TextView
+            android:id="@+id/tv_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="15125147412"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@+id/tv_name"/>
+
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/left_margin"
+            android:text="收货地址:上海市徐汇区漕河泾新型技术开发区万达总部未来科技大厦2222"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:layout_below="@+id/tv_name"
+            android:layout_toLeftOf="@+id/iv_arrow"/>
+
+        <ImageView
+            android:id="@+id/iv_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_right_arrow"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/right_margin"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+</LinearLayout>

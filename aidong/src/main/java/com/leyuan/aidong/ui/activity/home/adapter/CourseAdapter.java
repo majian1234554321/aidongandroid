@@ -55,7 +55,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CourseDetailActivity.actionStart(context,"1");
+                CourseDetailActivity.start(context,"1");
             }
         });
     }

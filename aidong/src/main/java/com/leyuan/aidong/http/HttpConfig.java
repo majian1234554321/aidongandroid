@@ -2,7 +2,7 @@ package com.leyuan.aidong.http;
 
 import android.graphics.Bitmap;
 
-import com.leyuan.aidong.ui.BaseApp;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.utils.common.MXLog;
 import com.leyuan.aidong.entity.model.result.MsgResult;
@@ -139,9 +139,9 @@ public class HttpConfig {
                 HttpUtils http = new HttpUtils(TIMEOUT, "Android");
                 http.configSoTimeout(60000);
                 RequestParams params = new RequestParams();
-                if (BaseApp.mInstance.isLogin() && BaseApp.mInstance.getUser() != null) {
-                    MXLog.out("t:" + BaseApp.mInstance.getUser().getToken());
-                    params.addHeader("token", BaseApp.mInstance.getUser().getToken());
+                if (App.mInstance.isLogin() && App.mInstance.getUser() != null) {
+                    MXLog.out("t:" + App.mInstance.getUser().getToken());
+                    params.addHeader("token", App.mInstance.getUser().getToken());
                 }
                 if (task.getHeaderMap() != null) {
                     for (String key : task.getHeaderMap().keySet()) {
@@ -155,13 +155,13 @@ public class HttpConfig {
                     if (parls == null) {
                         parls = new ArrayList<>();
                     }
-                    parls.add(0, new BasicNameValuePair("device", Utils.getIMEI(BaseApp.mInstance)));
+                    parls.add(0, new BasicNameValuePair("device", Utils.getIMEI(App.mInstance)));
                     //					parls.add(new BasicNameValuePair("channel", ""));
-                    parls.add(0, new BasicNameValuePair("version", Utils.getVersion(BaseApp.mInstance)));
-                    parls.add(0, new BasicNameValuePair("lng", "" + BaseApp.mInstance.lon));
-                    parls.add(0, new BasicNameValuePair("lat", "" + BaseApp.mInstance.lat));
-                    if (BaseApp.mInstance.getToken() != null) {
-                        parls.add(0, new BasicNameValuePair("token", BaseApp.mInstance.getToken()));
+                    parls.add(0, new BasicNameValuePair("version", Utils.getVersion(App.mInstance)));
+                    parls.add(0, new BasicNameValuePair("lng", "" + App.mInstance.lon));
+                    parls.add(0, new BasicNameValuePair("lat", "" + App.mInstance.lat));
+                    if (App.mInstance.getToken() != null) {
+                        parls.add(0, new BasicNameValuePair("token", App.mInstance.getToken()));
                     }
                 }
 

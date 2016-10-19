@@ -16,7 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.BaseApp;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.utils.common.UrlLink;
 import com.leyuan.aidong.http.HttpConfig;
@@ -86,7 +86,7 @@ public class PasswordForgetActivity extends BaseActivity implements
                     if (rres.getData() != null) {
                         UserCoach user = new UserCoach();
                         user.setToken(rres.getData().getToken());
-                        BaseApp.mInstance.setUser(user);
+                        App.mInstance.setUser(user);
                     }
                 }
                 break;
@@ -207,8 +207,8 @@ public class PasswordForgetActivity extends BaseActivity implements
                 } else {
 
                     Map<String, String> head = new HashMap<String, String>();
-                    if (BaseApp.mInstance.getUser() != null && BaseApp.mInstance.getUser().getToken() != null) {
-                        head.put("token", BaseApp.mInstance.getUser().getToken());
+                    if (App.mInstance.getUser() != null && App.mInstance.getUser().getToken() != null) {
+                        head.put("token", App.mInstance.getUser().getToken());
                     }
 
 

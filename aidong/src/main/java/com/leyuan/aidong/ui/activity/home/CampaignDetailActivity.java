@@ -15,11 +15,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.CampaignDetailBean;
+import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.ApplicantAdapter;
 import com.leyuan.aidong.ui.activity.home.adapter.SamplePagerAdapter;
-import com.leyuan.aidong.entity.CampaignDetailBean;
 import com.leyuan.aidong.ui.mvp.presenter.CampaignPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CampaignPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CampaignDetailActivityView;
@@ -69,11 +69,14 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_campaign_detail);
+
         campaignPresent = new CampaignPresentImpl(this,this);
         Intent intent = getIntent();
         if(intent != null){
             id = intent.getStringExtra("id");
         }
+
+
 
         initView();
         setListener();

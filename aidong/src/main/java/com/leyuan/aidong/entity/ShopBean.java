@@ -12,6 +12,8 @@ public class ShopBean {
     private String opentime;
     private List<GoodsBean> item;
 
+    private boolean checked = false;            //标记该商店是否被选中
+
     public String getShopname() {
         return shopname;
     }
@@ -36,12 +38,21 @@ public class ShopBean {
         this.item = item;
     }
 
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+
     @Override
     public String toString() {
         return "ShopBean{" +
                 "shopname='" + shopname + '\'' +
                 ", opentime='" + opentime + '\'' +
                 ", item=" + item +
+                ", checked=" + checked +
                 '}';
     }
 }

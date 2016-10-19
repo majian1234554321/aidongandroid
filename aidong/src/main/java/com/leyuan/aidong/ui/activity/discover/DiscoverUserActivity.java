@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.BaseApp;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.activity.discover.adapter.UserAdapter;
 import com.leyuan.aidong.entity.UserBean;
@@ -80,7 +80,7 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
         public void onLoadNextPage(View view) {
             currPage ++;
             if (data != null && !data.isEmpty()) {
-                userPresent.requestMoreData(recyclerView,BaseApp.lat,BaseApp.lon,"","",pageSize,currPage);
+                userPresent.requestMoreData(recyclerView, App.lat, App.lon,"","",pageSize,currPage);
             }
         }
     };

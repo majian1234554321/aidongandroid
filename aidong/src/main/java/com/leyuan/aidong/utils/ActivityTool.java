@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.leyuan.aidong.ui.BaseApp;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.activity.mine.MyShowActivityNew;
 import com.leyuan.aidong.utils.common.Constant;
@@ -364,8 +364,8 @@ public class ActivityTool implements TabChoniceInterface {
 	public static void startShowActivity(Context context, UserCoach user) {
 		ArrayList<Integer> tags = user.getTags();
 		Intent i = new Intent();
-		if (BaseApp.mInstance.isLogin() && BaseApp.mInstance.getUser() != null) {
-			if (user.getMxid() == BaseApp.mInstance.getUser().getMxid()) {
+		if (App.mInstance.isLogin() && App.mInstance.getUser() != null) {
+			if (user.getMxid() == App.mInstance.getUser().getMxid()) {
 				if(tags.get(Constant.ID_COACH) > 0){
 //					i.setClass(context, PtMyshowActivity.class);
 				}else{

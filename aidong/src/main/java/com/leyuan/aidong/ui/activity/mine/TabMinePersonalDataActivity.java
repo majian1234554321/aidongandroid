@@ -29,7 +29,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.BaseApp;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.activity.vedio.media.AlbumActivity;
 import com.leyuan.aidong.adapter.GralleryAdapter;
@@ -157,16 +157,16 @@ public class TabMinePersonalDataActivity extends BaseActivity implements
 		data();
 		addTask(TabMinePersonalDataActivity.this, new IHttpTask(
 				UrlLink.PERSONALDATA_IRL, paramsinit2(""
-						+ BaseApp.mInstance.getUser().getMxid()),
+						+ App.mInstance.getUser().getMxid()),
 				MxPersonalDataResult.class), HttpConfig.GET, PERSON);
 	}
 
 	@SuppressLint("CutPasteId")
 	private void init() {
 		canEdit = false;
-		interested = BaseApp.mInstance.getUser().getInterests();
+		interested = App.mInstance.getUser().getInterests();
 		setInterested(interested);
-		modifyGenderCode = (byte) BaseApp.mInstance.getUser().getGender();
+		modifyGenderCode = (byte) App.mInstance.getUser().getGender();
 		layout_tab_mine_personal_data_interest_in_fitness_txt = (TextView) findViewById(R.id.layout_tab_mine_personal_data_interest_in_fitness_txt);
 		layout_tab_mine_personal_data_portrait_img_go = (ImageView) findViewById(R.id.layout_tab_mine_personal_data_portrait_img_go);
 		mlayout_tab_mine_personal_data_interest_in_fitness_txt = (TextView) findViewById(R.id.layout_tab_mine_personal_data_interest_in_fitness_txt);
@@ -207,14 +207,14 @@ public class TabMinePersonalDataActivity extends BaseActivity implements
 		mlayout_tab_mine_personal_data_interest_in_fitness_gallery = (Gallery) findViewById(R.id.layout_tab_mine_personal_data_interest_in_fitness_gallery);
 		mlayout_tab_mine_personal_data_head_portrait_img = (CircleImageView) findViewById(R.id.layout_tab_mine_personal_data_head_portrait_img);
 		intent = new Intent();
-		imageLoader.displayImage(BaseApp.mInstance.getUser().getAvatar(),
+		imageLoader.displayImage(App.mInstance.getUser().getAvatar(),
 				mlayout_tab_mine_personal_data_head_portrait_img);
-		mlayout_tab_mine_personal_data_nickname_txt1.setText(BaseApp.mInstance
+		mlayout_tab_mine_personal_data_nickname_txt1.setText(App.mInstance
 				.getUser().getName());
 		mlayout_tab_mine_personal_data_individuality_singnature_content_txt1
-				.setText(BaseApp.mInstance.getUser().getSignature());
+				.setText(App.mInstance.getUser().getSignature());
 		gender = ActivityTool
-				.getGender(BaseApp.mInstance.getUser().getGender());
+				.getGender(App.mInstance.getUser().getGender());
 		mlayout_tab_mine_personal_data_sex_txt1.setText(gender.genderString);
 		if (gender == null) {
 			mimag_picture.setImageResource(R.drawable.zhinan);
@@ -226,22 +226,22 @@ public class TabMinePersonalDataActivity extends BaseActivity implements
 			}
 		}
 		mlayout_tab_mine_personal_data_age_txt1.setText(String
-				.valueOf(BaseApp.mInstance.getUser().getTrue_age()));
-		if (BaseApp.mInstance.getUser().getTrue_age() < 1) {
+				.valueOf(App.mInstance.getUser().getTrue_age()));
+		if (App.mInstance.getUser().getTrue_age() < 1) {
 			mlayout_tab_mine_personal_data_age_txt1.setText("");
 		}
 		mlayout_tab_mine_personal_data_the_host_city_txt1
-				.setText(BaseApp.mInstance.getUser().getAddress());
+				.setText(App.mInstance.getUser().getAddress());
 		mlayout_tab_mine_personal_data_the_purpose_of_body_building_txt1
-				.setText(BaseApp.mInstance.getUser().getTarget());
+				.setText(App.mInstance.getUser().getTarget());
 		mlayout_tab_mine_personal_data_fitness_is_good_at_txt1
-				.setText(BaseApp.mInstance.getUser().getSkill());
+				.setText(App.mInstance.getUser().getSkill());
 		mlayout_tab_mine_personal_data_often_go_to_the_gym_txt1
-				.setText(BaseApp.mInstance.getUser().getOften());
+				.setText(App.mInstance.getUser().getOften());
 		mlayout_tab_mine_personal_data_mxhao_txt1.setText(String
-				.valueOf(BaseApp.mInstance.getUser().getMxid()));
+				.valueOf(App.mInstance.getUser().getMxid()));
 		mlayout_tab_mine_personal_data_id_txt1
-				.setText(Constants.IDENTITY_RES[BaseApp.mInstance.getUser()
+				.setText(Constants.IDENTITY_RES[App.mInstance.getUser()
 						.getIdentity()]);
 		gralleryAdapter = new GralleryAdapter(TabMinePersonalDataActivity.this, array);
 		mlayout_tab_mine_personal_data_interest_in_fitness_gallery
@@ -1140,16 +1140,16 @@ public class TabMinePersonalDataActivity extends BaseActivity implements
 			if (sares.getCode() == 1) {
 				if (sares.getData() != null
 						&& sares.getData().getProfile() != null) {
-					String token = BaseApp.mInstance.getUser().getToken();
+					String token = App.mInstance.getUser().getToken();
 					sares.getData().getProfile().setToken(token);
-					BaseApp.mInstance.setUser(sares.getData().getProfile());
-					imageLoader.displayImage(BaseApp.mInstance.getUser()
+					App.mInstance.setUser(sares.getData().getProfile());
+					imageLoader.displayImage(App.mInstance.getUser()
 							.getAvatar(),
 							mlayout_tab_mine_personal_data_head_portrait_img);
 					// BaseApp.mInstance.getUser().setInterests(sares.getData().getProfile()
 					// .getInterests());
 					mlayout_tab_mine_personal_data_nickname_txt1
-							.setText(BaseApp.mInstance.getUser().getName());
+							.setText(App.mInstance.getUser().getName());
 					mlayout_tab_mine_personal_data_individuality_singnature_content_txt1
 							.setText(sares.getData().getProfile()
 									.getSignature());
@@ -1169,28 +1169,28 @@ public class TabMinePersonalDataActivity extends BaseActivity implements
 						}
 					}
 					mlayout_tab_mine_personal_data_age_txt1
-							.setText(String.valueOf(BaseApp.mInstance.getUser()
+							.setText(String.valueOf(App.mInstance.getUser()
 									.getTrue_age()));
-					if (BaseApp.mInstance.getUser().getTrue_age() < 1) {
+					if (App.mInstance.getUser().getTrue_age() < 1) {
 						mlayout_tab_mine_personal_data_age_txt1.setText("");
 					}
 					mlayout_tab_mine_personal_data_the_host_city_txt1
-							.setText(BaseApp.mInstance.getUser().getAddress());
+							.setText(App.mInstance.getUser().getAddress());
 
 					mlayout_tab_mine_personal_data_the_purpose_of_body_building_txt1
-							.setText(BaseApp.mInstance.getUser().getTarget());
+							.setText(App.mInstance.getUser().getTarget());
 
 					mlayout_tab_mine_personal_data_fitness_is_good_at_txt1
-							.setText(BaseApp.mInstance.getUser().getSkill());
+							.setText(App.mInstance.getUser().getSkill());
 
 					mlayout_tab_mine_personal_data_often_go_to_the_gym_txt1
-							.setText(BaseApp.mInstance.getUser().getOften());
+							.setText(App.mInstance.getUser().getOften());
 
 					mlayout_tab_mine_personal_data_id_txt1
-							.setText(Constants.IDENTITY_RES[BaseApp.mInstance
+							.setText(Constants.IDENTITY_RES[App.mInstance
 									.getUser().getIdentity()]);
 					array.clear();
-					setInterested(BaseApp.mInstance.getUser().getInterests());
+					setInterested(App.mInstance.getUser().getInterests());
 					gralleryAdapter.freshData(array);
 				}
 			}

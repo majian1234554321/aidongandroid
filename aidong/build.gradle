@@ -1,4 +1,14 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.0'
+    }
+}
 
 android {
     signingConfigs {
@@ -72,8 +82,8 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
     compile 'com.facebook.fresco:fresco:0.12.0'
+    compile 'org.greenrobot:greendao:3.2.0'
 }
 //buildscript {
 //    repositories {

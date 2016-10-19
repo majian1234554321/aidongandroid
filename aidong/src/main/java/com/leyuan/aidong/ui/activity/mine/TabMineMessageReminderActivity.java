@@ -101,7 +101,7 @@ public class TabMineMessageReminderActivity extends BaseActivity {
                     // chatOptions.setNotifyBySoundAndVibrate(true);
                 }
                 //				Editor editor = mSharedPreferences.edit();
-                //				editor.putBoolean("state", isChecked);
+                //				editor.putBoolean("state", checked);
                 //				editor.commit();
             }
         });
@@ -121,7 +121,7 @@ public class TabMineMessageReminderActivity extends BaseActivity {
                     //					HXSDKHelper.getInstance().getModel().setSettingMsgSound(true);
                 }
                 //				Editor editor = mSharedPreferences.edit();
-                //				editor.putBoolean("state2", isChecked);
+                //				editor.putBoolean("state2", checked);
                 //				editor.commit();
             }
         });
@@ -141,7 +141,7 @@ public class TabMineMessageReminderActivity extends BaseActivity {
                     //					HXSDKHelper.getInstance().getModel().setSettingMsgVibrate(true);
                 }
                 //				Editor editor = mSharedPreferences.edit();
-                //				editor.putBoolean("state3", isChecked);
+                //				editor.putBoolean("state3", checked);
                 //				editor.commit();
             }
         });

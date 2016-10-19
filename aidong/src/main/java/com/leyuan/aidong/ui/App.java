@@ -18,9 +18,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
-public class BaseApp extends Application{
+public class App extends Application{
 
-    public static BaseApp mInstance;
+    public static App mInstance;
     public static Context context;
     private UserCoach user;
     private String token;
@@ -98,8 +98,8 @@ public class BaseApp extends Application{
         @Override
         public void onReceiveLocation(BDLocation location) {
             MXLog.out("GPS onReceiveLocation success");
-            BaseApp.lat = location.getLatitude();
-            BaseApp.lon = location.getLongitude();
+            App.lat = location.getLatitude();
+            App.lon = location.getLongitude();
             if(location.getCity()!= null)
                 city = location.getCity().replace("市", "");
             if(location.getAddrStr()!=null)

@@ -10,7 +10,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.leyuan.aidong.ui.BaseApp;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.utils.common.BaseUrlLink;
 import com.leyuan.aidong.R;
@@ -187,7 +187,7 @@ public class TabFoundDynamicFragment extends BaseFragment implements
 	private OnCommentAndLikeClickListenner mOnCommentAndLikeClickListenner = new OnCommentAndLikeClickListenner() {
 		@Override
 		public void onLikeClick(View v) {
-			if (BaseApp.mInstance.isLogin()) {
+			if (App.mInstance.isLogin()) {
 				currentPosition = (Integer) v.getTag();
 				Dynamic dynamic = array
 						.get(currentPosition);
@@ -200,7 +200,7 @@ public class TabFoundDynamicFragment extends BaseFragment implements
 					dynamic.setLikes(goodCount);
 					ArrayList<AttributeDynamics.LikeUser> like = dynamic.getLike_user();
 					LikeUser user =  new AttributeDynamics().new LikeUser();
-					user.setUser(BaseApp.mInstance.getUser());
+					user.setUser(App.mInstance.getUser());
 					like.add(0, user);
 					adapter.freshData(array);
 					addTask(TabFoundDynamicFragment.this,

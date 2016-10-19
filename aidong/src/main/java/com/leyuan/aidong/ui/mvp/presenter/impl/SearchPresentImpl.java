@@ -19,6 +19,7 @@ import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.aidong.ui.mvp.model.SearchModel;
 import com.leyuan.aidong.ui.mvp.model.impl.SearchModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.SearchPresent;
+import com.leyuan.aidong.ui.mvp.view.SearchActivityView;
 import com.leyuan.aidong.ui.mvp.view.SearchCampaignFragmentView;
 import com.leyuan.aidong.ui.mvp.view.SearchCourseFragmentView;
 import com.leyuan.aidong.ui.mvp.view.SearchFoodFragmentView;
@@ -44,11 +45,20 @@ public class SearchPresentImpl implements SearchPresent{
     private List<UserBean> userList;
     private List<VenuesBean> venuesList;
 
+    private SearchActivityView searchActivityView;  //搜索View层对象
     private SearchCampaignFragmentView campaignView;//搜索活动View层对象
     private SearchCourseFragmentView courseView;    //搜索课程View层对象
     private SearchFoodFragmentView foodView;        //搜索健康餐饮View层对象
     private SearchUserFragmentView userView;        //搜索用户View层对象
     private SearchVenuesFragmentView venuesView;    //搜索场馆View层对象
+
+    public SearchPresentImpl(Context context, SearchActivityView view) {
+        this.context = context;
+        this.searchActivityView = view;
+        if(searchModel == null){
+            searchModel = new SearchModelImpl();
+        }
+    }
 
     public SearchPresentImpl(Context context, SearchCampaignFragmentView view) {
         this.context = context;
@@ -93,6 +103,16 @@ public class SearchPresentImpl implements SearchPresent{
         if(searchModel == null){
             searchModel = new SearchModelImpl();
         }
+    }
+
+    @Override
+    public void getSearchHistory() {
+        searchActivityView.setHistory(searchModel.getSearchHistory());
+    }
+
+    @Override
+    public void insertHistory(String keyword) {
+        searchModel.insertSearchHistory(keyword);
     }
 
     @Override

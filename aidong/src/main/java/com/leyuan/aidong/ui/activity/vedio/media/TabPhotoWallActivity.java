@@ -25,7 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.BaseApp;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.utils.common.Constant;
 import com.leyuan.aidong.utils.common.MXLog;
@@ -147,7 +147,7 @@ public class TabPhotoWallActivity extends BaseActivity implements IHttpCallback 
                     //					setPopWindow(false);
                     //					pop_album.show(parentView);
 
-                    intent = new Intent(BaseApp.mInstance, AlbumActivity.class);
+                    intent = new Intent(App.mInstance, AlbumActivity.class);
                     intent.putExtra(Constant.BUNDLE_PHOTOWALL_POSITION, currentPosition);
                     intent.putExtra(Constant.BUNDLE_CLASS, TabPhotoWallActivity.class);
                     startActivityForResult(intent, Constant.RC_SELECTABLUMN);
@@ -395,7 +395,7 @@ public class TabPhotoWallActivity extends BaseActivity implements IHttpCallback 
 
             @Override
             public void onFirstItemClick() {
-                intent = new Intent(BaseApp.mInstance, AlbumActivity.class);
+                intent = new Intent(App.mInstance, AlbumActivity.class);
                 intent.putExtra(Constant.BUNDLE_PHOTOWALL_POSITION, currentPosition);
                 intent.putExtra(Constant.BUNDLE_CLASS, TabPhotoWallActivity.class);
                 startActivityForResult(intent, Constant.RC_SELECTABLUMN);

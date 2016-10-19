@@ -5,7 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import com.leyuan.aidong.ui.BaseApp;
+import com.leyuan.aidong.ui.App;
 
 public class ImageUtil {
 	// 使用BitmapFactory.Options的inSampleSize参数来缩放
@@ -69,7 +69,7 @@ public class ImageUtil {
 			return null;
 		}
 		if (width == 0 && height == 0) {
-			return getUrlEqualWidth(BaseApp.mInstance, imgPath);
+			return getUrlEqualWidth(App.mInstance, imgPath);
 		}
 		
 		
@@ -91,7 +91,7 @@ public class ImageUtil {
 			return null;
 		}
 		if (width == 0 ) {
-			return getUrlEqualWidth(BaseApp.mInstance, imgPath);
+			return getUrlEqualWidth(App.mInstance, imgPath);
 		}
 		
 		
@@ -113,7 +113,7 @@ public class ImageUtil {
 			return null;
 		}
 		if ( height == 0) {
-			return getUrlEqualWidth(BaseApp.mInstance, imgPath);
+			return getUrlEqualWidth(App.mInstance, imgPath);
 		}
 		
 		

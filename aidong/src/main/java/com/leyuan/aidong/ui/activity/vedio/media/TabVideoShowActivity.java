@@ -26,7 +26,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.BaseApp;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.utils.common.BaseUrlLink;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.utils.common.Constant;
@@ -247,7 +247,7 @@ public class TabVideoShowActivity extends BaseActivity implements
                 // Toast.makeText(TabVideoShowActivity.this, "等下会跳到照片墙",
                 // Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(BaseApp.context, AlbumActivity.class);
+                Intent intent = new Intent(App.context, AlbumActivity.class);
                 intent.putExtra(Constant.BUNDLE_PHOTOWALL_POSITION, currentPosition);
                 intent.putExtra(Constant.BUNDLE_CLASS, TabVideoShowActivity.class);
                 intent.putExtra("videoShow", true);
@@ -493,7 +493,7 @@ public class TabVideoShowActivity extends BaseActivity implements
                             new IHttpTask(
                                     UrlLink.DYNAMICSLATEST_URL,
                                     paramsinit2(""
-                                            + BaseApp.mInstance.getUser().getMxid()),
+                                            + App.mInstance.getUser().getMxid()),
                                     NewDynamicResult.class), HttpConfig.GET,
                             NEWDYNAMICS);
                 } else {

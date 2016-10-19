@@ -28,7 +28,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
-import com.leyuan.aidong.ui.BaseApp;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.activity.vedio.media.ImageShowerActivity;
 import com.leyuan.aidong.ui.activity.discover.UserWhoClickLikeActivity;
@@ -383,7 +383,7 @@ public class ListAdapterDynamic extends AbstractCommonAdapter {
 					holder.rel_subject_conent.setVisibility(View.VISIBLE);
 				}
 				holder.btnGood_rel_zan_img.setImageResource(R.drawable.btn_praise_normal);
-				if (BaseApp.mInstance.isLogin()) {
+				if (App.mInstance.isLogin()) {
 					int goodNo = dynamic.getId();
 					if (MyDbUtils.isZan("" + goodNo)) {
 						holder.btnGood_rel_zan_img

@@ -26,7 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.BaseApp;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.utils.common.Constant;
 import com.leyuan.aidong.utils.common.MXLog;
@@ -278,18 +278,18 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
 			if (res.getCode() == 1) {
 				// MXLog.out(""+res.getData().getCoach().getName());
 				
-				if(BaseApp.mInstance.getUser()==null){
-					BaseApp.mInstance.setUser(res.getData().getUser());
+				if(App.mInstance.getUser()==null){
+					App.mInstance.setUser(res.getData().getUser());
 					SharePrefUtils.setLogin(this,true);
 					addTask(this, new IHttpTask(UrlLink.FIND_UPLOAD_URL, new ArrayList<BasicNameValuePair>(), MsgResult.class), HttpConfig.PUT, FIND_UPLOAD_CODE);
 					addTask(this, new IHttpTask(UrlLink.PRIVACY_URL, paramsstealth(), MsgResult.class), HttpConfig.PUT, STEALTH_CODE);
-				} else if(BaseApp.mInstance.getUser().getMxid()!=res.getData().getUser().getMxid()){
-					BaseApp.mInstance.setUser(res.getData().getUser());
+				} else if(App.mInstance.getUser().getMxid()!=res.getData().getUser().getMxid()){
+					App.mInstance.setUser(res.getData().getUser());
 					SharePrefUtils.setLogin(this,true);
 					addTask(this, new IHttpTask(UrlLink.FIND_UPLOAD_URL, new ArrayList<BasicNameValuePair>(), MsgResult.class), HttpConfig.PUT, FIND_UPLOAD_CODE);
 					addTask(this, new IHttpTask(UrlLink.PRIVACY_URL, paramsstealth(), MsgResult.class), HttpConfig.PUT, STEALTH_CODE);
 				}else{
-					BaseApp.mInstance.setUser(res.getData().getUser());
+					App.mInstance.setUser(res.getData().getUser());
 					SharePrefUtils.setLogin(this,true);
 				}
 				
@@ -331,7 +331,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
 			LoginResult reslogin = (LoginResult) data;
 			if (reslogin.getCode() == 1) {
 				// MXLog.out(""+res.getData().getCoach().getName());
-				BaseApp.mInstance.setUser(reslogin.getData().getUser());
+				App.mInstance.setUser(reslogin.getData().getUser());
 				SharePrefUtils.setLogin(this,true);
 				
 				addTask(this, new IHttpTask(UrlLink.FIND_UPLOAD_URL, new ArrayList<BasicNameValuePair>(), MsgResult.class), HttpConfig.PUT, FIND_UPLOAD_CODE);

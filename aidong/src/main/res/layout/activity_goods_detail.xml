@@ -4,7 +4,8 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+   >
 
     <RelativeLayout
         android:id="@+id/rl_content"
@@ -34,7 +35,8 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="345dp">
+                        android:layout_height="345dp"
+                        >
 
                         <android.support.v4.view.ViewPager
                             android:id="@+id/vp_photo"

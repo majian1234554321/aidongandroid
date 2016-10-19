@@ -13,8 +13,6 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.entity.HomeBean;
 import com.leyuan.aidong.widget.customview.MyListView;
-import com.leyuan.aidong.widget.overscroll.IOverScrollDecor;
-import com.leyuan.aidong.widget.overscroll.IOverScrollUpdateListener;
 import com.leyuan.commonlibrary.util.ToastUtil;
 
 import java.util.ArrayList;

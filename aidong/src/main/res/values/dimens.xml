@@ -1,6 +1,8 @@
 <resources>
 
-    <dimen name="height_top_bar">46dp</dimen>
+    <dimen name="size_title">15sp</dimen>  <!--标题字体大小-->
+    <dimen name="height_top_bar">46dp</dimen> <!--标题高度-->
+
     <dimen name="item_max_text_size">16dp</dimen>
     <dimen name="item_min_text_size">13dp</dimen>
 
@@ -206,6 +208,10 @@
     <dimen name="sp_12">12sp</dimen>
     <dimen name="sp_14">14sp</dimen>
     <dimen name="sp_16">16sp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
+    <dimen name="nav_header_height">160dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 
 
 </resources>

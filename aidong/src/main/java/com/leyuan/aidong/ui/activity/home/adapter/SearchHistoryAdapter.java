@@ -7,9 +7,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.greendao.SearchHistory;
 
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 /**
  * 搜索历史记录适配器
@@ -17,13 +20,13 @@ import java.util.List;
  */
 public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdapter.HistoryHolder>{
     private Context context;
-    private List<String> data = new ArrayList<>();
+    private List<SearchHistory> data = new ArrayList<>();
 
     public SearchHistoryAdapter(Context context) {
         this.context = context;
     }
 
-    public void setData(List<String> data) {
+    public void setData(List<SearchHistory> data) {
         this.data = data;
         notifyDataSetChanged();
     }
@@ -41,8 +44,8 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdap
 
     @Override
     public void onBindViewHolder(HistoryHolder holder, int position) {
-        String  keyword = data.get(position);
-        holder.keyword.setText(keyword);
+        SearchHistory  bean = data.get(position);
+        holder.keyword.setText(bean.getKeyword());
     }
 
     class HistoryHolder extends RecyclerView.ViewHolder{

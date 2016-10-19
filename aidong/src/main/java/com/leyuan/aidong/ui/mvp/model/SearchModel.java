@@ -5,6 +5,9 @@ import com.leyuan.aidong.entity.data.CourseData;
 import com.leyuan.aidong.entity.data.FoodData;
 import com.leyuan.aidong.entity.data.UserData;
 import com.leyuan.aidong.entity.data.VenuesData;
+import com.leyuan.aidong.entity.greendao.SearchHistory;
+
+import java.util.List;
 
 import rx.Subscriber;
 
@@ -56,4 +59,14 @@ public interface SearchModel {
     void searchUser(Subscriber<UserData> subscriber, String keyword, int page);
 
 
+    /**
+     * 查找搜索历史
+     */
+    List<SearchHistory> getSearchHistory();
+
+    /**
+     * 插入搜索历史
+     * @param keyword 搜索历史
+     */
+    void insertSearchHistory(String keyword);
 }

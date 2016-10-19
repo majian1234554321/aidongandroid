@@ -119,6 +119,7 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
+
     <style name="myTransparent">
         <item name="android:windowBackground">@color/transparent</item>
         <item name="android:windowNoTitle">true</item>
@@ -195,13 +196,13 @@
 
     <declare-styleable name="SlideDetailsLayout">
         <!-- float value for indicate the moment of switch panel-->
-        <attr name="percent" format="float"/>
+        <attr name="percent" format="float" />
         <!-- how long the animation keep-->
-        <attr name="duration" format="integer"/>
+        <attr name="duration" format="integer" />
         <!-- default panel to show after init-->
         <attr name="default_panel" format="enum">
-            <enum name="front" value="0"/>
-            <enum name="behind" value="1"/>
+            <enum name="front" value="0" />
+            <enum name="behind" value="1" />
         </attr>
     </declare-styleable>
 
@@ -238,6 +239,7 @@
     </style>
 
     <style name="exception"></style>
+
     <style name="exception.title">
         <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
         <item name="android:layout_gravity">center_horizontal</item>
@@ -261,4 +263,8 @@
     <style name="exception.button">
         <item name="android:layout_marginTop">25dip</item>
     </style>
+
+    <style name="AppTheme.FullScreen.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.FullScreen.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

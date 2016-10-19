@@ -26,7 +26,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.BaseApp;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.utils.common.BaseUrlLink;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.activity.mine.account.LoginActivity;
@@ -160,8 +160,8 @@ public class MyShowActivityNew extends BaseActivity implements IHttpCallback, On
 //        oks = new OnekeyShare();
 
         user = (UserCoach) getIntent().getSerializableExtra("user");
-        if (BaseApp.mInstance.isLogin()) {
-            if (user.getMxid() == BaseApp.mInstance.getUser().getMxid()) {
+        if (App.mInstance.isLogin()) {
+            if (user.getMxid() == App.mInstance.getUser().getMxid()) {
                 ismine = true;
                 initTop("我的型秀", true, R.drawable.icon_edix);
                 showfabMenu();
@@ -180,7 +180,7 @@ public class MyShowActivityNew extends BaseActivity implements IHttpCallback, On
                 .bitmapConfig(Bitmap.Config.RGB_565).build();
         adapter = new MyShowDynamicAdapter(this, user);
         findView();
-        //		findViewById(R.id.dynamiclist_rl).setSelected(true);
+        //		findViewById(R.id.dynamiclist_rl).setChecked(true);
         initCursorView();
         initView();
         refreshUserProfileView();
@@ -192,7 +192,7 @@ public class MyShowActivityNew extends BaseActivity implements IHttpCallback, On
      */
     @Override
     protected void rightImageOnClick() {
-        if (BaseApp.mInstance.isLogin()) {
+        if (App.mInstance.isLogin()) {
             //			if(!ismine){
             //				showReportMenu();
             //			}else{
@@ -377,7 +377,7 @@ public class MyShowActivityNew extends BaseActivity implements IHttpCallback, On
             //			identity_et.setText(Constants.IDENTITY_RES[user.getIdentity()]);
             imageLoader.displayImage(user.getAvatar(), img_head_portrait, options);
             txt_like_number.setText(user.getLikes() + "");
-            if (BaseApp.mInstance.isLogin()) {
+            if (App.mInstance.isLogin()) {
                 if (MyDbUtils.isLike("" + user.getMxid())) {
                     //赞过，灰色
                     rel_like.setBackgroundResource(R.drawable.shape_edge_gray);
@@ -485,7 +485,7 @@ public class MyShowActivityNew extends BaseActivity implements IHttpCallback, On
 
                     addTask(MyShowActivityNew.this,
                             new IHttpTask(UrlLink.REPORT_URL, paramsinitReport(
-                                    Constant.REPORT_USER, BaseApp.mInstance
+                                    Constant.REPORT_USER, App.mInstance
                                             .getUser().getMxid(), getResources()
                                             .getString(R.string.popmenu_report_1)),
                                     MsgResult.class), HttpConfig.POST, REPORT);
@@ -496,7 +496,7 @@ public class MyShowActivityNew extends BaseActivity implements IHttpCallback, On
 
                     addTask(MyShowActivityNew.this,
                             new IHttpTask(UrlLink.REPORT_URL, paramsinitReport(
-                                    Constant.REPORT_USER, BaseApp.mInstance
+                                    Constant.REPORT_USER, App.mInstance
                                             .getUser().getMxid(), getResources()
                                             .getString(R.string.popmenu_report_2)),
                                     MsgResult.class), HttpConfig.POST, REPORT);
@@ -506,7 +506,7 @@ public class MyShowActivityNew extends BaseActivity implements IHttpCallback, On
                 public void onThirdItemClick() {
                     addTask(MyShowActivityNew.this,
                             new IHttpTask(UrlLink.REPORT_URL, paramsinitReport(
-                                    Constant.REPORT_USER, BaseApp.mInstance
+                                    Constant.REPORT_USER, App.mInstance
                                             .getUser().getMxid(), getResources()
                                             .getString(R.string.popmenu_report_3)),
                                     MsgResult.class), HttpConfig.POST, REPORT);
@@ -516,7 +516,7 @@ public class MyShowActivityNew extends BaseActivity implements IHttpCallback, On
                 public void onFourthItemClick() {
                     addTask(MyShowActivityNew.this,
                             new IHttpTask(UrlLink.REPORT_URL, paramsinitReport(
-                                    Constant.REPORT_USER, BaseApp.mInstance
+                                    Constant.REPORT_USER, App.mInstance
                                             .getUser().getMxid(), getResources()
                                             .getString(R.string.popmenu_report_4)),
                                     MsgResult.class), HttpConfig.POST, REPORT);
@@ -526,7 +526,7 @@ public class MyShowActivityNew extends BaseActivity implements IHttpCallback, On
                 public void onFiveItemClick() {
                     addTask(MyShowActivityNew.this,
                             new IHttpTask(UrlLink.REPORT_URL, paramsinitReport(
-                                    Constant.REPORT_USER, BaseApp.mInstance
+                                    Constant.REPORT_USER, App.mInstance
                                             .getUser().getMxid(), getResources()
                                             .getString(R.string.popmenu_report_5)),
                                     MsgResult.class), HttpConfig.POST, REPORT);
@@ -680,7 +680,7 @@ public class MyShowActivityNew extends BaseActivity implements IHttpCallback, On
     private OnCommentAndLikeClickListenner mOnCommentAndLikeClickListenner = new OnCommentAndLikeClickListenner() {
         @Override
         public void onLikeClick(View v) {
-            if (BaseApp.mInstance.isLogin()) {
+            if (App.mInstance.isLogin()) {
                 currentPosition = (Integer) v.getTag();
                 Dynamic dynamics = adapter.getItem(currentPosition);
                 goodNo = dynamics.getId();
@@ -693,7 +693,7 @@ public class MyShowActivityNew extends BaseActivity implements IHttpCallback, On
                     dynamic.setLikes(goodCount);
                     ArrayList<AttributeDynamics.LikeUser> like = dynamic.getLike_user();
                     AttributeDynamics.LikeUser user = new AttributeDynamics().new LikeUser();
-                    user.setUser(BaseApp.mInstance.getUser());
+                    user.setUser(App.mInstance.getUser());
                     like.add(0, user);
                     adapter.notifyDataSetChanged();
                     addTask(MyShowActivityNew.this,
@@ -963,7 +963,7 @@ public class MyShowActivityNew extends BaseActivity implements IHttpCallback, On
         Intent intent = new Intent();
         switch (arg0.getId()) {
             case R.id.tabTalkLayout:
-                if (BaseApp.mInstance.isLogin()) {
+                if (App.mInstance.isLogin()) {
 
                     //                    intent.setClass(MyShowActivityNew.this,
                     //                            TabMsgDialogueInterfaceActivity.class);
@@ -980,7 +980,7 @@ public class MyShowActivityNew extends BaseActivity implements IHttpCallback, On
 
                 break;
             case R.id.tabSportsWayLayout:
-                if (BaseApp.mInstance.isLogin()) {
+                if (App.mInstance.isLogin()) {
                     //                    if (BaseApp.getContactList() != null
                     //                            && BaseApp.getContactList().containsKey(
                     //                            String.valueOf(user.getMxid()))) {
@@ -1175,7 +1175,7 @@ public class MyShowActivityNew extends BaseActivity implements IHttpCallback, On
 
             @Override
             public void onClick(View arg0) {
-                if (BaseApp.mInstance.isLogin()) {
+                if (App.mInstance.isLogin()) {
                     Intent intent = new Intent(MyShowActivityNew.this,
                             TabTheIndividualDynaminActivity.class);
                     intent.putExtra("type", 1);
@@ -1194,7 +1194,7 @@ public class MyShowActivityNew extends BaseActivity implements IHttpCallback, On
 
             @Override
             public void onClick(View arg0) {
-                if (BaseApp.mInstance.isLogin()) {
+                if (App.mInstance.isLogin()) {
                     Intent intent = new Intent(MyShowActivityNew.this,
                             TabTheIndividualDynaminActivity.class);
                     intent.putExtra("type", 2);
@@ -1213,7 +1213,7 @@ public class MyShowActivityNew extends BaseActivity implements IHttpCallback, On
 
             @Override
             public void onClick(View arg0) {
-                if (BaseApp.mInstance.isLogin()) {
+                if (App.mInstance.isLogin()) {
                     Intent intent = new Intent(MyShowActivityNew.this,
                             TabTheIndividualDynaminActivity.class);
                     intent.putExtra("type", 3);

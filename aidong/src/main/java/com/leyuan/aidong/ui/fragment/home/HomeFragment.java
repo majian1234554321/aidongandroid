@@ -12,10 +12,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.BannerBean;
+import com.leyuan.aidong.entity.HomeBean;
+import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.activity.home.CampaignActivity;
-import com.leyuan.aidong.ui.activity.home.CampaignDetailActivity;
 import com.leyuan.aidong.ui.activity.home.CourseActivity;
 import com.leyuan.aidong.ui.activity.home.EquipmentActivity;
 import com.leyuan.aidong.ui.activity.home.FoodActivity;
@@ -23,8 +24,7 @@ import com.leyuan.aidong.ui.activity.home.GoodsFilterActivity;
 import com.leyuan.aidong.ui.activity.home.NurtureActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.BannerAdapter;
 import com.leyuan.aidong.ui.activity.home.adapter.HomeRecycleViewAdapter;
-import com.leyuan.aidong.entity.BannerBean;
-import com.leyuan.aidong.entity.HomeBean;
+import com.leyuan.aidong.ui.activity.mine.ApplyServiceActivity;
 import com.leyuan.aidong.ui.mvp.presenter.HomePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.HomePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.HomeFragmentView;
@@ -131,7 +131,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
         headerView.findViewById(R.id.tv_competition).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CampaignDetailActivity.class);
+                Intent intent = new Intent(getActivity(), ApplyServiceActivity.class);
                 startActivity(intent);
             }
         });

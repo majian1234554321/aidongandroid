@@ -23,7 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.BaseApp;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.MainActivity;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.utils.common.Constant;
@@ -225,7 +225,7 @@ public class PasswordRegistActivity extends BaseActivity implements
 			if (dataResult.getCode() == 1) {
 				// 获取个人信息
 				isLoginSuccess = true;
-				BaseApp.mInstance.setUser(dataResult.getData().getUser());
+				App.mInstance.setUser(dataResult.getData().getUser());
 				SharePrefUtils.setLogin(this,true);
 				Intent i = new Intent(this, MainActivity.class);
 				i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

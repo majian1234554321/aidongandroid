@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.leyuan.aidong.ui.BaseApp;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.model.LikeData;
 import com.leyuan.aidong.entity.model.UserCoach;
@@ -27,9 +27,9 @@ public class LikeListAdapter extends AbstractCommonAdapter {
 	public LikeListAdapter(Context context	) {
 		this.context = context;
 		this.array = new ArrayList<LikeData>();
-		islogin = BaseApp.mInstance.isLogin();
+		islogin = App.mInstance.isLogin();
 		if (islogin) {
-				mxid = BaseApp.mInstance.getUser().getMxid();
+				mxid = App.mInstance.getUser().getMxid();
 		}
 		
 	}

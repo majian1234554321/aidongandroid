@@ -21,19 +21,19 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.CouponBean;
+import com.leyuan.aidong.entity.GoodsDetailBean;
+import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.GoodsDetailCouponAdapter;
 import com.leyuan.aidong.ui.activity.home.adapter.SamplePagerAdapter;
 import com.leyuan.aidong.ui.activity.home.view.GoodsInfoPopupWindow;
-import com.leyuan.aidong.widget.customview.ObserveScrollView;
-import com.leyuan.aidong.widget.customview.SlideDetailsLayout;
-import com.leyuan.aidong.entity.CouponBean;
-import com.leyuan.aidong.entity.GoodsDetailBean;
 import com.leyuan.aidong.ui.mvp.presenter.GoodsDetailPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.GoodDetailPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.GoodsDetailActivityView;
 import com.leyuan.aidong.utils.DensityUtil;
+import com.leyuan.aidong.widget.customview.ObserveScrollView;
+import com.leyuan.aidong.widget.customview.SlideDetailsLayout;
 import com.leyuan.aidong.widget.customview.SwitcherLayout;
 import com.leyuan.aidong.widget.customview.ViewPagerIndicator;
 
@@ -85,14 +85,13 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
 
         initView();
         setListener();
-        //goodsDetailPresent.getGoodsDetail(switcherLayout,type,id);
+       // goodsDetailPresent.getGoodsDetail(switcherLayout,type,id);
     }
 
 
     private void initView() {
         detailsLayout = (SlideDetailsLayout)findViewById(R.id.slide_details_layout);
         contentLayout = (RelativeLayout) findViewById(R.id.rl_content);
-
 
         scrollView = (ObserveScrollView)findViewById(R.id.scrollview);
 

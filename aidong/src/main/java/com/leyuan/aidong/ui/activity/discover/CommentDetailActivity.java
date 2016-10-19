@@ -39,7 +39,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.adapter.LikeUserHorizontalListAdapter;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.BaseApp;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.utils.common.BaseUrlLink;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.activity.vedio.media.ImageShowerActivity;
@@ -269,8 +269,8 @@ public class CommentDetailActivity extends BaseActivity implements
             setHeadViewData(dynamic);
         }
 
-        if (BaseApp.mInstance.isLogin()) {
-            if (mxid == BaseApp.mInstance.getUser()
+        if (App.mInstance.isLogin()) {
+            if (mxid == App.mInstance.getUser()
                     .getMxid()) {
                 initTop(getResources().getString(R.string.commentDetail), true,
                         getResources().getString(R.string.delete));
@@ -436,7 +436,7 @@ public class CommentDetailActivity extends BaseActivity implements
 
             // 设置赞数据
 
-            if (BaseApp.mInstance.isLogin()) {
+            if (App.mInstance.isLogin()) {
                 int goodNo = dynamic.getId();
                 if (MyDbUtils.isZan("" + goodNo)) {
                     btn_zan.setImageResource(R.drawable.btn_praise_pressed);
@@ -463,7 +463,7 @@ public class CommentDetailActivity extends BaseActivity implements
             layoutbtnGood.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (BaseApp.mInstance.isLogin()) {
+                    if (App.mInstance.isLogin()) {
 
                         int goodNo = dynamic.getId();
                         MXLog.out("no---------------:" + goodNo);
@@ -830,8 +830,8 @@ public class CommentDetailActivity extends BaseActivity implements
                 .setAvatarClickListener(mOnAvatarClickListener);
 
 
-        if (BaseApp.mInstance.isLogin()) {
-            imageLoader.displayImage(BaseApp.mInstance.getUser().getAvatar(),
+        if (App.mInstance.isLogin()) {
+            imageLoader.displayImage(App.mInstance.getUser().getAvatar(),
                     userIcon, options);
         } else {
             userIcon.setImageResource(R.drawable.xin_geren);
@@ -889,8 +889,8 @@ public class CommentDetailActivity extends BaseActivity implements
     @Override
     protected void rightTxtOnClick() {
         super.rightTxtOnClick();
-        if (BaseApp.mInstance.isLogin()
-                && mxid == BaseApp.mInstance
+        if (App.mInstance.isLogin()
+                && mxid == App.mInstance
                 .getUser().getMxid()) {
             Builder builder = new Builder(
                     CommentDetailActivity.this);
@@ -1274,7 +1274,7 @@ public class CommentDetailActivity extends BaseActivity implements
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                if (BaseApp.mInstance.isLogin()) {
+                if (App.mInstance.isLogin()) {
                     s = mEditTextContent.getText().toString();
                     if (s == null || s.trim().length() == 0) {
                         ToastUtil.show(getResources().getString(
@@ -1548,7 +1548,7 @@ public class CommentDetailActivity extends BaseActivity implements
                 MsgResult mres = (MsgResult) data;
                 if (mres.getCode() == 1) {
                     Comment c = new Comment();
-                    c.setUser(BaseApp.mInstance.getUser());
+                    c.setUser(App.mInstance.getUser());
 
                     c.setContent(replyPrdfix
                             + mEditTextContent.getText().toString());
@@ -1596,7 +1596,7 @@ public class CommentDetailActivity extends BaseActivity implements
 
 
                     LikeUser user = new AttributeDynamics().new LikeUser();
-                    user.setUser(BaseApp.mInstance.getUser());
+                    user.setUser(App.mInstance.getUser());
                     like_user.add(0, user);
 
                     layout_like_user.setVisibility(View.VISIBLE);

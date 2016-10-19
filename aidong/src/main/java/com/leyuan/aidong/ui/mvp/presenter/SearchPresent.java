@@ -11,6 +11,17 @@ import com.leyuan.aidong.widget.customview.SwitcherLayout;
 public interface SearchPresent {
 
     /**
+     * 从数据库中获取搜索历史
+     */
+    void getSearchHistory();
+
+    /**
+    * 插入历史记录
+     * @param keyword 历史记录
+     */
+    void insertHistory(String keyword);
+
+    /**
      * 第一次加载数据
      * @param switcherLayout SwitcherLayout
      * @param keyword 关键字

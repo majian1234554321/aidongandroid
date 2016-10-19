@@ -8,7 +8,8 @@ import android.support.annotation.Nullable;
 import com.leyuan.aidong.R;
 import com.leyuan.commonlibrary.manager.UiManager;
 
-public class SplashActivity extends BaseActivity {
+public class
+SplashActivity extends BaseActivity {
 
     private Handler mHandler = new Handler() {
         @Override

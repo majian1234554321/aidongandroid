@@ -139,6 +139,7 @@
     <color name="base_theme">#ebebeb</color>
     <color name="mine_divider">#dfe0e6</color>
 
+    <color name="color_title">#FFFFFF</color>
     <color name="line_color">#ebebeb</color>
     <color name="bg_gray">#ebebeb</color>
     <color name="half_transparent">#8f000000</color>
@@ -147,4 +148,5 @@
     <color name="color_image_press">#55F1F1F1</color>
     <color name="c3">#333333</color>
     <color name="c9">#999999</color>
+
 </resources>

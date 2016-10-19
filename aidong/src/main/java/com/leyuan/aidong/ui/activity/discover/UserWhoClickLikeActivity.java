@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.BaseApp;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.activity.mine.account.LoginActivity;
 import com.leyuan.aidong.adapter.LikeListAdapter;
@@ -87,7 +87,7 @@ public class UserWhoClickLikeActivity extends BaseActivity implements
                 Object o = v.getTag();
                 if (o instanceof UserCoach) {
                     final UserCoach user = (UserCoach) o;
-                    if (BaseApp.mInstance.isLogin()) {
+                    if (App.mInstance.isLogin()) {
                         new Thread(new Runnable() {
 
                             @Override

@@ -20,7 +20,7 @@ import android.view.SurfaceView;
 import android.widget.Toast;
 
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.BaseApp;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.activity.mine.account.LoginActivity;
 import com.leyuan.aidong.utils.common.MXLog;
@@ -211,7 +211,7 @@ public class MipcaActivityCapture extends BaseActivity implements Callback {
 
     public List<BasicNameValuePair> paramsinit(String code) {
         List<BasicNameValuePair> paramsaaa = new ArrayList<BasicNameValuePair>();
-        paramsaaa.add(new BasicNameValuePair("student", String.valueOf(BaseApp.mInstance.getUser().getMxid())));
+        paramsaaa.add(new BasicNameValuePair("student", String.valueOf(App.mInstance.getUser().getMxid())));
         paramsaaa.add(new BasicNameValuePair("code", code));
         return paramsaaa;
     }

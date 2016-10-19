@@ -18,7 +18,7 @@ public class GoodsBean {
     private ArrayList<String> spec_value;
     private String amount;
 
-    public boolean isChecked = false;        //标记是否被选中
+    private boolean checked = false;        //标记是否被选中
 
     public String getSku_code() {
         return sku_code;
@@ -84,6 +84,13 @@ public class GoodsBean {
         this.amount = amount;
     }
 
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
 
     @Override
     public String toString() {
@@ -96,7 +103,7 @@ public class GoodsBean {
                 ", spec_name=" + spec_name +
                 ", spec_value=" + spec_value +
                 ", amount='" + amount + '\'' +
-                ", isChecked=" + isChecked +
+                ", checked=" + checked +
                 '}';
     }
 }

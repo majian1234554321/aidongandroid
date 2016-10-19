@@ -12,6 +12,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.activity.home.adapter.RecommendAdapter;
 import com.leyuan.aidong.ui.activity.mine.adapter.CartShopAdapter;
 import com.leyuan.aidong.entity.GoodsBean;
+import com.leyuan.aidong.ui.mvp.view.CartActivityView;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderSpanSizeLookup;
 import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
@@ -23,7 +24,7 @@ import java.util.List;
  * 购物车
  * Created by song on 2016/9/8.
  */
-public class CartActivity extends BaseActivity{
+public class CartActivity extends BaseActivity implements CartActivityView{
     private View headerView;
     private RecyclerView shopView;
     private CartShopAdapter shopAdapter;
@@ -31,7 +32,6 @@ public class CartActivity extends BaseActivity{
 
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recommendView;
-
     private List<GoodsBean> data;
     private RecommendAdapter recommendAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
@@ -76,5 +76,15 @@ public class CartActivity extends BaseActivity{
         recommendView.setLayoutManager(manager);
         RecyclerViewUtils.setHeaderView(recommendView,headerView);
         RecyclerViewUtils.setFooterView(recommendView,View.inflate(this,R.layout.list_footer_end,null));
+    }
+
+    @Override
+    public void updateRecyclerView(List<GoodsBean> goodsBeanList) {
+
+    }
+
+    @Override
+    public void showEmptyView() {
+
     }
 }

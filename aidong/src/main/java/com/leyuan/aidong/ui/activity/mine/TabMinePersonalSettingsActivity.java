@@ -15,7 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.BaseApp;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.MainActivity;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.activity.mine.account.LoginActivity;
@@ -123,8 +123,8 @@ public class TabMinePersonalSettingsActivity extends BaseActivity implements
      * 判断绑定手机号
      */
     private void bindMobile() {
-        if (BaseApp.mInstance.isLogin()) {
-            mobile = BaseApp.mInstance.getUser().getMobile();
+        if (App.mInstance.isLogin()) {
+            mobile = App.mInstance.getUser().getMobile();
         }
         if (!TextUtils.isEmpty(mobile)) {
             layout_tab_mine_personal_settings_binding_mobile_phone_unbound_txt
@@ -139,7 +139,7 @@ public class TabMinePersonalSettingsActivity extends BaseActivity implements
                     .setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (BaseApp.mInstance.isLogin()) {
+                            if (App.mInstance.isLogin()) {
                                 intent = new Intent(
                                         TabMinePersonalSettingsActivity.this,
                                         TabMineBingdingMobilePhoneActivity.class);
@@ -182,7 +182,7 @@ public class TabMinePersonalSettingsActivity extends BaseActivity implements
                 .setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (BaseApp.mInstance.isLogin()) {
+                        if (App.mInstance.isLogin()) {
                             intent.setClass(getApplicationContext(),
                                     TabMineMessageReminderActivity.class);
                             startActivity(intent);
@@ -206,7 +206,7 @@ public class TabMinePersonalSettingsActivity extends BaseActivity implements
                 .setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (BaseApp.mInstance.isLogin()) {
+                        if (App.mInstance.isLogin()) {
                             intent.setClass(getApplicationContext(),
                                     BingdingCommunityActivity.class);
                             startActivity(intent);
@@ -219,7 +219,7 @@ public class TabMinePersonalSettingsActivity extends BaseActivity implements
 
                     }
                 });
-        if (BaseApp.mInstance.isLogin()) {
+        if (App.mInstance.isLogin()) {
             button_personal_settings_unlogin
                     .setOnClickListener(new OnClickListener() {
                         @Override
@@ -259,7 +259,7 @@ public class TabMinePersonalSettingsActivity extends BaseActivity implements
                 .setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (BaseApp.mInstance.isLogin()) {
+                        if (App.mInstance.isLogin()) {
                             intent.setClass(getApplicationContext(),
                                     PrivacyActivity.class);
                             startActivity(intent);
@@ -283,7 +283,7 @@ public class TabMinePersonalSettingsActivity extends BaseActivity implements
                 .setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (BaseApp.mInstance.isLogin()) {
+                        if (App.mInstance.isLogin()) {
                             intent.setClass(getApplicationContext(),
                                     TabMineChangePasswordActivity.class);
                             startActivity(intent);
@@ -321,11 +321,11 @@ public class TabMinePersonalSettingsActivity extends BaseActivity implements
         try {
             MyDbUtils.clearZanmap();
             SharePrefUtils.setLogin(this,true);
-            BaseApp.mInstance.setUser(null);
+            App.mInstance.setUser(null);
 //            BaseApp.mInstance.getParamsHelper().setPreInt("islogin", 0);
 //            BaseApp.mInstance.logout(null);
             HashMap<String, String> map = new HashMap<String, String>();
-            map.put("token", BaseApp.mInstance.getUser().getToken());
+            map.put("token", App.mInstance.getUser().getToken());
             addTask(this, new IHttpTask(UrlLink.LOGOUT_URL, map,
                             new ArrayList<BasicNameValuePair>(), MsgResult.class),
                     HttpConfig.DELETE, LOGINOUT);
@@ -343,7 +343,7 @@ public class TabMinePersonalSettingsActivity extends BaseActivity implements
     @Override
     protected void onActivityResult(int request, int result, Intent arg2) {
         if (result == RESULT_OK) {
-            BaseApp.mInstance.getUser().setBindMobile(true);
+            App.mInstance.getUser().setBindMobile(true);
             layout_tab_mine_personal_settings_binding_mobile_phone_unbound_txt
                     .setText(R.string.the_bound);
         }

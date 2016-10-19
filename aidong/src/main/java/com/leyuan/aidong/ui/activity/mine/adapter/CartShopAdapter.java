@@ -9,6 +9,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.entity.ShopBean;
 
 import java.util.ArrayList;
@@ -42,15 +43,28 @@ public class CartShopAdapter extends RecyclerView.Adapter<CartShopAdapter.CartHo
         return new CartHolder(view);
     }
 
+
     @Override
-    public void onBindViewHolder(CartHolder holder, int position) {
-        ShopBean bean = data.get(position);
+    public void onBindViewHolder(final CartHolder holder, int position) {
+        final ShopBean bean = data.get(position);
         holder.tvShopName.setText(bean.getShopname());
         holder.tvTime.setText(bean.getOpentime());
         holder.rvShop.setLayoutManager(new LinearLayoutManager(context));
-        CartGoodsAdapter adapter = new CartGoodsAdapter(context);
-        holder.rvShop.setAdapter(adapter);
-        adapter.setData(bean.getItem());
+        final CartGoodsAdapter goodsAdapter = new CartGoodsAdapter(context);
+        holder.rvShop.setAdapter(goodsAdapter);
+        goodsAdapter.setData(bean.getItem());
+
+        holder.rbCheck.setChecked(bean.isChecked());
+        holder.rbCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (GoodsBean goodsBean : bean.getItem()) {
+                    goodsBean.setChecked(!bean.isChecked());
+                    holder.rbCheck.setChecked(!bean.isChecked());
+                }
+                goodsAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     class CartHolder extends RecyclerView.ViewHolder {

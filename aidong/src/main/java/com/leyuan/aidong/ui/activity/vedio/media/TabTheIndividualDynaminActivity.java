@@ -57,7 +57,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.BaseApp;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.utils.common.Constant;
 import com.leyuan.aidong.utils.common.MXLog;
@@ -166,7 +166,7 @@ public class TabTheIndividualDynaminActivity extends BaseActivity implements
         isfirst = true;
         switch (getIntent().getIntExtra("type", 0)) {
             case 1:
-                Intent intent = new Intent(BaseApp.context, AlbumActivity.class);
+                Intent intent = new Intent(App.context, AlbumActivity.class);
                 intent.putExtra(Constant.BUNDLE_PHOTOWALL_POSITION, currentPosition);
                 intent.putExtra(Constant.BUNDLE_CLASS,
                         TabTheIndividualDynaminActivity.class);
@@ -365,7 +365,7 @@ public class TabTheIndividualDynaminActivity extends BaseActivity implements
                 if (position == Bimp.tempSelectBitmap.size()) {
                     setPopWindow(false);
                     //直接执行跳到相册逻辑,新改的
-                    Intent intent = new Intent(BaseApp.context, AlbumActivity.class);
+                    Intent intent = new Intent(App.context, AlbumActivity.class);
                     intent.putExtra(Constant.BUNDLE_PHOTOWALL_POSITION, currentPosition);
                     intent.putExtra(Constant.BUNDLE_CLASS,
                             TabTheIndividualDynaminActivity.class);
@@ -601,7 +601,7 @@ public class TabTheIndividualDynaminActivity extends BaseActivity implements
                         //						}
                     }
                 } else {
-                    Intent intent = new Intent(BaseApp.context, AlbumActivity.class);
+                    Intent intent = new Intent(App.context, AlbumActivity.class);
                     intent.putExtra(Constant.BUNDLE_PHOTOWALL_POSITION, currentPosition);
                     intent.putExtra(Constant.BUNDLE_CLASS,
                             TabTheIndividualDynaminActivity.class);
@@ -1131,7 +1131,7 @@ public class TabTheIndividualDynaminActivity extends BaseActivity implements
                             R.string.tip_sendingSuccess), TabTheIndividualDynaminActivity.this);
                     addTask(TabTheIndividualDynaminActivity.this, new IHttpTask(
                             UrlLink.DYNAMICSLATEST_URL, paramsinit2(""
-                            + BaseApp.mInstance.getUser().getMxid()),
+                            + App.mInstance.getUser().getMxid()),
                             NewDynamicResult.class), HttpConfig.GET, NEWDYNAMICS);
                 }
                 break;

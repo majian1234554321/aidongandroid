@@ -14,11 +14,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.model.result.MsgResult;
 import com.leyuan.aidong.ui.activity.vedio.media.TabTheIndividualDynaminActivity;
+import com.leyuan.aidong.ui.fragment.discover.SportCircleFragment;
 import com.leyuan.aidong.ui.fragment.home.HomeFragment;
 import com.leyuan.aidong.ui.fragment.mine.MineFragment;
-import com.leyuan.aidong.ui.fragment.discover.SportCircleFragment;
-import com.leyuan.aidong.entity.model.result.MsgResult;
 import com.leyuan.aidong.utils.Utils;
 import com.leyuan.commonlibrary.http.IHttpCallback;
 import com.leyuan.commonlibrary.util.ToastUtil;
@@ -59,7 +59,6 @@ public class MainActivity extends BaseActivity implements IHttpCallback, View.On
         tabContactorLayout = (RelativeLayout) findViewById(R.id.tabContactorLayout);
         tabMineLayout = (RelativeLayout) findViewById(R.id.tabMineLayout);
         hazy_view = findViewById(R.id.hazy_view);
-
     }
 
     private void initData() {
