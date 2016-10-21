@@ -21,10 +21,10 @@ import com.leyuan.aidong.ui.activity.home.CourseActivity;
 import com.leyuan.aidong.ui.activity.home.EquipmentActivity;
 import com.leyuan.aidong.ui.activity.home.FoodActivity;
 import com.leyuan.aidong.ui.activity.home.GoodsFilterActivity;
+import com.leyuan.aidong.ui.activity.home.ImagePreviewActivity;
 import com.leyuan.aidong.ui.activity.home.NurtureActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.BannerAdapter;
 import com.leyuan.aidong.ui.activity.home.adapter.HomeRecycleViewAdapter;
-import com.leyuan.aidong.ui.activity.mine.ApplyServiceActivity;
 import com.leyuan.aidong.ui.mvp.presenter.HomePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.HomePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.HomeFragmentView;
@@ -131,8 +131,15 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
         headerView.findViewById(R.id.tv_competition).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ApplyServiceActivity.class);
-                startActivity(intent);
+                ArrayList<String> urls = new ArrayList<>();
+                urls.add("http://ww2.sinaimg.cn/mw690/006uFQHggw1f8xjwtufy3j30ku0rsdki.jpg");
+                urls.add("http://ww4.sinaimg.cn/mw690/636d00d8gw1f1kx1ux9y4j20ic5b4wwl.jpg");
+                urls.add("http://ww3.sinaimg.cn/mw690/61ecbb3djw1f8ym0r7dtsg20dc07itwe.gif");
+                urls.add("http://ww2.sinaimg.cn/mw690/61ecbb3djw1f8ym0qyytug20dc07itue.gif");
+                urls.add("http://ww3.sinaimg.cn/mw690/61ecbb3djw1f8ym0q7zqzg20dc07i4ar.gif");
+                ImagePreviewActivity.start(getActivity(),urls,1);
+              //  Intent intent = new Intent(getActivity(), ApplyServiceActivity.class);
+               // startActivity(intent);
             }
         });
 

@@ -143,6 +143,7 @@
         <activity android:name=".ui.activity.home.DeliveryInfoActivity" />
         <activity android:name=".ui.activity.home.SelfDeliveryShopActivity" />
         <activity android:name=".ui.activity.home.ConfirmGoodsActivity" />
+        <activity android:name=".ui.activity.home.ImagePreviewActivity"/>
         <activity android:name=".ui.WebViewActivity"/>
         <activity android:name=".ui.activity.mine.ApplyServiceActivity"
             android:screenOrientation="portrait"
