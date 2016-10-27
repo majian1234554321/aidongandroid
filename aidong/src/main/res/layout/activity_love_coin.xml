@@ -1,88 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="#f2f2f2"
-              android:orientation="vertical">
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/orange">
 
     <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="@dimen/top_hight"
-        android:background="@color/main_tophead">
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_top_bar">
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_back"
+            android:padding="10dp"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="爱币"
+            android:textSize="@dimen/size_title"
+            android:textColor="@color/color_title"
+            android:layout_centerInParent="true"/>
 
         <ImageView
-            android:id="@+id/img_back"
+            android:id="@+id/iv_help"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:src="@drawable/back_icon"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="爱币"
-            android:textColor="@color/white"
-            android:textSize="@dimen/length34"/>
-
-        <TextView
-            android:id="@+id/txt_use_help"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
+            android:src="@drawable/icon_share"
             android:padding="10dp"
-            android:text="使用帮助"
-            android:textColor="@color/white"
-            android:textSize="@dimen/length28"/>
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
     </RelativeLayout>
 
-    <FrameLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#f2f2f2"
-        >
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="账户余额(币)"
+            android:textColor="@color/white"
+            android:textSize="15sp"/>
+        
+        <TextView
+            android:id="@+id/tv_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="36,280"
+            android:textSize="40sp"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/white"/>
+        
+        <TextView
+            android:id="@+id/tv_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="收支明细"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:drawableRight="@drawable/icon_arrow_down"
+            android:drawablePadding="5dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/shape_solid_black"/>
+        
+    </LinearLayout>
 
-        <ListView
-            android:id="@+id/list"
-            android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:background="@color/black">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="match_parent"
-            android:divider="@null"
-            android:dividerHeight="0dp"
-            android:listSelector="@android:color/transparent"
-            android:scrollbars="none"
-            android:background="@color/white"
-            />
+            android:orientation="vertical"
+            android:gravity="center">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="66dp"
-            android:layout_gravity="bottom"
-            android:background="@color/white">
+            <TextView
+                android:id="@+id/tv_useful"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="300"
+                android:textSize="16sp"
+                android:textColor="@color/white"/>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="#d9d9d9"
-                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="可用爱币"
+                android:textSize="16sp"
+                android:textColor="@color/white"/>
+        </LinearLayout>
 
-            <Button
-                android:id="@+id/button_withdraw"
-                android:layout_width="match_parent"
-                android:layout_height="59dp"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/shape_withdraw"
-                android:gravity="center"
-                android:text="提现"
-                android:textColor="@color/white"
-                android:textSize="@dimen/length28"
-                />
-        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
 
-    </FrameLayout>
+            <TextView
+                android:id="@+id/tv_frozen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100"
+                android:textSize="16sp"
+                android:textColor="@color/white"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="解冻中"
+                android:textSize="16sp"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_withdraw"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/main_red"
+        android:text="提现"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:gravity="center"/>
 </LinearLayout>

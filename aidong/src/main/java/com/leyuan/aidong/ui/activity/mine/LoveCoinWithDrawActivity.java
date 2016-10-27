@@ -1,4 +1,4 @@
-package com.leyuan.aidong.ui.activity.mine.lovecoin;
+package com.leyuan.aidong.ui.activity.mine;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -11,17 +11,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.model.result.BaseResult;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.model.result.BaseResult;
+import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.commonlibrary.util.ToastUtil;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 
-public class WithDrawActivity extends BaseActivity implements View.OnClickListener {
+public class LoveCoinWithDrawActivity extends BaseActivity implements View.OnClickListener {
     private ImageView img_back;
     private EditText edit_account;
     private EditText edit_name;
@@ -114,14 +114,14 @@ public class WithDrawActivity extends BaseActivity implements View.OnClickListen
     };
 
     private void showDialog(String message, final int code) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(WithDrawActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(LoveCoinWithDrawActivity.this);
         builder.setTitle(message);
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
                 if (code == 1) {
-                    WithDrawActivity.this.finish();
+                    LoveCoinWithDrawActivity.this.finish();
                 }
             }
         });

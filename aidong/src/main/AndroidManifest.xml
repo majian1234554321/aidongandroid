@@ -113,10 +113,9 @@
         <activity android:name=".ui.activity.mine.TabMineMessageReminderActivity" />
         <activity android:name=".ui.activity.mine.TabMinePersonalSettingsActivity" />
         <activity android:name=".ui.activity.mine.VersionOfTheIntroductionActivity" />
-        <activity android:name=".ui.activity.mine.lovecoin.LoveCoinActivity" />
-        <activity android:name=".ui.activity.mine.lovecoin.LoveCoinHelpActivity" />
-        <activity android:name=".ui.activity.mine.lovecoin.PaymentsDetailActivity" />
-        <activity android:name=".ui.activity.mine.lovecoin.WithDrawActivity" />
+        <activity android:name=".ui.activity.mine.LoveCoinActivity"/>
+        <activity android:name=".ui.activity.mine.LoveCoinWithDrawActivity"/>
+        <activity android:name=".ui.activity.mine.PaymentDetailActivity"/>
         <activity android:name=".ui.activity.mine.OrderActivity" />
         <activity android:name=".ui.activity.mine.AppointmentActivity" />
         <activity android:name=".ui.activity.mine.CouponActivity" />

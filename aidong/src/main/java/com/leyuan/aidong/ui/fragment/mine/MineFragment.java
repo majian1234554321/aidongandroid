@@ -19,6 +19,7 @@ import com.leyuan.aidong.ui.activity.mine.AppointmentActivity;
 import com.leyuan.aidong.ui.activity.mine.CartActivity;
 import com.leyuan.aidong.ui.activity.mine.CouponActivity;
 import com.leyuan.aidong.ui.activity.mine.FollowActivity;
+import com.leyuan.aidong.ui.activity.mine.LoveCoinActivity;
 import com.leyuan.aidong.ui.activity.mine.OrderActivity;
 import com.leyuan.aidong.ui.activity.mine.TabMinePersonalSettingsActivity;
 import com.leyuan.aidong.widget.customview.AidongMineItem;
@@ -128,7 +129,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 UiManager.activityJump(getActivity(), OrderActivity.class);
                 break;
             case R.id.item_my_coin:
-                UiManager.activityJump(getActivity(), TabMinePersonalSettingsActivity.class);
+                UiManager.activityJump(getActivity(), LoveCoinActivity.class);
                 break;
             case R.id.item_my_coupon:
                 UiManager.activityJump(getActivity(), CouponActivity.class);
