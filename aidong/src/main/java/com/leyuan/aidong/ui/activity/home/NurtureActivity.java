@@ -66,9 +66,9 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
         categoryRecyclerView.setLayoutManager(layoutManager);
         categoryRecyclerView.setAdapter(categoryAdapter);
-        titleBar.setBackListener(new SimpleTitleBar.OnBackClickListener() {
+        titleBar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onBack() {
+            public void onClick(View v) {
                 finish();
             }
         });

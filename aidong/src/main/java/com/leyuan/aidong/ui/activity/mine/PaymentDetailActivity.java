@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
@@ -39,9 +40,9 @@ public class PaymentDetailActivity extends BaseActivity {
 
     private void initTitleBar(){
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
-        titleBar.setBackListener(new SimpleTitleBar.OnBackClickListener() {
+        titleBar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onBack() {
+            public void onClick(View v) {
                 finish();
             }
         });

@@ -65,19 +65,15 @@ public class AppointmentSuccessActivity extends BaseActivity implements View.OnC
         tvTime.setText(time);
         returnHome.setOnClickListener(this);
         checkAppointment.setOnClickListener(this);
-
-        titleBar.setBackListener(new SimpleTitleBar.OnBackClickListener() {
-            @Override
-            public void onBack() {
-                finish();
-            }
-        });
+        titleBar.setOnClickListener(this);
     }
 
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.iv_back:
+                finish();
             case R.id.tv_home:
                 break;
             case R.id.tv_appointment:

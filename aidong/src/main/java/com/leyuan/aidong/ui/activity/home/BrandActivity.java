@@ -71,9 +71,9 @@ public class BrandActivity extends BaseActivity implements BrandActivityView {
 
     private void intTitleBar(){
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
-        titleBar.setBackListener(new SimpleTitleBar.OnBackClickListener() {
+        titleBar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onBack() {
+            public void onClick(View v) {
                 finish();
             }
         });

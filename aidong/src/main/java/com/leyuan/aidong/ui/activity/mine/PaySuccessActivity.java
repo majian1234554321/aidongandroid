@@ -37,9 +37,9 @@ public class PaySuccessActivity extends BaseActivity{
         recommendAdapter = new RecommendAdapter(this);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(recommendAdapter);
         recyclerView.setAdapter(wrapperAdapter);
-        titleBar.setBackListener(new SimpleTitleBar.OnBackClickListener() {
+        titleBar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onBack() {
+            public void onClick(View v) {
                 finish();
             }
         });

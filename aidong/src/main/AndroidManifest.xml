@@ -143,6 +143,8 @@
         <activity android:name=".ui.activity.home.SelfDeliveryShopActivity" />
         <activity android:name=".ui.activity.home.ConfirmGoodsActivity" />
         <activity android:name=".ui.activity.home.ImagePreviewActivity"/>
+        <activity android:name=".ui.activity.mine.ApplyServiceNextActivity"/>
+        <activity android:name=".ui.activity.home.AppointmentSuccessActivity"/>
         <activity android:name=".ui.WebViewActivity"/>
         <activity android:name=".ui.activity.mine.ApplyServiceActivity"
             android:screenOrientation="portrait"
@@ -153,7 +155,6 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".ui.activity.discover.VenuesDetailActivity" />
-        <activity android:name=".ui.activity.discover.VenuesDetailOldActivity" />
         <activity android:name=".ui.activity.discover.DiscoverUserActivity" />
         <activity android:name=".ui.activity.discover.FilterAroundPeopleActivity" />
         <activity
