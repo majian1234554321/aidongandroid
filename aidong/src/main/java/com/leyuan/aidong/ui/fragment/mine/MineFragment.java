@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.activity.mine.AddressActivity;
+import com.leyuan.aidong.ui.activity.mine.ApplyServiceActivity;
 import com.leyuan.aidong.ui.activity.mine.AppointmentActivity;
 import com.leyuan.aidong.ui.activity.mine.CartActivity;
 import com.leyuan.aidong.ui.activity.mine.CouponActivity;
@@ -142,7 +143,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 UiManager.activityJump(getActivity(), TabMinePersonalSettingsActivity.class);
                 break;
             case R.id.item_after_sale:
-                UiManager.activityJump(getActivity(), TabMinePersonalSettingsActivity.class);
+                UiManager.activityJump(getActivity(), ApplyServiceActivity.class);
                 break;
             case R.id.item_setting:
                 UiManager.activityJump(getActivity(), TabMinePersonalSettingsActivity.class);

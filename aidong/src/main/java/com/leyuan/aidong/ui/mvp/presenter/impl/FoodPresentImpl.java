@@ -35,7 +35,8 @@ public class FoodPresentImpl implements FoodPresenter {
             @Override
             public void onNext(FoodAndVenuesBean foodAndVenuesBean) {
                 if (foodAndVenuesBean != null && (foodAndVenuesBean.getFood() != null || foodAndVenuesBean.getPick_up_gym() != null)) {
-                    if(!foodAndVenuesBean.getFood().isEmpty() || !foodAndVenuesBean.getPick_up_gym().isEmpty()){
+                    if((foodAndVenuesBean.getFood() != null && !foodAndVenuesBean.getFood().isEmpty()) ||
+                            (foodAndVenuesBean.getPick_up_gym()!= null &&!foodAndVenuesBean.getPick_up_gym().isEmpty())){
                         foodActivityView.updateRecyclerView(foodAndVenuesBean);
                     }else{
                         foodActivityView.showEmptyView();
