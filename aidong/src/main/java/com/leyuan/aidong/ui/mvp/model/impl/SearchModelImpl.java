@@ -1,28 +1,24 @@
 package com.leyuan.aidong.ui.mvp.model.impl;
 
-import android.database.sqlite.SQLiteDatabase;
-
 import com.leyuan.aidong.entity.data.CampaignData;
 import com.leyuan.aidong.entity.data.CourseData;
 import com.leyuan.aidong.entity.data.FoodData;
 import com.leyuan.aidong.entity.data.UserData;
 import com.leyuan.aidong.entity.data.VenuesData;
-import com.leyuan.aidong.entity.greendao.DaoMaster;
-import com.leyuan.aidong.entity.greendao.DaoSession;
 import com.leyuan.aidong.entity.greendao.SearchHistory;
-import com.leyuan.aidong.entity.greendao.SearchHistoryDao;
 import com.leyuan.aidong.http.RetrofitHelper;
 import com.leyuan.aidong.http.RxHelper;
 import com.leyuan.aidong.http.api.SearchService;
 import com.leyuan.aidong.ui.mvp.model.SearchModel;
 
-import org.greenrobot.greendao.query.QueryBuilder;
-
 import java.util.List;
 
 import rx.Subscriber;
 
-import static com.leyuan.aidong.ui.App.context;
+//import com.leyuan.aidong.entity.greendao.DaoMaster;
+//import com.leyuan.aidong.entity.greendao.DaoSession;
+//import com.leyuan.aidong.entity.greendao.SearchHistoryDao;
+//import org.greenrobot.greendao.query.QueryBuilder;
 
 /**
  * 搜索
@@ -37,15 +33,15 @@ public class SearchModelImpl implements SearchModel {
 
     private SearchService searchService;
 
-    private SearchHistoryDao dao;
+//    private SearchHistoryDao dao;
 
     public SearchModelImpl() {
         this.searchService = RetrofitHelper.createApi(SearchService.class);
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, "search_history");
-        SQLiteDatabase db = helper.getWritableDatabase();
-        DaoMaster daoMaster = new DaoMaster(db);
-        DaoSession daoSession = daoMaster.newSession();
-        dao = daoSession.getSearchHistoryDao();
+//        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, "search_history");
+//        SQLiteDatabase db = helper.getWritableDatabase();
+//        DaoMaster daoMaster = new DaoMaster(db);
+//        DaoSession daoSession = daoMaster.newSession();
+//        dao = daoSession.getSearchHistoryDao();
     }
 
     @Override
@@ -85,18 +81,18 @@ public class SearchModelImpl implements SearchModel {
 
     @Override
     public List<SearchHistory> getSearchHistory() {
-        QueryBuilder qb = dao.queryBuilder();        //TODO 保存历史记录的容器可以优化
-        List list = qb.limit(10).orderDesc(SearchHistoryDao.Properties.Id).list();
-        if(!list.isEmpty()){
-            return (List<SearchHistory>)list;
-        }
+//        QueryBuilder qb = dao.queryBuilder();        //TODO 保存历史记录的容器可以优化
+//        List list = qb.limit(10).orderDesc(SearchHistoryDao.Properties.Id).list();
+//        if(!list.isEmpty()){
+//            return (List<SearchHistory>)list;
+//        }
         return null;
     }
 
     @Override
     public void insertSearchHistory(String keyword){
         SearchHistory history = new SearchHistory(null,keyword);
-        dao.insert(history);
+//        dao.insert(history);
     }
 
 }

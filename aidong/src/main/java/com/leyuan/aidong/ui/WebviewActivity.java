@@ -17,16 +17,16 @@ import com.leyuan.aidong.widget.customview.SwitcherLayout;
 
 /**
  * WebView
- * Created by song on 2016/10/18.
+ * Created by song on 2016/10/18.v
  */
-public class WebViewActivity extends BaseActivity{
+public class WebviewActivity extends BaseActivity{
     private SwitcherLayout switcherLayout;
     private WebView webView;
     private String title;
     private String url;
 
     public static void start(Context context,String title,String url) {
-        Intent starter = new Intent(context, WebViewActivity.class);
+        Intent starter = new Intent(context, WebviewActivity.class);
         starter.putExtra("title",title);
         starter.putExtra("url",url);
         context.startActivity(starter);
@@ -44,7 +44,7 @@ public class WebViewActivity extends BaseActivity{
         ImageView ivBack = (ImageView) findViewById(R.id.iv_back);
         TextView tvTitle = (TextView) findViewById(R.id.tv_title);
         webView = (WebView) findViewById(R.id.web_view);
-        switcherLayout = new SwitcherLayout(WebViewActivity.this,webView);
+        switcherLayout = new SwitcherLayout(WebviewActivity.this,webView);
         switcherLayout.setOnRetryListener(retryListener);
 
         ivBack.setOnClickListener(backListener);
