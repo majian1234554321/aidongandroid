@@ -8,15 +8,16 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
-import com.leyuan.aidong.utils.common.MXLog;
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.utils.SharePrefUtils;
-import com.facebook.drawee.backends.pipeline.Fresco;
+import com.leyuan.aidong.utils.common.MXLog;
 import com.lidroid.xutils.DbUtils;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.squareup.leakcanary.LeakCanary;
 
 public class App extends Application{
 
@@ -40,12 +41,14 @@ public class App extends Application{
         mInstance = this;
         context = getApplicationContext();
         initConfig();
-        Fresco.initialize(this);
+
     }
 
     private void initConfig() {
-        initBaiduLoc();
+        LeakCanary.install(this);
         SDKInitializer.initialize(this);
+        Fresco.initialize(this);
+        initBaiduLoc();
         initImageLoader(getApplicationContext());
         initDbUtils();
     }
@@ -112,41 +115,40 @@ public class App extends Application{
     }
 
     public boolean isLogin() {
-        if (SharePrefUtils.getBoolean(this, "islogin", false)
-                && SharePrefUtils.getUser(this) != null) {
-            return true;
+        if (getUser() ==null) {
+            return false;
         }
-        return false;
+        return true;
+    }
+
+    public void exitLogin() {
+        setUser(null);
     }
 
     public UserCoach getUser() {
-
-        if (SharePrefUtils.getBoolean(this, "islogin", false)
-                && SharePrefUtils.getUser(this) != null) {
             if (user == null) {
                 user = SharePrefUtils.getUser(this);
             }
             return user;
-        }
-        return null;
+
     }
     public void setUser(UserCoach user){
         this.user = user;
         SharePrefUtils.setUser(context, user);
     }
 
-    @Deprecated
-    public String getToken(){
-        if(token == null){
-            token = SharePrefUtils.getString(context, "token", null);
-        }
-        return token;
-    }
-
-    @Deprecated
-    public void setToken(String token){
-        this.token =token;
-        SharePrefUtils.putString(context, "token", token);
-    }
+//    @Deprecated
+//    public String getToken(){
+//        if(token == null){
+//            token = SharePrefUtils.getString(context, "token", null);
+//        }
+//        return token;
+//    }
+//
+//    @Deprecated
+//    public void setToken(String token){
+//        this.token =token;
+//        SharePrefUtils.putString(context, "token", token);
+//    }
 
 }
