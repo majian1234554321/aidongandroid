@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.R;
@@ -46,9 +47,9 @@ public class CouponActivity extends BaseActivity{
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
         tabLayout.setupWithViewPager(viewPager);
 
-        titleBar.setBackListener(new SimpleTitleBar.OnBackClickListener() {
+        titleBar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onBack() {
+            public void onClick(View v) {
                 finish();
             }
         });

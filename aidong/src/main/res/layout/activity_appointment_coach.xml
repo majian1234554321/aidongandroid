@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <com.leyuan.aidong.widget.customview.SimpleTitleBar
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_top_bar"
+        app:stb_title="预约私教"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:paddingLeft="@dimen/left_margin"
+        android:paddingRight="@dimen/right_margin">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/dv_avatar"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:actualImageScaleType="focusCrop"
+            app:roundAsCircle="true"
+            app:placeholderImage="@drawable/place_holder_logo"/>
+
+        <ImageView
+            android:id="@+id/iv_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/nan"
+            android:layout_alignBottom="@+id/dv_avatar"
+            android:layout_alignRight="@+id/dv_avatar"/>
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="name"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/dv_avatar"/>
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_coach"
+            android:layout_alignTop="@+id/tv_name"
+            android:layout_toRightOf="@+id/tv_name"
+            android:layout_marginLeft="10dp"/>
+
+        <TextView
+            android:id="@+id/tv_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10m"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="20dp"
+            android:layout_below="@+id/tv_name"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/dv_avatar"/>
+
+        <ImageView
+            android:id="@+id/iv_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_phone"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:paddingLeft="@dimen/left_margin"
+        android:paddingRight="@dimen/right_margin"
+        android:paddingTop="10dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/tv_morning"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/shape_bg_white"
+            android:gravity="center"
+            android:text="上午"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_afternoon"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_solid_black"
+            android:gravity="center"
+            android:text="下午"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <include layout="@layout/inc_bold_line" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="52dp"
+        android:layout_marginLeft="@dimen/left_margin"
+        android:gravity="center_vertical"
+        android:text="报名信息"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+    <include layout="@layout/inc_line_black" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/white"
+        android:paddingLeft="@dimen/left_margin"
+        android:paddingRight="@dimen/right_margin">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:text="报名人:" />
+        <EditText
+            android:id="@+id/et_username"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:singleLine="true"
+            android:hint="姓名2-5个字"
+            android:textColorHint="@color/c9"
+            android:textColor="@color/c3"
+            android:layout_marginLeft="10dp"
+            android:textSize="14sp"
+            android:background="@null"/>
+    </LinearLayout>
+
+    <include layout="@layout/inc_line"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/white"
+        android:paddingLeft="@dimen/left_margin"
+        android:paddingRight="@dimen/right_margin">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:text="手机号:" />
+        <EditText
+            android:id="@+id/et_phone"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:singleLine="true"
+            android:hint="11位手机号"
+            android:textColorHint="@color/c9"
+            android:textColor="@color/c3"
+            android:layout_marginLeft="10dp"
+            android:textSize="14sp"
+            android:background="@null"/>
+    </LinearLayout>
+
+    <include layout="@layout/inc_line"/>
+</LinearLayout>

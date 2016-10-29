@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.R;
@@ -33,7 +34,7 @@ public class AppointmentActivity extends BaseActivity {
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.vp_content);
 
-        ArrayList<Fragment> fragments = new ArrayList<>();
+        final ArrayList<Fragment> fragments = new ArrayList<>();
         AppointmentFragment all = AppointmentFragment.newInstance(AppointmentFragment.ALL);
         AppointmentFragment joined = AppointmentFragment.newInstance(AppointmentFragment.JOINED);
         AppointmentFragment unJoined = AppointmentFragment.newInstance(AppointmentFragment.UN_JOIN);
@@ -47,9 +48,9 @@ public class AppointmentActivity extends BaseActivity {
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
         tabLayout.setupWithViewPager(viewPager);
 
-        titleBar.setBackListener(new SimpleTitleBar.OnBackClickListener() {
+        titleBar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onBack() {
+            public void onClick(View v) {
                 finish();
             }
         });

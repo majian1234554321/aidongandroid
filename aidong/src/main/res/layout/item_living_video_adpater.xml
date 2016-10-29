@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal">
+
+    <RelativeLayout
+        android:id="@+id/layout_single_living"
+        android:layout_width="match_parent"
+        android:layout_height="158dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        >
+
+        <ImageView
+            android:id="@+id/img_living_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#22000000"
+            android:scaleType="centerCrop"
+            />
+
+        <ImageView
+            android:id="@+id/img_living"
+            android:layout_width="38dp"
+            android:layout_height="17dp"
+            android:layout_marginTop="12dp"
+            android:src="@drawable/icon_live"
+            />
+
+        <ImageView
+            android:layout_width="92dp"
+            android:layout_height="21dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/live_videoing"
+            />
+
+        <TextView
+            android:id="@+id/txt_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="12dp"
+            android:text="超级小接"
+            android:textColor="@color/white"
+            android:textSize="10dp"
+            android:singleLine="true"
+            android:layout_marginRight="50dp"
+            />
+
+        <TextView
+            android:id="@+id/txt_course"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="12dp"
+            android:text="耐力训练"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:singleLine="true"
+            android:layout_marginRight="50dp"
+            />
+
+        <TextView
+            android:id="@+id/txt_viewers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="15dp"
+            android:text="12323"
+            android:textColor="@color/white"
+            android:textSize="11sp"
+            />
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="17dp"
+            android:layout_toLeftOf="@id/txt_viewers"
+            android:src="@drawable/icon_live_watch_num"
+            />
+
+    </RelativeLayout>
+
+</FrameLayout>

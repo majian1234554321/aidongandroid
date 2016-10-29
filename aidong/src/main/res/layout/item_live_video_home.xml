@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/ll_live_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            >
+
+            <TextView
+                android:id="@+id/txt_live_date"
+                android:layout_width="wrap_content"
+                android:layout_height="55dp"
+                android:layout_centerInParent="true"
+                android:drawableLeft="@drawable/point_home"
+                android:drawablePadding="5dp"
+                android:drawableRight="@drawable/point_home"
+                android:gravity="center"
+                android:text="今日直播"
+                android:textColor="@color/black"
+                android:textSize="16sp"/>
+
+        </RelativeLayout>
+
+
+        <com.example.aidong.view.MyListView
+            android:id="@+id/list_live"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@color/white"
+            android:dividerHeight="1dp"
+            />
+    </LinearLayout>
+</FrameLayout>

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.R;
@@ -42,9 +43,9 @@ public class AppointmentUserActivity extends BaseActivity{
         rvUser = (RecyclerView) findViewById(R.id.rv_user);
         rvUser.setLayoutManager(new LinearLayoutManager(this));
         rvUser.setAdapter(new UserAdapter(this,data));
-        titleBar.setBackListener(new SimpleTitleBar.OnBackClickListener() {
+        titleBar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onBack() {
+            public void onClick(View v) {
                 finish();
             }
         });

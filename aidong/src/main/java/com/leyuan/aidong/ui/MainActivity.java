@@ -12,13 +12,16 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.model.result.MsgResult;
-import com.leyuan.aidong.ui.activity.vedio.media.TabTheIndividualDynaminActivity;
-import com.leyuan.aidong.ui.fragment.discover.SportCircleFragment;
+import com.leyuan.aidong.ui.activity.media.TabTheIndividualDynaminActivity;
+import com.leyuan.aidong.ui.fragment.discover.TabFoundDynamicFragment;
 import com.leyuan.aidong.ui.fragment.home.HomeFragment;
 import com.leyuan.aidong.ui.fragment.mine.MineFragment;
+import com.leyuan.aidong.ui.fragment.video.VideoHomeFragment;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.Utils;
 import com.leyuan.commonlibrary.http.IHttpCallback;
 import com.leyuan.commonlibrary.util.ToastUtil;
@@ -195,9 +198,9 @@ public class MainActivity extends BaseActivity implements IHttpCallback, View.On
     private void initFragments() {
         fm = getSupportFragmentManager();
         mFragments.add(new HomeFragment());
-        //mFragments.add(new FindFragment());
-        mFragments.add(new SportCircleFragment());
-        //        mFragments.add(new TabFoundDynamicFragment());
+//        mFragments.add(new FindFragment());
+        mFragments.add(new VideoHomeFragment());
+                mFragments.add(new TabFoundDynamicFragment());
         mFragments.add(new MineFragment());
         setTabSelection(0);
         showFragment(0);
@@ -321,8 +324,17 @@ public class MainActivity extends BaseActivity implements IHttpCallback, View.On
         return super.onKeyDown(keyCode, event);
     }
 
+    private long mPressedTime = 0;
+
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        Logger.i("WatchOfficeActivity onBackPressed");
+        long mNowTime = System.currentTimeMillis();//获取第一次按键时间
+        if ((mNowTime - mPressedTime) > 2000) {//比较两次按键时间差
+            Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+            mPressedTime = mNowTime;
+        } else {//退出程序
+            finish();
+        }
     }
 }

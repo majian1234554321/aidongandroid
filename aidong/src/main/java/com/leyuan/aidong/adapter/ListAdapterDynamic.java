@@ -30,7 +30,7 @@ import android.widget.VideoView;
 
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.activity.vedio.media.ImageShowerActivity;
+import com.leyuan.aidong.ui.activity.media.ImageShowerActivity;
 import com.leyuan.aidong.ui.activity.discover.UserWhoClickLikeActivity;
 import com.leyuan.aidong.utils.common.Constant;
 import com.leyuan.aidong.utils.interfaces.OnCommentAndLikeClickListenner;

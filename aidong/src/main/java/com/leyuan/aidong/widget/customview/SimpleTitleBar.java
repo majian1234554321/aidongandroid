@@ -2,7 +2,6 @@ package com.leyuan.aidong.widget.customview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +19,7 @@ import com.leyuan.aidong.R;
 public class SimpleTitleBar extends RelativeLayout{
     private TextView tvTitle;
     private String title;
-    private OnBackClickListener backListener;
+    private View.OnClickListener onClickListener;
 
     public SimpleTitleBar(Context context) {
         this(context,null);
@@ -57,21 +56,14 @@ public class SimpleTitleBar extends RelativeLayout{
         ivBack.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                backListener.onBack();
+                onClickListener.onClick(v);
             }
         });
     }
 
-    public interface OnBackClickListener {
-        void onBack();
-    }
-
-    /**
-     * 设置回退监听
-     * @param l OnBackClickListener
-     */
-    public void setBackListener(@NonNull OnBackClickListener l) {
-        this.backListener = l;
+    @Override
+    public void setOnClickListener(OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
     }
 
     /**
