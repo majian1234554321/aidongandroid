@@ -27,8 +27,10 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdap
     }
 
     public void setData(List<SearchHistory> data) {
-        this.data = data;
-        notifyDataSetChanged();
+        if(data != null){
+            this.data = data;
+            notifyDataSetChanged();
+        }
     }
 
     @Override

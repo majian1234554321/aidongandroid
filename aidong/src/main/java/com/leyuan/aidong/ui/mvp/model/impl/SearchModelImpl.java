@@ -22,8 +22,6 @@ import java.util.List;
 
 import rx.Subscriber;
 
-import static com.leyuan.aidong.ui.App.context;
-
 /**
  * 搜索
  * Created by song on 2016/9/18.
@@ -41,8 +39,10 @@ public class SearchModelImpl implements SearchModel {
 
     public SearchModelImpl() {
         this.searchService = RetrofitHelper.createApi(SearchService.class);
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, "search_history");
-        SQLiteDatabase db = helper.getWritableDatabase();
+    }
+
+    public SearchModelImpl(SQLiteDatabase db){
+        this.searchService = RetrofitHelper.createApi(SearchService.class);
         DaoMaster daoMaster = new DaoMaster(db);
         DaoSession daoSession = daoMaster.newSession();
         dao = daoSession.getSearchHistoryDao();

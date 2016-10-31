@@ -703,7 +703,7 @@ public class WheelView extends View {
 
 		if (itemsWidth > 0) {
 			canvas.save();
-			// Skip padding space and hideCategoryList a part of top and bottom items
+			// Skip padding space and hidePopup a part of top and bottom items
 			canvas.translate(PADDING, -ITEM_OFFSET);
 			drawItems(canvas);
 			drawValue(canvas);

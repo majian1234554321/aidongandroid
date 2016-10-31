@@ -21,15 +21,14 @@ import java.util.List;
  * Created by song on 2016/9/23.
  */
 public class AppointmentUserActivity extends BaseActivity{
-
     private SimpleTitleBar titleBar;
     private RecyclerView rvUser;
     private List<UserBean> data;
 
-    public static void actionStart(Context context, ArrayList<UserBean> userList){
-        Intent intent = new Intent(context, AppointmentUserActivity.class);
-        intent.putParcelableArrayListExtra("userList",userList);
-        context.startActivity(intent);
+    public static void start(Context context,ArrayList<UserBean> userList) {
+        Intent starter = new Intent(context, AppointmentUserActivity.class);
+        starter.putParcelableArrayListExtra("userList",userList);
+        context.startActivity(starter);
     }
 
     @Override
@@ -42,7 +41,7 @@ public class AppointmentUserActivity extends BaseActivity{
         titleBar = (SimpleTitleBar)findViewById(R.id.title_bar);
         rvUser = (RecyclerView) findViewById(R.id.rv_user);
         rvUser.setLayoutManager(new LinearLayoutManager(this));
-        rvUser.setAdapter(new UserAdapter(this,data));
+        rvUser.setAdapter(new UserAdapter(this));
         titleBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

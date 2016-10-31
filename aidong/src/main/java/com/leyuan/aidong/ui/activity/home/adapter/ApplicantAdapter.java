@@ -4,8 +4,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.leyuan.aidong.R;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CampaignDetailBean;
 
 import java.util.ArrayList;
@@ -20,7 +20,16 @@ public class ApplicantAdapter extends RecyclerView.Adapter<ApplicantAdapter.Appl
     private List<CampaignDetailBean.Applicant> data = new ArrayList<>();
 
     public void setData(List<CampaignDetailBean.Applicant> data) {
-        this.data = data;
+       // this.data = data;
+        if(data == null){
+            for (int i = 0; i < 10; i++) {
+                CampaignDetailBean campaignDetailBean = new CampaignDetailBean();
+                CampaignDetailBean.Applicant applicant = campaignDetailBean.new Applicant();
+                applicant.setAvatar("https://www.baidu.com/img/bd_logo1.png");
+                this.data.add(applicant);
+            }
+
+        }
         notifyDataSetChanged();
     }
 

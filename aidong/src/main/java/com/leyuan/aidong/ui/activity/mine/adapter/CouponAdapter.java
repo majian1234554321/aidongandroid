@@ -56,10 +56,10 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponHold
 
         //与优惠劵类型无关
         holder.tvCouponPrice.setText(bean.getDiscount());
-        holder.tvUseMoney.setText(bean.getMin());
+        holder.tvUseMoney.setText(String.format(context.getString(R.string.user_condition),bean.getMin()));
         holder.tvCouponType.setText(bean.getName());
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        holder.recyclerView.setAdapter(new CouponDescAdapte(bean.getDesc()));
+       // holder.recyclerView.setAdapter(new CouponDescAdapter(bean.getDesc()));
         holder.couponTypeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

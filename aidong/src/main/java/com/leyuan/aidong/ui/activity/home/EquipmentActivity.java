@@ -102,7 +102,8 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(equipmentAdapter);
         recommendRecyclerView.setAdapter(wrapperAdapter);
         GridLayoutManager manager = new GridLayoutManager(this,2);
-        manager.setSpanSizeLookup(new HeaderSpanSizeLookup((HeaderAndFooterRecyclerViewAdapter)recommendRecyclerView.getAdapter(), manager.getSpanCount()));
+        manager.setSpanSizeLookup(new HeaderSpanSizeLookup((HeaderAndFooterRecyclerViewAdapter)
+                recommendRecyclerView.getAdapter(), manager.getSpanCount()));
         recommendRecyclerView.setLayoutManager(manager);
         recommendRecyclerView.addOnScrollListener(onScrollListener);
         RecyclerViewUtils.setHeaderView(recommendRecyclerView, View.inflate(this,R.layout.header_nurture_or_equipment,null));

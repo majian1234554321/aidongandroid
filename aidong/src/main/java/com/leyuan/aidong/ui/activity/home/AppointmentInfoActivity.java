@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.activity.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -95,16 +96,14 @@ public class AppointmentInfoActivity extends BaseActivity implements View.OnClic
     private void setListener() {
         etInputName.setText("song");
         etInputPhone.setText("123455");
-        etInputName.clearFocus();
-        etInputPhone.clearFocus();
+        tvPay.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.et_input_name:
-                break;
-            case R.id.et_input_phone:
+            case R.id.tv_pay:
+                startActivity(new Intent(this,AppointmentSuccessActivity.class));
                 break;
             default:
                 break;

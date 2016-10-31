@@ -32,6 +32,7 @@
 
     <string name="campaign_detail">活动详情</string>
     <string name="food_material">主要食材: %1$s</string>
+    <string name="user_condition">满%1$s元可用</string>
 
     <string name="campaign_free">免费</string>
     <string name="campaign_pay">付费</string>

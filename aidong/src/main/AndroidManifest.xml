@@ -125,12 +125,13 @@
         <activity android:name=".ui.activity.mine.AddAddressActivity" />
         <activity android:name=".ui.activity.mine.AddressActivity" />
         <activity android:name=".ui.activity.mine.CartActivity" />
+        <activity android:name=".ui.activity.mine.CouponExchangeActivity"/>
         <activity android:name=".module.scan.activity.MipcaActivityCapture" />
         <activity android:name=".module.scan.activity.ScanResultActivity" />
         <activity android:name=".module.scan.activity.ScanActivity" />
         <activity android:name=".ui.activity.home.FoodActivity" />
         <activity android:name=".ui.activity.home.PastCampaignActivity" />
-        <activity android:name=".ui.activity.home.CourseActivity" />
+        <activity android:name=".ui.activity.home.OldCourseActivity" />
         <activity android:name=".ui.activity.home.CourseDetailActivity" />
         <activity android:name=".ui.activity.home.CampaignActivity" />
         <activity android:name=".ui.activity.home.SearchActivity" />
@@ -145,7 +146,7 @@
         <activity android:name=".ui.activity.home.ImagePreviewActivity"/>
         <activity android:name=".ui.activity.mine.ApplyServiceNextActivity"/>
         <activity android:name=".ui.activity.home.AppointmentSuccessActivity"/>
-
+        <activity android:name=".ui.activity.home.AppointmentUserActivity"/>
         <activity android:name=".ui.activity.mine.UpdateAddressActivity"/>
         <activity android:name=".ui.WebViewActivity"/>
         <activity android:name=".ui.activity.video.WatchOfficeActivity"/>
