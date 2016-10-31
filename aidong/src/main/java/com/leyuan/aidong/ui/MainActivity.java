@@ -6,7 +6,6 @@ import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -315,14 +314,14 @@ public class MainActivity extends BaseActivity implements IHttpCallback, View.On
         tabMineLayout.setClickable(true);
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            exitApp();
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+//            exitApp();
+//            return true;
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
 
     private long mPressedTime = 0;
 
@@ -334,7 +333,7 @@ public class MainActivity extends BaseActivity implements IHttpCallback, View.On
             Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
             mPressedTime = mNowTime;
         } else {//退出程序
-            finish();
+            exitApp();
         }
     }
 }

@@ -38,13 +38,13 @@ public class SharePrefUtils {
 		}
 		return user;
 	}
-	public static void setLogin(Context ctx, boolean value){
-		if (mSharedPreferences == null) {
-			mSharedPreferences = ctx.getSharedPreferences(SHARE_PREFS_NAME,
-					Context.MODE_PRIVATE);
-		}
-		mSharedPreferences.edit().putBoolean("islogin", value).commit();
-	}
+//	public static void setLogin(Context ctx, boolean value){
+//		if (mSharedPreferences == null) {
+//			mSharedPreferences = ctx.getSharedPreferences(SHARE_PREFS_NAME,
+//					Context.MODE_PRIVATE);
+//		}
+//		mSharedPreferences.edit().putBoolean("islogin", value).commit();
+//	}
 	
 	public static void putInt(Context ctx, String key, int value){
 		if (mSharedPreferences == null) {

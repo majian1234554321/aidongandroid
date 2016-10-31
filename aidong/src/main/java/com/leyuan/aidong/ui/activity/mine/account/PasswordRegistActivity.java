@@ -22,19 +22,18 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.App;
-import com.leyuan.aidong.ui.MainActivity;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.utils.common.Constant;
-import com.leyuan.aidong.utils.common.MXLog;
-import com.leyuan.aidong.utils.common.UrlLink;
-import com.leyuan.aidong.http.HttpConfig;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.entity.model.result.FriendsResult;
 import com.leyuan.aidong.entity.model.result.MxPersonalDataResult;
+import com.leyuan.aidong.http.HttpConfig;
+import com.leyuan.aidong.ui.App;
+import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.MainActivity;
 import com.leyuan.aidong.utils.Constants;
-import com.leyuan.aidong.utils.SharePrefUtils;
+import com.leyuan.aidong.utils.common.Constant;
+import com.leyuan.aidong.utils.common.MXLog;
+import com.leyuan.aidong.utils.common.UrlLink;
 import com.leyuan.commonlibrary.http.IHttpCallback;
 import com.leyuan.commonlibrary.http.IHttpTask;
 import com.leyuan.commonlibrary.util.ToastUtil;
@@ -226,7 +225,7 @@ public class PasswordRegistActivity extends BaseActivity implements
 				// 获取个人信息
 				isLoginSuccess = true;
 				App.mInstance.setUser(dataResult.getData().getUser());
-				SharePrefUtils.setLogin(this,true);
+//				SharePrefUtils.setLogin(this,true);
 				Intent i = new Intent(this, MainActivity.class);
 				i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(i);

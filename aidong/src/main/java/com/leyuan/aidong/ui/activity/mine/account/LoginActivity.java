@@ -280,17 +280,17 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
 				
 				if(App.mInstance.getUser()==null){
 					App.mInstance.setUser(res.getData().getUser());
-					SharePrefUtils.setLogin(this,true);
+//					SharePrefUtils.setLogin(this,true);
 					addTask(this, new IHttpTask(UrlLink.FIND_UPLOAD_URL, new ArrayList<BasicNameValuePair>(), MsgResult.class), HttpConfig.PUT, FIND_UPLOAD_CODE);
 					addTask(this, new IHttpTask(UrlLink.PRIVACY_URL, paramsstealth(), MsgResult.class), HttpConfig.PUT, STEALTH_CODE);
 				} else if(App.mInstance.getUser().getMxid()!=res.getData().getUser().getMxid()){
 					App.mInstance.setUser(res.getData().getUser());
-					SharePrefUtils.setLogin(this,true);
+//					SharePrefUtils.setLogin(this,true);
 					addTask(this, new IHttpTask(UrlLink.FIND_UPLOAD_URL, new ArrayList<BasicNameValuePair>(), MsgResult.class), HttpConfig.PUT, FIND_UPLOAD_CODE);
 					addTask(this, new IHttpTask(UrlLink.PRIVACY_URL, paramsstealth(), MsgResult.class), HttpConfig.PUT, STEALTH_CODE);
 				}else{
 					App.mInstance.setUser(res.getData().getUser());
-					SharePrefUtils.setLogin(this,true);
+//					SharePrefUtils.setLogin(this,true);
 				}
 				
 				
@@ -332,7 +332,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
 			if (reslogin.getCode() == 1) {
 				// MXLog.out(""+res.getData().getCoach().getName());
 				App.mInstance.setUser(reslogin.getData().getUser());
-				SharePrefUtils.setLogin(this,true);
+//				SharePrefUtils.setLogin(this,true);
 				
 				addTask(this, new IHttpTask(UrlLink.FIND_UPLOAD_URL, new ArrayList<BasicNameValuePair>(), MsgResult.class), HttpConfig.PUT, FIND_UPLOAD_CODE);
 				addTask(this, new IHttpTask(UrlLink.PRIVACY_URL, paramsstealth(), MsgResult.class), HttpConfig.PUT, STEALTH_CODE);
