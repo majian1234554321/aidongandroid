@@ -58,7 +58,7 @@ public class AppointmentPresentImpl implements AppointmentPresent {
         appointmentModel.getAppointments(new CommonSubscriber<AppointmentData>(switcherLayout) {
             @Override
             public void onNext(AppointmentData appointmentData) {
-                if(appointmentData != null){
+                if(appointmentData != null &&  appointmentData.getAppointment() != null){
                     appointmentBeanList = appointmentData.getAppointment();
                 }
                 if(appointmentBeanList.isEmpty()){
@@ -76,7 +76,7 @@ public class AppointmentPresentImpl implements AppointmentPresent {
         appointmentModel.getAppointments(new RefreshSubscriber<AppointmentData>(context) {
             @Override
             public void onNext(AppointmentData appointmentData) {
-                if(appointmentData != null){
+                if(appointmentData != null &&  appointmentData.getAppointment() != null){
                     appointmentBeanList = appointmentData.getAppointment();
                 }
                 if(!appointmentBeanList.isEmpty()){
@@ -91,7 +91,7 @@ public class AppointmentPresentImpl implements AppointmentPresent {
         appointmentModel.getAppointments(new RequestMoreSubscriber<AppointmentData>(context,recyclerView,pageSize) {
             @Override
             public void onNext(AppointmentData appointmentData) {
-                if(appointmentData != null){
+                if(appointmentData != null &&  appointmentData.getAppointment() != null){
                     appointmentBeanList = appointmentData.getAppointment();
                 }
                 if(!appointmentBeanList.isEmpty()){
@@ -111,7 +111,7 @@ public class AppointmentPresentImpl implements AppointmentPresent {
             @Override
             public void onNext(AppointmentDetailData appointmentDetailData) {
                 AppointmentDetailBean appointmentDetailBean = null;
-                if(appointmentDetailData != null ){
+                if(appointmentDetailData != null && appointmentDetailData.getAppoint() != null){
                     appointmentDetailBean = appointmentDetailData.getAppoint();
                 }
                 if(appointmentDetailBean != null){

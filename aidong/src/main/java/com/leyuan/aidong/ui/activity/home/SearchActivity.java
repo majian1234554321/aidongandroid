@@ -31,7 +31,6 @@ public class SearchActivity extends BaseActivity implements SearchActivityView{
     private RecyclerView recyclerView;
     private SearchHistoryAdapter historyAdapter;
 
-
     private SearchPresent searchPresent;
 
     @Override

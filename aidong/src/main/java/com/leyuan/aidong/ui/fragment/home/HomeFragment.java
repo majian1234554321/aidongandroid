@@ -28,6 +28,7 @@ import com.leyuan.aidong.ui.activity.home.adapter.HomeRecycleViewAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.HomePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.HomePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.HomeFragmentView;
+import com.leyuan.aidong.widget.customview.SwitcherLayout;
 import com.leyuan.aidong.widget.customview.ViewPagerIndicator;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -50,6 +51,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
     private ViewPager viewPager;
     private BannerAdapter bannerAdapter;
 
+    private SwitcherLayout switcherLayout;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout refreshLayout;
 
@@ -76,6 +78,8 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
         initSwipeRefreshLayout(view);
         initRecyclerView(view);
         setListener();
+
+        present.commonLoadData(switcherLayout);
     }
 
 
@@ -138,16 +142,16 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
                 urls.add("http://ww2.sinaimg.cn/mw690/61ecbb3djw1f8ym0qyytug20dc07itue.gif");
                 urls.add("http://ww3.sinaimg.cn/mw690/61ecbb3djw1f8ym0q7zqzg20dc07i4ar.gif");
                 ImagePreviewActivity.start(getActivity(),urls,1);
-              //  Intent intent = new Intent(getActivity(), ApplyServiceActivity.class);
-               // startActivity(intent);
+               // CampaignDetailActivity.start(getContext(),"1");
             }
         });
 
-        present.getBanners();
+       // present.getBanners();
     }
 
     private void initSwipeRefreshLayout(View view) {
         refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.sr_refresh);
+        switcherLayout = new SwitcherLayout(getContext(),refreshLayout);
         setColorSchemeResources(refreshLayout);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -157,13 +161,6 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
             }
         });
 
-        refreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                refreshLayout.setRefreshing(true);
-                present.pullToRefreshHomeData();
-            }
-        });
     }
 
     private void initRecyclerView(View view) {
@@ -223,30 +220,6 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
         }
     }
 
-    @Override
-    public void showEmptyView() {
-
-    }
-
-    @Override
-    public void hideEmptyView() {
-
-    }
-
-    @Override
-    public void showRecyclerView() {
-
-    }
-
-    @Override
-    public void hideRecyclerView() {
-
-    }
-
-    @Override
-    public void showErrorView() {
-
-    }
 
     @Override
     public void showEndFooterView() {

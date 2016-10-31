@@ -1,5 +1,7 @@
 package com.leyuan.aidong.ui.activity.mine;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,16 +10,15 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.activity.mine.adapter.CartShopAdapter;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.OrderDetailBean;
+import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.activity.mine.adapter.CartShopAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.OrderPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.OrderPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.OrderDetailActivityView;
 import com.leyuan.aidong.widget.customview.ExtendTextView;
-import com.leyuan.aidong.widget.customview.SwitcherLayout;
 
 /**
  * 订单详情
@@ -33,7 +34,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
     private static final String SELF_DELIVERED = "6";   //已自提
 
     //切换加载中 无内容,无网络控件
-    private SwitcherLayout switcherLayout;
+   // private SwitcherLayout switcherLayout;
     private LinearLayout contentLayout;
 
     //订单状态
@@ -86,19 +87,28 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
     private OrderPresent orderPresent;
     private String orderId;
 
+    public static void start(Context context,String id) {
+        Intent starter = new Intent(context, OrderDetailActivity.class);
+        starter.putExtra("orderId",id);
+        context.startActivity(starter);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_detail);
         orderPresent = new OrderPresentImpl(this,this);
+        if(getIntent() != null){
+            orderId = getIntent().getStringExtra("orderId");
+        }
 
         initView();
-        orderPresent.getOrderDetail(orderId,switcherLayout);
+      //  orderPresent.getOrderDetail(orderId,switcherLayout);
     }
 
     private void initView(){
         contentLayout = (LinearLayout)findViewById(R.id.ll_content);
-        switcherLayout = new SwitcherLayout(this,contentLayout);
+     //   switcherLayout = new SwitcherLayout(this,contentLayout);
 
         tvState = (TextView) findViewById(R.id.tv_state);
         tvTimeOrNum = (TextView) findViewById(R.id.tv_time_or_num);
@@ -176,7 +186,4 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
                 break;
         }
     }
-
-
-
 }

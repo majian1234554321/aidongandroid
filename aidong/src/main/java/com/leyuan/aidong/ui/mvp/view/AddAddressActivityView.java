@@ -8,11 +8,6 @@ import com.leyuan.aidong.entity.AddressBean;
  */
 public interface AddAddressActivityView {
 
-    /**
-     * 设置更新地址
-     * @param addressBean AddressBean
-     */
-    void setUpdateAddress(AddressBean addressBean);
 
     /**
      * 设置添加地址

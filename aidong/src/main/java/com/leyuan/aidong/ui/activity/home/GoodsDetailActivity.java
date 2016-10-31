@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.activity.home;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -73,15 +74,25 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
     private ImageView ivArrow;
     private TextView tvTip;
 
-    private String id = "1";
+    private String goodsId;
     private String type = "nurture";
     private GoodsDetailPresent goodsDetailPresent;
+
+    public static void start(Context context,String id) {
+        Intent starter = new Intent(context, GoodsDetailActivity.class);
+        starter.putExtra("goodsId",id);
+        context.startActivity(starter);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_detail);
         goodsDetailPresent = new GoodDetailPresentImpl(this);
+        if(getIntent() != null){
+            goodsId = getIntent().getStringExtra("goodsId");
+        }
+        goodsId = "1";
 
         initView();
         setListener();

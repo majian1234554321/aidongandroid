@@ -26,14 +26,16 @@ import java.util.List;
  * 收货地址
  * Created by song on 2016/9/20.
  */
-public class AddressActivity extends BaseActivity implements View.OnClickListener, AddressActivityView {
+public class AddressActivity extends BaseActivity implements View.OnClickListener, AddressActivityView, AddressAdapter.EditAddressListener {
+    private static final int CODE_UPDATE_ADDRESS = 1;
+
     private ImageView ivBack;
     private TextView tvAddAddress;
 
     private SwitcherLayout switcherLayout;
     private RecyclerView rvAddress;
     private AddressAdapter addressAdapter;
-    private List<AddressBean> data = new ArrayList<>();
+    private List<AddressBean> addressList = new ArrayList<>();
 
     private AddressPresent addressPresent;
     private int position;
@@ -42,26 +44,26 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address);
-        init();
+        initView();
+        setListener();
         addressPresent.getAddress(switcherLayout);
     }
 
-    private void init() {
+    private void initView() {
         ivBack = (ImageView) findViewById(R.id.iv_back);
         rvAddress = (RecyclerView) findViewById(R.id.rv_address);
         tvAddAddress = (TextView) findViewById(R.id.tv_add_address);
         switcherLayout = new SwitcherLayout(this,rvAddress);
         addressAdapter = new AddressAdapter(this);
+        addressAdapter.setEditAddressListener(this);
         rvAddress.setLayoutManager(new LinearLayoutManager(this));
         rvAddress.setAdapter(addressAdapter);
         addressPresent = new AddressPresentImpl(this,this);
-        ivBack.setOnClickListener(this);
-        tvAddAddress.setOnClickListener(this);
     }
 
-    public void deleteAddress(int position){
-        this.position = position;
-        addressPresent.deleteAddress(data.get(position).getId());
+    private void setListener() {
+        ivBack.setOnClickListener(this);
+        tvAddAddress.setOnClickListener(this);
     }
 
     @Override
@@ -81,15 +83,15 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void setAddress(List<AddressBean> addressBeanList) {
-        data = addressBeanList;
-        addressAdapter.setData(data);
+        addressList = addressBeanList;
+        addressAdapter.setData(addressBeanList);
     }
 
     @Override
     public void setDeleteAddress(BaseBean baseBean) {
         if(baseBean.getStatus() == 1){
-            data.remove(position);
-            addressAdapter.setData(data);
+            addressList.remove(position);
+            addressAdapter.setData(addressList);
         }else{
             Toast.makeText(this,getString(R.string.delete_fail),Toast.LENGTH_LONG).show();
         }
@@ -98,5 +100,36 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void showEmptyView() {
 
+    }
+
+    @Override
+    public void onDeleteAddress(int position) {
+        this.position = position;
+        addressPresent.deleteAddress(addressList.get(position).getId());
+    }
+
+    @Override
+    public void onUpdateAddress(int position) {
+        this.position = position;
+        Intent intent = new Intent(this,UpdateAddressActivity.class);
+        intent.putExtra("address", addressList.get(position));
+        startActivityForResult(intent,CODE_UPDATE_ADDRESS);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(data != null){
+            if(requestCode == CODE_UPDATE_ADDRESS){
+                AddressBean addressBean = data.getParcelableExtra("address");
+                addressList.remove(position);
+                addressList.add(position,addressBean);
+                addressAdapter.setData(addressList);
+            }else{
+                AddressBean addressBean = data.getParcelableExtra("address");
+                addressList.add(0,addressBean);
+                addressAdapter.setData(addressList);
+            }
+        }
     }
 }

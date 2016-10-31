@@ -6,6 +6,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.ui.BaseActivity;
@@ -24,6 +25,7 @@ public class CampaignActivity extends BaseActivity{
     private static  final int CAMPAIGN_FREE = 0;
     private static  final int CAMPAIGN_PAY = 1;
 
+    private ImageView ivBack;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private TextView tvPost;
@@ -33,6 +35,7 @@ public class CampaignActivity extends BaseActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_campaign);
 
+        ivBack = (ImageView) findViewById(R.id.iv_back);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.vp_content);
         tvPost = (TextView)findViewById(R.id.tv_post);
@@ -54,6 +57,13 @@ public class CampaignActivity extends BaseActivity{
         viewPager.setAdapter(new TabFragmentAdapter(getSupportFragmentManager(),fragments,titles));
         viewPager.setOffscreenPageLimit(2);
         tabLayout.setupWithViewPager(viewPager);
+
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         tvPost.setOnClickListener(new View.OnClickListener() {
             @Override

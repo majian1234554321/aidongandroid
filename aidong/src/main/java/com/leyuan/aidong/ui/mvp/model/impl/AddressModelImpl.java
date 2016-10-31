@@ -31,8 +31,8 @@ public class AddressModelImpl implements AddressModel{
     }
 
     @Override
-    public void addAddress(Subscriber<AddressData> subscriber, String name, String phone, String address) {
-        addressService.addAddress(name,phone,address)
+    public void addAddress(Subscriber<AddressData> subscriber,String id, String name, String phone, String address) {
+        addressService.addAddress(id,name,phone,address)
                 .compose(RxHelper.<AddressData>transform())
                 .subscribe(subscriber);
     }

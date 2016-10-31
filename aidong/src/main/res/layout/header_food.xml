@@ -21,6 +21,7 @@
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/tv_recommend"
         android:layout_width="wrap_content"
         android:layout_height="55dp"
         android:text="推荐自提"

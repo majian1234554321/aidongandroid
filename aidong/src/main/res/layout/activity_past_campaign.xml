@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <com.leyuan.aidong.widget.customview.SimpleTitleBar
+        android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
         app:stb_title="往期活动"/>

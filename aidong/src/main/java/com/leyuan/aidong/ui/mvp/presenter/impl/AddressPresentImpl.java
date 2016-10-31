@@ -13,6 +13,7 @@ import com.leyuan.aidong.ui.mvp.model.impl.AddressModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.AddressPresent;
 import com.leyuan.aidong.ui.mvp.view.AddAddressActivityView;
 import com.leyuan.aidong.ui.mvp.view.AddressActivityView;
+import com.leyuan.aidong.ui.mvp.view.UpdateAddressActivityView;
 import com.leyuan.aidong.widget.customview.SwitcherLayout;
 
 import java.util.ArrayList;
@@ -26,11 +27,9 @@ public class AddressPresentImpl implements AddressPresent{
     private Context context;
     private AddressModel addressModel;
 
-    //收货地址列表View层
-    private AddressActivityView addressActivityView;
-
-    //新建或修改地址View层
-    private AddAddressActivityView addAddressActivityView;
+    private AddressActivityView addressActivityView;                //收货地址列表View层
+    private AddAddressActivityView addAddressActivityView;          //新建地址View层
+    private UpdateAddressActivityView updateAddressActivityView;    //更新地址View层
 
     public AddressPresentImpl(Context context, AddressActivityView view) {
         this.context = context;
@@ -48,13 +47,21 @@ public class AddressPresentImpl implements AddressPresent{
         }
     }
 
+    public AddressPresentImpl(Context context, UpdateAddressActivityView view) {
+        this.context = context;
+        this.updateAddressActivityView = view;
+        if(addressModel == null){
+            addressModel = new AddressModelImpl();
+        }
+    }
+
     @Override
     public void getAddress(final SwitcherLayout switcherLayout) {
         addressModel.getAddress(new CommonSubscriber<AddressListData>(switcherLayout) {
             @Override
             public void onNext(AddressListData addressListData) {
                 List<AddressBean> addressList = new ArrayList<>();
-                if(addressListData != null){
+                if(addressListData != null && addressListData.getAddress() != null){
                     addressList = addressListData.getAddress();
                 }
                 if(addressList.isEmpty()){
@@ -68,16 +75,15 @@ public class AddressPresentImpl implements AddressPresent{
     }
 
     @Override
-    public void addAddress(String name, String phone, final String address) {
+    public void addAddress(String id,String name, String phone, final String address) {
         addressModel.addAddress(new ProgressSubscriber<AddressData>(context,false) {
             @Override
             public void onNext(AddressData addressData) {
-                if(addressData != null){
-                    //注意: 这里传回去的Bean可能为空
+                if(addressData != null && addressData.getAddress() != null){
                     addAddressActivityView.setAddAddress(addressData.getAddress());
                 }
             }
-        },name,phone,address);
+        },id,name,phone,address);
     }
 
     @Override
@@ -85,9 +91,8 @@ public class AddressPresentImpl implements AddressPresent{
         addressModel.updateAddress(new ProgressSubscriber<AddressData>(context,false) {
             @Override
             public void onNext(AddressData addressData) {
-                if(addressData != null){
-                    //注意: 这里传回去的Bean可能为空
-                    addAddressActivityView.setAddAddress(addressData.getAddress());
+                if(addressData != null && addressData.getAddress() != null){
+                    updateAddressActivityView.setUpdateAddress(addressData.getAddress());
                 }
             }
         },id,name,phone,address);

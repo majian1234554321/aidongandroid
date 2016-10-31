@@ -11,6 +11,7 @@ import java.lang.reflect.Field;
  * 软键盘
  */
 public class KeyBoardUtil {
+
     /**
      * 打卡软键盘
      * @param mEditText 输入框

@@ -6,10 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.leyuan.commonlibrary.util.ToastUtil;
+import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.FoodBean;
+import com.leyuan.aidong.ui.activity.home.GoodsDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +90,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtil.show("商品详情",context);
+                GoodsDetailActivity.start(context,"1");
             }
         });
     }

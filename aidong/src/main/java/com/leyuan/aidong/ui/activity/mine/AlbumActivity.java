@@ -68,6 +68,7 @@ public class AlbumActivity extends BaseActivity implements AlbumRecyclerAdapter.
 
     private int usefulImageSize;
 
+    //TODO handler leak
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -77,7 +78,7 @@ public class AlbumActivity extends BaseActivity implements AlbumRecyclerAdapter.
 
     public static void start(Context context,ArrayList<ImageInfoBean> selectedImages) {
         Intent starter = new Intent(context, AlbumActivity.class);
-        starter.putExtra("selectedImages",selectedImages);
+        starter.putExtra("selectImages",selectedImages);
         context.startActivity(starter);
     }
 
@@ -95,7 +96,7 @@ public class AlbumActivity extends BaseActivity implements AlbumRecyclerAdapter.
         imageRootPath = outFilePath + imageName;// 指定路径;
 
         if (getIntent() != null) {
-            selectImages = getIntent().getParcelableArrayListExtra("selectedImages");
+            selectImages = getIntent().getParcelableArrayListExtra("selectImages");
             usefulImageSize = MAX_UPLOAD_IMAGE_COUNT - selectImages.size();
         }
 
@@ -215,7 +216,7 @@ public class AlbumActivity extends BaseActivity implements AlbumRecyclerAdapter.
                 break;
             case R.id.tv_next:
                 Intent intent = new Intent();
-                intent.putParcelableArrayListExtra("selectedImages", selectImages);
+                intent.putParcelableArrayListExtra("selectImages", selectImages);
                 //setResult(CODE_ADD_IMAGE, intent);
                 finish();
                 break;
@@ -248,7 +249,7 @@ public class AlbumActivity extends BaseActivity implements AlbumRecyclerAdapter.
                 selectImages.add(0, imageInfoBean);
 
                 Intent intent = new Intent();
-                intent.putParcelableArrayListExtra("selectedImages", selectImages);
+                intent.putParcelableArrayListExtra("selectImages", selectImages);
               //  setResult(CODE_ADD_IMAGE, intent);
 
                 updateGallery(imageRootPath);

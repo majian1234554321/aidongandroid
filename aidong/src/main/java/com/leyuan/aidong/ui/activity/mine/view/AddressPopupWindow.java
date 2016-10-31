@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.activity.mine.AddAddressActivity;
+import com.leyuan.aidong.ui.activity.mine.UpdateAddressActivity;
 import com.leyuan.aidong.widget.customview.BaseAddressPopupWindow;
 import com.leyuan.aidong.widget.wheelcity.ArrayWheelAdapter;
 import com.leyuan.aidong.widget.wheelcity.OnWheelChangedListener;
@@ -85,7 +86,11 @@ public class AddressPopupWindow extends BaseAddressPopupWindow implements View.O
             case R.id.btn_confirm:
                 String address = String.format(context.getString(R.string.add_address),
                         currentProvinceName,currentCityName,currentDistrictName);
-                ((AddAddressActivity)context).setAddress(address);
+                if(context instanceof AddAddressActivity){
+                    ((AddAddressActivity)context).setAddress(address);
+                }else{
+                    ((UpdateAddressActivity)context).setAddress(address);
+                }
                 dismiss();
                 break;
         }

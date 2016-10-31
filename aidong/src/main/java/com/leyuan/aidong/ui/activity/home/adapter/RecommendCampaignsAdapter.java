@@ -35,7 +35,7 @@ public class RecommendCampaignsAdapter extends BaseAdapter<HomeItemBean> {
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CampaignDetailActivity.newInstance(context,"1");
+                CampaignDetailActivity.start(context,"1");
             }
         });
     }
