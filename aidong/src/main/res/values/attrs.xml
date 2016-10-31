@@ -251,4 +251,21 @@
         <attr name="donut_inner_bottom_text_color" format="color" />
         <attr name="donut_circle_starting_degree" format="integer" />
     </declare-styleable>
+
+    <declare-styleable name="circleImg">
+        <attr name="isCircle" format="boolean" />
+        <attr name="defResId" format="reference" />
+    </declare-styleable>
+    <declare-styleable name="SwipyRefreshLayout">
+        <attr name="srl_direction">
+            <enum name="top" value="0" />
+            <enum name="bottom" value="1" />
+            <enum name="both" value="2" />
+        </attr>
+    </declare-styleable>
+    <attr name="entrySummaries" format="reference" />
+
+    <declare-styleable name="IjkListPreference">
+        <attr name="entrySummaries" />
+    </declare-styleable>
 </resources>

@@ -14,7 +14,7 @@ import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.utils.common.BaseUrlLink;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.activity.vedio.media.VideoPlayerActivity;
+import com.leyuan.aidong.ui.activity.media.VideoPlayerActivity;
 import com.leyuan.aidong.ui.activity.discover.CommentDetailActivity;
 import com.leyuan.aidong.ui.activity.mine.account.LoginActivity;
 import com.leyuan.aidong.adapter.ListAdapterDynamic;

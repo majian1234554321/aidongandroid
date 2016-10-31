@@ -31,7 +31,7 @@ import android.widget.TextView;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.activity.vedio.media.AlbumActivity;
+import com.leyuan.aidong.ui.activity.media.AlbumActivity;
 import com.leyuan.aidong.adapter.GralleryAdapter;
 import com.leyuan.aidong.utils.common.Constant;
 import com.leyuan.aidong.utils.common.UrlLink;

@@ -76,20 +76,20 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.MainActivity" />
-        <activity android:name=".ui.activity.vedio.media.VideoPlayerActivity" />
+        <activity android:name=".ui.activity.media.VideoPlayerActivity" />
         <activity android:name=".ui.activity.mine.account.LoginActivity" />
         <activity android:name=".ui.activity.discover.CommentDetailActivity" />
         <activity
-            android:name=".ui.activity.vedio.media.AlbumActivity"
+            android:name=".ui.activity.media.AlbumActivity"
             android:hardwareAccelerated="true" />
-        <activity android:name=".ui.activity.vedio.media.TabPhotoWallActivity" />
-        <activity android:name=".ui.activity.vedio.media.TabTheIndividualDynaminActivity" />
-        <activity android:name=".ui.activity.vedio.media.MyRecorderVideoActivity" />
-        <activity android:name=".ui.activity.vedio.media.PreviewViedoShowActivity" />
-        <activity android:name=".ui.activity.vedio.media.SelectVideoActivity" />
-        <activity android:name=".ui.activity.vedio.media.SelectVideoCoverActivity" />
-        <activity android:name=".ui.activity.vedio.media.TabVideoShowActivity" />
-        <activity android:name=".ui.activity.vedio.media.ImageShowerActivity" />
+        <activity android:name=".ui.activity.media.TabPhotoWallActivity" />
+        <activity android:name=".ui.activity.media.TabTheIndividualDynaminActivity" />
+        <activity android:name=".ui.activity.media.MyRecorderVideoActivity" />
+        <activity android:name=".ui.activity.media.PreviewViedoShowActivity" />
+        <activity android:name=".ui.activity.media.SelectVideoActivity" />
+        <activity android:name=".ui.activity.media.SelectVideoCoverActivity" />
+        <activity android:name=".ui.activity.media.TabVideoShowActivity" />
+        <activity android:name=".ui.activity.media.ImageShowerActivity" />
         <activity android:name=".ui.activity.mine.MyShowActivityNew" />
         <activity android:name=".ui.activity.mine.TabMinePersonalDataActivity" />
         <activity android:name=".ui.activity.mine.TabMinePersonalDataFitnessGoalsActivity" />
@@ -145,8 +145,17 @@
         <activity android:name=".ui.activity.home.ImagePreviewActivity"/>
         <activity android:name=".ui.activity.mine.ApplyServiceNextActivity"/>
         <activity android:name=".ui.activity.home.AppointmentSuccessActivity"/>
+
         <activity android:name=".ui.activity.mine.UpdateAddressActivity"/>
         <activity android:name=".ui.WebViewActivity"/>
+        <activity android:name=".ui.activity.video.WatchOfficeActivity"/>
+        <activity android:name=".ui.activity.video.PlayerActivity"/>
+        <activity android:name=".ui.activity.video.VideoDetailActivity"/>
+        <activity android:name=".ui.activity.video.LiveCommentActivity"/>
+        <activity android:name=".ui.activity.video.LiveDetailActivity"/>
+        <activity android:name=".ui.activity.video.LivingVideoActivity"/>
+
+        <activity android:name=".ui.activity.video.VideoCommentActivity"/>
         <activity android:name=".ui.activity.mine.ApplyServiceActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>

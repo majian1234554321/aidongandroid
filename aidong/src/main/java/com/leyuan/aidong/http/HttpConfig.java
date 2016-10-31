@@ -160,9 +160,9 @@ public class HttpConfig {
                     parls.add(0, new BasicNameValuePair("version", Utils.getVersion(App.mInstance)));
                     parls.add(0, new BasicNameValuePair("lng", "" + App.mInstance.lon));
                     parls.add(0, new BasicNameValuePair("lat", "" + App.mInstance.lat));
-                    if (App.mInstance.getToken() != null) {
-                        parls.add(0, new BasicNameValuePair("token", App.mInstance.getToken()));
-                    }
+//                    if (App.mInstance.getToken() != null) {
+//                        parls.add(0, new BasicNameValuePair("token", App.mInstance.getToken()));
+//                    }
                 }
 
                 switch (method) {
