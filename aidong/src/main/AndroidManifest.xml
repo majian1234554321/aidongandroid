@@ -123,6 +123,7 @@
         <activity android:name=".ui.activity.mine.AppointmentDetailActivity" />
         <activity android:name=".ui.activity.mine.FollowActivity" />
         <activity android:name=".ui.activity.mine.AddAddressActivity" />
+        <activity android:name=".ui.activity.mine.MessageActivity"/>
         <activity android:name=".ui.activity.mine.AddressActivity" />
         <activity android:name=".ui.activity.mine.CartActivity" />
         <activity android:name=".ui.activity.mine.CouponExchangeActivity"/>
@@ -132,6 +133,7 @@
         <activity android:name=".ui.activity.home.FoodActivity" />
         <activity android:name=".ui.activity.home.PastCampaignActivity" />
         <activity android:name=".ui.activity.home.OldCourseActivity" />
+        <activity android:name=".ui.activity.home.CourseActivity"/>
         <activity android:name=".ui.activity.home.CourseDetailActivity" />
         <activity android:name=".ui.activity.home.CampaignActivity" />
         <activity android:name=".ui.activity.home.SearchActivity" />

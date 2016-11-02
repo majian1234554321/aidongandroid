@@ -19,7 +19,6 @@ import com.leyuan.aidong.widget.customview.SimpleTitleBar;
  * Created by song on 2016/9/12.
  */
 public class AppointmentInfoActivity extends BaseActivity implements View.OnClickListener{
-
     private SimpleTitleBar titleBar;
 
     //课程或活动信息

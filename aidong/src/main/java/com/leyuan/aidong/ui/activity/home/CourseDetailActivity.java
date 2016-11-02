@@ -16,12 +16,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.activity.home.adapter.ApplicantAdapter;
 import com.leyuan.aidong.ui.activity.home.adapter.SamplePagerAdapter;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.widget.customview.ViewPagerIndicator;
 
@@ -159,7 +159,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             if(maxScroll - Math.abs(verticalOffset) < DensityUtil.dp2px(CourseDetailActivity.this,35)){
                avatar.setVisibility(View.GONE);
             }else {
-                avatar.setVisibility(View.VISIBLE);
+               avatar.setVisibility(View.VISIBLE);
             }
         }
     }

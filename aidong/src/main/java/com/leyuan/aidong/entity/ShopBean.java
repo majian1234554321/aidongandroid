@@ -7,12 +7,12 @@ import java.util.List;
  * Created by song on 2016/9/23.
  */
 public class ShopBean {
-
     private String shopname;
     private String opentime;
     private List<GoodsBean> item;
 
     private boolean checked = false;            //标记该商店是否被选中
+    private double shopPrice = 0d;              //商店中所有被选中的商品的价格
 
     public String getShopname() {
         return shopname;
@@ -44,6 +44,14 @@ public class ShopBean {
 
     public void setChecked(boolean checked) {
         this.checked = checked;
+    }
+
+    public double getShopPrice() {
+        return shopPrice;
+    }
+
+    public void setShopPrice(double shopPrice) {
+        this.shopPrice = shopPrice;
     }
 
     @Override

@@ -23,7 +23,7 @@ import java.util.List;
  * 选择自提门店
  * Created by song on 2016/9/14.
  */
-public class SelfDeliveryShopActivity extends BaseActivity{
+public class SelfDeliveryShopActivity extends BaseActivity implements View.OnClickListener {
     private ImageView ivBack;
     private TextView tvFinish;
 
@@ -40,12 +40,26 @@ public class SelfDeliveryShopActivity extends BaseActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_self_delivery);
-
         pageSize = 20;
-        ivBack = (ImageView) findViewById(R.id.iv_back);
-        tvFinish = (TextView) findViewById(R.id.tv_finish);
+        initView();
+        setListener();
+
+        deliveryAdapter.setData(null);
+        wrapperAdapter.notifyDataSetChanged();
     }
 
+
+    private void initView(){
+        ivBack = (ImageView) findViewById(R.id.iv_back);
+        tvFinish = (TextView) findViewById(R.id.tv_finish);
+        initSwipeRefreshLayout();
+        initRecyclerView();
+    }
+
+    private void setListener() {
+        ivBack.setOnClickListener(this);
+        tvFinish.setOnClickListener(this);
+    }
 
     private void initSwipeRefreshLayout() {
         refreshLayout = (SwipeRefreshLayout)findViewById(R.id.refreshLayout);
@@ -61,7 +75,7 @@ public class SelfDeliveryShopActivity extends BaseActivity{
     }
 
     private void initRecyclerView(){
-        recyclerView = (RecyclerView)findViewById(R.id.rv_brand_detail);
+        recyclerView = (RecyclerView)findViewById(R.id.rv_address);
         data = new ArrayList<>();
         deliveryAdapter = new SelfDeliveryAdapter(this);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(deliveryAdapter);
@@ -80,4 +94,17 @@ public class SelfDeliveryShopActivity extends BaseActivity{
             }
         }
     };
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.iv_back:
+                finish();
+                break;
+            case R.id.tv_finish:
+                break;
+            default:
+                break;
+        }
+    }
 }

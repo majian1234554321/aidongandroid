@@ -9,20 +9,18 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.widget.customview.SimpleTitleBar;
 
 /**
- * 消息
- * Created by song on 2016/9/10.
+ * 系统消息
+ * Created by song on 2016/11/2.
  */
-public class MessageActivity extends BaseActivity{
+public class SystemMessageActivity extends BaseActivity{
     private SimpleTitleBar titleBar;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView rvMessage;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_message);
+        setContentView(R.layout.activity_system_message);
 
         initView();
     }
@@ -31,6 +29,5 @@ public class MessageActivity extends BaseActivity{
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
         rvMessage = (RecyclerView) findViewById(R.id.rv_message);
-
     }
 }

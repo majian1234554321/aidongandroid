@@ -40,6 +40,7 @@ public class SearchActivity extends BaseActivity implements SearchActivityView{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(getApplicationContext(), "search_history");
         db = helper.getWritableDatabase();
         SearchPresent searchPresent = new SearchPresentImpl(this,this,db);

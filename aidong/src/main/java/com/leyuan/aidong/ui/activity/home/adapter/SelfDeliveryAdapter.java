@@ -26,7 +26,17 @@ public class SelfDeliveryAdapter extends RecyclerView.Adapter<SelfDeliveryAdapte
     }
 
     public void setData(List<DeliveryBean> data) {
-        this.data = data;
+        if(data != null){
+            this.data = data;
+        }else{
+            for (int i = 0; i < 10; i++) {
+                DeliveryBean bean = new DeliveryBean();
+                bean.setAddress("大日本东京大道");
+                bean.setDistance("1000");
+                bean.setName("日本全球会社");
+                this.data.add(bean);
+            }
+        }
     }
 
     @Override
@@ -45,7 +55,8 @@ public class SelfDeliveryAdapter extends RecyclerView.Adapter<SelfDeliveryAdapte
         DeliveryBean bean = data.get(position);
         holder.tvShopName.setText(bean.getName());
         holder.tvAddress.setText(bean.getAddress());
-        holder.tvDistance.setText(bean.getDistance());
+        holder.tvDistance.setText(String.format
+                (context.getResources().getString(R.string.distance_km),bean.getDistance()));
     }
 
     class ShopHolder extends RecyclerView.ViewHolder {

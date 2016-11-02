@@ -11,8 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.activity.mine.AddressActivity;
 import com.leyuan.aidong.ui.activity.mine.ApplyServiceActivity;
 import com.leyuan.aidong.ui.activity.mine.AppointmentActivity;
@@ -20,6 +20,7 @@ import com.leyuan.aidong.ui.activity.mine.CartActivity;
 import com.leyuan.aidong.ui.activity.mine.CouponActivity;
 import com.leyuan.aidong.ui.activity.mine.FollowActivity;
 import com.leyuan.aidong.ui.activity.mine.LoveCoinActivity;
+import com.leyuan.aidong.ui.activity.mine.MessageActivity;
 import com.leyuan.aidong.ui.activity.mine.OrderActivity;
 import com.leyuan.aidong.ui.activity.mine.TabMinePersonalSettingsActivity;
 import com.leyuan.aidong.widget.customview.AidongMineItem;
@@ -117,7 +118,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 UiManager.activityJump(getActivity(), CartActivity.class);
                 break;
             case R.id.btn_message:
-                UiManager.activityJump(getActivity(), TabMinePersonalSettingsActivity.class);
+                UiManager.activityJump(getActivity(), MessageActivity.class);
                 break;
             case R.id.imageView_head:
                 UiManager.activityJump(getActivity(), TabMinePersonalSettingsActivity.class);
@@ -151,6 +152,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case  R.id.linearLayout_guanzhu:
                 UiManager.activityJump(getActivity(), FollowActivity.class);
+                break;
+            case  R.id.linearLayout_beiguanzhu:
+                FollowActivity.start(getContext(),1);
                 break;
         }
     }

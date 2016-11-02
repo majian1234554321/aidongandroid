@@ -18,7 +18,7 @@ import com.leyuan.aidong.entity.HomeBean;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.activity.home.CampaignActivity;
 import com.leyuan.aidong.ui.activity.home.CampaignDetailActivity;
-import com.leyuan.aidong.ui.activity.home.OldCourseActivity;
+import com.leyuan.aidong.ui.activity.home.CourseActivity;
 import com.leyuan.aidong.ui.activity.home.CourseDetailActivity;
 import com.leyuan.aidong.ui.activity.home.EquipmentActivity;
 import com.leyuan.aidong.ui.activity.home.FoodActivity;
@@ -128,7 +128,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
         headerView.findViewById(R.id.tv_course).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), OldCourseActivity.class);
+                Intent intent = new Intent(getActivity(), CourseActivity.class);
                 startActivity(intent);
             }
         });

@@ -39,7 +39,7 @@ public class FollowPresentImpl implements FollowPresent {
         followModel.getFollow(new CommonSubscriber<FollowData>(switcherLayout) {
             @Override
             public void onNext(FollowData followData) {
-                if(followData != null){
+                if(followData != null && !followData.getFollow().isEmpty()){
                     userBeanList = followData.getFollow();
                 }
                 if(!userBeanList.isEmpty()){
@@ -57,11 +57,8 @@ public class FollowPresentImpl implements FollowPresent {
         followModel.getFollow(new RefreshSubscriber<FollowData>(context) {
             @Override
             public void onNext(FollowData followData) {
-                if(followData != null){
-                    userBeanList = followData.getFollow();
-                }
-                if(!userBeanList.isEmpty()){
-                    followFragmentView.updateRecyclerView(userBeanList);
+                if(followData != null && !followData.getFollow().isEmpty()){
+                    followFragmentView.updateRecyclerView(followData.getFollow());
                 }
             }
         },type,Constant.FIRST_PAGE);

@@ -10,20 +10,20 @@ import java.util.List;
  */
 public class FollowData {
 
-    private List<UserBean> follow;
+    private List<UserBean> user;
 
     public List<UserBean> getFollow() {
-        return follow;
+        return user;
     }
 
     public void setFollower(List<UserBean> follower) {
-        this.follow = follower;
+        this.user = follower;
     }
 
     @Override
     public String toString() {
         return "FollowData{" +
-                "follower=" + follow +
+                "follower=" + user +
                 '}';
     }
 }

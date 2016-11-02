@@ -27,6 +27,7 @@ public abstract class BaseAdapter<T> extends android.widget.BaseAdapter {
 
     public void setList(List<T> list) {
         this.list = list;
+        notifyDataSetChanged();
     }
 
     public List<T> getList() {
