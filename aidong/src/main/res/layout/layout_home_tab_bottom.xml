@@ -24,6 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
+                android:src="@drawable/selctor_tab_home"
                 android:gravity="center">
             </ImageView>
 
@@ -59,6 +60,7 @@
             android:layout_centerInParent="true">
 
             <ImageView
+                android:src="@drawable/selector_tab_live_video"
                 android:id="@+id/tabFoundImageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -74,7 +76,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="7dp"
                 android:gravity="center"
-                android:text="@string/tabFound"
+                android:text="@string/live_video"
                 android:textSize="11dp">
             </TextView>
         </RelativeLayout>
@@ -117,6 +119,7 @@
             android:layout_centerInParent="true">
 
             <ImageView
+                android:src="@drawable/selector_tab_found"
                 android:id="@+id/tabContactorImageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -132,7 +135,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="7dp"
                 android:gravity="center"
-                android:text="@string/sportCircle"
+                android:text="@string/found"
                 android:textSize="11dp">
             </TextView>
         </RelativeLayout>
@@ -157,6 +160,7 @@
             android:layout_centerInParent="true">
 
             <ImageView
+                android:src="@drawable/selector_tab_mine"
                 android:id="@+id/tabMineImageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

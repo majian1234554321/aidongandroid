@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_main"
+    android:orientation="vertical">
+
+    <com.leyuan.aidong.widget.CommonTitleLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/layout_title"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        app:txtTitle="@string/register"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            style="@style/common_img_left_style"
+            android:src="@drawable/telephone_number"
+            />
+
+        <EditText
+            android:id="@+id/eidt_telephone"
+            style="@style/common_edit_style"
+            android:layout_marginRight="130dp"
+            android:hint="@string/input_telephone"
+            android:inputType="phone"
+            />
+
+        <ImageView
+            style="@style/common_divider_style"
+            android:layout_marginRight="110dp"
+            />
+
+        <Button
+            android:id="@+id/btn_identify"
+            android:layout_width="90dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/shape_solid_black"
+            android:gravity="center"
+            android:text="@string/get_identify_code"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        >
+
+        <ImageView
+            style="@style/common_img_left_style"
+            android:src="@drawable/find_password"
+            />
+
+        <EditText
+            android:id="@+id/eidt_verify_code"
+            style="@style/common_edit_style"
+            android:hint="@string/input_verify_code"
+            android:inputType="number"
+            />
+
+        <ImageView
+            style="@style/common_divider_style"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        >
+
+        <ImageView
+            style="@style/common_img_left_style"
+            android:src="@drawable/password"
+            />
+
+        <EditText
+            android:id="@+id/eidt_password"
+            style="@style/common_edit_style"
+            android:hint="@string/input_password_limit"
+            android:inputType="textPassword"
+            />
+
+        <ImageView
+            style="@style/common_divider_style"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:visibility="gone"
+        >
+
+        <ImageView
+            style="@style/common_img_left_style"
+            android:src="@drawable/password"
+            />
+
+        <EditText
+            android:id="@+id/eidt_re_password"
+            style="@style/common_edit_style"
+            android:hint="@string/input_password_limit_again"
+            android:inputType="textPassword"
+            />
+
+        <ImageView
+            style="@style/common_divider_style"
+            />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="12dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/checkbox_protocol"
+            style="@style/common_checkBox_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:padding="5dp"/>
+
+        <TextView
+            android:id="@+id/txt_protocol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:padding="6dp"
+            android:text="@string/protocol"
+            android:textColor="@color/text_color_common"
+            android:textSize="12dp"
+            />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button_register"
+        style="@style/common_button_style"
+        android:text="@string/register_complete"
+        android:background="@color/sort"
+        />
+
+
+</LinearLayout>

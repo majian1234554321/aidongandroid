@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.activity.mine.AddressActivity;
 import com.leyuan.aidong.ui.activity.mine.ApplyServiceActivity;
@@ -21,11 +22,14 @@ import com.leyuan.aidong.ui.activity.mine.CouponActivity;
 import com.leyuan.aidong.ui.activity.mine.FollowActivity;
 import com.leyuan.aidong.ui.activity.mine.LoveCoinActivity;
 import com.leyuan.aidong.ui.activity.mine.MessageActivity;
+import com.leyuan.aidong.ui.activity.mine.MyShowActivityNew;
 import com.leyuan.aidong.ui.activity.mine.OrderActivity;
 import com.leyuan.aidong.ui.activity.mine.TabMinePersonalSettingsActivity;
+import com.leyuan.aidong.ui.activity.mine.account.LoginActivity;
 import com.leyuan.aidong.widget.customview.AidongMineItem;
 import com.leyuan.aidong.widget.customview.CircleImageView;
 import com.leyuan.commonlibrary.manager.UiManager;
+
 
 public class MineFragment extends BaseFragment implements View.OnClickListener {
 
@@ -49,6 +53,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_mine, container, false);
         initView();
+        setViewEvent();
         initData();
         return rootView;
     }
@@ -88,7 +93,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         item_setting = (AidongMineItem) rootView.findViewById(R.id.item_setting);
     }
 
-    private void initData() {
+    private void setViewEvent() {
         button_login.setOnClickListener(this);
         btn_shop_car.setOnClickListener(this);
         btn_message.setOnClickListener(this);
@@ -108,11 +113,24 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     }
 
+    private void initData() {
+
+         if(App.mInstance.isLogin()){
+             relativeLayout_my_logo.setVisibility(View.VISIBLE);
+             layout_no_login.setVisibility(View.GONE);
+         }else{
+             relativeLayout_my_logo.setVisibility(View.GONE);
+             layout_no_login.setVisibility(View.VISIBLE);
+         }
+
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button_login:
-                UiManager.activityJump(getActivity(), TabMinePersonalSettingsActivity.class);
+//                UiManager.activityJump(getActivity(), MyShowActivityNew.class);
+                UiManager.activityJump(getActivity(), LoginActivity.class);
                 break;
             case R.id.btn_shop_car:
                 UiManager.activityJump(getActivity(), CartActivity.class);
@@ -121,7 +139,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 UiManager.activityJump(getActivity(), MessageActivity.class);
                 break;
             case R.id.imageView_head:
-                UiManager.activityJump(getActivity(), TabMinePersonalSettingsActivity.class);
+                UiManager.activityJump(getActivity(), MyShowActivityNew.class);
                 break;
             case R.id.relativeLayout_yuyue:
                 UiManager.activityJump(getActivity(), AppointmentActivity.class);

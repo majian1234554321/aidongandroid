@@ -12,7 +12,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.greendao.DaoMaster;
+//import com.leyuan.aidong.entity.greendao.DaoMaster;
 import com.leyuan.aidong.entity.greendao.SearchHistory;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.SearchHistoryAdapter;
@@ -41,8 +41,8 @@ public class SearchActivity extends BaseActivity implements SearchActivityView{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(getApplicationContext(), "search_history");
-        db = helper.getWritableDatabase();
+//        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(getApplicationContext(), "search_history");
+//        db = helper.getWritableDatabase();
         SearchPresent searchPresent = new SearchPresentImpl(this,this,db);
         initView();
         setListener();

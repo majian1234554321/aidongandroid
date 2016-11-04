@@ -53,7 +53,7 @@
     <color name="store">#8d97a6</color>
     <color name="sort">#ff572f</color>
     <color name="b_four_b_b_c_five">#b4bbc5</color>
-    <color name="new_background_one">#ff234969</color>
+    <color name="new_background_one">#000000</color>
     <color name="dialog_intetface">#666666</color>
     <color name="seven_two_seven">#727171</color>
     <color name="touming_black">#00000000</color>
@@ -202,5 +202,17 @@
     <color name="my_tv_black">#4D4D4D</color>
     <color name="fitness_festival">#000000</color>
     <color name="ticket_tag_color">#D2B763</color>
+    <color name="txt_black">#333333</color>
+    <color name="title_bg">#1C4987</color>
+    <color name="text_color_common">#999999</color>
+    <color name="common_divider_color">#dfe0e6</color>
+    <color name="light_black">#333333</color>
+    <color name="transpance">#00000000</color>
+    <color name="background_main">#ffffff</color>
+    <color name="light_white">#f0f0f0</color>
+    <color name="mine_txt_color">#a5a5a5</color>
+    <color name="blue_select">#1C4987</color>
+    <color name="divider_pop">#eeeeee</color>
+    <color name="bike_no_select">#999999</color>
 
 </resources>

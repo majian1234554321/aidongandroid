@@ -175,6 +175,12 @@
         <activity android:name=".ui.activity.discover.VenuesDetailActivity" />
         <activity android:name=".ui.activity.discover.DiscoverUserActivity" />
         <activity android:name=".ui.activity.discover.FilterAroundPeopleActivity" />
+        <activity android:name=".ui.activity.mine.login.ChangePasswordActivity" />
+        <activity android:name=".ui.activity.mine.login.CompleteUserInfomationActivity" />
+        <activity android:name=".ui.activity.mine.login.FastLoginActivity" />
+        <activity android:name=".ui.activity.mine.login.FindPasswordActivity" />
+        <activity android:name=".ui.activity.mine.login.RegisterActivity" />
+
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"

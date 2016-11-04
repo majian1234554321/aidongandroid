@@ -16,6 +16,7 @@
     <style name="AppTheme.FullScreen" parent="AppTheme.NoActionBar">
         <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
         <item name="android:windowBackground">@color/color_light_white</item>
+        <item name="android:screenOrientation">portrait</item>
     </style>
 
     <style name="AnimationActivity" parent="@android:style/Animation.Activity">
@@ -272,5 +273,111 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:minWidth">40dp</item>
+    </style>
+
+
+
+    <style name="baseImageStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="common_img_right_style" parent="baseImageStyle">
+        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <style name="common_img_left_style" parent="baseImageStyle">
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <style name="baseTextStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Common_txt_style" parent="baseTextStyle">
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginLeft">45dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/mine_txt_color</item>
+    </style>
+
+    <style name="baseEditStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/txt_black</item>
+        <item name="android:textColorHint">@color/text_color_common</item>
+    </style>
+
+    <style name="common_edit_style" parent="baseEditStyle">
+        <item name="android:layout_marginLeft">45dp</item>
+        <item name="android:maxLength">14</item>
+    </style>
+
+    <style name="common_divider_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:background">@color/common_divider_color</item>
+
+    </style>
+
+    <style name="common_checkBox_style">
+        <item name="android:button">@null</item>
+        <item name="android:background">@drawable/selctor_checkbox</item>
+    </style>
+
+    <style name="common_button_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:layout_marginTop">30dp</item>
+        <item name="android:background">@color/light_black</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+
+
+    <style name="selectorDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <!--边框-->
+        <item name="android:windowIsFloating">true</item>
+        <!--半透明-->
+        <item name="android:windowNoTitle">true</item>
+        <!--无标题-->
+        <item name="android:windowBackground">@color/transpance</item>
+        <!--模糊-->
+        <item name="android:backgroundDimAmount">0.6</item>
+    </style>
+
+    <style name="baseButtonStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="ButtonStyleAlignRight" parent="baseButtonStyle">
+        <item name="android:background">@color/transparent</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:textColor">@color/txt_black</item>
+        <item name="android:textSize">15dp</item>
+
+    </style>
+
+    <style name="ButtonStyleAlignRightWithArrow" parent="ButtonStyleAlignRight">
+        <item name="android:drawableRight">@drawable/icon_right_arrow</item>
+        <item name="android:gravity">center_vertical|right</item>
+        <item name="android:drawablePadding">5dp</item>
     </style>
 </resources>

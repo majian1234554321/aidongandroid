@@ -1,30 +1,30 @@
 package com.leyuan.aidong.entity.greendao;
 
-import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Id;
-import org.greenrobot.greendao.annotation.Generated;
+//import org.greenrobot.greendao.annotation.Entity;
+//import org.greenrobot.greendao.annotation.Id;
+//import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * 搜索历史记录实体
  * Created by song on 2016/10/19.
  */
-@Entity
+//@Entity
 public class SearchHistory {
-    @Id(autoincrement=true)
+//    @Id(autoincrement=true)
     private Long id;
 
 
     private String keyword;
 
 
-    @Generated(hash = 98012354)
+//    @Generated(hash = 98012354)
     public SearchHistory(Long id, String keyword) {
         this.id = id;
         this.keyword = keyword;
     }
 
 
-    @Generated(hash = 1905904755)
+//    @Generated(hash = 1905904755)
     public SearchHistory() {
     }
 

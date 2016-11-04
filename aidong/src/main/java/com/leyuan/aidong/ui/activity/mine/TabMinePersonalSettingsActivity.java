@@ -14,18 +14,17 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.App;
-import com.leyuan.aidong.ui.MainActivity;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.activity.mine.account.LoginActivity;
-import com.leyuan.aidong.utils.common.UrlLink;
-import com.leyuan.aidong.http.HttpConfig;
 import com.leyuan.aidong.entity.model.result.ContactUsResult;
 import com.leyuan.aidong.entity.model.result.MsgResult;
+import com.leyuan.aidong.http.HttpConfig;
+import com.leyuan.aidong.ui.App;
+import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.MainActivity;
+import com.leyuan.aidong.ui.activity.mine.account.LoginActivity;
 import com.leyuan.aidong.utils.DataCleanManager;
 import com.leyuan.aidong.utils.MyDbUtils;
-import com.leyuan.aidong.utils.SharePrefUtils;
+import com.leyuan.aidong.utils.common.UrlLink;
 import com.leyuan.commonlibrary.http.IHttpCallback;
 import com.leyuan.commonlibrary.http.IHttpTask;
 import com.leyuan.commonlibrary.util.ToastUtil;
@@ -320,8 +319,9 @@ public class TabMinePersonalSettingsActivity extends BaseActivity implements
     private void loginOut() {
         try {
             MyDbUtils.clearZanmap();
-            SharePrefUtils.setLogin(this,true);
-            App.mInstance.setUser(null);
+//            SharePrefUtils.setLogin(this,true);
+//            Ap.mInstance.setUser(null);
+            App.mInstance.exitLogin();
 //            BaseApp.mInstance.getParamsHelper().setPreInt("islogin", 0);
 //            BaseApp.mInstance.logout(null);
             HashMap<String, String> map = new HashMap<String, String>();

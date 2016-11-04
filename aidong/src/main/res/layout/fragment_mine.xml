@@ -53,7 +53,6 @@
                     android:layout_height="match_parent"
                     android:visibility="visible">
 
-
                     <com.leyuan.aidong.widget.customview.CircleImageView
                         android:id="@+id/imageView_head"
                         android:layout_width="70dp"
