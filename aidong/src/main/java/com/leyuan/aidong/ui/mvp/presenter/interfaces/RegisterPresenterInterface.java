@@ -4,6 +4,6 @@ public interface RegisterPresenterInterface {
 
     void regitserIdentify(String mobile);
     void foundIdentify(String mobile);
-    void checkIdentify(String mobile, String code, String password, String re_password);
+    void checkIdentify(String mobile, String code, String password);
 
 }

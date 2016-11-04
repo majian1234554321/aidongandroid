@@ -46,6 +46,29 @@ public class LoginPresenter implements LoginPresenterInterface {
     }
 
     @Override
+    public void loginSns(String sns, String access){
+        loginModel.loginSns(new BaseSubscriber<LoginResult>(context) {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                //                loginViewInterface.loginResult(false);
+            }
+
+            @Override
+            public void onNext(LoginResult user) {
+                loginViewInterface.loginResult(true);
+                App.mInstance.setUser(user.getUser());
+            }
+        }, sns, access);
+
+    }
+
+    @Override
     public void autoLogin() {
         loginModel.autoLogin(new BaseSubscriber<LoginResult>(context) {
             @Override

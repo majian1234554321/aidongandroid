@@ -30,6 +30,8 @@ public class CompleteUserInfomationActivity extends BaseActivity implements View
         imgAvatar = (SimpleDraweeView) findViewById(R.id.img_avatar);
         txtChangeAvatar = (TextView) findViewById(R.id.txt_change_avatar);
         relNickname = (RelativeLayout) findViewById(R.id.rel_nickname);
+        findViewById(R.id.img_avatar).setOnClickListener(this);
+        findViewById(R.id.txt_change_avatar).setOnClickListener(this);
         findViewById(R.id.btn_gender).setOnClickListener(this);
         findViewById(R.id.btn_city).setOnClickListener(this);
         findViewById(R.id.btn_sign).setOnClickListener(this);
@@ -48,6 +50,10 @@ public class CompleteUserInfomationActivity extends BaseActivity implements View
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.img_avatar:
+                break;
+            case R.id.txt_change_avatar:
+                break;
             case R.id.btn_gender:
                 break;
             case R.id.btn_city:

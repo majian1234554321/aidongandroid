@@ -25,7 +25,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private String mobile;
     private String code;
     private String password;
-    private String re_password;
+//    private String re_password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +78,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 break;
             case R.id.button_register:
                 if (verifyEdit()) {
-                    presenter.checkIdentify(mobile, code, password, re_password);
+                    presenter.checkIdentify(mobile, code, password);
                 }
                 break;
             case R.id.txt_protocol:
@@ -105,12 +105,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             getEidtPassword().setError("请输入密码");
             return false;
         }
-
-        re_password = getEidtRePassword().getText().toString().trim();
-        if (TextUtils.isEmpty(re_password)) {
-            getEidtRePassword().setError("请输入密码");
-            return false;
-        }
+//
+//        re_password = getEidtRePassword().getText().toString().trim();
+//        if (TextUtils.isEmpty(re_password)) {
+//            getEidtRePassword().setError("请输入密码");
+//            return false;
+//        }
 
         if (!getCheckboxProtocol().isChecked()) {
            // ToastUtil.showShort(.context, "需同意协议才能完成注册");

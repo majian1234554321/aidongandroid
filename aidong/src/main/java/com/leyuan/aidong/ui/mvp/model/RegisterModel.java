@@ -1,6 +1,6 @@
 package com.leyuan.aidong.ui.mvp.model;
 
-import com.leyuan.aidong.entity.user.User;
+import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.http.RetrofitHelper;
 import com.leyuan.aidong.http.RxHelper;
 import com.leyuan.aidong.http.api.IdentifyService;
@@ -17,23 +17,23 @@ public class RegisterModel implements RegisterModelInterface {
     }
 
     @Override
-    public void regitserIdentify(Subscriber<User> subscriber, String mobile) {
+    public void regitserIdentify(Subscriber<UserCoach> subscriber, String mobile) {
         mIdentifyService.regitserIdentify(mobile)
-                .compose(RxHelper.<User>transform())
+                .compose(RxHelper.<UserCoach>transform())
                 .subscribe(subscriber);
     }
 
-    public void foundIdentify(Subscriber<User> subscriber, String mobile) {
+    public void foundIdentify(Subscriber<UserCoach> subscriber, String mobile) {
         mIdentifyService.foundIdentify(mobile)
-                .compose(RxHelper.<User>transform())
+                .compose(RxHelper.<UserCoach>transform())
                 .subscribe(subscriber);
     }
 
     @Override
-    public void checkIdentify(Subscriber<User> subscriber, String mobile, String code, String password, String re_password) {
+    public void checkIdentify(Subscriber<UserCoach> subscriber, String mobile, String code, String password) {
 
-        mIdentifyService.checkIdentify(mobile, code, password, re_password)
-                .compose(RxHelper.<User>transform())
+        mIdentifyService.checkIdentify(mobile, code, password)
+                .compose(RxHelper.<UserCoach>transform())
                 .subscribe(subscriber);
 
     }

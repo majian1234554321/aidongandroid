@@ -2,8 +2,9 @@ package com.leyuan.aidong.ui.mvp.presenter;
 
 import android.content.Context;
 
-import com.leyuan.aidong.entity.user.User;
+import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.http.subscriber.BaseSubscriber;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.mvp.model.RegisterModel;
 import com.leyuan.aidong.ui.mvp.model.interfaces.RegisterModelInterface;
 import com.leyuan.aidong.ui.mvp.presenter.interfaces.RegisterPresenterInterface;
@@ -24,20 +25,20 @@ public class RegisterPresenter implements RegisterPresenterInterface {
 
     @Override
     public void regitserIdentify(String mobile) {
-        mRegisterModelInterface.regitserIdentify(new BaseSubscriber<User>(mContext) {
+        mRegisterModelInterface.regitserIdentify(new BaseSubscriber<UserCoach>(mContext) {
             //            @Override
             //            public void onCompleted() {
             //
             //            }
             //
             //            @Override
-            //            public void onError(Throwable e) {
-            //                e.printStackTrace();
-            //                mRegisterViewInterface.getIdentifyCode(false);
-            //            }
+                        public void onError(Throwable e) {
+                            e.printStackTrace();
+                            mRegisterViewInterface.getIdentifyCode(false);
+                        }
 
             @Override
-            public void onNext(User s) {
+            public void onNext(UserCoach s) {
                 mRegisterViewInterface.getIdentifyCode(true);
             }
         }, mobile);
@@ -45,7 +46,7 @@ public class RegisterPresenter implements RegisterPresenterInterface {
     }
 
     public void foundIdentify(String mobile) {
-        mRegisterModelInterface.foundIdentify(new BaseSubscriber<User>(mContext) {
+        mRegisterModelInterface.foundIdentify(new BaseSubscriber<UserCoach>(mContext) {
             //            @Override
             //            public void onCompleted() {
             //
@@ -58,7 +59,7 @@ public class RegisterPresenter implements RegisterPresenterInterface {
             //            }
 
             @Override
-            public void onNext(User s) {
+            public void onNext(UserCoach s) {
                 mRegisterViewInterface.getIdentifyCode(true);
             }
         }, mobile);
@@ -66,23 +67,23 @@ public class RegisterPresenter implements RegisterPresenterInterface {
     }
 
     @Override
-    public void checkIdentify(String mobile, String code, String password, String re_password) {
-        mRegisterModelInterface.checkIdentify(new BaseSubscriber<User>(mContext) {
+    public void checkIdentify(String mobile, String code, String password) {
+        mRegisterModelInterface.checkIdentify(new BaseSubscriber<UserCoach>(mContext) {
 //            @Override
 //            public void onCompleted() {
 //
 //            }
 //
-//            @Override
-//            public void onError(Throwable e) {
-//                mRegisterViewInterface.register(false);
-//            }
+            @Override
+            public void onError(Throwable e) {
+                mRegisterViewInterface.register(false);
+            }
 
             @Override
-            public void onNext(User user) {
+            public void onNext(UserCoach user) {
                 mRegisterViewInterface.register(true);
-//                App.mInstance.setUser(user);
+                App.mInstance.setUser(user);
             }
-        }, mobile, code, password, re_password);
+        }, mobile, code, password);
     }
 }

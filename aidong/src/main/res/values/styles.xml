@@ -16,6 +16,7 @@
     <style name="AppTheme.FullScreen" parent="AppTheme.NoActionBar">
         <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
         <item name="android:windowBackground">@color/color_light_white</item>
+        <item name="android:screenOrientation">portrait</item>
     </style>
 
     <style name="AnimationActivity" parent="@android:style/Animation.Activity">

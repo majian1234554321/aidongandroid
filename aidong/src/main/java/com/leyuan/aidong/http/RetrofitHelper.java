@@ -1,5 +1,6 @@
 package com.leyuan.aidong.http;
 
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.utils.Constant;
 
 import java.io.IOException;
@@ -42,9 +43,18 @@ public class RetrofitHelper {
                        /* if ("sToken" == null || alreadyHasTokenHeader(originalRequest)) {
                             return chain.proceed(originalRequest);
                         }*/
-                        Request authorised = originalRequest.newBuilder()
-                                .header("token", "sToken")
-                                .build();
+                        Request authorised;
+                        if(App.mInstance.getUser() !=null && App.mInstance.getUser().getToken() != null){
+                            authorised = originalRequest.newBuilder()
+                                    .header("token", App.mInstance.getUser().getToken())
+                                    .build();
+
+                        }else{
+                            authorised = originalRequest.newBuilder()
+//                                    .header("token", "sToken")
+                                    .build();
+                        }
+
                         return chain.proceed(authorised);
                     }
                 })

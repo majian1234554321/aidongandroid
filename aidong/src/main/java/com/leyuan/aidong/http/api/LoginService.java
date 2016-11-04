@@ -10,10 +10,14 @@ import rx.Observable;
 
 public interface LoginService {
     @FormUrlEncoded
-    @POST("users/login")
-    Observable<BaseBean<LoginResult>> login(@Field("mobile") String account, @Field("password") String password,
-                                            @Field("device_type") String device_type, @Field("device_token") String device_token);
-
+    @POST("login/mobile")
+    Observable<BaseBean<LoginResult>> login(@Field("mobile") String account, @Field("password") String password);
+//                                            @Field("device_type") String device_type, @Field("device_token") String device_token);
+    @FormUrlEncoded
     @POST("users/autoLogin")
     Observable<BaseBean<LoginResult>> autoLogin();
+
+    @FormUrlEncoded
+    @POST("login/sns")
+    Observable<BaseBean<LoginResult>> loginSns(@Field("sns") String sns, @Field("access_token") String access_token);
 }

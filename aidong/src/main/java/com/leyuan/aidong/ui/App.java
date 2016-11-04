@@ -41,7 +41,6 @@ public class App extends Application{
         mInstance = this;
         context = getApplicationContext();
         initConfig();
-
     }
 
     private void initConfig() {

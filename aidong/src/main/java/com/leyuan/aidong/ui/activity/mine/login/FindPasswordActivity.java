@@ -70,7 +70,7 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.button_login:
                 if(verifyEdit()){
-                    presenter.checkIdentify(mobile,code,password,re_password);
+                    presenter.checkIdentify(mobile,code,password);
                 }
                 break;
         }
