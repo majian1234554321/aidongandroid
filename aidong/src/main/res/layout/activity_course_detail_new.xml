@@ -248,13 +248,14 @@
                 android:id="@+id/tv_count"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:layout_marginLeft="@dimen/left_margin"
-                android:layout_marginRight="@dimen/right_margin"
+                android:paddingLeft="@dimen/left_margin"
+                android:paddingRight="@dimen/right_margin"
                 android:drawableRight="@drawable/icon_right_arrow"
                 android:gravity="center_vertical"
                 android:text="@string/applicant_count"
                 android:textColor="@color/black"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                android:background="?selectableItemBackground"/>
 
             <include layout="@layout/inc_line" />
 

@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.activity.home;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -17,7 +18,6 @@ import com.leyuan.aidong.ui.activity.home.view.ChooseTimePopupWindow;
  * Created by song on 2016/9/22.
  */
 public class DeliveryInfoActivity extends BaseActivity implements View.OnClickListener{
-
     private ImageView tvBack;
     private TextView tvFinish;
     private TextView tvExpress;
@@ -65,9 +65,17 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
             case R.id.tv_finish:
                 break;
             case R.id.tv_express:
+                tvExpress.setTextColor(Color.parseColor("#ffffff"));
+                tvSelfDelivery.setTextColor(Color.parseColor("#000000"));
+                tvExpress.setBackgroundResource(R.drawable.shape_bg_black);
+                tvSelfDelivery.setBackgroundResource(R.drawable.shape_bg_white);
                 deliveryLayout.setVisibility(View.GONE);
                 break;
             case R.id.tv_self_delivery:
+                tvExpress.setTextColor(Color.parseColor("#000000"));
+                tvSelfDelivery.setTextColor(Color.parseColor("#ffffff"));
+                tvExpress.setBackgroundResource(R.drawable.shape_bg_white);
+                tvSelfDelivery.setBackgroundResource(R.drawable.shape_bg_black);
                 deliveryLayout.setVisibility(View.VISIBLE);
                 break;
             case R.id.ll_delivery_address:
@@ -75,7 +83,6 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
                 startActivity(intent);
                 break;
             case R.id.tv_delivery_time:
-
                 if(timePopupWindow == null){
                     timePopupWindow = new ChooseTimePopupWindow(this);
                 }

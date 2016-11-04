@@ -2,14 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="130dp"
-    android:layout_marginLeft="@dimen/left_margin"
-    android:layout_marginRight="@dimen/right_margin">
-    
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/left_margin"
+    android:paddingRight="@dimen/right_margin"
+    android:background="?selectableItemBackground">
+
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/dv_nurture_cover"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         app:actualImageScaleType="centerCrop"
         android:layout_centerVertical="true"
         app:placeholderImage="@drawable/place_holder_logo"/>
@@ -37,20 +40,26 @@
         android:paddingBottom="4dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:text=""
+        android:text="GNC"
         android:layout_marginLeft="10dp"
         android:layout_above="@+id/tv_nurture_price"
         android:layout_marginBottom="10dp"
         android:layout_toRightOf="@+id/dv_nurture_cover"/>
+
     <TextView
         android:id="@+id/tv_nurture_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/main_red"
         android:textSize="17sp"
-        android:text=""
+        android:text="111"
         android:layout_toRightOf="@+id/dv_nurture_cover"
         android:layout_marginLeft="10dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"/>
+        android:layout_alignBottom="@+id/dv_nurture_cover" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_color"
+        android:layout_alignParentBottom="true"/>
 </RelativeLayout>

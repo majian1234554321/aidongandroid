@@ -8,11 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.RecommendAdapter;
 import com.leyuan.aidong.widget.customview.SimpleTitleBar;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
+import com.leyuan.aidong.widget.endlessrecyclerview.HeaderSpanSizeLookup;
 import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
 
 /**
@@ -31,7 +32,7 @@ public class AppointmentSuccessActivity extends BaseActivity implements View.OnC
 
     private String time;
 
-    private void newInstance(Context context,String time){
+    private void start(Context context,String time){
         Intent intent = new Intent(context,AppointmentSuccessActivity.class);
         intent.putExtra("time",time);
         context.startActivity(intent);
@@ -41,33 +42,36 @@ public class AppointmentSuccessActivity extends BaseActivity implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appointment_success);
-
         if(getIntent() != null){
             time = getIntent().getStringExtra("time");
         }
         initView();
+        setListener();
     }
 
     private void initView() {
         View headerView = View.inflate(this,R.layout.header_appointment_success,null);
         tvTime = (TextView) headerView.findViewById(R.id.tv_time);
+       // tvTime.setText(time);
         returnHome = (TextView) headerView.findViewById(R.id.tv_home);
         checkAppointment = (TextView) headerView.findViewById(R.id.tv_appointment);
-
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
         recyclerView = (RecyclerView) findViewById(R.id.rv_recommend);
-        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
         recommendAdapter = new RecommendAdapter(this);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(recommendAdapter);
         recyclerView.setAdapter(wrapperAdapter);
+        GridLayoutManager manager = new GridLayoutManager(this,2);
+        manager.setSpanSizeLookup(new HeaderSpanSizeLookup((HeaderAndFooterRecyclerViewAdapter)
+                recyclerView.getAdapter(), manager.getSpanCount()));
+        recyclerView.setLayoutManager(manager);
         RecyclerViewUtils.setHeaderView(recyclerView,headerView);
+    }
 
-        tvTime.setText(time);
+    private void setListener(){
         returnHome.setOnClickListener(this);
         checkAppointment.setOnClickListener(this);
         titleBar.setOnClickListener(this);
     }
-
 
     @Override
     public void onClick(View v) {

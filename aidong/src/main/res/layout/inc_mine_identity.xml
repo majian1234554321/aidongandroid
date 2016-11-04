@@ -45,7 +45,7 @@
             android:textColor="@color/white"
             android:gravity="center"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/shape_solid_black"/>
+            android:background="@drawable/shape_bg_black"/>
     </LinearLayout>
 
     <include layout="@layout/inc_line"/>

@@ -1,5 +1,7 @@
 package com.leyuan.aidong.ui.activity.home;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.widget.LinearLayout;
@@ -45,6 +47,11 @@ public class ConfirmOrderActivity extends BaseActivity{
     private TextView tvPrice;
     private TextView tvPay;
 
+
+    public static void start(Context context) {
+        Intent starter = new Intent(context, ConfirmOrderActivity.class);
+        context.startActivity(starter);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

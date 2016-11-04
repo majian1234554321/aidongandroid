@@ -16,8 +16,8 @@
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:layout_below="@+id/line"
-        app:pressedStateOverlayImage="@color/color_image_press"
         app:actualImageScaleType="centerCrop"
+        app:placeholderImageScaleType="centerCrop"
         app:placeholderImage="@drawable/place_holder_logo" />
 
     <TextView

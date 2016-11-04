@@ -1,5 +1,7 @@
 package com.leyuan.aidong.ui.mvp.model.impl;
 
+import android.database.sqlite.SQLiteDatabase;
+
 import com.leyuan.aidong.entity.data.CampaignData;
 import com.leyuan.aidong.entity.data.CourseData;
 import com.leyuan.aidong.entity.data.FoodData;
@@ -19,7 +21,6 @@ import rx.Subscriber;
 //import com.leyuan.aidong.entity.greendao.DaoSession;
 //import com.leyuan.aidong.entity.greendao.SearchHistoryDao;
 //import org.greenrobot.greendao.query.QueryBuilder;
-
 /**
  * 搜索
  * Created by song on 2016/9/18.
@@ -37,8 +38,10 @@ public class SearchModelImpl implements SearchModel {
 
     public SearchModelImpl() {
         this.searchService = RetrofitHelper.createApi(SearchService.class);
-//        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, "search_history");
-//        SQLiteDatabase db = helper.getWritableDatabase();
+    }
+
+    public SearchModelImpl(SQLiteDatabase db){
+        this.searchService = RetrofitHelper.createApi(SearchService.class);
 //        DaoMaster daoMaster = new DaoMaster(db);
 //        DaoSession daoSession = daoMaster.newSession();
 //        dao = daoSession.getSearchHistoryDao();

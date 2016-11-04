@@ -38,8 +38,7 @@
                     android:layout_height="20dp"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/right_margin"
-                    />
+                    android:layout_marginRight="@dimen/right_margin" />
 
                 <TextView
                     android:id="@+id/tv_hot"
@@ -62,7 +61,14 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/actionBarSize"
-                app:layout_collapseMode="pin" />
+                app:layout_collapseMode="pin" >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="title"
+                    android:textColor="@color/white" />
+            </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
@@ -117,17 +123,27 @@
                         android:singleLine="true"
                         android:text="徐家汇"
                         android:textColor="@color/white"
-                        android:textSize="13sp" />
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|right"
+                        android:text="2016-09-09"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/tv_time"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="2"
+                        android:layout_weight="1"
                         android:gravity="center_vertical|right"
-                        android:text="2016-09-09"
+                        android:text="12:34"
                         android:textColor="@color/white"
-                        android:textSize="13sp" />
+                        android:textSize="12sp" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -201,20 +217,21 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
-                android:background="@color/main_gray" />
+                android:background="@color/line_color" />
 
             <!--已参加-->
             <TextView
                 android:id="@+id/tv_count"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:layout_marginLeft="@dimen/left_margin"
-                android:layout_marginRight="@dimen/right_margin"
+                android:paddingLeft="@dimen/left_margin"
+                android:paddingRight="@dimen/right_margin"
                 android:drawableRight="@drawable/icon_right_arrow"
                 android:gravity="center_vertical"
                 android:text="@string/applicant_count"
                 android:textColor="@color/black"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                android:background="?selectableItemBackground"/>
 
             <include layout="@layout/inc_line" />
 
@@ -223,12 +240,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="7dp"
-                android:layout_marginRight="7dp" />
+                android:layout_marginRight="7dp"/>
+
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
-                android:background="@color/main_gray" />
+                android:background="@color/line_color" />
 
 
             <!--活动详情-->
@@ -250,7 +268,26 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/left_margin"
                 android:layout_marginRight="@dimen/right_margin"
-                android:text="" />
+                android:text="活动详情活动详情活动详情活动详情活动详情活动详情
+                活动详情活动详情活动详情
+                活动详情活动详情活动详情活动详情活动详情活动详情
+                活动详情活动详情活动详情
+                活动详情活动详情活动详情活动详情活动详情活动详情
+                活动详情活动详情活动详情
+                活动详情活动详情活动详情活动详情活动详情活动详情
+                活动详情活动详情活动详情活动详情活动详情活动详情活动详情活动详情活动详情
+                活动详情活动详情活动详情
+                活动详情活动详情活动详情活动详情活动详情活动详情
+                活动详情活动详情活动详情
+                活动详情活动详情活动详情活动详情活动详情活动详情
+                活动详情活动详情活动详情
+                活动详情活动详情活动详情活动详情活动详情活动详情
+                活动详情活动详情活动详情
+                活动详情活动详情活动详情活动详情活动详情活动详情
+                活动详情活动详情活动详情
+                活动详情活动详情活动详情活动详情活动详情活动详情
+                活动详情活动详情活动详情
+                " />
 
         </LinearLayout>
 
@@ -265,7 +302,7 @@
         android:background="@drawable/shape_solid_black"
         android:gravity="center"
         android:orientation="horizontal"
-        android:visibility="gone">
+        android:visibility="visible">
         <TextView
             android:id="@+id/tv_price"
             android:layout_width="wrap_content"

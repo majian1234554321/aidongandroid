@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -13,6 +13,7 @@
         android:paddingRight="@dimen/right_margin">
 
         <ImageView
+            android:id="@+id/iv_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -26,6 +27,7 @@
             android:textColor="@color/white" />
 
         <TextView
+            android:id="@+id/tv_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -46,80 +48,97 @@
             android:layout_height="match_parent" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:paddingLeft="10dp"
-        android:elevation="10dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-       <RadioButton
-           android:layout_width="wrap_content"
-           android:layout_height="match_parent"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/line_color" />
 
-        <TextView
-            android:id="@+id/tv_select"
-            android:layout_width="43dp"
-            android:layout_height="match_parent"
-            android:text="全选"
-            android:layout_marginLeft="5dp"
-            android:paddingRight="30dp"
-            android:gravity="center_vertical"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:elevation="10dp"
+            android:fadingEdgeLength="@dimen/dp_10"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp">
 
-        <FrameLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+            <CheckBox
+                android:id="@+id/rb_select_all"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="43dp"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:visibility="visible">
+                android:layout_marginLeft="5dp"
+                android:gravity="center_vertical"
+                android:paddingRight="30dp"
+                android:text="全选" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="合计"
-                    android:layout_marginLeft="30dp"/>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="¥300"
-                    android:layout_marginLeft="10dp"
-                    android:textColor="@color/main_red"/>
-
-                <TextView
-                    android:layout_width="120dp"
-                    android:layout_height="match_parent"
-                    android:text="结算"
-                    android:gravity="center"
-                    android:textSize="15sp"
-                    android:textColor="@color/white"
-                    android:background="@color/main_red"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <FrameLayout
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:visibility="gone">
+                android:layout_weight="1">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                <LinearLayout
+                    android:id="@+id/ll_bottom_normal"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textColor="@color/white"
-                    android:text="删除"
-                    android:gravity="center"
-                    android:textSize="15sp"
-                    android:background="@color/main_red"/>
-            </LinearLayout>
-        </FrameLayout>
+                    android:elevation="10dp"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:text="合计" />
+
+                    <TextView
+                        android:id="@+id/tv_total_price"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:text="¥300"
+                        android:textColor="@color/main_red" />
+
+                    <TextView
+                        android:id="@+id/tv_settlement"
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/main_red"
+                        android:gravity="center"
+                        android:text="结算"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_bottom_delete"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tv_delete"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/main_red"
+                        android:gravity="center"
+                        android:text="删除"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
+                </LinearLayout>
+            </FrameLayout>
+
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

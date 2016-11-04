@@ -17,11 +17,12 @@ import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.entity.HomeBean;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.activity.home.CampaignActivity;
+import com.leyuan.aidong.ui.activity.home.CampaignDetailActivity;
 import com.leyuan.aidong.ui.activity.home.CourseActivity;
+import com.leyuan.aidong.ui.activity.home.CourseDetailActivity;
 import com.leyuan.aidong.ui.activity.home.EquipmentActivity;
 import com.leyuan.aidong.ui.activity.home.FoodActivity;
 import com.leyuan.aidong.ui.activity.home.GoodsFilterActivity;
-import com.leyuan.aidong.ui.activity.home.ImagePreviewActivity;
 import com.leyuan.aidong.ui.activity.home.NurtureActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.BannerAdapter;
 import com.leyuan.aidong.ui.activity.home.adapter.HomeRecycleViewAdapter;
@@ -141,8 +142,9 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
                 urls.add("http://ww3.sinaimg.cn/mw690/61ecbb3djw1f8ym0r7dtsg20dc07itwe.gif");
                 urls.add("http://ww2.sinaimg.cn/mw690/61ecbb3djw1f8ym0qyytug20dc07itue.gif");
                 urls.add("http://ww3.sinaimg.cn/mw690/61ecbb3djw1f8ym0q7zqzg20dc07i4ar.gif");
-                ImagePreviewActivity.start(getActivity(),urls,1);
-               // CampaignDetailActivity.start(getContext(),"1");
+                //ImagePreviewActivity.start(getActivity(),urls,1);
+                CampaignDetailActivity.start(getContext(),"1");
+                CourseDetailActivity.start(getContext(),"1");
             }
         });
 

@@ -7,6 +7,7 @@
     android:background="@color/main_gray">
 
     <com.leyuan.aidong.widget.customview.SimpleTitleBar
+        android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
         app:stb_title="报名的人"/>

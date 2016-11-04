@@ -45,7 +45,7 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
     private List<String> categoryList = new ArrayList<>();
 
     private String  category;
-    private boolean isShowing = false;
+    private boolean isPopupShowing = false;
     private boolean isLow2High = true;
     private int panelHeight;
 
@@ -104,8 +104,8 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
                 break;
             case R.id.ll_popularity:
                 isLow2High = true;
-                if(isShowing){
-                    hideCategoryList();
+                if(isPopupShowing){
+                    hidePopup();
                 }
                 resetSortStatus();
                 onFilterClickListener.onPopularityClick();
@@ -113,16 +113,16 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
                 break;
             case R.id.ll_sale:
                 isLow2High = true;
-                if(isShowing){
-                    hideCategoryList();
+                if(isPopupShowing){
+                    hidePopup();
                 }
                 resetSortStatus();
                 onFilterClickListener.onSaleClick();
                 tvSale.setTextColor(context.getResources().getColor(R.color.main_red));
                 break;
             case R.id.ll_price:
-                if(isShowing){
-                    hideCategoryList();
+                if(isPopupShowing){
+                    hidePopup();
                 }
                 resetSortStatus();
                 onFilterClickListener.onPriceClick(isLow2High);
@@ -131,7 +131,7 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
                 isLow2High = !isLow2High;
                 break;
             case R.id.view_mask_bg:
-                hideCategoryList();
+                hidePopup();
                 break;
             default:
                 break;
@@ -140,11 +140,11 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
 
     // 设置分类数据
     private void setCategoryAdapter() {
-        if (isShowing){
+        if (isPopupShowing){
             return;
         }
-        isShowing = true;
-        showCategoryList();
+        isPopupShowing = true;
+        showPopup();
         tvCategory.setTextColor(context.getResources().getColor(R.color.main_red));
         ivCategoryArrow.setImageResource(R.drawable.icon_filter_arrow_selected);
         contentLayout.setVisibility(VISIBLE);
@@ -161,7 +161,7 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
                 category = categoryList.get(position);
                 categoryAdapter.setCheckItem(position);
                 tvCategory.setText(category);
-                hideCategoryList();
+                hidePopup();
                 if (onFilterClickListener != null) {
                     onFilterClickListener.onCategoryItemClick(category);
                 }
@@ -175,8 +175,8 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
     }
 
     // 动画显示
-    private void showCategoryList() {
-        isShowing = true;
+    private void showPopup() {
+        isPopupShowing = true;
         maskBgView.setVisibility(VISIBLE);
         contentLayout.setVisibility(VISIBLE);
         contentLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -190,8 +190,8 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
     }
 
     // 隐藏动画
-    public void hideCategoryList() {
-        isShowing = false;
+    public void hidePopup() {
+        isPopupShowing = false;
         resetCategoryStatus();
         maskBgView.setVisibility(View.GONE);
         ObjectAnimator.ofFloat(contentLayout, "translationY", 0, -panelHeight).setDuration(200).start();
@@ -200,7 +200,7 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
     public void resetAllStatus() {
         resetCategoryStatus();
         resetSortStatus();
-        hideCategoryList();
+        hidePopup();
     }
 
     // 复位分类的显示状态

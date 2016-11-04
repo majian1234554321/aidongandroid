@@ -13,10 +13,10 @@ import com.leyuan.aidong.ui.mvp.model.CourseModel;
 import com.leyuan.aidong.ui.mvp.model.impl.CourseModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
 import com.leyuan.aidong.ui.mvp.view.CourseDetailActivityView;
+import com.leyuan.aidong.ui.mvp.view.CourserFragmentView;
 import com.leyuan.aidong.ui.mvp.view.CoursesActivityView;
 import com.leyuan.aidong.utils.Constant;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,21 +28,29 @@ public class CoursePresentImpl  implements CoursePresent{
     private CourseModel courseModel;
 
     private List<CourseBean> courseBeanList;
+    private CourserFragmentView courserFragmentView;
     private CoursesActivityView coursesActivityView;                //课程列表View层对象
     private CourseDetailActivityView courseDetailActivityView;      //课程详情View层对象
 
-    public CoursePresentImpl(Context context, CoursesActivityView view) {
+    public CoursePresentImpl(Context context, CourseDetailActivityView view) {
         this.context = context;
-        this.coursesActivityView = view;
-        courseBeanList = new ArrayList<>();
+        this.courseDetailActivityView = view;
         if(courseModel == null){
             courseModel = new CourseModelImpl();
         }
     }
 
-    public CoursePresentImpl(Context context, CourseDetailActivityView view) {
+    public CoursePresentImpl(Context context, CourserFragmentView view) {
         this.context = context;
-        this.courseDetailActivityView = view;
+        this.courserFragmentView = view;
+        if(courseModel == null){
+            courseModel = new CourseModelImpl();
+        }
+    }
+
+    public CoursePresentImpl(Context context, CoursesActivityView view) {
+        this.context = context;
+        this.coursesActivityView = view;
         if(courseModel == null){
             courseModel = new CourseModelImpl();
         }
@@ -58,16 +66,8 @@ public class CoursePresentImpl  implements CoursePresent{
         courseModel.getCourses(new RefreshSubscriber<CourseData>(context) {
             @Override
             public void onNext(CourseData courseData) {
-                if(courseData != null){
-                    courseBeanList = courseData.getCourse();
-                }
-                if(courseBeanList != null && courseBeanList.isEmpty()){
-                    coursesActivityView.showEmptyView();
-                    coursesActivityView.hideRecyclerView();
-                }else {
-                    coursesActivityView.hideEmptyView();
-                    coursesActivityView.showRecyclerView();
-                    coursesActivityView.updateRecyclerView(courseBeanList);
+                if(courseData != null && !courseData.getCourse().isEmpty()){
+                    courserFragmentView.updateRecyclerView(courseData.getCourse());
                 }
             }
         },category,day, Constant.FIRST_PAGE);
@@ -78,18 +78,15 @@ public class CoursePresentImpl  implements CoursePresent{
         courseModel.getCourses(new RequestMoreSubscriber<CourseData>(context,recyclerView,page) {
             @Override
             public void onNext(CourseData courseData) {
-
-                if(courseData != null){
+                if(courseData != null && !courseData.getCourse().isEmpty()){
                     courseBeanList = courseData.getCourse();
                 }
-
-                if(courseBeanList != null && !courseBeanList.isEmpty()){
-                    coursesActivityView.updateRecyclerView(courseBeanList);
+                if(!courseBeanList.isEmpty()){
+                    courserFragmentView.updateRecyclerView(courseBeanList);
                 }
-
                 //没有更多数据了显示到底提示
                 if(courseBeanList != null && courseBeanList.size() < pageSize){
-                    coursesActivityView.showEndFooterView();
+                    courserFragmentView.showEndFooterView();
                 }
             }
         },category,day,pageSize);

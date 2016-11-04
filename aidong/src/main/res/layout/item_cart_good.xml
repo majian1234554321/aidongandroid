@@ -4,9 +4,10 @@
     android:layout_width="match_parent"
     android:paddingLeft="@dimen/left_margin"
     android:paddingRight="@dimen/right_margin"
-    android:layout_height="126dp">
+    android:layout_height="wrap_content"
+    android:background="?selectableItemBackground">
     
-    <RadioButton
+    <CheckBox
         android:id="@+id/rb_check"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -61,6 +62,7 @@
         android:layout_height="33dp"
         android:orientation="horizontal"
         android:layout_marginTop="12sp"
+        android:layout_marginBottom="15dp"
         android:layout_below="@+id/tv_desc"
 
         android:layout_alignLeft="@+id/tv_goods_name">
@@ -87,4 +89,8 @@
             android:src="@drawable/icon_add"/>
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_color"/>
 </RelativeLayout>

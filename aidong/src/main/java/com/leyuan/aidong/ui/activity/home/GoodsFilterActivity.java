@@ -10,12 +10,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.activity.home.adapter.GoodsFilterAdapter;
-import com.leyuan.aidong.ui.activity.home.view.GoodsFilterView;
 import com.leyuan.aidong.entity.NurtureBean;
 import com.leyuan.aidong.entity.data.NurtureData;
+import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.activity.home.adapter.GoodsFilterAdapter;
+import com.leyuan.aidong.ui.activity.home.view.GoodsFilterView;
 import com.leyuan.aidong.ui.mvp.presenter.NurturePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.NurturePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.NurtureActivityView;
@@ -34,18 +34,15 @@ import java.util.List;
 public class GoodsFilterActivity extends BaseActivity implements View.OnClickListener,NurtureActivityView{
     private ImageView ivBack;
     private TextView tvSearch;
-
-
     private GoodsFilterView filterView;
-
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
 
     private int currPage = 1;
     private List<NurtureData> data;
-    private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private GoodsFilterAdapter nurtureAdapter;
+    private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private NurturePresent present;
 
     @Override
@@ -58,12 +55,14 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
         initTopLayout();
         initSwipeRefreshLayout();
         initRecyclerView();
-        present.commonLoadData(switcherLayout);
+        nurtureAdapter.setData(null);
+        wrapperAdapter.notifyDataSetChanged();
+       // present.commonLoadData(switcherLayout);
     }
 
     private void  initTopLayout(){
+        ivBack = (ImageView) findViewById(R.id.iv_back);
         tvSearch = (TextView)findViewById(R.id.tv_search);
-        tvSearch.setOnClickListener(this);
         filterView = (GoodsFilterView)findViewById(R.id.view_filter);
         filterView.setCategoryList(Arrays.asList(getResources().getStringArray(R.array.characterTag)));
         filterView.setOnFilterClickListener(new GoodsFilterView.OnFilterClickListener() {
@@ -87,6 +86,8 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
                 Toast.makeText(GoodsFilterActivity.this,""+low2High,Toast.LENGTH_SHORT).show();
             }
         });
+
+        tvSearch.setOnClickListener(this);
     }
 
     private void initSwipeRefreshLayout() {
@@ -100,19 +101,10 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
                // present.pullToRefreshHomeData();
             }
         });
-
-        refreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-               // refreshLayout.setRefreshing(true);
-              //  present.pullToRefreshHomeData();
-            }
-        });
     }
 
     private void initRecyclerView() {
         recyclerView = (RecyclerView)findViewById(R.id.rv_goods);
-        recyclerView.requestFocus();
         data = new ArrayList<>();
         nurtureAdapter = new GoodsFilterAdapter(this);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(nurtureAdapter);
@@ -125,9 +117,10 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
         @Override
         public void onLoadNextPage(View view) {
             currPage ++;
-            if (data != null && !data.isEmpty()) {
-                //present.requestMoreHomeData(recyclerView,pageSize,currPage);
-            }
+            present.requestMoreData(recyclerView,pageSize,currPage);
+            /*if (data != null && !data.isEmpty()) {
+                present.requestMoreHomeData(recyclerView,pageSize,currPage);
+            }*/
         }
     };
 

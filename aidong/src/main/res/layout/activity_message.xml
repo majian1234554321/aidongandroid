@@ -5,17 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tab_layout"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        app:tabTextColor="@color/gray"
-        app:tabSelectedTextColor="@color/white"
-        app:tabIndicatorColor="@color/white"
-        android:background="@color/black"/>
+   <com.leyuan.aidong.widget.customview.SimpleTitleBar
+       android:id="@+id/title_bar"
+       android:layout_width="match_parent"
+       android:layout_height="@dimen/height_top_bar"
+       app:stb_title="消息"/>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/vp_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+  <android.support.v4.widget.SwipeRefreshLayout
+      android:id="@+id/refreshLayout"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/rv_message"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"/>
+  </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

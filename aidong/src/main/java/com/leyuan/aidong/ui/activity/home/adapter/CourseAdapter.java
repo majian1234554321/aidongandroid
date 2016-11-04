@@ -27,7 +27,20 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
     }
 
     public void setData(List<CourseBean> data) {
-        this.data = data;
+        if(data != null) {
+            this.data = data;
+        }else{
+            for (int i = 0; i < 10; i++) {
+                CourseBean b = new CourseBean();
+                b.setCover("http://ww4.sinaimg.cn/mw690/006uFQHggw1f982lew699j30qo0zk121.jpg");
+                b.setName("这是课程");
+                b.setDistance("10000m");
+                b.setApplied_count("100");
+                b.setAddress("大日本");
+                b.setPrice("10000000");
+                this.data.add(b);
+            }
+        }
     }
 
     @Override

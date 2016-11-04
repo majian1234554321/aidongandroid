@@ -8,6 +8,7 @@ import java.util.List;
  * 课程列表
  * Created by song on 2016/8/13.
  */
+@Deprecated
 public interface CoursesActivityView {
 
     /**

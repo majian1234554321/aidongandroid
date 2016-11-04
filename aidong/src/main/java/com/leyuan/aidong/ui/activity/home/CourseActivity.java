@@ -1,27 +1,19 @@
 package com.leyuan.aidong.ui.activity.home;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.ImageView;
 
-import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.activity.home.adapter.CourseAdapter;
-import com.leyuan.aidong.entity.CourseBean;
-import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
-import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
-import com.leyuan.aidong.ui.mvp.view.CoursesActivityView;
-import com.leyuan.aidong.widget.dropdownmenu.DropDownMenu;
-import com.leyuan.aidong.widget.dropdownmenu.adapter.ListWithFlagAdapter;
-import com.leyuan.aidong.widget.dropdownmenu.adapter.SimpleListAdapter;
-import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
-import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
-import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
-import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
+import com.leyuan.aidong.adapter.TabFragmentAdapter;
+import com.leyuan.aidong.entity.BusinessCircleBean;
+import com.leyuan.aidong.entity.BusinessCircleDescBean;
+import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.activity.home.view.CourseFilterView;
+import com.leyuan.aidong.ui.fragment.home.CourseFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,186 +21,79 @@ import java.util.List;
 
 /**
  * 小团体课列表
- * Created by song on 2016/8/17.
+ * Created by song on 2016/10/31.
  */
-public class CourseActivity extends BaseActivity implements CoursesActivityView{
+public class CourseActivity extends BaseActivity{
+    private ImageView ivBack;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private CourseFilterView filterView;
 
-    private DropDownMenu dropDownMenu;
-    private View contentView;
-    private RecyclerView recyclerView;
-    private SwipeRefreshLayout refreshLayout;
 
-    private int currPage = 1;
-    private CourseAdapter courseAdapter;
-    private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
-    private CoursePresent present;
-    private ArrayList<CourseBean> data = new ArrayList<>();
-
-    private String conditionHeaders[];
-    private List<View> popupViews = new ArrayList<>();
-    private ListWithFlagAdapter dateAdapter;    //日期适配器
-    private ListWithFlagAdapter categoryAdapter;//分类适配器
-    private SimpleListAdapter groupAdapter;     //商圈一级列表适配器
-    private ListWithFlagAdapter childrenAdapter;//商圈二级列表适配器
-
-    private int day = 3;
-    private int category ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course);
-        pageSize = 20;
-        present = new CoursePresentImpl(this,this);
-        initDropDownMenu();
-        initSwipeRefreshLayout();
-        initRecyclerView();
+
+        initView();
+        setListener();
     }
 
-    private void initDropDownMenu(){
-        dropDownMenu = (DropDownMenu)findViewById(R.id.drop_down_menu);
-        conditionHeaders = getResources().getStringArray(R.array.courseCondition);
+    private void initView() {
+        ivBack = (ImageView) findViewById(R.id.iv_back);
+        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        viewPager = (ViewPager) findViewById(R.id.view_pager);
+        filterView = (CourseFilterView) findViewById(R.id.view_filter_course);
 
-        final ListView dateView = new ListView(this);
-        dateAdapter = new ListWithFlagAdapter(this, Arrays.asList("1"));
-        dateView.setDividerHeight(0);
-        dateView.setAdapter(dateAdapter);
-
-        final ListView categoryView = new ListView(this);
-        categoryAdapter = new ListWithFlagAdapter(this, Arrays.asList("1"));
-        categoryView.setDividerHeight(0);
-        categoryView.setAdapter(categoryAdapter);
-
-        final View addressView = View.inflate(this,R.layout.multi_list_drop_down,null);
-        ListView leftListView = (ListView) addressView.findViewById(R.id.lv_left);
-        final ListView rightListView = (ListView)addressView.findViewById(R.id.lv_right);
-        groupAdapter = new SimpleListAdapter(this,Arrays.asList("1"));
-        leftListView.setAdapter(groupAdapter);
-
-        dateView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                dateAdapter.setCheckItem(position);
-                day = 4;
-                currPage = 1;
-                present.pullToRefreshData(category,day);
-                //dropDownMenu.setTabText(position == 0 ? conditionHeaders[0] : citys[position]);
-                dropDownMenu.closeMenu();
+        filterView.setCategoryList(Arrays.asList(getResources().getStringArray(R.array.characterTag)));
+        List<BusinessCircleBean> circleList = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            BusinessCircleBean circleBean = new BusinessCircleBean();
+            circleBean.setAreaName("商圈" + i);
+            List<BusinessCircleDescBean> list = new ArrayList<>();
+            for (int i1 = 0; i1 < 10; i1++) {
+                BusinessCircleDescBean bean = new BusinessCircleDescBean();
+                bean.setAreaName("商圈" + i+ ":" +i1 + "路");
+                list.add(bean);
+                circleBean.setDistrict(list);
             }
-        });
+            circleList.add(circleBean);
+        }
+        filterView.setCircleList(circleList);
 
-        categoryView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                dateAdapter.setCheckItem(position);
-                //dropDownMenu.setTabText(position == 0 ? conditionHeaders[0] : citys[position]);
-                dropDownMenu.closeMenu();
-            }
-        });
-
-        leftListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        });
-
-        rightListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        });
-
-        popupViews.add(dateView);
-        popupViews.add(categoryView);
-        popupViews.add(addressView);
-        contentView = View.inflate(this,R.layout.dropdownmenu_content,null);
-        dropDownMenu.setDropDownMenu(Arrays.asList(conditionHeaders), popupViews, contentView);
+        ArrayList<Fragment> fragments = new ArrayList<>();
+        for (int i = 0; i < 7; i++) {
+            CourseFragment f = new CourseFragment();
+            fragments.add(f);
+        }
+        List<String> titles = Arrays.asList(getResources().getStringArray(R.array.dateTab));
+        viewPager.setAdapter(new TabFragmentAdapter(getSupportFragmentManager(),fragments,titles));
+        tabLayout.setupWithViewPager(viewPager);
     }
 
-    private void initSwipeRefreshLayout() {
-        refreshLayout = (SwipeRefreshLayout)contentView.findViewById(R.id.refreshLayout);
-        setColorSchemeResources(refreshLayout);
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                currPage = 1;
-                present.pullToRefreshData(category,day);
-            }
-        });
-
-        refreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                refreshLayout.setRefreshing(true);
-                present.pullToRefreshData(category,day);
-            }
-        });
+    private void setListener(){
+        ivBack.setOnClickListener(backListener);
+        filterView.setOnFilterClickListener(new MyOnFilterClickListener());
     }
 
-    private void initRecyclerView() {
-        recyclerView = (RecyclerView)contentView.findViewById(R.id.recycler_view);
-        data = new ArrayList<>();
-        courseAdapter = new CourseAdapter(this);
-        wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(courseAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(wrapperAdapter);
-        recyclerView.addOnScrollListener(onScrollListener);
-    }
-
-    private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
+    private View.OnClickListener backListener = new View.OnClickListener() {
         @Override
-        public void onLoadNextPage(View view) {
-            currPage ++;
-            if (data != null && !data.isEmpty()) {
-                present.requestMoreData(recyclerView,pageSize,category,day,currPage);
-            }
+        public void onClick(View v) {
+            finish();
         }
     };
 
+    private class MyOnFilterClickListener implements CourseFilterView.OnFilterClickListener{
 
-    @Override
-    public void updateRecyclerView(List<CourseBean> courseList) {
-        if(refreshLayout.isRefreshing()){
-            data.clear();
-            refreshLayout.setRefreshing(false);
+        @Override
+        public void onCategoryItemClick(int position) {
+
         }
 
-            data.addAll(courseList);
+        @Override
+        public void onBusinessCircleItemClick(String address) {
 
-
-        courseAdapter.setData(data);
-        wrapperAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void showEmptyView() {
-
-    }
-
-    @Override
-    public void hideEmptyView() {
-
-    }
-
-    @Override
-    public void showRecyclerView() {
-
-    }
-
-    @Override
-    public void hideRecyclerView() {
-
-    }
-
-    @Override
-    public void showErrorView() {
-
-    }
-
-    @Override
-    public void showEndFooterView() {
-        RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
+        }
     }
 }

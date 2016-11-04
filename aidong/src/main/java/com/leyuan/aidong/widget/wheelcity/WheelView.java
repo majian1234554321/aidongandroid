@@ -49,7 +49,7 @@ public class WheelView extends View {
 	private static final int[] SHADOWS_COLORS = new int[] { 0xFFebebeb,
 			0x00ebebeb, 0x00ebebeb };
 
-	/** Top and bottom items offset (to hideCategoryList that) */
+	/** Top and bottom items offset (to hidePopup that) */
 	private static final int ITEM_OFFSET_PERCENT = 10;
 
 	/** Left and right padding value */
