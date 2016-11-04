@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
         android:background="@color/black"
-        app:stb_title="zh"/>
+        app:stb_title="支付成功"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_recommend"

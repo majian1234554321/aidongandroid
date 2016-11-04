@@ -18,40 +18,17 @@
         android:layout_width="91dp"
         android:layout_height="86dp"
         android:layout_marginTop="68dp"
-        android:src="@drawable/ssdk_oks_classic_alipay"
+        android:src="@drawable/icon_pay_success"
         android:layout_gravity="center_horizontal"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="请提早15分钟入场"
+        android:text="感谢您的支持，我们会竭尽为您服务"
         android:textColor="@color/c9"
         android:textSize="15sp"
         android:layout_marginTop="22dp"
         android:layout_gravity="center_horizontal"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="5dp"
-        android:gravity="center_horizontal">
-
-        <TextView
-            android:id="@+id/tv_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="活动时间："
-            android:textColor="@color/c9"
-            android:textSize="15sp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/c9"
-            android:textSize="15sp"
-            android:text="2015-09-09 14:30"/>
-    </LinearLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -74,7 +51,7 @@
             android:textColor="@color/c3"/>
 
         <TextView
-            android:id="@+id/tv_appointment"
+            android:id="@+id/tv_order"
             android:layout_width="168dp"
             android:layout_height="wrap_content"
             android:text="查看订单"
@@ -94,6 +71,7 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:text="推荐商品"
+        android:drawablePadding="5dp"
         android:textSize="16sp"
         android:gravity="center_vertical"
         android:layout_gravity="center_horizontal"

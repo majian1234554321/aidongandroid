@@ -18,7 +18,7 @@
         android:layout_width="91dp"
         android:layout_height="86dp"
         android:layout_marginTop="68dp"
-        android:src="@drawable/ssdk_oks_classic_alipay"
+        android:src="@drawable/icon_appointment_success"
         android:layout_gravity="center_horizontal"/>
 
     <TextView
@@ -94,6 +94,7 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:text="推荐商品"
+        android:drawablePadding="5dp"
         android:textSize="16sp"
         android:gravity="center_vertical"
         android:layout_gravity="center_horizontal"

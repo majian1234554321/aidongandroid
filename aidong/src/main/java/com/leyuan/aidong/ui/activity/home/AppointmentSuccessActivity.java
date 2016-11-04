@@ -10,7 +10,9 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.MainActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.RecommendAdapter;
+import com.leyuan.aidong.ui.activity.mine.AppointmentActivity;
 import com.leyuan.aidong.widget.customview.SimpleTitleBar;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderSpanSizeLookup;
@@ -79,8 +81,10 @@ public class AppointmentSuccessActivity extends BaseActivity implements View.OnC
             case R.id.iv_back:
                 finish();
             case R.id.tv_home:
+                startActivity(new Intent(this, MainActivity.class));
                 break;
             case R.id.tv_appointment:
+                startActivity(new Intent(this, AppointmentActivity.class));
                 break;
             default:
                 break;

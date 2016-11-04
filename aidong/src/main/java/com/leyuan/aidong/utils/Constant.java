@@ -7,5 +7,5 @@ public class Constant {
 
     public static final int CODE_OPEN_ALBUM = 11;
 
-    public static final String  BASE_URL = "http://192.168.86.106:5000/";
+    public static final String  BASE_URL = "http://192.168.0.223:5000/";
 }

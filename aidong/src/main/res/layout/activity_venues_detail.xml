@@ -9,12 +9,12 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
         android:orientation="horizontal"
-        android:paddingRight="@dimen/height_top_bar"
+        android:paddingRight="90dp"
         android:background="@color/black">
 
         <ImageView
             android:id="@+id/iv_back"
-            android:layout_width="@dimen/height_top_bar"
+            android:layout_width="45dp"
             android:layout_height="match_parent"
             android:src="@drawable/icon_back"
             android:scaleType="center"
@@ -24,6 +24,7 @@
             android:id="@+id/tab_layout"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:layout_marginLeft="45dp"
             android:layout_height="match_parent"
             app:tabIndicatorColor="@color/main_red"
             app:tabTextColor="@color/gray"

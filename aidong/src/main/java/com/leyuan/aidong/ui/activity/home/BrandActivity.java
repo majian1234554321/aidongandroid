@@ -4,23 +4,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.activity.home.adapter.RecommendAdapter;
 import com.leyuan.aidong.entity.BrandBean;
 import com.leyuan.aidong.entity.GoodsBean;
+import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.activity.home.adapter.RecommendAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.HomePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.HomePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.BrandActivityView;
 import com.leyuan.aidong.widget.customview.SimpleTitleBar;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
+import com.leyuan.aidong.widget.endlessrecyclerview.HeaderSpanSizeLookup;
 import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
 
 import java.util.ArrayList;
@@ -40,21 +41,16 @@ public class BrandActivity extends BaseActivity implements BrandActivityView {
 
     private int currPage = 1;
     private ArrayList<GoodsBean> data;
-    private HeaderAndFooterRecyclerViewAdapter wrapAdapter;
+    private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private RecommendAdapter brandAdapter;
     private HomePresent present;
 
     private int id;
 
-    /**
-     * 跳转到品牌详情界面
-     * @param context 来源界面
-     * @param id id
-     */
-    public static void newInstance(Context context, String id){
-        Intent intent = new Intent(context,BrandActivity.class);
-        intent.putExtra("id",id);
-        context.startActivity(intent);
+    public static void start(Context context, String id) {
+        Intent starter = new Intent(context, BrandActivity.class);
+        starter.putExtra("id",id);
+        context.startActivity(starter);
     }
 
     @Override
@@ -67,6 +63,8 @@ public class BrandActivity extends BaseActivity implements BrandActivityView {
         initHeaderView();
         initSwipeRefreshLayout();
         initRecyclerView();
+        brandAdapter.setData(null);
+        wrapperAdapter.notifyDataSetChanged();
     }
 
     private void intTitleBar(){
@@ -92,15 +90,15 @@ public class BrandActivity extends BaseActivity implements BrandActivityView {
             @Override
             public void onRefresh() {
                 currPage = 1;
-                present.pullToRefreshBrandData(id);
+               // present.pullToRefreshBrandData(id);
             }
         });
 
         refreshLayout.post(new Runnable() {
             @Override
             public void run() {
-                refreshLayout.setRefreshing(true);
-                present.pullToRefreshBrandData(id);
+               // refreshLayout.setRefreshing(true);
+                //present.pullToRefreshBrandData(id);
             }
         });
     }
@@ -109,9 +107,12 @@ public class BrandActivity extends BaseActivity implements BrandActivityView {
         recyclerView = (RecyclerView)findViewById(R.id.rv_brand_detail);
         data = new ArrayList<>();
         brandAdapter = new RecommendAdapter(this);
-        wrapAdapter = new HeaderAndFooterRecyclerViewAdapter(brandAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(wrapAdapter);
+        wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(brandAdapter);
+        recyclerView.setAdapter(wrapperAdapter);
+        GridLayoutManager manager = new GridLayoutManager(this,2);
+        manager.setSpanSizeLookup(new HeaderSpanSizeLookup((HeaderAndFooterRecyclerViewAdapter)
+                recyclerView.getAdapter(), manager.getSpanCount()));
+        recyclerView.setLayoutManager(manager);
         recyclerView.addOnScrollListener(onScrollListener);
         RecyclerViewUtils.setHeaderView(recyclerView, headerView);
     }

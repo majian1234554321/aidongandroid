@@ -242,17 +242,9 @@
                             android:gravity="center_horizontal">
 
                             <ImageView
-                                android:layout_width="45dp"
-                                android:layout_height="45dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:src="@drawable/icon_self_delivery"/>
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:textSize="12sp"
-                                android:gravity="center_horizontal"
-                                android:layout_marginTop="10dp"
-                                android:textColor="@color/black"
-                                android:text="门店自提" />
 
                         </LinearLayout>
 
@@ -265,17 +257,9 @@
                             android:gravity="center_horizontal">
 
                             <ImageView
-                                android:layout_width="45dp"
-                                android:layout_height="45dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:src="@drawable/icon_return"/>
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:textSize="12sp"
-                                android:gravity="center_horizontal"
-                                android:layout_marginTop="10dp"
-                                android:textColor="@color/black"
-                                android:text="七天退货" />
 
                         </LinearLayout>
 
@@ -287,17 +271,9 @@
                             android:gravity="center_horizontal">
 
                             <ImageView
-                                android:layout_width="45dp"
-                                android:layout_height="45dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:src="@drawable/icon_genuine"/>
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:textSize="12sp"
-                                android:gravity="center_horizontal"
-                                android:layout_marginTop="10dp"
-                                android:textColor="@color/black"
-                                android:text="正品保障" />
 
                         </LinearLayout>
 
@@ -309,17 +285,9 @@
                             android:gravity="center_horizontal">
 
                             <ImageView
-                                android:layout_width="45dp"
-                                android:layout_height="45dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:src="@drawable/icon_gabalnara"/>
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:textSize="12sp"
-                                android:gravity="center_horizontal"
-                                android:layout_marginTop="10dp"
-                                android:textColor="@color/black"
-                                android:text="全场包邮" />
 
                         </LinearLayout>
                     </LinearLayout>

@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.entity.GoodsBean;
+import com.leyuan.aidong.ui.activity.home.GoodsDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,11 +40,18 @@ public class OrderGoodAdapter extends RecyclerView.Adapter<OrderGoodAdapter.Good
 
     @Override
     public void onBindViewHolder(GoodHolder holder, int position) {
-        GoodsBean bean = data.get(position);
+        final GoodsBean bean = data.get(position);
         holder.cover.setImageURI(bean.getCover());
         holder.name.setText(bean.getName());
         holder.price.setText(bean.getPrice());
         holder.count.setText(bean.getAmount());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GoodsDetailActivity.start(context,bean.getSku_code());
+            }
+        });
     }
 
     class GoodHolder extends RecyclerView.ViewHolder{

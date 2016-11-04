@@ -22,7 +22,6 @@ import java.util.List;
  * Created by song on 2016/8/27.
  */
 public class VenuesCoachFragment extends BaseFragment implements VenuesCoachFragmentView{
-
     private VenuesCoachAdapter coachAdapter;
 
     @Override
@@ -37,7 +36,8 @@ public class VenuesCoachFragment extends BaseFragment implements VenuesCoachFrag
         coachAdapter = new VenuesCoachAdapter(getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(coachAdapter);
-        present.getCoaches(1);
+        coachAdapter.setData(null);
+        //present.getCoaches(1);
     }
 
     @Override

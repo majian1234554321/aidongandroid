@@ -24,10 +24,11 @@
 
             <!--默认收货地址-->
             <RelativeLayout
+                android:id="@+id/rl_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp">
-
+                android:paddingTop="20dp"
+                android:background="?selectableItemBackground">
 
                 <ImageView
                     android:id="@+id/iv_default"
@@ -108,6 +109,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:orientation="horizontal"
+                android:background="?selectableItemBackground"
                 android:paddingLeft="@dimen/left_margin"
                 android:paddingRight="@dimen/right_margin">
 
@@ -219,69 +221,7 @@
                 app:left_text="爱豆:" />
 
             <!--支付方式-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="52dp"
-                    android:layout_marginLeft="@dimen/left_margin"
-                    android:gravity="center_vertical"
-                    android:text="支付方式"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <include layout="@layout/inc_line_black" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="@dimen/left_margin"
-                    android:layout_marginRight="@dimen/right_margin"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="支付宝"
-                        android:textColor="@color/c3"
-                        android:textSize="14sp" />
-
-                    <RadioButton
-                        android:id="@+id/cb_alipay"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-
-                <include layout="@layout/inc_line" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="@dimen/left_margin"
-                    android:layout_marginRight="@dimen/right_margin"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="微信"
-                        android:textColor="@color/c3"
-                        android:textSize="14sp" />
-
-                    <RadioButton
-                        android:id="@+id/cb_weixin"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-
-            </LinearLayout>
+            <include layout="@layout/inc_pay_info"/>
 
             <include layout="@layout/inc_bold_line" />
 

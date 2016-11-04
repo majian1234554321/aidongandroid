@@ -7,10 +7,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.leyuan.commonlibrary.util.ToastUtil;
+import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.GoodsBean;
+import com.leyuan.aidong.ui.activity.home.BrandActivity;
+import com.leyuan.aidong.ui.activity.home.GoodsDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +32,10 @@ public class RecommendGoodsAdapter extends RecyclerView.Adapter< RecyclerView.Vi
     }
 
     public void setData(List<GoodsBean> data) {
-        this.data = data;
-        notifyDataSetChanged();
+        if(data != null){
+            this.data = data;
+            notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -73,7 +76,7 @@ public class RecommendGoodsAdapter extends RecyclerView.Adapter< RecyclerView.Vi
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ToastUtil.show("商品详情",context);
+                    GoodsDetailActivity.start(context,"1");
                 }
             });
         }
@@ -100,7 +103,7 @@ public class RecommendGoodsAdapter extends RecyclerView.Adapter< RecyclerView.Vi
             more.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    BrandActivity.start(context,"1");
                 }
             });
         }

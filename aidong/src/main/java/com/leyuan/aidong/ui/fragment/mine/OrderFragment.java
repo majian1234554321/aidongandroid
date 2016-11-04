@@ -8,10 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.activity.mine.adapter.OrderAdapter;
 import com.leyuan.aidong.entity.OrderBean;
+import com.leyuan.aidong.ui.BaseFragment;
+import com.leyuan.aidong.ui.activity.mine.adapter.OrderAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.OrderPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.OrderPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.OrderFragmentView;
@@ -101,7 +101,9 @@ public class OrderFragment extends BaseFragment implements OrderFragmentView{
         data = new ArrayList<>();
         orderAdapter = new OrderAdapter(getContext());
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(orderAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setAutoMeasureEnabled(true);
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(wrapperAdapter);
         recyclerView.addOnScrollListener(onScrollListener);
     }

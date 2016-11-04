@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -69,8 +69,8 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
 
     //支付方式
     private LinearLayout payLayout;
-    private CheckBox cbAliPay;
-    private CheckBox cbWeixinPay;
+    private RadioButton cbAliPay;
+    private RadioButton cbWeixinPay;
 
     //支付状态按钮及商品总信息
     private TextView tvGoodsCount;
@@ -140,8 +140,8 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
         tvPayType = (ExtendTextView) findViewById(R.id.tv_pay_type);
 
         payLayout = (LinearLayout)findViewById(R.id.ll_pay);
-        cbAliPay = (CheckBox)findViewById(R.id.cb_alipay);
-        cbWeixinPay = (CheckBox)findViewById(R.id.cb_weixin);
+        cbAliPay = (RadioButton)findViewById(R.id.cb_alipay);
+        cbWeixinPay = (RadioButton)findViewById(R.id.cb_weixin);
 
         tvGoodsCount = (TextView) findViewById(R.id.tv_goods_count);
         tvPayTip = (TextView) findViewById(R.id.tv_pay_tip);

@@ -4,12 +4,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.activity.mine.AddressActivity;
+import com.leyuan.aidong.ui.activity.mine.CouponActivity;
+import com.leyuan.aidong.ui.activity.mine.PaySuccessActivity;
 import com.leyuan.aidong.widget.customview.ExtendTextView;
 import com.leyuan.aidong.widget.customview.SimpleTitleBar;
 
@@ -17,10 +22,11 @@ import com.leyuan.aidong.widget.customview.SimpleTitleBar;
  * 确认订单
  * Created by song on 2016/9/23.
  */
-public class ConfirmOrderActivity extends BaseActivity{
+public class ConfirmOrderActivity extends BaseActivity implements View.OnClickListener {
     private SimpleTitleBar titleBar;
 
     //收货地址
+    private RelativeLayout addressLayout;
     private TextView tvName;
     private TextView tvPhone;
     private TextView tvAddress;
@@ -58,10 +64,12 @@ public class ConfirmOrderActivity extends BaseActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_order);
         initView();
+        setListener();
     }
 
     private void initView() {
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
+        addressLayout = (RelativeLayout) findViewById(R.id.rl_address);
         tvName = (TextView) findViewById(R.id.tv_name);
         tvPhone = (TextView)findViewById(R.id.tv_phone);
         tvAddress = (TextView) findViewById(R.id.tv_address);
@@ -79,5 +87,33 @@ public class ConfirmOrderActivity extends BaseActivity{
         tvTip = (TextView) findViewById(R.id.tv_tip);
         tvPrice = (TextView) findViewById(R.id.tv_price);
         tvPay = (TextView) findViewById(R.id.tv_pay);
+    }
+
+    private void setListener() {
+        titleBar.setOnClickListener(this);
+        addressLayout.setOnClickListener(this);
+        couponLayout.setOnClickListener(this);
+        tvPay.setOnClickListener(this);
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.title_bar:
+                finish();
+                break;
+            case R.id.rl_address:
+                startActivity(new Intent(this, AddressActivity.class));
+                break;
+            case R.id.ll_coupon:
+                startActivity(new Intent(this, CouponActivity.class));
+                break;
+            case R.id.tv_pay:
+                startActivity(new Intent(this, PaySuccessActivity.class));
+                break;
+            default:
+                break;
+        }
     }
 }

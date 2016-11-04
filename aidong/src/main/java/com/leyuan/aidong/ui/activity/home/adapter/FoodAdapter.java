@@ -30,7 +30,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
     }
 
     public void setData(List<FoodBean> data) {
-        for (int i=0;i<10;i++){
+        for (int i=0;i<2;i++){
             this.data.addAll(data);
         }
     }

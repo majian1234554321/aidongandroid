@@ -23,9 +23,8 @@ import java.util.List;
  * Created by song on 2016/8/27.
  */
 public class VenuesCourseFragment extends BaseFragment implements VenuesCourseFragmentView{
-
     private VenuesCourseAdapter courseAdapter;
-    private RecyclerView dateView;
+    private DateAdapter dateAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,17 +40,20 @@ public class VenuesCourseFragment extends BaseFragment implements VenuesCourseFr
         courseAdapter = new VenuesCourseAdapter(getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(courseAdapter);
+        courseAdapter.setData(null);
 
-        dateView = (RecyclerView)view.findViewById(R.id.rv_date);
-        DateAdapter dateAdapter = new DateAdapter();
+        RecyclerView dateView = (RecyclerView)view.findViewById(R.id.rv_date);
+        dateAdapter = new DateAdapter();
         dateView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
         dateView.setAdapter(dateAdapter);
+        dateAdapter.setData(null);
 
-        present.getCourses(1);
+       // present.getCourses(1);
     }
 
     @Override
     public void setCourses(List<CourseBean> courseBeanList) {
         courseAdapter.setData(courseBeanList);
+        dateAdapter.setData(null);
     }
 }

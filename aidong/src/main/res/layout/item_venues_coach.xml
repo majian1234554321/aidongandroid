@@ -5,7 +5,7 @@
     android:layout_height="90dp"
     android:paddingLeft="@dimen/left_margin"
     android:paddingRight="@dimen/right_margin"
-    android:background="?selectableItemBackground">
+    android:background="@color/white">
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/dv_coach_cover"
@@ -32,7 +32,7 @@
         android:layout_height="30dp"
         android:layout_alignParentRight="true"
         android:layout_marginTop="30dp"
-        android:src="@drawable/icon_following"/>
+        android:src="@drawable/icon_appointment_red"/>
 
     <TextView
         android:id="@+id/tv_coach_name"
