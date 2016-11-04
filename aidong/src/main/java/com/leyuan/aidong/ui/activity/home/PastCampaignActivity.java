@@ -13,6 +13,7 @@ import com.leyuan.aidong.entity.CampaignBean;
 import com.leyuan.aidong.ui.mvp.presenter.CampaignPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CampaignPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CampaignFragmentView;
+import com.leyuan.aidong.widget.customview.SimpleTitleBar;
 import com.leyuan.aidong.widget.customview.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -27,7 +28,7 @@ import java.util.List;
  * Created by song on 2016/8/19.
  */
 public class PastCampaignActivity extends BaseActivity implements CampaignFragmentView {
-
+    private SimpleTitleBar titleBar;
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
@@ -45,9 +46,20 @@ public class PastCampaignActivity extends BaseActivity implements CampaignFragme
         pageSize = 10;
         campaignActivityPresent = new CampaignPresentImpl(this,this);
 
+        initTop();
         initSwipeRefreshLayout();
         initRecyclerView();
         campaignActivityPresent.commonLoadData(switcherLayout);
+    }
+
+    private void initTop(){
+        titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
+        titleBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void initSwipeRefreshLayout(){

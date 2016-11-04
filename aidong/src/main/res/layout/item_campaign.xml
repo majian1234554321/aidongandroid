@@ -10,7 +10,8 @@
         android:layout_height="190dp"
         fresco:pressedStateOverlayImage="@color/color_image_press"
         fresco:placeholderImage="@drawable/place_holder_logo"
-        fresco:actualImageScaleType="centerCrop"/>
+        fresco:actualImageScaleType="centerCrop"
+        fresco:placeholderImageScaleType="fitXY"/>
 
     <TextView
         android:id="@+id/tv_campaign_hot"

@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="titleBg" format="color"/>
+    <attr name="titleColor" format="color"/>
+    <attr name="txtTitle" format="string"/>
+    <attr name="txtRight" format="string"/>
+    <attr name="imgRight" format="reference"/>
+    <attr name="imgLeft" format="reference"/>
+
 
     <declare-styleable name="CircleImageView">
         <attr name="border_width" format="dimension"/>
@@ -267,5 +274,15 @@
 
     <declare-styleable name="IjkListPreference">
         <attr name="entrySummaries" />
+    </declare-styleable>
+
+    <declare-styleable name="CommonTitleLayout">
+
+        <attr name="titleBg"/>
+        <attr name="txtTitle"/>
+        <attr name="txtRight"/>
+        <attr name="imgRight"/>
+        <attr name="imgLeft"/>
+        <attr name="titleColor"/>
     </declare-styleable>
 </resources>

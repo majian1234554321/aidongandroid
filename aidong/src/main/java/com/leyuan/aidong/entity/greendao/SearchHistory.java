@@ -48,5 +48,8 @@ public class SearchHistory {
         this.keyword = keyword;
     }
 
+
+
+
  
 }

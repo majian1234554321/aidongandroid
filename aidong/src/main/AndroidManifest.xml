@@ -145,6 +145,9 @@
         <activity android:name=".ui.activity.home.ImagePreviewActivity"/>
         <activity android:name=".ui.activity.mine.ApplyServiceNextActivity"/>
         <activity android:name=".ui.activity.home.AppointmentSuccessActivity"/>
+
+        <activity android:name=".ui.activity.mine.UpdateAddressActivity"/>
+        <activity android:name=".ui.WebViewActivity"/>
         <activity android:name=".ui.activity.video.WatchOfficeActivity"/>
         <activity android:name=".ui.activity.video.PlayerActivity"/>
         <activity android:name=".ui.activity.video.VideoDetailActivity"/>
@@ -153,7 +156,6 @@
         <activity android:name=".ui.activity.video.LivingVideoActivity"/>
 
         <activity android:name=".ui.activity.video.VideoCommentActivity"/>
-        <activity android:name=".ui.WebviewActivity"/>
         <activity android:name=".ui.activity.mine.ApplyServiceActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
@@ -165,6 +167,12 @@
         <activity android:name=".ui.activity.discover.VenuesDetailActivity" />
         <activity android:name=".ui.activity.discover.DiscoverUserActivity" />
         <activity android:name=".ui.activity.discover.FilterAroundPeopleActivity" />
+        <activity android:name=".ui.activity.mine.login.ChangePasswordActivity" />
+        <activity android:name=".ui.activity.mine.login.CompleteUserInfomationActivity" />
+        <activity android:name=".ui.activity.mine.login.FastLoginActivity" />
+        <activity android:name=".ui.activity.mine.login.FindPasswordActivity" />
+        <activity android:name=".ui.activity.mine.login.RegisterActivity" />
+
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"

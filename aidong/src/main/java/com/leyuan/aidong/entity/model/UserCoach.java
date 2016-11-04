@@ -1,9 +1,11 @@
 package com.leyuan.aidong.entity.model;
 
+import com.leyuan.aidong.entity.user.User;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class UserCoach implements Serializable{
+public class UserCoach extends User implements Serializable{
 	protected String token; // '用户token值',
 	protected String name; // '昵称'，
 	protected int mxid; // 美型号,

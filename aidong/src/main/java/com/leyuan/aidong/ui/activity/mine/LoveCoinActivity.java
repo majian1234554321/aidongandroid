@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.WebviewActivity;
+import com.leyuan.aidong.ui.WebViewActivity;
 
 /**
  * 爱币
@@ -58,7 +58,7 @@ public class LoveCoinActivity extends BaseActivity implements View.OnClickListen
                finish();
                break;
            case R.id.iv_help:
-               WebviewActivity.start(this,"爱币说明","https://www.baidu.com/");
+               WebViewActivity.start(this,"爱币说明","https://www.baidu.com/");
                break;
            case R.id.tv_detail:
                startActivity(new Intent(this,PaymentDetailActivity.class));

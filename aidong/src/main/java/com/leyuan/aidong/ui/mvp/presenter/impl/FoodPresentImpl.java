@@ -30,7 +30,7 @@ public class FoodPresentImpl implements FoodPresenter {
     }
 
     @Override
-    public void commonLoadData(SwitcherLayout switcherLayout) {
+    public void commonLoadData(final SwitcherLayout switcherLayout) {
         foodModel.getFoods(new CommonSubscriber<FoodAndVenuesBean>(switcherLayout) {
             @Override
             public void onNext(FoodAndVenuesBean foodAndVenuesBean) {
@@ -38,11 +38,12 @@ public class FoodPresentImpl implements FoodPresenter {
                     if((foodAndVenuesBean.getFood() != null && !foodAndVenuesBean.getFood().isEmpty()) ||
                             (foodAndVenuesBean.getPick_up_gym()!= null &&!foodAndVenuesBean.getPick_up_gym().isEmpty())){
                         foodActivityView.updateRecyclerView(foodAndVenuesBean);
+                        switcherLayout.showContentLayout();
                     }else{
-                        foodActivityView.showEmptyView();
+                        switcherLayout.showEmptyLayout();
                     }
                 }else{
-                    foodActivityView.showEmptyView();
+                    switcherLayout.showEmptyLayout();
                 }
             }
         },Constant.FIRST_PAGE);

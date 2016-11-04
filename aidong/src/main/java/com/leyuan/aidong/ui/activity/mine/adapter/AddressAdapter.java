@@ -12,8 +12,6 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.activity.mine.AddAddressActivity;
-import com.leyuan.aidong.ui.activity.mine.AddressActivity;
 import com.leyuan.aidong.entity.AddressBean;
 
 import java.util.ArrayList;
@@ -28,8 +26,14 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressH
     private int position;
     private List<AddressBean> data = new ArrayList<>();
 
+    private EditAddressListener editAddressListener;
+
     public AddressAdapter(Context context) {
         this.context = context;
+    }
+
+    public void setEditAddressListener(EditAddressListener l) {
+        this.editAddressListener = l;
     }
 
     public void setData(List<AddressBean> data) {
@@ -51,10 +55,9 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressH
     @Override
     public void onBindViewHolder(AddressHolder holder, int position) {
         this.position = holder.getAdapterPosition();
-
         AddressBean bean = data.get(position);
         holder.name.setText(bean.getName());
-        holder.phone.setText(bean.getName());
+        holder.phone.setText(bean.getMobile());
         holder.address.setText(bean.getAddress());
 
         holder.edit.setOnClickListener(this);
@@ -68,7 +71,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressH
         switch (v.getId()){
             case R.id.item_view:
             case R.id.tv_edit:
-                AddAddressActivity.actionStart(context,data.get(position));
+                editAddressListener.onUpdateAddress(position);
                 break;
             case R.id.iv_delete:
                 showDeleteDialog();
@@ -87,7 +90,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressH
                 .setCancelable(true)
                 .setPositiveButton(context.getString(R.string.sure), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        ((AddressActivity)context).deleteAddress(position);
+                        editAddressListener.onDeleteAddress(position);
                     }
                 })
                 .setNegativeButton(context.getString(R.string.cancel), new DialogInterface.OnClickListener() {
@@ -117,5 +120,10 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressH
             phone = (TextView) itemView.findViewById(R.id.tv_phone);
             address = (TextView) itemView.findViewById(R.id.tv_address);
         }
+    }
+
+    public interface EditAddressListener{
+        void onDeleteAddress(int position);
+        void onUpdateAddress(int position);
     }
 }

@@ -1,31 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/white">
 
+
     <com.leyuan.aidong.widget.customview.SimpleTitleBar
+        android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
         app:stb_title="申请售后"/>
 
     <TextView
+        android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="52dp"
         android:paddingLeft="@dimen/left_margin"
         android:gravity="center_vertical"
         android:text="确定收发联系信息"
         android:textColor="@color/black"
-        android:textSize="16sp"/>
+        android:textSize="16sp"
+        android:layout_below="@+id/title_bar"/>
 
    <include layout="@layout/inc_line_black"/>
 
     <RelativeLayout
+        android:id="@+id/rl_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="10dp">
+        android:paddingTop="10dp"
+        android:layout_below="@+id/text">
 
         <ImageView
             android:id="@+id/iv_default"
@@ -77,4 +82,15 @@
             android:layout_marginRight="@dimen/right_margin"
             android:layout_alignParentRight="true"/>
     </RelativeLayout>
-</LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_apply"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="提交申请"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:background="@color/main_red"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>

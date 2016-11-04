@@ -246,8 +246,8 @@ public class PasswordRegistActivity extends BaseActivity implements
 					Map<String, UserCoach> userlist = new HashMap<String, UserCoach>();
 					for (UserCoach username : fres.getData().getProfiles()) {
 						username.setUsername(username.getMxid() + "");
-						LoginActivity.setUserHearder(username.getMxid() + "",
-								username);
+//						LoginActivity.setUserHearder(username.getMxid() + "",
+//								username);
 
 						userlist.put(username.getMxid() + "", username);
 					}

@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.activity.mine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,12 +10,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.ImageInfoBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.mine.adapter.AddImageAdapter;
 
 import java.util.ArrayList;
+
+import static com.leyuan.aidong.utils.Constant.CODE_OPEN_ALBUM;
 
 /**
  * 申请售后
@@ -70,12 +74,16 @@ public class ApplyServiceActivity extends BaseActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.iv_back:
+                finish();
                 break;
             case R.id.tv_next:
+                startActivity(new Intent(this,ApplyServiceNextActivity.class));
                 break;
             case R.id.tv_return:
+
                 break;
             case R.id.tv_exchange:
+
                 break;
             default:
                 break;
@@ -89,6 +97,17 @@ public class ApplyServiceActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onAddViewClick() {
-       AlbumActivity.start(this,selectImages);
+        Intent intent = new Intent(this,AlbumActivity.class);
+        getIntent().putExtra("selectImages",selectImages);
+        startActivityForResult(intent,CODE_OPEN_ALBUM);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(data != null && requestCode == CODE_OPEN_ALBUM){
+            selectImages = data.getParcelableArrayListExtra("selectImages");
+            addImageAdapter.setData(selectImages);
+        }
     }
 }

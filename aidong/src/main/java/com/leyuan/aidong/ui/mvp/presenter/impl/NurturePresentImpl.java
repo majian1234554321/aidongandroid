@@ -39,7 +39,7 @@ public class NurturePresentImpl implements NurturePresent {
         nurtureModel.getNurtures(new CommonSubscriber<NurtureData>(switcherLayout) {
             @Override
             public void onNext(NurtureData nurtureDataBean) {
-                if(null != nurtureDataBean){
+                if(nurtureDataBean != null && nurtureDataBean.getNutrition() != null){
                     nurtureBeanList = nurtureDataBean.getNutrition();
                 }
                 if(!nurtureBeanList.isEmpty()){
@@ -57,7 +57,7 @@ public class NurturePresentImpl implements NurturePresent {
         nurtureModel.getNurtures(new RefreshSubscriber<NurtureData>(context) {
             @Override
             public void onNext(NurtureData nurtureDataBean) {
-                if(null != nurtureDataBean){
+                if(nurtureDataBean != null && nurtureDataBean.getNutrition() != null){
                     nurtureBeanList = nurtureDataBean.getNutrition();
                 }
                 if(!nurtureBeanList.isEmpty()){
@@ -72,7 +72,7 @@ public class NurturePresentImpl implements NurturePresent {
         nurtureModel.getNurtures(new RequestMoreSubscriber<NurtureData>(context,recyclerView,pageSize) {
             @Override
             public void onNext(NurtureData nurtureDataBean) {
-                if(null != nurtureDataBean){
+                if(nurtureDataBean != null && nurtureDataBean.getNutrition() != null){
                     nurtureBeanList = nurtureDataBean.getNutrition();
                 }
                 if(!nurtureBeanList.isEmpty()){

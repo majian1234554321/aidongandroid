@@ -54,7 +54,7 @@ public class CampaignAdapter extends RecyclerView.Adapter<CampaignAdapter.ViewHo
         holder.cover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CampaignDetailActivity.newInstance(context,"1");
+                CampaignDetailActivity.start(context,"1");
             }
         });
     }

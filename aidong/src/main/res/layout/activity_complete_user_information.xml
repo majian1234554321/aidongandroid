@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.leyuan.aidong.widget.CommonTitleLayout
+            android:id="@+id/layout_title"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/pref_45dp"
+            app:txtRight="@string/complete"
+            app:txtTitle="@string/complete_user_info" />
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/img_avatar"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            fresco:placeholderImage="@drawable/icon_avatar_default"
+            fresco:roundAsCircle="true" />
+
+        <TextView
+            android:id="@+id/txt_change_avatar"
+            style="@style/baseTextStyle"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:text="@string/click_modify"
+            android:textColor="@color/txt_black"
+            android:textSize="15dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/pref_10dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/base_theme" />
+
+        <RelativeLayout
+            android:id="@+id/rel_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                style="@style/common_img_left_style"
+                android:text="@string/nickname_asterisk"
+                android:textColor="@color/txt_black"
+                android:textSize="15dp" />
+
+            <EditText
+                android:id="@+id/edit_nickname"
+                style="@style/common_edit_style"
+                android:layout_marginLeft="100dp"
+                android:gravity="right|center_vertical"
+                android:hint="@string/please_input_nickname" />
+
+            <View
+                style="@style/common_divider_style"
+              />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                style="@style/common_img_left_style"
+                android:text="@string/gender_asterisk"
+                android:textColor="@color/txt_black"
+                android:textSize="15dp" />
+
+         <Button
+             android:id="@+id/btn_gender"
+             style="@style/ButtonStyleAlignRightWithArrow"
+             android:text="@string/please_select" />
+            <View
+                style="@style/common_divider_style"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                style="@style/common_img_left_style"
+                android:text="@string/city_asterisk"
+                android:textColor="@color/txt_black"
+                android:textSize="15dp" />
+
+            <Button
+                android:id="@+id/btn_city"
+                style="@style/ButtonStyleAlignRightWithArrow"
+                android:text="@string/please_select" />
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/pref_10dp"
+            android:background="@color/base_theme" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                style="@style/common_img_left_style"
+                android:text="@string/individuality_signature"
+                android:textColor="@color/txt_black"
+                android:textSize="15dp" />
+
+            <Button
+                android:id="@+id/btn_sign"
+                style="@style/ButtonStyleAlignRightWithArrow"
+                android:text="@string/please_input_signature" />
+            <View
+                style="@style/common_divider_style"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                style="@style/common_img_left_style"
+                android:text="@string/id"
+                android:textColor="@color/txt_black"
+                android:textSize="15dp" />
+
+            <Button
+                android:id="@+id/btn_identify"
+                style="@style/ButtonStyleAlignRightWithArrow"
+                android:text="@string/please_select" />
+            <View
+                style="@style/common_divider_style"
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                style="@style/common_img_left_style"
+                android:text="@string/birthday"
+                android:textColor="@color/txt_black"
+                android:textSize="15dp" />
+
+            <Button
+                android:id="@+id/btn_birthday"
+                style="@style/ButtonStyleAlignRightWithArrow"
+                android:text="@string/please_select" />
+            <View
+                style="@style/common_divider_style"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                style="@style/common_img_left_style"
+                android:text="@string/constellation"
+                android:textColor="@color/txt_black"
+                android:textSize="15dp" />
+
+            <Button
+                android:id="@+id/btn_constellation"
+                style="@style/ButtonStyleAlignRightWithArrow"
+                android:text="@string/please_select" />
+            <View
+                style="@style/common_divider_style"
+                />
+        </RelativeLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/pref_10dp"
+            android:background="@color/base_theme" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                style="@style/common_img_left_style"
+                android:text="@string/height"
+                android:textColor="@color/txt_black"
+                android:textSize="15dp" />
+
+            <Button
+                android:id="@+id/btn_height"
+                style="@style/ButtonStyleAlignRightWithArrow"
+                android:text="@string/please_select" />
+            <View
+                style="@style/common_divider_style"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                style="@style/common_img_left_style"
+                android:text="@string/weight"
+                android:textColor="@color/txt_black"
+                android:textSize="15dp" />
+
+            <Button
+                android:id="@+id/btn_weight"
+                style="@style/ButtonStyleAlignRightWithArrow"
+                android:text="@string/please_select" />
+            <View
+                style="@style/common_divider_style"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                style="@style/common_img_left_style"
+                android:text="@string/exercise_frequecy"
+                android:textColor="@color/txt_black"
+                android:textSize="15dp" />
+
+            <Button
+                android:id="@+id/btn_exercise"
+                style="@style/ButtonStyleAlignRightWithArrow"
+                android:text="@string/please_select" />
+            <View
+                style="@style/common_divider_style"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                style="@style/common_img_left_style"
+                android:text="BMI"
+                android:textColor="@color/txt_black"
+                android:textSize="15dp" />
+
+            <Button
+                android:id="@+id/btn_bmi"
+                style="@style/ButtonStyleAlignRight"
+                android:text="000" />
+            <View
+                style="@style/common_divider_style"
+                />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/pref_10dp"
+            android:background="@color/base_theme" />
+
+
+
+
+    </LinearLayout>
+</ScrollView>

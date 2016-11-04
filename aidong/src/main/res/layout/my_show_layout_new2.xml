@@ -88,8 +88,6 @@
             </RelativeLayout>
         </RelativeLayout>
 
-
-
     </LinearLayout>
 
     <com.handmark.pulltorefresh.library.PullToRefreshListView

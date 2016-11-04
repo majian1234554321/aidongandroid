@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.activity.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -7,7 +8,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.R;
@@ -35,10 +38,14 @@ import java.util.List;
  * 健康餐饮
  * Created by song on 2016/8/18.
  */
-public class FoodActivity extends BaseActivity implements FoodActivityView{
+public class FoodActivity extends BaseActivity implements FoodActivityView, View.OnClickListener {
+    private ImageView ivBack;
+    private TextView tvSearch;
+
     // header
     private View headerView;
     private ViewPager viewPager;
+    private TextView tvRecommend;
     private RecyclerView venuesRecyclerView;
     private List<VenuesBean> venuesList;
     private RecommendVenuesAdapter venuesAdapter;
@@ -59,10 +66,18 @@ public class FoodActivity extends BaseActivity implements FoodActivityView{
         setContentView(R.layout.activity_food);
         pageSize = 20;
         present = new FoodPresentImpl(this,this);
+        initTop();
         initHeaderView();
         initSwipeRefreshLayout();
         initRecyclerView();
         present.commonLoadData(switcherLayout);
+    }
+
+    private void initTop(){
+        ivBack = (ImageView) findViewById(R.id.iv_back);
+        tvSearch = (TextView) findViewById(R.id.tv_search);
+        ivBack.setOnClickListener(this);
+        tvSearch.setOnClickListener(this);
     }
 
     private void initHeaderView(){
@@ -70,6 +85,7 @@ public class FoodActivity extends BaseActivity implements FoodActivityView{
         headerView.setLayoutParams(new LinearLayout.LayoutParams
                 (LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
         viewPager = (ViewPager) headerView.findViewById(R.id.vP_food);
+        tvRecommend = (TextView) headerView.findViewById(R.id.tv_recommend);
         venuesRecyclerView = (RecyclerView)headerView.findViewById(R.id.rv_recommend_venue);
         ViewPagerIndicator indicator = (ViewPagerIndicator)headerView.findViewById(R.id.vp_indicator);
         SamplePagerAdapter pagerAdapter = new SamplePagerAdapter();
@@ -106,12 +122,11 @@ public class FoodActivity extends BaseActivity implements FoodActivityView{
         RecyclerViewUtils.setHeaderView(foodRecyclerView, headerView);
     }
 
-
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
         @Override
         public void onLoadNextPage(View view) {
             currPage ++;
-            if (foodList != null && !foodList.isEmpty()) {
+            if (foodList != null && foodList.size() >= pageSize) {
                 present.requestMoreData(foodRecyclerView,pageSize,currPage);
             }
         }
@@ -124,21 +139,36 @@ public class FoodActivity extends BaseActivity implements FoodActivityView{
             foodList.clear();
             refreshLayout.setRefreshing(false);
         }
-        venuesList.addAll(foodAndVenuesBean.getPick_up_gym());
-        venuesList.add(foodAndVenuesBean.getPick_up_gym().get(0));
-        foodList.addAll(foodAndVenuesBean.getFood());
+        if(foodAndVenuesBean.getPick_up_gym() != null){
+            tvRecommend.setVisibility(View.VISIBLE);
+            venuesList.addAll(foodAndVenuesBean.getPick_up_gym());
+        }else {
+            tvRecommend.setVisibility(View.GONE);
+        }
+        if(foodAndVenuesBean.getFood() != null){
+           foodList.addAll(foodAndVenuesBean.getFood());
+        }
         venuesAdapter.setData(venuesList);
         foodAdapter.setData(foodList);
         wrapperAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void showEmptyView() {
-        switcherLayout.showEmptyLayout();
+    public void showEndFooterView() {
+        RecyclerViewStateUtils.setFooterViewState(foodRecyclerView, LoadingFooter.State.TheEnd);
     }
 
     @Override
-    public void showEndFooterView() {
-        RecyclerViewStateUtils.setFooterViewState(foodRecyclerView, LoadingFooter.State.TheEnd);
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.iv_back:
+                finish();
+                break;
+            case R.id.tv_search:
+                startActivity(new Intent(this,SearchActivity.class));
+                break;
+            default:
+                break;
+        }
     }
 }

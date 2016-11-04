@@ -59,7 +59,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
      * 跳转活动界面
      * @param id 活动id
      */
-    public static void newInstance(Context context,String id){
+    public static void start(Context context, String id){
         Intent intent = new Intent(context,CampaignDetailActivity.class);
         intent.putExtra("id",id);
         context.startActivity(intent);
@@ -82,7 +82,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
         setListener();
 
         id = "1";
-        campaignPresent.getCampaignDetail(id);
+       // campaignPresent.getCampaignDetail(id);
     }
 
 

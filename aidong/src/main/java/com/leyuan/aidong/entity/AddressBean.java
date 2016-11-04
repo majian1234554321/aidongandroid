@@ -8,17 +8,17 @@ import android.os.Parcelable;
  * Created by song on 2016/9/21.
  */
 public class AddressBean implements Parcelable{
-    private String id;
+    private String address_id;
     private String name;
     private String mobile;
     private String address;
 
     public String getId() {
-        return id;
+        return address_id;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.address_id = id;
     }
 
     public String getName() {
@@ -52,14 +52,14 @@ public class AddressBean implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
+        dest.writeString(this.address_id);
         dest.writeString(this.name);
         dest.writeString(this.mobile);
         dest.writeString(this.address);
     }
 
     protected AddressBean(Parcel in) {
-        this.id = in.readString();
+        this.address_id = in.readString();
         this.name = in.readString();
         this.mobile = in.readString();
         this.address = in.readString();
@@ -80,7 +80,7 @@ public class AddressBean implements Parcelable{
     @Override
     public String toString() {
         return "AddressBean{" +
-                "id='" + id + '\'' +
+                "id='" + address_id + '\'' +
                 ", name='" + name + '\'' +
                 ", mobile='" + mobile + '\'' +
                 ", address='" + address + '\'' +

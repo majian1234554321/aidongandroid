@@ -5,7 +5,8 @@ import com.leyuan.aidong.entity.model.UserCoach;
 
 public class LoginResult extends MsgResult {
 	private LoginData data;
-	
+	private UserCoach user;
+
 	public LoginData getData() {
 		return data;
 	}
@@ -16,6 +17,9 @@ public class LoginResult extends MsgResult {
 		this.data = data;
 	}
 
+	public UserCoach getUser() {
+		return user;
+	}
 
 
 	public class LoginData{

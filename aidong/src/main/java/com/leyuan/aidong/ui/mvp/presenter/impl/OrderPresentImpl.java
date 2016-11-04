@@ -58,7 +58,7 @@ public class OrderPresentImpl implements OrderPresent {
         orderModel.getOrders(new CommonSubscriber<OrderData>(switcherLayout) {
             @Override
             public void onNext(OrderData orderData) {
-                if(orderData != null){
+                if(orderData != null && orderData.getOrder() != null){
                     orderBeanList = orderData.getOrder();
                 }
                 if(orderBeanList.isEmpty()){
@@ -76,7 +76,7 @@ public class OrderPresentImpl implements OrderPresent {
         orderModel.getOrders(new RefreshSubscriber<OrderData>(context) {
             @Override
             public void onNext(OrderData orderData) {
-                if(orderData != null && !orderData.getOrder().isEmpty()){
+                if(orderData != null && orderData.getOrder() != null){
                     orderFragmentView.updateRecyclerView(orderData.getOrder());
                 }
             }
@@ -88,7 +88,7 @@ public class OrderPresentImpl implements OrderPresent {
         orderModel.getOrders(new RequestMoreSubscriber<OrderData>(context,recyclerView,pageSize) {
             @Override
             public void onNext(OrderData orderData) {
-                if(orderData != null){
+                if(orderData != null && orderData.getOrder() != null){
                    orderBeanList = orderData.getOrder();
                 }
                 if(!orderBeanList.isEmpty()){
@@ -108,7 +108,7 @@ public class OrderPresentImpl implements OrderPresent {
             @Override
             public void onNext(OrderDetailData orderDetailData) {
                 OrderDetailBean orderDetailBean = null;
-                if(orderDetailData != null ){
+                if(orderDetailData != null && orderDetailData.getItem() != null){
                     orderDetailBean = orderDetailData.getItem();
                 }
                 if(orderDetailBean != null){

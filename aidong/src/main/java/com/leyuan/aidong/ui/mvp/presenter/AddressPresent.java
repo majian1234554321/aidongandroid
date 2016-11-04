@@ -20,7 +20,7 @@ public interface AddressPresent {
      * @param phone 电话
      * @param address 地址
      */
-    void addAddress(String name, String phone, String address);
+    void addAddress(String id,String name, String phone, String address);
 
     /**
      * 修改收货地址信息

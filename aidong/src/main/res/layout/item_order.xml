@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?selectableItemBackground"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <include layout="@layout/inc_bold_line" />
@@ -26,7 +26,14 @@
         android:textColor="@color/c9"
         android:textSize="13sp" />
 
-    <include layout="@layout/inc_line" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="@dimen/left_margin"
+        android:layout_marginRight="@dimen/right_margin"
+        android:layout_marginTop="15dp"
+        android:background="@color/line_color" >
+    </View>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_good"
