@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.activity.home;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -44,6 +45,12 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
     private GoodsFilterAdapter nurtureAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private NurturePresent present;
+
+    public static void start(Context context) {
+        Intent starter = new Intent(context, GoodsFilterActivity.class);
+        //starter.putExtra();
+        context.startActivity(starter);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

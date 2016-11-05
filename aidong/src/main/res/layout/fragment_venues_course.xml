@@ -7,7 +7,13 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_date"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:elevation="5dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/c9"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_venues_course"

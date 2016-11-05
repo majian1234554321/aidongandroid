@@ -11,7 +11,7 @@
         android:layout_height="150dp"
         fresco:placeholderImage="@drawable/place_holder_logo"
         fresco:pressedStateOverlayImage="@drawable/selector_image_ripple"
-        fresco:placeholderImageScaleType="fitCenter"/>
+        fresco:placeholderImageScaleType="centerCrop"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

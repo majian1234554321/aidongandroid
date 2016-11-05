@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.fragment.discover;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,9 @@ import android.view.ViewGroup;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseFragment;
+import com.leyuan.aidong.ui.activity.discover.DiscoverUserActivity;
+import com.leyuan.aidong.ui.activity.discover.DiscoverVenuesActivity;
+import com.leyuan.aidong.ui.activity.discover.SportNewsActivity;
 
 /**
  * Created by user on 2016/11/4.
@@ -33,11 +37,14 @@ public class FoundHomeFragment extends BaseFragment implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_gymnasium:
+                startActivity(new Intent(getContext(), DiscoverVenuesActivity.class));
                 break;
             case R.id.btn_person:
+                startActivity(new Intent(getContext(), DiscoverUserActivity.class));
                 //TODO implement
                 break;
             case R.id.btn_news:
+                startActivity(new Intent(getContext(), SportNewsActivity.class));
                 //TODO implement
                 break;
             case R.id.btn_sport_circle:

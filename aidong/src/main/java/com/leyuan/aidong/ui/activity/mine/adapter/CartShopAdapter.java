@@ -59,6 +59,7 @@ public class CartShopAdapter extends RecyclerView.Adapter<CartShopAdapter.CartHo
         goodsAdapter.setData(bean.getItem());
 
         holder.rbCheck.setChecked(bean.isChecked());
+
         holder.rbCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

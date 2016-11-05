@@ -56,11 +56,13 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:gravity="right|center_vertical"
-                    android:hint="请输入真是姓名"
+                    android:hint="请输入真实姓名"
                     android:text=""
+                    android:singleLine="true"
                     android:textColor="@color/black"
                     android:textColorHint="@color/c9"
                     android:textSize="15sp" />
+
             </LinearLayout>
 
             <include layout="@layout/inc_line" />
@@ -91,6 +93,7 @@
                     android:hint="请输入手机号码"
                     android:inputType="phone"
                     android:text=""
+                    android:singleLine="true"
                     android:textColor="@color/black"
                     android:textColorHint="@color/c9"
                     android:textSize="15sp" />
@@ -289,86 +292,7 @@
 
             <!--支付方式-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="52dp"
-                    android:layout_marginLeft="@dimen/left_margin"
-                    android:gravity="center_vertical"
-                    android:text="支付方式"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <include layout="@layout/inc_line_black" />
-
-                <com.leyuan.aidong.widget.customview.CustomNestRadioGroup
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="@dimen/left_margin"
-                        android:layout_marginRight="@dimen/right_margin"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="支付宝"
-                            android:drawablePadding="5dp"
-                            android:gravity="center_vertical"
-                            android:drawableLeft="@drawable/icon_integral_alipay"
-                            android:textColor="@color/c3"
-                            android:textSize="14sp" />
-
-                        <RadioButton
-                            android:id="@+id/cb_alipay"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-
-                   <View
-                       android:layout_width="match_parent"
-                       android:layout_height="0.5dp"
-                       android:background="@color/line_color"
-                       android:layout_marginLeft="@dimen/left_margin"
-                       android:layout_marginRight="@dimen/right_margin"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="@dimen/left_margin"
-                        android:layout_marginRight="@dimen/right_margin"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="微信"
-                            android:drawablePadding="5dp"
-                            android:gravity="center_vertical"
-                            android:drawableLeft="@drawable/weixin"
-                            android:textColor="@color/c3"
-                            android:textSize="14sp" />
-
-                        <RadioButton
-                            android:id="@+id/cb_weixin"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-                </com.leyuan.aidong.widget.customview.CustomNestRadioGroup>
-
-            </LinearLayout>
+            <include layout="@layout/inc_pay_info"/>
 
             <include layout="@layout/inc_bold_line" />
 

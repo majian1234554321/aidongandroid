@@ -35,7 +35,6 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
     private SimpleTitleBar titleBar;
     private RecyclerView categoryRecyclerView;
 
-
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recommendRecyclerView;
@@ -63,7 +62,7 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
     private void initTopLayout(){
         titleBar = (SimpleTitleBar)findViewById(R.id.title_bar);
         categoryRecyclerView = (RecyclerView)findViewById(R.id.rv_category);
-        CategoryAdapter categoryAdapter = new CategoryAdapter();
+        CategoryAdapter categoryAdapter = new CategoryAdapter(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
         categoryRecyclerView.setLayoutManager(layoutManager);
         categoryRecyclerView.setAdapter(categoryAdapter);
@@ -73,6 +72,7 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
                 finish();
             }
         });
+        categoryAdapter.setData(null);
     }
 
     private void initSwipeRefreshLayout() {

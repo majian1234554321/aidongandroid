@@ -68,7 +68,7 @@ public class OldCourseActivity extends BaseActivity implements CoursesActivityVi
 
     private void initDropDownMenu(){
         dropDownMenu = (DropDownMenu)findViewById(R.id.drop_down_menu);
-        conditionHeaders = getResources().getStringArray(R.array.courseCondition);
+        //conditionHeaders = getResources().getStringArray(R.array.courseCondition);
 
         final ListView dateView = new ListView(this);
         dateAdapter = new ListWithFlagAdapter(this, Arrays.asList("1"));

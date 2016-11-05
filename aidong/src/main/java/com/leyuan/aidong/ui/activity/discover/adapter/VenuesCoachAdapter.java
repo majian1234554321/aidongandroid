@@ -2,14 +2,16 @@ package com.leyuan.aidong.ui.activity.discover.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CoachBean;
+import com.leyuan.aidong.ui.activity.discover.AppointCoachActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +29,21 @@ public class VenuesCoachAdapter extends RecyclerView.Adapter<VenuesCoachAdapter.
     }
 
     public void setData(List<CoachBean> data) {
-        this.data = data;
+        if(data != null){
+            this.data = data;
+        }else{
+            for (int i = 0; i < 10; i++) {
+                CoachBean bean = new CoachBean();
+                if( i % 2 == 0){
+                    bean.setName("AiFukuhara ");
+                    bean.setAvatar("http://ww3.sinaimg.cn/mw690/718878b5jw1f9fiyllzqpj20go0b5tah.jpg");
+                }else{
+                    bean.setAvatar("https://www.baidu.com/img/bd_logo1.png");
+                    bean.setName("百度保健 ");
+                }
+                this.data.add(bean);
+            }
+        }
         notifyDataSetChanged();
     }
 
@@ -38,7 +54,7 @@ public class VenuesCoachAdapter extends RecyclerView.Adapter<VenuesCoachAdapter.
 
     @Override
     public CoachHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = View.inflate(context, R.layout.item_venues_coach,null);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_venues_coach, parent, false);
         return new CoachHolder(view);
     }
 
@@ -48,6 +64,13 @@ public class VenuesCoachAdapter extends RecyclerView.Adapter<VenuesCoachAdapter.
         holder.cover.setImageURI(bean.getAvatar());
         holder.name.setText(bean.getName());
         holder.gender.setTag(bean.getGender());
+
+        holder.appointment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppointCoachActivity.start(context);
+            }
+        });
     }
 
     class CoachHolder extends RecyclerView.ViewHolder{

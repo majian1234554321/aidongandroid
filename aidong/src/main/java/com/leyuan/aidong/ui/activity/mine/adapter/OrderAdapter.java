@@ -60,7 +60,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
         OrderBean bean = data.get(position);
 
         //与订单状态无关
-        holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
         holder.recyclerView.setAdapter(new OrderGoodAdapter(context, bean.getItem()));
         holder.count.setText(bean.getTotal());
         holder.price.setText(bean.getPay_amount());
@@ -190,6 +189,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
             tvReceiving = (TextView) itemView.findViewById(R.id.tv_receiving);
             tvDelete = (TextView) itemView.findViewById(R.id.tv_delete);
             tvAgainBuy = (TextView) itemView.findViewById(R.id.tv_again_buy);
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
             itemView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         }
     }

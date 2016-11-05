@@ -1,16 +1,15 @@
 package com.leyuan.aidong.ui.activity.home.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.activity.home.CampaignDetailActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.VenuesBean;
+import com.leyuan.aidong.ui.activity.discover.VenuesDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +27,24 @@ public class RecommendVenuesAdapter extends RecyclerView.Adapter<RecommendVenues
     }
 
     public void setData(List<VenuesBean> data) {
-        this.data = data;
+        if(data != null){
+            this.data = data;
+        }else{
+            for (int i = 0; i < 3; i++) {
+                VenuesBean bean = new VenuesBean();
+                if(i % 2 == 0){
+                    bean.setName("舒淇");
+                    bean.setDistance("555");
+                    bean.setLogo("http://ww1.sinaimg.cn/mw690/66acb59ajw1f9f2pyqslcj20qo140tgm.jpg");
+                }else {
+                    bean.setDistance("1000");
+                    bean.setName("少零食");
+                    bean.setLogo("http://ww3.sinaimg.cn/mw690/718878b5jw1f9ezf1cetnj20go0awmz4.jpg");
+                }
+                this.data.add(bean);
+            }
+        }
+       
         notifyDataSetChanged();
     }
 
@@ -53,8 +69,7 @@ public class RecommendVenuesAdapter extends RecyclerView.Adapter<RecommendVenues
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, CampaignDetailActivity.class);
-                context.startActivity(intent);
+                VenuesDetailActivity.start(context);
             }
         });
     }

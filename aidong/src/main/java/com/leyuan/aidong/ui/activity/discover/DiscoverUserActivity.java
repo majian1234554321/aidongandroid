@@ -28,7 +28,6 @@ import java.util.List;
  * Created by song on 2016/8/29.
  */
 public class DiscoverUserActivity extends BaseActivity implements DiscoverUserActivityView{
-
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
@@ -48,8 +47,7 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
 
         initSwipeRefreshLayout();
         initRecyclerView();
-
-        userPresent.commonLoadData(switcherLayout,0.00,0.00,"","");
+        //userPresent.commonLoadData(switcherLayout,0.00,0.00,"","");
     }
 
     private void initSwipeRefreshLayout(){

@@ -29,10 +29,35 @@
             android:layout_height="wrap_content"
             android:src="@drawable/icon_share"
             android:padding="10dp"
+            android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"/>
+            android:layout_alignParentEnd="true" />
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/left_margin"
+        android:paddingRight="@dimen/right_margin"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:text="奥林匹亚健美先生分享背部锻炼方法（图文）"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        android:background="@color/black"/>
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:textColor="@color/white"
+        android:paddingLeft="@dimen/left_margin"
+        android:paddingRight="@dimen/right_margin"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:text="06-16 09:09"/>
     <WebView
         android:id="@+id/wv_news"
         android:layout_width="match_parent"

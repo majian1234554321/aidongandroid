@@ -1,10 +1,14 @@
 package com.leyuan.aidong.ui.activity.discover;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.R;
@@ -22,10 +26,16 @@ import java.util.List;
  * Created by song on 2016/9/21.
  */
 public class VenuesDetailActivity extends BaseActivity{
-
     private ImageView ivBack;
+    private TextView tvAppointment;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+
+    public static void start(Context context) {
+        Intent starter = new Intent(context, VenuesDetailActivity.class);
+        //starter.putExtra();
+        context.startActivity(starter);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +45,12 @@ public class VenuesDetailActivity extends BaseActivity{
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.vp_content);
+        tvAppointment = (TextView) findViewById(R.id.tv_appointment);
 
         ArrayList<Fragment> fragments = new ArrayList<>();
         VenuesDetailFragment detail = new VenuesDetailFragment();
         VenuesCoachFragment coach = new VenuesCoachFragment();
         VenuesCourseFragment course = new VenuesCourseFragment();
-
         fragments.add(detail);
         fragments.add(coach);
         fragments.add(course);
@@ -48,5 +58,19 @@ public class VenuesDetailActivity extends BaseActivity{
         List<String> titles = Arrays.asList(getResources().getStringArray(R.array.venuesTab));
         viewPager.setAdapter(new TabFragmentAdapter(getSupportFragmentManager(),fragments,titles));
         tabLayout.setupWithViewPager(viewPager);
+
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        tvAppointment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppointVenuesActivity.start(VenuesDetailActivity.this,"id");
+            }
+        });
     }
 }

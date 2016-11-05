@@ -8,14 +8,38 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:gravity="center"
-        android:text="健身工作室"
+        android:layout_marginLeft="@dimen/left_margin"
+        android:gravity="center_vertical"
+        android:text="巴黎春天新世纪酒店健身"
         android:textColor="@color/black"
         android:textSize="20sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="15sp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="99元起"
+            android:textColor="@color/c9"
+            android:textSize="16sp"
+            android:layout_marginLeft="@dimen/left_margin"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/2.8km"
+            android:textColor="@color/c9"
+            android:textSize="16sp"
+            android:layout_marginLeft="@dimen/left_margin"/>
+    </LinearLayout>
+
+    <include layout="@layout/inc_line"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
         android:orientation="horizontal">
 
         <TextView
@@ -25,6 +49,7 @@
             android:drawableTop="@drawable/home_food"
             android:gravity="center"
             android:text="健康餐饮"
+            android:paddingTop="10dp"
             android:textColor="@color/black"
             android:textSize="13sp" />
 
@@ -35,8 +60,10 @@
             android:drawableTop="@drawable/home_nurture"
             android:gravity="center"
             android:text="营养品"
+            android:paddingTop="10dp"
             android:textColor="@color/black"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+            android:id="@+id/textView" />
 
         <TextView
             android:layout_width="0dp"
@@ -45,6 +72,7 @@
             android:drawableTop="@drawable/home_equipment"
             android:gravity="center"
             android:text="装备"
+            android:paddingTop="10dp"
             android:textColor="@color/black"
             android:textSize="13sp" />
     </LinearLayout>
@@ -170,5 +198,39 @@
             android:text="共三家"
             android:textColor="@color/black"
             android:textSize="15sp" />
+    </LinearLayout>
+
+    <include layout="@layout/inc_line"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_park" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_wifi" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_bath" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_food" />
     </LinearLayout>
 </LinearLayout>

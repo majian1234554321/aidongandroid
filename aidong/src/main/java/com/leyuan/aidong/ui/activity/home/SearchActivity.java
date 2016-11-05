@@ -52,7 +52,9 @@ public class SearchActivity extends BaseActivity implements SearchActivityView{
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        db.close();
+        if(db != null){
+            db.close();
+        }
     }
 
     private void initView() {

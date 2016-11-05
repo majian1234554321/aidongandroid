@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/tv_state"
@@ -76,8 +77,7 @@
         android:id="@+id/ll_code"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:paddingBottom="30dp" >
+        android:layout_height="180dp">
 
         <TextView
             android:id="@+id/tv_code_num"
@@ -93,11 +93,12 @@
             android:id="@+id/dv_code"
             android:layout_width="294dp"
             android:layout_height="73dp"
-            app:actualImageScaleType="centerCrop"
+            app:actualImageScaleType="fitXY"
+            app:placeholderImageScaleType="centerCrop"
             app:placeholderImage="@drawable/place_holder_logo"
             app:pressedStateOverlayImage="@color/color_image_press"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="25dp"/>
+            android:layout_marginTop="25dp" />
     </LinearLayout>
 
 </LinearLayout>

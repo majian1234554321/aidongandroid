@@ -14,16 +14,17 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.BannerBean;
+import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.entity.HomeBean;
+import com.leyuan.aidong.entity.HomeItemBean;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.activity.home.CampaignActivity;
-import com.leyuan.aidong.ui.activity.home.CampaignDetailActivity;
+import com.leyuan.aidong.ui.activity.home.ConfirmOrderActivity;
 import com.leyuan.aidong.ui.activity.home.CourseActivity;
-import com.leyuan.aidong.ui.activity.home.CourseDetailActivity;
 import com.leyuan.aidong.ui.activity.home.EquipmentActivity;
 import com.leyuan.aidong.ui.activity.home.FoodActivity;
-import com.leyuan.aidong.ui.activity.home.GoodsFilterActivity;
 import com.leyuan.aidong.ui.activity.home.NurtureActivity;
+import com.leyuan.aidong.ui.activity.home.SearchActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.BannerAdapter;
 import com.leyuan.aidong.ui.activity.home.adapter.HomeRecycleViewAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.HomePresent;
@@ -136,15 +137,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
         headerView.findViewById(R.id.tv_competition).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<String> urls = new ArrayList<>();
-                urls.add("http://ww2.sinaimg.cn/mw690/006uFQHggw1f8xjwtufy3j30ku0rsdki.jpg");
-                urls.add("http://ww4.sinaimg.cn/mw690/636d00d8gw1f1kx1ux9y4j20ic5b4wwl.jpg");
-                urls.add("http://ww3.sinaimg.cn/mw690/61ecbb3djw1f8ym0r7dtsg20dc07itwe.gif");
-                urls.add("http://ww2.sinaimg.cn/mw690/61ecbb3djw1f8ym0qyytug20dc07itue.gif");
-                urls.add("http://ww3.sinaimg.cn/mw690/61ecbb3djw1f8ym0q7zqzg20dc07i4ar.gif");
-                //ImagePreviewActivity.start(getActivity(),urls,1);
-                CampaignDetailActivity.start(getContext(),"1");
-                CourseDetailActivity.start(getContext(),"1");
+                ConfirmOrderActivity.start(getContext());
             }
         });
 
@@ -186,7 +179,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
         public void onLoadNextPage(View view) {
             currPage ++;
             if (data != null && !data.isEmpty()) {
-                present.requestMoreHomeData(recyclerView,pageSize,currPage);
+               // present.requestMoreHomeData(recyclerView,pageSize,currPage);
             }
         }
     };
@@ -202,6 +195,45 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
             data.clear();
             refreshLayout.setRefreshing(false);
         }
+        if(homeBeanList.isEmpty()){
+            for (int i = 0; i < 4; i++) {
+                HomeBean bean = new HomeBean();
+                if(i % 2 != 0){
+                    bean.setDisplay("cover");
+                    ArrayList<HomeItemBean> item = new ArrayList<>();
+                    for (int k = 0; k < 2; k++) {
+                        HomeItemBean itemBean = new HomeItemBean();
+                        itemBean.setCover("http://ww2.sinaimg.cn/mw690/61ecbb3dgw1f9eswvd0hqj211p1v04qp.jpg");
+                        item.add(itemBean);
+                    }
+                    bean.setCategory(item);
+                }else{
+                    bean.setDisplay("list");
+                    HomeItemBean item = new HomeItemBean();
+                    item.setCover("http://ww2.sinaimg.cn/mw690/006uFQHggw1f94x7xfic2j30qo0zi47p.jpg");
+                    ArrayList<GoodsBean> goodsBeanList = new ArrayList<>();
+                    for (int k = 0; k < 8; k++) {
+                        GoodsBean goodsBean = new GoodsBean();
+                        if(k %2 == 0){
+                            goodsBean.setName("盗墓笔记");
+                            goodsBean.setPrice("100");
+                            goodsBean.setCover("http://ww1.sinaimg.cn/mw690/91393a6bjw1f9eoh5iprzj20jg0r9q62.jpg");
+                        }else{
+                            goodsBean.setName("福原爱");
+                            goodsBean.setPrice("10000");
+                            goodsBean.setCover("http://ww2.sinaimg.cn/mw690/006uFQHggw1f94x7xfic2j30qo0zi47p.jpg");
+                        }
+                        goodsBeanList.add(goodsBean);
+                    }
+                    item.setItem(goodsBeanList);
+                    ArrayList<HomeItemBean> homeItemBeanArrayList = new ArrayList<>();
+                    homeItemBeanArrayList.add(item);
+                    bean.setCategory(homeItemBeanArrayList);
+                }
+                homeBeanList.add(bean);
+            }
+        }
+
         data.addAll(homeBeanList);
         if(!data.isEmpty()){
             homeAdapter.setData(data);
@@ -214,7 +246,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.iv_search:
-                Intent intent = new Intent(getContext(), GoodsFilterActivity.class);
+                Intent intent = new Intent(getContext(), SearchActivity.class);
                 startActivity(intent);
                 break;
             default:

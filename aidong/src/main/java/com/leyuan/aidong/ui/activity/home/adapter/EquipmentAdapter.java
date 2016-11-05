@@ -50,7 +50,7 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.Equi
         holder.name.setText(bean.getName());
         holder.price.setText(String.format(context.getString(R.string.rmb_price),bean.getPrice()));
 
-        holder.cover.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, GoodsDetailActivity.class);

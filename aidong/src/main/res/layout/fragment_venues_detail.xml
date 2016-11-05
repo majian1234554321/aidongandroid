@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="48dp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:layout_scrollFlags="scroll|snap">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -37,14 +37,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginBottom="30dp"
-                    android:layout_marginRight="12sp" />
-
-
+                    android:layout_marginBottom="10dp"
+                   android:layout_centerHorizontal="true" />
             </RelativeLayout>
 
-
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@color/transparent"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
@@ -53,7 +56,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -73,11 +75,10 @@
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/right_margin"
         android:src="@drawable/icon_share"
-        app:backgroundTint="@color/black"
-        app:layout_anchor ="@id/ll_content"
         app:elevation="5dp"
         app:fabSize="mini"
-        app:layout_anchorGravity="top|right|end"/>
+        app:backgroundTint="@color/black"
+        app:layout_anchor ="@id/app_bar_layout"
+        app:layout_anchorGravity="bottom|right|end"/>
 </android.support.design.widget.CoordinatorLayout>

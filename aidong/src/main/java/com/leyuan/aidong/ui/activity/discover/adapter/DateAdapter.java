@@ -18,7 +18,17 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateHolder>{
     private List<String> data = new ArrayList<>();
 
     public void setData(List<String> data) {
-        this.data = data;
+        if(data != null){
+            this.data = data;
+        }else{
+            this.data.add("星期一");
+            this.data.add("星期二");
+            this.data.add("星期三");
+            this.data.add("星期四");
+            this.data.add("星期五");
+            this.data.add("星期六");
+            this.data.add("星期日");
+        }
         notifyDataSetChanged();
     }
 

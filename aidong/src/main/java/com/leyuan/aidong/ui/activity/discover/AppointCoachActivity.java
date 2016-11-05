@@ -1,6 +1,9 @@
 package com.leyuan.aidong.ui.activity.discover;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
@@ -10,24 +13,31 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.activity.discover.adapter.DateAdapter;
 
 /**
  * 预约私教
  * Created by song on 2016/10/26.
  */
-public class AppointmentCoachActivity extends BaseActivity implements View.OnClickListener {
+public class AppointCoachActivity extends BaseActivity implements View.OnClickListener {
     private SimpleDraweeView dvAvatar;
     private ImageView ivGender;
     private TextView tvName;
     private TextView tvDistance;
     private ImageView ivPhone;
-
     private RecyclerView rvDate;
     private TextView tvMorning;
     private TextView tvAfternoon;
-
     private EditText etUsername;
     private EditText etPhone;
+
+    private DateAdapter dateAdapter;
+
+    public static void start(Context context) {
+        Intent starter = new Intent(context, AppointCoachActivity.class);
+       // starter.putExtra();
+        context.startActivity(starter);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +58,10 @@ public class AppointmentCoachActivity extends BaseActivity implements View.OnCli
         tvAfternoon = (TextView) findViewById(R.id.tv_afternoon);
         etUsername = (EditText) findViewById(R.id.et_username);
         etPhone = (EditText) findViewById(R.id.et_phone);
+        dateAdapter = new DateAdapter();
+        rvDate.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        rvDate.setAdapter(dateAdapter);
+        dateAdapter.setData(null);
     }
 
     private void setListener() {
