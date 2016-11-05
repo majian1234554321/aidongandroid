@@ -162,7 +162,9 @@
         <activity android:name=".ui.activity.video.LiveCommentActivity"/>
         <activity android:name=".ui.activity.video.LiveDetailActivity"/>
         <activity android:name=".ui.activity.video.LivingVideoActivity"/>
-
+        <activity android:name=".ui.activity.discover.DiscoverVenuesActivity"/>
+        <activity android:name=".ui.activity.discover.SportNewsActivity"/>
+        <activity android:name=".ui.activity.discover.NewsDetailActivity"/>
         <activity android:name=".ui.activity.video.VideoCommentActivity"/>
         <activity android:name=".ui.activity.mine.ApplyServiceActivity"
             android:screenOrientation="portrait"

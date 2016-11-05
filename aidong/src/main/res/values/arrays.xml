@@ -101,10 +101,10 @@
         <item>脚部</item>
     </string-array>
 
-    <string-array name="courseCondition">
-        <item>时间</item>
-        <item>课程分类</item>
-        <item>商圈</item>
+    <string-array name="venuesCondition">
+        <item>全部品牌</item>
+        <item>全部商圈</item>
+        <item>全部类型</item>
     </string-array>
 
     <string-array name="searchTab">

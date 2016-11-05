@@ -49,17 +49,13 @@ public class VenuesDetailOldActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_venues_detail_old);
 
-
         initToolbar();
-
         initBannerViewPager();
-
         initTabLayout();
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_tool_bar);
         appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
         appBarLayout.addOnOffsetChangedListener(new MyOnOffsetChangedListener());
-
         tvTitle = (TextView)findViewById(R.id.tv_title);
     }
 
@@ -78,7 +74,6 @@ public class VenuesDetailOldActivity extends BaseActivity {
     }
 
     private void initBannerViewPager() {
-
         bannerViewPager = (ViewPager) findViewById(R.id.vp_banner);
         indicator = (ViewPagerIndicator) findViewById(R.id.vp_indicator);
         SamplePagerAdapter pagerAdapter = new SamplePagerAdapter();

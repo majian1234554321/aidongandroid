@@ -2,20 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/left_margin"
-    android:layout_marginRight="@dimen/right_margin"
-    android:layout_marginBottom="10dp"
-    android:layout_marginTop="10dp">
-
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:maxLines="2"
-        android:textColor="@color/black"
-        android:text="标题"
-        android:textSize="15sp"/>
+    android:layout_height="100dp"
+    android:paddingLeft="@dimen/left_margin"
+    android:paddingRight="@dimen/right_margin"
+    android:background="?selectableItemBackground">
 
     <TextView
         android:id="@+id/tv_time"
@@ -25,15 +15,39 @@
         android:textColor="@color/main_gray"
         android:text="2016"
         android:textSize="15sp"
-        android:layout_below="@+id/tv_title"
+        android:layout_marginBottom="15dp"
+        android:layout_alignParentBottom="true"
         android:layout_marginTop="10dp"/>
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/dv_cover"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="80dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         app:actualImageScaleType="centerCrop"
+        app:placeholderImageScaleType="centerCrop"
         app:placeholderImage="@drawable/place_holder_logo"
         app:pressedStateOverlayImage="@color/color_image_press"/>
 
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:textColor="@color/black"
+        android:text="奥林匹克运动更快更高更远更强"
+        android:textSize="16sp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="15dp"
+        android:layout_toLeftOf="@+id/dv_cover"
+        android:layout_alignParentLeft="true" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/line_color"/>
 </RelativeLayout>

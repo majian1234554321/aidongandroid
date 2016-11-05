@@ -5,11 +5,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.leyuan.aidong.widget.customview.SimpleTitleBar
-        android:id="@+id/title_bar"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
-        app:stb_title="场馆"/>
+        android:background="@color/black">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_back"
+            android:padding="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="场馆"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:layout_centerInParent="true"/>
+
+        <ImageView
+            android:id="@+id/iv_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_search"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/right_margin"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
 
     <com.leyuan.aidong.widget.dropdownmenu.DropDownMenu
         android:id="@+id/drop_down_menu"
