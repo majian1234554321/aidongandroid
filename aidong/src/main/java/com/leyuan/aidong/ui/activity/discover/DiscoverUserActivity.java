@@ -1,10 +1,14 @@
 package com.leyuan.aidong.ui.activity.discover;
 
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.App;
@@ -27,7 +31,12 @@ import java.util.List;
  * 发现-用户
  * Created by song on 2016/8/29.
  */
-public class DiscoverUserActivity extends BaseActivity implements DiscoverUserActivityView{
+public class DiscoverUserActivity extends BaseActivity implements DiscoverUserActivityView, View.OnClickListener {
+    private DrawerLayout drawerLayout;
+    private LinearLayout filterLayout;
+    private ImageView ivBack;
+    private TextView tvFilter;
+
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
@@ -44,10 +53,17 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
         setContentView(R.layout.activity_discover_user);
         pageSize = 20;
         userPresent = new DiscoverPresentImpl(this,this);
-
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        filterLayout = (LinearLayout) findViewById(R.id.ll_filter);
+        ivBack = (ImageView) findViewById(R.id.iv_back);
+        tvFilter = (TextView) findViewById(R.id.tv_filter);
         initSwipeRefreshLayout();
         initRecyclerView();
         //userPresent.commonLoadData(switcherLayout,0.00,0.00,"","");
+
+        ivBack.setOnClickListener(this);
+        tvFilter.setOnClickListener(this);
+
     }
 
     private void initSwipeRefreshLayout(){
@@ -104,5 +120,19 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
     @Override
     public void showEndFooterView() {
         RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.iv_back:
+                finish();
+                break;
+            case R.id.tv_filter:
+                drawerLayout.openDrawer(filterLayout);
+                break;
+            default:
+                break;
+        }
     }
 }
