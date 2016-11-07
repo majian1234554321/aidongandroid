@@ -180,7 +180,6 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
                 present.pullToRefreshData();
             }
         });
-
     }
 
     private void initRecyclerView() {

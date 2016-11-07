@@ -23,10 +23,12 @@ import com.leyuan.aidong.ui.activity.home.ConfirmOrderActivity;
 import com.leyuan.aidong.ui.activity.home.CourseActivity;
 import com.leyuan.aidong.ui.activity.home.EquipmentActivity;
 import com.leyuan.aidong.ui.activity.home.FoodActivity;
+import com.leyuan.aidong.ui.activity.home.LocationActivity;
 import com.leyuan.aidong.ui.activity.home.NurtureActivity;
 import com.leyuan.aidong.ui.activity.home.SearchActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.BannerAdapter;
 import com.leyuan.aidong.ui.activity.home.adapter.HomeRecycleViewAdapter;
+import com.leyuan.aidong.ui.activity.home.adapter.SamplePagerAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.HomePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.HomePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.HomeFragmentView;
@@ -76,6 +78,8 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
 
         tvLocation = (TextView)view.findViewById(R.id.tv_location);
         ivSearch = (ImageView) view.findViewById(R.id.iv_search);
+        tvLocation.setOnClickListener(this);
+
         initHeaderView();
         initSwipeRefreshLayout(view);
         initRecyclerView(view);
@@ -90,7 +94,8 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
         viewPager = (ViewPager) headerView.findViewById(R.id.vp_home);
         ViewPagerIndicator indicator = (ViewPagerIndicator)headerView.findViewById(R.id.vp_indicator);
         bannerAdapter = new BannerAdapter(getContext());
-        //HomeViewPagerAdapter pagerAdapter = new HomeViewPagerAdapter(imageList);
+        SamplePagerAdapter bannerAdapter = new SamplePagerAdapter();
+        //HomeViewPagerAdapter bannerAdapter = new HomeViewPagerAdapter(imageList);
         viewPager.setAdapter(bannerAdapter);
         indicator.setViewPager(viewPager);
         bannerAdapter.registerDataSetObserver(indicator.getDataSetObserver());
@@ -246,8 +251,10 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.iv_search:
-                Intent intent = new Intent(getContext(), SearchActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(getContext(), SearchActivity.class));
+                break;
+            case R.id.tv_location:
+                startActivity(new Intent(getContext(), LocationActivity.class));
                 break;
             default:
                 break;

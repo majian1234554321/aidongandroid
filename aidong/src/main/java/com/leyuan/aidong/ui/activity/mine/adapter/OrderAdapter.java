@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.LayoutParams;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -51,7 +52,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
 
     @Override
     public OrderHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = View.inflate(context, R.layout.item_order, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_order,parent,false);
         return new OrderHolder(view);
     }
 
@@ -61,8 +62,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
 
         //与订单状态无关
         holder.recyclerView.setAdapter(new OrderGoodAdapter(context, bean.getItem()));
-        holder.count.setText(bean.getTotal());
-        holder.price.setText(bean.getPay_amount());
+        holder.count.setText(String.format(context.getString(R.string.goods_count),bean.getTotal()));
+        holder.price.setText(String.format(context.getString(R.string.rmb_price),bean.getPay_amount()));
 
         //与订单状态有关
         if (TextUtils.isEmpty(bean.getStatus())) return;

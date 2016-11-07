@@ -65,7 +65,9 @@ public class SearchFoodFragment extends BaseFragment implements SearchFoodFragme
     public void onViewCreated(View view, Bundle savedInstanceState) {
         initSwipeRefreshLayout(view);
         initRecyclerView(view);
-        present.commonLoadFoodData(switcherLayout,keyword);
+        foodAdapter.setData(null);
+        wrapperAdapter.notifyDataSetChanged();
+        //present.commonLoadFoodData(switcherLayout,keyword);
     }
 
     private void initSwipeRefreshLayout(View view) {

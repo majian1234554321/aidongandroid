@@ -109,7 +109,6 @@
             android:id="@+id/iv_minus"
             android:layout_width="32dp"
             android:layout_height="32dp"
-
             android:src="@drawable/icon_minus" />
 
         <TextView
@@ -117,7 +116,7 @@
             android:layout_width="44dp"
             android:layout_height="32dp"
             android:gravity="center"
-            android:background="@drawable/shape_bg_black"
+            android:background="@drawable/shape_bg_white"
             android:text="1" />
 
         <ImageView
