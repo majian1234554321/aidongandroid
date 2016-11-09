@@ -94,7 +94,7 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
         public void onLoadNextPage(View view) {
             currPage ++;
             if (data != null && !data.isEmpty()) {
-                userPresent.requestMoreData(recyclerView, App.lat, App.lon,"","",pageSize,currPage);
+                userPresent.requestMoreUserData(recyclerView, App.lat, App.lon,"","",pageSize,currPage);
             }
         }
     };
