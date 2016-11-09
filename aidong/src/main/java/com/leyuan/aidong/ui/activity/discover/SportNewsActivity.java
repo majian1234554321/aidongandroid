@@ -5,6 +5,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.Window;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.NewsBean;
@@ -34,6 +35,7 @@ public class SportNewsActivity extends BaseActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         setContentView(R.layout.activity_sport_news);
 
         titleBar = (SimpleTitleBar)findViewById(R.id.title_bar);
@@ -47,6 +49,7 @@ public class SportNewsActivity extends BaseActivity{
         initRecyclerView();
 
         newsAdapter.setData(null);
+
         wrapperAdapter.notifyDataSetChanged();
     }
 

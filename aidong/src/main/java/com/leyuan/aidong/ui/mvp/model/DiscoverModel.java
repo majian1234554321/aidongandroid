@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.mvp.model;
 
 import com.leyuan.aidong.entity.data.DiscoverUserData;
 import com.leyuan.aidong.entity.data.DiscoverVenuesData;
+import com.leyuan.aidong.entity.data.DiscoverNewsData;
 
 import rx.Subscriber;
 
@@ -31,4 +32,10 @@ public interface DiscoverModel {
      */
     void getUsers(Subscriber<DiscoverUserData> subscriber, double lat, double lng, int page, String gender, String type);
 
+    /**
+     * 获取新闻列表
+     * @param subscriber Subscriber
+     * @param page 页码
+     */
+    void getNews(Subscriber<DiscoverNewsData> subscriber,int page);
 }

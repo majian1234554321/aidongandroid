@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -46,11 +47,11 @@ import java.util.List;
  * Created by song on 2016/9/12.
  */
 public class GoodsDetailActivity extends BaseActivity implements ObserveScrollView.ScrollViewListener, View.OnClickListener,GoodsDetailActivityView{
+    private AppBarLayout appBarLayout;
     private SwitcherLayout switcherLayout;
     private RelativeLayout contentLayout;
     private SlideDetailsLayout detailsLayout;
 
-    private ObserveScrollView scrollView;
     private ViewPager viewPager;
     private ViewPagerIndicator indicator;
 
@@ -60,7 +61,7 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
     private LinearLayout addressLayout;
 
     private GoodsInfoPopupWindow goodInfoPopup;
-    private LinearLayout rootLayout;
+    private RelativeLayout rootLayout;
     private PopupWindow goodsInfoPopup = null;
 
     private RecyclerView couponRecyclerView;
@@ -102,12 +103,13 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
 
 
     private void initView() {
+
         detailsLayout = (SlideDetailsLayout)findViewById(R.id.slide_details_layout);
         contentLayout = (RelativeLayout) findViewById(R.id.rl_content);
+        appBarLayout = (AppBarLayout)findViewById(R.id.app_bar_layout);
+       // scrollView = (ObserveScrollView)findViewById(R.id.scrollview);
 
-        scrollView = (ObserveScrollView)findViewById(R.id.scrollview);
-
-        switcherLayout = new SwitcherLayout(this,scrollView);
+       // switcherLayout = new SwitcherLayout(this,scrollView);
         titleLayout = (RelativeLayout)findViewById(R.id.rl_title);
         viewPager = (ViewPager) findViewById(R.id.vp_photo);
         indicator = (ViewPagerIndicator) findViewById(R.id.vp_indicator);
@@ -119,8 +121,8 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
         recommendCodeLayout = (LinearLayout)findViewById(R.id.ll_recommend_code);
         addressLayout = (LinearLayout)findViewById(R.id.ll_address);
 
-        scrollView.setScrollViewListener(this);
-        rootLayout = (LinearLayout)findViewById(R.id.root);
+        //scrollView.setScrollViewListener(this);
+        rootLayout = (RelativeLayout)findViewById(R.id.root);
 
 
         tvDesc = (TextView) findViewById(R.id.tv_desc);
@@ -133,6 +135,7 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
 
         couponRecyclerView = (RecyclerView)findViewById(R.id.rv_coupon);
         couponRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        couponRecyclerView.setNestedScrollingEnabled(false);
         couponAdapter = new GoodsDetailCouponAdapter(this);
         couponRecyclerView.setAdapter(couponAdapter);
         couponBeanList = new ArrayList<>();
@@ -187,6 +190,7 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
 
     private void setListener() {
         detailsLayout.setOnSlideDetailsListener(new MyOnSlideDetailsListener());
+        appBarLayout.addOnOffsetChangedListener(new MyOnOffsetChangedListener());
         goodsInfoLayout.setOnClickListener(this);
         recommendCodeLayout.setOnClickListener(this);
         addressLayout.setOnClickListener(this);
@@ -194,7 +198,6 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
         tvDesc.setOnClickListener(this);
         tvQuestion.setOnClickListener(this);
         tvService.setOnClickListener(this);
-        tvPay.setOnClickListener(this);
     }
 
 
@@ -284,5 +287,15 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
     @Override
     public void setGoodsDetail(GoodsDetailBean goodsDetailBean) {
 
+    }
+
+    private  class MyOnOffsetChangedListener implements AppBarLayout.OnOffsetChangedListener{
+        @Override
+        public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+            int maxScroll = appBarLayout.getTotalScrollRange();
+            float percentage = (float) Math.abs(verticalOffset) / (float) maxScroll;
+            titleLayout.setBackgroundColor(Color.argb((int) (percentage * 255), 0, 0, 0));
+
+        }
     }
 }

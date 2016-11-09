@@ -32,7 +32,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
     public void setData(List<FoodBean> data) {
         if(data != null){
             for (int i=0;i<2;i++){
-
+                this.data.addAll(data);
             }
         }else {
             for (int i = 0; i < 5; i++) {
