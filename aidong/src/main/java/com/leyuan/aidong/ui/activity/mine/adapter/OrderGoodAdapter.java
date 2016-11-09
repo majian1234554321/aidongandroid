@@ -2,12 +2,13 @@ package com.leyuan.aidong.ui.activity.mine.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.ui.activity.home.GoodsDetailActivity;
 
@@ -34,7 +35,7 @@ public class OrderGoodAdapter extends RecyclerView.Adapter<OrderGoodAdapter.Good
 
     @Override
     public GoodHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = View.inflate(context, R.layout.item_order_goods,null);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_order_goods,parent,false);
         return new GoodHolder(view);
     }
 
@@ -43,8 +44,8 @@ public class OrderGoodAdapter extends RecyclerView.Adapter<OrderGoodAdapter.Good
         final GoodsBean bean = data.get(position);
         holder.cover.setImageURI(bean.getCover());
         holder.name.setText(bean.getName());
-        holder.price.setText(bean.getPrice());
-        holder.count.setText(bean.getAmount());
+        holder.price.setText(String.format(context.getString(R.string.rmb_price),bean.getPrice()));
+        holder.count.setText(String.format(context.getString(R.string.x_count),bean.getAmount()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

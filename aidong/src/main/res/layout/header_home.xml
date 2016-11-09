@@ -16,8 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_alignBottom="@+id/vp_home"
-        android:layout_marginBottom="@dimen/pref_10dip"/>
-
+       />
 
     <LinearLayout
         android:id="@+id/layout"

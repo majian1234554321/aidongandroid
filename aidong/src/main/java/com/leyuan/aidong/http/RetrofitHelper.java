@@ -4,6 +4,7 @@ import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.utils.Constant;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
@@ -13,6 +14,8 @@ import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static com.leyuan.aidong.ui.App.mInstance;
 
 
 public class RetrofitHelper {
@@ -39,22 +42,16 @@ public class RetrofitHelper {
                 .addInterceptor(new Interceptor() {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
-                        Request originalRequest = chain.request();
-                       /* if ("sToken" == null || alreadyHasTokenHeader(originalRequest)) {
-                            return chain.proceed(originalRequest);
-                        }*/
-                        Request authorised;
-                        if(App.mInstance.getUser() !=null && App.mInstance.getUser().getToken() != null){
-                            authorised = originalRequest.newBuilder()
-                                    .header("token", App.mInstance.getUser().getToken())
-                                    .build();
-
-                        }else{
-                            authorised = originalRequest.newBuilder()
-//                                    .header("token", "sToken")
-                                    .build();
+                       Request.Builder builder= chain.request().newBuilder();
+                        if(mInstance.getUser() !=null && mInstance.getUser().getToken() != null){
+                            builder.addHeader("token", mInstance.getUser().getToken());
+//                            authorised = originalRequest.newBuilder()
+//                                    .header("token", App.mInstance.getUser().getToken())
+//                                    .build();
                         }
+                        builder.addHeader("city", URLEncoder.encode(App.city, "UTF-8"));
 
+                        Request authorised = builder.build();
                         return chain.proceed(authorised);
                     }
                 })

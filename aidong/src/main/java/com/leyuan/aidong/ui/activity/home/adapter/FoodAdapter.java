@@ -30,8 +30,18 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
     }
 
     public void setData(List<FoodBean> data) {
-        for (int i=0;i<2;i++){
-            this.data.addAll(data);
+        if(data != null){
+            for (int i=0;i<2;i++){
+
+            }
+        }else {
+            for (int i = 0; i < 5; i++) {
+                FoodBean bean = new FoodBean();
+                bean.setCover("https://www.baidu.com/img/bd_logo1.png");
+                bean.setName("food");
+                bean.setPrice("111");
+                this.data.add(bean);
+            }
         }
     }
 
@@ -61,8 +71,10 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         FoodBean bean = data.get(position);
         holder.cover.setImageURI(bean.getCover());
         holder.name.setText(bean.getName());
-        holder.function.setText(bean.getCrowd().get(0));
         holder.price.setText(String.format(context.getString(R.string.rmb_price),bean.getPrice()));
+        if(bean.getCrowd() != null){
+            holder.function.setText(bean.getCrowd().get(0));
+        }
 
         List<String> material = new ArrayList<>();
         StringBuffer sb = new StringBuffer();

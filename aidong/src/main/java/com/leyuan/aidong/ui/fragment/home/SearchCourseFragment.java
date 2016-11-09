@@ -65,7 +65,9 @@ public class SearchCourseFragment extends BaseFragment implements SearchCourseFr
     public void onViewCreated(View view, Bundle savedInstanceState) {
         initSwipeRefreshLayout(view);
         initRecyclerView(view);
-        present.commonLoadCourseData(switcherLayout,keyword);
+        courseAdapter.setData(null);
+        wrapperAdapter.notifyDataSetChanged();
+        //present.commonLoadCourseData(switcherLayout,keyword);
     }
 
     private void initSwipeRefreshLayout(View view) {

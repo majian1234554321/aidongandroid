@@ -73,6 +73,7 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
 
     private ImageView ivArrow;
     private TextView tvTip;
+    private TextView tvPay;
 
     private String goodsId;
     private String type = "nurture";
@@ -128,6 +129,7 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
 
         ivArrow = (ImageView) findViewById(R.id.iv_arrow);
         tvTip = (TextView) findViewById(R.id.tv_tip);
+        tvPay = (TextView) findViewById(R.id.tv_pay);
 
         couponRecyclerView = (RecyclerView)findViewById(R.id.rv_coupon);
         couponRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
@@ -192,6 +194,7 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
         tvDesc.setOnClickListener(this);
         tvQuestion.setOnClickListener(this);
         tvService.setOnClickListener(this);
+        tvPay.setOnClickListener(this);
     }
 
 
@@ -219,6 +222,9 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
                 break;
 
             case R.id.tv_service:
+                break;
+            case R.id.tv_pay:
+                ConfirmOrderActivity.start(this);
                 break;
             default:
                 break;

@@ -66,7 +66,9 @@ public class SearchVenuesFragment extends BaseFragment implements SearchVenuesFr
     public void onViewCreated(View view, Bundle savedInstanceState) {
         initSwipeRefreshLayout(view);
         initRecyclerView(view);
-        present.commonLoadVenuesData(switcherLayout,keyword);
+        venuesAdapter.setData(null);
+        wrapperAdapter.notifyDataSetChanged();
+        // present.commonLoadVenuesData(switcherLayout,keyword);
     }
 
     private void initSwipeRefreshLayout(View view) {
