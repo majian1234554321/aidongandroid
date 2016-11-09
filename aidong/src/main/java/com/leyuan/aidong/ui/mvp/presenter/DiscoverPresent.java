@@ -12,15 +12,18 @@ public interface DiscoverPresent {
     /**
      * 第一次正常加载数据
      */
-    void commonLoadData(SwitcherLayout switcherLayout,double lat, double lng, String gender, String type);
+    void commonLoadUserData(SwitcherLayout switcherLayout,double lat, double lng, String gender, String type);
+    void commonLoadNewsData(SwitcherLayout switcherLayout);
 
     /**
      * 下拉刷新
      */
-    void pullToRefreshData(double lat, double lng, String gender, String type);
+    void pullToRefreshUserData(double lat, double lng, String gender, String type);
+    void pullToRefreshNewsData();
 
     /**
      * 上拉加载更多
      */
-    void requestMoreData(RecyclerView recyclerView, double lat, double lng, String gender, String type,int size, int page);
+    void requestMoreUserData(RecyclerView recyclerView, double lat, double lng, String gender, String type,int size, int page);
+    void requestMoreNewsData(RecyclerView recyclerView,int pageSize,int page);
 }

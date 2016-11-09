@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.mvp.model.impl;
 
+import com.leyuan.aidong.entity.data.DiscoverNewsData;
 import com.leyuan.aidong.entity.data.DiscoverUserData;
 import com.leyuan.aidong.entity.data.DiscoverVenuesData;
 import com.leyuan.aidong.http.RetrofitHelper;
@@ -31,6 +32,13 @@ public class DiscoverModelImpl implements DiscoverModel{
     public void getUsers(Subscriber<DiscoverUserData> subscriber, double lat, double lng, int page, String gender, String type) {
         discoverService.getUsers(lat,lng,page,gender,type)
                 .compose(RxHelper.<DiscoverUserData>transform())
+                .subscribe(subscriber);
+    }
+
+    @Override
+    public void getNews(Subscriber<DiscoverNewsData> subscriber, int page) {
+        discoverService.getNews(page)
+                .compose(RxHelper.<DiscoverNewsData>transform())
                 .subscribe(subscriber);
     }
 }
