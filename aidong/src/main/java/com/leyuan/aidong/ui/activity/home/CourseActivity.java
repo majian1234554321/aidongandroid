@@ -55,7 +55,7 @@ public class CourseActivity extends BaseActivity{
                 BusinessCircleDescBean bean = new BusinessCircleDescBean();
                 bean.setAreaName("商圈" + i+ ":" +i1 + "路");
                 list.add(bean);
-                bean.setAreaId("二级" + i);
+                bean.setAreaId(i+"" + i1);
                 circleBean.setDistrict(list);
             }
             circleList.add(circleBean);

@@ -21,13 +21,23 @@ import java.util.List;
 public class LeftFilterAdapter extends BaseAdapter{
     private Context context;
     private List<BusinessCircleBean> circleBeanList = new ArrayList<>();
-    private BusinessCircleBean selectedBean;
+    private BusinessCircleBean selectedBean;        //持久保存
+    private int checkItemPosition = -1;             //临时保存
+    private boolean isTempShow = false;
+
 
     public LeftFilterAdapter(Context context, List<BusinessCircleBean> circleBeanList) {
         this.context = context;
         if(circleBeanList != null){
             this.circleBeanList = circleBeanList;
         }
+    }
+
+
+    public void setCheckItem(int position) {
+        isTempShow = true;
+        checkItemPosition = position;
+        notifyDataSetChanged();
     }
 
     public void setSelectedBean(BusinessCircleBean bean) {
@@ -70,12 +80,22 @@ public class LeftFilterAdapter extends BaseAdapter{
 
     private void fillValue(int position, ViewHolder viewHolder) {
         viewHolder.text.setText(getItem(position).getAreaName());
-        if (getItem(position).isSelected()) {
-            viewHolder.root.setBackgroundColor(context.getResources().getColor(R.color.white));
-            viewHolder.text.setTextColor(context.getResources().getColor(R.color.main_red));
-        } else {
-            viewHolder.root.setBackgroundColor(context.getResources().getColor(R.color.line_color));
-            viewHolder.text.setTextColor(context.getResources().getColor(R.color.black));
+        if(isTempShow){
+            if (checkItemPosition == position) {
+                viewHolder.root.setBackgroundColor(context.getResources().getColor(R.color.white));
+                viewHolder.text.setTextColor(context.getResources().getColor(R.color.main_red));
+            } else {
+                viewHolder.root.setBackgroundColor(context.getResources().getColor(R.color.line_color));
+                viewHolder.text.setTextColor(context.getResources().getColor(R.color.black));
+            }
+        }else{
+            if (getItem(position).isSelected()) {
+                viewHolder.root.setBackgroundColor(context.getResources().getColor(R.color.white));
+                viewHolder.text.setTextColor(context.getResources().getColor(R.color.main_red));
+            } else {
+                viewHolder.root.setBackgroundColor(context.getResources().getColor(R.color.line_color));
+                viewHolder.text.setTextColor(context.getResources().getColor(R.color.black));
+            }
         }
     }
 

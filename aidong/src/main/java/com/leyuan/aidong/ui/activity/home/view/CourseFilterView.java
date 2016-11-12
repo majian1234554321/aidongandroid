@@ -37,8 +37,8 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
     private ImageView ivCircleArrow;
     private View maskBgView;
     private LinearLayout contentLayout;
-    private ListView leftList;
-    private ListView rightList;
+    private ListView leftListView;
+    private ListView rightListView;
 
     //分类
     private ListWithFlagAdapter categoryAdapter;
@@ -47,13 +47,15 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
     //商圈
     private LeftFilterAdapter leftCircleAdapter;
     private RightFilterAdapter rightCircleAdapter;
-    private BusinessCircleBean leftSelectedCircle;
-    private BusinessCircleDescBean rightSelectedCircle;
+    private int leftSelectedPosition = -1;  //左边列表实际选中的位置 ：只有当右边列表选中其中一个item时，此时的左边列表实际位置才确定，否则当临时选中位置处理，即只改变选中的效果
+    private int rightSelectedPosition = -1; //右边列表实际选中的位置
     private List<BusinessCircleBean> leftCircleList = new ArrayList<>();
     private List<BusinessCircleDescBean> rightCircleList = new ArrayList<>();
 
     private int panelHeight;
     private boolean isPopupShowing = false;
+    private boolean isCateogryShowing = false;
+    private boolean isCircleShowing = false;
 
     public CourseFilterView(Context context) {
         this(context, null);
@@ -80,8 +82,8 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
         ivCircleArrow = (ImageView) view.findViewById(R.id.iv_circle_arrow);
         maskBgView = view.findViewById(R.id.view_mask_bg);
         contentLayout = (LinearLayout) view.findViewById(R.id.ll_content);
-        leftList = (ListView) view.findViewById(R.id.list_left);
-        rightList = (ListView) view.findViewById(R.id.list_right);
+        leftListView = (ListView) view.findViewById(R.id.list_left);
+        rightListView = (ListView) view.findViewById(R.id.list_right);
     }
 
     private void setListener(){
@@ -114,19 +116,24 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
         if (!isPopupShowing){
             isPopupShowing = true;
             showPopup();
+        }else if(isCateogryShowing){
+            hidePopup();
+            return;
         }
+        isCateogryShowing = true;
+        isCircleShowing =false;
         tvCategory.setTextColor(context.getResources().getColor(R.color.main_red));
         ivCategoryArrow.setImageResource(R.drawable.icon_filter_arrow_selected);
         contentLayout.setVisibility(VISIBLE);
-        rightList.setVisibility(GONE);
+        rightListView.setVisibility(GONE);
         if (categoryList.isEmpty()) {
             Log.d("CourseFilterView", "you need set categoryList data first");
         }
         if(categoryAdapter == null){
             categoryAdapter = new ListWithFlagAdapter(context, categoryList);
         }
-        leftList.setAdapter(categoryAdapter);
-        leftList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        leftListView.setAdapter(categoryAdapter);
+        leftListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 categoryAdapter.setCheckItem(position);
@@ -144,56 +151,73 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
         if (!isPopupShowing){
             isPopupShowing = true;
             showPopup();
+        }else if(isCircleShowing){
+            hidePopup();
+            return;
         }
+        isCateogryShowing =false;
+        isCircleShowing = true;
+
         tvCircle.setTextColor(context.getResources().getColor(R.color.main_red));
         ivCircleArrow.setImageResource(R.drawable.icon_filter_arrow_selected);
         contentLayout.setVisibility(VISIBLE);
-        rightList.setVisibility(VISIBLE);
+        rightListView.setVisibility(VISIBLE);
 
-        if(leftSelectedCircle == null && leftCircleList.get(0) != null){
-            leftSelectedCircle = leftCircleList.get(0);
-
+        if(leftSelectedPosition == -1){
+            rightCircleList = leftCircleList.get(0).getDistrict();
+        }else{
+            rightCircleList = leftCircleList.get(leftSelectedPosition).getDistrict();
         }
 
         // 左边列表
         leftCircleAdapter = new LeftFilterAdapter(context, leftCircleList);
-        leftList.setAdapter(leftCircleAdapter);
-        leftList.smoothScrollToPosition(8);
-        leftCircleAdapter.setSelectedBean(leftSelectedCircle);
-
-        //右边列表
-        if(rightSelectedCircle == null){
-            rightCircleList = leftCircleList.get(0).getDistrict();
-            rightCircleAdapter = new RightFilterAdapter(context,rightCircleList);
-            rightList.setAdapter(rightCircleAdapter);
+        leftListView.setAdapter(leftCircleAdapter);
+        if(leftSelectedPosition != -1){
+            leftListView.setSelection(leftSelectedPosition);
+            leftCircleAdapter.setSelectedBean(leftCircleList.get(leftSelectedPosition));
         }
 
+        //右边列表
+        rightCircleAdapter = new RightFilterAdapter(context,rightCircleList);
+        rightListView.setAdapter(rightCircleAdapter);
+        if(rightSelectedPosition != -1) {
+            rightListView.setSelection(rightSelectedPosition);
+            rightCircleAdapter.setSelectedBean(rightCircleList.get(rightSelectedPosition));
+        }
 
-
-        leftList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        leftListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                leftSelectedCircle = leftCircleList.get(position);
-                leftCircleAdapter.setSelectedBean(leftSelectedCircle);
-                if(leftCircleList.get(position) != null){
-                    rightCircleList = leftCircleList.get(position).getDistrict();
+            public void onItemClick(AdapterView<?> parent, View view, final int leftPosition, long id) {
+                leftCircleAdapter.setCheckItem(leftPosition);       //临时改变左边选中item的状态
+
+                if(leftCircleList.get(leftPosition) != null){       //更新右边列表数据
+                    rightCircleList = leftCircleList.get(leftPosition).getDistrict();
                     rightCircleAdapter.setCircleDescBeanList(rightCircleList);
                 }
-            }
-        });
 
-        rightList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                hidePopup();
-                rightSelectedCircle = rightCircleList.get(position);
-                //leftSelectedCircle.setSelectedRightCircleBean(rightSelectedCircle);
-                rightCircleAdapter.setSelectedBean(rightSelectedCircle);
-                String address = rightSelectedCircle.getAreaName();
-                tvCircle.setText(address);
-                if (onFilterClickListener != null) {
-                    onFilterClickListener.onBusinessCircleItemClick(address);
+                if(leftPosition != leftSelectedPosition){           //若左边列表实际选中的左边列表不是当前点击位置 去掉之前有右边列表之前选中的item 并将右边列表滑至顶端
+                    rightCircleAdapter.setSelectedBean(null);
+                    rightListView.setSelection(0);
+                }else {                                             //若左边列表实际选中的左边列表是当前点击位置 将右边列表滑至顶端
+                    rightListView.setSelection(rightSelectedPosition);
                 }
+
+                rightListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int rightPosition, long id) {
+                        hidePopup();
+                        leftSelectedPosition = leftPosition;        //改变左边选中item的状态
+                        leftCircleAdapter.setSelectedBean(leftCircleList.get(leftSelectedPosition));
+
+                        rightSelectedPosition = rightPosition;           //改变右边选中item
+                        rightCircleAdapter.setSelectedBean(rightCircleList.get(rightSelectedPosition));
+                        String address = rightCircleList.get(rightSelectedPosition).getAreaName();
+                        tvCircle.setText(address);
+                        if (onFilterClickListener != null) {
+                            onFilterClickListener.onBusinessCircleItemClick(address);
+                        }
+                    }
+                });
             }
         });
     }

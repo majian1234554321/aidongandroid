@@ -35,10 +35,17 @@ public class RightFilterAdapter extends BaseAdapter{
     }
 
     public void setSelectedBean(BusinessCircleDescBean bean) {
-        this.selectedBean = bean;
-        for (BusinessCircleDescBean entity : circleDescBeanList) {
-            entity.setSelected(entity.getAreaId().equals(bean.getAreaId()));
+        if(bean != null) {
+            this.selectedBean = bean;
+            for (BusinessCircleDescBean entity : circleDescBeanList) {
+                entity.setSelected(entity.getAreaId().equals(bean.getAreaId()));
+            }
+        }else {
+            for (BusinessCircleDescBean entity : circleDescBeanList) {
+                entity.setSelected(false);
+            }
         }
+
         notifyDataSetChanged();
     }
 
