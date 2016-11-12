@@ -1,7 +1,10 @@
 package com.leyuan.aidong.ui.mvp.model;
 
+import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.data.NurtureData;
 import com.leyuan.aidong.entity.data.NurtureDetailData;
+
+import java.util.List;
 
 import rx.Subscriber;
 
@@ -10,6 +13,11 @@ import rx.Subscriber;
  * Created by song on 2016/8/15.
  */
 public interface NurtureModel {
+    /**
+     * 获取营养品分类信息
+     * @return List<CategoryBean>
+     */
+    List<CategoryBean> getCategory();
 
     /**
      * 获取营养品列表

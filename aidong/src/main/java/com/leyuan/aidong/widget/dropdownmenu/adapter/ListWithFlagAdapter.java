@@ -18,7 +18,7 @@ public class ListWithFlagAdapter extends BaseAdapter {
 
     private Context context;
     private List<String> list;
-    private int checkItemPosition = 0;
+    private int checkItemPosition = -1;
 
     public void setCheckItem(int position) {
         checkItemPosition = position;

@@ -14,10 +14,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.activity.home.adapter.FilterRightAdapter;
 import com.leyuan.aidong.entity.BusinessCircleBean;
 import com.leyuan.aidong.entity.BusinessCircleDescBean;
-import com.leyuan.aidong.ui.activity.home.adapter.FilterLeftAdapter;
+import com.leyuan.aidong.ui.activity.home.adapter.LeftFilterAdapter;
+import com.leyuan.aidong.ui.activity.home.adapter.RightFilterAdapter;
 import com.leyuan.aidong.widget.dropdownmenu.adapter.ListWithFlagAdapter;
 
 import java.util.ArrayList;
@@ -45,10 +45,12 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
     private List<String> categoryList = new ArrayList<>();
 
     //商圈
-    private FilterLeftAdapter leftAdapter;
-    private FilterRightAdapter rightAdapter;
-    private List<BusinessCircleBean> circleList = new ArrayList<>();
-    private List<BusinessCircleDescBean> circleDescList = new ArrayList<>();
+    private LeftFilterAdapter leftCircleAdapter;
+    private RightFilterAdapter rightCircleAdapter;
+    private BusinessCircleBean leftSelectedCircle;
+    private BusinessCircleDescBean rightSelectedCircle;
+    private List<BusinessCircleBean> leftCircleList = new ArrayList<>();
+    private List<BusinessCircleDescBean> rightCircleList = new ArrayList<>();
 
     private int panelHeight;
     private boolean isPopupShowing = false;
@@ -92,9 +94,11 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.ll_category:
+                resetBusinessCircleStatus();
                 setCategoryAdapter();
                 break;
             case R.id.ll_business_circle:
+                resetCategoryStatus();
                 setBusinessCircleAdapter();
                 break;
             case R.id.view_mask_bg:
@@ -107,11 +111,10 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
 
     // 设置分类数据
     private void setCategoryAdapter() {
-       /* if (isPopupShowing){
-            return;
-        }*/
-        isPopupShowing = true;
-        showPopup();
+        if (!isPopupShowing){
+            isPopupShowing = true;
+            showPopup();
+        }
         tvCategory.setTextColor(context.getResources().getColor(R.color.main_red));
         ivCategoryArrow.setImageResource(R.drawable.icon_filter_arrow_selected);
         contentLayout.setVisibility(VISIBLE);
@@ -136,30 +139,46 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
         });
     }
 
+    //设置商圈数据
     private void setBusinessCircleAdapter(){
-       /* if (isPopupShowing){
-            return;
-        }*/
-        isPopupShowing = true;
-        showPopup();
+        if (!isPopupShowing){
+            isPopupShowing = true;
+            showPopup();
+        }
         tvCircle.setTextColor(context.getResources().getColor(R.color.main_red));
         ivCircleArrow.setImageResource(R.drawable.icon_filter_arrow_selected);
         contentLayout.setVisibility(VISIBLE);
         rightList.setVisibility(VISIBLE);
 
-        // 左边列表视图
-        leftAdapter = new FilterLeftAdapter(context);
-        leftList.setAdapter(leftAdapter);
-        leftAdapter.setList(circleList);
+        if(leftSelectedCircle == null && leftCircleList.get(0) != null){
+            leftSelectedCircle = leftCircleList.get(0);
+
+        }
+
+        // 左边列表
+        leftCircleAdapter = new LeftFilterAdapter(context, leftCircleList);
+        leftList.setAdapter(leftCircleAdapter);
+        leftList.smoothScrollToPosition(8);
+        leftCircleAdapter.setSelectedBean(leftSelectedCircle);
+
+        //右边列表
+        if(rightSelectedCircle == null){
+            rightCircleList = leftCircleList.get(0).getDistrict();
+            rightCircleAdapter = new RightFilterAdapter(context,rightCircleList);
+            rightList.setAdapter(rightCircleAdapter);
+        }
+
+
 
         leftList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                circleDescList = circleList.get(position).getDistrict();
-                circleList.get(position).setSelected(true);
-                rightAdapter = new FilterRightAdapter(context);
-                rightList.setAdapter(rightAdapter);
-                rightAdapter.setList(circleDescList);
+                leftSelectedCircle = leftCircleList.get(position);
+                leftCircleAdapter.setSelectedBean(leftSelectedCircle);
+                if(leftCircleList.get(position) != null){
+                    rightCircleList = leftCircleList.get(position).getDistrict();
+                    rightCircleAdapter.setCircleDescBeanList(rightCircleList);
+                }
             }
         });
 
@@ -167,7 +186,10 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 hidePopup();
-                String address = circleDescList.get(position).getAreaName();
+                rightSelectedCircle = rightCircleList.get(position);
+                //leftSelectedCircle.setSelectedRightCircleBean(rightSelectedCircle);
+                rightCircleAdapter.setSelectedBean(rightSelectedCircle);
+                String address = rightSelectedCircle.getAreaName();
                 tvCircle.setText(address);
                 if (onFilterClickListener != null) {
                     onFilterClickListener.onBusinessCircleItemClick(address);
@@ -228,6 +250,6 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
     }
 
     public void setCircleList(List<BusinessCircleBean> circleList) {
-        this.circleList = circleList;
+        this.leftCircleList = circleList;
     }
 }

@@ -11,7 +11,7 @@ public interface CampaignDetailActivityView {
      * 获取活动详情
      * @param campaignDetailBean CampaignDetailBean
      */
-    void getCampaignDetail(CampaignDetailBean campaignDetailBean);
+    void setCampaignDetail(CampaignDetailBean campaignDetailBean);
 
     /**
      * 分享此活动

@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.mvp.view;
 
+import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.EquipmentBean;
 
 import java.util.List;
@@ -9,6 +10,11 @@ import java.util.List;
  * Created by song on 2016/8/15.
  */
 public interface EquipmentActivityView{
+    /**
+     * 设置装备分类列表
+     * @param categoryBeanList
+     */
+    void setCategory(List<CategoryBean> categoryBeanList);
 
     /**
      * 更新列表

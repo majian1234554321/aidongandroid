@@ -1,19 +1,20 @@
 package com.leyuan.aidong.ui.activity.home.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.NurtureBean;
 import com.leyuan.aidong.ui.activity.home.GoodsDetailActivity;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.leyuan.aidong.ui.activity.home.GoodsDetailActivity.TYEP_NURTURE;
 
 
 /**
@@ -45,7 +46,7 @@ public class NurtureAdapter extends RecyclerView.Adapter<NurtureAdapter.NurtureV
 
     @Override
     public void onBindViewHolder(final NurtureViewHolder holder, int position) {
-        NurtureBean bean = data.get(position);
+        final NurtureBean bean = data.get(position);
         holder.cover.setImageURI(bean.getCover());
         holder.name.setText(bean.getName());
         holder.price.setText(String.format(context.getString(R.string.rmb_price),bean.getPrice()));
@@ -53,8 +54,7 @@ public class NurtureAdapter extends RecyclerView.Adapter<NurtureAdapter.NurtureV
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, GoodsDetailActivity.class);
-                context.startActivity(intent);
+                GoodsDetailActivity.start(context,TYEP_NURTURE,bean.getId());
             }
         });
     }

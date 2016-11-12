@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/left_margin"
+    android:paddingRight="@dimen/right_margin">
+
+    <TextView
+        android:id="@+id/tv_specification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="口味"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textSize="15sp"
+        android:textColor="@color/c9"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_specification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

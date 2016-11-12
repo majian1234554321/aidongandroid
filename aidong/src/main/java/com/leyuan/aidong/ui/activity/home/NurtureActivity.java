@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.activity.home.adapter.NurtureAdapter;
@@ -33,11 +34,12 @@ import java.util.List;
  */
 public class NurtureActivity extends BaseActivity implements NurtureActivityView{
     private SimpleTitleBar titleBar;
-    private RecyclerView categoryRecyclerView;
+    private RecyclerView categoryView;
+    private CategoryAdapter categoryAdapter;
 
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
-    private RecyclerView recommendRecyclerView;
+    private RecyclerView recommendView;
 
     private int currPage = 1;
     private List<NurtureBean> nurtureList;
@@ -56,16 +58,17 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
         initSwipeRefreshLayout();
         initRecommendRecyclerView();
 
+        present.getCategory();
         present.commonLoadData(switcherLayout);
     }
 
     private void initTopLayout(){
         titleBar = (SimpleTitleBar)findViewById(R.id.title_bar);
-        categoryRecyclerView = (RecyclerView)findViewById(R.id.rv_category);
-        CategoryAdapter categoryAdapter = new CategoryAdapter(this);
+        categoryView = (RecyclerView)findViewById(R.id.rv_category);
+        categoryAdapter = new CategoryAdapter(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
-        categoryRecyclerView.setLayoutManager(layoutManager);
-        categoryRecyclerView.setAdapter(categoryAdapter);
+        categoryView.setLayoutManager(layoutManager);
+        categoryView.setAdapter(categoryAdapter);
         titleBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,7 +84,7 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                RecyclerViewStateUtils.resetFooterViewState(recommendRecyclerView);
+                RecyclerViewStateUtils.resetFooterViewState(recommendView);
                 currPage = 1;
                 present.pullToRefreshData();
             }
@@ -97,16 +100,16 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
 
 
     private void initRecommendRecyclerView() {
-        recommendRecyclerView = (RecyclerView)findViewById(R.id.rv_recommend);
+        recommendView = (RecyclerView)findViewById(R.id.rv_recommend);
         nurtureList = new ArrayList<>();
         nurtureAdapter = new NurtureAdapter(this);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(nurtureAdapter);
-        recommendRecyclerView.setAdapter(wrapperAdapter);
+        recommendView.setAdapter(wrapperAdapter);
         GridLayoutManager manager = new GridLayoutManager(this,2);
-        manager.setSpanSizeLookup(new HeaderSpanSizeLookup((HeaderAndFooterRecyclerViewAdapter)recommendRecyclerView.getAdapter(), manager.getSpanCount()));
-        recommendRecyclerView.setLayoutManager(manager);
-        recommendRecyclerView.addOnScrollListener(onScrollListener);
-        RecyclerViewUtils.setHeaderView(recommendRecyclerView,View.inflate(this,R.layout.header_nurture_or_equipment,null));
+        manager.setSpanSizeLookup(new HeaderSpanSizeLookup((HeaderAndFooterRecyclerViewAdapter) recommendView.getAdapter(), manager.getSpanCount()));
+        recommendView.setLayoutManager(manager);
+        recommendView.addOnScrollListener(onScrollListener);
+        RecyclerViewUtils.setHeaderView(recommendView,View.inflate(this,R.layout.header_nurture_or_equipment,null));
     }
 
 
@@ -115,10 +118,15 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
         public void onLoadNextPage(View view) {
             currPage ++;
             if (nurtureList != null && !nurtureList.isEmpty()) {
-                present.requestMoreData(recommendRecyclerView,pageSize,currPage);
+                present.requestMoreData(recommendView,pageSize,currPage);
             }
         }
     };
+
+    @Override
+    public void setCategory(List<CategoryBean> categoryBeanList) {
+        categoryAdapter.setData(categoryBeanList);
+    }
 
     @Override
     public void updateRecyclerView(List<NurtureBean> nurtureBeanList) {
@@ -133,6 +141,6 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
 
     @Override
     public void showEndFooterView() {
-        RecyclerViewStateUtils.setFooterViewState(recommendRecyclerView, LoadingFooter.State.TheEnd);
+        RecyclerViewStateUtils.setFooterViewState(recommendView, LoadingFooter.State.TheEnd);
     }
 }

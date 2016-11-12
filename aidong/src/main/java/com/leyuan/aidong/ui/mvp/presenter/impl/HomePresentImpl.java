@@ -3,12 +3,10 @@ package com.leyuan.aidong.ui.mvp.presenter.impl;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
-import com.leyuan.aidong.entity.BrandBean;
 import com.leyuan.aidong.entity.HomeBean;
-import com.leyuan.aidong.entity.data.BannerData;
+import com.leyuan.aidong.entity.data.BrandData;
 import com.leyuan.aidong.entity.data.HomeData;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
-import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.aidong.ui.mvp.model.HomeModel;
@@ -51,6 +49,11 @@ public class HomePresentImpl implements HomePresent {
         if(homeModel == null){
             homeModel = new HomeModelImpl();
         }
+    }
+
+    @Override
+    public void getBanners() {
+        homeFragmentView.updateBanner(homeModel.getBanners());
     }
 
     @Override
@@ -104,41 +107,28 @@ public class HomePresentImpl implements HomePresent {
     }
 
     @Override
-    public void getBanners() {
-        homeModel.getBanners(new ProgressSubscriber<BannerData>(context,false) {
+    public void pullToRefreshBrandData(String id) {
+        homeModel.getBrandDetail(new RefreshSubscriber<BrandData>(context) {
             @Override
-            public void onNext(BannerData bannerData) {
-                if (bannerData != null && bannerData.getBanners() != null)
-                homeFragmentView.updateBanner(bannerData.getBanners());
-            }
-        });
-    }
-
-    @Override
-    public void pullToRefreshBrandData(int id) {
-        homeModel.getBrandDetail(new RefreshSubscriber<BrandBean>(context) {
-            @Override
-            public void onNext(BrandBean brandBean) {
-                brandDetailActivityView.updateRecyclerView(brandBean);
+            public void onNext(BrandData goodsBean) {
+                if(goodsBean != null)
+                brandDetailActivityView.updateRecyclerView(goodsBean.getItem());
             }
         },id, Constant.FIRST_PAGE);
     }
 
     @Override
-    public void requestMorBrandeData(RecyclerView recyclerView, int pageSize, int page, int id) {
-        homeModel.getBrandDetail(new RefreshSubscriber<BrandBean>(context) {
+    public void requestMorBrandeData(RecyclerView recyclerView, final int pageSize, int page, String id) {
+        homeModel.getBrandDetail(new RequestMoreSubscriber<BrandData>(context,recyclerView,pageSize) {
             @Override
-            public void onNext(BrandBean brandBean) {
-                /*if(brandBean != null && !brandBean.isEmpty()){
-                    homeFragmentView.refreshData(homeBeanList);
+            public void onNext(BrandData brandData) {
+                if(brandData != null && brandData.getItem() != null) {
+                    brandDetailActivityView.updateRecyclerView(brandData.getItem());
                 }
-
-                //没有更多数据了显示到底提示
-                if(homeBeanList != null && homeBeanList.size() < pageSize){
-                    homeFragmentView.showEndFooterView();
-                }*/
+                if(brandData != null && brandData.getItem().size() < pageSize){
+                    brandDetailActivityView.showEndFooterView();
+                }
             }
         },id,page);
     }
-
 }

@@ -5,24 +5,34 @@ package com.leyuan.aidong.entity;
  * Created by song on 2016/8/30.
  */
 public class BannerBean {
+    private String title;       //广告标题
+    private String position;    //广告位置,#0-开机广告 1-首页广告位 2-弹出广告位
+    private String type;        //广告类型,#10-内嵌网页 11-外部网页 20-场馆 21-营养品 22-课程 23-活动
+    private String image;       //广告图片
+    private String link;        //关联信息当类型为网页时-关联信息为网址 当类型为场馆|营养品|课程|活动时为关联ID
 
-    private String id;
-    private String image;
-    private String recommend_type;
-    private String url;
-    private String sort;
-    private String site;
-    private String app_type;
-    private String content;
-    private String remark;
-    private String city;
-
-    public String getId() {
-        return id;
+    public String getTitle() {
+        return title;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getImage() {
@@ -33,83 +43,22 @@ public class BannerBean {
         this.image = image;
     }
 
-    public String getRecommend_type() {
-        return recommend_type;
+    public String getLink() {
+        return link;
     }
 
-    public void setRecommend_type(String recommend_type) {
-        this.recommend_type = recommend_type;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getSort() {
-        return sort;
-    }
-
-    public void setSort(String sort) {
-        this.sort = sort;
-    }
-
-    public String getSite() {
-        return site;
-    }
-
-    public void setSite(String site) {
-        this.site = site;
-    }
-
-    public String getApp_type() {
-        return app_type;
-    }
-
-    public void setApp_type(String app_type) {
-        this.app_type = app_type;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
+    public void setLink(String link) {
+        this.link = link;
     }
 
     @Override
     public String toString() {
         return "BannerBean{" +
-                "id='" + id + '\'' +
+                "title='" + title + '\'' +
+                ", position='" + position + '\'' +
+                ", type='" + type + '\'' +
                 ", image='" + image + '\'' +
-                ", recommend_type='" + recommend_type + '\'' +
-                ", url='" + url + '\'' +
-                ", sort='" + sort + '\'' +
-                ", site='" + site + '\'' +
-                ", app_type='" + app_type + '\'' +
-                ", content='" + content + '\'' +
-                ", remark='" + remark + '\'' +
-                ", city='" + city + '\'' +
+                ", link='" + link + '\'' +
                 '}';
     }
 }

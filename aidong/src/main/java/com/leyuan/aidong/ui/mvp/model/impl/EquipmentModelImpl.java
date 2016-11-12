@@ -1,17 +1,21 @@
 package com.leyuan.aidong.ui.mvp.model.impl;
 
+import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.data.EquipmentData;
 import com.leyuan.aidong.entity.data.EquipmentDetailData;
 import com.leyuan.aidong.http.RetrofitHelper;
 import com.leyuan.aidong.http.RxHelper;
 import com.leyuan.aidong.http.api.EquipmentService;
 import com.leyuan.aidong.ui.mvp.model.EquipmentModel;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.LogUtil;
+
+import java.util.List;
 
 import rx.Subscriber;
 
 /**
- * 营养品
+ * 装备
  * Created by song on 2016/8/15.
  */
 public class EquipmentModelImpl implements EquipmentModel {
@@ -19,6 +23,12 @@ public class EquipmentModelImpl implements EquipmentModel {
 
     public EquipmentModelImpl() {
         equipmentService = RetrofitHelper.createApi(EquipmentService.class);
+    }
+
+    @Override
+    public List<CategoryBean> getCategory() {
+        //Todo 统一同系统配置文件工具类中获取
+        return Constant.systemInfoBean.getNutrition();
     }
 
     @Override

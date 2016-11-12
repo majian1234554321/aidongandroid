@@ -35,6 +35,11 @@ public class NurturePresentImpl implements NurturePresent {
     }
 
     @Override
+    public void getCategory() {
+        nurtureActivityView.setCategory(nurtureModel.getCategory());
+    }
+
+    @Override
     public void commonLoadData(final SwitcherLayout switcherLayout) {
         nurtureModel.getNurtures(new CommonSubscriber<NurtureData>(switcherLayout) {
             @Override

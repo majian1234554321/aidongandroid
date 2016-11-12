@@ -23,7 +23,7 @@ import com.leyuan.aidong.widget.customview.SwitcherLayout;
 public class GoodDetailPresentImpl implements GoodsDetailPresent {
     private static final String TYPE_FOOD = "food";
     private static final String TYPE_EQUIPMENT = "equipment";
-    private static final String TYPE_NURTURE = "nurture";
+    private static final String TYPE_NURTURE = "nutrition";
 
     private GoodsDetailActivityView goodsDetailView;    //商品详情View层对象
 
@@ -32,7 +32,7 @@ public class GoodDetailPresentImpl implements GoodsDetailPresent {
     }
 
     @Override
-    public void getGoodsDetail(SwitcherLayout switcherLayout,String type,String id) {
+    public void getGoodsDetail(final SwitcherLayout switcherLayout, String type, String id) {
         switch (type){
             case TYPE_FOOD:
                 FoodModel foodModel = new FoodModelImpl();
@@ -41,6 +41,9 @@ public class GoodDetailPresentImpl implements GoodsDetailPresent {
                     public void onNext(FoodDetailData foodDetailData) {
                         if(foodDetailData != null && foodDetailData.getFood() != null){
                             goodsDetailView.setGoodsDetail(foodDetailData.getFood());
+                            switcherLayout.showContentLayout();
+                        }else{
+                            switcherLayout.showEmptyLayout();
                         }
                     }
                 },id);
@@ -53,6 +56,9 @@ public class GoodDetailPresentImpl implements GoodsDetailPresent {
                     public void onNext(EquipmentDetailData equipmentDetailData) {
                         if(equipmentDetailData != null && equipmentDetailData.getEquipment()!= null){
                             goodsDetailView.setGoodsDetail(equipmentDetailData.getEquipment());
+                            switcherLayout.showContentLayout();
+                        }else{
+                            switcherLayout.showEmptyLayout();
                         }
                     }
                 },id);
@@ -65,12 +71,15 @@ public class GoodDetailPresentImpl implements GoodsDetailPresent {
                     public void onNext(NurtureDetailData nurtureDetailData) {
                         if(nurtureDetailData != null && nurtureDetailData.getNurture()!= null){
                             goodsDetailView.setGoodsDetail(nurtureDetailData.getNurture());
+                            switcherLayout.showContentLayout();
+                        }else{
+                            switcherLayout.showEmptyLayout();
                         }
                     }
                 },id);
                 break;
             default:
-                Log.e("GoodDetailPresentImpl","type must be food,equipment or nurture");
+                Log.e("GoodDetailPresentImpl","type must be food,equipment or nutrition");
                 break;
         }
     }

@@ -44,8 +44,7 @@ public class CampaignAdapter extends RecyclerView.Adapter<CampaignAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
-        CampaignBean bean = data.get(position);
+        final CampaignBean bean = data.get(position);
         holder.cover.setImageURI(bean.getCover());
         holder.hot.setText(bean.getName());
         holder.address.setText(bean.getLandmart());
@@ -54,7 +53,7 @@ public class CampaignAdapter extends RecyclerView.Adapter<CampaignAdapter.ViewHo
         holder.cover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CampaignDetailActivity.start(context,"1");
+                CampaignDetailActivity.start(context,bean.getCampaign_id());
             }
         });
     }

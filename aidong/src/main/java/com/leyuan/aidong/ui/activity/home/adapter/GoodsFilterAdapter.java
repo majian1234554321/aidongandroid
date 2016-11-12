@@ -14,6 +14,8 @@ import com.leyuan.aidong.ui.activity.home.GoodsDetailActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.leyuan.aidong.ui.activity.home.GoodsDetailActivity.TYEP_EQUIPMENT;
+
 /**
  * 营养品筛选界面适配器
  * Created by song on 2016/8/17.
@@ -64,7 +66,7 @@ public class GoodsFilterAdapter extends RecyclerView.Adapter<GoodsFilterAdapter.
 
     @Override
     public void onBindViewHolder(FilterViewHolder holder, int position) {
-        NurtureBean bean = data.get(position);
+        final NurtureBean bean = data.get(position);
         holder.cover.setImageURI(bean.getCover());
         holder.name.setText(bean.getName());
         holder.brand.setText(bean.getMarket_price());
@@ -73,7 +75,7 @@ public class GoodsFilterAdapter extends RecyclerView.Adapter<GoodsFilterAdapter.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GoodsDetailActivity.start(context,"1");
+                GoodsDetailActivity.start(context,TYEP_EQUIPMENT,bean.getId());
             }
         });
     }

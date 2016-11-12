@@ -46,6 +46,7 @@
                 android:text="food_material"
                 android:textColor="@color/c9"
                 android:textSize="14sp"
+                android:maxLines="2"
                 android:layout_marginRight="10dp"/>
 
             <TextView

@@ -2,7 +2,6 @@ package com.leyuan.aidong.ui.fragment.home;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,34 +13,32 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.BannerBean;
-import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.entity.HomeBean;
-import com.leyuan.aidong.entity.HomeItemBean;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.activity.home.CampaignActivity;
 import com.leyuan.aidong.ui.activity.home.ConfirmOrderActivity;
 import com.leyuan.aidong.ui.activity.home.CourseActivity;
 import com.leyuan.aidong.ui.activity.home.EquipmentActivity;
 import com.leyuan.aidong.ui.activity.home.FoodActivity;
+import com.leyuan.aidong.ui.activity.home.GoodsDetailActivity;
 import com.leyuan.aidong.ui.activity.home.LocationActivity;
 import com.leyuan.aidong.ui.activity.home.NurtureActivity;
-import com.leyuan.aidong.ui.activity.home.SearchActivity;
-import com.leyuan.aidong.ui.activity.home.adapter.BannerAdapter;
 import com.leyuan.aidong.ui.activity.home.adapter.HomeRecycleViewAdapter;
-import com.leyuan.aidong.ui.activity.home.adapter.SamplePagerAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.HomePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.HomePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.HomeFragmentView;
 import com.leyuan.aidong.widget.customview.SwitcherLayout;
-import com.leyuan.aidong.widget.customview.ViewPagerIndicator;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.bingoogolapple.bgabanner.BGABanner;
 
 /**
  * 首页
@@ -52,8 +49,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
     private ImageView ivSearch;
 
     private View headerView;
-    private ViewPager viewPager;
-    private BannerAdapter bannerAdapter;
+    private BGABanner banner;
 
     private SwitcherLayout switcherLayout;
     private RecyclerView recyclerView;
@@ -85,20 +81,22 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
         initRecyclerView(view);
         setListener();
 
+        present.getBanners();
         present.commonLoadData(switcherLayout);
     }
 
 
     private void initHeaderView(){
         headerView = View.inflate(getContext(),R.layout.header_home,null);
-        viewPager = (ViewPager) headerView.findViewById(R.id.vp_home);
-        ViewPagerIndicator indicator = (ViewPagerIndicator)headerView.findViewById(R.id.vp_indicator);
-        bannerAdapter = new BannerAdapter(getContext());
-        SamplePagerAdapter bannerAdapter = new SamplePagerAdapter();
-        //HomeViewPagerAdapter bannerAdapter = new HomeViewPagerAdapter(imageList);
-        viewPager.setAdapter(bannerAdapter);
-        indicator.setViewPager(viewPager);
-        bannerAdapter.registerDataSetObserver(indicator.getDataSetObserver());
+        banner = (BGABanner) headerView.findViewById(R.id.banner);
+
+        banner.setAdapter(new BGABanner.Adapter() {
+            @Override
+            public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
+                ImageLoader.getInstance().displayImage(((BannerBean)model).getImage(),(ImageView)view);
+            }
+        });
+
 
         headerView.findViewById(R.id.tv_food).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,7 +144,6 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
             }
         });
 
-       // present.getBanners();
     }
 
     private void initSwipeRefreshLayout(View view) {
@@ -160,7 +157,6 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
                 present.pullToRefreshHomeData();
             }
         });
-
     }
 
     private void initRecyclerView(View view) {
@@ -189,9 +185,10 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
         }
     };
 
+
     @Override
     public void updateBanner(List<BannerBean> bannerBeanList) {
-        bannerAdapter.setData(bannerBeanList);
+        banner.setData(bannerBeanList,null);
     }
 
     @Override
@@ -200,58 +197,16 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
             data.clear();
             refreshLayout.setRefreshing(false);
         }
-        if(homeBeanList.isEmpty()){
-            for (int i = 0; i < 4; i++) {
-                HomeBean bean = new HomeBean();
-                if(i % 2 != 0){
-                    bean.setDisplay("cover");
-                    ArrayList<HomeItemBean> item = new ArrayList<>();
-                    for (int k = 0; k < 2; k++) {
-                        HomeItemBean itemBean = new HomeItemBean();
-                        itemBean.setCover("http://ww2.sinaimg.cn/mw690/61ecbb3dgw1f9eswvd0hqj211p1v04qp.jpg");
-                        item.add(itemBean);
-                    }
-                    bean.setCategory(item);
-                }else{
-                    bean.setDisplay("list");
-                    HomeItemBean item = new HomeItemBean();
-                    item.setCover("http://ww2.sinaimg.cn/mw690/006uFQHggw1f94x7xfic2j30qo0zi47p.jpg");
-                    ArrayList<GoodsBean> goodsBeanList = new ArrayList<>();
-                    for (int k = 0; k < 8; k++) {
-                        GoodsBean goodsBean = new GoodsBean();
-                        if(k %2 == 0){
-                            goodsBean.setName("盗墓笔记");
-                            goodsBean.setPrice("100");
-                            goodsBean.setCover("http://ww1.sinaimg.cn/mw690/91393a6bjw1f9eoh5iprzj20jg0r9q62.jpg");
-                        }else{
-                            goodsBean.setName("福原爱");
-                            goodsBean.setPrice("10000");
-                            goodsBean.setCover("http://ww2.sinaimg.cn/mw690/006uFQHggw1f94x7xfic2j30qo0zi47p.jpg");
-                        }
-                        goodsBeanList.add(goodsBean);
-                    }
-                    item.setItem(goodsBeanList);
-                    ArrayList<HomeItemBean> homeItemBeanArrayList = new ArrayList<>();
-                    homeItemBeanArrayList.add(item);
-                    bean.setCategory(homeItemBeanArrayList);
-                }
-                homeBeanList.add(bean);
-            }
-        }
-
         data.addAll(homeBeanList);
-        if(!data.isEmpty()){
-            homeAdapter.setData(data);
-            wrapperAdapter.notifyDataSetChanged();
-        }
+        homeAdapter.setData(data);
+        wrapperAdapter.notifyDataSetChanged();
     }
-
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.iv_search:
-                startActivity(new Intent(getContext(), SearchActivity.class));
+                startActivity(new Intent(getContext(), GoodsDetailActivity.class));
                 break;
             case R.id.tv_location:
                 startActivity(new Intent(getContext(), LocationActivity.class));

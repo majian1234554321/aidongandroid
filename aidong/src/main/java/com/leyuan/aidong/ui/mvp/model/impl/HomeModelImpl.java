@@ -1,12 +1,15 @@
 package com.leyuan.aidong.ui.mvp.model.impl;
 
-import com.leyuan.aidong.entity.BrandBean;
-import com.leyuan.aidong.entity.data.BannerData;
+import com.leyuan.aidong.entity.BannerBean;
+import com.leyuan.aidong.entity.data.BrandData;
 import com.leyuan.aidong.entity.data.HomeData;
 import com.leyuan.aidong.http.RetrofitHelper;
 import com.leyuan.aidong.http.RxHelper;
 import com.leyuan.aidong.http.api.HomeService;
 import com.leyuan.aidong.ui.mvp.model.HomeModel;
+import com.leyuan.aidong.utils.Constant;
+
+import java.util.List;
 
 import rx.Subscriber;
 
@@ -29,17 +32,16 @@ public class HomeModelImpl implements HomeModel {
     }
 
     @Override
-    public void getBrandDetail(Subscriber<BrandBean> subscriber, int id, int page) {
+    public void getBrandDetail(Subscriber<BrandData> subscriber, String id, int page) {
         homeService.getTypeDetail(id,page)
-                .compose(RxHelper.<BrandBean>transform())
+                .compose(RxHelper.<BrandData>transform())
                 .subscribe(subscriber);
 
     }
 
     @Override
-    public void getBanners(Subscriber<BannerData> subscriber) {
-        homeService.getBanners("homepage")
-                .compose(RxHelper.<BannerData>transform())
-                .subscribe(subscriber);
+    public List<BannerBean> getBanners() {
+       //Todo 改成成工具类统一获取
+        return Constant.systemInfoBean.getBanner();
     }
 }

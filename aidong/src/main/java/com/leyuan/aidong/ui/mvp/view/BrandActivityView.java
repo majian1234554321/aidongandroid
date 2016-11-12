@@ -1,6 +1,8 @@
 package com.leyuan.aidong.ui.mvp.view;
 
-import com.leyuan.aidong.entity.BrandBean;
+import com.leyuan.aidong.entity.GoodsBean;
+
+import java.util.List;
 
 /**
  * 品牌详情
@@ -9,9 +11,9 @@ import com.leyuan.aidong.entity.BrandBean;
 public interface BrandActivityView {
     /**
      * 更新列表
-     * @param brandBean
+     * @param goodsBeanList
      */
-    void updateRecyclerView(BrandBean brandBean);
+    void updateRecyclerView(List<GoodsBean> goodsBeanList);
 
     /**
      * 整体界面显示无网络界面

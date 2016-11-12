@@ -1,5 +1,6 @@
 package com.leyuan.aidong.entity.data;
 
+import com.leyuan.aidong.entity.GoodsDetailBean;
 import com.leyuan.aidong.entity.NurtureDetailBean;
 
 /**
@@ -7,20 +8,20 @@ import com.leyuan.aidong.entity.NurtureDetailBean;
  * Created by song on 2016/9/22.
  */
 public class NurtureDetailData {
-    private NurtureDetailBean nurture;
+    private GoodsDetailBean nutrition;
 
-    public NurtureDetailBean getNurture() {
-        return nurture;
+    public GoodsDetailBean getNurture() {
+        return nutrition;
     }
 
     public void setNurture(NurtureDetailBean nurture) {
-        this.nurture = nurture;
+        this.nutrition = nurture;
     }
 
     @Override
     public String toString() {
-        return "NurtureDetailData{" +
-                "nurture=" + nurture +
+        return "GoodsDetailBean{" +
+                "nurture=" + nutrition +
                 '}';
     }
 }

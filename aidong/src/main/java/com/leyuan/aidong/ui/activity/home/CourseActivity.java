@@ -29,8 +29,6 @@ public class CourseActivity extends BaseActivity{
     private ViewPager viewPager;
     private CourseFilterView filterView;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,11 +49,13 @@ public class CourseActivity extends BaseActivity{
         for (int i = 0; i < 10; i++) {
             BusinessCircleBean circleBean = new BusinessCircleBean();
             circleBean.setAreaName("商圈" + i);
+            circleBean.setAreaId(i+"");
             List<BusinessCircleDescBean> list = new ArrayList<>();
             for (int i1 = 0; i1 < 10; i1++) {
                 BusinessCircleDescBean bean = new BusinessCircleDescBean();
                 bean.setAreaName("商圈" + i+ ":" +i1 + "路");
                 list.add(bean);
+                bean.setAreaId("二级" + i);
                 circleBean.setDistrict(list);
             }
             circleList.add(circleBean);

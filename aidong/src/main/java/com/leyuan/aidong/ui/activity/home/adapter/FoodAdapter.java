@@ -14,6 +14,8 @@ import com.leyuan.aidong.ui.activity.home.GoodsDetailActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.leyuan.aidong.ui.activity.home.GoodsDetailActivity.TYEP_FOODS;
+
 /**
  * 健康列表适配器
  * Created by song on 2016/8/17.
@@ -31,17 +33,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
 
     public void setData(List<FoodBean> data) {
         if(data != null){
-            for (int i=0;i<2;i++){
-                this.data.addAll(data);
-            }
-        }else {
-            for (int i = 0; i < 5; i++) {
-                FoodBean bean = new FoodBean();
-                bean.setCover("https://www.baidu.com/img/bd_logo1.png");
-                bean.setName("food");
-                bean.setPrice("111");
-                this.data.add(bean);
-            }
+            this.data.addAll(data);
         }
     }
 
@@ -68,7 +60,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
 
     @Override
     public void onBindViewHolder(FoodViewHolder holder, int position) {
-        FoodBean bean = data.get(position);
+        final FoodBean bean = data.get(position);
         holder.cover.setImageURI(bean.getCover());
         holder.name.setText(bean.getName());
         holder.price.setText(String.format(context.getString(R.string.rmb_price),bean.getPrice()));
@@ -80,8 +72,6 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         StringBuffer sb = new StringBuffer();
 
         if(bean.getMaterial() != null){
-            material.addAll(bean.getMaterial());
-            material.addAll(bean.getMaterial());
             material.addAll(bean.getMaterial());
         }
 
@@ -102,7 +92,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GoodsDetailActivity.start(context,"1");
+                GoodsDetailActivity.start(context,TYEP_FOODS,bean.getFood_id());
             }
         });
     }

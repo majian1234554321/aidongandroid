@@ -44,10 +44,6 @@ public class CampaignFragment extends BaseFragment implements CampaignFragmentVi
 
     private String type;
 
-    /**
-     * 设置传递给Fragment的参数
-     * @param type 活动类型
-     */
     public void setArguments(String type){
         Bundle bundle=new Bundle();
         bundle.putString("type", type);
@@ -113,9 +109,7 @@ public class CampaignFragment extends BaseFragment implements CampaignFragmentVi
             data.clear();
             refreshLayout.setRefreshing(false);
         }
-        for(int i=0;i<10;i++){
-            data.addAll(campaignBeanList);
-        }
+        data.addAll(campaignBeanList);
         campaignAdapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();
     }
