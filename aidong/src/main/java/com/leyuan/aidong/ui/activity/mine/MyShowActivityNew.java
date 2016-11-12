@@ -156,6 +156,7 @@ public class MyShowActivityNew extends BaseActivity implements IHttpCallback, On
     }
 
     protected void setupView() {
+
         setContentView(R.layout.my_show_layout_new2);
 //        oks = new OnekeyShare();
 

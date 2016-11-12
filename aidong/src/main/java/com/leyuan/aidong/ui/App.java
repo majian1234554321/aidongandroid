@@ -28,7 +28,7 @@ public class App extends Application{
 
     public static double lat;
     public static double lon;
-    public static String city;
+    public static String city="上海";
     public static String addressStr;
 
     public DbUtils db;

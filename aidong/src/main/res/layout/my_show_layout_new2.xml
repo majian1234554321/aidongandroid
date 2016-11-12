@@ -17,6 +17,7 @@
         android:orientation="horizontal"
         android:background="#ff572f"
         android:layout_alignParentBottom="true"
+        android:visibility="gone"
         >
         <RelativeLayout
             android:id="@+id/tabTalkLayout"
