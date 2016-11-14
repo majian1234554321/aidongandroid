@@ -58,6 +58,7 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
         initSwipeRefreshLayout();
         initRecommendRecyclerView();
 
+        present.getCategory();
         present.commonLoadData(switcherLayout);
     }
 

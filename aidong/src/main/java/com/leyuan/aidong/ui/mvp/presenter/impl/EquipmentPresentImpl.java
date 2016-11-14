@@ -3,7 +3,6 @@ package com.leyuan.aidong.ui.mvp.presenter.impl;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
-import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.EquipmentBean;
 import com.leyuan.aidong.entity.data.EquipmentData;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
@@ -32,13 +31,13 @@ public class EquipmentPresentImpl implements EquipmentPresent {
     public EquipmentPresentImpl(Context context, EquipmentActivityView equipmentActivityView) {
         this.context = context;
         this.equipmentActivityView = equipmentActivityView;
-        equipmentModel = new EquipmentModelImpl();
+        equipmentModel = new EquipmentModelImpl(context);
         equipmentBeanList = new ArrayList<>();
     }
 
     @Override
-    public void setCategory(List<CategoryBean> beanList) {
-        equipmentActivityView.setCategory(beanList);
+    public void getCategory() {
+        equipmentActivityView.setCategory(equipmentModel.getCategory());
     }
 
     @Override

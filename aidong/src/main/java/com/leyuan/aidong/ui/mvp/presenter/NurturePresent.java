@@ -11,7 +11,6 @@ import com.leyuan.aidong.widget.customview.SwitcherLayout;
 public interface NurturePresent {
     /**
      * 获取营养品分类信息
-     * @return List<CategoryBean>
      */
     void getCategory();
 

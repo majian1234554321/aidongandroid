@@ -41,7 +41,10 @@ public class HomeModelImpl implements HomeModel {
 
     @Override
     public List<BannerBean> getBanners() {
-       //Todo 改成成工具类统一获取
-        return Constant.systemInfoBean.getBanner();
+        //todo 改成成工具类统一获取
+        if(Constant.systemInfoBean != null){
+            return Constant.systemInfoBean.getBanner();
+        }
+        return  null;
     }
 }

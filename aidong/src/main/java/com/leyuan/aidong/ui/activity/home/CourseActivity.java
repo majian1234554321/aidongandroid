@@ -14,6 +14,7 @@ import com.leyuan.aidong.entity.BusinessCircleDescBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.home.view.CourseFilterView;
 import com.leyuan.aidong.ui.fragment.home.CourseFragment;
+import com.leyuan.aidong.ui.mvp.view.CourseActivityView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,7 +24,7 @@ import java.util.List;
  * 小团体课列表
  * Created by song on 2016/10/31.
  */
-public class CourseActivity extends BaseActivity{
+public class CourseActivity extends BaseActivity implements CourseActivityView{
     private ImageView ivBack;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -83,6 +84,21 @@ public class CourseActivity extends BaseActivity{
             finish();
         }
     };
+
+    @Override
+    public void setDate() {
+
+    }
+
+    @Override
+    public void setCategory() {
+
+    }
+
+    @Override
+    public void setBusinessCircle() {
+
+    }
 
     private class MyOnFilterClickListener implements CourseFilterView.OnFilterClickListener{
 

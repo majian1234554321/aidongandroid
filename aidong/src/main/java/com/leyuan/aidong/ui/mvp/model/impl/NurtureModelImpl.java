@@ -1,5 +1,7 @@
 package com.leyuan.aidong.ui.mvp.model.impl;
 
+import android.content.Context;
+
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.data.NurtureData;
 import com.leyuan.aidong.entity.data.NurtureDetailData;
@@ -7,7 +9,7 @@ import com.leyuan.aidong.http.RetrofitHelper;
 import com.leyuan.aidong.http.RxHelper;
 import com.leyuan.aidong.http.api.NurtureService;
 import com.leyuan.aidong.ui.mvp.model.NurtureModel;
-import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.SystemInfoUtils;
 
 import java.util.List;
 
@@ -18,16 +20,17 @@ import rx.Subscriber;
  * Created by song on 2016/8/15.
  */
 public class NurtureModelImpl implements NurtureModel {
+    private Context context;
     private NurtureService nurtureService;
 
-    public NurtureModelImpl() {
+    public NurtureModelImpl(Context context) {
+        this.context = context;
         nurtureService = RetrofitHelper.createApi(NurtureService.class);
     }
 
     @Override
     public List<CategoryBean> getCategory() {
-        //Todo 统一同系统配置文件工具类中获取
-        return Constant.systemInfoBean.getNutrition();
+        return SystemInfoUtils.getNurtureCategory(context);
     }
 
     @Override

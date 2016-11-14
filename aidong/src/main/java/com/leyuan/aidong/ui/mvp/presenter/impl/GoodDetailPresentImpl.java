@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.mvp.presenter.impl;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.leyuan.aidong.entity.data.EquipmentDetailData;
@@ -25,9 +26,11 @@ public class GoodDetailPresentImpl implements GoodsDetailPresent {
     private static final String TYPE_EQUIPMENT = "equipment";
     private static final String TYPE_NURTURE = "nutrition";
 
+    private Context context;
     private GoodsDetailActivityView goodsDetailView;    //商品详情View层对象
 
-    public GoodDetailPresentImpl(GoodsDetailActivityView view) {
+    public GoodDetailPresentImpl(Context context,GoodsDetailActivityView view) {
+        this.context = context;
         this.goodsDetailView = view;
     }
 
@@ -50,7 +53,7 @@ public class GoodDetailPresentImpl implements GoodsDetailPresent {
                 break;
 
             case TYPE_EQUIPMENT:
-                EquipmentModel equipmentModel = new EquipmentModelImpl();
+                EquipmentModel equipmentModel = new EquipmentModelImpl(context);
                 equipmentModel.getEquipmentDetail(new CommonSubscriber<EquipmentDetailData>(switcherLayout) {
                     @Override
                     public void onNext(EquipmentDetailData equipmentDetailData) {
@@ -65,7 +68,7 @@ public class GoodDetailPresentImpl implements GoodsDetailPresent {
                 break;
 
             case TYPE_NURTURE:
-                NurtureModel nurtureModel = new NurtureModelImpl();
+                NurtureModel nurtureModel = new NurtureModelImpl(context);
                 nurtureModel.getNurtureDetail(new CommonSubscriber<NurtureDetailData>(switcherLayout) {
                     @Override
                     public void onNext(NurtureDetailData nurtureDetailData) {

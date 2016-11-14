@@ -8,6 +8,21 @@ import android.support.v7.widget.RecyclerView;
  */
 public interface CoursePresent {
     /**
+     * 获取时间
+     */
+    void getDate();
+
+    /**
+     * 获取课程分类
+     */
+    void getCategory();
+
+    /**
+     * 获取商圈信息
+     */
+    void getBusinessCircle();
+
+    /**
      * 第一次加载数据
      */
     void commendLoadData();

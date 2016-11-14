@@ -5,18 +5,18 @@ package com.leyuan.aidong.entity;
  * Created by song on 2016/8/18.
  */
 public class CampaignBean {
-    private String campaign_id;
+    private String id;
     private String name;
     private String cover;
     private String start_time;
     private String landmart;
 
-    public String getCampaign_id() {
-        return campaign_id;
+    public String getId() {
+        return id;
     }
 
-    public void setCampaign_id(String campaign_id) {
-        this.campaign_id = campaign_id;
+    public void setId(String campaign_id) {
+        this.id = campaign_id;
     }
 
     public String getName() {
@@ -54,7 +54,7 @@ public class CampaignBean {
     @Override
     public String toString() {
         return "CampaignBean{" +
-                "campaign_id='" + campaign_id + '\'' +
+                "campaign_id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", cover='" + cover + '\'' +
                 ", start_time='" + start_time + '\'' +

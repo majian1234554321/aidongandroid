@@ -1,9 +1,12 @@
 package com.leyuan.aidong.ui.mvp.presenter.impl;
 
+import android.content.Context;
+
 import com.leyuan.aidong.entity.SystemBean;
 import com.leyuan.aidong.ui.mvp.model.SystemModel;
 import com.leyuan.aidong.ui.mvp.model.impl.SystemModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.SystemPresent;
+import com.leyuan.aidong.utils.SystemInfoUtils;
 
 import rx.Subscriber;
 
@@ -15,8 +18,11 @@ import static com.leyuan.aidong.utils.Constant.systemInfoBean;
  * Created by song on 2016/11/10.
  */
 public class SystemPresentImpl implements SystemPresent{
+    private Context context;
     private SystemModel systemModel;
-    public SystemPresentImpl() {
+
+    public SystemPresentImpl(Context context) {
+        this.context = context;
         systemModel = new SystemModelImpl();
     }
 
@@ -35,9 +41,10 @@ public class SystemPresentImpl implements SystemPresent{
 
             @Override
             public void onNext(SystemBean systemBean) {
-                systemInfoBean = systemBean;
-                //保存到本地
-
+                if(systemBean != null){
+                    systemInfoBean = systemBean;
+                    SystemInfoUtils.putSystemInfoBean(context,systemBean);  //保存到本地
+                }
             }
         },os);
     }

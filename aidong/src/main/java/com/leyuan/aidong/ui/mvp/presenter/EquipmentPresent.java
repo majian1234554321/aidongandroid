@@ -2,10 +2,7 @@ package com.leyuan.aidong.ui.mvp.presenter;
 
 import android.support.v7.widget.RecyclerView;
 
-import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.widget.customview.SwitcherLayout;
-
-import java.util.List;
 
 /**
  * 装备
@@ -14,9 +11,8 @@ import java.util.List;
 public interface EquipmentPresent {
     /**
      * 设置装备分类信息
-     * @param beanList List<CategoryBean>
      */
-    void setCategory(List<CategoryBean> beanList);
+    void getCategory();
 
     /**
      * 第一次进入界面加载装备列表数据

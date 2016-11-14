@@ -36,7 +36,7 @@ public class CoursePresentImpl  implements CoursePresent{
         this.context = context;
         this.courseDetailActivityView = view;
         if(courseModel == null){
-            courseModel = new CourseModelImpl();
+            courseModel = new CourseModelImpl(context);
         }
     }
 
@@ -44,7 +44,7 @@ public class CoursePresentImpl  implements CoursePresent{
         this.context = context;
         this.courserFragmentView = view;
         if(courseModel == null){
-            courseModel = new CourseModelImpl();
+            courseModel = new CourseModelImpl(context);
         }
     }
 
@@ -52,8 +52,23 @@ public class CoursePresentImpl  implements CoursePresent{
         this.context = context;
         this.coursesActivityView = view;
         if(courseModel == null){
-            courseModel = new CourseModelImpl();
+            courseModel = new CourseModelImpl(context);
         }
+    }
+
+    @Override
+    public void getDate() {
+
+    }
+
+    @Override
+    public void getCategory() {
+
+    }
+
+    @Override
+    public void getBusinessCircle() {
+
     }
 
     @Override

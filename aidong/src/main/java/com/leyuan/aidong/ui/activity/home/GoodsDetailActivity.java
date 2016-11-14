@@ -102,7 +102,7 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_detail);
-        goodsDetailPresent = new GoodDetailPresentImpl(this);
+        goodsDetailPresent = new GoodDetailPresentImpl(this,this);
        /* if(getIntent() != null){
             id = getIntent().getStringExtra("id");
             type = getIntent().getStringExtra("type");

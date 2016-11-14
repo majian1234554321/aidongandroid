@@ -188,7 +188,9 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
 
     @Override
     public void updateBanner(List<BannerBean> bannerBeanList) {
-        banner.setData(bannerBeanList,null);
+        if(bannerBeanList != null && !bannerBeanList.isEmpty()){
+            banner.setData(bannerBeanList,null);
+        }
     }
 
     @Override

@@ -30,7 +30,7 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        systemPresent = new SystemPresentImpl();
+        systemPresent = new SystemPresentImpl(this);
         systemPresent.getSystemInfo("android");
         initView();
         initData();
