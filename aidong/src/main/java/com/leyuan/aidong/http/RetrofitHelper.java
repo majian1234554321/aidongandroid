@@ -1,5 +1,6 @@
 package com.leyuan.aidong.http;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.utils.Constant;
 
@@ -30,6 +31,7 @@ public class RetrofitHelper {
                     builder.baseUrl(Constant.BASE_URL)
                             .addConverterFactory(GsonConverterFactory.create())//设置远程地址
                             .addCallAdapterFactory(RxJavaCallAdapterFactory.create());
+
                     singleton = builder.client(createClient()).build();
                 }
             }
@@ -58,6 +60,7 @@ public class RetrofitHelper {
                 .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
+                .addNetworkInterceptor(new StethoInterceptor())
                 .build();
     }
 

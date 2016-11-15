@@ -9,6 +9,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.stetho.Stetho;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.utils.SharePrefUtils;
 import com.leyuan.aidong.utils.common.MXLog;
@@ -41,6 +42,7 @@ public class App extends Application{
         mInstance = this;
         context = getApplicationContext();
         initConfig();
+        Stetho.initializeWithDefaults(this);
     }
 
     private void initConfig() {
