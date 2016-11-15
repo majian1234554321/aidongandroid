@@ -7,6 +7,8 @@ import rx.Subscriber;
 public interface RegisterModelInterface {
     void regitserIdentify(Subscriber<UserCoach> subscriber, String mobile);
     void foundIdentify(Subscriber<UserCoach> subscriber, String mobile);
+    void bindingCaptcha(Subscriber<UserCoach> subscriber, String mobile);
 
-    void checkIdentify(Subscriber<UserCoach> subscriber, String mobile, String code, String password);
+    void checkIdentify(Subscriber<UserCoach> subscriber, String token, String captcha, String password);
+    void checkCaptchaImage(Subscriber<UserCoach> subscriber, String mobile, String captcha);
 }

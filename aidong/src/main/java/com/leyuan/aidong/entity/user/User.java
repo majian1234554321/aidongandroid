@@ -1,14 +1,16 @@
 package com.leyuan.aidong.entity.user;
 
+import java.util.Arrays;
+
 /**
  * Created by user on 2016/11/1.
  */
 public class User {
-//    String name;
-//    String avatar;
-//    String gender;
-//    String birthday;
-//    String age;
+    String name;
+    String avatar;
+    int gender;
+    String birthday;
+    int age;
     String zodiac;
     String signature;
     String  province;
@@ -25,46 +27,6 @@ public class User {
 
     String[] sport;
     UserTag tag[];
-
-//    public String getName() {
-//        return name;
-//    }
-//
-//    public void setName(String name) {
-//        this.name = name;
-//    }
-//
-//    public String getAvatar() {
-//        return avatar;
-//    }
-//
-//    public void setAvatar(String avatar) {
-//        this.avatar = avatar;
-//    }
-//
-//    public String getBirthday() {
-//        return birthday;
-//    }
-//
-//    public void setBirthday(String birthday) {
-//        this.birthday = birthday;
-//    }
-//
-//    public String getGender() {
-//        return gender;
-//    }
-//
-//    public void setGender(String gender) {
-//        this.gender = gender;
-//    }
-//
-//    public String getAge() {
-//        return age;
-//    }
-//
-//    public void setAge(String age) {
-//        this.age = age;
-//    }
 
     public String getZodiac() {
         return zodiac;
@@ -205,5 +167,71 @@ public class User {
         public void setColor(int color) {
             this.color = color;
         }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", gender=" + gender +
+                ", birthday='" + birthday + '\'' +
+                ", age=" + age +
+                ", zodiac='" + zodiac + '\'' +
+                ", signature='" + signature + '\'' +
+                ", province='" + province + '\'' +
+                ", city='" + city + '\'' +
+                ", area='" + area + '\'' +
+                ", height=" + height +
+                ", weight=" + weight +
+                ", bmi=" + bmi +
+                ", bust=" + bust +
+                ", waist=" + waist +
+                ", hip=" + hip +
+                ", charm_site='" + charm_site + '\'' +
+                ", frequency=" + frequency +
+                ", sport=" + Arrays.toString(sport) +
+                ", tag=" + Arrays.toString(tag) +
+                '}';
     }
 }

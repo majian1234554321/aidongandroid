@@ -7,13 +7,13 @@ import java.util.ArrayList;
 
 public class UserCoach extends User implements Serializable{
 	protected String token; // '用户token值',
-	protected String name; // '昵称'，
+//	protected String name; // '昵称'，
 	protected int mxid; // 美型号,
-	protected String avatar; // 头像,
-	protected int gender; // 性别 0:男，1：女
-	protected int age; // 年龄
+//	protected String avatar; // 头像,
+//	protected int gender; // 性别 0:男，1：女
+//	protected int age; // 年龄
 	protected int true_age; // 年龄
-	protected String signature;
+//	protected String signature;
 	protected int identity;//是否是服务号
 	protected ArrayList<Integer> tags;// 图标
 	protected String mobile;
@@ -28,7 +28,7 @@ public class UserCoach extends User implements Serializable{
 	private String skill;
 	private String interests;
 	private String often;
-	private String birthday;
+//	private String birthday;
 	//	private Contact1 contact;
 	private boolean isBindMobile;
 
@@ -37,17 +37,17 @@ public class UserCoach extends User implements Serializable{
 	private String header;
 	private String username;
 	private String nick;
-	private String city;
+//	private String city;
 
 	protected int likes;
 
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
+//	public String getCity() {
+//		return city;
+//	}
+//
+//	public void setCity(String city) {
+//		this.city = city;
+//	}
 
 	/** 照片墙*/
 	private ArrayList<AttributeImages> photowall;
@@ -161,13 +161,13 @@ public class UserCoach extends User implements Serializable{
 		this.token = token;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
+//	public String getName() {
+//		return name;
+//	}
+//
+//	public void setName(String name) {
+//		this.name = name;
+//	}
 
 	public int getMxid() {
 		return mxid;
@@ -177,37 +177,37 @@ public class UserCoach extends User implements Serializable{
 		this.mxid = mxid;
 	}
 
-	public String getAvatar() {
-		return avatar;
-	}
+//	public String getAvatar() {
+//		return avatar;
+//	}
+//
+//	public void setAvatar(String avatar) {
+//		this.avatar = avatar;
+//	}
 
-	public void setAvatar(String avatar) {
-		this.avatar = avatar;
-	}
+//	public int getGender() {
+//		return gender;
+//	}
+//
+//	public void setGender(int gender) {
+//		this.gender = gender;
+//	}
 
-	public int getGender() {
-		return gender;
-	}
+//	public int getAge() {
+//		return age;
+//	}
+//
+//	public void setAge(int age) {
+//		this.age = age;
+//	}
 
-	public void setGender(int gender) {
-		this.gender = gender;
-	}
-
-	public int getAge() {
-		return age;
-	}
-
-	public void setAge(int age) {
-		this.age = age;
-	}
-
-	public String getSignature() {
-		return signature;
-	}
-
-	public void setSignature(String signature) {
-		this.signature = signature;
-	}
+//	public String getSignature() {
+//		return signature;
+//	}
+//
+//	public void setSignature(String signature) {
+//		this.signature = signature;
+//	}
 
 	public int getIdentity() {
 		return identity;
@@ -270,13 +270,13 @@ public class UserCoach extends User implements Serializable{
 		this.interests = interests;
 	}
 
-	public String getBirthday() {
-		return birthday;
-	}
-
-	public void setBirthday(String birthday) {
-		this.birthday = birthday;
-	}
+//	public String getBirthday() {
+//		return birthday;
+//	}
+//
+//	public void setBirthday(String birthday) {
+//		this.birthday = birthday;
+//	}
 
 
 	public class Contact1 {
@@ -416,11 +416,38 @@ public class UserCoach extends User implements Serializable{
 
 	@Override
 	public String toString() {
-		return nick == null ? username : nick;
+		return "UserCoach{" +
+				"token='" + token + '\'' +
+//				", name='" + name + '\'' +
+				", mxid=" + mxid +
+//				", avatar='" + avatar + '\'' +
+//				", gender=" + gender +
+//				", age=" + age +
+				", true_age=" + true_age +
+//				", signature='" + signature + '\'' +
+				", identity=" + identity +
+				", tags=" + tags +
+				", mobile='" + mobile + '\'' +
+				", address='" + address + '\'' +
+				", tip='" + tip + '\'' +
+				", courses=" + courses +
+				", coordinate=" + coordinate +
+				", target='" + target + '\'' +
+				", skill='" + skill + '\'' +
+				", interests='" + interests + '\'' +
+				", often='" + often + '\'' +
+//				", birthday='" + birthday + '\'' +
+				", isBindMobile=" + isBindMobile +
+				", unreadMsgCount=" + unreadMsgCount +
+				", header='" + header + '\'' +
+				", username='" + username + '\'' +
+				", nick='" + nick + '\'' +
+				", likes=" + likes +
+				", photowall=" + photowall +
+				", fpg=" + fpg +
+				'}';
 	}
-
-
-	//	@Override
+//	@Override
 	//	public int describeContents() {
 	//		// TODO Auto-generated method stub
 	//		return 0;

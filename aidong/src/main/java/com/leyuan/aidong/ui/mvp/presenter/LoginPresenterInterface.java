@@ -1,4 +1,4 @@
-package com.leyuan.aidong.ui.mvp.presenter.interfaces;
+package com.leyuan.aidong.ui.mvp.presenter;
 
 public interface LoginPresenterInterface {
 

@@ -11,6 +11,8 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.widget.CommonTitleLayout;
 
+import static com.leyuan.aidong.R.id.layout_title;
+
 /**
  * Created by user on 2016/11/1.
  */
@@ -25,11 +27,18 @@ public class CompleteUserInfomationActivity extends BaseActivity implements View
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complete_user_information);
+        initView();
 
-        layoutTitle = (CommonTitleLayout) findViewById(R.id.layout_title);
+
+    }
+
+    private void initView() {
+        layoutTitle = (CommonTitleLayout) findViewById(layout_title);
         imgAvatar = (SimpleDraweeView) findViewById(R.id.img_avatar);
         txtChangeAvatar = (TextView) findViewById(R.id.txt_change_avatar);
         relNickname = (RelativeLayout) findViewById(R.id.rel_nickname);
+        layoutTitle.setLeftIconListener(this);
+        layoutTitle.setRightTextListener(this);
         findViewById(R.id.img_avatar).setOnClickListener(this);
         findViewById(R.id.txt_change_avatar).setOnClickListener(this);
         findViewById(R.id.btn_gender).setOnClickListener(this);
@@ -50,6 +59,13 @@ public class CompleteUserInfomationActivity extends BaseActivity implements View
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.img_left:
+                finish();
+                break;
+            case R.id.txt_right:
+                //调接口
+
+                break;
             case R.id.img_avatar:
                 break;
             case R.id.txt_change_avatar:

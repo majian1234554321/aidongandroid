@@ -10,8 +10,8 @@ import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.mine.login.FindPasswordActivity;
 import com.leyuan.aidong.ui.activity.mine.login.RegisterActivity;
-import com.leyuan.aidong.ui.mvp.presenter.LoginPresenter;
-import com.leyuan.aidong.ui.mvp.presenter.interfaces.LoginPresenterInterface;
+import com.leyuan.aidong.ui.mvp.presenter.impl.LoginPresenter;
+import com.leyuan.aidong.ui.mvp.presenter.LoginPresenterInterface;
 import com.leyuan.aidong.ui.mvp.view.LoginViewInterface;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.commonlibrary.manager.UiManager;
@@ -96,9 +96,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     public void loginResult(boolean success) {
         if(success){
+            ToastUtil.showShort(App.context,"登录成功");
             finish();
-        }else{
-            ToastUtil.showShort(App.context,"账户或密码错误");
         }
+//        else{
+//            ToastUtil.showShort(App.context,"账户或密码错误");
+//        }
     }
 }

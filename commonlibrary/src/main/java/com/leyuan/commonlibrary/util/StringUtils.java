@@ -9,7 +9,8 @@ public class StringUtils {
 			.compile("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*");
 
 	private final static Pattern RegexTel = Pattern
-			.compile("^(13[0-9]|15[0|1|2|3|5|6|7|8|9]|18[0-9]|14[57]|17[0|7])\\d{8}$");
+//			.compile("^(13[0-9]|15[0|1|2|3|5|6|7|8|9]|18[0-9]|14[57]|17[0|7])\\d{8}$");
+			.compile("^(1)\\d{10}$");
 
 	private final static Pattern RegexPwd = Pattern.compile("[\\d\\w]{6,16}");
 

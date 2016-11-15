@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:layout_width="290dp"
+        android:layout_height="250dp"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="12dp"
+                android:text="@string/input_words"
+                android:textColor="@color/text_black"
+                android:textSize="17dp"/>
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                xmlns:fresco="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/img_identify"
+                android:layout_width="230dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                fresco:actualImageScaleType="centerCrop"
+                fresco:placeholderImage="@drawable/place_holder_logo"
+                fresco:placeholderImageScaleType="fitXY"
+                fresco:pressedStateOverlayImage="@color/color_image_press"/>
+
+            <TextView
+                android:id="@+id/txt_refresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/click_refresh"
+                android:textColor="@color/text_gray"
+                android:textSize="15sp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="47dp"
+                android:layout_gravity="right"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="12dp"
+                >
+
+                <EditText
+                    android:id="@+id/edit_first"
+                    android:layout_width="47dp"
+                    android:layout_height="47dp"
+                    android:background="@drawable/selector_identify"
+                    android:gravity="center"
+                    android:inputType="text"
+                    android:maxLength="1"
+                    />
+
+                <EditText
+                    android:id="@+id/edit_second"
+                    android:layout_width="47dp"
+                    android:layout_height="47dp"
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/selector_identify"
+                    android:gravity="center"
+                    android:inputType="text"
+                    android:maxLength="1"
+                    />
+
+                <EditText
+                    android:id="@+id/edit_third"
+                    android:layout_width="47dp"
+                    android:layout_height="47dp"
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/selector_identify"
+                    android:gravity="center"
+                    android:inputType="text"
+                    android:maxLength="1"
+                    />
+
+                <EditText
+                    android:id="@+id/edit_fourth"
+                    android:layout_width="47dp"
+                    android:layout_height="47dp"
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/selector_identify"
+                    android:gravity="center"
+                    android:inputType="text"
+                    android:maxLength="1"
+                    />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/img_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/icon_close_balck"
+            />
+
+    </RelativeLayout>
+
+</FrameLayout>

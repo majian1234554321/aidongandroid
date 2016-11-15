@@ -8,11 +8,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mvp.presenter.RegisterPresenter;
-import com.leyuan.aidong.ui.mvp.presenter.interfaces.RegisterPresenterInterface;
+import com.leyuan.aidong.ui.mvp.presenter.impl.RegisterPresenter;
+import com.leyuan.aidong.ui.mvp.presenter.RegisterPresenterInterface;
 import com.leyuan.aidong.ui.mvp.view.RegisterViewInterface;
+import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.widget.CommonTitleLayout;
+import com.leyuan.aidong.widget.DialogImageIdentify;
 import com.leyuan.commonlibrary.util.StringUtils;
 
 
@@ -21,6 +24,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private CommonTitleLayout layoutTitle;
     private TextView txtProtocol;
     private RegisterPresenterInterface presenter;
+    private DialogImageIdentify mDialogImageIdentify;
 
     private String mobile;
     private String code;
@@ -71,7 +75,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             case R.id.btn_identify:
                 String tel = getEidtTelephone().getText().toString().trim();
                 if (StringUtils.isMatchTel(tel)) {
-                    presenter.regitserIdentify(tel);
+                    showImageIdentifyDialog(tel);
+
                 } else {
                     getEidtTelephone().setError("请输入正确手机号");
                 }
@@ -123,10 +128,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void getIdentifyCode(boolean success) {
         if (success) {
-            // ToastUtil.showLong(MyApplication.context, "验证码已发送,请查看");
-        } else {
-            // ToastUtil.showShort(MyApplication.context, "手机号已注册或无效,请重新输入");
+             ToastUtil.showShort(App.context, "验证码已发送,请查看");
+
         }
+//        else {
+//            // ToastUtil.showShort(MyApplication.context, "手机号已注册或无效,请重新输入");
+//        }
     }
 
     @Override
@@ -139,4 +146,26 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             //  ToastUtil.showShort(MyApplication.context, "注册失败 请重新提交");
         }
     }
+
+    private void showImageIdentifyDialog(final String tel) {
+//           if(mDialogImageIdentify == null){
+        mDialogImageIdentify = new DialogImageIdentify(this);
+        mDialogImageIdentify.setOnInputCompleteListener(new DialogImageIdentify.OnInputCompleteListener() {
+            @Override
+            public void inputIdentify(String imageIndentify) {
+//                presenter.regitserIdentify(tel,imageIndentify);
+                presenter.checkCaptchaImage(tel,imageIndentify);
+            }
+
+            @Override
+            public void refreshImage() {
+                mDialogImageIdentify.refreshImage(tel);
+            }
+        });
+//           }
+
+        mDialogImageIdentify.show();
+        mDialogImageIdentify.refreshImage(tel);
+    }
+
 }

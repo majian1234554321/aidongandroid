@@ -1,4 +1,4 @@
-package com.leyuan.aidong.ui.mvp.presenter;
+package com.leyuan.aidong.ui.mvp.presenter.impl;
 
 import android.content.Context;
 
@@ -7,7 +7,7 @@ import com.leyuan.aidong.http.subscriber.BaseSubscriber;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.mvp.model.LoginModel;
 import com.leyuan.aidong.ui.mvp.model.interfaces.LoginModelInterface;
-import com.leyuan.aidong.ui.mvp.presenter.interfaces.LoginPresenterInterface;
+import com.leyuan.aidong.ui.mvp.presenter.LoginPresenterInterface;
 import com.leyuan.aidong.ui.mvp.view.LoginViewInterface;
 
 public class LoginPresenter implements LoginPresenterInterface {
@@ -33,7 +33,7 @@ public class LoginPresenter implements LoginPresenterInterface {
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
-                //                loginViewInterface.loginResult(false);
+                                loginViewInterface.loginResult(false);
             }
 
             @Override

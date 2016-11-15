@@ -30,9 +30,24 @@ public class RegisterModel implements RegisterModelInterface {
     }
 
     @Override
+    public void bindingCaptcha(Subscriber<UserCoach> subscriber, String mobile) {
+        mIdentifyService.bindingMobile(mobile)
+                .compose(RxHelper.<UserCoach>transform())
+                .subscribe(subscriber);
+    }
+
+    @Override
     public void checkIdentify(Subscriber<UserCoach> subscriber, String mobile, String code, String password) {
 
         mIdentifyService.checkIdentify(mobile, code, password)
+                .compose(RxHelper.<UserCoach>transform())
+                .subscribe(subscriber);
+
+    }
+
+    @Override
+    public void checkCaptchaImage(Subscriber<UserCoach> subscriber, String mobile, String captcha) {
+        mIdentifyService.checkCaptchaImage(mobile,captcha)
                 .compose(RxHelper.<UserCoach>transform())
                 .subscribe(subscriber);
 
