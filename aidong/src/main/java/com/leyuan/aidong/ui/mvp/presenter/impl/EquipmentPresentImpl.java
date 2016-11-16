@@ -31,8 +31,13 @@ public class EquipmentPresentImpl implements EquipmentPresent {
     public EquipmentPresentImpl(Context context, EquipmentActivityView equipmentActivityView) {
         this.context = context;
         this.equipmentActivityView = equipmentActivityView;
-        equipmentModel = new EquipmentModelImpl();
+        equipmentModel = new EquipmentModelImpl(context);
         equipmentBeanList = new ArrayList<>();
+    }
+
+    @Override
+    public void getCategory() {
+        equipmentActivityView.setCategory(equipmentModel.getCategory());
     }
 
     @Override

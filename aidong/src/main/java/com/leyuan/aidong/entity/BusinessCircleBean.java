@@ -11,7 +11,8 @@ public class BusinessCircleBean {
     private String areaName;
     private List<BusinessCircleDescBean> district;
 
-    private boolean isSelected;
+    private BusinessCircleDescBean selectedRightCircleBean;
+    private boolean selected;
 
     public String getAreaId() {
         return areaId;
@@ -38,10 +39,18 @@ public class BusinessCircleBean {
     }
 
     public boolean isSelected() {
-        return isSelected;
+        return selected;
     }
 
     public void setSelected(boolean selected) {
-        isSelected = selected;
+        this.selected = selected;
+    }
+
+    public BusinessCircleDescBean getSelectedRightCircleBean() {
+        return selectedRightCircleBean;
+    }
+
+    public void setSelectedRightCircleBean(BusinessCircleDescBean selectedRightCircleBean) {
+        this.selectedRightCircleBean = selectedRightCircleBean;
     }
 }

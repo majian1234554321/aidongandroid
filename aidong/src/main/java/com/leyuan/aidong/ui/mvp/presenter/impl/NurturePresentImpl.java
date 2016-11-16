@@ -31,7 +31,12 @@ public class NurturePresentImpl implements NurturePresent {
     public NurturePresentImpl(NurtureActivityView nurtureActivityView, Context context) {
         this.context = context;
         this.nurtureActivityView = nurtureActivityView;
-        nurtureModel = new NurtureModelImpl();
+        nurtureModel = new NurtureModelImpl(context);
+    }
+
+    @Override
+    public void getCategory() {
+        nurtureActivityView.setCategory(nurtureModel.getCategory());
     }
 
     @Override

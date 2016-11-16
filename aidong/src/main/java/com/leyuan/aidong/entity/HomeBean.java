@@ -1,47 +1,76 @@
 package com.leyuan.aidong.entity;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 首页实体
  * Created by song on 2016/8/23.
  */
 public class HomeBean {
+    private String id;                      //分类编号
+    private String title;                   //分类标题
+    private String style;                   //展示样式 list-显示小分类封面图及下边10件商品 cover-只显示小分类封面图
+    private String image;                   //封面图
+    private String type;                    //类型 course-课程 campaign-活动 event-赛事 food-健康餐饮 nutrition-营养品 equipment-装备
+    private List<HomeItemBean> item;
 
-    private ArrayList<HomeItemBean> category; //所有样式及数据集合
-    private String name;                      //大分类名字
-    private String display;                   //展示样式类型
-
-    public ArrayList<HomeItemBean> getCategory() {
-        return category;
+    public String getId() {
+        return id;
     }
 
-    public void setCategory(ArrayList<HomeItemBean> category) {
-        this.category = category;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getDisplay() {
-        return display;
+    public String getStyle() {
+        return style;
     }
 
-    public void setDisplay(String display) {
-        this.display = display;
+    public void setStyle(String style) {
+        this.style = style;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public List<HomeItemBean> getItem() {
+        return item;
+    }
+
+    public void setItem(List<HomeItemBean> item) {
+        this.item = item;
     }
 
     @Override
     public String toString() {
         return "HomeBean{" +
-                "category=" + category +
-                ", name='" + name + '\'' +
-                ", display='" + display + '\'' +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", style='" + style + '\'' +
+                ", image='" + image + '\'' +
+                ", type='" + type + '\'' +
+                ", item=" + item +
                 '}';
     }
 }

@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.mvp.presenter.impl;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.leyuan.aidong.entity.CampaignBean;
 import com.leyuan.aidong.entity.data.CampaignData;
@@ -110,7 +111,8 @@ public class CampaignPresentImpl implements CampaignPresent {
             @Override
             public void onNext(CampaignDetailData campaignDetailData) {
                 if(campaignDetailData.getCampaign() != null){
-                    campaignDetailView.getCampaignDetail(campaignDetailData.getCampaign());
+                    campaignDetailView.showContent();
+                    campaignDetailView.setCampaignDetail(campaignDetailData.getCampaign());
                 }else{
                     campaignDetailView.showNoContentView();
                 }
@@ -123,7 +125,8 @@ public class CampaignPresentImpl implements CampaignPresent {
 
             @Override
             public void onError(Throwable e) {
-                campaignDetailView.showNetErrorView();
+                Toast.makeText(context,"error",Toast.LENGTH_LONG).show();
+               // campaignDetailView.showNetErrorView();
             }
         }, id);
     }

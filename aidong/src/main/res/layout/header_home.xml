@@ -1,29 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="vertical">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/vp_home"
+    <cn.bingoogolapple.bgabanner.BGABanner
+        android:id="@+id/banner"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="@color/orange"/>
-    
-    <com.leyuan.aidong.widget.customview.ViewPagerIndicator
-        android:id="@+id/vp_indicator"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_alignBottom="@+id/vp_home"
-       />
+        app:banner_pageChangeDuration="500"
+        app:banner_pointAutoPlayAble="true"
+        app:banner_pointContainerBackground="@android:color/transparent"
+        app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
+        app:banner_pointTopBottomMargin="5dp"
+        app:banner_transitionEffect="alpha" />
 
     <LinearLayout
         android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="90dp"
         android:orientation="horizontal"
-        android:layout_below="@+id/vp_home">
+        android:layout_below="@+id/banner">
         <TextView
             android:id="@+id/tv_course"
             android:layout_width="@dimen/pref_0dp"
@@ -101,6 +100,7 @@
             android:textColor="@color/black"
             android:gravity="center"
             android:clickable="true"
+            android:visibility="invisible"
             android:background="?selectableItemBackground"
             android:drawableTop="@drawable/home_competition"/>
     </LinearLayout>

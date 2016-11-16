@@ -24,7 +24,7 @@ public class RegisterPresenter implements RegisterPresenterInterface {
     }
 
     @Override
-    public void regitserIdentify(String mobile, String imageIndentify) {
+    public void regitserIdentify(String mobile) {
         mRegisterModelInterface.regitserIdentify(new BaseSubscriber<UserCoach>(mContext) {
             //            @Override
             //            public void onCompleted() {
@@ -39,6 +39,7 @@ public class RegisterPresenter implements RegisterPresenterInterface {
 
             @Override
             public void onNext(UserCoach s) {
+                App.mInstance.setToken(s.getToken());
                 mRegisterViewInterface.getIdentifyCode(true);
             }
         }, mobile);
@@ -67,13 +68,8 @@ public class RegisterPresenter implements RegisterPresenterInterface {
     }
 
     @Override
-    public void checkIdentify(String mobile, String code, String password) {
+    public void checkIdentify(String token, String code, String password) {
         mRegisterModelInterface.checkIdentify(new BaseSubscriber<UserCoach>(mContext) {
-//            @Override
-//            public void onCompleted() {
-//
-//            }
-//
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
@@ -83,9 +79,9 @@ public class RegisterPresenter implements RegisterPresenterInterface {
             @Override
             public void onNext(UserCoach user) {
                 mRegisterViewInterface.register(true);
-                App.mInstance.setUser(user);
+//                App.mInstance.setUser(user);
             }
-        }, mobile, code, password);
+        }, token, code, password);
     }
 
     @Override
@@ -103,18 +99,20 @@ public class RegisterPresenter implements RegisterPresenterInterface {
     }
 
     @Override
-    public void checkCaptchaImage(String mobile, String captcha) {
+    public void checkCaptchaImage(final String mobile, String captcha) {
         mRegisterModelInterface.checkCaptchaImage(new BaseSubscriber<UserCoach>(mContext) {
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
+                mRegisterViewInterface.checkCaptchaImage(false,mobile);
             }
 
             @Override
             public void onNext(UserCoach user) {
+                mRegisterViewInterface.checkCaptchaImage(true,mobile);
 
             }
         }, mobile,captcha);
-
     }
+
 }

@@ -45,9 +45,9 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     @Override
     public int getItemViewType(int position) {
-        if(TextUtils.equals("list",data.get(position).getDisplay())){
+        if(TextUtils.equals("list",data.get(position).getStyle())){         //大图加小图
             return TYPE_RECOMMEND_GOODS;
-        }else if(TextUtils.equals("cover",data.get(position).getDisplay())){
+        }else if(TextUtils.equals("cover",data.get(position).getStyle())){  //列表
             return TYPE_RECOMMEND_ACTIVITY;
         }else {
             return -1;
@@ -58,34 +58,40 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if(viewType == TYPE_RECOMMEND_ACTIVITY){
             View view = View.inflate(parent.getContext(), R.layout.item_recommend_activity,null);
-            return new RecommendActivityViewHolder(view);
+            return new CoverImageViewHolder(view);
         }else if(viewType == TYPE_RECOMMEND_GOODS){
             View view = View.inflate(parent.getContext(),R.layout.item_home_recommend_goods,null);
-            return new RecommendGoodsViewHolder(view);
+            return new BigAndLittleImageViewHolder(view);
         }
         return null;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        HomeBean bean = data.get(position);
-        if(holder instanceof RecommendActivityViewHolder){
-            RecommendCampaignsAdapter adapter = new RecommendCampaignsAdapter(context);
-            ((RecommendActivityViewHolder) holder).listView.setAdapter(adapter);
-            adapter.addList(bean.getCategory());
-        }else if(holder instanceof  RecommendGoodsViewHolder){
-            ((RecommendGoodsViewHolder) holder).cover.setImageURI(bean.getCategory().get(0).getCover());
-            ((RecommendGoodsViewHolder) holder).cover.setOnClickListener(new View.OnClickListener() {
+        final HomeBean bean = data.get(position);
+        if(holder instanceof CoverImageViewHolder){
+            CoverImageAdapter adapter = new CoverImageAdapter(context,bean.getType());
+            ((CoverImageViewHolder) holder).listView.setAdapter(adapter);
+            adapter.addList(bean.getItem());
+        }else if(holder instanceof BigAndLittleImageViewHolder){
+            ((BigAndLittleImageViewHolder) holder).cover.setImageURI(bean.getImage());
+            ((BigAndLittleImageViewHolder) holder).cover.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    BrandActivity.start(context,"1");
+                    BrandActivity.start(context,bean.getType(),bean.getId(),bean.getTitle(),bean.getImage());
                 }
             });
-            RecommendGoodsAdapter adapter = new RecommendGoodsAdapter(context);
-            ((RecommendGoodsViewHolder) holder).recyclerView.setLayoutManager(
+            BigAndLittleImageAdapter adapter = new BigAndLittleImageAdapter(context);
+            ((BigAndLittleImageViewHolder) holder).recyclerView.setLayoutManager(
                     new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false));
-            ((RecommendGoodsViewHolder) holder).recyclerView.setAdapter(adapter);
-            adapter.setData(bean.getCategory().get(0).getItem());
+            ((BigAndLittleImageViewHolder) holder).recyclerView.setAdapter(adapter);
+            adapter.setData(bean.getItem(),bean.getType());
+            adapter.setSeeMoreListener(new BigAndLittleImageAdapter.SeeMoreListener() {
+                @Override
+                public void onSeeMore() {
+                    BrandActivity.start(context,bean.getType(),bean.getId(),bean.getTitle(),bean.getImage());
+                }
+            });
         }
     }
 
@@ -93,11 +99,11 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     /**
      * 推荐商品ViewHolder
      */
-    private static class RecommendGoodsViewHolder extends RecyclerView.ViewHolder {
+    private static class BigAndLittleImageViewHolder extends RecyclerView.ViewHolder {
         SimpleDraweeView cover;
         RecyclerView recyclerView;
 
-        public RecommendGoodsViewHolder (View itemView) {
+        public BigAndLittleImageViewHolder(View itemView) {
             super(itemView);
             itemView.setLayoutParams(new RecyclerView.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
             cover = (SimpleDraweeView) itemView.findViewById(R.id.dv_recommend_good_cover);
@@ -108,10 +114,10 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     /**
      * 推荐活动ViewHolder
      */
-    private static class RecommendActivityViewHolder extends RecyclerView.ViewHolder{
+    private static class CoverImageViewHolder extends RecyclerView.ViewHolder{
         MyListView listView;
 
-        public RecommendActivityViewHolder (View itemView) {
+        public CoverImageViewHolder(View itemView) {
             super(itemView);
             itemView.setLayoutParams(new RecyclerView.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
             listView = (MyListView) itemView.findViewById(R.id.lv_recommend);

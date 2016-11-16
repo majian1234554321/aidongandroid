@@ -9,16 +9,6 @@
     android:paddingRight="5dp"
     android:background="@color/black">
 
-    <TextView
-        android:id="@+id/tv_category_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text=""
-        android:singleLine="true"
-        android:textColor="@color/white"
-        android:textSize="16sp"/>
-
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/dv_category_cover"
         android:layout_width="match_parent"
@@ -27,5 +17,17 @@
         app:placeholderImageScaleType="centerCrop"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        app:roundedCornerRadius="5dp"
+        app:overlayImage="@color/color_image_press"/>
+
+    <TextView
+        android:id="@+id/tv_category_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="aaaa"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textSize="20sp"/>
 </RelativeLayout>

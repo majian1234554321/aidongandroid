@@ -8,7 +8,7 @@ public class BusinessCircleDescBean {
 
     private String areaId;
     private String areaName;
-    private boolean isSelected;
+    private boolean selected;
 
     public String getAreaId() {
         return areaId;
@@ -27,10 +27,10 @@ public class BusinessCircleDescBean {
     }
 
     public boolean isSelected() {
-        return isSelected;
+        return selected;
     }
 
     public void setSelected(boolean selected) {
-        isSelected = selected;
+        this.selected = selected;
     }
 }

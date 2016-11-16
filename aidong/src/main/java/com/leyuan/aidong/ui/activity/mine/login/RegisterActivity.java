@@ -83,7 +83,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 break;
             case R.id.button_register:
                 if (verifyEdit()) {
-                    presenter.checkIdentify(mobile, code, password);
+                    presenter.checkIdentify(App.mInstance.getToken(), code, password);
                 }
                 break;
             case R.id.txt_protocol:
@@ -129,22 +129,34 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     public void getIdentifyCode(boolean success) {
         if (success) {
              ToastUtil.showShort(App.context, "验证码已发送,请查看");
-
+            if(mDialogImageIdentify!=null && mDialogImageIdentify.isShowing()){
+                mDialogImageIdentify.dismiss();
+            }
+        }else  if(mDialogImageIdentify!=null && mDialogImageIdentify.isShowing()){
+            mDialogImageIdentify.clearContent();
+            mDialogImageIdentify.refreshImage(mobile);
         }
-//        else {
-//            // ToastUtil.showShort(MyApplication.context, "手机号已注册或无效,请重新输入");
-//        }
     }
 
     @Override
     public void register(boolean success) {
 
         if (success) {
-            // ToastUtil.showShort(MyApplication.context, "注册成功");
+             ToastUtil.showShort(App.context, "注册成功");
             finish();
         } else {
             //  ToastUtil.showShort(MyApplication.context, "注册失败 请重新提交");
         }
+    }
+
+    @Override
+    public void checkCaptchaImage(boolean success, String mobile) {
+         if(success ){
+             presenter.regitserIdentify(mobile);
+         }else  if(mDialogImageIdentify!=null && mDialogImageIdentify.isShowing()){
+             mDialogImageIdentify.clearContent();
+             mDialogImageIdentify.refreshImage(mobile);
+         }
     }
 
     private void showImageIdentifyDialog(final String tel) {

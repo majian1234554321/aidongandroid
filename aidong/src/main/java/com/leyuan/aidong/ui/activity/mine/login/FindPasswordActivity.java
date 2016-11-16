@@ -123,4 +123,9 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
             ToastUtil.showShort(App.context,"注册失败 请重新提交");
         }
     }
+
+    @Override
+    public void checkCaptchaImage(boolean success, String mobile) {
+
+    }
 }

@@ -101,9 +101,7 @@ public class PastCampaignActivity extends BaseActivity implements CampaignFragme
             data.clear();
             refreshLayout.setRefreshing(false);
         }
-        for(int i=0;i<10;i++){
-            data.addAll(campaignBeanList);
-        }
+        data.addAll(campaignBeanList);
         campaignAdapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();
     }

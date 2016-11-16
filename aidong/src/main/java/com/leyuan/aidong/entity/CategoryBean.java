@@ -1,34 +1,44 @@
 package com.leyuan.aidong.entity;
 
 /**
- * 营养品类型实体
+ * 营养品，装备分类实体
  * Created by song on 2016/8/18.
  */
 public class CategoryBean {
-    private String cover;
-    private String type;
+    private String id;
+    private String name;    //分类名称
+    private String image;   //分类图标
 
-    public String getCover() {
-        return cover;
+    public String getId() {
+        return id;
     }
 
-    public void setCover(String cover) {
-        this.cover = cover;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getType() {
-        return type;
+    public String getName() {
+        return name;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     @Override
     public String toString() {
         return "CategoryBean{" +
-                "cover='" + cover + '\'' +
-                ", type='" + type + '\'' +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", image='" + image + '\'' +
                 '}';
     }
 }

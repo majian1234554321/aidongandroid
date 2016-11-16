@@ -50,7 +50,6 @@ public class HomeHeaderView extends RelativeLayout implements View.OnClickListen
         loader = ImageLoader.getInstance();
         options = new ImageLoadConfig().getOptions(R.drawable.renzheng);
         View header = inflate(context, R.layout.header_home, this);
-        viewPager = (ViewPager) header.findViewById(R.id.vp_home);
         indicator = (ViewPagerIndicator)header.findViewById(R.id.vp_indicator);
 
         header.findViewById(R.id.tv_course).setOnClickListener(this);

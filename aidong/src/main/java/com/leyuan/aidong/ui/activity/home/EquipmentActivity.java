@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.activity.home.adapter.EquipmentAdapter;
@@ -33,11 +34,12 @@ import java.util.List;
  */
 public class EquipmentActivity extends BaseActivity implements EquipmentActivityView{
     private SimpleTitleBar titleBar;
-    private RecyclerView categoryRecyclerView;
+    private RecyclerView categoryView;
+    private CategoryAdapter categoryAdapter;
 
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
-    private RecyclerView recommendRecyclerView;
+    private RecyclerView recommendView;
 
     private int currPage = 1;
     private List<EquipmentBean> equipmentList;
@@ -56,23 +58,23 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
         initSwipeRefreshLayout();
         initRecommendRecyclerView();
 
+        present.getCategory();
         present.commonLoadData(switcherLayout);
     }
 
     private void initTopLayout(){
         titleBar = (SimpleTitleBar)findViewById(R.id.title_bar);
-        categoryRecyclerView = (RecyclerView)findViewById(R.id.rv_category);
-        CategoryAdapter categoryAdapter = new CategoryAdapter(this);
+        categoryView = (RecyclerView)findViewById(R.id.rv_category);
+        categoryAdapter = new CategoryAdapter(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
-        categoryRecyclerView.setLayoutManager(layoutManager);
-        categoryRecyclerView.setAdapter(categoryAdapter);
+        categoryView.setLayoutManager(layoutManager);
+        categoryView.setAdapter(categoryAdapter);
         titleBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        categoryAdapter.setData(null);
     }
 
     private void initSwipeRefreshLayout() {
@@ -96,17 +98,17 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
     }
 
     private void initRecommendRecyclerView() {
-        recommendRecyclerView = (RecyclerView)findViewById(R.id.rv_recommend);
+        recommendView = (RecyclerView)findViewById(R.id.rv_recommend);
         equipmentList = new ArrayList<>();
         equipmentAdapter = new EquipmentAdapter(this);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(equipmentAdapter);
-        recommendRecyclerView.setAdapter(wrapperAdapter);
+        recommendView.setAdapter(wrapperAdapter);
         GridLayoutManager manager = new GridLayoutManager(this,2);
         manager.setSpanSizeLookup(new HeaderSpanSizeLookup((HeaderAndFooterRecyclerViewAdapter)
-                recommendRecyclerView.getAdapter(), manager.getSpanCount()));
-        recommendRecyclerView.setLayoutManager(manager);
-        recommendRecyclerView.addOnScrollListener(onScrollListener);
-        RecyclerViewUtils.setHeaderView(recommendRecyclerView, View.inflate(this,R.layout.header_nurture_or_equipment,null));
+                recommendView.getAdapter(), manager.getSpanCount()));
+        recommendView.setLayoutManager(manager);
+        recommendView.addOnScrollListener(onScrollListener);
+        RecyclerViewUtils.setHeaderView(recommendView, View.inflate(this,R.layout.header_nurture_or_equipment,null));
     }
 
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
@@ -114,10 +116,15 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
         public void onLoadNextPage(View view) {
             currPage ++;
             if (equipmentList != null && equipmentList.size() >= pageSize) {
-                present.requestMoreData(recommendRecyclerView,pageSize,currPage);
+                present.requestMoreData(recommendView,pageSize,currPage);
             }
         }
     };
+
+    @Override
+    public void setCategory(List<CategoryBean> categoryBeanList) {
+        categoryAdapter.setData(categoryBeanList);
+    }
 
     @Override
     public void updateRecyclerView(List<EquipmentBean> equipmentBeanList) {
@@ -132,6 +139,6 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
 
     @Override
     public void showEndFooterView() {
-        RecyclerViewStateUtils.setFooterViewState(recommendRecyclerView, LoadingFooter.State.TheEnd);
+        RecyclerViewStateUtils.setFooterViewState(recommendView, LoadingFooter.State.TheEnd);
     }
 }

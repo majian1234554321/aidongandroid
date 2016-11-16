@@ -30,19 +30,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.FoodVi
     public void setData(List<CategoryBean> data) {
         if(data != null){
             this.data = data;
-        }else{
-            CategoryBean bean1 = new CategoryBean();
-            CategoryBean bean2 = new CategoryBean();
-            CategoryBean bean3 = new CategoryBean();
-            CategoryBean bean4 = new CategoryBean();
-            bean1.setCover("http://ww3.sinaimg.cn/mw690/636d00d8gw1f9g6tyzmi5j205b0483yn.jpg");
-            bean2.setCover("http://ww1.sinaimg.cn/mw690/636d00d8gw1f9g6tzghivj205a0420su.jpg");
-            bean3.setCover("http://ww1.sinaimg.cn/mw690/636d00d8gw1f9g6u02xvpj205e045mxc.jpg");
-            bean4.setCover("http://ww2.sinaimg.cn/mw690/636d00d8gw1f9g6u0rvdxj2056041gll.jpg");
-            this.data.add(bean1);
-            this.data.add(bean2);
-            this.data.add(bean3);
-            this.data.add(bean4);
         }
         notifyDataSetChanged();
     }
@@ -61,7 +48,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.FoodVi
     @Override
     public void onBindViewHolder(FoodViewHolder holder, int position) {
         CategoryBean bean = data.get(position);
-        holder.cover.setImageURI(bean.getCover());
+        holder.cover.setImageURI(bean.getImage());
+        holder.name.setText(bean.getName());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

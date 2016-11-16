@@ -52,6 +52,7 @@
                 android:layout_below="@+id/tv_name"
                 android:layout_marginTop="12dp"
                 android:text="food_material"
+                android:maxLines="2"
                 android:textColor="@color/c9"
                 android:textSize="14sp" />
 

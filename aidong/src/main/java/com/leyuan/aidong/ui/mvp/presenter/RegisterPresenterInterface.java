@@ -2,7 +2,7 @@ package com.leyuan.aidong.ui.mvp.presenter;
 
 public interface RegisterPresenterInterface {
 
-    void regitserIdentify(String mobile, String imageIndentify);
+    void regitserIdentify(String mobile);
     void foundIdentify(String mobile);
     void checkIdentify(String mobile, String code, String password);
     void bindingCaptcha( String mobile);

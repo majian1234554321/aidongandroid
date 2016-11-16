@@ -1,7 +1,10 @@
 package com.leyuan.aidong.ui.mvp.model;
 
+import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.data.EquipmentData;
 import com.leyuan.aidong.entity.data.EquipmentDetailData;
+
+import java.util.List;
 
 import rx.Subscriber;
 
@@ -10,6 +13,11 @@ import rx.Subscriber;
  * Created by song on 2016/8/15.
  */
 public interface EquipmentModel {
+    /**
+     * 获取装备分类信息
+     * @return List<CategoryBean>
+     */
+    List<CategoryBean> getCategory();
 
     /**
      * 获取装备列表

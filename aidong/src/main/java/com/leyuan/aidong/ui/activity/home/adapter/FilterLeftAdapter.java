@@ -14,11 +14,22 @@ import com.leyuan.aidong.entity.BusinessCircleBean;
  * 商圈筛选左边适配器
  * Created by song on 2016/11/1.
  */
-public class FilterLeftAdapter extends BaseAdapter<BusinessCircleBean>{
+public class FilterLeftAdapter extends BaseAdapter<BusinessCircleBean> {
     private Context context;
+    private int checkItemPosition = 0;
 
     public FilterLeftAdapter(Context context) {
         this.context = context;
+    }
+
+    public void setCheckItem(int position) {
+        for (int i = 0; i < getList().size(); i++) {
+            if(i == position){
+                getList().get(i).setSelected(true);
+            }
+            getList().get(i).setSelected(false);
+        }
+        notifyDataSetChanged();
     }
 
     @Override
@@ -28,8 +39,8 @@ public class FilterLeftAdapter extends BaseAdapter<BusinessCircleBean>{
 
     @Override
     public void initView(View view, int position, ViewGroup parent) {
-        TextView circle = getView(view,R.id.tv_title);
-        LinearLayout root = getView(view,R.id.ll_root);
+        TextView circle = getView(view, R.id.tv_title);
+        LinearLayout root = getView(view, R.id.ll_root);
         final BusinessCircleBean bean = getItem(position);
         circle.setText(bean.getAreaName());
         if (bean.isSelected()) {

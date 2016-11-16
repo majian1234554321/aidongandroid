@@ -32,7 +32,7 @@ public interface HomePresent {
     /**
      * 品牌商品列表详情下拉刷新
      */
-    void pullToRefreshBrandData(int id);
+    void pullToRefreshBrandData(String id);
 
     /**
      * 品牌商品列表上拉加载更多
@@ -41,7 +41,7 @@ public interface HomePresent {
      * @param page 页码
      * @param id 小分类id
      */
-    void requestMorBrandeData(RecyclerView recyclerView, int pageSize, int page,int id);
+    void requestMorBrandeData(RecyclerView recyclerView, int pageSize, int page,String id);
 
     /**
      * 获取Banner

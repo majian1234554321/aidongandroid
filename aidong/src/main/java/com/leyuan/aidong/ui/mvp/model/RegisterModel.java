@@ -37,9 +37,9 @@ public class RegisterModel implements RegisterModelInterface {
     }
 
     @Override
-    public void checkIdentify(Subscriber<UserCoach> subscriber, String mobile, String code, String password) {
+    public void checkIdentify(Subscriber<UserCoach> subscriber, String token, String captcha, String password) {
 
-        mIdentifyService.checkIdentify(mobile, code, password)
+        mIdentifyService.checkIdentify(token, captcha, password)
                 .compose(RxHelper.<UserCoach>transform())
                 .subscribe(subscriber);
 

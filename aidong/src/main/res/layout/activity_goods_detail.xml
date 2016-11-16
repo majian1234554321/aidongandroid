@@ -1,161 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <com.leyuan.aidong.widget.customview.SlideDetailsLayout
-        android:id="@+id/slide_details_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/ll_bottom"
-        app:default_panel="front"
-        app:duration="300"
-        app:percent="0.4">
-
-        <!--商品详情默认布局UI-->
-        <android.support.design.widget.CoordinatorLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <android.support.design.widget.AppBarLayout
-                android:id="@+id/app_bar_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-                <android.support.design.widget.CollapsingToolbarLayout
-                    android:id="@+id/collapsing_tool_bar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:expandedTitleMarginEnd="64dp"
-                    app:expandedTitleMarginStart="48dp"
-                    app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="300dp"
-                        app:layout_collapseMode="parallax">
-
-                        <android.support.v4.view.ViewPager
-                            android:id="@+id/vp_photo"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop" />
-
-                        <com.leyuan.aidong.widget.customview.ViewPagerIndicator
-                            android:id="@+id/vp_indicator"
-                            android:layout_width="wrap_content"
-                            android:layout_height="20dp"
-                            android:layout_alignParentBottom="true"
-                            android:layout_centerHorizontal="true" />
-                    </RelativeLayout>
-
-                    <android.support.v7.widget.Toolbar
-                        android:id="@+id/toolbar"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/height_top_bar"
-                        app:layout_collapseMode="pin"/>
-
-                </android.support.design.widget.CollapsingToolbarLayout>
-            </android.support.design.widget.AppBarLayout>
-
-            <android.support.v4.widget.NestedScrollView
-                android:id="@+id/scroll"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-                <include layout="@layout/inc_goods_detail_content" />
-
-            </android.support.v4.widget.NestedScrollView>
-        </android.support.design.widget.CoordinatorLayout>
-
-        <!--商品详情下拉布局UI-->
-        <LinearLayout
-            android:id="@+id/slide_details_behind"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="@dimen/height_top_bar"
-                android:background="@color/white"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_desc"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="商品详情"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/tv_question"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="常见问题"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/tv_service"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="售后服务"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
-            </LinearLayout>
-
-            <WebView
-                android:id="@+id/web_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-
-
-    </com.leyuan.aidong.widget.customview.SlideDetailsLayout>
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/rl_title"
+        android:id="@+id/rl_content"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height_top_bar"
-        android:background="@color/black">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="wrap_content"
+        <com.leyuan.aidong.widget.customview.SlideDetailsLayout
+            android:id="@+id/slide_details_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:background="?selectableItemBackground"
-            android:padding="5dp"
-            android:src="@drawable/icon_back" />
+            app:default_panel="front"
+            app:duration="300"
+            app:percent="0.4">
 
-        <ImageView
-            android:id="@+id/iv_share"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:background="?selectableItemBackground"
-            android:padding="5dp"
-            android:src="@drawable/icon_share" />
+            <!--商品详情默认布局UI-->
+            <android.support.design.widget.CoordinatorLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
+                <android.support.design.widget.AppBarLayout
+                    android:id="@+id/app_bar_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+                    <android.support.design.widget.CollapsingToolbarLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:expandedTitleMarginEnd="64dp"
+                        app:expandedTitleMarginStart="48dp"
+                        app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+
+                        <cn.bingoogolapple.bgabanner.BGABanner
+                            android:id="@+id/banner_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="300dp"
+                            app:banner_pageChangeDuration="1000"
+                            app:banner_pointAutoPlayAble="false"
+                            app:banner_pointContainerBackground="@android:color/transparent"
+                            app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
+                            app:banner_pointTopBottomMargin="5dp"
+                            app:banner_transitionEffect="alpha"
+                            app:layout_collapseMode="parallax" />
+
+                        <android.support.v7.widget.Toolbar
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/height_top_bar"
+                            app:layout_collapseMode="pin" />
+
+                    </android.support.design.widget.CollapsingToolbarLayout>
+                </android.support.design.widget.AppBarLayout>
+
+                <android.support.v4.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                   <include layout="@layout/inc_goods_detail_content" />
+
+                </android.support.v4.widget.NestedScrollView>
+            </android.support.design.widget.CoordinatorLayout>
+
+            <!--商品详情下拉布局UI-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="@dimen/height_top_bar"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_desc"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="商品详情"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tv_question"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="常见问题"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tv_service"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="售后服务"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <WebView
+                    android:id="@+id/web_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+
+        </com.leyuan.aidong.widget.customview.SlideDetailsLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_top_bar"
+            android:background="@color/black">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="?selectableItemBackground"
+                android:padding="5dp"
+                android:src="@drawable/icon_back" />
+
+            <ImageView
+                android:id="@+id/iv_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="?selectableItemBackground"
+                android:padding="5dp"
+                android:src="@drawable/icon_share" />
+
+        </RelativeLayout>
     </RelativeLayout>
 
     <LinearLayout
@@ -163,7 +159,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/tv_cart"
@@ -174,6 +171,7 @@
             android:src="@drawable/icon_cart" />
 
         <TextView
+            android:id="@+id/tv_add_cart"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -184,6 +182,7 @@
             android:textSize="16sp" />
 
         <TextView
+            android:id="@+id/tv_pay"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -193,4 +192,4 @@
             android:textColor="@color/white"
             android:textSize="16sp" />
     </LinearLayout>
-</RelativeLayout>
+</LinearLayout>

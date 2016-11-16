@@ -9,6 +9,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.stetho.Stetho;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.utils.SharePrefUtils;
 import com.leyuan.aidong.utils.common.MXLog;
@@ -41,6 +42,7 @@ public class App extends Application{
         mInstance = this;
         context = getApplicationContext();
         initConfig();
+        Stetho.initializeWithDefaults(this);
     }
 
     private void initConfig() {
@@ -133,21 +135,23 @@ public class App extends Application{
     }
     public void setUser(UserCoach user){
         this.user = user;
+        if(user!=null){
+            this.token = user.getToken();
+            SharePrefUtils.putString(context, "token", token);
+        }
         SharePrefUtils.setUser(context, user);
     }
 
-//    @Deprecated
-//    public String getToken(){
-//        if(token == null){
-//            token = SharePrefUtils.getString(context, "token", null);
-//        }
-//        return token;
-//    }
-//
-//    @Deprecated
-//    public void setToken(String token){
-//        this.token =token;
-//        SharePrefUtils.putString(context, "token", token);
-//    }
+    public String getToken(){
+        if(token == null){
+            token = SharePrefUtils.getString(context, "token", null);
+        }
+        return token;
+    }
+
+    public void setToken(String token){
+        this.token =token;
+        SharePrefUtils.putString(context, "token", token);
+    }
 
 }

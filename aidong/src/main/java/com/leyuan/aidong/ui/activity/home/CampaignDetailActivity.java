@@ -5,13 +5,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,14 +19,15 @@ import com.leyuan.aidong.entity.CampaignDetailBean;
 import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.ApplicantAdapter;
-import com.leyuan.aidong.ui.activity.home.adapter.SamplePagerAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.CampaignPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CampaignPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CampaignDetailActivityView;
 import com.leyuan.aidong.widget.customview.SwitcherLayout;
-import com.leyuan.aidong.widget.customview.ViewPagerIndicator;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
+
+import cn.bingoogolapple.bgabanner.BGABanner;
 
 /**
  * 活动详情
@@ -35,26 +35,27 @@ import java.util.ArrayList;
  */
 public class CampaignDetailActivity extends BaseActivity implements CampaignDetailActivityView,View.OnClickListener{
     private AppBarLayout appBarLayout;
-    private CollapsingToolbarLayout collapsingToolbarLayout;
+    private BGABanner bannerLayout;
+    private TextView tvHot;
     private Toolbar toolbar;
-    private ViewPager viewPager;
-    private ViewPagerIndicator indicator;
 
     private SwitcherLayout switcherLayout;
-    private RecyclerView recyclerView;
-    private TextView tvHot;
-    private TextView tvName;
+    private LinearLayout contentLayout;
+    private TextView tvCampaignName;
     private TextView tvLandmark;
+    private TextView tvDate;
     private TextView tvTime;
+    private LinearLayout addressLayout;
     private TextView tvAddress;
     private TextView tvOrganizer;
     private TextView tvCount;
-    private TextView tvDesc;
+    private RecyclerView applicantView;
+    private TextView tvCampaignDesc;
     private LinearLayout applyLayout;
     private TextView tvPrice;
+    private TextView tvState;
 
     private String id ;                         //活动详情id
-    private boolean isFinishLoad = true;       //数据是否完成加载
     private ApplicantAdapter applicantAdapter;
     private CampaignPresent campaignPresent;
 
@@ -72,20 +73,14 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_campaign_detail);
-
         campaignPresent = new CampaignPresentImpl(this,this);
         Intent intent = getIntent();
         if(intent != null){
             id = intent.getStringExtra("id");
         }
-
-
-
         initView();
         setListener();
-
-        id = "1";
-       // campaignPresent.getCampaignDetail(id);
+        campaignPresent.getCampaignDetail(id);
     }
 
 
@@ -96,50 +91,49 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
         return true;
     }
 
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        return isFinishLoad;
-    }
-
     private void initView(){
-        toolbar = (Toolbar)findViewById(R.id.toolbar);
-        viewPager = (ViewPager)findViewById(R.id.vp_campaign);
-        indicator = (ViewPagerIndicator)findViewById(R.id.vp_indicator);
-        collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.collapsing_tool_bar);
-        appBarLayout = (AppBarLayout)findViewById(R.id.app_bar_layout);
-        recyclerView = (RecyclerView)findViewById(R.id.rv_applicant);
-        switcherLayout = new SwitcherLayout(this,findViewById(R.id.ll_content));
-        tvName = (TextView)findViewById(R.id.tv_campaign_name);
-        tvLandmark = (TextView)findViewById(R.id.tv_landmark);
-        tvTime = (TextView)findViewById(R.id.tv_time);
-        tvAddress = (TextView)findViewById(R.id.tv_address);
-        tvOrganizer = (TextView)findViewById(R.id.tv_organizer);
-        tvCount = (TextView)findViewById(R.id.tv_count);
-        tvDesc = (TextView)findViewById(R.id.tv_campaign_desc);
-        applyLayout = (LinearLayout)findViewById(R.id.ll_apply);
-        tvPrice = (TextView)findViewById(R.id.tv_price);
+        appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
+        bannerLayout = (BGABanner) findViewById(R.id.banner_layout);
+        tvHot = (TextView) findViewById(R.id.tv_hot);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        contentLayout = (LinearLayout) findViewById(R.id.ll_content);
+        switcherLayout = new SwitcherLayout(this,contentLayout);
+        tvCampaignName = (TextView) findViewById(R.id.tv_campaign_name);
+        tvLandmark = (TextView) findViewById(R.id.tv_landmark);
+        tvDate = (TextView) findViewById(R.id.tv_date);
+        tvTime = (TextView) findViewById(R.id.tv_time);
+        addressLayout = (LinearLayout) findViewById(R.id.ll_address);
+        tvAddress = (TextView) findViewById(R.id.tv_address);
+        tvOrganizer = (TextView) findViewById(R.id.tv_organizer);
+        tvCount = (TextView) findViewById(R.id.tv_count);
+        applicantView = (RecyclerView) findViewById(R.id.rv_applicant);
+        tvCampaignDesc = (TextView) findViewById(R.id.tv_campaign_desc);
+        applyLayout = (LinearLayout) findViewById(R.id.ll_apply);
+        tvPrice = (TextView) findViewById(R.id.tv_price);
+        tvState = (TextView) findViewById(R.id.tv_state);
+        applyLayout.setVisibility(View.GONE);
 
         toolbar.setTitle("");
         toolbar.setNavigationIcon(R.drawable.back);
         setSupportActionBar(toolbar);
 
-        SamplePagerAdapter pagerAdapter = new SamplePagerAdapter();
-        viewPager.setAdapter(pagerAdapter);
-        indicator.setViewPager(viewPager);
+        bannerLayout.setAdapter(new BGABanner.Adapter() {
+            @Override
+            public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
+                ImageLoader.getInstance().displayImage((String)model,(ImageView)view);
+            }
+        });
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        applicantView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
         applicantAdapter = new ApplicantAdapter();
-        recyclerView.setAdapter(applicantAdapter);
-        recyclerView.setNestedScrollingEnabled(false);
-
-        applicantAdapter.setData(null);
+        applicantView.setAdapter(applicantAdapter);
+        applicantView.setNestedScrollingEnabled(false);
     }
 
     private void setListener() {
         appBarLayout.addOnOffsetChangedListener(new MyOnOffsetChangedListener());
         switcherLayout.setOnRetryListener(retryListener);
         toolbar.setNavigationOnClickListener(this);
-        recyclerView.setOnClickListener(this);
         applyLayout.setOnClickListener(this);
         tvCount.setOnClickListener(this);
         tvAddress.setOnClickListener(this);
@@ -159,12 +153,6 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
             int maxScroll = appBarLayout.getTotalScrollRange();
             float percentage = (float) Math.abs(verticalOffset) / (float) maxScroll;
             toolbar.setBackgroundColor(Color.argb((int) (percentage * 255), 0, 0, 0));
-
-           /* if(Math.abs(verticalOffset) == appBarLayout.getTotalScrollRange()){
-                collapsingToolbarLayout.setTitle(getString(R.string.campaign_detail));
-            }else{
-                collapsingToolbarLayout.setTitle("");
-            }*/
         }
     }
 
@@ -174,7 +162,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
             case R.id.toolbar:          //回退
                 finish();
                 break;
-            case R.id.tv_count:     //查看报名的人
+            case R.id.tv_count:         //查看报名的人
                 AppointmentUserActivity.start(this,new ArrayList<UserBean>());
                 break;
             case R.id.ll_apply:         //报名
@@ -187,19 +175,23 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
     }
 
     @Override
-    public void getCampaignDetail(CampaignDetailBean bean) {
-        isFinishLoad = true;
-
-        tvName.setText(bean.getName());
+    public void setCampaignDetail(CampaignDetailBean bean) {
+        applyLayout.setVisibility(View.VISIBLE);
+        bannerLayout.setData(bean.getImage(),null);
+        tvCampaignName.setText(bean.getName());
         tvLandmark.setText(bean.getLandmark());
         tvTime.setText(bean.getStart_time());
         tvAddress.setText(bean.getAddress());
         tvOrganizer.setText(bean.getOrganizer());
-        tvDesc.setText(bean.getIntroduce());
+        tvCampaignDesc.setText(bean.getIntroduce());
         applicantAdapter.setData(bean.getApplicant());
-        tvCount.setText(String.format(getString(R.string.applicant_count),bean.getApplicant().size(),bean.getPlace()));
+        if(bean.getApplicant() == null || bean.getApplicant().isEmpty()){
+            tvCount.setText(String.format(getString(R.string.applicant_count), 0,bean.getPlace()));
+        }else{
+            tvCount.setText(String.format(getString(R.string.applicant_count)
+                    ,bean.getApplicant().size(),bean.getPlace()));
+        }
         tvPrice.setText(String.format(getString(R.string.rmb_price),bean.getPrice()));
-        applyLayout.setVisibility(View.VISIBLE);
     }
 
     @Override

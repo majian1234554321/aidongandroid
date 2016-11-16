@@ -1,6 +1,7 @@
 package com.leyuan.aidong.entity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 活动详情实体
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 public class CampaignDetailBean {
     private String campaign_id;             //活动编号
     private String name;                    //活动名称
-    private String cover;                   //活动封面图
+    private List image;                     //活动封面图
     private String landmark;                //活动地标
     private String start_time;              //活动开始时间
     private String end_time;                //活动结束时间
@@ -39,12 +40,12 @@ public class CampaignDetailBean {
         this.name = name;
     }
 
-    public String getCover() {
-        return cover;
+    public List getImage() {
+        return image;
     }
 
-    public void setCover(String cover) {
-        this.cover = cover;
+    public void setImage(List image) {
+        this.image = image;
     }
 
     public String getLandmark() {
@@ -187,7 +188,7 @@ public class CampaignDetailBean {
         return "CampaignDetailBean{" +
                 "campaign_id='" + campaign_id + '\'' +
                 ", name='" + name + '\'' +
-                ", cover='" + cover + '\'' +
+                ", image='" + image + '\'' +
                 ", landmark='" + landmark + '\'' +
                 ", start_time='" + start_time + '\'' +
                 ", end_time='" + end_time + '\'' +

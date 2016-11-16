@@ -27,7 +27,9 @@ public class GoodsDetailCouponAdapter extends RecyclerView.Adapter<GoodsDetailCo
     }
 
     public void setData(List<CouponBean> data) {
-        this.data = data;
+        if(data != null){
+            this.data = data;
+        }
         notifyDataSetChanged();
     }
 

@@ -6,6 +6,7 @@
     android:background="@color/white">
 
     <TextView
+        android:id="@+id/tv_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -15,6 +16,7 @@
         android:textSize="30sp" />
 
     <TextView
+        android:id="@+id/tv_market_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -24,6 +26,7 @@
         android:textSize="12sp" />
 
     <TextView
+        android:id="@+id/tv_goods_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -41,40 +44,41 @@
         android:layout_marginTop="2dp"
         android:src="@drawable/venues_divider" />
 
-    <LinearLayout
-        android:id="@+id/ll_coupon"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"
-            android:drawableLeft="@drawable/icon_black_point"
-            android:drawablePadding="5dp"
-            android:drawableRight="@drawable/icon_black_point"
-            android:gravity="center_vertical"
-            android:text="爱动福利券"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_coupon"
+        <LinearLayout
+            android:id="@+id/ll_coupon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="7.5dp"
-            android:layout_marginRight="7.5dp"
-            android:layout_marginBottom="15dp"/>
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:visibility="visible">
 
-        <include layout="@layout/inc_bold_line" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:drawableLeft="@drawable/icon_black_point"
+                android:drawablePadding="5dp"
+                android:drawableRight="@drawable/icon_black_point"
+                android:gravity="center_vertical"
+                android:text="爱动福利券"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
-    </LinearLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_coupon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7.5dp"
+                android:layout_marginRight="7.5dp"
+                android:layout_marginBottom="15dp"/>
+
+            <include layout="@layout/inc_bold_line" />
+
+        </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_goods_info"
+        android:id="@+id/ll_goods_specification"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:paddingLeft="@dimen/left_margin"
@@ -92,6 +96,7 @@
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/tv_select_specification"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -124,6 +129,7 @@
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/tv_recommend_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -157,6 +163,7 @@
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/tv_address_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"

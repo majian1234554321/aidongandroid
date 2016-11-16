@@ -9,9 +9,8 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.GoodsBean;
-import com.leyuan.aidong.ui.activity.home.BrandActivity;
-import com.leyuan.aidong.ui.activity.home.GoodsDetailActivity;
+import com.leyuan.aidong.entity.HomeItemBean;
+import com.leyuan.aidong.ui.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,20 +19,27 @@ import java.util.List;
  * 首页推荐商品的RecyclerView适配器
  * Created by song on 2016/7/14.
  */
-public class RecommendGoodsAdapter extends RecyclerView.Adapter< RecyclerView.ViewHolder>{
+public class BigAndLittleImageAdapter extends RecyclerView.Adapter< RecyclerView.ViewHolder>{
     private static final int NORMAL_ITEM = 1;
     private static final int SEE_MORE = 2;
 
     private Context context;
-    private List<GoodsBean> data = new ArrayList<>();
+    private String type;
+    private List<HomeItemBean> data = new ArrayList<>();
+    private SeeMoreListener seeMoreListener;
 
-    public RecommendGoodsAdapter(Context context) {
+    public BigAndLittleImageAdapter(Context context) {
         this.context = context;
     }
 
-    public void setData(List<GoodsBean> data) {
+    public void setSeeMoreListener(SeeMoreListener seeMoreListener) {
+        this.seeMoreListener = seeMoreListener;
+    }
+
+    public void setData(List<HomeItemBean> data, String type) {
         if(data != null){
             this.data = data;
+            this.type = type;
             notifyDataSetChanged();
         }
     }
@@ -68,7 +74,7 @@ public class RecommendGoodsAdapter extends RecyclerView.Adapter< RecyclerView.Vi
         if(position >= data.size()){
             return;
         }
-        final GoodsBean bean = data.get(position);
+        final HomeItemBean bean = data.get(position);
         if(holder instanceof RecommendGoodsViewHolder){
             ((RecommendGoodsViewHolder)holder).image.setImageURI(bean.getCover());
             ((RecommendGoodsViewHolder)holder).name.setText(bean.getName());
@@ -76,7 +82,7 @@ public class RecommendGoodsAdapter extends RecyclerView.Adapter< RecyclerView.Vi
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    GoodsDetailActivity.start(context,"1");
+                    ((MainActivity)context).toTagetDetailActivity(type,bean.getId());
                 }
             });
         }
@@ -100,12 +106,18 @@ public class RecommendGoodsAdapter extends RecyclerView.Adapter< RecyclerView.Vi
         public MoreViewHolder(View itemView) {
             super(itemView);
             more = (ImageView)itemView.findViewById(R.id.iv_see_more);
-            more.setOnClickListener(new View.OnClickListener() {
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    BrandActivity.start(context,"1");
+                    if(seeMoreListener != null){
+                        seeMoreListener.onSeeMore();
+                    }
                 }
             });
         }
+    }
+
+    public interface SeeMoreListener{
+        void onSeeMore();
     }
 }

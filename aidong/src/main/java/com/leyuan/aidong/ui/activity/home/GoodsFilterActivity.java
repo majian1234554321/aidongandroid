@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.NurtureBean;
 import com.leyuan.aidong.entity.data.NurtureData;
 import com.leyuan.aidong.ui.BaseActivity;
@@ -142,6 +143,11 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
             default:
                 break;
         }
+    }
+
+    @Override
+    public void setCategory(List<CategoryBean> categoryBeanList) {
+
     }
 
     @Override

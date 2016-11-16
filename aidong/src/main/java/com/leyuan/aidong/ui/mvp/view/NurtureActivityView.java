@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.mvp.view;
 
+import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.NurtureBean;
 
 import java.util.List;
@@ -10,8 +11,14 @@ import java.util.List;
  */
 public interface NurtureActivityView {
     /**
+     * 设置营养品的分类信息
+     * @param categoryBeanList CategoryBean
+     */
+    void setCategory(List<CategoryBean> categoryBeanList);
+
+    /**
      * 更新列表
-     * @param nurtureBeanList
+     * @param nurtureBeanList List<NurtureBean>
      */
     void updateRecyclerView(List<NurtureBean> nurtureBeanList);
 

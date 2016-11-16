@@ -12,10 +12,14 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.http.Logic;
+import com.leyuan.aidong.ui.activity.home.CampaignDetailActivity;
+import com.leyuan.aidong.ui.activity.home.CourseDetailActivity;
+import com.leyuan.aidong.ui.activity.home.GoodsDetailActivity;
+import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.utils.ScreenUtil;
 import com.leyuan.commonlibrary.http.IHttpCallback;
 import com.leyuan.commonlibrary.http.IHttpTask;
 import com.leyuan.commonlibrary.http.IHttpToastCallBack;
-import com.leyuan.aidong.utils.ScreenUtil;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -187,4 +191,35 @@ public class BaseActivity extends AppCompatActivity implements IHttpToastCallBac
     }
 
 
+
+    /**
+     * 跳转目标详情页
+     * @param type course-课程 campaign-活动 event-赛事 food-健康餐饮 nutrition-营养品 equipment-装备
+     * @param id id
+     */
+    public void toTagetDetailActivity(String type,String id){
+        switch (type){
+            case "course":
+                CourseDetailActivity.start(this,id);
+                break;
+            case "campaign":
+                CampaignDetailActivity.start(this,id);
+                break;
+            case "event":
+                Logger.e("TAG","developing");
+                break;
+            case "food":
+                GoodsDetailActivity.start(this,id,GoodsDetailActivity.TYEP_FOODS);
+            case "nutrition":
+                GoodsDetailActivity.start(this,id,GoodsDetailActivity.TYEP_NURTURE);
+                break;
+            case "equipment":
+                GoodsDetailActivity.start(this,id,GoodsDetailActivity.TYEP_EQUIPMENT);
+                break;
+            default:
+                Logger.e("TAG","can not support this type,please check it");
+                break;
+        }
+
+    }
 }

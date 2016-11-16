@@ -14,6 +14,7 @@ import com.leyuan.aidong.entity.BusinessCircleDescBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.home.view.CourseFilterView;
 import com.leyuan.aidong.ui.fragment.home.CourseFragment;
+import com.leyuan.aidong.ui.mvp.view.CourseActivityView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,13 +24,11 @@ import java.util.List;
  * 小团体课列表
  * Created by song on 2016/10/31.
  */
-public class CourseActivity extends BaseActivity{
+public class CourseActivity extends BaseActivity implements CourseActivityView{
     private ImageView ivBack;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private CourseFilterView filterView;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +50,13 @@ public class CourseActivity extends BaseActivity{
         for (int i = 0; i < 10; i++) {
             BusinessCircleBean circleBean = new BusinessCircleBean();
             circleBean.setAreaName("商圈" + i);
+            circleBean.setAreaId(i+"");
             List<BusinessCircleDescBean> list = new ArrayList<>();
             for (int i1 = 0; i1 < 10; i1++) {
                 BusinessCircleDescBean bean = new BusinessCircleDescBean();
                 bean.setAreaName("商圈" + i+ ":" +i1 + "路");
                 list.add(bean);
+                bean.setAreaId(i+"" + i1);
                 circleBean.setDistrict(list);
             }
             circleList.add(circleBean);
@@ -83,6 +84,21 @@ public class CourseActivity extends BaseActivity{
             finish();
         }
     };
+
+    @Override
+    public void setDate() {
+
+    }
+
+    @Override
+    public void setCategory() {
+
+    }
+
+    @Override
+    public void setBusinessCircle() {
+
+    }
 
     private class MyOnFilterClickListener implements CourseFilterView.OnFilterClickListener{
 

@@ -13,7 +13,6 @@ import android.widget.Toast;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.GoodsBean;
-import com.leyuan.aidong.ui.activity.home.GoodsDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,7 +115,7 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GoodsDetailActivity.start(context,"1");
+                //GoodsDetailActivity.start(context,"1");
             }
         });
     }

@@ -16,19 +16,11 @@ import java.util.List;
  * Created by song on 2016/8/24.
  */
 public class ApplicantAdapter extends RecyclerView.Adapter<ApplicantAdapter.ApplicantHolder>{
-
     private List<CampaignDetailBean.Applicant> data = new ArrayList<>();
 
     public void setData(List<CampaignDetailBean.Applicant> data) {
-       // this.data = data;
-        if(data == null){
-            for (int i = 0; i < 10; i++) {
-                CampaignDetailBean campaignDetailBean = new CampaignDetailBean();
-                CampaignDetailBean.Applicant applicant = campaignDetailBean.new Applicant();
-                applicant.setAvatar("https://www.baidu.com/img/bd_logo1.png");
-                this.data.add(applicant);
-            }
-
+        if(data != null){
+            this.data = data;
         }
         notifyDataSetChanged();
     }

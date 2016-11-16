@@ -8,6 +8,8 @@ import java.util.ArrayList;
  */
 public class GoodsBean {
     private  String sku_code;      //商品编码
+    private  String id;
+    private  String code;
     private  String cover;         //商品封面
     private  String name;          //商品名字
     private  String price;         //商品售价
@@ -92,10 +94,28 @@ public class GoodsBean {
         this.checked = checked;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     @Override
     public String toString() {
         return "GoodsBean{" +
                 "sku_code='" + sku_code + '\'' +
+                ", id='" + id + '\'' +
+                ", code='" + code + '\'' +
                 ", cover='" + cover + '\'' +
                 ", name='" + name + '\'' +
                 ", price='" + price + '\'' +

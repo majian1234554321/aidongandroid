@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.utils.Constant;
@@ -103,6 +104,7 @@ public class DialogImageIdentify extends Dialog {
     public void refreshImage(String mobile) {
 //        mImageLoader.displayImage(Common.URL_IMAGE_IDENTIFY_CODE + mobile, imgIdentify, mOptions);
 //        imgIdentify.destroyDrawingCache();
+        Fresco.getImagePipeline().clearCaches();
         imgIdentify.setImageURI(Constant.BASE_URL+"captcha_image/" + mobile);
     }
 

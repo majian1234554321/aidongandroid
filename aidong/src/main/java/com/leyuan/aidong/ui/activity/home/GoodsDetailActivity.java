@@ -4,10 +4,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,7 +19,6 @@ import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -28,7 +27,6 @@ import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.entity.GoodsDetailBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.GoodsDetailCouponAdapter;
-import com.leyuan.aidong.ui.activity.home.adapter.SamplePagerAdapter;
 import com.leyuan.aidong.ui.activity.home.view.GoodsInfoPopupWindow;
 import com.leyuan.aidong.ui.mvp.presenter.GoodsDetailPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.GoodDetailPresentImpl;
@@ -37,52 +35,66 @@ import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.widget.customview.ObserveScrollView;
 import com.leyuan.aidong.widget.customview.SlideDetailsLayout;
 import com.leyuan.aidong.widget.customview.SwitcherLayout;
-import com.leyuan.aidong.widget.customview.ViewPagerIndicator;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.bingoogolapple.bgabanner.BGABanner;
 
 /**
  * 商品详情
  * Created by song on 2016/9/12.
  */
-public class GoodsDetailActivity extends BaseActivity implements ObserveScrollView.ScrollViewListener, View.OnClickListener,GoodsDetailActivityView{
-    private AppBarLayout appBarLayout;
+public class GoodsDetailActivity extends BaseActivity implements ObserveScrollView.ScrollViewListener, View.OnClickListener,GoodsDetailActivityView, BGABanner.OnItemClickListener {
+    public static final String TYEP_NURTURE = "nutrition";
+    public static final String TYEP_EQUIPMENT = "equipments";
+    public static final String TYEP_FOODS = "foods";
+
     private SwitcherLayout switcherLayout;
-    private RelativeLayout contentLayout;
+    private LinearLayout rootLayout;
     private SlideDetailsLayout detailsLayout;
-
-    private ViewPager viewPager;
-    private ViewPagerIndicator indicator;
-
-    private RelativeLayout titleLayout;
-    private LinearLayout goodsInfoLayout;
+    private AppBarLayout appBarLayout;
+    private BGABanner bannerLayout;
+    private TextView tvPrice;
+    private TextView tvMarketPrice;
+    private TextView tvGoodsName;
+    private LinearLayout couponLayout;
+    private RecyclerView couponView;
+    private LinearLayout specificationLayout;
+    private TextView tvSelectSpecification;
     private LinearLayout recommendCodeLayout;
+    private TextView tvRecommendCode;
     private LinearLayout addressLayout;
-
-    private GoodsInfoPopupWindow goodInfoPopup;
-    private RelativeLayout rootLayout;
-    private PopupWindow goodsInfoPopup = null;
-
-    private RecyclerView couponRecyclerView;
-    private List<CouponBean> couponBeanList;
-    private GoodsDetailCouponAdapter couponAdapter;
-
+    private TextView tvAddressInfo;
+    private ImageView ivArrow;
+    private TextView tvTip;
     private TextView tvDesc;
     private TextView tvQuestion;
     private TextView tvService;
-
-    private ImageView ivArrow;
-    private TextView tvTip;
+    private WebView webView;
+    private RelativeLayout titleLayout;
+    private ImageView ivBack;
+    private ImageView ivShare;
+    private LinearLayout bottomLayout;
+    private ImageView tvCart;
+    private TextView tvAddCart;
     private TextView tvPay;
 
-    private String goodsId;
-    private String type = "nurture";
+    private GoodsInfoPopupWindow goodInfoPopup;
+    private List<CouponBean> couponBeanList;
+    private GoodsDetailCouponAdapter couponAdapter;
+
+    private String id = "8";
+    private String type = "nutrition";
     private GoodsDetailPresent goodsDetailPresent;
 
-    public static void start(Context context,String id) {
+    private List<String> imageUrls = new ArrayList<>();
+
+    public static void start(Context context,String id,String type) {
         Intent starter = new Intent(context, GoodsDetailActivity.class);
-        starter.putExtra("goodsId",id);
+        starter.putExtra("id",id);
+        starter.putExtra("type",type);
         context.startActivity(starter);
     }
 
@@ -90,71 +102,64 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_detail);
-        goodsDetailPresent = new GoodDetailPresentImpl(this);
-        if(getIntent() != null){
-            goodsId = getIntent().getStringExtra("goodsId");
-        }
-        goodsId = "1";
+        goodsDetailPresent = new GoodDetailPresentImpl(this,this);
+       /* if(getIntent() != null){
+            id = getIntent().getStringExtra("id");
+            type = getIntent().getStringExtra("type");
+        }*/
 
         initView();
         setListener();
-       // goodsDetailPresent.getGoodsDetail(switcherLayout,type,id);
+        goodsDetailPresent.getGoodsDetail(switcherLayout,type,id);
     }
 
 
     private void initView() {
-
-        detailsLayout = (SlideDetailsLayout)findViewById(R.id.slide_details_layout);
-        contentLayout = (RelativeLayout) findViewById(R.id.rl_content);
-        appBarLayout = (AppBarLayout)findViewById(R.id.app_bar_layout);
-       // scrollView = (ObserveScrollView)findViewById(R.id.scrollview);
-
-       // switcherLayout = new SwitcherLayout(this,scrollView);
-        titleLayout = (RelativeLayout)findViewById(R.id.rl_title);
-        viewPager = (ViewPager) findViewById(R.id.vp_photo);
-        indicator = (ViewPagerIndicator) findViewById(R.id.vp_indicator);
-        SamplePagerAdapter pagerAdapter = new SamplePagerAdapter();
-        viewPager.setAdapter(pagerAdapter);
-        indicator.setViewPager(viewPager);
-
-        goodsInfoLayout = (LinearLayout)findViewById(R.id.ll_goods_info);
-        recommendCodeLayout = (LinearLayout)findViewById(R.id.ll_recommend_code);
-        addressLayout = (LinearLayout)findViewById(R.id.ll_address);
-
-        //scrollView.setScrollViewListener(this);
-        rootLayout = (RelativeLayout)findViewById(R.id.root);
-
-
+        rootLayout = (LinearLayout) findViewById(R.id.root);
+        detailsLayout = (SlideDetailsLayout) findViewById(R.id.slide_details_layout);
+        switcherLayout = new SwitcherLayout(this,detailsLayout);
+        appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
+        bannerLayout = (BGABanner) findViewById(R.id.banner_layout);
+        tvPrice = (TextView) findViewById(R.id.tv_price);
+        tvMarketPrice = (TextView) findViewById(R.id.tv_market_price);
+        tvGoodsName = (TextView) findViewById(R.id.tv_goods_name);
+        couponLayout = (LinearLayout) findViewById(R.id.ll_coupon);
+        couponView = (RecyclerView) findViewById(R.id.rv_coupon);
+        specificationLayout = (LinearLayout) findViewById(R.id.ll_goods_specification);
+        tvSelectSpecification = (TextView) findViewById(R.id.tv_select_specification);
+        recommendCodeLayout = (LinearLayout) findViewById(R.id.ll_recommend_code);
+        tvRecommendCode = (TextView) findViewById(R.id.tv_recommend_code);
+        addressLayout = (LinearLayout) findViewById(R.id.ll_address);
+        tvAddressInfo = (TextView) findViewById(R.id.tv_address_info);
+        ivArrow = (ImageView) findViewById(R.id.iv_arrow);
+        tvTip = (TextView) findViewById(R.id.tv_tip);
         tvDesc = (TextView) findViewById(R.id.tv_desc);
         tvQuestion = (TextView) findViewById(R.id.tv_question);
         tvService = (TextView) findViewById(R.id.tv_service);
-
-        ivArrow = (ImageView) findViewById(R.id.iv_arrow);
-        tvTip = (TextView) findViewById(R.id.tv_tip);
+        webView = (WebView) findViewById(R.id.web_view);
+        titleLayout = (RelativeLayout) findViewById(R.id.rl_title);
+        ivBack = (ImageView) findViewById(R.id.iv_back);
+        ivShare = (ImageView) findViewById(R.id.iv_share);
+        bottomLayout = (LinearLayout) findViewById(R.id.ll_bottom);
+        tvCart = (ImageView) findViewById(R.id.tv_cart);
+        tvAddCart = (TextView) findViewById(R.id.tv_add_cart);
         tvPay = (TextView) findViewById(R.id.tv_pay);
 
-        couponRecyclerView = (RecyclerView)findViewById(R.id.rv_coupon);
-        couponRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
-        couponRecyclerView.setNestedScrollingEnabled(false);
-        couponAdapter = new GoodsDetailCouponAdapter(this);
-        couponRecyclerView.setAdapter(couponAdapter);
-        couponBeanList = new ArrayList<>();
-        for(int i= 0;i<5;i++){
-            CouponBean bean = new CouponBean();
-            if(i%2 == 0){
-                bean.setDiscount("20");
-                bean.setMin("200");
-            }else{
-                bean.setDiscount("50");
-                bean.setMin("500");
+        //设置Banner
+        bannerLayout.setAdapter(new BGABanner.Adapter() {
+            @Override
+            public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
+                ImageLoader.getInstance().displayImage((String)model,(ImageView)view);
             }
-            couponBeanList.add(bean);
-        }
+        });
 
-        couponAdapter.setData(couponBeanList);
+        //设置优惠券
+        couponView.setLayoutManager(new LinearLayoutManager
+                (this,LinearLayoutManager.HORIZONTAL,false));
+        couponView.setNestedScrollingEnabled(false);
+        couponAdapter = new GoodsDetailCouponAdapter(this);
+        couponView.setAdapter(couponAdapter);
 
-
-        final WebView webView = (WebView) findViewById(R.id.web_view);
         final WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setSupportZoom(true);
@@ -176,39 +181,59 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
                 }
             }.setLoadWithOverviewMode(true);
         }
-
         settings.setCacheMode(WebSettings.LOAD_DEFAULT);
-
         getWindow().getDecorView().post(new Runnable() {
             @Override
             public void run() {
                 webView.loadUrl("http://www.jianshu.com/p/fc923690463f");
-
             }
         });
     }
 
     private void setListener() {
+        ivBack.setOnClickListener(this);
+        ivShare.setOnClickListener(this);
         detailsLayout.setOnSlideDetailsListener(new MyOnSlideDetailsListener());
         appBarLayout.addOnOffsetChangedListener(new MyOnOffsetChangedListener());
-        goodsInfoLayout.setOnClickListener(this);
+        specificationLayout.setOnClickListener(this);
         recommendCodeLayout.setOnClickListener(this);
         addressLayout.setOnClickListener(this);
-
         tvDesc.setOnClickListener(this);
         tvQuestion.setOnClickListener(this);
         tvService.setOnClickListener(this);
+        tvPay.setOnClickListener(this);
+        bannerLayout.setOnItemClickListener(this);
     }
 
+    @Override
+    public void setGoodsDetail(GoodsDetailBean bean) {
+        imageUrls = bean.image;
+        bottomLayout.setVisibility(View.VISIBLE);
+        bannerLayout.setData(imageUrls,null);
+        tvPrice.setText(String.format(getString(R.string.rmb_price),bean.price));
+        tvMarketPrice.setText(String.format(getString(R.string.rmb_price),bean.market_price));
+        tvMarketPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG );
+        tvGoodsName.setText(bean.name);
+        /*if(bean.coupon == null || bean.coupon.isEmpty()){
+            couponLayout.setVisibility(View.GONE);
+        }else{
+            couponLayout.setVisibility(View.VISIBLE);
+        }*/
+    }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.iv_back:
+                finish();
+                break;
+            case R.id.iv_share:
+                break;
             case R.id.ll_recommend_code:
                 inputRecommendCodeDialog();
                 break;
             case R.id.ll_goods_info:
-                if(goodsInfoPopup == null){
+                if(goodInfoPopup == null){
                     goodInfoPopup = new GoodsInfoPopupWindow(this,false);
                 }
                 goodInfoPopup.showAtLocation(rootLayout,Gravity.BOTTOM,0,0);
@@ -252,7 +277,6 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
 
     private void inputRecommendCodeDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
         builder.setMessage("请输入推荐码")
                 .setCancelable(true)
                 .setView(new EditText(this),100,20,100,20)
@@ -266,8 +290,12 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
                         dialog.cancel();
                     }
                 });
-
         builder.show();
+    }
+
+    @Override
+    public void onBannerItemClick(BGABanner banner, View view, Object model, int position) {
+        ImagePreviewActivity.start(this,(ArrayList<String>) imageUrls,position);
     }
 
 
@@ -284,10 +312,7 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
         }
     }
 
-    @Override
-    public void setGoodsDetail(GoodsDetailBean goodsDetailBean) {
 
-    }
 
     private  class MyOnOffsetChangedListener implements AppBarLayout.OnOffsetChangedListener{
         @Override
@@ -295,7 +320,6 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
             int maxScroll = appBarLayout.getTotalScrollRange();
             float percentage = (float) Math.abs(verticalOffset) / (float) maxScroll;
             titleLayout.setBackgroundColor(Color.argb((int) (percentage * 255), 0, 0, 0));
-
         }
     }
 }

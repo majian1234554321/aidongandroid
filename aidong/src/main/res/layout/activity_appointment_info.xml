@@ -258,7 +258,7 @@
                 android:id="@+id/tv_total_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:left_text="商品总额:" />
+                app:left_text="课程/活动总额:" />
 
             <com.leyuan.aidong.widget.customview.ExtendTextView
                 android:id="@+id/tv_express_price"
@@ -276,7 +276,7 @@
                 android:id="@+id/tv_discount_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:left_text="商品优惠:" />
+                app:left_text="课程/活动优惠:" />
 
             <com.leyuan.aidong.widget.customview.ExtendTextView
                 android:id="@+id/tv_aibi"

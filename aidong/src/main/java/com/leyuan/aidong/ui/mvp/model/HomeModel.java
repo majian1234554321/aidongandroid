@@ -1,8 +1,10 @@
 package com.leyuan.aidong.ui.mvp.model;
 
-import com.leyuan.aidong.entity.BrandBean;
-import com.leyuan.aidong.entity.data.BannerData;
+import com.leyuan.aidong.entity.BannerBean;
+import com.leyuan.aidong.entity.data.BrandData;
 import com.leyuan.aidong.entity.data.HomeData;
+
+import java.util.List;
 
 import rx.Subscriber;
 
@@ -24,13 +26,12 @@ public interface HomeModel {
      * @param id 小分类id
      * @param page 页码
      */
-    void getBrandDetail(Subscriber<BrandBean> subscriber, int id, int page);
+    void getBrandDetail(Subscriber<BrandData> subscriber, String id, int page);
 
     /**
      * 获取Banner
-     * @param subscriber Subscriber
      */
-    void getBanners(Subscriber<BannerData> subscriber);
+    List<BannerBean> getBanners();
 
 
 }

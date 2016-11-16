@@ -82,7 +82,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
         shopView.setLayoutManager(new LinearLayoutManager(this));
         shopAdapter = new CartShopAdapter(this);
         shopView.setAdapter(shopAdapter);
-        recommendAdapter = new RecommendAdapter(this);
+       // recommendAdapter = new RecommendAdapter(this);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(recommendAdapter);
         recommendView.setAdapter(wrapperAdapter);
         GridLayoutManager manager = new GridLayoutManager(this, 2);

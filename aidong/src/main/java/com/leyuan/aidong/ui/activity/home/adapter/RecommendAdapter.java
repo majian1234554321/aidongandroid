@@ -6,10 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.GoodsBean;
-import com.leyuan.aidong.ui.activity.home.GoodsDetailActivity;
+import com.leyuan.aidong.ui.activity.home.BrandActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,29 +20,17 @@ import java.util.List;
  */
 public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.GoodsHolder>{
     private Context context;
+    private String type;
     private List<GoodsBean> data= new ArrayList<>();
 
-    public RecommendAdapter(Context context) {
+    public RecommendAdapter(Context context,String type) {
         this.context = context;
+        this.type = type;
     }
 
     public void setData(List<GoodsBean> data) {
         if(data != null){
             this.data = data;
-        }else{
-            for (int i = 0; i < 10; i++) {
-                GoodsBean bean = new GoodsBean();
-                if(i % 2 == 0){
-                    bean.setCover("http://ww2.sinaimg.cn/mw690/006uFQHggw1f94x7xfic2j30qo0zi47p.jpg");
-                    bean.setName("AiFukuhara");
-                    bean.setPrice("999");
-                }else{
-                    bean.setCover("http://ww3.sinaimg.cn/mw690/006uFQHggw1f9e6ex106aj30qo0zmtib.jpg");
-                    bean.setName("food");
-                    bean.setPrice("9");
-                }
-                this.data.add(bean);
-            }
         }
     }
 
@@ -59,7 +47,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Good
 
     @Override
     public void onBindViewHolder(GoodsHolder holder, int position) {
-        GoodsBean bean = data.get(position);
+        final GoodsBean bean = data.get(position);
         holder.dvGoods.setImageURI(bean.getCover());
         holder.tvName.setText(bean.getName());
         holder.tvPrice.setText(bean.getPrice());
@@ -67,7 +55,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Good
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GoodsDetailActivity.start(context,"1");
+                ((BrandActivity)context).toTagetDetailActivity(type,bean.getId());
             }
         });
     }
