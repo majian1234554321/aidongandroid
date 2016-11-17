@@ -124,7 +124,7 @@ public class SystemInfoUtils {
             }
 
         } else {
-            throw new IllegalArgumentException("the obj must implement Serializable or Parcelable");
+            throw new IllegalArgumentException("the obj must implement Serializable");
         }
     }
 

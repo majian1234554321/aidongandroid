@@ -54,7 +54,7 @@ public class NurtureAdapter extends RecyclerView.Adapter<NurtureAdapter.NurtureV
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GoodsDetailActivity.start(context,TYEP_NURTURE,bean.getId());
+                GoodsDetailActivity.start(context,bean.getId(),TYEP_NURTURE);
             }
         });
     }

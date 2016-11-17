@@ -2,22 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:paddingLeft="@dimen/left_margin"
-    android:paddingRight="@dimen/right_margin">
+    android:paddingRight="@dimen/right_margin"
+    android:background="@color/white">
 
     <TextView
-        android:id="@+id/tv_specification"
+        android:id="@+id/tv_sku_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="口味"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:textSize="15sp"
+        android:textSize="14sp"
         android:textColor="@color/c9"/>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_specification"
+        android:id="@+id/rv_sku_value"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 </LinearLayout>

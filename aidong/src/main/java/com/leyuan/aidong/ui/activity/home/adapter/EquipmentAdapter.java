@@ -1,19 +1,20 @@
 package com.leyuan.aidong.ui.activity.home.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.activity.home.GoodsDetailActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.EquipmentBean;
+import com.leyuan.aidong.ui.activity.home.GoodsDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.leyuan.aidong.ui.activity.home.GoodsDetailActivity.TYEP_EQUIPMENT;
 
 
 /**
@@ -45,7 +46,7 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.Equi
 
     @Override
     public void onBindViewHolder(final EquipmentViewHolder holder, int position) {
-        EquipmentBean bean = data.get(position);
+        final EquipmentBean bean = data.get(position);
         holder.cover.setImageURI(bean.getCover());
         holder.name.setText(bean.getName());
         holder.price.setText(String.format(context.getString(R.string.rmb_price),bean.getPrice()));
@@ -53,8 +54,7 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.Equi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, GoodsDetailActivity.class);
-                context.startActivity(intent);
+                GoodsDetailActivity.start(context,bean.getId(),TYEP_EQUIPMENT);
             }
         });
     }

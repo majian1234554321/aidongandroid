@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CampaignDetailBean;
+import com.leyuan.aidong.entity.PayOrderBean;
 import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.ApplicantAdapter;
@@ -195,6 +196,11 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
     }
 
     @Override
+    public void onBuyCampaign(PayOrderBean payOrderBean) {
+
+    }
+
+    @Override
     public void shareCampaign() {
 
     }
@@ -223,4 +229,5 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
     public void showNoContentView() {
         switcherLayout.showEmptyLayout();
     }
+
 }

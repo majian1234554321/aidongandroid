@@ -19,20 +19,19 @@ import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.entity.GoodsDetailBean;
+import com.leyuan.aidong.entity.GoodsSpecBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.GoodsDetailCouponAdapter;
-import com.leyuan.aidong.ui.activity.home.view.GoodsInfoPopupWindow;
+import com.leyuan.aidong.ui.activity.home.view.GoodsSkuPopupWindow;
 import com.leyuan.aidong.ui.mvp.presenter.GoodsDetailPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.GoodDetailPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.GoodsDetailActivityView;
-import com.leyuan.aidong.utils.DensityUtil;
-import com.leyuan.aidong.widget.customview.ObserveScrollView;
 import com.leyuan.aidong.widget.customview.SlideDetailsLayout;
 import com.leyuan.aidong.widget.customview.SwitcherLayout;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -46,7 +45,7 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  * 商品详情
  * Created by song on 2016/9/12.
  */
-public class GoodsDetailActivity extends BaseActivity implements ObserveScrollView.ScrollViewListener, View.OnClickListener,GoodsDetailActivityView, BGABanner.OnItemClickListener {
+public class GoodsDetailActivity extends BaseActivity implements View.OnClickListener,GoodsDetailActivityView, BGABanner.OnItemClickListener {
     public static final String TYEP_NURTURE = "nutrition";
     public static final String TYEP_EQUIPMENT = "equipments";
     public static final String TYEP_FOODS = "foods";
@@ -59,8 +58,9 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
     private TextView tvPrice;
     private TextView tvMarketPrice;
     private TextView tvGoodsName;
-    private LinearLayout couponLayout;
+    private TextView tvCoupon;
     private RecyclerView couponView;
+    private View lineCoupon;
     private LinearLayout specificationLayout;
     private TextView tvSelectSpecification;
     private LinearLayout recommendCodeLayout;
@@ -81,15 +81,14 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
     private TextView tvAddCart;
     private TextView tvPay;
 
-    private GoodsInfoPopupWindow goodInfoPopup;
-    private List<CouponBean> couponBeanList;
+    private List<String> bannerUrls = new ArrayList<>();
     private GoodsDetailCouponAdapter couponAdapter;
+    private PopupWindow goodSkuPopup;
+    private GoodsSpecBean specBean;
 
-    private String id = "8";
-    private String type = "nutrition";
+    private String id;
+    private String type ;
     private GoodsDetailPresent goodsDetailPresent;
-
-    private List<String> imageUrls = new ArrayList<>();
 
     public static void start(Context context,String id,String type) {
         Intent starter = new Intent(context, GoodsDetailActivity.class);
@@ -103,10 +102,10 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_detail);
         goodsDetailPresent = new GoodDetailPresentImpl(this,this);
-       /* if(getIntent() != null){
+        if(getIntent() != null){
             id = getIntent().getStringExtra("id");
             type = getIntent().getStringExtra("type");
-        }*/
+        }
 
         initView();
         setListener();
@@ -123,8 +122,9 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
         tvPrice = (TextView) findViewById(R.id.tv_price);
         tvMarketPrice = (TextView) findViewById(R.id.tv_market_price);
         tvGoodsName = (TextView) findViewById(R.id.tv_goods_name);
-        couponLayout = (LinearLayout) findViewById(R.id.ll_coupon);
+        tvCoupon = (TextView) findViewById(R.id.tv_coupon);
         couponView = (RecyclerView) findViewById(R.id.rv_coupon);
+        lineCoupon = findViewById(R.id.line_coupon);
         specificationLayout = (LinearLayout) findViewById(R.id.ll_goods_specification);
         tvSelectSpecification = (TextView) findViewById(R.id.tv_select_specification);
         recommendCodeLayout = (LinearLayout) findViewById(R.id.ll_recommend_code);
@@ -156,8 +156,8 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
         //设置优惠券
         couponView.setLayoutManager(new LinearLayoutManager
                 (this,LinearLayoutManager.HORIZONTAL,false));
-        couponView.setNestedScrollingEnabled(false);
         couponAdapter = new GoodsDetailCouponAdapter(this);
+        couponView.setNestedScrollingEnabled(false);
         couponView.setAdapter(couponAdapter);
 
         final WebSettings settings = webView.getSettings();
@@ -207,18 +207,26 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
 
     @Override
     public void setGoodsDetail(GoodsDetailBean bean) {
-        imageUrls = bean.image;
         bottomLayout.setVisibility(View.VISIBLE);
-        bannerLayout.setData(imageUrls,null);
+        //bannerUrls = bean.image;
+        bannerUrls.add("http://o8e1adk04.bkt.clouddn.com/image/2016/07/28/e391a4e8e20206696ff465db27f1c56a.jpg");
+        bannerUrls.add("http://o8e1adk04.bkt.clouddn.com/image/2016/07/28/7fda4371e89056af7580c46027489310.jpg");
+        bannerUrls.add("http://o8e1adk04.bkt.clouddn.com/image/2016/07/28/03d618e00649619e76e0300cbf1b6451.jpg");
+        bannerLayout.setData(bannerUrls,null);
         tvPrice.setText(String.format(getString(R.string.rmb_price),bean.price));
         tvMarketPrice.setText(String.format(getString(R.string.rmb_price),bean.market_price));
         tvMarketPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG );
         tvGoodsName.setText(bean.name);
-        /*if(bean.coupon == null || bean.coupon.isEmpty()){
-            couponLayout.setVisibility(View.GONE);
+        specBean = bean.spec;
+
+        if(bean.coupon == null || bean.coupon.isEmpty()){
+            tvCoupon.setVisibility(View.GONE);
+            lineCoupon.setVisibility(View.GONE);
+            couponAdapter.setData(bean.coupon);
         }else{
-            couponLayout.setVisibility(View.VISIBLE);
-        }*/
+            tvCoupon.setVisibility(View.VISIBLE);
+            lineCoupon.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -232,11 +240,11 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
             case R.id.ll_recommend_code:
                 inputRecommendCodeDialog();
                 break;
-            case R.id.ll_goods_info:
-                if(goodInfoPopup == null){
-                    goodInfoPopup = new GoodsInfoPopupWindow(this,false);
+            case R.id.ll_goods_specification:
+                if(goodSkuPopup == null){
+                    goodSkuPopup = new GoodsSkuPopupWindow(this,specBean,false);
                 }
-                goodInfoPopup.showAtLocation(rootLayout,Gravity.BOTTOM,0,0);
+                goodSkuPopup.showAtLocation(rootLayout, Gravity.BOTTOM,0,0);
                 break;
             case R.id.ll_address:
                 Intent intent = new Intent(this,DeliveryInfoActivity.class);
@@ -259,22 +267,6 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
         }
     }
 
-    @Override
-    public void onScrollChanged(ObserveScrollView scrollView, int x, int y, int oldX, int oldY) {
-        int height = DensityUtil.dp2px(GoodsDetailActivity.this,345);
-        if (y <= 0) {
-            titleLayout.setBackgroundColor(Color.argb( 0, 0,0,0));
-        } else if (y > 0 && y <= height) {
-            float ratio = (float) y / height;
-            float alpha = (255 * ratio);
-            titleLayout.setBackgroundColor(Color.argb((int) alpha, 0,0,0));
-        } else {
-            titleLayout.setBackgroundColor(Color.argb(255, 0,0,0));
-        }
-    }
-
-
-
     private void inputRecommendCodeDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("请输入推荐码")
@@ -295,7 +287,7 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
 
     @Override
     public void onBannerItemClick(BGABanner banner, View view, Object model, int position) {
-        ImagePreviewActivity.start(this,(ArrayList<String>) imageUrls,position);
+        ImagePreviewActivity.start(this,(ArrayList<String>) bannerUrls,position);
     }
 
 
@@ -312,8 +304,6 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
         }
     }
 
-
-
     private  class MyOnOffsetChangedListener implements AppBarLayout.OnOffsetChangedListener{
         @Override
         public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -322,4 +312,6 @@ public class GoodsDetailActivity extends BaseActivity implements ObserveScrollVi
             titleLayout.setBackgroundColor(Color.argb((int) (percentage * 255), 0, 0, 0));
         }
     }
+
+
 }

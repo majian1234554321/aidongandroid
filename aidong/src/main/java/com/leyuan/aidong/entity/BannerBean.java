@@ -1,10 +1,13 @@
 package com.leyuan.aidong.entity;
 
+
+import java.io.Serializable;
+
 /**
  * Banner
  * Created by song on 2016/8/30.
  */
-public class BannerBean {
+public class BannerBean  implements Serializable{
     private String title;       //广告标题
     private String position;    //广告位置,#0-开机广告 1-首页广告位 2-弹出广告位
     private String type;        //广告类型,#10-内嵌网页 11-外部网页 20-场馆 21-营养品 22-课程 23-活动
@@ -49,16 +52,5 @@ public class BannerBean {
 
     public void setLink(String link) {
         this.link = link;
-    }
-
-    @Override
-    public String toString() {
-        return "BannerBean{" +
-                "title='" + title + '\'' +
-                ", position='" + position + '\'' +
-                ", type='" + type + '\'' +
-                ", image='" + image + '\'' +
-                ", link='" + link + '\'' +
-                '}';
     }
 }

@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.mvp.view;
 
 import com.leyuan.aidong.entity.CampaignDetailBean;
+import com.leyuan.aidong.entity.PayOrderBean;
 
 /**
  * 活动详情
@@ -12,6 +13,12 @@ public interface CampaignDetailActivityView {
      * @param campaignDetailBean CampaignDetailBean
      */
     void setCampaignDetail(CampaignDetailBean campaignDetailBean);
+
+    /**
+     * 购买活动回调
+     * @param payOrderBean PayOrderBean
+     */
+    void onBuyCampaign(PayOrderBean payOrderBean);
 
     /**
      * 分享此活动

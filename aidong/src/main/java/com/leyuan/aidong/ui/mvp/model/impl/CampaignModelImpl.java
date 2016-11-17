@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.mvp.model.impl;
 
 import com.leyuan.aidong.entity.data.CampaignData;
 import com.leyuan.aidong.entity.data.CampaignDetailData;
+import com.leyuan.aidong.entity.data.PayOrderData;
 import com.leyuan.aidong.http.RetrofitHelper;
 import com.leyuan.aidong.http.RxHelper;
 import com.leyuan.aidong.http.api.CampaignService;
@@ -32,6 +33,14 @@ public class CampaignModelImpl implements CampaignModel{
     public void getCampaignDetail(Subscriber<CampaignDetailData> subscriber, String id) {
         campaignService.getCampaignDetail(id)
                 .compose(RxHelper.<CampaignDetailData>transform())
+                .subscribe(subscriber);
+    }
+
+    @Override
+    public void buyCampaign(Subscriber<PayOrderData> subscriber, String id, String couponId,
+                            float integral, String payType, String contactName, String contactMobile) {
+        campaignService.buyCampaignDetail(id,couponId,integral,payType,contactName,contactMobile)
+                .compose(RxHelper.<PayOrderData>transform())
                 .subscribe(subscriber);
     }
 }
