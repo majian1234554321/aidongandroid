@@ -3,6 +3,8 @@ package com.leyuan.aidong.utils;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.leyuan.aidong.ui.App;
+
 /**
  * Toast统一管理类
  */
@@ -83,5 +85,16 @@ public class ToastUtil {
         if (isShow)
             Toast.makeText(context, message, duration).show();
     }
+
+    private static  Toast toast;
+    public static void showConsecutiveShort(String message){
+           if(toast == null){
+               toast = Toast.makeText(App.context,"",Toast.LENGTH_SHORT);
+           }
+        toast.setText(message);
+        toast.show();
+    }
+
+
 
 }

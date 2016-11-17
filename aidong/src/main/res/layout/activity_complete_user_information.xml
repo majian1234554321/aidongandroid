@@ -5,12 +5,13 @@
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/ll_root"
     android:background="@color/white"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <com.leyuan.aidong.widget.CommonTitleLayout
@@ -199,10 +200,11 @@
             <Button
                 android:id="@+id/btn_height"
                 style="@style/ButtonStyleAlignRightWithArrow"
-                android:text="@string/please_select" />
+                android:text="@string/please_select"
+                android:layout_above="@+id/view4" />
             <View
                 style="@style/common_divider_style"
-                />
+                android:id="@+id/view4" />
         </RelativeLayout>
 
         <RelativeLayout

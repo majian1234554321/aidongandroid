@@ -23,6 +23,7 @@ public class AddressPopupWindow extends BaseAddressPopupWindow implements View.O
     private WheelView wvDistrict;
     private TextView sure;
     private TextView cancel;
+    private OnConfirmAddressListener listener;
 
     public AddressPopupWindow(Context context) {
         super(context);
@@ -88,9 +89,14 @@ public class AddressPopupWindow extends BaseAddressPopupWindow implements View.O
                         currentProvinceName,currentCityName,currentDistrictName);
                 if(context instanceof AddAddressActivity){
                     ((AddAddressActivity)context).setAddress(address);
-                }else{
+                }else  if(context instanceof UpdateAddressActivity){
                     ((UpdateAddressActivity)context).setAddress(address);
                 }
+
+                if(listener!=null){
+                    listener.onAddressConfirm(currentProvinceName,currentCityName,currentDistrictName);
+                }
+
                 dismiss();
                 break;
         }
@@ -119,5 +125,13 @@ public class AddressPopupWindow extends BaseAddressPopupWindow implements View.O
         wvDistrict.setViewAdapter(new ArrayWheelAdapter<>(context, areas));
         wvDistrict.setCurrentItem(0);
         currentDistrictName = areas[0];
+    }
+
+    public  void setOnConfirmAddressListener(OnConfirmAddressListener listener){
+        this.listener = listener;
+    }
+
+    public interface OnConfirmAddressListener{
+        void onAddressConfirm( String province, String city, String area);
     }
 }

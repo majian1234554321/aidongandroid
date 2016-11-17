@@ -20,7 +20,7 @@ import static com.leyuan.aidong.ui.App.mInstance;
 
 
 public class RetrofitHelper {
-    private static final int DEFAULT_TIMEOUT = 5;
+    private static final int DEFAULT_TIMEOUT = 30;
     private static Retrofit singleton;
 
     public static <T> T createApi( Class<T> clazz) {
