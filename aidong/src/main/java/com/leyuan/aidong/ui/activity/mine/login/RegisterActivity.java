@@ -16,6 +16,7 @@ import com.leyuan.aidong.ui.mvp.view.RegisterViewInterface;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.widget.CommonTitleLayout;
 import com.leyuan.aidong.widget.DialogImageIdentify;
+import com.leyuan.commonlibrary.manager.UiManager;
 import com.leyuan.commonlibrary.util.StringUtils;
 
 
@@ -140,9 +141,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void register(boolean success) {
-
+        UiManager.activityJump(this,CompleteUserInfomationActivity.class);
         if (success) {
              ToastUtil.showShort(App.context, "注册成功");
+            UiManager.activityJump(this,CompleteUserInfomationActivity.class);
             finish();
         } else {
             //  ToastUtil.showShort(MyApplication.context, "注册失败 请重新提交");
