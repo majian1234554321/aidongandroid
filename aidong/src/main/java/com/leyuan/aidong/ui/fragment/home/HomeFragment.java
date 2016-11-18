@@ -190,6 +190,9 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
     public void updateBanner(List<BannerBean> bannerBeanList) {
         if(bannerBeanList != null && !bannerBeanList.isEmpty()){
             banner.setData(bannerBeanList,null);
+            banner.setVisibility(View.VISIBLE);
+        }else{
+            banner.setVisibility(View.GONE);
         }
     }
 

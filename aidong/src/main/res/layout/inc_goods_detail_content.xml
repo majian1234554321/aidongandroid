@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_price"
@@ -44,47 +44,41 @@
         android:layout_marginTop="2dp"
         android:src="@drawable/venues_divider" />
 
-        <LinearLayout
-            android:id="@+id/ll_coupon"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:orientation="vertical"
-            android:visibility="visible">
+    <TextView
+        android:id="@+id/tv_coupon"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:drawableLeft="@drawable/icon_black_point"
+        android:drawablePadding="5dp"
+        android:drawableRight="@drawable/icon_black_point"
+        android:gravity="center_vertical"
+        android:text="爱动福利券"
+        android:textSize="16sp"
+        android:visibility="visible"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_gravity="center_horizontal"
-                android:drawableLeft="@drawable/icon_black_point"
-                android:drawablePadding="5dp"
-                android:drawableRight="@drawable/icon_black_point"
-                android:gravity="center_vertical"
-                android:text="爱动福利券"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_coupon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="7.5dp"
+        android:layout_marginRight="7.5dp" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_coupon"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="7.5dp"
-                android:layout_marginRight="7.5dp"
-                android:layout_marginBottom="15dp"/>
-
-            <include layout="@layout/inc_bold_line" />
-
-        </LinearLayout>
+    <View
+        android:id="@+id/line_coupon"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/line_color"
+        android:visibility="visible"/>
 
     <LinearLayout
         android:id="@+id/ll_goods_specification"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:paddingLeft="@dimen/left_margin"
-        android:paddingRight="@dimen/right_margin"
+        android:layout_height="55dp"
+        android:background="?selectableItemBackground"
         android:orientation="horizontal"
-        android:background="?selectableItemBackground">
+        android:paddingLeft="@dimen/left_margin"
+        android:paddingRight="@dimen/right_margin">
 
         <TextView
             android:layout_width="0dp"
@@ -113,11 +107,11 @@
     <LinearLayout
         android:id="@+id/ll_recommend_code"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:paddingLeft="@dimen/left_margin"
-        android:paddingRight="@dimen/right_margin"
+        android:layout_height="55dp"
+        android:background="?selectableItemBackground"
         android:orientation="horizontal"
-        android:background="?selectableItemBackground">
+        android:paddingLeft="@dimen/left_margin"
+        android:paddingRight="@dimen/right_margin">
 
         <TextView
             android:layout_width="0dp"
@@ -147,11 +141,11 @@
     <LinearLayout
         android:id="@+id/ll_address"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:paddingLeft="@dimen/left_margin"
-        android:paddingRight="@dimen/right_margin"
+        android:layout_height="55dp"
+        android:background="?selectableItemBackground"
         android:orientation="horizontal"
-        android:background="?selectableItemBackground">
+        android:paddingLeft="@dimen/left_margin"
+        android:paddingRight="@dimen/right_margin">
 
         <TextView
             android:layout_width="0dp"
@@ -196,58 +190,58 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icon_self_delivery"/>
+                android:src="@drawable/icon_self_delivery" />
 
         </LinearLayout>
 
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icon_return"/>
+                android:src="@drawable/icon_return" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icon_genuine"/>
+                android:src="@drawable/icon_genuine" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icon_gabalnara"/>
+                android:src="@drawable/icon_gabalnara" />
 
         </LinearLayout>
     </LinearLayout>
@@ -263,8 +257,8 @@
             android:id="@+id/iv_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/icon_arrow_up"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:background="@drawable/icon_arrow_up" />
 
         <TextView
             android:id="@+id/tv_tip"

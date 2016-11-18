@@ -34,4 +34,15 @@ public interface CampaignPresent {
      * @param id 活动id
      */
     void getCampaignDetail(String id);
+
+    /**
+     * 购买活动
+     * @param id 活动id
+     * @param couponId 优惠券id
+     * @param integral 积分
+     * @param payType 支付类型
+     * @param contactName 联系人
+     * @param contactMobile 联系人电话
+     */
+    void buyCampaign(String id,String couponId,float integral,String payType,String contactName,String contactMobile);
 }

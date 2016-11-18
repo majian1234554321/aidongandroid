@@ -86,11 +86,9 @@
 
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_specification"
+        android:id="@+id/rv_sku"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="7.5dp"
-        android:layout_marginRight="7.5dp" />
+        android:layout_height="wrap_content" />
 
 
     <LinearLayout

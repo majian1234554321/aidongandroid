@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.activity.home.CourseDetailActivity;
+import com.leyuan.aidong.ui.activity.home.OldCourseDetailActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.entity.CourseBean;
 
@@ -68,7 +68,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CourseDetailActivity.start(context,"1");
+                OldCourseDetailActivity.start(context,"1");
             }
         });
     }
