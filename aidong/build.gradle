@@ -49,12 +49,12 @@ android {
             signingConfig signingConfigs.release
         }
     }
-
-    sourceSets {
-        main {
-            jniLibs.srcDirs = ['libs']
-        }
-    }
+//
+//    sourceSets {
+//        main {
+//            jniLibs.srcDirs = ['libs']
+//        }
+//    }
 
     lintOptions {
         abortOnError false
