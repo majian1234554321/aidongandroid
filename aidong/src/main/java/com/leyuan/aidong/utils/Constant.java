@@ -12,4 +12,6 @@ public class Constant {
     public static final String  BASE_URL = "http://192.168.0.207:3001/";
 
     public static SystemBean systemInfoBean;
+
+
 }

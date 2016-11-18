@@ -141,14 +141,15 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void register(boolean success) {
-        UiManager.activityJump(this,CompleteUserInfomationActivity.class);
+//        UiManager.activityJump(this,CompleteUserInfomationActivity.class);
         if (success) {
              ToastUtil.showShort(App.context, "注册成功");
             UiManager.activityJump(this,CompleteUserInfomationActivity.class);
             finish();
-        } else {
-            //  ToastUtil.showShort(MyApplication.context, "注册失败 请重新提交");
         }
+//        else {
+            //  ToastUtil.showShort(MyApplication.context, "注册失败 请重新提交");
+//        }
     }
 
     @Override

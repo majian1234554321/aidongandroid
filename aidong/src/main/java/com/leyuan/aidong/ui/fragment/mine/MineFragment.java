@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.fragment.mine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -115,14 +116,19 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     private void initData() {
 
-         if(App.mInstance.isLogin()){
-             relativeLayout_my_logo.setVisibility(View.VISIBLE);
-             layout_no_login.setVisibility(View.GONE);
-         }else{
-             relativeLayout_my_logo.setVisibility(View.GONE);
-             layout_no_login.setVisibility(View.VISIBLE);
-         }
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(App.mInstance.isLogin()){
+            relativeLayout_my_logo.setVisibility(View.VISIBLE);
+            layout_no_login.setVisibility(View.GONE);
+        }else{
+            relativeLayout_my_logo.setVisibility(View.GONE);
+            layout_no_login.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -139,7 +145,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 UiManager.activityJump(getActivity(), MessageActivity.class);
                 break;
             case R.id.imageView_head:
-                UiManager.activityJump(getActivity(), MyShowActivityNew.class);
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), MyShowActivityNew.class);
+                intent.putExtra(com.leyuan.aidong.utils.common.Constant.user,App.mInstance.getUser());
+                startActivity(intent);
                 break;
             case R.id.relativeLayout_yuyue:
                 UiManager.activityJump(getActivity(), AppointmentActivity.class);

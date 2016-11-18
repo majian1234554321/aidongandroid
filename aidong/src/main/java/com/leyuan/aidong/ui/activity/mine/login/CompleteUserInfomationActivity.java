@@ -14,9 +14,14 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.mine.view.AddressPopupWindow;
+import com.leyuan.aidong.ui.mvp.presenter.impl.CompleteUserPresenter;
+import com.leyuan.aidong.ui.mvp.view.CompleteUserViewInterface;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.widget.ActionSheetDialog;
 import com.leyuan.aidong.widget.CommonTitleLayout;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.leyuan.aidong.R.id.layout_title;
 import static com.leyuan.aidong.R.id.txt_change_avatar;
@@ -25,7 +30,7 @@ import static com.leyuan.aidong.R.id.txt_change_avatar;
  * Created by user on 2016/11/1.
  */
 
-public class CompleteUserInfomationActivity extends BaseActivity implements View.OnClickListener {
+public class CompleteUserInfomationActivity extends BaseActivity implements View.OnClickListener, CompleteUserViewInterface{
     private CommonTitleLayout layoutTitle;
     private SimpleDraweeView imgAvatar;
     private TextView txtChangeAvatar;
@@ -34,14 +39,19 @@ public class CompleteUserInfomationActivity extends BaseActivity implements View
     private ScrollView rootLayout;
     Button btn_gender,btn_city,btn_sign,btn_identify,btn_birthday,btn_constellation,btn_height
             ,btn_weight,btn_exercise,btn_bmi;
-    private String nickname,avatar,gender,birthday,signature,sport,province,city,area,height,weight
-            ,bust,waist,hip,chart_site,frequency;
+    private String nickname,filepath;
+//            ,avatar,gender,birthday,signature,sport,province,city,area,height,weight
+//            ,bust,waist,hip,chart_site,frequency;
+
+    private CompleteUserPresenter presenter;
+    private Map<String,String > params = new HashMap<>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complete_user_information);
+        presenter = new CompleteUserPresenter(this,this);
         initView();
     }
 
@@ -91,7 +101,7 @@ public class CompleteUserInfomationActivity extends BaseActivity implements View
             case R.id.txt_right:
                 //调接口
                 if(verify()){
-
+                    presenter.completeUserInfo(params,filepath);
                 }
 
                 break;
@@ -112,17 +122,21 @@ public class CompleteUserInfomationActivity extends BaseActivity implements View
                     addressPopup = new AddressPopupWindow(this);
                     addressPopup.setOnConfirmAddressListener(new AddressPopupWindow.OnConfirmAddressListener() {
                         @Override
-                        public void onAddressConfirm(String p, String c, String a) {
-                            province = p;
-                            city = c;
-                            area = a;
+                        public void onAddressConfirm(String province, String city, String area) {
+//                            province = p;
+//                            city = c;
+//                            area = a;
                             btn_city.setText(province+"-"+city+"-"+area);
+                            params.put("province",province);
+                            params.put("city",city);
+                            params.put("area",area);
                         }
                     });
                 }
                 addressPopup.showAtLocation(rootLayout, Gravity.BOTTOM,0,0);
                 break;
             case R.id.btn_sign:
+                
 
                 break;
             case R.id.btn_identify:
@@ -151,15 +165,15 @@ public class CompleteUserInfomationActivity extends BaseActivity implements View
             ToastUtil.showConsecutiveShort("请输入昵称");
             return false;
         }
-        if(TextUtils.isEmpty(gender)){
+        if(TextUtils.isEmpty(params.get("gender"))){
             ToastUtil.showConsecutiveShort("请选择性别");
             return false;
         }
-        if(TextUtils.isEmpty(province)){
+        if(TextUtils.isEmpty(params.get("province"))){
             ToastUtil.showConsecutiveShort("请选择城市");
             return false;
         }
-
+        params.put("nickname",nickname);
 
         return true;
     }
@@ -187,16 +201,18 @@ public class CompleteUserInfomationActivity extends BaseActivity implements View
                 .addSheetItem("男", ActionSheetDialog.SheetItemColor.Black, new ActionSheetDialog.OnSheetItemClickListener() {
                     @Override
                     public void onClick(int which) {
-                        gender=String.valueOf(which);
+//                        gender=String.valueOf(which);
                         btn_gender.setText("男");
+                        params.put("gender","0");
 
                     }
                 })
                 .addSheetItem("女", ActionSheetDialog.SheetItemColor.Black, new ActionSheetDialog.OnSheetItemClickListener() {
                     @Override
                     public void onClick(int which) {
-                        gender=String.valueOf(which);
+//                        gender=String.valueOf(which);
                         btn_gender.setText("女");
+                        params.put("gender","1");
                     }
                 })
                 .show();
@@ -209,4 +225,13 @@ public class CompleteUserInfomationActivity extends BaseActivity implements View
                 .setCanceledOnTouchOutside(false);
     }
 
+    @Override
+    public void OnCompletUserInfoCallBack(boolean success) {
+        if(success){
+            ToastUtil.showConsecutiveShort("更新资料成功");
+            finish();
+        }else{
+
+        }
+    }
 }

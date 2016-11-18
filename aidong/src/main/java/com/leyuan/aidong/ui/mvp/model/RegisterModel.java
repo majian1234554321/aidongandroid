@@ -4,8 +4,15 @@ import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.http.RetrofitHelper;
 import com.leyuan.aidong.http.RxHelper;
 import com.leyuan.aidong.http.api.IdentifyService;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.mvp.model.interfaces.RegisterModelInterface;
 
+import java.io.File;
+import java.util.Map;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import rx.Subscriber;
 
 public class RegisterModel implements RegisterModelInterface {
@@ -51,5 +58,17 @@ public class RegisterModel implements RegisterModelInterface {
                 .compose(RxHelper.<UserCoach>transform())
                 .subscribe(subscriber);
 
+    }
+
+    public void completeUserInfo(Subscriber<UserCoach> subscriber, Map<String, String> params, String filePath) {
+        MultipartBody.Part body = null;
+            if(filePath !=null){
+                File file = new File(filePath);
+                RequestBody requestFile = RequestBody.create(MediaType.parse("application/octet-stream"), file);
+                body = MultipartBody.Part.createFormData("avatar", file.getName(), requestFile);
+            }
+        mIdentifyService.completeUserInfo(params, App.mInstance.getToken())
+                .compose(RxHelper.<UserCoach>transform())
+                .subscribe(subscriber);
     }
 }

@@ -4,9 +4,14 @@ package com.leyuan.aidong.http.api;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.model.UserCoach;
 
+import java.util.Map;
+
 import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import rx.Observable;
 
@@ -32,5 +37,9 @@ public interface IdentifyService {
     @FormUrlEncoded
     @POST("captcha_image/{mobile}")
     Observable<BaseBean<UserCoach>> checkCaptchaImage(@Path("mobile") String mobile,@Field("captcha") String captcha);
+
+    @FormUrlEncoded
+    @PUT("mine/profile")
+    Observable<BaseBean<UserCoach>> completeUserInfo(@FieldMap Map<String ,String> param, @Header("token") String token);
 
 }

@@ -79,6 +79,8 @@ public class RegisterPresenter implements RegisterPresenterInterface {
             @Override
             public void onNext(UserCoach user) {
                 mRegisterViewInterface.register(true);
+                if(user!=null)
+                App.mInstance.setToken(user.getToken());
 //                App.mInstance.setUser(user);
             }
         }, token, code, password);

@@ -138,4 +138,6 @@ public class Constant {
 	public static final String BUNDLE_URL = "BUNDLE_URL";
 	public static final String BUNDLE_BIGIMAGEITEM_INDEX = "BUNDLE_BIGIMAGEITEM_INDEX";
 
+	public static final String  user = "user";
+
 }

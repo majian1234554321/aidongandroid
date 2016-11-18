@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class UserCoach extends User implements Serializable{
 	protected String token; // '用户token值',
 //	protected String name; // '昵称'，
-	protected int mxid; // 美型号,
+	protected int id; // 美型号,
 //	protected String avatar; // 头像,
 //	protected int gender; // 性别 0:男，1：女
 //	protected int age; // 年龄
@@ -170,11 +170,11 @@ public class UserCoach extends User implements Serializable{
 //	}
 
 	public int getMxid() {
-		return mxid;
+		return id;
 	}
 
 	public void setMxid(int mxid) {
-		this.mxid = mxid;
+		this.id = mxid;
 	}
 
 //	public String getAvatar() {
@@ -419,7 +419,7 @@ public class UserCoach extends User implements Serializable{
 		return "UserCoach{" +
 				"token='" + token + '\'' +
 //				", name='" + name + '\'' +
-				", mxid=" + mxid +
+				", id=" + id +
 //				", avatar='" + avatar + '\'' +
 //				", gender=" + gender +
 //				", age=" + age +
