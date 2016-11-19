@@ -38,7 +38,7 @@ public class HomePresentImpl implements HomePresent {
         this.homeFragmentView = view;
         homeBeanList = new ArrayList<>();
         if(homeModel == null){
-            homeModel = new HomeModelImpl();
+            homeModel = new HomeModelImpl(context);
         }
     }
 
@@ -47,7 +47,7 @@ public class HomePresentImpl implements HomePresent {
         this.brandDetailActivityView = view;
         homeBeanList = new ArrayList<>();
         if(homeModel == null){
-            homeModel = new HomeModelImpl();
+            homeModel = new HomeModelImpl(context);
         }
     }
 

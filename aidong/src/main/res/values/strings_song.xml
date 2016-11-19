@@ -21,6 +21,8 @@
     <string name="home_activity">活动</string>
     <string name="home_equipment">装备</string>
     <string name="home_competition">赛事</string>
+    <string name="course_info">课程信息</string>
+    <string name="campaign_info">活动信息</string>
 
     <string name="applicant_count">已参加(%1$d/%2$s)</string>
     <string name="rmb_price">¥ %1$s</string>

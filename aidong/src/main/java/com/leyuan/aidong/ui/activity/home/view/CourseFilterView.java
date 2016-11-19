@@ -3,7 +3,6 @@ package com.leyuan.aidong.ui.activity.home.view;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -16,9 +15,10 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.BusinessCircleBean;
 import com.leyuan.aidong.entity.BusinessCircleDescBean;
+import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.ui.activity.home.adapter.LeftFilterAdapter;
 import com.leyuan.aidong.ui.activity.home.adapter.RightFilterAdapter;
-import com.leyuan.aidong.widget.dropdownmenu.adapter.ListWithFlagAdapter;
+import com.leyuan.aidong.ui.activity.home.adapter.SelectListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,8 +41,8 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
     private ListView rightListView;
 
     //分类
-    private ListWithFlagAdapter categoryAdapter;
-    private List<String> categoryList = new ArrayList<>();
+    private SelectListAdapter categoryAdapter;
+    private List<CategoryBean> categoryList = new ArrayList<>();
 
     //商圈
     private LeftFilterAdapter leftCircleAdapter;
@@ -54,7 +54,7 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
 
     private int panelHeight;
     private boolean isPopupShowing = false;
-    private boolean isCateogryShowing = false;
+    private boolean isCategoryShowing = false;
     private boolean isCircleShowing = false;
 
     public CourseFilterView(Context context) {
@@ -116,28 +116,25 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
         if (!isPopupShowing){
             isPopupShowing = true;
             showPopup();
-        }else if(isCateogryShowing){
+        }else if(isCategoryShowing){
             hidePopup();
             return;
         }
-        isCateogryShowing = true;
+        isCategoryShowing = true;
         isCircleShowing =false;
         tvCategory.setTextColor(context.getResources().getColor(R.color.main_red));
         ivCategoryArrow.setImageResource(R.drawable.icon_filter_arrow_selected);
         contentLayout.setVisibility(VISIBLE);
         rightListView.setVisibility(GONE);
-        if (categoryList.isEmpty()) {
-            Log.d("CourseFilterView", "you need set categoryList data first");
-        }
         if(categoryAdapter == null){
-            categoryAdapter = new ListWithFlagAdapter(context, categoryList);
+            categoryAdapter = new SelectListAdapter(context, categoryList);
         }
         leftListView.setAdapter(categoryAdapter);
         leftListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 categoryAdapter.setCheckItem(position);
-                tvCategory.setText(categoryList.get(position));
+                tvCategory.setText(categoryList.get(position).getName());
                 hidePopup();
                 if (onFilterClickListener != null) {
                     onFilterClickListener.onCategoryItemClick(position);
@@ -155,7 +152,7 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
             hidePopup();
             return;
         }
-        isCateogryShowing =false;
+        isCategoryShowing =false;
         isCircleShowing = true;
 
         tvCircle.setTextColor(context.getResources().getColor(R.color.main_red));
@@ -269,7 +266,8 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
         void onBusinessCircleItemClick(String address);
     }
 
-    public void setCategoryList(List<String> categoryList) {
+    public void setCategoryList(List<CategoryBean> categoryList) {
+        if(categoryList != null)
         this.categoryList = categoryList;
     }
 

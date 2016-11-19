@@ -11,7 +11,6 @@ public class LocalGoodsSkuBean {
     private List<GoodsSkuValueBean> skuValues;
 
     private boolean isSelected = false;
-    private boolean isLastSelected = false;
 
     public String getSkuName() {
         return skuName;
@@ -35,14 +34,6 @@ public class LocalGoodsSkuBean {
 
     public void setSelected(boolean selected) {
         isSelected = selected;
-    }
-
-    public boolean isLastSelected() {
-        return isLastSelected;
-    }
-
-    public void setLastSelected(boolean lastSelected) {
-        isLastSelected = lastSelected;
     }
 
     @Override

@@ -22,13 +22,15 @@ import com.leyuan.aidong.widget.customview.SimpleTitleBar;
 public class AppointmentInfoActivity extends BaseActivity implements View.OnClickListener{
     public static final int TYPE_COURSE = 1;
     public static final int TYPE_CAMPAIGN = 2;
-    private int type;   //区分课程或活动预约
 
     private SimpleTitleBar titleBar;
 
-    //课程或活动信息
+    //预约人信息
     private EditText etInputName;
     private EditText etInputPhone;
+
+    //课程或活动信息
+    private TextView tvType;
     private SimpleDraweeView dvCover;
     private TextView tvCourseName;
     private TextView tvShop;
@@ -44,7 +46,6 @@ public class AppointmentInfoActivity extends BaseActivity implements View.OnClic
 
     //订单信息
     private ExtendTextView tvTotalPrice;
-    private ExtendTextView tvExpressPrice;
     private ExtendTextView tvCouponPrice;
     private ExtendTextView tvDiscountPrice;
     private ExtendTextView tvAibi;
@@ -59,10 +60,17 @@ public class AppointmentInfoActivity extends BaseActivity implements View.OnClic
     private TextView tvPrice;
     private TextView tvPay;
 
+    private int type;   //区分课程或活动预约
+    private String name;
+    private String time;
+    private String address;
 
-    public static void start(Context context,int type) {
+    public static void start(Context context,int type,String name,String time,String address) {
         Intent starter = new Intent(context, AppointmentInfoActivity.class);
         starter.putExtra("type",type);
+        starter.putExtra("name",name);
+        starter.putExtra("time",time);
+        starter.putExtra("address",address);
         context.startActivity(starter);
     }
 
@@ -71,7 +79,10 @@ public class AppointmentInfoActivity extends BaseActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appointment_info);
         if(getIntent() != null){
-            type = getIntent().getIntExtra("type",1);   //默认为预约课程
+            type = getIntent().getIntExtra("type",TYPE_COURSE);
+            name = getIntent().getStringExtra("name");
+            time = getIntent().getStringExtra("time");
+            address = getIntent().getStringExtra("address");
         }
         initView();
         setListener();
@@ -81,6 +92,7 @@ public class AppointmentInfoActivity extends BaseActivity implements View.OnClic
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
         etInputName = (EditText) findViewById(R.id.et_input_name);
         etInputPhone = (EditText) findViewById(R.id.et_input_phone);
+        tvType = (TextView)findViewById(R.id.tv_type);
         dvCover = (SimpleDraweeView) findViewById(R.id.dv_cover);
         tvCourseName = (TextView) findViewById(R.id.tv_course_name);
         tvShop = (TextView) findViewById(R.id.tv_shop);
@@ -92,7 +104,6 @@ public class AppointmentInfoActivity extends BaseActivity implements View.OnClic
         tvNoVip = (TextView) findViewById(R.id.tv_no_vip);
         vipTipLayout = (LinearLayout) findViewById(R.id.ll_vip_tip);
         tvTotalPrice = (ExtendTextView) findViewById(R.id.tv_total_price);
-        tvExpressPrice = (ExtendTextView) findViewById(R.id.tv_express_price);
         tvCouponPrice = (ExtendTextView) findViewById(R.id.tv_coupon_price);
         tvDiscountPrice = (ExtendTextView) findViewById(R.id.tv_discount_price);
         tvAibi = (ExtendTextView) findViewById(R.id.tv_aibi);
@@ -102,6 +113,12 @@ public class AppointmentInfoActivity extends BaseActivity implements View.OnClic
         tvTip = (TextView) findViewById(R.id.tv_tip);
         tvPrice = (TextView) findViewById(R.id.tv_price);
         tvPay = (TextView) findViewById(R.id.tv_pay);
+
+        tvType.setText(TYPE_COURSE == type ? getString(R.string.course_info) :
+                getString(R.string.campaign_info));
+        tvCourseName.setText(name);
+        tvCourseTime.setRightTextContent(time);
+        tvCourseAddress.setRightTextContent(address);
     }
 
 

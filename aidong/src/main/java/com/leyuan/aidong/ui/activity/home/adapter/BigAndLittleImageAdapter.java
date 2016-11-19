@@ -46,7 +46,12 @@ public class BigAndLittleImageAdapter extends RecyclerView.Adapter< RecyclerView
 
     @Override
     public int getItemCount() {
-        return data.size() + 1;
+        if(data.size() > 4){        //大于4个子item时才显示查看更多
+            return data.size() + 1;
+        }else{
+            return data.size();
+        }
+
     }
 
     @Override

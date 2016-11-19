@@ -12,9 +12,9 @@ import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.aidong.ui.mvp.model.CourseModel;
 import com.leyuan.aidong.ui.mvp.model.impl.CourseModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
+import com.leyuan.aidong.ui.mvp.view.CourseActivityView;
 import com.leyuan.aidong.ui.mvp.view.CourseDetailActivityView;
 import com.leyuan.aidong.ui.mvp.view.CourserFragmentView;
-import com.leyuan.aidong.ui.mvp.view.CoursesActivityView;
 import com.leyuan.aidong.utils.Constant;
 
 import java.util.List;
@@ -29,7 +29,7 @@ public class CoursePresentImpl  implements CoursePresent{
 
     private List<CourseBean> courseBeanList;
     private CourserFragmentView courserFragmentView;
-    private CoursesActivityView coursesActivityView;                //课程列表View层对象
+    private CourseActivityView coursesActivityView;                //课程列表View层对象
     private CourseDetailActivityView courseDetailActivityView;      //课程详情View层对象
 
     public CoursePresentImpl(Context context, CourseDetailActivityView view) {
@@ -48,7 +48,7 @@ public class CoursePresentImpl  implements CoursePresent{
         }
     }
 
-    public CoursePresentImpl(Context context, CoursesActivityView view) {
+    public CoursePresentImpl(Context context, CourseActivityView view) {
         this.context = context;
         this.coursesActivityView = view;
         if(courseModel == null){
@@ -58,17 +58,17 @@ public class CoursePresentImpl  implements CoursePresent{
 
     @Override
     public void getDate() {
-
+        coursesActivityView.setDate(courseModel.getDate());
     }
 
     @Override
     public void getCategory() {
-
+        coursesActivityView.setCategory(courseModel.getCategory());
     }
 
     @Override
     public void getBusinessCircle() {
-
+        coursesActivityView.setBusinessCircle(courseModel.getBusinessCircle());
     }
 
     @Override

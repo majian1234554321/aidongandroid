@@ -2,10 +2,10 @@ package com.leyuan.aidong.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.util.Base64;
 
+import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.entity.BusinessCircleBean;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.SystemBean;
@@ -15,6 +15,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,6 +26,58 @@ import java.util.List;
  * Created by song on 2016/11/10.
  */
 public class SystemInfoUtils {
+    private static final String BANNER_SPLASH = "0";
+    private static final String BANNER_HOME = "1";
+    private static final String BOUNCED_AD = "2";
+
+    /**
+     * 获取首页广告
+     * 0-开机广告 1-首页广告位 2-弹出广告位
+     */
+    public static List<BannerBean> getHomeBanner(Context context){
+        List<BannerBean> bannerBeanList = new ArrayList<>();
+        if(Constant.systemInfoBean != null && Constant.systemInfoBean.getBanner() != null){
+            for (BannerBean bannerBean : Constant.systemInfoBean.getBanner()) {
+                if(BANNER_HOME.equals(bannerBean.getPosition())){
+                    bannerBeanList.add(bannerBean);
+                }
+            }
+        }
+        return bannerBeanList;
+    }
+
+    /**
+     *获取闪屏页广告
+     */
+    public static BannerBean getSplashBanner(Context context){
+        BannerBean splashBannerBean = new BannerBean();
+        if(Constant.systemInfoBean != null && Constant.systemInfoBean.getBanner() != null){
+            for (BannerBean bannerBean : Constant.systemInfoBean.getBanner()) {
+                if(BANNER_SPLASH.equals(bannerBean.getPosition())){
+                    splashBannerBean = bannerBean;
+                    break;
+                }
+            }
+        }
+        return splashBannerBean;
+    }
+
+    /**
+     * 获取首页弹框广告
+     */
+    public static BannerBean getHomeAd(Context context){
+        BannerBean bouncedAd = new BannerBean();
+        if(Constant.systemInfoBean != null && Constant.systemInfoBean.getBanner() != null){
+            for (BannerBean bannerBean : Constant.systemInfoBean.getBanner()) {
+                if(BOUNCED_AD.equals(bannerBean.getPosition())){
+                    bouncedAd = bannerBean;
+                    break;
+                }
+            }
+        }
+        return bouncedAd;
+    }
+
     /**
      * 获取开通城市
      * @return 城市列表
@@ -111,7 +165,7 @@ public class SystemInfoUtils {
      * @param obj
      */
     public static void putSystemInfoBean(Context context, Object obj) {
-        if (obj instanceof Parcelable) {
+        if (obj instanceof Serializable) {
             try {
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 ObjectOutputStream oos = new ObjectOutputStream(baos);

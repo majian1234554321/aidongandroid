@@ -8,6 +8,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
@@ -187,11 +188,12 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
         tvCampaignDesc.setText(bean.getIntroduce());
         applicantAdapter.setData(bean.getApplicant());
         if(bean.getApplicant() == null || bean.getApplicant().isEmpty()){
-            tvCount.setText(String.format(getString(R.string.applicant_count), 0,bean.getPlace()));
+            tvCount.setText(String.format(getString(R.string.applicant_count),0,bean.getPlace()));
         }else{
             tvCount.setText(String.format(getString(R.string.applicant_count)
                     ,bean.getApplicant().size(),bean.getPlace()));
         }
+        tvCampaignDesc.setText(Html.fromHtml(bean.getIntroduce()));
         tvPrice.setText(String.format(getString(R.string.rmb_price),bean.getPrice()));
     }
 

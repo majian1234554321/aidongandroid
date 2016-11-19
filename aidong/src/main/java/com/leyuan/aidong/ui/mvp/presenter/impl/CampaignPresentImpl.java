@@ -8,6 +8,7 @@ import com.leyuan.aidong.entity.CampaignBean;
 import com.leyuan.aidong.entity.data.CampaignData;
 import com.leyuan.aidong.entity.data.CampaignDetailData;
 import com.leyuan.aidong.entity.data.PayOrderData;
+import com.leyuan.aidong.http.subscriber.BaseSubscriber;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
@@ -134,17 +135,7 @@ public class CampaignPresentImpl implements CampaignPresent {
 
     @Override
     public void buyCampaign(String id, String couponId, float integral, String payType, String contactName, String contactMobile) {
-        campaignModel.buyCampaign(new Subscriber<PayOrderData>() {
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
+        campaignModel.buyCampaign(new BaseSubscriber<PayOrderData>(context) {
             @Override
             public void onNext(PayOrderData payOrderData) {
                 campaignDetailView.onBuyCampaign(payOrderData.getOrder());

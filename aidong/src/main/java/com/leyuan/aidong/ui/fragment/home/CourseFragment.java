@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CourseBean;
 import com.leyuan.aidong.ui.BaseFragment;
+import com.leyuan.aidong.ui.activity.home.CourseActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.CourseAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
@@ -28,6 +29,10 @@ import java.util.List;
  * Created by song on 2016/11/1.
  */
 public class CourseFragment extends BaseFragment implements CourserFragmentView{
+    private static final int HIDE_THRESHOLD = 80;
+    private int scrolledDistance = 0;
+    private boolean filterViewVisible = true;
+
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
@@ -56,6 +61,7 @@ public class CourseFragment extends BaseFragment implements CourserFragmentView{
     private void initRefreshLayout(View view) {
         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout);
         setColorSchemeResources(refreshLayout);
+        refreshLayout.setProgressViewOffset(true,100,250);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -84,6 +90,25 @@ public class CourseFragment extends BaseFragment implements CourserFragmentView{
                // present.requestMoreData(recyclerView,type,pageSize,currPage);
             }
         }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+
+            if (scrolledDistance > HIDE_THRESHOLD  && filterViewVisible) {        //手指向上滑动
+                ((CourseActivity)getActivity()).hideConditionLayout();
+                filterViewVisible = false;
+                scrolledDistance = 0;
+
+            } else if (scrolledDistance < -HIDE_THRESHOLD && !filterViewVisible) {   //手指向下滑动
+                ((CourseActivity)getActivity()).showConditionLayout();
+                scrolledDistance = 0;
+                filterViewVisible = true;
+            }
+            if ((filterViewVisible && dy > 0) || (!filterViewVisible && dy < 0)) {
+                scrolledDistance += dy;
+            }
+        }
     };
 
     @Override
@@ -94,5 +119,9 @@ public class CourseFragment extends BaseFragment implements CourserFragmentView{
     @Override
     public void showEndFooterView() {
 
+    }
+
+    public void scrollToTop(){
+        recyclerView.scrollToPosition(0);
     }
 }

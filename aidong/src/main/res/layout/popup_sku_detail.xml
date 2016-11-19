@@ -40,23 +40,23 @@
                 android:id="@+id/tv_stock"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/tv_good_name"
+                android:layout_below="@+id/tv_goods_price"
+                android:layout_marginTop="8dp"
                 android:text="库存15件"
                 android:textColor="@color/c3"
-                android:textSize="14sp"
-                android:layout_marginTop="8dp"
-                android:layout_below="@+id/tv_goods_price"
-                android:layout_alignLeft="@+id/tv_good_name"/>
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/tv_select_tip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/tv_good_name"
+                android:layout_below="@+id/tv_stock"
+                android:layout_marginTop="5dp"
                 android:text="已选：“海军蓝色” “165/88A/XS"
                 android:textColor="@color/c3"
-                android:textSize="14sp"
-                android:layout_marginTop="5dp"
-                android:layout_below="@+id/tv_stock"
-                android:layout_alignLeft="@+id/tv_good_name"/>
+                android:textSize="14sp" />
 
             <ImageView
                 android:id="@+id/iv_cancel"
@@ -84,12 +84,11 @@
             fresco:backgroundImage="@drawable/place_holder_logo" />
     </RelativeLayout>
 
-
-    <android.support.v7.widget.RecyclerView
+    <com.leyuan.aidong.widget.customview.MaxHeightRecyclerView
         android:id="@+id/rv_sku"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
+        android:layout_height="wrap_content"
+        fresco:recyclerView_maxHeight="260dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
