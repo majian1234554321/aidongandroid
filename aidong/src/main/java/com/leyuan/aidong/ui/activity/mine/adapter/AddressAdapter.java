@@ -21,9 +21,8 @@ import java.util.List;
  * 地址适配器
  * Created by song on 2016/9/20.
  */
-public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressHolder> implements View.OnClickListener{
+public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressHolder> {
     private Context context;
-    private int position;
     private List<AddressBean> data = new ArrayList<>();
 
     private EditAddressListener editAddressListener;
@@ -53,44 +52,39 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressH
     }
 
     @Override
-    public void onBindViewHolder(AddressHolder holder, int position) {
-        this.position = holder.getAdapterPosition();
+    public void onBindViewHolder(AddressHolder holder, final int position) {
         AddressBean bean = data.get(position);
         holder.name.setText(bean.getName());
         holder.phone.setText(bean.getMobile());
-        holder.address.setText(bean.getAddress());
+        holder.address.setText(new StringBuilder(bean.getProvince()).append(bean.getCity())
+                .append(bean.getDistrict()).append(bean.getAddress()));
 
-        holder.edit.setOnClickListener(this);
-        holder.itemLayout.setOnClickListener(this);
-        holder.delete.setOnClickListener(this);
-        holder.rbDefault.setOnClickListener(this);
+        holder.edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(editAddressListener != null){
+                    editAddressListener.onUpdateAddress(position);
+                }
+            }
+        });
+
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDeleteDialog(position);
+            }
+        });
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.item_view:
-            case R.id.tv_edit:
-                editAddressListener.onUpdateAddress(position);
-                break;
-            case R.id.iv_delete:
-                showDeleteDialog();
-                break;
-            case R.id.rb_default:
-
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void showDeleteDialog() {
+    private void showDeleteDialog(final int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(context.getString(R.string.delete_confirm))
                 .setCancelable(true)
                 .setPositiveButton(context.getString(R.string.sure), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        editAddressListener.onDeleteAddress(position);
+                        if(editAddressListener != null){
+                            editAddressListener.onDeleteAddress(position);
+                        }
                     }
                 })
                 .setNegativeButton(context.getString(R.string.cancel), new DialogInterface.OnClickListener() {

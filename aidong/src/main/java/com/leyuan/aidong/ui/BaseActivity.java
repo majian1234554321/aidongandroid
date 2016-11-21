@@ -187,7 +187,7 @@ public class BaseActivity extends AppCompatActivity implements IHttpToastCallBac
      * @param refreshLayout
      */
     protected void setColorSchemeResources(SwipeRefreshLayout refreshLayout){
-        refreshLayout.setColorSchemeResources(R.color.orange, R.color.red,R.color.black, R.color.gray);
+        refreshLayout.setColorSchemeResources(R.color.black, R.color.red,R.color.orange, R.color.gray);
     }
 
 
@@ -197,7 +197,7 @@ public class BaseActivity extends AppCompatActivity implements IHttpToastCallBac
      * @param type course-课程 campaign-活动 event-赛事 food-健康餐饮 nutrition-营养品 equipment-装备
      * @param id id
      */
-    public void toTagetDetailActivity(String type,String id){
+    public void toTargetDetailActivity(String type, String id){
         switch (type){
             case "course":
                 CourseDetailActivity.start(this,id);
@@ -209,12 +209,13 @@ public class BaseActivity extends AppCompatActivity implements IHttpToastCallBac
                 Logger.e("TAG","developing");
                 break;
             case "food":
-                GoodsDetailActivity.start(this,id,GoodsDetailActivity.TYEP_FOODS);
+                GoodsDetailActivity.start(this,id,GoodsDetailActivity.TYPE_FOODS);
+                break;
             case "nutrition":
-                GoodsDetailActivity.start(this,id,GoodsDetailActivity.TYEP_NURTURE);
+                GoodsDetailActivity.start(this,id,GoodsDetailActivity.TYPE_NURTURE);
                 break;
             case "equipment":
-                GoodsDetailActivity.start(this,id,GoodsDetailActivity.TYEP_EQUIPMENT);
+                GoodsDetailActivity.start(this,id,GoodsDetailActivity.TYPE_EQUIPMENT);
                 break;
             default:
                 Logger.e("TAG","can not support this type,please check it");

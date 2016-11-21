@@ -43,7 +43,7 @@
             android:id="@+id/iv_delete"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/icon_delete"
+            android:src="@drawable/icon_delete_black"
             android:layout_alignParentRight="true"
             android:gravity="center_vertical" />
     </RelativeLayout>

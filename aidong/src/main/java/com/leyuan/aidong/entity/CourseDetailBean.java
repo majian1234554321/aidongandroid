@@ -1,12 +1,16 @@
 package com.leyuan.aidong.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 课程详情实体
  * Created by song on 2016/8/13.
  */
-public class CourseDetailBean {
+public class CourseDetailBean implements Parcelable {
     private String code;        //课程编号
     private String name;        //课程名称
     private String cover;       //封面
@@ -19,6 +23,8 @@ public class CourseDetailBean {
     private String applied_count;    //已报名人数
     private List<UserBean> applied;  //报名的人
     private String introduce;        //课程介绍
+    private String price;
+    private String address;
 
     public String getCode() {
         return code;
@@ -116,6 +122,22 @@ public class CourseDetailBean {
         this.introduce = introduce;
     }
 
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     @Override
     public String toString() {
         return "CourseDetailBean{" +
@@ -133,4 +155,57 @@ public class CourseDetailBean {
                 ", introduce='" + introduce + '\'' +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.code);
+        dest.writeString(this.name);
+        dest.writeString(this.cover);
+        dest.writeString(this.class_date);
+        dest.writeString(this.class_time);
+        dest.writeString(this.break_time);
+        dest.writeList(this.coach);
+        dest.writeList(this.gym);
+        dest.writeString(this.place);
+        dest.writeString(this.applied_count);
+        dest.writeTypedList(this.applied);
+        dest.writeString(this.introduce);
+    }
+
+    public CourseDetailBean() {
+    }
+
+    protected CourseDetailBean(Parcel in) {
+        this.code = in.readString();
+        this.name = in.readString();
+        this.cover = in.readString();
+        this.class_date = in.readString();
+        this.class_time = in.readString();
+        this.break_time = in.readString();
+        this.coach = new ArrayList<CoachBean>();
+        in.readList(this.coach, CoachBean.class.getClassLoader());
+        this.gym = new ArrayList<VenuesBean>();
+        in.readList(this.gym, VenuesBean.class.getClassLoader());
+        this.place = in.readString();
+        this.applied_count = in.readString();
+        this.applied = in.createTypedArrayList(UserBean.CREATOR);
+        this.introduce = in.readString();
+    }
+
+    public static final Parcelable.Creator<CourseDetailBean> CREATOR = new Parcelable.Creator<CourseDetailBean>() {
+        @Override
+        public CourseDetailBean createFromParcel(Parcel source) {
+            return new CourseDetailBean(source);
+        }
+
+        @Override
+        public CourseDetailBean[] newArray(int size) {
+            return new CourseDetailBean[size];
+        }
+    };
 }

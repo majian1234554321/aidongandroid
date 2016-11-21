@@ -119,7 +119,6 @@
         <activity android:name=".module.scan.activity.ScanActivity" />
         <activity android:name=".ui.activity.home.FoodActivity" />
         <activity android:name=".ui.activity.home.PastCampaignActivity" />
-        <activity android:name=".ui.activity.home.OldCourseActivity" />
         <activity android:name=".ui.activity.home.CourseActivity"/>
         <activity android:name=".ui.activity.home.CourseDetailActivity" />
         <activity android:name=".ui.activity.home.CampaignActivity" />

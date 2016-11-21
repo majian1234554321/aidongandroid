@@ -60,6 +60,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
     private String id ;                         //活动详情id
     private ApplicantAdapter applicantAdapter;
     private CampaignPresent campaignPresent;
+    private CampaignDetailBean bean;
 
     /**
      * 跳转活动界面
@@ -168,8 +169,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
                 AppointmentUserActivity.start(this,new ArrayList<UserBean>());
                 break;
             case R.id.ll_apply:         //报名
-                Intent intent = new Intent(this,AppointmentInfoActivity.class);
-                startActivity(intent);
+                AppointmentInfoActivity.start(this,AppointmentInfoActivity.TYPE_CAMPAIGN,bean);
                 break;
             default:
                 break;
@@ -178,6 +178,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
 
     @Override
     public void setCampaignDetail(CampaignDetailBean bean) {
+        this.bean = bean;
         applyLayout.setVisibility(View.VISIBLE);
         bannerLayout.setData(bean.getImage(),null);
         tvCampaignName.setText(bean.getName());

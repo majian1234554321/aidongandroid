@@ -51,6 +51,6 @@ public class BaseFragment extends Fragment implements IHttpToastCallBack {
      * @param refreshLayout
      */
     protected void setColorSchemeResources(SwipeRefreshLayout refreshLayout){
-        refreshLayout.setColorSchemeResources(R.color.orange, R.color.red, R.color.black,R.color.gray);
+        refreshLayout.setColorSchemeResources(R.color.black, R.color.red, R.color.orange,R.color.gray);
     }
 }

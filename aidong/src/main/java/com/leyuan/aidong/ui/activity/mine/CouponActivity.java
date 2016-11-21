@@ -25,6 +25,7 @@ public class CouponActivity extends BaseActivity{
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

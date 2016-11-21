@@ -128,7 +128,7 @@ public class CampaignPresentImpl implements CampaignPresent {
             @Override
             public void onError(Throwable e) {
                 Toast.makeText(context,"error",Toast.LENGTH_LONG).show();
-               // campaignDetailView.showNetErrorView();
+                campaignDetailView.showNetErrorView();
             }
         }, id);
     }

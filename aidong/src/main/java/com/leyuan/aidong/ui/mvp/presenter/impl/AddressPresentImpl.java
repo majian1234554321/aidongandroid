@@ -65,7 +65,7 @@ public class AddressPresentImpl implements AddressPresent{
                     addressList = addressListData.getAddress();
                 }
                 if(addressList.isEmpty()){
-                    addressActivityView.showEmptyView();
+                    switcherLayout.showEmptyLayout();
                 }else{
                     switcherLayout.showContentLayout();
                     addressActivityView.setAddress(addressList);
@@ -75,7 +75,7 @@ public class AddressPresentImpl implements AddressPresent{
     }
 
     @Override
-    public void addAddress(String id,String name, String phone, final String address) {
+    public void addAddress(String id,String name, String phone,String province,String city,String district,  final String address) {
         addressModel.addAddress(new ProgressSubscriber<AddressData>(context,false) {
             @Override
             public void onNext(AddressData addressData) {
@@ -83,11 +83,11 @@ public class AddressPresentImpl implements AddressPresent{
                     addAddressActivityView.setAddAddress(addressData.getAddress());
                 }
             }
-        },id,name,phone,address);
+        },id,name,phone,province,city,district,address);
     }
 
     @Override
-    public void updateAddress(String id, String name, String phone, String address) {
+    public void updateAddress(String id, String name, String phone,String province,String city,String district,  String address) {
         addressModel.updateAddress(new ProgressSubscriber<AddressData>(context,false) {
             @Override
             public void onNext(AddressData addressData) {
@@ -95,7 +95,7 @@ public class AddressPresentImpl implements AddressPresent{
                     updateAddressActivityView.setUpdateAddress(addressData.getAddress());
                 }
             }
-        },id,name,phone,address);
+        },id,name,phone,province,city,district,address);
     }
 
     @Override

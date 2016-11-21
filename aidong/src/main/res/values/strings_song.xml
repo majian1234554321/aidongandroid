@@ -23,6 +23,14 @@
     <string name="home_competition">赛事</string>
     <string name="course_info">课程信息</string>
     <string name="campaign_info">活动信息</string>
+    <string name="course_time">课程时间</string>
+    <string name="campaign_time">活动时间</string>
+    <string name="course_address">课程地址</string>
+    <string name="campaign_address">活动地址</string>
+    <string name="course_price">课程总额</string>
+    <string name="campaign_price">活动总额</string>
+    <string name="course_privilege">课程优惠</string>
+    <string name="campaign_privilege">活动优惠</string>
 
     <string name="applicant_count">已参加(%1$d/%2$s)</string>
     <string name="rmb_price">¥ %1$s</string>

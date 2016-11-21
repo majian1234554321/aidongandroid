@@ -46,9 +46,9 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  * Created by song on 2016/9/12.
  */
 public class GoodsDetailActivity extends BaseActivity implements View.OnClickListener,GoodsDetailActivityView, BGABanner.OnItemClickListener {
-    public static final String TYEP_NURTURE = "nutrition";
-    public static final String TYEP_EQUIPMENT = "equipments";
-    public static final String TYEP_FOODS = "foods";
+    public static final String TYPE_NURTURE = "nutrition";
+    public static final String TYPE_EQUIPMENT = "equipments";
+    public static final String TYPE_FOODS = "foods";
 
     private SwitcherLayout switcherLayout;
     private LinearLayout rootLayout;

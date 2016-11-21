@@ -14,7 +14,7 @@ import com.leyuan.aidong.ui.activity.home.GoodsDetailActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.leyuan.aidong.ui.activity.home.GoodsDetailActivity.TYEP_FOODS;
+import static com.leyuan.aidong.ui.activity.home.GoodsDetailActivity.TYPE_FOODS;
 
 /**
  * 健康列表适配器
@@ -33,7 +33,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
 
     public void setData(List<FoodBean> data) {
         if(data != null){
-            this.data.addAll(data);
+            this.data = data;
         }
     }
 
@@ -92,7 +92,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GoodsDetailActivity.start(context,TYEP_FOODS,bean.getFood_id());
+                GoodsDetailActivity.start(context, bean.getFood_id(),TYPE_FOODS);
             }
         });
     }

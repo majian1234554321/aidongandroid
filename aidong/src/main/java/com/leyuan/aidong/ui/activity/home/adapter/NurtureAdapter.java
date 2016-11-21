@@ -14,7 +14,7 @@ import com.leyuan.aidong.ui.activity.home.GoodsDetailActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.leyuan.aidong.ui.activity.home.GoodsDetailActivity.TYEP_NURTURE;
+import static com.leyuan.aidong.ui.activity.home.GoodsDetailActivity.TYPE_NURTURE;
 
 
 /**
@@ -54,7 +54,7 @@ public class NurtureAdapter extends RecyclerView.Adapter<NurtureAdapter.NurtureV
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GoodsDetailActivity.start(context,bean.getId(),TYEP_NURTURE);
+                GoodsDetailActivity.start(context,bean.getId(), TYPE_NURTURE);
             }
         });
     }

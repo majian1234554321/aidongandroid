@@ -83,11 +83,11 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     BrandActivity.start(context,bean.getType(),bean.getId(),bean.getTitle(),bean.getImage());
                 }
             });
-            BigAndLittleImageAdapter adapter = new BigAndLittleImageAdapter(context);
+            BigAndLittleImageAdapter adapter = new BigAndLittleImageAdapter(context,bean.getType());
             ((BigAndLittleImageViewHolder) holder).recyclerView.setLayoutManager(
                     new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false));
             ((BigAndLittleImageViewHolder) holder).recyclerView.setAdapter(adapter);
-            adapter.setData(bean.getItem(),bean.getType());
+            adapter.setData(bean.getItem());
             adapter.setSeeMoreListener(new BigAndLittleImageAdapter.SeeMoreListener() {
                 @Override
                 public void onSeeMore() {

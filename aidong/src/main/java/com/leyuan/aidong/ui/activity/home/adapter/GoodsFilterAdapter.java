@@ -14,7 +14,7 @@ import com.leyuan.aidong.ui.activity.home.GoodsDetailActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.leyuan.aidong.ui.activity.home.GoodsDetailActivity.TYEP_EQUIPMENT;
+import static com.leyuan.aidong.ui.activity.home.GoodsDetailActivity.TYPE_EQUIPMENT;
 
 /**
  * 营养品筛选界面适配器
@@ -75,7 +75,7 @@ public class GoodsFilterAdapter extends RecyclerView.Adapter<GoodsFilterAdapter.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GoodsDetailActivity.start(context,TYEP_EQUIPMENT,bean.getId());
+                GoodsDetailActivity.start(context, TYPE_EQUIPMENT,bean.getId());
             }
         });
     }

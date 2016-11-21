@@ -11,6 +11,9 @@ public class AddressBean implements Parcelable{
     private String address_id;
     private String name;
     private String mobile;
+    private String province;
+    private String city;
+    private String district;
     private String address;
 
     public String getId() {
@@ -45,6 +48,51 @@ public class AddressBean implements Parcelable{
         this.address = address;
     }
 
+    public String getAddress_id() {
+        return address_id;
+    }
+
+    public void setAddress_id(String address_id) {
+        this.address_id = address_id;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    @Override
+    public String toString() {
+        return "AddressBean{" +
+                "address_id='" + address_id + '\'' +
+                ", name='" + name + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", province='" + province + '\'' +
+                ", city='" + city + '\'' +
+                ", district='" + district + '\'' +
+                ", address='" + address + '\'' +
+                '}';
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -55,13 +103,22 @@ public class AddressBean implements Parcelable{
         dest.writeString(this.address_id);
         dest.writeString(this.name);
         dest.writeString(this.mobile);
+        dest.writeString(this.province);
+        dest.writeString(this.city);
+        dest.writeString(this.district);
         dest.writeString(this.address);
+    }
+
+    public AddressBean() {
     }
 
     protected AddressBean(Parcel in) {
         this.address_id = in.readString();
         this.name = in.readString();
         this.mobile = in.readString();
+        this.province = in.readString();
+        this.city = in.readString();
+        this.district = in.readString();
         this.address = in.readString();
     }
 
@@ -76,14 +133,4 @@ public class AddressBean implements Parcelable{
             return new AddressBean[size];
         }
     };
-
-    @Override
-    public String toString() {
-        return "AddressBean{" +
-                "id='" + address_id + '\'' +
-                ", name='" + name + '\'' +
-                ", mobile='" + mobile + '\'' +
-                ", address='" + address + '\'' +
-                '}';
-    }
 }

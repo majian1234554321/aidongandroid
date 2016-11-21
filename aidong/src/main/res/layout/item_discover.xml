@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="品牌场馆"
+        android:drawableLeft="@drawable/icon_point"
+        android:drawableRight="@drawable/icon_point"
+        android:drawablePadding="5dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/c3"
+        android:textSize="16sp"
+        android:layout_gravity="center_horizontal" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"/>
+
+    <include layout="@layout/inc_line"/>
+
+    <TextView
+        android:id="@+id/tv_more"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="附近场馆"
+        android:gravity="center"
+        android:textColor="@color/c3"
+        android:textSize="14sp"
+        android:drawablePadding="5dp"
+        android:layout_gravity="center_horizontal"
+        android:drawableRight="@drawable/icon_arrow_toward_right"/>
+
+    <include layout="@layout/inc_bold_line"/>
+</LinearLayout>

@@ -37,7 +37,7 @@ public class CoverImageAdapter extends BaseAdapter<HomeItemBean> {
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)context).toTagetDetailActivity(type,bean.getId());
+                ((MainActivity)context).toTargetDetailActivity(type,bean.getId());
             }
         });
     }

@@ -22,7 +22,7 @@ import com.leyuan.aidong.widget.customview.SwitcherLayout;
  * Created by song on 2016/9/22.
  */
 public class GoodDetailPresentImpl implements GoodsDetailPresent {
-    private static final String TYPE_FOOD = "food";
+    private static final String TYPE_FOOD = "foods";
     private static final String TYPE_EQUIPMENT = "equipments";
     private static final String TYPE_NURTURE = "nutrition";
 
@@ -82,7 +82,7 @@ public class GoodDetailPresentImpl implements GoodsDetailPresent {
                 },id);
                 break;
             default:
-                Log.e("GoodDetailPresentImpl","type must be food,equipments or nutrition");
+                Log.e("GoodDetailPresentImpl","type must be foods,equipments or nutrition");
                 break;
         }
     }
