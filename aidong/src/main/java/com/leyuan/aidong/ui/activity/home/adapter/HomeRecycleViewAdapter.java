@@ -4,9 +4,10 @@ import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
+import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
@@ -45,9 +46,9 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     @Override
     public int getItemViewType(int position) {
-        if(TextUtils.equals("list",data.get(position).getStyle())){         //大图加小图
+        if(TextUtils.equals("list",data.get(position).getStyle())){          //大图加小图
             return TYPE_RECOMMEND_GOODS;
-        }else if(TextUtils.equals("cover",data.get(position).getStyle())){  //列表
+        }else if(TextUtils.equals("cover",data.get(position).getStyle())){   //大图列表
             return TYPE_RECOMMEND_ACTIVITY;
         }else {
             return -1;
@@ -57,10 +58,10 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if(viewType == TYPE_RECOMMEND_ACTIVITY){
-            View view = View.inflate(parent.getContext(), R.layout.item_recommend_activity,null);
+            View view = LayoutInflater.from(context).inflate(R.layout.item_home_big_image_list,parent,false);
             return new CoverImageViewHolder(view);
         }else if(viewType == TYPE_RECOMMEND_GOODS){
-            View view = View.inflate(parent.getContext(),R.layout.item_home_recommend_goods,null);
+            View view = LayoutInflater.from(context).inflate(R.layout.item_home_big_and_little_image,parent,false);
             return new BigAndLittleImageViewHolder(view);
         }
         return null;
@@ -71,6 +72,7 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         final HomeBean bean = data.get(position);
         if(holder instanceof CoverImageViewHolder){
             CoverImageAdapter adapter = new CoverImageAdapter(context,bean.getType());
+            ((CoverImageViewHolder) holder).tvName.setText(bean.getTitle());
             ((CoverImageViewHolder) holder).listView.setAdapter(adapter);
             adapter.addList(bean.getItem());
         }else if(holder instanceof BigAndLittleImageViewHolder){
@@ -81,11 +83,11 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     BrandActivity.start(context,bean.getType(),bean.getId(),bean.getTitle(),bean.getImage());
                 }
             });
-            BigAndLittleImageAdapter adapter = new BigAndLittleImageAdapter(context);
+            BigAndLittleImageAdapter adapter = new BigAndLittleImageAdapter(context,bean.getType());
             ((BigAndLittleImageViewHolder) holder).recyclerView.setLayoutManager(
                     new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false));
             ((BigAndLittleImageViewHolder) holder).recyclerView.setAdapter(adapter);
-            adapter.setData(bean.getItem(),bean.getType());
+            adapter.setData(bean.getItem());
             adapter.setSeeMoreListener(new BigAndLittleImageAdapter.SeeMoreListener() {
                 @Override
                 public void onSeeMore() {
@@ -105,7 +107,6 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         public BigAndLittleImageViewHolder(View itemView) {
             super(itemView);
-            itemView.setLayoutParams(new RecyclerView.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
             cover = (SimpleDraweeView) itemView.findViewById(R.id.dv_recommend_good_cover);
             recyclerView = (RecyclerView) itemView.findViewById(R.id.rv_recommend_good);
         }
@@ -115,11 +116,12 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
      * 推荐活动ViewHolder
      */
     private static class CoverImageViewHolder extends RecyclerView.ViewHolder{
+        TextView tvName;
         MyListView listView;
 
         public CoverImageViewHolder(View itemView) {
             super(itemView);
-            itemView.setLayoutParams(new RecyclerView.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
+            tvName = (TextView) itemView.findViewById(R.id.tv_name);
             listView = (MyListView) itemView.findViewById(R.id.lv_recommend);
         }
     }

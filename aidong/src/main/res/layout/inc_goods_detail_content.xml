@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--google issue  待解决目前此界面必须大于一屏-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,7 +24,7 @@
         android:layout_marginTop="10dp"
         android:text="¥1000"
         android:textColor="@color/c3"
-        android:textSize="12sp" />
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/tv_goods_name"
@@ -55,7 +56,7 @@
         android:gravity="center_vertical"
         android:text="爱动福利券"
         android:textSize="16sp"
-        android:visibility="visible"/>
+        android:visibility="visible" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_coupon"
@@ -69,12 +70,12 @@
         android:layout_width="match_parent"
         android:layout_height="10dp"
         android:background="@color/line_color"
-        android:visibility="visible"/>
+        android:visibility="visible" />
 
     <LinearLayout
         android:id="@+id/ll_goods_specification"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="50dp"
         android:background="?selectableItemBackground"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/left_margin"
@@ -107,13 +108,14 @@
     <LinearLayout
         android:id="@+id/ll_recommend_code"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="50dp"
         android:background="?selectableItemBackground"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/left_margin"
         android:paddingRight="@dimen/right_margin">
 
         <TextView
+            android:id="@+id/textView4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -141,7 +143,7 @@
     <LinearLayout
         android:id="@+id/ll_address"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="50dp"
         android:background="?selectableItemBackground"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/left_margin"
@@ -185,72 +187,39 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_height="100dp"
         android:orientation="horizontal">
 
-        <LinearLayout
+        <ImageView
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:src="@drawable/icon_self_delivery" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_self_delivery" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
+        <ImageView
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:src="@drawable/icon_return" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_return" />
-
-        </LinearLayout>
-
-        <LinearLayout
+        <ImageView
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:src="@drawable/icon_genuine" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_genuine" />
-
-        </LinearLayout>
-
-        <LinearLayout
+        <ImageView
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_gabalnara" />
-
-        </LinearLayout>
+            android:src="@drawable/icon_gabalnara" />
     </LinearLayout>
 
     <include layout="@layout/inc_bold_line" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height_top_bar"
+        android:layout_height="50dp"
         android:gravity="center_horizontal">
 
         <ImageView

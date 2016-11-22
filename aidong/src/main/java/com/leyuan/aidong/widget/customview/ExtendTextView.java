@@ -16,6 +16,7 @@ import com.leyuan.aidong.utils.DensityUtil;
  * Created by song on 2016/8/17.
  */
 public class ExtendTextView extends RelativeLayout{
+    private TextView leftTextView;
     private TextView rightTextView;
 
     private String leftText;
@@ -67,7 +68,7 @@ public class ExtendTextView extends RelativeLayout{
     private void setAttr(Context context){
         View view = LayoutInflater.from(context).inflate(R.layout.extend_textview,this,true);
         RelativeLayout root = (RelativeLayout)view.findViewById(R.id.root);
-        TextView leftTextView = (TextView)view.findViewById(R.id.tv_left);
+        leftTextView = (TextView) view.findViewById(R.id.tv_left);
         rightTextView = (TextView)view.findViewById(R.id.tv_right);
         View line = view.findViewById(R.id.line);
         root.setPadding(leftPadding,0,rightPadding,0);
@@ -86,5 +87,13 @@ public class ExtendTextView extends RelativeLayout{
      */
     public void setRightTextContent(String content){
         rightTextView.setText(content);
+    }
+
+    /**
+     * 设置左边文本内容
+     * @param content 内容
+     */
+    public void setLeftTextContent(String content){
+        leftTextView.setText(content);
     }
 }

@@ -31,15 +31,15 @@ public class AddressModelImpl implements AddressModel{
     }
 
     @Override
-    public void addAddress(Subscriber<AddressData> subscriber,String id, String name, String phone, String address) {
-        addressService.addAddress(id,name,phone,address)
+    public void addAddress(Subscriber<AddressData> subscriber,String id, String name, String phone,String province,String city,String district, String address) {
+        addressService.addAddress(id,name,phone,province,city,district,address)
                 .compose(RxHelper.<AddressData>transform())
                 .subscribe(subscriber);
     }
 
     @Override
-    public void updateAddress(Subscriber<AddressData> subscriber, String id, String name, String phone, String address) {
-        addressService.updateAddress(id,name,phone,address)
+    public void updateAddress(Subscriber<AddressData> subscriber, String id, String name, String phone,String province,String city,String district, String address) {
+        addressService.updateAddress(id,name,phone,province,city,district,address)
                 .compose(RxHelper.<AddressData>transform())
                 .subscribe(subscriber);
     }
@@ -48,6 +48,7 @@ public class AddressModelImpl implements AddressModel{
     public void deleteAddress(Subscriber<BaseBean> subscriber, String id) {
         addressService.deleteAddress(id)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
     }
 }

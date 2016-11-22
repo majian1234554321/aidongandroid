@@ -25,7 +25,7 @@ import java.util.UUID;
  * 新增地址
  * Created by song on 2016/9/20.
  */
-public class AddAddressActivity extends BaseActivity implements View.OnClickListener,AddAddressActivityView{
+public class AddAddressActivity extends BaseActivity implements View.OnClickListener,AddAddressActivityView, AddressPopupWindow.OnConfirmAddressListener {
     private LinearLayout rootLayout;
     private ImageView ivBack;
     private TextView tvFinish;
@@ -37,6 +37,10 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
 
     private AddressPopupWindow addressPopup;
     private AddressPresent addressPresent;
+
+    private String province;
+    private String city;
+    private String district;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +70,6 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
        // rbDefault.setOnCheckedChangeListener(this);
     }
 
-
-
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -76,13 +78,13 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
                 break;
             case R.id.tv_finish:
                 addressPresent.addAddress(UUID.randomUUID().toString(),etUsername.getText().toString(),etPhone.getText().toString(),
-                        tvAddress.getText().toString() + etDescAddress.getText().toString());
-                finish();
+                        province,city,district,etDescAddress.getText().toString());
                 break;
             case R.id.tv_address:
                 KeyBoardUtil.closeKeybord(etUsername,this);
                 if(addressPopup == null){
                     addressPopup = new AddressPopupWindow(this);
+                    addressPopup.setOnConfirmAddressListener(this);
                 }
                 addressPopup.showAtLocation(rootLayout, Gravity.BOTTOM,0,0);
                 break;
@@ -91,17 +93,19 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
         }
     }
 
-    public void setAddress(String address){
-        tvAddress.setText(address);
-    }
-
-
-
     @Override
     public void setAddAddress(AddressBean addressBean) {
         Intent intent = new Intent();
         intent.putExtra("address",addressBean);
         setResult(0,intent);
         finish();
+    }
+
+    @Override
+    public void onAddressConfirm(String province, String city, String area) {
+        this.province = province;
+        this.city = city;
+        this.district = area;
+        tvAddress.setText(new StringBuilder(province).append(city).append(area));
     }
 }

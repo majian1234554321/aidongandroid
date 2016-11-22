@@ -8,6 +8,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
@@ -59,6 +60,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
     private String id ;                         //活动详情id
     private ApplicantAdapter applicantAdapter;
     private CampaignPresent campaignPresent;
+    private CampaignDetailBean bean;
 
     /**
      * 跳转活动界面
@@ -167,8 +169,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
                 AppointmentUserActivity.start(this,new ArrayList<UserBean>());
                 break;
             case R.id.ll_apply:         //报名
-                Intent intent = new Intent(this,AppointmentInfoActivity.class);
-                startActivity(intent);
+                AppointmentInfoActivity.start(this,AppointmentInfoActivity.TYPE_CAMPAIGN,bean);
                 break;
             default:
                 break;
@@ -177,6 +178,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
 
     @Override
     public void setCampaignDetail(CampaignDetailBean bean) {
+        this.bean = bean;
         applyLayout.setVisibility(View.VISIBLE);
         bannerLayout.setData(bean.getImage(),null);
         tvCampaignName.setText(bean.getName());
@@ -187,11 +189,12 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
         tvCampaignDesc.setText(bean.getIntroduce());
         applicantAdapter.setData(bean.getApplicant());
         if(bean.getApplicant() == null || bean.getApplicant().isEmpty()){
-            tvCount.setText(String.format(getString(R.string.applicant_count), 0,bean.getPlace()));
+            tvCount.setText(String.format(getString(R.string.applicant_count),0,bean.getPlace()));
         }else{
             tvCount.setText(String.format(getString(R.string.applicant_count)
                     ,bean.getApplicant().size(),bean.getPlace()));
         }
+        tvCampaignDesc.setText(Html.fromHtml(bean.getIntroduce()));
         tvPrice.setText(String.format(getString(R.string.rmb_price),bean.getPrice()));
     }
 

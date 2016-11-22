@@ -2,7 +2,6 @@ package com.leyuan.aidong.ui.activity.home.view;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +14,7 @@ import com.leyuan.aidong.entity.GoodsSpecBean;
 import com.leyuan.aidong.entity.LocalGoodsSkuBean;
 import com.leyuan.aidong.ui.activity.home.adapter.GoodsSkuAdapter;
 import com.leyuan.aidong.widget.customview.BasePopupWindow;
+import com.leyuan.aidong.widget.customview.MaxHeightRecyclerView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,7 +33,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     private TextView tvStock;
     private TextView tvSelectTip;
 
-    private RecyclerView skuRecyclerView;
+    private MaxHeightRecyclerView skuRecyclerView;
     private ImageView ivMinus;
     private TextView tvCount;
     private ImageView ivAdd;
@@ -77,7 +77,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         tvAdd = (TextView) view.findViewById(R.id.tv_add);
         tvBuy = (TextView) view.findViewById(R.id.tv_buy);
 
-        skuRecyclerView = (RecyclerView) view.findViewById(R.id.rv_sku);
+        skuRecyclerView = (MaxHeightRecyclerView) view.findViewById(R.id.rv_sku);
         skuRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         GoodsSkuAdapter goodsSkuAdapter = new GoodsSkuAdapter(this,localSkuBeanList,specBean.item);
         skuRecyclerView.setAdapter(goodsSkuAdapter);
@@ -148,19 +148,19 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         }
     }
 
-    //获取除最后选定规格值的Sku
-    public List<LocalGoodsSkuBean> getExceptLastSelectedSku(){
-        List<LocalGoodsSkuBean> localExceptLastSelectedSkuList = new ArrayList<>();
+    //获选定规格值的Sku行 如颜色选中
+    public List<LocalGoodsSkuBean> getSelectedSkuLine(){
+        List<LocalGoodsSkuBean> localSelectedSkuList = new ArrayList<>();
         for (LocalGoodsSkuBean localGoodsSkuBean : localSkuBeanList) {
-            if(localGoodsSkuBean.isSelected() && !localGoodsSkuBean.isLastSelected()){
-                localExceptLastSelectedSkuList.add(localGoodsSkuBean);
+            if(localGoodsSkuBean.isSelected()) {
+                localSelectedSkuList.add(localGoodsSkuBean);
             }
         }
-        return localExceptLastSelectedSkuList;
+        return localSelectedSkuList;
     }
 
-    //获取未确定规格值的Sku 如尺寸未选中
-    public List<LocalGoodsSkuBean> getUnSelectedSku(){
+    //获取未确定规格值的Sku行 如尺寸未选中
+    public List<LocalGoodsSkuBean> getUnSelectedSkuLine(){
         List<LocalGoodsSkuBean> localUnselectedSkuList = new ArrayList<>();
         for (LocalGoodsSkuBean localGoodsSkuBean : localSkuBeanList) {
             if(!localGoodsSkuBean.isSelected()) {

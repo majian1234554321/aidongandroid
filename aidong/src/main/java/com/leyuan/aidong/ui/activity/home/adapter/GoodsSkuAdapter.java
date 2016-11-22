@@ -1,7 +1,7 @@
 package com.leyuan.aidong.ui.activity.home.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.GridLayoutManager;
+import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +13,8 @@ import com.leyuan.aidong.entity.GoodsSkuBean;
 import com.leyuan.aidong.entity.GoodsSkuValueBean;
 import com.leyuan.aidong.entity.LocalGoodsSkuBean;
 import com.leyuan.aidong.ui.activity.home.view.GoodsSkuPopupWindow;
+import com.xiaofeng.flowlayoutmanager.Alignment;
+import com.xiaofeng.flowlayoutmanager.FlowLayoutManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +28,6 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
     private GoodsSkuPopupWindow popupWindow;
     private List<LocalGoodsSkuBean> localSkuList;
     private List<GoodsSkuBean> skuList;
-    private int lastSelectedSkuPosition = -1;   //最后选中的sku值
 
     public GoodsSkuAdapter(GoodsSkuPopupWindow popupWindow, List<LocalGoodsSkuBean> localSkuList, List<GoodsSkuBean> skuList) {
         this.context = popupWindow.context;
@@ -50,20 +51,17 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
     public void onBindViewHolder(SkuHolder holder, final int position) {
         LocalGoodsSkuBean bean = localSkuList.get(position);
         holder.skuName.setText(bean.getSkuName());
-        GridLayoutManager manager = new GridLayoutManager(context,3);
-        holder.skuValues.setLayoutManager(manager);
         GoodsSkuValuesAdapter skuValueAdapter = new GoodsSkuValuesAdapter(context,bean.getSkuValues());
         holder.skuValues.setAdapter(skuValueAdapter);
+        FlowLayoutManager manager = new FlowLayoutManager();
+        manager.setAutoMeasureEnabled(true);
+        manager.setAlignment(Alignment.LEFT);
+        holder.skuValues.setLayoutManager(manager);
+        holder.skuValues.setNestedScrollingEnabled(false);
         skuValueAdapter.setItemClickListener(new GoodsSkuValuesAdapter.OnItemClickListener() {
             @Override
             public void onSelectItem(int itemPosition) {
                 localSkuList.get(position).setSelected(true);
-                for (LocalGoodsSkuBean localGoodsSkuBean : localSkuList) {
-                    localGoodsSkuBean.setLastSelected(false);
-                }
-                lastSelectedSkuPosition = position;
-                localSkuList.get(position).setLastSelected(true);
-
                 List<GoodsSkuValueBean> skuValues = localSkuList.get(position).getSkuValues();
                 for (int i = 0; i < skuValues.size(); i++) {
                     skuValues.get(i).setSelected(i == itemPosition);
@@ -73,8 +71,6 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
             @Override
             public void onCancelSelectItem(int itemPosition) {
                 localSkuList.get(position).setSelected(false);
-                localSkuList.get(position).setLastSelected(false);
-
                 List<GoodsSkuValueBean> skuValues = localSkuList.get(position).getSkuValues();
                 for (int i = 0; i < skuValues.size(); i++) {
                     if(i == itemPosition){
@@ -93,74 +89,14 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
 
     }
 
-    //获取当前选中的Sku值如['黄'] ['红'，'大']
-    private List<String> getSelectedNodes(){
-        List<String> selectedNodes = new ArrayList<>();
-        for (LocalGoodsSkuBean localGoodsSkuBean : localSkuList) {
-            for (GoodsSkuValueBean valueBean : localGoodsSkuBean.getSkuValues()) {
-                if(valueBean.isSelected()){
-                    selectedNodes.add(valueBean.getValue());
-                }
-            }
-        }
-        return selectedNodes;
-    }
-
-    //获取最后一个选中的Sku值如当前选中['红'，'大'] 最后选中的是红 返回[红]
-    private List<String> getLastSelectedNodes(){
-        List<String> selectedNodes = new ArrayList<>();
-        for (LocalGoodsSkuBean localGoodsSkuBean : localSkuList) {
-            List<GoodsSkuValueBean> skuValues = localGoodsSkuBean.getSkuValues();
-            for (int i = 0; i < skuValues.size(); i++) {
-                if( i == lastSelectedSkuPosition){
-                    selectedNodes.add(skuValues.get(i).getValue());
-                    break;
-                }
-            }
-        }
-        return selectedNodes;
-    }
-
-    //获取包含指定属性节点的所有路线
-    private List<GoodsSkuBean> getLines(List<String> selectedValues){
-        ArrayList<GoodsSkuBean> usefulGoodsSkuBean = new ArrayList<>();
-        for (GoodsSkuBean goodsSkuBean : skuList) {
-            for (String selectedValue : selectedValues) {
-                if(goodsSkuBean.value.contains(selectedValue)){
-                    usefulGoodsSkuBean.add(goodsSkuBean);
-                }
-            }
-        }
-        return usefulGoodsSkuBean;
-    }
-
-    //获取包含选中的属性节点路线上的所有节点
-    public List<String> getLineNodes(List<String> selectedSkuValues){
-        List<GoodsSkuBean> lines = getLines(selectedSkuValues);
-        List<String> allLineNodes = new ArrayList<>();
-        for (GoodsSkuBean line : lines) {
-            for (String s : line.value) {
-                allLineNodes.add(s);
-            }
-        }
-        return allLineNodes;
-    }
-
-    class SkuHolder extends RecyclerView.ViewHolder{
-        TextView skuName;
-        RecyclerView skuValues;
-
-        public SkuHolder(View itemView) {
-            super(itemView);
-            skuName = (TextView)itemView.findViewById(R.id.tv_sku_name);
-            skuValues = (RecyclerView) itemView.findViewById(R.id.rv_sku_value);
-        }
-    }
-
     //设置未选择属性中的节点状态
     private void setUnSelectedStatus(){
-        List<LocalGoodsSkuBean> localUnselectedSkuList = popupWindow.getUnSelectedSku();
-        List<String> selectedSkuValues = getSelectedNodes();
+        List<LocalGoodsSkuBean> localUnselectedSkuList = popupWindow.getUnSelectedSkuLine();
+        if(localUnselectedSkuList.isEmpty()){
+            return;
+        }
+
+        List<String> selectedSkuValues = getAllSelectedNodes();
         List<String> lineNodes = getLineNodes(selectedSkuValues);
         for (LocalGoodsSkuBean localGoodsSkuBean : localUnselectedSkuList) {
             for (GoodsSkuValueBean valueBean : localGoodsSkuBean.getSkuValues()) {
@@ -177,16 +113,16 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
         }
     }
 
-    //设置已选属性（除了最后一个确定的）中的相邻节点状态
+    //设置已选属性行中的相邻节点状态
     private void setSelectedNodeStatus(){
-        List<LocalGoodsSkuBean> localExceptLastSelectedSkuList = popupWindow.getExceptLastSelectedSku();
-        if(localExceptLastSelectedSkuList == null || localExceptLastSelectedSkuList.isEmpty()){
+        List<LocalGoodsSkuBean> localSelectedSkuList = popupWindow.getSelectedSkuLine();
+        if(localSelectedSkuList.isEmpty()){
             return;
         }
 
-        List<String> selectedNodes = getLastSelectedNodes();
-        List<String> lineNodes = getLineNodes(selectedNodes);
-        for (LocalGoodsSkuBean localGoodsSkuBean : localExceptLastSelectedSkuList) {
+        for (LocalGoodsSkuBean localGoodsSkuBean : localSelectedSkuList) {
+            List<String> otherLineSelectedNodes = getExceptCurrLineSelectedNodes(localGoodsSkuBean);
+            List<String> lineNodes = getLineNodes(otherLineSelectedNodes);
             for (GoodsSkuValueBean valueBean : localGoodsSkuBean.getSkuValues()) {
                 if(lineNodes.isEmpty()){
                     valueBean.setAvailable(true);
@@ -198,6 +134,86 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
                     }
                 }
             }
+        }
+    }
+
+    //获取当前选中的Sku值如['黄'] ['红'，'大']
+    private List<String> getAllSelectedNodes(){
+        List<String> selectedNodes = new ArrayList<>();
+        for (LocalGoodsSkuBean localGoodsSkuBean : localSkuList) {
+            for (GoodsSkuValueBean valueBean : localGoodsSkuBean.getSkuValues()) {
+                if(valueBean.isSelected()){
+                    selectedNodes.add(valueBean.getValue());
+                }
+            }
+        }
+        return selectedNodes;
+    }
+
+    //获取当前行选中的Sku值
+    private String getCurrentLineSelectedNode(LocalGoodsSkuBean localGoodsSkuBean){
+        String currLineSelectedNode = "";
+        for (GoodsSkuValueBean valueBean : localGoodsSkuBean.getSkuValues()) {
+            if(valueBean.isSelected()){
+                currLineSelectedNode = valueBean.getValue();
+                break;
+            }
+        }
+        return currLineSelectedNode;
+    }
+
+
+    //获取包含选中的属性节点路线上的所有节点
+    public List<String> getLineNodes(List<String> selectedSkuValues){
+        List<GoodsSkuBean> lines = getLines(selectedSkuValues);
+        List<String> allLineNodes = new ArrayList<>();
+        for (GoodsSkuBean line : lines) {
+            for (String s : line.value) {
+                allLineNodes.add(s);
+            }
+        }
+        return allLineNodes;
+    }
+
+    //获取包含指定属性节点的所有路线
+    private List<GoodsSkuBean> getLines(List<String> selectedValues){
+        ArrayList<GoodsSkuBean> usefulGoodsSkuBean = new ArrayList<>();
+        for (GoodsSkuBean goodsSkuBean : skuList) {
+            if(goodsSkuBean.value.containsAll(selectedValues)){
+                usefulGoodsSkuBean.add(goodsSkuBean);
+            }
+        }
+        return usefulGoodsSkuBean;
+    }
+
+    //获取除去当前行选中的Sku值，剩余Sku值的集合 如当前选中['红'，'大'] 当前行选中的是红 返回[大]
+    private List<String> getExceptCurrLineSelectedNodes(LocalGoodsSkuBean localGoodsSkuBean){
+        String currLineSelectedNode = getCurrentLineSelectedNode(localGoodsSkuBean);
+        List<String> allSelectedNodes = getAllSelectedNodes();
+        List<String> otherLineSelectedNodes = new ArrayList<>();
+        for (String allSelectedNode : allSelectedNodes) {
+            if(!allSelectedNode.equals(currLineSelectedNode)){
+                otherLineSelectedNodes.add(allSelectedNode);
+            }
+        }
+        return otherLineSelectedNodes;
+    }
+
+    class SkuHolder extends RecyclerView.ViewHolder{
+        TextView skuName;
+        RecyclerView skuValues;
+
+        public SkuHolder(View itemView) {
+            super(itemView);
+            skuName = (TextView)itemView.findViewById(R.id.tv_sku_name);
+            skuValues = (RecyclerView) itemView.findViewById(R.id.rv_sku_value);
+            skuValues.addItemDecoration(new RecyclerView.ItemDecoration() {
+                @Override
+                public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                    super.getItemOffsets(outRect, view, parent, state);
+                    outRect.set(0,0,40,20);
+                }
+            });
         }
     }
 }

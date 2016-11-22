@@ -28,10 +28,10 @@ import java.util.List;
  */
 public class AddressActivity extends BaseActivity implements View.OnClickListener, AddressActivityView, AddressAdapter.EditAddressListener {
     private static final int CODE_UPDATE_ADDRESS = 1;
+    private static final int CODE_ADD_ADDRESS = 2;
 
     private ImageView ivBack;
     private TextView tvAddAddress;
-
     private SwitcherLayout switcherLayout;
     private RecyclerView rvAddress;
     private AddressAdapter addressAdapter;
@@ -44,6 +44,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address);
+        addressPresent = new AddressPresentImpl(this,this);
         initView();
         setListener();
         addressPresent.getAddress(switcherLayout);
@@ -58,7 +59,6 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
         addressAdapter.setEditAddressListener(this);
         rvAddress.setLayoutManager(new LinearLayoutManager(this));
         rvAddress.setAdapter(addressAdapter);
-        addressPresent = new AddressPresentImpl(this,this);
     }
 
     private void setListener() {
@@ -74,7 +74,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.tv_add_address:
                 Intent intent = new Intent(this, AddAddressActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,CODE_ADD_ADDRESS);
                 break;
             default:
                 break;
@@ -125,7 +125,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
                 addressList.remove(position);
                 addressList.add(position,addressBean);
                 addressAdapter.setData(addressList);
-            }else{
+            }else if(requestCode == CODE_ADD_ADDRESS){
                 AddressBean addressBean = data.getParcelableExtra("address");
                 addressList.add(0,addressBean);
                 addressAdapter.setData(addressList);

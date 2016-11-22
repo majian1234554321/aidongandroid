@@ -24,7 +24,7 @@ import com.leyuan.aidong.utils.KeyBoardUtil;
  * 更新地址
  * Created by song on 2016/10/28.
  */
-public class UpdateAddressActivity extends BaseActivity implements UpdateAddressActivityView, View.OnClickListener {
+public class UpdateAddressActivity extends BaseActivity implements UpdateAddressActivityView, View.OnClickListener, AddressPopupWindow.OnConfirmAddressListener {
     private LinearLayout rootLayout;
     private ImageView ivBack;
     private TextView tvTitle;
@@ -36,9 +36,13 @@ public class UpdateAddressActivity extends BaseActivity implements UpdateAddress
     private RadioButton rbDefault;
 
     private AddressPopupWindow addressPopup;
-    private AddressBean addressBean;
+    private AddressBean bean;
 
     private AddressPresent addressPresent;
+
+    private String province;
+    private String city;
+    private String district;
 
     public static void start(Context context, AddressBean address){
         Intent intent = new Intent(context, AddAddressActivity.class);
@@ -52,7 +56,7 @@ public class UpdateAddressActivity extends BaseActivity implements UpdateAddress
         setContentView(R.layout.activity_add_asddress);
         addressPresent = new AddressPresentImpl(this,this);
         if(getIntent() != null){
-            addressBean = getIntent().getParcelableExtra("address");
+            bean = getIntent().getParcelableExtra("address");
         }
 
         initView();
@@ -81,10 +85,11 @@ public class UpdateAddressActivity extends BaseActivity implements UpdateAddress
 
     private void showUpdateAddress(){
         tvTitle.setText(getString(R.string.update_address));
-        etUsername.setText(addressBean.getName());
-        etPhone.setText(addressBean.getMobile());
-        tvAddress.setText(addressBean.getAddress());
-        etDescAddress.setText(addressBean.getAddress());
+        etUsername.setText(bean.getName());
+        etPhone.setText(bean.getMobile());
+        tvAddress.setText(new StringBuilder(bean.getProvince())
+                .append(bean.getCity()).append(bean.getDistrict()));
+        etDescAddress.setText(bean.getAddress());
     }
 
     @Override
@@ -102,13 +107,14 @@ public class UpdateAddressActivity extends BaseActivity implements UpdateAddress
                 finish();
                 break;
             case R.id.tv_finish:
-                addressPresent.updateAddress(addressBean.getId(),etUsername.getText().toString(),
-                        etPhone.getText().toString(),tvAddress.getText().toString());
+                addressPresent.updateAddress(bean.getId(),etUsername.getText().toString(),
+                        etPhone.getText().toString(), province,city,district,etDescAddress.getText().toString());
                 break;
             case R.id.tv_address:
                 KeyBoardUtil.closeKeybord(etUsername,this);
                 if(addressPopup == null){
                     addressPopup = new AddressPopupWindow(this);
+                    addressPopup.setOnConfirmAddressListener(this);
                 }
                 addressPopup.showAtLocation(rootLayout, Gravity.BOTTOM,0,0);
                 break;
@@ -117,7 +123,11 @@ public class UpdateAddressActivity extends BaseActivity implements UpdateAddress
         }
     }
 
-    public void setAddress(String address){
-        tvAddress.setText(address);
+    @Override
+    public void onAddressConfirm(String province, String city, String area) {
+        this.province = province;
+        this.city = city;
+        this.district = area;
+        tvAddress.setText(new StringBuilder(province).append(city).append(area));
     }
 }

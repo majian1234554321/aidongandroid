@@ -34,7 +34,7 @@ public class Alipay implements PayInterface {
     public void payOrder(Object object) {
         bean = (PayOrderBean) object;
         if (null != bean) {
-            final String orderInfo = bean.getRequest();
+            final String orderInfo = bean.getPay_option().getPay_string();
             Runnable payRunnable = new Runnable() {
 
                 @Override

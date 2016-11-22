@@ -46,9 +46,9 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  * Created by song on 2016/9/12.
  */
 public class GoodsDetailActivity extends BaseActivity implements View.OnClickListener,GoodsDetailActivityView, BGABanner.OnItemClickListener {
-    public static final String TYEP_NURTURE = "nutrition";
-    public static final String TYEP_EQUIPMENT = "equipments";
-    public static final String TYEP_FOODS = "foods";
+    public static final String TYPE_NURTURE = "nutrition";
+    public static final String TYPE_EQUIPMENT = "equipments";
+    public static final String TYPE_FOODS = "foods";
 
     private SwitcherLayout switcherLayout;
     private LinearLayout rootLayout;
@@ -208,10 +208,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void setGoodsDetail(GoodsDetailBean bean) {
         bottomLayout.setVisibility(View.VISIBLE);
-        //bannerUrls = bean.image;
-        bannerUrls.add("http://o8e1adk04.bkt.clouddn.com/image/2016/07/28/e391a4e8e20206696ff465db27f1c56a.jpg");
-        bannerUrls.add("http://o8e1adk04.bkt.clouddn.com/image/2016/07/28/7fda4371e89056af7580c46027489310.jpg");
-        bannerUrls.add("http://o8e1adk04.bkt.clouddn.com/image/2016/07/28/03d618e00649619e76e0300cbf1b6451.jpg");
+        bannerUrls = bean.image;
         bannerLayout.setData(bannerUrls,null);
         tvPrice.setText(String.format(getString(R.string.rmb_price),bean.price));
         tvMarketPrice.setText(String.format(getString(R.string.rmb_price),bean.market_price));

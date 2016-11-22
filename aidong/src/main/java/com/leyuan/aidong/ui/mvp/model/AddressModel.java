@@ -24,7 +24,7 @@ public interface AddressModel {
      * @param phone 电话
      * @param address 地址
      */
-    void addAddress(Subscriber<AddressData> subscriber, String id,String name, String phone, String address);
+    void addAddress(Subscriber<AddressData> subscriber, String id,String name, String phone,String province,String city,String district,  String address);
 
     /**
      * 更新地址
@@ -34,7 +34,7 @@ public interface AddressModel {
      * @param phone 电话 没变化传入null
      * @param address 地址 没变化传入null
      */
-    void updateAddress(Subscriber<AddressData> subscriber,String id,String name,String phone,String address);
+    void updateAddress(Subscriber<AddressData> subscriber,String id,String name,String phone,String province,String city,String district, String address);
 
     /**
      * 删除地址

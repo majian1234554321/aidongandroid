@@ -1,5 +1,7 @@
 package com.leyuan.aidong.ui.mvp.model.impl;
 
+import android.content.Context;
+
 import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.entity.data.BrandData;
 import com.leyuan.aidong.entity.data.HomeData;
@@ -7,7 +9,7 @@ import com.leyuan.aidong.http.RetrofitHelper;
 import com.leyuan.aidong.http.RxHelper;
 import com.leyuan.aidong.http.api.HomeService;
 import com.leyuan.aidong.ui.mvp.model.HomeModel;
-import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.SystemInfoUtils;
 
 import java.util.List;
 
@@ -18,9 +20,11 @@ import rx.Subscriber;
  * Created by song on 2016/8/13.
  */
 public class HomeModelImpl implements HomeModel {
+    private Context context;
     private HomeService homeService;
 
-    public HomeModelImpl() {
+    public HomeModelImpl(Context context) {
+        this.context = context;
         homeService = RetrofitHelper.createApi(HomeService.class);
     }
 
@@ -41,10 +45,6 @@ public class HomeModelImpl implements HomeModel {
 
     @Override
     public List<BannerBean> getBanners() {
-        //todo 改成成工具类统一获取
-        if(Constant.systemInfoBean != null){
-            return Constant.systemInfoBean.getBanner();
-        }
-        return  null;
+        return SystemInfoUtils.getHomeBanner(context);
     }
 }

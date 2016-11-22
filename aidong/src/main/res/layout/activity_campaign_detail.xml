@@ -20,19 +20,20 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="300dp"
                 app:layout_collapseMode="parallax">
 
                 <cn.bingoogolapple.bgabanner.BGABanner
                     android:id="@+id/banner_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
+                    android:layout_height="match_parent"
                     app:banner_pageChangeDuration="1000"
                     app:banner_pointAutoPlayAble="false"
                     app:banner_pointContainerBackground="@android:color/transparent"
                     app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
                     app:banner_pointTopBottomMargin="5dp"
-                    app:banner_transitionEffect="alpha" />
+                    app:banner_transitionEffect="alpha"
+                    android:background="@drawable/place_holder_logo"/>
 
                 <TextView
                     android:id="@+id/tv_hot"
@@ -61,7 +62,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="活动详情"
+                    android:text=""
                     android:textColor="@color/white" />
             </android.support.v7.widget.Toolbar>
 
@@ -173,6 +174,7 @@
                     android:drawableRight="@drawable/icon_right_arrow"
                     android:gravity="center_vertical|right"
                     android:text="北京东路"
+                    android:singleLine="true"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
             </LinearLayout>

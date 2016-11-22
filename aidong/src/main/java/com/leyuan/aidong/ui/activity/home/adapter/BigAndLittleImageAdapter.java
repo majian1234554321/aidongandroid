@@ -28,25 +28,30 @@ public class BigAndLittleImageAdapter extends RecyclerView.Adapter< RecyclerView
     private List<HomeItemBean> data = new ArrayList<>();
     private SeeMoreListener seeMoreListener;
 
-    public BigAndLittleImageAdapter(Context context) {
+    public BigAndLittleImageAdapter(Context context,String type) {
         this.context = context;
+        this.type = type;
     }
 
     public void setSeeMoreListener(SeeMoreListener seeMoreListener) {
         this.seeMoreListener = seeMoreListener;
     }
 
-    public void setData(List<HomeItemBean> data, String type) {
+    public void setData(List<HomeItemBean> data) {
         if(data != null){
             this.data = data;
-            this.type = type;
             notifyDataSetChanged();
         }
     }
 
     @Override
     public int getItemCount() {
-        return data.size() + 1;
+        if(data.size() > 4){        //大于4个子item时才显示查看更多
+            return data.size() + 1;
+        }else{
+            return data.size();
+        }
+
     }
 
     @Override
@@ -82,7 +87,7 @@ public class BigAndLittleImageAdapter extends RecyclerView.Adapter< RecyclerView
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((MainActivity)context).toTagetDetailActivity(type,bean.getId());
+                    ((MainActivity)context).toTargetDetailActivity(type,bean.getId());
                 }
             });
         }

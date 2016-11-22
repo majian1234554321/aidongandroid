@@ -5,15 +5,20 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.TabFragmentAdapter;
 import com.leyuan.aidong.entity.BusinessCircleBean;
 import com.leyuan.aidong.entity.BusinessCircleDescBean;
+import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.home.view.CourseFilterView;
 import com.leyuan.aidong.ui.fragment.home.CourseFragment;
+import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
+import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CourseActivityView;
 
 import java.util.ArrayList;
@@ -29,14 +34,18 @@ public class CourseActivity extends BaseActivity implements CourseActivityView{
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private CourseFilterView filterView;
+    private List<Fragment> fragments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course);
-
+        CoursePresent present = new CoursePresentImpl(this,this);
         initView();
         setListener();
+        present.getDate();
+        present.getCategory();
+        present.getBusinessCircle();
     }
 
     private void initView() {
@@ -45,7 +54,6 @@ public class CourseActivity extends BaseActivity implements CourseActivityView{
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         filterView = (CourseFilterView) findViewById(R.id.view_filter_course);
 
-        filterView.setCategoryList(Arrays.asList(getResources().getStringArray(R.array.characterTag)));
         List<BusinessCircleBean> circleList = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             BusinessCircleBean circleBean = new BusinessCircleBean();
@@ -63,7 +71,7 @@ public class CourseActivity extends BaseActivity implements CourseActivityView{
         }
         filterView.setCircleList(circleList);
 
-        ArrayList<Fragment> fragments = new ArrayList<>();
+        fragments = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
             CourseFragment f = new CourseFragment();
             fragments.add(f);
@@ -71,6 +79,7 @@ public class CourseActivity extends BaseActivity implements CourseActivityView{
         List<String> titles = Arrays.asList(getResources().getStringArray(R.array.dateTab));
         viewPager.setAdapter(new TabFragmentAdapter(getSupportFragmentManager(),fragments,titles));
         tabLayout.setupWithViewPager(viewPager);
+        viewPager.addOnPageChangeListener(new MyOnPageChangeListener());
     }
 
     private void setListener(){
@@ -86,17 +95,17 @@ public class CourseActivity extends BaseActivity implements CourseActivityView{
     };
 
     @Override
-    public void setDate() {
+    public void setDate(List<String> data) {
 
     }
 
     @Override
-    public void setCategory() {
-
+    public void setCategory(List<CategoryBean> categoryBeanList) {
+        filterView.setCategoryList(categoryBeanList);
     }
 
     @Override
-    public void setBusinessCircle() {
+    public void setBusinessCircle(List<BusinessCircleBean> circleBeanList) {
 
     }
 
@@ -112,4 +121,24 @@ public class CourseActivity extends BaseActivity implements CourseActivityView{
 
         }
     }
+
+    public void showConditionLayout(){
+        filterView.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
+    }
+
+    public void hideConditionLayout(){
+        filterView.animate().translationY(-filterView.getHeight()).setInterpolator(new AccelerateInterpolator(2));
+    }
+
+    class MyOnPageChangeListener extends ViewPager.SimpleOnPageChangeListener{
+
+
+        @Override
+        public void onPageSelected(int position) {
+            CourseFragment fragment = (CourseFragment) fragments.get(position);
+            fragment.scrollToTop();
+            showConditionLayout();
+        }
+    }
+
 }

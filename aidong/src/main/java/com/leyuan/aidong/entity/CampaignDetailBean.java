@@ -1,5 +1,8 @@
 package com.leyuan.aidong.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,10 +10,10 @@ import java.util.List;
  * 活动详情实体
  * Created by song on 2016/8/18.
  */
-public class CampaignDetailBean {
+public class CampaignDetailBean implements Parcelable {
     private String campaign_id;             //活动编号
     private String name;                    //活动名称
-    private List image;                     //活动封面图
+    private List<String> image;             //活动封面图
     private String landmark;                //活动地标
     private String start_time;              //活动开始时间
     private String end_time;                //活动结束时间
@@ -40,11 +43,11 @@ public class CampaignDetailBean {
         this.name = name;
     }
 
-    public List getImage() {
+    public List<String> getImage() {
         return image;
     }
 
-    public void setImage(List image) {
+    public void setImage(List<String> image) {
         this.image = image;
     }
 
@@ -144,7 +147,7 @@ public class CampaignDetailBean {
         this.applicant = applicant;
     }
 
-    public class Applicant{
+    public class Applicant {
         private String idong_id;
         private String name;
         private String avatar;
@@ -203,4 +206,62 @@ public class CampaignDetailBean {
                 ", applicant=" + applicant +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.campaign_id);
+        dest.writeString(this.name);
+        dest.writeStringList(this.image);
+        dest.writeString(this.landmark);
+        dest.writeString(this.start_time);
+        dest.writeString(this.end_time);
+        dest.writeString(this.address);
+        dest.writeString(this.organizer);
+        dest.writeString(this.place);
+        dest.writeString(this.introduce);
+        dest.writeString(this.price);
+        dest.writeString(this.market_price);
+        dest.writeString(this.enroll_start_time);
+        dest.writeString(this.enroll_end_time);
+        dest.writeList(this.applicant);
+    }
+
+    public CampaignDetailBean() {
+    }
+
+    protected CampaignDetailBean(Parcel in) {
+        this.campaign_id = in.readString();
+        this.name = in.readString();
+        this.image = in.createStringArrayList();
+        this.landmark = in.readString();
+        this.start_time = in.readString();
+        this.end_time = in.readString();
+        this.address = in.readString();
+        this.organizer = in.readString();
+        this.place = in.readString();
+        this.introduce = in.readString();
+        this.price = in.readString();
+        this.market_price = in.readString();
+        this.enroll_start_time = in.readString();
+        this.enroll_end_time = in.readString();
+        this.applicant = new ArrayList<Applicant>();
+        in.readList(this.applicant, Applicant.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<CampaignDetailBean> CREATOR = new Parcelable.Creator<CampaignDetailBean>() {
+        @Override
+        public CampaignDetailBean createFromParcel(Parcel source) {
+            return new CampaignDetailBean(source);
+        }
+
+        @Override
+        public CampaignDetailBean[] newArray(int size) {
+            return new CampaignDetailBean[size];
+        }
+    };
 }

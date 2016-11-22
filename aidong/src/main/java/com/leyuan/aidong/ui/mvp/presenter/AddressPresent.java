@@ -20,7 +20,7 @@ public interface AddressPresent {
      * @param phone 电话
      * @param address 地址
      */
-    void addAddress(String id,String name, String phone, String address);
+    void addAddress(String id,String name, String phone,String province,String city,String district,String address);
 
     /**
      * 修改收货地址信息
@@ -29,7 +29,7 @@ public interface AddressPresent {
      * @param phone 电话
      * @param address 地址
      */
-    void updateAddress(String id,String name, String phone, String address);
+    void updateAddress(String id,String name, String phone,String province,String city,String district,String address);
 
     /**
      * 删除收货地址
