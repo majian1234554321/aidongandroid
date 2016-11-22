@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.mvp.model;
 
 import com.leyuan.aidong.entity.model.UserCoach;
+import com.leyuan.aidong.entity.model.result.LoginResult;
 import com.leyuan.aidong.http.RetrofitHelper;
 import com.leyuan.aidong.http.RxHelper;
 import com.leyuan.aidong.http.api.IdentifyService;
@@ -60,15 +61,24 @@ public class RegisterModel implements RegisterModelInterface {
 
     }
 
-    public void completeUserInfo(Subscriber<UserCoach> subscriber, Map<String, String> params, String filePath) {
+    public void completeUserInfo(Subscriber<LoginResult> subscriber, Map<String, String> params, String filePath) {
         MultipartBody.Part body = null;
             if(filePath !=null){
                 File file = new File(filePath);
                 RequestBody requestFile = RequestBody.create(MediaType.parse("application/octet-stream"), file);
                 body = MultipartBody.Part.createFormData("avatar", file.getName(), requestFile);
             }
-        mIdentifyService.completeUserInfo(params, App.mInstance.getToken())
-                .compose(RxHelper.<UserCoach>transform())
-                .subscribe(subscriber);
+
+        String token = App.mInstance.isLogin()?null:App.mInstance.getToken();
+//        if(App.mInstance.isLogin()){
+//            mIdentifyService.completeUserInfo(params, null)
+//                    .compose(RxHelper.<UserCoach>transform())
+//                    .subscribe(subscriber);
+//        }else{
+            mIdentifyService.completeUserInfo(params, token)
+                    .compose(RxHelper.<LoginResult>transform())
+                    .subscribe(subscriber);
+//        }
+
     }
 }

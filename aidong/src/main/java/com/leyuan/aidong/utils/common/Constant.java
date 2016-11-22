@@ -126,6 +126,9 @@ public class Constant {
 	public static final byte CHATSUBTYPE_USER = 1;
 	public static final byte CHATSUBTYPE_SERVICES = 2;
 	public static final String BUNDLE_VIDEO_PATH = "BUNDLE_VIDEO_PATH";
+	public static final String PERSION_SIGN = "person_sign";
+	public static final int RESULT_CODE_SIGN = 201;
+	public static final int REQUEST_CODE_SIGN = 301;
 	public static FileUtil MxFileUtil;
 	//	protected LoadingDialog loadingDialog;
 	public static final byte MAX_PHOTO_WALL_COUNT = 8;
@@ -138,6 +141,7 @@ public class Constant {
 	public static final String BUNDLE_URL = "BUNDLE_URL";
 	public static final String BUNDLE_BIGIMAGEITEM_INDEX = "BUNDLE_BIGIMAGEITEM_INDEX";
 
-	public static final String  user = "user";
+	public static final String  USER = "user";
+	public static final String BUNDLE_CONTENT = "content";
 
 }

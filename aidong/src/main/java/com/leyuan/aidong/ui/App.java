@@ -135,9 +135,8 @@ public class App extends Application{
     }
     public void setUser(UserCoach user){
         this.user = user;
-        if(user!=null){
-            this.token = user.getToken();
-            SharePrefUtils.putString(context, "token", token);
+        if(user!=null && user.getToken() !=null){
+           setToken(user.getToken());
         }
         SharePrefUtils.setUser(context, user);
     }

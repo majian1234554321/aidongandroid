@@ -168,6 +168,7 @@
         <activity android:name=".ui.activity.mine.login.FastLoginActivity" />
         <activity android:name=".ui.activity.mine.login.FindPasswordActivity" />
         <activity android:name=".ui.activity.mine.login.RegisterActivity" />
+        <activity android:name=".ui.activity.mine.login.XiuGaiGeXinQianMing" />
 
         <activity
             android:name="com.mob.tools.MobUIShell"

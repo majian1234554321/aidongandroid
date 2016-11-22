@@ -33,6 +33,13 @@ public class DateUtils {
         return new SimpleDateFormat(pattern).parse(dateStr);
     }
 
+    public static String calendarToStr(Calendar calendar1, String format) {
+        SimpleDateFormat formatter = new SimpleDateFormat(format);
+        String str = formatter.format(calendar1.getTime());
+        return str;
+
+    }
+
     /**
      * 将Date类型转换为日期字符串
      *

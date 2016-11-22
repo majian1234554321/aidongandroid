@@ -19,11 +19,11 @@ public class User {
     int height;
     int  weight;
     int bmi;
-    int  bust;
-    int waist;
-    int  hip;
+    String  bust;
+    String waist;
+    boolean  hip;
     String charm_site;
-    int frequency;
+    String frequency;
 
     String[] sport;
     UserTag tag[];
@@ -92,29 +92,6 @@ public class User {
         this.bmi = bmi;
     }
 
-    public int getBust() {
-        return bust;
-    }
-
-    public void setBust(int bust) {
-        this.bust = bust;
-    }
-
-    public int getWaist() {
-        return waist;
-    }
-
-    public void setWaist(int waist) {
-        this.waist = waist;
-    }
-
-    public int getHip() {
-        return hip;
-    }
-
-    public void setHip(int hip) {
-        this.hip = hip;
-    }
 
     public String getCharm_site() {
         return charm_site;
@@ -122,14 +99,6 @@ public class User {
 
     public void setCharm_site(String charm_site) {
         this.charm_site = charm_site;
-    }
-
-    public int getFrequency() {
-        return frequency;
-    }
-
-    public void setFrequency(int frequency) {
-        this.frequency = frequency;
     }
 
     public String[] getSport() {
@@ -207,6 +176,38 @@ public class User {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public String getBust() {
+        return bust;
+    }
+
+    public void setBust(String bust) {
+        this.bust = bust;
+    }
+
+    public String getWaist() {
+        return waist;
+    }
+
+    public void setWaist(String waist) {
+        this.waist = waist;
+    }
+
+    public boolean isHip() {
+        return hip;
+    }
+
+    public void setHip(boolean hip) {
+        this.hip = hip;
+    }
+
+    public String getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(String frequency) {
+        this.frequency = frequency;
     }
 
     @Override

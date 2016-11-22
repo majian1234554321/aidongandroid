@@ -3,6 +3,7 @@ package com.leyuan.aidong.ui.activity.mine.login;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -10,9 +11,10 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mvp.presenter.impl.RegisterPresenter;
 import com.leyuan.aidong.ui.mvp.presenter.RegisterPresenterInterface;
+import com.leyuan.aidong.ui.mvp.presenter.impl.RegisterPresenter;
 import com.leyuan.aidong.ui.mvp.view.RegisterViewInterface;
+import com.leyuan.aidong.utils.TimeCountUtil;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.widget.CommonTitleLayout;
 import com.leyuan.aidong.widget.DialogImageIdentify;
@@ -133,6 +135,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             if(mDialogImageIdentify!=null && mDialogImageIdentify.isShowing()){
                 mDialogImageIdentify.dismiss();
             }
+
+            new TimeCountUtil(60000, 1000, (Button)findViewById(R.id.btn_identify)).start();
+
         }else  if(mDialogImageIdentify!=null && mDialogImageIdentify.isShowing()){
             mDialogImageIdentify.clearContent();
             mDialogImageIdentify.refreshImage(mobile);

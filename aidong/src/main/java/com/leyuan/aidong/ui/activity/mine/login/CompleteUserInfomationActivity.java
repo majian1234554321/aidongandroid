@@ -1,10 +1,13 @@
 package com.leyuan.aidong.ui.activity.mine.login;
 
+import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -16,10 +19,14 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.mine.view.AddressPopupWindow;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CompleteUserPresenter;
 import com.leyuan.aidong.ui.mvp.view.CompleteUserViewInterface;
+import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.ToastUtil;
+import com.leyuan.aidong.utils.common.Constant;
 import com.leyuan.aidong.widget.ActionSheetDialog;
 import com.leyuan.aidong.widget.CommonTitleLayout;
+import com.leyuan.commonlibrary.manager.UiManager;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,6 +52,9 @@ public class CompleteUserInfomationActivity extends BaseActivity implements View
 
     private CompleteUserPresenter presenter;
     private Map<String,String > params = new HashMap<>();
+    private Calendar calender_current = Calendar.getInstance();
+    private String[] zodiacs =  {"白羊座","金牛座","双子座","巨蟹座","狮子座","处女座",
+            "天秤座","天蝎座","射手座","摩羯座","水瓶座","双鱼座"};
 
 
     @Override
@@ -136,27 +146,134 @@ public class CompleteUserInfomationActivity extends BaseActivity implements View
                 addressPopup.showAtLocation(rootLayout, Gravity.BOTTOM,0,0);
                 break;
             case R.id.btn_sign:
-                
+                Bundle bundle = new Bundle();
+                bundle.putString(Constant.BUNDLE_CONTENT,btn_sign.getText().toString().trim());
+                UiManager.activityJump(this,bundle,XiuGaiGeXinQianMing.class,Constant.REQUEST_CODE_SIGN);
 
                 break;
             case R.id.btn_identify:
-
+                showSelectIdentifyDialog();
                 break;
             case R.id.btn_birthday:
-
+                showSelectBirthdayDialog();
                 break;
             case R.id.btn_constellation:
+                showSelectConstellationDialog();
 
                 break;
             case R.id.btn_height:
+                showSelectHeightDialog();
                 break;
             case R.id.btn_weight:
+                showSelectWeightDialog();
+
                 break;
             case R.id.btn_exercise:
+                showSelectExerciseDialog();
                 break;
             case R.id.btn_bmi:
+
                 break;
         }
+    }
+
+    private void showSelectExerciseDialog() {
+        ActionSheetDialog dialog =   ActionSheetDialogBuild("请选择");
+        for(int i = 1; i <= 7; i++){
+            dialog.addSheetItem("一周"+i+"次", ActionSheetDialog.SheetItemColor.Black, new ActionSheetDialog.OnSheetItemClickListener() {
+                @Override
+                public void onClick(int which) {
+                    btn_exercise.setText("一周"+which+"次");
+                    params.put("frequency","一周"+which+"次");
+                }
+            });
+        }
+        dialog.show();
+    }
+
+    private void showSelectWeightDialog() {
+        ActionSheetDialog dialog =   ActionSheetDialogBuild("请选择");
+        for(int i = 40; i <=100; i++){
+            dialog.addSheetItem(i+"kg", ActionSheetDialog.SheetItemColor.Black, new ActionSheetDialog.OnSheetItemClickListener() {
+                @Override
+                public void onClick(int which) {
+                    btn_weight.setText((which+39)+"kg");
+                    params.put("weight",(which+39)+"kg");
+                }
+            });
+        }
+        dialog.show();
+    }
+
+    private void showSelectHeightDialog() {
+        ActionSheetDialog dialog =   ActionSheetDialogBuild("请选择");
+        for(int i = 150; i <= 210; i++){
+            dialog.addSheetItem(i+"cm", ActionSheetDialog.SheetItemColor.Black, new ActionSheetDialog.OnSheetItemClickListener() {
+                @Override
+                public void onClick(int which) {
+                    btn_height.setText((which+149)+"cm");
+                    params.put("height",(which+149)+"cm");
+                }
+            });
+        }
+        dialog.show();
+    }
+
+    private void showSelectConstellationDialog() {
+        ActionSheetDialog dialog =   ActionSheetDialogBuild("请选择");
+        for(int i = 0; i < zodiacs.length; i++){
+            dialog.addSheetItem(zodiacs[i], ActionSheetDialog.SheetItemColor.Black, new ActionSheetDialog.OnSheetItemClickListener() {
+                @Override
+                public void onClick(int which) {
+                   btn_constellation.setText(zodiacs[which -1]);
+                    params.put("zodiac",zodiacs[which -1]);
+                }
+            });
+        }
+        dialog.show();
+    }
+
+    private void showSelectBirthdayDialog() {
+        DatePickerDialog dialog = new DatePickerDialog(this, R.style.time_dialog,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+                        Calendar temp = Calendar.getInstance();
+                        temp.set(year, monthOfYear, dayOfMonth);
+                        if (temp.after(calender_current)) {
+                            ToastUtil.showConsecutiveShort("不能大于当前时间");
+                            return;
+                        }
+
+                          String birthday =  DateUtils.calendarToStr(temp, DateUtils.yyyyMMDD);
+                            if(birthday != null){
+                                btn_birthday.setText(birthday);
+                                params.put("birthday",birthday);
+                            }
+                    }
+                }, 1980, 00, 01);
+        dialog.show();
+
+    }
+
+    private void showSelectIdentifyDialog() {
+            ActionSheetDialogBuild("请选择")
+                    .addSheetItem("会员", ActionSheetDialog.SheetItemColor.Black, new ActionSheetDialog.OnSheetItemClickListener() {
+                        @Override
+                        public void onClick(int which) {
+                            btn_identify.setText("会员");
+                            params.put("type","0");
+                        }
+                    })
+                    .addSheetItem("教练", ActionSheetDialog.SheetItemColor.Black, new ActionSheetDialog.OnSheetItemClickListener() {
+                        @Override
+                        public void onClick(int which) {
+                            btn_identify.setText("教练");
+                            params.put("type","1");
+                        }
+                    })
+                    .show();
     }
 
     private boolean verify() {
@@ -232,6 +349,22 @@ public class CompleteUserInfomationActivity extends BaseActivity implements View
             finish();
         }else{
 
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case Constant.REQUEST_CODE_SIGN:
+                if(data != null){
+                    String sign = data.getStringExtra(Constant.PERSION_SIGN);
+                    if(!TextUtils.isEmpty(sign)){
+                        params.put("signature",sign);
+                        btn_sign.setText(sign);
+                    }
+                }
+                break;
         }
     }
 }

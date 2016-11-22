@@ -2,8 +2,9 @@ package com.leyuan.aidong.ui.mvp.presenter.impl;
 
 import android.app.Activity;
 
-import com.leyuan.aidong.entity.model.UserCoach;
+import com.leyuan.aidong.entity.model.result.LoginResult;
 import com.leyuan.aidong.http.subscriber.BaseSubscriber;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.mvp.model.RegisterModel;
 import com.leyuan.aidong.ui.mvp.view.CompleteUserViewInterface;
 
@@ -11,9 +12,6 @@ import java.util.Map;
 
 import rx.Subscriber;
 
-/**
- * Created by user on 2016/11/17.
- */
 public class CompleteUserPresenter {
     private Activity mContext;
     private CompleteUserViewInterface mViewInterface;
@@ -32,7 +30,7 @@ public class CompleteUserPresenter {
        registerModel.completeUserInfo(completeSubcribe,params,filePath);
    }
 
-    private Subscriber<UserCoach> completeSubcribe = new BaseSubscriber<UserCoach>(mContext) {
+    private Subscriber<LoginResult> completeSubcribe = new BaseSubscriber<LoginResult>(mContext) {
         @Override
         public void onError(Throwable e) {
             super.onError(e);
@@ -40,8 +38,11 @@ public class CompleteUserPresenter {
         }
 
         @Override
-        public void onNext(UserCoach userCoach) {
+        public void onNext(LoginResult loginResult) {
             mViewInterface.OnCompletUserInfoCallBack(true);
+            if(loginResult != null && loginResult.getUser()!=null){
+                App.mInstance.setUser(loginResult.getUser());
+            }
 
         }
     };

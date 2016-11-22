@@ -147,7 +147,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             case R.id.imageView_head:
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), MyShowActivityNew.class);
-                intent.putExtra(com.leyuan.aidong.utils.common.Constant.user,App.mInstance.getUser());
+//                intent.setClass(getActivity(), CompleteUserInfomationActivity.class);
+                intent.putExtra(com.leyuan.aidong.utils.common.Constant.USER,App.mInstance.getUser());
                 startActivity(intent);
                 break;
             case R.id.relativeLayout_yuyue:

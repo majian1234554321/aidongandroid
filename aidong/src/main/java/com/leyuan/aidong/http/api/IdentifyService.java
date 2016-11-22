@@ -3,6 +3,7 @@ package com.leyuan.aidong.http.api;
 
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.model.UserCoach;
+import com.leyuan.aidong.entity.model.result.LoginResult;
 
 import java.util.Map;
 
@@ -40,6 +41,6 @@ public interface IdentifyService {
 
     @FormUrlEncoded
     @PUT("mine/profile")
-    Observable<BaseBean<UserCoach>> completeUserInfo(@FieldMap Map<String ,String> param, @Header("token") String token);
+    Observable<BaseBean<LoginResult>> completeUserInfo(@FieldMap Map<String ,String> param, @Header("token") String token);
 
 }

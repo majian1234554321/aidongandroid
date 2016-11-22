@@ -127,6 +127,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="50dp">
 
@@ -154,13 +155,19 @@
                 android:textColor="@color/txt_black"
                 android:textSize="15dp" />
 
-            <Button
-                android:id="@+id/btn_birthday"
-                style="@style/ButtonStyleAlignRightWithArrow"
-                android:text="@string/please_select" />
             <View
                 style="@style/common_divider_style"
                 />
+
+            <Button
+                android:id="@+id/btn_birthday"
+                style="@style/ButtonStyleAlignRightWithArrow"
+                android:text="@string/please_select"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -175,8 +182,8 @@
 
             <Button
                 android:id="@+id/btn_constellation"
-                style="@style/ButtonStyleAlignRightWithArrow"
-                android:text="@string/please_select" />
+                style="@style/ButtonStyleAlignRight"
+                android:text="@string/please_select_birthday" />
             <View
                 style="@style/common_divider_style"
                 />
