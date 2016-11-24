@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RadioButton;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
@@ -60,14 +60,14 @@ public class SelfDeliveryAdapter extends RecyclerView.Adapter<SelfDeliveryAdapte
     }
 
     class ShopHolder extends RecyclerView.ViewHolder {
-        RadioButton rbCheck;
+        CheckBox checkBox;
         TextView tvShopName;
         TextView tvAddress;
         TextView tvDistance;
 
         public ShopHolder(View itemView) {
             super(itemView);
-            rbCheck = (RadioButton) itemView.findViewById(R.id.rb_check);
+            checkBox = (CheckBox) itemView.findViewById(R.id.check_box);
             tvShopName = (TextView) itemView.findViewById(R.id.tv_shop_name);
             tvAddress = (TextView) itemView.findViewById(R.id.tv_address);
             tvDistance = (TextView) itemView.findViewById(R.id.tv_distance);

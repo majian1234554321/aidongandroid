@@ -10,15 +10,20 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.entity.ShopBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.home.ConfirmOrderActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.RecommendAdapter;
 import com.leyuan.aidong.ui.activity.mine.adapter.CartShopAdapter;
+import com.leyuan.aidong.ui.mvp.presenter.CartPresent;
+import com.leyuan.aidong.ui.mvp.presenter.impl.CartPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CartActivityView;
+import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderSpanSizeLookup;
 import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
@@ -30,7 +35,7 @@ import java.util.List;
  * 购物车
  * Created by song on 2016/9/8.
  */
-public class CartActivity extends BaseActivity implements CartActivityView, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener{
+public class CartActivity extends BaseActivity implements CartActivityView, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, CartShopAdapter.ShopChangeListener{
     private ImageView ivBack;
     private TextView tvEdit;
 
@@ -38,7 +43,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
     private View headerView;
     private RecyclerView shopView;
     private CartShopAdapter shopAdapter;
-    private List<ShopBean> data = new ArrayList<>();
+    private List<ShopBean> shopBeanList = new ArrayList<>();
 
     //推荐
     private SwipeRefreshLayout refreshLayout;
@@ -46,22 +51,28 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
     private RecommendAdapter recommendAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
 
-    public CheckBox rbSelectAll;
+    private CheckBox rbSelectAll;
     private LinearLayout bottomNormalLayout;
     private TextView tvTotalPrice;
     private TextView tvSettlement;
     private LinearLayout bottomDeleteLayout;
     private TextView tvDelete;
 
+    private CartPresent cartPresent;
+    private boolean isEditing = false;          //标记购物车是否处于编辑状态
+    private boolean isEditSelectAll = false;    //标记编辑模式下购物车是否全选
+    private boolean isNormalSelectAll = false;  //标记普通模式下购物车是否全选
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+        cartPresent = new CartPresentImpl(this,this);
 
         initView();
         setListener();
         initData();
-        shopAdapter.setData(data);
+        shopAdapter.setData(shopBeanList);
     }
 
     private void initView(){
@@ -82,7 +93,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
         shopView.setLayoutManager(new LinearLayoutManager(this));
         shopAdapter = new CartShopAdapter(this);
         shopView.setAdapter(shopAdapter);
-       // recommendAdapter = new RecommendAdapter(this);
+        recommendAdapter = new RecommendAdapter(this,"1");
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(recommendAdapter);
         recommendView.setAdapter(wrapperAdapter);
         GridLayoutManager manager = new GridLayoutManager(this, 2);
@@ -99,57 +110,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
         tvDelete.setOnClickListener(this);
         refreshLayout.setOnRefreshListener(this);
         rbSelectAll.setOnClickListener(this);
-    }
-
-    @Override
-    public void updateRecyclerView(List<GoodsBean> goodsBeanList) {
-
-    }
-
-    @Override
-    public void showEmptyView() {
-
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.iv_back:
-                finish();
-                break;
-            case R.id.tv_edit:
-                break;
-            case R.id.tv_settlement:
-                ConfirmOrderActivity.start(this);
-                break;
-            case R.id.tv_delete:
-                break;
-            case R.id.rb_select_all:
-                /***购物车与购物车中的商店联动**/
-                for (ShopBean bean : data) {
-                    bean.setChecked(rbSelectAll.isChecked());
-                }
-                shopAdapter.notifyDataSetChanged();
-                break;
-            default:
-                break;
-        }
-    }
-
-   /* private double getCartPrice(){
-        double cartPrice = 0d;
-        for (ShopBean bean : data) {
-            if(bean.isChecked()){
-                cartPrice +=
-            }
-        }
-        return cartPrice;
-    }*/
-
-    //下拉刷新
-    @Override
-    public void onRefresh() {
-
+        shopAdapter.setShopChangeListener(this);
     }
 
     private  void initData(){
@@ -172,7 +133,151 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
                 goods.add(good);
             }
             bean.setItem(goods);
-            this.data.add(bean);
+            this.shopBeanList.add(bean);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.iv_back:
+                finish();
+                break;
+            case R.id.tv_edit:
+                isEditing = !isEditing;
+                if(isEditing){
+                    resetBeanEditStatus();
+                }
+                shopAdapter.setEditing(isEditing);
+                tvEdit.setText(isEditing ? R.string.finish : R.string.edit);
+                rbSelectAll.setChecked(isEditing ? isEditSelectAll : isNormalSelectAll);
+                bottomDeleteLayout.setVisibility(isEditing ? View.VISIBLE :View.GONE);
+                bottomNormalLayout.setVisibility(isEditing ? View.GONE : View.VISIBLE);
+                break;
+            case R.id.tv_settlement:
+                ConfirmOrderActivity.start(this);
+                break;
+            case R.id.tv_delete:
+                break;
+            case R.id.rb_select_all:
+                if(isEditing){
+                    isEditSelectAll = rbSelectAll.isChecked();
+                    for (ShopBean bean : shopBeanList) {
+                        bean.setEidtChecked(isEditSelectAll);
+                        for (GoodsBean goodsBean : bean.getItem()) {
+                            goodsBean.setEditChecked(isEditSelectAll);
+                        }
+                    }
+                    shopAdapter.notifyDataSetChanged();
+                }else {     //该变购物车状态同时改变购物车中的商店和商品的属性
+                    isNormalSelectAll = rbSelectAll.isChecked();
+                    for (ShopBean bean : shopBeanList) {
+                        bean.setChecked(isNormalSelectAll);
+                        for (GoodsBean goodsBean : bean.getItem()) {
+                            goodsBean.setChecked(isNormalSelectAll);
+                        }
+                    }
+                    shopAdapter.notifyDataSetChanged();
+                    setTotalPrice();
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    //下拉刷新
+    @Override
+    public void onRefresh() {
+
+    }
+
+
+    @Override
+    public void updateRecyclerView(List<GoodsBean> goodsBeanList) {
+
+    }
+
+    @Override
+    public void setUpdateCart(BaseBean baseBean) {
+        if(baseBean.getStatus() == 1){
+            setTotalPrice();
+        }else {
+            Toast.makeText(this,R.string.update_fail,Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void setDeleteCart(BaseBean baseBean) {
+        if(baseBean.getStatus() == 1){
+            setTotalPrice();
+        }else {
+            Toast.makeText(this,R.string.delete_fail,Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void showEmptyView() {
+
+    }
+
+    //商店选中状态变化时通知更改购物车的状态
+    @Override
+    public void onShopStatusChanged() {
+        boolean isAllShopSelected = true;
+        if(isEditing){
+            for (ShopBean bean : shopBeanList) {
+                if(!bean.isEidtChecked()){
+                    isAllShopSelected = false;
+                    break;
+                }
+            }
+            rbSelectAll.setChecked(isAllShopSelected);
+            shopAdapter.notifyDataSetChanged();
+        }else {
+            for (ShopBean bean : shopBeanList) {
+                if(!bean.isChecked()){
+                    isAllShopSelected = false;
+                    break;
+                }
+            }
+            rbSelectAll.setChecked(isAllShopSelected);
+            shopAdapter.notifyDataSetChanged();
+            setTotalPrice();
+        }
+    }
+
+    @Override
+    public void onGoodsDeleted(String goodsId) {
+        cartPresent.deleteCart(goodsId);
+    }
+
+
+    @Override
+    public void onGoodsCountChanged(String goodsId,int count) {
+        cartPresent.updateCart(goodsId,count);
+    }
+
+    private void setTotalPrice(){
+        double totalPrice = 0;
+        for (ShopBean bean : shopBeanList) {
+            for (GoodsBean goodsBean : bean.getItem()) {
+                if(goodsBean.isChecked()){
+                    totalPrice += FormatUtil.parseDouble(goodsBean.getPrice())
+                            * FormatUtil.parseInt(goodsBean.getAmount());
+                }
+            }
+        }
+        tvTotalPrice.setText(String.format(getString(R.string.rmb_price),String.valueOf(totalPrice)));
+    }
+
+    private void resetBeanEditStatus(){
+        isEditSelectAll = false;
+        for (ShopBean shopBean : shopBeanList) {
+            shopBean.setEidtChecked(false);
+            for (GoodsBean goodsBean : shopBean.getItem()) {
+                goodsBean.setEditChecked(false);
+            }
         }
     }
 }

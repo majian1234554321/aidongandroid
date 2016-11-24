@@ -68,7 +68,7 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         final HomeBean bean = data.get(position);
         if(holder instanceof CoverImageViewHolder){
             CoverImageAdapter adapter = new CoverImageAdapter(context,bean.getType());
@@ -80,7 +80,7 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             ((BigAndLittleImageViewHolder) holder).cover.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    BrandActivity.start(context,bean.getType(),bean.getId(),bean.getTitle(),bean.getImage());
+                    BrandActivity.start(context, bean.getType(),bean.getId(),bean.getTitle(),bean.getImage());
                 }
             });
             BigAndLittleImageAdapter adapter = new BigAndLittleImageAdapter(context,bean.getType());
@@ -99,7 +99,7 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
 
     /**
-     * 推荐商品ViewHolder
+     * 大图加小图ViewHolder
      */
     private static class BigAndLittleImageViewHolder extends RecyclerView.ViewHolder {
         SimpleDraweeView cover;
@@ -107,13 +107,13 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         public BigAndLittleImageViewHolder(View itemView) {
             super(itemView);
-            cover = (SimpleDraweeView) itemView.findViewById(R.id.dv_recommend_good_cover);
+            cover = (SimpleDraweeView) itemView.findViewById(R.id.dv_cover);
             recyclerView = (RecyclerView) itemView.findViewById(R.id.rv_recommend_good);
         }
     }
 
     /**
-     * 推荐活动ViewHolder
+     * 大图列表ViewHolder
      */
     private static class CoverImageViewHolder extends RecyclerView.ViewHolder{
         TextView tvName;

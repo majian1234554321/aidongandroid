@@ -7,9 +7,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.ui.BaseActivity;
@@ -22,7 +22,6 @@ import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListe
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderSpanSizeLookup;
 import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +32,7 @@ import java.util.List;
  */
 public class BrandActivity extends BaseActivity implements BrandActivityView, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
     private SimpleTitleBar titleBar;
-    private ImageView ivCover;
+    private SimpleDraweeView dvCover;
     private TextView tvDesc;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
@@ -49,7 +48,7 @@ public class BrandActivity extends BaseActivity implements BrandActivityView, Vi
     private String title;
     private String url;
 
-    public static void start(Context context, String type,String id,String title,String url) {
+    public static void start(Context context, String type, String id, String title, String url) {
         Intent starter = new Intent(context, BrandActivity.class);
         starter.putExtra("type",type);
         starter.putExtra("id",id);
@@ -79,13 +78,12 @@ public class BrandActivity extends BaseActivity implements BrandActivityView, Vi
     private void initView(){
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
         View headerView = View.inflate(this,R.layout.header_brand_detail,null);
-        ivCover = (ImageView)headerView.findViewById(R.id.iv_brand_cover);
+        dvCover = (SimpleDraweeView)headerView.findViewById(R.id.dv_cover);
         tvDesc = (TextView)headerView.findViewById(R.id.tv_desc);
         refreshLayout = (SwipeRefreshLayout)findViewById(R.id.refreshLayout);
         recyclerView = (RecyclerView)findViewById(R.id.rv_brand_detail);
-
         titleBar.setTitle(title);
-        ImageLoader.getInstance().displayImage(url,ivCover);
+        dvCover.setImageURI(url);
         setColorSchemeResources(refreshLayout);
         data = new ArrayList<>();
         brandAdapter = new RecommendAdapter(this,type);
@@ -101,7 +99,7 @@ public class BrandActivity extends BaseActivity implements BrandActivityView, Vi
 
     private void setListener(){
         titleBar.setOnClickListener(this);
-        ivCover.setOnClickListener(this);
+        dvCover.setOnClickListener(this);
         refreshLayout.setOnRefreshListener(this);
     }
 

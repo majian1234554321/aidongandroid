@@ -12,7 +12,6 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.GoodsSkuBean;
 import com.leyuan.aidong.entity.GoodsSkuValueBean;
 import com.leyuan.aidong.entity.LocalGoodsSkuBean;
-import com.leyuan.aidong.ui.activity.home.view.GoodsSkuPopupWindow;
 import com.xiaofeng.flowlayoutmanager.Alignment;
 import com.xiaofeng.flowlayoutmanager.FlowLayoutManager;
 
@@ -25,13 +24,12 @@ import java.util.List;
  */
 public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHolder>{
     private Context context;
-    private GoodsSkuPopupWindow popupWindow;
     private List<LocalGoodsSkuBean> localSkuList;
     private List<GoodsSkuBean> skuList;
+    private SelectSkuListener selectSkuListener;
 
-    public GoodsSkuAdapter(GoodsSkuPopupWindow popupWindow, List<LocalGoodsSkuBean> localSkuList, List<GoodsSkuBean> skuList) {
-        this.context = popupWindow.context;
-        this.popupWindow = popupWindow;
+    public GoodsSkuAdapter(Context context, List<LocalGoodsSkuBean> localSkuList, List<GoodsSkuBean> skuList) {
+        this.context = context;
         this.localSkuList = localSkuList;
         this.skuList = skuList;
     }
@@ -84,14 +82,21 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
                 setUnSelectedStatus();
                 setSelectedNodeStatus();
                 notifyDataSetChanged();
+
+                if(selectSkuListener != null){
+                    selectSkuListener.onSelectSkuChanged(getAllSelectedNodes());
+                }
             }
         });
-
     }
 
     //设置未选择属性中的节点状态
     private void setUnSelectedStatus(){
-        List<LocalGoodsSkuBean> localUnselectedSkuList = popupWindow.getUnSelectedSkuLine();
+        List<LocalGoodsSkuBean> localUnselectedSkuList = new ArrayList<>();
+        if(selectSkuListener != null){
+             localUnselectedSkuList = selectSkuListener.onGetUnSelectSku();
+        }
+
         if(localUnselectedSkuList.isEmpty()){
             return;
         }
@@ -115,7 +120,10 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
 
     //设置已选属性行中的相邻节点状态
     private void setSelectedNodeStatus(){
-        List<LocalGoodsSkuBean> localSelectedSkuList = popupWindow.getSelectedSkuLine();
+        List<LocalGoodsSkuBean> localSelectedSkuList = new ArrayList<>();
+        if(selectSkuListener != null){
+            localSelectedSkuList = selectSkuListener.onGetSelectSku();
+        }
         if(localSelectedSkuList.isEmpty()){
             return;
         }
@@ -215,5 +223,15 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
                 }
             });
         }
+    }
+
+    public void setSelectSkuListener(SelectSkuListener listener) {
+        this.selectSkuListener = listener;
+    }
+
+    public interface SelectSkuListener {
+        List<LocalGoodsSkuBean> onGetSelectSku();
+        List<LocalGoodsSkuBean> onGetUnSelectSku();
+        void onSelectSkuChanged(List<String> allSelectedNodes );
     }
 }

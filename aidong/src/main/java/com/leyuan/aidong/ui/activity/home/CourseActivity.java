@@ -23,6 +23,8 @@ import com.leyuan.aidong.ui.mvp.view.CourseActivityView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -36,11 +38,15 @@ public class CourseActivity extends BaseActivity implements CourseActivityView{
     private CourseFilterView filterView;
     private List<Fragment> fragments;
 
+    private Animation animation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course);
+        animation = new Animation();
         CoursePresent present = new CoursePresentImpl(this,this);
+
         initView();
         setListener();
         present.getDate();
@@ -68,12 +74,17 @@ public class CourseActivity extends BaseActivity implements CourseActivityView{
                 circleBean.setDistrict(list);
             }
             circleList.add(circleBean);
+
+            Date date = new Date();
+
+            Calendar calendar = Calendar.getInstance();
         }
         filterView.setCircleList(circleList);
 
         fragments = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
             CourseFragment f = new CourseFragment();
+            f.setAnimationListener(animation);
             fragments.add(f);
         }
         List<String> titles = Arrays.asList(getResources().getStringArray(R.array.dateTab));
@@ -109,6 +120,8 @@ public class CourseActivity extends BaseActivity implements CourseActivityView{
 
     }
 
+
+
     private class MyOnFilterClickListener implements CourseFilterView.OnFilterClickListener{
 
         @Override
@@ -122,23 +135,26 @@ public class CourseActivity extends BaseActivity implements CourseActivityView{
         }
     }
 
-    public void showConditionLayout(){
-        filterView.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
-    }
+    class Animation implements CourseFragment.AnimationListener{
+        @Override
+        public void animatedShow() {
+            filterView.animate().translationY(0).setInterpolator
+                    (new DecelerateInterpolator(2)).start();
+        }
 
-    public void hideConditionLayout(){
-        filterView.animate().translationY(-filterView.getHeight()).setInterpolator(new AccelerateInterpolator(2));
+        @Override
+        public void animatedHide() {
+            filterView.animate().translationY(-filterView.getHeight()).setInterpolator
+                    (new AccelerateInterpolator(2)).start();
+        }
     }
 
     class MyOnPageChangeListener extends ViewPager.SimpleOnPageChangeListener{
-
-
         @Override
         public void onPageSelected(int position) {
             CourseFragment fragment = (CourseFragment) fragments.get(position);
             fragment.scrollToTop();
-            showConditionLayout();
+            animation.animatedShow();
         }
     }
-
 }

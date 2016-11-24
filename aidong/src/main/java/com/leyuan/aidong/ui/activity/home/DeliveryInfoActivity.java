@@ -25,6 +25,8 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
 
     private LinearLayout deliveryLayout;
     private LinearLayout llDeliveryAddress;
+    private TextView tvShop;
+    private TextView tvShopAddress;
     private TextView tvDeliveryTime;
 
     private ChooseTimePopupWindow timePopupWindow;
@@ -44,6 +46,8 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
         tvSelfDelivery = (TextView) findViewById(R.id.tv_self_delivery);
         deliveryLayout = (LinearLayout)findViewById(R.id.ll_self_delivery);
         llDeliveryAddress = (LinearLayout) findViewById(R.id.ll_delivery_address);
+        tvShop = (TextView) findViewById(R.id.tv_shop);
+        tvShopAddress = (TextView) findViewById(R.id.tv_shop_address);
         tvDeliveryTime = (TextView) findViewById(R.id.tv_delivery_time);
     }
 

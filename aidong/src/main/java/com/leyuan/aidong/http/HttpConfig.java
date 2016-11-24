@@ -2,15 +2,14 @@ package com.leyuan.aidong.http;
 
 import android.graphics.Bitmap;
 
-import com.leyuan.aidong.ui.App;
-import com.leyuan.aidong.R;
-import com.leyuan.aidong.utils.common.MXLog;
-import com.leyuan.aidong.entity.model.result.MsgResult;
-import com.leyuan.aidong.utils.ImageFactory;
-import com.leyuan.aidong.utils.LogUtils;
-import com.leyuan.aidong.utils.Utils;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.model.result.MsgResult;
+import com.leyuan.aidong.ui.App;
+import com.leyuan.aidong.utils.ImageFactory;
+import com.leyuan.aidong.utils.Utils;
+import com.leyuan.aidong.utils.common.MXLog;
 import com.leyuan.commonlibrary.http.IHttpCallback;
 import com.leyuan.commonlibrary.http.IHttpTask;
 import com.leyuan.commonlibrary.http.IHttpToastCallBack;
@@ -196,7 +195,6 @@ public class HttpConfig {
                         }
                         http.configCurrentHttpCacheExpiry(200);
                         MXLog.out("url:" + sb.toString());
-                        LogUtils.e("url",sb.toString());
                         http.send(getOrdeteteMethod, sb.toString(), params,
                                 requestCallBack);
 

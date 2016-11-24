@@ -12,7 +12,7 @@ public class ShopBean {
     private List<GoodsBean> item;
 
     private boolean checked = false;            //标记该商店是否被选中
-    private double shopPrice = 0d;              //商店中所有被选中的商品的价格
+    private boolean isEidtChecked = false;      //标记商店在编辑模式下是否被选中
 
     public String getShopname() {
         return shopname;
@@ -46,12 +46,12 @@ public class ShopBean {
         this.checked = checked;
     }
 
-    public double getShopPrice() {
-        return shopPrice;
+    public boolean isEidtChecked() {
+        return isEidtChecked;
     }
 
-    public void setShopPrice(double shopPrice) {
-        this.shopPrice = shopPrice;
+    public void setEidtChecked(boolean eidtChecked) {
+        isEidtChecked = eidtChecked;
     }
 
     @Override

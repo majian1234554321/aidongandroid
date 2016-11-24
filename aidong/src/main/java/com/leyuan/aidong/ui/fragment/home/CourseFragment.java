@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CourseBean;
 import com.leyuan.aidong.ui.BaseFragment;
-import com.leyuan.aidong.ui.activity.home.CourseActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.CourseAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
@@ -42,6 +41,8 @@ public class CourseFragment extends BaseFragment implements CourserFragmentView{
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private CoursePresent present;
     private ArrayList<CourseBean> data = new ArrayList<>();
+
+    private AnimationListener listener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
@@ -96,12 +97,16 @@ public class CourseFragment extends BaseFragment implements CourserFragmentView{
             super.onScrolled(recyclerView, dx, dy);
 
             if (scrolledDistance > HIDE_THRESHOLD  && filterViewVisible) {        //手指向上滑动
-                ((CourseActivity)getActivity()).hideConditionLayout();
+                if(listener != null){
+                    listener.animatedHide();
+                }
                 filterViewVisible = false;
                 scrolledDistance = 0;
 
             } else if (scrolledDistance < -HIDE_THRESHOLD && !filterViewVisible) {   //手指向下滑动
-                ((CourseActivity)getActivity()).showConditionLayout();
+                if(listener != null){
+                    listener.animatedShow();
+                }
                 scrolledDistance = 0;
                 filterViewVisible = true;
             }
@@ -123,5 +128,14 @@ public class CourseFragment extends BaseFragment implements CourserFragmentView{
 
     public void scrollToTop(){
         recyclerView.scrollToPosition(0);
+    }
+
+    public void setAnimationListener(AnimationListener listener) {
+        this.listener = listener;
+    }
+
+    public interface AnimationListener{
+        void animatedShow();
+        void animatedHide();
     }
 }

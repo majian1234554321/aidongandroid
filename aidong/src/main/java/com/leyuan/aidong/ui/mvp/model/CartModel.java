@@ -22,10 +22,10 @@ public interface CartModel {
     /**
      * 添加到购物车
      * @param subscriber Subscriber
-     * @param sku 商品sku码
+     * @param skuCode 商品sku码
      * @param mount 数量
      */
-    void addCart(Subscriber<BaseBean> subscriber,String sku,int mount);
+    void addCart(Subscriber<BaseBean> subscriber,String skuCode,int mount);
 
     /**
      * 删除购物车

@@ -115,15 +115,17 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_shop"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawablePadding="5dp"
                     android:gravity="right|center_vertical"
-                    android:text="威尔士长宁店"
+                    android:text="请选择"
                     android:textColor="@color/c3"
                     android:textSize="15sp" />
 
                 <TextView
+                    android:id="@+id/tv_shop_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
@@ -131,7 +133,8 @@
                     android:gravity="right|center_vertical"
                     android:text="上海长宁店番禹区88号"
                     android:textColor="@color/c9"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    android:visibility="gone"/>
             </LinearLayout>
 
             <ImageView
@@ -168,7 +171,7 @@
                 android:drawablePadding="5dp"
                 android:drawableRight="@drawable/right_icon"
                 android:gravity="right|center_vertical"
-                android:text="2018-8-8 08:08:08"
+                android:text="请选择"
                 android:textColor="@color/c9"
                 android:textSize="15sp" />
 
