@@ -27,6 +27,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.App;
+import com.leyuan.aidong.ui.activity.mine.login.CompleteUserInfomationActivity;
 import com.leyuan.aidong.utils.common.BaseUrlLink;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.activity.mine.account.LoginActivity;
@@ -458,7 +459,7 @@ public class MyShowActivityNew extends BaseActivity implements IHttpCallback, On
                 public void onThirdItemClick() {
                     //打开个人资料
                     intent.setClass(MyShowActivityNew.this,
-                            TabMinePersonalDataActivity.class);
+                            CompleteUserInfomationActivity.class);
                     startActivity(intent);
                 }
 
