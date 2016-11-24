@@ -60,8 +60,6 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
 
     private CartPresent cartPresent;
     private boolean isEditing = false;          //标记购物车是否处于编辑状态
-    private boolean isEditSelectAll = false;    //标记编辑模式下购物车是否全选
-    private boolean isNormalSelectAll = false;  //标记普通模式下购物车是否全选
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,12 +143,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
                 break;
             case R.id.tv_edit:
                 isEditing = !isEditing;
-                if(isEditing){
-                    resetBeanEditStatus();
-                }
-                shopAdapter.setEditing(isEditing);
                 tvEdit.setText(isEditing ? R.string.finish : R.string.edit);
-                rbSelectAll.setChecked(isEditing ? isEditSelectAll : isNormalSelectAll);
                 bottomDeleteLayout.setVisibility(isEditing ? View.VISIBLE :View.GONE);
                 bottomNormalLayout.setVisibility(isEditing ? View.GONE : View.VISIBLE);
                 break;
@@ -160,26 +153,15 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
             case R.id.tv_delete:
                 break;
             case R.id.rb_select_all:
-                if(isEditing){
-                    isEditSelectAll = rbSelectAll.isChecked();
-                    for (ShopBean bean : shopBeanList) {
-                        bean.setEidtChecked(isEditSelectAll);
-                        for (GoodsBean goodsBean : bean.getItem()) {
-                            goodsBean.setEditChecked(isEditSelectAll);
-                        }
+                //该变购物车状态同时改变购物车中的商店和商品的属性
+                for (ShopBean bean : shopBeanList) {
+                    bean.setChecked(rbSelectAll.isChecked());
+                    for (GoodsBean goodsBean : bean.getItem()) {
+                        goodsBean.setChecked(rbSelectAll.isChecked());
                     }
-                    shopAdapter.notifyDataSetChanged();
-                }else {     //该变购物车状态同时改变购物车中的商店和商品的属性
-                    isNormalSelectAll = rbSelectAll.isChecked();
-                    for (ShopBean bean : shopBeanList) {
-                        bean.setChecked(isNormalSelectAll);
-                        for (GoodsBean goodsBean : bean.getItem()) {
-                            goodsBean.setChecked(isNormalSelectAll);
-                        }
-                    }
-                    shopAdapter.notifyDataSetChanged();
-                    setTotalPrice();
                 }
+                shopAdapter.notifyDataSetChanged();
+                setTotalPrice();
                 break;
             default:
                 break;
@@ -225,26 +207,15 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
     @Override
     public void onShopStatusChanged() {
         boolean isAllShopSelected = true;
-        if(isEditing){
-            for (ShopBean bean : shopBeanList) {
-                if(!bean.isEidtChecked()){
-                    isAllShopSelected = false;
-                    break;
-                }
+        for (ShopBean bean : shopBeanList) {
+            if(!bean.isChecked()){
+                isAllShopSelected = false;
+                break;
             }
-            rbSelectAll.setChecked(isAllShopSelected);
-            shopAdapter.notifyDataSetChanged();
-        }else {
-            for (ShopBean bean : shopBeanList) {
-                if(!bean.isChecked()){
-                    isAllShopSelected = false;
-                    break;
-                }
-            }
-            rbSelectAll.setChecked(isAllShopSelected);
-            shopAdapter.notifyDataSetChanged();
-            setTotalPrice();
         }
+        rbSelectAll.setChecked(isAllShopSelected);
+        shopAdapter.notifyDataSetChanged();
+        setTotalPrice();
     }
 
     @Override
@@ -269,15 +240,5 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
             }
         }
         tvTotalPrice.setText(String.format(getString(R.string.rmb_price),String.valueOf(totalPrice)));
-    }
-
-    private void resetBeanEditStatus(){
-        isEditSelectAll = false;
-        for (ShopBean shopBean : shopBeanList) {
-            shopBean.setEidtChecked(false);
-            for (GoodsBean goodsBean : shopBean.getItem()) {
-                goodsBean.setEditChecked(false);
-            }
-        }
     }
 }

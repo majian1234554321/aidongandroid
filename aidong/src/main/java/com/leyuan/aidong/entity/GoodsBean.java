@@ -20,7 +20,6 @@ public class GoodsBean {
     private ArrayList<String> spec_value;
     private String amount;                  //商品数量
     private boolean checked = false;        //标记商品是否被选中
-    private boolean isEditChecked = false;  //标记商品在编辑模式下是否被选中
 
     public String getSku_code() {
         return sku_code;
@@ -110,13 +109,6 @@ public class GoodsBean {
         this.code = code;
     }
 
-    public boolean isEditChecked() {
-        return isEditChecked;
-    }
-
-    public void setEditChecked(boolean editChecked) {
-        isEditChecked = editChecked;
-    }
 
     @Override
     public String toString() {

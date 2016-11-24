@@ -22,17 +22,11 @@ import java.util.List;
 //todo 优化：利用观察者模式改写回调和判断逻辑
 public class CartShopAdapter extends RecyclerView.Adapter<CartShopAdapter.CartHolder> {
     private Context context;
-    private boolean isEditing = false;
     private List<ShopBean> data = new ArrayList<>();
     private ShopChangeListener shopChangeListener;
 
     public CartShopAdapter(Context context) {
         this.context = context;
-    }
-
-    public void setEditing(boolean editing) {
-        isEditing = editing;
-        notifyDataSetChanged();
     }
 
     public void setData(List<ShopBean> data) {
@@ -62,8 +56,7 @@ public class CartShopAdapter extends RecyclerView.Adapter<CartShopAdapter.CartHo
         final CartGoodsAdapter goodsAdapter = new CartGoodsAdapter(context);
         holder.rvShop.setAdapter(goodsAdapter);
         goodsAdapter.setData(bean.getItem());
-        goodsAdapter.setEditing(isEditing);
-        holder.check.setChecked(isEditing ? bean.isEidtChecked() : bean.isChecked());
+        holder.check.setChecked(bean.isChecked());
         goodsAdapter.setGoodsChangeListener(new CartGoodsAdapter.GoodsChangeListener() {
             @Override
             public void onGoodsDeleted(String goodsId) {
@@ -82,23 +75,13 @@ public class CartShopAdapter extends RecyclerView.Adapter<CartShopAdapter.CartHo
             @Override
             public void onGoodsStatusChanged() {          //商品选中状态变化时通知更改商店和购物车的状态
                 boolean isAllGoodsSelected = true;
-                if(isEditing){
-                    for (GoodsBean goodsBean : bean.getItem()) {
-                        if(!goodsBean.isEditChecked()){
-                            isAllGoodsSelected = false;
-                            break;
-                        }
+                for (GoodsBean goodsBean : bean.getItem()) {
+                    if(!goodsBean.isChecked()){
+                        isAllGoodsSelected = false;
+                        break;
                     }
-                    bean.setEidtChecked(isAllGoodsSelected);
-                }else{
-                    for (GoodsBean goodsBean : bean.getItem()) {
-                        if(!goodsBean.isChecked()){
-                            isAllGoodsSelected = false;
-                            break;
-                        }
-                    }
-                    bean.setChecked(isAllGoodsSelected);
                 }
+                bean.setChecked(isAllGoodsSelected);
                 if (shopChangeListener != null) {
                     shopChangeListener.onShopStatusChanged();
                 }
@@ -108,16 +91,9 @@ public class CartShopAdapter extends RecyclerView.Adapter<CartShopAdapter.CartHo
         holder.check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {            //商店点击时改变商店和商店中商品的状态，并通知购物车相应改变
-                if(isEditing){
-                    bean.setEidtChecked(!bean.isEidtChecked());
-                    for (GoodsBean goodsBean : bean.getItem()) {
-                        goodsBean.setEditChecked(bean.isEidtChecked());
-                    }
-                }else {
-                    bean.setChecked(!bean.isChecked());
-                    for (GoodsBean goodsBean : bean.getItem()) {
-                        goodsBean.setChecked(bean.isChecked());
-                    }
+                bean.setChecked(!bean.isChecked());
+                for (GoodsBean goodsBean : bean.getItem()) {
+                    goodsBean.setChecked(bean.isChecked());
                 }
                 if (shopChangeListener != null) {
                     shopChangeListener.onShopStatusChanged();

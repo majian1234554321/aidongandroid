@@ -24,17 +24,11 @@ import java.util.List;
  */
 public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.GoodsHolder>{
     private Context context;
-    private boolean isEditing = false;
     private List<GoodsBean> data = new ArrayList<>();
     private GoodsChangeListener goodsChangeListener;
 
     public CartGoodsAdapter(Context context) {
         this.context = context;
-    }
-
-    public void setEditing(boolean editing) {
-        isEditing = editing;
-        notifyDataSetChanged();
     }
 
     public void setData(List<GoodsBean> data) {
@@ -64,16 +58,12 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
         holder.price.setText(String.format
                 (context.getString(R.string.rmb_price),bean.getPrice()));
         holder.count.setText(bean.getAmount());
-        holder.check.setChecked(isEditing ? bean.isEditChecked() : bean.isChecked());
+        holder.check.setChecked(bean.isChecked());
 
         holder.check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {           //商品点击时改变商品状态，并通知商店相应改变
-                if(isEditing){
-                    bean.setEditChecked(!bean.isEditChecked());
-                }else {
-                    bean.setChecked(!bean.isChecked());
-                }
+                bean.setChecked(!bean.isChecked());
                 if(goodsChangeListener != null){
                     goodsChangeListener.onGoodsStatusChanged();
                 }
