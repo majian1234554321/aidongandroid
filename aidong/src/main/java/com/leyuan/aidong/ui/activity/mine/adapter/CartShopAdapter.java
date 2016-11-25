@@ -3,6 +3,7 @@ package com.leyuan.aidong.ui.activity.mine.adapter;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -43,7 +44,7 @@ public class CartShopAdapter extends RecyclerView.Adapter<CartShopAdapter.CartHo
 
     @Override
     public CartHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = View.inflate(context,R.layout.item_cart_shop,null);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_cart_shop,parent,false);
         return new CartHolder(view);
     }
 

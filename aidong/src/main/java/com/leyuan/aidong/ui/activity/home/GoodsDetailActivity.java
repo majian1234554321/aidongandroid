@@ -259,7 +259,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                 startActivity(intent);
                 break;
             case R.id.tv_pay:
-                ConfirmOrderActivity.start(this);
+                //ConfirmOrderActivity.start(this);
                 break;
             default:
                 break;

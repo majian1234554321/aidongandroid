@@ -3,9 +3,9 @@ package com.leyuan.aidong.http.subscriber;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.Toast;
 
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.NetUtil;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
@@ -38,7 +38,7 @@ public abstract class RequestMoreSubscriber<T> extends Subscriber<T>{
     private void showLoadingFooterView(){
         LoadingFooter.State state = RecyclerViewStateUtils.getFooterViewState(recyclerView);
         if(state == LoadingFooter.State.Loading) {
-            Log.d("RecyclerView", "the state is Loading, just wait..");
+            Logger.d("RecyclerView", "the state is Loading, just wait..");
             return;
         }
         RecyclerViewStateUtils.setFooterViewState((Activity)context, recyclerView, pageSize, LoadingFooter.State.Loading, null);
@@ -57,7 +57,7 @@ public abstract class RequestMoreSubscriber<T> extends Subscriber<T>{
     private void hideFooterView(){
         LoadingFooter.State state = RecyclerViewStateUtils.getFooterViewState(recyclerView);
         if(state == LoadingFooter.State.TheEnd){
-            Log.d("RecyclerView", "the state is the end, don't hide the end tip");
+            Logger.d("RecyclerView", "the state is the end, don't hide the end tip");
             return;
         }
         RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.Normal);

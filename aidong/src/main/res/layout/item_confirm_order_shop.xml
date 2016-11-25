@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/left_margin"
+        android:paddingRight="@dimen/right_margin">
+
+        <TextView
+            android:id="@+id/tv_shop_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="仓库发货"
+            android:textSize="16sp"
+            android:textColor="@color/c3"/>
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="08:00 - 18:00"
+            android:layout_marginLeft="10dp"/>
+
+        <TextView
+            android:id="@+id/tv_delivery_type"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical|right"
+            android:layout_height="match_parent"
+            android:text="快递"
+            android:textColor="@color/c3"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+   <View
+       android:layout_width="match_parent"
+       android:layout_height="1px"
+       android:background="@color/line_color"
+       android:layout_marginLeft="@dimen/left_margin"
+       android:layout_marginRight="@dimen/right_margin"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_shop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line_color"/>
+
+</LinearLayout>

@@ -1,9 +1,8 @@
 package com.leyuan.aidong.http;
 
-import android.util.Log;
-
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.http.api.exception.ServerException;
+import com.leyuan.aidong.utils.Logger;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -32,7 +31,7 @@ public class RxHelper {
                 return tObservable.flatMap(new Func1<BaseBean<T>, Observable<T>>() {
                     @Override
                     public Observable<T> call(BaseBean<T> result) {
-                        Log.i("retrofit","result from network : " + result);
+                        Logger.i("retrofit","result from network : " + result);
                         if (result.getStatus() == 1) {
                             return createDataObservable(result.getData());
                         } else {

@@ -148,9 +148,24 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
                 bottomNormalLayout.setVisibility(isEditing ? View.GONE : View.VISIBLE);
                 break;
             case R.id.tv_settlement:
-                ConfirmOrderActivity.start(this);
+                ArrayList<ShopBean> selectedShops = getSelectedShops();
+                if(selectedShops.isEmpty()){
+                    Toast.makeText(this,R.string.tip_select_goods,Toast.LENGTH_LONG).show();
+                    return;
+                }
+                ConfirmOrderActivity.start(this,selectedShops);
                 break;
             case R.id.tv_delete:
+                List<GoodsBean> selectedGoods = getSelectedGoods();
+                if(selectedGoods.isEmpty()){
+                    Toast.makeText(this,R.string.tip_select_goods,Toast.LENGTH_LONG).show();
+                    return;
+                }
+                StringBuilder ids = new StringBuilder();
+                for (GoodsBean selectedGood : selectedGoods) {
+                    ids.append(selectedGood.getId()).append("，");
+                }
+                cartPresent.deleteCart(ids.toString());
                 break;
             case R.id.rb_select_all:
                 //该变购物车状态同时改变购物车中的商店和商品的属性
@@ -231,14 +246,46 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
 
     private void setTotalPrice(){
         double totalPrice = 0;
+        for (GoodsBean goodsBean : getSelectedGoods()) {
+            totalPrice += FormatUtil.parseDouble(goodsBean.getPrice())
+                    * FormatUtil.parseInt(goodsBean.getAmount());
+        }
+        tvTotalPrice.setText(String.format(getString(R.string.rmb_price),String.valueOf(totalPrice)));
+    }
+
+    private List<GoodsBean> getSelectedGoods(){
+        List<GoodsBean> goodsBeanList = new ArrayList<>();
         for (ShopBean bean : shopBeanList) {
             for (GoodsBean goodsBean : bean.getItem()) {
                 if(goodsBean.isChecked()){
-                    totalPrice += FormatUtil.parseDouble(goodsBean.getPrice())
-                            * FormatUtil.parseInt(goodsBean.getAmount());
+                    goodsBeanList.add(goodsBean);
                 }
             }
         }
-        tvTotalPrice.setText(String.format(getString(R.string.rmb_price),String.valueOf(totalPrice)));
+        return goodsBeanList;
+    }
+
+    private ArrayList<ShopBean> getSelectedShops(){
+        ArrayList<ShopBean> selectedShopBeanList = new ArrayList<>();
+        for (ShopBean shopBean : shopBeanList) {
+            if(shopBean.isChecked()){
+                selectedShopBeanList.add(shopBean);
+            }else{
+                ShopBean tempShopBean = new ShopBean();
+                List<GoodsBean> goodsBeanList = new ArrayList<>();
+                for (GoodsBean goodsBean : shopBean.getItem()) {
+                    if(goodsBean.isChecked()){
+                        goodsBeanList.add(goodsBean);
+                    }
+                }
+                if(!goodsBeanList.isEmpty()){
+                    tempShopBean.setItem(goodsBeanList);
+                    tempShopBean.setOpentime(shopBean.getOpentime());
+                    tempShopBean.setShopname(shopBean.getShopname());
+                    selectedShopBeanList.add(tempShopBean);
+                }
+            }
+        }
+        return selectedShopBeanList;
     }
 }
