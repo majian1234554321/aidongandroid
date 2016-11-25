@@ -7,7 +7,6 @@
         android:text="@string/back"
         style="@style/ButtonStyleAlignRight"
         android:layout_alignParentRight="false"
-        android:paddingLeft="20dp"
         android:textSize="16dp"
         android:id="@+id/btn_back" />
 
@@ -122,22 +121,24 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/login_weichat"
                 />
+
+
+            <ImageView
+                android:id="@+id/button_qq"
+                android:layout_centerHorizontal="true"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/login_qq"
+                />
             <ImageView
                 android:id="@+id/button_weibo"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:scaleType="centerCrop"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/login_weibo"
-                />
 
-            <ImageView
-                android:id="@+id/button_qq"
                 android:layout_alignParentRight="true"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/login_qq"
+                android:src="@drawable/login_weibo"
                 />
 
         </RelativeLayout>

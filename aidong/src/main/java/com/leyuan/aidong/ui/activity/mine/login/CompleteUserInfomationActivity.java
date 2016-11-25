@@ -2,6 +2,8 @@ package com.leyuan.aidong.ui.activity.mine.login;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -25,7 +27,9 @@ import com.leyuan.aidong.utils.common.Constant;
 import com.leyuan.aidong.widget.ActionSheetDialog;
 import com.leyuan.aidong.widget.CommonTitleLayout;
 import com.leyuan.commonlibrary.manager.UiManager;
+import com.leyuan.commonlibrary.util.CameraUtils;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -55,6 +59,7 @@ public class CompleteUserInfomationActivity extends BaseActivity implements View
     private Calendar calender_current = Calendar.getInstance();
     private String[] zodiacs =  {"白羊座","金牛座","双子座","巨蟹座","狮子座","处女座",
             "天秤座","天蝎座","射手座","摩羯座","水瓶座","双鱼座"};
+    private File tempFile;
 
 
     @Override
@@ -300,14 +305,16 @@ public class CompleteUserInfomationActivity extends BaseActivity implements View
                 .addSheetItem("拍照", ActionSheetDialog.SheetItemColor.Black, new ActionSheetDialog.OnSheetItemClickListener() {
                     @Override
                     public void onClick(int which) {
-
+                        tempFile = new File("/mnt/sdcard/aidong/", "aidong_pic_" + CameraUtils.createTempPhotoFileName());
+                        CameraUtils.startCameraForResult(CompleteUserInfomationActivity.this,  Uri.fromFile(tempFile),Constant.REQUEST_CODE_CAMERA);
 
                     }
                 })
                 .addSheetItem("相册", ActionSheetDialog.SheetItemColor.Black, new ActionSheetDialog.OnSheetItemClickListener() {
                     @Override
                     public void onClick(int which) {
-
+                        tempFile = new File("/mnt/sdcard/aidong/", "aidong_pic_" + CameraUtils.createTempPhotoFileName());
+                        CameraUtils.startPhotosForResult(CompleteUserInfomationActivity.this, Constant.REQUEST_CODE_PICTURE);
                     }
                 })
                 .show();
@@ -363,6 +370,22 @@ public class CompleteUserInfomationActivity extends BaseActivity implements View
                         params.put("signature",sign);
                         btn_sign.setText(sign);
                     }
+                }
+                break;
+            case Constant.REQUEST_CODE_CAMERA:
+                if(resultCode == RESULT_OK){
+                    CameraUtils.startPhotoZoom(this,Uri.fromFile(tempFile),Uri.fromFile(tempFile),Constant.REQUEST_CODE_CUT);
+                }
+                break;
+            case Constant.REQUEST_CODE_CUT:
+                if(resultCode == RESULT_OK&& data != null){
+                    Bitmap photo = CameraUtils.sentPicToNext(data,Uri.fromFile(tempFile),this);
+                    imgAvatar.setImageBitmap(photo);
+                }
+                break;
+            case Constant.REQUEST_CODE_PICTURE:
+                if(resultCode == RESULT_OK&& data != null){
+                    CameraUtils.startPhotoZoom(this,data.getData(),Uri.fromFile(tempFile),Constant.REQUEST_CODE_CUT);
                 }
                 break;
         }

@@ -3,6 +3,7 @@ package com.leyuan.aidong.ui.activity.mine.login;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.leyuan.aidong.R;
@@ -11,8 +12,10 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.RegisterPresenter;
 import com.leyuan.aidong.ui.mvp.presenter.RegisterPresenterInterface;
 import com.leyuan.aidong.ui.mvp.view.RegisterViewInterface;
+import com.leyuan.aidong.utils.TimeCountUtil;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.widget.CommonTitleLayout;
+import com.leyuan.aidong.widget.DialogImageIdentify;
 import com.leyuan.commonlibrary.util.StringUtils;
 
 
@@ -23,6 +26,7 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
     private String code;
     private String password;
     private String re_password;
+    private DialogImageIdentify mDialogImageIdentify;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +67,7 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
             case R.id.btn_identify:
                 String tel = getEidtTelephone().getText().toString().trim();
                 if (StringUtils.isMatchTel(tel)) {
-                    presenter.foundIdentify(tel);
+                    showImageIdentifyDialog(tel);
                 } else {
                     getEidtTelephone().setError("请输入正确手机号");
                 }
@@ -106,10 +110,17 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void getIdentifyCode(boolean success) {
-        if(success){
-            ToastUtil.showLong(App.context,"验证码已发送,请查看");
-        }else{
-            ToastUtil.showShort(App.context,"手机号已注册或无效,请重新输入");
+
+        if (success) {
+            ToastUtil.showShort(App.context, "验证码已发送,请查看");
+            if(mDialogImageIdentify!=null && mDialogImageIdentify.isShowing()){
+                mDialogImageIdentify.dismiss();
+            }
+            new TimeCountUtil(60000, 1000, (Button)findViewById(R.id.btn_identify)).start();
+
+        }else  if(mDialogImageIdentify!=null && mDialogImageIdentify.isShowing()){
+            mDialogImageIdentify.clearContent();
+            mDialogImageIdentify.refreshImage(mobile);
         }
     }
 
@@ -126,6 +137,34 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void checkCaptchaImage(boolean success, String mobile) {
+        if(success ){
+            presenter.foundIdentify(mobile);
+        }else  if(mDialogImageIdentify!=null && mDialogImageIdentify.isShowing()){
+            mDialogImageIdentify.clearContent();
+            mDialogImageIdentify.refreshImage(mobile);
+        }
 
     }
+
+    private void showImageIdentifyDialog(final String tel) {
+//           if(mDialogImageIdentify == null){
+        mDialogImageIdentify = new DialogImageIdentify(this);
+        mDialogImageIdentify.setOnInputCompleteListener(new DialogImageIdentify.OnInputCompleteListener() {
+            @Override
+            public void inputIdentify(String imageIndentify) {
+//                presenter.regitserIdentify(tel,imageIndentify);
+                presenter.checkCaptchaImage(tel,imageIndentify);
+            }
+
+            @Override
+            public void refreshImage() {
+                mDialogImageIdentify.refreshImage(tel);
+            }
+        });
+//           }
+
+        mDialogImageIdentify.show();
+        mDialogImageIdentify.refreshImage(tel);
+    }
+
 }
