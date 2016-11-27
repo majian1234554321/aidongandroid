@@ -1,18 +1,21 @@
 package com.leyuan.aidong.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
  * 购物车中商家实体
  * Created by song on 2016/9/23.
  */
-public class ShopBean {
+public class ShopBean implements Parcelable {
     private String shopname;
     private String opentime;
     private List<GoodsBean> item;
 
     private boolean checked = false;            //标记该商店是否被选中
-    private double shopPrice = 0d;              //商店中所有被选中的商品的价格
+
 
     public String getShopname() {
         return shopname;
@@ -46,13 +49,6 @@ public class ShopBean {
         this.checked = checked;
     }
 
-    public double getShopPrice() {
-        return shopPrice;
-    }
-
-    public void setShopPrice(double shopPrice) {
-        this.shopPrice = shopPrice;
-    }
 
     @Override
     public String toString() {
@@ -63,4 +59,39 @@ public class ShopBean {
                 ", checked=" + checked +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.shopname);
+        dest.writeString(this.opentime);
+        dest.writeTypedList(this.item);
+        dest.writeByte(this.checked ? (byte) 1 : (byte) 0);
+    }
+
+    public ShopBean() {
+    }
+
+    protected ShopBean(Parcel in) {
+        this.shopname = in.readString();
+        this.opentime = in.readString();
+        this.item = in.createTypedArrayList(GoodsBean.CREATOR);
+        this.checked = in.readByte() != 0;
+    }
+
+    public static final Parcelable.Creator<ShopBean> CREATOR = new Parcelable.Creator<ShopBean>() {
+        @Override
+        public ShopBean createFromParcel(Parcel source) {
+            return new ShopBean(source);
+        }
+
+        @Override
+        public ShopBean[] newArray(int size) {
+            return new ShopBean[size];
+        }
+    };
 }

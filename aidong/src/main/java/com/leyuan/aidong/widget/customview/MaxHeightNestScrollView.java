@@ -2,30 +2,30 @@ package com.leyuan.aidong.widget.customview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.widget.NestedScrollView;
 import android.util.AttributeSet;
 
 import com.leyuan.aidong.R;
 
 /**
- * 控制最大高度的RecyclerView
+ * 控制最大高度的NestScrollView
  * Created by song on 2016/11/18.
  */
-public class MaxHeightRecyclerView extends RecyclerView{
+public class MaxHeightNestScrollView extends NestedScrollView{
     private int maxHeight;
     private final int defaultHeight = 200;
 
-    public MaxHeightRecyclerView(Context context) {
+    public MaxHeightNestScrollView(Context context) {
         super(context);
         init(context, null);
     }
 
-    public MaxHeightRecyclerView(Context context, AttributeSet attrs) {
+    public MaxHeightNestScrollView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public MaxHeightRecyclerView(Context context, AttributeSet attrs, int defStyle) {
+    public MaxHeightNestScrollView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context, attrs);
     }
@@ -33,9 +33,9 @@ public class MaxHeightRecyclerView extends RecyclerView{
 
     private void init(Context context, AttributeSet attrs) {
         if (attrs != null) {
-            TypedArray styledAttrs = context.obtainStyledAttributes(attrs, R.styleable.MaxHeightRecyclerView);
+            TypedArray styledAttrs = context.obtainStyledAttributes(attrs, R.styleable.MaxHeightScrollView);
             //200 is a defualt value
-            maxHeight = styledAttrs.getDimensionPixelSize(R.styleable.MaxHeightRecyclerView_recyclerView_maxHeight, defaultHeight);
+            maxHeight = styledAttrs.getDimensionPixelSize(R.styleable.MaxHeightScrollView_scrollView_maxHeight, defaultHeight);
             styledAttrs.recycle();
         }
     }

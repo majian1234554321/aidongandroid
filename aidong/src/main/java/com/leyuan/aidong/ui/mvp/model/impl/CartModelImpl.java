@@ -33,23 +33,26 @@ public class CartModelImpl implements CartModel{
     }
 
     @Override
-    public void addCart(Subscriber<BaseBean> subscriber, String sku, int mount) {
-        cartService.addCart(sku,mount)
+    public void addCart(Subscriber<BaseBean> subscriber, String skuCode, int mount) {
+        cartService.addCart(skuCode,mount)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
     }
 
     @Override
     public void deleteCart(Subscriber<BaseBean> subscriber, String ids) {
         cartService.deleteCart(ids)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
     }
 
     @Override
     public void updateCart(Subscriber<BaseBean> subscriber, String id, int mount) {
         cartService.updateCart(id,mount)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
     }
 }

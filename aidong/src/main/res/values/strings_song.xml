@@ -27,11 +27,16 @@
     <string name="campaign_time">活动时间</string>
     <string name="course_address">课程地址</string>
     <string name="campaign_address">活动地址</string>
-    <string name="course_price">课程总额</string>
-    <string name="campaign_price">活动总额</string>
-    <string name="course_privilege">课程优惠</string>
-    <string name="campaign_privilege">活动优惠</string>
-
+    <string name="course_price">课程总额:</string>
+    <string name="campaign_price">活动总额:</string>
+    <string name="course_privilege">课程优惠:</string>
+    <string name="campaign_privilege">活动优惠:</string>
+    <string name="please_choose">请选择:</string>
+    <string name="selected">已选择:</string>
+    <string name="stock_count">库存%1$s件</string>
+    <string name="stock_out">超出库存范围</string>
+    <string name="input_recommend_code">请输入推荐码</string>
+    <string name="add_cart_failed">加入购物车失败</string>
     <string name="applicant_count">已参加(%1$d/%2$s)</string>
     <string name="rmb_price">¥ %1$s</string>
     <string name="time_with_line">%1$s—%2$s</string>
@@ -39,7 +44,7 @@
     <string name="distance_km"> %1$s km </string>
     <string name="x_count"> x %1$s</string>
     <string name="goods_count"> 共%1$s件商品</string>
-
+    <string name="tip_select_goods">你还没有选择商品哦!</string>
     <string name="use_price">满%1$s使用</string>
     <string name="real_pay">实付款：¥%1$s</string>
 
@@ -85,7 +90,7 @@
     <string name="exchange_coupon_fail">兑换码无效</string>
     <string name="delete_confirm">确认要删除吗?</string>
     <string name="delete_fail">删除失败</string>
-
+    <string name="update_fail">修改失败</string>
     <string name="update_address">更新地址</string>
 
     <!-- Time -->

@@ -1,12 +1,15 @@
 package com.leyuan.aidong.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
 /**
  * 商品实体 当前包含营养品、 健康餐饮、 装备
  * Created by song on 2016/7/14.
  */
-public class GoodsBean {
+public class GoodsBean implements Parcelable {
     private  String sku_code;      //商品编码
     private  String id;
     private  String code;
@@ -18,9 +21,8 @@ public class GoodsBean {
     /******订单商品中需要用到的字段******/
     private ArrayList<String> spec_name;
     private ArrayList<String> spec_value;
-    private String amount;
-
-    private boolean checked = false;        //标记是否被选中
+    private String amount;                  //商品数量
+    private boolean checked = false;        //标记商品是否被选中
 
     public String getSku_code() {
         return sku_code;
@@ -110,6 +112,7 @@ public class GoodsBean {
         this.code = code;
     }
 
+
     @Override
     public String toString() {
         return "GoodsBean{" +
@@ -126,4 +129,53 @@ public class GoodsBean {
                 ", checked=" + checked +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.sku_code);
+        dest.writeString(this.id);
+        dest.writeString(this.code);
+        dest.writeString(this.cover);
+        dest.writeString(this.name);
+        dest.writeString(this.price);
+        dest.writeString(this.market_price);
+        dest.writeStringList(this.spec_name);
+        dest.writeStringList(this.spec_value);
+        dest.writeString(this.amount);
+        dest.writeByte(this.checked ? (byte) 1 : (byte) 0);
+    }
+
+    public GoodsBean() {
+    }
+
+    protected GoodsBean(Parcel in) {
+        this.sku_code = in.readString();
+        this.id = in.readString();
+        this.code = in.readString();
+        this.cover = in.readString();
+        this.name = in.readString();
+        this.price = in.readString();
+        this.market_price = in.readString();
+        this.spec_name = in.createStringArrayList();
+        this.spec_value = in.createStringArrayList();
+        this.amount = in.readString();
+        this.checked = in.readByte() != 0;
+    }
+
+    public static final Parcelable.Creator<GoodsBean> CREATOR = new Parcelable.Creator<GoodsBean>() {
+        @Override
+        public GoodsBean createFromParcel(Parcel source) {
+            return new GoodsBean(source);
+        }
+
+        @Override
+        public GoodsBean[] newArray(int size) {
+            return new GoodsBean[size];
+        }
+    };
 }

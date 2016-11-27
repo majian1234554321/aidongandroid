@@ -13,19 +13,20 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.GoodsDetailBean;
-import com.leyuan.aidong.entity.GoodsSpecBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.GoodsDetailCouponAdapter;
 import com.leyuan.aidong.ui.activity.home.view.GoodsSkuPopupWindow;
@@ -45,7 +46,7 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  * 商品详情
  * Created by song on 2016/9/12.
  */
-public class GoodsDetailActivity extends BaseActivity implements View.OnClickListener,GoodsDetailActivityView, BGABanner.OnItemClickListener {
+public class GoodsDetailActivity extends BaseActivity implements View.OnClickListener,GoodsDetailActivityView, BGABanner.OnItemClickListener, RadioGroup.OnCheckedChangeListener, GoodsSkuPopupWindow.ConfirmSkuListener {
     public static final String TYPE_NURTURE = "nutrition";
     public static final String TYPE_EQUIPMENT = "equipments";
     public static final String TYPE_FOODS = "foods";
@@ -61,20 +62,22 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     private TextView tvCoupon;
     private RecyclerView couponView;
     private View lineCoupon;
-    private LinearLayout specificationLayout;
-    private TextView tvSelectSpecification;
+    private LinearLayout skuLayout;
+    private TextView tvSku;
     private LinearLayout recommendCodeLayout;
     private TextView tvRecommendCode;
     private LinearLayout addressLayout;
     private TextView tvAddressInfo;
     private ImageView ivArrow;
     private TextView tvTip;
-    private TextView tvDesc;
-    private TextView tvQuestion;
-    private TextView tvService;
+    private RadioGroup radioGroup;
+    private RadioButton rbDesc;
+    private RadioButton rbQuestion;
+    private RadioButton rbService;
     private WebView webView;
     private RelativeLayout titleLayout;
     private ImageView ivBack;
+    private TextView tvTitle;
     private ImageView ivShare;
     private LinearLayout bottomLayout;
     private ImageView tvCart;
@@ -83,8 +86,8 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
 
     private List<String> bannerUrls = new ArrayList<>();
     private GoodsDetailCouponAdapter couponAdapter;
-    private PopupWindow goodSkuPopup;
-    private GoodsSpecBean specBean;
+    private GoodsSkuPopupWindow goodSkuPopup;
+    private GoodsDetailBean detailBean;
 
     private String id;
     private String type ;
@@ -125,20 +128,22 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         tvCoupon = (TextView) findViewById(R.id.tv_coupon);
         couponView = (RecyclerView) findViewById(R.id.rv_coupon);
         lineCoupon = findViewById(R.id.line_coupon);
-        specificationLayout = (LinearLayout) findViewById(R.id.ll_goods_specification);
-        tvSelectSpecification = (TextView) findViewById(R.id.tv_select_specification);
+        skuLayout = (LinearLayout) findViewById(R.id.ll_goods_specification);
+        tvSku = (TextView) findViewById(R.id.tv_select_specification);
         recommendCodeLayout = (LinearLayout) findViewById(R.id.ll_recommend_code);
         tvRecommendCode = (TextView) findViewById(R.id.tv_recommend_code);
         addressLayout = (LinearLayout) findViewById(R.id.ll_address);
         tvAddressInfo = (TextView) findViewById(R.id.tv_address_info);
         ivArrow = (ImageView) findViewById(R.id.iv_arrow);
         tvTip = (TextView) findViewById(R.id.tv_tip);
-        tvDesc = (TextView) findViewById(R.id.tv_desc);
-        tvQuestion = (TextView) findViewById(R.id.tv_question);
-        tvService = (TextView) findViewById(R.id.tv_service);
+        radioGroup = (RadioGroup) findViewById(R.id.rg_detail);
+        rbDesc = (RadioButton) findViewById(R.id.rb_desc);
+        rbQuestion = (RadioButton) findViewById(R.id.rb_question);
+        rbService = (RadioButton) findViewById(R.id.rb_service);
         webView = (WebView) findViewById(R.id.web_view);
         titleLayout = (RelativeLayout) findViewById(R.id.rl_title);
         ivBack = (ImageView) findViewById(R.id.iv_back);
+        tvTitle = (TextView)findViewById(R.id.tv_title);
         ivShare = (ImageView) findViewById(R.id.iv_share);
         bottomLayout = (LinearLayout) findViewById(R.id.ll_bottom);
         tvCart = (ImageView) findViewById(R.id.tv_cart);
@@ -195,26 +200,25 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         ivShare.setOnClickListener(this);
         detailsLayout.setOnSlideDetailsListener(new MyOnSlideDetailsListener());
         appBarLayout.addOnOffsetChangedListener(new MyOnOffsetChangedListener());
-        specificationLayout.setOnClickListener(this);
+        skuLayout.setOnClickListener(this);
         recommendCodeLayout.setOnClickListener(this);
         addressLayout.setOnClickListener(this);
-        tvDesc.setOnClickListener(this);
-        tvQuestion.setOnClickListener(this);
-        tvService.setOnClickListener(this);
         tvPay.setOnClickListener(this);
         bannerLayout.setOnItemClickListener(this);
+        radioGroup.setOnCheckedChangeListener(this);
     }
 
     @Override
     public void setGoodsDetail(GoodsDetailBean bean) {
+        detailBean = bean;
         bottomLayout.setVisibility(View.VISIBLE);
         bannerUrls = bean.image;
         bannerLayout.setData(bannerUrls,null);
+        tvTitle.setText(String.format(getString(R.string.rmb_price),bean.price));
         tvPrice.setText(String.format(getString(R.string.rmb_price),bean.price));
         tvMarketPrice.setText(String.format(getString(R.string.rmb_price),bean.market_price));
         tvMarketPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG );
         tvGoodsName.setText(bean.name);
-        specBean = bean.spec;
 
         if(bean.coupon == null || bean.coupon.isEmpty()){
             tvCoupon.setVisibility(View.GONE);
@@ -224,6 +228,12 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             tvCoupon.setVisibility(View.VISIBLE);
             lineCoupon.setVisibility(View.VISIBLE);
         }
+
+        StringBuilder sb = new StringBuilder(getString(R.string.please_choose));
+        for (String s : detailBean.spec.name) {
+            sb.append(s).append(" ");
+        }
+        tvSku.setText(sb);
     }
 
     @Override
@@ -239,7 +249,8 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.ll_goods_specification:
                 if(goodSkuPopup == null){
-                    goodSkuPopup = new GoodsSkuPopupWindow(this,specBean,false);
+                    goodSkuPopup = new GoodsSkuPopupWindow(this,detailBean,true);
+                    goodSkuPopup.setConfirmSkuListener(this);
                 }
                 goodSkuPopup.showAtLocation(rootLayout, Gravity.BOTTOM,0,0);
                 break;
@@ -247,17 +258,8 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                 Intent intent = new Intent(this,DeliveryInfoActivity.class);
                 startActivity(intent);
                 break;
-
-            case R.id.tv_desc:
-                break;
-
-            case R.id.tv_question:
-                break;
-
-            case R.id.tv_service:
-                break;
             case R.id.tv_pay:
-                ConfirmOrderActivity.start(this);
+                //ConfirmOrderActivity.start(this);
                 break;
             default:
                 break;
@@ -265,18 +267,21 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void inputRecommendCodeDialog() {
+        View view = View.inflate(this,R.layout.dialog_input_code,null);
+        final EditText etCode = (EditText) view.findViewById(R.id.et_code);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("请输入推荐码")
+        builder.setMessage(getString(R.string.input_recommend_code))
                 .setCancelable(true)
-                .setView(new EditText(this),100,20,100,20)
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                .setView(view)
+                .setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-
+                        tvRecommendCode.setText(etCode.getText());
+                        dialog.dismiss();
                     }
                 })
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
+                        dialog.dismiss();
                     }
                 });
         builder.show();
@@ -287,6 +292,28 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         ImagePreviewActivity.start(this,(ArrayList<String>) bannerUrls,position);
     }
 
+    @Override
+    public void onConfirmSku(String sku) {
+        tvSku.setText(sku);
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        switch (checkedId){
+            case R.id.rb_desc:
+                webView.loadUrl("http://www.baidu.com");
+                break;
+            case R.id.rb_question:
+                webView.loadUrl("http://www.tmall.com");
+                break;
+            case R.id.rb_service:
+                webView.loadUrl("http://www.tmall.com");
+                break;
+            default:
+                break;
+        }
+    }
+
 
     private class MyOnSlideDetailsListener implements SlideDetailsLayout.OnSlideDetailsListener{
         @Override
@@ -294,9 +321,14 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             if(status == SlideDetailsLayout.Status.OPEN){
                 tvTip.setText(getString(R.string.tip_close));
                 ivArrow.setBackgroundResource(R.drawable.icon_arrow_down);
+                tvTitle.setVisibility(View.VISIBLE);
+                tvTitle.animate().translationY(0).setInterpolator
+                        (new DecelerateInterpolator(2)).start();
             }else{
                 tvTip.setText(getString(R.string.tip_open));
                 ivArrow.setBackgroundResource(R.drawable.icon_arrow_up);
+                tvTitle.animate().translationY(tvTitle.getHeight()).setInterpolator
+                        (new DecelerateInterpolator(2)).start();
             }
         }
     }
@@ -309,6 +341,4 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             titleLayout.setBackgroundColor(Color.argb((int) (percentage * 255), 0, 0, 0));
         }
     }
-
-
 }

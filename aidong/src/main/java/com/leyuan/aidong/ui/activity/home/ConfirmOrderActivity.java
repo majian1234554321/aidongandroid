@@ -3,6 +3,7 @@ package com.leyuan.aidong.ui.activity.home;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -11,12 +12,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.ShopBean;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.activity.home.adapter.ConfirmOrderShopAdapter;
 import com.leyuan.aidong.ui.activity.mine.AddressActivity;
 import com.leyuan.aidong.ui.activity.mine.CouponActivity;
 import com.leyuan.aidong.ui.activity.mine.PaySuccessActivity;
 import com.leyuan.aidong.widget.customview.ExtendTextView;
 import com.leyuan.aidong.widget.customview.SimpleTitleBar;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 确认订单
@@ -53,9 +59,12 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private TextView tvPrice;
     private TextView tvPay;
 
+    private List<ShopBean> shopBeanList;
+    private ConfirmOrderShopAdapter shopAdapter;
 
-    public static void start(Context context) {
+    public static void start(Context context, ArrayList<ShopBean> selectedShops) {
         Intent starter = new Intent(context, ConfirmOrderActivity.class);
+        starter.putParcelableArrayListExtra("selectedShops",selectedShops);
         context.startActivity(starter);
     }
 
@@ -63,6 +72,10 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_order);
+        if(getIntent() != null){
+            shopBeanList = getIntent().getParcelableArrayListExtra("selectedShops");
+        }
+
         initView();
         setListener();
     }
@@ -87,6 +100,10 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         tvTip = (TextView) findViewById(R.id.tv_tip);
         tvPrice = (TextView) findViewById(R.id.tv_price);
         tvPay = (TextView) findViewById(R.id.tv_pay);
+        shopAdapter = new ConfirmOrderShopAdapter(this);
+        rvGoods.setLayoutManager(new LinearLayoutManager(this));
+        rvGoods.setAdapter(shopAdapter);
+        shopAdapter.setData(shopBeanList);
     }
 
     private void setListener() {

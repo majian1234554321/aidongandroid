@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class GoodsSkuBean {
 
-    public String item_id;       //商品规格
+    public String id;       //商品规格
     public List<String> value;       //['规格-1-值','规格-2-值'...]
     public String cover;       //图片封面
     public String market_price;       //市场价
@@ -19,7 +19,7 @@ public class GoodsSkuBean {
     @Override
     public String toString() {
         return "Item{" +
-                "item_id='" + item_id + '\'' +
+                "id='" + id + '\'' +
                 ", value=" + value +
                 ", cover='" + cover + '\'' +
                 ", market_price='" + market_price + '\'' +

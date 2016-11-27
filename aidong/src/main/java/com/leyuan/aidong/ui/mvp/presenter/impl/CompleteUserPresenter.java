@@ -25,14 +25,12 @@ public class CompleteUserPresenter {
     }
 
 
-
     public void  completeUserInfo(Map<String,String> params,String filePath){
        registerModel.completeUserInfo(completeSubcribe,params,filePath);
    }
     public void  completeUserAvatarUpdate(String filePath){
         registerModel.userAvatarUpload(completeSubcribe,filePath);
     }
-
 
     private Subscriber<LoginResult> completeSubcribe = new BaseSubscriber<LoginResult>(mContext) {
 

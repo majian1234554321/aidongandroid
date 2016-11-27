@@ -29,13 +29,13 @@ public interface CartService {
 
     /**
      * 添加商品到购物车
-     * @param sku  sku
+     * @param sku_code  sku_code
      * @param amount 数量
      * @return
      */
     @FormUrlEncoded
     @POST("mine/cart")
-    Observable<BaseBean> addCart(@Field("sku") String sku, @Field("amount") int amount);
+    Observable<BaseBean> addCart(@Field("sku_code") String sku_code, @Field("amount") int amount);
 
     /**
      * 删除购物车中商品

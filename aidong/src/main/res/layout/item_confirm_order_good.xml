@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:paddingLeft="@dimen/left_margin"
+    android:paddingRight="@dimen/right_margin"
+    android:layout_height="70dp"
+    android:background="?selectableItemBackground">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/dv_cover"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/rb_check"
+        fresco:actualImageScaleType="centerCrop"
+        fresco:placeholderImage="@drawable/place_holder_logo"/>
+
+    <TextView
+        android:id="@+id/tv_goods_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="健身"
+        android:singleLine="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/dv_cover"
+        android:layout_toLeftOf="@+id/tv_goods_price"
+        android:textSize="16sp"
+        android:textColor="@color/c3"/>
+
+    <TextView
+        android:id="@+id/tv_goods_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="150"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="22dp"
+        android:textSize="16sp"
+        android:textColor="@color/c3"/>
+
+    <TextView
+        android:id="@+id/tv_sku"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sku"
+        android:textSize="13sp"
+        android:textColor="@color/c9"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/tv_goods_name"
+        android:layout_alignLeft="@+id/tv_goods_name"/>
+
+    <TextView
+        android:id="@+id/tv_recommend_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="推荐码：211111"
+        android:textSize="13sp"
+        android:textColor="@color/c9"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_alignBottom="@+id/tv_sku"
+        android:layout_toRightOf="@+id/tv_sku"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_color"/>
+</RelativeLayout>

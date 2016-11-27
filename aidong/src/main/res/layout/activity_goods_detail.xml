@@ -77,15 +77,16 @@
                 android:background="@color/white"
                 android:orientation="vertical">
 
-                <LinearLayout
+                <RadioGroup
+                    android:id="@+id/rg_detail"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="@dimen/height_top_bar"
                     android:background="@color/white"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/tv_desc"
+                    <RadioButton
+                        android:id="@+id/rb_desc"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -93,10 +94,11 @@
                         android:gravity="center"
                         android:text="商品详情"
                         android:textColor="@color/black"
-                        android:textSize="15sp" />
+                        android:textSize="15sp"
+                        android:background="@drawable/selector_goods_detail"/>
 
-                    <TextView
-                        android:id="@+id/tv_question"
+                    <RadioButton
+                        android:id="@+id/rb_question"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -104,10 +106,11 @@
                         android:gravity="center"
                         android:text="常见问题"
                         android:textColor="@color/black"
-                        android:textSize="15sp" />
+                        android:textSize="15sp"
+                        android:background="@drawable/selector_goods_detail"/>
 
-                    <TextView
-                        android:id="@+id/tv_service"
+                    <RadioButton
+                        android:id="@+id/rb_service"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -115,9 +118,10 @@
                         android:gravity="center"
                         android:text="售后服务"
                         android:textColor="@color/black"
-                        android:textSize="15sp" />
+                        android:textSize="15sp"
+                        android:background="@drawable/selector_goods_detail"/>
 
-                </LinearLayout>
+                </RadioGroup>
 
                 <WebView
                     android:id="@+id/web_view"
@@ -141,6 +145,17 @@
                 android:background="?selectableItemBackground"
                 android:padding="5dp"
                 android:src="@drawable/icon_back" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="￥999"
+                android:textSize="20sp"
+                android:layout_centerInParent="true"
+                android:textColor="@color/main_red"
+                android:gravity="center_vertical"
+                android:visibility="invisible"/>
 
             <ImageView
                 android:id="@+id/iv_share"

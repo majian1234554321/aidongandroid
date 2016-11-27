@@ -26,7 +26,7 @@ public interface FoodService {
 
     //生成健康餐饮订单
     @POST("market/foods/{id}")
-    Observable<BaseBean> createFoodOrder(@Path("id") int id, @Field("item_id") int itemId, @Field("amount") int amount,
+    Observable<BaseBean> createFoodOrder(@Path("id") int id, @Field("id") int itemId, @Field("amount") int amount,
                                          @Field("coupon") int coupon, @Field("integral") int integral, @Field("pay_type") int pay_type,
                                          @Field("contact_name") int contact_name, @Field("contact_mobile") int contact_mobile);
 }

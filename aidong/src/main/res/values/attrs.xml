@@ -122,8 +122,8 @@
     </declare-styleable>
 
 
-    <declare-styleable name="MaxHeightRecyclerView">
-        <attr name="recyclerView_maxHeight" format="dimension" />
+    <declare-styleable name="MaxHeightScrollView">
+        <attr name="scrollView_maxHeight" format="dimension" />
     </declare-styleable>
 
     <declare-styleable name="SimpleTitleBar">

@@ -2,19 +2,25 @@ package com.leyuan.aidong.ui.activity.home.view;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.GoodsDetailBean;
 import com.leyuan.aidong.entity.GoodsSkuBean;
 import com.leyuan.aidong.entity.GoodsSkuValueBean;
-import com.leyuan.aidong.entity.GoodsSpecBean;
 import com.leyuan.aidong.entity.LocalGoodsSkuBean;
 import com.leyuan.aidong.ui.activity.home.adapter.GoodsSkuAdapter;
+import com.leyuan.aidong.ui.mvp.presenter.CartPresent;
+import com.leyuan.aidong.ui.mvp.presenter.impl.CartPresentImpl;
+import com.leyuan.aidong.ui.mvp.view.GoodsSkuPopupWindowView;
+import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.widget.customview.BasePopupWindow;
-import com.leyuan.aidong.widget.customview.MaxHeightRecyclerView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,33 +30,38 @@ import java.util.List;
  * 商品详情页选择商品信息弹框
  * Created by song on 2016/9/13.
  */
-public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClickListener {
-    public Context context;
+public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClickListener, GoodsSkuAdapter.SelectSkuListener,GoodsSkuPopupWindowView{
+    private Context context;
     private SimpleDraweeView dvGoodsCover;
     private ImageView ivCancel;
     private TextView tvGoodName;
     private TextView tvGoodsPrice;
     private TextView tvStock;
-    private TextView tvSelectTip;
-
-    private MaxHeightRecyclerView skuRecyclerView;
+    private TextView tvSkuTip;
+    private RecyclerView skuRecyclerView;
+    private GoodsSkuAdapter goodsSkuAdapter;
     private ImageView ivMinus;
     private TextView tvCount;
     private ImageView ivAdd;
-
     private TextView tvConfirm;
     private TextView tvAdd;
     private TextView tvBuy;
 
-    private GoodsSpecBean specBean;
+    private int stock = Integer.MAX_VALUE;
+    private GoodsDetailBean detailBean;
     private List<LocalGoodsSkuBean> localSkuBeanList;
     private boolean isConfirmDeliveryWay = false;   //是否确认配送方式
+    private List<String> allSelectedNodes = new ArrayList<>();
+    private ConfirmSkuListener confirmSkuListener;
 
-    public GoodsSkuPopupWindow(Context context,GoodsSpecBean specBean,boolean isConfirmDeliveryWay) {
+    private CartPresent present;
+
+    public GoodsSkuPopupWindow(Context context, GoodsDetailBean detailBean, boolean isConfirmDeliveryWay) {
         super(context);
         this.context = context;
-        this.specBean = specBean;
+        this.detailBean = detailBean;
         this.isConfirmDeliveryWay = isConfirmDeliveryWay;
+        present = new CartPresentImpl(context,this);
         init();
     }
 
@@ -68,23 +79,28 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         tvGoodName = (TextView) view.findViewById(R.id.tv_good_name);
         tvGoodsPrice = (TextView) view.findViewById(R.id.tv_goods_price);
         tvStock = (TextView) view.findViewById(R.id.tv_stock);
-        tvSelectTip = (TextView) view.findViewById(R.id.tv_select_tip);
-
+        tvSkuTip = (TextView) view.findViewById(R.id.tv_sku_tip);
         ivMinus = (ImageView) view.findViewById(R.id.iv_minus);
         tvCount = (TextView) view.findViewById(R.id.tv_count);
         ivAdd = (ImageView) view.findViewById(R.id.iv_add);
         tvConfirm = (TextView) view.findViewById(R.id.tv_confirm);
-        tvAdd = (TextView) view.findViewById(R.id.tv_add);
+        tvAdd = (TextView) view.findViewById(R.id.tv_add_cart);
         tvBuy = (TextView) view.findViewById(R.id.tv_buy);
-
-        skuRecyclerView = (MaxHeightRecyclerView) view.findViewById(R.id.rv_sku);
+        skuRecyclerView = (RecyclerView) view.findViewById(R.id.rv_sku);
         skuRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-        GoodsSkuAdapter goodsSkuAdapter = new GoodsSkuAdapter(this,localSkuBeanList,specBean.item);
+        goodsSkuAdapter = new GoodsSkuAdapter(context,localSkuBeanList,detailBean.spec.item);
         skuRecyclerView.setAdapter(goodsSkuAdapter);
 
-        tvConfirm.setVisibility( isConfirmDeliveryWay ? View.GONE :View.VISIBLE);
-        tvAdd.setVisibility( isConfirmDeliveryWay ? View.VISIBLE :View.GONE);
-        tvBuy.setVisibility( isConfirmDeliveryWay ? View.VISIBLE :View.GONE);
+        StringBuilder sb = new StringBuilder(context.getString(R.string.please_choose));
+        for (String s : detailBean.spec.name) {
+            sb.append(s).append(" ");
+        }
+        tvSkuTip.setText(sb);
+        tvCount.setText("1");
+        tvGoodName.setText(detailBean.name);
+        tvConfirm.setVisibility(isConfirmDeliveryWay ? View.GONE :View.VISIBLE);
+        tvAdd.setVisibility(isConfirmDeliveryWay ? View.VISIBLE :View.GONE);
+        tvBuy.setVisibility(isConfirmDeliveryWay ? View.VISIBLE :View.GONE);
     }
 
     private void setListener() {
@@ -94,37 +110,79 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         tvConfirm.setOnClickListener(this);
         tvAdd.setOnClickListener(this);
         tvBuy.setOnClickListener(this);
+        goodsSkuAdapter.setSelectSkuListener(this);
     }
 
     @Override
     public void onClick(View v) {
+        int count = Integer.parseInt(tvCount.getText().toString());
+        StringBuilder result = new StringBuilder();
         switch (v.getId()){
             case R.id.iv_cancel:
                 dismiss();
                 break;
             case R.id.iv_minus:
+                count --;
+                if(count <= 1){
+                    count = 1;
+                    ivMinus.setBackgroundResource(R.drawable.icon_minus_gray);
+                }
+                tvCount.setText(String.valueOf(count));
                 break;
             case R.id.iv_add:
+                if(count == 1){
+                    ivMinus.setBackgroundResource(R.drawable.icon_minus);
+                }
+                count ++;
+                if(count > stock){
+                    count = stock;
+                    Toast.makeText(context,context.getString(R.string.stock_out),Toast.LENGTH_LONG).show();
+                }
+                tvCount.setText(String.valueOf(count));
                 break;
             case R.id.tv_confirm:
+                if(allSelectedNodes.size() == detailBean.spec.name.size()){
+                    for (String selectedNode : allSelectedNodes) {
+                        result.append(selectedNode).append(" ");
+                    }
+                    if(confirmSkuListener != null){
+                        confirmSkuListener.onConfirmSku(result.toString());
+                        dismiss();
+                    }
+                }else {
+                    tipUnSelectSku(result);
+                }
                 break;
-            case R.id.tv_add:
+            case R.id.tv_add_cart:
+                if(allSelectedNodes.size() == detailBean.spec.name.size()) {
+                    GoodsSkuBean line = getLine(allSelectedNodes);
+                    String countStr = tvCount.getText().toString();
+                    present.addCart(line.id,Integer.parseInt(countStr));
+                }else {
+                    tipUnSelectSku(result);
+                }
                 break;
             case R.id.tv_buy:
+                if(allSelectedNodes.size() == detailBean.spec.name.size()){
+                    //todo 确认订单
+                }else {
+                   tipUnSelectSku(result);
+                }
                 break;
             default:
                 break;
         }
     }
 
+
     private void packageData() {
         localSkuBeanList = new ArrayList<>();
-        for (int i = 0; i < specBean.name.size(); i++) {
+        for (int i = 0; i < detailBean.spec.name.size(); i++) {
             LocalGoodsSkuBean localGoodsSkuBean = new LocalGoodsSkuBean();
-            String name = specBean.name.get(i);
+            String name = detailBean.spec.name.get(i);
             localGoodsSkuBean.setSkuName(name);
             List<String> temp = new ArrayList<>();
-            for (GoodsSkuBean item : specBean.item) {
+            for (GoodsSkuBean item : detailBean.spec.item) {
                 if(item != null && item.value != null){
                     temp.add(item.value.get(i));
                 }
@@ -149,7 +207,8 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     }
 
     //获选定规格值的Sku行 如颜色选中
-    public List<LocalGoodsSkuBean> getSelectedSkuLine(){
+    @Override
+    public List<LocalGoodsSkuBean> onGetSelectSku() {
         List<LocalGoodsSkuBean> localSelectedSkuList = new ArrayList<>();
         for (LocalGoodsSkuBean localGoodsSkuBean : localSkuBeanList) {
             if(localGoodsSkuBean.isSelected()) {
@@ -160,7 +219,8 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     }
 
     //获取未确定规格值的Sku行 如尺寸未选中
-    public List<LocalGoodsSkuBean> getUnSelectedSkuLine(){
+    @Override
+    public List<LocalGoodsSkuBean> onGetUnSelectSku() {
         List<LocalGoodsSkuBean> localUnselectedSkuList = new ArrayList<>();
         for (LocalGoodsSkuBean localGoodsSkuBean : localSkuBeanList) {
             if(!localGoodsSkuBean.isSelected()) {
@@ -168,5 +228,77 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
             }
         }
         return localUnselectedSkuList;
+    }
+
+    @Override
+    public void onSelectSkuChanged(List<String> allSelectedNodes) {
+        this.allSelectedNodes = allSelectedNodes;
+        StringBuilder result = new StringBuilder();
+        if(allSelectedNodes.size() == detailBean.spec.name.size()){
+            GoodsSkuBean line = getLine(allSelectedNodes);
+            if(line != null){
+                tvGoodsPrice.setText(String.format(context.getString(R.string.rmb_price),line.price));
+                tvStock.setText(String.format(context.getString(R.string.stock_count),line.stock));
+                dvGoodsCover.setImageURI(line.cover);
+                stock = FormatUtil.parseInt(line.stock);
+                if(Integer.parseInt(tvCount.getText().toString()) > stock){
+                    tvCount.setText(line.stock);
+                }
+            }
+            result.append(context.getString(R.string.selected));
+            for (String selectedNode : allSelectedNodes) {
+                result.append(selectedNode).append(" ");
+            }
+        }else {
+            tvGoodsPrice.setText("默认价格范围");
+            tvStock.setText("总库存");
+            dvGoodsCover.setImageURI("");
+
+            result.append(context.getString(R.string.please_choose));
+            List<LocalGoodsSkuBean> unSelectedSkuBeanList = onGetUnSelectSku();
+            for (LocalGoodsSkuBean localGoodsSkuBean : unSelectedSkuBeanList) {
+                result.append(localGoodsSkuBean.getSkuName()).append(" ");
+            }
+        }
+        tvSkuTip.setText(result);
+    }
+
+    @Override
+    public void addCart(BaseBean baseBean) {
+        if(baseBean.getStatus() == 1){
+            dismiss();
+        }else {
+            Toast.makeText(context,context.getString(R.string.add_cart_failed),Toast.LENGTH_LONG).show();
+        }
+    }
+
+    //获取包含全部属性节点的唯一路线
+    private GoodsSkuBean getLine(List<String> selectedValues){
+        GoodsSkuBean usefulGoodsSkuBean = null;
+        for (GoodsSkuBean goodsSkuBean : detailBean.spec.item) {
+            if(goodsSkuBean.value.containsAll(selectedValues)){
+                usefulGoodsSkuBean = goodsSkuBean;
+                break;      //数据正常得情况下只可能有一条线路包含所有节点，不考虑数据录入异常情况
+            }
+        }
+        return usefulGoodsSkuBean;
+    }
+
+    //提示sku没有全部选择
+    private void tipUnSelectSku(StringBuilder result){
+        result.append(context.getString(R.string.please_choose));
+        List<LocalGoodsSkuBean> unSelectedSkuBeanList = onGetUnSelectSku();
+        for (LocalGoodsSkuBean localGoodsSkuBean : unSelectedSkuBeanList) {
+            result.append(localGoodsSkuBean.getSkuName()).append(" ");
+        }
+        Toast.makeText(context,result,Toast.LENGTH_LONG).show();
+    }
+
+    public void setConfirmSkuListener(ConfirmSkuListener l) {
+        this.confirmSkuListener = l;
+    }
+
+    public interface ConfirmSkuListener {
+        void onConfirmSku(String sku);
     }
 }
