@@ -4,16 +4,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 
 /**
  * Created by user on 2016/11/23.
@@ -67,23 +66,22 @@ public class CameraUtils {
     }
 
     // 将进行剪裁后的图片传递到下一个界面上
-    public static Bitmap sentPicToNext(Intent picdata,Uri uri ,Context context) {
-        Bitmap photo = null;
-        try {
+    public static String sentPicToNext(Intent picdata,Uri uri ,Context context) {
+
+        String path = null;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                String fpath = CropTool.getPath(context, uri);
-                photo = BitmapFactory.decodeFile(fpath);
-                if (photo == null) {
-                    String wpath = CropTool.selectImage(context, picdata);
-                    photo = BitmapFactory.decodeFile(wpath);
+                path = CropTool.getPath(context, uri);
+//                photo = BitmapFactory.decodeFile(fpath);
+                if (path == null) {
+                     path = CropTool.selectImage(context, picdata);
+//                    photo = BitmapFactory.decodeFile(wpath);
                 }
             } else {
-                photo = BitmapFactory.decodeStream(context.getContentResolver().openInputStream(uri));
+                path = uri.getPath();
+//               BitmapFactory.decodeStream(context.getContentResolver().openInputStream(uri));
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-         return photo;
+
+         return path;
     }
 
 }

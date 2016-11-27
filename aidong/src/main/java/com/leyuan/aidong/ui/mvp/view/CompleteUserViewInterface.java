@@ -5,5 +5,6 @@ package com.leyuan.aidong.ui.mvp.view;
  */
 public interface CompleteUserViewInterface {
 
-    void OnCompletUserInfoCallBack(boolean success);
+    void onCompletUserInfoCallBack(boolean success);
+    void onUploadStart();
 }

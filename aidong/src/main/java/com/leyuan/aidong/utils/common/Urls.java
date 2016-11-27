@@ -5,7 +5,7 @@ package com.leyuan.aidong.utils.common;
  * Created by user on 2015/5/20
  */
 public class Urls {
-    public static boolean debug = false;
+    public static boolean debug = true;
 
     //    public final static String BASE_URL_TEXT = "http://192.168.50.127:8080/aidongApp";
     //    public final static String BASE_URL_TEXT = "http://192.168.50.146:8080/app";

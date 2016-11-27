@@ -19,6 +19,7 @@ import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.widget.CommonTitleLayout;
 import com.leyuan.aidong.widget.DialogImageIdentify;
 import com.leyuan.commonlibrary.manager.UiManager;
+import com.leyuan.commonlibrary.util.DialogUtils;
 import com.leyuan.commonlibrary.util.StringUtils;
 
 
@@ -79,7 +80,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 String tel = getEidtTelephone().getText().toString().trim();
                 if (StringUtils.isMatchTel(tel)) {
                     showImageIdentifyDialog(tel);
-
                 } else {
                     getEidtTelephone().setError("请输入正确手机号");
                 }
@@ -130,6 +130,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void getIdentifyCode(boolean success) {
+        DialogUtils.dismissDialog();
         if (success) {
              ToastUtil.showShort(App.context, "验证码已发送,请查看");
             if(mDialogImageIdentify!=null && mDialogImageIdentify.isShowing()){
@@ -146,6 +147,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void register(boolean success) {
+        DialogUtils.dismissDialog();
 //        UiManager.activityJump(this,CompleteUserInfomationActivity.class);
         if (success) {
              ToastUtil.showShort(App.context, "注册成功");
@@ -162,9 +164,15 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
          if(success ){
              presenter.regitserIdentify(mobile);
          }else  if(mDialogImageIdentify!=null && mDialogImageIdentify.isShowing()){
+             DialogUtils.dismissDialog();
              mDialogImageIdentify.clearContent();
              mDialogImageIdentify.refreshImage(mobile);
          }
+    }
+
+    @Override
+    public void onRequestStart() {
+        DialogUtils.showDialog(this,"",false);
     }
 
     private void showImageIdentifyDialog(final String tel) {
@@ -188,4 +196,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         mDialogImageIdentify.refreshImage(tel);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        DialogUtils.releaseDialog();
+    }
 }

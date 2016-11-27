@@ -25,25 +25,57 @@ public class CompleteUserPresenter {
     }
 
 
-
     public void  completeUserInfo(Map<String,String> params,String filePath){
        registerModel.completeUserInfo(completeSubcribe,params,filePath);
    }
+    public void  completeUserAvatarUpdate(String filePath){
+        registerModel.userAvatarUpload(completeSubcribe,filePath);
+    }
 
     private Subscriber<LoginResult> completeSubcribe = new BaseSubscriber<LoginResult>(mContext) {
+
+        @Override
+        public void onStart() {
+            super.onStart();
+            mViewInterface.onUploadStart();
+        }
+
         @Override
         public void onError(Throwable e) {
             super.onError(e);
-            mViewInterface.OnCompletUserInfoCallBack(false);
+            mViewInterface.onCompletUserInfoCallBack(false);
         }
 
         @Override
         public void onNext(LoginResult loginResult) {
-            mViewInterface.OnCompletUserInfoCallBack(true);
+            mViewInterface.onCompletUserInfoCallBack(true);
             if(loginResult != null && loginResult.getUser()!=null){
                 App.mInstance.setUser(loginResult.getUser());
             }
 
+        }
+    };
+
+    private Subscriber<LoginResult> subscriberUserAvatar= new BaseSubscriber<LoginResult>(mContext) {
+
+        @Override
+        public void onStart() {
+            super.onStart();
+            mViewInterface.onUploadStart();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            super.onError(e);
+            mViewInterface.onCompletUserInfoCallBack(false);
+        }
+
+        @Override
+        public void onNext(LoginResult loginResult) {
+            mViewInterface.onCompletUserInfoCallBack(true);
+            if(loginResult != null && loginResult.getUser()!=null){
+                App.mInstance.setUser(loginResult.getUser());
+            }
         }
     };
 }

@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.fragment.mine;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.activity.mine.AddressActivity;
@@ -43,6 +45,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private TextView textView_name, textView_guanzhushu, textView_beiguanzhushu, textView_popularity, textView_yysl, textView_yyjrw, textView_dd, textView_ddjrw;
     private AidongMineItem item_my_coin, item_my_coupon, item_sport_timing, item_address,
             item_recommend_friend, item_after_sale, item_setting;
+    private UserCoach user;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -125,6 +128,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         if(App.mInstance.isLogin()){
             relativeLayout_my_logo.setVisibility(View.VISIBLE);
             layout_no_login.setVisibility(View.GONE);
+            user = App.mInstance.getUser();
+            textView_name.setText(user.getName());
+            imageView_head.setImageURI(Uri.parse(user.getAvatar()));
         }else{
             relativeLayout_my_logo.setVisibility(View.GONE);
             layout_no_login.setVisibility(View.VISIBLE);

@@ -23,7 +23,6 @@ public class UserCoach extends User implements Serializable{
 	private int courses;
 	private Coordinate coordinate;
 
-
 	private String target;
 	private String skill;
 	private String interests;

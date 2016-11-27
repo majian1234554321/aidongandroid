@@ -146,6 +146,11 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
 
     }
 
+    @Override
+    public void onRequestStart() {
+
+    }
+
     private void showImageIdentifyDialog(final String tel) {
 //           if(mDialogImageIdentify == null){
         mDialogImageIdentify = new DialogImageIdentify(this);

@@ -7,8 +7,10 @@ import com.leyuan.aidong.http.RxHelper;
 import com.leyuan.aidong.http.api.IdentifyService;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.mvp.model.interfaces.RegisterModelInterface;
+import com.leyuan.aidong.utils.RetrofitFileUpdateUtils;
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.MediaType;
@@ -78,6 +80,17 @@ public class RegisterModel implements RegisterModelInterface {
             mIdentifyService.completeUserInfo(params, token)
                     .compose(RxHelper.<LoginResult>transform())
                     .subscribe(subscriber);
+//        }
+
+    }
+
+    public void userAvatarUpload(Subscriber<LoginResult> subscriber,String filePath) {
+        String path[] ={filePath};
+        List<MultipartBody.Part> partList = RetrofitFileUpdateUtils.files2Parts("avatar",path,MediaType.parse("image/*"));
+        String token = App.mInstance.isLogin()?null:App.mInstance.getToken();
+        mIdentifyService.completeUserFileUpdate(token,partList)
+                .compose(RxHelper.<LoginResult>transform())
+                .subscribe(subscriber);
 //        }
 
     }

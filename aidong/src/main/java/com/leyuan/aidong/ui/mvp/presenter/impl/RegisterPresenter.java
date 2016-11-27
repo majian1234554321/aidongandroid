@@ -26,16 +26,11 @@ public class RegisterPresenter implements RegisterPresenterInterface {
     @Override
     public void regitserIdentify(String mobile) {
         mRegisterModelInterface.regitserIdentify(new BaseSubscriber<UserCoach>(mContext) {
-            //            @Override
-            //            public void onCompleted() {
-            //
-            //            }
-            //
-            //            @Override
-                        public void onError(Throwable e) {
-                           super.onError(e);
-                            mRegisterViewInterface.getIdentifyCode(false);
-                        }
+
+            public void onError(Throwable e) {
+                super.onError(e);
+                mRegisterViewInterface.getIdentifyCode(false);
+            }
 
             @Override
             public void onNext(UserCoach s) {
@@ -48,16 +43,12 @@ public class RegisterPresenter implements RegisterPresenterInterface {
 
     public void foundIdentify(String mobile) {
         mRegisterModelInterface.foundIdentify(new BaseSubscriber<UserCoach>(mContext) {
-            //            @Override
-            //            public void onCompleted() {
-            //
-            //            }
-            //
-            //            @Override
-            //            public void onError(Throwable e) {
-            //                e.printStackTrace();
-            //                mRegisterViewInterface.getIdentifyCode(false);
-            //            }
+
+            @Override
+            public void onStart() {
+                super.onStart();
+                mRegisterViewInterface.onRequestStart();
+            }
 
             @Override
             public void onNext(UserCoach s) {
@@ -70,6 +61,12 @@ public class RegisterPresenter implements RegisterPresenterInterface {
     @Override
     public void checkIdentify(String token, String code, String password) {
         mRegisterModelInterface.checkIdentify(new BaseSubscriber<UserCoach>(mContext) {
+            @Override
+            public void onStart() {
+                super.onStart();
+                mRegisterViewInterface.onRequestStart();
+            }
+
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
@@ -89,6 +86,13 @@ public class RegisterPresenter implements RegisterPresenterInterface {
     @Override
     public void bindingCaptcha(String mobile) {
         mRegisterModelInterface.bindingCaptcha(new BaseSubscriber<UserCoach>(mContext) {
+
+            @Override
+            public void onStart() {
+                super.onStart();
+                mRegisterViewInterface.onRequestStart();
+            }
+
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
@@ -103,6 +107,12 @@ public class RegisterPresenter implements RegisterPresenterInterface {
     @Override
     public void checkCaptchaImage(final String mobile, String captcha) {
         mRegisterModelInterface.checkCaptchaImage(new BaseSubscriber<UserCoach>(mContext) {
+            @Override
+            public void onStart() {
+                super.onStart();
+                mRegisterViewInterface.onRequestStart();
+            }
+
             @Override
             public void onError(Throwable e) {
                 super.onError(e);

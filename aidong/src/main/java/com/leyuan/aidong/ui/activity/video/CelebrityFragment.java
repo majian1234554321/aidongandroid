@@ -23,15 +23,13 @@ import com.leyuan.aidong.adapter.CelebrityFragmentAdapter;
 import com.leyuan.aidong.entity.video.SpecialTopicInfo;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.CustomLayoutManager;
-import com.leyuan.aidong.widget.video.SwipyRefreshLayout;
-import com.leyuan.aidong.widget.video.SwipyRefreshLayoutDirection;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 
 
-public class CelebrityFragment extends Fragment implements SwipyRefreshLayout.OnRefreshListener, SwipeRefreshLayout.OnRefreshListener {
+public class CelebrityFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private int item_normal_height;
     private int item_max_height;
@@ -356,14 +354,14 @@ public class CelebrityFragment extends Fragment implements SwipyRefreshLayout.On
     }
 
 
-    @Override
-    public void onRefresh(SwipyRefreshLayoutDirection direction) {
-        if (direction == SwipyRefreshLayoutDirection.TOP) {
-            getDataFromInter();
-        } else {
-            getMoreDataFromInter();
-        }
-    }
+//    @Override
+//    public void onRefresh(SwipyRefreshLayoutDirection direction) {
+//        if (direction == SwipyRefreshLayoutDirection.TOP) {
+//            getDataFromInter();
+//        } else {
+//            getMoreDataFromInter();
+//        }
+//    }
 
     private void getMoreDataFromInter() {
         isLoading = true;

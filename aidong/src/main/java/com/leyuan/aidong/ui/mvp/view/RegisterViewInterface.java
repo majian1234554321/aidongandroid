@@ -7,4 +7,6 @@ public interface RegisterViewInterface {
     void register(boolean success);
 
     void checkCaptchaImage(boolean success, String mobile);
+
+    void onRequestStart();
 }
