@@ -11,6 +11,7 @@ import com.leyuan.aidong.http.api.NurtureService;
 import com.leyuan.aidong.ui.mvp.model.NurtureModel;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import rx.Subscriber;
@@ -29,7 +30,7 @@ public class NurtureModelImpl implements NurtureModel {
     }
 
     @Override
-    public List<CategoryBean> getCategory() {
+    public ArrayList<CategoryBean> getCategory() {
         return SystemInfoUtils.getNurtureCategory(context);
     }
 

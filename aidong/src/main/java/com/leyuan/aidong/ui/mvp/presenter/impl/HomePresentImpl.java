@@ -45,10 +45,14 @@ public class HomePresentImpl implements HomePresent {
     public HomePresentImpl(Context context, BrandActivityView view) {
         this.context = context;
         this.brandDetailActivityView = view;
-        homeBeanList = new ArrayList<>();
         if(homeModel == null){
             homeModel = new HomeModelImpl(context);
         }
+    }
+
+    @Override
+    public void getPopupBanner() {
+        homeFragmentView.setPopupBanner(homeModel.getPopupBanners());
     }
 
     @Override

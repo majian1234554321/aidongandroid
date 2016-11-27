@@ -1,6 +1,7 @@
 package com.leyuan.aidong.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,11 +11,11 @@ import java.util.List;
 public class SystemBean implements Serializable{
     private List<String> open_city;     //开通城市
     private List<BannerBean> banner;    //广告位
-    private List<CategoryBean> course;  //课程分类
-    private List<CategoryBean> campaign;//活动分类
-    private List<CategoryBean> nutrition;//营养品分类
-    private List<CategoryBean> equipment;//装备分类
-    private List<BusinessCircleBean> landmark;
+    private ArrayList<CategoryBean> course;  //课程分类
+    private ArrayList<CategoryBean> campaign;//活动分类
+    private ArrayList<CategoryBean> nutrition;//营养品分类
+    private ArrayList<CategoryBean> equipment;//装备分类
+    private ArrayList<BusinessCircleBean> landmark;
 
     public List<String> getOpen_city() {
         return open_city;
@@ -32,43 +33,43 @@ public class SystemBean implements Serializable{
         this.banner = banner;
     }
 
-    public List<CategoryBean> getCourse() {
+    public ArrayList<CategoryBean> getCourse() {
         return course;
     }
 
-    public void setCourse(List<CategoryBean> course) {
+    public void setCourse(ArrayList<CategoryBean> course) {
         this.course = course;
     }
 
-    public List<CategoryBean> getCampaign() {
+    public ArrayList<CategoryBean> getCampaign() {
         return campaign;
     }
 
-    public void setCampaign(List<CategoryBean> campaign) {
+    public void setCampaign(ArrayList<CategoryBean> campaign) {
         this.campaign = campaign;
     }
 
-    public List<CategoryBean> getNutrition() {
+    public ArrayList<CategoryBean> getNutrition() {
         return nutrition;
     }
 
-    public void setNutrition(List<CategoryBean> nutrition) {
+    public void setNutrition(ArrayList<CategoryBean> nutrition) {
         this.nutrition = nutrition;
     }
 
-    public List<CategoryBean> getEquipment() {
+    public ArrayList<CategoryBean> getEquipment() {
         return equipment;
     }
 
-    public void setEquipment(List<CategoryBean> equipment) {
+    public void setEquipment(ArrayList<CategoryBean> equipment) {
         this.equipment = equipment;
     }
 
-    public List<BusinessCircleBean> getLandmark() {
+    public ArrayList<BusinessCircleBean> getLandmark() {
         return landmark;
     }
 
-    public void setLandmark(List<BusinessCircleBean> landmark) {
+    public void setLandmark(ArrayList<BusinessCircleBean> landmark) {
         this.landmark = landmark;
     }
 

@@ -20,9 +20,9 @@ import com.leyuan.aidong.ui.fragment.home.CourseFragment;
 import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CourseActivityView;
+import com.leyuan.aidong.utils.DateUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -49,7 +49,6 @@ public class CourseActivity extends BaseActivity implements CourseActivityView{
 
         initView();
         setListener();
-        present.getDate();
         present.getCategory();
         present.getBusinessCircle();
     }
@@ -87,8 +86,10 @@ public class CourseActivity extends BaseActivity implements CourseActivityView{
             f.setAnimationListener(animation);
             fragments.add(f);
         }
-        List<String> titles = Arrays.asList(getResources().getStringArray(R.array.dateTab));
-        viewPager.setAdapter(new TabFragmentAdapter(getSupportFragmentManager(),fragments,titles));
+
+
+        List<String> days = DateUtils.getSevenDate();
+        viewPager.setAdapter(new TabFragmentAdapter(getSupportFragmentManager(),fragments,days));
         tabLayout.setupWithViewPager(viewPager);
         viewPager.addOnPageChangeListener(new MyOnPageChangeListener());
     }
@@ -105,10 +106,6 @@ public class CourseActivity extends BaseActivity implements CourseActivityView{
         }
     };
 
-    @Override
-    public void setDate(List<String> data) {
-
-    }
 
     @Override
     public void setCategory(List<CategoryBean> categoryBeanList) {
@@ -119,8 +116,6 @@ public class CourseActivity extends BaseActivity implements CourseActivityView{
     public void setBusinessCircle(List<BusinessCircleBean> circleBeanList) {
 
     }
-
-
 
     private class MyOnFilterClickListener implements CourseFilterView.OnFilterClickListener{
 

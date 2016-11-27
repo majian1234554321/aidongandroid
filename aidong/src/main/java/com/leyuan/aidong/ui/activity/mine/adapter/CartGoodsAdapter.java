@@ -55,7 +55,7 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
         final GoodsBean bean = data.get(position);
         holder.cover.setImageURI(bean.getCover());
         holder.name.setText(bean.getName());
-        holder.desc.setText(bean.getName());
+        holder.sku.setText(bean.getName());
         holder.price.setText(String.format
                 (context.getString(R.string.rmb_price),bean.getPrice()));
         holder.count.setText(bean.getAmount());
@@ -131,7 +131,8 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
         SimpleDraweeView cover;
         TextView name;
         TextView price;
-        TextView desc;
+        TextView sku;
+        TextView code;
         TextView count;
         ImageView minus;
         ImageView add;
@@ -142,7 +143,8 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
             cover = (SimpleDraweeView) itemView.findViewById(R.id.dv_cover);
             name = (TextView) itemView.findViewById(R.id.tv_goods_name);
             price = (TextView) itemView.findViewById(R.id.tv_goods_price);
-            desc = (TextView) itemView.findViewById(R.id.tv_desc);
+            sku = (TextView) itemView.findViewById(R.id.tv_sku);
+            code = (TextView) itemView.findViewById(R.id.tv_code);
             minus = (ImageView) itemView.findViewById(R.id.iv_minus);
             count = (TextView) itemView.findViewById(R.id.tv_count);
             add = (ImageView) itemView.findViewById(R.id.iv_add);

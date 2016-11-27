@@ -14,11 +14,6 @@ import rx.Subscriber;
  * Created by song on 2016/8/13.
  */
 public interface CourseModel {
-    /**
-     * 获取时间
-     * @return 时间列表
-     */
-    List<String> getDate();
 
     /**
      * 获取课程分类信息

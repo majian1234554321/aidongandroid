@@ -15,15 +15,34 @@ public interface NurturePresent {
     void getCategory();
 
     /**
+     * 第一次进入界面加载营养品推荐列表数据
+     * @param switcherLayout SwitcherLayout
+     */
+    void commonLoadRecommendData(SwitcherLayout switcherLayout);
+
+    /**
+     * 下拉刷新营养品推荐列表数据
+     */
+    void pullToRefreshRecommendData();
+
+    /**
+     * 上拉加载更多营养品推荐列表数据
+     * @param recyclerView RecyclerView
+     * @param pageSize 每页加载数
+     * @param page 页码
+     */
+    void requestMoreRecommendData(RecyclerView recyclerView, int pageSize, int page);
+
+    /**
      * 第一次进入界面加载营养品列表数据
      * @param switcherLayout SwitcherLayout
      */
-    void commonLoadData(SwitcherLayout switcherLayout);
+    void commendLoadNurtureData(SwitcherLayout switcherLayout);
 
     /**
      * 下拉刷新营养品列表数据
      */
-    void pullToRefreshData();
+    void pullToRefreshNurtureData();
 
     /**
      * 上拉加载更多营养品列表数据
@@ -31,6 +50,5 @@ public interface NurturePresent {
      * @param pageSize 每页加载数
      * @param page 页码
      */
-    void requestMoreData(RecyclerView recyclerView, int pageSize, int page);
-
+    void requestMoreNurtureData(RecyclerView recyclerView, int pageSize, int page);
 }

@@ -30,11 +30,6 @@ public class CourseModelImpl implements CourseModel {
     }
 
     @Override
-    public List<String> getDate() {
-        return null;
-    }
-
-    @Override
     public List<CategoryBean> getCategory() {
         return SystemInfoUtils.getCourseCategory(context);
     }

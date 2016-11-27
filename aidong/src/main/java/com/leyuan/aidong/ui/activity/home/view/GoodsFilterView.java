@@ -14,7 +14,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.widget.dropdownmenu.adapter.ListWithFlagAdapter;
+import com.leyuan.aidong.entity.CategoryBean;
+import com.leyuan.aidong.ui.activity.home.adapter.GoodsFilterCategoryAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,6 @@ import java.util.List;
 public class GoodsFilterView extends LinearLayout implements View.OnClickListener {
     private Context context;
 
-    private LinearLayout filterLayout;
     private LinearLayout categoryLayout;
     private TextView tvCategory;
     private ImageView ivCategoryArrow;
@@ -41,8 +41,8 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
     private View maskBgView;
     private LinearLayout contentLayout;
     private ListView listView;
-    private ListWithFlagAdapter categoryAdapter;
-    private List<String> categoryList = new ArrayList<>();
+    private GoodsFilterCategoryAdapter categoryAdapter;
+    private List<CategoryBean> categoryList = new ArrayList<>();
 
     private String  category;
     private boolean isPopupShowing = false;
@@ -66,7 +66,6 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
 
     private void init() {
         View view = LayoutInflater.from(context).inflate(R.layout.view_goods_filter, this);
-        filterLayout = (LinearLayout) view.findViewById(R.id.ll_filter_layout);
         categoryLayout = (LinearLayout) view.findViewById(R.id.ll_category);
         tvCategory = (TextView) view.findViewById(R.id.tv_category);
         ivCategoryArrow = (ImageView) view.findViewById(R.id.iv_category_arrow);
@@ -152,13 +151,13 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
             Log.d("GoodsFilterView", "you need set categoryList data first");
         }
         if(categoryAdapter == null){
-            categoryAdapter = new ListWithFlagAdapter(context, categoryList);
+            categoryAdapter = new GoodsFilterCategoryAdapter(context, categoryList);
         }
         listView.setAdapter(categoryAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                category = categoryList.get(position);
+                category = categoryList.get(position).getName();
                 categoryAdapter.setCheckItem(position);
                 tvCategory.setText(category);
                 hidePopup();
@@ -169,9 +168,23 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
         });
     }
 
+    public void setSelectedCategoryPosition(int position){
+        if(categoryAdapter == null){
+            categoryAdapter = new GoodsFilterCategoryAdapter(context, categoryList);
+        }
+        category = categoryList.get(position).getName();
+        categoryAdapter.setCheckItem(position);
+        tvCategory.setText(category);
+        if (onFilterClickListener != null) {
+            onFilterClickListener.onCategoryItemClick(category);
+        }
+    }
+
     //设置分类筛选数据
-    public void setCategoryList(List<String> categoryList) {
-        this.categoryList = categoryList;
+    public void setCategoryList(List<CategoryBean> categoryList) {
+        if(categoryList != null){
+            this.categoryList = categoryList;
+        }
     }
 
     // 动画显示

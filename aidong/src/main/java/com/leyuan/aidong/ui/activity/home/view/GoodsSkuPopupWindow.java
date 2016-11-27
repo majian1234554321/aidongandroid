@@ -130,13 +130,13 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
                 tvCount.setText(String.valueOf(count));
                 break;
             case R.id.iv_add:
-                if(count == 1){
-                    ivMinus.setBackgroundResource(R.drawable.icon_minus);
-                }
                 count ++;
                 if(count > stock){
                     count = stock;
                     Toast.makeText(context,context.getString(R.string.stock_out),Toast.LENGTH_LONG).show();
+                }
+                if(count > 1){
+                    ivMinus.setBackgroundResource(R.drawable.icon_minus);
                 }
                 tvCount.setText(String.valueOf(count));
                 break;
@@ -244,6 +244,8 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
                 if(Integer.parseInt(tvCount.getText().toString()) > stock){
                     tvCount.setText(line.stock);
                 }
+                ivMinus.setBackgroundResource(Integer.parseInt(tvCount.getText().toString()) > 1 ?
+                        R.drawable.icon_minus : R.drawable.icon_minus_gray);
             }
             result.append(context.getString(R.string.selected));
             for (String selectedNode : allSelectedNodes) {

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.http.Logic;
 import com.leyuan.aidong.ui.activity.home.CampaignDetailActivity;
 import com.leyuan.aidong.ui.activity.home.CourseDetailActivity;
@@ -190,10 +191,8 @@ public class BaseActivity extends AppCompatActivity implements IHttpToastCallBac
         refreshLayout.setColorSchemeResources(R.color.black, R.color.red,R.color.orange, R.color.gray);
     }
 
-
-
     /**
-     * 跳转目标详情页
+     * 列表页跳转目标详情页
      * @param type course-课程 campaign-活动 event-赛事 food-健康餐饮 nutrition-营养品 equipment-装备
      * @param id id
      */
@@ -222,5 +221,30 @@ public class BaseActivity extends AppCompatActivity implements IHttpToastCallBac
                 break;
         }
 
+    }
+
+    /**
+     * 广告跳转目标页
+     * @param bannerBean BannerBean
+     * 广告类型,#10-内嵌网页 11-外部网页 20-场馆 21-营养品 22-课程 23-活动
+     */
+    public void toTargetActivity(BannerBean bannerBean){
+        switch (bannerBean.getType()){
+            case "10":
+
+                break;
+            case "11":
+                break;
+            case "20":
+                break;
+            case "21":
+                break;
+            case "22":
+                break;
+            case "23":
+                break;
+            default:
+                break;
+        }
     }
 }

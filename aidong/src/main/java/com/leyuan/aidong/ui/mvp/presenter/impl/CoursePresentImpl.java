@@ -57,11 +57,6 @@ public class CoursePresentImpl  implements CoursePresent{
     }
 
     @Override
-    public void getDate() {
-        coursesActivityView.setDate(courseModel.getDate());
-    }
-
-    @Override
     public void getCategory() {
         coursesActivityView.setCategory(courseModel.getCategory());
     }

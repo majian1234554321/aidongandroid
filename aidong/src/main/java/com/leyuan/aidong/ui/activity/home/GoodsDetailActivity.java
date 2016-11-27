@@ -198,14 +198,14 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     private void setListener() {
         ivBack.setOnClickListener(this);
         ivShare.setOnClickListener(this);
-        detailsLayout.setOnSlideDetailsListener(new MyOnSlideDetailsListener());
-        appBarLayout.addOnOffsetChangedListener(new MyOnOffsetChangedListener());
         skuLayout.setOnClickListener(this);
         recommendCodeLayout.setOnClickListener(this);
         addressLayout.setOnClickListener(this);
         tvPay.setOnClickListener(this);
         bannerLayout.setOnItemClickListener(this);
         radioGroup.setOnCheckedChangeListener(this);
+        detailsLayout.setOnSlideDetailsListener(new MyOnSlideDetailsListener());
+        appBarLayout.addOnOffsetChangedListener(new MyOnOffsetChangedListener());
     }
 
     @Override

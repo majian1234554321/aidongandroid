@@ -13,7 +13,6 @@ import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.ui.activity.home.GoodsFilterActivity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 营养品类型适配器
@@ -21,13 +20,15 @@ import java.util.List;
  */
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.FoodViewHolder>{
     private Context context;
-    private List<CategoryBean> data = new ArrayList<>();
+    private int type;
+    private ArrayList<CategoryBean> data = new ArrayList<>();
 
-    public CategoryAdapter(Context context) {
+    public CategoryAdapter(Context context,int type) {
         this.context = context;
+        this.type = type;
     }
 
-    public void setData(List<CategoryBean> data) {
+    public void setData(ArrayList<CategoryBean> data) {
         if(data != null){
             this.data = data;
         }
@@ -46,14 +47,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.FoodVi
     }
 
     @Override
-    public void onBindViewHolder(FoodViewHolder holder, int position) {
+    public void onBindViewHolder(FoodViewHolder holder, final int position) {
         CategoryBean bean = data.get(position);
         holder.cover.setImageURI(bean.getImage());
         holder.name.setText(bean.getName());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GoodsFilterActivity.start(context);
+                GoodsFilterActivity.start(context,type,data,position);
             }
         });
     }

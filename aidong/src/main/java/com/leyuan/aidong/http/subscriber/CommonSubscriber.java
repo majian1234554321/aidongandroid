@@ -5,6 +5,7 @@ import com.leyuan.aidong.widget.customview.SwitcherLayout;
 
 import rx.Subscriber;
 
+
 /**
  * 用于第一次正常加载数据时的Http请求
  * 慎用:该Subscriber需与SwitcherLayout结合使用
@@ -15,6 +16,7 @@ public abstract class CommonSubscriber<T> extends Subscriber<T> {
 
     public CommonSubscriber(SwitcherLayout switcherLayout) {
         this.switcherLayout = switcherLayout;
+
     }
 
     /**

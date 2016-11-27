@@ -23,6 +23,7 @@ import com.leyuan.aidong.ui.activity.home.GoodsDetailActivity;
 import com.leyuan.aidong.ui.activity.home.LocationActivity;
 import com.leyuan.aidong.ui.activity.home.NurtureActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.HomeRecycleViewAdapter;
+import com.leyuan.aidong.ui.activity.home.view.HomeBannerDialog;
 import com.leyuan.aidong.ui.mvp.presenter.HomePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.HomePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.HomeFragmentView;
@@ -80,6 +81,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
         initRecyclerView(view);
         setListener();
 
+        present.getPopupBanner();
         present.getBanners();
         present.commonLoadData(switcherLayout);
     }
@@ -188,10 +190,18 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
     @Override
     public void updateBanner(List<BannerBean> bannerBeanList) {
         if(bannerBeanList != null && !bannerBeanList.isEmpty()){
-            banner.setData(bannerBeanList,null);
             banner.setVisibility(View.VISIBLE);
+            banner.setAutoPlayAble(bannerBeanList.size() > 1);
+            banner.setData(bannerBeanList,null);
         }else{
             banner.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void setPopupBanner(List<BannerBean> banner) {
+        if(banner != null && !banner.isEmpty()){
+           new HomeBannerDialog(getContext(),banner).show();
         }
     }
 
@@ -225,4 +235,6 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
     public void showEndFooterView() {
         RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
     }
+
+
 }

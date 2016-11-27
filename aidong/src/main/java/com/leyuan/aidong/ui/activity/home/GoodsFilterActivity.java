@@ -13,27 +13,31 @@ import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CategoryBean;
+import com.leyuan.aidong.entity.EquipmentBean;
 import com.leyuan.aidong.entity.NurtureBean;
-import com.leyuan.aidong.entity.data.NurtureData;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.GoodsFilterAdapter;
 import com.leyuan.aidong.ui.activity.home.view.GoodsFilterView;
+import com.leyuan.aidong.ui.mvp.presenter.EquipmentPresent;
 import com.leyuan.aidong.ui.mvp.presenter.NurturePresent;
+import com.leyuan.aidong.ui.mvp.presenter.impl.EquipmentPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.NurturePresentImpl;
-import com.leyuan.aidong.ui.mvp.view.NurtureActivityView;
+import com.leyuan.aidong.ui.mvp.view.GoodsFilterActivityView;
 import com.leyuan.aidong.widget.customview.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
  * 营养品和装备筛选
  * Created by song on 2016/8/18.
  */
-public class GoodsFilterActivity extends BaseActivity implements View.OnClickListener,NurtureActivityView{
+public class GoodsFilterActivity extends BaseActivity implements View.OnClickListener,GoodsFilterActivityView {
+    public static final int TYPE_NURTURE = 1;       //营养品
+    public static final int TYPE_EQUIPMENT = 2;     //装备
+
     private ImageView ivBack;
     private TextView tvSearch;
     private GoodsFilterView filterView;
@@ -42,14 +46,22 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
     private RecyclerView recyclerView;
 
     private int currPage = 1;
-    private List<NurtureData> data;
-    private GoodsFilterAdapter nurtureAdapter;
+    private List<NurtureBean> nurtureList;
+    private List<EquipmentBean> equipmentList;
+    private GoodsFilterAdapter adapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
-    private NurturePresent present;
 
-    public static void start(Context context) {
+    private int type = 1;
+    private int selectedPosition = 0;
+    private List<CategoryBean> categoryBeanList;
+    private NurturePresent nurturePresent;
+    private EquipmentPresent equipmentPresent;
+
+    public static void start(Context context, int type, ArrayList<CategoryBean> categoryList,int pos) {
         Intent starter = new Intent(context, GoodsFilterActivity.class);
-        //starter.putExtra();
+        starter.putExtra("type",type);
+        starter.putExtra("position",pos);
+        starter.putParcelableArrayListExtra("categoryList",categoryList);
         context.startActivity(starter);
     }
 
@@ -58,21 +70,31 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_filter);
         pageSize = 20;
-        present = new NurturePresentImpl(this,this);
+        nurturePresent = new NurturePresentImpl(this,this);
+        equipmentPresent = new EquipmentPresentImpl(this,this);
+        if(getIntent() != null){
+            type = getIntent().getIntExtra("type",TYPE_NURTURE);
+            selectedPosition = getIntent().getIntExtra("position",0);
+            categoryBeanList = getIntent().getParcelableArrayListExtra("categoryList");
+        }
 
         initTopLayout();
         initSwipeRefreshLayout();
         initRecyclerView();
-        nurtureAdapter.setData(null);
-        wrapperAdapter.notifyDataSetChanged();
-       // present.commonLoadData(switcherLayout);
+
+        if(type == TYPE_NURTURE){
+            nurturePresent.commendLoadNurtureData(switcherLayout);
+        }else {
+            equipmentPresent.commonLoadEquipmentData(switcherLayout);
+        }
     }
 
     private void  initTopLayout(){
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tvSearch = (TextView)findViewById(R.id.tv_search);
         filterView = (GoodsFilterView)findViewById(R.id.view_filter);
-        filterView.setCategoryList(Arrays.asList(getResources().getStringArray(R.array.characterTag)));
+        filterView.setCategoryList(categoryBeanList);
+        filterView.setSelectedCategoryPosition(selectedPosition);
         filterView.setOnFilterClickListener(new GoodsFilterView.OnFilterClickListener() {
             @Override
             public void onCategoryItemClick(String category) {
@@ -106,16 +128,21 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onRefresh() {
                 currPage = 1;
-               // present.pullToRefreshHomeData();
+                if(type == TYPE_NURTURE){
+                    nurturePresent.pullToRefreshNurtureData();
+                }else {
+                    equipmentPresent.pullToRefreshEquipmentData();
+                }
             }
         });
     }
 
     private void initRecyclerView() {
         recyclerView = (RecyclerView)findViewById(R.id.rv_goods);
-        data = new ArrayList<>();
-        nurtureAdapter = new GoodsFilterAdapter(this);
-        wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(nurtureAdapter);
+        equipmentList = new ArrayList<>();
+        nurtureList = new ArrayList<>();
+        adapter = new GoodsFilterAdapter(this,type == TYPE_NURTURE ? TYPE_NURTURE : TYPE_EQUIPMENT);
+        wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(wrapperAdapter);
         recyclerView.addOnScrollListener(onScrollListener);
@@ -125,10 +152,11 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
         @Override
         public void onLoadNextPage(View view) {
             currPage ++;
-            present.requestMoreData(recyclerView,pageSize,currPage);
-            /*if (data != null && !data.isEmpty()) {
-                present.requestMoreHomeData(recyclerView,pageSize,currPage);
-            }*/
+            if(type == TYPE_NURTURE && nurtureList != null && !nurtureList.isEmpty()){
+                nurturePresent.requestMoreNurtureData(recyclerView,pageSize,currPage);
+            }else if(type == TYPE_EQUIPMENT && equipmentList != null && !equipmentList.isEmpty()){
+                equipmentPresent.requestMoreEquipmentData(recyclerView,pageSize,currPage);
+            }
         }
     };
 
@@ -139,20 +167,34 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
                 Intent intent = new Intent(this,SearchActivity.class);
                 startActivity(intent);
                 break;
-
+            case R.id.iv_back:
+                finish();
+                break;
             default:
                 break;
         }
     }
 
     @Override
-    public void setCategory(List<CategoryBean> categoryBeanList) {
-
+    public void updateEquipmentRecyclerView(List<EquipmentBean> equipmentList) {
+        if(refreshLayout.isRefreshing()){
+            equipmentList.clear();
+            refreshLayout.setRefreshing(false);
+        }
+        equipmentList.addAll(equipmentList);
+        adapter.setEquipmentList(equipmentList);
+        wrapperAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void updateRecyclerView(List<NurtureBean> nurtureBeanList) {
-
+    public void updateNurtureRecyclerView(List<NurtureBean> beanList) {
+        if(refreshLayout.isRefreshing()){
+            nurtureList.clear();
+            refreshLayout.setRefreshing(false);
+        }
+        nurtureList.addAll(beanList);
+        adapter.setNurtureList(nurtureList);
+        wrapperAdapter.notifyDataSetChanged();
     }
 
     @Override

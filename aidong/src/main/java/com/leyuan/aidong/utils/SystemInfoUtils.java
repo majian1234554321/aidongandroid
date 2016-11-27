@@ -36,46 +36,68 @@ public class SystemInfoUtils {
      */
     public static List<BannerBean> getHomeBanner(Context context){
         List<BannerBean> bannerBeanList = new ArrayList<>();
+        List<BannerBean> homeBannerBeanList = new ArrayList<>();
         if(Constant.systemInfoBean != null && Constant.systemInfoBean.getBanner() != null){
-            for (BannerBean bannerBean : Constant.systemInfoBean.getBanner()) {
-                if(BANNER_HOME.equals(bannerBean.getPosition())){
-                    bannerBeanList.add(bannerBean);
-                }
+            bannerBeanList =  Constant.systemInfoBean.getBanner();
+        }else {
+            Object bean = getSystemInfoBean(context);
+            if(bean instanceof SystemBean){
+                bannerBeanList = ((SystemBean) bean).getBanner();
             }
         }
-        return bannerBeanList;
+
+        for (BannerBean bannerBean :bannerBeanList) {
+            if(BANNER_HOME.equals(bannerBean.getPosition())){
+                homeBannerBeanList.add(bannerBean);
+            }
+        }
+        return homeBannerBeanList;
     }
 
     /**
      *获取闪屏页广告
      */
-    public static BannerBean getSplashBanner(Context context){
-        BannerBean splashBannerBean = new BannerBean();
+    public static List<BannerBean> getSplashBanner(Context context){
+        List<BannerBean> bannerBeanList = new ArrayList<>();
+        List<BannerBean> splashBannerBean = new ArrayList<>();
         if(Constant.systemInfoBean != null && Constant.systemInfoBean.getBanner() != null){
-            for (BannerBean bannerBean : Constant.systemInfoBean.getBanner()) {
-                if(BANNER_SPLASH.equals(bannerBean.getPosition())){
-                    splashBannerBean = bannerBean;
-                    break;
-                }
+            bannerBeanList =  Constant.systemInfoBean.getBanner();
+        }else {
+            Object bean = getSystemInfoBean(context);
+            if(bean instanceof SystemBean){
+                bannerBeanList = ((SystemBean) bean).getBanner();
+            }
+        }
+        for (BannerBean bannerBean : bannerBeanList) {
+            if(BANNER_SPLASH.equals(bannerBean.getPosition())){
+                splashBannerBean.add(bannerBean);
+                break;
             }
         }
         return splashBannerBean;
     }
 
     /**
-     * 获取首页弹框广告
+     * 获取首页弹框广告 支持多张图片
      */
-    public static BannerBean getHomeAd(Context context){
-        BannerBean bouncedAd = new BannerBean();
+    public static List<BannerBean> getHomePopupBanner(Context context){
+        List<BannerBean> bannerBeanList = new ArrayList<>();
+        List<BannerBean> popupBannerList = new ArrayList<>();
         if(Constant.systemInfoBean != null && Constant.systemInfoBean.getBanner() != null){
-            for (BannerBean bannerBean : Constant.systemInfoBean.getBanner()) {
-                if(BOUNCED_AD.equals(bannerBean.getPosition())){
-                    bouncedAd = bannerBean;
-                    break;
-                }
+            bannerBeanList =  Constant.systemInfoBean.getBanner();
+        }else {
+            Object bean = getSystemInfoBean(context);
+            if(bean instanceof SystemBean){
+                bannerBeanList = ((SystemBean) bean).getBanner();
             }
         }
-        return bouncedAd;
+        for (BannerBean bannerBean : bannerBeanList) {
+            if(BOUNCED_AD.equals(bannerBean.getPosition())){
+                popupBannerList.add(bannerBean);
+                break;
+            }
+        }
+        return popupBannerList;
     }
 
     /**
@@ -115,7 +137,7 @@ public class SystemInfoUtils {
      * 获取营养品分类信息
      * @return 营养品分类
      */
-    public static List<CategoryBean> getNurtureCategory(Context context){
+    public static ArrayList<CategoryBean> getNurtureCategory(Context context){
         if(Constant.systemInfoBean != null && Constant.systemInfoBean.getNutrition() != null){ //内存有直接从内存读取返回
             return Constant.systemInfoBean.getNutrition();
         }else{          // 从本地读取
@@ -131,7 +153,7 @@ public class SystemInfoUtils {
      * 获取装备分类信息
      * @return 装备分类
      */
-    public static List<CategoryBean> getEquipmentCategory(Context context){
+    public static ArrayList<CategoryBean> getEquipmentCategory(Context context){
         if(Constant.systemInfoBean != null && Constant.systemInfoBean.getEquipment() != null){ //内存有直接从内存读取返回
             return Constant.systemInfoBean.getEquipment();
         }else{          // 从本地读取

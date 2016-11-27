@@ -68,7 +68,7 @@ public class CourseFragment extends BaseFragment implements CourserFragmentView{
             public void onRefresh() {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-            //    present.pullToRefreshData(type);
+            //    present.pullToRefreshRecommendData(type);
             }
         });
     }
@@ -88,7 +88,7 @@ public class CourseFragment extends BaseFragment implements CourserFragmentView{
         public void onLoadNextPage(View view) {
             currPage ++;
             if (data != null && data.size() >= pageSize) {
-               // present.requestMoreData(recyclerView,type,pageSize,currPage);
+               // present.requestMoreRecommendData(recyclerView,type,pageSize,currPage);
             }
         }
 

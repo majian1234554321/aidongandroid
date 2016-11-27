@@ -7,10 +7,6 @@ import android.support.v7.widget.RecyclerView;
  * Created by song on 2016/8/13.
  */
 public interface CoursePresent {
-    /**
-     * 获取时间
-     */
-    void getDate();
 
     /**
      * 获取课程分类

@@ -59,13 +59,13 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
         initRecommendRecyclerView();
 
         present.getCategory();
-        present.commonLoadData(switcherLayout);
+        present.commonLoadEquipmentData(switcherLayout);
     }
 
     private void initTopLayout(){
         titleBar = (SimpleTitleBar)findViewById(R.id.title_bar);
         categoryView = (RecyclerView)findViewById(R.id.rv_category);
-        categoryAdapter = new CategoryAdapter(this);
+        categoryAdapter = new CategoryAdapter(this,GoodsFilterActivity.TYPE_EQUIPMENT);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
         categoryView.setLayoutManager(layoutManager);
         categoryView.setAdapter(categoryAdapter);
@@ -85,14 +85,14 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
             @Override
             public void onRefresh() {
                 currPage = 1;
-                present.pullToRefreshData();
+                present.pullToRefreshEquipmentData();
             }
         });
 
         switcherLayout.setOnRetryListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                present.commonLoadData(switcherLayout);
+                present.commonLoadEquipmentData(switcherLayout);
             }
         });
     }
@@ -116,13 +116,13 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
         public void onLoadNextPage(View view) {
             currPage ++;
             if (equipmentList != null && equipmentList.size() >= pageSize) {
-                present.requestMoreData(recommendView,pageSize,currPage);
+                present.requestMoreEquipmentData(recommendView,pageSize,currPage);
             }
         }
     };
 
     @Override
-    public void setCategory(List<CategoryBean> categoryBeanList) {
+    public void setCategory(ArrayList<CategoryBean> categoryBeanList) {
         categoryAdapter.setData(categoryBeanList);
     }
 

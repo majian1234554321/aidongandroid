@@ -176,7 +176,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
-                <data android:scheme="换成腾讯appid" />
+                <nurtureList android:scheme="换成腾讯appid" />
 
                 <action android:name="android.intent.action.VIEW" />
 
@@ -196,7 +196,7 @@
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" />
-        <meta-data
+        <meta-nurtureList
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="oOUovyobUoONSmPB8qGjG4Lq" />
 
