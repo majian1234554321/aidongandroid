@@ -5,14 +5,18 @@ import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.entity.model.result.LoginResult;
 
+import java.util.List;
 import java.util.Map;
 
+import okhttp3.MultipartBody;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import rx.Observable;
 
@@ -42,5 +46,10 @@ public interface IdentifyService {
     @FormUrlEncoded
     @PUT("mine/profile")
     Observable<BaseBean<LoginResult>> completeUserInfo(@FieldMap Map<String ,String> param, @Header("token") String token);
+
+    @Multipart
+    @PUT("mine/profile")
+    Observable<BaseBean<LoginResult>> completeUserFileUpdate( @Header("token") String token,
+                                                        @Part List<MultipartBody.Part> parts);
 
 }

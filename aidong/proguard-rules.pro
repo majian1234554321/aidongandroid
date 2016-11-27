@@ -41,3 +41,7 @@
 -keep class com.alipay.sdk.app.PayTask{ public *;}
 -keep class com.alipay.sdk.app.AuthTask{ public *;}
 #-----------------------------------------------------------------
+
+-keep class com.tencent.mm.sdk.** {
+   *;
+}

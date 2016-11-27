@@ -2,7 +2,6 @@ package com.leyuan.aidong.ui.activity.mine.login;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -22,12 +21,14 @@ import com.leyuan.aidong.ui.activity.mine.view.AddressPopupWindow;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CompleteUserPresenter;
 import com.leyuan.aidong.ui.mvp.view.CompleteUserViewInterface;
 import com.leyuan.aidong.utils.DateUtils;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.utils.common.Constant;
 import com.leyuan.aidong.widget.ActionSheetDialog;
 import com.leyuan.aidong.widget.CommonTitleLayout;
 import com.leyuan.commonlibrary.manager.UiManager;
 import com.leyuan.commonlibrary.util.CameraUtils;
+import com.leyuan.commonlibrary.util.DialogUtils;
 
 import java.io.File;
 import java.util.Calendar;
@@ -60,7 +61,6 @@ public class CompleteUserInfomationActivity extends BaseActivity implements View
     private String[] zodiacs =  {"白羊座","金牛座","双子座","巨蟹座","狮子座","处女座",
             "天秤座","天蝎座","射手座","摩羯座","水瓶座","双鱼座"};
     private File tempFile;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -350,13 +350,19 @@ public class CompleteUserInfomationActivity extends BaseActivity implements View
     }
 
     @Override
-    public void OnCompletUserInfoCallBack(boolean success) {
+    public void onCompletUserInfoCallBack(boolean success) {
+        DialogUtils.dismissDialog();
         if(success){
             ToastUtil.showConsecutiveShort("更新资料成功");
             finish();
         }else{
 
         }
+    }
+
+    @Override
+    public void onUploadStart() {
+        DialogUtils.showDialog(this,"正在更新资料",false);
     }
 
     @Override
@@ -379,8 +385,11 @@ public class CompleteUserInfomationActivity extends BaseActivity implements View
                 break;
             case Constant.REQUEST_CODE_CUT:
                 if(resultCode == RESULT_OK&& data != null){
-                    Bitmap photo = CameraUtils.sentPicToNext(data,Uri.fromFile(tempFile),this);
-                    imgAvatar.setImageBitmap(photo);
+                  String path =  CameraUtils.sentPicToNext(data,Uri.fromFile(tempFile),this);
+                    Logger.i("Complete","path --- " +path);
+                    imgAvatar.setImageURI(Uri.parse("file://"+path));
+                    presenter.completeUserAvatarUpdate(path);
+//                    imgAvatar.setImageBitmap(photo);
                 }
                 break;
             case Constant.REQUEST_CODE_PICTURE:
@@ -389,5 +398,11 @@ public class CompleteUserInfomationActivity extends BaseActivity implements View
                 }
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        DialogUtils.releaseDialog();
     }
 }
