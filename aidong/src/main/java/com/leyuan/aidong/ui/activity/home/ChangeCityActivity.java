@@ -6,10 +6,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.CityAdapter;
-import com.leyuan.aidong.entity.CityBean;
+import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
@@ -27,9 +27,11 @@ public class ChangeCityActivity extends BaseActivity{
     private RecyclerView recyclerView;
 
     private int currPage = 1;
-    private List<CityBean> data;
+    private List<String> data;
     private CityAdapter cityAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
+
+    //private HomePresent homePresent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,9 @@ public class ChangeCityActivity extends BaseActivity{
         initHeaderView();
         initSwipeRefreshLayout();
         initRecyclerView();
+        List<String> openCity = SystemInfoUtils.getOpenCity(this);
+        cityAdapter.setData(openCity);
+        wrapperAdapter.notifyDataSetChanged();
     }
 
     private void initHeaderView(){
@@ -57,13 +62,13 @@ public class ChangeCityActivity extends BaseActivity{
             }
         });
 
-        refreshLayout.post(new Runnable() {
+      /*  refreshLayout.post(new Runnable() {
             @Override
             public void run() {
                 refreshLayout.setRefreshing(true);
                 //present.pullToRefreshHomeData(recyclerView);
             }
-        });
+        });*/
     }
 
     private void initRecyclerView() {

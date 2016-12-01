@@ -69,7 +69,7 @@ public class RecommendVenuesAdapter extends RecyclerView.Adapter<RecommendVenues
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                VenuesDetailActivity.start(context);
+                VenuesDetailActivity.start(context,"1");
             }
         });
     }

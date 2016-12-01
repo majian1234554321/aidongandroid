@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.activity.home.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.ShopBean;
+import com.leyuan.aidong.ui.activity.home.DeliveryInfoActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +55,13 @@ public class ConfirmOrderShopAdapter extends RecyclerView.Adapter<ConfirmOrderSh
         final ConfirmOrderGoodsAdapter goodsAdapter = new ConfirmOrderGoodsAdapter(context);
         holder.rvShop.setAdapter(goodsAdapter);
         goodsAdapter.setData(bean.getItem());
+
+        holder.tvDeliveryType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, DeliveryInfoActivity.class));
+            }
+        });
     }
 
     class CartHolder extends RecyclerView.ViewHolder {

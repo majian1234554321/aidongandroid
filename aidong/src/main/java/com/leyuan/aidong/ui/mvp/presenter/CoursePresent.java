@@ -28,7 +28,7 @@ public interface CoursePresent {
      * @param category 课程类型
      * @param day 从当前开始向后天数
      */
-    void pullToRefreshData(int category, int day);
+    void pullToRefreshData(String category, String day);
 
 
     /**
@@ -39,7 +39,7 @@ public interface CoursePresent {
      * @param day 从当前开始向后天数
      * @param page 页码
      */
-    void requestMoreData(RecyclerView recyclerView, int pageSize, int category, int day, int page);
+    void requestMoreData(RecyclerView recyclerView, int pageSize, String category, String day, int page);
 
     /**
      * 获取课程详情

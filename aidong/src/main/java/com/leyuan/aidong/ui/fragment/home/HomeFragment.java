@@ -16,12 +16,12 @@ import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.entity.HomeBean;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.activity.home.CampaignActivity;
+import com.leyuan.aidong.ui.activity.home.ChangeCityActivity;
 import com.leyuan.aidong.ui.activity.home.CourseActivity;
 import com.leyuan.aidong.ui.activity.home.EquipmentActivity;
 import com.leyuan.aidong.ui.activity.home.FoodActivity;
-import com.leyuan.aidong.ui.activity.home.GoodsDetailActivity;
-import com.leyuan.aidong.ui.activity.home.LocationActivity;
 import com.leyuan.aidong.ui.activity.home.NurtureActivity;
+import com.leyuan.aidong.ui.activity.home.SearchActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.HomeRecycleViewAdapter;
 import com.leyuan.aidong.ui.activity.home.view.HomeBannerDialog;
 import com.leyuan.aidong.ui.mvp.presenter.HomePresent;
@@ -97,7 +97,12 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
                 ImageLoader.getInstance().displayImage(((BannerBean)model).getImage(),(ImageView)view);
             }
         });
-
+        banner.setOnItemClickListener(new BGABanner.OnItemClickListener() {
+            @Override
+            public void onBannerItemClick(BGABanner banner, View view, Object model, int position) {
+                toTargetActivity((BannerBean)model);
+            }
+        });
 
         headerView.findViewById(R.id.tv_food).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -220,10 +225,10 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.iv_search:
-                startActivity(new Intent(getContext(), GoodsDetailActivity.class));
+                startActivity(new Intent(getContext(), SearchActivity.class));
                 break;
             case R.id.tv_location:
-                startActivity(new Intent(getContext(), LocationActivity.class));
+                startActivity(new Intent(getContext(), ChangeCityActivity.class));
                 break;
             default:
                 break;

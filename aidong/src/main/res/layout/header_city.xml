@@ -7,7 +7,8 @@
         android:layout_height="45dp"
         android:text="定位城市"
         android:gravity="bottom"
-        android:background="@color/gray"/>
+        android:paddingLeft="@dimen/left_margin"
+        android:background="@color/line_color"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
@@ -17,7 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:text="上海"
-        android:gravity="bottom"
+        android:paddingLeft="@dimen/left_margin"
+        android:gravity="center_vertical"
         android:background="@color/white"/>
     <View
         android:layout_width="match_parent"
@@ -29,7 +31,8 @@
         android:layout_height="45dp"
         android:text="已开通城市"
         android:gravity="bottom"
-        android:background="@color/gray"/>
+        android:paddingLeft="@dimen/left_margin"
+        android:background="@color/line_color"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"

@@ -5,7 +5,7 @@ package com.leyuan.aidong.entity;
  * Created by song on 2016/8/2.
  */
 public class CourseBean {
-    private String course_id;
+    private String code;
     private String name;
     private String cover;
     private String price;
@@ -17,12 +17,12 @@ public class CourseBean {
     private String address;
     private String distance;
 
-    public String getCourse_id() {
-        return course_id;
+    public String getCode() {
+        return code;
     }
 
-    public void setCourse_id(String course_id) {
-        this.course_id = course_id;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getName() {
@@ -108,7 +108,7 @@ public class CourseBean {
     @Override
     public String toString() {
         return "CourseBean{" +
-                "course_id='" + course_id + '\'' +
+                "code='" + code + '\'' +
                 ", name='" + name + '\'' +
                 ", cover='" + cover + '\'' +
                 ", price='" + price + '\'' +

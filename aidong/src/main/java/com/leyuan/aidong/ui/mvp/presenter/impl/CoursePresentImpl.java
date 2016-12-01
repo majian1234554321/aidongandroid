@@ -72,7 +72,7 @@ public class CoursePresentImpl  implements CoursePresent{
     }
 
     @Override
-    public void pullToRefreshData(int category, int day) {
+    public void pullToRefreshData(String category, String day) {
         courseModel.getCourses(new RefreshSubscriber<CourseData>(context) {
             @Override
             public void onNext(CourseData courseData) {
@@ -84,7 +84,7 @@ public class CoursePresentImpl  implements CoursePresent{
     }
 
     @Override
-    public void requestMoreData(RecyclerView recyclerView, final int pageSize, int category, int day, int page) {
+    public void requestMoreData(RecyclerView recyclerView, final int pageSize, String category, String day, int page) {
         courseModel.getCourses(new RequestMoreSubscriber<CourseData>(context,recyclerView,page) {
             @Override
             public void onNext(CourseData courseData) {

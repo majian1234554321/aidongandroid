@@ -91,6 +91,7 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
 
     private void  initTopLayout(){
         ivBack = (ImageView) findViewById(R.id.iv_back);
+        ivBack.setOnClickListener(this);
         tvSearch = (TextView)findViewById(R.id.tv_search);
         filterView = (GoodsFilterView)findViewById(R.id.view_filter);
         filterView.setCategoryList(categoryBeanList);
@@ -176,12 +177,12 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
     }
 
     @Override
-    public void updateEquipmentRecyclerView(List<EquipmentBean> equipmentList) {
+    public void updateEquipmentRecyclerView(List<EquipmentBean> equipments) {
         if(refreshLayout.isRefreshing()){
             equipmentList.clear();
             refreshLayout.setRefreshing(false);
         }
-        equipmentList.addAll(equipmentList);
+        equipmentList.addAll(equipments);
         adapter.setEquipmentList(equipmentList);
         wrapperAdapter.notifyDataSetChanged();
     }

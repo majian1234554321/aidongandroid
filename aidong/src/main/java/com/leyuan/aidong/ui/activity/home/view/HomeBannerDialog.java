@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.BannerBean;
+import com.leyuan.aidong.ui.BaseActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
@@ -73,12 +74,14 @@ public class HomeBannerDialog extends Dialog implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.dv_cover:
+                ((BaseActivity)context).toTargetActivity(banner.get(0));
                 dismiss();
                 break;
             case R.id.tv_finish:
                 dismiss();
                 break;
             case R.id.tv_desc:
+                ((BaseActivity)context).toTargetActivity(banner.get(0));
                 dismiss();
                 break;
             default:

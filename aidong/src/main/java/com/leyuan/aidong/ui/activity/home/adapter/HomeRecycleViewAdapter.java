@@ -80,7 +80,8 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             ((BigAndLittleImageViewHolder) holder).cover.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    BrandActivity.start(context, bean.getType(),bean.getId(),bean.getTitle(),bean.getImage());
+                    BrandActivity.start(context, bean.getType(),bean.getId(),bean.getTitle(),
+                            bean.getImage(),bean.getIntroduce());
                 }
             });
             BigAndLittleImageAdapter adapter = new BigAndLittleImageAdapter(context,bean.getType());
@@ -91,7 +92,8 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             adapter.setSeeMoreListener(new BigAndLittleImageAdapter.SeeMoreListener() {
                 @Override
                 public void onSeeMore() {
-                    BrandActivity.start(context,bean.getType(),bean.getId(),bean.getTitle(),bean.getImage());
+                    BrandActivity.start(context,bean.getType(),bean.getId(),bean.getTitle(),
+                            bean.getImage(),bean.getIntroduce());
                 }
             });
         }

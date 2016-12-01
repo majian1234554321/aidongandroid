@@ -36,11 +36,13 @@
             android:layout_height="match_parent"
             android:text="快递"
             android:textColor="@color/c3"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:drawablePadding="5dp"
+            android:drawableRight="@drawable/icon_right_arrow"/>
 
     </LinearLayout>
 
-   <View
+    <View
        android:layout_width="match_parent"
        android:layout_height="1px"
        android:background="@color/line_color"

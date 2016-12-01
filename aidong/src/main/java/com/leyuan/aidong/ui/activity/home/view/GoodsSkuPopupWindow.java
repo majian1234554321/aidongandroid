@@ -50,17 +50,15 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     private int stock = Integer.MAX_VALUE;
     private GoodsDetailBean detailBean;
     private List<LocalGoodsSkuBean> localSkuBeanList;
-    private boolean isConfirmDeliveryWay = false;   //是否确认配送方式
     private List<String> allSelectedNodes = new ArrayList<>();
     private ConfirmSkuListener confirmSkuListener;
 
     private CartPresent present;
 
-    public GoodsSkuPopupWindow(Context context, GoodsDetailBean detailBean, boolean isConfirmDeliveryWay) {
+    public GoodsSkuPopupWindow(Context context, GoodsDetailBean detailBean) {
         super(context);
         this.context = context;
         this.detailBean = detailBean;
-        this.isConfirmDeliveryWay = isConfirmDeliveryWay;
         present = new CartPresentImpl(context,this);
         init();
     }
@@ -98,9 +96,6 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         tvSkuTip.setText(sb);
         tvCount.setText("1");
         tvGoodName.setText(detailBean.name);
-        tvConfirm.setVisibility(isConfirmDeliveryWay ? View.GONE :View.VISIBLE);
-        tvAdd.setVisibility(isConfirmDeliveryWay ? View.VISIBLE :View.GONE);
-        tvBuy.setVisibility(isConfirmDeliveryWay ? View.VISIBLE :View.GONE);
     }
 
     private void setListener() {

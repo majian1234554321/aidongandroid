@@ -13,14 +13,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.widget.customview.SwitcherLayout;
 
 /**
  * WebView
  * Created by song on 2016/10/18.v
  */
 public class WebViewActivity extends BaseActivity{
-    private SwitcherLayout switcherLayout;
     private WebView webView;
     private String title;
     private String url;
@@ -44,8 +42,6 @@ public class WebViewActivity extends BaseActivity{
         ImageView ivBack = (ImageView) findViewById(R.id.iv_back);
         TextView tvTitle = (TextView) findViewById(R.id.tv_title);
         webView = (WebView) findViewById(R.id.web_view);
-        switcherLayout = new SwitcherLayout(WebViewActivity.this,webView);
-        switcherLayout.setOnRetryListener(retryListener);
 
         ivBack.setOnClickListener(backListener);
         tvTitle.setText(title);
@@ -61,19 +57,19 @@ public class WebViewActivity extends BaseActivity{
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             super.onPageStarted(view, url, favicon);
-            switcherLayout.showLoadingLayout();
+            //switcherLayout.showLoadingLayout();
         }
 
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            switcherLayout.showContentLayout();
+          //  switcherLayout.showContentLayout();
         }
 
         @Override
         public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
             super.onReceivedError(view, errorCode, description, failingUrl);
-            switcherLayout.showExceptionLayout();
+           // switcherLayout.showExceptionLayout();
         }
     }
 
@@ -84,14 +80,7 @@ public class WebViewActivity extends BaseActivity{
         }
     };
 
-    private View.OnClickListener retryListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if(webView != null){
-                webView.loadUrl(url);
-            }
-        }
-    };
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

@@ -7,10 +7,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CourseBean;
 import com.leyuan.aidong.ui.BaseFragment;
+import com.leyuan.aidong.ui.activity.home.CourseActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.CourseAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
@@ -27,7 +29,7 @@ import java.util.List;
  * 课程列表
  * Created by song on 2016/11/1.
  */
-public class CourseFragment extends BaseFragment implements CourserFragmentView{
+public class CourseFragment extends BaseFragment implements CourserFragmentView, CourseActivity.FilterListener {
     private static final int HIDE_THRESHOLD = 80;
     private int scrolledDistance = 0;
     private boolean filterViewVisible = true;
@@ -39,24 +41,39 @@ public class CourseFragment extends BaseFragment implements CourserFragmentView{
     private int currPage = 1;
     private CourseAdapter courseAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
-    private CoursePresent present;
     private ArrayList<CourseBean> data = new ArrayList<>();
 
+    private String date;            //日期
+    private String category;        //分类
+    private String businessCircle;  //商圈
+
+    private CoursePresent present;
     private AnimationListener listener;
+
+    public static CourseFragment newInstance(String date) {
+        Bundle args = new Bundle();
+        args.putString("date",date);
+        CourseFragment fragment = new CourseFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_course,null);
+        return inflater.inflate(R.layout.fragment_course,container,false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if(getArguments()!=null){
+            date = getArguments().getString("date");
+        }
         present = new CoursePresentImpl(getContext(),this);
         initRefreshLayout(view);
         initRecyclerView(view);
-        courseAdapter.setData(null);
-        wrapperAdapter.notifyDataSetChanged();
+        ((CourseActivity)getActivity()).setFilterListener(this);
+        present.pullToRefreshData(category,date);
     }
 
     private void initRefreshLayout(View view) {
@@ -96,7 +113,7 @@ public class CourseFragment extends BaseFragment implements CourserFragmentView{
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
 
-            if (scrolledDistance > HIDE_THRESHOLD  && filterViewVisible) {        //手指向上滑动
+            if (scrolledDistance > HIDE_THRESHOLD  && filterViewVisible) {           //手指向上滑动
                 if(listener != null){
                     listener.animatedHide();
                 }
@@ -118,7 +135,13 @@ public class CourseFragment extends BaseFragment implements CourserFragmentView{
 
     @Override
     public void updateRecyclerView(List<CourseBean> courseList) {
-
+        if(refreshLayout.isRefreshing()){
+            data.clear();
+            refreshLayout.setRefreshing(false);
+        }
+        data.addAll(courseList);
+        courseAdapter.setData(data);
+        wrapperAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -129,6 +152,22 @@ public class CourseFragment extends BaseFragment implements CourserFragmentView{
     public void scrollToTop(){
         recyclerView.scrollToPosition(0);
     }
+
+
+    @Override
+    public void onSelectedCategory(String category) {
+        this.category = category;
+        Toast.makeText(getContext(),category,Toast.LENGTH_LONG).show();
+        present.pullToRefreshData(category,date);
+    }
+
+    @Override
+    public void onSelectedCircle(String businessCircle) {
+        this.businessCircle = businessCircle;
+        Toast.makeText(getContext(),businessCircle,Toast.LENGTH_LONG).show();
+        present.pullToRefreshData(category,date);
+    }
+
 
     public void setAnimationListener(AnimationListener listener) {
         this.listener = listener;

@@ -6,10 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.activity.home.OldCourseDetailActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CourseBean;
+import com.leyuan.aidong.ui.activity.home.CourseDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,17 +29,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
     public void setData(List<CourseBean> data) {
         if(data != null) {
             this.data = data;
-        }else{
-            for (int i = 0; i < 10; i++) {
-                CourseBean b = new CourseBean();
-                b.setCover("http://ww4.sinaimg.cn/mw690/006uFQHggw1f982lew699j30qo0zk121.jpg");
-                b.setName("这是课程");
-                b.setDistance("10000m");
-                b.setApplied_count("100");
-                b.setAddress("大日本");
-                b.setPrice("10000000");
-                this.data.add(b);
-            }
         }
     }
 
@@ -56,7 +45,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
 
     @Override
     public void onBindViewHolder(CourseViewHolder holder, int position) {
-        CourseBean bean = data.get(position);
+        final CourseBean bean = data.get(position);
         holder.cover.setImageURI(bean.getCover());
         holder.price.setText(String.format(context.getString(R.string.rmb_price),bean.getPrice()));
         holder.name.setText(bean.getName());
@@ -68,7 +57,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OldCourseDetailActivity.start(context,"1");
+                CourseDetailActivity.start(context,bean.getCode());
             }
         });
     }

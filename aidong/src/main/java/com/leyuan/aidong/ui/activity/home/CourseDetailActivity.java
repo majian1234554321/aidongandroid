@@ -46,13 +46,13 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     private TextView tvPrice;
     private TextView tvState;
 
-    private String id;
+    private String code;
     private int pageSize;
     private CoursePresent coursePresent;
 
-    public static void start(Context context,String id) {
+    public static void start(Context context,String code) {
         Intent starter = new Intent(context, CourseDetailActivity.class);
-        starter.putExtra("id",id);
+        starter.putExtra("code",code);
         context.startActivity(starter);
     }
 
@@ -63,12 +63,12 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         pageSize = 20;
         coursePresent = new CoursePresentImpl(this,this);
         if(getIntent() != null){
-            id = getIntent().getStringExtra("id");
+            code = getIntent().getStringExtra("code");
         }
 
         initView();
         setListener();
-        coursePresent.getCourseDetail(id);
+        coursePresent.getCourseDetail(code);
     }
 
     private void initView(){

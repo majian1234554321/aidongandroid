@@ -40,7 +40,7 @@ public class SwitcherLayout {
     private final String TAG_EXCEPTION   =  "EXCEPTION";
 
     private final String[] mSupportedAbsListViews = new String[]{"listview","gridview","expandablelistview"};
-    private final String[] mSupportedViewGroups = new String[]{"linearlayout","relativelayout", "framelayout", "scrollview", "recyclerview", "viewgroup","webview"};
+    private final String[] mSupportedViewGroups = new String[]{"linearlayout","relativelayout", "framelayout", "scrollview", "recyclerview", "viewgroup"};
 
     public SwitcherLayout(Context context, View targetView){
         this.mContext 		= context;

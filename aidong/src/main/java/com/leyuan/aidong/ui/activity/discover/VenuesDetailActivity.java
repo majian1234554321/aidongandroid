@@ -31,9 +31,10 @@ public class VenuesDetailActivity extends BaseActivity{
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
-    public static void start(Context context) {
+    private String id;
+    public static void start(Context context,String id) {
         Intent starter = new Intent(context, VenuesDetailActivity.class);
-        //starter.putExtra();
+        starter.putExtra("id",id);
         context.startActivity(starter);
     }
 
@@ -41,6 +42,9 @@ public class VenuesDetailActivity extends BaseActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_venues_detail);
+        if(getIntent() != null){
+            id = getIntent().getStringExtra("id");
+        }
 
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);

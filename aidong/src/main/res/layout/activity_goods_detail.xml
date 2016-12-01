@@ -19,123 +19,14 @@
             app:default_panel="front"
             app:duration="300"
             app:percent="0.4">
-
-            <!--商品详情默认布局UI-->
-            <android.support.design.widget.CoordinatorLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <android.support.design.widget.AppBarLayout
-                    android:id="@+id/app_bar_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-                    <android.support.design.widget.CollapsingToolbarLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:expandedTitleMarginEnd="64dp"
-                        app:expandedTitleMarginStart="48dp"
-                        app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
-
-                        <cn.bingoogolapple.bgabanner.BGABanner
-                            android:id="@+id/banner_layout"
-                            android:layout_width="match_parent"
-                            android:layout_height="300dp"
-                            app:banner_pageChangeDuration="1000"
-                            app:banner_pointAutoPlayAble="false"
-                            app:banner_pointContainerBackground="@android:color/transparent"
-                            app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
-                            app:banner_pointTopBottomMargin="5dp"
-                            app:banner_transitionEffect="alpha"
-                            app:layout_collapseMode="parallax"
-                            android:background="@drawable/place_holder_logo"/>
-
-                        <android.support.v7.widget.Toolbar
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/height_top_bar"
-                            app:layout_collapseMode="pin" />
-
-                    </android.support.design.widget.CollapsingToolbarLayout>
-                </android.support.design.widget.AppBarLayout>
-
-                <android.support.v4.widget.NestedScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clipToPadding="false"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-                   <include layout="@layout/inc_goods_detail_content" />
-
-                </android.support.v4.widget.NestedScrollView>
-            </android.support.design.widget.CoordinatorLayout>
-
-            <!--商品详情下拉布局UI-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white"
-                android:orientation="vertical">
-
-                <RadioGroup
-                    android:id="@+id/rg_detail"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="@dimen/height_top_bar"
-                    android:background="@color/white"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/rb_desc"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:button="@null"
-                        android:gravity="center"
-                        android:text="商品详情"
-                        android:textColor="@color/black"
-                        android:textSize="15sp"
-                        android:background="@drawable/selector_goods_detail"/>
-
-                    <RadioButton
-                        android:id="@+id/rb_question"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:button="@null"
-                        android:gravity="center"
-                        android:text="常见问题"
-                        android:textColor="@color/black"
-                        android:textSize="15sp"
-                        android:background="@drawable/selector_goods_detail"/>
-
-                    <RadioButton
-                        android:id="@+id/rb_service"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:button="@null"
-                        android:gravity="center"
-                        android:text="售后服务"
-                        android:textColor="@color/black"
-                        android:textSize="15sp"
-                        android:background="@drawable/selector_goods_detail"/>
-
-                </RadioGroup>
-
-                <WebView
-                    android:id="@+id/web_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
-
+            <include layout="@layout/inc_goods_detail_front" />
+            <include layout="@layout/inc_goods_detail_behind" />
         </com.leyuan.aidong.widget.customview.SlideDetailsLayout>
 
         <RelativeLayout
             android:id="@+id/rl_title"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/height_top_bar"
-            android:background="@color/black">
+            android:layout_height="@dimen/height_top_bar">
 
             <ImageView
                 android:id="@+id/iv_back"
@@ -145,17 +36,6 @@
                 android:background="?selectableItemBackground"
                 android:padding="5dp"
                 android:src="@drawable/icon_back" />
-
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="￥999"
-                android:textSize="20sp"
-                android:layout_centerInParent="true"
-                android:textColor="@color/main_red"
-                android:gravity="center_vertical"
-                android:visibility="invisible"/>
 
             <ImageView
                 android:id="@+id/iv_share"
@@ -168,18 +48,17 @@
                 android:src="@drawable/icon_share" />
 
         </RelativeLayout>
+
     </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:visibility="gone">
+        android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/tv_cart"
+            android:id="@+id/iv_cart"
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:background="@color/black"

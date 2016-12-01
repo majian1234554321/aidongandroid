@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:text="name"
+        android:paddingLeft="@dimen/left_margin"
         android:gravity="center_vertical"/>
     <View
         android:layout_width="match_parent"

@@ -98,7 +98,7 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //GoodsDetailActivity.start(context,"1");
+                //OldGoodsDetailActivity.start(context,"1");
             }
         });
 

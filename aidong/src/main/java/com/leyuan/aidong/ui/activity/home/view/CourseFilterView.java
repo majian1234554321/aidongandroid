@@ -137,7 +137,7 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
                 tvCategory.setText(categoryList.get(position).getName());
                 hidePopup();
                 if (onFilterClickListener != null) {
-                    onFilterClickListener.onCategoryItemClick(position);
+                    onFilterClickListener.onCategoryItemClick(categoryList.get(position).getName());
                 }
             }
         });
@@ -262,7 +262,7 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
     }
 
     public interface  OnFilterClickListener{
-        void onCategoryItemClick(int position);
+        void onCategoryItemClick(String category);
         void onBusinessCircleItemClick(String address);
     }
 

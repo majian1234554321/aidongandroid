@@ -59,7 +59,7 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
         initRecommendRecyclerView();
 
         present.getCategory();
-        present.commonLoadEquipmentData(switcherLayout);
+        present.commonLoadRecommendData(switcherLayout);
     }
 
     private void initTopLayout(){

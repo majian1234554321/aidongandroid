@@ -18,7 +18,7 @@ public interface CourseService {
     //Observable<BaseBean<CourseData>> getCourses(@Query("cat") int category, @Query("day") int day, @Query("page") int page);
 
     @GET("market/courses")
-    Observable<BaseBean<CourseData>> getCourses(@Query("day") int day, @Query("page") int page);
+    Observable<BaseBean<CourseData>> getCourses(@Query("day") String day, @Query("page") int page);
 
     @GET("market/courses/{id}")
     Observable<BaseBean<CourseDetailBean>> getCourseDetail(@Path("id") String id);

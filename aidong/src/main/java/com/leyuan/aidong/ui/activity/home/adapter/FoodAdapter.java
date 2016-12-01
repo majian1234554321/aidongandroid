@@ -14,7 +14,7 @@ import com.leyuan.aidong.ui.activity.home.GoodsDetailActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.leyuan.aidong.ui.activity.home.GoodsDetailActivity.TYPE_FOODS;
+import static com.leyuan.aidong.ui.activity.home.OldGoodsDetailActivity.TYPE_FOODS;
 
 /**
  * 健康列表适配器

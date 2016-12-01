@@ -17,7 +17,7 @@ public class SystemBean implements Serializable{
     private ArrayList<CategoryBean> equipment;//装备分类
     private ArrayList<BusinessCircleBean> landmark;
 
-    public List<String> getOpen_city() {
+    public List<String>  getOpen_city() {
         return open_city;
     }
 
@@ -73,16 +73,5 @@ public class SystemBean implements Serializable{
         this.landmark = landmark;
     }
 
-    @Override
-    public String toString() {
-        return "SystemBean{" +
-                "open_city=" + open_city +
-                ", banner=" + banner +
-                ", course=" + course +
-                ", campaign=" + campaign +
-                ", nutrition=" + nutrition +
-                ", equipment=" + equipment +
-                ", landmark=" + landmark +
-                '}';
-    }
+
 }

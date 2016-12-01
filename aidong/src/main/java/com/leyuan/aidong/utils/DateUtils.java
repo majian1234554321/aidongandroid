@@ -225,7 +225,7 @@ public class DateUtils {
         for (int i = 0; i < 7; i++) {
             calendar.add(calendar.DATE,i== 0 ? 0:+1);//把日期往前减少一天，若想把日期向后推一天则将负数改为正数
             date=calendar.getTime();
-            SimpleDateFormat formatter = new SimpleDateFormat("MM月dd日");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             String dateString = formatter.format(date);
             dates.add(dateString);
         }
