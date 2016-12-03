@@ -2,8 +2,10 @@ package com.leyuan.aidong.ui.activity.home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -11,13 +13,17 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.entity.CourseDetailBean;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CourseDetailActivityView;
+import com.leyuan.aidong.widget.customview.SwitcherLayout;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 
@@ -26,9 +32,20 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  * Created by song on 2016/11/15.
  */
 public class CourseDetailActivity extends BaseActivity implements View.OnClickListener,CourseDetailActivityView {
+    private static final String STATUS__APPOINT = "1";      //马上预约
+    private static final String STATUS_END = "2";           //预约已结束
+    private static final String STATUS_APPOINTED = "3";     //已预约
+    private static final String STATUS_FULL = "4";          //预约人数已满
+    private static final String STATUS_NOT_START = "5";     //即将开始预约
+    private static final String STATUS_NOT_PAY = "6";       //待支付
+    private static final String STATUS_NOT_NEED= "7";       //无需预约
+    private String status = STATUS__APPOINT;
+
     private ImageView ivBack;
     private TextView tvTitle;
     private ImageView ivShare;
+    private SwitcherLayout switcherLayout;
+    private LinearLayout contentLayout;
     private TextView tvStartTime;
     private BGABanner banner;
     private TextView tvHot;
@@ -42,17 +59,16 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     private TextView tvCount;
     private RecyclerView rvApplicant;
     private TextView tvDesc;
-    private LinearLayout applyLayout;
+    private LinearLayout bottomLayout;
     private TextView tvPrice;
     private TextView tvState;
 
-    private String id;
-    private int pageSize;
+    private String code;
     private CoursePresent coursePresent;
 
-    public static void start(Context context,String id) {
+    public static void start(Context context,String code) {
         Intent starter = new Intent(context, CourseDetailActivity.class);
-        starter.putExtra("id",id);
+        starter.putExtra("code",code);
         context.startActivity(starter);
     }
 
@@ -63,18 +79,20 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         pageSize = 20;
         coursePresent = new CoursePresentImpl(this,this);
         if(getIntent() != null){
-            id = getIntent().getStringExtra("id");
+            code = getIntent().getStringExtra("code");
         }
 
         initView();
         setListener();
-        coursePresent.getCourseDetail(id);
+        coursePresent.getCourseDetail(switcherLayout,code);
     }
 
     private void initView(){
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tvTitle = (TextView) findViewById(R.id.tv_title);
         ivShare = (ImageView) findViewById(R.id.iv_share);
+        contentLayout = (LinearLayout) findViewById(R.id.ll_content);
+        switcherLayout = new SwitcherLayout(this,contentLayout);
         tvStartTime = (TextView) findViewById(R.id.tv_start_time);
         banner = (BGABanner) findViewById(R.id.banner);
         tvHot = (TextView) findViewById(R.id.tv_hot);
@@ -88,13 +106,13 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         tvCount = (TextView) findViewById(R.id.tv_count);
         rvApplicant = (RecyclerView) findViewById(R.id.rv_applicant);
         tvDesc = (TextView) findViewById(R.id.tv_desc);
-        applyLayout = (LinearLayout) findViewById(R.id.ll_apply);
+        bottomLayout = (LinearLayout) findViewById(R.id.ll_apply);
         tvPrice = (TextView) findViewById(R.id.tv_price);
         tvState = (TextView) findViewById(R.id.tv_state);
         banner.setAdapter(new BGABanner.Adapter() {
             @Override
             public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
-                ImageLoader.getInstance().displayImage(((BannerBean)model).getImage(),(ImageView)view);
+                ImageLoader.getInstance().displayImage((String) model,(ImageView)view);
             }
         });
     }
@@ -104,8 +122,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         ivShare.setOnClickListener(this);
         dvAvatar.setOnClickListener(this);
         ivFollow.setOnClickListener(this);
-        applyLayout.setOnClickListener(this);
-
+        bottomLayout.setOnClickListener(this);
     }
 
     @Override
@@ -121,23 +138,94 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             case R.id.iv_follow:
                 break;
             case R.id.ll_apply:
+                bottomToTargetActivity();
                 break;
             default:
                 break;
-
         }
     }
 
     @Override
     public void setCourseDetail(CourseDetailBean bean) {
+        ivShare.setVisibility(View.VISIBLE);
+        status = bean.getStatues();
         tvTitle.setText(bean.getName());
+        List<String> cover = new ArrayList<>();
+        cover.add(bean.getCover());
+        banner.setData(cover,null);
         dvAvatar.setImageURI(bean.getCover());
         tvCoachName.setText(bean.getName());
-
+        tvTime.setText(bean.getClass_date());
+        tvAddress.setText(bean.getGym().getAddress());
+        tvVenues.setText(bean.getGym().getName());
+        tvRoom.setText(bean.getClassroom());
+        tvCount.setText(String.format(getString(R.string.course_applicant_count),
+                bean.getApplied_count(),bean.getStock()));
+        tvDesc.setText(Html.fromHtml(bean.getIntroduce()));
+        tvPrice.setText(String.format(getString(R.string.rmb_price),bean.getPrice()));
+        tvStartTime.setText(String.format(getString(R.string.appoint_time),bean.getClass_time()));
+        setBottomStatus();
     }
 
-    @Override
-    public void showErrorView() {
+    private void setBottomStatus(){
+        bottomLayout.setVisibility(View.VISIBLE);
+        switch (status){
+            case STATUS__APPOINT:   //跳预约
+                tvStartTime.setVisibility(View.GONE);
+                tvPrice.setVisibility(View.VISIBLE);
+                tvState.setText(R.string.status_appoint);
+                bottomLayout.setBackgroundColor(Color.parseColor("#000000"));
+                break;
+            case STATUS_END:
+                tvStartTime.setVisibility(View.GONE);
+                tvPrice.setVisibility(View.GONE);
+                tvState.setText(R.string.status_end);
+                bottomLayout.setBackgroundColor(Color.parseColor("#666667"));
+                break;
+            case STATUS_APPOINTED:
+                tvStartTime.setVisibility(View.GONE);
+                tvPrice.setVisibility(View.GONE);
+                tvState.setText(R.string.status_appointed);
+                bottomLayout.setBackgroundColor(Color.parseColor("#666667"));
+                break;
+            case STATUS_FULL:
+                tvStartTime.setVisibility(View.GONE);
+                tvPrice.setVisibility(View.GONE);
+                tvState.setText(R.string.status_full);
+                bottomLayout.setBackgroundColor(Color.parseColor("#666667"));
+                break;
+            case STATUS_NOT_START:
+                tvStartTime.setVisibility(View.VISIBLE);
+                tvPrice.setVisibility(View.GONE);
+                tvState.setText(R.string.status_not_start);
+                bottomLayout.setBackgroundColor(Color.parseColor("#666667"));
+                break;
+            case STATUS_NOT_PAY:    //跳支付
+                tvStartTime.setVisibility(View.GONE);
+                tvPrice.setVisibility(View.VISIBLE);
+                tvState.setText(R.string.status_not_pay);
+                bottomLayout.setBackgroundColor(Color.parseColor("#000000"));
+                break;
+            case STATUS_NOT_NEED:
+                tvStartTime.setVisibility(View.GONE);
+                tvPrice.setVisibility(View.GONE);
+                tvState.setText(R.string.status_not_need);
+                bottomLayout.setBackgroundColor(Color.parseColor("#666667"));
+                break;
+            default:
+                break;
+        }
+    }
 
+    private void bottomToTargetActivity(){
+        if(STATUS__APPOINT.equals(status)){     //预约
+            if(App.mInstance.isLogin()){
+                //todo 判断同一时间是否已有预约
+            }else {
+                //todo  登录 登录完成之后重新刷接口
+            }
+        }else if(STATUS_NOT_PAY.equals(status)){
+
+        }
     }
 }

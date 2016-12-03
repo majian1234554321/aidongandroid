@@ -173,7 +173,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 UiManager.activityJump(getActivity(), TabMinePersonalSettingsActivity.class);
                 break;
             case R.id.item_address:
-                UiManager.activityJump(getActivity(), AddressActivity.class);
+                AddressActivity.start(getActivity());
+               // UiManager.activityJump(getActivity(), AddressActivity.class);
                 break;
             case R.id.item_recommend_friend:
                 UiManager.activityJump(getActivity(), TabMinePersonalSettingsActivity.class);

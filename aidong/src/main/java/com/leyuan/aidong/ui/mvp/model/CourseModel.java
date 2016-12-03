@@ -2,7 +2,7 @@ package com.leyuan.aidong.ui.mvp.model;
 
 import com.leyuan.aidong.entity.BusinessCircleBean;
 import com.leyuan.aidong.entity.CategoryBean;
-import com.leyuan.aidong.entity.CourseDetailBean;
+import com.leyuan.aidong.entity.CourseDetailData;
 import com.leyuan.aidong.entity.data.CourseData;
 
 import java.util.List;
@@ -14,11 +14,6 @@ import rx.Subscriber;
  * Created by song on 2016/8/13.
  */
 public interface CourseModel {
-    /**
-     * 获取时间
-     * @return 时间列表
-     */
-    List<String> getDate();
 
     /**
      * 获取课程分类信息
@@ -39,12 +34,12 @@ public interface CourseModel {
      * @param day 从当前开始向后天数
      * @param page 页码
      */
-    void getCourses(Subscriber<CourseData> subscriber, int cat, int day, int page);
+    void getCourses(Subscriber<CourseData> subscriber, String cat, String day, int page);
 
     /**
      * 获取课程详情
      * @param subscriber Subscriber
      * @param id 课程id
      */
-    void getCourseDetail(Subscriber<CourseDetailBean> subscriber, String id);
+    void getCourseDetail(Subscriber<CourseDetailData> subscriber, String id);
 }

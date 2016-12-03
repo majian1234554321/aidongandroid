@@ -126,7 +126,7 @@
         <activity android:name=".ui.activity.home.GoodsFilterActivity" />
         <activity android:name=".ui.activity.home.NurtureActivity" />
         <activity android:name=".ui.activity.home.CampaignDetailActivity" />
-        <activity android:name=".ui.activity.home.GoodsDetailActivity" />
+        <activity android:name=".ui.activity.home.OldGoodsDetailActivity" />
         <activity android:name=".ui.activity.home.EquipmentActivity" />
         <activity android:name=".ui.activity.home.LocationActivity"/>
         <activity android:name=".ui.activity.home.BrandActivity"/>
@@ -151,6 +151,8 @@
         <activity android:name=".ui.activity.discover.SportNewsActivity"/>
         <activity android:name=".ui.activity.discover.NewsDetailActivity"/>
         <activity android:name=".ui.activity.video.VideoCommentActivity"/>
+        <activity android:name=".ui.activity.home.ChangeCityActivity"/>
+        <activity android:name=".ui.activity.home.GoodsDetailActivity"/>
         <activity android:name=".ui.activity.mine.ApplyServiceActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
@@ -176,7 +178,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
-                <data android:scheme="换成腾讯appid" />
+                <nurtureList android:scheme="换成腾讯appid" />
 
                 <action android:name="android.intent.action.VIEW" />
 
@@ -196,7 +198,7 @@
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" />
-        <meta-data
+        <meta-nurtureList
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="oOUovyobUoONSmPB8qGjG4Lq" />
 

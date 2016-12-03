@@ -27,6 +27,8 @@ public class CampaignDetailBean implements Parcelable {
     private String enroll_end_time;         //报名截至时间
     private ArrayList<Applicant> applicant; //报名的人
 
+    private String status = "";
+
     public String getCampaign_id() {
         return campaign_id;
     }
@@ -137,6 +139,14 @@ public class CampaignDetailBean implements Parcelable {
 
     public void setEnroll_end_time(String enroll_end_time) {
         this.enroll_end_time = enroll_end_time;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public ArrayList<Applicant> getApplicant() {

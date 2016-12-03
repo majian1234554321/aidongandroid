@@ -49,7 +49,7 @@ public class OrderGoodAdapter extends RecyclerView.Adapter<OrderGoodAdapter.Good
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // GoodsDetailActivity.start(context,bean.getSku_code());
+               // OldGoodsDetailActivity.start(context,bean.getSku_code());
             }
         });
     }

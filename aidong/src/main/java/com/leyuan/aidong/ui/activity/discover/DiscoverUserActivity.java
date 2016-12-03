@@ -59,7 +59,7 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
         tvFilter = (TextView) findViewById(R.id.tv_filter);
         initSwipeRefreshLayout();
         initRecyclerView();
-        //userPresent.commonLoadData(switcherLayout,0.00,0.00,"","");
+        //userPresent.commonLoadRecommendData(switcherLayout,0.00,0.00,"","");
 
         ivBack.setOnClickListener(this);
         tvFilter.setOnClickListener(this);

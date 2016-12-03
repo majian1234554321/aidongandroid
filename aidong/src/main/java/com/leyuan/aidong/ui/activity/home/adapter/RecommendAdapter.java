@@ -50,7 +50,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Good
         final GoodsBean bean = data.get(position);
         holder.dvGoods.setImageURI(bean.getCover());
         holder.tvName.setText(bean.getName());
-        holder.tvPrice.setText(bean.getPrice());
+        holder.tvPrice.setText(String.format(context.getString(R.string.rmb_price),bean.getPrice()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

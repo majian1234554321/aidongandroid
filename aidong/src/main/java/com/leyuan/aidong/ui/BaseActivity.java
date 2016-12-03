@@ -1,17 +1,20 @@
 package com.leyuan.aidong.ui;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.http.Logic;
+import com.leyuan.aidong.ui.activity.discover.VenuesDetailActivity;
 import com.leyuan.aidong.ui.activity.home.CampaignDetailActivity;
 import com.leyuan.aidong.ui.activity.home.CourseDetailActivity;
 import com.leyuan.aidong.ui.activity.home.GoodsDetailActivity;
@@ -44,7 +47,7 @@ public class BaseActivity extends AppCompatActivity implements IHttpToastCallBac
             mActivities.add(this);
         }
         logic = new Logic();
-        Log.w("className",getClass().getSimpleName());
+        Logger.w("className",getClass().getSimpleName());
     }
 
 
@@ -190,10 +193,8 @@ public class BaseActivity extends AppCompatActivity implements IHttpToastCallBac
         refreshLayout.setColorSchemeResources(R.color.black, R.color.red,R.color.orange, R.color.gray);
     }
 
-
-
     /**
-     * 跳转目标详情页
+     * 列表页跳转目标详情页
      * @param type course-课程 campaign-活动 event-赛事 food-健康餐饮 nutrition-营养品 equipment-装备
      * @param id id
      */
@@ -209,18 +210,50 @@ public class BaseActivity extends AppCompatActivity implements IHttpToastCallBac
                 Logger.e("TAG","developing");
                 break;
             case "food":
-                GoodsDetailActivity.start(this,id,GoodsDetailActivity.TYPE_FOODS);
+                GoodsDetailActivity.start(this,id, GoodsDetailActivity.TYPE_FOODS);
                 break;
             case "nutrition":
-                GoodsDetailActivity.start(this,id,GoodsDetailActivity.TYPE_NURTURE);
+                GoodsDetailActivity.start(this,id, GoodsDetailActivity.TYPE_NURTURE);
                 break;
             case "equipment":
-                GoodsDetailActivity.start(this,id,GoodsDetailActivity.TYPE_EQUIPMENT);
+                GoodsDetailActivity.start(this,id, GoodsDetailActivity.TYPE_EQUIPMENT);
                 break;
             default:
                 Logger.e("TAG","can not support this type,please check it");
                 break;
         }
 
+    }
+
+    /**
+     * 广告跳转目标页
+     * @param bannerBean BannerBean
+     * 广告类型,#10-内嵌网页 11-外部网页 20-场馆详情页 21-营养品详情页 22-课程详情页 23-活动详情页
+     */
+    public void toTargetActivity(BannerBean bannerBean){
+        switch (bannerBean.getType()){
+            case "10":
+                WebViewActivity.start(this,bannerBean.getTitle(),bannerBean.getLink());
+                break;
+            case "11":
+                Uri uri = Uri.parse(bannerBean.getLink());
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+                break;
+            case "20":
+                VenuesDetailActivity.start(this,bannerBean.getLink());
+                break;
+            case "21":
+                GoodsDetailActivity.start(this,bannerBean.getLink(), GoodsDetailActivity.TYPE_NURTURE);
+                break;
+            case "22":
+                CourseDetailActivity.start(this,bannerBean.getLink());
+                break;
+            case "23":
+                CampaignDetailActivity.start(this,bannerBean.getLink());
+                break;
+            default:
+                break;
+        }
     }
 }

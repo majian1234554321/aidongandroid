@@ -3,6 +3,7 @@ package com.leyuan.aidong.ui.activity.home;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -30,6 +31,7 @@ import java.util.List;
  */
 public class ConfirmOrderActivity extends BaseActivity implements View.OnClickListener {
     private SimpleTitleBar titleBar;
+    private NestedScrollView scrollView;
 
     //收货地址
     private RelativeLayout addressLayout;
@@ -78,9 +80,11 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
         initView();
         setListener();
+
     }
 
     private void initView() {
+        scrollView= (NestedScrollView) findViewById(R.id.nested_scrollView);
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
         addressLayout = (RelativeLayout) findViewById(R.id.rl_address);
         tvName = (TextView) findViewById(R.id.tv_name);
@@ -121,7 +125,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 finish();
                 break;
             case R.id.rl_address:
-                startActivity(new Intent(this, AddressActivity.class));
+                AddressActivity.start(this);
                 break;
             case R.id.ll_coupon:
                 startActivity(new Intent(this, CouponActivity.class));

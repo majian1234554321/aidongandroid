@@ -11,6 +11,7 @@ import com.leyuan.aidong.http.api.EquipmentService;
 import com.leyuan.aidong.ui.mvp.model.EquipmentModel;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import rx.Subscriber;
@@ -33,7 +34,7 @@ public class EquipmentModelImpl implements EquipmentModel {
     }
 
     @Override
-    public List<CategoryBean> getCategory() {
+    public ArrayList<CategoryBean> getCategory() {
         return SystemInfoUtils.getEquipmentCategory(context);
     }
 

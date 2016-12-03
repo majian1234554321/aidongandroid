@@ -430,7 +430,7 @@
     <string name="change_the_cover">更改封面</string>
     <string name="mx_hao">美型号:</string>
     <string name="nologin">未登录</string>
-    <string name="data">编辑个人资料</string>
+    <string name="nurtureList">编辑个人资料</string>
     <string name="mx_wallet">美型钱包</string>
     <string name="mx_membership_card">美型会员卡</string>
     <string name="setup">设置</string>
@@ -942,7 +942,7 @@
     <string name="TrackType_audio">Audio</string>
     <string name="TrackType_subtitle">Subtitle</string>
     <string name="TrackType_timedtext">Timed text</string>
-    <string name="TrackType_metadata">Meta data</string>
+    <string name="TrackType_metadata">Meta nurtureList</string>
     <string name="TrackType_unknown">Unknown</string>
 
     <string name="VideoView_error_text_invalid_progressive_playback">Invalid progressive playback</string>

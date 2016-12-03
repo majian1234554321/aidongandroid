@@ -12,6 +12,7 @@ public class HomeBean {
     private String style;                   //展示样式 list-显示小分类封面图及下边10件商品 cover-只显示小分类封面图
     private String image;                   //封面图
     private String type;                    //类型 course-课程 campaign-活动 event-赛事 food-健康餐饮 nutrition-营养品 equipment-装备
+    private String introduce;               //介绍
     private List<HomeItemBean> item;
 
     public String getId() {
@@ -62,6 +63,14 @@ public class HomeBean {
         this.item = item;
     }
 
+    public String getIntroduce() {
+        return introduce;
+    }
+
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce;
+    }
+
     @Override
     public String toString() {
         return "HomeBean{" +
@@ -70,6 +79,7 @@ public class HomeBean {
                 ", style='" + style + '\'' +
                 ", image='" + image + '\'' +
                 ", type='" + type + '\'' +
+                ", introduce='" + introduce + '\'' +
                 ", item=" + item +
                 '}';
     }

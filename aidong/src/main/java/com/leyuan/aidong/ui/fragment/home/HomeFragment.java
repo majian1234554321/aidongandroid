@@ -16,13 +16,14 @@ import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.entity.HomeBean;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.activity.home.CampaignActivity;
+import com.leyuan.aidong.ui.activity.home.ChangeCityActivity;
 import com.leyuan.aidong.ui.activity.home.CourseActivity;
 import com.leyuan.aidong.ui.activity.home.EquipmentActivity;
 import com.leyuan.aidong.ui.activity.home.FoodActivity;
-import com.leyuan.aidong.ui.activity.home.GoodsDetailActivity;
-import com.leyuan.aidong.ui.activity.home.LocationActivity;
 import com.leyuan.aidong.ui.activity.home.NurtureActivity;
+import com.leyuan.aidong.ui.activity.home.SearchActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.HomeRecycleViewAdapter;
+import com.leyuan.aidong.ui.activity.home.view.HomeBannerDialog;
 import com.leyuan.aidong.ui.mvp.presenter.HomePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.HomePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.HomeFragmentView;
@@ -80,6 +81,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
         initRecyclerView(view);
         setListener();
 
+        present.getPopupBanner();
         present.getBanners();
         present.commonLoadData(switcherLayout);
     }
@@ -95,7 +97,12 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
                 ImageLoader.getInstance().displayImage(((BannerBean)model).getImage(),(ImageView)view);
             }
         });
-
+        banner.setOnItemClickListener(new BGABanner.OnItemClickListener() {
+            @Override
+            public void onBannerItemClick(BGABanner banner, View view, Object model, int position) {
+                toTargetActivity((BannerBean)model);
+            }
+        });
 
         headerView.findViewById(R.id.tv_food).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,10 +195,18 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
     @Override
     public void updateBanner(List<BannerBean> bannerBeanList) {
         if(bannerBeanList != null && !bannerBeanList.isEmpty()){
-            banner.setData(bannerBeanList,null);
             banner.setVisibility(View.VISIBLE);
+            banner.setAutoPlayAble(bannerBeanList.size() > 1);
+            banner.setData(bannerBeanList,null);
         }else{
             banner.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void setPopupBanner(List<BannerBean> banner) {
+        if(banner != null && !banner.isEmpty()){
+           new HomeBannerDialog(getContext(),banner).show();
         }
     }
 
@@ -210,10 +225,10 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.iv_search:
-                startActivity(new Intent(getContext(), GoodsDetailActivity.class));
+                startActivity(new Intent(getContext(), SearchActivity.class));
                 break;
             case R.id.tv_location:
-                startActivity(new Intent(getContext(), LocationActivity.class));
+                startActivity(new Intent(getContext(), ChangeCityActivity.class));
                 break;
             default:
                 break;
@@ -225,4 +240,6 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
     public void showEndFooterView() {
         RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
     }
+
+
 }

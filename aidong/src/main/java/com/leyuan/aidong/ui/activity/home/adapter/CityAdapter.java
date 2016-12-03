@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.CityBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +15,11 @@ import java.util.List;
  * Created by song on 2016/8/23.
  */
 public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityHolder>{
-    private List<CityBean> data = new ArrayList<>();
+    private List<String> data = new ArrayList<>();
 
-    public void setData(List<CityBean> data) {
+    public void setData(List<String> data) {
         this.data = data;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -35,8 +35,8 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityHolder>{
 
     @Override
     public void onBindViewHolder(CityHolder holder, int position) {
-        CityBean bean = data.get(position);
-        //holder.name.setText(bean);
+        String str = data.get(position);
+        holder.name.setText(str);
     }
 
     class CityHolder extends RecyclerView.ViewHolder{

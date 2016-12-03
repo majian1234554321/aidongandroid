@@ -148,7 +148,7 @@ public class FoodActivity extends BaseActivity implements FoodActivityView, View
         if(foodAndVenuesBean.getFood() != null){
            foodList.addAll(foodAndVenuesBean.getFood());
         }
-        //venuesAdapter.setData(venuesList);
+        //venuesAdapter.setNurtureList(venuesList);
         venuesAdapter.setData(null);
         tvRecommend.setVisibility(View.VISIBLE);
         foodAdapter.setData(foodList);

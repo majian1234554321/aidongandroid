@@ -145,14 +145,14 @@
         <LinearLayout
             android:id="@+id/ll_content"
             android:layout_width="match_parent"
-            android:layout_height="225dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:visibility="gone">
 
             <ListView
                 android:id="@+id/list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@color/line_color"
                 android:divider="@null"
                 android:dividerHeight="0dp"

@@ -30,24 +30,6 @@ public interface CampaignDetailActivityView {
      */
     void applyCampaign();
 
-    /**
-     * 显示加载中布局
-     */
-    void showLoadingView();
 
-    /**
-     * 显示正常加载到的内容
-     */
-    void showContent();
-
-    /**
-     * 显示网络错误布局
-     */
-    void showNetErrorView();
-
-    /**
-     * 活动无内容,比如无此活动布局
-     */
-    void showNoContentView();
 
 }

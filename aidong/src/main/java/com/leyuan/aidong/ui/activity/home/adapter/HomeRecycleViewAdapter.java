@@ -71,7 +71,7 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         final HomeBean bean = data.get(position);
         if(holder instanceof CoverImageViewHolder){
-            CoverImageAdapter adapter = new CoverImageAdapter(context,bean.getType());
+            CoverImageAdapter adapter = new CoverImageAdapter(context);
             ((CoverImageViewHolder) holder).tvName.setText(bean.getTitle());
             ((CoverImageViewHolder) holder).listView.setAdapter(adapter);
             adapter.addList(bean.getItem());
@@ -80,10 +80,11 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             ((BigAndLittleImageViewHolder) holder).cover.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    BrandActivity.start(context, bean.getType(),bean.getId(),bean.getTitle(),bean.getImage());
+                    BrandActivity.start(context, bean.getType(),bean.getId(),bean.getTitle(),
+                            bean.getImage(),bean.getIntroduce());
                 }
             });
-            BigAndLittleImageAdapter adapter = new BigAndLittleImageAdapter(context,bean.getType());
+            BigAndLittleImageAdapter adapter = new BigAndLittleImageAdapter(context);
             ((BigAndLittleImageViewHolder) holder).recyclerView.setLayoutManager(
                     new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false));
             ((BigAndLittleImageViewHolder) holder).recyclerView.setAdapter(adapter);
@@ -91,7 +92,8 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             adapter.setSeeMoreListener(new BigAndLittleImageAdapter.SeeMoreListener() {
                 @Override
                 public void onSeeMore() {
-                    BrandActivity.start(context,bean.getType(),bean.getId(),bean.getTitle(),bean.getImage());
+                    BrandActivity.start(context,bean.getType(),bean.getId(),bean.getTitle(),
+                            bean.getImage(),bean.getIntroduce());
                 }
             });
         }

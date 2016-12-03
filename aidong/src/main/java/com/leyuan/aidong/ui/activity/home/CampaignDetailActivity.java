@@ -19,6 +19,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CampaignDetailBean;
 import com.leyuan.aidong.entity.PayOrderBean;
 import com.leyuan.aidong.entity.UserBean;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.ApplicantAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.CampaignPresent;
@@ -36,6 +37,14 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  * Created by song on 2016/8/24
  */
 public class CampaignDetailActivity extends BaseActivity implements CampaignDetailActivityView,View.OnClickListener{
+    private static final String STATUS_APPLY = "1";                //马上报名
+    private static final String STATUS_END = "2";                  //活动已结束
+    private static final String STATUS_APPLIED = "3";              //已报名
+    private static final String STATUS_NOT_START = "4";            //即将开始报名
+    private static final String STATUS_NOT_PAY = "5";              //待支付
+    private static final String STATUS_FULL = "6";                 //报名人数已满
+    private String status;
+
     private AppBarLayout appBarLayout;
     private BGABanner bannerLayout;
     private TextView tvHot;
@@ -53,7 +62,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
     private TextView tvCount;
     private RecyclerView applicantView;
     private TextView tvCampaignDesc;
-    private LinearLayout applyLayout;
+    private LinearLayout bottomLayout;
     private TextView tvPrice;
     private TextView tvState;
 
@@ -62,10 +71,6 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
     private CampaignPresent campaignPresent;
     private CampaignDetailBean bean;
 
-    /**
-     * 跳转活动界面
-     * @param id 活动id
-     */
     public static void start(Context context, String id){
         Intent intent = new Intent(context,CampaignDetailActivity.class);
         intent.putExtra("id",id);
@@ -83,7 +88,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
         }
         initView();
         setListener();
-        campaignPresent.getCampaignDetail(id);
+        campaignPresent.getCampaignDetail(switcherLayout,id);
     }
 
 
@@ -111,10 +116,10 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
         tvCount = (TextView) findViewById(R.id.tv_count);
         applicantView = (RecyclerView) findViewById(R.id.rv_applicant);
         tvCampaignDesc = (TextView) findViewById(R.id.tv_campaign_desc);
-        applyLayout = (LinearLayout) findViewById(R.id.ll_apply);
+        bottomLayout = (LinearLayout) findViewById(R.id.ll_apply);
         tvPrice = (TextView) findViewById(R.id.tv_price);
         tvState = (TextView) findViewById(R.id.tv_state);
-        applyLayout.setVisibility(View.GONE);
+        bottomLayout.setVisibility(View.GONE);
 
         toolbar.setTitle("");
         toolbar.setNavigationIcon(R.drawable.back);
@@ -137,7 +142,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
         appBarLayout.addOnOffsetChangedListener(new MyOnOffsetChangedListener());
         switcherLayout.setOnRetryListener(retryListener);
         toolbar.setNavigationOnClickListener(this);
-        applyLayout.setOnClickListener(this);
+        bottomLayout.setOnClickListener(this);
         tvCount.setOnClickListener(this);
         tvAddress.setOnClickListener(this);
     }
@@ -146,7 +151,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
     private View.OnClickListener retryListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            campaignPresent.getCampaignDetail(id);
+            campaignPresent.getCampaignDetail(switcherLayout,id);
         }
     };
 
@@ -169,7 +174,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
                 AppointmentUserActivity.start(this,new ArrayList<UserBean>());
                 break;
             case R.id.ll_apply:         //报名
-                AppointmentInfoActivity.start(this,AppointmentInfoActivity.TYPE_CAMPAIGN,bean);
+                bottomToTargetActivity();
                 break;
             default:
                 break;
@@ -179,7 +184,8 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
     @Override
     public void setCampaignDetail(CampaignDetailBean bean) {
         this.bean = bean;
-        applyLayout.setVisibility(View.VISIBLE);
+        status = bean.getStatus();
+        bottomLayout.setVisibility(View.VISIBLE);
         bannerLayout.setData(bean.getImage(),null);
         tvCampaignName.setText(bean.getName());
         tvLandmark.setText(bean.getLandmark());
@@ -196,6 +202,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
         }
         tvCampaignDesc.setText(Html.fromHtml(bean.getIntroduce()));
         tvPrice.setText(String.format(getString(R.string.rmb_price),bean.getPrice()));
+        setBottomStatus();
     }
 
     @Override
@@ -213,24 +220,53 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
 
     }
 
-    @Override
-    public void showLoadingView() {
-        switcherLayout.showLoadingLayout();
+    //设置底部状态
+    private void setBottomStatus(){
+        switch (status){
+            case STATUS_APPLY:
+                tvPrice.setVisibility(View.VISIBLE);
+                tvState.setText(R.string.campaign_status_apply);
+                bottomLayout.setBackgroundColor(Color.parseColor("#000000"));
+                break;
+            case STATUS_END:
+                tvPrice.setVisibility(View.GONE);
+                tvState.setText(R.string.campaign_status_end);
+                bottomLayout.setBackgroundColor(Color.parseColor("#666667"));
+                break;
+            case STATUS_APPLIED:
+                tvPrice.setVisibility(View.GONE);
+                tvState.setText(R.string.campaign_status_applied);
+                bottomLayout.setBackgroundColor(Color.parseColor("#666667"));
+                break;
+            case STATUS_NOT_START:
+                tvPrice.setVisibility(View.GONE);
+                tvState.setText(R.string.campaign_status_not_start);
+                bottomLayout.setBackgroundColor(Color.parseColor("#666667"));
+                break;
+            case STATUS_NOT_PAY:
+                tvPrice.setVisibility(View.VISIBLE);
+                tvState.setText(R.string.campaign_status_not_pay);
+                bottomLayout.setBackgroundColor(Color.parseColor("#000000"));
+                break;
+            case STATUS_FULL:
+                tvPrice.setVisibility(View.GONE);
+                tvState.setText(R.string.campaign_status_full);
+                bottomLayout.setBackgroundColor(Color.parseColor("#666667"));
+                break;
+            default:
+                break;
+        }
     }
 
-    @Override
-    public void showContent() {
-        switcherLayout.showContentLayout();
-    }
+    private void bottomToTargetActivity(){
+        if(STATUS_APPLY.equals(status)){     //预约
+            if(App.mInstance.isLogin()){
+                //todo 判断同一时间是否已有预约
+            }else {
+                //todo  登录 登录完成之后重新刷接口
+            }
+        }else if(STATUS_NOT_PAY.equals(status)){
 
-    @Override
-    public void showNetErrorView() {
-        switcherLayout.showExceptionLayout();
+        }
     }
-
-    @Override
-    public void showNoContentView() {
-        switcherLayout.showEmptyLayout();
-    }
-
 }

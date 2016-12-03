@@ -59,13 +59,13 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
         initRecommendRecyclerView();
 
         present.getCategory();
-        present.commonLoadData(switcherLayout);
+        present.commonLoadRecommendData(switcherLayout);
     }
 
     private void initTopLayout(){
         titleBar = (SimpleTitleBar)findViewById(R.id.title_bar);
         categoryView = (RecyclerView)findViewById(R.id.rv_category);
-        categoryAdapter = new CategoryAdapter(this);
+        categoryAdapter = new CategoryAdapter(this,GoodsFilterActivity.TYPE_NURTURE);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
         categoryView.setLayoutManager(layoutManager);
         categoryView.setAdapter(categoryAdapter);
@@ -86,14 +86,14 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
             public void onRefresh() {
                 RecyclerViewStateUtils.resetFooterViewState(recommendView);
                 currPage = 1;
-                present.pullToRefreshData();
+                present.pullToRefreshRecommendData();
             }
         });
 
         switcherLayout.setOnRetryListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                present.commonLoadData(switcherLayout);
+                present.commonLoadRecommendData(switcherLayout);
             }
         });
     }
@@ -118,13 +118,13 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
         public void onLoadNextPage(View view) {
             currPage ++;
             if (nurtureList != null && !nurtureList.isEmpty()) {
-                present.requestMoreData(recommendView,pageSize,currPage);
+                present.requestMoreRecommendData(recommendView,pageSize,currPage);
             }
         }
     };
 
     @Override
-    public void setCategory(List<CategoryBean> categoryBeanList) {
+    public void setCategory(ArrayList<CategoryBean> categoryBeanList) {
         categoryAdapter.setData(categoryBeanList);
     }
 

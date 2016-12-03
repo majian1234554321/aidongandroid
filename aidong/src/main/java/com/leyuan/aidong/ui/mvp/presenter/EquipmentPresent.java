@@ -15,15 +15,34 @@ public interface EquipmentPresent {
     void getCategory();
 
     /**
+     * 第一次进入界面加载推荐列表数据
+     * @param switcherLayout SwitcherLayout
+     */
+    void commonLoadRecommendData(SwitcherLayout switcherLayout);
+
+    /**
+     * 下拉刷新推荐列表数据
+     */
+    void pullToRefreshRecommendData();
+
+    /**
+     * 上拉加载更多推荐列表数据
+     * @param recyclerView RecyclerView
+     * @param pageSize 每页加载数
+     * @param page 页码
+     */
+    void requestMoreRecommendData(RecyclerView recyclerView, int pageSize, int page);
+
+    /**
      * 第一次进入界面加载装备列表数据
      * @param switcherLayout SwitcherLayout
      */
-    void commonLoadData(SwitcherLayout switcherLayout);
+    void commonLoadEquipmentData(SwitcherLayout switcherLayout);
 
     /**
      * 下拉刷新装备列表数据
      */
-    void pullToRefreshData();
+    void pullToRefreshEquipmentData();
 
     /**
      * 上拉加载更多装备列表数据
@@ -31,6 +50,6 @@ public interface EquipmentPresent {
      * @param pageSize 每页加载数
      * @param page 页码
      */
-    void requestMoreData(RecyclerView recyclerView, int pageSize, int page);
+    void requestMoreEquipmentData(RecyclerView recyclerView, int pageSize, int page);
 
 }

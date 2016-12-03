@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.activity.mine;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,11 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.activity.mine.adapter.AddressAdapter;
 import com.leyuan.aidong.entity.AddressBean;
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.ui.App;
+import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.activity.mine.account.LoginActivity;
+import com.leyuan.aidong.ui.activity.mine.adapter.AddressAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.AddressPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.AddressPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AddressActivityView;
@@ -39,6 +42,15 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
 
     private AddressPresent addressPresent;
     private int position;
+
+    public static void start(Context context) {
+        if(App.mInstance.isLogin()){
+            Intent starter = new Intent(context, AddressActivity.class);
+            context.startActivity(starter);
+        }else {
+            context.startActivity(new Intent(context, LoginActivity.class));
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

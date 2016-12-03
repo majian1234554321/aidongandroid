@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.leyuan.aidong.entity.BusinessCircleBean;
 import com.leyuan.aidong.entity.CategoryBean;
-import com.leyuan.aidong.entity.CourseDetailBean;
+import com.leyuan.aidong.entity.CourseDetailData;
 import com.leyuan.aidong.entity.data.CourseData;
 import com.leyuan.aidong.http.RetrofitHelper;
 import com.leyuan.aidong.http.RxHelper;
@@ -30,11 +30,6 @@ public class CourseModelImpl implements CourseModel {
     }
 
     @Override
-    public List<String> getDate() {
-        return null;
-    }
-
-    @Override
     public List<CategoryBean> getCategory() {
         return SystemInfoUtils.getCourseCategory(context);
     }
@@ -45,16 +40,16 @@ public class CourseModelImpl implements CourseModel {
     }
 
     @Override
-    public void getCourses(Subscriber<CourseData> subscriber, int cat, int day, int page) {
+    public void getCourses(Subscriber<CourseData> subscriber, String cat, String day, int page) {
         courseService.getCourses(day,page)
                 .compose(RxHelper.<CourseData>transform())
                 .subscribe(subscriber);
     }
 
     @Override
-    public void getCourseDetail(Subscriber<CourseDetailBean> subscriber, String id) {
+    public void getCourseDetail(Subscriber<CourseDetailData> subscriber, String id) {
         courseService.getCourseDetail(id)
-                .compose(RxHelper.<CourseDetailBean>transform())
+                .compose(RxHelper.<CourseDetailData>transform())
                 .subscribe(subscriber);
     }
 }

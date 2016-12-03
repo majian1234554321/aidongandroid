@@ -155,7 +155,7 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
 //        if (videoList != null && !videoList.isEmpty()) {
 ////            videoList.addAll(videoList);
 ////            videoList.addAll(videoList);
-//            videoAdapter.setData(videoList);
+//            videoAdapter.setNurtureList(videoList);
 //        }else{
 //            findViewById(R.id.tv_relate_video).setVisibility(View.GONE);
 //            findViewById(R.id.rv_relate_relate_video).setVisibility(View.GONE);
@@ -170,7 +170,7 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
 //        if (goodList != null && !goodList.isEmpty()) {
 ////            goodList.addAll(goodList);
 ////            goodList.addAll(goodList);
-//            goodAdapter.setData(goodList);
+//            goodAdapter.setNurtureList(goodList);
 //        }else{
 //            findViewById(R.id.tv_relate_good).setVisibility(View.GONE);
 //            findViewById(R.id.rv_relate_good).setVisibility(View.GONE);

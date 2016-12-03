@@ -44,7 +44,13 @@ public interface HomePresent {
     void requestMorBrandeData(RecyclerView recyclerView, int pageSize, int page,String id);
 
     /**
-     * 获取Banner
+     * 获取首页广告位Banner
      */
     void getBanners();
+
+
+    /**
+     * 获取首页弹出广告
+     */
+    void getPopupBanner();
 }

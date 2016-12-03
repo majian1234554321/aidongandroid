@@ -13,7 +13,7 @@ public class LoginResult  {
 //
 //
 //
-//	public void setData(LoginData data) {
+//	public void setNurtureList(LoginData data) {
 //		this.data = data;
 //	}
 

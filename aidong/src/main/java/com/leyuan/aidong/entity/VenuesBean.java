@@ -1,10 +1,13 @@
 package com.leyuan.aidong.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * 场馆实体
  * Created by pc on 2016/8/2.
  */
-public class VenuesBean {
+public class VenuesBean implements Parcelable {
     private String gym_id;          //场馆编号
     private String name;            //场馆名字
     private String logo;            //场馆封面
@@ -71,4 +74,43 @@ public class VenuesBean {
                 ", price='" + price + '\'' +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.gym_id);
+        dest.writeString(this.name);
+        dest.writeString(this.logo);
+        dest.writeString(this.address);
+        dest.writeString(this.distance);
+        dest.writeString(this.price);
+    }
+
+    public VenuesBean() {
+    }
+
+    protected VenuesBean(Parcel in) {
+        this.gym_id = in.readString();
+        this.name = in.readString();
+        this.logo = in.readString();
+        this.address = in.readString();
+        this.distance = in.readString();
+        this.price = in.readString();
+    }
+
+    public static final Parcelable.Creator<VenuesBean> CREATOR = new Parcelable.Creator<VenuesBean>() {
+        @Override
+        public VenuesBean createFromParcel(Parcel source) {
+            return new VenuesBean(source);
+        }
+
+        @Override
+        public VenuesBean[] newArray(int size) {
+            return new VenuesBean[size];
+        }
+    };
 }

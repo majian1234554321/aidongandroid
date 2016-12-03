@@ -10,10 +10,6 @@ import java.util.List;
  * Created by song on 2016/11/14.
  */
 public interface CourseActivityView {
-    /**
-     * 设置时间
-     */
-    void setDate(List<String> data);
 
     /**
      * 设置课程分类

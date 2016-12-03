@@ -47,13 +47,15 @@ public class BrandActivity extends BaseActivity implements BrandActivityView, Vi
     private String id;
     private String title;
     private String url;
+    private String introduce;
 
-    public static void start(Context context, String type, String id, String title, String url) {
+    public static void start(Context context, String type, String id, String title, String url,String introduce) {
         Intent starter = new Intent(context, BrandActivity.class);
         starter.putExtra("type",type);
         starter.putExtra("id",id);
         starter.putExtra("title",title);
         starter.putExtra("url",url);
+        starter.putExtra("introduce",introduce);
         context.startActivity(starter);
     }
 
@@ -68,6 +70,7 @@ public class BrandActivity extends BaseActivity implements BrandActivityView, Vi
             id = getIntent().getStringExtra("id");
             title = getIntent().getStringExtra("title");
             url = getIntent().getStringExtra("url");
+            introduce = getIntent().getStringExtra("introduce");
         }
 
         initView();
@@ -79,11 +82,12 @@ public class BrandActivity extends BaseActivity implements BrandActivityView, Vi
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
         View headerView = View.inflate(this,R.layout.header_brand_detail,null);
         dvCover = (SimpleDraweeView)headerView.findViewById(R.id.dv_cover);
-        tvDesc = (TextView)headerView.findViewById(R.id.tv_desc);
+        tvDesc = (TextView)headerView.findViewById(R.id.tv_brand_desc);
         refreshLayout = (SwipeRefreshLayout)findViewById(R.id.refreshLayout);
         recyclerView = (RecyclerView)findViewById(R.id.rv_brand_detail);
         titleBar.setTitle(title);
         dvCover.setImageURI(url);
+        tvDesc.setText(introduce);
         setColorSchemeResources(refreshLayout);
         data = new ArrayList<>();
         brandAdapter = new RecommendAdapter(this,type);

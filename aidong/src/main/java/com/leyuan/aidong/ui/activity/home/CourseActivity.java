@@ -20,9 +20,9 @@ import com.leyuan.aidong.ui.fragment.home.CourseFragment;
 import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CourseActivityView;
+import com.leyuan.aidong.utils.DateUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -38,18 +38,16 @@ public class CourseActivity extends BaseActivity implements CourseActivityView{
     private CourseFilterView filterView;
     private List<Fragment> fragments;
 
-    private Animation animation;
+    private FilterListener filterListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course);
-        animation = new Animation();
         CoursePresent present = new CoursePresentImpl(this,this);
 
         initView();
         setListener();
-        present.getDate();
         present.getCategory();
         present.getBusinessCircle();
     }
@@ -81,15 +79,29 @@ public class CourseActivity extends BaseActivity implements CourseActivityView{
         }
         filterView.setCircleList(circleList);
 
+        List<String> days = DateUtils.getSevenDate();
         fragments = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
-            CourseFragment f = new CourseFragment();
-            f.setAnimationListener(animation);
+        for (int i = 0; i < days.size(); i++) {
+            CourseFragment f = CourseFragment.newInstance(days.get(i));
+            f.setAnimationListener(new CourseFragment.AnimationListener() {
+                @Override
+                public void animatedShow() {
+                    filterView.animate().translationY(0).setInterpolator
+                            (new DecelerateInterpolator(2)).start();
+                }
+
+                @Override
+                public void animatedHide() {
+                    filterView.animate().translationY(-filterView.getHeight()).setInterpolator
+                            (new AccelerateInterpolator(2)).start();
+                }
+            });
+
             fragments.add(f);
         }
-        List<String> titles = Arrays.asList(getResources().getStringArray(R.array.dateTab));
-        viewPager.setAdapter(new TabFragmentAdapter(getSupportFragmentManager(),fragments,titles));
+        viewPager.setAdapter(new TabFragmentAdapter(getSupportFragmentManager(),fragments,days));
         tabLayout.setupWithViewPager(viewPager);
+        viewPager.setOffscreenPageLimit(6);
         viewPager.addOnPageChangeListener(new MyOnPageChangeListener());
     }
 
@@ -105,10 +117,6 @@ public class CourseActivity extends BaseActivity implements CourseActivityView{
         }
     };
 
-    @Override
-    public void setDate(List<String> data) {
-
-    }
 
     @Override
     public void setCategory(List<CategoryBean> categoryBeanList) {
@@ -120,32 +128,20 @@ public class CourseActivity extends BaseActivity implements CourseActivityView{
 
     }
 
-
-
     private class MyOnFilterClickListener implements CourseFilterView.OnFilterClickListener{
 
         @Override
-        public void onCategoryItemClick(int position) {
-
+        public void onCategoryItemClick(String category) {
+           if(filterListener != null){
+               filterListener.onSelectedCategory(category);
+           }
         }
 
         @Override
         public void onBusinessCircleItemClick(String address) {
-
-        }
-    }
-
-    class Animation implements CourseFragment.AnimationListener{
-        @Override
-        public void animatedShow() {
-            filterView.animate().translationY(0).setInterpolator
-                    (new DecelerateInterpolator(2)).start();
-        }
-
-        @Override
-        public void animatedHide() {
-            filterView.animate().translationY(-filterView.getHeight()).setInterpolator
-                    (new AccelerateInterpolator(2)).start();
+            if(filterListener != null){
+                filterListener.onSelectedCircle(address);
+            }
         }
     }
 
@@ -154,7 +150,17 @@ public class CourseActivity extends BaseActivity implements CourseActivityView{
         public void onPageSelected(int position) {
             CourseFragment fragment = (CourseFragment) fragments.get(position);
             fragment.scrollToTop();
-            animation.animatedShow();
+            filterView.animate().translationY(0).setInterpolator
+                    (new DecelerateInterpolator(2)).start();
         }
+    }
+
+    public void setFilterListener(FilterListener filterListener) {
+        this.filterListener = filterListener;
+    }
+
+    public interface FilterListener {
+        void onSelectedCategory(String category);
+        void onSelectedCircle(String businessCircle);
     }
 }

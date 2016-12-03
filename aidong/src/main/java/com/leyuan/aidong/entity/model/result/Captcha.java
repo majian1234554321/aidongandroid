@@ -23,7 +23,7 @@ public class Captcha extends MsgResult{
 //	public Captcha copyCpatchaValue(Captcha c){
 //		Captcha object = new Captcha();
 //		object.setCode(c.getCode());
-//		object.setData(c.getData());
+//		object.setNurtureList(c.getData());
 //		object.setMessage(c.getMessage());
 //		return object;
 //	}

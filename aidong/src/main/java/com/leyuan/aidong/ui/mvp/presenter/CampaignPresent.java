@@ -33,7 +33,7 @@ public interface CampaignPresent {
      * 获取活动详情信息
      * @param id 活动id
      */
-    void getCampaignDetail(String id);
+    void getCampaignDetail(SwitcherLayout switcherLayout,String id);
 
     /**
      * 购买活动

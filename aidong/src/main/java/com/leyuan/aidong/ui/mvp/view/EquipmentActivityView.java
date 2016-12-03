@@ -3,6 +3,7 @@ package com.leyuan.aidong.ui.mvp.view;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.EquipmentBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ public interface EquipmentActivityView{
      * 设置装备分类列表
      * @param categoryBeanList
      */
-    void setCategory(List<CategoryBean> categoryBeanList);
+    void setCategory(ArrayList<CategoryBean> categoryBeanList);
 
     /**
      * 更新列表

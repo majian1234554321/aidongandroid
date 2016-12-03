@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:fresco="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:paddingLeft="@dimen/left_margin"
+        android:paddingRight="@dimen/right_margin"
+        android:background="?selectableItemBackground">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/dv_goods_cover"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            fresco:actualImageScaleType="centerCrop"
+            android:layout_centerVertical="true"
+            fresco:placeholderImage="@drawable/place_holder_logo"
+            fresco:pressedStateOverlayImage="@color/color_image_press"/>
+
+        <TextView
+            android:id="@+id/tv_goods_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¥150"
+            android:textColor="@color/c3"
+            android:textSize="16sp"
+            android:layout_marginTop="22dp"
+            android:layout_alignParentRight="true"
+            android:singleLine="true"/>
+
+        <TextView
+            android:id="@+id/tv_good_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:textColor="@color/c9"
+            android:layout_alignBottom="@+id/dv_goods_cover"
+            android:layout_alignLeft="@+id/tv_good_name"
+            android:text="尺寸"/>
+
+        <TextView
+            android:id="@+id/tv_good_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_goods_price"
+            android:textColor="@color/black"
+            android:textSize="13sp"
+            android:text="X3"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@+id/tv_desc"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="@dimen/left_margin"
+            android:layout_marginRight="@dimen/right_margin"
+            android:layout_alignParentBottom="true"/>
+
+        <TextView
+            android:id="@+id/tv_good_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="name"
+            android:textColor="@color/c3"
+            android:textSize="16sp"
+            android:singleLine="true"
+            android:layout_marginLeft="10dp"
+            android:layout_alignBaseline="@+id/tv_goods_price"
+            android:layout_alignBottom="@+id/tv_goods_price"
+            android:layout_toRightOf="@+id/dv_goods_cover"
+            android:layout_toEndOf="@+id/dv_goods_cover" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="52dp"
+        android:layout_marginLeft="@dimen/left_margin"
+        android:gravity="center_vertical"
+        android:text="配送方式"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+    <include layout="@layout/inc_line_black" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:paddingLeft="@dimen/left_margin"
+        android:paddingRight="@dimen/right_margin"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:id="@+id/tv_express"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/shape_bg_white"
+            android:gravity="center"
+            android:text="快递"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_self_delivery"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_bg_black"
+            android:gravity="center"
+            android:text="自提"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <include layout="@layout/inc_line" />
+
+    <LinearLayout
+        android:id="@+id/ll_self_delivery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/left_margin"
+            android:paddingRight="@dimen/right_margin">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="自提门店:"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <LinearLayout
+                android:id="@+id/ll_delivery_address"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_shop"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="5dp"
+                    android:gravity="right|center_vertical"
+                    android:text="请选择"
+                    android:textColor="@color/c3"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tv_shop_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:drawablePadding="5dp"
+                    android:gravity="right|center_vertical"
+                    android:text="上海长宁店番禹区88号"
+                    android:textColor="@color/c9"
+                    android:textSize="15sp"
+                    android:visibility="gone"/>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="5dp"
+                android:src="@drawable/icon_right_arrow" />
+        </LinearLayout>
+
+        <include layout="@layout/inc_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/left_margin"
+            android:paddingRight="@dimen/right_margin">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="自提时间:"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tv_delivery_time"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:drawablePadding="5dp"
+                android:drawableRight="@drawable/right_icon"
+                android:gravity="right|center_vertical"
+                android:text="请选择"
+                android:textColor="@color/c9"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+        <include layout="@layout/inc_line" />
+
+    </LinearLayout>
+</LinearLayout>

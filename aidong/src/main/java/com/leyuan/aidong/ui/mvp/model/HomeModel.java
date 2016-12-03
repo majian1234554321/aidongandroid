@@ -33,5 +33,9 @@ public interface HomeModel {
      */
     List<BannerBean> getBanners();
 
-
+    /**
+     * 获取首页弹出式广告
+     * @return
+     */
+    List<BannerBean> getPopupBanners();
 }

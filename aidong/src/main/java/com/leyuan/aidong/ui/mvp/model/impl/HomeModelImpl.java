@@ -47,4 +47,9 @@ public class HomeModelImpl implements HomeModel {
     public List<BannerBean> getBanners() {
         return SystemInfoUtils.getHomeBanner(context);
     }
+
+    @Override
+    public List<BannerBean> getPopupBanners() {
+        return SystemInfoUtils.getHomePopupBanner(context);
+    }
 }

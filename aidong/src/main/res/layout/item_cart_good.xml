@@ -41,30 +41,42 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="150"
+        android:singleLine="true"
         android:layout_alignParentRight="true"
         android:layout_marginTop="22dp"
         android:textSize="16sp"
         android:textColor="@color/c3"/>
 
     <TextView
-        android:id="@+id/tv_desc"
+        android:id="@+id/tv_sku"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="型号"
+        android:text="sku"
         android:textSize="13sp"
         android:textColor="@color/c9"
         android:layout_marginTop="15dp"
         android:layout_below="@+id/tv_goods_name"
         android:layout_alignLeft="@+id/tv_goods_name"/>
-    
+
+    <TextView
+        android:id="@+id/tv_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="推荐码：123456"
+        android:textSize="13sp"
+        android:textColor="@color/c9"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_alignBottom="@+id/tv_sku"
+        android:layout_toRightOf="@+id/tv_sku"/>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="33dp"
         android:orientation="horizontal"
         android:layout_marginTop="12sp"
         android:layout_marginBottom="15dp"
-        android:layout_below="@+id/tv_desc"
-
+        android:layout_below="@+id/tv_sku"
         android:layout_alignLeft="@+id/tv_goods_name">
 
         <ImageView
