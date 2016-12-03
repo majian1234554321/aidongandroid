@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.activity.mine.account;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,7 +12,6 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.mine.login.FindPasswordActivity;
 import com.leyuan.aidong.ui.activity.mine.login.RegisterActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.LoginPresenter;
-import com.leyuan.aidong.ui.mvp.presenter.LoginPresenterInterface;
 import com.leyuan.aidong.ui.mvp.view.LoginViewInterface;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.commonlibrary.manager.UiManager;
@@ -20,7 +20,7 @@ import com.leyuan.commonlibrary.util.StringUtils;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener ,LoginViewInterface {
 
-    private LoginPresenterInterface loginPresenter;
+    private LoginPresenter loginPresenter;
     private String telephone;
     private String password;
 
@@ -59,12 +59,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 UiManager.activityJump(this,RegisterActivity.class);
                 break;
             case R.id.button_weixin:
+                loginPresenter.loginThirdParty(LoginPresenter.LOGIN_WEIXIN);
 
                 break;
             case R.id.button_weibo:
+                loginPresenter.loginThirdParty(LoginPresenter.LOGIN_WEIBO);
 
                 break;
             case R.id.button_qq:
+                loginPresenter.loginThirdParty(LoginPresenter.LOGIN_QQ);
 
                 break;
         }
@@ -97,10 +100,20 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public void loginResult(boolean success) {
         if(success){
             ToastUtil.showShort(App.context,"登录成功");
+//            ToastUtil.showShort(App.context,App.mInstance.getUser().getName()+"姓名");
             finish();
         }
 //        else{
 //            ToastUtil.showShort(App.context,"账户或密码错误");
 //        }
+    }
+
+
+    //    应用调用Andriod_SDK接口时，如果要成功接收到回调，需要在调用接口的Activity的onActivityResult方法中增加如下代码：
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        loginPresenter.onActivityResultData(requestCode,resultCode,data);
+
+
     }
 }

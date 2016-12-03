@@ -8,7 +8,7 @@ import android.widget.EditText;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.user.User;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mvp.presenter.ChangePasswordPresenter;
+import com.leyuan.aidong.ui.mvp.presenter.impl.ChangePasswordPresenter;
 import com.leyuan.aidong.ui.mvp.view.ChangePasswordViewInterface;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.widget.CommonTitleLayout;

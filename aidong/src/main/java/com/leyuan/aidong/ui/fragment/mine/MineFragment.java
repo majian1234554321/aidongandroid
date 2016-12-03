@@ -129,7 +129,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             relativeLayout_my_logo.setVisibility(View.VISIBLE);
             layout_no_login.setVisibility(View.GONE);
             user = App.mInstance.getUser();
-            textView_name.setText(user.getName());
+            textView_name.setText(user.getName() +"- " +user.getMobile());
             imageView_head.setImageURI(Uri.parse(user.getAvatar()));
         }else{
             relativeLayout_my_logo.setVisibility(View.GONE);

@@ -1,4 +1,4 @@
-package com.leyuan.aidong.ui.mvp.presenter;
+package com.leyuan.aidong.ui.mvp.presenter.impl;
 
 import android.content.Context;
 

@@ -16,6 +16,7 @@ public class User {
     String  province;
     String city;
     String area;
+    String mobile;
     int height;
     int  weight;
     int bmi;
@@ -107,6 +108,14 @@ public class User {
 
     public void setSport(String[] sport) {
         this.sport = sport;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     public UserTag[] getTag() {

@@ -6,19 +6,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class UserCoach extends User implements Serializable{
-	protected String token; // '用户token值',
-//	protected String name; // '昵称'，
-	protected int id; // 美型号,
-//	protected String avatar; // 头像,
-//	protected int gender; // 性别 0:男，1：女
-//	protected int age; // 年龄
-	protected int true_age; // 年龄
-//	protected String signature;
-	protected int identity;//是否是服务号
-	protected ArrayList<Integer> tags;// 图标
-	protected String mobile;
+	private String token; // '用户token值',
+private int id; // 美型号,
+private int true_age; // 年龄
+private int identity;//是否是服务号
+	private ArrayList<Integer> tags;// 图标
 	private String address;
-	//	private int new;//完善资料使用字段：1为跳完善资料，0为去应用主界面
 	private String tip;
 	private int courses;
 	private Coordinate coordinate;
@@ -27,8 +20,6 @@ public class UserCoach extends User implements Serializable{
 	private String skill;
 	private String interests;
 	private String often;
-//	private String birthday;
-	//	private Contact1 contact;
 	private boolean isBindMobile;
 
 
@@ -36,17 +27,8 @@ public class UserCoach extends User implements Serializable{
 	private String header;
 	private String username;
 	private String nick;
-//	private String city;
 
-	protected int likes;
-
-//	public String getCity() {
-//		return city;
-//	}
-//
-//	public void setCity(String city) {
-//		this.city = city;
-//	}
+	private int likes;
 
 	/** 照片墙*/
 	private ArrayList<AttributeImages> photowall;
@@ -252,13 +234,13 @@ public class UserCoach extends User implements Serializable{
 		this.tags = tags;
 	}
 
-	public String getMobile() {
-		return mobile;
-	}
-
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
+//	public String getMobile() {
+//		return mobile;
+//	}
+//
+//	public void setMobile(String mobile) {
+//		this.mobile = mobile;
+//	}
 
 
 	public String getInterests() {
@@ -319,6 +301,8 @@ public class UserCoach extends User implements Serializable{
 	}
 
 	public String getUsername() {
+		if(username == null)
+			username = getName();
 		return username;
 	}
 
@@ -426,7 +410,7 @@ public class UserCoach extends User implements Serializable{
 //				", signature='" + signature + '\'' +
 				", identity=" + identity +
 				", tags=" + tags +
-				", mobile='" + mobile + '\'' +
+//				", mobile='" + mobile + '\'' +
 				", address='" + address + '\'' +
 				", tip='" + tip + '\'' +
 				", courses=" + courses +
