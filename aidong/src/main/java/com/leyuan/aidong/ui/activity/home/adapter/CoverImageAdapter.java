@@ -16,11 +16,10 @@ import com.leyuan.aidong.ui.MainActivity;
  */
 public class CoverImageAdapter extends BaseAdapter<HomeItemBean> {
     private Context context;
-    private String type;
 
-    public CoverImageAdapter(Context context,String type) {
+    public CoverImageAdapter(Context context) {
         this.context = context;
-        this.type = type;
+
     }
 
     @Override
@@ -37,7 +36,7 @@ public class CoverImageAdapter extends BaseAdapter<HomeItemBean> {
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)context).toTargetDetailActivity(type,bean.getId());
+                ((MainActivity)context).toTargetDetailActivity(bean.getType(),bean.getId());
             }
         });
     }

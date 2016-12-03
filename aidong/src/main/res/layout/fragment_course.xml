@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/line_color">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refreshLayout"
@@ -13,7 +14,18 @@
             android:paddingTop="45dp"
             android:clipChildren="false"
             android:clipToPadding="false"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </android.support.v4.widget.SwipeRefreshLayout>
-</LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_no_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="没有内容"
+        android:textSize="15sp"
+        android:textColor="@color/white"
+        android:background="@color/main_red"
+        android:gravity="center"
+        android:visibility="gone"/>
+</RelativeLayout>

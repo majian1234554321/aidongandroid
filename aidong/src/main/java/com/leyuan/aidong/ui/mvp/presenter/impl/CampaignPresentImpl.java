@@ -103,32 +103,32 @@ public class CampaignPresentImpl implements CampaignPresent {
     }
 
     @Override
-    public void getCampaignDetail(String id) {
+    public void getCampaignDetail(final SwitcherLayout switcherLayout,String id) {
         campaignModel.getCampaignDetail(new Subscriber<CampaignDetailData>() {
             @Override
             public void onStart() {
-                campaignDetailView.showLoadingView();
+                switcherLayout.showLoadingLayout();
             }
 
             @Override
             public void onNext(CampaignDetailData campaignDetailData) {
                 if(campaignDetailData.getCampaign() != null){
-                    campaignDetailView.showContent();
+                    switcherLayout.showContentLayout();
                     campaignDetailView.setCampaignDetail(campaignDetailData.getCampaign());
                 }else{
-                    campaignDetailView.showNoContentView();
+                    switcherLayout.showEmptyLayout();
                 }
             }
 
             @Override
             public void onCompleted() {
-                campaignDetailView.showContent();
+                switcherLayout.showContentLayout();
             }
 
             @Override
             public void onError(Throwable e) {
-                Toast.makeText(context,"error",Toast.LENGTH_LONG).show();
-                campaignDetailView.showNetErrorView();
+                Toast.makeText(context, "error:" + e.toString(), Toast.LENGTH_LONG).show();
+                switcherLayout.showExceptionLayout();
             }
         }, id);
     }

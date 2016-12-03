@@ -88,7 +88,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
 
     private String id;
     private String type ;
-    private boolean isConfrimSku = false;
+    private boolean isConfirmSku = false;
 
     public static void start(Context context, String id, String type) {
         Intent starter = new Intent(context, GoodsDetailActivity.class);
@@ -179,7 +179,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             case R.id.iv_share:
                 break;
             case R.id.ll_sku:
-                showSelecteSkuPopup();
+                showSelectSkuPopup();
                 break;
             case R.id.ll_code:
                 inputRecommendCodeDialog();
@@ -191,14 +191,14 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                 startActivity(new Intent(this,CartActivity.class));
                 break;
             case R.id.tv_add_cart:
-                if(isConfrimSku){
+                if(isConfirmSku){
 
                 }else {
-                    showSelecteSkuPopup();
+                    showSelectSkuPopup();
                 }
                 break;
             case R.id.tv_pay:
-                if(isConfrimSku){
+                if(isConfirmSku){
                     ArrayList<ShopBean> shopBeanList = new ArrayList<>();
                     ShopBean shopBean = new ShopBean();
                     List<GoodsBean> goodsBeanList = new ArrayList<>();
@@ -210,7 +210,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                     shopBeanList.add(shopBean);
                     ConfirmOrderActivity.start(this,shopBeanList);
                 }else {
-                    showSelecteSkuPopup();
+                    showSelectSkuPopup();
                 }
                 break;
             default:
@@ -250,7 +250,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onConfirmSku(String sku) {
-        isConfrimSku = true;
+        isConfirmSku = true;
         tvSku.setText(sku);
     }
 
@@ -281,7 +281,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
-    private void showSelecteSkuPopup(){
+    private void showSelectSkuPopup(){
         if(goodSkuPopup == null){
             goodSkuPopup = new GoodsSkuPopupWindow(this,detailBean);
             goodSkuPopup.setConfirmSkuListener(this);

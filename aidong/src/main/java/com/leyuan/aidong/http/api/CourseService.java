@@ -1,7 +1,7 @@
 package com.leyuan.aidong.http.api;
 
 import com.leyuan.aidong.entity.BaseBean;
-import com.leyuan.aidong.entity.CourseDetailBean;
+import com.leyuan.aidong.entity.CourseDetailData;
 import com.leyuan.aidong.entity.data.CourseData;
 
 import retrofit2.http.GET;
@@ -21,5 +21,5 @@ public interface CourseService {
     Observable<BaseBean<CourseData>> getCourses(@Query("day") String day, @Query("page") int page);
 
     @GET("market/courses/{id}")
-    Observable<BaseBean<CourseDetailBean>> getCourseDetail(@Path("id") String id);
+    Observable<BaseBean<CourseDetailData>> getCourseDetail(@Path("id") String id);
 }

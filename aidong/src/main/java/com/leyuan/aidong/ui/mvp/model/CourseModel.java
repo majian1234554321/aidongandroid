@@ -2,7 +2,7 @@ package com.leyuan.aidong.ui.mvp.model;
 
 import com.leyuan.aidong.entity.BusinessCircleBean;
 import com.leyuan.aidong.entity.CategoryBean;
-import com.leyuan.aidong.entity.CourseDetailBean;
+import com.leyuan.aidong.entity.CourseDetailData;
 import com.leyuan.aidong.entity.data.CourseData;
 
 import java.util.List;
@@ -41,5 +41,5 @@ public interface CourseModel {
      * @param subscriber Subscriber
      * @param id 课程id
      */
-    void getCourseDetail(Subscriber<CourseDetailBean> subscriber, String id);
+    void getCourseDetail(Subscriber<CourseDetailData> subscriber, String id);
 }

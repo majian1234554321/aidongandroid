@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CourseBean;
@@ -47,8 +47,10 @@ public class CourseFragment extends BaseFragment implements CourserFragmentView,
     private String category;        //分类
     private String businessCircle;  //商圈
 
-    private CoursePresent present;
-    private AnimationListener listener;
+    private CoursePresent coursePresent;
+    private AnimationListener animationListener;
+
+    private TextView tvNoContent;
 
     public static CourseFragment newInstance(String date) {
         Bundle args = new Bundle();
@@ -66,18 +68,21 @@ public class CourseFragment extends BaseFragment implements CourserFragmentView,
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        pageSize = 10;
         if(getArguments()!=null){
             date = getArguments().getString("date");
         }
-        present = new CoursePresentImpl(getContext(),this);
+        coursePresent = new CoursePresentImpl(getContext(),this);
         initRefreshLayout(view);
         initRecyclerView(view);
         ((CourseActivity)getActivity()).setFilterListener(this);
-        present.pullToRefreshData(category,date);
+        coursePresent.commendLoadData(switcherLayout,category,date);
     }
 
     private void initRefreshLayout(View view) {
+        tvNoContent = (TextView) view.findViewById(R.id.tv_no_content);
         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout);
+        switcherLayout = new SwitcherLayout(getContext(),refreshLayout);
         setColorSchemeResources(refreshLayout);
         refreshLayout.setProgressViewOffset(true,100,250);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -85,7 +90,7 @@ public class CourseFragment extends BaseFragment implements CourserFragmentView,
             public void onRefresh() {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-            //    present.pullToRefreshRecommendData(type);
+                coursePresent.pullToRefreshData(category,date);
             }
         });
     }
@@ -95,8 +100,8 @@ public class CourseFragment extends BaseFragment implements CourserFragmentView,
         data = new ArrayList<>();
         courseAdapter = new CourseAdapter(getContext());
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(courseAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(wrapperAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addOnScrollListener(onScrollListener);
     }
 
@@ -105,7 +110,7 @@ public class CourseFragment extends BaseFragment implements CourserFragmentView,
         public void onLoadNextPage(View view) {
             currPage ++;
             if (data != null && data.size() >= pageSize) {
-               // present.requestMoreRecommendData(recyclerView,type,pageSize,currPage);
+               coursePresent.requestMoreData(recyclerView,pageSize,category,date,currPage);
             }
         }
 
@@ -114,15 +119,15 @@ public class CourseFragment extends BaseFragment implements CourserFragmentView,
             super.onScrolled(recyclerView, dx, dy);
 
             if (scrolledDistance > HIDE_THRESHOLD  && filterViewVisible) {           //手指向上滑动
-                if(listener != null){
-                    listener.animatedHide();
+                if(animationListener != null){
+                    animationListener.animatedHide();
                 }
                 filterViewVisible = false;
                 scrolledDistance = 0;
 
             } else if (scrolledDistance < -HIDE_THRESHOLD && !filterViewVisible) {   //手指向下滑动
-                if(listener != null){
-                    listener.animatedShow();
+                if(animationListener != null){
+                    animationListener.animatedShow();
                 }
                 scrolledDistance = 0;
                 filterViewVisible = true;
@@ -146,31 +151,37 @@ public class CourseFragment extends BaseFragment implements CourserFragmentView,
 
     @Override
     public void showEndFooterView() {
+    }
 
+    @Override
+    public void showEmptyView() {
+        switcherLayout.showEmptyLayout();
+        tvNoContent.setVisibility(View.VISIBLE);
     }
 
     public void scrollToTop(){
+        filterViewVisible = true;
         recyclerView.scrollToPosition(0);
     }
 
 
     @Override
-    public void onSelectedCategory(String category) {
+    public void onSelectedCategory(final String category) {
         this.category = category;
-        Toast.makeText(getContext(),category,Toast.LENGTH_LONG).show();
-        present.pullToRefreshData(category,date);
+        refreshLayout.setRefreshing(true);
+        coursePresent.pullToRefreshData(category,date);
     }
 
     @Override
     public void onSelectedCircle(String businessCircle) {
         this.businessCircle = businessCircle;
-        Toast.makeText(getContext(),businessCircle,Toast.LENGTH_LONG).show();
-        present.pullToRefreshData(category,date);
+        refreshLayout.setRefreshing(true);
+        coursePresent.pullToRefreshData(category,date);
     }
 
 
     public void setAnimationListener(AnimationListener listener) {
-        this.listener = listener;
+        this.animationListener = listener;
     }
 
     public interface AnimationListener{

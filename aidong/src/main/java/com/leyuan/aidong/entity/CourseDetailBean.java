@@ -3,7 +3,6 @@ package com.leyuan.aidong.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,14 +16,17 @@ public class CourseDetailBean implements Parcelable {
     private String class_date;       //上课日期
     private String class_time;       //上课时间
     private String break_time;       //下课时间
-    private List<CoachBean> coach;   //课程
-    private List<VenuesBean> gym;    //场馆
+    private CoachBean coach;   //课程
+    private VenuesBean gym;    //场馆
     private String place;            //名额
     private String applied_count;    //已报名人数
     private List<UserBean> applied;  //报名的人
     private String introduce;        //课程介绍
     private String price;
     private String address;
+    private String classroom;
+    private String stock;
+    private String statues  = "";
 
     public String getCode() {
         return code;
@@ -74,19 +76,19 @@ public class CourseDetailBean implements Parcelable {
         this.break_time = break_time;
     }
 
-    public List<CoachBean> getCoach() {
+    public CoachBean getCoach() {
         return coach;
     }
 
-    public void setCoach(List<CoachBean> coach) {
+    public void setCoach(CoachBean coach) {
         this.coach = coach;
     }
 
-    public List<VenuesBean> getGym() {
+    public VenuesBean getGym() {
         return gym;
     }
 
-    public void setGym(List<VenuesBean> gym) {
+    public void setGym(VenuesBean gym) {
         this.gym = gym;
     }
 
@@ -138,6 +140,30 @@ public class CourseDetailBean implements Parcelable {
         this.address = address;
     }
 
+    public String getClassroom() {
+        return classroom;
+    }
+
+    public void setClassroom(String classroom) {
+        this.classroom = classroom;
+    }
+
+    public String getStock() {
+        return stock;
+    }
+
+    public void setStock(String stock) {
+        this.stock = stock;
+    }
+
+    public String getStatues() {
+        return statues;
+    }
+
+    public void setStatues(String statues) {
+        this.statues = statues;
+    }
+
     @Override
     public String toString() {
         return "CourseDetailBean{" +
@@ -153,7 +179,12 @@ public class CourseDetailBean implements Parcelable {
                 ", applied_count='" + applied_count + '\'' +
                 ", applied=" + applied +
                 ", introduce='" + introduce + '\'' +
+                ", price='" + price + '\'' +
+                ", address='" + address + '\'' +
                 '}';
+    }
+
+    public CourseDetailBean() {
     }
 
     @Override
@@ -169,15 +200,14 @@ public class CourseDetailBean implements Parcelable {
         dest.writeString(this.class_date);
         dest.writeString(this.class_time);
         dest.writeString(this.break_time);
-        dest.writeList(this.coach);
-        dest.writeList(this.gym);
+        dest.writeParcelable(this.coach, flags);
+        dest.writeParcelable(this.gym, flags);
         dest.writeString(this.place);
         dest.writeString(this.applied_count);
         dest.writeTypedList(this.applied);
         dest.writeString(this.introduce);
-    }
-
-    public CourseDetailBean() {
+        dest.writeString(this.price);
+        dest.writeString(this.address);
     }
 
     protected CourseDetailBean(Parcel in) {
@@ -187,17 +217,17 @@ public class CourseDetailBean implements Parcelable {
         this.class_date = in.readString();
         this.class_time = in.readString();
         this.break_time = in.readString();
-        this.coach = new ArrayList<CoachBean>();
-        in.readList(this.coach, CoachBean.class.getClassLoader());
-        this.gym = new ArrayList<VenuesBean>();
-        in.readList(this.gym, VenuesBean.class.getClassLoader());
+        this.coach = in.readParcelable(CoachBean.class.getClassLoader());
+        this.gym = in.readParcelable(VenuesBean.class.getClassLoader());
         this.place = in.readString();
         this.applied_count = in.readString();
         this.applied = in.createTypedArrayList(UserBean.CREATOR);
         this.introduce = in.readString();
+        this.price = in.readString();
+        this.address = in.readString();
     }
 
-    public static final Parcelable.Creator<CourseDetailBean> CREATOR = new Parcelable.Creator<CourseDetailBean>() {
+    public static final Creator<CourseDetailBean> CREATOR = new Creator<CourseDetailBean>() {
         @Override
         public CourseDetailBean createFromParcel(Parcel source) {
             return new CourseDetailBean(source);

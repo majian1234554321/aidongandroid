@@ -125,7 +125,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 finish();
                 break;
             case R.id.rl_address:
-                startActivity(new Intent(this, AddressActivity.class));
+                AddressActivity.start(this);
                 break;
             case R.id.ll_coupon:
                 startActivity(new Intent(this, CouponActivity.class));

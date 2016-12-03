@@ -2,6 +2,8 @@ package com.leyuan.aidong.ui.mvp.presenter;
 
 import android.support.v7.widget.RecyclerView;
 
+import com.leyuan.aidong.widget.customview.SwitcherLayout;
+
 /**
  * 课程列表
  * Created by song on 2016/8/13.
@@ -21,7 +23,7 @@ public interface CoursePresent {
     /**
      * 第一次加载数据
      */
-    void commendLoadData();
+    void commendLoadData(SwitcherLayout switcherLayout,String category, String day);
 
     /**
      * 下拉刷新
@@ -45,5 +47,5 @@ public interface CoursePresent {
      * 获取课程详情
      * @param id 课程id
      */
-    void getCourseDetail(String id);
+    void getCourseDetail(SwitcherLayout switcherLayout,String id);
 }

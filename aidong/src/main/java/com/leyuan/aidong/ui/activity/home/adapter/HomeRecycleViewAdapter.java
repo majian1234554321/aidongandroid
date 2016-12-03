@@ -71,7 +71,7 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         final HomeBean bean = data.get(position);
         if(holder instanceof CoverImageViewHolder){
-            CoverImageAdapter adapter = new CoverImageAdapter(context,bean.getType());
+            CoverImageAdapter adapter = new CoverImageAdapter(context);
             ((CoverImageViewHolder) holder).tvName.setText(bean.getTitle());
             ((CoverImageViewHolder) holder).listView.setAdapter(adapter);
             adapter.addList(bean.getItem());
@@ -84,7 +84,7 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                             bean.getImage(),bean.getIntroduce());
                 }
             });
-            BigAndLittleImageAdapter adapter = new BigAndLittleImageAdapter(context,bean.getType());
+            BigAndLittleImageAdapter adapter = new BigAndLittleImageAdapter(context);
             ((BigAndLittleImageViewHolder) holder).recyclerView.setLayoutManager(
                     new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false));
             ((BigAndLittleImageViewHolder) holder).recyclerView.setAdapter(adapter);

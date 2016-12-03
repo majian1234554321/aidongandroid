@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.leyuan.aidong.entity.BusinessCircleBean;
 import com.leyuan.aidong.entity.CategoryBean;
-import com.leyuan.aidong.entity.CourseDetailBean;
+import com.leyuan.aidong.entity.CourseDetailData;
 import com.leyuan.aidong.entity.data.CourseData;
 import com.leyuan.aidong.http.RetrofitHelper;
 import com.leyuan.aidong.http.RxHelper;
@@ -47,9 +47,9 @@ public class CourseModelImpl implements CourseModel {
     }
 
     @Override
-    public void getCourseDetail(Subscriber<CourseDetailBean> subscriber, String id) {
+    public void getCourseDetail(Subscriber<CourseDetailData> subscriber, String id) {
         courseService.getCourseDetail(id)
-                .compose(RxHelper.<CourseDetailBean>transform())
+                .compose(RxHelper.<CourseDetailData>transform())
                 .subscribe(subscriber);
     }
 }

@@ -6,10 +6,10 @@ public class FormatUtil {
     /**
      * 将String转换成int
      * @param str String
-     * @return -1表示转换失败
+     * @return  默认返回0
      */
     public static int parseInt(String str){
-        int result = -1;
+        int result = 0;
         try {
             result = Integer.parseInt(str);
         }catch (Exception e){

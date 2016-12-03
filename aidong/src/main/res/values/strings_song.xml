@@ -34,11 +34,15 @@
     <string name="please_choose">请选择:</string>
     <string name="selected">已选择:</string>
     <string name="stock_count">库存%1$s件</string>
+    <string name="int_stock_count">库存%1$d件</string>
     <string name="stock_out">超出库存范围</string>
     <string name="input_recommend_code">请输入推荐码</string>
     <string name="add_cart_failed">加入购物车失败</string>
     <string name="applicant_count">已参加(%1$d/%2$s)</string>
+    <string name="course_applicant_count">已参加(%1$s/%2$s)</string>
+    <string name="appoint_time">开始预约时间:%1$s</string>
     <string name="rmb_price">¥ %1$s</string>
+    <string name="rmb_price_scope">¥ %1$.2f - ¥ %2$.2f</string>
     <string name="time_with_line">%1$s—%2$s</string>
     <string name="course_count">&#160;(%1$s/%2$s&#160;人)&#160;&#160;/&#160;&#160;</string>
     <string name="distance_km"> %1$s km </string>
@@ -47,6 +51,21 @@
     <string name="tip_select_goods">你还没有选择商品哦!</string>
     <string name="use_price">满%1$s使用</string>
     <string name="real_pay">实付款：¥%1$s</string>
+
+    <string name="status_appoint">马上预约</string>
+    <string name="status_end">预约已结束</string>
+    <string name="status_appointed">已预约</string>
+    <string name="status_full">预约人数已满</string>
+    <string name="status_not_start">即将开始预约</string>
+    <string name="status_not_pay">待支付</string>
+    <string name="status_not_need">无需预约</string>
+
+    <string name="campaign_status_apply">马上报名</string>
+    <string name="campaign_status_end">活动已结束</string>
+    <string name="campaign_status_applied">已报名</string>
+    <string name="campaign_status_not_start">即将开始报名</string>
+    <string name="campaign_status_not_pay">待支付</string>
+    <string name="campaign_status_full">报名人数已满</string>
 
     <string name="campaign_detail">活动详情</string>
     <string name="food_material">主要食材: %1$s</string>

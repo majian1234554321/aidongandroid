@@ -10,6 +10,7 @@ public class HomeItemBean{
     private String cover;           //封面图片
     private String price;           //售价
     private String market_price;    //市场价
+    private String type;            //类型
 
     public String getId() {
         return id;
@@ -51,10 +52,19 @@ public class HomeItemBean{
         this.market_price = market_price;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         return "HomeItemBean{" +
                 "id='" + id + '\'' +
+                ", type='" + type + '\'' +
                 ", name='" + name + '\'' +
                 ", cover='" + cover + '\'' +
                 ", price='" + price + '\'' +

@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.http.subscriber.handler.ProgressDialogHandler;
+import com.leyuan.aidong.utils.Logger;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -79,6 +80,7 @@ public abstract class ProgressSubscriber<T> extends Subscriber<T> implements Pro
         } else {
             Toast.makeText(context, "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
+        Logger.w("ProgressSubscriber", "error:" + e.getMessage());
         dismissProgressDialog();
     }
 

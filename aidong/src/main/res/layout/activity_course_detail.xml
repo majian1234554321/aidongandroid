@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="课程"
+            android:text=""
             android:textColor="@color/white"
             android:textSize="15sp" />
 
@@ -33,6 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:padding="10dp"
+            android:visibility="gone"
             android:src="@drawable/icon_share" />
     </RelativeLayout>
 
@@ -44,7 +45,8 @@
         android:gravity="center"
         android:text="开始时间"
         android:textColor="@color/white"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        android:visibility="gone"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -52,6 +54,7 @@
         android:layout_weight="1">
 
         <LinearLayout
+            android:id="@+id/ll_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -91,7 +94,9 @@
                     android:layout_height="70dp"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
-                    app:placeholderImage="@drawable/place_holder_user" />
+                    app:roundAsCircle="true"
+                    app:placeholderImage="@drawable/place_holder_user"
+                    android:elevation="15dp"/>
             </RelativeLayout>
 
             <TextView
@@ -129,7 +134,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:drawableLeft="@drawable/icon_time"
-                    android:drawablePadding="10dp"
+                    android:drawablePadding="13dp"
                     android:gravity="center_vertical"
                     android:text="时间"
                     android:textColor="@color/black"
@@ -166,7 +171,8 @@
                     android:gravity="center_vertical"
                     android:text="地点"
                     android:textColor="@color/black"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    android:id="@+id/textView5" />
 
                 <TextView
                     android:id="@+id/tv_address"
@@ -177,6 +183,8 @@
                     android:drawableRight="@drawable/icon_right_arrow"
                     android:gravity="center_vertical|right"
                     android:text="北京东路"
+                    android:singleLine="true"
+                    android:ellipsize="end"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
             </LinearLayout>
@@ -309,7 +317,8 @@
         android:layout_gravity="bottom"
         android:background="@drawable/shape_solid_black"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/tv_price"

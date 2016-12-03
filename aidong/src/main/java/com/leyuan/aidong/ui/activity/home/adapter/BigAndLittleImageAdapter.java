@@ -24,13 +24,12 @@ public class BigAndLittleImageAdapter extends RecyclerView.Adapter< RecyclerView
     private static final int SEE_MORE = 2;
 
     private Context context;
-    private String type;
+
     private List<HomeItemBean> data = new ArrayList<>();
     private SeeMoreListener seeMoreListener;
 
-    public BigAndLittleImageAdapter(Context context,String type) {
+    public BigAndLittleImageAdapter(Context context) {
         this.context = context;
-        this.type = type;
     }
 
     public void setSeeMoreListener(SeeMoreListener seeMoreListener) {
@@ -87,7 +86,7 @@ public class BigAndLittleImageAdapter extends RecyclerView.Adapter< RecyclerView
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((MainActivity)context).toTargetDetailActivity(type,bean.getId());
+                    ((MainActivity)context).toTargetDetailActivity(bean.getType(),bean.getId());
                 }
             });
         }
