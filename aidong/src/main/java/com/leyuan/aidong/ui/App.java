@@ -11,8 +11,8 @@ import com.baidu.mapapi.SDKInitializer;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.stetho.Stetho;
 import com.leyuan.aidong.entity.model.UserCoach;
+import com.leyuan.aidong.utils.LogUtil;
 import com.leyuan.aidong.utils.SharePrefUtils;
-import com.leyuan.aidong.utils.common.MXLog;
 import com.lidroid.xutils.DbUtils;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -101,7 +101,7 @@ public class App extends Application{
 
         @Override
         public void onReceiveLocation(BDLocation location) {
-            MXLog.out("GPS onReceiveLocation success");
+
             App.lat = location.getLatitude();
             App.lon = location.getLongitude();
             if(location.getCity()!= null)
@@ -111,6 +111,7 @@ public class App extends Application{
             if(city!=null){
                 mLocationClient.stop();
             }
+            LogUtil.i("lat = " +lat+",   lon = " +lon);
 
         }
     }
