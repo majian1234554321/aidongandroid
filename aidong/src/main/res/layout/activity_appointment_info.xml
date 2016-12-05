@@ -48,8 +48,8 @@
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
-                <EditText
-                    android:id="@+id/et_input_name"
+                <TextView
+                    android:id="@+id/tv_input_name"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
@@ -82,8 +82,8 @@
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
-                <EditText
-                    android:id="@+id/et_input_phone"
+                <TextView
+                    android:id="@+id/tv_input_phone"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"

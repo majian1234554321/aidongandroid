@@ -16,11 +16,11 @@ import rx.Observable;
  */
 public interface DiscoverService {
     //场馆
-    @GET("discovery/gyms")
+    @GET("discoveries/gyms")
     Observable<BaseBean<DiscoverVenuesData>> getVenues(@Query("lat") double lat, @Query("lng") double lng, @Query("page") int page);
 
     //用户
-    @GET("discovery/persons")
+    @GET("discoveries/persons")
     Observable<BaseBean<DiscoverUserData>> getUsers(@Query("lat") double lat, @Query("lng") double lng, @Query("page") int page, @Query("gender") String gender, @Query("type") String type);
 
     //新闻

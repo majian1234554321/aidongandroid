@@ -4,6 +4,7 @@ import com.leyuan.aidong.entity.BusinessCircleBean;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.CourseDetailData;
 import com.leyuan.aidong.entity.data.CourseData;
+import com.leyuan.aidong.entity.data.PayOrderData;
 
 import java.util.List;
 
@@ -42,4 +43,17 @@ public interface CourseModel {
      * @param id 课程id
      */
     void getCourseDetail(Subscriber<CourseDetailData> subscriber, String id);
+
+    /**
+     * 购买课程
+     * @param subscriber Subscriber
+     * @param id 课程id
+     * @param couponId 优惠券id
+     * @param integral 使用积分数量
+     * @param payType   支付类型
+     * @param contactName 用户名
+     * @param contactMobile 手机号
+     */
+    void buyCourse(Subscriber<PayOrderData> subscriber,String id,String couponId,String integral,
+                   String payType,String contactName,String contactMobile);
 }

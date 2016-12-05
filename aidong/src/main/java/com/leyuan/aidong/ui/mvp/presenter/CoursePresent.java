@@ -48,4 +48,15 @@ public interface CoursePresent {
      * @param id 课程id
      */
     void getCourseDetail(SwitcherLayout switcherLayout,String id);
+
+    /**
+     * 购买课程
+     * @param id 活动id
+     * @param couponId 优惠券id
+     * @param integral 积分
+     * @param payType 支付类型
+     * @param contactName 联系人
+     * @param contactMobile 联系人电话
+     */
+    void buyCourse(String id,String couponId,String integral,String payType,String contactName,String contactMobile);
 }

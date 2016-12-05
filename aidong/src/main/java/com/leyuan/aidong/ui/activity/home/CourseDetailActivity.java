@@ -32,14 +32,13 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  * Created by song on 2016/11/15.
  */
 public class CourseDetailActivity extends BaseActivity implements View.OnClickListener,CourseDetailActivityView {
-    private static final String STATUS__APPOINT = "1";      //马上预约
-    private static final String STATUS_END = "2";           //预约已结束
-    private static final String STATUS_APPOINTED = "3";     //已预约
-    private static final String STATUS_FULL = "4";          //预约人数已满
-    private static final String STATUS_NOT_START = "5";     //即将开始预约
-    private static final String STATUS_NOT_PAY = "6";       //待支付
-    private static final String STATUS_NOT_NEED= "7";       //无需预约
-    private String status = STATUS__APPOINT;
+    private static final String STATUS_END = "0";           //预约已结束
+    private static final String STATUS_APPOINTED = "1";     //已预约
+    private static final String STATUS_FULL = "2";          //预约人数已满
+    private static final String STATUS_NOT_START = "3";     //即将开始预约
+    private static final String STATUS_NOT_PAY = "4";       //待支付
+    private static final String STATUS_NOT_NEED= "5";       //无需预约
+    private static final String STATUS_APPOINT = "6";       //马上预约
 
     private ImageView ivBack;
     private TextView tvTitle;
@@ -64,6 +63,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     private TextView tvState;
 
     private String code;
+    private CourseDetailBean detailBean;
     private CoursePresent coursePresent;
 
     public static void start(Context context,String code) {
@@ -148,7 +148,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void setCourseDetail(CourseDetailBean bean) {
         ivShare.setVisibility(View.VISIBLE);
-        status = bean.getStatues();
+        detailBean = bean;
         tvTitle.setText(bean.getName());
         List<String> cover = new ArrayList<>();
         cover.add(bean.getCover());
@@ -169,8 +169,8 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
 
     private void setBottomStatus(){
         bottomLayout.setVisibility(View.VISIBLE);
-        switch (status){
-            case STATUS__APPOINT:   //跳预约
+        switch (detailBean.getStatus()){
+            case STATUS_APPOINT:   //跳预约
                 tvStartTime.setVisibility(View.GONE);
                 tvPrice.setVisibility(View.VISIBLE);
                 tvState.setText(R.string.status_appoint);
@@ -218,13 +218,14 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void bottomToTargetActivity(){
-        if(STATUS__APPOINT.equals(status)){     //预约
+        if(STATUS_APPOINT.equals(detailBean.getStatus())){     //预约
             if(App.mInstance.isLogin()){
                 //todo 判断同一时间是否已有预约
+                AppointmentInfoActivity.start(this,AppointmentInfoActivity.TYPE_COURSE,detailBean);
             }else {
                 //todo  登录 登录完成之后重新刷接口
             }
-        }else if(STATUS_NOT_PAY.equals(status)){
+        }else if(STATUS_NOT_PAY.equals(detailBean.getStatus())){
 
         }
     }

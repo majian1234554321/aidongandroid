@@ -7,12 +7,17 @@ import android.widget.Toast;
 import com.leyuan.aidong.entity.CourseBean;
 import com.leyuan.aidong.entity.CourseDetailData;
 import com.leyuan.aidong.entity.data.CourseData;
+import com.leyuan.aidong.entity.data.PayOrderData;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
+import com.leyuan.aidong.module.pay.Alipay;
+import com.leyuan.aidong.module.pay.PayInterface;
+import com.leyuan.aidong.ui.activity.home.AppointmentInfoActivity;
 import com.leyuan.aidong.ui.mvp.model.CourseModel;
 import com.leyuan.aidong.ui.mvp.model.impl.CourseModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
+import com.leyuan.aidong.ui.mvp.view.AppointmentInfoActivityView;
 import com.leyuan.aidong.ui.mvp.view.CourseActivityView;
 import com.leyuan.aidong.ui.mvp.view.CourseDetailActivityView;
 import com.leyuan.aidong.ui.mvp.view.CourserFragmentView;
@@ -33,9 +38,10 @@ public class CoursePresentImpl  implements CoursePresent{
     private CourseModel courseModel;
 
     private List<CourseBean> courseBeanList;
-    private CourserFragmentView courserFragmentView;
-    private CourseActivityView coursesActivityView;                //课程列表View层对象
+    private CourserFragmentView courserFragmentView;                //课程列表View层对象
+    private CourseActivityView coursesActivityView;                 //课程列表View层对象
     private CourseDetailActivityView courseDetailActivityView;      //课程详情View层对象
+    private AppointmentInfoActivityView appointActivityView;        //预约课程View层对象
 
     public CoursePresentImpl(Context context, CourseDetailActivityView view) {
         this.context = context;
@@ -56,6 +62,14 @@ public class CoursePresentImpl  implements CoursePresent{
     public CoursePresentImpl(Context context, CourseActivityView view) {
         this.context = context;
         this.coursesActivityView = view;
+        if(courseModel == null){
+            courseModel = new CourseModelImpl(context);
+        }
+    }
+
+    public CoursePresentImpl(Context context, AppointmentInfoActivityView view) {
+        this.context = context;
+        this.appointActivityView = view;
         if(courseModel == null){
             courseModel = new CourseModelImpl(context);
         }
@@ -150,5 +164,46 @@ public class CoursePresentImpl  implements CoursePresent{
                 }
             }
         }, id);
+    }
+
+    @Override
+    public void buyCourse(String id, String couponId, String integral, String payType, String contactName, String contactMobile) {
+       courseModel.buyCourse(new Subscriber<PayOrderData>() {
+           @Override
+           public void onCompleted() {
+               Toast.makeText(context,"onCompleted",Toast.LENGTH_LONG).show();
+           }
+
+           @Override
+           public void onError(Throwable e) {
+               Toast.makeText(context,"failed:" + e.toString(),Toast.LENGTH_LONG).show();
+           }
+
+           @Override
+           public void onNext(PayOrderData payOrderData) {
+              // appointActivityView.onAppointFinished(payOrderData.getOrder());
+               String pay_type = payOrderData.getOrder().getPay_type();
+               if("alipay".equals(pay_type)){
+                   PayInterface payInterface = new Alipay((AppointmentInfoActivity)context, new PayInterface.PayListener() {
+                       @Override
+                       public void fail(String code, Object object) {
+                           Toast.makeText(context,"failed:" + code + object.toString(),Toast.LENGTH_LONG).show();
+                       }
+
+                       @Override
+                       public void success(String code, Object object) {
+                           Toast.makeText(context,"success:" + code + object.toString(),Toast.LENGTH_LONG).show();
+                       }
+                   });
+                   payInterface.payOrder(payOrderData.getOrder());
+               }
+           }
+       },id,couponId,integral,payType,contactName,contactMobile);
+       /* courseModel.buyCourse(new ProgressSubscriber<PayOrderData>(context) {
+            @Override
+            public void onNext(PayOrderData payOrderData) {
+                appointActivityView.onAppointFinished(payOrderData.getOrder());
+            }
+        },id,couponId,integral,payType,contactName,contactMobile);*/
     }
 }

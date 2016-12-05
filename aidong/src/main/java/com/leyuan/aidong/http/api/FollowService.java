@@ -6,6 +6,7 @@ import com.leyuan.aidong.entity.data.FollowData;
 
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -32,6 +33,7 @@ public interface FollowService {
      * @param id 关注的用户id
      * @return 状态
      */
+    @FormUrlEncoded
     @POST("mine/followers")
     Observable<BaseBean> addFollow(@Field("following_id") int id);
 
@@ -41,6 +43,7 @@ public interface FollowService {
      * @param id 取消关注的用户id
      * @return 状态
      */
+    @FormUrlEncoded
     @DELETE("mine/followers/{id}")
     Observable<BaseBean> cancelFollow(@Path("id") int id);
 }
