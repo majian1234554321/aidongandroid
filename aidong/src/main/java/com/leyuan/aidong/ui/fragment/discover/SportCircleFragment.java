@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
+import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.common.BaseUrlLink;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.activity.media.VideoPlayerActivity;
@@ -41,7 +42,6 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.leyuan.commonlibrary.http.IHttpCallback;
 import com.leyuan.commonlibrary.http.IHttpTask;
 import com.leyuan.commonlibrary.util.ToastUtil;
-import com.leyuan.aidong.utils.LogUtil;
 
 import org.apache.http.message.BasicNameValuePair;
 
@@ -305,7 +305,7 @@ public class SportCircleFragment extends BaseFragment implements
 	@Override
 	public void onGetData(Object data, int requestCode, String response) {
 		stopLoading();
-		LogUtil.d("111",data.toString());
+		LogAidong.d("111",data.toString());
 		switch (requestCode) {
 		case DYAMICS_DOWN:
 			FoundDynamicResult result_down = (FoundDynamicResult) data;

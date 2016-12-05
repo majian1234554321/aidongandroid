@@ -5,7 +5,7 @@ import com.leyuan.aidong.entity.model.result.LoginResult;
 import com.leyuan.aidong.http.RetrofitHelper;
 import com.leyuan.aidong.http.RxHelper;
 import com.leyuan.aidong.http.api.UpdateDeviceService;
-import com.leyuan.aidong.utils.LogUtil;
+import com.leyuan.aidong.utils.LogAidong;
 
 import rx.Subscriber;
 
@@ -23,12 +23,12 @@ public class UpdateDevicePresenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        LogUtil.i("updateDevice", e.toString());
+                        LogAidong.i("updateDevice", e.toString());
                     }
 
                     @Override
                     public void onNext(LoginResult loginResult) {
-                        LogUtil.i("onNext");
+                        LogAidong.i("onNext");
                     }
                 });
     }

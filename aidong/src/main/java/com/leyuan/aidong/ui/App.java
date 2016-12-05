@@ -11,7 +11,7 @@ import com.baidu.mapapi.SDKInitializer;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.stetho.Stetho;
 import com.leyuan.aidong.entity.model.UserCoach;
-import com.leyuan.aidong.utils.LogUtil;
+import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.SharePrefUtils;
 import com.lidroid.xutils.DbUtils;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -111,7 +111,7 @@ public class App extends Application{
             if(city!=null){
                 mLocationClient.stop();
             }
-            LogUtil.i("lat = " +lat+",   lon = " +lon);
+            LogAidong.i("lat = " +lat+",   lon = " +lon);
 
         }
     }

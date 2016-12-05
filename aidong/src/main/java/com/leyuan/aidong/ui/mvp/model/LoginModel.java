@@ -21,7 +21,7 @@ public class LoginModel implements LoginModelInterface {
     @Override
     public void login(Subscriber<LoginResult> subscriber, String account, String password) {
 //        String device_toke = SharePrefUtils.getString(App.mInstance.context, "regId", "");
-//        LogUtil.i("Push MyReceiver", "device_toke regId = " + device_toke);
+//        LogAidong.i("Push MyReceiver", "device_toke regId = " + device_toke);
         mLoginService.login(account, password)
                 .compose(RxHelper.<LoginResult>transform())
                 .subscribe(subscriber);

@@ -101,7 +101,7 @@ public class SDCardUtil {
             }
         } catch (Exception ex) {
             //Toast.makeText(context, "文件写入失败", Toast.LENGTH_SHORT).show();
-            //LogUtil.d(ex.toString());
+            //LogAidong.d(ex.toString());
         }
     }
 
@@ -109,7 +109,7 @@ public class SDCardUtil {
         StringBuffer sb = null;
         try {
             File file = new File(fileDir, fileName);
-            LogUtil.d(file.getPath());
+            LogAidong.d(file.getPath());
             BufferedReader br = new BufferedReader(new FileReader(file));
             String readline = "";
             sb = new StringBuffer();

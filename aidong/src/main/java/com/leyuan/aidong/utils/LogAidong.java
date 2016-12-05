@@ -7,9 +7,9 @@ import com.leyuan.aidong.utils.common.Urls;
 /**
  * Log统一管理类
  */
-public class LogUtil {
+public class LogAidong {
 
-    private LogUtil() {
+    private LogAidong() {
         /* cannot be instantiated */
         throw new UnsupportedOperationException("cannot be instantiated");
     }

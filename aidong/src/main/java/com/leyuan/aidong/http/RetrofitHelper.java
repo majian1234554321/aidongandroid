@@ -50,6 +50,11 @@ public class RetrofitHelper {
                         }
                         builder.addHeader("city", URLEncoder.encode(App.city, "UTF-8"));
 
+//                        builder.addHeader("city",App.city);
+                        builder.addHeader("lat",String.valueOf(App.lat));
+                        builder.addHeader("lng",String.valueOf(App.lon));
+
+
                         Request authorised = builder.build();
                         return chain.proceed(authorised);
                     }
