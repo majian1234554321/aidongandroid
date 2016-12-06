@@ -170,7 +170,7 @@
         <activity android:name=".ui.activity.mine.login.FindPasswordActivity" />
         <activity android:name=".ui.activity.mine.login.RegisterActivity" />
         <activity android:name=".ui.activity.mine.login.XiuGaiGeXinQianMing" />
-
+        <!-- ********************share sdk************************* -->
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -186,6 +186,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <!-- ********************WeiXin Login Share************************* -->
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -222,7 +224,7 @@
             android:exported="true"
             android:launchMode="singleTop"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
+        <!-- ********************QQ Login Share************************* -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:noHistory="true"
@@ -239,8 +241,21 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="orientation|keyboardHidden|screenSize"
             />
+
+        <!--********************Weibo Login Share************************* -->
+        <activity android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
+            android:configChanges="keyboardHidden|orientation"
+            android:windowSoftInputMode="adjustResize"
+            android:exported="false" >
+        </activity>
+        <meta-data
+            android:name="WEIBO_APPKEY"
+            android:value="2029019793" />
+
+        <service
+            android:name="com.sina.weibo.sdk.net.DownloadService"
+            android:exported="false" >
+        </service>
     </application>
-
-
 
 </manifest>
