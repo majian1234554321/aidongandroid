@@ -8,13 +8,13 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.BaseAdapter;
-import com.leyuan.aidong.entity.BusinessCircleBean;
+import com.leyuan.aidong.entity.DistrictBean;
 
 /**
  * 商圈筛选左边适配器
  * Created by song on 2016/11/1.
  */
-public class FilterLeftAdapter extends BaseAdapter<BusinessCircleBean> {
+public class FilterLeftAdapter extends BaseAdapter<DistrictBean> {
     private Context context;
     private int checkItemPosition = 0;
 
@@ -41,8 +41,8 @@ public class FilterLeftAdapter extends BaseAdapter<BusinessCircleBean> {
     public void initView(View view, int position, ViewGroup parent) {
         TextView circle = getView(view, R.id.tv_title);
         LinearLayout root = getView(view, R.id.ll_root);
-        final BusinessCircleBean bean = getItem(position);
-        circle.setText(bean.getAreaName());
+        final DistrictBean bean = getItem(position);
+        circle.setText(bean.getDistrictName());
         if (bean.isSelected()) {
             circle.setTextColor(context.getResources().getColor(R.color.main_red));
             root.setBackgroundColor(context.getResources().getColor(R.color.white));

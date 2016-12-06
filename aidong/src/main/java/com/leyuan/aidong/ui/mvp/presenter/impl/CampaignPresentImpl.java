@@ -18,6 +18,7 @@ import com.leyuan.aidong.ui.mvp.presenter.CampaignPresent;
 import com.leyuan.aidong.ui.mvp.view.CampaignDetailActivityView;
 import com.leyuan.aidong.ui.mvp.view.CampaignFragmentView;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.customview.SwitcherLayout;
 
 import java.util.ArrayList;
@@ -127,6 +128,7 @@ public class CampaignPresentImpl implements CampaignPresent {
 
             @Override
             public void onError(Throwable e) {
+                Logger.w("111","error:" + e.toString());
                 Toast.makeText(context, "error:" + e.toString(), Toast.LENGTH_LONG).show();
                 switcherLayout.showExceptionLayout();
             }

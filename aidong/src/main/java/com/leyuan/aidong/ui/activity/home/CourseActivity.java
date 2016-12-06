@@ -11,9 +11,8 @@ import android.widget.ImageView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.TabFragmentAdapter;
-import com.leyuan.aidong.entity.BusinessCircleBean;
-import com.leyuan.aidong.entity.BusinessCircleDescBean;
 import com.leyuan.aidong.entity.CategoryBean;
+import com.leyuan.aidong.entity.DistrictBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.home.view.CourseFilterView;
 import com.leyuan.aidong.ui.fragment.home.CourseFragment;
@@ -23,8 +22,6 @@ import com.leyuan.aidong.ui.mvp.view.CourseActivityView;
 import com.leyuan.aidong.utils.DateUtils;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -57,27 +54,6 @@ public class CourseActivity extends BaseActivity implements CourseActivityView{
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         filterView = (CourseFilterView) findViewById(R.id.view_filter_course);
-
-        List<BusinessCircleBean> circleList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            BusinessCircleBean circleBean = new BusinessCircleBean();
-            circleBean.setAreaName("商圈" + i);
-            circleBean.setAreaId(i+"");
-            List<BusinessCircleDescBean> list = new ArrayList<>();
-            for (int i1 = 0; i1 < 10; i1++) {
-                BusinessCircleDescBean bean = new BusinessCircleDescBean();
-                bean.setAreaName("商圈" + i+ ":" +i1 + "路");
-                list.add(bean);
-                bean.setAreaId(i+"" + i1);
-                circleBean.setDistrict(list);
-            }
-            circleList.add(circleBean);
-
-            Date date = new Date();
-
-            Calendar calendar = Calendar.getInstance();
-        }
-        filterView.setCircleList(circleList);
 
         List<String> days = DateUtils.getSevenDate();
         fragments = new ArrayList<>();
@@ -124,8 +100,8 @@ public class CourseActivity extends BaseActivity implements CourseActivityView{
     }
 
     @Override
-    public void setBusinessCircle(List<BusinessCircleBean> circleBeanList) {
-
+    public void setBusinessCircle(List<DistrictBean> circleBeanList) {
+        filterView.setCircleList(circleBeanList);
     }
 
     private class MyOnFilterClickListener implements CourseFilterView.OnFilterClickListener{

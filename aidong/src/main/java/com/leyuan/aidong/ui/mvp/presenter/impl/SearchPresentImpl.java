@@ -7,11 +7,13 @@ import android.support.v7.widget.RecyclerView;
 import com.leyuan.aidong.entity.CampaignBean;
 import com.leyuan.aidong.entity.CourseBean;
 import com.leyuan.aidong.entity.FoodBean;
+import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.entity.data.CampaignData;
 import com.leyuan.aidong.entity.data.CourseData;
 import com.leyuan.aidong.entity.data.FoodData;
+import com.leyuan.aidong.entity.data.SearchGoodsData;
 import com.leyuan.aidong.entity.data.UserData;
 import com.leyuan.aidong.entity.data.VenuesData;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
@@ -24,6 +26,7 @@ import com.leyuan.aidong.ui.mvp.view.SearchActivityView;
 import com.leyuan.aidong.ui.mvp.view.SearchCampaignFragmentView;
 import com.leyuan.aidong.ui.mvp.view.SearchCourseFragmentView;
 import com.leyuan.aidong.ui.mvp.view.SearchFoodFragmentView;
+import com.leyuan.aidong.ui.mvp.view.SearchGoodsFragmentView;
 import com.leyuan.aidong.ui.mvp.view.SearchUserFragmentView;
 import com.leyuan.aidong.ui.mvp.view.SearchVenuesFragmentView;
 import com.leyuan.aidong.utils.Constant;
@@ -41,6 +44,7 @@ public class SearchPresentImpl implements SearchPresent{
     private SearchModel searchModel;
 
     private List<CampaignBean> campaignList;
+    private List<GoodsBean> goodsList;
     private List<CourseBean> courseList;
     private List<FoodBean> foodList;
     private List<UserBean> userList;
@@ -48,6 +52,7 @@ public class SearchPresentImpl implements SearchPresent{
 
     private SearchActivityView searchActivityView;  //搜索View层对象
     private SearchCampaignFragmentView campaignView;//搜索活动View层对象
+    private SearchGoodsFragmentView goodsView;      //搜索商品View层对象
     private SearchCourseFragmentView courseView;    //搜索课程View层对象
     private SearchFoodFragmentView foodView;        //搜索健康餐饮View层对象
     private SearchUserFragmentView userView;        //搜索用户View层对象
@@ -70,10 +75,19 @@ public class SearchPresentImpl implements SearchPresent{
         }
     }
 
+    public SearchPresentImpl(Context context, SearchGoodsFragmentView view) {
+        this.context = context;
+        this.goodsView = view;
+        campaignList = new ArrayList<>();
+        if(searchModel == null){
+            searchModel = new SearchModelImpl();
+        }
+    }
+
     public SearchPresentImpl(Context context, SearchCourseFragmentView view) {
         this.context = context;
         this.courseView = view;
-        courseList = new ArrayList<>();
+        goodsList = new ArrayList<>();
         if(searchModel == null){
             searchModel = new SearchModelImpl();
         }
@@ -129,6 +143,24 @@ public class SearchPresentImpl implements SearchPresent{
                 }else {
                     switcherLayout.showContentLayout();
                     campaignView.updateRecyclerView(campaignList);
+                }
+            }
+        },keyword, Constant.FIRST_PAGE);
+    }
+
+    @Override
+    public void commonLoadGoodsData(final SwitcherLayout switcherLayout, String keyword) {
+        searchModel.searchGoods(new CommonSubscriber<SearchGoodsData>(switcherLayout) {
+            @Override
+            public void onNext(SearchGoodsData searchGoodsData) {
+                if (searchGoodsData != null) {
+                    goodsList = searchGoodsData.getProduct();
+                }
+                if(goodsList.isEmpty()){
+                    switcherLayout.showEmptyLayout();
+                }else {
+                    switcherLayout.showContentLayout();
+                    goodsView.updateRecyclerView(goodsList);
                 }
             }
         },keyword, Constant.FIRST_PAGE);
@@ -222,6 +254,21 @@ public class SearchPresentImpl implements SearchPresent{
     }
 
     @Override
+    public void pullToRefreshGoodsData(String keyword) {
+        searchModel.searchGoods(new RefreshSubscriber<SearchGoodsData>(context) {
+            @Override
+            public void onNext(SearchGoodsData searchGoodsData) {
+                if(searchGoodsData != null){
+                    goodsList = searchGoodsData.getProduct();
+                }
+                if(!goodsList.isEmpty()){
+                    goodsView.updateRecyclerView(goodsList);
+                }
+            }
+        },keyword,Constant.FIRST_PAGE);
+    }
+
+    @Override
     public void pullToRefreshCourseData(String keyword) {
         searchModel.searchCourse(new RefreshSubscriber<CourseData>(context) {
             @Override
@@ -294,6 +341,24 @@ public class SearchPresentImpl implements SearchPresent{
                 }
                 if(campaignList.size() < pageSize){
                     campaignView.showEndFooterView();
+                }
+            }
+        },keyword,page);
+    }
+
+    @Override
+    public void requestMoreGoodsData(RecyclerView recyclerView, String keyword, final int pageSize, int page) {
+        searchModel.searchGoods(new RequestMoreSubscriber<SearchGoodsData>(context,recyclerView,pageSize) {
+            @Override
+            public void onNext(SearchGoodsData searchGoodsData) {
+                if(searchGoodsData != null){
+                    goodsList = searchGoodsData.getProduct();
+                }
+                if(!goodsList.isEmpty()){
+                    goodsView.updateRecyclerView(goodsList);
+                }
+                if(goodsList.size() < pageSize){
+                    goodsView.showEndFooterView();
                 }
             }
         },keyword,page);

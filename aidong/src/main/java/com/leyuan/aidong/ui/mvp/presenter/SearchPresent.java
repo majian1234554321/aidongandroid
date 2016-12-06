@@ -28,6 +28,8 @@ public interface SearchPresent {
      */
     void commonLoadCampaignData(SwitcherLayout switcherLayout, String keyword);
 
+    void commonLoadGoodsData(SwitcherLayout switcherLayout, String keyword);
+
     void commonLoadCourseData(SwitcherLayout switcherLayout, String keyword);
 
     void commonLoadFoodData(SwitcherLayout switcherLayout, String keyword);
@@ -41,6 +43,8 @@ public interface SearchPresent {
      * @param keyword 关键字
      */
     void pullToRefreshCampaignData(String keyword);
+
+    void pullToRefreshGoodsData(String keyword);
 
     void pullToRefreshCourseData(String keyword);
 
@@ -58,6 +62,8 @@ public interface SearchPresent {
      * @param page 页码
      */
     void requestMoreCampaignData(RecyclerView recyclerView, String keyword, int pageSize, int page);
+
+    void requestMoreGoodsData(RecyclerView recyclerView, String keyword, int pageSize, int page);
 
     void requestMoreCourseData(RecyclerView recyclerView, String keyword, int pageSize, int page);
 

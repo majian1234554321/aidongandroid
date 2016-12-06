@@ -55,10 +55,6 @@ public class SportNewsActivity extends BaseActivity implements SportNewsActivity
         });
         initSwipeRefreshLayout();
         initRecyclerView();
-
-        newsAdapter.setData(null);
-        wrapperAdapter.notifyDataSetChanged();
-
         discoverPresent.commonLoadNewsData(switcherLayout);
     }
 

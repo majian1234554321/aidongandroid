@@ -1,6 +1,6 @@
 package com.leyuan.aidong.ui.mvp.model;
 
-import com.leyuan.aidong.entity.BusinessCircleBean;
+import com.leyuan.aidong.entity.DistrictBean;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.CourseDetailData;
 import com.leyuan.aidong.entity.data.CourseData;
@@ -26,7 +26,7 @@ public interface CourseModel {
      * 获取商圈信息
      * @return 商圈信息
      */
-    List<BusinessCircleBean> getBusinessCircle();
+    List<DistrictBean> getBusinessCircle();
 
     /**
      * 获取课程列表

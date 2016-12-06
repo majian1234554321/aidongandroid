@@ -4,10 +4,10 @@ package com.leyuan.aidong.entity;
  * 商圈筛选数据右边实体
  * Created by song on 2016/11/1.
  */
-public class BusinessCircleDescBean {
+public class DistrictDescBean {
 
     private String areaId;
-    private String areaName;
+    private String area;
     private boolean selected;
 
     public String getAreaId() {
@@ -18,12 +18,12 @@ public class BusinessCircleDescBean {
         this.areaId = areaId;
     }
 
-    public String getAreaName() {
-        return areaName;
+    public String getArea() {
+        return area;
     }
 
-    public void setAreaName(String areaName) {
-        this.areaName = areaName;
+    public void setArea(String area) {
+        this.area = area;
     }
 
     public boolean isSelected() {
@@ -32,5 +32,14 @@ public class BusinessCircleDescBean {
 
     public void setSelected(boolean selected) {
         this.selected = selected;
+    }
+
+    @Override
+    public String toString() {
+        return "DistrictDescBean{" +
+                "areaId='" + areaId + '\'' +
+                ", area='" + area + '\'' +
+                ", selected=" + selected +
+                '}';
     }
 }

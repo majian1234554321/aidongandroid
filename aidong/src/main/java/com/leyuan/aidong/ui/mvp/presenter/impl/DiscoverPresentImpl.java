@@ -110,8 +110,9 @@ public class DiscoverPresentImpl implements DiscoverPresent {
                     newsBeanList = discoverNewsData.getNews();
                 }
                 if(!newsBeanList.isEmpty()){
+                    switcherLayout.showContentLayout();
                     sportNewsActivityView.updateRecyclerView(newsBeanList);
-                }else{
+                }else {
                     switcherLayout.showEmptyLayout();
                 }
             }

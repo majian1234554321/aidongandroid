@@ -6,7 +6,7 @@ import android.preference.PreferenceManager;
 import android.util.Base64;
 
 import com.leyuan.aidong.entity.BannerBean;
-import com.leyuan.aidong.entity.BusinessCircleBean;
+import com.leyuan.aidong.entity.DistrictBean;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.SystemBean;
 
@@ -169,7 +169,7 @@ public class SystemInfoUtils {
      * 获取商圈信息
      * @return 装备分类
      */
-    public static List<BusinessCircleBean> getLandmark(Context context){
+    public static List<DistrictBean> getLandmark(Context context){
         if(Constant.systemInfoBean != null && Constant.systemInfoBean.getLandmark() != null){ //内存有直接从内存读取返回
             return Constant.systemInfoBean.getLandmark();
         }else{          // 从本地读取

@@ -67,7 +67,7 @@ public class SearchFoodFragment extends BaseFragment implements SearchFoodFragme
         initRecyclerView(view);
         foodAdapter.setData(null);
         wrapperAdapter.notifyDataSetChanged();
-        //present.commonLoadFoodData(switcherLayout,keyword);
+        present.commonLoadFoodData(switcherLayout,keyword);
     }
 
     private void initSwipeRefreshLayout(View view) {

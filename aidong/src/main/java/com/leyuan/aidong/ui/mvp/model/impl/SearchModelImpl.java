@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.leyuan.aidong.entity.data.CampaignData;
 import com.leyuan.aidong.entity.data.CourseData;
 import com.leyuan.aidong.entity.data.FoodData;
+import com.leyuan.aidong.entity.data.SearchGoodsData;
 import com.leyuan.aidong.entity.data.UserData;
 import com.leyuan.aidong.entity.data.VenuesData;
 import com.leyuan.aidong.entity.greendao.SearchHistory;
@@ -26,7 +27,8 @@ import rx.Subscriber;
  * Created by song on 2016/9/18.
  */
 public class SearchModelImpl implements SearchModel {
-    private static final String SEARCH_VENUES = "venues";
+    private static final String SEARCH_VENUES = "gym";
+    private static final String SEARCH_GOODS = "product";
     private static final String SEARCH_COURSE = "course";
     private static final String SEARCH_FOOD = "food";
     private static final String SEARCH_CAMPAIGN = "campaign";
@@ -51,6 +53,13 @@ public class SearchModelImpl implements SearchModel {
     public void searchVenues(Subscriber<VenuesData> subscriber, String keyword, int page) {
         searchService.searchVenues(keyword, SEARCH_VENUES, page)
                 .compose(RxHelper.<VenuesData>transform())
+                .subscribe(subscriber);
+    }
+
+    @Override
+    public void searchGoods(Subscriber<SearchGoodsData> subscriber, String keyword, int page) {
+        searchService.searchGoods(keyword, SEARCH_GOODS, page)
+                .compose(RxHelper.<SearchGoodsData>transform())
                 .subscribe(subscriber);
     }
 

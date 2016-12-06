@@ -8,9 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.TabFragmentAdapter;
+import com.leyuan.aidong.ui.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,14 +20,12 @@ import java.util.List;
  * 搜索结果
  * Created by song on 2016/9/18.
  */
-public class SearchResultFragment extends BaseFragment{
-
+public class SearchResultFragment extends BaseFragment {
     private TabLayout tabLayout;
     private ViewPager viewPager;
-
     private String keyword;
 
-    public static SearchResultFragment newInstance(String searchContent){
+    public static SearchResultFragment newInstance(String searchContent) {
         Bundle bundle = new Bundle();
         bundle.putString("keyword", searchContent);
         SearchResultFragment fragment = new SearchResultFragment();
@@ -36,32 +34,34 @@ public class SearchResultFragment extends BaseFragment{
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Bundle bundle = getArguments();
-        if(bundle != null){
+        if (bundle != null) {
             keyword = bundle.getString("keyword");
         }
-        return inflater.inflate(R.layout.fragment_search_result,null);
+        return inflater.inflate(R.layout.fragment_search_result, null);
     }
 
     @Override
-    public void onViewCreated(View view,Bundle savedInstanceState) {
-        tabLayout = (TabLayout)view.findViewById(R.id.tab_layout);
-        viewPager = (ViewPager)view.findViewById(R.id.vp_search_result);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        tabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
+        viewPager = (ViewPager) view.findViewById(R.id.vp_search_result);
 
         ArrayList<Fragment> fragments = new ArrayList<>();
-        SearchVenuesFragment venues =  SearchVenuesFragment.newInstance(keyword);
-        SearchCourseFragment course = new SearchCourseFragment();
-        SearchFoodFragment food = new SearchFoodFragment();
-        SearchCampaignFragment campaign = new SearchCampaignFragment();
-        SearchUserFragment user = new SearchUserFragment();
+        SearchVenuesFragment venues = SearchVenuesFragment.newInstance(keyword);
+        SearchGoodsFragment goods = SearchGoodsFragment.newInstance(keyword);
+        SearchCourseFragment course = SearchCourseFragment.newInstance(keyword);
+        SearchFoodFragment food = SearchFoodFragment.newInstance(keyword);
+        SearchCampaignFragment campaign = SearchCampaignFragment.newInstance(keyword);
+        SearchUserFragment user = SearchUserFragment.newInstance(keyword);
         fragments.add(venues);
+        fragments.add(goods);
         fragments.add(course);
         fragments.add(food);
         fragments.add(campaign);
         fragments.add(user);
         List<String> titles = Arrays.asList(getResources().getStringArray(R.array.searchTab));
-        viewPager.setAdapter(new TabFragmentAdapter(getChildFragmentManager(),fragments,titles));
+        viewPager.setAdapter(new TabFragmentAdapter(getChildFragmentManager(), fragments, titles));
         tabLayout.setupWithViewPager(viewPager);
     }
 }

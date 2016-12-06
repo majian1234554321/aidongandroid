@@ -8,13 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.activity.home.adapter.CampaignAdapter;
-import com.leyuan.aidong.entity.CampaignBean;
+import com.leyuan.aidong.entity.GoodsBean;
+import com.leyuan.aidong.ui.BaseFragment;
+import com.leyuan.aidong.ui.activity.home.adapter.SearchGoodsAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.SearchPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SearchPresentImpl;
-import com.leyuan.aidong.ui.mvp.view.SearchCampaignFragmentView;
+import com.leyuan.aidong.ui.mvp.view.SearchGoodsFragmentView;
 import com.leyuan.aidong.widget.customview.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -25,38 +25,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 活动搜索结果
- * Created by song on 2016/9/12.
+ * 搜索商品结果包含营养品和装备
+ * Created by song on 2016/12/6.
  */
-public class SearchCampaignFragment extends BaseFragment implements SearchCampaignFragmentView {
+public class SearchGoodsFragment extends BaseFragment implements SearchGoodsFragmentView{
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
 
     private int currPage = 1;
-    private List<CampaignBean> data;
+    private List<GoodsBean> data;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
-    private CampaignAdapter campaignAdapter;
+    private SearchGoodsAdapter goodsAdapter;
 
     private SearchPresent present;
     private String keyword;
 
-    public static SearchCampaignFragment newInstance(String searchContent){
+    public static SearchGoodsFragment newInstance(String searchContent){
         Bundle bundle = new Bundle();
         bundle.putString("keyword", searchContent);
-        SearchCampaignFragment fragment = new SearchCampaignFragment();
+        SearchGoodsFragment fragment = new SearchGoodsFragment();
         fragment.setArguments(bundle);
         return fragment;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        pageSize = 20;
+        present = new SearchPresentImpl(getContext(),this);
         Bundle bundle = getArguments();
         if(bundle != null){
             keyword = bundle.getString("keyword");
         }
-        pageSize = 20;
-        present = new SearchPresentImpl(getContext(),this);
         return inflater.inflate(R.layout.fragment_result,null);
     }
 
@@ -64,7 +64,7 @@ public class SearchCampaignFragment extends BaseFragment implements SearchCampai
     public void onViewCreated(View view, Bundle savedInstanceState) {
         initSwipeRefreshLayout(view);
         initRecyclerView(view);
-        present.commonLoadCampaignData(switcherLayout,keyword);
+        present.commonLoadGoodsData(switcherLayout,keyword);
     }
 
     private void initSwipeRefreshLayout(View view) {
@@ -76,14 +76,14 @@ public class SearchCampaignFragment extends BaseFragment implements SearchCampai
             public void onRefresh() {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-                present.pullToRefreshCampaignData(keyword);
+                present.pullToRefreshGoodsData(keyword);
             }
         });
 
         switcherLayout.setOnRetryListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                present.commonLoadCampaignData(switcherLayout,keyword);
+                present.commonLoadGoodsData(switcherLayout,keyword);
             }
         });
     }
@@ -91,8 +91,8 @@ public class SearchCampaignFragment extends BaseFragment implements SearchCampai
     private void initRecyclerView(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_result);
         data = new ArrayList<>();
-        campaignAdapter = new CampaignAdapter(getContext());
-        wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(campaignAdapter);
+        goodsAdapter = new SearchGoodsAdapter(getContext());
+        wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(goodsAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(wrapperAdapter);
         recyclerView.addOnScrollListener(onScrollListener);
@@ -103,19 +103,19 @@ public class SearchCampaignFragment extends BaseFragment implements SearchCampai
         public void onLoadNextPage(View view) {
             currPage ++;
             if (data != null && data.size() >= pageSize) {
-                present.requestMoreCampaignData(recyclerView,keyword,pageSize,currPage);
+                present.requestMoreGoodsData(recyclerView,keyword,pageSize,currPage);
             }
         }
     };
 
     @Override
-    public void updateRecyclerView(List<CampaignBean> campaignBeanList) {
+    public void updateRecyclerView(List<GoodsBean> goodsBeanList) {
         if(refreshLayout.isRefreshing()){
             data.clear();
             refreshLayout.setRefreshing(false);
         }
-        data.addAll(campaignBeanList);
-        campaignAdapter.setData(data);
+        data.addAll(goodsBeanList);
+        goodsAdapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();
     }
 
@@ -123,4 +123,5 @@ public class SearchCampaignFragment extends BaseFragment implements SearchCampai
     public void showEndFooterView() {
         RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
     }
+
 }

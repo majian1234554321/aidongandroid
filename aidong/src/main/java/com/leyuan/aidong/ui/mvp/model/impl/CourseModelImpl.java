@@ -2,7 +2,7 @@ package com.leyuan.aidong.ui.mvp.model.impl;
 
 import android.content.Context;
 
-import com.leyuan.aidong.entity.BusinessCircleBean;
+import com.leyuan.aidong.entity.DistrictBean;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.CourseDetailData;
 import com.leyuan.aidong.entity.data.CourseData;
@@ -36,7 +36,7 @@ public class CourseModelImpl implements CourseModel {
     }
 
     @Override
-    public List<BusinessCircleBean> getBusinessCircle() {
+    public List<DistrictBean> getBusinessCircle() {
         return SystemInfoUtils.getLandmark(context);
     }
 

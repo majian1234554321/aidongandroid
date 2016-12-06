@@ -1,6 +1,6 @@
 package com.leyuan.aidong.ui.mvp.view;
 
-import com.leyuan.aidong.entity.BusinessCircleBean;
+import com.leyuan.aidong.entity.DistrictBean;
 import com.leyuan.aidong.entity.CategoryBean;
 
 import java.util.List;
@@ -19,5 +19,5 @@ public interface CourseActivityView {
     /**
      * 设置热门商圈
      */
-    void setBusinessCircle(List<BusinessCircleBean> circleBeanList);
+    void setBusinessCircle(List<DistrictBean> circleBeanList);
 }

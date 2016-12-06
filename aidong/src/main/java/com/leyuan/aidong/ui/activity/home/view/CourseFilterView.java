@@ -13,8 +13,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.BusinessCircleBean;
-import com.leyuan.aidong.entity.BusinessCircleDescBean;
+import com.leyuan.aidong.entity.DistrictBean;
+import com.leyuan.aidong.entity.DistrictDescBean;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.ui.activity.home.adapter.LeftFilterAdapter;
 import com.leyuan.aidong.ui.activity.home.adapter.RightFilterAdapter;
@@ -49,8 +49,8 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
     private RightFilterAdapter rightCircleAdapter;
     private int leftSelectedPosition = -1;  //左边列表实际选中的位置 ：只有当右边列表选中其中一个item时，此时的左边列表实际位置才确定，否则当临时选中位置处理，即只改变选中的效果
     private int rightSelectedPosition = -1; //右边列表实际选中的位置
-    private List<BusinessCircleBean> leftCircleList = new ArrayList<>();
-    private List<BusinessCircleDescBean> rightCircleList = new ArrayList<>();
+    private List<DistrictBean> leftCircleList = new ArrayList<>();
+    private List<DistrictDescBean> rightCircleList = new ArrayList<>();
 
     private int panelHeight;
     private boolean isPopupShowing = false;
@@ -161,9 +161,9 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
         rightListView.setVisibility(VISIBLE);
 
         if(leftSelectedPosition == -1){
-            rightCircleList = leftCircleList.get(0).getDistrict();
+            rightCircleList = leftCircleList.get(0).getDistrictValues();
         }else{
-            rightCircleList = leftCircleList.get(leftSelectedPosition).getDistrict();
+            rightCircleList = leftCircleList.get(leftSelectedPosition).getDistrictValues();
         }
 
         // 左边列表
@@ -188,7 +188,7 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
                 leftCircleAdapter.setCheckItem(leftPosition);       //临时改变左边选中item的状态
 
                 if(leftCircleList.get(leftPosition) != null){       //更新右边列表数据
-                    rightCircleList = leftCircleList.get(leftPosition).getDistrict();
+                    rightCircleList = leftCircleList.get(leftPosition).getDistrictValues();
                     rightCircleAdapter.setCircleDescBeanList(rightCircleList);
                 }
 
@@ -208,7 +208,7 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
 
                         rightSelectedPosition = rightPosition;           //改变右边选中item
                         rightCircleAdapter.setSelectedBean(rightCircleList.get(rightSelectedPosition));
-                        String address = rightCircleList.get(rightSelectedPosition).getAreaName();
+                        String address = rightCircleList.get(rightSelectedPosition).getArea();
                         tvCircle.setText(address);
                         if (onFilterClickListener != null) {
                             onFilterClickListener.onBusinessCircleItemClick(address);
@@ -271,7 +271,8 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
         this.categoryList = categoryList;
     }
 
-    public void setCircleList(List<BusinessCircleBean> circleList) {
+    public void setCircleList(List<DistrictBean> circleList) {
+        if(circleList != null)
         this.leftCircleList = circleList;
     }
 }

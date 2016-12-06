@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.BusinessCircleBean;
+import com.leyuan.aidong.entity.DistrictBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +20,13 @@ import java.util.List;
  */
 public class LeftFilterAdapter extends BaseAdapter{
     private Context context;
-    private List<BusinessCircleBean> circleBeanList = new ArrayList<>();
-    private BusinessCircleBean selectedBean;        //持久保存
+    private List<DistrictBean> circleBeanList = new ArrayList<>();
+    private DistrictBean selectedBean;        //持久保存
     private int checkItemPosition = -1;             //临时保存
     private boolean isTempShow = false;
 
 
-    public LeftFilterAdapter(Context context, List<BusinessCircleBean> circleBeanList) {
+    public LeftFilterAdapter(Context context, List<DistrictBean> circleBeanList) {
         this.context = context;
         if(circleBeanList != null){
             this.circleBeanList = circleBeanList;
@@ -40,9 +40,9 @@ public class LeftFilterAdapter extends BaseAdapter{
         notifyDataSetChanged();
     }
 
-    public void setSelectedBean(BusinessCircleBean bean) {
+    public void setSelectedBean(DistrictBean bean) {
         this.selectedBean = bean;
-        for (BusinessCircleBean entity : circleBeanList) {
+        for (DistrictBean entity : circleBeanList) {
              entity.setSelected(entity.getAreaId().equals(bean.getAreaId()));
         }
         notifyDataSetChanged();
@@ -54,7 +54,7 @@ public class LeftFilterAdapter extends BaseAdapter{
     }
 
     @Override
-    public BusinessCircleBean getItem(int position) {
+    public DistrictBean getItem(int position) {
         return circleBeanList.get(position);
     }
 
@@ -79,7 +79,7 @@ public class LeftFilterAdapter extends BaseAdapter{
 
 
     private void fillValue(int position, ViewHolder viewHolder) {
-        viewHolder.text.setText(getItem(position).getAreaName());
+        viewHolder.text.setText(getItem(position).getDistrictName());
         if(isTempShow){
             if (checkItemPosition == position) {
                 viewHolder.root.setBackgroundColor(context.getResources().getColor(R.color.white));

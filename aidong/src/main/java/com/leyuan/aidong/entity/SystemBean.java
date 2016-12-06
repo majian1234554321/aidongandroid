@@ -15,7 +15,7 @@ public class SystemBean implements Serializable{
     private ArrayList<CategoryBean> campaign;//活动分类
     private ArrayList<CategoryBean> nutrition;//营养品分类
     private ArrayList<CategoryBean> equipment;//装备分类
-    private ArrayList<BusinessCircleBean> landmark;
+    private ArrayList<DistrictBean> landmark;
 
     public List<String>  getOpen_city() {
         return open_city;
@@ -65,13 +65,24 @@ public class SystemBean implements Serializable{
         this.equipment = equipment;
     }
 
-    public ArrayList<BusinessCircleBean> getLandmark() {
+    public ArrayList<DistrictBean> getLandmark() {
         return landmark;
     }
 
-    public void setLandmark(ArrayList<BusinessCircleBean> landmark) {
+    public void setLandmark(ArrayList<DistrictBean> landmark) {
         this.landmark = landmark;
     }
 
-
+    @Override
+    public String toString() {
+        return "SystemBean{" +
+                "open_city=" + open_city +
+                ", banner=" + banner +
+                ", course=" + course +
+                ", campaign=" + campaign +
+                ", nutrition=" + nutrition +
+                ", equipment=" + equipment +
+                ", landmark=" + landmark +
+                '}';
+    }
 }

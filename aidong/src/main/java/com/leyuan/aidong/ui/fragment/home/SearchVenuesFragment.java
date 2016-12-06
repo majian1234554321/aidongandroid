@@ -68,7 +68,7 @@ public class SearchVenuesFragment extends BaseFragment implements SearchVenuesFr
         initRecyclerView(view);
         venuesAdapter.setData(null);
         wrapperAdapter.notifyDataSetChanged();
-        // present.commonLoadVenuesData(switcherLayout,keyword);
+        present.commonLoadVenuesData(switcherLayout,keyword);
     }
 
     private void initSwipeRefreshLayout(View view) {

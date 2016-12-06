@@ -12,7 +12,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.leyuan.aidong.R;
-//import com.leyuan.aidong.entity.greendao.DaoMaster;
 import com.leyuan.aidong.entity.greendao.SearchHistory;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.SearchHistoryAdapter;
@@ -23,6 +22,8 @@ import com.leyuan.aidong.ui.mvp.view.SearchActivityView;
 import com.leyuan.aidong.utils.KeyBoardUtil;
 
 import java.util.List;
+
+//import com.leyuan.aidong.entity.greendao.DaoMaster;
 
 /**
  * 搜索
@@ -74,12 +75,14 @@ public class SearchActivity extends BaseActivity implements SearchActivityView{
                 finish();
             }
         });
+
         etSearch.setOnKeyListener(new View.OnKeyListener(){
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if(keyCode == KeyEvent.KEYCODE_ENTER){
                     KeyBoardUtil.closeKeybord(etSearch,SearchActivity.this);
-                    SearchResultFragment fragment = new SearchResultFragment();
+                    String keyword = etSearch.getText().toString();
+                    SearchResultFragment fragment = SearchResultFragment.newInstance(keyword);
                     FragmentManager fm = getSupportFragmentManager();
                     fm.beginTransaction().replace(R.id.fl_container,fragment).commit();
                     frameLayout.setVisibility(View.VISIBLE);

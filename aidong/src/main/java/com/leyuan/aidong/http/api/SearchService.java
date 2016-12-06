@@ -4,6 +4,7 @@ import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.data.CampaignData;
 import com.leyuan.aidong.entity.data.CourseData;
 import com.leyuan.aidong.entity.data.FoodData;
+import com.leyuan.aidong.entity.data.SearchGoodsData;
 import com.leyuan.aidong.entity.data.UserData;
 import com.leyuan.aidong.entity.data.VenuesData;
 
@@ -21,6 +22,10 @@ public interface SearchService {
     @FormUrlEncoded
     @POST("search")
     Observable<BaseBean<VenuesData>> searchVenues(@Field("keyword") String keyword,@Field("cat") String category, @Field("page") int page);
+
+    @FormUrlEncoded
+    @POST("search")
+    Observable<BaseBean<SearchGoodsData>> searchGoods(@Field("keyword") String keyword, @Field("cat") String category, @Field("page") int page);
 
     @FormUrlEncoded
     @POST("search")
