@@ -151,7 +151,7 @@ public class SaveImgUtil {
         File file = new File(context.getExternalFilesDir(
                 Environment.DIRECTORY_PICTURES), folderName);
         if (!file.mkdirs()) {
-            LogUtil.e(TAG, "Directory not created");
+            LogAidong.e(TAG, "Directory not created");
         }
         return file;
     }

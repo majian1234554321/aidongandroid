@@ -40,13 +40,13 @@ public class UploadUserModel {
         //        call.enqueue(new Callback<ResponseBody>() {
         //            @Override
         //            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-        //                LogUtil.i("upload", "onResponse --" + response.body());
+        //                LogAidong.i("upload", "onResponse --" + response.body());
         //
         //            }
         //
         //            @Override
         //            public void onFailure(Call<ResponseBody> call, Throwable t) {
-        //                LogUtil.i("upload", "onFailure");
+        //                LogAidong.i("upload", "onFailure");
         //
         //            }
         //        });

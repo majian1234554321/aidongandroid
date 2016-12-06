@@ -198,7 +198,7 @@
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" />
-        <meta-nurtureList
+        <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="oOUovyobUoONSmPB8qGjG4Lq" />
 
