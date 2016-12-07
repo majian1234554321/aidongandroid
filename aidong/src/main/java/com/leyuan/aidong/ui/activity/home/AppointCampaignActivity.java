@@ -12,27 +12,21 @@ import android.widget.Toast;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CampaignDetailBean;
-import com.leyuan.aidong.entity.CourseDetailBean;
-import com.leyuan.aidong.entity.PayOrderBean;
-import com.leyuan.aidong.module.pay.Alipay;
 import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.mine.CouponActivity;
-import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
-import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
-import com.leyuan.aidong.ui.mvp.view.AppointmentInfoActivityView;
+import com.leyuan.aidong.ui.mvp.presenter.CampaignPresent;
+import com.leyuan.aidong.ui.mvp.presenter.impl.CampaignPresentImpl;
 import com.leyuan.aidong.widget.customview.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.customview.ExtendTextView;
 import com.leyuan.aidong.widget.customview.SimpleTitleBar;
 
 /**
- * 预约信息 包括课程和活动的预约
+ * 预约活动
  * Created by song on 2016/9/12.
  */
-public class AppointmentInfoActivity extends BaseActivity implements View.OnClickListener, AppointmentInfoActivityView, CustomNestRadioGroup.OnCheckedChangeListener {
-    public static final int TYPE_COURSE = 1;
-    public static final int TYPE_CAMPAIGN = 2;
+public class AppointCampaignActivity extends BaseActivity implements View.OnClickListener, CustomNestRadioGroup.OnCheckedChangeListener {
     private static final String ALI_PAY = "alipay";
     private static final String WEI_XIN_PAY = "wxpay";
 
@@ -42,7 +36,7 @@ public class AppointmentInfoActivity extends BaseActivity implements View.OnClic
     private TextView tvUserName;
     private TextView tvUserPhone;
 
-    //课程或活动信息
+    //活动信息
     private TextView tvType;
     private SimpleDraweeView dvCover;
     private TextView tvCourseName;
@@ -71,43 +65,27 @@ public class AppointmentInfoActivity extends BaseActivity implements View.OnClic
     private TextView tvPay;
 
     private String couponId;
-    private String integral;
+    private float integral;
     private String payType;
     private String userName;
     private String contactMobile;
-    private int type;   //区分课程或活动预约
-    private CourseDetailBean courseDetailBean;
-    private CampaignDetailBean campaignDetailBean;
-    private CoursePresent coursePresent;
 
-    //from campaign detail activity
-    public static void start(Context context, int type, CampaignDetailBean campaignDetailBean) {
-        Intent starter = new Intent(context, AppointmentInfoActivity.class);
-        starter.putExtra("type", type);
-        starter.putExtra("bean", campaignDetailBean);
-        context.startActivity(starter);
-    }
+    private CampaignDetailBean campaignBean;
+    private CampaignPresent campaignPresent;
 
-    // form course detail activity
-    public static void start(Context context, int type, CourseDetailBean courseDetailBean) {
-        Intent starter = new Intent(context, AppointmentInfoActivity.class);
-        starter.putExtra("type", type);
-        starter.putExtra("bean", courseDetailBean);
+    public static void start(Context context,CampaignDetailBean campaignBean) {
+        Intent starter = new Intent(context, AppointCampaignActivity.class);
+        starter.putExtra("bean", campaignBean);
         context.startActivity(starter);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_appointment_info);
+        setContentView(R.layout.activity_appoint_campaign);
         payType = ALI_PAY;
         if (getIntent() != null) {
-            type = getIntent().getIntExtra("type", TYPE_COURSE);
-            if (type == TYPE_COURSE) {
-                courseDetailBean = getIntent().getParcelableExtra("bean");
-            } else {
-                campaignDetailBean = getIntent().getParcelableExtra("bean");
-            }
+            campaignBean = getIntent().getParcelableExtra("bean");
         }
         initView();
         setListener();
@@ -142,17 +120,13 @@ public class AppointmentInfoActivity extends BaseActivity implements View.OnClic
         contactMobile = App.mInstance.getUser().getMobile();
         tvUserName.setText(userName);
         tvUserPhone.setText(contactMobile);
-        tvType.setText(TYPE_COURSE == type ? getString(R.string.course_info) : getString(R.string.campaign_info));
-        tvCourseName.setText(TYPE_COURSE == type ? courseDetailBean.getName() : campaignDetailBean.getName());
-        tvTime.setLeftTextContent(TYPE_COURSE == type ? getString(R.string.course_time) : getString(R.string.campaign_time));
-        tvTime.setRightTextContent(TYPE_COURSE == type ? courseDetailBean.getClass_time() : campaignDetailBean.getStart_time());
-        tvAddress.setLeftTextContent(TYPE_COURSE == type ? getString(R.string.course_address) : getString(R.string.campaign_address));
-        tvAddress.setRightTextContent(TYPE_COURSE == type ? courseDetailBean.getAddress() : campaignDetailBean.getAddress());
-        tvTotalPrice.setLeftTextContent(TYPE_COURSE == type ? getString(R.string.course_price) : getString(R.string.campaign_price));
-        tvTotalPrice.setRightTextContent(TYPE_COURSE == type ? courseDetailBean.getPrice() : campaignDetailBean.getPrice());
-        tvDiscountPrice.setLeftTextContent(TYPE_COURSE == type ? getString(R.string.course_privilege) : getString(R.string.campaign_privilege));
+        tvCourseName.setText( campaignBean.getName());
+        dvCover.setImageURI(campaignBean.getImage().get(0));
+        tvTime.setRightTextContent(campaignBean.getStartTime());
+        tvAddress.setRightTextContent(campaignBean.getLandmark());
+        tvTotalPrice.setRightTextContent(campaignBean.getPrice());
         tvDiscountPrice.setRightTextContent("0");
-        tvPrice.setText(TYPE_COURSE == type ? courseDetailBean.getPrice() : campaignDetailBean.getPrice());
+        tvPrice.setText(campaignBean.getPrice());
     }
 
     private void setListener() {
@@ -184,35 +158,28 @@ public class AppointmentInfoActivity extends BaseActivity implements View.OnClic
                 vipTipLayout.setVisibility(View.VISIBLE);
                 break;
             case R.id.tv_pay:
-                if(coursePresent == null){
-                    coursePresent = new CoursePresentImpl(this,this);
+                if(campaignPresent == null){
+                    campaignPresent = new CampaignPresentImpl(this);
                 }
-                coursePresent.buyCourse(courseDetailBean.getCode(),couponId,integral,payType, userName,contactMobile);
+                campaignPresent.buyCampaign(campaignBean.getCampaignId(),couponId,integral,
+                        payType,userName,contactMobile,payListener);
                 break;
             default:
                 break;
         }
     }
 
-    @Override
-    public void onAppointFinished(PayOrderBean payOrderBean) {
-        Toast.makeText(AppointmentInfoActivity.this,"调起支付宝",Toast.LENGTH_LONG).show();
-        String pay_type = payOrderBean.getPay_type();
-        if(ALI_PAY.equals(pay_type)){
-            PayInterface payInterface = new Alipay(this, new PayInterface.PayListener() {
-                @Override
-                public void fail(String code, Object object) {
-                    Toast.makeText(AppointmentInfoActivity.this,"failed:" + code + object.toString(),Toast.LENGTH_LONG).show();
-                }
-
-                @Override
-                public void success(String code, Object object) {
-                    Toast.makeText(AppointmentInfoActivity.this,"success:" + code + object.toString(),Toast.LENGTH_LONG).show();
-                }
-            });
-            payInterface.payOrder(payOrderBean);
+    private PayInterface.PayListener payListener = new PayInterface.PayListener() {
+        @Override
+        public void fail(String code, Object object) {
+            Toast.makeText(AppointCampaignActivity.this,"failed:" + code + object.toString(),Toast.LENGTH_LONG).show();
         }
-    }
+
+        @Override
+        public void success(String code, Object object) {
+            Toast.makeText(AppointCampaignActivity.this,"success:" + code + object.toString(),Toast.LENGTH_LONG).show();
+        }
+    };
 
     @Override
     public void onCheckedChanged(CustomNestRadioGroup group, int checkedId) {

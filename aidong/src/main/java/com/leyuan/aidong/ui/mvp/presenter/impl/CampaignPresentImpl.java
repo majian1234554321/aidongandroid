@@ -8,10 +8,13 @@ import com.leyuan.aidong.entity.CampaignBean;
 import com.leyuan.aidong.entity.data.CampaignData;
 import com.leyuan.aidong.entity.data.CampaignDetailData;
 import com.leyuan.aidong.entity.data.PayOrderData;
-import com.leyuan.aidong.http.subscriber.BaseSubscriber;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
+import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
+import com.leyuan.aidong.module.pay.AliPay;
+import com.leyuan.aidong.module.pay.PayInterface;
+import com.leyuan.aidong.module.pay.WeiXinPay;
 import com.leyuan.aidong.ui.mvp.model.CampaignModel;
 import com.leyuan.aidong.ui.mvp.model.impl.CampaignModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.CampaignPresent;
@@ -37,6 +40,13 @@ public class CampaignPresentImpl implements CampaignPresent {
     private List<CampaignBean> campaignBeanList;
     private CampaignFragmentView campaignActivityView;          //活动列表View层对象
     private CampaignDetailActivityView campaignDetailView;      //活动详情View层对象
+
+    public CampaignPresentImpl(Context context) {
+        this.context = context;
+        if(campaignModel == null){
+            campaignModel = new CampaignModelImpl();
+        }
+    }
 
     public CampaignPresentImpl(Context context, CampaignFragmentView view) {
         this.context = context;
@@ -136,11 +146,15 @@ public class CampaignPresentImpl implements CampaignPresent {
     }
 
     @Override
-    public void buyCampaign(String id, String couponId, float integral, String payType, String contactName, String contactMobile) {
-        campaignModel.buyCampaign(new BaseSubscriber<PayOrderData>(context) {
+    public void buyCampaign(String id, String couponId, float integral, String payType, String contactName,
+                            String contactMobile, final PayInterface.PayListener listener) {
+        campaignModel.buyCampaign(new ProgressSubscriber<PayOrderData>(context) {
             @Override
             public void onNext(PayOrderData payOrderData) {
-                campaignDetailView.onBuyCampaign(payOrderData.getOrder());
+                String payType = payOrderData.getOrder().getPay_type();
+                PayInterface payInterface = "alipay".equals(payType) ? new AliPay(context,listener)
+                        : new WeiXinPay(context,listener);
+                payInterface.payOrder(payOrderData.getOrder());
             }
         },id,couponId,integral,payType,contactName,contactMobile);
     }

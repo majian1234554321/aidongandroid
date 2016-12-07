@@ -32,6 +32,7 @@ public class VenuesDetailActivity extends BaseActivity{
     private ViewPager viewPager;
 
     private String id;
+
     public static void start(Context context,String id) {
         Intent starter = new Intent(context, VenuesDetailActivity.class);
         starter.putExtra("id",id);
@@ -52,9 +53,9 @@ public class VenuesDetailActivity extends BaseActivity{
         tvAppointment = (TextView) findViewById(R.id.tv_appointment);
 
         ArrayList<Fragment> fragments = new ArrayList<>();
-        VenuesDetailFragment detail = new VenuesDetailFragment();
-        VenuesCoachFragment coach = new VenuesCoachFragment();
-        VenuesCourseFragment course = new VenuesCourseFragment();
+        VenuesDetailFragment detail = VenuesDetailFragment.newInstance(id);
+        VenuesCoachFragment coach =  VenuesCoachFragment.newInstance(id);
+        VenuesCourseFragment course = VenuesCourseFragment.newInstance(id);
         fragments.add(detail);
         fragments.add(coach);
         fragments.add(course);

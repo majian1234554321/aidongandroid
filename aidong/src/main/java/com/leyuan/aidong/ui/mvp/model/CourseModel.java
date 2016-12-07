@@ -35,7 +35,7 @@ public interface CourseModel {
      * @param day 从当前开始向后天数
      * @param page 页码
      */
-    void getCourses(Subscriber<CourseData> subscriber, String cat, String day, int page);
+    void getCourses(Subscriber<CourseData> subscriber, String day, String cat,String landmark, int page);
 
     /**
      * 获取课程详情

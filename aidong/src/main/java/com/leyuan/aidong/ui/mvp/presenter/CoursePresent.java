@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.mvp.presenter;
 
 import android.support.v7.widget.RecyclerView;
 
+import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.widget.customview.SwitcherLayout;
 
 /**
@@ -23,14 +24,14 @@ public interface CoursePresent {
     /**
      * 第一次加载数据
      */
-    void commendLoadData(SwitcherLayout switcherLayout,String category, String day);
+    void commendLoadData(SwitcherLayout switcherLayout,String day,String category, String landmark);
 
     /**
      * 下拉刷新
      * @param category 课程类型
      * @param day 从当前开始向后天数
      */
-    void pullToRefreshData(String category, String day);
+    void pullToRefreshData(String day,String category, String landmark);
 
 
     /**
@@ -41,7 +42,8 @@ public interface CoursePresent {
      * @param day 从当前开始向后天数
      * @param page 页码
      */
-    void requestMoreData(RecyclerView recyclerView, int pageSize, String category, String day, int page);
+    void requestMoreData(RecyclerView recyclerView, int pageSize, String day,String category,
+                         String landmark, int page);
 
     /**
      * 获取课程详情
@@ -58,5 +60,6 @@ public interface CoursePresent {
      * @param contactName 联系人
      * @param contactMobile 联系人电话
      */
-    void buyCourse(String id,String couponId,String integral,String payType,String contactName,String contactMobile);
+    void buyCourse(String id, String couponId, String integral, String payType, String contactName,
+                   String contactMobile, PayInterface.PayListener listener);
 }

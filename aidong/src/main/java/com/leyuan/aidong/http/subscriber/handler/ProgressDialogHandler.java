@@ -33,7 +33,7 @@ public class ProgressDialogHandler extends Handler {
         if (pd == null) {
             pd = new ProgressDialog(context);
             pd.setCancelable(cancelable);
-
+            pd.setTitle("正在加载中...");
             if (cancelable) {
                 pd.setOnCancelListener(new DialogInterface.OnCancelListener() {
                     @Override

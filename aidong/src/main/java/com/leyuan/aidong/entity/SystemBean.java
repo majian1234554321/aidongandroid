@@ -16,6 +16,8 @@ public class SystemBean implements Serializable{
     private ArrayList<CategoryBean> nutrition;//营养品分类
     private ArrayList<CategoryBean> equipment;//装备分类
     private ArrayList<DistrictBean> landmark;
+    private List<GymBrandBean> gym_brand;   //场馆品牌
+
 
     public List<String>  getOpen_city() {
         return open_city;
@@ -71,6 +73,14 @@ public class SystemBean implements Serializable{
 
     public void setLandmark(ArrayList<DistrictBean> landmark) {
         this.landmark = landmark;
+    }
+
+    public List<GymBrandBean> getGymBrand() {
+        return gym_brand;
+    }
+
+    public void setGym_brand(List<GymBrandBean> gym_brand) {
+        this.gym_brand = gym_brand;
     }
 
     @Override

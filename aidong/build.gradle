@@ -60,6 +60,7 @@ android {
         abortOnError false
         disable 'MissingTranslation'
     }
+
 }
 
 

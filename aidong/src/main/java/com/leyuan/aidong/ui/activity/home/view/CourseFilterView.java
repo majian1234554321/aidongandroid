@@ -161,7 +161,9 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
         rightListView.setVisibility(VISIBLE);
 
         if(leftSelectedPosition == -1){
-            rightCircleList = leftCircleList.get(0).getDistrictValues();
+            if(leftCircleList.get(0) != null){
+                rightCircleList = leftCircleList.get(0).getDistrictValues();
+            }
         }else{
             rightCircleList = leftCircleList.get(leftSelectedPosition).getDistrictValues();
         }

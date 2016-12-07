@@ -29,7 +29,7 @@ public class CampaignDetailBean implements Parcelable {
 
     private String status = "";
 
-    public String getCampaign_id() {
+    public String getCampaignId() {
         return campaign_id;
     }
 
@@ -61,7 +61,7 @@ public class CampaignDetailBean implements Parcelable {
         this.landmark = landmark;
     }
 
-    public String getStart_time() {
+    public String getStartTime() {
         return start_time;
     }
 

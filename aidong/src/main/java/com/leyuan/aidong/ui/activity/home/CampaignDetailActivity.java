@@ -189,7 +189,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
         bannerLayout.setData(bean.getImage(),null);
         tvCampaignName.setText(bean.getName());
         tvLandmark.setText(bean.getLandmark());
-        tvTime.setText(bean.getStart_time());
+        tvTime.setText(bean.getStartTime());
         tvAddress.setText(bean.getAddress());
         tvOrganizer.setText(bean.getOrganizer());
         tvCampaignDesc.setText(bean.getIntroduce());

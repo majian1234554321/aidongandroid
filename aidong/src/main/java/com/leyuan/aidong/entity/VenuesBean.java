@@ -10,7 +10,7 @@ import android.os.Parcelable;
 public class VenuesBean implements Parcelable {
     private String gym_id;          //场馆编号
     private String name;            //场馆名字
-    private String logo;            //场馆封面
+    private String brand_logo;      //场馆封面
     private String address;         //场馆地址
     private String distance;        //距离
     private String price;           //价格
@@ -31,12 +31,12 @@ public class VenuesBean implements Parcelable {
         this.name = name;
     }
 
-    public String getLogo() {
-        return logo;
+    public String getBrand_logo() {
+        return brand_logo;
     }
 
-    public void setLogo(String logo) {
-        this.logo = logo;
+    public void setBrand_logo(String brand_logo) {
+        this.brand_logo = brand_logo;
     }
 
     public String getAddress() {
@@ -68,7 +68,7 @@ public class VenuesBean implements Parcelable {
         return "VenuesBean{" +
                 "gym_id='" + gym_id + '\'' +
                 ", name='" + name + '\'' +
-                ", logo='" + logo + '\'' +
+                ", brand_logo='" + brand_logo + '\'' +
                 ", address='" + address + '\'' +
                 ", distance='" + distance + '\'' +
                 ", price='" + price + '\'' +
@@ -84,7 +84,7 @@ public class VenuesBean implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.gym_id);
         dest.writeString(this.name);
-        dest.writeString(this.logo);
+        dest.writeString(this.brand_logo);
         dest.writeString(this.address);
         dest.writeString(this.distance);
         dest.writeString(this.price);
@@ -96,13 +96,13 @@ public class VenuesBean implements Parcelable {
     protected VenuesBean(Parcel in) {
         this.gym_id = in.readString();
         this.name = in.readString();
-        this.logo = in.readString();
+        this.brand_logo = in.readString();
         this.address = in.readString();
         this.distance = in.readString();
         this.price = in.readString();
     }
 
-    public static final Parcelable.Creator<VenuesBean> CREATOR = new Parcelable.Creator<VenuesBean>() {
+    public static final Creator<VenuesBean> CREATOR = new Creator<VenuesBean>() {
         @Override
         public VenuesBean createFromParcel(Parcel source) {
             return new VenuesBean(source);

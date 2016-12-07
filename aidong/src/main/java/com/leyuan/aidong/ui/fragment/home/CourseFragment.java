@@ -8,11 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CourseBean;
 import com.leyuan.aidong.ui.BaseFragment;
-import com.leyuan.aidong.ui.activity.home.CourseActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.CourseAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
@@ -29,7 +29,7 @@ import java.util.List;
  * 课程列表
  * Created by song on 2016/11/1.
  */
-public class CourseFragment extends BaseFragment implements CourserFragmentView, CourseActivity.FilterListener {
+public class CourseFragment extends BaseFragment implements CourserFragmentView, SwipeRefreshLayout.OnRefreshListener {
     private static final int HIDE_THRESHOLD = 80;
     private int scrolledDistance = 0;
     private boolean filterViewVisible = true;
@@ -45,7 +45,7 @@ public class CourseFragment extends BaseFragment implements CourserFragmentView,
 
     private String date;            //日期
     private String category;        //分类
-    private String businessCircle;  //商圈
+    private String landmark;        //商圈
 
     private CoursePresent coursePresent;
     private AnimationListener animationListener;
@@ -75,8 +75,7 @@ public class CourseFragment extends BaseFragment implements CourserFragmentView,
         coursePresent = new CoursePresentImpl(getContext(),this);
         initRefreshLayout(view);
         initRecyclerView(view);
-        ((CourseActivity)getActivity()).setFilterListener(this);
-        coursePresent.commendLoadData(switcherLayout,category,date);
+        coursePresent.commendLoadData(switcherLayout,date,category,landmark);
     }
 
     private void initRefreshLayout(View view) {
@@ -85,14 +84,7 @@ public class CourseFragment extends BaseFragment implements CourserFragmentView,
         switcherLayout = new SwitcherLayout(getContext(),refreshLayout);
         setColorSchemeResources(refreshLayout);
         refreshLayout.setProgressViewOffset(true,100,250);
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                currPage = 1;
-                RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-                coursePresent.pullToRefreshData(category,date);
-            }
-        });
+        refreshLayout.setOnRefreshListener(this);
     }
 
     private void initRecyclerView(View view) {
@@ -105,29 +97,36 @@ public class CourseFragment extends BaseFragment implements CourserFragmentView,
         recyclerView.addOnScrollListener(onScrollListener);
     }
 
+    @Override
+    public void onRefresh() {
+        Toast.makeText(getContext(),"refresh",Toast.LENGTH_LONG).show();
+        currPage = 1;
+        RecyclerViewStateUtils.resetFooterViewState(recyclerView);
+        coursePresent.pullToRefreshData(date,category,landmark);
+    }
+
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
         @Override
         public void onLoadNextPage(View view) {
             currPage ++;
             if (data != null && data.size() >= pageSize) {
-               coursePresent.requestMoreData(recyclerView,pageSize,category,date,currPage);
+               coursePresent.requestMoreData(recyclerView,pageSize,date,category,landmark,currPage);
             }
         }
 
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
-
             if (scrolledDistance > HIDE_THRESHOLD  && filterViewVisible) {           //手指向上滑动
                 if(animationListener != null){
-                    animationListener.animatedHide();
+                    animationListener.onAnimatedHide();
                 }
                 filterViewVisible = false;
                 scrolledDistance = 0;
 
             } else if (scrolledDistance < -HIDE_THRESHOLD && !filterViewVisible) {   //手指向下滑动
                 if(animationListener != null){
-                    animationListener.animatedShow();
+                    animationListener.onAnimatedShow();
                 }
                 scrolledDistance = 0;
                 filterViewVisible = true;
@@ -151,12 +150,12 @@ public class CourseFragment extends BaseFragment implements CourserFragmentView,
 
     @Override
     public void showEndFooterView() {
+
     }
 
     @Override
     public void showEmptyView() {
         switcherLayout.showEmptyLayout();
-        tvNoContent.setVisibility(View.VISIBLE);
     }
 
     public void scrollToTop(){
@@ -164,28 +163,22 @@ public class CourseFragment extends BaseFragment implements CourserFragmentView,
         recyclerView.scrollToPosition(0);
     }
 
-
-    @Override
-    public void onSelectedCategory(final String category) {
+    public void refreshCategory(final String category) {
         this.category = category;
-        refreshLayout.setRefreshing(true);
-        coursePresent.pullToRefreshData(category,date);
+        this.onRefresh();
     }
 
-    @Override
-    public void onSelectedCircle(String businessCircle) {
-        this.businessCircle = businessCircle;
-        refreshLayout.setRefreshing(true);
-        coursePresent.pullToRefreshData(category,date);
+    public void refreshCircle(String businessCircle) {
+        this.landmark = businessCircle;
+        this.onRefresh();
     }
-
 
     public void setAnimationListener(AnimationListener listener) {
         this.animationListener = listener;
     }
 
     public interface AnimationListener{
-        void animatedShow();
-        void animatedHide();
+        void onAnimatedShow();
+        void onAnimatedHide();
     }
 }

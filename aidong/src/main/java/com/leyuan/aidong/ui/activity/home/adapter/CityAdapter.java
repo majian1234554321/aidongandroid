@@ -18,8 +18,10 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityHolder>{
     private List<String> data = new ArrayList<>();
 
     public void setData(List<String> data) {
-        this.data = data;
-        notifyDataSetChanged();
+        if(data != null){
+            this.data = data;
+            notifyDataSetChanged();
+        }
     }
 
     @Override

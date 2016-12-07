@@ -60,7 +60,7 @@ public class CourseDetailBean implements Parcelable {
         this.class_date = class_date;
     }
 
-    public String getClass_time() {
+    public String getClassTime() {
         return class_time;
     }
 

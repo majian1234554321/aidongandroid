@@ -144,7 +144,7 @@ public class OldCourseDetailActivity extends BaseActivity implements View.OnClic
                 AppointmentUserActivity.start(this,new ArrayList<UserBean>());
                 break;
             case R.id.tv_state:
-                startActivity(new Intent(this,AppointmentInfoActivity.class));
+                startActivity(new Intent(this,AppointInfoActivity.class));
                 break;
             default:
                 break;

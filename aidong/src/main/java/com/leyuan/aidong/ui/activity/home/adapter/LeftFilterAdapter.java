@@ -43,7 +43,7 @@ public class LeftFilterAdapter extends BaseAdapter{
     public void setSelectedBean(DistrictBean bean) {
         this.selectedBean = bean;
         for (DistrictBean entity : circleBeanList) {
-             entity.setSelected(entity.getAreaId().equals(bean.getAreaId()));
+             entity.setSelected(entity.getDistrictName().equals(bean.getDistrictName()));
         }
         notifyDataSetChanged();
     }

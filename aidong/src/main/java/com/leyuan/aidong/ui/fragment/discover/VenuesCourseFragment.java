@@ -6,15 +6,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
-import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.CourseBean;
+import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.activity.discover.adapter.DateAdapter;
 import com.leyuan.aidong.ui.activity.discover.adapter.VenuesCourseAdapter;
-import com.leyuan.aidong.entity.CourseBean;
 import com.leyuan.aidong.ui.mvp.presenter.VenuesPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VenuesPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.VenuesCourseFragmentView;
+import com.leyuan.aidong.widget.customview.SwitcherLayout;
 
 import java.util.List;
 
@@ -23,8 +25,20 @@ import java.util.List;
  * Created by song on 2016/8/27.
  */
 public class VenuesCourseFragment extends BaseFragment implements VenuesCourseFragmentView{
+    private SwitcherLayout switcherLayout;
+    private LinearLayout contentLayout;
     private VenuesCourseAdapter courseAdapter;
     private DateAdapter dateAdapter;
+    private VenuesPresent venuesPresent;
+    private String id;
+
+    public static VenuesCourseFragment newInstance(String id) {
+        Bundle args = new Bundle();
+        args.putString("id",id);
+        VenuesCourseFragment fragment = new VenuesCourseFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -34,8 +48,18 @@ public class VenuesCourseFragment extends BaseFragment implements VenuesCourseFr
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Bundle bundle = getArguments();
+        if(bundle != null){
+            id = bundle.getString("id");
+        }
+        initView(view);
+        venuesPresent.getCourses(switcherLayout,id);
+    }
 
-        VenuesPresent present = new VenuesPresentImpl(getContext(),this);
+    private void initView(View view) {
+        venuesPresent = new VenuesPresentImpl(getContext(),this);
+        contentLayout = (LinearLayout) view.findViewById(R.id.ll_content);
+        switcherLayout = new SwitcherLayout(getContext(),contentLayout);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv_venues_course);
         courseAdapter = new VenuesCourseAdapter(getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -46,9 +70,6 @@ public class VenuesCourseFragment extends BaseFragment implements VenuesCourseFr
         dateAdapter = new DateAdapter();
         dateView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
         dateView.setAdapter(dateAdapter);
-        dateAdapter.setData(null);
-
-       // present.getCourses(1);
     }
 
     @Override

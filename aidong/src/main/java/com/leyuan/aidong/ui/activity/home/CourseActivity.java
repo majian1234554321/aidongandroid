@@ -35,8 +35,6 @@ public class CourseActivity extends BaseActivity implements CourseActivityView{
     private CourseFilterView filterView;
     private List<Fragment> fragments;
 
-    private FilterListener filterListener;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,23 +55,23 @@ public class CourseActivity extends BaseActivity implements CourseActivityView{
 
         List<String> days = DateUtils.getSevenDate();
         fragments = new ArrayList<>();
+
         for (int i = 0; i < days.size(); i++) {
-            CourseFragment f = CourseFragment.newInstance(days.get(i));
-            f.setAnimationListener(new CourseFragment.AnimationListener() {
+            CourseFragment iCourse = CourseFragment.newInstance(days.get(i));
+            iCourse.setAnimationListener(new CourseFragment.AnimationListener() {
                 @Override
-                public void animatedShow() {
+                public void onAnimatedShow() {
                     filterView.animate().translationY(0).setInterpolator
                             (new DecelerateInterpolator(2)).start();
                 }
 
                 @Override
-                public void animatedHide() {
+                public void onAnimatedHide() {
                     filterView.animate().translationY(-filterView.getHeight()).setInterpolator
                             (new AccelerateInterpolator(2)).start();
                 }
             });
-
-            fragments.add(f);
+            fragments.add(iCourse);
         }
         viewPager.setAdapter(new TabFragmentAdapter(getSupportFragmentManager(),fragments,days));
         tabLayout.setupWithViewPager(viewPager);
@@ -108,15 +106,15 @@ public class CourseActivity extends BaseActivity implements CourseActivityView{
 
         @Override
         public void onCategoryItemClick(String category) {
-           if(filterListener != null){
-               filterListener.onSelectedCategory(category);
+           for (Fragment fragment : fragments) {
+               ((CourseFragment)fragment).refreshCategory(category);
            }
         }
 
         @Override
         public void onBusinessCircleItemClick(String address) {
-            if(filterListener != null){
-                filterListener.onSelectedCircle(address);
+            for (Fragment fragment : fragments) {
+                ((CourseFragment)fragment).refreshCircle(address);
             }
         }
     }
@@ -129,14 +127,5 @@ public class CourseActivity extends BaseActivity implements CourseActivityView{
             filterView.animate().translationY(0).setInterpolator
                     (new DecelerateInterpolator(2)).start();
         }
-    }
-
-    public void setFilterListener(FilterListener filterListener) {
-        this.filterListener = filterListener;
-    }
-
-    public interface FilterListener {
-        void onSelectedCategory(String category);
-        void onSelectedCircle(String businessCircle);
     }
 }

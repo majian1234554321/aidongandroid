@@ -11,12 +11,12 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 /**
  * 微信支付
  */
-public class WeiXingPay implements PayInterface {
+public class WeiXinPay implements PayInterface {
 	private IWXAPI msgApi;
 	public static PayListener payListener;
 
 	
-	public WeiXingPay(Context context, PayListener payListener) {
+	public WeiXinPay(Context context, PayListener payListener) {
 		String appId = context.getString(R.string.weixingAppID);
 		msgApi = WXAPIFactory.createWXAPI(context, null);
 		msgApi.registerApp(appId);

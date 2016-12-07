@@ -9,11 +9,12 @@ import com.leyuan.aidong.entity.CourseDetailData;
 import com.leyuan.aidong.entity.data.CourseData;
 import com.leyuan.aidong.entity.data.PayOrderData;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
+import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
-import com.leyuan.aidong.module.pay.Alipay;
+import com.leyuan.aidong.module.pay.AliPay;
 import com.leyuan.aidong.module.pay.PayInterface;
-import com.leyuan.aidong.ui.activity.home.AppointmentInfoActivity;
+import com.leyuan.aidong.module.pay.WeiXinPay;
 import com.leyuan.aidong.ui.mvp.model.CourseModel;
 import com.leyuan.aidong.ui.mvp.model.impl.CourseModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
@@ -33,7 +34,7 @@ import rx.Subscriber;
  * 课程
  * Created by song on 2016/9/21.
  */
-public class CoursePresentImpl  implements CoursePresent{
+public class CoursePresentImpl implements CoursePresent {
     private Context context;
     private CourseModel courseModel;
 
@@ -46,7 +47,7 @@ public class CoursePresentImpl  implements CoursePresent{
     public CoursePresentImpl(Context context, CourseDetailActivityView view) {
         this.context = context;
         this.courseDetailActivityView = view;
-        if(courseModel == null){
+        if (courseModel == null) {
             courseModel = new CourseModelImpl(context);
         }
     }
@@ -54,7 +55,7 @@ public class CoursePresentImpl  implements CoursePresent{
     public CoursePresentImpl(Context context, CourserFragmentView view) {
         this.context = context;
         this.courserFragmentView = view;
-        if(courseModel == null){
+        if (courseModel == null) {
             courseModel = new CourseModelImpl(context);
         }
     }
@@ -62,15 +63,14 @@ public class CoursePresentImpl  implements CoursePresent{
     public CoursePresentImpl(Context context, CourseActivityView view) {
         this.context = context;
         this.coursesActivityView = view;
-        if(courseModel == null){
+        if (courseModel == null) {
             courseModel = new CourseModelImpl(context);
         }
     }
 
-    public CoursePresentImpl(Context context, AppointmentInfoActivityView view) {
+    public CoursePresentImpl(Context context) {
         this.context = context;
-        this.appointActivityView = view;
-        if(courseModel == null){
+        if (courseModel == null) {
             courseModel = new CourseModelImpl(context);
         }
     }
@@ -86,55 +86,55 @@ public class CoursePresentImpl  implements CoursePresent{
     }
 
     @Override
-    public void commendLoadData(final SwitcherLayout switcherLayout, final String category, String day) {
+    public void commendLoadData(final SwitcherLayout switcherLayout, String day, String category, String landmark) {
         courseModel.getCourses(new CommonSubscriber<CourseData>(switcherLayout) {
             @Override
             public void onNext(CourseData courseData) {
-                if(courseData != null && courseData.getCourse() != null  &&!courseData.getCourse().isEmpty()){
+                if (courseData != null && courseData.getCourse() != null && !courseData.getCourse().isEmpty()) {
                     switcherLayout.showContentLayout();
                     courserFragmentView.updateRecyclerView(courseData.getCourse());
-                }else {
+                } else {
                     switcherLayout.showEmptyLayout();
                 }
             }
-        },category,day, Constant.FIRST_PAGE);
+        }, day, category, landmark, Constant.FIRST_PAGE);
     }
 
     @Override
-    public void pullToRefreshData(String category, String day) {
+    public void pullToRefreshData(String day, String category, String landmark) {
         courseModel.getCourses(new RefreshSubscriber<CourseData>(context) {
             @Override
             public void onNext(CourseData courseData) {
-                if(courseData != null && courseData.getCourse() != null ){
+                if (courseData != null && courseData.getCourse() != null && !courseData.getCourse().isEmpty()) {
                     courserFragmentView.updateRecyclerView(courseData.getCourse());
-                }else {
+                } else {
                     courserFragmentView.showEmptyView();
                 }
             }
-        },category,day, Constant.FIRST_PAGE);
+        }, day, category, landmark, Constant.FIRST_PAGE);
     }
 
     @Override
-    public void requestMoreData(RecyclerView recyclerView, final int pageSize, String category, String day, int page) {
-        courseModel.getCourses(new RequestMoreSubscriber<CourseData>(context,recyclerView,page) {
+    public void requestMoreData(RecyclerView recyclerView, final int pageSize, String day, String category, String landmark, int page) {
+        courseModel.getCourses(new RequestMoreSubscriber<CourseData>(context, recyclerView, page) {
             @Override
             public void onNext(CourseData courseData) {
-                if(courseData != null && !courseData.getCourse().isEmpty()){
+                if (courseData != null && !courseData.getCourse().isEmpty()) {
                     courseBeanList = courseData.getCourse();
                 }
-                if(!courseBeanList.isEmpty()){
+                if (!courseBeanList.isEmpty()) {
                     courserFragmentView.updateRecyclerView(courseBeanList);
                 }
                 //没有更多数据了显示到底提示
-                if(courseBeanList != null && courseBeanList.size() < pageSize){
+                if (courseBeanList != null && courseBeanList.size() < pageSize) {
                     courserFragmentView.showEndFooterView();
                 }
             }
-        },category,day,pageSize);
+        }, day, category, landmark, pageSize);
     }
 
     @Override
-    public void getCourseDetail(final SwitcherLayout switcherLayout,String id) {
+    public void getCourseDetail(final SwitcherLayout switcherLayout, String id) {
 
         courseModel.getCourseDetail(new Subscriber<CourseDetailData>() {
             @Override
@@ -150,7 +150,7 @@ public class CoursePresentImpl  implements CoursePresent{
             @Override
             public void onError(Throwable e) {
                 Toast.makeText(context, "error:" + e.toString(), Toast.LENGTH_LONG).show();
-                Logger.d("error",e.toString());
+                Logger.d("error", e.toString());
                 switcherLayout.showExceptionLayout();
             }
 
@@ -159,7 +159,7 @@ public class CoursePresentImpl  implements CoursePresent{
                 if (courseDetailData != null) {
                     switcherLayout.showContentLayout();
                     courseDetailActivityView.setCourseDetail(courseDetailData.getCourse());
-                }else {
+                } else {
                     switcherLayout.showEmptyLayout();
                 }
             }
@@ -167,38 +167,62 @@ public class CoursePresentImpl  implements CoursePresent{
     }
 
     @Override
-    public void buyCourse(String id, String couponId, String integral, String payType, String contactName, String contactMobile) {
-       courseModel.buyCourse(new Subscriber<PayOrderData>() {
-           @Override
-           public void onCompleted() {
-               Toast.makeText(context,"onCompleted",Toast.LENGTH_LONG).show();
-           }
+    public void buyCourse(String id, String couponId, String integral, String payType,
+                          String contactName, String contactMobile, final PayInterface.PayListener listener) {
+        courseModel.buyCourse(new ProgressSubscriber<PayOrderData>(context) {
+            @Override
+            public void onNext(PayOrderData payOrderData) {
+                String payType = payOrderData.getOrder().getPay_type();
+                PayInterface payInterface = "alipay".equals(payType) ? new AliPay(context,listener)
+                        : new WeiXinPay(context,listener);
+                payInterface.payOrder(payOrderData.getOrder());
 
-           @Override
-           public void onError(Throwable e) {
-               Toast.makeText(context,"failed:" + e.toString(),Toast.LENGTH_LONG).show();
-           }
+            }
+        }, id, couponId, integral, payType, contactName, contactMobile);
+       /* courseModel.buyCourse(new Subscriber<PayOrderData>() {
+            @Override
+            public void onCompleted() {
+                Toast.makeText(context, "onCompleted", Toast.LENGTH_LONG).show();
+            }
 
-           @Override
-           public void onNext(PayOrderData payOrderData) {
-              // appointActivityView.onAppointFinished(payOrderData.getOrder());
-               String pay_type = payOrderData.getOrder().getPay_type();
-               if("alipay".equals(pay_type)){
-                   PayInterface payInterface = new Alipay((AppointmentInfoActivity)context, new PayInterface.PayListener() {
-                       @Override
-                       public void fail(String code, Object object) {
-                           Toast.makeText(context,"failed:" + code + object.toString(),Toast.LENGTH_LONG).show();
-                       }
+            @Override
+            public void onError(Throwable e) {
+                Toast.makeText(context, "failed:" + e.toString(), Toast.LENGTH_LONG).show();
+            }
 
-                       @Override
-                       public void success(String code, Object object) {
-                           Toast.makeText(context,"success:" + code + object.toString(),Toast.LENGTH_LONG).show();
-                       }
-                   });
-                   payInterface.payOrder(payOrderData.getOrder());
-               }
-           }
-       },id,couponId,integral,payType,contactName,contactMobile);
+            @Override
+            public void onNext(PayOrderData payOrderData) {
+                // appointActivityView.onAppointFinished(payOrderData.getOrder());
+                String pay_type = payOrderData.getOrder().getPay_type();
+                PayInterface payInterface;
+                if ("alipay".equals(pay_type)) {
+                    payInterface = new AliPay(context, new PayInterface.PayListener() {
+                        @Override
+                        public void fail(String code, Object object) {
+                            Toast.makeText(context, "failed:" + code + object.toString(), Toast.LENGTH_LONG).show();
+                        }
+
+                        @Override
+                        public void success(String code, Object object) {
+                            Toast.makeText(context, "success:" + code + object.toString(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+                } else {
+                    payInterface = new WeiXinPay(context, new PayInterface.PayListener() {
+                        @Override
+                        public void fail(String code, Object object) {
+                            Toast.makeText(context, "failed:" + code + object.toString(), Toast.LENGTH_LONG).show();
+                        }
+
+                        @Override
+                        public void success(String code, Object object) {
+                            Toast.makeText(context, "failed:" + code + object.toString(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+                payInterface.payOrder(payOrderData.getOrder());
+            }
+        }, id, couponId, integral, payType, contactName, contactMobile);*/
        /* courseModel.buyCourse(new ProgressSubscriber<PayOrderData>(context) {
             @Override
             public void onNext(PayOrderData payOrderData) {

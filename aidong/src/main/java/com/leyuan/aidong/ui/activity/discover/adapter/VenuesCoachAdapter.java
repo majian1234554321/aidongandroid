@@ -31,20 +31,8 @@ public class VenuesCoachAdapter extends RecyclerView.Adapter<VenuesCoachAdapter.
     public void setData(List<CoachBean> data) {
         if(data != null){
             this.data = data;
-        }else{
-            for (int i = 0; i < 10; i++) {
-                CoachBean bean = new CoachBean();
-                if( i % 2 == 0){
-                    bean.setName("AiFukuhara ");
-                    bean.setAvatar("http://ww3.sinaimg.cn/mw690/718878b5jw1f9fiyllzqpj20go0b5tah.jpg");
-                }else{
-                    bean.setAvatar("https://www.baidu.com/img/bd_logo1.png");
-                    bean.setName("百度保健 ");
-                }
-                this.data.add(bean);
-            }
+            notifyDataSetChanged();
         }
-        notifyDataSetChanged();
     }
 
     @Override

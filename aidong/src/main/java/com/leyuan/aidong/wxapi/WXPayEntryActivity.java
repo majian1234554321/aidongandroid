@@ -7,7 +7,7 @@ import android.os.Bundle;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.module.pay.PayInterface;
-import com.leyuan.aidong.module.pay.WeiXingPay;
+import com.leyuan.aidong.module.pay.WeiXinPay;
 import com.tencent.mm.sdk.constants.ConstantsAPI;
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
@@ -42,7 +42,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
     public void onResp(BaseResp resp) {
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
             int code = resp.errCode;
-            PayInterface.PayListener payListener = WeiXingPay.payListener;
+            PayInterface.PayListener payListener = WeiXinPay.payListener;
             switch (code) {
                 case 0:		//成功
                     if (null != payListener) {

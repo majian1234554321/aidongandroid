@@ -114,7 +114,7 @@ public abstract class OnekeyShareThemeImpl implements PlatformActionListener, Ca
 				|| "KakaoStory".equals(name) || "KakaoTalk".equals(name)
 				|| "Bluetooth".equals(name) || "WhatsApp".equals(name)
 				|| "BaiduTieba".equals(name) || "Laiwang".equals(name)
-				|| "LaiwangMoments".equals(name) || "Alipay".equals(name)
+				|| "LaiwangMoments".equals(name) || "AliPay".equals(name)
 				|| "FacebookMessenger".equals(name)
 				) {
 			return true;
@@ -175,7 +175,7 @@ public abstract class OnekeyShareThemeImpl implements PlatformActionListener, Ca
 			return false;
 		}
 
-		boolean isAlipay = "Alipay".equals(name);
+		boolean isAlipay = "AliPay".equals(name);
 		if (isAlipay && !plat.isClientValid()) {
 			toast("ssdk_alipay_client_inavailable");
 			return false;
