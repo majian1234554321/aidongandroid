@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.mine.login.FindPasswordActivity;
@@ -23,12 +24,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private LoginPresenter loginPresenter;
     private String telephone;
     private String password;
+    private SharePopupWindow sharePopupWindow;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
         loginPresenter = new LoginPresenter(this,this);
+        sharePopupWindow = new SharePopupWindow(this);
 
         findViewById(R.id.btn_back).setOnClickListener(this);
         findViewById(R.id.btn_login).setOnClickListener(this);
@@ -59,19 +63,23 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 UiManager.activityJump(this,RegisterActivity.class);
                 break;
             case R.id.button_weixin:
-                loginPresenter.loginThirdParty(LoginPresenter.LOGIN_WEIXIN);
+                sharePopupWindow.showAtBottom("测试标题","测试内容","http://o8e1adk04.bkt.clouddn.com/image/2016/11/18/941b1d51-9e24-47bb-8b1a-6a172abbdce3.jpg",
+                        "http://www.baidu.com");
+//                loginPresenter.loginThirdParty(LoginPresenter.LOGIN_WEIXIN);
 
                 break;
             case R.id.button_weibo:
-                loginPresenter.loginThirdParty(LoginPresenter.LOGIN_WEIBO);
+//                loginPresenter.loginThirdParty(LoginPresenter.LOGIN_WEIBO);
 
                 break;
             case R.id.button_qq:
-                loginPresenter.loginThirdParty(LoginPresenter.LOGIN_QQ);
+//                loginPresenter.loginThirdParty(LoginPresenter.LOGIN_QQ);
 
                 break;
         }
     }
+
+
 
     private EditText getEditTelephone(){
         return (EditText) findViewById(R.id.edit_telephone);
@@ -113,7 +121,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         loginPresenter.onActivityResultData(requestCode,resultCode,data);
+        sharePopupWindow.onActivityResult(requestCode,resultCode,data);
+
+    }
 
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        sharePopupWindow.onNewIntent(intent);
     }
 }

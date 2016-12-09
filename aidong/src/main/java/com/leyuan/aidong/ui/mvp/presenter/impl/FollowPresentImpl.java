@@ -3,9 +3,11 @@ package com.leyuan.aidong.ui.mvp.presenter.impl;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.entity.data.FollowData;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
+import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.aidong.ui.mvp.model.FollowModel;
@@ -85,11 +87,21 @@ public class FollowPresentImpl implements FollowPresent {
 
     @Override
     public void addFollow(int id) {
+        followModel.addFollow(new ProgressSubscriber<BaseBean>(context) {
+            @Override
+            public void onNext(BaseBean baseBean) {
 
+            }
+        },id);
     }
 
     @Override
     public void cancelFollow(int id) {
+        followModel.cancelFollow(new ProgressSubscriber<BaseBean>(context) {
+            @Override
+            public void onNext(BaseBean baseBean) {
 
+            }
+        },id);
     }
 }

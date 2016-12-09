@@ -15,7 +15,7 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 public class WXLogin {
 
     private IWXAPI api;
-    public void registerToWX(Context context){
+    public  WXLogin(Context context){
         String appId = context.getString(R.string.weixingAppID);
         api = WXAPIFactory.createWXAPI(context, appId, true);
         api.registerApp(appId);

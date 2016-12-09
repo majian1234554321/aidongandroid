@@ -29,15 +29,6 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.VenuesHold
     public void setData(List<VenuesBean> data) {
         if(data != null){
             this.data = data;
-        }else{
-            for (int i = 0; i < 10; i++) {
-                VenuesBean bean = new VenuesBean();
-                bean.setLogo("http://ww4.sinaimg.cn/mw690/61ecbb3djw1f6rwvtl7zuj20zk0mctc8.jpg");
-                bean.setName("金公馆");
-                bean.setAddress("上海");
-                bean.setDistance("110");
-                this.data.add(bean);
-            }
         }
     }
 

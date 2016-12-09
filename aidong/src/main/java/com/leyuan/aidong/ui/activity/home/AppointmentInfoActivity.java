@@ -5,17 +5,24 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CampaignDetailBean;
 import com.leyuan.aidong.entity.CourseDetailBean;
+import com.leyuan.aidong.entity.PayOrderBean;
+import com.leyuan.aidong.module.pay.Alipay;
+import com.leyuan.aidong.module.pay.PayInterface;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.mine.CouponActivity;
+import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
+import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
+import com.leyuan.aidong.ui.mvp.view.AppointmentInfoActivityView;
+import com.leyuan.aidong.widget.customview.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.customview.ExtendTextView;
 import com.leyuan.aidong.widget.customview.SimpleTitleBar;
 
@@ -23,21 +30,22 @@ import com.leyuan.aidong.widget.customview.SimpleTitleBar;
  * 预约信息 包括课程和活动的预约
  * Created by song on 2016/9/12.
  */
-public class
-AppointmentInfoActivity extends BaseActivity implements View.OnClickListener {
+public class AppointmentInfoActivity extends BaseActivity implements View.OnClickListener, AppointmentInfoActivityView, CustomNestRadioGroup.OnCheckedChangeListener {
     public static final int TYPE_COURSE = 1;
     public static final int TYPE_CAMPAIGN = 2;
+    private static final String ALI_PAY = "alipay";
+    private static final String WEI_XIN_PAY = "wxpay";
 
     private SimpleTitleBar titleBar;
 
     //预约人信息
-    private EditText etInputName;
-    private EditText etInputPhone;
+    private TextView tvUserName;
+    private TextView tvUserPhone;
 
     //课程或活动信息
     private TextView tvType;
     private SimpleDraweeView dvCover;
-    private TextView tvName;
+    private TextView tvCourseName;
     private TextView tvShop;
     private ExtendTextView tvTime;
     private ExtendTextView tvAddress;
@@ -56,18 +64,21 @@ AppointmentInfoActivity extends BaseActivity implements View.OnClickListener {
     private ExtendTextView tvAibi;
     private ExtendTextView tvAidou;
 
-    //支付方式
-    private RadioButton cbAlipay;
-    private RadioButton cbWeixin;
-
-    //支付信息
+    //支付
+    private CustomNestRadioGroup radioGroup;
     private TextView tvTip;
     private TextView tvPrice;
     private TextView tvPay;
 
+    private String couponId;
+    private String integral;
+    private String payType;
+    private String userName;
+    private String contactMobile;
     private int type;   //区分课程或活动预约
     private CourseDetailBean courseDetailBean;
     private CampaignDetailBean campaignDetailBean;
+    private CoursePresent coursePresent;
 
     //from campaign detail activity
     public static void start(Context context, int type, CampaignDetailBean campaignDetailBean) {
@@ -89,6 +100,7 @@ AppointmentInfoActivity extends BaseActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appointment_info);
+        payType = ALI_PAY;
         if (getIntent() != null) {
             type = getIntent().getIntExtra("type", TYPE_COURSE);
             if (type == TYPE_COURSE) {
@@ -103,11 +115,11 @@ AppointmentInfoActivity extends BaseActivity implements View.OnClickListener {
 
     private void initView() {
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
-        etInputName = (EditText) findViewById(R.id.et_input_name);
-        etInputPhone = (EditText) findViewById(R.id.et_input_phone);
+        tvUserName = (TextView) findViewById(R.id.tv_input_name);
+        tvUserPhone = (TextView) findViewById(R.id.tv_input_phone);
         tvType = (TextView) findViewById(R.id.tv_type);
         dvCover = (SimpleDraweeView) findViewById(R.id.dv_cover);
-        tvName = (TextView) findViewById(R.id.tv_name);
+        tvCourseName = (TextView) findViewById(R.id.tv_name);
         tvShop = (TextView) findViewById(R.id.tv_shop);
         tvTime = (ExtendTextView) findViewById(R.id.tv_time);
         tvAddress = (ExtendTextView) findViewById(R.id.tv_address);
@@ -121,14 +133,17 @@ AppointmentInfoActivity extends BaseActivity implements View.OnClickListener {
         tvDiscountPrice = (ExtendTextView) findViewById(R.id.tv_discount_price);
         tvAibi = (ExtendTextView) findViewById(R.id.tv_aibi);
         tvAidou = (ExtendTextView) findViewById(R.id.tv_aidou);
-        cbAlipay = (RadioButton) findViewById(R.id.cb_alipay);
-        cbWeixin = (RadioButton) findViewById(R.id.cb_weixin);
+        radioGroup = (CustomNestRadioGroup) findViewById(R.id.radio_group);
         tvTip = (TextView) findViewById(R.id.tv_tip);
         tvPrice = (TextView) findViewById(R.id.tv_price);
         tvPay = (TextView) findViewById(R.id.tv_pay);
 
+        userName = App.mInstance.getUser().getName();
+        contactMobile = App.mInstance.getUser().getMobile();
+        tvUserName.setText(userName);
+        tvUserPhone.setText(contactMobile);
         tvType.setText(TYPE_COURSE == type ? getString(R.string.course_info) : getString(R.string.campaign_info));
-        tvName.setText(TYPE_COURSE == type ? courseDetailBean.getName() : campaignDetailBean.getName());
+        tvCourseName.setText(TYPE_COURSE == type ? courseDetailBean.getName() : campaignDetailBean.getName());
         tvTime.setLeftTextContent(TYPE_COURSE == type ? getString(R.string.course_time) : getString(R.string.campaign_time));
         tvTime.setRightTextContent(TYPE_COURSE == type ? courseDetailBean.getClass_time() : campaignDetailBean.getStart_time());
         tvAddress.setLeftTextContent(TYPE_COURSE == type ? getString(R.string.course_address) : getString(R.string.campaign_address));
@@ -140,14 +155,12 @@ AppointmentInfoActivity extends BaseActivity implements View.OnClickListener {
         tvPrice.setText(TYPE_COURSE == type ? courseDetailBean.getPrice() : campaignDetailBean.getPrice());
     }
 
-
     private void setListener() {
-        etInputName.setText("song");
-        etInputPhone.setText("123455");
         couponLayout.setOnClickListener(this);
         tvVip.setOnClickListener(this);
         tvNoVip.setOnClickListener(this);
         tvPay.setOnClickListener(this);
+        radioGroup.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -171,7 +184,44 @@ AppointmentInfoActivity extends BaseActivity implements View.OnClickListener {
                 vipTipLayout.setVisibility(View.VISIBLE);
                 break;
             case R.id.tv_pay:
-                startActivity(new Intent(this, AppointmentSuccessActivity.class));
+                if(coursePresent == null){
+                    coursePresent = new CoursePresentImpl(this,this);
+                }
+                coursePresent.buyCourse(courseDetailBean.getCode(),couponId,integral,payType, userName,contactMobile);
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onAppointFinished(PayOrderBean payOrderBean) {
+        Toast.makeText(AppointmentInfoActivity.this,"调起支付宝",Toast.LENGTH_LONG).show();
+        String pay_type = payOrderBean.getPay_type();
+        if(ALI_PAY.equals(pay_type)){
+            PayInterface payInterface = new Alipay(this, new PayInterface.PayListener() {
+                @Override
+                public void fail(String code, Object object) {
+                    Toast.makeText(AppointmentInfoActivity.this,"failed:" + code + object.toString(),Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void success(String code, Object object) {
+                    Toast.makeText(AppointmentInfoActivity.this,"success:" + code + object.toString(),Toast.LENGTH_LONG).show();
+                }
+            });
+            payInterface.payOrder(payOrderBean);
+        }
+    }
+
+    @Override
+    public void onCheckedChanged(CustomNestRadioGroup group, int checkedId) {
+        switch (checkedId){
+            case R.id.cb_alipay:
+                payType = ALI_PAY;
+                break;
+            case R.id.cb_weixin:
+                payType = WEI_XIN_PAY;
                 break;
             default:
                 break;

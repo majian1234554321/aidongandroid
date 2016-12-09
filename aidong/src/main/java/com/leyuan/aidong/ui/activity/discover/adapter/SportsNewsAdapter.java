@@ -30,16 +30,7 @@ public class SportsNewsAdapter extends RecyclerView.Adapter<SportsNewsAdapter.Ne
     public void setData(List<NewsBean> data) {
         if(data != null){
             this.data = data;
-        }else{
-            for (int i = 0; i < 10; i++) {
-                NewsBean bean = new NewsBean();
-                bean.setCover("http://ww2.sinaimg.cn/mw690/607ca6d6gw1f9anhtrbysj20f80mwtav.jpg");
-                bean.setName("衣服");
-                bean.setDate("2016-5-9");
-                this.data.add(bean);
-            }
         }
-        notifyDataSetChanged();
     }
 
     @Override
@@ -55,14 +46,14 @@ public class SportsNewsAdapter extends RecyclerView.Adapter<SportsNewsAdapter.Ne
 
     @Override
     public void onBindViewHolder(NewsHolder holder, int position) {
-        NewsBean bean = data.get(position);
+        final NewsBean bean = data.get(position);
         holder.cover.setImageURI(bean.getCover());
-        holder.title.setText(bean.getName());
-        holder.time.setText(bean.getDate());
+        holder.title.setText(bean.getTitle());
+        holder.time.setText(bean.getDatetime());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NewsDetailActivity.start(context);
+                NewsDetailActivity.start(context,bean.getTitle(),bean.getDatetime(),bean.getBody());
             }
         });
     }

@@ -3,6 +3,7 @@ package com.leyuan.aidong.ui.mvp.model;
 import com.leyuan.aidong.entity.data.CampaignData;
 import com.leyuan.aidong.entity.data.CourseData;
 import com.leyuan.aidong.entity.data.FoodData;
+import com.leyuan.aidong.entity.data.SearchGoodsData;
 import com.leyuan.aidong.entity.data.UserData;
 import com.leyuan.aidong.entity.data.VenuesData;
 import com.leyuan.aidong.entity.greendao.SearchHistory;
@@ -24,6 +25,14 @@ public interface SearchModel {
      * @param page 页码
      */
     void searchVenues(Subscriber<VenuesData> subscriber, String keyword, int page);
+
+    /**
+     * 搜索场馆
+     * @param subscriber Subscriber
+     * @param keyword 关键字
+     * @param page 页码
+     */
+    void searchGoods(Subscriber<SearchGoodsData> subscriber, String keyword, int page);
 
     /**
      * 搜索教练

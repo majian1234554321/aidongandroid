@@ -17,10 +17,5 @@ public class CampaignDetailData {
         this.campaign = campaign;
     }
 
-    @Override
-    public String toString() {
-        return "CampaignDetailData{" +
-                "campaign=" + campaign +
-                '}';
-    }
+
 }

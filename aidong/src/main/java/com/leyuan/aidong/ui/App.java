@@ -52,6 +52,8 @@ public class App extends Application{
         initBaiduLoc();
         initImageLoader(getApplicationContext());
         initDbUtils();
+
+//        new WXShare(this);
     }
 
     private void initDbUtils() {

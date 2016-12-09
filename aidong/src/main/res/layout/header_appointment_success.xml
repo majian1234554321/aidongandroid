@@ -84,7 +84,7 @@
             android:gravity="center"
             android:visibility="visible"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/shape_bg_red"
+            android:background="@drawable/shape_stroke_red"
             android:textColor="@color/main_red"/>
     </LinearLayout>
 

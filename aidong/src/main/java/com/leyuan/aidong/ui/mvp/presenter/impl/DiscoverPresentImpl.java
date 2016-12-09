@@ -50,7 +50,7 @@ public class DiscoverPresentImpl implements DiscoverPresent {
     }
 
     @Override
-    public void commonLoadUserData(SwitcherLayout switcherLayout,double lat, double lng, String gender, String type) {
+    public void commonLoadUserData(final SwitcherLayout switcherLayout,double lat, double lng, String gender, String type) {
         discoverModel.getUsers(new CommonSubscriber<DiscoverUserData>(switcherLayout) {
             @Override
             public void onNext(DiscoverUserData discoverUserData) {
@@ -58,9 +58,10 @@ public class DiscoverPresentImpl implements DiscoverPresent {
                     userBeanList = discoverUserData.getUser();
                 }
                 if(!userBeanList.isEmpty()){
+                    switcherLayout.showContentLayout();
                     discoverUserActivityView.updateRecyclerView(userBeanList);
                 }else{
-                    discoverUserActivityView.showEmptyView();
+                    switcherLayout.showEmptyLayout();
                 }
             }
         },lat,lng, Constant.FIRST_PAGE,gender,type);
@@ -109,8 +110,9 @@ public class DiscoverPresentImpl implements DiscoverPresent {
                     newsBeanList = discoverNewsData.getNews();
                 }
                 if(!newsBeanList.isEmpty()){
+                    switcherLayout.showContentLayout();
                     sportNewsActivityView.updateRecyclerView(newsBeanList);
-                }else{
+                }else {
                     switcherLayout.showEmptyLayout();
                 }
             }

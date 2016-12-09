@@ -186,35 +186,6 @@ public class CampaignDetailBean implements Parcelable {
             this.avatar = avatar;
         }
 
-        @Override
-        public String toString() {
-            return "Applicant{" +
-                    "idong_id='" + idong_id + '\'' +
-                    ", name='" + name + '\'' +
-                    ", avatar='" + avatar + '\'' +
-                    '}';
-        }
-    }
-
-    @Override
-    public String toString() {
-        return "CampaignDetailBean{" +
-                "campaign_id='" + campaign_id + '\'' +
-                ", name='" + name + '\'' +
-                ", image='" + image + '\'' +
-                ", landmark='" + landmark + '\'' +
-                ", start_time='" + start_time + '\'' +
-                ", end_time='" + end_time + '\'' +
-                ", address='" + address + '\'' +
-                ", organizer='" + organizer + '\'' +
-                ", place='" + place + '\'' +
-                ", introduce='" + introduce + '\'' +
-                ", price='" + price + '\'' +
-                ", market_price='" + market_price + '\'' +
-                ", enroll_start_time='" + enroll_start_time + '\'' +
-                ", enroll_end_time='" + enroll_end_time + '\'' +
-                ", applicant=" + applicant +
-                '}';
     }
 
     @Override

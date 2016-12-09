@@ -29,7 +29,6 @@ import java.util.List;
  * Created by song on 2016/9/12.
  */
 public class SearchCampaignFragment extends BaseFragment implements SearchCampaignFragmentView {
-
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;

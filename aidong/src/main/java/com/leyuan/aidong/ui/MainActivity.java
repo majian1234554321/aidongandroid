@@ -31,7 +31,7 @@ import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.sharesdk.framework.ShareSDK;
+//import cn.sharesdk.framework.ShareSDK;
 
 
 public class MainActivity extends BaseActivity implements IHttpCallback, View.OnClickListener {
@@ -216,7 +216,7 @@ public class MainActivity extends BaseActivity implements IHttpCallback, View.On
     }
 
     private void initConfig() {
-                ShareSDK.initSDK(this);
+//                ShareSDK.initSDK(this);
     }
 
     @Override

@@ -8,6 +8,8 @@ import com.leyuan.aidong.http.api.FollowService;
 import com.leyuan.aidong.ui.mvp.model.FollowModel;
 
 import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * 关注 粉丝
@@ -30,12 +32,16 @@ public class FollowModelImpl implements FollowModel{
     @Override
     public void addFollow(Subscriber<BaseBean> subscriber, int id) {
         followService.addFollow(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
     }
 
     @Override
     public void cancelFollow(Subscriber<BaseBean> subscriber, int id) {
         followService.cancelFollow(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
     }
 }

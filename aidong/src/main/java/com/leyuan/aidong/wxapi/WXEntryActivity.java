@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.leyuan.aidong.utils.Logger;
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.modelmsg.SendAuth;
@@ -40,14 +41,14 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
 	@Override
 	public void onResp(BaseResp resp) {
-
+		Logger.i("share","resp.errCode " +resp.errCode);
 		String result = null;
 		switch (resp.errCode) {
 			case BaseResp.ErrCode.ERR_OK:
 				result = "发送成功";
 				code_code = ((SendAuth.Resp) resp).code;
 				//此处进行数据请求，请求用户信息
-				Toast.makeText(this, result, Toast.LENGTH_LONG).show();
+				Toast.makeText(this, result+code_code, Toast.LENGTH_LONG).show();
 				finish();
 				break;
 			case BaseResp.ErrCode.ERR_USER_CANCEL:

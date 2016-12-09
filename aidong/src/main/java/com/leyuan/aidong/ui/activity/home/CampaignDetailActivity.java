@@ -222,6 +222,10 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
 
     //设置底部状态
     private void setBottomStatus(){
+        if(status == null) {
+            return;
+        }
+
         switch (status){
             case STATUS_APPLY:
                 tvPrice.setVisibility(View.VISIBLE);

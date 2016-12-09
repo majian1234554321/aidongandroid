@@ -2,6 +2,7 @@ package com.leyuan.aidong.module.share;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
 
@@ -25,13 +26,25 @@ public class MyQQShare {
         this.context = context;
     }
 
-    public  void share(){
+    public  void share(String title, String content, Bitmap bitmap, String webUrl){
         final Bundle params = new Bundle();
         //本地地址一定要传sdcard路径，不要什么getCacheDir()或getFilesDir()
         params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, Environment.getExternalStorageDirectory().getAbsolutePath().concat("/a.png"));
-        params.putString(QQShare.SHARE_TO_QQ_APP_NAME, "测试应用");
+        params.putString(QQShare.SHARE_TO_QQ_APP_NAME, "爱动健身");
         params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_IMAGE);
         params.putInt(QQShare.SHARE_TO_QQ_EXT_INT, QQShare.SHARE_TO_QQ_FLAG_QZONE_AUTO_OPEN); //打开这句话，可以实现分享纯图到QQ空间
+        doShareToQQ(params);
+    }
+
+
+    public  void share(String title, String content, String imageUrl, String webUrl){
+        final Bundle params = new Bundle();
+        //本地地址一定要传sdcard路径，不要什么getCacheDir()或getFilesDir()
+        params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, imageUrl);
+        params.putString(QQShare.SHARE_TO_QQ_TITLE,title);
+        params.putString(QQShare.SHARE_TO_QQ_SUMMARY,content);
+        params.putString(QQShare.SHARE_TO_QQ_TARGET_URL,webUrl);
+        params.putString(QQShare.SHARE_TO_QQ_APP_NAME, "爱动健身");
         doShareToQQ(params);
     }
     private void doShareToQQ(final Bundle params) {
@@ -63,6 +76,10 @@ public class MyQQShare {
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Tencent.onActivityResultData(requestCode, resultCode, data, qqShareListener);
+    }
+
+    public void release() {
+
     }
 
     /**

@@ -27,11 +27,11 @@ public interface CampaignService {
 
     @FormUrlEncoded
     @POST("market/campaigns/{id}")
-    Observable<BaseBean<PayOrderData>> buyCampaignDetail(@Path("id") String id,
-                                                         @Field("coupon") String couponId,
-                                                         @Field("integral") float integral,
-                                                         @Field("pay_type") String payType,
-                                                         @Field("contact_name") String contactName,
-                                                         @Field("contact_mobile") String contactMobile);
+    Observable<BaseBean<PayOrderData>> buyCampaign(@Path("id") String id,
+                                                   @Field("coupon") String couponId,
+                                                   @Field("integral") float integral,
+                                                   @Field("pay_type") String payType,
+                                                   @Field("contact_name") String contactName,
+                                                   @Field("contact_mobile") String contactMobile);
 
 }

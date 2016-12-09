@@ -84,8 +84,8 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                RecyclerViewStateUtils.resetFooterViewState(recommendView);
                 currPage = 1;
+                RecyclerViewStateUtils.resetFooterViewState(recommendView);
                 present.pullToRefreshRecommendData();
             }
         });

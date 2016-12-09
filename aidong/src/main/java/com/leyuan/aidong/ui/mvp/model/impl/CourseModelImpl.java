@@ -2,10 +2,11 @@ package com.leyuan.aidong.ui.mvp.model.impl;
 
 import android.content.Context;
 
-import com.leyuan.aidong.entity.BusinessCircleBean;
+import com.leyuan.aidong.entity.DistrictBean;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.CourseDetailData;
 import com.leyuan.aidong.entity.data.CourseData;
+import com.leyuan.aidong.entity.data.PayOrderData;
 import com.leyuan.aidong.http.RetrofitHelper;
 import com.leyuan.aidong.http.RxHelper;
 import com.leyuan.aidong.http.api.CourseService;
@@ -35,7 +36,7 @@ public class CourseModelImpl implements CourseModel {
     }
 
     @Override
-    public List<BusinessCircleBean> getBusinessCircle() {
+    public List<DistrictBean> getBusinessCircle() {
         return SystemInfoUtils.getLandmark(context);
     }
 
@@ -50,6 +51,13 @@ public class CourseModelImpl implements CourseModel {
     public void getCourseDetail(Subscriber<CourseDetailData> subscriber, String id) {
         courseService.getCourseDetail(id)
                 .compose(RxHelper.<CourseDetailData>transform())
+                .subscribe(subscriber);
+    }
+
+    @Override
+    public void buyCourse(Subscriber<PayOrderData> subscriber, String id, String couponId,String integral,String payType, String contactName, String contactMobile) {
+        courseService.buyCourse(id,couponId,integral,payType,contactName,contactMobile)
+                .compose(RxHelper.<PayOrderData>transform())
                 .subscribe(subscriber);
     }
 }

@@ -50,7 +50,6 @@ public class GoodsFilterAdapter extends RecyclerView.Adapter<GoodsFilterAdapter.
         }else {
             return nurtureList.size();
         }
-
     }
 
     @Override

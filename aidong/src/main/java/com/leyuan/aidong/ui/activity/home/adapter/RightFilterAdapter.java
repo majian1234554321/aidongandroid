@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.BusinessCircleDescBean;
+import com.leyuan.aidong.entity.DistrictDescBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,29 +19,29 @@ import java.util.List;
  */
 public class RightFilterAdapter extends BaseAdapter{
     private Context context;
-    private List<BusinessCircleDescBean> circleDescBeanList = new ArrayList<>();
-    private BusinessCircleDescBean selectedBean;
+    private List<DistrictDescBean> circleDescBeanList = new ArrayList<>();
+    private DistrictDescBean selectedBean;
 
-    public RightFilterAdapter(Context context, List<BusinessCircleDescBean> circleDescBeanList) {
+    public RightFilterAdapter(Context context, List<DistrictDescBean> circleDescBeanList) {
         this.context = context;
         if(circleDescBeanList != null){
             this.circleDescBeanList = circleDescBeanList;
         }
     }
 
-    public void setCircleDescBeanList(List<BusinessCircleDescBean> circleDescBeanList) {
+    public void setCircleDescBeanList(List<DistrictDescBean> circleDescBeanList) {
         this.circleDescBeanList = circleDescBeanList;
         notifyDataSetChanged();
     }
 
-    public void setSelectedBean(BusinessCircleDescBean bean) {
+    public void setSelectedBean(DistrictDescBean bean) {
         if(bean != null) {
             this.selectedBean = bean;
-            for (BusinessCircleDescBean entity : circleDescBeanList) {
+            for (DistrictDescBean entity : circleDescBeanList) {
                 entity.setSelected(entity.getAreaId().equals(bean.getAreaId()));
             }
         }else {
-            for (BusinessCircleDescBean entity : circleDescBeanList) {
+            for (DistrictDescBean entity : circleDescBeanList) {
                 entity.setSelected(false);
             }
         }
@@ -55,7 +55,7 @@ public class RightFilterAdapter extends BaseAdapter{
     }
 
     @Override
-    public BusinessCircleDescBean getItem(int position) {
+    public DistrictDescBean getItem(int position) {
         return circleDescBeanList.get(position);
     }
 
@@ -80,7 +80,7 @@ public class RightFilterAdapter extends BaseAdapter{
 
 
     private void fillValue(int position, ViewHolder viewHolder) {
-        viewHolder.text.setText(getItem(position).getAreaName());
+        viewHolder.text.setText(getItem(position).getArea());
         if (getItem(position).isSelected()) {
             viewHolder.text.setTextColor(context.getResources().getColor(R.color.main_red));
         } else {

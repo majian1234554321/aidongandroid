@@ -21,9 +21,11 @@ public class WeiBoLogin {
     private  Oauth2AccessToken mAccessToken;
     private  AuthInfo mAuthInfo;
     private Activity context;
+    private ThirdLoginUtils.OnThirdPartyLogin listner;
 
-    public  WeiBoLogin(Activity context){
+    public  WeiBoLogin(Activity context, ThirdLoginUtils.OnThirdPartyLogin listner){
         this.context = context;
+        this.listner = listner;
         mAuthInfo = new AuthInfo(context, WeiBoConstants.APP_KEY, WeiBoConstants.REDIRECT_URL,WeiBoConstants.SCOPE);
 
         mSsoHandler = new SsoHandler(context, mAuthInfo);
@@ -71,6 +73,7 @@ public class WeiBoLogin {
             mAccessToken = Oauth2AccessToken.parseAccessToken(values);
             String token = mAccessToken.getToken();
             String uid = mAccessToken.getUid();//调后台接口的id
+            listner.onThridLogin("weibo",uid);
             //从这里获取用户输入的 电话号码信息
             String  phoneNum =  mAccessToken.getPhoneNum();
             if (mAccessToken.isSessionValid()) {

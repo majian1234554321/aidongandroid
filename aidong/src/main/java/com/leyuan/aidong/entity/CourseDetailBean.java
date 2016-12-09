@@ -26,7 +26,7 @@ public class CourseDetailBean implements Parcelable {
     private String address;
     private String classroom;
     private String stock;
-    private String statues  = "";
+    private String status;    //# 0-预约已结束 1-已预约 2-预约人数已满 3-即将开始预约 4-“金额”待支付（已预约) 5-无需预约 6-可预约
 
     public String getCode() {
         return code;
@@ -156,12 +156,12 @@ public class CourseDetailBean implements Parcelable {
         this.stock = stock;
     }
 
-    public String getStatues() {
-        return statues;
+    public String getStatus() {
+        return status;
     }
 
-    public void setStatues(String statues) {
-        this.statues = statues;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override
@@ -181,11 +181,12 @@ public class CourseDetailBean implements Parcelable {
                 ", introduce='" + introduce + '\'' +
                 ", price='" + price + '\'' +
                 ", address='" + address + '\'' +
+                ", classroom='" + classroom + '\'' +
+                ", stock='" + stock + '\'' +
+                ", status='" + status + '\'' +
                 '}';
     }
 
-    public CourseDetailBean() {
-    }
 
     @Override
     public int describeContents() {
@@ -208,6 +209,12 @@ public class CourseDetailBean implements Parcelable {
         dest.writeString(this.introduce);
         dest.writeString(this.price);
         dest.writeString(this.address);
+        dest.writeString(this.classroom);
+        dest.writeString(this.stock);
+        dest.writeString(this.status);
+    }
+
+    public CourseDetailBean() {
     }
 
     protected CourseDetailBean(Parcel in) {
@@ -225,6 +232,9 @@ public class CourseDetailBean implements Parcelable {
         this.introduce = in.readString();
         this.price = in.readString();
         this.address = in.readString();
+        this.classroom = in.readString();
+        this.stock = in.readString();
+        this.status = in.readString();
     }
 
     public static final Creator<CourseDetailBean> CREATOR = new Creator<CourseDetailBean>() {

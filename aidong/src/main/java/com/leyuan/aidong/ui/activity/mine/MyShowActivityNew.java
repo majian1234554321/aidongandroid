@@ -241,7 +241,6 @@ public class MyShowActivityNew extends BaseActivity implements IHttpCallback, On
         tabLayout = (LinearLayout) findViewById(R.id.tabLayout);
         view_pop_bg = findViewById(R.id.view_pop_bg);
 
-
         //		scrollView.setMode(Mode.DISABLED);
         //		scrollView.setOnRefreshListener(this);
         mLayoutAddFriend.setOnClickListener(this);

@@ -109,6 +109,7 @@
 
     <string-array name="searchTab">
         <item>场馆</item>
+        <item>商品</item>
         <item>小团体课</item>
         <item>健康餐饮</item>
         <item>活动</item>

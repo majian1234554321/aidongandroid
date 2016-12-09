@@ -6,9 +6,10 @@ package com.leyuan.aidong.entity;
  */
 public class NewsBean {
     private String id;
-    private String name;
+    private String title;
+    private String body;
     private String cover;
-    private String date;
+    private String datetime;
 
     public String getId() {
         return id;
@@ -18,12 +19,20 @@ public class NewsBean {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
     }
 
     public String getCover() {
@@ -34,21 +43,22 @@ public class NewsBean {
         this.cover = cover;
     }
 
-    public String getDate() {
-        return date;
+    public String getDatetime() {
+        return datetime;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDatetime(String datetime) {
+        this.datetime = datetime;
     }
 
     @Override
     public String toString() {
-        return "NewBean{" +
+        return "NewsBean{" +
                 "id='" + id + '\'' +
-                ", name='" + name + '\'' +
+                ", title='" + title + '\'' +
+                ", body='" + body + '\'' +
                 ", cover='" + cover + '\'' +
-                ", date='" + date + '\'' +
+                ", datetime='" + datetime + '\'' +
                 '}';
     }
 }
