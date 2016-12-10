@@ -41,14 +41,6 @@ public class SearchCampaignFragment extends BaseFragment implements SearchCampai
     private SearchPresent present;
     private String keyword;
 
-    public static SearchCampaignFragment newInstance(String searchContent){
-        Bundle bundle = new Bundle();
-        bundle.putString("keyword", searchContent);
-        SearchCampaignFragment fragment = new SearchCampaignFragment();
-        fragment.setArguments(bundle);
-        return fragment;
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         Bundle bundle = getArguments();

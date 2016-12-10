@@ -42,14 +42,6 @@ public class SearchCourseFragment extends BaseFragment implements SearchCourseFr
     private SearchPresent present;
     private String  keyword;
 
-    public static SearchCourseFragment newInstance(String searchContent){
-        Bundle bundle = new Bundle();
-        bundle.putString("keyword", searchContent);
-        SearchCourseFragment fragment = new SearchCourseFragment();
-        fragment.setArguments(bundle);
-        return fragment;
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         Bundle bundle = getArguments();

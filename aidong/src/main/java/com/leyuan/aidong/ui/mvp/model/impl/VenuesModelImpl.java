@@ -3,8 +3,8 @@ package com.leyuan.aidong.ui.mvp.model.impl;
 
 import android.content.Context;
 
+import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.DistrictBean;
-import com.leyuan.aidong.entity.GymBrandBean;
 import com.leyuan.aidong.entity.data.CoachData;
 import com.leyuan.aidong.entity.data.CourseData;
 import com.leyuan.aidong.entity.data.VenuesData;
@@ -33,7 +33,7 @@ public class VenuesModelImpl implements VenuesModel {
     }
 
     @Override
-    public List<GymBrandBean> getGymBrand() {
+    public List<CategoryBean> getGymBrand() {
         return SystemInfoUtils.getGymBrand(context);
     }
 

@@ -7,12 +7,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CourseBean;
 import com.leyuan.aidong.ui.BaseFragment;
+import com.leyuan.aidong.ui.activity.home.CourseActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.CourseAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
@@ -48,17 +47,6 @@ public class CourseFragment extends BaseFragment implements CourserFragmentView,
     private String landmark;        //商圈
 
     private CoursePresent coursePresent;
-    private AnimationListener animationListener;
-
-    private TextView tvNoContent;
-
-    public static CourseFragment newInstance(String date) {
-        Bundle args = new Bundle();
-        args.putString("date",date);
-        CourseFragment fragment = new CourseFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
@@ -68,7 +56,6 @@ public class CourseFragment extends BaseFragment implements CourserFragmentView,
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        pageSize = 10;
         if(getArguments()!=null){
             date = getArguments().getString("date");
         }
@@ -79,7 +66,6 @@ public class CourseFragment extends BaseFragment implements CourserFragmentView,
     }
 
     private void initRefreshLayout(View view) {
-        tvNoContent = (TextView) view.findViewById(R.id.tv_no_content);
         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout);
         switcherLayout = new SwitcherLayout(getContext(),refreshLayout);
         setColorSchemeResources(refreshLayout);
@@ -99,7 +85,6 @@ public class CourseFragment extends BaseFragment implements CourserFragmentView,
 
     @Override
     public void onRefresh() {
-        Toast.makeText(getContext(),"refresh",Toast.LENGTH_LONG).show();
         currPage = 1;
         RecyclerViewStateUtils.resetFooterViewState(recyclerView);
         coursePresent.pullToRefreshData(date,category,landmark);
@@ -118,16 +103,12 @@ public class CourseFragment extends BaseFragment implements CourserFragmentView,
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
             if (scrolledDistance > HIDE_THRESHOLD  && filterViewVisible) {           //手指向上滑动
-                if(animationListener != null){
-                    animationListener.onAnimatedHide();
-                }
+                ((CourseActivity)getActivity()).animatedHide(); //todo 设置回调无效
                 filterViewVisible = false;
                 scrolledDistance = 0;
 
             } else if (scrolledDistance < -HIDE_THRESHOLD && !filterViewVisible) {   //手指向下滑动
-                if(animationListener != null){
-                    animationListener.onAnimatedShow();
-                }
+                ((CourseActivity)getActivity()).animatedShow();
                 scrolledDistance = 0;
                 filterViewVisible = true;
             }
@@ -171,14 +152,5 @@ public class CourseFragment extends BaseFragment implements CourserFragmentView,
     public void refreshCircle(String businessCircle) {
         this.landmark = businessCircle;
         this.onRefresh();
-    }
-
-    public void setAnimationListener(AnimationListener listener) {
-        this.animationListener = listener;
-    }
-
-    public interface AnimationListener{
-        void onAnimatedShow();
-        void onAnimatedHide();
     }
 }

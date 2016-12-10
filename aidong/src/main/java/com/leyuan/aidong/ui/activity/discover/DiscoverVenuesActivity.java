@@ -6,32 +6,28 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.AdapterView;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
-import android.widget.ListView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.DistrictBean;
-import com.leyuan.aidong.entity.GymBrandBean;
 import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.activity.discover.adapter.GymBrandAdapter;
 import com.leyuan.aidong.ui.activity.discover.adapter.VenuesAdapter;
+import com.leyuan.aidong.ui.activity.discover.view.VenuesFilterView;
 import com.leyuan.aidong.ui.activity.home.SearchActivity;
 import com.leyuan.aidong.ui.mvp.presenter.VenuesPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VenuesPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.DiscoverVenuesActivityView;
 import com.leyuan.aidong.widget.customview.SwitcherLayout;
-import com.leyuan.aidong.widget.dropdownmenu.DropDownMenu;
-import com.leyuan.aidong.widget.dropdownmenu.adapter.ListWithFlagAdapter;
-import com.leyuan.aidong.widget.dropdownmenu.adapter.SimpleListAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -39,29 +35,22 @@ import java.util.List;
  * Created by song on 2016/8/29.
  */
 public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenuesActivityView{
+    private static final int HIDE_THRESHOLD = 80;
+    private int scrolledDistance = 0;
+    private boolean filterViewVisible = true;
+
     private ImageView ivBack;
     private ImageView ivSearch;
-    private DropDownMenu dropDownMenu;
 
-    private View contentView;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout refreshLayout;
     private SwitcherLayout switcherLayout;
+    private VenuesFilterView filterView;
 
     private int currPage = 1;
     private VenuesAdapter venuesAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private ArrayList<VenuesBean> data = new ArrayList<>();
-
-    private String conditionHeaders[];
-    private List<View> popupViews = new ArrayList<>();
-    private GymBrandAdapter brandAdapter;        //品牌适配器
-    private ListWithFlagAdapter categoryAdapter;     //类型适配器
-    private SimpleListAdapter circleLeftAdapter;     //商圈一级列表适配器
-    private ListWithFlagAdapter circleRightAdapter;  //商圈二级列表适配器
-
-    private List<GymBrandBean> brandList = new ArrayList<>();
-    private List<String> categoryList = new ArrayList<>();
 
     private VenuesPresent venuesPresent;
 
@@ -70,19 +59,19 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover_venues);
         venuesPresent = new VenuesPresentImpl(this,this);
-        venuesPresent.getGymBrand();
-        venuesPresent.getBusinessCircle();
         initView();
         setListener();
+        venuesPresent.getGymBrand();
+        venuesPresent.getBusinessCircle();
         venuesPresent.commonLoadData(switcherLayout);
     }
 
     private void initView(){
         ivBack = (ImageView) findViewById(R.id.iv_back);
         ivSearch = (ImageView) findViewById(R.id.iv_search);
-        initDropDownMenu();
         initSwipeRefreshLayout();
         initRecyclerView();
+        initFilterView();
     }
 
     private void setListener(){
@@ -100,69 +89,10 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
         });
     }
 
-    private void initDropDownMenu(){
-        dropDownMenu = (DropDownMenu)findViewById(R.id.drop_down_menu);
-        conditionHeaders = getResources().getStringArray(R.array.venuesCondition);
-
-        final ListView brandView = new ListView(this);
-        brandAdapter = new GymBrandAdapter(this, brandList);
-        brandView.setDividerHeight(0);
-        brandView.setAdapter(brandAdapter);
-
-        final View circleView = View.inflate(this,R.layout.multi_list_drop_down,null);
-        ListView leftListView = (ListView) circleView.findViewById(R.id.lv_left);
-        final ListView rightListView = (ListView)circleView.findViewById(R.id.lv_right);
-        circleLeftAdapter = new SimpleListAdapter(this,Arrays.asList("1"));
-        leftListView.setAdapter(circleLeftAdapter);
-
-        final ListView categoryView = new ListView(this);
-        categoryAdapter = new ListWithFlagAdapter(this, categoryList);
-        categoryView.setDividerHeight(0);
-        categoryView.setAdapter(categoryAdapter);
-
-        brandView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                brandAdapter.setCheckItem(position);
-                dropDownMenu.setTabText(position == 0 ? conditionHeaders[0] : brandList.get(position).getName());
-                dropDownMenu.closeMenu();
-            }
-        });
-
-        leftListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        });
-
-        rightListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        });
-
-        categoryView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                categoryAdapter.setCheckItem(position);
-                dropDownMenu.setTabText(position == 0 ? conditionHeaders[2] : categoryList.get(position));
-                dropDownMenu.closeMenu();
-            }
-        });
-
-        popupViews.add(brandView);
-        popupViews.add(circleView);
-        popupViews.add(categoryView);
-        contentView = View.inflate(this,R.layout.dropdownmenu_content,null);
-        dropDownMenu.setDropDownMenu(Arrays.asList(conditionHeaders), popupViews, contentView);
-    }
-
-
     private void initSwipeRefreshLayout() {
-        refreshLayout = (SwipeRefreshLayout)contentView.findViewById(R.id.refreshLayout);
+        refreshLayout = (SwipeRefreshLayout)findViewById(R.id.refreshLayout);
         switcherLayout = new SwitcherLayout(this,refreshLayout);
+        refreshLayout.setProgressViewOffset(true,100,250);
         setColorSchemeResources(refreshLayout);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -175,13 +105,28 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
     }
 
     private void initRecyclerView() {
-        recyclerView = (RecyclerView)contentView.findViewById(R.id.recycler_view);
+        recyclerView = (RecyclerView)findViewById(R.id.rv_venues);
         data = new ArrayList<>();
         venuesAdapter = new VenuesAdapter(this);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(venuesAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(wrapperAdapter);
         recyclerView.addOnScrollListener(onScrollListener);
+    }
+
+    private void initFilterView() {
+        filterView = (VenuesFilterView)findViewById(R.id.filter_view);
+        filterView.setOnFilterClickListener(new VenuesFilterView.OnFilterClickListener() {
+            @Override
+            public void onBrandItemClick(String brandId) {
+
+            }
+
+            @Override
+            public void onBusinessCircleItemClick(String address) {
+
+            }
+        });
     }
 
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
@@ -192,16 +137,35 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
                 venuesPresent.requestMoreData(recyclerView,pageSize,currPage);
             }
         }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            if (scrolledDistance > HIDE_THRESHOLD  && filterViewVisible) {           //手指向上滑动
+                filterView.animate().translationY(-filterView.getHeight()).setInterpolator
+                        (new AccelerateInterpolator(2)).start();
+                filterViewVisible = false;
+                scrolledDistance = 0;
+            } else if (scrolledDistance < -HIDE_THRESHOLD && !filterViewVisible) {   //手指向下滑动
+                filterView.animate().translationY(0).setInterpolator
+                        (new DecelerateInterpolator(2)).start();
+                scrolledDistance = 0;
+                filterViewVisible = true;
+            }
+            if ((filterViewVisible && dy > 0) || (!filterViewVisible && dy < 0)) {
+                scrolledDistance += dy;
+            }
+        }
     };
 
     @Override
-    public void setGymBrand(List<GymBrandBean> gymBrandBeanList) {
-        brandList = gymBrandBeanList;
+    public void setGymBrand(List<CategoryBean> gymBrandBeanList) {
+        filterView.setBrandList(gymBrandBeanList);
     }
 
     @Override
     public void setBusinessCircle(List<DistrictBean> circleBeanList) {
-
+        filterView.setCircleList(circleBeanList);
     }
 
     @Override
@@ -220,6 +184,5 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
     public void showEndFooterView() {
         RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
     }
-
 
 }

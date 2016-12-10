@@ -11,7 +11,7 @@ import java.util.List;
  * Created by song on 2016/8/18.
  */
 public class CampaignDetailBean implements Parcelable {
-    private String campaign_id;             //活动编号
+    private String id;                      //活动编号
     private String name;                    //活动名称
     private List<String> image;             //活动封面图
     private String landmark;                //活动地标
@@ -30,11 +30,11 @@ public class CampaignDetailBean implements Parcelable {
     private String status = "";
 
     public String getCampaignId() {
-        return campaign_id;
+        return id;
     }
 
     public void setCampaign_id(String campaign_id) {
-        this.campaign_id = campaign_id;
+        this.id = campaign_id;
     }
 
     public String getName() {
@@ -195,7 +195,7 @@ public class CampaignDetailBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.campaign_id);
+        dest.writeString(this.id);
         dest.writeString(this.name);
         dest.writeStringList(this.image);
         dest.writeString(this.landmark);
@@ -216,7 +216,7 @@ public class CampaignDetailBean implements Parcelable {
     }
 
     protected CampaignDetailBean(Parcel in) {
-        this.campaign_id = in.readString();
+        this.id = in.readString();
         this.name = in.readString();
         this.image = in.createStringArrayList();
         this.landmark = in.readString();

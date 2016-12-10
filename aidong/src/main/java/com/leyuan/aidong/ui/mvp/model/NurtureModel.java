@@ -3,6 +3,7 @@ package com.leyuan.aidong.ui.mvp.model;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.data.NurtureData;
 import com.leyuan.aidong.entity.data.NurtureDetailData;
+import com.leyuan.aidong.entity.data.VenuesData;
 
 import java.util.ArrayList;
 
@@ -24,7 +25,8 @@ public interface NurtureModel {
      * @param subscriber Subscribers
      * @param page 页码
      */
-    void getNurtures(Subscriber<NurtureData> subscriber, int page);
+    void getNurtures(Subscriber<NurtureData> subscriber, int page,String brandId,String priceSort,
+                     String countSort,String heatSort);
 
     /**
      * 获取营养品详情
@@ -32,4 +34,12 @@ public interface NurtureModel {
      * @param id id
      */
     void getNurtureDetail(Subscriber<NurtureDetailData> subscriber, String id);
+
+    /**
+     * 获取营养品的自提场馆
+     * @param subscriber Subscribers
+     * @param skuCode sku码
+     * @param page 页码
+     */
+    void getDeliveryVenues(Subscriber<VenuesData> subscriber, String skuCode, int page);
 }

@@ -1,8 +1,8 @@
 package com.leyuan.aidong.ui.mvp.model;
 
 
+import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.DistrictBean;
-import com.leyuan.aidong.entity.GymBrandBean;
 import com.leyuan.aidong.entity.data.CoachData;
 import com.leyuan.aidong.entity.data.CourseData;
 import com.leyuan.aidong.entity.data.VenuesData;
@@ -23,7 +23,7 @@ public interface VenuesModel {
      * 获取场馆品牌信息
      * @return 课程分类
      */
-    List<GymBrandBean> getGymBrand();
+    List<CategoryBean> getGymBrand();
 
     /**
      * 获取商圈信息

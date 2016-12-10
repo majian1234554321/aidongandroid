@@ -3,6 +3,7 @@ package com.leyuan.aidong.http.api;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.data.EquipmentData;
 import com.leyuan.aidong.entity.data.EquipmentDetailData;
+import com.leyuan.aidong.entity.data.VenuesData;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -16,8 +17,15 @@ import rx.Observable;
 public interface EquipmentService {
 
     @GET("market/equipments")
-    Observable<BaseBean<EquipmentData>> getEquipments(@Query("page") int page);
+    Observable<BaseBean<EquipmentData>> getEquipments(@Query("page") int page,
+                                                      @Query("brand_id") String brandId,
+                                                      @Query("price") String priceSort,
+                                                      @Query("order_count") String countSort,
+                                                      @Query("heat") String heatSort);
 
     @GET("market/equipments/{id}")
     Observable<BaseBean<EquipmentDetailData>>  getEquipmentDetail(@Path("id") String id);
+
+    @GET("equipments/{sku_code}/gyms")
+    Observable<BaseBean<VenuesData>> getDeliveryVenues(@Path("sku_code") String skuCode,int page);
 }

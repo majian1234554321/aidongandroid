@@ -27,7 +27,7 @@ import com.leyuan.aidong.ui.activity.home.adapter.GoodsDetailCouponAdapter;
 import com.leyuan.aidong.ui.activity.home.view.GoodsSkuPopupWindow;
 import com.leyuan.aidong.ui.activity.mine.CartActivity;
 import com.leyuan.aidong.ui.mvp.presenter.GoodsDetailPresent;
-import com.leyuan.aidong.ui.mvp.presenter.impl.GoodDetailPresentImpl;
+import com.leyuan.aidong.ui.mvp.presenter.impl.GoodsDetailPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.GoodsDetailActivityView;
 import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.ImageLoadConfig;
@@ -101,7 +101,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_detail);
-        GoodsDetailPresent goodsDetailPresent = new GoodDetailPresentImpl(this,this);
+        GoodsDetailPresent goodsDetailPresent = new GoodsDetailPresentImpl(this,this);
         if(getIntent() != null){
             id = getIntent().getStringExtra("id");
             type = getIntent().getStringExtra("type");

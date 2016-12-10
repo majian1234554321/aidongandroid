@@ -9,7 +9,6 @@ import com.leyuan.aidong.entity.data.CourseData;
 import com.leyuan.aidong.entity.data.VenuesData;
 import com.leyuan.aidong.entity.data.VenuesDetailData;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
-import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.aidong.ui.mvp.model.VenuesModel;
@@ -136,15 +135,15 @@ public class VenuesPresentImpl implements VenuesPresent{
 
     @Override
     public void getVenuesDetail(final SwitcherLayout switcherLayout, String id) {
-        venuesModel.getVenuesDetail(new ProgressSubscriber<VenuesDetailData>(context) {
+      /* venuesModel.getVenuesDetail(new ProgressSubscriber<VenuesDetailData>(context) {
             @Override
             public void onNext(VenuesDetailData venuesDetailData) {
                 if(venuesDetailData != null && venuesDetailData.getGym() != null){
                     venuesDetailFragmentView.setVenuesDetail(venuesDetailData.getGym());
                 }
             }
-        },id);
-       /* venuesModel.getVenuesDetail(new CommonSubscriber<VenuesDetailData>(switcherLayout) {
+        },id);*/
+      venuesModel.getVenuesDetail(new CommonSubscriber<VenuesDetailData>(switcherLayout) {
             @Override
             public void onNext(VenuesDetailData venuesDetailData) {
                 if(venuesDetailData != null && venuesDetailData.getGym() != null){
@@ -152,7 +151,7 @@ public class VenuesPresentImpl implements VenuesPresent{
                     venuesDetailFragmentView.setVenuesDetail(venuesDetailData.getGym());
                 }
             }
-        },id);*/
+        },id);
     }
 
     @Override
@@ -170,15 +169,15 @@ public class VenuesPresentImpl implements VenuesPresent{
 
     @Override
     public void getCoaches(final SwitcherLayout switcherLayout,String id) {
-        venuesModel.getCoaches(new ProgressSubscriber<CoachData>(context) {
+       /* venuesModel.getCoaches(new ProgressSubscriber<CoachData>(context) {
             @Override
             public void onNext(CoachData coachData) {
                 if(coachData != null && coachData.getCoach() != null && !coachData.getCoach().isEmpty()){
                     venuesCoachFragmentView.setCoaches(coachData.getCoach());
                 }
             }
-        },id);
-        /*venuesModel.getCoaches(new CommonSubscriber<CoachData>(switcherLayout) {
+        },id);*/
+        venuesModel.getCoaches(new CommonSubscriber<CoachData>(switcherLayout) {
             @Override
             public void onNext(CoachData coachData) {
                 if(coachData != null && coachData.getCoach() != null && !coachData.getCoach().isEmpty()){
@@ -186,6 +185,6 @@ public class VenuesPresentImpl implements VenuesPresent{
                     venuesCoachFragmentView.setCoaches(coachData.getCoach());
                 }
             }
-        },id);*/
+        },id);
     }
 }

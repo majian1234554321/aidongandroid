@@ -28,14 +28,6 @@ public class SelfDeliveryAdapter extends RecyclerView.Adapter<SelfDeliveryAdapte
     public void setData(List<DeliveryBean> data) {
         if(data != null){
             this.data = data;
-        }else{
-            for (int i = 0; i < 10; i++) {
-                DeliveryBean bean = new DeliveryBean();
-                bean.setAddress("大日本东京大道");
-                bean.setDistance("1000");
-                bean.setName("日本全球会社");
-                this.data.add(bean);
-            }
         }
     }
 

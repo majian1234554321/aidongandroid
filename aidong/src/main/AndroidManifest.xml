@@ -135,7 +135,7 @@
         <activity android:name=".ui.activity.home.DeliveryInfoActivity" />
         <activity android:name=".ui.activity.discover.AppointVenuesActivity"/>
         <activity android:name=".ui.activity.discover.AppointCoachActivity"/>
-        <activity android:name=".ui.activity.home.SelfDeliveryShopActivity" />
+        <activity android:name=".ui.activity.home.SelfDeliveryVenuesActivity" />
         <activity android:name=".ui.activity.home.ConfirmGoodsActivity" />
         <activity android:name=".ui.activity.home.ImagePreviewActivity"/>
         <activity android:name=".ui.activity.mine.ApplyServiceNextActivity"/>
@@ -150,7 +150,7 @@
         <activity android:name=".ui.activity.video.LiveDetailActivity"/>
         <activity android:name=".ui.activity.video.LivingVideoActivity"/>
         <activity android:name=".ui.activity.discover.DiscoverVenuesActivity"/>
-        <activity android:name=".ui.activity.discover.SportNewsActivity"/>
+        <activity android:name=".ui.activity.discover.NewsActivity"/>
         <activity android:name=".ui.activity.discover.NewsDetailActivity"/>
         <activity android:name=".ui.activity.video.VideoCommentActivity"/>
         <activity android:name=".ui.activity.home.ChangeCityActivity"/>

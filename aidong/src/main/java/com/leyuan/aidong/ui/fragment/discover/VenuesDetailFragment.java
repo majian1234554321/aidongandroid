@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
@@ -25,7 +26,7 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  */
 public class VenuesDetailFragment extends BaseFragment implements View.OnClickListener ,VenuesDetailFragmentView {
     private SwitcherLayout switcherLayout;
-    private LinearLayout contentLayout;
+    private RelativeLayout contentLayout;
     private BGABanner bannerLayout;
     private FloatingActionButton shareButton;
     private TextView tvName;
@@ -45,14 +46,8 @@ public class VenuesDetailFragment extends BaseFragment implements View.OnClickLi
     private ImageView ivFood;
 
     private String id;
-
-    public static VenuesDetailFragment newInstance(String id) {
-        Bundle args = new Bundle();
-        args.putString("id",id);
-        VenuesDetailFragment fragment = new VenuesDetailFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private VenuesLoadListener loadListener;
+    private VenuesDetailBean venuesBean;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -73,8 +68,8 @@ public class VenuesDetailFragment extends BaseFragment implements View.OnClickLi
     }
 
     private void initView(View view) {
-        contentLayout = (LinearLayout) view.findViewById(R.id.main_content);
-     //   switcherLayout = new SwitcherLayout(getContext(),contentLayout);
+        contentLayout = (RelativeLayout) view.findViewById(R.id.main_content);
+        switcherLayout = new SwitcherLayout(getContext(),contentLayout);
         bannerLayout = (BGABanner) view.findViewById(R.id.banner);
         shareButton = (FloatingActionButton) view.findViewById(R.id.fb_share);
         tvName = (TextView) view.findViewById(R.id.tv_name);
@@ -128,9 +123,19 @@ public class VenuesDetailFragment extends BaseFragment implements View.OnClickLi
 
     @Override
     public void setVenuesDetail(VenuesDetailBean venuesBean) {
+        if(loadListener != null){
+            loadListener.onLoadFinish(venuesBean);
+        }
         tvName.setText(venuesBean.getName());
         tvPhone.setText(venuesBean.getPhone());
         tvAddress.setText(venuesBean.getAddress());
+    }
 
+    public void setLoadListener(VenuesLoadListener loadListener) {
+        this.loadListener = loadListener;
+    }
+
+    public interface VenuesLoadListener{
+        void onLoadFinish(VenuesDetailBean venuesBean);
     }
 }

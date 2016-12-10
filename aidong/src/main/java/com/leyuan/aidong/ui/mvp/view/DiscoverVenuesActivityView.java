@@ -1,7 +1,7 @@
 package com.leyuan.aidong.ui.mvp.view;
 
+import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.DistrictBean;
-import com.leyuan.aidong.entity.GymBrandBean;
 import com.leyuan.aidong.entity.VenuesBean;
 
 import java.util.List;
@@ -13,9 +13,9 @@ import java.util.List;
 public interface DiscoverVenuesActivityView {
 
     /**
-     * 设置课程分类
+     * 设置场馆品牌
      */
-    void setGymBrand(List<GymBrandBean> gymBrandBeanList);
+    void setGymBrand(List<CategoryBean> gymBrandBeanList);
 
     /**
      * 设置热门商圈

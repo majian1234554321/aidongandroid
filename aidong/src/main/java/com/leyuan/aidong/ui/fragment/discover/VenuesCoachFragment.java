@@ -1,12 +1,12 @@
 package com.leyuan.aidong.ui.fragment.discover;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CoachBean;
@@ -25,20 +25,9 @@ import java.util.List;
  */
 public class VenuesCoachFragment extends BaseFragment implements VenuesCoachFragmentView{
     private SwitcherLayout switcherLayout;
-    private LinearLayout contentLayout;
+    private SwipeRefreshLayout refreshLayout;
     private VenuesCoachAdapter coachAdapter;
-    private VenuesPresent venuesPresent;
     private String id;
-
-
-    public static VenuesCoachFragment newInstance(String id) {
-        Bundle args = new Bundle();
-        args.putString("id",id);
-        VenuesCoachFragment fragment = new VenuesCoachFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,9 +40,9 @@ public class VenuesCoachFragment extends BaseFragment implements VenuesCoachFrag
         if(bundle != null){
             id = bundle.getString("id");
         }
-        venuesPresent = new VenuesPresentImpl(getContext(),this);
-        contentLayout = (LinearLayout) view.findViewById(R.id.ll_content);
-        //switcherLayout = new SwitcherLayout(getContext(),contentLayout);
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout);
+        VenuesPresent venuesPresent = new VenuesPresentImpl(getContext(),this);
+        switcherLayout = new SwitcherLayout(getContext(),refreshLayout);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv_venues_coach);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         coachAdapter = new VenuesCoachAdapter(getContext());

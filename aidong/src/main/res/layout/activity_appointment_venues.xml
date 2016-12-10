@@ -49,6 +49,7 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_date"
+        android:background="@color/line_color"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
@@ -67,10 +68,10 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/shape_bg_white"
+            android:background="@drawable/shape_solid_black"
             android:gravity="center"
             android:text="上午"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="15sp" />
 
         <TextView
@@ -79,10 +80,10 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
-            android:background="@drawable/shape_bg_black"
+            android:background="@drawable/shape_stroke_white"
             android:gravity="center"
             android:text="下午"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="15sp" />
     </LinearLayout>
 
@@ -100,7 +101,7 @@
         android:id="@+id/tv_appointment"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="预约场馆"
+        android:text="确认预约"
         android:textSize="15sp"
         android:gravity="center"
         android:background="@color/main_red"

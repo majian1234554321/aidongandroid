@@ -4,13 +4,6 @@
     android:layout_width="match_parent"
     android:background="@color/white"
     android:layout_height="match_parent">
-    <com.leyuan.aidong.widget.CommonTitleLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/pref_45dp"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:txtTitle="@string/found"
-        app:imgLeft="@color/transparent"
-        />
 
     <Button
         android:id="@+id/btn_gymnasium"

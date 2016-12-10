@@ -17,8 +17,9 @@
         android:text="上海"
         android:textSize="@dimen/pref_12dp"
         android:textColor="@color/white"
-        android:drawableRight="@drawable/icon_arrow_down"
+        android:drawableRight="@drawable/home_arrow"
         android:gravity="center"
+        android:drawablePadding="2dp"
         android:layout_toRightOf="@+id/iv_logo"
         android:layout_alignBottom="@+id/iv_logo"/>
 

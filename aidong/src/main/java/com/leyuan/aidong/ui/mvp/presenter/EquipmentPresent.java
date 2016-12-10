@@ -37,12 +37,14 @@ public interface EquipmentPresent {
      * 第一次进入界面加载装备列表数据
      * @param switcherLayout SwitcherLayout
      */
-    void commonLoadEquipmentData(SwitcherLayout switcherLayout);
+    void commonLoadEquipmentData(SwitcherLayout switcherLayout,String brandId,
+                                 String priceSort, String countSort, String heatSort);
 
     /**
      * 下拉刷新装备列表数据
      */
-    void pullToRefreshEquipmentData();
+    void pullToRefreshEquipmentData(String brandId,String priceSort, String countSort, String heatSort);
+
 
     /**
      * 上拉加载更多装备列表数据
@@ -50,6 +52,7 @@ public interface EquipmentPresent {
      * @param pageSize 每页加载数
      * @param page 页码
      */
-    void requestMoreEquipmentData(RecyclerView recyclerView, int pageSize, int page);
+    void requestMoreEquipmentData(RecyclerView recyclerView, int pageSize, int page,String brandId,
+                                  String priceSort, String countSort, String heatSort);
 
 }

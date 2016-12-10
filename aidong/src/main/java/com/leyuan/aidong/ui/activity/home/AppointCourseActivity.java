@@ -146,15 +146,15 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
             case R.id.tv_vip:
                 tvNoVip.setTextColor(Color.parseColor("#000000"));
                 tvVip.setTextColor(Color.parseColor("#ffffff"));
-                tvNoVip.setBackgroundResource(R.drawable.shape_bg_white);
-                tvVip.setBackgroundResource(R.drawable.shape_bg_black);
+                tvNoVip.setBackgroundResource(R.drawable.shape_stroke_white);
+                tvVip.setBackgroundResource(R.drawable.shape_solid_black);
                 vipTipLayout.setVisibility(View.GONE);
                 break;
             case R.id.tv_no_vip:
                 tvVip.setTextColor(Color.parseColor("#000000"));
                 tvNoVip.setTextColor(Color.parseColor("#ffffff"));
-                tvVip.setBackgroundResource(R.drawable.shape_bg_white);
-                tvNoVip.setBackgroundResource(R.drawable.shape_bg_black);
+                tvVip.setBackgroundResource(R.drawable.shape_stroke_white);
+                tvNoVip.setBackgroundResource(R.drawable.shape_solid_black);
                 vipTipLayout.setVisibility(View.VISIBLE);
                 break;
             case R.id.tv_pay:

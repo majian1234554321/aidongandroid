@@ -8,7 +8,6 @@ import android.util.Base64;
 import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.entity.DistrictBean;
 import com.leyuan.aidong.entity.CategoryBean;
-import com.leyuan.aidong.entity.GymBrandBean;
 import com.leyuan.aidong.entity.SystemBean;
 
 import java.io.ByteArrayInputStream;
@@ -179,7 +178,7 @@ public class SystemInfoUtils {
     /**
      * 获取场馆品牌分类
      */
-    public static List<GymBrandBean> getGymBrand(Context context){
+    public static List<CategoryBean> getGymBrand(Context context){
         if(Constant.systemInfoBean != null && Constant.systemInfoBean.getGymBrand() != null){ //内存有直接从内存读取返回
             return Constant.systemInfoBean.getGymBrand();
         }else {          // 从本地读取

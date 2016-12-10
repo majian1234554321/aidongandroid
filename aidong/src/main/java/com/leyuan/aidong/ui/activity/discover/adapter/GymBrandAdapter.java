@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.GymBrandBean;
+import com.leyuan.aidong.entity.CategoryBean;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import java.util.List;
 public class GymBrandAdapter extends BaseAdapter {
 
     private Context context;
-    private List<GymBrandBean> list;
+    private List<CategoryBean> list;
     private int checkItemPosition = -1;
 
     public void setCheckItem(int position) {
@@ -24,8 +24,9 @@ public class GymBrandAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public GymBrandAdapter(Context context, List<GymBrandBean> list) {
+    public GymBrandAdapter(Context context, List<CategoryBean> list) {
         this.context = context;
+        if(list != null)
         this.list = list;
     }
 

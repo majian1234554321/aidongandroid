@@ -10,7 +10,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.activity.discover.DiscoverUserActivity;
 import com.leyuan.aidong.ui.activity.discover.DiscoverVenuesActivity;
-import com.leyuan.aidong.ui.activity.discover.SportNewsActivity;
+import com.leyuan.aidong.ui.activity.discover.NewsActivity;
 
 /**
  * Created by user on 2016/11/4.
@@ -44,7 +44,7 @@ public class FoundHomeFragment extends BaseFragment implements View.OnClickListe
                 //TODO implement
                 break;
             case R.id.btn_news:
-                startActivity(new Intent(getContext(), SportNewsActivity.class));
+                startActivity(new Intent(getContext(), NewsActivity.class));
                 //TODO implement
                 break;
             case R.id.btn_sport_circle:

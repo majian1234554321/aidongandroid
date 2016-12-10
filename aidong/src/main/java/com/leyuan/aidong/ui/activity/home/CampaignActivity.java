@@ -1,32 +1,35 @@
 package com.leyuan.aidong.ui.activity.home;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.adapter.TabFragmentAdapter;
+import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.fragment.home.CampaignFragment;
-import com.leyuan.aidong.utils.interfaces.SimpleOnTabSelectedListener;
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 活动
  * Created by song on 2016/9/9.
  */
-public class CampaignActivity extends BaseActivity{
-    private static  final int CAMPAIGN_FREE = 0;
-    private static  final int CAMPAIGN_PAY = 1;
-
+public class CampaignActivity extends BaseActivity  implements SmartTabLayout.TabProvider{
+    private List<View> allTabView = new ArrayList<>();
     private ImageView ivBack;
-    private TabLayout tabLayout;
+    private SmartTabLayout tabLayout;
     private ViewPager viewPager;
     private TextView tvPost;
 
@@ -36,27 +39,26 @@ public class CampaignActivity extends BaseActivity{
         setContentView(R.layout.activity_campaign);
 
         ivBack = (ImageView) findViewById(R.id.iv_back);
-        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        viewPager = (ViewPager) findViewById(R.id.vp_content);
         tvPost = (TextView)findViewById(R.id.tv_post);
-
-        ArrayList<Fragment> fragments = new ArrayList<>();
-        CampaignFragment free = new CampaignFragment();
-        CampaignFragment pay = new CampaignFragment();
-
-        free.setArguments(CampaignFragment.FREE);
-        pay.setArguments(CampaignFragment.PAY);
-
-        fragments.add(free);
-        fragments.add(pay);
-
-        ArrayList<String> titles = new ArrayList<>();
-        titles.add(getString(R.string.campaign_free));
-        titles.add(getString(R.string.campaign_pay));
-
-        viewPager.setAdapter(new TabFragmentAdapter(getSupportFragmentManager(),fragments,titles));
-        viewPager.setOffscreenPageLimit(2);
-        tabLayout.setupWithViewPager(viewPager);
+        tabLayout = (SmartTabLayout) findViewById(R.id.tab_layout);
+        viewPager = (ViewPager) findViewById(R.id.vp_content);
+        FragmentPagerItems pages = new FragmentPagerItems(this);
+        pages.add(FragmentPagerItem.of(null,CampaignFragment.newInstance(CampaignFragment.FREE).getClass()));
+        pages.add(FragmentPagerItem.of(null,CampaignFragment.newInstance(CampaignFragment.PAY).getClass()));
+        final FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);
+        viewPager.setAdapter(adapter);
+        tabLayout.setCustomTabView(this);
+        tabLayout.setViewPager(viewPager);
+        tabLayout.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+            @Override
+            public void onPageSelected(int position) {
+                for (int i = 0; i < allTabView.size(); i++) {
+                    View tabAt = tabLayout.getTabAt(i);
+                    TextView text = (TextView) tabAt.findViewById(R.id.tv_tab_text);
+                    text.setTypeface(i == position ? Typeface.DEFAULT_BOLD :Typeface.DEFAULT);
+                }
+            }
+        });
 
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +66,6 @@ public class CampaignActivity extends BaseActivity{
                 finish();
             }
         });
-
         tvPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,16 +73,18 @@ public class CampaignActivity extends BaseActivity{
                 startActivity(intent);
             }
         });
+    }
 
-        tabLayout.setOnTabSelectedListener(new SimpleOnTabSelectedListener(){
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                if(tab.equals(tabLayout.getTabAt(CAMPAIGN_FREE))){
-                    viewPager.setCurrentItem(CAMPAIGN_FREE);
-                }else{
-                    viewPager.setCurrentItem(CAMPAIGN_PAY);
-                }
-            }
-        });
+    @Override
+    public View createTabView(ViewGroup container, int position, PagerAdapter adapter) {
+        View tabView = LayoutInflater.from(this).inflate(R.layout.tab_text, container, false);
+        TextView text = (TextView) tabView.findViewById(R.id.tv_tab_text);
+        String[] campaignTab = getResources().getStringArray(R.array.campaignTab);
+        text.setText(campaignTab[position]);
+        if(position == 0){
+            text.setTypeface(Typeface.DEFAULT_BOLD);
+        }
+        allTabView.add(tabView);
+        return tabView;
     }
 }
