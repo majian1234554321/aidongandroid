@@ -9,9 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="#F7F7F7"
+        android:elevation="2dp"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:elevation="2dp"  >
+        android:orientation="horizontal">
 
 
         <LinearLayout
@@ -86,36 +86,46 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/half_transparent"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/ll_content"
             android:layout_width="match_parent"
-            android:layout_height="265dp"
+            android:layout_height="wrap_content"
             android:background="@color/white"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:visibility="gone">
 
-            <ListView
-                android:id="@+id/list_left"
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_height="match_parent"
-                android:background="@color/white"
-                android:divider="@null"
-                android:dividerHeight="0dp"
-                android:scrollbars="none" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="265dp"
+                android:orientation="horizontal">
+
+                <ListView
+                    android:id="@+id/list_left"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:background="@color/white"
+                    android:divider="@null"
+                    android:dividerHeight="0dp"
+                    android:scrollbars="none" />
 
 
-            <ListView
-                android:id="@+id/list_right"
-                android:layout_width="0dp"
-                android:layout_weight="3"
-                android:layout_height="match_parent"
-                android:background="@color/white"
-                android:divider="@null"
-                android:dividerHeight="0dp"
-                android:scrollbars="none" />
+                <ListView
+                    android:id="@+id/list_right"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:background="@color/white"
+                    android:divider="@null"
+                    android:dividerHeight="0dp"
+                    android:scrollbars="none" />
+            </LinearLayout>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/popup_bottom"/>
         </LinearLayout>
     </FrameLayout>
 </LinearLayout>

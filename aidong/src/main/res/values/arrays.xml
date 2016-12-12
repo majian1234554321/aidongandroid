@@ -154,7 +154,11 @@
         <item>课程</item>
         <item>教练</item>
     </string-array>
-
+    <string-array name="goodsDetailTab">
+        <item>商品详情</item>
+        <item>常见问题</item>
+        <item>售后服务</item>
+    </string-array>
     <string-array name="dateTab">
         <item>星期一</item>
         <item>星期二</item>

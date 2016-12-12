@@ -91,7 +91,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     private boolean isConfirmSku = false;
 
     public static void start(Context context, String id, String type) {
-        Intent starter = new Intent(context, GoodsDetailActivity.class);
+        Intent starter = new Intent(context, OldGoodsDetailActivity.class);
         starter.putExtra("id",id);
         starter.putExtra("type",type);
         context.startActivity(starter);

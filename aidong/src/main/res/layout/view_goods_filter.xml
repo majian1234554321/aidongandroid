@@ -146,7 +146,7 @@
             android:id="@+id/ll_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:visibility="gone">
 
             <ListView
@@ -158,6 +158,10 @@
                 android:dividerHeight="0dp"
                 android:scrollbars="none" />
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/popup_bottom"/>
         </LinearLayout>
     </FrameLayout>
 </LinearLayout>

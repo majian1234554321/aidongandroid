@@ -12,16 +12,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/AVLoadingIndicatorView"
-        app:indicatorName="BallPulseIndicator"
+        app:indicatorName="LineSpinFadeLoaderIndicator"
         app:indicatorColor="@color/black"/>
 
     <TextView
         android:id="@+id/loading_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
+        android:layout_marginLeft="10dp"
         android:text="@string/list_footer_loading"
-        android:visibility="gone"
+        android:visibility="visible"
         android:textColor="@color/black"
         android:textSize="14sp" />
 </LinearLayout>
