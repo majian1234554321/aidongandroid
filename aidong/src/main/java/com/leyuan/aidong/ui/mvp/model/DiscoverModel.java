@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.mvp.model;
 
+import com.leyuan.aidong.entity.data.DiscoverData;
 import com.leyuan.aidong.entity.data.DiscoverUserData;
 import com.leyuan.aidong.entity.data.DiscoverVenuesData;
 import com.leyuan.aidong.entity.data.DiscoverNewsData;
@@ -11,6 +12,12 @@ import rx.Subscriber;
  * Created by song on 2016/8/29.
  */
 public interface DiscoverModel {
+
+    /**
+     * 发现首页
+     * @param subscriber Subscriber
+     */
+    void getDiscover(Subscriber<DiscoverData> subscriber);
 
     /**
      * 获取场馆列表

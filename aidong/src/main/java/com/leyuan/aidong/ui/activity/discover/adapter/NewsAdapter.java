@@ -19,11 +19,11 @@ import java.util.List;
  * 运动之窗适配器
  * Created by song on 2016/10/17.
  */
-public class SportsNewsAdapter extends RecyclerView.Adapter<SportsNewsAdapter.NewsHolder>{
+public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder>{
     private Context context;
     private List<NewsBean> data = new ArrayList<>();
 
-    public SportsNewsAdapter(Context context) {
+    public NewsAdapter(Context context) {
         this.context = context;
     }
 

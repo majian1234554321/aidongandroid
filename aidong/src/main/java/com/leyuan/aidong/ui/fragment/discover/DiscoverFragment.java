@@ -1,14 +1,38 @@
 package com.leyuan.aidong.ui.fragment.discover;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.BannerBean;
+import com.leyuan.aidong.entity.NewsBean;
+import com.leyuan.aidong.entity.UserBean;
+import com.leyuan.aidong.entity.VenuesBean;
+import com.leyuan.aidong.entity.data.DiscoverData;
 import com.leyuan.aidong.ui.BaseFragment;
+import com.leyuan.aidong.ui.activity.discover.DiscoverUserActivity;
+import com.leyuan.aidong.ui.activity.discover.DiscoverVenuesActivity;
+import com.leyuan.aidong.ui.activity.discover.NewsActivity;
+import com.leyuan.aidong.ui.activity.discover.adapter.DiscoverNewsAdapter;
+import com.leyuan.aidong.ui.activity.discover.adapter.DiscoverUserAdapter;
+import com.leyuan.aidong.ui.activity.discover.adapter.DiscoverVenuesAdapter;
+import com.leyuan.aidong.ui.mvp.presenter.DiscoverPresent;
+import com.leyuan.aidong.ui.mvp.presenter.impl.DiscoverPresentImpl;
+import com.leyuan.aidong.ui.mvp.view.DiscoverFragmentView;
+import com.leyuan.aidong.utils.SystemInfoUtils;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 
@@ -16,10 +40,22 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  * 发现 -- 发现
  * Created by song on 2016/11/19.
  */
-public class DiscoverFragment extends BaseFragment{
+public class DiscoverFragment extends BaseFragment implements DiscoverFragmentView, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+    //private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
-    private RecyclerView recyclerView;
-    private BGABanner bannerLayout;
+    private BGABanner banner;
+    private RecyclerView rvVenues;
+    private RecyclerView rvUser;
+    private RecyclerView rvNews;
+    private RelativeLayout moreVenuesLayout;
+    private RelativeLayout moreUserLayout;
+    private RelativeLayout moreNewsLayout;
+
+    private DiscoverVenuesAdapter venuesAdapter;
+    private DiscoverUserAdapter userAdapter;
+    private DiscoverNewsAdapter newsAdapter;
+
+    private DiscoverPresent discoverPresent;
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
@@ -29,15 +65,127 @@ public class DiscoverFragment extends BaseFragment{
     @Override
     public void onViewCreated(View view,Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        discoverPresent = new DiscoverPresentImpl(getContext(),this);
         initView(view);
-
+        setListener();
+        getData();
+        //discoverPresent.getDiscoverData(switcherLayout);
     }
 
     private void initView(View view) {
-        View headerView = View.inflate(getContext(), R.layout.header_discover,null);
-        bannerLayout = (BGABanner) headerView.findViewById(R.id.banner);
-        refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.refreshLayout);
-        recyclerView = (RecyclerView)view.findViewById(R.id.rv_discover);
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout);
+        //switcherLayout = new SwitcherLayout(getContext(),refreshLayout);
+        banner = (BGABanner) view.findViewById(R.id.banner);
+        rvVenues = (RecyclerView) view.findViewById(R.id.rv_venues);
+        rvUser = (RecyclerView) view.findViewById(R.id.rv_user);
+        rvNews = (RecyclerView) view.findViewById(R.id.rv_news);
+        moreVenuesLayout = (RelativeLayout) view.findViewById(R.id.rl_more_venues);
+        moreUserLayout = (RelativeLayout) view.findViewById(R.id.rl_more_user);
+        moreNewsLayout = (RelativeLayout) view.findViewById(R.id.rl_more_news);
 
+        rvVenues.setLayoutManager(new LinearLayoutManager(getContext(),
+                LinearLayoutManager.HORIZONTAL,false));
+        rvUser.setLayoutManager(new GridLayoutManager(getContext(),4));
+        rvNews.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvVenues.setNestedScrollingEnabled(false);
+        rvUser.setNestedScrollingEnabled(false);
+        rvNews.setNestedScrollingEnabled(false);
+        venuesAdapter = new DiscoverVenuesAdapter(getContext());
+        userAdapter = new DiscoverUserAdapter(getContext());
+        newsAdapter = new DiscoverNewsAdapter(getContext());
+        rvVenues.setAdapter(venuesAdapter);
+        rvUser.setAdapter(userAdapter);
+        rvNews.setAdapter(newsAdapter);
+        banner.setData(SystemInfoUtils.getHomeBanner(getContext()),null);
+        banner.setAdapter(new BGABanner.Adapter() {
+            @Override
+            public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
+                ImageLoader.getInstance().displayImage(((BannerBean)model).getImage(),(ImageView)view);
+            }
+        });
     }
+
+    private void setListener(){
+        refreshLayout.setOnRefreshListener(this);
+        moreVenuesLayout.setOnClickListener(this);
+        moreUserLayout.setOnClickListener(this);
+        moreNewsLayout.setOnClickListener(this);
+    }
+
+    @Override
+    public void setDiscoverData(DiscoverData discoverData) {
+        if(discoverData.getGym() != null){
+            venuesAdapter.setData(discoverData.getGym());
+        }
+        if(discoverData.getPerson() != null){
+            userAdapter.setData(discoverData.getPerson());
+        }
+        if(discoverData.getNews() != null){
+            newsAdapter.setData(discoverData.getNews());
+        }
+    }
+
+    @Override
+    public void onRefresh() {
+      //  discoverPresent.getDiscoverData(switcherLayout);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.rl_more_venues:
+                startActivity(new Intent(getContext(), DiscoverVenuesActivity.class));
+                break;
+            case R.id.rl_more_user:
+                startActivity(new Intent(getContext(), DiscoverUserActivity.class));
+                break;
+            case R.id.rl_more_news:
+                startActivity(new Intent(getContext(), NewsActivity.class));
+                break;
+            default:
+                break;
+        }
+    }
+
+
+    private void getData(){
+        DiscoverData data = new DiscoverData();
+        List<VenuesBean> venuesBeen = new ArrayList<>();
+        for (int i = 0; i < 8; i++) {
+            VenuesBean v = new VenuesBean();
+            v.setDistance("1212");
+            v.setName("场馆");
+            v.setBrand_logo("http://wx3.sinaimg.cn/mw690/48e837eely1fan3qf8yozj22dc1kwnpd0.jpg");
+            venuesBeen.add(v);
+        }
+        data.setGym(venuesBeen);
+
+        List<UserBean> userBean = new ArrayList<>();
+        for (int i = 0; i < 8; i++) {
+            UserBean u = new UserBean();
+            u.setAvatar("http://wx3.sinaimg.cn/mw690/48e837eely1fan3qf8yozj22dc1kwnpd0.jpg");
+            userBean.add(u);
+        }
+        data.setPerson(userBean);
+
+        List<NewsBean> newsBean = new ArrayList<>();
+        for (int i = 0; i < 2; i++) {
+            NewsBean n = new NewsBean();
+            n.setTitle("新闻");
+            n.setCover("http://wx3.sinaimg.cn/mw690/48e837eely1fan3qf8yozj22dc1kwnpd0.jpg");
+            newsBean.add(n);
+        }
+        data.setNews(newsBean);
+
+        if(data.getGym() != null){
+            venuesAdapter.setData(data.getGym());
+        }
+        if(data.getPerson() != null){
+            userAdapter.setData(data.getPerson());
+        }
+        if(data.getNews() != null){
+            newsAdapter.setData(data.getNews());
+        }
+    }
+
 }

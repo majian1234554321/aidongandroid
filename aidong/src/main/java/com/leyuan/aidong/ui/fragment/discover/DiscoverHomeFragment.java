@@ -42,7 +42,7 @@ public class DiscoverHomeFragment extends BaseFragment implements SmartTabLayout
         tabLayout.setCustomTabView(this);
 
         FragmentPagerItems pages = new FragmentPagerItems(getContext());
-        pages.add(FragmentPagerItem.of(null,FoundHomeFragment.class));
+        pages.add(FragmentPagerItem.of(null,DiscoverFragment.class));
         pages.add(FragmentPagerItem.of(null,SportCircleFragment.class));
         final FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(getChildFragmentManager(), pages);
         viewPager.setAdapter(adapter);

@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.leyuan.aidong.entity.NewsBean;
 import com.leyuan.aidong.entity.UserBean;
+import com.leyuan.aidong.entity.data.DiscoverData;
 import com.leyuan.aidong.entity.data.DiscoverNewsData;
 import com.leyuan.aidong.entity.data.DiscoverUserData;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
@@ -13,6 +14,7 @@ import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.aidong.ui.mvp.model.DiscoverModel;
 import com.leyuan.aidong.ui.mvp.model.impl.DiscoverModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.DiscoverPresent;
+import com.leyuan.aidong.ui.mvp.view.DiscoverFragmentView;
 import com.leyuan.aidong.ui.mvp.view.DiscoverUserActivityView;
 import com.leyuan.aidong.ui.mvp.view.SportNewsActivityView;
 import com.leyuan.aidong.utils.Constant;
@@ -30,6 +32,7 @@ public class DiscoverPresentImpl implements DiscoverPresent {
     private DiscoverModel discoverModel;
     private DiscoverUserActivityView discoverUserActivityView;
     private SportNewsActivityView sportNewsActivityView;
+    private DiscoverFragmentView discoverFragmentView;
     private List<UserBean> userBeanList = new ArrayList<>();
     private List<NewsBean> newsBeanList = new ArrayList<>();
 
@@ -47,6 +50,27 @@ public class DiscoverPresentImpl implements DiscoverPresent {
         if(discoverModel == null){
             discoverModel = new DiscoverModelImpl();
         }
+    }
+
+    public DiscoverPresentImpl(Context context, DiscoverFragmentView discoverFragmentView) {
+        this.context = context;
+        this.discoverFragmentView = discoverFragmentView;
+        if(discoverModel == null){
+            discoverModel = new DiscoverModelImpl();
+        }
+    }
+
+    @Override
+    public void getDiscoverData(final SwitcherLayout switcherLayout) {
+        discoverModel.getDiscover(new CommonSubscriber<DiscoverData>(switcherLayout) {
+            @Override
+            public void onNext(DiscoverData discoverData) {
+                if(discoverData != null){
+                    switcherLayout.showContentLayout();
+                    discoverFragmentView.setDiscoverData(discoverData);
+                }
+            }
+        });
     }
 
     @Override
