@@ -3,6 +3,8 @@ package com.leyuan.aidong.ui.activity.home;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +25,7 @@ import com.leyuan.aidong.ui.mvp.presenter.NurturePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.EquipmentPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.NurturePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.GoodsFilterActivityView;
+import com.leyuan.aidong.utils.TransitionHelper;
 import com.leyuan.aidong.widget.customview.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -172,7 +175,9 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
         switch (v.getId()){
             case R.id.tv_search:
                 Intent intent = new Intent(this,SearchActivity.class);
-                startActivity(intent);
+                final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(this, false);
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, pairs);
+                startActivity(intent,optionsCompat.toBundle());
                 break;
             case R.id.iv_back:
                 finish();

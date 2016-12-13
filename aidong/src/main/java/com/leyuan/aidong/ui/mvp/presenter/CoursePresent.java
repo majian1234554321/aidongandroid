@@ -62,4 +62,16 @@ public interface CoursePresent {
      */
     void buyCourse(String id, String couponId, String integral, String payType, String contactName,
                    String contactMobile, PayInterface.PayListener listener);
+
+    /**
+     * 添加关注
+     * @param id
+     */
+    void addFollow(String id);
+
+    /**
+     * 取消关注
+     * @param id
+     */
+    void cancelFollow(String id);
 }

@@ -30,7 +30,7 @@ public class FollowModelImpl implements FollowModel{
     }
 
     @Override
-    public void addFollow(Subscriber<BaseBean> subscriber, int id) {
+    public void addFollow(Subscriber<BaseBean> subscriber, String id) {
         followService.addFollow(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -38,7 +38,7 @@ public class FollowModelImpl implements FollowModel{
     }
 
     @Override
-    public void cancelFollow(Subscriber<BaseBean> subscriber, int id) {
+    public void cancelFollow(Subscriber<BaseBean> subscriber, String id) {
         followService.cancelFollow(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

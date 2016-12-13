@@ -89,13 +89,6 @@ public class VenuesDetailActivity extends BaseActivity implements SmartTabLayout
                 finish();
             }
         });
-        detail.setLoadListener(new VenuesDetailFragment.VenuesLoadListener() {
-            @Override
-            public void onLoadFinish(VenuesDetailBean bean) {
-                venuesBean = bean;
-                tvAppointment.setVisibility(View.VISIBLE);
-            }
-        });
 
         tvAppointment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,5 +110,10 @@ public class VenuesDetailActivity extends BaseActivity implements SmartTabLayout
         }
         allTabView.add(tabView);
         return tabView;
+    }
+
+    public void loadFinish(VenuesDetailBean bean){
+        venuesBean = bean;
+        tvAppointment.setVisibility(View.VISIBLE);
     }
 }

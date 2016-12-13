@@ -11,6 +11,7 @@ import com.leyuan.aidong.entity.data.VenuesDetailData;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
+import com.leyuan.aidong.ui.activity.home.SelfDeliveryVenuesActivity;
 import com.leyuan.aidong.ui.mvp.model.VenuesModel;
 import com.leyuan.aidong.ui.mvp.model.impl.VenuesModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.VenuesPresent;
@@ -37,6 +38,7 @@ public class VenuesPresentImpl implements VenuesPresent{
     private VenuesCoachFragmentView venuesCoachFragmentView;        //场馆教练View层对象
     private VenuesCourseFragmentView venuesCourseFragmentView;      //场馆课程View层对象
     private VenuesDetailFragmentView venuesDetailFragmentView;      //场馆详情View层对象
+    private SelfDeliveryVenuesActivity selfDeliveryVenuesActivity;  //自提场馆列表View层对象
 
     public VenuesPresentImpl(Context context,DiscoverVenuesActivityView view) {
         this.context = context;
@@ -71,14 +73,33 @@ public class VenuesPresentImpl implements VenuesPresent{
         }
     }
 
+    public VenuesPresentImpl(Context context, SelfDeliveryVenuesActivity view) {
+        this.context = context;
+        this.selfDeliveryVenuesActivity = view;
+        if(venuesModel == null){
+            venuesModel = new VenuesModelImpl(context);
+        }
+    }
+
     @Override
     public void getGymBrand() {
-        discoverVenuesActivityView.setGymBrand(venuesModel.getGymBrand());
+        if(discoverVenuesActivityView != null){
+            discoverVenuesActivityView.setGymBrand(venuesModel.getGymBrand());
+        }
+        if(selfDeliveryVenuesActivity != null){
+            selfDeliveryVenuesActivity.setGymBrand(venuesModel.getGymBrand());
+        }
+
     }
 
     @Override
     public void getBusinessCircle() {
-        discoverVenuesActivityView.setBusinessCircle(venuesModel.getBusinessCircle());
+        if(discoverVenuesActivityView != null){
+            discoverVenuesActivityView.setBusinessCircle(venuesModel.getBusinessCircle());
+        }
+        if(selfDeliveryVenuesActivity != null){
+            selfDeliveryVenuesActivity.setBusinessCircle(venuesModel.getBusinessCircle());
+        }
     }
 
     @Override

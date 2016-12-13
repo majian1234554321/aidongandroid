@@ -15,7 +15,7 @@ public class VenuesBean implements Parcelable {
     private String distance;        //距离
     private String price;           //价格
 
-    public String getGym_id() {
+    public String getGymId() {
         return gym_id;
     }
 

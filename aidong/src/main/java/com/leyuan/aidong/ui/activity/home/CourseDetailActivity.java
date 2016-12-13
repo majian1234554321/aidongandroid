@@ -10,9 +10,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CourseDetailBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
@@ -31,7 +33,7 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  * 课程详情
  * Created by song on 2016/11/15.
  */
-public class CourseDetailActivity extends BaseActivity implements View.OnClickListener,CourseDetailActivityView {
+public class CourseDetailActivity extends BaseActivity implements View.OnClickListener,CourseDetailActivityView{
     private static final String STATUS_END = "0";           //预约已结束
     private static final String STATUS_APPOINTED = "1";     //已预约
     private static final String STATUS_FULL = "2";          //预约人数已满
@@ -63,6 +65,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     private TextView tvState;
 
     private String code;
+    private boolean isFollow;
     private CourseDetailBean detailBean;
     private CoursePresent coursePresent;
 
@@ -136,6 +139,11 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             case R.id.dv_avatar:
                 break;
             case R.id.iv_follow:
+                if(isFollow){
+                    coursePresent.cancelFollow(detailBean.getCoach().getCoachId());
+                }else {
+                    coursePresent.addFollow(detailBean.getCoach().getCoachId());
+                }
                 break;
             case R.id.ll_apply:
                 bottomToTargetActivity();
@@ -167,6 +175,28 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         setBottomStatus();
     }
 
+    @Override
+    public void addFollow(BaseBean baseBean) {
+        if(baseBean.getStatus() == 1){
+            isFollow = true;
+            ivFollow.setBackgroundResource(R.drawable.icon_following);
+            Toast.makeText(this,R.string.follow_success,Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(this,R.string.follow_fail,Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void cancelFollow(BaseBean baseBean) {
+        if(baseBean.getStatus() == 1){
+            isFollow = false;
+            ivFollow.setBackgroundResource(R.drawable.icon_follow);
+            Toast.makeText(this,R.string.cancel_follow_success,Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(this,R.string.cancel_follow_fail,Toast.LENGTH_LONG).show();
+        }
+    }
+
     private void setBottomStatus(){
         bottomLayout.setVisibility(View.VISIBLE);
         switch (detailBean.getStatus()){
@@ -188,6 +218,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 tvState.setText(R.string.status_appointed);
                 bottomLayout.setBackgroundColor(Color.parseColor("#666667"));
                 break;
+
             case STATUS_FULL:
                 tvStartTime.setVisibility(View.GONE);
                 tvPrice.setVisibility(View.GONE);

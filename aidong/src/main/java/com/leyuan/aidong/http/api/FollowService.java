@@ -35,7 +35,7 @@ public interface FollowService {
      */
     @FormUrlEncoded
     @POST("mine/followers")
-    Observable<BaseBean> addFollow(@Field("following_id") int id);
+    Observable<BaseBean> addFollow(@Field("following_id") String id);
 
 
     /**
@@ -45,5 +45,5 @@ public interface FollowService {
      */
     @FormUrlEncoded
     @DELETE("mine/followers/{id}")
-    Observable<BaseBean> cancelFollow(@Path("id") int id);
+    Observable<BaseBean> cancelFollow(@Path("id") String id);
 }

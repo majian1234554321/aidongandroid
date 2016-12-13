@@ -1,8 +1,13 @@
 package com.leyuan.aidong.ui.activity.home;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
+import android.transition.Slide;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,12 +17,16 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.home.view.ChooseTimePopupWindow;
+import com.leyuan.aidong.utils.TransitionHelper;
+
 
 /**
  * 配送信息
  * Created by song on 2016/9/22.
  */
 public class DeliveryInfoActivity extends BaseActivity implements View.OnClickListener{
+    private static final int CODE_SELECTE_VENUES = 1;
+
     private ImageView tvBack;
     private TextView tvFinish;
     private TextView tvExpress;
@@ -28,15 +37,19 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
     private TextView tvShop;
     private TextView tvShopAddress;
     private TextView tvDeliveryTime;
-
     private ChooseTimePopupWindow timePopupWindow;
+
+    private String type;
+    private String skuCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setupWindowAnimations();
         setContentView(R.layout.activity_delivery_info);
         initView();
         setListener();
+
     }
 
     private void initView(){
@@ -64,9 +77,14 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.tv_back:
-                finish();
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                    finishAfterTransition();
+                }else {
+                    finish();
+                }
                 break;
             case R.id.tv_finish:
+                finish();
                 break;
             case R.id.tv_express:
                 tvExpress.setTextColor(Color.parseColor("#ffffff"));
@@ -84,7 +102,12 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.ll_delivery_address:
                 Intent intent = new Intent(this,SelfDeliveryVenuesActivity.class);
-                startActivity(intent);
+                intent.putExtra("type",type);
+                intent.putExtra("skuCode",skuCode);
+
+                final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(this, false);
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, pairs);
+                startActivityForResult(intent,CODE_SELECTE_VENUES,optionsCompat.toBundle());
                 break;
             case R.id.tv_delivery_time:
                 if(timePopupWindow == null){
@@ -97,4 +120,35 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
             
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(data != null && requestCode == CODE_SELECTE_VENUES){
+            String venues = data.getStringExtra("venues");
+            String address = data.getStringExtra("address");
+            tvShop.setText(venues);
+            tvShopAddress.setText(address);
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void setupWindowAnimations() {
+        Slide slide = new Slide();
+        slide.setDuration(300);
+        slide.setSlideEdge(Gravity.END);
+        slide.excludeTarget(android.R.id.statusBarBackground,true);
+        getWindow().setEnterTransition(slide);
+
+       /* Fade fade = new Fade();
+        fade.setMode(MODE_OUT);
+        fade.setDuration(500);
+        getWindow().setExitTransition(fade);*/
+    }
+
+  /*  @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    public void onBackPressed() {
+       // super.onBackPressed();
+        finishAfterTransition();
+    }*/
 }

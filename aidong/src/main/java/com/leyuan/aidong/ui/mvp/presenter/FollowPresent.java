@@ -35,11 +35,11 @@ public interface FollowPresent {
      * 添加关注
      * @param id user id
      */
-    void addFollow(int id);
+    void addFollow(String id);
 
     /**
      * 取消关注
      * @param id user id
      */
-    void cancelFollow(int id);
+    void cancelFollow(String id);
 }

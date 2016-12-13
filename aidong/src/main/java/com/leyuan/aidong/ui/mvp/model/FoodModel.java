@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.mvp.model;
 
 import com.leyuan.aidong.entity.FoodAndVenuesBean;
 import com.leyuan.aidong.entity.data.FoodDetailData;
+import com.leyuan.aidong.entity.data.VenuesData;
 
 import rx.Subscriber;
 
@@ -25,4 +26,11 @@ public interface FoodModel {
     void getFoodDetail(Subscriber<FoodDetailData> subscriber, String id);
 
 
+    /**
+     * 获取装备的自提场馆
+     * @param subscriber Subscribers
+     * @param skuCode sku码
+     * @param page 页码
+     */
+    void getDeliveryVenues(Subscriber<VenuesData> subscriber, String skuCode, int page);
 }

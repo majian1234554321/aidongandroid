@@ -8,6 +8,8 @@ import android.graphics.Paint;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,6 +36,7 @@ import com.leyuan.aidong.ui.mvp.presenter.GoodsDetailPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.GoodsDetailPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.GoodsDetailActivityView;
 import com.leyuan.aidong.utils.ImageLoadConfig;
+import com.leyuan.aidong.utils.TransitionHelper;
 import com.leyuan.aidong.widget.customview.SlideDetailsLayout;
 import com.leyuan.aidong.widget.customview.SwitcherLayout;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -111,7 +114,6 @@ public class OldGoodsDetailActivity extends BaseActivity implements View.OnClick
             id = getIntent().getStringExtra("id");
             type = getIntent().getStringExtra("type");
         }
-
         initView();
         setListener();
         goodsDetailPresent.getGoodsDetail(switcherLayout,type,id);
@@ -259,7 +261,9 @@ public class OldGoodsDetailActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.ll_address:
                 Intent intent = new Intent(this,DeliveryInfoActivity.class);
-                startActivity(intent);
+                final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(this, false);
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, pairs);
+                startActivity(intent,optionsCompat.toBundle());
                 break;
             case R.id.tv_pay:
                 //ConfirmOrderActivity.start(this);
@@ -343,5 +347,14 @@ public class OldGoodsDetailActivity extends BaseActivity implements View.OnClick
             float percentage = (float) Math.abs(verticalOffset) / (float) maxScroll;
             titleLayout.setBackgroundColor(Color.argb((int) (percentage * 255), 0, 0, 0));
         }
+    }
+
+    public int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
     }
 }

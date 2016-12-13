@@ -8,10 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.activity.mine.adapter.FollowAdapter;
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.UserBean;
+import com.leyuan.aidong.ui.BaseFragment;
+import com.leyuan.aidong.ui.activity.mine.adapter.FollowAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.FollowPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.FollowFragmentView;
@@ -43,14 +44,6 @@ public class FollowFragment extends BaseFragment implements FollowFragmentView{
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
 
     private FollowPresent present;
-
-    public static FollowFragment newInstance(String type){
-        Bundle bundle = new Bundle();
-        bundle.putString("type", type);
-        FollowFragment fragment = new FollowFragment();
-        fragment.setArguments(bundle);
-        return fragment;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
@@ -128,5 +121,15 @@ public class FollowFragment extends BaseFragment implements FollowFragmentView{
     @Override
     public void showEndFooterView() {
         RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
+    }
+
+    @Override
+    public void addFollow(BaseBean baseBean) {
+
+    }
+
+    @Override
+    public void cancelFollow(BaseBean baseBean) {
+
     }
 }

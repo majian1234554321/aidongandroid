@@ -27,6 +27,13 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateHolder>{
         }
     }
 
+    public DateAdapter() {
+    }
+
+    public DateAdapter(int selectedPosition) {
+        this.selectedPosition = selectedPosition;
+    }
+
     @Override
     public int getItemCount() {
         return data.size();
@@ -63,11 +70,6 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateHolder>{
             super(itemView);
             date = (TextView)itemView.findViewById(R.id.tv_date);
         }
-    }
-
-    public void setSelectedPosition(int selectedPosition) {
-        this.selectedPosition = selectedPosition;
-        notifyDataSetChanged();
     }
 
     public void setItemClickListener(ItemClickListener itemClickListener) {

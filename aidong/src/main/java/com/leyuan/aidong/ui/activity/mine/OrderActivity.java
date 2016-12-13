@@ -1,30 +1,36 @@
 package com.leyuan.aidong.ui.activity.mine;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
-import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.adapter.TabFragmentAdapter;
+import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.fragment.mine.OrderFragment;
 import com.leyuan.aidong.widget.customview.SimpleTitleBar;
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
+import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
  * 订单
  * Created by song on 2016/8/31.
  */
-public class OrderActivity extends BaseActivity{
-
-    private SimpleTitleBar titleBar;
-    private TabLayout tabLayout;
+public class OrderActivity extends BaseActivity implements SmartTabLayout.TabProvider{
+   private SimpleTitleBar titleBar;
+    private SmartTabLayout tabLayout;
     private ViewPager viewPager;
+    private List<View> allTabView = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,23 +38,37 @@ public class OrderActivity extends BaseActivity{
         setContentView(R.layout.activity_order);
 
         titleBar = (SimpleTitleBar)findViewById(R.id.title_bar);
-        tabLayout = (TabLayout)findViewById(R.id.tab_layout);
+        tabLayout = (SmartTabLayout)findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.vp_content);
 
-        ArrayList<Fragment> fragments = new ArrayList<>();
-        OrderFragment all = OrderFragment.newInstance(OrderFragment.ALL);
-        OrderFragment unpaid = OrderFragment.newInstance(OrderFragment.UN_PAID);
-        OrderFragment selfPickUp = OrderFragment.newInstance(OrderFragment.SELF_DELIVERY);
-        OrderFragment express = OrderFragment.newInstance(OrderFragment.EXPRESS_DELIVERY);
+        FragmentPagerItems pages = new FragmentPagerItems(this);
+        OrderFragment all = new OrderFragment();
+        OrderFragment unpaid = new OrderFragment();
+        OrderFragment selfPickUp = new OrderFragment();
+        OrderFragment express = new OrderFragment();
+        pages.add(FragmentPagerItem.of(null, all.getClass(),
+                new Bundler().putString("type",OrderFragment.ALL).get()));
+        pages.add(FragmentPagerItem.of(null, unpaid.getClass(),
+                new Bundler().putString("type",OrderFragment.UN_PAID).get()));
+        pages.add(FragmentPagerItem.of(null, selfPickUp.getClass(),
+                new Bundler().putString("type",OrderFragment.SELF_DELIVERY).get()));
+        pages.add(FragmentPagerItem.of(null, express.getClass(),
+                new Bundler().putString("type",OrderFragment.EXPRESS_DELIVERY).get()));
+        final FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(),pages);
 
-        fragments.add(all);
-        fragments.add(unpaid);
-        fragments.add(selfPickUp);
-        fragments.add(express);
-
-        List<String> titles = Arrays.asList(getResources().getStringArray(R.array.orderTab));
-        viewPager.setAdapter(new TabFragmentAdapter(getSupportFragmentManager(),fragments,titles));
-        tabLayout.setupWithViewPager(viewPager);
+        viewPager.setAdapter(adapter);
+        tabLayout.setCustomTabView(this);
+        tabLayout.setViewPager(viewPager);
+        tabLayout.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+            @Override
+            public void onPageSelected(int position) {
+                for (int i = 0; i < allTabView.size(); i++) {
+                    View tabAt = tabLayout.getTabAt(i);
+                    TextView text = (TextView) tabAt.findViewById(R.id.tv_tab_text);
+                    text.setTypeface(i == position ? Typeface.DEFAULT_BOLD :Typeface.DEFAULT);
+                }
+            }
+        });
 
         titleBar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,5 +76,18 @@ public class OrderActivity extends BaseActivity{
                 finish();
             }
         });
+    }
+
+    @Override
+    public View createTabView(ViewGroup container, int position, PagerAdapter adapter) {
+        View tabView = LayoutInflater.from(this).inflate(R.layout.tab_order_text, container, false);
+        TextView text = (TextView) tabView.findViewById(R.id.tv_tab_text);
+        String[] campaignTab = getResources().getStringArray(R.array.orderTab);
+        text.setText(campaignTab[position]);
+        if(position == 0){
+            text.setTypeface(Typeface.DEFAULT_BOLD);
+        }
+        allTabView.add(tabView);
+        return tabView;
     }
 }

@@ -10,6 +10,7 @@ import com.leyuan.aidong.widget.customview.SwitcherLayout;
  */
 public interface GoodsDetailPresent {
 
+
     /**
      * 获取商品详情
      * @param switcherLayout SwitcherLayout

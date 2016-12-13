@@ -1,15 +1,21 @@
 package com.leyuan.aidong.ui.activity.home;
 
+import android.annotation.TargetApi;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.transition.Slide;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.greendao.SearchHistory;
@@ -22,6 +28,9 @@ import com.leyuan.aidong.ui.mvp.view.SearchActivityView;
 import com.leyuan.aidong.utils.KeyBoardUtil;
 
 import java.util.List;
+
+
+
 
 //import com.leyuan.aidong.entity.greendao.DaoMaster;
 
@@ -37,9 +46,11 @@ public class SearchActivity extends BaseActivity implements SearchActivityView{
     private SearchHistoryAdapter historyAdapter;
     private SQLiteDatabase db;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setupWindowAnimations();
         setContentView(R.layout.activity_search);
 
 //        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(getApplicationContext(), "search_history");
@@ -47,6 +58,7 @@ public class SearchActivity extends BaseActivity implements SearchActivityView{
         SearchPresent searchPresent = new SearchPresentImpl(this,this,db);
         initView();
         setListener();
+        historyAdapter.setData(null);
         searchPresent.getSearchHistory();
     }
 
@@ -75,11 +87,27 @@ public class SearchActivity extends BaseActivity implements SearchActivityView{
                 finish();
             }
         });
+        historyAdapter.setItemClickListener(new SearchHistoryAdapter.ItemClickListener() {
+            @Override
+            public void onItemClick(String keyword) {
+                etSearch.setText(keyword);
+                etSearch.setSelection(keyword.length());
+                KeyBoardUtil.closeKeybord(etSearch,SearchActivity.this);
+                SearchResultFragment fragment = SearchResultFragment.newInstance(keyword);
+                FragmentManager fm = getSupportFragmentManager();
+                fm.beginTransaction().replace(R.id.fl_container,fragment).commit();
+                frameLayout.setVisibility(View.VISIBLE);
+            }
+        });
 
         etSearch.setOnKeyListener(new View.OnKeyListener(){
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if(keyCode == KeyEvent.KEYCODE_ENTER){
+                    if(TextUtils.isEmpty(etSearch.getText())){
+                        Toast.makeText(SearchActivity.this,R.string.input_content,Toast.LENGTH_LONG).show();
+                        return true;
+                    }
                     KeyBoardUtil.closeKeybord(etSearch,SearchActivity.this);
                     String keyword = etSearch.getText().toString();
                     SearchResultFragment fragment = SearchResultFragment.newInstance(keyword);
@@ -96,5 +124,32 @@ public class SearchActivity extends BaseActivity implements SearchActivityView{
     @Override
     public void setHistory(List<SearchHistory> historyList) {
         historyAdapter.setData(historyList);
+
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void setupWindowAnimations() {
+        Slide bottomSlide = new Slide();
+        bottomSlide.setDuration(1000);
+        bottomSlide.excludeTarget(android.R.id.statusBarBackground,true);
+        bottomSlide.excludeTarget(R.id.ll_search_1,true);
+        bottomSlide.setSlideEdge(Gravity.BOTTOM);
+
+   /*     TransitionSet transitionSet = new TransitionSet();
+        transitionSet.addTransition(bottomSlide);
+        Slide topSlide = new Slide();
+        topSlide.setDuration(1000);
+        topSlide.excludeTarget(R.id.rl_content,true);
+        topSlide.excludeTarget(android.R.id.statusBarBackground,true);
+        topSlide.setSlideEdge(Gravity.TOP);
+        transitionSet.addTransition(topSlide);*/
+
+        // slide.addTarget(R.id.rl_content);
+        getWindow().setEnterTransition(bottomSlide);
+
+        /*Fade fade = new Fade();
+        fade.setMode(MODE_OUT);
+        fade.setDuration(500);
+        getWindow().setExitTransition(fade);*/
     }
 }

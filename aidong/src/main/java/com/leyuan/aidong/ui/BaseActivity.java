@@ -185,6 +185,9 @@ public class BaseActivity extends AppCompatActivity implements IHttpToastCallBac
         }
     }
 
+
+
+
     /**
      * 设置下拉刷新颜色
      * @param refreshLayout

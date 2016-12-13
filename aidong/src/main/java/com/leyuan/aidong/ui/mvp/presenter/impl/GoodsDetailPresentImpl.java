@@ -31,6 +31,7 @@ import java.util.List;
  * 商品 包含装备、健康餐饮、营养品
  * Created by song on 2016/9/22.
  */
+//todo 重复代码
 public class GoodsDetailPresentImpl implements GoodsDetailPresent {
     private static final String TYPE_FOOD = "foods";
     private static final String TYPE_EQUIPMENT = "equipments";
@@ -156,6 +157,23 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
 
                 break;
             case TYPE_FOOD:
+                if(foodModel == null){
+                    foodModel = new FoodModelImpl();
+                }
+                foodModel.getDeliveryVenues(new CommonSubscriber<VenuesData>(switcherLayout) {
+                    @Override
+                    public void onNext(VenuesData venuesData) {
+                        if(venuesData != null && venuesData.getGym() != null){
+                            venuesBeanList = venuesData.getGym();
+                        }
+                        if(!venuesBeanList.isEmpty()){
+                            switcherLayout.showContentLayout();
+                            venuesActivityView.updateRecyclerView(venuesBeanList);
+                        }else {
+                            switcherLayout.showEmptyLayout();
+                        }
+                    }
+                },sku, Constant.FIRST_PAGE);
                 break;
             default:
                 Logger.e("GoodsDetailPresentImpl","type must be foods,equipments or nutrition");
@@ -200,6 +218,20 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                 },sku,Constant.FIRST_PAGE);
                 break;
             case TYPE_FOOD:
+                if(foodModel == null){
+                    foodModel = new FoodModelImpl();
+                }
+                foodModel.getDeliveryVenues(new RefreshSubscriber<VenuesData>(context) {
+                    @Override
+                    public void onNext(VenuesData venuesData) {
+                        if(venuesData != null && venuesData.getGym() != null){
+                            venuesBeanList = venuesData.getGym();
+                        }
+                        if(!venuesBeanList.isEmpty()){
+                            venuesActivityView.updateRecyclerView(venuesBeanList);
+                        }
+                    }
+                },sku,Constant.FIRST_PAGE);
                 break;
             default:
                 Logger.e("GoodsDetailPresentImpl","type must be foods,equipments or nutrition");
@@ -231,6 +263,9 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                 },sku,page);
                 break;
             case TYPE_NURTURE:
+                if(nurtureModel == null){
+                    nurtureModel = new NurtureModelImpl(context);
+                }
                 nurtureModel.getDeliveryVenues(new RequestMoreSubscriber<VenuesData>(context,recyclerView,pageSize) {
                     @Override
                     public void onNext(VenuesData venuesData) {
@@ -248,6 +283,24 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                 },sku,page);
                 break;
             case TYPE_FOOD:
+                if(foodModel == null){
+                    foodModel = new FoodModelImpl();
+                }
+                foodModel.getDeliveryVenues(new RequestMoreSubscriber<VenuesData>(context,recyclerView,pageSize) {
+                    @Override
+                    public void onNext(VenuesData venuesData) {
+                        if(venuesData != null && venuesData.getGym() != null){
+                            venuesBeanList = venuesData.getGym();
+                        }
+                        if(!venuesBeanList.isEmpty()){
+                            venuesActivityView.updateRecyclerView(venuesBeanList);
+                        }
+                        //没有更多数据了显示到底提示
+                        if( venuesBeanList.size() < pageSize){
+                            venuesActivityView.showEndFooterView();
+                        }
+                    }
+                },sku,page);
                 break;
             default:
                 Logger.e("GoodsDetailPresentImpl","type must be foods,equipments or nutrition");

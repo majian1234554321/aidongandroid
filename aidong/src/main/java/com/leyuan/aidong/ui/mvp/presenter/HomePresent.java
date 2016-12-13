@@ -53,4 +53,9 @@ public interface HomePresent {
      * 获取首页弹出广告
      */
     void getPopupBanner();
+
+    /**
+     * 获取开通城市列表
+     */
+    void getOpenCity();
 }

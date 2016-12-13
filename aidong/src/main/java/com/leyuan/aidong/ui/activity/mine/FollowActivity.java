@@ -2,27 +2,36 @@ package com.leyuan.aidong.ui.activity.mine;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.adapter.TabFragmentAdapter;
+import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.fragment.mine.FollowFragment;
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
+import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
  * 关注和粉丝
  * Created by song on 2016/9/10.
  */
-public class FollowActivity extends BaseActivity{
-
-    private TabLayout tabLayout;
+public class FollowActivity extends BaseActivity implements SmartTabLayout.TabProvider {
+    private List<View> allTabView = new ArrayList<>();
+    private ImageView ivBack;
+    private SmartTabLayout tabLayout;
     private ViewPager viewPager;
     private int position;
 
@@ -39,18 +48,52 @@ public class FollowActivity extends BaseActivity{
         if(getIntent() != null){
             position = getIntent().getIntExtra("position",0);
         }
-
-        tabLayout = (TabLayout)findViewById(R.id.tab_layout);
+        ivBack = (ImageView) findViewById(R.id.iv_back);
+        tabLayout = (SmartTabLayout)findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.vp_content);
 
-        ArrayList<Fragment> fragments = new ArrayList<>();
-        FollowFragment followFragment = FollowFragment.newInstance(FollowFragment.FOLLOW);
-        FollowFragment fansFragment = FollowFragment.newInstance(FollowFragment.FANS);
-        fragments.add(followFragment);
-        fragments.add(fansFragment);
-        List<String> titles = Arrays.asList(getResources().getStringArray(R.array.followTab));
-        viewPager.setAdapter(new TabFragmentAdapter(getSupportFragmentManager(),fragments,titles));
-        tabLayout.setupWithViewPager(viewPager);
+        FragmentPagerItems pages = new FragmentPagerItems(this);
+        FollowFragment followFragment = new FollowFragment();
+        FollowFragment fansFragment = new FollowFragment();
+        pages.add(FragmentPagerItem.of(null, followFragment.getClass(),
+                new Bundler().putString("type", FollowFragment.FOLLOW).get()));
+        pages.add(FragmentPagerItem.of(null,fansFragment.getClass(),
+                new Bundler().putString("type", FollowFragment.FANS).get()));
+        final FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);
+
+        viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(position);
+        tabLayout.setCustomTabView(this);
+        tabLayout.setViewPager(viewPager);
+        tabLayout.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+            @Override
+            public void onPageSelected(int position) {
+                for (int i = 0; i < allTabView.size(); i++) {
+                    View tabAt = tabLayout.getTabAt(i);
+                    TextView text = (TextView) tabAt.findViewById(R.id.tv_tab_text);
+                    text.setTypeface(i == position ? Typeface.DEFAULT_BOLD :Typeface.DEFAULT);
+                }
+            }
+        });
+
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public View createTabView(ViewGroup container, int position, PagerAdapter adapter) {
+        View tabView = LayoutInflater.from(this).inflate(R.layout.tab_text, container, false);
+        TextView text = (TextView) tabView.findViewById(R.id.tv_tab_text);
+        String[] campaignTab = getResources().getStringArray(R.array.followTab);
+        text.setText(campaignTab[position]);
+        if(position == 0){
+            text.setTypeface(Typeface.DEFAULT_BOLD);
+        }
+        allTabView.add(tabView);
+        return tabView;
     }
 }

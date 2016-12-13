@@ -47,6 +47,8 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.UserHolder
         holder.avatar.setImageURI(bean.getAvatar());
         holder.nickname.setText(bean.getName());
         holder.distance.setText(bean.getDistance());
+
+
     }
 
     class UserHolder extends RecyclerView.ViewHolder {
@@ -65,4 +67,7 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.UserHolder
             distance = (TextView) itemView.findViewById(R.id.tv_distance);
         }
     }
+
+
+
 }

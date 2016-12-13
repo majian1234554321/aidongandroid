@@ -14,6 +14,7 @@ public class UserBean implements Parcelable{
     private String avatar;      //头像
     private String gender;      //性别
     private String distance;    //距离
+    private boolean isFollow;   //是否关注
 
     public String getId() {
         return id;
@@ -102,5 +103,13 @@ public class UserBean implements Parcelable{
                 ", gender='" + gender + '\'' +
                 ", distance='" + distance + '\'' +
                 '}';
+    }
+
+    public boolean isFollow() {
+        return isFollow;
+    }
+
+    public void setFollow(boolean follow) {
+        isFollow = follow;
     }
 }

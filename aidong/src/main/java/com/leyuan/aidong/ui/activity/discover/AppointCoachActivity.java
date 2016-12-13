@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,10 +27,11 @@ public class AppointCoachActivity extends BaseActivity implements View.OnClickLi
     private RecyclerView rvDate;
     private TextView tvMorning;
     private TextView tvAfternoon;
-    private EditText etUsername;
-    private EditText etPhone;
+    private TextView tvUsername;
+    private TextView tvPhone;
 
     private DateAdapter dateAdapter;
+    private int selectPosition;
 
     public static void start(Context context) {
         Intent starter = new Intent(context, AppointCoachActivity.class);
@@ -56,9 +56,9 @@ public class AppointCoachActivity extends BaseActivity implements View.OnClickLi
         rvDate = (RecyclerView) findViewById(R.id.rv_date);
         tvMorning = (TextView) findViewById(R.id.tv_morning);
         tvAfternoon = (TextView) findViewById(R.id.tv_afternoon);
-        etUsername = (EditText) findViewById(R.id.et_username);
-        etPhone = (EditText) findViewById(R.id.et_phone);
-        dateAdapter = new DateAdapter();
+        tvUsername = (TextView) findViewById(R.id.et_username);
+        tvPhone = (TextView) findViewById(R.id.et_phone);
+        dateAdapter = new DateAdapter(selectPosition);
         rvDate.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
         rvDate.setAdapter(dateAdapter);
         dateAdapter.setData(null);

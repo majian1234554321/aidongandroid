@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.entity.VenuesBean;
+import com.leyuan.aidong.ui.activity.discover.VenuesDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,10 +44,17 @@ public class DiscoverVenuesAdapter extends RecyclerView.Adapter<DiscoverVenuesAd
 
     @Override
     public void onBindViewHolder(VenuesHolder holder, int position) {
-        VenuesBean bean = data.get(position);
+        final VenuesBean bean = data.get(position);
         holder.cover.setImageURI(bean.getBrand_logo());
         holder.name.setText(bean.getName());
         holder.distance.setText(bean.getDistance());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                VenuesDetailActivity.start(context,bean.getGymId());
+            }
+        });
     }
 
     class VenuesHolder extends RecyclerView.ViewHolder{

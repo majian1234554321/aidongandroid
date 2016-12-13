@@ -118,7 +118,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
-                android:src="@drawable/icon_following" />
+                android:background="@drawable/icon_follow" />
 
 
             <!--时间-->

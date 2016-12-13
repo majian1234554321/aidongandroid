@@ -1,33 +1,38 @@
 package com.leyuan.aidong.ui.activity.mine;
 
 import android.os.Bundle;
-import android.widget.CheckBox;
+import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.R;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.AppointmentDetailBean;
+import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.AppointmentPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.AppointmentPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointmentDetailActivityView;
+import com.leyuan.aidong.widget.customview.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.customview.ExtendTextView;
+import com.leyuan.aidong.widget.customview.SimpleTitleBar;
 import com.leyuan.aidong.widget.customview.SwitcherLayout;
 
 /**
  * 预约详情
  * Created by song on 2016/9/2.
  */
-public class AppointmentDetailActivity extends BaseActivity implements AppointmentDetailActivityView{
+public class AppointmentDetailActivity extends BaseActivity implements AppointmentDetailActivityView, View.OnClickListener, CustomNestRadioGroup.OnCheckedChangeListener {
     private static final String UN_PAID = "0";          //待付款
     private static final String UN_JOIN= "1";           //待参加
     private static final String JOINED = "2";           //已参加
     private static final String CLOSE = "3";            //已关闭
+    private static final String PAY_ALI = "alipay";
+    private static final String PAY_WEIXIN = "weixin";
 
-    //切换加载中 无内容,无网络控件
+    private SimpleTitleBar titleBar;
     private SwitcherLayout switcherLayout;
-    private LinearLayout contentLayout;
+    private ScrollView scrollView;
 
     //预约状态信息
     private TextView tvState;
@@ -68,8 +73,7 @@ public class AppointmentDetailActivity extends BaseActivity implements Appointme
 
     //支付方式信息
     private LinearLayout llPay;
-    private CheckBox cbAlipay;
-    private CheckBox cbWeixin;
+    private CustomNestRadioGroup payGroup;
 
     //底部预约操作状态及价格信息
     private TextView tvGoodsCount;
@@ -85,6 +89,7 @@ public class AppointmentDetailActivity extends BaseActivity implements Appointme
     //Present层对象
     private AppointmentPresent appointmentPresent;
     private String appointmentId;
+    private String payType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,12 +98,14 @@ public class AppointmentDetailActivity extends BaseActivity implements Appointme
         appointmentPresent = new AppointmentPresentImpl(this,this);
 
         initView();
+        setListener();
         appointmentPresent.getAppointmentDetail(switcherLayout,appointmentId);
     }
 
     private void initView() {
-        contentLayout = (LinearLayout)findViewById(R.id.ll_content);
-        switcherLayout = new SwitcherLayout(this,contentLayout);
+        titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
+        scrollView = (ScrollView) findViewById(R.id.scroll_view);
+        switcherLayout = new SwitcherLayout(this,scrollView);
 
         tvState = (TextView) findViewById(R.id.tv_state);
         tvTimeOrNum = (TextView) findViewById(R.id.tv_time_or_num);
@@ -134,8 +141,7 @@ public class AppointmentDetailActivity extends BaseActivity implements Appointme
         tvPayType = (ExtendTextView) findViewById(R.id.tv_pay_type);
 
         llPay = (LinearLayout) findViewById(R.id.ll_pay);
-        cbAlipay = (CheckBox) findViewById(R.id.cb_alipay);
-        cbWeixin = (CheckBox) findViewById(R.id.cb_weixin);
+        payGroup = (CustomNestRadioGroup) findViewById(R.id.radio_group);
 
         tvGoodsCount = (TextView) findViewById(R.id.tv_goods_count);
         tvPrice = (TextView) findViewById(R.id.tv_price);
@@ -146,6 +152,11 @@ public class AppointmentDetailActivity extends BaseActivity implements Appointme
         tvReceiving = (TextView) findViewById(R.id.tv_receiving);
         tvDelete = (TextView) findViewById(R.id.tv_delete);
         tvAgainBuy = (TextView) findViewById(R.id.tv_again_buy);
+    }
+
+    private void setListener(){
+        titleBar.setOnClickListener(this);
+        payGroup.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -162,6 +173,29 @@ public class AppointmentDetailActivity extends BaseActivity implements Appointme
             case JOINED:
                 break;
             case CLOSE:
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.iv_back:
+                finish();
+                break;
+        }
+    }
+
+    @Override
+    public void onCheckedChanged(CustomNestRadioGroup group, int checkedId) {
+        switch (checkedId){
+            case R.id.cb_alipay:
+                payType = PAY_ALI;
+                break;
+            case R.id.cb_weixin:
+                payType = PAY_WEIXIN;
                 break;
             default:
                 break;

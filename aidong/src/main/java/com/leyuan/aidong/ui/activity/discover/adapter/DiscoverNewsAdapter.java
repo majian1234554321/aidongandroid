@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.NewsBean;
+import com.leyuan.aidong.ui.activity.discover.NewsDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,9 +39,16 @@ public class DiscoverNewsAdapter extends RecyclerView.Adapter<DiscoverNewsAdapte
 
     @Override
     public void onBindViewHolder(NewsHolder holder, int position) {
-        NewsBean newsBean = news.get(position);
-        holder.cover.setImageURI(newsBean.getCover());
-        holder.title.setText(newsBean.getTitle());
+        final NewsBean bean = news.get(position);
+        holder.cover.setImageURI(bean.getCover());
+        holder.title.setText(bean.getTitle());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NewsDetailActivity.start(context,bean.getTitle(),bean.getDatetime(),bean.getBody());
+            }
+        });
     }
 
     @Override

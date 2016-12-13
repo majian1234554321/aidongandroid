@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.activity.home.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -21,6 +22,7 @@ import java.util.List;
 public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdapter.HistoryHolder>{
     private Context context;
     private List<SearchHistory> data = new ArrayList<>();
+    private ItemClickListener itemClickListener;
 
     public SearchHistoryAdapter(Context context) {
         this.context = context;
@@ -30,6 +32,12 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdap
         if(data != null){
             this.data = data;
             notifyDataSetChanged();
+        }else {
+            for (int i = 0; i < 10; i++) {
+                SearchHistory h = new SearchHistory();
+                h.setKeyword("搜索历史" + i);
+                this.data.add(h);
+            }
         }
     }
 
@@ -40,14 +48,22 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdap
 
     @Override
     public HistoryHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = View.inflate(context,R.layout.item_search_history,null);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_search_history,parent,false);
         return new HistoryHolder(view);
     }
 
     @Override
     public void onBindViewHolder(HistoryHolder holder, int position) {
-        SearchHistory  bean = data.get(position);
+        final SearchHistory  bean = data.get(position);
         holder.keyword.setText(bean.getKeyword());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(itemClickListener != null){
+                    itemClickListener.onItemClick(bean.getKeyword());
+                }
+            }
+        });
     }
 
     class HistoryHolder extends RecyclerView.ViewHolder{
@@ -58,5 +74,13 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<SearchHistoryAdap
             super(itemView);
             keyword = (TextView)itemView.findViewById(R.id.tv_history);
         }
+    }
+
+    public void setItemClickListener(ItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
+    }
+
+    public interface ItemClickListener {
+        void onItemClick(String keyword);
     }
 }

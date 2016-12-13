@@ -8,7 +8,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.DeliveryBean;
+import com.leyuan.aidong.entity.VenuesBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,13 +19,13 @@ import java.util.List;
  */
 public class SelfDeliveryAdapter extends RecyclerView.Adapter<SelfDeliveryAdapter.ShopHolder> {
     private Context context;
-    private List<DeliveryBean> data = new ArrayList<>();
+    private List<VenuesBean> data = new ArrayList<>();
 
     public SelfDeliveryAdapter(Context context) {
         this.context = context;
     }
 
-    public void setData(List<DeliveryBean> data) {
+    public void setData(List<VenuesBean> data) {
         if(data != null){
             this.data = data;
         }
@@ -44,7 +44,7 @@ public class SelfDeliveryAdapter extends RecyclerView.Adapter<SelfDeliveryAdapte
 
     @Override
     public void onBindViewHolder(ShopHolder holder, int position) {
-        DeliveryBean bean = data.get(position);
+        VenuesBean bean = data.get(position);
         holder.tvShopName.setText(bean.getName());
         holder.tvAddress.setText(bean.getAddress());
         holder.tvDistance.setText(String.format
