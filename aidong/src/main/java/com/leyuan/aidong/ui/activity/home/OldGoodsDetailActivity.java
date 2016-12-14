@@ -32,6 +32,7 @@ import com.leyuan.aidong.entity.GoodsDetailBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.GoodsDetailCouponAdapter;
 import com.leyuan.aidong.ui.activity.home.view.GoodsSkuPopupWindow;
+import com.leyuan.aidong.ui.activity.mine.CartActivity;
 import com.leyuan.aidong.ui.mvp.presenter.GoodsDetailPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.GoodsDetailPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.GoodsDetailActivityView;
@@ -55,6 +56,7 @@ public class OldGoodsDetailActivity extends BaseActivity implements View.OnClick
     public static final String TYPE_NURTURE = "nutrition";
     public static final String TYPE_EQUIPMENT = "equipments";
     public static final String TYPE_FOODS = "foods";
+    private static final String BLANK_SPACE = " ";
 
     private SwitcherLayout switcherLayout;
     private LinearLayout rootLayout;
@@ -85,18 +87,20 @@ public class OldGoodsDetailActivity extends BaseActivity implements View.OnClick
     private TextView tvTitle;
     private ImageView ivShare;
     private LinearLayout bottomLayout;
-    private ImageView tvCart;
+    private ImageView ivCart;
     private TextView tvAddCart;
     private TextView tvPay;
 
     private List<String> bannerUrls = new ArrayList<>();
     private GoodsDetailCouponAdapter couponAdapter;
-    private GoodsSkuPopupWindow goodSkuPopup;
+    private GoodsSkuPopupWindow skuPopupWindow;
     private GoodsDetailBean detailBean;
 
     private String id;
     private String type ;
+    private List<String> selectedSkuValues = new ArrayList<>();
     private GoodsDetailPresent goodsDetailPresent;
+
 
     public static void start(Context context,String id,String type) {
         Intent starter = new Intent(context, OldGoodsDetailActivity.class);
@@ -150,7 +154,7 @@ public class OldGoodsDetailActivity extends BaseActivity implements View.OnClick
         tvTitle = (TextView)findViewById(R.id.tv_title);
         ivShare = (ImageView) findViewById(R.id.iv_share);
         bottomLayout = (LinearLayout) findViewById(R.id.ll_bottom);
-        tvCart = (ImageView) findViewById(R.id.tv_cart);
+        ivCart = (ImageView) findViewById(R.id.iv_cart);
         tvAddCart = (TextView) findViewById(R.id.tv_add_cart);
         tvPay = (TextView) findViewById(R.id.tv_pay);
 
@@ -206,6 +210,8 @@ public class OldGoodsDetailActivity extends BaseActivity implements View.OnClick
         skuLayout.setOnClickListener(this);
         recommendCodeLayout.setOnClickListener(this);
         addressLayout.setOnClickListener(this);
+        ivCart.setOnClickListener(this);
+        tvAddCart.setOnClickListener(this);
         tvPay.setOnClickListener(this);
         bannerLayout.setOnItemClickListener(this);
         radioGroup.setOnCheckedChangeListener(this);
@@ -236,7 +242,7 @@ public class OldGoodsDetailActivity extends BaseActivity implements View.OnClick
 
         StringBuilder sb = new StringBuilder(getString(R.string.please_choose));
         for (String s : detailBean.spec.name) {
-            sb.append(s).append(" ");
+            sb.append(s).append(BLANK_SPACE);
         }
         tvSku.setText(sb);
     }
@@ -253,11 +259,7 @@ public class OldGoodsDetailActivity extends BaseActivity implements View.OnClick
                 inputRecommendCodeDialog();
                 break;
             case R.id.ll_goods_specification:
-                if(goodSkuPopup == null){
-                    goodSkuPopup = new GoodsSkuPopupWindow(this,detailBean);
-                    goodSkuPopup.setConfirmSkuListener(this);
-                }
-                goodSkuPopup.showAtLocation(rootLayout, Gravity.BOTTOM,0,0);
+                showSkuPopupWindow(false,selectedSkuValues);
                 break;
             case R.id.ll_address:
                 Intent intent = new Intent(this,DeliveryInfoActivity.class);
@@ -265,12 +267,44 @@ public class OldGoodsDetailActivity extends BaseActivity implements View.OnClick
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, pairs);
                 startActivity(intent,optionsCompat.toBundle());
                 break;
+            case R.id.iv_cart:
+                startActivity(new Intent(this, CartActivity.class));
+                break;
+            case R.id.tv_add_cart:
+               /* if(isConfirmSku){
+
+                }else {
+                    showSkuPopupWindow(true,selectedSkuValues);
+                }*/
+                showSkuPopupWindow(true,selectedSkuValues);
+                break;
             case R.id.tv_pay:
+               /* if(isConfirmSku){
+                    ShopBean shopBean = new ShopBean();
+                    List<GoodsBean> goodsBeanList = new ArrayList<>();
+                    GoodsBean goodsBean = new GoodsBean();
+                    goodsBean.setName(detailBean.name);
+                    goodsBean.setCover(detailBean.image.get(0));
+                    goodsBeanList.add(goodsBean);
+                    shopBean.setItem(goodsBeanList);
+                    ConfirmOrderActivity.start(this,shopBean);
+                }else {
+                    showSkuPopupWindow(true,selectedSkuValues);
+                }*/
                 //ConfirmOrderActivity.start(this);
+                showSkuPopupWindow(true,selectedSkuValues);
                 break;
             default:
                 break;
         }
+    }
+
+    private void showSkuPopupWindow(boolean showConfirmStatus,List<String> selectedSkuValues) {
+       // if(skuPopupWindow == null){
+            skuPopupWindow = new GoodsSkuPopupWindow(this,detailBean,showConfirmStatus,selectedSkuValues);
+            skuPopupWindow.setConfirmSkuListener(this);
+        //}
+        skuPopupWindow.showAtLocation(rootLayout, Gravity.BOTTOM,0,0);
     }
 
     private void inputRecommendCodeDialog() {
@@ -300,8 +334,13 @@ public class OldGoodsDetailActivity extends BaseActivity implements View.OnClick
     }
 
     @Override
-    public void onConfirmSku(String sku) {
-        tvSku.setText(sku);
+    public void onSelectSku(List<String> skuValues) {
+        selectedSkuValues = skuValues;
+        StringBuilder result = new StringBuilder();
+        for (String selectedNode : selectedSkuValues) {
+            result.append(selectedNode).append(BLANK_SPACE);
+        }
+        tvSku.setText(result.toString());
     }
 
     @Override
@@ -320,7 +359,6 @@ public class OldGoodsDetailActivity extends BaseActivity implements View.OnClick
                 break;
         }
     }
-
 
     private class MyOnSlideDetailsListener implements SlideDetailsLayout.OnSlideDetailsListener{
         @Override
@@ -347,14 +385,5 @@ public class OldGoodsDetailActivity extends BaseActivity implements View.OnClick
             float percentage = (float) Math.abs(verticalOffset) / (float) maxScroll;
             titleLayout.setBackgroundColor(Color.argb((int) (percentage * 255), 0, 0, 0));
         }
-    }
-
-    public int getStatusBarHeight() {
-        int result = 0;
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = getResources().getDimensionPixelSize(resourceId);
-        }
-        return result;
     }
 }

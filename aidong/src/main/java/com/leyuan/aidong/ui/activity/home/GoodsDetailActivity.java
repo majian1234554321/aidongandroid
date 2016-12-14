@@ -89,6 +89,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     private String id;
     private String type ;
     private boolean isConfirmSku = false;
+    private String selectedSkuValues;
 
     public static void start(Context context, String id, String type) {
         Intent starter = new Intent(context, OldGoodsDetailActivity.class);
@@ -165,6 +166,8 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         codeLayout.setOnClickListener(this);
         addressLayout.setOnClickListener(this);
         ivCart.setOnClickListener(this);
+        tvAddCart.setOnClickListener(this);
+        tvPay.setOnClickListener(this);
         bannerLayout.setOnItemClickListener(this);
         scrollview.setScrollViewListener(this);
         slideDetailsLayout.setOnSlideDetailsListener(new MyOnSlideDetailsListener());
@@ -179,7 +182,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             case R.id.iv_share:
                 break;
             case R.id.ll_sku:
-                showSelectSkuPopup();
+                showSelectSkuPopup(false,selectedSkuValues);
                 break;
             case R.id.ll_code:
                 inputRecommendCodeDialog();
@@ -194,12 +197,11 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                 if(isConfirmSku){
 
                 }else {
-                    showSelectSkuPopup();
+                    showSelectSkuPopup(true,null);
                 }
                 break;
             case R.id.tv_pay:
                 if(isConfirmSku){
-                    ArrayList<ShopBean> shopBeanList = new ArrayList<>();
                     ShopBean shopBean = new ShopBean();
                     List<GoodsBean> goodsBeanList = new ArrayList<>();
                     GoodsBean goodsBean = new GoodsBean();
@@ -207,10 +209,9 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                     goodsBean.setCover(detailBean.image.get(0));
                     goodsBeanList.add(goodsBean);
                     shopBean.setItem(goodsBeanList);
-                    shopBeanList.add(shopBean);
-                    ConfirmOrderActivity.start(this,shopBeanList);
+                    ConfirmOrderActivity.start(this,shopBean);
                 }else {
-                    showSelectSkuPopup();
+                    showSelectSkuPopup(true,null);
                 }
                 break;
             default:
@@ -249,9 +250,10 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     }
 
     @Override
-    public void onConfirmSku(String sku) {
+    public void onSelectSku(List<String> skuValues) {
+       // selectedSkuValues = skuValues;
         isConfirmSku = true;
-        tvSku.setText(sku);
+        tvSku.setText(selectedSkuValues);
     }
 
     @Override
@@ -281,9 +283,9 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
-    private void showSelectSkuPopup(){
+    private void showSelectSkuPopup(boolean showConfirmStatus,String selectedSkuValues){
         if(goodSkuPopup == null){
-            goodSkuPopup = new GoodsSkuPopupWindow(this,detailBean);
+           // goodSkuPopup = new GoodsSkuPopupWindow(this,detailBean,showConfirmStatus,selectedSkuValues);
             goodSkuPopup.setConfirmSkuListener(this);
         }
         goodSkuPopup.showAtLocation(rootLayout, Gravity.BOTTOM,0,0);

@@ -61,12 +61,18 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private TextView tvPrice;
     private TextView tvPay;
 
-    private List<ShopBean> shopBeanList;
     private ConfirmOrderShopAdapter shopAdapter;
+    private List<ShopBean> shopBeanList = new ArrayList<>();
 
     public static void start(Context context, ArrayList<ShopBean> selectedShops) {
         Intent starter = new Intent(context, ConfirmOrderActivity.class);
         starter.putParcelableArrayListExtra("selectedShops",selectedShops);
+        context.startActivity(starter);
+    }
+
+    public static void start(Context context,ShopBean selectedShop) {
+        Intent starter = new Intent(context, ConfirmOrderActivity.class);
+        starter.putExtra("selectedShop",selectedShop);
         context.startActivity(starter);
     }
 
@@ -75,12 +81,17 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_order);
         if(getIntent() != null){
-            shopBeanList = getIntent().getParcelableArrayListExtra("selectedShops");
+            if(getIntent().getParcelableArrayListExtra("selectedShops") != null) {
+                shopBeanList = getIntent().getParcelableArrayListExtra("selectedShops");
+            }
+            ShopBean selectedShop = getIntent().getParcelableExtra("selectedShop");
+            if(null != selectedShop){
+                shopBeanList.add(selectedShop);
+            }
         }
 
         initView();
         setListener();
-
     }
 
     private void initView() {

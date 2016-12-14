@@ -27,11 +27,13 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
     private List<LocalGoodsSkuBean> localSkuList;
     private List<GoodsSkuBean> skuList;
     private SelectSkuListener selectSkuListener;
+    private List<String> selectedSkuValues = new ArrayList<>();   //已经选中的sku值
 
-    public GoodsSkuAdapter(Context context, List<LocalGoodsSkuBean> localSkuList, List<GoodsSkuBean> skuList) {
+    public GoodsSkuAdapter(Context context, List<LocalGoodsSkuBean> localSkuList, List<GoodsSkuBean> skuList,List<String> selectedSkuVaules) {
         this.context = context;
         this.localSkuList = localSkuList;
         this.skuList = skuList;
+        this.selectedSkuValues = selectedSkuVaules;
     }
 
     @Override
@@ -56,6 +58,12 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
         manager.setAlignment(Alignment.LEFT);
         holder.skuValues.setLayoutManager(manager);
         holder.skuValues.setNestedScrollingEnabled(false);
+
+        /**************初始化sku值按钮状态*************/
+        if(!selectedSkuValues.isEmpty()){
+            setSelectedNodeStatus();
+        }
+
         skuValueAdapter.setItemClickListener(new GoodsSkuValuesAdapter.OnItemClickListener() {
             @Override
             public void onSelectItem(int itemPosition) {
