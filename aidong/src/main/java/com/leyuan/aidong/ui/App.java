@@ -10,8 +10,12 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.stetho.Stetho;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMOptions;
 import com.leyuan.aidong.entity.model.UserCoach;
+import com.leyuan.aidong.utils.AppUtil;
 import com.leyuan.aidong.utils.LogAidong;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.SharePrefUtils;
 import com.lidroid.xutils.DbUtils;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -20,7 +24,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.squareup.leakcanary.LeakCanary;
 
-public class App extends Application{
+public class App extends Application {
 
     public static App mInstance;
     public static Context context;
@@ -29,13 +33,14 @@ public class App extends Application{
 
     public static double lat;
     public static double lon;
-    public static String city="上海";
+    public static String city = "上海";
     public static String addressStr;
 
     public DbUtils db;
 
     public LocationClient mLocationClient = null;
     public BDLocationListener myListener = new MyLocationListener();
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -52,6 +57,38 @@ public class App extends Application{
         initBaiduLoc();
         initImageLoader(getApplicationContext());
         initDbUtils();
+        initEMchat();
+
+//        WXAPIFactory.createWXAPI(this, "wx365ab323b9269d30", false).registerApp("wx365ab323b9269d30");
+//        new WXShare(this);
+    }
+
+
+
+
+    private void initEMchat() {
+        EMOptions options = new EMOptions();
+        // 默认添加好友时，是不需要验证的，改成需要验证
+        // options.setAcceptInvitationAlways(false);
+        //自动登录属性默认是 true 打开的，如果不需要自动登录,设置为 false 关闭。
+        //  options.setAutoLogin(false);
+
+        int pid = android.os.Process.myPid();
+        String processAppName = AppUtil.getAppName(pid,this);
+        // 如果APP启用了远程的service，此application:onCreate会被调用2次
+        // 为了防止环信SDK被初始化2次，加此判断会保证SDK被初始化1次
+        // 默认的APP会在以包名为默认的process name下运行，如果查到的process name不是APP的process name就立即返回
+
+        if (processAppName == null ||!processAppName.equalsIgnoreCase(this.getPackageName())) {
+            Logger.e("","enter the service process!");
+            // 则此application::onCreate 是被service 调用的，直接返回
+            return;
+        }
+
+        //初始化
+        EMClient.getInstance().init(this, options);
+        //在做打包混淆时，关闭debug模式，避免消耗不必要的资源
+        EMClient.getInstance().setDebugMode(true);
     }
 
     private void initDbUtils() {
@@ -80,11 +117,11 @@ public class App extends Application{
         ImageLoader.getInstance().init(config);
     }
 
-    private void initLocation(){
+    private void initLocation() {
         LocationClientOption option = new LocationClientOption();
         option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
         option.setCoorType("bd09ll");//可选，默认gcj02，设置返回的定位结果坐标系
-        int span=5*60*1000;
+        int span = 5 * 60 * 1000;
         option.setScanSpan(span);//可选，默认0，即仅定位一次，设隔需要大于等于1000ms才是置发起定位请求的间有效的
         option.setIsNeedAddress(true);//可选，设置是否需要地址信息，默认不需要
         option.setOpenGps(true);//可选，默认false,设置是否使用gps
@@ -104,20 +141,20 @@ public class App extends Application{
 
             App.lat = location.getLatitude();
             App.lon = location.getLongitude();
-            if(location.getCity()!= null)
+            if (location.getCity() != null)
                 city = location.getCity().replace("市", "");
-            if(location.getAddrStr()!=null)
+            if (location.getAddrStr() != null)
                 addressStr = location.getAddrStr();
-            if(city!=null){
+            if (city != null) {
                 mLocationClient.stop();
             }
-            LogAidong.i("lat = " +lat+",   lon = " +lon);
+            LogAidong.i("lat = " + lat + ",   lon = " + lon);
 
         }
     }
 
     public boolean isLogin() {
-        if (getUser() ==null) {
+        if (getUser() == null) {
             return false;
         }
         return true;
@@ -128,29 +165,30 @@ public class App extends Application{
     }
 
     public UserCoach getUser() {
-            if (user == null) {
-                user = SharePrefUtils.getUser(this);
-            }
-            return user;
+        if (user == null) {
+            user = SharePrefUtils.getUser(this);
+        }
+        return user;
 
     }
-    public void setUser(UserCoach user){
+
+    public void setUser(UserCoach user) {
         this.user = user;
-        if(user!=null && user.getToken() !=null){
-           setToken(user.getToken());
+        if (user != null && user.getToken() != null) {
+            setToken(user.getToken());
         }
         SharePrefUtils.setUser(context, user);
     }
 
-    public String getToken(){
-        if(token == null){
+    public String getToken() {
+        if (token == null) {
             token = SharePrefUtils.getString(context, "token", null);
         }
         return token;
     }
 
-    public void setToken(String token){
-        this.token =token;
+    public void setToken(String token) {
+        this.token = token;
         SharePrefUtils.putString(context, "token", token);
     }
 

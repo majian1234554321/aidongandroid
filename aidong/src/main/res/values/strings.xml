@@ -1033,6 +1033,8 @@
     <string name="love_sport_circle">爱动圈</string>
     <string name="please_select_birthday">请选择生日</string>
     <string name="qq_id" >1104718858</string>
+    <string name="weibosdk_demo_token_to_string_format_1">Token：%1$s \n有效期：%2$s</string>
+    <string name="weibosdk_demo_token_has_existed">Token 仍在有效期内，无需再次登录。</string>
 
 
 </resources>

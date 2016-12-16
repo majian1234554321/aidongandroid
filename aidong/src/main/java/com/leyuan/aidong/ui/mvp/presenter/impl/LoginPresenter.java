@@ -6,32 +6,28 @@ import android.content.Intent;
 
 import com.leyuan.aidong.entity.model.result.LoginResult;
 import com.leyuan.aidong.http.subscriber.BaseSubscriber;
-import com.leyuan.aidong.module.thirdpartylogin.QQLogin;
+import com.leyuan.aidong.module.thirdpartylogin.ThirdLoginUtils;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.mvp.model.LoginModel;
 import com.leyuan.aidong.ui.mvp.model.interfaces.LoginModelInterface;
 import com.leyuan.aidong.ui.mvp.presenter.LoginPresenterInterface;
-import com.leyuan.aidong.ui.mvp.presenter.LoginThirdPartyInterface;
 import com.leyuan.aidong.ui.mvp.view.LoginViewInterface;
-import com.tencent.tauth.Tencent;
 
 public class LoginPresenter implements LoginPresenterInterface {
-
-    public static final int LOGIN_WEIXIN = 1;
-    public static final int LOGIN_QQ = 2;
-    public static final int LOGIN_WEIBO = 3;
 
     private Context context;
     private LoginViewInterface loginViewInterface;
     private LoginModelInterface loginModel;
-    private QQLogin qqLogin;
+//    private QQLogin qqLogin;
+    private ThirdLoginUtils thirdLoginUtils;
 
-    public LoginPresenter(Context context, LoginViewInterface loginViewInterface) {
+    public LoginPresenter(Activity context, LoginViewInterface loginViewInterface) {
         this.context = context;
         this.loginViewInterface = loginViewInterface;
         loginModel = new LoginModel();
+        thirdLoginUtils = new ThirdLoginUtils(context,thirdLoginListner);
 
-        qqLogin = new QQLogin((Activity) context, thirdPartyLoginListener);
+//        qqLogin = new QQLogin((Activity) context, thirdPartyLoginListener);
     }
 
     @Override
@@ -45,7 +41,7 @@ public class LoginPresenter implements LoginPresenterInterface {
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
-                                loginViewInterface.loginResult(false);
+                loginViewInterface.loginResult(false);
             }
 
             @Override
@@ -57,6 +53,9 @@ public class LoginPresenter implements LoginPresenterInterface {
 
     }
 
+    public void loginThirdParty(int mode){
+        thirdLoginUtils.loginThirdParty(mode);
+    }
     @Override
     public void loginSns(String sns, String access){
         loginModel.loginSns(new BaseSubscriber<LoginResult>(context) {
@@ -92,26 +91,15 @@ public class LoginPresenter implements LoginPresenterInterface {
 
     }
 
-    @Override
     public void onActivityResultData(int requestCode, int resultCode, Intent data) {
-        Tencent.onActivityResultData(requestCode,resultCode,data, qqLogin.getUiListener());
+        thirdLoginUtils.onActivityResult(requestCode,resultCode,data);
     }
 
-    public void loginThirdParty(int loginMode) {
-        switch (loginMode){
-            case LOGIN_WEIXIN:
-                break;
-            case LOGIN_WEIBO:
-                break;
-            case LOGIN_QQ:
-                break;
-        }
-    }
-
-    private final LoginThirdPartyInterface thirdPartyLoginListener = new LoginThirdPartyInterface() {
+    private final ThirdLoginUtils.OnThirdPartyLogin thirdLoginListner = new ThirdLoginUtils.OnThirdPartyLogin() {
         @Override
-        public void onInvokeThridPartyComplete(String code) {
-
+        public void onThridLogin(String sns, String code) {
+            loginSns(sns,code);
         }
     };
+
 }

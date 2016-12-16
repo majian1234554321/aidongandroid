@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.fragment.discover;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,17 @@ public class FoundHomeFragment extends BaseFragment implements View.OnClickListe
         view.findViewById(R.id.btn_person).setOnClickListener(this);
         view.findViewById(R.id.btn_news).setOnClickListener(this);
         view.findViewById(R.id.btn_sport_circle).setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -49,6 +61,7 @@ public class FoundHomeFragment extends BaseFragment implements View.OnClickListe
                 break;
             case R.id.btn_sport_circle:
                 //TODO implement
+
                 break;
         }
     }

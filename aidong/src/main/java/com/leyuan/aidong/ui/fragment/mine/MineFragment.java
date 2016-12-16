@@ -129,7 +129,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             relativeLayout_my_logo.setVisibility(View.VISIBLE);
             layout_no_login.setVisibility(View.GONE);
             user = App.mInstance.getUser();
-            textView_name.setText(user.getName() +"- " +user.getMobile());
+            textView_name.setText(user.getName());
+//            +"- " +user.getMobile()+"https://www.zhihu.com/question/31660075"
             imageView_head.setImageURI(Uri.parse(user.getAvatar()));
         }else{
             relativeLayout_my_logo.setVisibility(View.GONE);
@@ -151,6 +152,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 UiManager.activityJump(getActivity(), MessageActivity.class);
                 break;
             case R.id.imageView_head:
+
+
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), MyShowActivityNew.class);
 //                intent.setClass(getActivity(), CompleteUserInfomationActivity.class);

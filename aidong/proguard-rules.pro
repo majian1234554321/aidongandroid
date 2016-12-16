@@ -42,6 +42,13 @@
 -keep class com.alipay.sdk.app.AuthTask{ public *;}
 #-----------------------------------------------------------------
 
+
+#--------------QQ---------
 -keep class com.tencent.mm.sdk.** {
    *;
 }
+
+#--------------EMChat---------
+-keep class com.hyphenate.** {*;}
+-dontwarn  com.hyphenate.**
+

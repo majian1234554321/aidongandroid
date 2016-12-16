@@ -48,8 +48,6 @@ import org.apache.http.message.BasicNameValuePair;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.sharesdk.onekeyshare.OnekeyShare;
-import cn.sharesdk.onekeyshare.OnekeyShareTheme;
 
 public class SportCircleFragment extends BaseFragment implements
 		OnRefreshListener2<ListView>, IHttpCallback {
@@ -61,13 +59,11 @@ public class SportCircleFragment extends BaseFragment implements
 	private ListAdapterDynamic adapter;
 	private PullToRefreshListView mListView;
 	private int page = 1;
-	private OnekeyShare oks;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		view = inflater.inflate(R.layout.yes_finished_fragment, null);
-		oks = new OnekeyShare();
 		initView();
 		initData();
 		setClick();
@@ -129,40 +125,40 @@ public class SportCircleFragment extends BaseFragment implements
 				buffer.append(dynamic.getId());
 				buffer.append("/dynamics");
 				String titleUrl = buffer.toString();
-				oks.setTitleUrl(titleUrl);
-				if (App.mInstance.isLogin()) {
-					oks.setText("我的美型号" + App.mInstance.getUser().getMxid()
-							+ "这里都是型男美女“小鲜肉”，全民老公vs梦中女神，速速围观" + titleUrl);
-				} else {
-					oks.setText("这里都是型男美女“小鲜肉”，全民老公vs梦中女神，速速围观" + titleUrl);
-				}
-				oks.setUrl(titleUrl);
-				oks.setTheme(OnekeyShareTheme.CLASSIC);
-				oks.show(getActivity());
-				oks.setTitle(titleUrl);
-				if (dynamic.getContent() == null
-						|| dynamic.getContent().intern()
-								.equals("")) {
-					oks.setTitle("最近用美型App，国内首家健身社交App");
-				} else {
-					if (dynamic.getContent().length() > 30) {
-						oks.setTitle(dynamic.getContent()
-								.substring(0, 30));
-					} else {
-						oks.setTitle(dynamic.getContent());
-					}
-
-				}
-
-				if (dynamic.getImage() != null
-						&& dynamic.getImage().size() > 0) {
-					oks.setImageUrl(dynamic.getImage().get(0).getUrl());
-				} else if (dynamic.getFilm() != null) {
-					oks.setImageUrl(dynamic.getFilm().getCover());
-
-				} else {
-
-				}
+//				oks.setTitleUrl(titleUrl);
+//				if (App.mInstance.isLogin()) {
+//					oks.setText("我的美型号" + App.mInstance.getUser().getMxid()
+//							+ "这里都是型男美女“小鲜肉”，全民老公vs梦中女神，速速围观" + titleUrl);
+//				} else {
+//					oks.setText("这里都是型男美女“小鲜肉”，全民老公vs梦中女神，速速围观" + titleUrl);
+//				}
+//				oks.setUrl(titleUrl);
+//				oks.setTheme(OnekeyShareTheme.CLASSIC);
+//				oks.show(getActivity());
+//				oks.setTitle(titleUrl);
+//				if (dynamic.getContent() == null
+//						|| dynamic.getContent().intern()
+//								.equals("")) {
+//					oks.setTitle("最近用美型App，国内首家健身社交App");
+//				} else {
+//					if (dynamic.getContent().length() > 30) {
+//						oks.setTitle(dynamic.getContent()
+//								.substring(0, 30));
+//					} else {
+//						oks.setTitle(dynamic.getContent());
+//					}
+//
+//				}
+//
+//				if (dynamic.getImage() != null
+//						&& dynamic.getImage().size() > 0) {
+//					oks.setImageUrl(dynamic.getImage().get(0).getUrl());
+//				} else if (dynamic.getFilm() != null) {
+//					oks.setImageUrl(dynamic.getFilm().getCover());
+//
+//				} else {
+//
+//				}
 			
 			}
 		});
