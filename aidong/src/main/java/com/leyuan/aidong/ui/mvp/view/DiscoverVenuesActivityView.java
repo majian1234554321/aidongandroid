@@ -1,5 +1,7 @@
 package com.leyuan.aidong.ui.mvp.view;
 
+import com.leyuan.aidong.entity.CategoryBean;
+import com.leyuan.aidong.entity.DistrictBean;
 import com.leyuan.aidong.entity.VenuesBean;
 
 import java.util.List;
@@ -9,16 +11,22 @@ import java.util.List;
  * Created by song on 2016/8/29.
  */
 public interface DiscoverVenuesActivityView {
+
+    /**
+     * 设置场馆品牌
+     */
+    void setGymBrand(List<CategoryBean> gymBrandBeanList);
+
+    /**
+     * 设置热门商圈
+     */
+    void setBusinessCircle(List<DistrictBean> circleBeanList);
+
     /**
      * 更新列表
      * @param venuesBeanList
      */
     void updateRecyclerView(List<VenuesBean> venuesBeanList);
-
-    /**
-     * 显示空值界面
-     */
-    void showEmptyView();
 
     /**
      * 显示FooterView，提示没有任何内容了

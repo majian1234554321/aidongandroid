@@ -85,14 +85,14 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
             @Override
             public void onRefresh() {
                 currPage = 1;
-                present.pullToRefreshEquipmentData();
+                present.pullToRefreshRecommendData();
             }
         });
 
         switcherLayout.setOnRetryListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                present.commonLoadEquipmentData(switcherLayout);
+               present.commonLoadRecommendData(switcherLayout);
             }
         });
     }
@@ -116,7 +116,7 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
         public void onLoadNextPage(View view) {
             currPage ++;
             if (equipmentList != null && equipmentList.size() >= pageSize) {
-                present.requestMoreEquipmentData(recommendView,pageSize,currPage);
+                present.requestMoreRecommendData(recommendView,pageSize,currPage);
             }
         }
     };

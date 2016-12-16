@@ -8,13 +8,21 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.leyuan.aidong.entity.CategoryBean;
+import com.leyuan.aidong.entity.DistrictBean;
+import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.activity.home.adapter.SelfDeliveryAdapter;
 import com.leyuan.aidong.entity.DeliveryBean;
+import com.leyuan.aidong.ui.mvp.presenter.GoodsDetailPresent;
+import com.leyuan.aidong.ui.mvp.presenter.impl.GoodsDetailPresentImpl;
+import com.leyuan.aidong.ui.mvp.view.SelfDeliveryVenuesActivityView;
 import com.leyuan.aidong.widget.customview.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
+import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
+import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +31,7 @@ import java.util.List;
  * 选择自提门店
  * Created by song on 2016/9/14.
  */
-public class SelfDeliveryShopActivity extends BaseActivity implements View.OnClickListener {
+public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnClickListener,SelfDeliveryVenuesActivityView{
     private ImageView ivBack;
     private TextView tvFinish;
 
@@ -36,16 +44,16 @@ public class SelfDeliveryShopActivity extends BaseActivity implements View.OnCli
     private SelfDeliveryAdapter deliveryAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
 
+    private GoodsDetailPresent goodsPresent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_self_delivery);
-        pageSize = 20;
+        goodsPresent = new GoodsDetailPresentImpl(this,this);
         initView();
         setListener();
-
-        deliveryAdapter.setData(null);
-        wrapperAdapter.notifyDataSetChanged();
+        //goodsPresent.commonLoadVenues(switcherLayout,);
     }
 
 
@@ -106,5 +114,25 @@ public class SelfDeliveryShopActivity extends BaseActivity implements View.OnCli
             default:
                 break;
         }
+    }
+
+    @Override
+    public void setGymBrand(List<CategoryBean> gymBrandBeanList) {
+
+    }
+
+    @Override
+    public void setBusinessCircle(List<DistrictBean> circleBeanList) {
+
+    }
+
+    @Override
+    public void updateRecyclerView(List<VenuesBean> venuesBeanList) {
+
+    }
+
+    @Override
+    public void showEndFooterView() {
+        RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
     }
 }

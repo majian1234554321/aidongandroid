@@ -189,7 +189,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
         bannerLayout.setData(bean.getImage(),null);
         tvCampaignName.setText(bean.getName());
         tvLandmark.setText(bean.getLandmark());
-        tvTime.setText(bean.getStart_time());
+        tvTime.setText(bean.getStartTime());
         tvAddress.setText(bean.getAddress());
         tvOrganizer.setText(bean.getOrganizer());
         tvCampaignDesc.setText(bean.getIntroduce());
@@ -266,11 +266,14 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
         if(STATUS_APPLY.equals(status)){     //预约
             if(App.mInstance.isLogin()){
                 //todo 判断同一时间是否已有预约
+                AppointCampaignActivity.start(this,bean);
             }else {
                 //todo  登录 登录完成之后重新刷接口
             }
         }else if(STATUS_NOT_PAY.equals(status)){
-
+            AppointCampaignActivity.start(this,bean);
+        }else {
+            AppointCampaignActivity.start(this,bean);
         }
     }
 }

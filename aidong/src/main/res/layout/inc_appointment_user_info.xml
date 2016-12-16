@@ -32,13 +32,14 @@
             android:textColor="@color/black"
             android:textSize="14sp" />
 
-        <EditText
+        <TextView
             android:id="@+id/et_username"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:background="@null"
+            android:gravity="center_vertical"
             android:hint="姓名2-5个字"
             android:singleLine="true"
             android:textColor="@color/c3"
@@ -64,7 +65,7 @@
             android:textColor="@color/black"
             android:textSize="14sp" />
 
-        <EditText
+        <TextView
             android:id="@+id/et_phone"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -72,6 +73,7 @@
             android:layout_weight="1"
             android:background="@null"
             android:hint="11位手机号"
+            android:gravity="center_vertical"
             android:singleLine="true"
             android:textColor="@color/c3"
             android:textColorHint="@color/c9"

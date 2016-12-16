@@ -26,13 +26,13 @@ import java.util.List;
  * Created by song on 2016/11/10.
  */
 public class SystemInfoUtils {
+    // 0-开机广告 1-首页广告位 2-弹出广告位
     private static final String BANNER_SPLASH = "0";
     private static final String BANNER_HOME = "1";
     private static final String BOUNCED_AD = "2";
 
     /**
      * 获取首页广告
-     * 0-开机广告 1-首页广告位 2-弹出广告位
      */
     public static List<BannerBean> getHomeBanner(Context context){
         List<BannerBean> bannerBeanList = new ArrayList<>();
@@ -102,7 +102,6 @@ public class SystemInfoUtils {
 
     /**
      * 获取开通城市
-     * @return 城市列表
      */
     public static List<String> getOpenCity(Context context){
         if(Constant.systemInfoBean != null && Constant.systemInfoBean.getOpen_city() != null){ //内存有直接从内存读取返回
@@ -118,7 +117,6 @@ public class SystemInfoUtils {
 
     /**
      * 获取课程分类信息
-     * @return 课程分类
      */
     public static List<CategoryBean> getCourseCategory(Context context){
         if(Constant.systemInfoBean != null && Constant.systemInfoBean.getCourse() != null){ //内存有直接从内存读取返回
@@ -132,10 +130,8 @@ public class SystemInfoUtils {
         }
     }
 
-
     /**
      * 获取营养品分类信息
-     * @return 营养品分类
      */
     public static ArrayList<CategoryBean> getNurtureCategory(Context context){
         if(Constant.systemInfoBean != null && Constant.systemInfoBean.getNutrition() != null){ //内存有直接从内存读取返回
@@ -151,7 +147,6 @@ public class SystemInfoUtils {
 
     /**
      * 获取装备分类信息
-     * @return 装备分类
      */
     public static ArrayList<CategoryBean> getEquipmentCategory(Context context){
         if(Constant.systemInfoBean != null && Constant.systemInfoBean.getEquipment() != null){ //内存有直接从内存读取返回
@@ -167,7 +162,6 @@ public class SystemInfoUtils {
 
     /**
      * 获取商圈信息
-     * @return 装备分类
      */
     public static List<DistrictBean> getLandmark(Context context){
         if(Constant.systemInfoBean != null && Constant.systemInfoBean.getLandmark() != null){ //内存有直接从内存读取返回
@@ -176,6 +170,21 @@ public class SystemInfoUtils {
             Object bean = getSystemInfoBean(context);
             if(bean instanceof SystemBean){
                 return ((SystemBean) bean).getLandmark();
+            }
+            return null;
+        }
+    }
+
+    /**
+     * 获取场馆品牌分类
+     */
+    public static List<CategoryBean> getGymBrand(Context context){
+        if(Constant.systemInfoBean != null && Constant.systemInfoBean.getGymBrand() != null){ //内存有直接从内存读取返回
+            return Constant.systemInfoBean.getGymBrand();
+        }else {          // 从本地读取
+            Object bean = getSystemInfoBean(context);
+            if(bean instanceof SystemBean){
+                return ((SystemBean) bean).getGymBrand();
             }
             return null;
         }

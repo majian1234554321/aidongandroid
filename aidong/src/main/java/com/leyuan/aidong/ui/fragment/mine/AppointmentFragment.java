@@ -55,7 +55,6 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState){
-        pageSize = 20;
         present = new AppointmentPresentImpl(getContext(),this);
         Bundle bundle = getArguments();
         if(bundle != null){

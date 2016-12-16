@@ -38,7 +38,7 @@ public class RightFilterAdapter extends BaseAdapter{
         if(bean != null) {
             this.selectedBean = bean;
             for (DistrictDescBean entity : circleDescBeanList) {
-                entity.setSelected(entity.getAreaId().equals(bean.getAreaId()));
+                entity.setSelected(entity.getArea().equals(bean.getArea()));
             }
         }else {
             for (DistrictDescBean entity : circleDescBeanList) {

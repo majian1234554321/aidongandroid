@@ -47,8 +47,11 @@ public class NurturePresentImpl implements NurturePresent{
         nurtureActivityView.setCategory(nurtureModel.getCategory());
     }
 
+
+
     @Override
-    public void commonLoadRecommendData(final SwitcherLayout switcherLayout) {
+    public void commendLoadNurtureData(final SwitcherLayout switcherLayout, String brandId,
+                                       String priceSort, String countSort, String heatSort) {
         nurtureModel.getNurtures(new CommonSubscriber<NurtureData>(switcherLayout) {
             @Override
             public void onNext(NurtureData nurtureDataBean) {
@@ -56,98 +59,62 @@ public class NurturePresentImpl implements NurturePresent{
                     nurtureBeanList = nurtureDataBean.getNutrition();
                 }
                 if(!nurtureBeanList.isEmpty()){
-                    nurtureActivityView.updateRecyclerView(nurtureBeanList);
+                    filterActivityView.updateNurtureRecyclerView(nurtureBeanList);
                     switcherLayout.showContentLayout();
                 }else{
                     switcherLayout.showEmptyLayout();
                 }
             }
-        },Constant.FIRST_PAGE);
+        },Constant.FIRST_PAGE,brandId,priceSort,countSort,heatSort);
+    }
+
+    @Override
+    public void pullToRefreshNurtureData(String brandId, String priceSort, String countSort, String heatSort) {
+        nurtureModel.getNurtures(new RefreshSubscriber<NurtureData>(context) {
+            @Override
+            public void onNext(NurtureData nurtureDataBean) {
+                if(nurtureDataBean != null && nurtureDataBean.getNutrition() != null){
+                    nurtureBeanList = nurtureDataBean.getNutrition();
+                }
+                if(!nurtureBeanList.isEmpty()){
+                    filterActivityView.updateNurtureRecyclerView(nurtureBeanList);
+                }
+            }
+        }, Constant.FIRST_PAGE,brandId,priceSort,countSort,heatSort);
+    }
+
+    @Override
+    public void requestMoreNurtureData(RecyclerView recyclerView, final int pageSize, int page,
+                                       String brandId, String priceSort, String countSort, String heatSort) {
+        nurtureModel.getNurtures(new RequestMoreSubscriber<NurtureData>(context,recyclerView,pageSize) {
+            @Override
+            public void onNext(NurtureData nurtureDataBean) {
+                if(nurtureDataBean != null && nurtureDataBean.getNutrition() != null){
+                    nurtureBeanList = nurtureDataBean.getNutrition();
+                }
+                if(!nurtureBeanList.isEmpty()){
+                    filterActivityView.updateNurtureRecyclerView(nurtureBeanList);
+                }
+                //没有更多数据了显示到底提示
+                if( nurtureBeanList.size() < pageSize){
+                    nurtureActivityView.showEndFooterView();
+                }
+            }
+        },page,brandId,priceSort,countSort,heatSort);
+    }
+
+    @Override
+    public void commonLoadRecommendData(final SwitcherLayout switcherLayout) {
+
     }
 
     @Override
     public void pullToRefreshRecommendData() {
-        nurtureModel.getNurtures(new RefreshSubscriber<NurtureData>(context) {
-            @Override
-            public void onNext(NurtureData nurtureDataBean) {
-                if(nurtureDataBean != null && nurtureDataBean.getNutrition() != null){
-                    nurtureBeanList = nurtureDataBean.getNutrition();
-                }
-                if(!nurtureBeanList.isEmpty()){
-                    nurtureActivityView.updateRecyclerView(nurtureBeanList);
-                }
-            }
-        }, Constant.FIRST_PAGE);
+
     }
 
     @Override
     public void requestMoreRecommendData(RecyclerView recyclerView, final int pageSize, int page) {
-        nurtureModel.getNurtures(new RequestMoreSubscriber<NurtureData>(context,recyclerView,pageSize) {
-            @Override
-            public void onNext(NurtureData nurtureDataBean) {
-                if(nurtureDataBean != null && nurtureDataBean.getNutrition() != null){
-                    nurtureBeanList = nurtureDataBean.getNutrition();
-                }
-                if(!nurtureBeanList.isEmpty()){
-                    nurtureActivityView.updateRecyclerView(nurtureBeanList);
-                }
-                //没有更多数据了显示到底提示
-                if( nurtureBeanList.size() < pageSize){
-                    nurtureActivityView.showEndFooterView();
-                }
-            }
-        },page);
-    }
 
-    @Override
-    public void commendLoadNurtureData(final SwitcherLayout switcherLayout) {
-        nurtureModel.getNurtures(new CommonSubscriber<NurtureData>(switcherLayout) {
-            @Override
-            public void onNext(NurtureData nurtureDataBean) {
-                if(nurtureDataBean != null && nurtureDataBean.getNutrition() != null){
-                    nurtureBeanList = nurtureDataBean.getNutrition();
-                }
-                if(!nurtureBeanList.isEmpty()){
-                    filterActivityView.updateNurtureRecyclerView(nurtureBeanList);
-                    switcherLayout.showContentLayout();
-                }else{
-                    switcherLayout.showEmptyLayout();
-                }
-            }
-        },Constant.FIRST_PAGE);
-    }
-
-    @Override
-    public void pullToRefreshNurtureData() {
-        nurtureModel.getNurtures(new RefreshSubscriber<NurtureData>(context) {
-            @Override
-            public void onNext(NurtureData nurtureDataBean) {
-                if(nurtureDataBean != null && nurtureDataBean.getNutrition() != null){
-                    nurtureBeanList = nurtureDataBean.getNutrition();
-                }
-                if(!nurtureBeanList.isEmpty()){
-                    filterActivityView.updateNurtureRecyclerView(nurtureBeanList);
-                }
-            }
-        }, Constant.FIRST_PAGE);
-    }
-
-    @Override
-    public void requestMoreNurtureData(RecyclerView recyclerView, final int pageSize, int page) {
-        nurtureModel.getNurtures(new RequestMoreSubscriber<NurtureData>(context,recyclerView,pageSize) {
-            @Override
-            public void onNext(NurtureData nurtureDataBean) {
-                if(nurtureDataBean != null && nurtureDataBean.getNutrition() != null){
-                    nurtureBeanList = nurtureDataBean.getNutrition();
-                }
-                if(!nurtureBeanList.isEmpty()){
-                    filterActivityView.updateNurtureRecyclerView(nurtureBeanList);
-                }
-                //没有更多数据了显示到底提示
-                if( nurtureBeanList.size() < pageSize){
-                    nurtureActivityView.showEndFooterView();
-                }
-            }
-        },page);
     }
 }

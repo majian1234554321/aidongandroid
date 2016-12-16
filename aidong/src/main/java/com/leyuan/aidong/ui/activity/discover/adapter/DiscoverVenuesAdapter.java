@@ -44,7 +44,7 @@ public class DiscoverVenuesAdapter extends RecyclerView.Adapter<DiscoverVenuesAd
     @Override
     public void onBindViewHolder(VenuesHolder holder, int position) {
         VenuesBean bean = data.get(position);
-        holder.cover.setImageURI(bean.getLogo());
+        holder.cover.setImageURI(bean.getBrand_logo());
         holder.name.setText(bean.getName());
         holder.distance.setText(bean.getDistance());
     }

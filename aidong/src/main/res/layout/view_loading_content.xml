@@ -26,7 +26,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center_horizontal"
-                app:indicatorName="LineScalePartyIndicator"
+                app:indicatorName="BallPulseIndicator"
                 app:indicatorColor="@color/black"/>
 
 

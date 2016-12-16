@@ -148,6 +148,8 @@
     <color name="color_image_press">#55F1F1F1</color>
     <color name="c3">#333333</color>
     <color name="c9">#999999</color>
+    <color name="text_enabled">#FFFFFFFF</color>
+    <color name="text_disabled">#747474</color>
 
     <color name="bg_color">#ededed</color>
     <color name="contents_text">#ff000000</color>

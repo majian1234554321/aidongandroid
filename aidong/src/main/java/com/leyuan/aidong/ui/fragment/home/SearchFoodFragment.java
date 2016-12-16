@@ -42,14 +42,6 @@ public class SearchFoodFragment extends BaseFragment implements SearchFoodFragme
     private SearchPresent present;
     private String keyword;
 
-    public static SearchFoodFragment newInstance(String searchContent){
-        Bundle bundle = new Bundle();
-        bundle.putString("keyword", searchContent);
-        SearchFoodFragment fragment = new SearchFoodFragment();
-        fragment.setArguments(bundle);
-        return fragment;
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         pageSize = 20;

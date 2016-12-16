@@ -42,18 +42,8 @@ public class SearchVenuesFragment extends BaseFragment implements SearchVenuesFr
     private SearchPresent present;
     private String  keyword ;
 
-
-    public static SearchVenuesFragment newInstance(String searchContent){
-        Bundle bundle = new Bundle();
-        bundle.putString("keyword", searchContent);
-        SearchVenuesFragment fragment = new SearchVenuesFragment();
-        fragment.setArguments(bundle);
-        return fragment;
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        pageSize = 20;
         present = new SearchPresentImpl(getContext(),this);
         Bundle bundle = getArguments();
         if(bundle != null){

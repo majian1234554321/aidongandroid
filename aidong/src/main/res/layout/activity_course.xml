@@ -18,16 +18,18 @@
             android:src="@drawable/icon_back"
             android:padding="10dp"/>
 
-        <android.support.design.widget.TabLayout
+        <com.ogaclejapan.smarttablayout.SmartTabLayout
             android:id="@+id/tab_layout"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/height_top_bar"
             android:layout_marginRight="@dimen/right_margin"
-            app:tabIndicatorColor="@color/main_red"
-            app:tabTextColor="@color/white"
-            app:tabSelectedTextColor="@color/main_red"
-            app:tabMode="scrollable"/>
+            android:layout_centerInParent="true"
+            app:stl_indicatorColor="@color/main_red"
+            app:stl_defaultTabTextColor="@color/gray_normal"
+            app:stl_defaultTabTextSize="16sp"
+            app:stl_indicatorThickness="3dp"
+            app:stl_indicatorInterpolation="smart"
+            app:stl_indicatorWidth="auto" />
     </LinearLayout>
 
     <FrameLayout

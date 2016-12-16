@@ -9,20 +9,20 @@ import java.util.ArrayList;
  * Created by song on 2016/9/1.
  */
 public class AppointmentData {
-    private ArrayList<AppointmentBean> appointment;
+    private ArrayList<AppointmentBean> order;
 
     public ArrayList<AppointmentBean> getAppointment() {
-        return appointment;
+        return order;
     }
 
     public void setAppointment(ArrayList<AppointmentBean> appointment) {
-        this.appointment = appointment;
+        this.order = appointment;
     }
 
     @Override
     public String toString() {
         return "AppointmentData{" +
-                "appointment=" + appointment +
+                "order=" + order +
                 '}';
     }
 }

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class SelectListAdapter extends BaseAdapter {
+public class CategoryListAdapter extends BaseAdapter {
 
     private Context context;
     private List<CategoryBean> list = new ArrayList<>();
@@ -25,7 +25,7 @@ public class SelectListAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public SelectListAdapter(Context context, List<CategoryBean> list) {
+    public CategoryListAdapter(Context context, List<CategoryBean> list) {
         this.context = context;
         if(!list.isEmpty()){
             this.list = list;

@@ -18,7 +18,7 @@ import com.leyuan.aidong.entity.DistrictDescBean;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.ui.activity.home.adapter.LeftFilterAdapter;
 import com.leyuan.aidong.ui.activity.home.adapter.RightFilterAdapter;
-import com.leyuan.aidong.ui.activity.home.adapter.SelectListAdapter;
+import com.leyuan.aidong.ui.activity.home.adapter.CategoryListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +41,7 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
     private ListView rightListView;
 
     //分类
-    private SelectListAdapter categoryAdapter;
+    private CategoryListAdapter categoryAdapter;
     private List<CategoryBean> categoryList = new ArrayList<>();
 
     //商圈
@@ -74,9 +74,9 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
 
     private void init(){
         View view = LayoutInflater.from(context).inflate(R.layout.view_course_filter, this);
-        categoryLayout = (LinearLayout) view.findViewById(R.id.ll_category);
-        tvCategory = (TextView) view.findViewById(R.id.tv_category);
-        ivCategoryArrow = (ImageView) view.findViewById(R.id.iv_category_arrow);
+        categoryLayout = (LinearLayout) view.findViewById(R.id.ll_brand);
+        tvCategory = (TextView) view.findViewById(R.id.tv_brand);
+        ivCategoryArrow = (ImageView) view.findViewById(R.id.iv_brand_arrow);
         circleLayout = (LinearLayout) view.findViewById(R.id.ll_business_circle);
         tvCircle = (TextView) view.findViewById(R.id.tv_circle);
         ivCircleArrow = (ImageView) view.findViewById(R.id.iv_circle_arrow);
@@ -95,7 +95,7 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.ll_category:
+            case R.id.ll_brand:
                 resetBusinessCircleStatus();
                 setCategoryAdapter();
                 break;
@@ -127,7 +127,7 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
         contentLayout.setVisibility(VISIBLE);
         rightListView.setVisibility(GONE);
         if(categoryAdapter == null){
-            categoryAdapter = new SelectListAdapter(context, categoryList);
+            categoryAdapter = new CategoryListAdapter(context, categoryList);
         }
         leftListView.setAdapter(categoryAdapter);
         leftListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -161,7 +161,9 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
         rightListView.setVisibility(VISIBLE);
 
         if(leftSelectedPosition == -1){
-            rightCircleList = leftCircleList.get(0).getDistrictValues();
+            if(leftCircleList.get(0) != null){
+                rightCircleList = leftCircleList.get(0).getDistrictValues();
+            }
         }else{
             rightCircleList = leftCircleList.get(leftSelectedPosition).getDistrictValues();
         }

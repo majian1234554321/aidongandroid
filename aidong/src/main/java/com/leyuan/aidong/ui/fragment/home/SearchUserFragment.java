@@ -42,14 +42,6 @@ public class SearchUserFragment extends BaseFragment implements SearchUserFragme
     private SearchPresent present;
     private String keyword;
 
-    public static SearchUserFragment newInstance(String searchContent){
-        Bundle bundle = new Bundle();
-        bundle.putString("keyword", searchContent);
-        SearchUserFragment fragment = new SearchUserFragment();
-        fragment.setArguments(bundle);
-        return fragment;
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         pageSize = 20;

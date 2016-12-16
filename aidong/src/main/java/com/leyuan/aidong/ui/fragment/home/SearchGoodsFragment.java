@@ -41,14 +41,6 @@ public class SearchGoodsFragment extends BaseFragment implements SearchGoodsFrag
     private SearchPresent present;
     private String keyword;
 
-    public static SearchGoodsFragment newInstance(String searchContent){
-        Bundle bundle = new Bundle();
-        bundle.putString("keyword", searchContent);
-        SearchGoodsFragment fragment = new SearchGoodsFragment();
-        fragment.setArguments(bundle);
-        return fragment;
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         pageSize = 20;

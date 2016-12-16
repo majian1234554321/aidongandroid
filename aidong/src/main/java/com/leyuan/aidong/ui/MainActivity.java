@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.model.result.MsgResult;
 import com.leyuan.aidong.ui.activity.media.TabTheIndividualDynaminActivity;
-import com.leyuan.aidong.ui.fragment.discover.FoundHomeFragment;
+import com.leyuan.aidong.ui.fragment.discover.DiscoverHomeFragment;
 import com.leyuan.aidong.ui.fragment.home.HomeFragment;
 import com.leyuan.aidong.ui.fragment.mine.MineFragment;
 import com.leyuan.aidong.ui.fragment.video.VideoHomeFragment;
@@ -199,7 +199,7 @@ public class MainActivity extends BaseActivity implements IHttpCallback, View.On
         mFragments.add(new HomeFragment());
         mFragments.add(new VideoHomeFragment());
 //                mFragments.add(new TabFoundDynamicFragment());
-        mFragments.add(new FoundHomeFragment());
+        mFragments.add(new DiscoverHomeFragment());
         mFragments.add(new MineFragment());
         setTabSelection(0);
         showFragment(0);

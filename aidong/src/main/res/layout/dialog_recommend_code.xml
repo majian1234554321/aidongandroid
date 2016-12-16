@@ -33,7 +33,7 @@
             android:textColor="@color/main_red"
             android:textSize="14sp"
             android:gravity="center"
-            android:background="@drawable/shape_bg_black"/>
+            android:background="@drawable/shape_solid_black"/>
 
         <TextView
             android:layout_width="0dp"
@@ -44,6 +44,6 @@
             android:textSize="14sp"
             android:gravity="center"
             android:layout_marginLeft="@dimen/left_margin"
-            android:background="@drawable/shape_bg_black"/>
+            android:background="@drawable/shape_solid_black"/>
     </LinearLayout>
 </LinearLayout>

@@ -66,9 +66,9 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
 
     private void init() {
         View view = LayoutInflater.from(context).inflate(R.layout.view_goods_filter, this);
-        categoryLayout = (LinearLayout) view.findViewById(R.id.ll_category);
-        tvCategory = (TextView) view.findViewById(R.id.tv_category);
-        ivCategoryArrow = (ImageView) view.findViewById(R.id.iv_category_arrow);
+        categoryLayout = (LinearLayout) view.findViewById(R.id.ll_brand);
+        tvCategory = (TextView) view.findViewById(R.id.tv_brand);
+        ivCategoryArrow = (ImageView) view.findViewById(R.id.iv_brand_arrow);
         popularityLayout = (LinearLayout) view.findViewById(R.id.ll_popularity);
         tvPopularity = (TextView) view.findViewById(R.id.tv_popularity);
         saleLayout = (LinearLayout) view.findViewById(R.id.ll_sale);
@@ -97,7 +97,7 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
         }
 
         switch (v.getId()) {
-            case R.id.ll_category:
+            case R.id.ll_brand:
                 isLow2High = true;
                 setCategoryAdapter();
                 break;
@@ -162,7 +162,7 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
                 tvCategory.setText(category);
                 hidePopup();
                 if (onFilterClickListener != null) {
-                    onFilterClickListener.onCategoryItemClick(category);
+                    onFilterClickListener.onCategoryItemClick(position);
                 }
             }
         });
@@ -176,7 +176,7 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
         categoryAdapter.setCheckItem(position);
         tvCategory.setText(category);
         if (onFilterClickListener != null) {
-            onFilterClickListener.onCategoryItemClick(category);
+            onFilterClickListener.onCategoryItemClick(position);
         }
     }
 
@@ -237,7 +237,7 @@ public class GoodsFilterView extends LinearLayout implements View.OnClickListene
     }
 
     public interface OnFilterClickListener {
-        void onCategoryItemClick(String category);
+        void onCategoryItemClick(int position);
 
         void onPopularityClick();
 

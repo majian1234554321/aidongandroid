@@ -44,10 +44,12 @@ public class CampaignFragment extends BaseFragment implements CampaignFragmentVi
 
     private String type;
 
-    public void setArguments(String type){
-        Bundle bundle=new Bundle();
-        bundle.putString("type", type);
-        this.setArguments(bundle);
+    public static CampaignFragment newInstance(String type) {
+        Bundle args = new Bundle();
+        args.putString("type", type);
+        CampaignFragment fragment = new CampaignFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -57,15 +59,12 @@ public class CampaignFragment extends BaseFragment implements CampaignFragmentVi
 
     @Override
     public void onViewCreated(View view,Bundle savedInstanceState) {
-        if (getArguments().containsKey(type)) {
-            type = getArguments().getString(type);
+        if (getArguments() != null) {
+            type = getArguments().getString("type");
         }
-        pageSize = 10;
         campaignPresent = new CampaignPresentImpl(getActivity(),this);
-
         initSwipeRefreshLayout(view);
         initRecyclerView(view);
-
         campaignPresent.commonLoadData(switcherLayout);
     }
 
@@ -113,8 +112,6 @@ public class CampaignFragment extends BaseFragment implements CampaignFragmentVi
         campaignAdapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();
     }
-
-
 
     @Override
     public void showEmptyView() {

@@ -15,6 +15,7 @@ public class VenuesDetailBean {
     private String address;
     private String business_time;
     private ArrayList<String> service;
+    private String phone;
 
     public String getId() {
         return id;
@@ -78,6 +79,14 @@ public class VenuesDetailBean {
 
     public void setService(ArrayList<String> service) {
         this.service = service;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     @Override

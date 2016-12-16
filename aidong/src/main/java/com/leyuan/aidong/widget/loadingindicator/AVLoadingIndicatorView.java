@@ -16,14 +16,14 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.widget.loadingindicator.indicators.BallPulseIndicator;
+import com.leyuan.aidong.widget.loadingindicator.indicators.LineSpinFadeLoaderIndicator;
 
 
 public class AVLoadingIndicatorView extends View {
 
     private static final String TAG="AVLoadingIndicatorView";
 
-    private static final BallPulseIndicator DEFAULT_INDICATOR=new BallPulseIndicator();
+    private static final LineSpinFadeLoaderIndicator DEFAULT_INDICATOR=new LineSpinFadeLoaderIndicator();
 
     private static final int MIN_SHOW_TIME = 500; // ms
     private static final int MIN_DELAY = 500; // ms

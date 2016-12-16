@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/ll_top"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
         android:orientation="horizontal"
-        android:paddingRight="90dp"
         android:background="@color/black">
 
         <ImageView
@@ -20,22 +20,25 @@
             android:scaleType="center"
             android:layout_gravity="center_vertical"/>
 
-        <android.support.design.widget.TabLayout
+        <com.ogaclejapan.smarttablayout.SmartTabLayout
             android:id="@+id/tab_layout"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_marginLeft="45dp"
-            android:layout_height="match_parent"
-            app:tabIndicatorColor="@color/main_red"
-            app:tabTextColor="@color/gray"
-            app:tabSelectedTextColor="@color/white"/>
-    </LinearLayout>
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/height_top_bar"
+            android:layout_centerInParent="true"
+            app:stl_indicatorColor="@color/main_red"
+            app:stl_defaultTabTextColor="@color/gray_normal"
+            app:stl_defaultTabTextSize="17sp"
+            app:stl_indicatorThickness="3dp"
+            app:stl_indicatorInterpolation="smart"
+            app:stl_indicatorWidth="auto" />
+    </RelativeLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_content"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_height="match_parent"
+        android:layout_below="@id/ll_top"
+        android:layout_above="@+id/tv_appointment"/>
 
     <TextView
         android:id="@+id/tv_appointment"
@@ -44,6 +47,8 @@
         android:text="预约场馆"
         android:textSize="15sp"
         android:gravity="center"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
         android:background="@color/main_red"
         android:textColor="@color/white"/>
-</LinearLayout>
+</RelativeLayout>

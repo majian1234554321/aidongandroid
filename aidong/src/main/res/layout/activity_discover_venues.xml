@@ -33,19 +33,29 @@
             android:layout_marginRight="@dimen/right_margin"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
-
-    <com.leyuan.aidong.widget.dropdownmenu.DropDownMenu
-        android:id="@+id/drop_down_menu"
+    
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:ddmenuTextSize="14sp"
-        app:ddtextUnselectedColor="@color/drop_down_unselected"
-        app:ddtextSelectedColor="@color/drop_down_selected"
-        app:dddividerColor="@color/transparent"
-        app:ddunderlineColor="@color/transparent"
-        app:ddmenuSelectedIcon="@mipmap/drop_down_selected_icon"
-        app:ddmaskColor="@color/mask_color"
-        app:ddmenuBackgroundColor="@color/white"
-        app:ddmenuUnselectedIcon="@mipmap/drop_down_unselected_icon" />
+        android:background="@color/white">
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_venues"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="45dp"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:scrollbars="vertical"/>
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <com.leyuan.aidong.ui.activity.discover.view.VenuesFilterView
+            android:id="@+id/filter_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
 
 </LinearLayout>

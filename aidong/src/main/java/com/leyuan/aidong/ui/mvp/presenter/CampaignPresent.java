@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.mvp.presenter;
 
 import android.support.v7.widget.RecyclerView;
 
+import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.widget.customview.SwitcherLayout;
 
 /**
@@ -44,5 +45,6 @@ public interface CampaignPresent {
      * @param contactName 联系人
      * @param contactMobile 联系人电话
      */
-    void buyCampaign(String id,String couponId,float integral,String payType,String contactName,String contactMobile);
+    void buyCampaign(String id,String couponId,float integral,String payType,String contactName,
+                     String contactMobile,PayInterface.PayListener listener);
 }

@@ -35,6 +35,7 @@ import java.util.List;
  * 筛选附近的人
  * @author song
  */
+@Deprecated
 public class FilterAroundPeopleActivity extends LoadAddressDataActivity implements View.OnClickListener,OnWheelChangedListener{
 
     //top bar

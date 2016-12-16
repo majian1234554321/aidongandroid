@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -44,7 +45,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
     @Override
     public AppointmentHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = View.inflate(context, R.layout.item_appointment, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_appointment,parent,false);
         return new AppointmentHolder(view);
     }
 
@@ -53,11 +54,12 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         AppointmentBean bean = data.get(position);
 
         //与订单状态无关
-        holder.cover.setImageURI(bean.getItem().getCover());
-        holder.name.setText(bean.getItem().getName());
-        holder.address.setText("");
-        holder.price.setText(String.format(context.getString(R.string.rmb_price),bean.getPay_amount()));
-
+        if(bean.getItem() != null){
+            holder.cover.setImageURI(bean.getItem().getCover());
+            holder.name.setText(bean.getItem().getName());
+            holder.address.setText("");
+            holder.price.setText(String.format(context.getString(R.string.rmb_price),bean.getPay_amount()));
+        }
         //与订单状态有关
         if (TextUtils.isEmpty(bean.getStatus())) return;
         switch (bean.getStatus()) {

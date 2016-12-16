@@ -51,58 +51,22 @@ public class EquipmentPresentImpl implements EquipmentPresent{
 
     @Override
     public void commonLoadRecommendData(final SwitcherLayout switcherLayout) {
-        equipmentModel.getEquipments(new CommonSubscriber<EquipmentData>(switcherLayout) {
-            @Override
-            public void onNext(EquipmentData equipmentData) {
-                if(equipmentData != null){
-                    equipmentBeanList = equipmentData.getEquipment();
-                }
-                if(!equipmentBeanList.isEmpty()){
-                    equipmentActivityView.updateRecyclerView(equipmentBeanList);
-                    switcherLayout.showContentLayout();
-                }else{
-                    switcherLayout.showEmptyLayout();
-                }
-            }
-        },Constant.FIRST_PAGE);
+
     }
 
     @Override
     public void pullToRefreshRecommendData() {
-        equipmentModel.getEquipments(new RefreshSubscriber<EquipmentData>(context) {
-            @Override
-            public void onNext(EquipmentData equipmentData) {
-                if( equipmentData != null){
-                    equipmentBeanList = equipmentData.getEquipment();
-                }
-                if(!equipmentBeanList.isEmpty()){
-                    equipmentActivityView.updateRecyclerView(equipmentBeanList);
-                }
-            }
-        },Constant.FIRST_PAGE);
+
     }
 
     @Override
     public void requestMoreRecommendData(RecyclerView recyclerView, final int pageSize, int page) {
-        equipmentModel.getEquipments(new RequestMoreSubscriber<EquipmentData>(context,recyclerView,pageSize) {
-            @Override
-            public void onNext(EquipmentData equipmentData) {
-                if(equipmentData != null){
-                    equipmentBeanList = equipmentData.getEquipment();
-                }
-                if(!equipmentBeanList.isEmpty()){
-                    equipmentActivityView.updateRecyclerView(equipmentBeanList);
-                }
-                //没有更多数据了显示到底提示
-                if(equipmentBeanList != null && equipmentBeanList.size() < pageSize){
-                    equipmentActivityView.showEndFooterView();
-                }
-            }
-        },page);
+
     }
 
     @Override
-    public void commonLoadEquipmentData(final SwitcherLayout switcherLayout) {
+    public void commonLoadEquipmentData(final SwitcherLayout switcherLayout, String brandId,
+                                        String priceSort, String countSort, String heatSort) {
         equipmentModel.getEquipments(new CommonSubscriber<EquipmentData>(switcherLayout) {
             @Override
             public void onNext(EquipmentData equipmentData) {
@@ -116,11 +80,11 @@ public class EquipmentPresentImpl implements EquipmentPresent{
                     switcherLayout.showEmptyLayout();
                 }
             }
-        },Constant.FIRST_PAGE);
+        },Constant.FIRST_PAGE,brandId,priceSort,countSort,heatSort);
     }
 
     @Override
-    public void pullToRefreshEquipmentData() {
+    public void pullToRefreshEquipmentData(String brandId, String priceSort, String countSort, String heatSort) {
         equipmentModel.getEquipments(new RefreshSubscriber<EquipmentData>(context) {
             @Override
             public void onNext(EquipmentData equipmentData) {
@@ -131,11 +95,12 @@ public class EquipmentPresentImpl implements EquipmentPresent{
                     filterActivityView.updateEquipmentRecyclerView(equipmentBeanList);
                 }
             }
-        },Constant.FIRST_PAGE);
+        },Constant.FIRST_PAGE,brandId,priceSort,countSort,heatSort);
     }
 
     @Override
-    public void requestMoreEquipmentData(RecyclerView recyclerView, final int pageSize, int page) {
+    public void requestMoreEquipmentData(RecyclerView recyclerView, final int pageSize, int page,
+                                         String brandId, String priceSort, String countSort, String heatSort) {
         equipmentModel.getEquipments(new RequestMoreSubscriber<EquipmentData>(context,recyclerView,pageSize) {
             @Override
             public void onNext(EquipmentData equipmentData) {
@@ -150,6 +115,6 @@ public class EquipmentPresentImpl implements EquipmentPresent{
                     equipmentActivityView.showEndFooterView();
                 }
             }
-        },page);
+        },page,brandId,priceSort,countSort,heatSort);
     }
 }

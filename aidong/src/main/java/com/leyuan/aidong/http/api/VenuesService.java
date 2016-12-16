@@ -30,7 +30,7 @@ public interface VenuesService {
      * @return 场馆详情实体
      */
     @GET("gyms/{id}")
-    Observable<BaseBean<VenuesDetailData>> getVenuesDetail(@Path("id") int id);
+    Observable<BaseBean<VenuesDetailData>> getVenuesDetail(@Path("id") String id);
 
     /**
      * 获取场馆中教练列表(暂不考虑分页)
@@ -38,7 +38,7 @@ public interface VenuesService {
      * @return
      */
     @GET("gyms/{id}/coaches")
-    Observable<BaseBean<CoachData>> getCoaches(@Path("id") int id);
+    Observable<BaseBean<CoachData>> getCoaches(@Path("id") String id);
 
     /**
      * 获取场馆中课程列表(暂不考虑分页)
@@ -46,5 +46,5 @@ public interface VenuesService {
      * @return
      */
     @GET("gyms/{id}/courses")
-    Observable<BaseBean<CourseData>> getCourses(@Path("id") int id);
+    Observable<BaseBean<CourseData>> getCourses(@Path("id") String id);
 }

@@ -24,10 +24,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 运动之窗
+ * 运动之窗资讯列表
  * Created by song on 2016/10/17.
  */
-public class SportNewsActivity extends BaseActivity implements SportNewsActivityView{
+public class NewsActivity extends BaseActivity implements SportNewsActivityView{
     private SimpleTitleBar titleBar;
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;

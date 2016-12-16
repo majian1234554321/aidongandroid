@@ -80,7 +80,7 @@
             android:layout_width="44dp"
             android:layout_height="32dp"
             android:gravity="center"
-            android:background="@drawable/shape_bg_black"
+            android:background="@drawable/shape_solid_black"
             android:text="1" />
 
         <ImageView
@@ -117,7 +117,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/shape_bg_white"
+            android:background="@drawable/shape_stroke_white"
             android:gravity="center"
             android:text="快递"
             android:textColor="@color/black"

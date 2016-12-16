@@ -163,7 +163,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 bean.getApplied_count(),bean.getStock()));
         tvDesc.setText(Html.fromHtml(bean.getIntroduce()));
         tvPrice.setText(String.format(getString(R.string.rmb_price),bean.getPrice()));
-        tvStartTime.setText(String.format(getString(R.string.appoint_time),bean.getClass_time()));
+        tvStartTime.setText(String.format(getString(R.string.appoint_time),bean.getClassTime()));
         setBottomStatus();
     }
 
@@ -200,7 +200,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 tvState.setText(R.string.status_not_start);
                 bottomLayout.setBackgroundColor(Color.parseColor("#666667"));
                 break;
-            case STATUS_NOT_PAY:    //跳支付
+            case STATUS_NOT_PAY:    //跳订单详情
                 tvStartTime.setVisibility(View.GONE);
                 tvPrice.setVisibility(View.VISIBLE);
                 tvState.setText(R.string.status_not_pay);
@@ -221,12 +221,14 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         if(STATUS_APPOINT.equals(detailBean.getStatus())){     //预约
             if(App.mInstance.isLogin()){
                 //todo 判断同一时间是否已有预约
-                AppointmentInfoActivity.start(this,AppointmentInfoActivity.TYPE_COURSE,detailBean);
+                AppointInfoActivity.start(this, AppointInfoActivity.TYPE_COURSE,detailBean);
             }else {
                 //todo  登录 登录完成之后重新刷接口
             }
         }else if(STATUS_NOT_PAY.equals(detailBean.getStatus())){
-
+            AppointCourseActivity.start(this,detailBean);
+        }else {
+            AppointCourseActivity.start(this,detailBean);
         }
     }
 }

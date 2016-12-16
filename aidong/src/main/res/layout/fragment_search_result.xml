@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app ="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <android.support.design.widget.TabLayout
+
+    <com.ogaclejapan.smarttablayout.SmartTabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
-        android:background="@color/line_color"
-        app:tabMode="scrollable"
-        app:tabTextColor="@color/black"
-        app:tabIndicatorColor="@color/main_red"
-        app:tabSelectedTextColor="@color/main_red"
-        android:elevation="2dp" />
+        app:stl_indicatorColor="@color/main_red"
+        app:stl_defaultTabTextColor="@color/gray_normal"
+        app:stl_defaultTabTextSize="16sp"
+        app:stl_indicatorThickness="3dp"
+        app:stl_indicatorInterpolation="smart"
+        app:stl_indicatorWidth="auto"
+        app:stl_dividerColor="@color/transparent"
+        app:stl_underlineColor="@color/transparent"
+        android:background="@color/line_color"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_search_result"

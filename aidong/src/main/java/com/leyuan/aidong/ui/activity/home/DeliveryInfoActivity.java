@@ -71,19 +71,19 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
             case R.id.tv_express:
                 tvExpress.setTextColor(Color.parseColor("#ffffff"));
                 tvSelfDelivery.setTextColor(Color.parseColor("#000000"));
-                tvExpress.setBackgroundResource(R.drawable.shape_bg_black);
-                tvSelfDelivery.setBackgroundResource(R.drawable.shape_bg_white);
+                tvExpress.setBackgroundResource(R.drawable.shape_solid_black);
+                tvSelfDelivery.setBackgroundResource(R.drawable.shape_stroke_white);
                 deliveryLayout.setVisibility(View.GONE);
                 break;
             case R.id.tv_self_delivery:
                 tvExpress.setTextColor(Color.parseColor("#000000"));
                 tvSelfDelivery.setTextColor(Color.parseColor("#ffffff"));
-                tvExpress.setBackgroundResource(R.drawable.shape_bg_white);
-                tvSelfDelivery.setBackgroundResource(R.drawable.shape_bg_black);
+                tvExpress.setBackgroundResource(R.drawable.shape_stroke_white);
+                tvSelfDelivery.setBackgroundResource(R.drawable.shape_solid_black);
                 deliveryLayout.setVisibility(View.VISIBLE);
                 break;
             case R.id.ll_delivery_address:
-                Intent intent = new Intent(this,SelfDeliveryShopActivity.class);
+                Intent intent = new Intent(this,SelfDeliveryVenuesActivity.class);
                 startActivity(intent);
                 break;
             case R.id.tv_delivery_time:

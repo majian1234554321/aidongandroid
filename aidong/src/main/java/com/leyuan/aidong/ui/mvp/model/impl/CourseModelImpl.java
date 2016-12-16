@@ -41,8 +41,8 @@ public class CourseModelImpl implements CourseModel {
     }
 
     @Override
-    public void getCourses(Subscriber<CourseData> subscriber, String cat, String day, int page) {
-        courseService.getCourses(day,page)
+    public void getCourses(Subscriber<CourseData> subscriber, String day, String cat, String landmark, int page) {
+        courseService.getCourses(day,cat,landmark,page)
                 .compose(RxHelper.<CourseData>transform())
                 .subscribe(subscriber);
     }

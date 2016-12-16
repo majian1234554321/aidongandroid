@@ -24,7 +24,7 @@ import java.util.List;
 
 public class BaseFragment extends Fragment implements IHttpToastCallBack {
     private static final String TAG = "BaseFragment";
-    protected int pageSize; //分页数据量
+    protected int pageSize = 25; //分页数据量
 
     protected Logic logic;
 
