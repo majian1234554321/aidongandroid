@@ -2,6 +2,7 @@ package com.leyuan.aidong.module.share;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.view.View;
 import android.widget.Toast;
@@ -36,13 +37,12 @@ import static com.leyuan.aidong.ui.App.context;
 
 public class WXShare {
 
-
+    public final static String WX_APP_ID = "wx365ab323b9269d30";
     private IWXAPI api;
 
     public WXShare(Context context) {
-        String appId = context.getString(R.string.weixingAppID);
-        api = WXAPIFactory.createWXAPI(context, appId, true);
-        api.registerApp(appId);
+        api = WXAPIFactory.createWXAPI(context, WX_APP_ID);
+        api.registerApp(WX_APP_ID);
     }
 
     // 文本分享
@@ -115,7 +115,7 @@ public class WXShare {
             public void onLoadingComplete(String imageUri, View view, Bitmap bitmap) {
                 //                        //图片不能超过32kb,需要压缩
                         Logger.i("share","bitmap getWidth = " + bitmap.getWidth());
-                        double targetwidth = Math.sqrt(32.00 * 1000);
+                        double targetwidth = Math.sqrt(25.00 * 1000);
                         if (bitmap.getWidth() > targetwidth || bitmap.getHeight() > targetwidth) {
                             // 创建操作图片用的matrix对象
                             Matrix matrix = new Matrix();
@@ -150,7 +150,7 @@ public class WXShare {
 
     public void shareWeb(String title, String desc, Bitmap bitmap, String url, boolean isCircleOfFriends) {
 
-        Logger.i("share","shareWeb  bitmap getWidth = " + bitmap.getWidth());
+        Logger.i("share","shareWeb  bitmap getWidth = " + bitmap.getWidth()+",  height = " +bitmap.getHeight());
         WXWebpageObject webpage = new WXWebpageObject();
         webpage.webpageUrl = url;
 
@@ -158,6 +158,7 @@ public class WXShare {
         msg.title = title;
         msg.description = desc;
 
+        bitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.ic_launcher);
         msg.thumbData = bmpToByteArray(bitmap, true);
 
 
@@ -165,9 +166,9 @@ public class WXShare {
         req.transaction = buildTransaction("webpage");
         req.message = msg;
         req.scene = isCircleOfFriends ? SendMessageToWX.Req.WXSceneTimeline : SendMessageToWX.Req.WXSceneSession;
-        api.sendReq(req);
+       boolean result =  api.sendReq(req);
 
-        Logger.i("share","api.sendReq(req);" );
+        Logger.i("share","api.sendReq(req) return value = "  + result);
 
     }
 

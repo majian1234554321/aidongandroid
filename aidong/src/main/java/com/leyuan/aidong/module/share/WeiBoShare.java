@@ -3,9 +3,11 @@ package com.leyuan.aidong.module.share;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.view.View;
 
+import com.leyuan.aidong.R;
 import com.leyuan.aidong.module.weibo.WeiBoConstants;
 import com.leyuan.aidong.utils.Logger;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -49,7 +51,10 @@ public class WeiBoShare implements IWeiboHandler.Response {
     @Override
     public void onResponse(BaseResponse baseResponse) {
         if(baseResponse!= null){
+            Logger.i("share"," baseResponse.errCode = " + baseResponse.errCode);
             switch (baseResponse.errCode) {
+
+
                 case WBConstants.ErrorCode.ERR_OK:
 
                     break;
@@ -66,7 +71,7 @@ public class WeiBoShare implements IWeiboHandler.Response {
 
 
     public  void sendMessage(String title,String content, Bitmap bitmap, String webUrl) {
-
+        Logger.i("share"," sendMessage = " );
         WeiboMultiMessage weiboMessage = new WeiboMultiMessage();
 
         TextObject textObject = new TextObject();
@@ -74,6 +79,8 @@ public class WeiBoShare implements IWeiboHandler.Response {
         weiboMessage.textObject = textObject;
 
         //图片不能超过32kb
+        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.back);
+        Logger.i("share"," bitmap size  = " +bitmap.getByteCount());
         ImageObject imageObject = new ImageObject();
         imageObject.setImageObject(bitmap);
         weiboMessage.imageObject = imageObject;
@@ -89,6 +96,8 @@ public class WeiBoShare implements IWeiboHandler.Response {
         request.transaction = String.valueOf(System.currentTimeMillis());
         request.multiMessage = weiboMessage;
         mWeiboShareAPI.sendRequest(context, request);
+
+        Logger.i("share","  mWeiboShareAPI.sendRequest(context, request);" );
 
     }
 

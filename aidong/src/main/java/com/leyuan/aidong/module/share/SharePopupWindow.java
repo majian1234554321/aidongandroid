@@ -33,6 +33,7 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
         super(context);
         this.context = context;
         myShareUtils = new MyShareUtils(context);
+        myShareUtils.onNewIntent(context.getIntent());
         initView();
         initData();
     }
@@ -98,7 +99,7 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
     }
 
     /**
-     * you must call this when activity is created and newIntent
+     * you must call this when activity onNewIntent
      * @param intent
      */
     public  void onNewIntent(Intent intent){

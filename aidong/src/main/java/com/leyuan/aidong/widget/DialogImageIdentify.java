@@ -17,7 +17,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.Logger;
-import com.lidroid.xutils.BitmapUtils;
 
 
 public class DialogImageIdentify extends Dialog {
@@ -27,7 +26,7 @@ public class DialogImageIdentify extends Dialog {
     private ImageView imgClose;
 //    private ImageLoader mImageLoader = ImageLoader.getInstance();
 
-    private BitmapUtils mBitmapUtils;
+//    private BitmapUtils mBitmapUtils;
 
 //    private DisplayImageOptions mOptions = new DisplayImageOptions.Builder()
 //            .showImageOnLoading(R.drawable.img_default)

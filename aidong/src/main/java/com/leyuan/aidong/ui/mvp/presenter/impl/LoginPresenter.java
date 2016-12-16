@@ -1,10 +1,12 @@
 package com.leyuan.aidong.ui.mvp.presenter.impl;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
 import com.leyuan.aidong.entity.model.result.LoginResult;
 import com.leyuan.aidong.http.subscriber.BaseSubscriber;
+import com.leyuan.aidong.module.thirdpartylogin.ThirdLoginUtils;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.mvp.model.LoginModel;
 import com.leyuan.aidong.ui.mvp.model.interfaces.LoginModelInterface;
@@ -13,16 +15,17 @@ import com.leyuan.aidong.ui.mvp.view.LoginViewInterface;
 
 public class LoginPresenter implements LoginPresenterInterface {
 
-
     private Context context;
     private LoginViewInterface loginViewInterface;
     private LoginModelInterface loginModel;
 //    private QQLogin qqLogin;
+    private ThirdLoginUtils thirdLoginUtils;
 
-    public LoginPresenter(Context context, LoginViewInterface loginViewInterface) {
+    public LoginPresenter(Activity context, LoginViewInterface loginViewInterface) {
         this.context = context;
         this.loginViewInterface = loginViewInterface;
         loginModel = new LoginModel();
+        thirdLoginUtils = new ThirdLoginUtils(context,thirdLoginListner);
 
 //        qqLogin = new QQLogin((Activity) context, thirdPartyLoginListener);
     }
@@ -50,6 +53,9 @@ public class LoginPresenter implements LoginPresenterInterface {
 
     }
 
+    public void loginThirdParty(int mode){
+        thirdLoginUtils.loginThirdParty(mode);
+    }
     @Override
     public void loginSns(String sns, String access){
         loginModel.loginSns(new BaseSubscriber<LoginResult>(context) {
@@ -86,12 +92,14 @@ public class LoginPresenter implements LoginPresenterInterface {
     }
 
     public void onActivityResultData(int requestCode, int resultCode, Intent data) {
-
+        thirdLoginUtils.onActivityResult(requestCode,resultCode,data);
     }
 
-    public void loginThirdParty(int loginMode) {
-
-    }
-
+    private final ThirdLoginUtils.OnThirdPartyLogin thirdLoginListner = new ThirdLoginUtils.OnThirdPartyLogin() {
+        @Override
+        public void onThridLogin(String sns, String code) {
+            loginSns(sns,code);
+        }
+    };
 
 }

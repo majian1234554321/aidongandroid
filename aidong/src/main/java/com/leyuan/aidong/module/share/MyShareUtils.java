@@ -51,6 +51,7 @@ public class MyShareUtils {
      * @param intent
      */
     public  void onNewIntent(Intent intent){
+        if(intent!=null)
         weiBoShare.onNewIntent(intent);
     }
 
