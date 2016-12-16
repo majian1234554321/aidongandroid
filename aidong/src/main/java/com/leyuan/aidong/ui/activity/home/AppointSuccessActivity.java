@@ -22,7 +22,7 @@ import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
  * 预约成功界面
  * Created by song on 2016/9/12.
  */
-public class AppointmentSuccessActivity extends BaseActivity implements View.OnClickListener{
+public class AppointSuccessActivity extends BaseActivity implements View.OnClickListener{
     private TextView tvTime;
     private TextView returnHome;
     private TextView checkAppointment;
@@ -35,7 +35,7 @@ public class AppointmentSuccessActivity extends BaseActivity implements View.OnC
     private String time;
 
     private void start(Context context,String time){
-        Intent intent = new Intent(context,AppointmentSuccessActivity.class);
+        Intent intent = new Intent(context,AppointSuccessActivity.class);
         intent.putExtra("time",time);
         context.startActivity(intent);
     }

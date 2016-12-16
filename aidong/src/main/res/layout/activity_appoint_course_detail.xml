@@ -78,56 +78,75 @@
                     app:left_text="上课地址:" />
             </LinearLayout>
 
-            <!--活动预约信息布局-->
-            <LinearLayout
-                android:id="@+id/ll_campaign_info"
+            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="54dp"
-                    android:layout_marginLeft="@dimen/left_margin"
-                    android:gravity="center_vertical"
-                    android:text="预约信息"
-                    android:textColor="@color/c3"
-                    android:textSize="16sp" />
-
-                <include layout="@layout/inc_line_black" />
-
-                <com.leyuan.aidong.widget.customview.ExtendTextView
-                    android:id="@+id/tv_campaign_user"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:left_text="预约人:" />
-
-                <com.leyuan.aidong.widget.customview.ExtendTextView
-                    android:id="@+id/tv_campaign_phone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:left_text="手机:" />
-
-                <com.leyuan.aidong.widget.customview.ExtendTextView
-                    android:id="@+id/tv_campaign_organization"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:left_text="主办方:" />
-
-                <com.leyuan.aidong.widget.customview.ExtendTextView
-                    android:id="@+id/tv_campaign_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:left_text="活动时间:" />
-
-                <com.leyuan.aidong.widget.customview.ExtendTextView
-                    android:id="@+id/tv_campaign_address"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:left_text="上课地址:" />
-            </LinearLayout>
+                android:src="@drawable/icon_line"/>
 
             <!--订单信息-->
-            <include layout="@layout/inc_order_info"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="52dp"
+                android:layout_marginLeft="@dimen/left_margin"
+                android:gravity="center_vertical"
+                android:text="订单信息"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <include layout="@layout/inc_line_black" />
+
+            <com.leyuan.aidong.widget.customview.ExtendTextView
+                android:id="@+id/tv_total_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:left_text="课程总额:" />
+
+            <com.leyuan.aidong.widget.customview.ExtendTextView
+                android:id="@+id/tv_express_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:left_text="运费:" />
+
+            <com.leyuan.aidong.widget.customview.ExtendTextView
+                android:id="@+id/coupon_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:left_text="优惠劵:" />
+
+            <com.leyuan.aidong.widget.customview.ExtendTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:left_text="课程优惠:" />
+
+            <com.leyuan.aidong.widget.customview.ExtendTextView
+                android:id="@+id/tv_aibi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:left_text="爱币:" />
+
+            <com.leyuan.aidong.widget.customview.ExtendTextView
+                android:id="@+id/tv_aidou"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:left_text="爱豆:" />
+
+            <com.leyuan.aidong.widget.customview.ExtendTextView
+                android:id="@+id/tv_start_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:left_text="下单时间:" />
+
+            <com.leyuan.aidong.widget.customview.ExtendTextView
+                android:id="@+id/tv_pay_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:left_text="支付时间:" />
+
+            <com.leyuan.aidong.widget.customview.ExtendTextView
+                android:id="@+id/tv_pay_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:left_text="支付方式:" />
 
             <!--支付信息-->
             <LinearLayout
@@ -210,6 +229,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_marginLeft="@dimen/left_margin"
+                        android:layout_marginRight="@dimen/right_margin"
+                        android:background="@color/line_color" />
                 </com.leyuan.aidong.widget.customview.CustomNestRadioGroup>
 
             </LinearLayout>

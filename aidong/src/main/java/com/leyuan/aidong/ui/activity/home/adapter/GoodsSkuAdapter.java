@@ -59,8 +59,9 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
         holder.skuValues.setLayoutManager(manager);
         holder.skuValues.setNestedScrollingEnabled(false);
 
-        /**************初始化sku值按钮状态*************/
+        //初始化sku值按钮状态
         if(!selectedSkuValues.isEmpty()){
+            setUnSelectedStatus();
             setSelectedNodeStatus();
         }
 

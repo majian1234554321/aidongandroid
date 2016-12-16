@@ -95,7 +95,7 @@ public class CartPresentImpl implements CartPresent {
         cartModel.addCart(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
-                skuPopupWindowView.addCart(baseBean);   //未作校验 上层自行判断
+                skuPopupWindowView.addCartResult(baseBean);   //未作校验 上层自行判断
             }
         },skuCode,amount);
     }

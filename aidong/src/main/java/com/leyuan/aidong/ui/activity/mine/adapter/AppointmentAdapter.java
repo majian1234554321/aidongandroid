@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.activity.mine.AppointmentDetailActivity;
+import com.leyuan.aidong.ui.activity.mine.AppointCourseDetailActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.entity.AppointmentBean;
 
@@ -100,7 +100,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, AppointmentDetailActivity.class);
+                Intent intent = new Intent(context, AppointCourseDetailActivity.class);
                 context.startActivity(intent);
             }
         });
@@ -151,5 +151,12 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             tvDelete = (TextView) itemView.findViewById(R.id.tv_delete);
             tvPay = (TextView) itemView.findViewById(R.id.tv_pay);
         }
+    }
+
+    public interface OrderHandleListener{
+        void onPayOrder();
+        void onDeleteOrder();
+        void onConfirmJoin();
+        void onCancelJoin();
     }
 }

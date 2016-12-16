@@ -119,6 +119,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
             List<GoodsBean> goods = new ArrayList<>();
             for (int i1 = 0; i1 < 2; i1++) {
                 GoodsBean good = new GoodsBean();
+                good.setId(i1 + i + "");
                 good.setName("第" + (i + 1) +"个商店中的第" + (i1 + 1)+"件商品");
                 good.setAmount((i+1) + "");
                 if(i1 % 2 == 0){

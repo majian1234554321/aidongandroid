@@ -45,7 +45,7 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  * 商品详情
  * Created by song on 2016/11/28.
  */
-public class GoodsDetailActivity extends BaseActivity implements View.OnClickListener,GoodsDetailActivityView, BGABanner.OnItemClickListener, ObserveScrollView.ScrollViewListener, GoodsSkuPopupWindow.ConfirmSkuListener {
+public class GoodsDetailActivity extends BaseActivity implements View.OnClickListener,GoodsDetailActivityView, BGABanner.OnItemClickListener, ObserveScrollView.ScrollViewListener, GoodsSkuPopupWindow.SelectSkuListener {
     public static final String TYPE_NURTURE = "nutrition";
     public static final String TYPE_EQUIPMENT = "equipments";
     public static final String TYPE_FOODS = "foods";
@@ -250,7 +250,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     }
 
     @Override
-    public void onSelectSku(List<String> skuValues) {
+    public void onSelectSkuChanged(List<String> skuValues,String sku) {
        // selectedSkuValues = skuValues;
         isConfirmSku = true;
         tvSku.setText(selectedSkuValues);
@@ -286,7 +286,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     private void showSelectSkuPopup(boolean showConfirmStatus,String selectedSkuValues){
         if(goodSkuPopup == null){
            // goodSkuPopup = new GoodsSkuPopupWindow(this,detailBean,showConfirmStatus,selectedSkuValues);
-            goodSkuPopup.setConfirmSkuListener(this);
+            goodSkuPopup.setSelectSkuListener(this);
         }
         goodSkuPopup.showAtLocation(rootLayout, Gravity.BOTTOM,0,0);
     }

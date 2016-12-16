@@ -8,10 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.activity.mine.adapter.AppointmentAdapter;
 import com.leyuan.aidong.entity.AppointmentBean;
+import com.leyuan.aidong.ui.BaseFragment;
+import com.leyuan.aidong.ui.activity.mine.adapter.AppointmentAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.AppointmentPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.AppointmentPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointmentFragmentView;
@@ -33,7 +33,6 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
     public static final String JOINED = "joined";
     public static final String UN_JOIN = "unJoin";
     private String type;
-
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;

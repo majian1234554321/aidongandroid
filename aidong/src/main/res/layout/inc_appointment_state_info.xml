@@ -69,9 +69,14 @@
 
     </RelativeLayout>
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_line"/>
+
     <!--二维码布局-->
-    <LinearLayout
-        android:id="@+id/ll_qr_code"
+    <RelativeLayout
+        android:id="@+id/rl_qr_code"
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:orientation="vertical">
@@ -81,8 +86,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:text="88777"
+            android:layout_centerHorizontal="true"
             android:textColor="@color/black"
             android:textSize="30sp" />
 
@@ -94,7 +100,15 @@
             android:layout_marginTop="25dp"
             app:actualImageScaleType="centerCrop"
             android:background="@color/line_color"
+            android:layout_below="@+id/tv_num"
+            android:layout_centerHorizontal="true"
             app:placeholderImage="@drawable/place_holder_logo"
             app:pressedStateOverlayImage="@color/color_image_press" />
-    </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_line"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
 </LinearLayout>

@@ -52,11 +52,14 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  * Created by song on 2016/9/12.
  */
 @Deprecated
-public class OldGoodsDetailActivity extends BaseActivity implements View.OnClickListener,GoodsDetailActivityView, BGABanner.OnItemClickListener, RadioGroup.OnCheckedChangeListener, GoodsSkuPopupWindow.ConfirmSkuListener {
+public class OldGoodsDetailActivity extends BaseActivity implements View.OnClickListener,GoodsDetailActivityView, BGABanner.OnItemClickListener, RadioGroup.OnCheckedChangeListener, GoodsSkuPopupWindow.SelectSkuListener {
     public static final String TYPE_NURTURE = "nutrition";
     public static final String TYPE_EQUIPMENT = "equipments";
     public static final String TYPE_FOODS = "foods";
-    private static final String BLANK_SPACE = " ";
+    public static final String FROM_SKU = "1";
+    public static final String FROM_BUY = "2";
+    public static final String FROM_ADD_CART = "3";
+    public static final String BLANK_SPACE = " ";
 
     private SwitcherLayout switcherLayout;
     private LinearLayout rootLayout;
@@ -70,6 +73,7 @@ public class OldGoodsDetailActivity extends BaseActivity implements View.OnClick
     private RecyclerView couponView;
     private View lineCoupon;
     private LinearLayout skuLayout;
+    private TextView tvSelect;
     private TextView tvSku;
     private LinearLayout recommendCodeLayout;
     private TextView tvRecommendCode;
@@ -102,6 +106,7 @@ public class OldGoodsDetailActivity extends BaseActivity implements View.OnClick
     private GoodsDetailPresent goodsDetailPresent;
 
 
+
     public static void start(Context context,String id,String type) {
         Intent starter = new Intent(context, OldGoodsDetailActivity.class);
         starter.putExtra("id",id);
@@ -123,6 +128,11 @@ public class OldGoodsDetailActivity extends BaseActivity implements View.OnClick
         goodsDetailPresent.getGoodsDetail(switcherLayout,type,id);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        skuPopupWindow = null;
+    }
 
     private void initView() {
         rootLayout = (LinearLayout) findViewById(R.id.root);
@@ -136,7 +146,8 @@ public class OldGoodsDetailActivity extends BaseActivity implements View.OnClick
         tvCoupon = (TextView) findViewById(R.id.tv_coupon);
         couponView = (RecyclerView) findViewById(R.id.rv_coupon);
         lineCoupon = findViewById(R.id.line_coupon);
-        skuLayout = (LinearLayout) findViewById(R.id.ll_goods_specification);
+        skuLayout = (LinearLayout) findViewById(R.id.ll_goods_sku);
+        tvSelect = (TextView) findViewById(R.id.tv_select);
         tvSku = (TextView) findViewById(R.id.tv_select_specification);
         recommendCodeLayout = (LinearLayout) findViewById(R.id.ll_code);
         tvRecommendCode = (TextView) findViewById(R.id.tv_recommend_code);
@@ -240,7 +251,7 @@ public class OldGoodsDetailActivity extends BaseActivity implements View.OnClick
             lineCoupon.setVisibility(View.VISIBLE);
         }
 
-        StringBuilder sb = new StringBuilder(getString(R.string.please_choose));
+        StringBuilder sb = new StringBuilder();
         for (String s : detailBean.spec.name) {
             sb.append(s).append(BLANK_SPACE);
         }
@@ -258,8 +269,8 @@ public class OldGoodsDetailActivity extends BaseActivity implements View.OnClick
             case R.id.ll_code:
                 inputRecommendCodeDialog();
                 break;
-            case R.id.ll_goods_specification:
-                showSkuPopupWindow(false,selectedSkuValues);
+            case R.id.ll_goods_sku:
+                showSkuPopupWindow(this,detailBean,selectedSkuValues,FROM_SKU);
                 break;
             case R.id.ll_address:
                 Intent intent = new Intent(this,DeliveryInfoActivity.class);
@@ -271,38 +282,23 @@ public class OldGoodsDetailActivity extends BaseActivity implements View.OnClick
                 startActivity(new Intent(this, CartActivity.class));
                 break;
             case R.id.tv_add_cart:
-               /* if(isConfirmSku){
+                showSkuPopupWindow(this,detailBean,selectedSkuValues,FROM_ADD_CART);
 
-                }else {
-                    showSkuPopupWindow(true,selectedSkuValues);
-                }*/
-                showSkuPopupWindow(true,selectedSkuValues);
                 break;
             case R.id.tv_pay:
-               /* if(isConfirmSku){
-                    ShopBean shopBean = new ShopBean();
-                    List<GoodsBean> goodsBeanList = new ArrayList<>();
-                    GoodsBean goodsBean = new GoodsBean();
-                    goodsBean.setName(detailBean.name);
-                    goodsBean.setCover(detailBean.image.get(0));
-                    goodsBeanList.add(goodsBean);
-                    shopBean.setItem(goodsBeanList);
-                    ConfirmOrderActivity.start(this,shopBean);
-                }else {
-                    showSkuPopupWindow(true,selectedSkuValues);
-                }*/
-                //ConfirmOrderActivity.start(this);
-                showSkuPopupWindow(true,selectedSkuValues);
+                showSkuPopupWindow(this,detailBean,selectedSkuValues,FROM_BUY);
                 break;
             default:
                 break;
         }
     }
 
-    private void showSkuPopupWindow(boolean showConfirmStatus,List<String> selectedSkuValues) {
+
+    private void showSkuPopupWindow(Context context, GoodsDetailBean detailBean,List<String> selectedSkuValues,String from) {
+        //todo optimize
        // if(skuPopupWindow == null){
-            skuPopupWindow = new GoodsSkuPopupWindow(this,detailBean,showConfirmStatus,selectedSkuValues);
-            skuPopupWindow.setConfirmSkuListener(this);
+            skuPopupWindow = new GoodsSkuPopupWindow(context,detailBean,selectedSkuValues,from);
+            skuPopupWindow.setSelectSkuListener(this);
         //}
         skuPopupWindow.showAtLocation(rootLayout, Gravity.BOTTOM,0,0);
     }
@@ -334,13 +330,14 @@ public class OldGoodsDetailActivity extends BaseActivity implements View.OnClick
     }
 
     @Override
-    public void onSelectSku(List<String> skuValues) {
+    public void onSelectSkuChanged(List<String> skuValues,String skuTip) {
         selectedSkuValues = skuValues;
-        StringBuilder result = new StringBuilder();
-        for (String selectedNode : selectedSkuValues) {
-            result.append(selectedNode).append(BLANK_SPACE);
+        if(selectedSkuValues.size() == detailBean.spec.name.size()){
+            tvSelect.setText("已选择:");
+        }else {
+            tvSelect.setText("选择:");
         }
-        tvSku.setText(result.toString());
+        tvSku.setText(skuTip);
     }
 
     @Override

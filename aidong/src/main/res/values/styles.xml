@@ -453,7 +453,11 @@
         <item name="android:backgroundDimEnabled">false</item>
         <!-- 模糊 -->
     </style>
-
+    <style name="progressDialog" parent="AppTheme">
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="colorAccent">#000000</item>
+    </style>
 
     <color name="subtransparent">#77000000</color>
 </resources>

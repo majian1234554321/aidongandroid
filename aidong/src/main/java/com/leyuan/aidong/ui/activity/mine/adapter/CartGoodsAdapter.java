@@ -60,6 +60,8 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
                 (context.getString(R.string.rmb_price),bean.getPrice()));
         holder.count.setText(bean.getAmount());
         holder.check.setChecked(bean.isChecked());
+        holder.minus.setImageResource(FormatUtil.parseInt(bean.getAmount()) == 1 ?
+                R.drawable.icon_minus_gray : R.drawable.icon_minus);
 
         holder.check.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,9 +88,10 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
             @Override
             public void onClick(View v) {
                 int count = FormatUtil.parseInt(holder.count.getText().toString());
-                if(count > 1){
-                    count --;
+                if(count <= 1){
+                    return;
                 }
+                count --;
                 if(goodsChangeListener != null){
                     goodsChangeListener.onGoodsCountChanged(data.get(position).getId(),count);
                 }

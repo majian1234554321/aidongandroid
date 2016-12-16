@@ -104,7 +104,6 @@
         <activity android:name=".ui.activity.mine.AppointmentActivity" />
         <activity android:name=".ui.activity.mine.CouponActivity" />
         <activity android:name=".ui.activity.mine.OrderDetailActivity" />
-        <activity android:name=".ui.activity.mine.AppointmentDetailActivity" />
         <activity android:name=".ui.activity.mine.FollowActivity" />
         <activity android:name=".ui.activity.mine.AddAddressActivity" />
         <activity android:name=".ui.activity.mine.MessageActivity"/>
@@ -137,7 +136,8 @@
         <activity android:name=".ui.activity.home.ConfirmGoodsActivity" />
         <activity android:name=".ui.activity.home.ImagePreviewActivity"/>
         <activity android:name=".ui.activity.mine.ApplyServiceNextActivity"/>
-        <activity android:name=".ui.activity.home.AppointmentSuccessActivity"/>
+        <activity android:name=".ui.activity.mine.AppointCourseDetailActivity" />
+        <activity android:name=".ui.activity.mine.AppointCourseDetailActivity" />
         <activity android:name=".ui.activity.home.AppointmentUserActivity"/>
         <activity android:name=".ui.activity.mine.UpdateAddressActivity"/>
         <activity android:name=".ui.WebViewActivity"/>

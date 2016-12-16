@@ -42,6 +42,7 @@ public interface CartService {
      * @param ids 商品id 多个用逗号隔开
      * @return
      */
+    @FormUrlEncoded
     @DELETE("mine/cart/{ids}")
     Observable<BaseBean> deleteCart(@Path("ids") String ids);
 
@@ -51,6 +52,7 @@ public interface CartService {
      * @param amount 数量
      * @return
      */
+    @FormUrlEncoded
     @PUT("mine/cart/{id}")
     Observable<BaseBean> updateCart(@Path("id") String id,@Field("amount") int amount);
 }

@@ -6,6 +6,9 @@ import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Message;
 
+import com.leyuan.aidong.R;
+import com.leyuan.aidong.widget.customview.CustomProgressDialog;
+
 
 public class ProgressDialogHandler extends Handler {
 
@@ -31,9 +34,8 @@ public class ProgressDialogHandler extends Handler {
 
     private void initProgressDialog(){
         if (pd == null) {
-            pd = new ProgressDialog(context);
+            pd = new CustomProgressDialog(context, R.style.progressDialog);
             pd.setCancelable(cancelable);
-            pd.setTitle("正在加载中...");
             if (cancelable) {
                 pd.setOnCancelListener(new DialogInterface.OnCancelListener() {
                     @Override

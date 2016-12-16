@@ -7,8 +7,13 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.MotionEventCompat;
+import android.support.v4.view.ScrollingView;
 import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewPager;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -17,8 +22,14 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.utils.Logger;
+import com.nostra13.universalimageloader.utils.L;
 
 
 /**
@@ -88,6 +99,10 @@ public class SlideDetailsLayout extends ViewGroup {
     private VelocityTracker mVelocityTracker;
 
     private OnSlideDetailsListener mOnSlideDetailsListener;
+
+    //ViewPager的当前所在位置
+    public int viewPagerCurrent = 0;
+
 
     public SlideDetailsLayout(Context context) {
         this(context, null);
@@ -283,7 +298,7 @@ public class SlideDetailsLayout extends ViewGroup {
 
                 if (canChildScrollVertically((int) yDiff)) {
                     shouldIntercept = false;
-                    Log.d(TAG, "intercept, child can scroll vertically, do not intercept");
+                    Log.d(TAG, "not intercept!!!, child can scroll vertically");
                 } else {
                     final float xDiffabs = Math.abs(xDiff);
                     final float yDiffabs = Math.abs(yDiff);
@@ -296,7 +311,7 @@ public class SlideDetailsLayout extends ViewGroup {
                             && !(mStatus == Status.CLOSE && yDiff > 0
                             || mStatus == Status.OPEN && yDiff < 0)) {
                         shouldIntercept = true;
-                        Log.d(TAG, "intercept, intercept events");
+                        Log.d(TAG, "intercept !!!, need to another page");
                     }
                 }
                 break;
@@ -407,7 +422,7 @@ public class SlideDetailsLayout extends ViewGroup {
         }
 
 
-        Log.v(TAG, "process, offset: " + mSlideOffset);
+        Log.v(TAG, "onTouchEvent process ---> offset: " + mSlideOffset);
 
         // relayout
         requestLayout();
@@ -425,7 +440,7 @@ public class SlideDetailsLayout extends ViewGroup {
         final float yVelocity = mVelocityTracker.getYVelocity();
 
 
-        Log.v(TAG, "finish, offset: " + offset + ", percent: " + percent + ", yVelocity: " + yVelocity);
+        Log.v(TAG, "onTouchEvent finish --->offset: " + offset + ", percent: " + percent + ", yVelocity: " + yVelocity);
 
 
         if (Status.CLOSE == mStatus) {
@@ -527,7 +542,7 @@ public class SlideDetailsLayout extends ViewGroup {
      * @param direction Negative to check scrolling up, positive to check scrolling down.
      * @return true if this view can be scrolled in the specified direction, false otherwise.
      */
-    protected boolean canChildScrollVertically(int direction) {
+ /*   protected boolean canChildScrollVertically(int direction) {
         return innerCanChildScrollVertically(mTarget, -direction);
     }
 
@@ -538,7 +553,10 @@ public class SlideDetailsLayout extends ViewGroup {
             boolean result;
             for (int i = 0; i < vGroup.getChildCount(); i++) {
                 child = vGroup.getChildAt(i);
-                if (child instanceof View) {
+                *//*if(child instanceof NestedScrollView){
+                    result  = ((NestedScrollView)child).canScrollVertically();
+                } else *//*
+                if (child instanceof ViewGroup) {
                     result = ViewCompat.canScrollVertically(child, direction);
                 } else {
                     result = innerCanChildScrollVertically(child, direction);
@@ -551,9 +569,68 @@ public class SlideDetailsLayout extends ViewGroup {
         }
 
         return ViewCompat.canScrollVertically(view, direction);
+    }*/
+    protected boolean canChildScrollVertically(int direction) {
+        if (mTarget instanceof AbsListView) {
+            return canListViewSroll((AbsListView) mTarget);
+        } else if (mTarget instanceof FrameLayout ||
+                mTarget instanceof RelativeLayout ||
+                mTarget instanceof LinearLayout ||
+                mTarget instanceof CoordinatorLayout) {
+            View child;
+            for (int i = 0; i < ((ViewGroup) mTarget).getChildCount(); i++) {
+                child = ((ViewGroup) mTarget).getChildAt(i);
+                if (child instanceof AbsListView) {
+                    return canListViewSroll((AbsListView) child);
+                } else if (child instanceof ScrollView) {
+                    return canScrollViewSroll((ScrollView) child);
+                } else if (child instanceof ViewPager) {
+                    ViewPager pager = (ViewPager) child;
+                    View child2 = pager.getChildAt(viewPagerCurrent);
+                    if (child2 instanceof RecyclerView) {
+                        return canRecyclerViewSroll((RecyclerView) child2);
+                    } else if (child2 instanceof ScrollView) {
+                        return canScrollViewSroll((ScrollView) child2);
+                    }
+                } else if(child instanceof NestedScrollView){
+                    return canNestedScrollViewSroll((NestedScrollView) child,direction);
+                }
+            }
+        }
+
+        if (android.os.Build.VERSION.SDK_INT < 14){
+            return ViewCompat.canScrollVertically(mTarget, -direction) || mTarget.getScrollY() > 0;
+        } else{
+            return ViewCompat.canScrollVertically(mTarget, -direction);
+        }
     }
 
-    protected boolean canListViewScroll(AbsListView absListView) {
+    private boolean canNestedScrollViewSroll(ScrollingView view, int direction) {
+        int dir = -direction;
+        Logger.w("SlideDetailsLayout-->dir",dir +"");
+        final int offset = view.computeVerticalScrollOffset();
+        Logger.w("SlideDetailsLayout-->offset",offset +"");
+        final int range = view.computeVerticalScrollRange() -  view.computeVerticalScrollExtent();
+        Logger.w("SlideDetailsLayout-->range", view.computeVerticalScrollRange() +"");
+        Logger.w("SlideDetailsLayout-->extent", view.computeVerticalScrollExtent() +"");
+        if (range == 0) return false;
+        if (dir < 0) {
+            return offset > 0;
+        } else {
+            return offset < range - 1;
+        }
+    }
+
+   /* protected boolean canNestedScrollViewSroll(NestedScrollView nestedScrollView){
+        if (mStatus == Status.CLOSE) {
+            Logger.w("isNestedScrollingEnabled",nestedScrollView.isNestedScrollingEnabled()+"");
+            return nestedScrollView.stopNestedScroll();
+        }else {
+            return false;
+        }
+    }*/
+
+    protected boolean canListViewSroll(AbsListView absListView) {
         if (mStatus == Status.OPEN) {
             return absListView.getChildCount() > 0
                     && (absListView.getFirstVisiblePosition() > 0 || absListView.getChildAt(0)
@@ -567,6 +644,44 @@ public class SlideDetailsLayout extends ViewGroup {
                     .getBottom() > absListView.getMeasuredHeight());
         }
     }
+
+    protected boolean canRecyclerViewSroll(RecyclerView absListView) {
+        if (mStatus == Status.OPEN) {
+            L.i(absListView.getScrollY() + ":scaleY" + "\t");
+
+            return absListView.getChildCount() > 0
+                    && (absListView.getScrollY() > 0 || absListView.getChildAt(0)
+                    .getTop() <
+                    absListView.getPaddingTop());
+        } else {
+            final int count = absListView.getChildCount();
+            return count > 0
+                    && (absListView.getScrollY() <= count - 1
+                    || absListView.getChildAt(count - 1)
+                    .getBottom() > absListView.getMeasuredHeight());
+        }
+    }
+
+    protected boolean canScrollViewSroll(ScrollView absListView) {
+        if (mStatus == Status.OPEN) {
+            L.i(absListView.getScrollY() + ":scaleY" + "\t" + absListView.getChildAt(0)
+                    .getTop() + "=== " + absListView.getPaddingTop());
+
+            return absListView.getChildCount() > 0
+                    && (absListView.getScrollY() > 0 || absListView.getChildAt(0)
+                    .getTop() <
+                    absListView.getPaddingTop());
+        } else {
+            final int count = absListView.getChildCount();
+            return count > 0
+                    && (absListView.getScrollY() <= count - 1
+                    || absListView.getChildAt(count - 1)
+                    .getBottom() > absListView.getMeasuredHeight());
+        }
+    }
+
+
+
 
     @Override
     protected Parcelable onSaveInstanceState() {
@@ -632,5 +747,13 @@ public class SlideDetailsLayout extends ViewGroup {
                         return new SavedState[size];
                     }
                 };
+    }
+
+    public int getViewPagerCurrent() {
+        return viewPagerCurrent;
+    }
+
+    public void setViewPagerCurrent(int viewPagerCurrent) {
+        this.viewPagerCurrent = viewPagerCurrent;
     }
 }

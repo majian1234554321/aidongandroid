@@ -15,7 +15,7 @@ public class AppointmentDetailBean {
     private Item item;             //课程或活动实体
     private Contact contact;       //联系人
 
-    class Item{
+    public class Item{
         private String id;          //活动或者课程ID
         private String name;        //活动或者课程名字
         private String cover;       //活动或者课程封面
@@ -64,12 +64,20 @@ public class AppointmentDetailBean {
         }
     }
 
-    class Contact{
+    public class Contact{
         private String name;
         private String mobile;
 
         public String getName() {
             return name;
+        }
+
+        public String getMobile() {
+            return mobile;
+        }
+
+        public void setMobile(String mobile) {
+            this.mobile = mobile;
         }
 
         public void setName(String name) {

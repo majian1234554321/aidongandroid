@@ -18,6 +18,7 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.mine.CouponActivity;
 import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.customview.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.customview.ExtendTextView;
 import com.leyuan.aidong.widget.customview.SimpleTitleBar;
@@ -172,12 +173,32 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
     private PayInterface.PayListener payListener = new PayInterface.PayListener() {
         @Override
         public void fail(String code, Object object) {
-            Toast.makeText(AppointCourseActivity.this,"failed:" + code + object.toString(),Toast.LENGTH_LONG).show();
+            String tip = "";
+            switch (code){
+                case "4000":
+                    tip = "订单支付失败";
+                    break;
+                case "5000":
+                    tip = "订单重复提交";
+                    break;
+                case "6001":
+                    tip = "订单取消支付";
+                    break;
+                case "6002":
+                    tip = "网络连接出错";
+                    break;
+                default:
+                    break;
+            }
+            Toast.makeText(AppointCourseActivity.this,tip,Toast.LENGTH_LONG).show();
+            Logger.w("AppointCourseActivity","failed:" + code + object.toString());
         }
 
         @Override
         public void success(String code, Object object) {
-            Toast.makeText(AppointCourseActivity.this,"success:" + code + object.toString(),Toast.LENGTH_LONG).show();
+            Toast.makeText(AppointCourseActivity.this,"支付成功",Toast.LENGTH_LONG).show();
+            startActivity(new Intent(AppointCourseActivity.this,AppointSuccessActivity.class));
+            Logger.w("AppointCourseActivity","success:" + code + object.toString());
         }
     };
 

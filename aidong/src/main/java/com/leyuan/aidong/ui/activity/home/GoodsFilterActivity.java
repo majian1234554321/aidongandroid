@@ -70,6 +70,7 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
     private String heatSort;    //热度排序
 
 
+
     public static void start(Context context, int type, ArrayList<CategoryBean> categoryList,int pos) {
         Intent starter = new Intent(context, GoodsFilterActivity.class);
         starter.putExtra("type",type);
