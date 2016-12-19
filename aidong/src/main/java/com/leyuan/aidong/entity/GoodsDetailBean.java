@@ -13,6 +13,8 @@ public class GoodsDetailBean {
     public String price;            //商品价格
     public String market_price;     //商品市场价
     public String introduce;        //商品更多详情
+    public String question;
+    public String service;
     public GoodsSpecBean spec;       //商品规格
     public List<CouponBean> coupon; //商品优惠券
 

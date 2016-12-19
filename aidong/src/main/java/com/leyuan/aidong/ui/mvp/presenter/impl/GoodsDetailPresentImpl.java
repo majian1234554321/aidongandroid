@@ -9,6 +9,7 @@ import com.leyuan.aidong.entity.data.FoodDetailData;
 import com.leyuan.aidong.entity.data.NurtureDetailData;
 import com.leyuan.aidong.entity.data.VenuesData;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
+import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.aidong.ui.mvp.model.EquipmentModel;
@@ -53,6 +54,21 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
     public GoodsDetailPresentImpl(Context context, SelfDeliveryVenuesActivityView view) {
         this.context = context;
         this.venuesActivityView = view;
+    }
+
+    @Override
+    public void getGoodsDetail(String type, String id) {
+        if(type.equals(TYPE_NURTURE)){
+            if(nurtureModel == null){
+                nurtureModel = new NurtureModelImpl(context);
+            }
+            nurtureModel.getNurtureDetail(new ProgressSubscriber<NurtureDetailData>(context) {
+                @Override
+                public void onNext(NurtureDetailData nurtureDetailData) {
+                    goodsDetailView.setGoodsDetail(nurtureDetailData.getNurture());
+                }
+            },id);
+        }
     }
 
     @Override
@@ -241,70 +257,72 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
 
     @Override
     public void requestMoreVenues(RecyclerView recyclerView, final int pageSize, String type, String sku, int page) {
-        switch (type){
+        switch (type) {
             case TYPE_EQUIPMENT:
-                if(equipmentModel == null){
+                if (equipmentModel == null) {
                     equipmentModel = new EquipmentModelImpl(context);
                 }
-                equipmentModel.getDeliveryVenues(new RequestMoreSubscriber<VenuesData>(context,recyclerView,pageSize) {
+                equipmentModel.getDeliveryVenues(new RequestMoreSubscriber<VenuesData>(context, recyclerView, pageSize) {
                     @Override
                     public void onNext(VenuesData venuesData) {
-                        if(venuesData != null && venuesData.getGym() != null){
+                        if (venuesData != null && venuesData.getGym() != null) {
                             venuesBeanList = venuesData.getGym();
                         }
-                        if(!venuesBeanList.isEmpty()){
+                        if (!venuesBeanList.isEmpty()) {
                             venuesActivityView.updateRecyclerView(venuesBeanList);
                         }
                         //没有更多数据了显示到底提示
-                        if( venuesBeanList.size() < pageSize){
+                        if (venuesBeanList.size() < pageSize) {
                             venuesActivityView.showEndFooterView();
                         }
                     }
-                },sku,page);
+                }, sku, page);
                 break;
             case TYPE_NURTURE:
-                if(nurtureModel == null){
+                if (nurtureModel == null) {
                     nurtureModel = new NurtureModelImpl(context);
                 }
-                nurtureModel.getDeliveryVenues(new RequestMoreSubscriber<VenuesData>(context,recyclerView,pageSize) {
+                nurtureModel.getDeliveryVenues(new RequestMoreSubscriber<VenuesData>(context, recyclerView, pageSize) {
                     @Override
                     public void onNext(VenuesData venuesData) {
-                        if(venuesData != null && venuesData.getGym() != null){
+                        if (venuesData != null && venuesData.getGym() != null) {
                             venuesBeanList = venuesData.getGym();
                         }
-                        if(!venuesBeanList.isEmpty()){
+                        if (!venuesBeanList.isEmpty()) {
                             venuesActivityView.updateRecyclerView(venuesBeanList);
                         }
                         //没有更多数据了显示到底提示
-                        if( venuesBeanList.size() < pageSize){
+                        if (venuesBeanList.size() < pageSize) {
                             venuesActivityView.showEndFooterView();
                         }
                     }
-                },sku,page);
+                }, sku, page);
                 break;
             case TYPE_FOOD:
-                if(foodModel == null){
+                if (foodModel == null) {
                     foodModel = new FoodModelImpl();
                 }
-                foodModel.getDeliveryVenues(new RequestMoreSubscriber<VenuesData>(context,recyclerView,pageSize) {
+                foodModel.getDeliveryVenues(new RequestMoreSubscriber<VenuesData>(context, recyclerView, pageSize) {
                     @Override
                     public void onNext(VenuesData venuesData) {
-                        if(venuesData != null && venuesData.getGym() != null){
+                        if (venuesData != null && venuesData.getGym() != null) {
                             venuesBeanList = venuesData.getGym();
                         }
-                        if(!venuesBeanList.isEmpty()){
+                        if (!venuesBeanList.isEmpty()) {
                             venuesActivityView.updateRecyclerView(venuesBeanList);
                         }
                         //没有更多数据了显示到底提示
-                        if( venuesBeanList.size() < pageSize){
+                        if (venuesBeanList.size() < pageSize) {
                             venuesActivityView.showEndFooterView();
                         }
                     }
-                },sku,page);
+                }, sku, page);
                 break;
             default:
-                Logger.e("GoodsDetailPresentImpl","type must be foods,equipments or nutrition");
+                Logger.e("GoodsDetailPresentImpl", "type must be foods,equipments or nutrition");
                 break;
         }
     }
+
+
 }

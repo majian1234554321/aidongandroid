@@ -1,29 +1,30 @@
 package com.leyuan.aidong.ui.activity.home;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.os.Build;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -33,14 +34,21 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.GoodsDetailCouponAdapter;
 import com.leyuan.aidong.ui.activity.home.view.GoodsSkuPopupWindow;
 import com.leyuan.aidong.ui.activity.mine.CartActivity;
+import com.leyuan.aidong.ui.fragment.home.GoodsDetailFragment;
+import com.leyuan.aidong.ui.fragment.home.GoodsProblemFragment;
+import com.leyuan.aidong.ui.fragment.home.GoodsServiceFragment;
 import com.leyuan.aidong.ui.mvp.presenter.GoodsDetailPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.GoodsDetailPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.GoodsDetailActivityView;
 import com.leyuan.aidong.utils.ImageLoadConfig;
 import com.leyuan.aidong.utils.TransitionHelper;
 import com.leyuan.aidong.widget.customview.SlideDetailsLayout;
-import com.leyuan.aidong.widget.customview.SwitcherLayout;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
+import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +60,7 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  * Created by song on 2016/9/12.
  */
 @Deprecated
-public class OldGoodsDetailActivity extends BaseActivity implements View.OnClickListener,GoodsDetailActivityView, BGABanner.OnItemClickListener, RadioGroup.OnCheckedChangeListener, GoodsSkuPopupWindow.SelectSkuListener {
+public class OldGoodsDetailActivity extends BaseActivity implements View.OnClickListener,GoodsDetailActivityView, BGABanner.OnItemClickListener, GoodsSkuPopupWindow.SelectSkuListener, SmartTabLayout.TabProvider, PopupWindow.OnDismissListener {
     public static final String TYPE_NURTURE = "nutrition";
     public static final String TYPE_EQUIPMENT = "equipments";
     public static final String TYPE_FOODS = "foods";
@@ -61,7 +69,7 @@ public class OldGoodsDetailActivity extends BaseActivity implements View.OnClick
     public static final String FROM_ADD_CART = "3";
     public static final String BLANK_SPACE = " ";
 
-    private SwitcherLayout switcherLayout;
+   // private SwitcherLayout switcherLayout;
     private LinearLayout rootLayout;
     private SlideDetailsLayout detailsLayout;
     private AppBarLayout appBarLayout;
@@ -81,11 +89,10 @@ public class OldGoodsDetailActivity extends BaseActivity implements View.OnClick
     private TextView tvAddressInfo;
     private ImageView ivArrow;
     private TextView tvTip;
-    private RadioGroup radioGroup;
-    private RadioButton rbDesc;
-    private RadioButton rbQuestion;
-    private RadioButton rbService;
-    private WebView webView;
+
+    private SmartTabLayout tabLayout;
+    private ViewPager viewPager;
+
     private RelativeLayout titleLayout;
     private ImageView ivBack;
     private TextView tvTitle;
@@ -95,6 +102,7 @@ public class OldGoodsDetailActivity extends BaseActivity implements View.OnClick
     private TextView tvAddCart;
     private TextView tvPay;
 
+    private List<View> allTabView = new ArrayList<>();
     private List<String> bannerUrls = new ArrayList<>();
     private GoodsDetailCouponAdapter couponAdapter;
     private GoodsSkuPopupWindow skuPopupWindow;
@@ -125,7 +133,7 @@ public class OldGoodsDetailActivity extends BaseActivity implements View.OnClick
         }
         initView();
         setListener();
-        goodsDetailPresent.getGoodsDetail(switcherLayout,type,id);
+        goodsDetailPresent.getGoodsDetail(type,id);
     }
 
     @Override
@@ -137,7 +145,7 @@ public class OldGoodsDetailActivity extends BaseActivity implements View.OnClick
     private void initView() {
         rootLayout = (LinearLayout) findViewById(R.id.root);
         detailsLayout = (SlideDetailsLayout) findViewById(R.id.slide_details_layout);
-        switcherLayout = new SwitcherLayout(this,detailsLayout);
+      //  switcherLayout = new SwitcherLayout(this,detailsLayout);
         appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
         bannerLayout = (BGABanner) findViewById(R.id.banner_layout);
         tvPrice = (TextView) findViewById(R.id.tv_price);
@@ -155,11 +163,8 @@ public class OldGoodsDetailActivity extends BaseActivity implements View.OnClick
         tvAddressInfo = (TextView) findViewById(R.id.tv_address_info);
         ivArrow = (ImageView) findViewById(R.id.iv_arrow);
         tvTip = (TextView) findViewById(R.id.tv_tip);
-        radioGroup = (RadioGroup) findViewById(R.id.rg_detail);
-        rbDesc = (RadioButton) findViewById(R.id.rb_desc);
-        rbQuestion = (RadioButton) findViewById(R.id.rb_question);
-        rbService = (RadioButton) findViewById(R.id.rb_service);
-        webView = (WebView) findViewById(R.id.web_view);
+        tabLayout = (SmartTabLayout) findViewById(R.id.tab_layout);
+        viewPager = (ViewPager) findViewById(R.id.vp_content);
         titleLayout = (RelativeLayout) findViewById(R.id.rl_title);
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tvTitle = (TextView)findViewById(R.id.tv_title);
@@ -184,35 +189,6 @@ public class OldGoodsDetailActivity extends BaseActivity implements View.OnClick
         couponAdapter = new GoodsDetailCouponAdapter(this);
         couponView.setNestedScrollingEnabled(false);
         couponView.setAdapter(couponAdapter);
-
-        final WebSettings settings = webView.getSettings();
-        settings.setJavaScriptEnabled(true);
-        settings.setSupportZoom(true);
-        settings.setBuiltInZoomControls(true);
-        settings.setUseWideViewPort(true);
-        settings.setDomStorageEnabled(true);
-        webView.setWebViewClient(new WebViewClient() {
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
-            }
-        });
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR_MR1) {
-            new Object() {
-                public void setLoadWithOverviewMode(boolean overview) {
-                    settings.setLoadWithOverviewMode(overview);
-                }
-            }.setLoadWithOverviewMode(true);
-        }
-        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
-        getWindow().getDecorView().post(new Runnable() {
-            @Override
-            public void run() {
-                webView.loadUrl("http://www.jianshu.com/p/fc923690463f");
-            }
-        });
     }
 
     private void setListener() {
@@ -225,7 +201,6 @@ public class OldGoodsDetailActivity extends BaseActivity implements View.OnClick
         tvAddCart.setOnClickListener(this);
         tvPay.setOnClickListener(this);
         bannerLayout.setOnItemClickListener(this);
-        radioGroup.setOnCheckedChangeListener(this);
         detailsLayout.setOnSlideDetailsListener(new MyOnSlideDetailsListener());
         appBarLayout.addOnOffsetChangedListener(new MyOnOffsetChangedListener());
     }
@@ -256,6 +231,35 @@ public class OldGoodsDetailActivity extends BaseActivity implements View.OnClick
             sb.append(s).append(BLANK_SPACE);
         }
         tvSku.setText(sb);
+
+
+        FragmentPagerItems pages = new FragmentPagerItems(this);
+        GoodsDetailFragment detail = new GoodsDetailFragment();
+        GoodsProblemFragment problem = new GoodsProblemFragment();
+        GoodsServiceFragment service = new GoodsServiceFragment();
+        pages.add(FragmentPagerItem.of(null, detail.getClass(),
+                new Bundler().putString("detailText",detailBean.introduce).get()));
+        pages.add(FragmentPagerItem.of(null,problem.getClass(),
+                new Bundler().putString("problemText",detailBean.question).get()));
+        pages.add(FragmentPagerItem.of(null,service.getClass(),
+                new Bundler().putString("serviceText", detailBean.service).get()));
+        final FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(),pages);
+
+        viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(3);
+        tabLayout.setCustomTabView(this);
+        tabLayout.setViewPager(viewPager);
+        tabLayout.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+            @Override
+            public void onPageSelected(int position) {
+                for (int i = 0; i < allTabView.size(); i++) {
+                    View tabAt = tabLayout.getTabAt(i);
+                    TextView text = (TextView) tabAt.findViewById(R.id.tv_tab_text);
+                    text.setTypeface(i == position ? Typeface.DEFAULT_BOLD :Typeface.DEFAULT);
+                    detailsLayout.setViewPagerCurrent(position);
+                }
+            }
+        });
     }
 
     @Override
@@ -299,8 +303,16 @@ public class OldGoodsDetailActivity extends BaseActivity implements View.OnClick
        // if(skuPopupWindow == null){
             skuPopupWindow = new GoodsSkuPopupWindow(context,detailBean,selectedSkuValues,from);
             skuPopupWindow.setSelectSkuListener(this);
+        skuPopupWindow.setOnDismissListener(this);
         //}
         skuPopupWindow.showAtLocation(rootLayout, Gravity.BOTTOM,0,0);
+
+        ObjectAnimator scale = new ObjectAnimator();
+        scale.setPropertyName("width");
+        scale.setFloatValues(1.0f,0.9f);
+        scale.setDuration(300);
+        scale.setTarget(rootLayout);
+        scale.start();
     }
 
     private void inputRecommendCodeDialog() {
@@ -341,20 +353,12 @@ public class OldGoodsDetailActivity extends BaseActivity implements View.OnClick
     }
 
     @Override
-    public void onCheckedChanged(RadioGroup group, int checkedId) {
-        switch (checkedId){
-            case R.id.rb_desc:
-                webView.loadUrl("http://www.baidu.com");
-                break;
-            case R.id.rb_question:
-                webView.loadUrl("http://www.tmall.com");
-                break;
-            case R.id.rb_service:
-                webView.loadUrl("http://www.tmall.com");
-                break;
-            default:
-                break;
-        }
+    public void onDismiss() {
+        ObjectAnimator scale = new ObjectAnimator();
+        scale.setFloatValues(0.9f,1.0f);
+        scale.setDuration(300);
+        scale.setTarget(rootLayout);
+        scale.start();
     }
 
     private class MyOnSlideDetailsListener implements SlideDetailsLayout.OnSlideDetailsListener{
@@ -382,5 +386,18 @@ public class OldGoodsDetailActivity extends BaseActivity implements View.OnClick
             float percentage = (float) Math.abs(verticalOffset) / (float) maxScroll;
             titleLayout.setBackgroundColor(Color.argb((int) (percentage * 255), 0, 0, 0));
         }
+    }
+
+    @Override
+    public View createTabView(ViewGroup container, int position, PagerAdapter adapter) {
+        View tabView = LayoutInflater.from(this).inflate(R.layout.tab_goods_detail_text, container, false);
+        TextView text = (TextView) tabView.findViewById(R.id.tv_tab_text);
+        String[] campaignTab = getResources().getStringArray(R.array.goodsDetailTab);
+        text.setText(campaignTab[position]);
+        if(position == 0){
+            text.setTypeface(Typeface.DEFAULT_BOLD);
+        }
+        allTabView.add(tabView);
+        return tabView;
     }
 }

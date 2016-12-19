@@ -10,6 +10,12 @@ import com.leyuan.aidong.widget.customview.SwitcherLayout;
  */
 public interface GoodsDetailPresent {
 
+    /**
+     * 获取商品详情
+     * @param type 装备:equipment 健康餐饮:food 营养品 nurture
+     * @param id  装备 健康餐饮 营养品 id
+     */
+    void getGoodsDetail(String type,String id);
 
     /**
      * 获取商品详情

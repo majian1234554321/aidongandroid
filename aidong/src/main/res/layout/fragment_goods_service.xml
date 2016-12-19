@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/inner_scroll"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:scrollbars="vertical">
     <LinearLayout
         android:id="@+id/web_view"
@@ -199,7 +199,7 @@
 
             更多详情更多详情更多详情更多详情更多详情更多详情"
             android:textSize="15sp"
-            android:textColor="@color/blue"/>
+            android:textColor="@color/main_red"/>
 
     </LinearLayout>
 </ScrollView>

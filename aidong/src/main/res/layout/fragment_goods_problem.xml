@@ -199,7 +199,7 @@
 
             更多详情更多详情更多详情更多详情更多详情更多详情"
             android:textSize="15sp"
-            android:textColor="@color/blue"/>
+            android:textColor="@color/orange"/>
 
     </LinearLayout>
 </ScrollView>

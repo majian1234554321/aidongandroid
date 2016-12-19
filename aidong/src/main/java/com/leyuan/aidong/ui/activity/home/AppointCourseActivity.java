@@ -196,7 +196,7 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
 
         @Override
         public void success(String code, Object object) {
-            Toast.makeText(AppointCourseActivity.this,"支付成功",Toast.LENGTH_LONG).show();
+            Toast.makeText(AppointCourseActivity.this,"支付成功啦啦啦啦啦绿",Toast.LENGTH_LONG).show();
             startActivity(new Intent(AppointCourseActivity.this,AppointSuccessActivity.class));
             Logger.w("AppointCourseActivity","success:" + code + object.toString());
         }

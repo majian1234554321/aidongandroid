@@ -1,4 +1,4 @@
-package com.leyuan.aidong.wxapi;
+package com.example.aidong.wxapi;
 
 
 import android.app.Activity;
@@ -15,6 +15,7 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
+
 public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 
     private IWXAPI api;
@@ -22,8 +23,8 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.pay_result);
-        api = WXAPIFactory.createWXAPI(this, getString(R.string.weixingAppID));
+        setContentView(R.layout.pay_result);
+        api = WXAPIFactory.createWXAPI(this, WeiXinPay.appId);
         api.handleIntent(getIntent(), this);
     }
 

@@ -25,7 +25,7 @@ import com.leyuan.aidong.utils.TransitionHelper;
  * Created by song on 2016/9/22.
  */
 public class DeliveryInfoActivity extends BaseActivity implements View.OnClickListener{
-    private static final int CODE_SELECTE_VENUES = 1;
+    private static final int CODE_SELECT_VENUES = 1;
 
     private ImageView tvBack;
     private TextView tvFinish;
@@ -107,7 +107,7 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
 
                 final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(this, false);
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, pairs);
-                startActivityForResult(intent,CODE_SELECTE_VENUES,optionsCompat.toBundle());
+                startActivityForResult(intent, CODE_SELECT_VENUES,optionsCompat.toBundle());
                 break;
             case R.id.tv_delivery_time:
                 if(timePopupWindow == null){
@@ -123,7 +123,7 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(data != null && requestCode == CODE_SELECTE_VENUES){
+        if(data != null && requestCode == CODE_SELECT_VENUES){
             String venues = data.getStringExtra("venues");
             String address = data.getStringExtra("address");
             tvShop.setText(venues);

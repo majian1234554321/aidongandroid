@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.fragment.discover;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.VenuesDetailBean;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.activity.discover.VenuesDetailActivity;
+import com.leyuan.aidong.ui.activity.home.NurtureActivity;
 import com.leyuan.aidong.ui.mvp.presenter.VenuesPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VenuesPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.VenuesDetailFragmentView;
@@ -107,6 +109,7 @@ public class VenuesDetailFragment extends BaseFragment implements View.OnClickLi
             case R.id.tv_food:
                 break;
             case R.id.tv_nurture:
+                startActivity(new Intent(getContext(), NurtureActivity.class));
                 break;
             case R.id.tv_equipment:
                 break;

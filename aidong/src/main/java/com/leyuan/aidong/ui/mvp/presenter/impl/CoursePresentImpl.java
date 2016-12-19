@@ -183,10 +183,8 @@ public class CoursePresentImpl implements CoursePresent{
                 PayInterface payInterface = "alipay".equals(payType) ? new AliPay(context,listener)
                         : new WeiXinPay(context,listener);
                 payInterface.payOrder(payOrderData.getOrder());
-
             }
         }, id, couponId, integral, payType, contactName, contactMobile);
-
     }
 
     @Override

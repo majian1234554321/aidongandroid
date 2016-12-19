@@ -8,8 +8,10 @@ import android.content.res.TypedArray;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.MotionEventCompat;
-import android.support.v4.view.ScrollingView;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
@@ -576,7 +578,8 @@ public class SlideDetailsLayout extends ViewGroup {
         } else if (mTarget instanceof FrameLayout ||
                 mTarget instanceof RelativeLayout ||
                 mTarget instanceof LinearLayout ||
-                mTarget instanceof CoordinatorLayout) {
+                mTarget instanceof CoordinatorLayout)
+        {
             View child;
             for (int i = 0; i < ((ViewGroup) mTarget).getChildCount(); i++) {
                 child = ((ViewGroup) mTarget).getChildAt(i);
@@ -585,12 +588,20 @@ public class SlideDetailsLayout extends ViewGroup {
                 } else if (child instanceof ScrollView) {
                     return canScrollViewSroll((ScrollView) child);
                 } else if (child instanceof ViewPager) {
-                    ViewPager pager = (ViewPager) child;
-                    View child2 = pager.getChildAt(viewPagerCurrent);
-                    if (child2 instanceof RecyclerView) {
-                        return canRecyclerViewSroll((RecyclerView) child2);
-                    } else if (child2 instanceof ScrollView) {
-                        return canScrollViewSroll((ScrollView) child2);
+                    ViewPager viewPager = (ViewPager) child;
+                    int currentItem = viewPager.getCurrentItem();
+                    PagerAdapter a = viewPager.getAdapter();
+                    if (a instanceof FragmentPagerAdapter) {
+                        FragmentPagerAdapter fadapter = (FragmentPagerAdapter) a;
+                        Fragment item = (Fragment) fadapter.instantiateItem(viewPager, currentItem);
+                        View child2 = (ViewGroup) (item.getView().findViewById(R.id.inner_scroll));
+                        if (child2 instanceof RecyclerView) {
+                            return canRecyclerViewSroll((RecyclerView) child2);
+                        } else if (child2 instanceof ScrollView) {
+                            return canScrollViewSroll((ScrollView) child2);
+                        } else if (child2 instanceof NestedScrollView) {
+                            return canNestedScrollViewSroll((NestedScrollView) child2, direction);
+                        }
                     }
                 } else if(child instanceof NestedScrollView){
                     return canNestedScrollViewSroll((NestedScrollView) child,direction);
@@ -605,30 +616,36 @@ public class SlideDetailsLayout extends ViewGroup {
         }
     }
 
-    private boolean canNestedScrollViewSroll(ScrollingView view, int direction) {
+
+    private boolean canNestedScrollViewSroll(NestedScrollView view, int direction) {
         int dir = -direction;
-        Logger.w("SlideDetailsLayout-->dir",dir +"");
-        final int offset = view.computeVerticalScrollOffset();
-        Logger.w("SlideDetailsLayout-->offset",offset +"");
-        final int range = view.computeVerticalScrollRange() -  view.computeVerticalScrollExtent();
-        Logger.w("SlideDetailsLayout-->range", view.computeVerticalScrollRange() +"");
-        Logger.w("SlideDetailsLayout-->extent", view.computeVerticalScrollExtent() +"");
+        /* final int offset = view.computeVerticalScrollOffset();
+        final int range = view.computeVerticalScrollRange() - view.computeVerticalScrollExtent();
+        Logger.w(TAG,"offset"+ offset);
+        Logger.w(TAG,"extent"+ view.computeVerticalScrollExtent());
+        Logger.w(TAG,"range"+ view.computeVerticalScrollRange());
         if (range == 0) return false;
         if (dir < 0) {
             return offset > 0;
         } else {
             return offset < range - 1;
+        }*/
+        if(mStatus == Status.CLOSE){
+            final int offset = view.computeVerticalScrollOffset();
+            final int range = view.computeVerticalScrollRange() - view.computeVerticalScrollExtent();
+            Logger.w(TAG,"offset"+ offset);
+            Logger.w(TAG,"extent"+ view.computeVerticalScrollExtent());
+            Logger.w(TAG,"range"+ view.computeVerticalScrollRange());
+            if (range == 0) return false;
+            if (dir < 0) {
+                return false;
+            } else {
+                return offset < range - 1;
+            }
         }
+        return false;
     }
 
-   /* protected boolean canNestedScrollViewSroll(NestedScrollView nestedScrollView){
-        if (mStatus == Status.CLOSE) {
-            Logger.w("isNestedScrollingEnabled",nestedScrollView.isNestedScrollingEnabled()+"");
-            return nestedScrollView.stopNestedScroll();
-        }else {
-            return false;
-        }
-    }*/
 
     protected boolean canListViewSroll(AbsListView absListView) {
         if (mStatus == Status.OPEN) {
@@ -662,7 +679,7 @@ public class SlideDetailsLayout extends ViewGroup {
         }
     }
 
-    protected boolean canScrollViewSroll(ScrollView absListView) {
+  /*  protected boolean canScrollViewSroll(ScrollView absListView) {
         if (mStatus == Status.OPEN) {
             L.i(absListView.getScrollY() + ":scaleY" + "\t" + absListView.getChildAt(0)
                     .getTop() + "=== " + absListView.getPaddingTop());
@@ -678,10 +695,20 @@ public class SlideDetailsLayout extends ViewGroup {
                     || absListView.getChildAt(count - 1)
                     .getBottom() > absListView.getMeasuredHeight());
         }
+    }*/
+
+
+    protected boolean canScrollViewSroll(ScrollView scrollView) {
+        if (mStatus == Status.OPEN) {
+            Logger.w(TAG, "scrollView" + scrollView.getScrollY());
+            if (scrollView.getScrollY() == 0) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        return false;
     }
-
-
-
 
     @Override
     protected Parcelable onSaveInstanceState() {

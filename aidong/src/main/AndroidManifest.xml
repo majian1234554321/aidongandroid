@@ -43,7 +43,7 @@
     <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    
+
     <uses-feature android:name="android.hardware.microphone" />
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
@@ -145,7 +145,6 @@
         <activity android:name=".ui.activity.home.ImagePreviewActivity"/>
         <activity android:name=".ui.activity.mine.ApplyServiceNextActivity"/>
         <activity android:name=".ui.activity.mine.AppointCourseDetailActivity" />
-        <activity android:name=".ui.activity.mine.AppointCourseDetailActivity" />
         <activity android:name=".ui.activity.home.AppointmentUserActivity"/>
         <activity android:name=".ui.activity.mine.UpdateAddressActivity"/>
         <activity android:name=".ui.WebViewActivity"/>
@@ -237,10 +236,11 @@
 
         <!-- ********************WeiXinPay************************* -->
         <activity
-            android:name=".wxapi.WXPayEntryActivity"
+            android:name="com.example.aidong.wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTop"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
         <!-- ********************QQ Login Share************************* -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
