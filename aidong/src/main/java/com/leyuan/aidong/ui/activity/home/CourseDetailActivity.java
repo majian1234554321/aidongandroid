@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -169,7 +168,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         tvRoom.setText(bean.getClassroom());
         tvCount.setText(String.format(getString(R.string.course_applicant_count),
                 bean.getApplied_count(),bean.getStock()));
-        tvDesc.setText(Html.fromHtml(bean.getIntroduce()));
+      //  tvDesc.setText(Html.fromHtml(bean.getIntroduce()));
         tvPrice.setText(String.format(getString(R.string.rmb_price),bean.getPrice()));
         tvStartTime.setText(String.format(getString(R.string.appoint_time),bean.getClassTime()));
         setBottomStatus();

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <com.leyuan.aidong.widget.customview.SlideDetailsLayout
+            android:id="@+id/slide_details_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:default_panel="front"
+            app:duration="300"
+            app:percent="0.4">
+            <include layout="@layout/inc_goods_detail_front" />
+            <include layout="@layout/inc_goods_detail_behind" />
+        </com.leyuan.aidong.widget.customview.SlideDetailsLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_top_bar">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="?selectableItemBackground"
+                android:padding="5dp"
+                android:src="@drawable/icon_back" />
+
+            <ImageView
+                android:id="@+id/iv_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="?selectableItemBackground"
+                android:padding="5dp"
+                android:src="@drawable/icon_share" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_cart"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"
+            android:scaleType="centerInside"
+            android:src="@drawable/icon_cart" />
+
+        <TextView
+            android:id="@+id/tv_add_cart"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/c3"
+            android:gravity="center"
+            android:text="加入购物车"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_pay"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/main_red"
+            android:gravity="center"
+            android:text="立即购买"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </LinearLayout>
+</LinearLayout>

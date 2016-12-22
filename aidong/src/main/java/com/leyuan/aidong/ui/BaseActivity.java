@@ -16,9 +16,9 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.http.Logic;
 import com.leyuan.aidong.ui.activity.discover.VenuesDetailActivity;
-import com.leyuan.aidong.ui.activity.home.CampaignDetailActivity;
+import com.leyuan.aidong.ui.activity.home.OldCampaignDetailActivity;
 import com.leyuan.aidong.ui.activity.home.CourseDetailActivity;
-import com.leyuan.aidong.ui.activity.home.GoodsDetailActivity;
+import com.leyuan.aidong.ui.activity.home.OldGoodsDetailActivity;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ScreenUtil;
 import com.leyuan.commonlibrary.http.IHttpCallback;
@@ -209,19 +209,19 @@ public class BaseActivity extends AppCompatActivity implements IHttpToastCallBac
                 CourseDetailActivity.start(this,id);
                 break;
             case "campaign":
-                CampaignDetailActivity.start(this,id);
+                OldCampaignDetailActivity.start(this,id);
                 break;
             case "event":
                 Logger.e("TAG","developing");
                 break;
             case "food":
-                GoodsDetailActivity.start(this,id, GoodsDetailActivity.TYPE_FOODS);
+                OldGoodsDetailActivity.start(this,id, OldGoodsDetailActivity.TYPE_FOODS);
                 break;
             case "nutrition":
-                GoodsDetailActivity.start(this,id, GoodsDetailActivity.TYPE_NURTURE);
+                OldGoodsDetailActivity.start(this,id, OldGoodsDetailActivity.TYPE_NURTURE);
                 break;
             case "equipment":
-                GoodsDetailActivity.start(this,id, GoodsDetailActivity.TYPE_EQUIPMENT);
+                OldGoodsDetailActivity.start(this,id, OldGoodsDetailActivity.TYPE_EQUIPMENT);
                 break;
             default:
                 Logger.e("TAG","can not support this type,please check it");
@@ -250,13 +250,13 @@ public class BaseActivity extends AppCompatActivity implements IHttpToastCallBac
                 VenuesDetailActivity.start(this,bannerBean.getLink());
                 break;
             case "21":
-                GoodsDetailActivity.start(this,bannerBean.getLink(), GoodsDetailActivity.TYPE_NURTURE);
+                OldGoodsDetailActivity.start(this,bannerBean.getLink(), OldGoodsDetailActivity.TYPE_NURTURE);
                 break;
             case "22":
                 CourseDetailActivity.start(this,bannerBean.getLink());
                 break;
             case "23":
-                CampaignDetailActivity.start(this,bannerBean.getLink());
+                OldCampaignDetailActivity.start(this,bannerBean.getLink());
                 break;
             default:
                 break;

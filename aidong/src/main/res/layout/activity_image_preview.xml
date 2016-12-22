@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <com.leyuan.aidong.widget.customview.ViewPagerFixed
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <com.leyuan.aidong.ui.activity.home.view.ImagePreviewTopBar
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar" />
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"  />
-</LinearLayout>
+</RelativeLayout>

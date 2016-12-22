@@ -134,7 +134,7 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void setupWindowAnimations() {
         Slide slide = new Slide();
-        slide.setDuration(300);
+        slide.setDuration(200);
         slide.setSlideEdge(Gravity.END);
         slide.excludeTarget(android.R.id.statusBarBackground,true);
         getWindow().setEnterTransition(slide);

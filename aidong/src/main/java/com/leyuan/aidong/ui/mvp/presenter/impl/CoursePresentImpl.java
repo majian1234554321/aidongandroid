@@ -157,7 +157,7 @@ public class CoursePresentImpl implements CoursePresent{
             @Override
             public void onError(Throwable e) {
                 Toast.makeText(context, "error:" + e.toString(), Toast.LENGTH_LONG).show();
-                Logger.d("error", e.toString());
+                Logger.d("CommonSubscriber", e.toString());
                 switcherLayout.showExceptionLayout();
             }
 

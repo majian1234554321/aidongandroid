@@ -17,13 +17,15 @@ import com.leyuan.aidong.R;
 public class ImagePreviewTopBar extends RelativeLayout{
     private View view;
     private TextView pageNum;
+    private ImageView ivBack;
     private ImageView moreOptions;
-    private OnMoreOptionsListener moreOptionsListener;
+    private OnOptionsListener optionsListener;
 
     public ImagePreviewTopBar(Context context, AttributeSet attrs) {
         super(context, attrs);
         view = LayoutInflater.from(context).inflate(R.layout.view_image_preview, this);
         pageNum = (TextView) view.findViewById(R.id.tv_page);
+        ivBack = (ImageView) view.findViewById(R.id.iv_back);
         moreOptions = (ImageView) view.findViewById(R.id.iv_more_options);
         setUpMoreOptionsEvent();
     }
@@ -32,8 +34,16 @@ public class ImagePreviewTopBar extends RelativeLayout{
         moreOptions.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (moreOptionsListener != null) {
-                    moreOptionsListener.onMoreOptionsClick(v);
+                if (optionsListener != null) {
+                    optionsListener.onMoreOptionsClick(v);
+                }
+            }
+        });
+        ivBack.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(optionsListener != null){
+                    optionsListener.onBackClick();
                 }
             }
         });
@@ -47,11 +57,12 @@ public class ImagePreviewTopBar extends RelativeLayout{
         pageNum.setVisibility(isVisible);
     }
 
-    public interface OnMoreOptionsListener {
+    public interface OnOptionsListener {
         void onMoreOptionsClick(View view);
+        void onBackClick();
     }
 
-    public void setOnMoreOptionsListener(OnMoreOptionsListener onMoreOptionsListener) {
-        this.moreOptionsListener = onMoreOptionsListener;
+    public void setOnMoreOptionsListener(OnOptionsListener onMoreOptionsListener) {
+        this.optionsListener = onMoreOptionsListener;
     }
 }

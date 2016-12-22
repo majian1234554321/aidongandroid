@@ -27,6 +27,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.SearchPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.SearchActivityView;
 import com.leyuan.aidong.utils.KeyBoardUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -45,6 +46,15 @@ public class SearchActivity extends BaseActivity implements SearchActivityView{
     private RecyclerView recyclerView;
     private SearchHistoryAdapter historyAdapter;
     private SQLiteDatabase db;
+    private List<SearchHistory> historyList = new ArrayList<>();
+
+    {
+        for (int i = 0; i < 5; i++) {
+            SearchHistory h = new SearchHistory();
+            h.setKeyword("搜索历史" + i);
+            historyList.add(h);
+        }
+    }
 
 
     @Override
@@ -58,7 +68,9 @@ public class SearchActivity extends BaseActivity implements SearchActivityView{
         SearchPresent searchPresent = new SearchPresentImpl(this,this,db);
         initView();
         setListener();
-        historyAdapter.setData(null);
+
+
+        historyAdapter.setData(historyList);
         searchPresent.getSearchHistory();
     }
 
@@ -97,6 +109,12 @@ public class SearchActivity extends BaseActivity implements SearchActivityView{
                 FragmentManager fm = getSupportFragmentManager();
                 fm.beginTransaction().replace(R.id.fl_container,fragment).commit();
                 frameLayout.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onDeleteHistory() {
+                historyList.clear();
+                historyAdapter.notifyDataSetChanged();
             }
         });
 

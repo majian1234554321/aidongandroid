@@ -13,12 +13,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.AddressBean;
 import com.leyuan.aidong.entity.ShopBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.ConfirmOrderShopAdapter;
-import com.leyuan.aidong.ui.activity.mine.AddressActivity;
 import com.leyuan.aidong.ui.activity.mine.CouponActivity;
 import com.leyuan.aidong.ui.activity.mine.PaySuccessActivity;
+import com.leyuan.aidong.ui.activity.mine.SelectAddressActivity;
 import com.leyuan.aidong.widget.customview.ExtendTextView;
 import com.leyuan.aidong.widget.customview.SimpleTitleBar;
 
@@ -30,6 +31,8 @@ import java.util.List;
  * Created by song on 2016/9/23.
  */
 public class ConfirmOrderActivity extends BaseActivity implements View.OnClickListener {
+    private static final int REQUST_ADDRESS = 1;
+    private static final int REQUST_COUPON = 2;
     private SimpleTitleBar titleBar;
     private NestedScrollView scrollView;
 
@@ -136,7 +139,8 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 finish();
                 break;
             case R.id.rl_address:
-                AddressActivity.start(this);
+                Intent  intent = new Intent(this,SelectAddressActivity.class);
+                startActivityForResult(intent,REQUST_ADDRESS);
                 break;
             case R.id.ll_coupon:
                 startActivity(new Intent(this, CouponActivity.class));
@@ -146,6 +150,21 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(data != null){
+            if(requestCode == REQUST_ADDRESS){
+                AddressBean address = data.getParcelableExtra("address");
+                tvName.setText(address.getName());
+                tvPhone.setText(address.getMobile());
+                StringBuilder sb = new StringBuilder("收货地址: ");
+                sb.append(address.getProvince()).append(address.getCity())
+                        .append(address.getDistrict()).append(address.getAddress());
+                tvAddress.setText(sb);
+            }
         }
     }
 }

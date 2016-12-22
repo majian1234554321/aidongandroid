@@ -4,9 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,13 +32,12 @@ import java.util.ArrayList;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 
-import static com.leyuan.aidong.R.id.toolbar;
-
 /**
  * 活动详情
  * Created by song on 2016/8/24
  */
-public class CampaignDetailActivity extends BaseActivity implements CampaignDetailActivityView,View.OnClickListener{
+@Deprecated //material design风格
+public class OldCampaignDetailActivity extends BaseActivity implements CampaignDetailActivityView,View.OnClickListener{
     private static final String STATUS_APPLY = "1";                //马上报名
     private static final String STATUS_END = "2";                  //活动已结束
     private static final String STATUS_APPLIED = "3";              //已报名
@@ -44,9 +46,10 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
     private static final String STATUS_FULL = "6";                 //报名人数已满
     private String status;
 
-
+    private AppBarLayout appBarLayout;
     private BGABanner bannerLayout;
     private TextView tvHot;
+    private Toolbar toolbar;
 
     private SwitcherLayout switcherLayout;
     private LinearLayout contentLayout;
@@ -70,7 +73,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
     private CampaignDetailBean bean;
 
     public static void start(Context context, String id){
-        Intent intent = new Intent(context,CampaignDetailActivity.class);
+        Intent intent = new Intent(context,OldCampaignDetailActivity.class);
         intent.putExtra("id",id);
         context.startActivity(intent);
     }
@@ -78,7 +81,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_campaign_detail);
+        setContentView(R.layout.activity_campaign_detail_old);
         campaignPresent = new CampaignPresentImpl(this,this);
         Intent intent = getIntent();
         if(intent != null){
@@ -86,13 +89,22 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
         }
         initView();
         setListener();
-        //campaignPresent.getCampaignDetail(switcherLayout,id);
+        campaignPresent.getCampaignDetail(switcherLayout,id);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_campaign_detail, menu);
+        return true;
     }
 
     private void initView(){
-
+        appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
         bannerLayout = (BGABanner) findViewById(R.id.banner_layout);
         tvHot = (TextView) findViewById(R.id.tv_hot);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         contentLayout = (LinearLayout) findViewById(R.id.ll_content);
         switcherLayout = new SwitcherLayout(this,contentLayout);
         tvCampaignName = (TextView) findViewById(R.id.tv_campaign_name);
@@ -108,6 +120,11 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
         bottomLayout = (LinearLayout) findViewById(R.id.ll_apply);
         tvPrice = (TextView) findViewById(R.id.tv_price);
         tvState = (TextView) findViewById(R.id.tv_state);
+        bottomLayout.setVisibility(View.GONE);
+
+        /*toolbar.setTitle("");
+        toolbar.setNavigationIcon(R.drawable.back);
+        setSupportActionBar(toolbar);*/
 
         bannerLayout.setAdapter(new BGABanner.Adapter() {
             @Override
@@ -123,7 +140,9 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
     }
 
     private void setListener() {
+        appBarLayout.addOnOffsetChangedListener(new MyOnOffsetChangedListener());
         switcherLayout.setOnRetryListener(retryListener);
+        //toolbar.setNavigationOnClickListener(this);
         bottomLayout.setOnClickListener(this);
         tvCount.setOnClickListener(this);
         tvAddress.setOnClickListener(this);
@@ -137,10 +156,19 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
         }
     };
 
+    private  class MyOnOffsetChangedListener implements AppBarLayout.OnOffsetChangedListener{
+        @Override
+        public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+            int maxScroll = appBarLayout.getTotalScrollRange();
+            float percentage = (float) Math.abs(verticalOffset) / (float) maxScroll;
+           // toolbar.setBackgroundColor(Color.argb((int) (percentage * 255), 0, 0, 0));
+        }
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case toolbar:          //回退
+            case R.id.toolbar:          //回退
                 finish();
                 break;
             case R.id.tv_count:         //查看报名的人

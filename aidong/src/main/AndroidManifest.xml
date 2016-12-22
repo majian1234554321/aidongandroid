@@ -116,6 +116,7 @@
         <activity android:name=".ui.activity.mine.AddAddressActivity" />
         <activity android:name=".ui.activity.mine.MessageActivity"/>
         <activity android:name=".ui.activity.mine.AddressActivity" />
+        <activity android:name=".ui.activity.mine.SelectAddressActivity"/>
         <activity android:name=".ui.activity.mine.CartActivity" />
         <activity android:name=".ui.activity.mine.CouponExchangeActivity"/>
         <activity android:name=".ui.activity.home.ConfirmOrderActivity"/>
@@ -129,13 +130,15 @@
         <activity android:name=".ui.activity.home.CourseDetailActivity" />
         <activity android:name=".ui.activity.home.CampaignActivity" />
         <activity android:name=".ui.activity.home.SearchActivity" />
+        <activity android:name=".ui.activity.home.CampaignDetailActivity"/>
         <activity android:name=".ui.activity.home.GoodsFilterActivity" />
         <activity android:name=".ui.activity.home.NurtureActivity" />
-        <activity android:name=".ui.activity.home.CampaignDetailActivity" />
-        <activity android:name=".ui.activity.home.OldGoodsDetailActivity" />
+        <activity android:name=".ui.activity.home.OldCampaignDetailActivity" />
+        <activity android:name=".ui.activity.home.GoodsDetailActivity" />
         <activity android:name=".ui.activity.home.AppointCampaignActivity"/>
         <activity android:name=".ui.activity.home.AppointCourseActivity"/>
         <activity android:name=".ui.activity.home.EquipmentActivity" />
+        <activity android:name=".ui.activity.home.OldCourseDetailActivity"/>
         <activity android:name=".ui.activity.home.BrandActivity"/>
         <activity android:name=".ui.activity.home.DeliveryInfoActivity" />
         <activity android:name=".ui.activity.discover.AppointVenuesActivity"/>
@@ -159,7 +162,7 @@
         <activity android:name=".ui.activity.discover.NewsDetailActivity"/>
         <activity android:name=".ui.activity.video.VideoCommentActivity"/>
         <activity android:name=".ui.activity.home.LocationActivity"/>
-        <activity android:name=".ui.activity.home.GoodsDetailActivity"/>
+        <activity android:name=".ui.activity.home.OldGoodsDetailActivity"/>
         <activity android:name=".ui.activity.mine.ApplyServiceActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>

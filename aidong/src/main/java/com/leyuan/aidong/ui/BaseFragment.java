@@ -10,9 +10,9 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.http.Logic;
 import com.leyuan.aidong.ui.activity.discover.VenuesDetailActivity;
-import com.leyuan.aidong.ui.activity.home.CampaignDetailActivity;
+import com.leyuan.aidong.ui.activity.home.OldCampaignDetailActivity;
 import com.leyuan.aidong.ui.activity.home.CourseDetailActivity;
-import com.leyuan.aidong.ui.activity.home.GoodsDetailActivity;
+import com.leyuan.aidong.ui.activity.home.OldGoodsDetailActivity;
 import com.leyuan.commonlibrary.http.IHttpCallback;
 import com.leyuan.commonlibrary.http.IHttpTask;
 import com.leyuan.commonlibrary.http.IHttpToastCallBack;
@@ -81,13 +81,13 @@ public class BaseFragment extends Fragment implements IHttpToastCallBack {
                 VenuesDetailActivity.start(getContext(),bannerBean.getLink());
                 break;
             case "21":
-                GoodsDetailActivity.start(getContext(),bannerBean.getLink(), GoodsDetailActivity.TYPE_NURTURE);
+                OldGoodsDetailActivity.start(getContext(),bannerBean.getLink(), OldGoodsDetailActivity.TYPE_NURTURE);
                 break;
             case "22":
                 CourseDetailActivity.start(getContext(),bannerBean.getLink());
                 break;
             case "23":
-                CampaignDetailActivity.start(getContext(),bannerBean.getLink());
+                OldCampaignDetailActivity.start(getContext(),bannerBean.getLink());
                 break;
             default:
                 break;

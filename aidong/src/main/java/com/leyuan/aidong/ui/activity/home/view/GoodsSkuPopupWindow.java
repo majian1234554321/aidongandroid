@@ -18,7 +18,7 @@ import com.leyuan.aidong.entity.GoodsSkuValueBean;
 import com.leyuan.aidong.entity.LocalGoodsSkuBean;
 import com.leyuan.aidong.entity.ShopBean;
 import com.leyuan.aidong.ui.activity.home.ConfirmOrderActivity;
-import com.leyuan.aidong.ui.activity.home.OldGoodsDetailActivity;
+import com.leyuan.aidong.ui.activity.home.GoodsDetailActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.GoodsSkuAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.CartPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CartPresentImpl;
@@ -79,9 +79,9 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         this.detailBean = detailBean;
         this.selectedSkuValues = selectedSkuValues;
 
-        if(from.equals(OldGoodsDetailActivity.FROM_SKU)){
+        if(from.equals(GoodsDetailActivity.FROM_SKU)){
             showConfirmStatus = false;
-        }else if(from.equals(OldGoodsDetailActivity.FROM_ADD_CART)){
+        }else if(from.equals(GoodsDetailActivity.FROM_ADD_CART)){
             showConfirmStatus = true;
             isAddCart = true;
         }else {
@@ -234,7 +234,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         switch (v.getId()){
             case R.id.iv_cancel:
                 if(selectSkuListener != null){
-                    selectSkuListener.onSelectSkuChanged(selectedSkuValues,skuTip.toString());
+                    selectSkuListener.onSelectSkuChanged(selectedSkuValues,skuTip.toString(),tvCount.getText().toString());
                 }
                 dismiss();
                 break;
@@ -320,7 +320,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     public void dismiss() {
         super.dismiss();
         if(selectSkuListener != null){
-            selectSkuListener.onSelectSkuChanged(selectedSkuValues,skuTip.toString());
+            selectSkuListener.onSelectSkuChanged(selectedSkuValues,skuTip.toString(),tvCount.getText().toString());
         }
     }
 
@@ -416,6 +416,6 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     }
 
     public interface SelectSkuListener {
-        void onSelectSkuChanged(List<String> selectedSkuValues,String skuTip);
+        void onSelectSkuChanged(List<String> selectedSkuValues,String skuTip,String count);
     }
 }
