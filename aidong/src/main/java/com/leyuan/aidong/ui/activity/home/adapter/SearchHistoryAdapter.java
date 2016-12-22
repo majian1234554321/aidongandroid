@@ -67,37 +67,21 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if(position >= data.size()) {
-            return;
-        }
-        if(holder instanceof HistoryHolder ){
-            final SearchHistory  bean = data.get(position);
-            ((HistoryHolder)holder).keyword.setText(bean.getKeyword());
-            ((HistoryHolder)holder).itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(itemClickListener != null){
-                        itemClickListener.onItemClick(bean.getKeyword());
+        if(position < data.size()) {
+            if(holder instanceof HistoryHolder ) {
+                final SearchHistory bean = data.get(position);
+                ((HistoryHolder) holder).keyword.setText(bean.getKeyword());
+                ((HistoryHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (itemClickListener != null) {
+                            itemClickListener.onItemClick(bean.getKeyword());
+                        }
                     }
-                }
-            });
-        }
-    }
-
-    class HistoryHolder extends RecyclerView.ViewHolder{
-        TextView keyword;
-        public HistoryHolder(View itemView) {
-            super(itemView);
-            keyword = (TextView)itemView.findViewById(R.id.tv_history);
-        }
-    }
-
-    class DeleteHistoryViewHolder extends RecyclerView.ViewHolder{
-        RelativeLayout delete;
-        public DeleteHistoryViewHolder(View itemView) {
-            super(itemView);
-            delete = (RelativeLayout) itemView.findViewById(R.id.rl_delete);
-            delete.setOnClickListener(new View.OnClickListener() {
+                });
+            }
+        }else {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(itemClickListener != null){
@@ -105,6 +89,22 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<RecyclerView.View
                     }
                 }
             });
+        }
+    }
+
+    private class HistoryHolder extends RecyclerView.ViewHolder{
+        TextView keyword;
+        public HistoryHolder(View itemView) {
+            super(itemView);
+            keyword = (TextView)itemView.findViewById(R.id.tv_history);
+        }
+    }
+
+    private class DeleteHistoryViewHolder extends RecyclerView.ViewHolder{
+        RelativeLayout delete;
+        public DeleteHistoryViewHolder(View itemView) {
+            super(itemView);
+            delete = (RelativeLayout) itemView.findViewById(R.id.rl_delete);
         }
     }
 

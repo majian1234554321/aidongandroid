@@ -22,6 +22,11 @@ public interface SearchPresent {
     void insertHistory(String keyword);
 
     /**
+     * 删除搜索历史
+     */
+    void deleteAllHistory();
+
+    /**
      * 第一次加载数据
      * @param switcherLayout SwitcherLayout
      * @param keyword 关键字

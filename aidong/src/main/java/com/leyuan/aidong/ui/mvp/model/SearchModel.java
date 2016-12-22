@@ -78,4 +78,9 @@ public interface SearchModel {
      * @param keyword 搜索历史
      */
     void insertSearchHistory(String keyword);
+
+    /**
+     * 删除搜索历史
+     */
+    void deleteSearchHistory();
 }

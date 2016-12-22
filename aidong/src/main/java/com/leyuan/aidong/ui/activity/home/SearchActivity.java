@@ -1,7 +1,6 @@
 package com.leyuan.aidong.ui.activity.home;
 
 import android.annotation.TargetApi;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -12,9 +11,11 @@ import android.transition.Slide;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.leyuan.aidong.R;
@@ -30,10 +31,10 @@ import com.leyuan.aidong.utils.KeyBoardUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.Realm;
 
 
 
-//import com.leyuan.aidong.entity.greendao.DaoMaster;
 
 /**
  * 搜索
@@ -45,40 +46,27 @@ public class SearchActivity extends BaseActivity implements SearchActivityView{
     private FrameLayout frameLayout;
     private RecyclerView recyclerView;
     private SearchHistoryAdapter historyAdapter;
-    private SQLiteDatabase db;
+    private Realm realm;
     private List<SearchHistory> historyList = new ArrayList<>();
-
-    {
-        for (int i = 0; i < 5; i++) {
-            SearchHistory h = new SearchHistory();
-            h.setKeyword("搜索历史" + i);
-            historyList.add(h);
-        }
-    }
-
+    private SearchPresent searchPresent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupWindowAnimations();
         setContentView(R.layout.activity_search);
-
-//        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(getApplicationContext(), "search_history");
-//        db = helper.getWritableDatabase();
-        SearchPresent searchPresent = new SearchPresentImpl(this,this,db);
+        realm = Realm.getDefaultInstance();
+        searchPresent = new SearchPresentImpl(this,this,realm);
         initView();
         setListener();
-
-
-        historyAdapter.setData(historyList);
         searchPresent.getSearchHistory();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(db != null){
-            db.close();
+        if(realm != null){
+            realm.close();
         }
     }
 
@@ -109,29 +97,31 @@ public class SearchActivity extends BaseActivity implements SearchActivityView{
                 FragmentManager fm = getSupportFragmentManager();
                 fm.beginTransaction().replace(R.id.fl_container,fragment).commit();
                 frameLayout.setVisibility(View.VISIBLE);
+                searchPresent.insertHistory(keyword);
             }
 
             @Override
             public void onDeleteHistory() {
-                historyList.clear();
+                searchPresent.deleteAllHistory();
                 historyAdapter.notifyDataSetChanged();
             }
         });
 
-        etSearch.setOnKeyListener(new View.OnKeyListener(){
+        etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(keyCode == KeyEvent.KEYCODE_ENTER){
-                    if(TextUtils.isEmpty(etSearch.getText())){
-                        Toast.makeText(SearchActivity.this,R.string.input_content,Toast.LENGTH_LONG).show();
-                        return true;
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH){
+                    if(TextUtils.isEmpty(etSearch.getText())) {
+                        Toast.makeText(SearchActivity.this, R.string.input_content, Toast.LENGTH_LONG).show();
+                    }else {
+                        KeyBoardUtil.closeKeybord(etSearch,SearchActivity.this);
+                        String keyword = etSearch.getText().toString();
+                        SearchResultFragment fragment = SearchResultFragment.newInstance(keyword);
+                        FragmentManager fm = getSupportFragmentManager();
+                        fm.beginTransaction().replace(R.id.fl_container,fragment).commit();
+                        frameLayout.setVisibility(View.VISIBLE);
+                        searchPresent.insertHistory(keyword);
                     }
-                    KeyBoardUtil.closeKeybord(etSearch,SearchActivity.this);
-                    String keyword = etSearch.getText().toString();
-                    SearchResultFragment fragment = SearchResultFragment.newInstance(keyword);
-                    FragmentManager fm = getSupportFragmentManager();
-                    fm.beginTransaction().replace(R.id.fl_container,fragment).commit();
-                    frameLayout.setVisibility(View.VISIBLE);
                     return true;
                 }
                 return false;
@@ -140,34 +130,18 @@ public class SearchActivity extends BaseActivity implements SearchActivityView{
     }
 
     @Override
-    public void setHistory(List<SearchHistory> historyList) {
+    public void setHistory(List<SearchHistory> histories) {
+        historyList = histories;
         historyAdapter.setData(historyList);
-
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void setupWindowAnimations() {
         Slide bottomSlide = new Slide();
-        bottomSlide.setDuration(1000);
+        bottomSlide.setDuration(200);
         bottomSlide.excludeTarget(android.R.id.statusBarBackground,true);
         bottomSlide.excludeTarget(R.id.ll_search_1,true);
         bottomSlide.setSlideEdge(Gravity.BOTTOM);
-
-   /*     TransitionSet transitionSet = new TransitionSet();
-        transitionSet.addTransition(bottomSlide);
-        Slide topSlide = new Slide();
-        topSlide.setDuration(1000);
-        topSlide.excludeTarget(R.id.rl_content,true);
-        topSlide.excludeTarget(android.R.id.statusBarBackground,true);
-        topSlide.setSlideEdge(Gravity.TOP);
-        transitionSet.addTransition(topSlide);*/
-
-        // slide.addTarget(R.id.rl_content);
         getWindow().setEnterTransition(bottomSlide);
-
-        /*Fade fade = new Fade();
-        fade.setMode(MODE_OUT);
-        fade.setDuration(500);
-        getWindow().setExitTransition(fade);*/
     }
 }

@@ -1,7 +1,5 @@
 package com.leyuan.aidong.ui.mvp.model.impl;
 
-import android.database.sqlite.SQLiteDatabase;
-
 import com.leyuan.aidong.entity.data.CampaignData;
 import com.leyuan.aidong.entity.data.CourseData;
 import com.leyuan.aidong.entity.data.FoodData;
@@ -16,12 +14,10 @@ import com.leyuan.aidong.ui.mvp.model.SearchModel;
 
 import java.util.List;
 
+import io.realm.Realm;
+import io.realm.RealmResults;
 import rx.Subscriber;
 
-//import com.leyuan.aidong.entity.greendao.DaoMaster;
-//import com.leyuan.aidong.entity.greendao.DaoSession;
-//import com.leyuan.aidong.entity.greendao.SearchHistoryDao;
-//import org.greenrobot.greendao.query.QueryBuilder;
 /**
  * 搜索
  * Created by song on 2016/9/18.
@@ -35,18 +31,16 @@ public class SearchModelImpl implements SearchModel {
     private static final String SEARCH_USER = "user";
 
     private SearchService searchService;
+    private Realm realm;
 
-//    private SearchHistoryDao dao;
 
     public SearchModelImpl() {
         this.searchService = RetrofitHelper.createApi(SearchService.class);
     }
 
-    public SearchModelImpl(SQLiteDatabase db){
+    public SearchModelImpl(Realm realm){
         this.searchService = RetrofitHelper.createApi(SearchService.class);
-//        DaoMaster daoMaster = new DaoMaster(db);
-//        DaoSession daoSession = daoMaster.newSession();
-//        dao = daoSession.getSearchHistoryDao();
+        this.realm = realm;
     }
 
     @Override
@@ -93,18 +87,22 @@ public class SearchModelImpl implements SearchModel {
 
     @Override
     public List<SearchHistory> getSearchHistory() {
-//        QueryBuilder qb = dao.queryBuilder();        //TODO 保存历史记录的容器可以优化
-//        List list = qb.limit(10).orderDesc(SearchHistoryDao.Properties.Id).list();
-//        if(!list.isEmpty()){
-//            return (List<SearchHistory>)list;
-//        }
-        return null;
+        return realm.where(SearchHistory.class).findAll();
     }
 
     @Override
     public void insertSearchHistory(String keyword){
-        SearchHistory history = new SearchHistory(null,keyword);
-//        dao.insert(history);
+        realm.beginTransaction();
+        SearchHistory history = realm.createObject(SearchHistory.class);
+        history.setKeyword(keyword);
+        realm.commitTransaction();
     }
 
+    @Override
+    public void deleteSearchHistory() {
+        realm.beginTransaction();
+        RealmResults<SearchHistory> results = realm.where(SearchHistory.class).findAll();
+        results.deleteAllFromRealm();
+        realm.commitTransaction();
+    }
 }

@@ -1,7 +1,6 @@
 package com.leyuan.aidong.ui.mvp.presenter.impl;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.widget.RecyclerView;
 
 import com.leyuan.aidong.entity.CampaignBean;
@@ -35,6 +34,8 @@ import com.leyuan.aidong.widget.customview.SwitcherLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.Realm;
+
 /**
  * 搜索
  * Created by song on 2016/9/21.
@@ -58,11 +59,11 @@ public class SearchPresentImpl implements SearchPresent{
     private SearchUserFragmentView userView;        //搜索用户View层对象
     private SearchVenuesFragmentView venuesView;    //搜索场馆View层对象
 
-    public SearchPresentImpl(Context context, SearchActivityView view, SQLiteDatabase db) {
+    public SearchPresentImpl(Context context, SearchActivityView view, Realm realm) {
         this.context = context;
         this.searchActivityView = view;
         if(searchModel == null){
-            searchModel = new SearchModelImpl(db);
+            searchModel = new SearchModelImpl(realm);
         }
     }
 
@@ -128,6 +129,11 @@ public class SearchPresentImpl implements SearchPresent{
     @Override
     public void insertHistory(String keyword) {
         searchModel.insertSearchHistory(keyword);
+    }
+
+    @Override
+    public void deleteAllHistory() {
+        searchModel.deleteSearchHistory();
     }
 
     @Override

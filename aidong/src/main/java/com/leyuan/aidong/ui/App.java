@@ -24,6 +24,9 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.squareup.leakcanary.LeakCanary;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+
 public class App extends Application {
 
     public static App mInstance;
@@ -59,6 +62,8 @@ public class App extends Application {
         initDbUtils();
         initEMchat();
 
+
+        Realm.init(context);
 //        WXAPIFactory.createWXAPI(this, "wx365ab323b9269d30", false).registerApp("wx365ab323b9269d30");
 //        new WXShare(this);
     }
