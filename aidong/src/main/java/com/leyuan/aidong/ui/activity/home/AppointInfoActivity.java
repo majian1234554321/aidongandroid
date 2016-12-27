@@ -145,13 +145,13 @@ public class AppointInfoActivity extends BaseActivity implements View.OnClickLis
         tvType.setText(TYPE_COURSE == type ? getString(R.string.course_info) : getString(R.string.campaign_info));
         tvCourseName.setText(TYPE_COURSE == type ? courseDetailBean.getName() : campaignDetailBean.getName());
         tvTime.setLeftTextContent(TYPE_COURSE == type ? getString(R.string.course_time) : getString(R.string.campaign_time));
-        tvTime.setRightTextContent(TYPE_COURSE == type ? courseDetailBean.getClassTime() : campaignDetailBean.getStartTime());
+        tvTime.setRightContent(TYPE_COURSE == type ? courseDetailBean.getClassTime() : campaignDetailBean.getStartTime());
         tvAddress.setLeftTextContent(TYPE_COURSE == type ? getString(R.string.course_address) : getString(R.string.campaign_address));
-        tvAddress.setRightTextContent(TYPE_COURSE == type ? courseDetailBean.getAddress() : campaignDetailBean.getAddress());
+        tvAddress.setRightContent(TYPE_COURSE == type ? courseDetailBean.getAddress() : campaignDetailBean.getAddress());
         tvTotalPrice.setLeftTextContent(TYPE_COURSE == type ? getString(R.string.course_price) : getString(R.string.campaign_price));
-        tvTotalPrice.setRightTextContent(TYPE_COURSE == type ? courseDetailBean.getPrice() : campaignDetailBean.getPrice());
+        tvTotalPrice.setRightContent(TYPE_COURSE == type ? courseDetailBean.getPrice() : campaignDetailBean.getPrice());
         tvDiscountPrice.setLeftTextContent(TYPE_COURSE == type ? getString(R.string.course_privilege) : getString(R.string.campaign_privilege));
-        tvDiscountPrice.setRightTextContent("0");
+        tvDiscountPrice.setRightContent("0");
         tvPrice.setText(TYPE_COURSE == type ? courseDetailBean.getPrice() : campaignDetailBean.getPrice());
     }
 

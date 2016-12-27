@@ -91,12 +91,12 @@ public class CartPresentImpl implements CartPresent {
     }
 
     @Override
-    public void addCart(String skuCode, int amount) {
+    public void addCart(String skuCode, int amount,String gymId) {
         cartModel.addCart(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
                 skuPopupWindowView.addCartResult(baseBean);   //未作校验 上层自行判断
             }
-        },skuCode,amount);
+        },skuCode,amount,gymId);
     }
 }

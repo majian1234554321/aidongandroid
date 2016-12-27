@@ -29,12 +29,10 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.GoodsDetailBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.GoodsDetailCouponAdapter;
-import com.leyuan.aidong.ui.activity.home.adapter.SimplePagerAdapter;
 import com.leyuan.aidong.ui.activity.home.view.GoodsSkuPopupWindow;
 import com.leyuan.aidong.ui.activity.mine.CartActivity;
 import com.leyuan.aidong.ui.fragment.home.GoodsDetailFragment;
@@ -46,6 +44,7 @@ import com.leyuan.aidong.ui.mvp.view.GoodsDetailActivityView;
 import com.leyuan.aidong.utils.ImageLoadConfig;
 import com.leyuan.aidong.utils.TransitionHelper;
 import com.leyuan.aidong.widget.customview.SlideDetailsLayout;
+import com.leyuan.aidong.widget.customview.SwitcherLayout;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
@@ -74,11 +73,11 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     public static final String FROM_ADD_CART = "3";
     public static final String BLANK_SPACE = " ";
 
-   // private SwitcherLayout switcherLayout;
+    private SwitcherLayout switcherLayout;
     private LinearLayout rootLayout;
-    private RelativeLayout contentLayout;
     private SlideDetailsLayout detailsLayout;
     private AppBarLayout appBarLayout;
+    private LinearLayout contentLayout;
     private BGABanner bannerLayout;
     private TextView tvPrice;
     private TextView tvMarketPrice;
@@ -119,9 +118,8 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     private List<String> selectedSkuValues = new ArrayList<>();
     private GoodsDetailPresent goodsDetailPresent;
 
-
-    private ViewPager bannerViewPager;
-    private SimplePagerAdapter pagerAdapter;
+  /*  private ViewPager bannerViewPager;
+    private SimplePagerAdapter pagerAdapter;*/
 
 
     public static void start(Context context,String id,String type) {
@@ -142,7 +140,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         }
         initView();
         setListener();
-        goodsDetailPresent.getGoodsDetail(type,id);
+        goodsDetailPresent.getGoodsDetail(switcherLayout,type,id);
     }
 
     @Override
@@ -153,10 +151,10 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
 
     private void initView() {
         rootLayout = (LinearLayout) findViewById(R.id.root);
-        contentLayout = (RelativeLayout) findViewById(R.id.rl_content);
         detailsLayout = (SlideDetailsLayout) findViewById(R.id.slide_details_layout);
-      //  switcherLayout = new SwitcherLayout(this,detailsLayout);
         appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
+        contentLayout = (LinearLayout) findViewById(R.id.ll_content);
+        switcherLayout = new SwitcherLayout(this,contentLayout);
         bannerLayout = (BGABanner) findViewById(R.id.banner_layout);
         tvPrice = (TextView) findViewById(R.id.tv_price);
         tvMarketPrice = (TextView) findViewById(R.id.tv_market_price);
@@ -202,9 +200,9 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
 
 
 
-        bannerViewPager = (ViewPager) findViewById(R.id.view_pager);
+       /* bannerViewPager = (ViewPager) findViewById(R.id.view_pager);
         pagerAdapter = new SimplePagerAdapter(this);
-        bannerViewPager.setAdapter(pagerAdapter);
+        bannerViewPager.setAdapter(pagerAdapter);*/
     }
 
     private void setListener() {
@@ -224,6 +222,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void setGoodsDetail(GoodsDetailBean bean) {
         detailBean = bean;
+        bannerLayout.setVisibility(View.VISIBLE);
         bottomLayout.setVisibility(View.VISIBLE);
         bannerUrls.addAll(bean.image);
         bannerUrls.addAll(bean.image);
@@ -278,7 +277,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             }
         });
 
-        pagerAdapter.setData(bannerUrls);
+       /* pagerAdapter.setData(bannerUrls);
         pagerAdapter.setListener(new SimplePagerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(SimpleDraweeView image, int position) {
@@ -291,11 +290,11 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                 ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(GoodsDetailActivity.this, sharedView, transitionName);
                 startActivity(intent, transitionActivityOptions.toBundle());
 
-                /*final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(GoodsDetailActivity.this, false);
+                *//*final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(GoodsDetailActivity.this, false);
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(GoodsDetailActivity.this, pairs);
-                startActivity(intent,optionsCompat.toBundle());*/
+                startActivity(intent,optionsCompat.toBundle());*//*
             }
-        });
+        });*/
     }
 
     @Override
@@ -335,8 +334,9 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
 
 
     private void showSkuPopupWindow(Context context, GoodsDetailBean detailBean,List<String> selectedSkuValues,String from) {
-        contentLayout.animate().scaleY(0.95f).setInterpolator(new AccelerateInterpolator(2)).start();
-        contentLayout.animate().scaleX(0.95f).setInterpolator(new AccelerateInterpolator(2)).start();
+        rootLayout.animate().scaleY(0.95f).setInterpolator(new AccelerateInterpolator(2)).start();
+        rootLayout.animate().scaleX(0.95f).setInterpolator(new AccelerateInterpolator(2)).start();
+        //contentLayout.animate().rotationX(0.8f).setInterpolator(new AccelerateInterpolator(2)).start();
         //todo optimize
        // if(skuPopupWindow == null){
             skuPopupWindow = new GoodsSkuPopupWindow(context,detailBean,selectedSkuValues,from);
@@ -369,7 +369,13 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onBannerItemClick(BGABanner banner, View view, Object model, int position) {
-        ImagePreviewActivity.start(this,bannerUrls,position);
+        Intent intent = new Intent(this,ImagePreviewActivity.class);
+        final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(this, false);
+        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, pairs);
+        intent.putExtra("position",position);
+        intent.putExtra("urls",bannerUrls);
+        startActivity(intent,optionsCompat.toBundle());
+        //ImagePreviewActivity.start(this,bannerUrls,position);
     }
 
     @Override
@@ -387,8 +393,9 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onDismiss() {
-        contentLayout.animate().scaleY(1.0f).setInterpolator(new DecelerateInterpolator(2)).start();
-        contentLayout.animate().scaleX(1.0f).setInterpolator(new DecelerateInterpolator(2)).start();
+        //contentLayout.animate().rotationX(-0.8f).setInterpolator(new AccelerateInterpolator(2)).start();
+        rootLayout.animate().scaleY(1.0f).setInterpolator(new DecelerateInterpolator(2)).start();
+        rootLayout.animate().scaleX(1.0f).setInterpolator(new DecelerateInterpolator(2)).start();
     }
 
     private class MyOnSlideDetailsListener implements SlideDetailsLayout.OnSlideDetailsListener{

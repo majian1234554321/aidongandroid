@@ -91,7 +91,7 @@ public class AddressPresentImpl implements AddressPresent{
     }
 
     @Override
-    public void addAddress(String id,String name, String phone,String province,String city,String district,  final String address) {
+    public void addAddress(String name, String phone,String province,String city,String district,  final String address) {
         addressModel.addAddress(new ProgressSubscriber<AddressData>(context,false) {
             @Override
             public void onNext(AddressData addressData) {
@@ -99,7 +99,7 @@ public class AddressPresentImpl implements AddressPresent{
                     addAddressActivityView.setAddAddress(addressData.getAddress());
                 }
             }
-        },id,name,phone,province,city,district,address);
+        },name,phone,province,city,district,address);
     }
 
     @Override

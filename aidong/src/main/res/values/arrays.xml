@@ -129,6 +129,12 @@
         <item>待参加</item>
     </string-array>
 
+    <string-array name="infoTab">
+        <item>爱动圈</item>
+        <item>资料</item>
+    </string-array>
+
+
     <string-array name="couponTab">
         <item>可使用</item>
         <item>已使用</item>

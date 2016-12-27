@@ -16,7 +16,7 @@
             android:id="@+id/tv_goods_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="共2件商品"
+            android:text="共1件商品"
             android:textColor="@color/black"
             android:textSize="13sp" />
 

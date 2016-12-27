@@ -28,13 +28,9 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.SearchPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.SearchActivityView;
 import com.leyuan.aidong.utils.KeyBoardUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
-
-
-
 
 /**
  * 搜索
@@ -47,7 +43,6 @@ public class SearchActivity extends BaseActivity implements SearchActivityView{
     private RecyclerView recyclerView;
     private SearchHistoryAdapter historyAdapter;
     private Realm realm;
-    private List<SearchHistory> historyList = new ArrayList<>();
     private SearchPresent searchPresent;
 
     @Override
@@ -131,8 +126,7 @@ public class SearchActivity extends BaseActivity implements SearchActivityView{
 
     @Override
     public void setHistory(List<SearchHistory> histories) {
-        historyList = histories;
-        historyAdapter.setData(historyList);
+        historyAdapter.setData(histories);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)

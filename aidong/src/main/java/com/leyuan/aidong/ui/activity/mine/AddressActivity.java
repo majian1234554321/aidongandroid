@@ -3,6 +3,7 @@ package com.leyuan.aidong.ui.activity.mine;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -69,6 +70,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
         switcherLayout = new SwitcherLayout(this,rvAddress);
         addressAdapter = new AddressAdapter(this);
         addressAdapter.setEditAddressListener(this);
+        rvAddress.setItemAnimator(new DefaultItemAnimator());
         rvAddress.setLayoutManager(new LinearLayoutManager(this));
         rvAddress.setAdapter(addressAdapter);
     }
@@ -97,17 +99,9 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     public void setAddress(List<AddressBean> addressBeanList) {
         addressList = addressBeanList;
         addressAdapter.setData(addressBeanList);
+        setAddAddressEnable();
     }
 
-    @Override
-    public void setDeleteAddress(BaseBean baseBean) {
-        if(baseBean.getStatus() == 1){
-            addressList.remove(position);
-            addressAdapter.setData(addressList);
-        }else{
-            Toast.makeText(this,getString(R.string.delete_fail),Toast.LENGTH_LONG).show();
-        }
-    }
 
     @Override
     public void showEmptyView() {
@@ -121,13 +115,23 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     }
 
     @Override
+    public void setDeleteAddress(BaseBean baseBean) {
+        if(baseBean.getStatus() == 1){
+            addressList.remove(position);
+            addressAdapter.setData(addressList);
+            setAddAddressEnable();
+        }else{
+            Toast.makeText(this,getString(R.string.delete_fail),Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
     public void onUpdateAddress(int position) {
         this.position = position;
         Intent intent = new Intent(this,UpdateAddressActivity.class);
         intent.putExtra("address", addressList.get(position));
         startActivityForResult(intent,CODE_UPDATE_ADDRESS);
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -141,7 +145,18 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
                 AddressBean addressBean = data.getParcelableExtra("address");
                 addressList.add(0,addressBean);
                 addressAdapter.setData(addressList);
+                setAddAddressEnable();
             }
+        }
+    }
+
+    private void setAddAddressEnable(){
+        if(addressList.size() >= 7){
+            tvAddAddress.setEnabled(false);
+            tvAddAddress.setBackgroundResource(R.color.gray_normal);
+        }else {
+            tvAddAddress.setEnabled(true);
+            tvAddAddress.setBackgroundResource(R.color.main_red);
         }
     }
 }

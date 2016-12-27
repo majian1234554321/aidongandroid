@@ -28,6 +28,8 @@ public class CourseDetailBean implements Parcelable {
     private String stock;
     private String status;    //# 0-预约已结束 1-已预约 2-预约人数已满 3-即将开始预约 4-“金额”待支付（已预约) 5-无需预约 6-可预约
 
+    private String orderId;
+
     public String getCode() {
         return code;
     }
@@ -52,7 +54,7 @@ public class CourseDetailBean implements Parcelable {
         this.cover = cover;
     }
 
-    public String getClass_date() {
+    public String getClassDate() {
         return class_date;
     }
 
@@ -68,7 +70,7 @@ public class CourseDetailBean implements Parcelable {
         this.class_time = class_time;
     }
 
-    public String getBreak_time() {
+    public String getBreakTime() {
         return break_time;
     }
 
@@ -100,7 +102,7 @@ public class CourseDetailBean implements Parcelable {
         this.place = place;
     }
 
-    public String getApplied_count() {
+    public String getAppliedCount() {
         return applied_count;
     }
 
@@ -248,4 +250,28 @@ public class CourseDetailBean implements Parcelable {
             return new CourseDetailBean[size];
         }
     };
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getClass_date() {
+        return class_date;
+    }
+
+    public String getClass_time() {
+        return class_time;
+    }
+
+    public String getBreak_time() {
+        return break_time;
+    }
+
+    public String getApplied_count() {
+        return applied_count;
+    }
 }

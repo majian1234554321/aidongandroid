@@ -206,10 +206,7 @@ public class OldCampaignDetailActivity extends BaseActivity implements CampaignD
         setBottomStatus();
     }
 
-    @Override
-    public void onBuyCampaign(PayOrderBean payOrderBean) {
 
-    }
 
     @Override
     public void shareCampaign() {

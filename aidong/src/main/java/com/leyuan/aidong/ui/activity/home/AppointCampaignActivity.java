@@ -122,11 +122,10 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
         tvUserPhone.setText(contactMobile);
         tvCourseName.setText( campaignBean.getName());
         dvCover.setImageURI(campaignBean.getImage().get(0));
-        tvTime.setRightTextContent(campaignBean.getStartTime());
-        tvAddress.setRightTextContent(campaignBean.getLandmark());
-        tvTotalPrice.setRightTextContent(campaignBean.getPrice());
-        tvDiscountPrice.setRightTextContent("0");
-        tvPrice.setText(campaignBean.getPrice());
+        tvTime.setRightContent(campaignBean.getStartTime());
+        tvAddress.setRightContent(campaignBean.getAddress());
+        tvTotalPrice.setRightContent(String.format(getString(R.string.rmb_price),campaignBean.getPrice()));
+        tvPrice.setText(String.format(getString(R.string.rmb_price),campaignBean.getPrice()));
     }
 
     private void setListener() {

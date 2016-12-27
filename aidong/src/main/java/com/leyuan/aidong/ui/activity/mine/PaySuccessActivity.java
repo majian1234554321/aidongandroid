@@ -28,6 +28,8 @@ public class PaySuccessActivity extends BaseActivity implements View.OnClickList
     private RecommendAdapter recommendAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
 
+
+
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -103,6 +103,7 @@
                 app:left_text="优惠劵:" />
 
             <com.leyuan.aidong.widget.customview.ExtendTextView
+                android:id="@+id/campaign_privilege"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="活动优惠:" />

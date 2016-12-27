@@ -43,7 +43,7 @@ public class DiscoverHomeFragment extends BaseFragment implements SmartTabLayout
 
         FragmentPagerItems pages = new FragmentPagerItems(getContext());
         pages.add(FragmentPagerItem.of(null,DiscoverFragment.class));
-        pages.add(FragmentPagerItem.of(null,TabFoundDynamicFragment.class));
+        pages.add(FragmentPagerItem.of(null,CircleFragment.class));
         final FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(getChildFragmentManager(), pages);
         viewPager.setAdapter(adapter);
         tabLayout.setViewPager(viewPager);

@@ -292,7 +292,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     private void addCart() {
         GoodsSkuBean line = getLine(selectedSkuValues);
         String countStr = tvCount.getText().toString();
-        cartPresent.addCart(line.id,Integer.parseInt(countStr));
+        cartPresent.addCart(line.id,Integer.parseInt(countStr),"gym_1");
     }
 
     private void confirmOrder() {

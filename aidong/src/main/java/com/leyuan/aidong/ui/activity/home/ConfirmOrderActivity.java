@@ -1,12 +1,17 @@
 package com.leyuan.aidong.ui.activity.home;
 
+import android.animation.Animator;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
@@ -20,6 +25,7 @@ import com.leyuan.aidong.ui.activity.home.adapter.ConfirmOrderShopAdapter;
 import com.leyuan.aidong.ui.activity.mine.CouponActivity;
 import com.leyuan.aidong.ui.activity.mine.PaySuccessActivity;
 import com.leyuan.aidong.ui.activity.mine.SelectAddressActivity;
+import com.leyuan.aidong.utils.ScreenUtil;
 import com.leyuan.aidong.widget.customview.ExtendTextView;
 import com.leyuan.aidong.widget.customview.SimpleTitleBar;
 
@@ -166,5 +172,15 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 tvAddress.setText(sb);
             }
         }
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void setAnimations(){
+        int cx = ScreenUtil.getScreenWidth(this);
+        int cy = ScreenUtil.getScreenHeight(this);
+        Animator anim = ViewAnimationUtils.createCircularReveal(titleBar, cx, cy, 0, cx);
+        anim.setDuration(300);
+        anim.setInterpolator(new AccelerateDecelerateInterpolator());
+        anim.start();
     }
 }

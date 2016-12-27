@@ -179,7 +179,7 @@ public class CoursePresentImpl implements CoursePresent{
         courseModel.buyCourse(new ProgressSubscriber<PayOrderData>(context) {
             @Override
             public void onNext(PayOrderData payOrderData) {
-                String payType = payOrderData.getOrder().getPay_type();
+                String payType = payOrderData.getOrder().getPayType();
                 PayInterface payInterface = "alipay".equals(payType) ? new AliPay(context,listener)
                         : new WeiXinPay(context,listener);
                 payInterface.payOrder(payOrderData.getOrder());

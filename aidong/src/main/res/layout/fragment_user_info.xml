@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <com.leyuan.aidong.widget.customview.ExtendTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:left_text="爱动ID"
+            app:line_color="@color/line_color"
+            app:text_height="45dp" />
+
+        <com.leyuan.aidong.widget.customview.ExtendTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:left_text="身份"
+            app:line_color="@color/line_color"
+            app:text_height="45dp" />
+
+        <com.leyuan.aidong.widget.customview.ExtendTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:left_text="热度"
+            app:line_color="@color/line_color"
+            app:text_height="45dp" />
+
+        <com.leyuan.aidong.widget.customview.ExtendTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:left_text="个性签名"
+            app:line_color="@color/line_color"
+            app:text_height="50dp" />
+
+        <include layout="@layout/inc_bold_line" />
+
+        <com.leyuan.aidong.widget.customview.ExtendTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:left_text="城市"
+            app:line_color="@color/line_color"
+            app:text_height="45dp" />
+
+        <com.leyuan.aidong.widget.customview.ExtendTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:left_text="生日"
+            app:line_color="@color/line_color"
+            app:text_height="45dp" />
+
+        <com.leyuan.aidong.widget.customview.ExtendTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:left_text="星座"
+            app:line_color="@color/line_color"
+            app:text_height="45dp" />
+
+        <include layout="@layout/inc_bold_line" />
+
+        <com.leyuan.aidong.widget.customview.ExtendTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:left_text="身高"
+            app:line_color="@color/line_color"
+            app:text_height="45dp" />
+
+        <com.leyuan.aidong.widget.customview.ExtendTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:left_text="体重"
+            app:line_color="@color/line_color"
+            app:text_height="45dp" />
+
+        <com.leyuan.aidong.widget.customview.ExtendTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:left_text="BMI"
+            app:line_color="@color/line_color"
+            app:text_height="45dp" />
+
+        <com.leyuan.aidong.widget.customview.ExtendTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:left_text="运动频次"
+            app:line_color="@color/line_color"
+            app:text_height="45dp" />
+
+        <include layout="@layout/inc_bold_line" />
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.AddressBean;
@@ -18,8 +19,7 @@ import com.leyuan.aidong.ui.mvp.presenter.AddressPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.AddressPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AddAddressActivityView;
 import com.leyuan.aidong.utils.KeyBoardUtil;
-
-import java.util.UUID;
+import com.leyuan.aidong.utils.Utils;
 
 /**
  * 新增地址
@@ -77,9 +77,13 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
                 finish();
                 break;
             case R.id.tv_finish:
-                addressPresent.addAddress(UUID.randomUUID().toString(),etUsername.getText().toString(),etPhone.getText().toString(),
-                        province,city,district,etDescAddress.getText().toString());
-                break;
+                    if(Utils.isMobileNO(etPhone.getText().toString())) {
+                        addressPresent.addAddress(etUsername.getText().toString(), etPhone.getText().toString(),
+                                province, city, district, etDescAddress.getText().toString());
+                    }else {
+                        Toast.makeText(this,"请输入正确的手机号码!",Toast.LENGTH_LONG).show();
+                    }
+                    break;
             case R.id.tv_address:
                 KeyBoardUtil.closeKeybord(etUsername,this);
                 if(addressPopup == null){
@@ -101,6 +105,7 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
         finish();
     }
 
+    //选择省市区
     @Override
     public void onAddressConfirm(String province, String city, String area) {
         this.province = province;

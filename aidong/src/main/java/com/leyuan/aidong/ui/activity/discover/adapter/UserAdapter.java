@@ -28,7 +28,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder>{
     }
 
     public void setData(List<UserBean> data) {
-        this.data = data;
+        if(data != null) {
+            this.data = data;
+        }
     }
 
     @Override

@@ -24,7 +24,7 @@ public interface AddressModel {
      * @param phone 电话
      * @param address 地址
      */
-    void addAddress(Subscriber<AddressData> subscriber, String id,String name, String phone,String province,String city,String district,  String address);
+    void addAddress(Subscriber<AddressData> subscriber,String name, String phone,String province,String city,String district,  String address);
 
     /**
      * 更新地址

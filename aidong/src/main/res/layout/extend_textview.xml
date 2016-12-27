@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:paddingBottom="5dp"
         android:paddingTop="5dp"
-        android:text="右边"
+        android:text="- ¥ 0"
         android:layout_toRightOf="@+id/tv_left"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
@@ -34,7 +34,7 @@
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/black"
+        android:background="@color/transpance"
         android:layout_alignParentBottom="true"
-        android:visibility="gone"/>
+        android:visibility="visible"/>
 </RelativeLayout>

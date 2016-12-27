@@ -7,20 +7,20 @@ import com.leyuan.aidong.entity.AppointmentDetailBean;
  * Created by song on 2016/9/1.
  */
 public class AppointmentDetailData {
-    private AppointmentDetailBean appoint;
+    private AppointmentDetailBean order;
 
     public AppointmentDetailBean getAppoint() {
-        return appoint;
+        return order;
     }
 
     public void setAppoint(AppointmentDetailBean appoint) {
-        this.appoint = appoint;
+        this.order = appoint;
     }
 
     @Override
     public String toString() {
         return "AppointmentDetailData{" +
-                "appoint=" + appoint +
+                "appoint=" + order +
                 '}';
     }
 }

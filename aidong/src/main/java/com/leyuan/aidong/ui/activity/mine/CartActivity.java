@@ -154,7 +154,10 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
                     Toast.makeText(this,R.string.tip_select_goods,Toast.LENGTH_LONG).show();
                     return;
                 }
+
                 ConfirmOrderActivity.start(this,selectedShops);
+
+
                 break;
             case R.id.tv_delete:
                 List<GoodsBean> selectedGoods = getSelectedGoods();

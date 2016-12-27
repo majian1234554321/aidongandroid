@@ -33,8 +33,8 @@ public class CartModelImpl implements CartModel{
     }
 
     @Override
-    public void addCart(Subscriber<BaseBean> subscriber, String skuCode, int mount) {
-        cartService.addCart(skuCode,mount)
+    public void addCart(Subscriber<BaseBean> subscriber, String skuCode, int mount,String gymId) {
+        cartService.addCart(skuCode,mount,gymId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);

@@ -35,14 +35,13 @@ public interface CartService {
      */
     @FormUrlEncoded
     @POST("mine/cart")
-    Observable<BaseBean> addCart(@Field("sku_code") String sku_code, @Field("amount") int amount);
+    Observable<BaseBean> addCart(@Field("sku_code") String sku_code, @Field("amount") int amount,@Field("gymId") String gymId);
 
     /**
      * 删除购物车中商品
      * @param ids 商品id 多个用逗号隔开
      * @return
      */
-    @FormUrlEncoded
     @DELETE("mine/cart/{ids}")
     Observable<BaseBean> deleteCart(@Path("ids") String ids);
 

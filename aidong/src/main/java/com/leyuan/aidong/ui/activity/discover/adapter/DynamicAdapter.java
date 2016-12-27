@@ -1,7 +1,10 @@
 package com.leyuan.aidong.ui.activity.discover.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -10,12 +13,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.model.AttributeImages;
-import com.leyuan.aidong.entity.model.Dynamic;
-import com.leyuan.aidong.entity.model.UserCoach;
-import com.leyuan.aidong.widget.customview.SquareRelativeLayout;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.DynamicBean;
+import com.leyuan.aidong.ui.activity.discover.view.GridItemDecoration;
+import com.leyuan.aidong.utils.FormatUtil;
+import com.leyuan.aidong.widget.customview.SquareRelativeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,21 +28,17 @@ import java.util.List;
  * Created by song on 2016/8/29.
  */
 public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicHolder>{
-
     private Context context;
-    private List<Dynamic> data = new ArrayList<>();
-    private View.OnClickListener onAvatarClickListener;
+    private List<DynamicBean> data = new ArrayList<>();
+    private OnHandleDynamicListener handleDynamicListener;
 
     public DynamicAdapter(Context context) {
         this.context = context;
     }
 
-    public void setData(List<Dynamic> data) {
+    public void setData(List<DynamicBean> data) {
         this.data = data;
-    }
-
-    public void setOnAvatarClickListener(View.OnClickListener onAvatarClickListener) {
-        this.onAvatarClickListener = onAvatarClickListener;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -49,48 +48,169 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
 
     @Override
     public DynamicHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = View.inflate(context, R.layout.item_dynamic,null);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_dynamic,parent,false);
         return new DynamicHolder(view);
     }
 
     @Override
     public void onBindViewHolder(DynamicHolder holder, int position) {
-        Dynamic dynamic = data.get(position);
-        UserCoach user = dynamic.getPublisher();
+        DynamicBean dynamic = data.get(position);
+        DynamicBean.Publisher publisher = dynamic.publisher;
 
-        if (user != null) {
-            holder.tvName.setText(user.getName());
-            holder.dvAvatar.setTag(user);
-            holder.dvAvatar.setImageURI(user.getAvatar());
-            holder.dvAvatar.setOnClickListener(onAvatarClickListener);
+        //头部信息
+        if (publisher != null) {
+            holder.tvName.setText(publisher.name);
+            holder.dvAvatar.setTag(publisher);
+            holder.dvAvatar.setImageURI(publisher.avatar);
+            holder.dvAvatar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(handleDynamicListener != null){
+                        handleDynamicListener.onAvatarClickListener();
+                    }
+                }
+            });
+        }
+        holder.tvTime.setText(dynamic.published_at);
+
+        //图片
+        List<String> images = dynamic.image;
+        if(images != null) {
+            DynamicImageAdapter imageAdapter;
+            switch (images.size()) {
+                case 0:
+                    holder.videoLayout.setVisibility(View.GONE);
+                    holder.photoLayout.setVisibility(View.GONE);
+                    holder.threePhotoLayout.setVisibility(View.GONE);
+                    holder.fivePhotoLayout.setVisibility(View.GONE);
+                    break;
+                case 1:
+                    holder.videoLayout.setVisibility(View.GONE);
+                    holder.photoLayout.setVisibility(View.VISIBLE);
+                    holder.threePhotoLayout.setVisibility(View.GONE);
+                    holder.fivePhotoLayout.setVisibility(View.GONE);
+                    holder.photoLayout.setLayoutManager(new GridLayoutManager(context,1));
+                    imageAdapter = new DynamicImageAdapter(context);
+                    imageAdapter.setData(dynamic.image);
+                    holder.photoLayout.setAdapter(imageAdapter);
+                    break;
+                case 2:
+                    holder.videoLayout.setVisibility(View.GONE);
+                    holder.photoLayout.setVisibility(View.VISIBLE);
+                    holder.threePhotoLayout.setVisibility(View.GONE);
+                    holder.fivePhotoLayout.setVisibility(View.GONE);
+                    holder.photoLayout.setLayoutManager(new GridLayoutManager(context,2));
+                    imageAdapter = new DynamicImageAdapter(context);
+                    imageAdapter.setData(dynamic.image);
+                    holder.photoLayout.setAdapter(imageAdapter);
+                    break;
+                case 3:
+                    holder.videoLayout.setVisibility(View.GONE);
+                    holder.photoLayout.setVisibility(View.GONE);
+                    holder.threePhotoLayout.setVisibility(View.VISIBLE);
+                    holder.fivePhotoLayout.setVisibility(View.GONE);
+                    holder.dvThreeFirst.setImageURI(images.get(0));
+                    holder.dvThreeSecond.setImageURI(images.get(1));
+                    holder.dvThreeThird.setImageURI(images.get(2));
+                    break;
+                case 4:
+                    holder.videoLayout.setVisibility(View.GONE);
+                    holder.photoLayout.setVisibility(View.VISIBLE);
+                    holder.threePhotoLayout.setVisibility(View.GONE);
+                    holder.fivePhotoLayout.setVisibility(View.GONE);
+                    holder.photoLayout.setLayoutManager(new GridLayoutManager(context,2));
+                    imageAdapter = new DynamicImageAdapter(context);
+                    imageAdapter.setData(dynamic.image);
+                    holder.photoLayout.setAdapter(imageAdapter);
+                    break;
+                case 5:
+                    holder.videoLayout.setVisibility(View.GONE);
+                    holder.photoLayout.setVisibility(View.GONE);
+                    holder.threePhotoLayout.setVisibility(View.GONE);
+                    holder.fivePhotoLayout.setVisibility(View.VISIBLE);
+                    holder.dvFiveFirst.setImageURI(images.get(0));
+                    holder.dvFiveSecond.setImageURI(images.get(1));
+                    holder.dvFiveThird.setImageURI(images.get(2));
+                    holder.dvFiveFourth.setImageURI(images.get(3));
+                    holder.dvFiveLast.setImageURI(images.get(4));
+                    break;
+                case 6:
+                    holder.videoLayout.setVisibility(View.GONE);
+                    holder.photoLayout.setVisibility(View.VISIBLE);
+                    holder.threePhotoLayout.setVisibility(View.GONE);
+                    holder.fivePhotoLayout.setVisibility(View.GONE);
+                    holder.photoLayout.setLayoutManager(new GridLayoutManager(context,3));
+                    imageAdapter = new DynamicImageAdapter(context);
+                    imageAdapter.setData(dynamic.image);
+                    holder.photoLayout.setAdapter(imageAdapter);
+                    break;
+                default:
+                    break;
+            }
+        }
+        //视频
+        if(dynamic.video != null){
+            holder.videoLayout.setVisibility(View.VISIBLE);
+            holder.photoLayout.setVisibility(View.GONE);
+            holder.threePhotoLayout.setVisibility(View.GONE);
+            holder.fivePhotoLayout.setVisibility(View.GONE);
+            holder.dvVideo.setImageURI(dynamic.video.cover);
         }
 
-       // holder.tvTime.setText(dynamic.getPublisher());
+        //内容
+        holder.tvContent.setText(dynamic.content);
 
-        ArrayList<AttributeImages> images = dynamic.getImage();
-        switch (images.size()){
-            case 0:
-
-                break;
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-            case 6:
-                break;
-            default:
-                break;
-
+        //点赞
+        if(FormatUtil.parseInt(dynamic.like_user.count) > 0){
+            holder.likeLayout.setVisibility(View.VISIBLE);
+            holder.likesRecyclerView.setLayoutManager(new LinearLayoutManager
+                    (context,LinearLayoutManager.HORIZONTAL,false));
+            DynamicLikeAdapter likeAdapter = new DynamicLikeAdapter(context);
+            likeAdapter.setData(dynamic.like_user.item);
+            holder.likesRecyclerView.setAdapter(likeAdapter);
+        }else {
+            holder.likeLayout.setVisibility(View.GONE);
         }
 
-        holder.tvContent.setText(dynamic.getContent());
+        //评论
+        if(FormatUtil.parseInt(dynamic.comment.count) > 0){
+            holder.commentLayout.setVisibility(View.VISIBLE);
+            DynamicCommentAdapter commonAdapter = new DynamicCommentAdapter(context);
+            commonAdapter.setData(dynamic.comment.item);
+            holder.commentRecyclerView.setAdapter(commonAdapter);
+            holder.commentRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+        }else {
+            holder.commentLayout.setVisibility(View.GONE);
+        }
 
+        //底部操作
+        holder.tvLikeCount.setText(dynamic.like_user.count);
+        holder.tvCommentCount.setText(dynamic.comment.count);
+        holder.bottomLikeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(handleDynamicListener != null){
+                    handleDynamicListener.onLikeClickListener();
+                }
+            }
+        });
+        holder.bottomCommentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(handleDynamicListener != null){
+                    handleDynamicListener.onCommonClickListener();
+                }
+            }
+        });
+
+        holder.bottomShareLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(handleDynamicListener != null){
+                    handleDynamicListener.onShareClickListener();
+                }
+            }
+        });
     }
 
     class DynamicHolder extends RecyclerView.ViewHolder{
@@ -103,7 +223,7 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
 
         //视频
         private SquareRelativeLayout videoLayout;
-        private ImageView ivVideo;
+        private SimpleDraweeView dvVideo;
         private ImageButton ibPlay;
 
         //1,2,4,5张图
@@ -132,9 +252,7 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
 
         //评论
         private LinearLayout commentLayout;
-        private TextView tvCommentFirst;
-        private TextView tvCommentSecond;
-        private TextView tvCommentMore;
+        private RecyclerView commentRecyclerView;
 
         //底部信息
         private RelativeLayout bottomLikeLayout;
@@ -154,7 +272,7 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
             ivCoachFlag = (ImageView) itemView.findViewById(R.id.iv_coach_flag);
             tvTime = (TextView) itemView.findViewById(R.id.tv_time);
             videoLayout = (SquareRelativeLayout) itemView.findViewById(R.id.video_layout);
-            ivVideo = (ImageView) itemView.findViewById(R.id.iv_video);
+            dvVideo = (SimpleDraweeView) itemView.findViewById(R.id.dv_video);
             ibPlay = (ImageButton) itemView.findViewById(R.id.ib_play);
             photoLayout = (RecyclerView) itemView.findViewById(R.id.photo_layout);
             threePhotoLayout = (RelativeLayout) itemView.findViewById(R.id.three_photo_layout);
@@ -171,9 +289,7 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
             likeLayout = (LinearLayout) itemView.findViewById(R.id.like_layout);
             likesRecyclerView = (RecyclerView) itemView.findViewById(R.id.rv_likes);
             commentLayout = (LinearLayout) itemView.findViewById(R.id.comment_layout);
-            tvCommentFirst = (TextView) itemView.findViewById(R.id.tv_comment_first);
-            tvCommentSecond = (TextView) itemView.findViewById(R.id.tv_comment_second);
-            tvCommentMore = (TextView) itemView.findViewById(R.id.tv_comment_more);
+            commentRecyclerView = (RecyclerView) itemView.findViewById(R.id.rv_comment);
             bottomLikeLayout = (RelativeLayout) itemView.findViewById(R.id.bottom_like_layout);
             ivLike = (ImageView) itemView.findViewById(R.id.iv_like);
             tvLikeCount = (TextView) itemView.findViewById(R.id.tv_like_count);
@@ -182,6 +298,24 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
             tvCommentCount = (TextView) itemView.findViewById(R.id.tv_comment_count);
             bottomShareLayout = (RelativeLayout) itemView.findViewById(R.id.bottom_share_layout);
             ivShare = (ImageView) itemView.findViewById(R.id.iv_share);
+            photoLayout.addItemDecoration(new GridItemDecoration(context));
+            photoLayout.setNestedScrollingEnabled(false);
+            likesRecyclerView.setNestedScrollingEnabled(false);
+            commentRecyclerView.setNestedScrollingEnabled(false);
         }
+    }
+
+    public void setHandleDynamicListener(OnHandleDynamicListener listener) {
+        this.handleDynamicListener = listener;
+    }
+
+    public interface OnHandleDynamicListener {
+        void onAvatarClickListener();
+        void onImageClickListener();
+        void onShowMoreLikeClickListener();
+        void onShowMoreCommenClickListener();
+        void onLikeClickListener();
+        void onCommonClickListener();
+        void onShareClickListener();
     }
 }

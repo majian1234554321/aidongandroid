@@ -157,7 +157,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
     @Override
     public void setOrderDetail(OrderDetailBean orderDetailBean) {
         //与订单状态无关: 收货信息 订单信息
-        //tvBuyer.setRightTextContent(orderDetailBean.);
+        //tvBuyer.setRightContent(orderDetailBean.);
 
         //与订单状态有关:订单状态 支付方式 支付状态按钮及商品总信息
         switch (orderDetailBean.getStatus()){

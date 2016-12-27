@@ -4,12 +4,29 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.leyuan.aidong.widget.customview.SimpleTitleBar
-        android:id="@+id/title_bar"
+
+    <LinearLayout
+        android:id="@+id/ll_top"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height_top_bar"
-        android:background="@color/black"
-        app:stb_title="支付成功"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <com.leyuan.aidong.widget.customview.SimpleTitleBar
+            android:id="@+id/title_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_top_bar"
+            android:background="@color/black"
+            app:stb_title="支付成功"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="注：爱动不会要求您点击任何链接进行退款，谨防受骗"
+            android:textColor="@color/white"
+            android:background="@color/black"
+            android:padding="5dp"
+            android:gravity="center"/>
+    </LinearLayout>
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_recommend"

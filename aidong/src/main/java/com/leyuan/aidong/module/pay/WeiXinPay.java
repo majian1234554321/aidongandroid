@@ -27,14 +27,14 @@ public class WeiXinPay implements PayInterface {
 		PayOrderBean payOrderBean = (PayOrderBean) object;
 		if (payOrderBean != null) {
 			PayReq payReq = new PayReq();
-			appId = payOrderBean.getPay_option().getAppid();
+			appId = payOrderBean.getpayOption().getAppid();
 			payReq.appId = appId;
-			payReq.partnerId = payOrderBean.getPay_option().getPartnerid();
-			payReq.prepayId = payOrderBean.getPay_option().getPrepayid();
-			payReq.nonceStr = payOrderBean.getPay_option().getNoncestr();
-			payReq.timeStamp = payOrderBean.getPay_option().getTimestamp();
-			payReq.packageValue = payOrderBean.getPay_option().get_package();
-			payReq.sign = payOrderBean.getPay_option().getSign();
+			payReq.partnerId = payOrderBean.getpayOption().getPartnerid();
+			payReq.prepayId = payOrderBean.getpayOption().getPrepayid();
+			payReq.nonceStr = payOrderBean.getpayOption().getNoncestr();
+			payReq.timeStamp = payOrderBean.getpayOption().getTimestamp();
+			payReq.packageValue = payOrderBean.getpayOption().get_package();
+			payReq.sign = payOrderBean.getpayOption().getSign();
 			msgApi.registerApp(appId);
 			msgApi.sendReq(payReq);
 		}

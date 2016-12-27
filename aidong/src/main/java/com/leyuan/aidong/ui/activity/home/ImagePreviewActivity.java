@@ -7,12 +7,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.transition.ChangeBounds;
-import android.transition.Explode;
-import android.transition.Transition;
-import android.transition.TransitionInflater;
+import android.transition.Fade;
 import android.transition.Visibility;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
@@ -47,7 +45,7 @@ public class ImagePreviewActivity extends BaseActivity implements ImagePreviewTo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // setupWindowAnimations();
+        setupWindowAnimations();
         setContentView(R.layout.activity_image_preview);
         if(getIntent() != null){
             data = this.getIntent().getStringArrayListExtra("urls");
@@ -95,7 +93,11 @@ public class ImagePreviewActivity extends BaseActivity implements ImagePreviewTo
 
     @Override
     public void onSingleTag() {
-        finish();
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            finishAfterTransition();
+        }else {
+            finish();
+        }
     }
 
     @Override
@@ -116,12 +118,10 @@ public class ImagePreviewActivity extends BaseActivity implements ImagePreviewTo
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void setupWindowAnimations() {
-        Explode slide = new Explode();
-        slide.setDuration(200);
-        slide.setMode(Visibility.MODE_IN);
-        ChangeBounds changeBounds = new ChangeBounds();
-        Transition changeBoundsTransition = TransitionInflater.from(this).inflateTransition(R.transition.changebounds_with_arcmotion);
-        getWindow().setSharedElementEnterTransition(changeBoundsTransition);
-        getWindow().setEnterTransition(slide);
+        Fade fade = new Fade();
+        fade.setDuration(100);
+        fade.setInterpolator(new AccelerateInterpolator(2));
+        fade.setMode(Visibility.MODE_IN);
+        getWindow().setEnterTransition(fade);
     }
 }

@@ -38,5 +38,5 @@ public interface CartPresent {
      * @param skuCode 商品sku码
      * @param amount 数量
      */
-    void addCart(String skuCode, int amount);
+    void addCart(String skuCode, int amount,String gymId);
 }

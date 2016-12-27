@@ -102,18 +102,13 @@
                 app:left_text="课程总额:" />
 
             <com.leyuan.aidong.widget.customview.ExtendTextView
-                android:id="@+id/tv_express_price"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:left_text="运费:" />
-
-            <com.leyuan.aidong.widget.customview.ExtendTextView
                 android:id="@+id/coupon_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="优惠劵:" />
 
             <com.leyuan.aidong.widget.customview.ExtendTextView
+                android:id="@+id/course_privilege"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="课程优惠:" />

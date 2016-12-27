@@ -18,6 +18,13 @@ public class PayOrderBean {
     private List<String> item;
     private PayOptionBean pay_option;
 
+
+    /********订单详情************/
+    private String coin;
+    private String integral;
+    private String coupon;
+    private String created_at;
+
     public static class PayOptionBean {
         private String pay_string;  //支付宝使用
 
@@ -125,7 +132,7 @@ public class PayOrderBean {
         this.total = total;
     }
 
-    public String getPay_type() {
+    public String getPayType() {
         return pay_type;
     }
 
@@ -157,7 +164,7 @@ public class PayOrderBean {
         this.item = item;
     }
 
-    public PayOptionBean getPay_option() {
+    public PayOptionBean getpayOption() {
         return pay_option;
     }
 
@@ -176,5 +183,37 @@ public class PayOrderBean {
                 ", item=" + item +
                 ", pay_option=" + pay_option +
                 '}';
+    }
+
+    public String getCoin() {
+        return coin;
+    }
+
+    public void setCoin(String coin) {
+        this.coin = coin;
+    }
+
+    public String getIntegral() {
+        return integral;
+    }
+
+    public void setIntegral(String integral) {
+        this.integral = integral;
+    }
+
+    public String getCoupon() {
+        return coupon;
+    }
+
+    public void setCoupon(String coupon) {
+        this.coupon = coupon;
+    }
+
+    public String getCreatedAt() {
+        return created_at;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
 }

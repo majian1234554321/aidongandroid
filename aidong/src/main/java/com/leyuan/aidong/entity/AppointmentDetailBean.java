@@ -6,28 +6,22 @@ package com.leyuan.aidong.entity;
  */
 public class AppointmentDetailBean {
     private String id;             //订单号
-    private String type;           //订单类型 course-课程 campaign-活动
-    private String total;          //订单总额
-    private String coupon;         //优惠券优惠金额
-    private String integral;       //积分优惠金额
-    private String pay_type;       //付款方式 alipay-支付宝 wxpay-微信支付
-    private String status;         //订单状态 -1-已取消 0-未支付 1-已支付 2-已确认
-    private Item item;             //课程或活动实体
-    private Contact contact;       //联系人
+    private String appointment_type;           //订单类型 course-课程 campaign-活动
+    private String link_id;             //关联课程或者活动编号
+    private String name;             //产品名称
+    private String sub_name;             //副标题
+    private String cover;             //产品封面
+    private AppointInfo appointment;    //预约信息
+    private PayOrderBean pay;            //支付信息
 
-    public class Item{
-        private String id;          //活动或者课程ID
-        private String name;        //活动或者课程名字
-        private String cover;       //活动或者课程封面
-        private String price;       //活动或者课程价格
 
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
+    public class AppointInfo{
+        private String name;            //预约人
+        private String mobile;          //手机
+        private String gym;             //上课场馆
+        private String class_time;      //上课教室
+        private String classroom;       //上课时间
+        private String address;         //上课地址
 
         public String getName() {
             return name;
@@ -35,41 +29,6 @@ public class AppointmentDetailBean {
 
         public void setName(String name) {
             this.name = name;
-        }
-
-        public String getCover() {
-            return cover;
-        }
-
-        public void setCover(String cover) {
-            this.cover = cover;
-        }
-
-        public String getPrice() {
-            return price;
-        }
-
-        public void setPrice(String price) {
-            this.price = price;
-        }
-
-        @Override
-        public String toString() {
-            return "Item{" +
-                    "id='" + id + '\'' +
-                    ", name='" + name + '\'' +
-                    ", cover='" + cover + '\'' +
-                    ", price='" + price + '\'' +
-                    '}';
-        }
-    }
-
-    public class Contact{
-        private String name;
-        private String mobile;
-
-        public String getName() {
-            return name;
         }
 
         public String getMobile() {
@@ -80,19 +39,113 @@ public class AppointmentDetailBean {
             this.mobile = mobile;
         }
 
-        public void setName(String name) {
-            this.name = name;
+        public String getGym() {
+            return gym;
         }
 
-        @Override
-        public String toString() {
-            return "Contact{" +
-                    "name='" + name + '\'' +
-                    ", mobile='" + mobile + '\'' +
-                    '}';
+        public void setGym(String gym) {
+            this.gym = gym;
+        }
+
+        public String getClassTime() {
+            return class_time;
+        }
+
+        public void setClass_time(String class_time) {
+            this.class_time = class_time;
+        }
+
+        public String getClassroom() {
+            return classroom;
+        }
+
+        public void setClassroom(String classroom) {
+            this.classroom = classroom;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
         }
     }
 
+    public class PayInfo {
+        private String total;
+        private String coin;
+        private String integral;
+        private String coupon;
+        private String created_at;
+        private String pay_type;
+        private String pay_option;
+        private String status;
+
+        public String getTotal() {
+            return total;
+        }
+
+        public void setTotal(String total) {
+            this.total = total;
+        }
+
+        public String getCoin() {
+            return coin;
+        }
+
+        public void setCoin(String coin) {
+            this.coin = coin;
+        }
+
+        public String getIntegral() {
+            return integral;
+        }
+
+        public void setIntegral(String integral) {
+            this.integral = integral;
+        }
+
+        public String getCoupon() {
+            return coupon;
+        }
+
+        public void setCoupon(String coupon) {
+            this.coupon = coupon;
+        }
+
+        public String getCreated_at() {
+            return created_at;
+        }
+
+        public void setCreated_at(String created_at) {
+            this.created_at = created_at;
+        }
+
+        public String getPay_type() {
+            return pay_type;
+        }
+
+        public void setPay_type(String pay_type) {
+            this.pay_type = pay_type;
+        }
+
+        public String getPay_option() {
+            return pay_option;
+        }
+
+        public void setPay_option(String pay_option) {
+            this.pay_option = pay_option;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
+        }
+    }
 
     public String getId() {
         return id;
@@ -102,82 +155,63 @@ public class AppointmentDetailBean {
         this.id = id;
     }
 
-    public String getType() {
-        return type;
+    public String getAppointment_type() {
+        return appointment_type;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setAppointment_type(String appointment_type) {
+        this.appointment_type = appointment_type;
     }
 
-    public String getTotal() {
-        return total;
+    public String getLinkId() {
+        return link_id;
     }
 
-    public void setTotal(String total) {
-        this.total = total;
+    public void setLink_id(String link_id) {
+        this.link_id = link_id;
     }
 
-    public String getCoupon() {
-        return coupon;
+    public String getName() {
+        return name;
     }
 
-    public void setCoupon(String coupon) {
-        this.coupon = coupon;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getIntegral() {
-        return integral;
+    public String getSubName() {
+        return sub_name;
     }
 
-    public void setIntegral(String integral) {
-        this.integral = integral;
+    public void setSub_name(String sub_name) {
+        this.sub_name = sub_name;
     }
 
-    public String getPay_type() {
-        return pay_type;
+    public String getCover() {
+        return cover;
     }
 
-    public void setPay_type(String pay_type) {
-        this.pay_type = pay_type;
+    public void setCover(String cover) {
+        this.cover = cover;
     }
 
-    public String getStatus() {
-        return status;
+    public AppointInfo getAppoint() {
+        return appointment;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setAppointment(AppointInfo appointment) {
+        this.appointment = appointment;
     }
 
-    public Item getItem() {
-        return item;
+    public String getSub_name() {
+        return sub_name;
     }
 
-    public void setItem(Item item) {
-        this.item = item;
+    public PayOrderBean getPay() {
+        return pay;
     }
 
-    public Contact getContact() {
-        return contact;
-    }
-
-    public void setContact(Contact contact) {
-        this.contact = contact;
-    }
-
-    @Override
-    public String toString() {
-        return "AppointmentDetailBean{" +
-                "id='" + id + '\'' +
-                ", type='" + type + '\'' +
-                ", total='" + total + '\'' +
-                ", coupon='" + coupon + '\'' +
-                ", integral='" + integral + '\'' +
-                ", pay_type='" + pay_type + '\'' +
-                ", status='" + status + '\'' +
-                ", item=" + item +
-                ", contact=" + contact +
-                '}';
+    public void setPay(PayOrderBean pay) {
+        this.pay = pay;
     }
 }
