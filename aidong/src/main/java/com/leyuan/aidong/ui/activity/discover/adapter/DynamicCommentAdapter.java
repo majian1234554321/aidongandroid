@@ -30,11 +30,12 @@ public class DynamicCommentAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     public void setData(List<DynamicBean.Comment.Item> data) {
         if(data != null) {
-            originalData.addAll(data);
-            while (data.size() > 2) {    //最多显示2条评论
-                data.remove(2);
+            originalData = data;
+            this.data.clear();
+            this.data.addAll(data);
+            while (this.data.size() > 2) {    //最多显示2条评论
+                this.data.remove(2);
             }
-            this.data = data;
             notifyDataSetChanged();
         }
     }

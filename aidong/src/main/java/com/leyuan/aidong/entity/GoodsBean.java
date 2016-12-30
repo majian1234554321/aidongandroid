@@ -18,6 +18,7 @@ public class GoodsBean implements Parcelable {
     private  String price;         //商品售价
     private  String  market_price; //商品市场价
 
+
     /******订单商品中需要用到的字段******/
     private ArrayList<String> spec_name;
     private ArrayList<String> spec_value;

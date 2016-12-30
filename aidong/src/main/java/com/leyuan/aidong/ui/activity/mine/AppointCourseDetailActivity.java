@@ -101,6 +101,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
     private String orderId;
     private String payType;
 
+
     public static void start(Context context,String orderId) {
         Intent starter = new Intent(context, AppointCourseDetailActivity.class);
         starter.putExtra("orderId",orderId);
@@ -273,6 +274,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
                     tip = "网络连接出错";
                     break;
                 default:
+                    tip = code +":::"+ object.toString();
                     break;
             }
             Toast.makeText(AppointCourseDetailActivity.this,tip,Toast.LENGTH_LONG).show();

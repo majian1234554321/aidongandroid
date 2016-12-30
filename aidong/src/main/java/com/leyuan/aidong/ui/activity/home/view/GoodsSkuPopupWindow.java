@@ -3,6 +3,7 @@ package com.leyuan.aidong.ui.activity.home.view;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -63,6 +64,8 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     private int stock = Integer.MAX_VALUE;          //具体sku的库存
     private String confirmedSkuCover;               //具体sku的图片
 
+    private String gymId;
+    private String count;
     private StringBuilder skuTip;
     private GoodsDetailBean detailBean;
     private List<LocalGoodsSkuBean> localSkuBeanList;
@@ -73,11 +76,14 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     private CartPresent cartPresent;
 
 
-    public GoodsSkuPopupWindow(Context context, GoodsDetailBean detailBean,List<String> selectedSkuValues,String from) {
+    public GoodsSkuPopupWindow(Context context, GoodsDetailBean detailBean,
+                               List<String> selectedSkuValues,String gymId,String count,String from) {
         super(context);
         this.context = context;
         this.detailBean = detailBean;
         this.selectedSkuValues = selectedSkuValues;
+        this.gymId = gymId;
+        this.count = count;
 
         if(from.equals(GoodsDetailActivity.FROM_SKU)){
             showConfirmStatus = false;
@@ -215,6 +221,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
                     String.format(context.getString(R.string.rmb_price_scope),minPrice,maxPrice));
             tvStock.setText(String.format(context.getString(R.string.int_stock_count), totalStock));
         }
+        tvCount.setText(TextUtils.isEmpty(count) ? "1" : count);
     }
 
     private void setListener() {
@@ -292,7 +299,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     private void addCart() {
         GoodsSkuBean line = getLine(selectedSkuValues);
         String countStr = tvCount.getText().toString();
-        cartPresent.addCart(line.id,Integer.parseInt(countStr),"gym_1");
+        cartPresent.addCart(line.code,Integer.parseInt(countStr),gymId);
     }
 
     private void confirmOrder() {

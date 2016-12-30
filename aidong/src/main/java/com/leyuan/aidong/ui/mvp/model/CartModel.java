@@ -1,9 +1,7 @@
 package com.leyuan.aidong.ui.mvp.model;
 
 import com.leyuan.aidong.entity.BaseBean;
-import com.leyuan.aidong.entity.GoodsBean;
-
-import java.util.List;
+import com.leyuan.aidong.entity.data.ShopData;
 
 import rx.Subscriber;
 
@@ -17,7 +15,7 @@ public interface CartModel {
      * 获取购物车列表
      * @param subscriber Subscriber
      */
-    void getCart(Subscriber<List<GoodsBean>> subscriber);
+    void getCart(Subscriber<ShopData> subscriber);
 
     /**
      * 添加到购物车

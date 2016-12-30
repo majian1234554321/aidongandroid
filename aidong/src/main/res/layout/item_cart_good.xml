@@ -15,10 +15,10 @@
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/dv_cover"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="5dp"
         android:layout_toRightOf="@+id/rb_check"
         fresco:actualImageScaleType="centerCrop"
         fresco:placeholderImage="@drawable/place_holder_logo"/>
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:text="健身"
         android:singleLine="true"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="15dp"
         android:layout_marginTop="20dp"
         android:layout_toRightOf="@+id/dv_cover"
         android:layout_toLeftOf="@+id/tv_goods_price"
@@ -55,6 +55,7 @@
         android:textSize="13sp"
         android:textColor="@color/c9"
         android:layout_marginTop="15dp"
+        android:singleLine="true"
         android:layout_below="@+id/tv_goods_name"
         android:layout_alignLeft="@+id/tv_goods_name"/>
 
@@ -66,7 +67,8 @@
         android:textSize="13sp"
         android:textColor="@color/c9"
         android:layout_marginTop="15dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="15dp"
+        android:singleLine="true"
         android:layout_alignBottom="@+id/tv_sku"
         android:layout_toRightOf="@+id/tv_sku"/>
 

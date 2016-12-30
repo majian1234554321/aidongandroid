@@ -176,8 +176,8 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
         if(FormatUtil.parseInt(dynamic.comment.count) > 0){
             holder.commentLayout.setVisibility(View.VISIBLE);
             DynamicCommentAdapter commonAdapter = new DynamicCommentAdapter(context);
-            commonAdapter.setData(dynamic.comment.item);
             holder.commentRecyclerView.setAdapter(commonAdapter);
+            commonAdapter.setData(dynamic.comment.item);
             holder.commentRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         }else {
             holder.commentLayout.setVisibility(View.GONE);
@@ -312,6 +312,7 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
     public interface OnHandleDynamicListener {
         void onAvatarClickListener();
         void onImageClickListener();
+        void onVedioClickListener();
         void onShowMoreLikeClickListener();
         void onShowMoreCommenClickListener();
         void onLikeClickListener();

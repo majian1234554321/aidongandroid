@@ -1,13 +1,11 @@
 package com.leyuan.aidong.ui.mvp.model.impl;
 
 import com.leyuan.aidong.entity.BaseBean;
-import com.leyuan.aidong.entity.GoodsBean;
+import com.leyuan.aidong.entity.data.ShopData;
 import com.leyuan.aidong.http.RetrofitHelper;
 import com.leyuan.aidong.http.RxHelper;
 import com.leyuan.aidong.http.api.CartService;
 import com.leyuan.aidong.ui.mvp.model.CartModel;
-
-import java.util.List;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -26,9 +24,9 @@ public class CartModelImpl implements CartModel{
     }
 
     @Override
-    public void getCart(Subscriber<List<GoodsBean>> subscriber) {
+    public void getCart(Subscriber<ShopData> subscriber) {
         cartService.getCart()
-            .compose(RxHelper.<List<GoodsBean>>transform())
+            .compose(RxHelper.<ShopData>transform())
             .subscribe(subscriber);
     }
 

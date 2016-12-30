@@ -1,7 +1,7 @@
 package com.leyuan.aidong.ui.mvp.view;
 
 import com.leyuan.aidong.entity.BaseBean;
-import com.leyuan.aidong.entity.GoodsBean;
+import com.leyuan.aidong.entity.ShopBean;
 
 import java.util.List;
 
@@ -12,9 +12,9 @@ import java.util.List;
 public interface CartActivityView {
     /**
      * 更新列表
-     * @param goodsBeanList GoodsBean
+     * @param shopBeanList ShopBean
      */
-    void updateRecyclerView(List<GoodsBean> goodsBeanList);
+    void updateRecyclerView(List<ShopBean> shopBeanList);
 
     /**
      * 显示购物车没有数据布局

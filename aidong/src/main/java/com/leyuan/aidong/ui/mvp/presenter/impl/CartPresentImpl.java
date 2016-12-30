@@ -3,7 +3,7 @@ package com.leyuan.aidong.ui.mvp.presenter.impl;
 import android.content.Context;
 
 import com.leyuan.aidong.entity.BaseBean;
-import com.leyuan.aidong.entity.GoodsBean;
+import com.leyuan.aidong.entity.data.ShopData;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
@@ -13,8 +13,6 @@ import com.leyuan.aidong.ui.mvp.presenter.CartPresent;
 import com.leyuan.aidong.ui.mvp.view.CartActivityView;
 import com.leyuan.aidong.ui.mvp.view.GoodsSkuPopupWindowView;
 import com.leyuan.aidong.widget.customview.SwitcherLayout;
-
-import java.util.List;
 
 /**
  * 购物车
@@ -43,15 +41,15 @@ public class CartPresentImpl implements CartPresent {
     }
 
     @Override
-    public void normalLoadingData(final SwitcherLayout switcherLayout) {
-        cartModel.getCart(new CommonSubscriber<List<GoodsBean>>(switcherLayout) {
+    public void commonLoadingData(final SwitcherLayout switcherLayout) {
+        cartModel.getCart(new CommonSubscriber<ShopData>(switcherLayout) {
             @Override
-            public void onNext(List<GoodsBean> goodsBeanList) {
-                if(goodsBeanList != null && !goodsBeanList.isEmpty()){
+            public void onNext(ShopData shopData) {
+                if(shopData != null && shopData.getCart() != null  && !shopData.getCart().isEmpty()){
                     switcherLayout.showContentLayout();
-                    cartActivityView.updateRecyclerView(goodsBeanList);
-                }else{
-                    switcherLayout.showEmptyLayout();
+                    cartActivityView.updateRecyclerView(shopData.getCart());
+                }else {
+                    cartActivityView.showEmptyView();
                 }
             }
         });
@@ -59,16 +57,15 @@ public class CartPresentImpl implements CartPresent {
 
     @Override
     public void pullToRefreshData() {
-        cartModel.getCart(new RefreshSubscriber<List<GoodsBean>>(context) {
+        cartModel.getCart(new RefreshSubscriber<ShopData>(context) {
             @Override
-            public void onNext(List<GoodsBean> goodsBeanList) {
-                if(goodsBeanList != null && !goodsBeanList.isEmpty()){
-                    cartActivityView.updateRecyclerView(goodsBeanList);
+            public void onNext(ShopData shopData) {
+                if(shopData != null && shopData.getCart() != null  && !shopData.getCart().isEmpty()){
+                    cartActivityView.updateRecyclerView(shopData.getCart());
                 }
             }
         });
     }
-
 
     @Override
     public void deleteCart(String ids) {

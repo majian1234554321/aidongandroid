@@ -74,6 +74,8 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
     private CourseDetailBean bean;
     private CoursePresent coursePresent;
 
+
+
     public static void start(Context context,CourseDetailBean courseDetailBean) {
         Intent starter = new Intent(context, AppointCourseActivity.class);
         starter.putExtra("bean", courseDetailBean);

@@ -12,7 +12,7 @@ public interface CartPresent {
      * 第一次正常加载数据
      * @param switcherLayout
      */
-    void normalLoadingData(SwitcherLayout switcherLayout);
+    void commonLoadingData(SwitcherLayout switcherLayout);
 
     /**
      * 下拉刷新

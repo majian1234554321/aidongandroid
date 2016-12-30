@@ -1,9 +1,7 @@
 package com.leyuan.aidong.http.api;
 
 import com.leyuan.aidong.entity.BaseBean;
-import com.leyuan.aidong.entity.GoodsBean;
-
-import java.util.List;
+import com.leyuan.aidong.entity.data.ShopData;
 
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
@@ -25,7 +23,7 @@ public interface CartService {
      * @return 商品
      */
     @GET("mine/cart")
-    Observable<BaseBean<List<GoodsBean>>> getCart();
+    Observable<BaseBean<ShopData>> getCart();
 
     /**
      * 添加商品到购物车
@@ -35,7 +33,7 @@ public interface CartService {
      */
     @FormUrlEncoded
     @POST("mine/cart")
-    Observable<BaseBean> addCart(@Field("sku_code") String sku_code, @Field("amount") int amount,@Field("gymId") String gymId);
+    Observable<BaseBean> addCart(@Field("code") String sku_code, @Field("amount") int amount,@Field("gym_id") String gymId);
 
     /**
      * 删除购物车中商品

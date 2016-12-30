@@ -77,6 +77,7 @@
             android:scaleType="centerCrop" />
     </com.leyuan.aidong.widget.customview.SquareRelativeLayout>
 
+
     <!--1,2,4,6张图片的布局-->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/photo_layout"
@@ -160,36 +161,36 @@
             android:orientation="horizontal"
             android:layout_below="@id/ll_top"
             android:layout_marginTop="5dp">
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/dv_five_third"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="122dp"
-            fresco:actualImageScaleType="centerCrop"
-            fresco:placeholderImage="@drawable/place_holder_logo"
-            fresco:placeholderImageScaleType="fitCenter"
-            fresco:pressedStateOverlayImage="@color/color_image_press" />
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/dv_five_third"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="122dp"
+                fresco:actualImageScaleType="centerCrop"
+                fresco:placeholderImage="@drawable/place_holder_logo"
+                fresco:placeholderImageScaleType="fitCenter"
+                fresco:pressedStateOverlayImage="@color/color_image_press" />
 
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/dv_five_fourth"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="122dp"
-            android:layout_marginLeft="5dp"
-            fresco:actualImageScaleType="centerCrop"
-            fresco:placeholderImage="@drawable/place_holder_logo"
-            fresco:pressedStateOverlayImage="@color/color_image_press" />
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/dv_five_fourth"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="122dp"
+                android:layout_marginLeft="5dp"
+                fresco:actualImageScaleType="centerCrop"
+                fresco:placeholderImage="@drawable/place_holder_logo"
+                fresco:pressedStateOverlayImage="@color/color_image_press" />
 
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/dv_five_last"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="122dp"
-            android:layout_marginLeft="5dp"
-            fresco:actualImageScaleType="centerCrop"
-            fresco:placeholderImage="@drawable/place_holder_logo"
-            fresco:placeholderImageScaleType="fitCenter"
-            fresco:pressedStateOverlayImage="@color/color_image_press" />
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/dv_five_last"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="122dp"
+                android:layout_marginLeft="5dp"
+                fresco:actualImageScaleType="centerCrop"
+                fresco:placeholderImage="@drawable/place_holder_logo"
+                fresco:placeholderImageScaleType="fitCenter"
+                fresco:pressedStateOverlayImage="@color/color_image_press" />
         </LinearLayout>
     </RelativeLayout>
 
@@ -223,28 +224,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_gravity="center_vertical"/>
-    </LinearLayout>
-
-    <!--评论布局-->
-    <LinearLayout
-        android:id="@+id/comment_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/icon_comment" />
-
-       <android.support.v7.widget.RecyclerView
-           android:id="@+id/rv_comment"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_marginLeft="10dp"/>
     </LinearLayout>
 
     <!--底部点赞 评论 分享布局-->
@@ -336,8 +315,4 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="@color/line_color"/>
 </LinearLayout>

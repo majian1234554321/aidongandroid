@@ -42,7 +42,6 @@ public class EndlessRecyclerOnScrollListener extends RecyclerView.OnScrollListen
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
-
         RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
 
         if (layoutManagerType == null) {
@@ -74,6 +73,7 @@ public class EndlessRecyclerOnScrollListener extends RecyclerView.OnScrollListen
                 lastVisibleItemPosition = findMax(lastPositions);
                 break;
         }
+
     }
 
     @Override

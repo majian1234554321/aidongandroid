@@ -17,6 +17,7 @@ public class GoodsDetailBean {
     public String service;
     public GoodsSpecBean spec;       //商品规格
     public List<CouponBean> coupon; //商品优惠券
+    public DeliveryBean pick_up;
 
 
     @Override

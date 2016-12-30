@@ -120,7 +120,7 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="5dp"
                     android:gravity="right|center_vertical"
-                    android:text="默认自提场馆"
+                    android:text="请选择"
                     android:textColor="@color/c3"
                     android:textSize="15sp" />
 
@@ -134,7 +134,7 @@
                     android:text="上海长宁店番禹区88号"
                     android:textColor="@color/c9"
                     android:textSize="15sp"
-                    android:visibility="visible"/>
+                    android:visibility="gone"/>
             </LinearLayout>
 
             <ImageView
@@ -152,7 +152,8 @@
             android:layout_height="50dp"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/left_margin"
-            android:paddingRight="@dimen/right_margin">
+            android:paddingRight="@dimen/right_margin"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"

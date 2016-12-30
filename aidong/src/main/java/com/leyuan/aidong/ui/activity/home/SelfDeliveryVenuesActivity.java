@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.activity.home;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -11,6 +12,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CategoryBean;
@@ -54,7 +56,7 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
     private GoodsDetailPresent goodsPresent;
     private VenuesPresent venuesPresent;
     private String type;
-    private String skuCode;
+    private String id;
     private String brandId;
     private String businessCircle;
 
@@ -68,18 +70,15 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
         venuesPresent = new VenuesPresentImpl(this,this);
         if(getIntent() != null){
             type = getIntent().getStringExtra("type");
-            skuCode = getIntent().getStringExtra("skuCode");
+            id = getIntent().getStringExtra("id");
         }
-        type = "equipments";
-        skuCode = "111";
 
         initView();
         setListener();
 
         venuesPresent.getGymBrand();
         venuesPresent.getBusinessCircle();
-        goodsPresent.commonLoadVenues(switcherLayout,type,skuCode);
-
+        goodsPresent.commonLoadVenues(switcherLayout,type,id);
     }
 
 
@@ -122,7 +121,7 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
             public void onRefresh() {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-                goodsPresent.pullToRefreshVenues(type,skuCode);
+                goodsPresent.pullToRefreshVenues(type,id);
             }
         });
 
@@ -143,7 +142,7 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
         public void onLoadNextPage(View view) {
             currPage ++;
             if (data != null && data.size() >= pageSize) {
-                goodsPresent.requestMoreVenues(recyclerView,pageSize,type,skuCode,currPage);
+                goodsPresent.requestMoreVenues(recyclerView,pageSize,type,id,currPage);
             }
         }
     };
@@ -152,12 +151,24 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.iv_back:
-                if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP){
-                    finishAfterTransition();
-                }else
-                finish();
+                animationFinish();
                 break;
             case R.id.tv_finish:
+                VenuesBean checked = null;
+                for (VenuesBean venuesBean : data) {
+                    if(venuesBean.isChecked()){
+                        checked = venuesBean;
+                        break;
+                    }
+                }
+                if(checked == null){
+                    Toast.makeText(this,"请选择自提场馆",Toast.LENGTH_LONG).show();
+                }else {
+                    Intent intent = new Intent();
+                    intent.putExtra("venues",checked);
+                    setResult(RESULT_OK,intent);
+                    animationFinish();
+                }
                 break;
             default:
                 break;
@@ -201,26 +212,7 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
         bottom.excludeTarget(android.R.id.statusBarBackground,true);
         bottom.excludeTarget(R.id.rl_top,true);
         bottom.setSlideEdge(Gravity.BOTTOM);
-       /* TransitionSet transitionSet = new TransitionSet();
-        transitionSet.addTransition(bottom);
-        Slide top = new Slide();
-        top.setDuration(200);
-        top.excludeTarget(android.R.id.statusBarBackground,true);
-        top.excludeTarget(R.id.fl_content,true);
-        top.setSlideEdge(Gravity.TOP);
-        transitionSet.addTransition(top);*/
         getWindow().setEnterTransition(bottom);
-
-        /*Fade fade = new Fade();
-        fade.setMode(MODE_OUT);
-        fade.setDuration(500);
-        getWindow().setExitTransition(fade);*/
     }
 
-   /* @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    @Override
-    public void onBackPressed() {
-      //  super.onBackPressed();
-        finishAfterTransition();
-    }*/
 }

@@ -8,12 +8,31 @@ import android.os.Parcelable;
  * Created by pc on 2016/8/2.
  */
 public class VenuesBean implements Parcelable {
+    private String id;
     private String gym_id;          //场馆编号
     private String name;            //场馆名字
     private String brand_logo;      //场馆封面
     private String address;         //场馆地址
     private String distance;        //距离
     private String price;           //价格
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    private boolean isChecked;
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
 
     public String getGymId() {
         return gym_id;

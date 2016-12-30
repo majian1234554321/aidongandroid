@@ -55,7 +55,12 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
         final GoodsBean bean = data.get(position);
         holder.cover.setImageURI(bean.getCover());
         holder.name.setText(bean.getName());
-        holder.sku.setText(bean.getName());
+        ArrayList<String> specValue = bean.getSpec_value();
+        StringBuilder skuStr = new StringBuilder();
+        for (String result : specValue) {
+            skuStr.append(result);
+        }
+        holder.sku.setText(skuStr);
         holder.price.setText(String.format
                 (context.getString(R.string.rmb_price),bean.getPrice()));
         holder.count.setText(bean.getAmount());

@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -186,7 +187,13 @@ public class BaseActivity extends AppCompatActivity implements IHttpToastCallBac
         }
     }
 
-
+    protected void animationFinish(){
+        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP){
+            finishAfterTransition();
+        }else {
+            finish();
+        }
+    }
 
 
     /**

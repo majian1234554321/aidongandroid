@@ -33,7 +33,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+            android:gravity="center_horizontal"
+            app:elevation="0dp"
+            app:layout_behavior="com.leyuan.aidong.ui.activity.mine.view.FlingBehavior">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -113,13 +115,12 @@
                 <include layout="@layout/inc_line"/>
             </LinearLayout>
 
-
             <com.ogaclejapan.smarttablayout.SmartTabLayout
                 android:id="@+id/tab_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/height_top_bar"
-                android:layout_centerInParent="true"
-                android:layout_gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
                 android:background="@color/white"
                 app:stl_defaultTabTextColor="@color/gray_normal"
                 app:stl_defaultTabTextSize="17sp"
@@ -128,8 +129,9 @@
                 app:stl_indicatorInterpolation="smart"
                 app:stl_indicatorThickness="3dp"
                 app:stl_indicatorWidth="auto"
-                android:elevation="0dp"/>
-
+                app:stl_underlineThickness="1dp"
+                app:stl_underlineColor = "@color/transparent"/>
+            <include layout="@layout/inc_line"/>
         </android.support.design.widget.AppBarLayout>
 
         <android.support.v4.view.ViewPager

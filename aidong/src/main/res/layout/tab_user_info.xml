@@ -5,8 +5,8 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:layout_gravity="center"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp"
+    android:layout_marginLeft="40dp"
+    android:layout_marginRight="40dp"
     android:padding="5dp">
     <TextView
         android:id="@+id/tv_tab_text"
@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:maxLines="1"
         android:text="爱动圈"
-        android:textColor="@drawable/selector_tab_orange"
+        android:textColor="@drawable/selector_tab_black"
         android:textSize="17sp" />
 
 </LinearLayout>

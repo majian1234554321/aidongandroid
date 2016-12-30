@@ -20,8 +20,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,6 +28,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.DeliveryBean;
 import com.leyuan.aidong.entity.GoodsDetailBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.GoodsDetailCouponAdapter;
@@ -58,8 +57,6 @@ import java.util.List;
 import cn.bingoogolapple.bgabanner.BGABanner;
 
 
-
-
 /**
  * 商品详情
  * Created by song on 2016/9/12.
@@ -68,10 +65,13 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     public static final String TYPE_NURTURE = "nutrition";
     public static final String TYPE_EQUIPMENT = "equipments";
     public static final String TYPE_FOODS = "foods";
-    public static final String FROM_SKU = "1";
-    public static final String FROM_BUY = "2";
-    public static final String FROM_ADD_CART = "3";
+    public static final String FROM_SKU = "2";
+    public static final String FROM_BUY = "3";
+    public static final String FROM_ADD_CART = "4";
     public static final String BLANK_SPACE = " ";
+    public static final String EXPRESS = "0";
+    public static final String SELF_DELIVERY = "1";
+    private static final int CODE_SELECT_ADDRESS = 1;
 
     private SwitcherLayout switcherLayout;
     private LinearLayout rootLayout;
@@ -91,6 +91,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     private LinearLayout recommendCodeLayout;
     private TextView tvRecommendCode;
     private LinearLayout addressLayout;
+    private TextView tvDeliveryInfo;
     private TextView tvAddressInfo;
     private ImageView ivArrow;
     private TextView tvTip;
@@ -115,8 +116,9 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
 
     private String id;
     private String type ;
+    private String gymId;
+    private String count;
     private List<String> selectedSkuValues = new ArrayList<>();
-    private GoodsDetailPresent goodsDetailPresent;
 
   /*  private ViewPager bannerViewPager;
     private SimplePagerAdapter pagerAdapter;*/
@@ -133,7 +135,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_detail);
-        goodsDetailPresent = new GoodsDetailPresentImpl(this,this);
+        GoodsDetailPresent goodsDetailPresent = new GoodsDetailPresentImpl(this,this);
         if(getIntent() != null){
             id = getIntent().getStringExtra("id");
             type = getIntent().getStringExtra("type");
@@ -169,6 +171,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         tvRecommendCode = (TextView) findViewById(R.id.tv_recommend_code);
         addressLayout = (LinearLayout) findViewById(R.id.ll_address);
         tvAddressInfo = (TextView) findViewById(R.id.tv_address_info);
+        tvDeliveryInfo = (TextView)findViewById(R.id.tv_delivery_info);
         ivArrow = (ImageView) findViewById(R.id.iv_arrow);
         tvTip = (TextView) findViewById(R.id.tv_tip);
         tabLayout = (SmartTabLayout) findViewById(R.id.tab_layout);
@@ -197,8 +200,6 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         couponAdapter = new GoodsDetailCouponAdapter(this);
         couponView.setNestedScrollingEnabled(false);
         couponView.setAdapter(couponAdapter);
-
-
 
        /* bannerViewPager = (ViewPager) findViewById(R.id.view_pager);
         pagerAdapter = new SimplePagerAdapter(this);
@@ -242,12 +243,23 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             lineCoupon.setVisibility(View.VISIBLE);
         }
 
-        StringBuilder sb = new StringBuilder();
+        StringBuilder skuStr = new StringBuilder();
         for (String s : detailBean.spec.name) {
-            sb.append(s).append(BLANK_SPACE);
+            skuStr.append(s).append(BLANK_SPACE);
         }
-        tvSku.setText(sb);
-
+        tvSku.setText(skuStr);
+        if(bean.pick_up != null) {
+            if(EXPRESS.equals(bean.pick_up.type)){
+                gymId = null;
+                tvAddressInfo.setVisibility(View.GONE);
+                tvDeliveryInfo.setText("快递");
+            }else {
+                gymId = bean.pick_up.info.getId();
+                tvAddressInfo.setVisibility(View.VISIBLE);
+                tvAddressInfo.setText(bean.pick_up.info.getAddress());
+                tvDeliveryInfo.setText("自提");
+            }
+        }
 
         final FragmentPagerItems pages = new FragmentPagerItems(this);
         GoodsDetailFragment detail = new GoodsDetailFragment();
@@ -313,16 +325,18 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.ll_address:
                 Intent intent = new Intent(this,DeliveryInfoActivity.class);
+                intent.putExtra("id",id);
+                intent.putExtra("type",type);
+                intent.putExtra("deliveryBean",detailBean.pick_up);
                 final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(this, false);
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, pairs);
-                startActivity(intent,optionsCompat.toBundle());
+                startActivityForResult(intent,CODE_SELECT_ADDRESS,optionsCompat.toBundle());
                 break;
             case R.id.iv_cart:
                 startActivity(new Intent(this, CartActivity.class));
                 break;
             case R.id.tv_add_cart:
                 showSkuPopupWindow(this,detailBean,selectedSkuValues,FROM_ADD_CART);
-
                 break;
             case R.id.tv_pay:
                 showSkuPopupWindow(this,detailBean,selectedSkuValues,FROM_BUY);
@@ -334,12 +348,12 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
 
 
     private void showSkuPopupWindow(Context context, GoodsDetailBean detailBean,List<String> selectedSkuValues,String from) {
-        rootLayout.animate().scaleY(0.95f).setInterpolator(new AccelerateInterpolator(2)).start();
-        rootLayout.animate().scaleX(0.95f).setInterpolator(new AccelerateInterpolator(2)).start();
+       /* rootLayout.animate().scaleY(0.95f).setInterpolator(new AccelerateInterpolator(2)).start();
+        rootLayout.animate().scaleX(0.95f).setInterpolator(new AccelerateInterpolator(2)).start();*/
         //contentLayout.animate().rotationX(0.8f).setInterpolator(new AccelerateInterpolator(2)).start();
         //todo optimize
        // if(skuPopupWindow == null){
-            skuPopupWindow = new GoodsSkuPopupWindow(context,detailBean,selectedSkuValues,from);
+            skuPopupWindow = new GoodsSkuPopupWindow(context,detailBean,selectedSkuValues,gymId,count,from);
             skuPopupWindow.setSelectSkuListener(this);
         skuPopupWindow.setOnDismissListener(this);
         //}
@@ -379,8 +393,17 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     }
 
     @Override
+    public void onDismiss() {
+        //contentLayout.animate().rotationX(-0.8f).setInterpolator(new AccelerateInterpolator(2)).start();
+        /*rootLayout.animate().scaleY(1.0f).setInterpolator(new DecelerateInterpolator(2)).start();
+        rootLayout.animate().scaleX(1.0f).setInterpolator(new DecelerateInterpolator(2)).start();*/
+    }
+
+    @Override
     public void onSelectSkuChanged(List<String> skuValues,String skuTip,String count) {
-        selectedSkuValues = skuValues;
+        if(skuValues != null) {
+            selectedSkuValues = skuValues;
+        }
         if(selectedSkuValues.size() == detailBean.spec.name.size()){
             tvSelect.setText("已选择:");
         }else {
@@ -389,13 +412,30 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         StringBuilder sb = new StringBuilder(skuTip);
         sb.append("，").append(count).append("个");
         tvSku.setText(sb);
+        this.count = count;
     }
 
+
     @Override
-    public void onDismiss() {
-        //contentLayout.animate().rotationX(-0.8f).setInterpolator(new AccelerateInterpolator(2)).start();
-        rootLayout.animate().scaleY(1.0f).setInterpolator(new DecelerateInterpolator(2)).start();
-        rootLayout.animate().scaleX(1.0f).setInterpolator(new DecelerateInterpolator(2)).start();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(data == null){
+            return;
+        }
+        if(requestCode == CODE_SELECT_ADDRESS){
+            DeliveryBean deliveryBean = data.getParcelableExtra("deliveryBean");
+            if(deliveryBean!= null) {
+                if(EXPRESS.equals(deliveryBean.type)){
+                    gymId = null;
+                    tvAddressInfo.setVisibility(View.GONE);
+                    tvDeliveryInfo.setText("快递");
+                }else {
+                    gymId = deliveryBean.info.getId();
+                    tvAddressInfo.setVisibility(View.VISIBLE);
+                    tvAddressInfo.setText(deliveryBean.info.getAddress());
+                    tvDeliveryInfo.setText("自提");
+                }
+            }
+        }
     }
 
     private class MyOnSlideDetailsListener implements SlideDetailsLayout.OnSlideDetailsListener{

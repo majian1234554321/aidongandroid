@@ -100,9 +100,9 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             @Override
             public void onClick(View v) {
                 if("course".equals(bean.getAppointmentType())){
-                    AppointCourseDetailActivity.start(context,bean.getLinkId());
+                    AppointCourseDetailActivity.start(context,bean.getId());
                 }else {
-                    AppointCampaignDetailActivity.start(context,bean.getLinkId());
+                    AppointCampaignDetailActivity.start(context,bean.getId());
                 }
             }
         });

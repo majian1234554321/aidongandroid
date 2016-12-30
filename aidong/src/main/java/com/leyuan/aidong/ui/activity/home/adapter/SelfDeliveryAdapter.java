@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.VenuesBean;
+import com.leyuan.aidong.utils.FormatUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
  * 自提门店适配器
  * Created by song on 2016/9/22.
  */
-public class SelfDeliveryAdapter extends RecyclerView.Adapter<SelfDeliveryAdapter.ShopHolder> {
+public class SelfDeliveryAdapter extends RecyclerView.Adapter<SelfDeliveryAdapter.VenuesHolder> {
     private Context context;
     private List<VenuesBean> data = new ArrayList<>();
 
@@ -37,33 +38,46 @@ public class SelfDeliveryAdapter extends RecyclerView.Adapter<SelfDeliveryAdapte
     }
 
     @Override
-    public ShopHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public VenuesHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = View.inflate(context, R.layout.item_self_delivery, null);
-        return new ShopHolder(view);
+        return new VenuesHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ShopHolder holder, int position) {
-        VenuesBean bean = data.get(position);
+    public void onBindViewHolder(final VenuesHolder holder, final int position) {
+        final VenuesBean bean = data.get(position);
+        holder.checkBox.setChecked(bean.isChecked());
         holder.tvShopName.setText(bean.getName());
         holder.tvAddress.setText(bean.getAddress());
-        holder.tvDistance.setText(String.format
-                (context.getResources().getString(R.string.distance_km),bean.getDistance()));
+        holder.tvDistance.setText(String.format(context.getResources().getString(R.string.distance_km),
+                String.valueOf(FormatUtil.parseDouble(bean.getDistance()))));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(bean.isChecked()){
+                    bean.setChecked(false);
+                }else {
+                    for (int i = 0; i < data.size(); i++) {
+                        data.get(i).setChecked(i==position);
+                    }
+                }
+                notifyDataSetChanged();
+            }
+        });
     }
 
-    class ShopHolder extends RecyclerView.ViewHolder {
+    class VenuesHolder extends RecyclerView.ViewHolder {
         CheckBox checkBox;
-        TextView tvShopName;
         TextView tvAddress;
+        TextView tvShopName;
         TextView tvDistance;
 
-        public ShopHolder(View itemView) {
+        public VenuesHolder(View itemView) {
             super(itemView);
             checkBox = (CheckBox) itemView.findViewById(R.id.check_box);
             tvShopName = (TextView) itemView.findViewById(R.id.tv_shop_name);
             tvAddress = (TextView) itemView.findViewById(R.id.tv_address);
             tvDistance = (TextView) itemView.findViewById(R.id.tv_distance);
-
         }
     }
 }

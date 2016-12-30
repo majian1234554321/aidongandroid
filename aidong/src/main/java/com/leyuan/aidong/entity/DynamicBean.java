@@ -1,5 +1,6 @@
 package com.leyuan.aidong.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import java.util.List;
  * 爱动圈动态
  * Created by song on 2016/12/26.
  */
-public class DynamicBean {
+public class DynamicBean implements Serializable{
     public String id;
     public String content;
     public List<String> image;
@@ -53,6 +54,7 @@ public class DynamicBean {
             public Publisher publisher;
             public class Publisher{
                 public String publisher_id;
+                public String published_at;
                 public String name;
                 public String avatar;
                 public String gender;
