@@ -5,12 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.SharedElementCallback;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.transition.Fade;
-import android.transition.Visibility;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
+import android.view.Window;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
@@ -20,6 +20,7 @@ import com.leyuan.aidong.widget.customview.ViewPagerFixed;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 图片预览
@@ -35,6 +36,8 @@ public class ImagePreviewActivity extends BaseActivity implements ImagePreviewTo
     private ImagePreviewAdapter previewAdapter;
     private AlertDialog.Builder builder;
 
+    private View view;
+
     public static void start(Context context, ArrayList<String> urls, int position) {
         Intent starter = new Intent(context, ImagePreviewActivity.class);
         starter.putExtra("urls",urls);
@@ -46,6 +49,7 @@ public class ImagePreviewActivity extends BaseActivity implements ImagePreviewTo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupWindowAnimations();
+
         setContentView(R.layout.activity_image_preview);
         if(getIntent() != null){
             data = this.getIntent().getStringArrayListExtra("urls");
@@ -55,6 +59,26 @@ public class ImagePreviewActivity extends BaseActivity implements ImagePreviewTo
 
         initView();
         setListener();
+
+     /*   supportPostponeEnterTransition();
+        viewpager.getViewTreeObserver().addOnPreDrawListener(
+                new ViewTreeObserver.OnPreDrawListener() {
+                    @Override
+                    public boolean onPreDraw() {
+                        viewpager.getViewTreeObserver().removeOnPreDrawListener(this);
+                        supportStartPostponedEnterTransition();
+                        return true;
+                    }
+                }
+        );*/
+
+        setExitSharedElementCallback(new SharedElementCallback() {
+            @Override
+            public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
+                super.onMapSharedElements(names, sharedElements);
+                sharedElements.put(ViewCompat.getTransitionName(view),view);
+            }
+        });
     }
 
     private void setListener() {
@@ -92,7 +116,8 @@ public class ImagePreviewActivity extends BaseActivity implements ImagePreviewTo
     }
 
     @Override
-    public void onSingleTag() {
+    public void onSingleTag(View view) {
+        this.view = view;
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             finishAfterTransition();
         }else {
@@ -118,10 +143,14 @@ public class ImagePreviewActivity extends BaseActivity implements ImagePreviewTo
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void setupWindowAnimations() {
-        Fade fade = new Fade();
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        /*Fade fade = new Fade();
         fade.setDuration(100);
         fade.setInterpolator(new AccelerateInterpolator(2));
         fade.setMode(Visibility.MODE_IN);
         getWindow().setEnterTransition(fade);
+        getWindow().setSharedElementEnterTransition(new ChangeBounds());*/
     }
+
+
 }

@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.mvp.model.impl;
 
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.data.PayOrderData;
 import com.leyuan.aidong.entity.data.ShopData;
 import com.leyuan.aidong.http.RetrofitHelper;
 import com.leyuan.aidong.http.RxHelper;
@@ -51,6 +52,14 @@ public class CartModelImpl implements CartModel{
         cartService.updateCart(id,mount)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
+    @Override
+    public void payCart(Subscriber<PayOrderData> subscriber, String integral, String coin,
+                        String coupon, String payType, String pickUpId, String... id) {
+        cartService.payCart(integral,coin,coupon,payType,pickUpId,id)
+                .compose(RxHelper.<PayOrderData>transform())
                 .subscribe(subscriber);
     }
 }

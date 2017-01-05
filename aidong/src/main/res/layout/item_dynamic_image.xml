@@ -3,5 +3,6 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/dv_image"
         android:layout_width="100dp"
-        android:layout_height="100dp">
+        android:layout_height="100dp"
+        android:scaleType="centerCrop">
 </com.facebook.drawee.view.SimpleDraweeView>

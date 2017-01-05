@@ -19,6 +19,7 @@
             android:layout_height="40dp"
             android:layout_centerVertical="true"
             fresco:actualImageScaleType="centerCrop"
+            fresco:roundAsCircle="true"
             fresco:placeholderImage="@drawable/place_holder_user"
             fresco:pressedStateOverlayImage="@color/color_image_press" />
 

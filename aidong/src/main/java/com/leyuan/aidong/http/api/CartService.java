@@ -1,6 +1,7 @@
 package com.leyuan.aidong.http.api;
 
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.data.PayOrderData;
 import com.leyuan.aidong.entity.data.ShopData;
 
 import retrofit2.http.DELETE;
@@ -52,4 +53,20 @@ public interface CartService {
     @FormUrlEncoded
     @PUT("mine/cart/{id}")
     Observable<BaseBean> updateCart(@Path("id") String id,@Field("amount") int amount);
+
+    /**
+     * 购物车结算
+     * @param id
+     * @param integral
+     * @param coin
+     * @param coupon
+     * @param payType
+     * @param pickUpId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("mine/cart/settle")
+    Observable<BaseBean<PayOrderData>> payCart(@Field("integral") String integral, @Field("coin") String coin,
+                                               @Field("coupon") String coupon, @Field("pay_type") String payType,
+                                               @Field("pick_up_id") String pickUpId,@Field("id[]") String... id);
 }

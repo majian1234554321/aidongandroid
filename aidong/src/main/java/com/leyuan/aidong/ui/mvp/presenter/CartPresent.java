@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.mvp.presenter;
 
+import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.widget.customview.SwitcherLayout;
 
 /**
@@ -39,4 +40,16 @@ public interface CartPresent {
      * @param amount 数量
      */
     void addCart(String skuCode, int amount,String gymId);
+
+    /**
+     * 购物车结算
+     * @param id 结算的购物车条目
+     * @param integral 积分
+     * @param coin 爱币
+     * @param coupon 优惠券
+     * @param payType 支付类型
+     * @param pickUpId 自提或地址id
+     */
+    void payCart( String integral, String coin, String coupon, String payType, String pickUpId,
+                  PayInterface.PayListener payListener,String... id);
 }

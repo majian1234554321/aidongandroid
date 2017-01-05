@@ -16,4 +16,5 @@ public interface GoodsDetailActivityView {
     void  setGoodsDetail(GoodsDetailBean goodsDetailBean);
 
 
+
 }

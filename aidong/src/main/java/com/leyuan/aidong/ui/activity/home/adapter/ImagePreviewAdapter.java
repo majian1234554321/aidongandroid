@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,7 +84,9 @@ public class ImagePreviewAdapter extends PagerAdapter{
         final DonutProgress progress = (DonutProgress) itemView.findViewById(R.id.view_progress);
         setOnClickListener(rootView, normalImage,longImage, gifImage);
         setOnLongClickListener(rootView,position,normalImage,longImage, gifImage);
-
+        ViewCompat.setTransitionName(normalImage, String.valueOf(position) + "transition");
+        ViewCompat.setTransitionName(longImage, String.valueOf(position) + "transition");
+        ViewCompat.setTransitionName(gifImage, String.valueOf(position) + "transition");
         ImageLoader.getInstance().loadImage(data.get(position), null, options, new SimpleImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
@@ -92,11 +95,13 @@ public class ImagePreviewAdapter extends PagerAdapter{
                 } else {
                     progress.setVisibility(View.GONE);
                 }
+
             }
 
             @Override
             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
                 progress.setVisibility(View.GONE);
+
             }
 
             @Override
@@ -120,6 +125,7 @@ public class ImagePreviewAdapter extends PagerAdapter{
                 }
                 progress.setProgress(100);
                 progress.setVisibility(View.GONE);
+
             }
         }, new ImageLoadingProgressListener() {
             @Override
@@ -137,36 +143,36 @@ public class ImagePreviewAdapter extends PagerAdapter{
     }
 
     private void setOnClickListener(RelativeLayout rootView, PhotoView normalImage, SubsamplingScaleImageView longImage, GifImageView gifImage) {
-        rootView.setOnClickListener(new View.OnClickListener() {
+       /* rootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                listener.onSingleTag();
             }
-        });
+        });*/
 
         normalImage.setOnPhotoTapListener(new OnPhotoTapListener() {
             @Override
             public void onPhotoTap(View view, float v, float v1) {
-                listener.onSingleTag();
+                listener.onSingleTag(view);
             }
 
             @Override
             public void onOutsidePhotoTap() {
-                listener.onSingleTag();
+             //   listener.onSingleTag();
             }
         });
 
         longImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onSingleTag();
+                listener.onSingleTag(v);
             }
         });
 
         gifImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               listener.onSingleTag();
+               listener.onSingleTag(v);
             }
         });
     }
@@ -200,7 +206,7 @@ public class ImagePreviewAdapter extends PagerAdapter{
 
 
    public interface HandleListener {
-        void onSingleTag();
+       void onSingleTag(View view);
        void  onLongClick();
     }
 

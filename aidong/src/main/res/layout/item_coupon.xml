@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="15dp"
+    android:layout_marginLeft="@dimen/left_margin"
+    android:layout_marginRight="@dimen/right_margin"
     android:background="@drawable/bg_coupon_fold">
 
     <LinearLayout
@@ -55,19 +57,21 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="新人抵用用劵"
             android:textColor="@color/c3"
-            android:textSize="14sp" />
+            android:textSize="16sp" />
 
         <TextView
+            android:id="@+id/tv_produce_condition"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:text="指定特殊产品可用"
             android:textColor="@color/c3"
-            android:textSize="14sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_use_money"
@@ -76,7 +80,7 @@
             android:layout_marginTop="2dp"
             android:text="满300元可用"
             android:textColor="@color/c3"
-            android:textSize="14sp" />
+            android:textSize="16sp" />
     </LinearLayout>
 
     <ImageView
@@ -89,7 +93,7 @@
 
     <LinearLayout
         android:id="@+id/ll_coupon_type"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/line"
         android:layout_marginLeft="15dp"
@@ -103,7 +107,7 @@
             android:layout_height="wrap_content"
             android:text="专用劵"
             android:textColor="@color/c3"
-            android:textSize="14sp" />
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/iv_arrow"
@@ -112,27 +116,29 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="3dp"
             android:src="@drawable/icon_arrow_down_coupon" />
-
-        <TextView
-            android:id="@+id/tv_time"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:text="2016.8.20到期"
-            android:textColor="@color/c3"
-            android:textSize="14sp" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2016.8.20到期"
+        android:textColor="@color/c3"
+        android:textSize="14sp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/right_margin"
+        android:layout_alignBottom="@+id/ll_coupon_type"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_coupon_desc"
+    <TextView
+        android:id="@+id/tv_coupon_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ll_coupon_type"
         android:layout_marginBottom="15dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:textSize="14sp"
+        android:textColor="@color/c3" />
 
 </RelativeLayout>

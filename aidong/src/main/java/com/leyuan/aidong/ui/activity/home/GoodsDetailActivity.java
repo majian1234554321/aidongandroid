@@ -37,6 +37,7 @@ import com.leyuan.aidong.ui.activity.mine.CartActivity;
 import com.leyuan.aidong.ui.fragment.home.GoodsDetailFragment;
 import com.leyuan.aidong.ui.fragment.home.GoodsProblemFragment;
 import com.leyuan.aidong.ui.fragment.home.GoodsServiceFragment;
+import com.leyuan.aidong.ui.mvp.presenter.CouponPresent;
 import com.leyuan.aidong.ui.mvp.presenter.GoodsDetailPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.GoodsDetailPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.GoodsDetailActivityView;
@@ -61,7 +62,7 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  * 商品详情
  * Created by song on 2016/9/12.
  */
-public class GoodsDetailActivity extends BaseActivity implements View.OnClickListener,GoodsDetailActivityView, BGABanner.OnItemClickListener, GoodsSkuPopupWindow.SelectSkuListener, SmartTabLayout.TabProvider, PopupWindow.OnDismissListener {
+public class GoodsDetailActivity extends BaseActivity implements View.OnClickListener, GoodsDetailActivityView, BGABanner.OnItemClickListener, GoodsSkuPopupWindow.SelectSkuListener, SmartTabLayout.TabProvider, PopupWindow.OnDismissListener{
     public static final String TYPE_NURTURE = "nutrition";
     public static final String TYPE_EQUIPMENT = "equipments";
     public static final String TYPE_FOODS = "foods";
@@ -119,6 +120,8 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     private String gymId;
     private String count;
     private List<String> selectedSkuValues = new ArrayList<>();
+
+    private CouponPresent couponPresent;
 
   /*  private ViewPager bannerViewPager;
     private SimplePagerAdapter pagerAdapter;*/
@@ -216,6 +219,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         tvAddCart.setOnClickListener(this);
         tvPay.setOnClickListener(this);
         bannerLayout.setOnItemClickListener(this);
+
         detailsLayout.setOnSlideDetailsListener(new MyOnSlideDetailsListener());
         appBarLayout.addOnOffsetChangedListener(new MyOnOffsetChangedListener());
     }
@@ -237,8 +241,8 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         if(bean.coupon == null || bean.coupon.isEmpty()){
             tvCoupon.setVisibility(View.GONE);
             lineCoupon.setVisibility(View.GONE);
-            couponAdapter.setData(bean.coupon);
         }else{
+            couponAdapter.setData(bean.coupon);
             tvCoupon.setVisibility(View.VISIBLE);
             lineCoupon.setVisibility(View.VISIBLE);
         }
@@ -437,6 +441,10 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             }
         }
     }
+
+
+
+
 
     private class MyOnSlideDetailsListener implements SlideDetailsLayout.OnSlideDetailsListener{
         @Override

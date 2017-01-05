@@ -27,7 +27,7 @@ import java.util.List;
  * 发现界面动态适配器
  * Created by song on 2016/8/29.
  */
-public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicHolder>{
+public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicHolder>  {
     private Context context;
     private List<DynamicBean> data = new ArrayList<>();
     private OnHandleDynamicListener handleDynamicListener;
@@ -53,8 +53,8 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
     }
 
     @Override
-    public void onBindViewHolder(DynamicHolder holder, int position) {
-        DynamicBean dynamic = data.get(position);
+    public void onBindViewHolder(DynamicHolder holder, final int position) {
+        final DynamicBean dynamic = data.get(position);
         DynamicBean.Publisher publisher = dynamic.publisher;
 
         //头部信息
@@ -75,34 +75,22 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
 
         //图片
         List<String> images = dynamic.image;
+        DynamicImageAdapter imageAdapter = null;
         if(images != null) {
-            DynamicImageAdapter imageAdapter;
+            int spanCount = 1;
+            if(images.size() == 1){
+                spanCount = 1;
+            }else if(images.size() == 2 || images.size() == 4){
+                spanCount = 2;
+            }else if(images.size() == 6){
+                spanCount = 3;
+            }
             switch (images.size()) {
                 case 0:
                     holder.videoLayout.setVisibility(View.GONE);
                     holder.photoLayout.setVisibility(View.GONE);
                     holder.threePhotoLayout.setVisibility(View.GONE);
                     holder.fivePhotoLayout.setVisibility(View.GONE);
-                    break;
-                case 1:
-                    holder.videoLayout.setVisibility(View.GONE);
-                    holder.photoLayout.setVisibility(View.VISIBLE);
-                    holder.threePhotoLayout.setVisibility(View.GONE);
-                    holder.fivePhotoLayout.setVisibility(View.GONE);
-                    holder.photoLayout.setLayoutManager(new GridLayoutManager(context,1));
-                    imageAdapter = new DynamicImageAdapter(context);
-                    imageAdapter.setData(dynamic.image);
-                    holder.photoLayout.setAdapter(imageAdapter);
-                    break;
-                case 2:
-                    holder.videoLayout.setVisibility(View.GONE);
-                    holder.photoLayout.setVisibility(View.VISIBLE);
-                    holder.threePhotoLayout.setVisibility(View.GONE);
-                    holder.fivePhotoLayout.setVisibility(View.GONE);
-                    holder.photoLayout.setLayoutManager(new GridLayoutManager(context,2));
-                    imageAdapter = new DynamicImageAdapter(context);
-                    imageAdapter.setData(dynamic.image);
-                    holder.photoLayout.setAdapter(imageAdapter);
                     break;
                 case 3:
                     holder.videoLayout.setVisibility(View.GONE);
@@ -112,16 +100,6 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
                     holder.dvThreeFirst.setImageURI(images.get(0));
                     holder.dvThreeSecond.setImageURI(images.get(1));
                     holder.dvThreeThird.setImageURI(images.get(2));
-                    break;
-                case 4:
-                    holder.videoLayout.setVisibility(View.GONE);
-                    holder.photoLayout.setVisibility(View.VISIBLE);
-                    holder.threePhotoLayout.setVisibility(View.GONE);
-                    holder.fivePhotoLayout.setVisibility(View.GONE);
-                    holder.photoLayout.setLayoutManager(new GridLayoutManager(context,2));
-                    imageAdapter = new DynamicImageAdapter(context);
-                    imageAdapter.setData(dynamic.image);
-                    holder.photoLayout.setAdapter(imageAdapter);
                     break;
                 case 5:
                     holder.videoLayout.setVisibility(View.GONE);
@@ -134,12 +112,15 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
                     holder.dvFiveFourth.setImageURI(images.get(3));
                     holder.dvFiveLast.setImageURI(images.get(4));
                     break;
+                case 1:
+                case 2:
+                case 4:
                 case 6:
                     holder.videoLayout.setVisibility(View.GONE);
                     holder.photoLayout.setVisibility(View.VISIBLE);
                     holder.threePhotoLayout.setVisibility(View.GONE);
                     holder.fivePhotoLayout.setVisibility(View.GONE);
-                    holder.photoLayout.setLayoutManager(new GridLayoutManager(context,3));
+                    holder.photoLayout.setLayoutManager(new GridLayoutManager(context,spanCount));
                     imageAdapter = new DynamicImageAdapter(context);
                     imageAdapter.setData(dynamic.image);
                     holder.photoLayout.setAdapter(imageAdapter);
@@ -148,6 +129,8 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
                     break;
             }
         }
+
+
         //视频
         if(dynamic.video != null){
             holder.videoLayout.setVisibility(View.VISIBLE);
@@ -186,6 +169,18 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
         //底部操作
         holder.tvLikeCount.setText(dynamic.like_user.count);
         holder.tvCommentCount.setText(dynamic.comment.count);
+
+        if(imageAdapter != null) {
+            imageAdapter.setImageClickListener(new DynamicImageAdapter.ImageClickListener() {
+                @Override
+                public void onImageClick(View view, int imagePosition) {
+                    if(handleDynamicListener != null){
+                        handleDynamicListener.onImageClickListener(view,position,imagePosition);
+                    }
+                }
+            });
+        }
+
         holder.bottomLikeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -194,6 +189,7 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
                 }
             }
         });
+
         holder.bottomCommentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -212,6 +208,8 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
             }
         });
     }
+
+
 
     class DynamicHolder extends RecyclerView.ViewHolder{
 
@@ -311,10 +309,10 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
 
     public interface OnHandleDynamicListener {
         void onAvatarClickListener();
-        void onImageClickListener();
-        void onVedioClickListener();
+        void onImageClickListener(View view,int itemPosition,int imagePosition);
+        void onVideoClickListener();
         void onShowMoreLikeClickListener();
-        void onShowMoreCommenClickListener();
+        void onShowMoreCommentClickListener();
         void onLikeClickListener();
         void onCommonClickListener();
         void onShareClickListener();

@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.mvp.model;
 
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.data.PayOrderData;
 import com.leyuan.aidong.entity.data.ShopData;
 
 import rx.Subscriber;
@@ -39,4 +40,17 @@ public interface CartModel {
      * @param mount 数量
      */
     void updateCart(Subscriber<BaseBean> subscriber,String id,int mount);
+
+    /**
+     * 结算购物车
+     * @param subscriber Subscriber
+     * @param id 结算条目id
+     * @param integral 积分
+     * @param coin 爱币
+     * @param coupon 优惠券
+     * @param payType 支付类型
+     * @param pickUpId 自提或地址id
+     */
+    void payCart(Subscriber<PayOrderData> subscriber, String integral, String coin ,
+                 String coupon, String payType, String pickUpId,String... id);
 }

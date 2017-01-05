@@ -1,6 +1,9 @@
 package com.leyuan.aidong.ui.fragment.discover;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +14,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.activity.discover.adapter.DynamicAdapter;
+import com.leyuan.aidong.ui.activity.home.ImagePreviewActivity;
 import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.SportCircleFragmentView;
@@ -36,7 +40,6 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
 
     @Override
     public View onCreateView(LayoutInflater inflater,  ViewGroup container,Bundle savedInstanceState) {
-
         return inflater.inflate(R.layout.fragment_circle,null);
     }
 
@@ -51,7 +54,12 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
         recyclerView.setAdapter(wrapperAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         dynamicAdapter.setData(dynamicList);
+        dynamicAdapter.setHandleDynamicListener(new HandleDynamicListener());
         recyclerView.addOnScrollListener(onScrollListener);
+       // dynamicPresent.pullToRefreshData();
+
+
+
     }
 
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
@@ -75,18 +83,25 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
     }
 
 
-    {
+   {
         for (int i = 0; i < 7; i++) {
             DynamicBean b = new DynamicBean();
             b.content = "内容" + i;
             List<String> image = new ArrayList<>();
-            for (int j = 0; j < i; j++) {
+            if(i == 4){
+                image.add("http://ww4.sinaimg.cn/mw690/61ecbb3djw1fb91u8cc60j20ku0xc7ct.jpg");
                 image.add("http://ww2.sinaimg.cn/mw690/006uFQHgjw1fb54ut8kc8j30zk0qowmb.jpg");
+                image.add("http://ww1.sinaimg.cn/mw690/005EbyOWjw1fbedmg8hqsj30c464t1kx.jpg");
+                image.add("http://ww2.sinaimg.cn/mw690/61ecbb3djw1fbdm5afmycg207r04anpd.gif");
+            }else {
+                for (int j = 0; j < i; j++) {
+                    image.add("http://ww2.sinaimg.cn/mw690/006uFQHgjw1fb54ut8kc8j30zk0qowmb.jpg");
+                }
             }
             b.image =  image;
             DynamicBean.Publisher p = b.new Publisher();
             p.name = "song";
-            p.avatar = "https://www.baidu.com/img/bd_logo1.png";
+            p.avatar = "http://ww4.sinaimg.cn/mw690/61ecbb3djw1fb91u8cc60j20ku0xc7ct.jpg";
             b.publisher = p;
             b.published_at = "2016-8-8";
 
@@ -119,4 +134,53 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
             dynamicList.add(b);
         }
     }
+
+   private class HandleDynamicListener implements DynamicAdapter.OnHandleDynamicListener{
+
+       @Override
+       public void onAvatarClickListener() {
+
+       }
+
+       @Override
+       public void onImageClickListener(View view,int itemPosition, int imagePosition) {
+           Intent i = new Intent(getContext(), ImagePreviewActivity.class);
+           ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation
+                   (getActivity(), view,ViewCompat.getTransitionName(view));
+           i.putExtra("urls",(ArrayList)dynamicList.get(itemPosition).image);
+           i.putExtra("position",imagePosition);
+           startActivity(i, optionsCompat.toBundle());
+           //ImagePreviewActivity.start(context,(ArrayList<String>) data,position);
+       }
+
+       @Override
+       public void onVideoClickListener() {
+
+       }
+
+       @Override
+       public void onShowMoreLikeClickListener() {
+
+       }
+
+       @Override
+       public void onShowMoreCommentClickListener() {
+
+       }
+
+       @Override
+       public void onLikeClickListener() {
+
+       }
+
+       @Override
+       public void onCommonClickListener() {
+
+       }
+
+       @Override
+       public void onShareClickListener() {
+
+       }
+   }
 }

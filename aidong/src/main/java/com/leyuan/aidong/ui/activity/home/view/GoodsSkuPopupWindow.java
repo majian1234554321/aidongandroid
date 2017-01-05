@@ -18,7 +18,6 @@ import com.leyuan.aidong.entity.GoodsSkuBean;
 import com.leyuan.aidong.entity.GoodsSkuValueBean;
 import com.leyuan.aidong.entity.LocalGoodsSkuBean;
 import com.leyuan.aidong.entity.ShopBean;
-import com.leyuan.aidong.ui.activity.home.ConfirmOrderActivity;
 import com.leyuan.aidong.ui.activity.home.GoodsDetailActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.GoodsSkuAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.CartPresent;
@@ -312,7 +311,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         goodsBean.setPrice(detailBean.price);
         goodsBeanList.add(goodsBean);
         shopBean.setItem(goodsBeanList);
-        ConfirmOrderActivity.start(context,shopBean);
+      //  ConfirmOrderActivity.start(context,shopBean);
     }
 
     @Override

@@ -104,31 +104,6 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
         shopAdapter.setShopChangeListener(this);
     }
 
-    /*{
-        for (int i = 0; i < 5; i++) {
-            ShopBean bean = new ShopBean();
-            bean.setName("第" + (i + 1) +"个商店" );
-
-            List<GoodsBean> goods = new ArrayList<>();
-            for (int i1 = 0; i1 < 2; i1++) {
-                GoodsBean good = new GoodsBean();
-                good.setId(i1 + i + "");
-                good.setName("第" + (i + 1) +"个商店中的第" + (i1 + 1)+"件商品");
-                good.setAmount((i+1) + "");
-                if(i1 % 2 == 0){
-                    good.setPrice("10");
-                    good.setCover("http://ww1.sinaimg.cn/mw690/6592c2e0jw1f9dps0ijpjj20qo0ynwht.jpg");
-                }else {
-                    good.setPrice("50");
-                    good.setCover("http://ww4.sinaimg.cn/mw690/718878b5jw1f9dlw9chi5j20f00ciq41.jpg");
-                }
-                goods.add(good);
-            }
-            bean.setItem(goods);
-            this.shopBeanList.add(bean);
-        }
-    }*/
-
     @Override
     public void onClick(View v) {
         switch (v.getId()){

@@ -7,6 +7,7 @@ import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.entity.data.CouponData;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
+import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.aidong.ui.mvp.model.CouponModel;
@@ -14,6 +15,7 @@ import com.leyuan.aidong.ui.mvp.model.impl.CouponModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.CouponPresent;
 import com.leyuan.aidong.ui.mvp.view.CouponExchangeActivityView;
 import com.leyuan.aidong.ui.mvp.view.CouponFragmentView;
+import com.leyuan.aidong.ui.mvp.view.GoodsDetailActivityView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.widget.customview.SwitcherLayout;
 
@@ -34,6 +36,7 @@ public class CouponPresentImpl implements CouponPresent {
 
     //领取优惠劵View层对象
     private CouponExchangeActivityView exchangeCouponView;
+    private GoodsDetailActivityView goodsDetailActivityView;
 
     public CouponPresentImpl(Context context, CouponFragmentView view) {
         this.context = context;
@@ -51,6 +54,7 @@ public class CouponPresentImpl implements CouponPresent {
             couponModel = new CouponModelImpl();
         }
     }
+
 
     @Override
     public void commonLoadData(final SwitcherLayout switcherLayout, String type) {
@@ -105,12 +109,14 @@ public class CouponPresentImpl implements CouponPresent {
     }
 
     @Override
-    public void obtainCoupon(SwitcherLayout switcherLayout, String id) {
-        couponModel.obtainCoupon(new CommonSubscriber<BaseBean>(switcherLayout) {
+    public void obtainCoupon(String id) {
+        couponModel.obtainCoupon(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
                 if(baseBean != null){
-                    exchangeCouponView.obtainCouponResult(baseBean);
+                    if(exchangeCouponView != null) {
+                        exchangeCouponView.obtainCouponResult(baseBean);
+                    }
                 }
             }
         },id);

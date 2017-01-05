@@ -32,7 +32,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical|right"
             android:layout_height="match_parent"
-            android:text="快递"
+            android:text="自提"
             android:textColor="@color/c3"
             android:textSize="16sp"/>
 

@@ -3,10 +3,14 @@ package com.leyuan.aidong.ui.mvp.presenter.impl;
 import android.content.Context;
 
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.data.PayOrderData;
 import com.leyuan.aidong.entity.data.ShopData;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
+import com.leyuan.aidong.module.pay.AliPay;
+import com.leyuan.aidong.module.pay.PayInterface;
+import com.leyuan.aidong.module.pay.WeiXinPay;
 import com.leyuan.aidong.ui.mvp.model.CartModel;
 import com.leyuan.aidong.ui.mvp.model.impl.CartModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.CartPresent;
@@ -23,6 +27,13 @@ public class CartPresentImpl implements CartPresent {
     private CartModel cartModel;
     private CartActivityView cartActivityView;
     private GoodsSkuPopupWindowView skuPopupWindowView;
+
+    public CartPresentImpl(Context context) {
+        this.context = context;
+        if(cartModel == null){
+            cartModel = new CartModelImpl();
+        }
+    }
 
     public CartPresentImpl(Context context, CartActivityView cartActivityView) {
         this.context = context;
@@ -95,5 +106,19 @@ public class CartPresentImpl implements CartPresent {
                 skuPopupWindowView.addCartResult(baseBean);   //未作校验 上层自行判断
             }
         },skuCode,amount,gymId);
+    }
+
+    @Override
+    public void payCart(String integral, String coin, String coupon, String payType,
+                        String pickUpId, final PayInterface.PayListener listener,String... id) {
+        cartModel.payCart(new ProgressSubscriber<PayOrderData>(context) {
+            @Override
+            public void onNext(PayOrderData payOrderData) {
+                String payType = payOrderData.getOrder().getPayType();
+                PayInterface payInterface = "alipay".equals(payType) ? new AliPay(context,listener)
+                        : new WeiXinPay(context,listener);
+                payInterface.payOrder(payOrderData.getOrder());
+            }
+        },integral,coin,coupon,payType,pickUpId,id);
     }
 }

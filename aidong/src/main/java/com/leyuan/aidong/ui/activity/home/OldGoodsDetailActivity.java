@@ -210,7 +210,7 @@ public class OldGoodsDetailActivity extends BaseActivity implements View.OnClick
                     goodsBean.setCover(detailBean.image.get(0));
                     goodsBeanList.add(goodsBean);
                     shopBean.setItem(goodsBeanList);
-                    ConfirmOrderActivity.start(this,shopBean);
+                   // ConfirmOrderActivity.start(this,shopBean);
                 }else {
                     showSelectSkuPopup(true,null);
                 }

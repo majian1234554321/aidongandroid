@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/line_color">
     <com.leyuan.aidong.widget.customview.SimpleTitleBar
+        android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
         app:stb_title="优惠劵兑换码"/>

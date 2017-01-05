@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:text="150"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="22dp"
+        android:layout_alignBottom="@+id/tv_goods_name"
         android:textSize="16sp"
         android:textColor="@color/c3"/>
 
@@ -61,6 +61,16 @@
         android:layout_marginLeft="10dp"
         android:layout_alignBottom="@+id/tv_sku"
         android:layout_toRightOf="@+id/tv_sku"/>
+
+    <TextView
+        android:id="@+id/tv_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:layout_alignParentRight="true"
+        android:text="X 1"
+        android:textColor="@color/black"
+        android:layout_alignTop="@+id/tv_recommend_code"/>
 
     <View
         android:layout_width="match_parent"
