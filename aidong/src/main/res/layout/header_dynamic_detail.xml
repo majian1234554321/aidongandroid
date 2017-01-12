@@ -18,6 +18,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_centerVertical="true"
+            fresco:roundAsCircle="true"
             fresco:actualImageScaleType="centerCrop"
             fresco:placeholderImage="@drawable/place_holder_user"
             fresco:pressedStateOverlayImage="@color/color_image_press" />
@@ -310,8 +311,9 @@
                 android:id="@+id/iv_share"
                 android:layout_width="26dp"
                 android:layout_height="26dp"
-                android:layout_centerInParent="true"
-                android:src="@drawable/btn_share" />
+                android:src="@drawable/btn_share"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
         </RelativeLayout>
     </LinearLayout>
 

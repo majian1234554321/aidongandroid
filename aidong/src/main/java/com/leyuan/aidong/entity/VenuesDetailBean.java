@@ -3,7 +3,7 @@ package com.leyuan.aidong.entity;
 import java.util.ArrayList;
 
 /**
- * 活动详情
+ * 场馆详情
  * Created by song on 2016/8/2.
  */
 public class VenuesDetailBean {
@@ -15,7 +15,8 @@ public class VenuesDetailBean {
     private String address;
     private String business_time;
     private ArrayList<String> service;
-    private String phone;
+    private String tel;
+
 
     public String getId() {
         return id;
@@ -81,12 +82,12 @@ public class VenuesDetailBean {
         this.service = service;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getTel() {
+        return tel;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setTel(String tel) {
+        this.tel = tel;
     }
 
     @Override

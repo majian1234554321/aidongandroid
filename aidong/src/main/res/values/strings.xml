@@ -783,7 +783,7 @@
     <string name="releasestrategy">发布攻略</string>
     <string name="icon_down">&#xe609;</string>
     <string name="icon_find">&#xe639;</string>
-    <string name="person">人</string>
+    <string name="user">人</string>
     <string name="allevaluation">全部评价</string>
     <item name="tag_first" type="id"></item>
     <string name="search_venues">请输入场馆名/场馆地址</string>

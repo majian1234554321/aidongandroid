@@ -151,6 +151,7 @@
         <activity android:name=".ui.activity.mine.AppointCourseDetailActivity" />
         <activity android:name=".ui.activity.home.AppointmentUserActivity"/>
         <activity android:name=".ui.activity.mine.UpdateAddressActivity"/>
+        <activity android:name=".ui.activity.discover.DynamicDetailActivity"/>
         <activity android:name=".ui.activity.mine.UserInfoActivity"/>
         <activity android:name=".ui.WebViewActivity"/>
         <activity android:name=".ui.activity.video.WatchOfficeActivity"/>

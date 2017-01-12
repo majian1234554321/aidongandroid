@@ -40,7 +40,7 @@
 -keep class com.alipay.android.app.IRemoteServiceCallback$Stub{*;}
 -keep class com.alipay.sdk.app.PayTask{ public *;}
 -keep class com.alipay.sdk.app.AuthTask{ public *;}
-#-----------------------------------------------------------------
+
 
 
 #--------------QQ---------
@@ -51,4 +51,10 @@
 #--------------EMChat---------
 -keep class com.hyphenate.** {*;}
 -dontwarn  com.hyphenate.**
+
+#--------------------qiniu------------------------------------------
+-keep class com.qiniu.**{*;}
+-keep class com.qiniu.**{public <init>();}
+-ignorewarnings
+
 

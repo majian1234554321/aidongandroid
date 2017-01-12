@@ -8,6 +8,7 @@ import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.entity.data.DiscoverData;
 import com.leyuan.aidong.entity.data.DiscoverNewsData;
 import com.leyuan.aidong.entity.data.DiscoverUserData;
+import com.leyuan.aidong.http.subscriber.BaseSubscriber;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
@@ -61,12 +62,24 @@ public class DiscoverPresentImpl implements DiscoverPresent {
     }
 
     @Override
-    public void getDiscoverData(final SwitcherLayout switcherLayout) {
-        discoverModel.getDiscover(new CommonSubscriber<DiscoverData>(switcherLayout) {
+    public void commonLoadDiscoverData(final SwitcherLayout switcherLayout) {
+       discoverModel.getDiscover(new CommonSubscriber<DiscoverData>(switcherLayout) {
             @Override
             public void onNext(DiscoverData discoverData) {
                 if(discoverData != null){
                     switcherLayout.showContentLayout();
+                    discoverFragmentView.setDiscoverData(discoverData);
+                }
+            }
+        });
+    }
+
+
+    public void pullToRefreshDiscoverData(){
+        discoverModel.getDiscover(new BaseSubscriber<DiscoverData>(context) {
+            @Override
+            public void onNext(DiscoverData discoverData) {
+                if(discoverData != null){
                     discoverFragmentView.setDiscoverData(discoverData);
                 }
             }

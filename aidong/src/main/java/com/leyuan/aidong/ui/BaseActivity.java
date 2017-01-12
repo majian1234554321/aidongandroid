@@ -30,7 +30,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class BaseActivity extends AppCompatActivity implements IHttpToastCallBack {
-    protected int pageSize = 25; //默认分页数据量
+    protected int pageSize = 15; //默认分页数据量
     protected int screenWidth;
     protected int screenHeight;
 

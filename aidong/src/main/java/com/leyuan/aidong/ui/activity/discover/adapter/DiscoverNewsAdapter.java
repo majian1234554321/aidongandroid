@@ -29,6 +29,7 @@ public class DiscoverNewsAdapter extends RecyclerView.Adapter<DiscoverNewsAdapte
 
     public void setData(List<NewsBean> news) {
         this.news = news;
+        notifyDataSetChanged();
     }
 
     @Override

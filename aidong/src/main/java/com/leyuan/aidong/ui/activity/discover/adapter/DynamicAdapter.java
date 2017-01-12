@@ -53,7 +53,7 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
     }
 
     @Override
-    public void onBindViewHolder(DynamicHolder holder, final int position) {
+    public void onBindViewHolder(final DynamicHolder holder, final int position) {
         final DynamicBean dynamic = data.get(position);
         DynamicBean.Publisher publisher = dynamic.publisher;
 
@@ -130,7 +130,6 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
             }
         }
 
-
         //视频
         if(dynamic.video != null){
             holder.videoLayout.setVisibility(View.VISIBLE);
@@ -181,6 +180,15 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
             });
         }
 
+        holder.commentRecyclerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(handleDynamicListener != null){
+                    handleDynamicListener.onDynamicDetailClickListener(position);
+                }
+            }
+        });
+
         holder.bottomLikeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -204,6 +212,15 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
             public void onClick(View v) {
                 if(handleDynamicListener != null){
                     handleDynamicListener.onShareClickListener();
+                }
+            }
+        });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(handleDynamicListener != null){
+                    handleDynamicListener.onDynamicDetailClickListener(position);
                 }
             }
         });
@@ -316,5 +333,6 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
         void onLikeClickListener();
         void onCommonClickListener();
         void onShareClickListener();
+        void onDynamicDetailClickListener(int position);
     }
 }

@@ -3,9 +3,11 @@ package com.leyuan.aidong.ui.activity.discover;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,18 +19,29 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.discover.adapter.DynamicDetailAdapter;
+import com.leyuan.aidong.ui.activity.discover.adapter.DynamicImageAdapter;
+import com.leyuan.aidong.ui.activity.discover.adapter.DynamicLikeAdapter;
+import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.widget.customview.SquareRelativeLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
+
+import java.util.List;
+
+import static com.leyuan.aidong.ui.App.context;
 
 /**
  * Created by song on 2016/12/28.
  */
 
 public class DynamicDetailActivity extends BaseActivity implements View.OnClickListener {
+    private ImageView ivBack;
+    private TextView tvReport;
+    private SimpleDraweeView dvUserAvatar;
+    private EditText etComment;
 
     //头部信息
-    private SimpleDraweeView dvAvatar;
+    private SimpleDraweeView dvPublishAvatar;
     private TextView tvName;
     private ImageView ivCoachFlag;
     private TextView tvTime;
@@ -75,14 +88,14 @@ public class DynamicDetailActivity extends BaseActivity implements View.OnClickL
     private RecyclerView commentView;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private DynamicDetailAdapter commentAdapter;
-    private DynamicBean dynamicBean;
+    private DynamicBean dynamic;
 
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dynamic_detail);
         if(getIntent() != null){
-            dynamicBean = (DynamicBean) getIntent().getSerializableExtra("dynamicBean");
+            dynamic = (DynamicBean) getIntent().getSerializableExtra("dynamic");
         }
         initView();
         setListener();
@@ -90,13 +103,18 @@ public class DynamicDetailActivity extends BaseActivity implements View.OnClickL
 
     public static void start(Context context,DynamicBean bean) {
         Intent starter = new Intent(context, DynamicDetailActivity.class);
-        starter.putExtra("dynamicBean",bean);
+        starter.putExtra("dynamic",bean);
         context.startActivity(starter);
     }
 
     private void initView(){
+        ivBack = (ImageView) findViewById(R.id.iv_back);
+        tvReport = (TextView) findViewById(R.id.tv_report);
+        dvUserAvatar = (SimpleDraweeView) findViewById(R.id.dv_user_avatar);
+        etComment = (EditText) findViewById(R.id.et_comment);
+
         View header = View.inflate(this,R.layout.header_dynamic_detail,null);
-        dvAvatar = (SimpleDraweeView) header.findViewById(R.id.dv_avatar);
+        dvPublishAvatar = (SimpleDraweeView) header.findViewById(R.id.dv_avatar);
         tvName = (TextView) header.findViewById(R.id.tv_name);
         ivCoachFlag = (ImageView) header.findViewById(R.id.iv_coach_flag);
         tvTime = (TextView) header.findViewById(R.id.tv_time);
@@ -125,26 +143,127 @@ public class DynamicDetailActivity extends BaseActivity implements View.OnClickL
         tvCommentCount = (TextView) header.findViewById(R.id.tv_comment_count);
         bottomShareLayout = (RelativeLayout) header.findViewById(R.id.bottom_share_layout);
         ivShare = (ImageView) header.findViewById(R.id.iv_share);
-
+        setHeaderView();
         commentView = (RecyclerView)findViewById(R.id.rv_comment);
         commentAdapter = new DynamicDetailAdapter(this);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(commentAdapter);
         commentView.setAdapter(wrapperAdapter);
         commentView.setLayoutManager(new LinearLayoutManager(this));
         RecyclerViewUtils.setHeaderView(commentView,header);
-
-
     }
 
     private void setListener(){
-        dvAvatar.setOnClickListener(this);
-
+        ivBack.setOnClickListener(this);
+        tvReport.setOnClickListener(this);
+        dvUserAvatar.setOnClickListener(this);
+        etComment.setOnClickListener(this);
+        dvPublishAvatar.setOnClickListener(this);
+        bottomLikeLayout.setOnClickListener(this);
+        bottomCommentLayout.setOnClickListener(this);
+        bottomShareLayout.setOnClickListener(this);
     }
-
 
 
     @Override
     public void onClick(View v) {
 
+    }
+
+
+    private void setHeaderView(){
+        DynamicBean.Publisher publisher = dynamic.publisher;
+
+        //头部信息
+        if (publisher != null) {
+            tvName.setText(publisher.name);
+            dvPublishAvatar.setTag(publisher);
+            dvPublishAvatar.setImageURI(publisher.avatar);
+        }
+        tvTime.setText(dynamic.published_at);
+
+        //图片
+        List<String> images = dynamic.image;
+        DynamicImageAdapter imageAdapter = null;
+        if(images != null) {
+            int spanCount = 1;
+            if(images.size() == 1){
+                spanCount = 1;
+            }else if(images.size() == 2 || images.size() == 4){
+                spanCount = 2;
+            }else if(images.size() == 6){
+                spanCount = 3;
+            }
+            switch (images.size()) {
+                case 0:
+                    videoLayout.setVisibility(View.GONE);
+                    photoLayout.setVisibility(View.GONE);
+                    threePhotoLayout.setVisibility(View.GONE);
+                    fivePhotoLayout.setVisibility(View.GONE);
+                    break;
+                case 3:
+                    videoLayout.setVisibility(View.GONE);
+                    photoLayout.setVisibility(View.GONE);
+                    threePhotoLayout.setVisibility(View.VISIBLE);
+                    fivePhotoLayout.setVisibility(View.GONE);
+                    dvThreeFirst.setImageURI(images.get(0));
+                    dvThreeSecond.setImageURI(images.get(1));
+                    dvThreeThird.setImageURI(images.get(2));
+                    break;
+                case 5:
+                    videoLayout.setVisibility(View.GONE);
+                    photoLayout.setVisibility(View.GONE);
+                    threePhotoLayout.setVisibility(View.GONE);
+                    fivePhotoLayout.setVisibility(View.VISIBLE);
+                    dvFiveFirst.setImageURI(images.get(0));
+                    dvFiveSecond.setImageURI(images.get(1));
+                    dvFiveThird.setImageURI(images.get(2));
+                    dvFiveFourth.setImageURI(images.get(3));
+                    dvFiveLast.setImageURI(images.get(4));
+                    break;
+                case 1:
+                case 2:
+                case 4:
+                case 6:
+                    videoLayout.setVisibility(View.GONE);
+                    photoLayout.setVisibility(View.VISIBLE);
+                    threePhotoLayout.setVisibility(View.GONE);
+                    fivePhotoLayout.setVisibility(View.GONE);
+                    photoLayout.setLayoutManager(new GridLayoutManager(context,spanCount));
+                    imageAdapter = new DynamicImageAdapter(context);
+                    imageAdapter.setData(dynamic.image);
+                    photoLayout.setAdapter(imageAdapter);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        //视频
+        if(dynamic.video != null){
+            videoLayout.setVisibility(View.VISIBLE);
+            photoLayout.setVisibility(View.GONE);
+            threePhotoLayout.setVisibility(View.GONE);
+            fivePhotoLayout.setVisibility(View.GONE);
+            dvVideo.setImageURI(dynamic.video.cover);
+        }
+
+        //内容
+        tvContent.setText(dynamic.content);
+
+        //点赞
+        if(FormatUtil.parseInt(dynamic.like_user.count) > 0){
+            likeLayout.setVisibility(View.VISIBLE);
+            likesRecyclerView.setLayoutManager(new LinearLayoutManager
+                    (context,LinearLayoutManager.HORIZONTAL,false));
+            DynamicLikeAdapter likeAdapter = new DynamicLikeAdapter(context);
+            likeAdapter.setData(dynamic.like_user.item);
+            likesRecyclerView.setAdapter(likeAdapter);
+        }else {
+            likeLayout.setVisibility(View.GONE);
+        }
+
+        //底部操作
+        tvLikeCount.setText(dynamic.like_user.count);
+        tvCommentCount.setText(dynamic.comment.count);
     }
 }

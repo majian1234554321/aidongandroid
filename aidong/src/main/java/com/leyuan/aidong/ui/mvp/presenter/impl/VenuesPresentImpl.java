@@ -159,8 +159,8 @@ public class VenuesPresentImpl implements VenuesPresent{
       /* venuesModel.getVenuesDetail(new ProgressSubscriber<VenuesDetailData>(context) {
             @Override
             public void onNext(VenuesDetailData venuesDetailData) {
-                if(venuesDetailData != null && venuesDetailData.getGym() != null){
-                    venuesDetailFragmentView.setVenuesDetail(venuesDetailData.getGym());
+                if(venuesDetailData != null && venuesDetailData.getBrand() != null){
+                    venuesDetailFragmentView.setVenuesDetail(venuesDetailData.getBrand());
                 }
             }
         },id);*/
@@ -170,6 +170,8 @@ public class VenuesPresentImpl implements VenuesPresent{
                 if(venuesDetailData != null && venuesDetailData.getGym() != null){
                     switcherLayout.showContentLayout();
                     venuesDetailFragmentView.setVenuesDetail(venuesDetailData.getGym());
+                }else {
+                    switcherLayout.showEmptyLayout();
                 }
             }
         },id);
@@ -183,6 +185,8 @@ public class VenuesPresentImpl implements VenuesPresent{
                 if(courseData != null && courseData.getCourse() != null && !courseData.getCourse().isEmpty()){
                     switcherLayout.showContentLayout();
                     venuesCourseFragmentView.setCourses(courseData.getCourse());
+                }else {
+                    switcherLayout.showEmptyLayout();
                 }
             }
         },id);
@@ -204,6 +208,8 @@ public class VenuesPresentImpl implements VenuesPresent{
                 if(coachData != null && coachData.getCoach() != null && !coachData.getCoach().isEmpty()){
                     switcherLayout.showContentLayout();
                     venuesCoachFragmentView.setCoaches(coachData.getCoach());
+                }else {
+                    switcherLayout.showEmptyLayout();
                 }
             }
         },id);

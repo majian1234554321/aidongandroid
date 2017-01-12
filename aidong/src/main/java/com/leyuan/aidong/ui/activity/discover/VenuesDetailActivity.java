@@ -94,7 +94,7 @@ public class VenuesDetailActivity extends BaseActivity implements SmartTabLayout
             @Override
             public void onClick(View v) {
                 AppointVenuesActivity.start(VenuesDetailActivity.this,venuesBean.getName(),
-                        venuesBean.getAddress(),venuesBean.getPhone());
+                        venuesBean.getAddress(),venuesBean.getTel());
             }
         });
     }

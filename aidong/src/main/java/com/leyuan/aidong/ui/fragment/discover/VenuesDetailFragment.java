@@ -128,8 +128,9 @@ public class VenuesDetailFragment extends BaseFragment implements View.OnClickLi
     public void setVenuesDetail(VenuesDetailBean venuesBean) {
         ((VenuesDetailActivity)getActivity()).loadFinish(venuesBean);
         tvName.setText(venuesBean.getName());
-        tvPhone.setText(venuesBean.getPhone());
         tvAddress.setText(venuesBean.getAddress());
+        tvPhone.setText(venuesBean.getTel());
+        tvOpenTime.setText(venuesBean.getBusiness_time());
         ivParking.setImageResource(venuesBean.getService().contains("1") ? R.drawable.icon_parking :
                 R.drawable.icon_parking_gray);
         ivWifi.setImageResource(venuesBean.getService().contains("2") ? R.drawable.icon_wifi :

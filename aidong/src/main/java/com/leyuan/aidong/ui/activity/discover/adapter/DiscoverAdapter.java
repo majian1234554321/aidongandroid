@@ -1,7 +1,6 @@
 package com.leyuan.aidong.ui.activity.discover.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,10 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.entity.data.DiscoverData;
-
-import java.util.List;
 
 /**
  * 发现适配器
@@ -35,7 +31,7 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.Discov
 
     @Override
     public int getItemCount() {
-      //  if(discoverData.getGym() != null)
+      //  if(discoverData.getBrand() != null)
         return 3;
     }
 
@@ -48,10 +44,10 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.Discov
     @Override
     public void onBindViewHolder(DiscoverHolder holder, int position) {
         if(position == 0){
-            List<VenuesBean> gym = discoverData.getGym();
+           /* List<VenuesBean> gym = discoverData.getBrand();
             holder.title.setText("品牌场馆");
             holder.more.setText("附近场馆");
-            holder.recyclerView.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false));
+            holder.recyclerView.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false));*/
 
         }
         //else if(position == 1)

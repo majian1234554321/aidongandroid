@@ -1,8 +1,8 @@
 package com.leyuan.aidong.entity.data;
 
+import com.leyuan.aidong.entity.BrandBean;
 import com.leyuan.aidong.entity.NewsBean;
 import com.leyuan.aidong.entity.UserBean;
-import com.leyuan.aidong.entity.VenuesBean;
 
 import java.util.List;
 
@@ -12,24 +12,24 @@ import java.util.List;
  */
 public class DiscoverData {
 
-    private List<VenuesBean> gym;
-    private List<UserBean> person;
+    private List<BrandBean> brand;
+    private List<UserBean> user;
     private List<NewsBean> news;
 
-    public List<VenuesBean> getGym() {
-        return gym;
+    public List<BrandBean> getBrand() {
+        return brand;
     }
 
-    public void setGym(List<VenuesBean> gym) {
-        this.gym = gym;
+    public void setBrand(List<BrandBean> brand) {
+        this.brand = brand;
     }
 
-    public List<UserBean> getPerson() {
-        return person;
+    public List<UserBean> getUser() {
+        return user;
     }
 
-    public void setPerson(List<UserBean> person) {
-        this.person = person;
+    public void setUser(List<UserBean> user) {
+        this.user = user;
     }
 
     public List<NewsBean> getNews() {

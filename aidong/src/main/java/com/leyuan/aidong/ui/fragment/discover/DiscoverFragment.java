@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.fragment.discover;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,25 +15,20 @@ import android.widget.RelativeLayout;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.BannerBean;
-import com.leyuan.aidong.entity.NewsBean;
-import com.leyuan.aidong.entity.UserBean;
-import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.entity.data.DiscoverData;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.activity.discover.DiscoverUserActivity;
 import com.leyuan.aidong.ui.activity.discover.DiscoverVenuesActivity;
 import com.leyuan.aidong.ui.activity.discover.NewsActivity;
+import com.leyuan.aidong.ui.activity.discover.adapter.DiscoverBrandsAdapter;
 import com.leyuan.aidong.ui.activity.discover.adapter.DiscoverNewsAdapter;
 import com.leyuan.aidong.ui.activity.discover.adapter.DiscoverUserAdapter;
-import com.leyuan.aidong.ui.activity.discover.adapter.DiscoverVenuesAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.DiscoverPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DiscoverPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.DiscoverFragmentView;
 import com.leyuan.aidong.utils.SystemInfoUtils;
+import com.leyuan.aidong.widget.customview.SwitcherLayout;
 import com.nostra13.universalimageloader.core.ImageLoader;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 
@@ -41,8 +37,9 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  * Created by song on 2016/11/19.
  */
 public class DiscoverFragment extends BaseFragment implements DiscoverFragmentView, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
-    //private SwitcherLayout switcherLayout;
+    private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
+    private NestedScrollView scrollView;
     private BGABanner banner;
     private RecyclerView rvVenues;
     private RecyclerView rvUser;
@@ -51,7 +48,7 @@ public class DiscoverFragment extends BaseFragment implements DiscoverFragmentVi
     private RelativeLayout moreUserLayout;
     private RelativeLayout moreNewsLayout;
 
-    private DiscoverVenuesAdapter venuesAdapter;
+    private DiscoverBrandsAdapter brandsAdapter;
     private DiscoverUserAdapter userAdapter;
     private DiscoverNewsAdapter newsAdapter;
 
@@ -68,13 +65,13 @@ public class DiscoverFragment extends BaseFragment implements DiscoverFragmentVi
         discoverPresent = new DiscoverPresentImpl(getContext(),this);
         initView(view);
         setListener();
-        getData();
-        //discoverPresent.getDiscoverData(switcherLayout);
+        discoverPresent.commonLoadDiscoverData(switcherLayout);
     }
 
     private void initView(View view) {
         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout);
-        //switcherLayout = new SwitcherLayout(getContext(),refreshLayout);
+        scrollView = (NestedScrollView) view.findViewById(R.id.scroll_view);
+        switcherLayout = new SwitcherLayout(getContext(),scrollView);
         banner = (BGABanner) view.findViewById(R.id.banner);
         rvVenues = (RecyclerView) view.findViewById(R.id.rv_venues);
         rvUser = (RecyclerView) view.findViewById(R.id.rv_user);
@@ -82,7 +79,6 @@ public class DiscoverFragment extends BaseFragment implements DiscoverFragmentVi
         moreVenuesLayout = (RelativeLayout) view.findViewById(R.id.rl_more_venues);
         moreUserLayout = (RelativeLayout) view.findViewById(R.id.rl_more_user);
         moreNewsLayout = (RelativeLayout) view.findViewById(R.id.rl_more_news);
-
         rvVenues.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.HORIZONTAL,false));
         rvUser.setLayoutManager(new GridLayoutManager(getContext(),4));
@@ -90,10 +86,10 @@ public class DiscoverFragment extends BaseFragment implements DiscoverFragmentVi
         rvVenues.setNestedScrollingEnabled(false);
         rvUser.setNestedScrollingEnabled(false);
         rvNews.setNestedScrollingEnabled(false);
-        venuesAdapter = new DiscoverVenuesAdapter(getContext());
+        brandsAdapter = new DiscoverBrandsAdapter(getContext());
         userAdapter = new DiscoverUserAdapter(getContext());
         newsAdapter = new DiscoverNewsAdapter(getContext());
-        rvVenues.setAdapter(venuesAdapter);
+        rvVenues.setAdapter(brandsAdapter);
         rvUser.setAdapter(userAdapter);
         rvNews.setAdapter(newsAdapter);
         banner.setData(SystemInfoUtils.getHomeBanner(getContext()),null);
@@ -114,11 +110,14 @@ public class DiscoverFragment extends BaseFragment implements DiscoverFragmentVi
 
     @Override
     public void setDiscoverData(DiscoverData discoverData) {
-        if(discoverData.getGym() != null){
-            venuesAdapter.setData(discoverData.getGym());
+        if(refreshLayout.isRefreshing()){
+            refreshLayout.setRefreshing(false);
         }
-        if(discoverData.getPerson() != null){
-            userAdapter.setData(discoverData.getPerson());
+        if(discoverData.getBrand() != null){
+            brandsAdapter.setData(discoverData.getBrand());
+        }
+        if(discoverData.getUser() != null){
+            userAdapter.setData(discoverData.getUser());
         }
         if(discoverData.getNews() != null){
             newsAdapter.setData(discoverData.getNews());
@@ -127,7 +126,7 @@ public class DiscoverFragment extends BaseFragment implements DiscoverFragmentVi
 
     @Override
     public void onRefresh() {
-      //  discoverPresent.getDiscoverData(switcherLayout);
+        discoverPresent.pullToRefreshDiscoverData();
     }
 
     @Override
@@ -146,46 +145,4 @@ public class DiscoverFragment extends BaseFragment implements DiscoverFragmentVi
                 break;
         }
     }
-
-
-    private void getData(){
-        DiscoverData data = new DiscoverData();
-        List<VenuesBean> venuesBeen = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            VenuesBean v = new VenuesBean();
-            v.setDistance("1212");
-            v.setName("场馆");
-            v.setBrand_logo("http://wx3.sinaimg.cn/mw690/48e837eely1fan3qf8yozj22dc1kwnpd0.jpg");
-            venuesBeen.add(v);
-        }
-        data.setGym(venuesBeen);
-
-        List<UserBean> userBean = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            UserBean u = new UserBean();
-            u.setAvatar("http://wx3.sinaimg.cn/mw690/48e837eely1fan3qf8yozj22dc1kwnpd0.jpg");
-            userBean.add(u);
-        }
-        data.setPerson(userBean);
-
-        List<NewsBean> newsBean = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
-            NewsBean n = new NewsBean();
-            n.setTitle("新闻");
-            n.setCover("http://wx3.sinaimg.cn/mw690/48e837eely1fan3qf8yozj22dc1kwnpd0.jpg");
-            newsBean.add(n);
-        }
-        data.setNews(newsBean);
-
-        if(data.getGym() != null){
-            venuesAdapter.setData(data.getGym());
-        }
-        if(data.getPerson() != null){
-            userAdapter.setData(data.getPerson());
-        }
-        if(data.getNews() != null){
-            newsAdapter.setData(data.getNews());
-        }
-    }
-
 }

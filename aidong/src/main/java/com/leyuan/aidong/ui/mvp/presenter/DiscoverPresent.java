@@ -13,7 +13,9 @@ public interface DiscoverPresent {
      * 发现首页
      * @param switcherLayout
      */
-    void getDiscoverData(SwitcherLayout switcherLayout);
+    void commonLoadDiscoverData(SwitcherLayout switcherLayout);
+    void pullToRefreshDiscoverData();
+
 
     /**
      * 第一次正常加载数据

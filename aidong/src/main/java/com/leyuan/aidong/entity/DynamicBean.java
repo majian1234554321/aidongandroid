@@ -18,12 +18,12 @@ public class DynamicBean implements Serializable{
     public LikeUser like_user;
     public Comment comment;
 
-    public class Video{
+    public class Video implements Serializable{
         public String url;
         public String cover;
     }
 
-    public class Publisher{
+    public class Publisher implements Serializable{
         public String publisher_id;
         public String name;
         public String avatar;
@@ -31,10 +31,10 @@ public class DynamicBean implements Serializable{
 
     }
 
-    public class LikeUser{
+    public class LikeUser implements Serializable{
         public String count;
         public List<Item> item = new ArrayList<>();
-        public class  Item{
+        public class  Item implements Serializable{
             public String publisher_id;
             public String name;
             public String avatar;
@@ -43,16 +43,16 @@ public class DynamicBean implements Serializable{
     }
 
 
-    public class Comment{
+    public class Comment implements Serializable{
         public String count;
 
         public List<Item> item = new ArrayList<>();
-        public class  Item{
+        public class  Item implements Serializable{
             public String comment_id;
             public String content;
             public String published_at;
             public Publisher publisher;
-            public class Publisher{
+            public class Publisher implements Serializable{
                 public String publisher_id;
                 public String published_at;
                 public String name;

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.ui.BaseFragment;
+import com.leyuan.aidong.ui.activity.discover.DynamicDetailActivity;
 import com.leyuan.aidong.ui.activity.discover.adapter.DynamicAdapter;
 import com.leyuan.aidong.ui.activity.home.ImagePreviewActivity;
 import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
@@ -181,6 +182,11 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
        @Override
        public void onShareClickListener() {
 
+       }
+
+       @Override
+       public void onDynamicDetailClickListener(int position) {
+           DynamicDetailActivity.start(getContext(),dynamicList.get(position));
        }
    }
 }

@@ -15,7 +15,7 @@
         android:id="@+id/btn_person"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/person"
+        android:text="@string/user"
         />
     <Button
         android:id="@+id/btn_news"

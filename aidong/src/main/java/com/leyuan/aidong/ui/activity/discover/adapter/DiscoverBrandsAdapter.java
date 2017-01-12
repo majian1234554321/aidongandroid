@@ -6,9 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.leyuan.aidong.entity.VenuesBean;
+import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.BrandBean;
 import com.leyuan.aidong.ui.activity.discover.VenuesDetailActivity;
 
 import java.util.ArrayList;
@@ -18,15 +18,15 @@ import java.util.List;
  * 发现界面 场馆适配器
  * Created by song on 2016/8/31.
  */
-public class DiscoverVenuesAdapter extends RecyclerView.Adapter<DiscoverVenuesAdapter.VenuesHolder>{
+public class DiscoverBrandsAdapter extends RecyclerView.Adapter<DiscoverBrandsAdapter.VenuesHolder>{
     private Context context;
-    private List<VenuesBean> data = new ArrayList<>();
+    private List<BrandBean> data = new ArrayList<>();
 
-    public DiscoverVenuesAdapter(Context context) {
+    public DiscoverBrandsAdapter(Context context) {
         this.context = context;
     }
 
-    public void setData(List<VenuesBean> data) {
+    public void setData(List<BrandBean> data) {
         this.data = data;
         notifyDataSetChanged();
     }
@@ -44,15 +44,15 @@ public class DiscoverVenuesAdapter extends RecyclerView.Adapter<DiscoverVenuesAd
 
     @Override
     public void onBindViewHolder(VenuesHolder holder, int position) {
-        final VenuesBean bean = data.get(position);
-        holder.cover.setImageURI(bean.getBrand_logo());
+        final BrandBean bean = data.get(position);
+        holder.cover.setImageURI(bean.getLogo());
         holder.name.setText(bean.getName());
-        holder.distance.setText(bean.getDistance());
+        holder.distance.setText(bean.getId());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                VenuesDetailActivity.start(context,bean.getGymId());
+                VenuesDetailActivity.start(context,bean.getId());
             }
         });
     }

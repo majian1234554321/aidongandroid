@@ -246,6 +246,8 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
             case R.id.tv_pay:
                 PayInterface payInterface = payType.equals(detailBean.getPay().getPayType()) ?
                         new AliPay(this,payListener) : new WeiXinPay(this,payListener);
+               // PayOrderBean bean =  detailBean.getPay();
+                //bean.getpayOption().setPay_string("_input_charset=utf-8&body=培训课程4-1&it_b_pay=30m&notify_url=&out_trade_no=483610338301&partner=2088021345411340&payment_type=1&seller_id=2088021345411340&service=mobile.securitypay.pay&subject=培训课程4-1&total_fee=88.8&sign_type=RSA&sign=Oaoqco9BIbH89WT5aCAsXvV23qImwg0CfvXnRZAbrpBlBqq6MSzpIIePVh8oJyXIPmqrhvANbFeILdV7eThU9E3%2BpKZWxNJuK4%2FjGhoCwLYZaDVhZ5%2F9nLu4zxYK72UkcchPT90eVLtMUu2TnvpuakuJJ2aajhFcOWDcwXn14UQ%3D");
                 payInterface.payOrder(detailBean.getPay());
                 break;
             case R.id.rl_detail:
