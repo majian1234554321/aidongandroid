@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.model.result.MsgResult;
+import com.leyuan.aidong.ui.activity.discover.PublishDynamicActivity;
 import com.leyuan.aidong.ui.activity.media.TabTheIndividualDynaminActivity;
 import com.leyuan.aidong.ui.fragment.discover.DiscoverHomeFragment;
 import com.leyuan.aidong.ui.fragment.home.HomeFragment;
@@ -30,6 +32,9 @@ import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import kr.co.namee.permissiongen.PermissionGen;
+import kr.co.namee.permissiongen.PermissionSuccess;
 
 //import cn.sharesdk.framework.ShareSDK;
 
@@ -145,11 +150,12 @@ public class MainActivity extends BaseActivity implements IHttpCallback, View.On
         tcSub1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+                PermissionGen.with(MainActivity.this)
+                        .addRequestCode(100)
+                        .permissions(Manifest.permission.READ_EXTERNAL_STORAGE)
+                        .request();
+
                 //                if (BaseApp.mInstance.isLogin()) {
-                Intent intent = new Intent(MainActivity.this,
-                        TabTheIndividualDynaminActivity.class);
-                intent.putExtra("type", 1);
-                startActivity(intent);
                 //                } else {
                 //                    Intent intent = new Intent(MainActivity.this,
                 //                            LoginActivity.class);
@@ -335,5 +341,19 @@ public class MainActivity extends BaseActivity implements IHttpCallback, View.On
         } else {//退出程序
             exitApp();
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+
+    }
+
+    @PermissionSuccess(requestCode = 100)
+    public void callUp() {
+        Intent intent = new Intent(MainActivity.this,
+                PublishDynamicActivity.class);
+        intent.putExtra("type", 1);
+        startActivity(intent);
     }
 }

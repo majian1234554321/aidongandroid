@@ -103,18 +103,6 @@
                 android:layout_below="@id/relativelayout_the_individual_dynamic"
                 android:background="@color/color_list_distance" />
 
-            <TextView
-                android:id="@+id/textview_the_individual_dynamic_to_share"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/noScrollgridview"
-                android:layout_marginLeft="@dimen/pref_15dp"
-                android:layout_marginTop="13dp"
-                android:text="@string/share_zhi"
-                android:textColor="@color/color_txt_gray1"
-                android:textSize="@dimen/pref_16dp" />
-
             <Button
                 android:id="@+id/button_the_individual_dynamic_release"
                 android:layout_width="match_parent"
@@ -142,6 +130,20 @@
                 android:layout_alignRight="@+id/button_the_individual_dynamic_release"
                 android:layout_alignTop="@+id/textview_the_individual_dynamic_to_share"
                 android:button="@drawable/weibo_selector" />
+
+            <TextView
+                android:id="@+id/textview_the_individual_dynamic_to_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="115dp"
+                android:text="@string/share_zhi"
+                android:textColor="@color/color_txt_gray1"
+                android:textSize="@dimen/pref_16dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignLeft="@+id/noScrollgridview"
+                android:layout_alignStart="@+id/noScrollgridview"
+                android:layout_marginStart="115dp"
+                android:layout_marginBottom="42dp" />
 
         </RelativeLayout>
     </ScrollView>

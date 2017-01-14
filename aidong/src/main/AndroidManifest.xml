@@ -166,7 +166,7 @@
         <activity android:name=".ui.activity.video.VideoCommentActivity"/>
         <activity android:name=".ui.activity.home.LocationActivity"/>
         <activity android:name=".ui.activity.home.OldGoodsDetailActivity"/>
-
+        <activity android:name=".ui.activity.discover.PublishDynamicActivity"/>
         <activity android:name=".ui.activity.mine.ApplyServiceActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
@@ -177,7 +177,6 @@
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".ui.activity.discover.VenuesDetailActivity" />
         <activity android:name=".ui.activity.discover.DiscoverUserActivity" />
-        <activity android:name=".ui.activity.discover.FilterAroundPeopleActivity" />
         <activity android:name=".ui.activity.mine.login.ChangePasswordActivity" />
         <activity android:name=".ui.activity.mine.login.CompleteUserInfomationActivity" />
         <activity android:name=".ui.activity.mine.login.FastLoginActivity" />

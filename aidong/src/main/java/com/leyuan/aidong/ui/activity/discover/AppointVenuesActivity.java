@@ -51,9 +51,8 @@ public class AppointVenuesActivity extends BaseActivity implements View.OnClickL
     private String phone;
 
     private List<String> days = new ArrayList<>();
-    private int selectedPosition = 0;
     private String appointDate;
-
+    private int selectedPosition = 0;
     private boolean isMorningUnable = false;
     private boolean isAfternoonUnable = false;
 

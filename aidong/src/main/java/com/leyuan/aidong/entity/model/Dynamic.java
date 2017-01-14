@@ -146,7 +146,7 @@ public class Dynamic implements Serializable{
 				", film=" + film +
 				", image=" + image +
 				", images=" + images +
-				", like_user=" + like_user +
+				", like=" + like_user +
 				", likes=" + likes +
 				", publisher=" + publisher +
 				'}';

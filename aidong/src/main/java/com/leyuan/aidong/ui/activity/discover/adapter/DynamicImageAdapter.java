@@ -1,7 +1,6 @@
 package com.leyuan.aidong.ui.activity.discover.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,9 +10,6 @@ import android.view.ViewGroup;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.utils.ScreenUtil;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,17 +22,9 @@ public class DynamicImageAdapter extends RecyclerView.Adapter<DynamicImageAdapte
     private Context context;
     private List<String> data = new ArrayList<>();
     private ImageClickListener imageClickListener;
-    private DisplayImageOptions options;
 
     public DynamicImageAdapter(Context context) {
         this.context = context;
-        options = new DisplayImageOptions.Builder()
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .considerExifParams(true)
-                .imageScaleType(ImageScaleType.NONE)
-                .bitmapConfig(Bitmap.Config.ARGB_8888)
-                .build();
     }
 
     public void setData(List<String> data) {
@@ -55,8 +43,7 @@ public class DynamicImageAdapter extends RecyclerView.Adapter<DynamicImageAdapte
     @Override
     public void onBindViewHolder(final ImageHolder holder, final int position) {
         String url = data.get(position);
-       // holder.image.setImageURI(url);
-        ImageLoader.getInstance().displayImage(url,holder.image,options);
+        holder.image.setImageURI(url);
         ViewCompat.setTransitionName(holder.image, String.valueOf(position) + "transition");
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

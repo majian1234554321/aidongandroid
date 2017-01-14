@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,22 +20,28 @@ import com.leyuan.aidong.ui.activity.home.ImagePreviewActivity;
 import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.SportCircleFragmentView;
+import com.leyuan.aidong.widget.customview.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
+import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
+import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.leyuan.aidong.R.id.rv_dynamic;
 
 /**
  * 爱动圈
  * Created by song on 2016/12/26.
  */
 public class CircleFragment extends BaseFragment implements SportCircleFragmentView{
-   // private SwipeRefreshLayout refreshLayout;
+    private SwitcherLayout switcherLayout;
+    private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
     private DynamicAdapter dynamicAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
-    private List<DynamicBean> dynamicList = new ArrayList<>();
+    private List<DynamicBean> dynamicList;
 
     private int currPage = 1;
     private DynamicPresent dynamicPresent;
@@ -48,19 +55,38 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
     public void onViewCreated(View view,Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         dynamicPresent = new DynamicPresentImpl(getContext(),this);
-       // refreshLayout = (SwipeRefreshLayout) view.findViewById(refreshLayout);
-        recyclerView = (RecyclerView) view.findViewById(R.id.rv_dynamic);
+        initSwipeRefreshLayout(view);
+        initRecyclerView(view);
+        dynamicPresent.commonLoadData(switcherLayout);
+    }
+
+    private void initSwipeRefreshLayout(View view) {
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout);
+        switcherLayout = new SwitcherLayout(getContext(),refreshLayout);
+        setColorSchemeResources(refreshLayout);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                dynamicPresent.pullToRefreshData();
+            }
+        });
+        switcherLayout.setOnRetryListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dynamicPresent.pullToRefreshData();
+            }
+        });
+    }
+
+    private void initRecyclerView(View view){
+        recyclerView = (RecyclerView) view.findViewById(rv_dynamic);
+        dynamicList = new ArrayList<>();
         dynamicAdapter = new DynamicAdapter(getContext());
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(dynamicAdapter);
         recyclerView.setAdapter(wrapperAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        dynamicAdapter.setData(dynamicList);
         dynamicAdapter.setHandleDynamicListener(new HandleDynamicListener());
         recyclerView.addOnScrollListener(onScrollListener);
-       // dynamicPresent.pullToRefreshData();
-
-
-
     }
 
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
@@ -68,23 +94,29 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
         public void onLoadNextPage(View view) {
             currPage ++;
             if (dynamicList != null && dynamicList.size() >= pageSize) {
-               // present.requestMoreRecommendData(recommendView,pageSize,currPage);
+                dynamicPresent.requestMoreData(recyclerView,pageSize,currPage);
             }
         }
     };
 
     @Override
     public void updateRecyclerView(List<DynamicBean> dynamicBeanList) {
-
+        if(refreshLayout.isRefreshing()){
+            dynamicList.clear();
+            refreshLayout.setRefreshing(false);
+        }
+        dynamicList.addAll(dynamicBeanList);
+        dynamicAdapter.setData(dynamicList);
+        wrapperAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void showEndFooterView() {
-
+        RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
     }
 
 
-   {
+   /*{
         for (int i = 0; i < 7; i++) {
             DynamicBean b = new DynamicBean();
             b.content = "内容" + i;
@@ -115,7 +147,7 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
                 likeUserItem.add(item);
             }
             likeUser.item = likeUserItem;
-            b.like_user = likeUser;
+            b.like = likeUser;
 
             DynamicBean.Comment comment = b.new Comment();
             List<DynamicBean.Comment.Item> commentItem = new ArrayList<>();
@@ -134,7 +166,7 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
             dynamicList.add(b);
             dynamicList.add(b);
         }
-    }
+    }*/
 
    private class HandleDynamicListener implements DynamicAdapter.OnHandleDynamicListener{
 

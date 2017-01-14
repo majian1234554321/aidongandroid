@@ -48,15 +48,19 @@ public class VenuesCoachAdapter extends RecyclerView.Adapter<VenuesCoachAdapter.
 
     @Override
     public void onBindViewHolder(CoachHolder holder, int position) {
-        CoachBean bean = data.get(position);
+        final CoachBean bean = data.get(position);
         holder.cover.setImageURI(bean.getAvatar());
         holder.name.setText(bean.getName());
-        holder.gender.setTag(bean.getGender());
-
+      //  holder.distance.setText(String.format(context.getString(R.string.distance_km),bean.getD));
+        if("0".equals(bean.getGender())){   //男
+            holder.gender.setBackgroundResource(R.drawable.icon_man);
+        }else {
+            holder.gender.setBackgroundResource(R.drawable.icon_woman);
+        }
         holder.appointment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppointCoachActivity.start(context);
+                AppointCoachActivity.start(context,bean.getAvatar(),bean.getName(),bean.getGender(),"111");
             }
         });
     }
@@ -71,7 +75,6 @@ public class VenuesCoachAdapter extends RecyclerView.Adapter<VenuesCoachAdapter.
 
         public CoachHolder(View itemView) {
             super(itemView);
-
             cover = (SimpleDraweeView)itemView.findViewById(R.id.dv_coach_cover);
             name = (TextView)itemView.findViewById(R.id.tv_coach_name);
             distance = (TextView)itemView.findViewById(R.id.tv_distance);

@@ -131,26 +131,26 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
         }
 
         //视频
-        if(dynamic.video != null){
+       /* if(dynamic.video != null){
             holder.videoLayout.setVisibility(View.VISIBLE);
             holder.photoLayout.setVisibility(View.GONE);
             holder.threePhotoLayout.setVisibility(View.GONE);
             holder.fivePhotoLayout.setVisibility(View.GONE);
             holder.dvVideo.setImageURI(dynamic.video.cover);
-        }
+        }*/
 
         //内容
         holder.tvContent.setText(dynamic.content);
 
         //点赞
-        if(FormatUtil.parseInt(dynamic.like_user.count) > 0){
+        if (FormatUtil.parseInt(dynamic.like.count) > 0) {
             holder.likeLayout.setVisibility(View.VISIBLE);
             holder.likesRecyclerView.setLayoutManager(new LinearLayoutManager
-                    (context,LinearLayoutManager.HORIZONTAL,false));
+                    (context, LinearLayoutManager.HORIZONTAL, false));
             DynamicLikeAdapter likeAdapter = new DynamicLikeAdapter(context);
-            likeAdapter.setData(dynamic.like_user.item);
+            likeAdapter.setData(dynamic.like.item);
             holder.likesRecyclerView.setAdapter(likeAdapter);
-        }else {
+        } else {
             holder.likeLayout.setVisibility(View.GONE);
         }
 
@@ -166,7 +166,7 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
         }
 
         //底部操作
-        holder.tvLikeCount.setText(dynamic.like_user.count);
+        holder.tvLikeCount.setText(dynamic.like.count);
         holder.tvCommentCount.setText(dynamic.comment.count);
 
         if(imageAdapter != null) {

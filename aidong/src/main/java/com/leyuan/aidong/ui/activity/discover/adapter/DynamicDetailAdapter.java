@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.DynamicBean;
+import com.leyuan.aidong.entity.CommentBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,13 +17,13 @@ import java.util.List;
 
 public class DynamicDetailAdapter extends RecyclerView.Adapter<DynamicDetailAdapter.CommentHolder>{
     private Context context;
-    private List<DynamicBean.Comment.Item> data = new ArrayList<>();
+    private List<CommentBean> data = new ArrayList<>();
 
     public DynamicDetailAdapter(Context context) {
         this.context = context;
     }
 
-    public void setData(List<DynamicBean.Comment.Item> data) {
+    public void setData(List<CommentBean> data) {
         if (data != null) {
             this.data = data;
             notifyDataSetChanged();
@@ -38,11 +38,11 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<DynamicDetailAdap
 
     @Override
     public void onBindViewHolder(CommentHolder holder, int position) {
-        DynamicBean.Comment.Item item = data.get(position);
-        holder.avatar.setImageURI(item.publisher.avatar);
-        holder.name.setText(item.publisher.name);
-        holder.content.setText(item.content);
-        holder.time.setText(item.publisher.published_at);
+        CommentBean bean = data.get(position);
+        holder.avatar.setImageURI(bean.getPublisher().getAvatar());
+        holder.name.setText(bean.getPublisher().getName());
+        holder.content.setText(bean.getContent());
+        holder.time.setText(bean.getPublishedAt());
     }
 
     @Override

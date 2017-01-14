@@ -1,8 +1,8 @@
 package com.leyuan.aidong.ui.mvp.model;
 
-import com.leyuan.aidong.entity.DynamicBean;
-
-import java.util.List;
+import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.data.CommentData;
+import com.leyuan.aidong.entity.data.DynamicsData;
 
 import rx.Subscriber;
 
@@ -16,5 +16,31 @@ public interface DynamicModel {
      * @param subscriber Subscriber
      * @param page 页码
      */
-    void getDynamics(Subscriber<List<DynamicBean>> subscriber, int page);
+    void getDynamics(Subscriber<DynamicsData> subscriber, int page);
+
+    /**
+     * 发表动态
+     * @param subscriber Subscriber
+     * @param content
+     * @param video
+     * @param image
+     */
+    void postDynamic(Subscriber<BaseBean> subscriber,String content,String video,String...image);
+
+
+    /**
+     * 发表评论
+     * @param subscriber Subscriber
+     * @param id 动态id
+     * @param content 评论内容
+     */
+    void addComment(Subscriber<BaseBean> subscriber,String id,String content);
+
+    /**
+     * 获取评论内容
+     * @param subscriber Subscriber
+     * @param id 动态id
+     * @param page 页码
+     */
+    void getComments(Subscriber<CommentData> subscriber,String id,int page);
 }

@@ -13,6 +13,7 @@ public class CoachBean implements Parcelable {
     private String avatar;
     private String gender;
 
+
     public String getCoachId() {
         return coach_id;
     }

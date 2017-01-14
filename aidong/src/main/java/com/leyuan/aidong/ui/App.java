@@ -22,6 +22,7 @@ import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.squareup.leakcanary.LeakCanary;
 
 import io.realm.Realm;
 
@@ -52,7 +53,7 @@ public class App extends Application {
     }
 
     private void initConfig() {
-       // LeakCanary.install(this);
+        LeakCanary.install(this);
         SDKInitializer.initialize(this);
         Fresco.initialize(this);
         initBaiduLoc();

@@ -97,7 +97,7 @@ public class AttributeDynamics implements Serializable{
 				", comments=" + comments +
 				", film=" + film +
 				", images=" + images +
-				", like_user=" + like_user +
+				", like=" + like_user +
 				'}';
 	}
 }

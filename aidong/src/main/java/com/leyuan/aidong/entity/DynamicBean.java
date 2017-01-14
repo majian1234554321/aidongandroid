@@ -12,10 +12,10 @@ public class DynamicBean implements Serializable{
     public String id;
     public String content;
     public List<String> image;
-    public Video video;
+    public String  video;
     public Publisher publisher;
     public String published_at;
-    public LikeUser like_user;
+    public LikeUser like;
     public Comment comment;
 
     public class Video implements Serializable{
