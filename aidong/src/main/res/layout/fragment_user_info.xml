@@ -12,6 +12,7 @@
         android:orientation="vertical">
 
         <com.leyuan.aidong.widget.customview.ExtendTextView
+            android:id="@+id/id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:left_text="爱动ID"
@@ -19,6 +20,7 @@
             app:text_height="45dp" />
 
         <com.leyuan.aidong.widget.customview.ExtendTextView
+            android:id="@+id/identify"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:left_text="身份"
@@ -26,6 +28,7 @@
             app:text_height="45dp" />
 
         <com.leyuan.aidong.widget.customview.ExtendTextView
+            android:id="@+id/hot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:left_text="热度"
@@ -33,6 +36,7 @@
             app:text_height="45dp" />
 
         <com.leyuan.aidong.widget.customview.ExtendTextView
+            android:id="@+id/signature"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:left_text="个性签名"
@@ -42,6 +46,7 @@
         <include layout="@layout/inc_bold_line" />
 
         <com.leyuan.aidong.widget.customview.ExtendTextView
+            android:id="@+id/address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:left_text="城市"
@@ -49,6 +54,7 @@
             app:text_height="45dp" />
 
         <com.leyuan.aidong.widget.customview.ExtendTextView
+            android:id="@+id/birthday"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:left_text="生日"
@@ -56,6 +62,7 @@
             app:text_height="45dp" />
 
         <com.leyuan.aidong.widget.customview.ExtendTextView
+            android:id="@+id/zodiac"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:left_text="星座"
@@ -65,6 +72,7 @@
         <include layout="@layout/inc_bold_line" />
 
         <com.leyuan.aidong.widget.customview.ExtendTextView
+            android:id="@+id/height"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:left_text="身高"
@@ -72,6 +80,7 @@
             app:text_height="45dp" />
 
         <com.leyuan.aidong.widget.customview.ExtendTextView
+            android:id="@+id/weight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:left_text="体重"
@@ -79,6 +88,7 @@
             app:text_height="45dp" />
 
         <com.leyuan.aidong.widget.customview.ExtendTextView
+            android:id="@+id/bmi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:left_text="BMI"
@@ -86,6 +96,7 @@
             app:text_height="45dp" />
 
         <com.leyuan.aidong.widget.customview.ExtendTextView
+            android:id="@+id/frequency"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:left_text="运动频次"

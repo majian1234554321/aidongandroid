@@ -10,5 +10,6 @@
         android:id="@+id/dv_avatar"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        app:roundAsCircle="true"/>
+        app:roundAsCircle="true"
+        app:placeholderImage="@drawable/place_holder_user"/>
 </LinearLayout>

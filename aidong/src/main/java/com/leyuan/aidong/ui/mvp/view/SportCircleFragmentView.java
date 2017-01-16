@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.mvp.view;
 
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.DynamicBean;
 
 import java.util.List;
@@ -20,4 +21,9 @@ public interface SportCircleFragmentView {
      * 显示FooterView，提示没有任何内容了
      */
     void showEndFooterView();
+
+    void updateAddLike(BaseBean baseBean);
+
+    void updateCancelLike(BaseBean baseBean);
+
 }

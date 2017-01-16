@@ -20,6 +20,8 @@ import java.util.List;
 public class DynamicCommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private static final int COMMENT = 0;
     private static final int MORE_COMMENT = 1;
+    private static final int SHOW_COMMENT_COUNT = 3;
+
     private Context context;
     private List<DynamicBean.Comment.Item> data = new ArrayList<>();
     private List<DynamicBean.Comment.Item> originalData = new ArrayList<>();
@@ -33,8 +35,8 @@ public class DynamicCommentAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             originalData = data;
             this.data.clear();
             this.data.addAll(data);
-            while (this.data.size() > 2) {    //最多显示2条评论
-                this.data.remove(2);
+            while (this.data.size() > SHOW_COMMENT_COUNT) {
+                this.data.remove(SHOW_COMMENT_COUNT);
             }
             notifyDataSetChanged();
         }
@@ -42,7 +44,7 @@ public class DynamicCommentAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public int getItemCount() {
-        if(originalData.size() > 2){
+        if(originalData.size() > SHOW_COMMENT_COUNT){
             return data.size() + 1;
         }else {
             return data.size();
@@ -80,7 +82,7 @@ public class DynamicCommentAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 ((CommonHolder) holder).comment.setText(bean.content);
             }
         }else {
-            ((MoreHolder) holder).more.setText("查看更多" + (originalData.size() - 2)  +"条评论");
+            ((MoreHolder) holder).more.setText("查看更多" + (originalData.size() - SHOW_COMMENT_COUNT)  +"条评论");
         }
     }
 

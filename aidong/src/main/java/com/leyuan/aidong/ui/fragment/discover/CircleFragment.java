@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.activity.discover.DynamicDetailActivity;
@@ -115,6 +116,16 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
         RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
     }
 
+    @Override
+    public void updateAddLike(BaseBean baseBean) {
+
+    }
+
+    @Override
+    public void updateCancelLike(BaseBean baseBean) {
+
+    }
+
 
    /*{
         for (int i = 0; i < 7; i++) {
@@ -202,8 +213,12 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
        }
 
        @Override
-       public void onLikeClickListener() {
-
+       public void onLikeClickListener(String id, boolean isAddLike) {
+            if(isAddLike){
+                dynamicPresent.cancelLike(id);
+            }else {
+                dynamicPresent.addLike(id);
+            }
        }
 
        @Override

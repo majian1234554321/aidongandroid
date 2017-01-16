@@ -4,7 +4,9 @@ import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.data.CommentData;
 import com.leyuan.aidong.entity.data.DiscoverData;
 import com.leyuan.aidong.entity.data.DynamicsData;
+import com.leyuan.aidong.entity.data.LikeData;
 
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -24,28 +26,24 @@ public interface DynamicService {
     @FormUrlEncoded
     @POST("dynamics")
     Observable<BaseBean<DiscoverData>> postDynamic(@Field("content") String content,
-                                                    @Field("video") String video,
-                                                    @Field("image[]") String... image);
+                                                   @Field("video") String video,
+                                                   @Field("image[]") String... image);
 
     @FormUrlEncoded
     @POST("dynamics/{id}/comments")
     Observable<BaseBean> addComment(@Path("id") String id,@Field("content") String content);
 
-
-
     @GET("dynamics/{id}/comments")
     Observable<BaseBean<CommentData>> getComments(@Path("id") String id, @Query("page") int page);
 
-
-
-    @FormUrlEncoded
-    @POST("dynamics/{id}/like")
+    @POST("dynamics/{id}/likes")
     Observable<BaseBean> addLike(@Path("id") String id);
 
-
+    @DELETE("dynamics/{id}/likes")
+    Observable<BaseBean> cancelLike(@Path("id") String id);
 
     @GET("dynamics/{id}/likes")
-    Observable<BaseBean<CommentData>> getLikes(@Path("id") String id);
+    Observable<BaseBean<LikeData>> getLikes(@Path("id") String id, @Query("page") int page);
 
 }
 

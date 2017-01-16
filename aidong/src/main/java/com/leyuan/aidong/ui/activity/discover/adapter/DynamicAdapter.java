@@ -2,7 +2,6 @@ package com.leyuan.aidong.ui.activity.discover.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +16,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.ui.activity.discover.view.GridItemDecoration;
-import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.widget.customview.SquareRelativeLayout;
 
 import java.util.ArrayList;
@@ -142,14 +140,15 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
         //内容
         holder.tvContent.setText(dynamic.content);
 
-        //点赞
-        if (FormatUtil.parseInt(dynamic.like.count) > 0) {
+        /*//点赞
+        if (FormatUtil.parseInt(dynamic.like.counter) > 0) {
             holder.likeLayout.setVisibility(View.VISIBLE);
             holder.likesRecyclerView.setLayoutManager(new LinearLayoutManager
                     (context, LinearLayoutManager.HORIZONTAL, false));
             DynamicLikeAdapter likeAdapter = new DynamicLikeAdapter(context);
             likeAdapter.setData(dynamic.like.item);
             holder.likesRecyclerView.setAdapter(likeAdapter);
+
         } else {
             holder.likeLayout.setVisibility(View.GONE);
         }
@@ -163,11 +162,11 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
             holder.commentRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         }else {
             holder.commentLayout.setVisibility(View.GONE);
-        }
+        }*/
 
         //底部操作
-        holder.tvLikeCount.setText(dynamic.like.count);
-        holder.tvCommentCount.setText(dynamic.comment.count);
+//        holder.tvLikeCount.setText(dynamic.like.counter);
+ //       holder.tvCommentCount.setText(dynamic.comment.count);
 
         if(imageAdapter != null) {
             imageAdapter.setImageClickListener(new DynamicImageAdapter.ImageClickListener() {
@@ -193,7 +192,8 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
             @Override
             public void onClick(View v) {
                 if(handleDynamicListener != null){
-                    handleDynamicListener.onLikeClickListener();
+                    handleDynamicListener.onLikeClickListener(dynamic.id,dynamic.isLiked);
+                    dynamic.isLiked = !dynamic.isLiked;
                 }
             }
         });
@@ -330,7 +330,7 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
         void onVideoClickListener();
         void onShowMoreLikeClickListener();
         void onShowMoreCommentClickListener();
-        void onLikeClickListener();
+        void onLikeClickListener(String id,boolean isAddLike);
         void onCommonClickListener();
         void onShareClickListener();
         void onDynamicDetailClickListener(int position);

@@ -17,7 +17,6 @@ import android.widget.Toast;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.model.result.MsgResult;
 import com.leyuan.aidong.ui.activity.discover.PublishDynamicActivity;
-import com.leyuan.aidong.ui.activity.media.TabTheIndividualDynaminActivity;
 import com.leyuan.aidong.ui.fragment.discover.DiscoverHomeFragment;
 import com.leyuan.aidong.ui.fragment.home.HomeFragment;
 import com.leyuan.aidong.ui.fragment.mine.MineFragment;
@@ -172,7 +171,7 @@ public class MainActivity extends BaseActivity implements IHttpCallback, View.On
             public void onClick(View arg0) {
                 //                if (BaseApp.mInstance.isLogin()) {
                 Intent intent = new Intent(MainActivity.this,
-                        TabTheIndividualDynaminActivity.class);
+                        PublishDynamicActivity.class);
                 intent.putExtra("type", 3);
                 startActivity(intent);
                 //                } else {

@@ -3,6 +3,7 @@ package com.leyuan.aidong.ui.mvp.model;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.data.CommentData;
 import com.leyuan.aidong.entity.data.DynamicsData;
+import com.leyuan.aidong.entity.data.LikeData;
 
 import rx.Subscriber;
 
@@ -43,4 +44,26 @@ public interface DynamicModel {
      * @param page 页码
      */
     void getComments(Subscriber<CommentData> subscriber,String id,int page);
+
+    /**
+     * 点赞
+     * @param subscriber
+     * @param id
+     */
+    void addLike(Subscriber<BaseBean> subscriber,String id);
+
+    /**
+     * 取消赞
+     * @param subscriber
+     * @param id
+     */
+    void cancelLike(Subscriber<BaseBean> subscriber,String id);
+
+    /**
+     * 获取点赞列表
+     * @param subscriber
+     * @param id
+     * @param page
+     */
+    void getLikes(Subscriber<LikeData> subscriber,String id,int page);
 }

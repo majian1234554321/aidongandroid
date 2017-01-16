@@ -24,4 +24,8 @@ public interface DynamicPresent {
 
     void pullToRefreshComments(String id);
     void requestMoreComments(RecyclerView recyclerView,String id,int page,int pageSize);
+
+    void addLike(String id);
+    void cancelLike(String id);
+    void getLikes(String id,int page);
 }

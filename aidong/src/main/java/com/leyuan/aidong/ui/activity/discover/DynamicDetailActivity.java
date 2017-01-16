@@ -273,7 +273,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
         tvContent.setText(dynamic.content);
 
         //点赞
-        if(FormatUtil.parseInt(dynamic.like.count) > 0){
+        if(FormatUtil.parseInt(dynamic.like.counter) > 0){
             likeLayout.setVisibility(View.VISIBLE);
             likesRecyclerView.setLayoutManager(new LinearLayoutManager
                     (context,LinearLayoutManager.HORIZONTAL,false));
@@ -285,7 +285,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
         }
 
         //底部操作
-        tvLikeCount.setText(dynamic.like.count);
+        tvLikeCount.setText(dynamic.like.counter);
         tvCommentCount.setText(dynamic.comment.count);
     }
 
