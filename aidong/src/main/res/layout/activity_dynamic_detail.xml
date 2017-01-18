@@ -49,17 +49,24 @@
             android:layout_height="match_parent"/>
     </android.support.v4.widget.SwipeRefreshLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_color"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height_top_bar"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="@dimen/left_margin"
-        android:layout_marginRight="@dimen/right_margin">
+        android:paddingLeft="@dimen/left_margin"
+        android:paddingRight="@dimen/right_margin"
+        android:background="@color/white">
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/dv_user_avatar"
             android:layout_width="35dp"
             android:layout_height="35dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_gravity="center_vertical"
             app:roundAsCircle="true"
             app:placeholderImage="@drawable/place_holder_user"/>
@@ -67,10 +74,21 @@
         <EditText
             android:id="@+id/et_comment"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:minHeight="30dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
             android:layout_weight="1"
+            android:background="@drawable/shape_bg_comment"
+            android:drawablePadding="5dp"
+            android:layout_marginLeft="10dp"
+            android:hint="评论"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
             android:imeOptions="actionSend"
-            android:inputType="text"
-            android:layout_height="match_parent" />
+            android:inputType="text|textCapSentences"
+            android:textColorHint="@color/c9"
+            android:textSize="13sp" />
     </LinearLayout>
 
 </LinearLayout>

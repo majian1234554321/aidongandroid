@@ -18,6 +18,7 @@ import java.util.List;
 public class DynamicDetailAdapter extends RecyclerView.Adapter<DynamicDetailAdapter.CommentHolder>{
     private Context context;
     private List<CommentBean> data = new ArrayList<>();
+    private OnItemClickListener onItemClickListener;
 
     public DynamicDetailAdapter(Context context) {
         this.context = context;
@@ -37,12 +38,21 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<DynamicDetailAdap
     }
 
     @Override
-    public void onBindViewHolder(CommentHolder holder, int position) {
+    public void onBindViewHolder(CommentHolder holder, final int position) {
         CommentBean bean = data.get(position);
         holder.avatar.setImageURI(bean.getPublisher().getAvatar());
         holder.name.setText(bean.getPublisher().getName());
         holder.content.setText(bean.getContent());
         holder.time.setText(bean.getPublishedAt());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(onItemClickListener != null){
+                    onItemClickListener.onItemClick(position);
+                }
+            }
+        });
     }
 
     @Override
@@ -62,5 +72,13 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<DynamicDetailAdap
             content = (TextView) itemView.findViewById(R.id.tv_content);
             time = (TextView) itemView.findViewById(R.id.tv_time);
         }
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    public interface OnItemClickListener{
+        void onItemClick(int position);
     }
 }

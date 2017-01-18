@@ -269,4 +269,12 @@ public class BaseActivity extends AppCompatActivity implements IHttpToastCallBac
                 break;
         }
     }
+
+    protected void compatFinish(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            finishAfterTransition();
+        } else{
+            finish();
+        }
+    }
 }

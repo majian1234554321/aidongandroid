@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.activity.discover.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +17,15 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.ui.activity.discover.view.GridItemDecoration;
+import com.leyuan.aidong.utils.DateUtils;
+import com.leyuan.aidong.utils.FormatUtil;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.customview.SquareRelativeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.leyuan.aidong.utils.DateUtils.yyyyMMddHHmmss;
 
 /**
  * 发现界面动态适配器
@@ -27,6 +33,7 @@ import java.util.List;
  */
 public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicHolder>  {
     private Context context;
+    private int counter;
     private List<DynamicBean> data = new ArrayList<>();
     private OnHandleDynamicListener handleDynamicListener;
 
@@ -46,12 +53,14 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
 
     @Override
     public DynamicHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Logger.w("recyclerView","onCreateViewHolder" +  counter++);
         View view = LayoutInflater.from(context).inflate(R.layout.item_dynamic,parent,false);
         return new DynamicHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final DynamicHolder holder, final int position) {
+        Logger.w("recyclerView","onBindView" + position);
         final DynamicBean dynamic = data.get(position);
         DynamicBean.Publisher publisher = dynamic.publisher;
 
@@ -69,12 +78,15 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
                 }
             });
         }
-        holder.tvTime.setText(dynamic.published_at);
 
-        //图片
+        holder.tvTime.setText(DateUtils.translateDate(DateUtils.parseDate
+                (dynamic.published_at,yyyyMMddHHmmss).getTime(),System.currentTimeMillis()));
+
+
+        //图片和视频
         List<String> images = dynamic.image;
         DynamicImageAdapter imageAdapter = null;
-        if(images != null) {
+        if(images != null && !images.isEmpty()) {
             int spanCount = 1;
             if(images.size() == 1){
                 spanCount = 1;
@@ -126,21 +138,20 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
                 default:
                     break;
             }
+        }else {
+            if(dynamic.video != null){
+                holder.videoLayout.setVisibility(View.VISIBLE);
+                holder.photoLayout.setVisibility(View.GONE);
+                holder.threePhotoLayout.setVisibility(View.GONE);
+                holder.fivePhotoLayout.setVisibility(View.GONE);
+                holder.dvVideo.setImageURI(dynamic.video.cover);
+            }
         }
-
-        //视频
-       /* if(dynamic.video != null){
-            holder.videoLayout.setVisibility(View.VISIBLE);
-            holder.photoLayout.setVisibility(View.GONE);
-            holder.threePhotoLayout.setVisibility(View.GONE);
-            holder.fivePhotoLayout.setVisibility(View.GONE);
-            holder.dvVideo.setImageURI(dynamic.video.cover);
-        }*/
 
         //内容
         holder.tvContent.setText(dynamic.content);
 
-        /*//点赞
+        //点赞
         if (FormatUtil.parseInt(dynamic.like.counter) > 0) {
             holder.likeLayout.setVisibility(View.VISIBLE);
             holder.likesRecyclerView.setLayoutManager(new LinearLayoutManager
@@ -148,25 +159,25 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
             DynamicLikeAdapter likeAdapter = new DynamicLikeAdapter(context);
             likeAdapter.setData(dynamic.like.item);
             holder.likesRecyclerView.setAdapter(likeAdapter);
-
         } else {
             holder.likeLayout.setVisibility(View.GONE);
         }
 
         //评论
+        DynamicCommentAdapter commonAdapter = null;
         if(FormatUtil.parseInt(dynamic.comment.count) > 0){
             holder.commentLayout.setVisibility(View.VISIBLE);
-            DynamicCommentAdapter commonAdapter = new DynamicCommentAdapter(context);
+            commonAdapter = new DynamicCommentAdapter(context);
             holder.commentRecyclerView.setAdapter(commonAdapter);
-            commonAdapter.setData(dynamic.comment.item);
+            commonAdapter.setData(dynamic.comment.item,dynamic.comment.count);
             holder.commentRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         }else {
             holder.commentLayout.setVisibility(View.GONE);
-        }*/
+        }
 
         //底部操作
-//        holder.tvLikeCount.setText(dynamic.like.counter);
- //       holder.tvCommentCount.setText(dynamic.comment.count);
+        holder.tvLikeCount.setText(dynamic.like.counter);
+        holder.tvCommentCount.setText(dynamic.comment.count);
 
         if(imageAdapter != null) {
             imageAdapter.setImageClickListener(new DynamicImageAdapter.ImageClickListener() {
@@ -179,14 +190,36 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
             });
         }
 
-        holder.commentRecyclerView.setOnClickListener(new View.OnClickListener() {
+        if(commonAdapter != null){
+            commonAdapter.setCommentListener(new DynamicCommentAdapter.CommentListener() {
+                @Override
+                public void onCommentClick() {
+                    if(handleDynamicListener != null){
+                        handleDynamicListener.onDynamicDetailClickListener(position);
+                    }
+                }
+            });
+        }
+
+        holder.ibPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(handleDynamicListener != null){
-                    handleDynamicListener.onDynamicDetailClickListener(position);
+                    handleDynamicListener.onVideoClickListener(dynamic.video.url);
                 }
             }
         });
+
+        holder.videoLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(handleDynamicListener != null){
+                    handleDynamicListener.onVideoClickListener(dynamic.video.url);
+                }
+            }
+        });
+
+
 
         holder.bottomLikeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -202,7 +235,7 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
             @Override
             public void onClick(View v) {
                 if(handleDynamicListener != null){
-                    handleDynamicListener.onCommonClickListener();
+                    handleDynamicListener.onCommonClickListener(position);
                 }
             }
         });
@@ -228,6 +261,7 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
 
 
 
+
     class DynamicHolder extends RecyclerView.ViewHolder{
 
         //头部信息
@@ -245,7 +279,7 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
         private RecyclerView photoLayout;
 
         //3张图
-        private RelativeLayout threePhotoLayout;
+        private LinearLayout threePhotoLayout;
         private SimpleDraweeView dvThreeFirst;
         private SimpleDraweeView dvThreeSecond;
         private SimpleDraweeView dvThreeThird;
@@ -262,7 +296,7 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
         private TextView tvContent;
 
         //点赞
-        private LinearLayout likeLayout;
+        private RelativeLayout likeLayout;
         private RecyclerView likesRecyclerView;
 
         //评论
@@ -290,7 +324,7 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
             dvVideo = (SimpleDraweeView) itemView.findViewById(R.id.dv_video);
             ibPlay = (ImageButton) itemView.findViewById(R.id.ib_play);
             photoLayout = (RecyclerView) itemView.findViewById(R.id.photo_layout);
-            threePhotoLayout = (RelativeLayout) itemView.findViewById(R.id.three_photo_layout);
+            threePhotoLayout = (LinearLayout) itemView.findViewById(R.id.three_photo_layout);
             dvThreeFirst = (SimpleDraweeView) itemView.findViewById(R.id.dv_three_first);
             dvThreeSecond = (SimpleDraweeView) itemView.findViewById(R.id.dv_three_second);
             dvThreeThird = (SimpleDraweeView) itemView.findViewById(R.id.dv_three_third);
@@ -301,9 +335,9 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
             dvFiveFourth = (SimpleDraweeView) itemView.findViewById(R.id.dv_five_fourth);
             dvFiveLast = (SimpleDraweeView) itemView.findViewById(R.id.dv_five_last);
             tvContent = (TextView) itemView.findViewById(R.id.tv_content);
-            likeLayout = (LinearLayout) itemView.findViewById(R.id.like_layout);
+            likeLayout = (RelativeLayout) itemView.findViewById(R.id.like_layout);
             likesRecyclerView = (RecyclerView) itemView.findViewById(R.id.rv_likes);
-            commentLayout = (LinearLayout) itemView.findViewById(R.id.comment_layout);
+            commentLayout = (LinearLayout) itemView.findViewById(R.id._comment_layout);
             commentRecyclerView = (RecyclerView) itemView.findViewById(R.id.rv_comment);
             bottomLikeLayout = (RelativeLayout) itemView.findViewById(R.id.bottom_like_layout);
             ivLike = (ImageView) itemView.findViewById(R.id.iv_like);
@@ -327,11 +361,11 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
     public interface OnHandleDynamicListener {
         void onAvatarClickListener();
         void onImageClickListener(View view,int itemPosition,int imagePosition);
-        void onVideoClickListener();
+        void onVideoClickListener(String url);
         void onShowMoreLikeClickListener();
         void onShowMoreCommentClickListener();
         void onLikeClickListener(String id,boolean isAddLike);
-        void onCommonClickListener();
+        void onCommonClickListener(int position);
         void onShareClickListener();
         void onDynamicDetailClickListener(int position);
     }

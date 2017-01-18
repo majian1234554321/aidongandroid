@@ -3,7 +3,7 @@
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="?selectableItemBackground"
     android:orientation="vertical">
 
     <!--头部用户信息布局-->
@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="11dp"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/dv_avatar"
             android:text="这是谁"
             android:textColor="@color/black"
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/tv_name"
             android:layout_below="@+id/tv_name"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="5dp"
             android:text="12分钟前"
             android:textColor="@color/c9"
             android:textSize="12sp" />
@@ -60,13 +60,18 @@
         android:id="@+id/video_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:descendantFocusability="beforeDescendants"
         android:visibility="gone">
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/dv_video"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop" />
+            android:background="@color/line_color"
+            fresco:placeholderImage="@color/line_color"
+            fresco:placeholderImageScaleType="centerInside"
+            fresco:pressedStateOverlayImage="@color/color_image_press"/>
+
 
         <ImageButton
             android:id="@+id/ib_play"
@@ -85,42 +90,56 @@
         android:layout_height="wrap_content" />
 
     <!-- 三张图片的布局  -->
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/three_photo_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="238dp"
+        android:orientation="horizontal"
         android:visibility="gone">
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/dv_three_first"
-            android:layout_width="238dp"
-            android:layout_height="238dp"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="match_parent"
             fresco:actualImageScaleType="centerCrop"
-            fresco:placeholderImage="@drawable/place_holder_logo"
+            fresco:placeholderImage="@color/line_color"
             fresco:placeholderImageScaleType="fitCenter"
             fresco:pressedStateOverlayImage="@color/color_image_press" />
 
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/dv_three_second"
-            android:layout_width="117dp"
-            android:layout_height="117dp"
-            android:layout_alignParentRight="true"
-            fresco:actualImageScaleType="centerCrop"
-            fresco:placeholderImage="@drawable/place_holder_logo"
-            fresco:placeholderImageScaleType="fitCenter"
-            fresco:pressedStateOverlayImage="@color/color_image_press" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginLeft="5dp">
 
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/dv_three_third"
-            android:layout_width="117dp"
-            android:layout_height="117dp"
-            android:layout_alignBottom="@id/dv_three_first"
-            android:layout_alignParentRight="true"
-            fresco:actualImageScaleType="centerCrop"
-            fresco:placeholderImage="@drawable/place_holder_logo"
-            fresco:placeholderImageScaleType="fitCenter"
-            fresco:pressedStateOverlayImage="@color/color_image_press" />
-    </RelativeLayout>
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/dv_three_second"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                fresco:actualImageScaleType="centerCrop"
+                fresco:placeholderImage="@color/line_color"
+                fresco:placeholderImageScaleType="fitCenter"
+                fresco:pressedStateOverlayImage="@color/color_image_press" />
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/dv_three_third"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="5dp"
+                fresco:actualImageScaleType="centerCrop"
+                fresco:placeholderImage="@color/line_color"
+                fresco:placeholderImageScaleType="fitCenter"
+                fresco:pressedStateOverlayImage="@color/color_image_press" />
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
 
     <!-- 5张图片的布局  -->
     <RelativeLayout
@@ -139,7 +158,7 @@
                 android:layout_weight="1"
                 android:layout_height="185dp"
                 fresco:actualImageScaleType="centerCrop"
-                fresco:placeholderImage="@drawable/place_holder_logo"
+                fresco:placeholderImage="@color/line_color"
                 fresco:placeholderImageScaleType="fitCenter"
                 fresco:pressedStateOverlayImage="@color/color_image_press" />
 
@@ -150,7 +169,7 @@
                 android:layout_height="185dp"
                 fresco:actualImageScaleType="centerCrop"
                 android:layout_marginLeft="5dp"
-                fresco:placeholderImage="@drawable/place_holder_logo"
+                fresco:placeholderImage="@color/line_color"
                 fresco:placeholderImageScaleType="fitCenter"
                 fresco:pressedStateOverlayImage="@color/color_image_press" />
         </LinearLayout>
@@ -167,7 +186,7 @@
             android:layout_weight="1"
             android:layout_height="122dp"
             fresco:actualImageScaleType="centerCrop"
-            fresco:placeholderImage="@drawable/place_holder_logo"
+            fresco:placeholderImage="@color/line_color"
             fresco:placeholderImageScaleType="fitCenter"
             fresco:pressedStateOverlayImage="@color/color_image_press" />
 
@@ -178,7 +197,7 @@
             android:layout_height="122dp"
             android:layout_marginLeft="5dp"
             fresco:actualImageScaleType="centerCrop"
-            fresco:placeholderImage="@drawable/place_holder_logo"
+            fresco:placeholderImage="@color/line_color"
             fresco:pressedStateOverlayImage="@color/color_image_press" />
 
         <com.facebook.drawee.view.SimpleDraweeView
@@ -188,7 +207,7 @@
             android:layout_height="122dp"
             android:layout_marginLeft="5dp"
             fresco:actualImageScaleType="centerCrop"
-            fresco:placeholderImage="@drawable/place_holder_logo"
+            fresco:placeholderImage="@color/line_color"
             fresco:placeholderImageScaleType="fitCenter"
             fresco:pressedStateOverlayImage="@color/color_image_press" />
         </LinearLayout>
@@ -200,14 +219,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="内容"
-        android:layout_marginLeft="@dimen/left_margin"
-        android:layout_marginRight="@dimen/right_margin"/>
+        android:padding="10dp"
+        android:textColor="@color/c3"
+        android:textSize="14sp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"/>
 
     <!--点赞布局-->
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/like_layout"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:gravity="center_vertical"
         android:layout_marginLeft="@dimen/left_margin"
         android:layout_marginRight="@dimen/right_margin"
         android:orientation="horizontal">
@@ -215,35 +238,39 @@
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/icon_like_dynamic_copy" />
+            android:layout_centerVertical="true"
+            android:src="@drawable/btn_praise_normal" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_likes"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"/>
-    </LinearLayout>
+            android:layout_marginLeft="25dp"
+            android:gravity="center_vertical"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
 
     <!--评论布局-->
     <LinearLayout
-        android:id="@+id/comment_layout"
+        android:id="@+id/_comment_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingRight="10dp"
-        android:paddingLeft="10dp"
+        android:paddingRight="@dimen/left_margin"
+        android:paddingLeft="@dimen/left_margin"
         android:orientation="horizontal"
-        android:background="?selectableItemBackground">
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp">
 
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/icon_comment" />
+            android:src="@drawable/btn_comment" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_comment"
+            android:focusable="false"
+            android:clickable="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp" />
@@ -253,8 +280,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/line_color"
-        android:layout_marginTop="5dp"/>
+        android:background="@color/line_color"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -265,7 +291,8 @@
             android:id="@+id/bottom_like_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="?selectableItemBackground">
 
             <ImageView
                 android:id="@+id/iv_like"
@@ -296,7 +323,8 @@
             android:id="@+id/bottom_comment_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="?selectableItemBackground">
 
             <ImageView
                 android:id="@+id/iv_comment"
@@ -327,7 +355,8 @@
             android:id="@+id/bottom_share_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="?selectableItemBackground">
 
             <ImageView
                 android:id="@+id/iv_share"

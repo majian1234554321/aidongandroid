@@ -3,16 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/left_margin"
-    android:layout_marginRight="@dimen/right_margin">
+    android:paddingLeft="@dimen/left_margin"
+    android:paddingRight="@dimen/right_margin"
+    android:background="@color/white">
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/dv_avatar"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
-        android:background="@color/gray"
-        app:roundAsCircle="true"/>
+        android:layout_marginBottom="10dp"
+        app:roundAsCircle="true"
+        app:placeholderImage="@drawable/place_holder_user"/>
     
     <TextView
         android:id="@+id/tv_name"
@@ -20,7 +22,7 @@
         android:layout_height="wrap_content"
         android:textSize="15sp"
         android:text="name"
-        android:layout_marginTop="10dp"
+        android:layout_alignTop="@+id/dv_avatar"
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/dv_avatar"
         android:textColor="@color/gray_normal"/>
@@ -35,8 +37,8 @@
         android:layout_toRightOf="@+id/dv_avatar"
         android:layout_alignLeft="@+id/tv_name"
         android:layout_below="@+id/tv_name"
-        android:text="contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontent
-        contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontent"/>
+        android:text="comment"
+        android:layout_marginBottom="10dp"/>
 
     <TextView
         android:id="@+id/tv_time"
@@ -45,7 +47,12 @@
         android:textSize="15sp"
         android:text="5分钟前"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/tv_name"
+        android:layout_alignTop="@+id/dv_avatar"
         android:textColor="@color/gray_normal"/>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/line_color"/>
 </RelativeLayout>

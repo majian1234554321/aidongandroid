@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.fragment.discover;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewCompat;
@@ -10,7 +11,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.google.android.exoplayer.util.Util;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.DynamicBean;
@@ -18,6 +21,7 @@ import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.activity.discover.DynamicDetailActivity;
 import com.leyuan.aidong.ui.activity.discover.adapter.DynamicAdapter;
 import com.leyuan.aidong.ui.activity.home.ImagePreviewActivity;
+import com.leyuan.aidong.ui.activity.video.PlayerActivity;
 import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.SportCircleFragmentView;
@@ -59,6 +63,15 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
         initSwipeRefreshLayout(view);
         initRecyclerView(view);
         dynamicPresent.commonLoadData(switcherLayout);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        recyclerView = null;
+        dynamicAdapter = null;
+        wrapperAdapter = null;
+        Toast.makeText(getContext(),"destroy circle fragment",Toast.LENGTH_LONG).show();
     }
 
     private void initSwipeRefreshLayout(View view) {
@@ -198,8 +211,11 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
        }
 
        @Override
-       public void onVideoClickListener() {
-
+       public void onVideoClickListener(String  url) {
+           Intent intent = new Intent(getContext(), PlayerActivity.class)
+                   .setData(Uri.parse(url))
+                   .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_HLS);
+           startActivity(intent);
        }
 
        @Override
@@ -222,8 +238,8 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
        }
 
        @Override
-       public void onCommonClickListener() {
-
+       public void onCommonClickListener(int position) {
+           DynamicDetailActivity.start(getContext(),dynamicList.get(position));
        }
 
        @Override

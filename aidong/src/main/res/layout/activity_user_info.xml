@@ -41,8 +41,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:gravity="center_horizontal"
-                app:elevation="0dp"
-                app:layout_behavior="com.leyuan.aidong.ui.activity.mine.view.FlingBehavior">
+                app:elevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"

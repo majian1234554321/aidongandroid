@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ScreenUtil;
 
 import java.util.ArrayList;
@@ -36,12 +37,14 @@ public class DynamicImageAdapter extends RecyclerView.Adapter<DynamicImageAdapte
 
     @Override
     public ImageHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Logger.w("recyclerView","DynamicImageAdapter onCreateViewHolder" );
         View view = LayoutInflater.from(context).inflate(R.layout.item_dynamic_image,parent,false);
         return new ImageHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ImageHolder holder, final int position) {
+        Logger.w("recyclerView","DynamicImageAdapter onBindView" + position);
         String url = data.get(position);
         holder.image.setImageURI(url);
         ViewCompat.setTransitionName(holder.image, String.valueOf(position) + "transition");

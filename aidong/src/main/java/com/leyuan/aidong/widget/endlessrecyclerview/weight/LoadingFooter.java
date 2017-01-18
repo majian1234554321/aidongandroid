@@ -4,10 +4,10 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewStub;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.widget.loadingindicator.AVLoadingIndicatorView;
 
 
 /**
@@ -21,7 +21,7 @@ public class LoadingFooter extends RelativeLayout {
     private View mLoadingView;
     private View mNetworkErrorView;
     private View mTheEndView;
-    private AVLoadingIndicatorView aviView;
+    private ProgressBar aviView;
 
 
     public LoadingFooter(Context context) {
@@ -97,7 +97,7 @@ public class LoadingFooter extends RelativeLayout {
                 if (mLoadingView == null) {
                     ViewStub viewStub = (ViewStub) findViewById(R.id.vs_loading);
                     mLoadingView = viewStub.inflate();
-                    aviView = (AVLoadingIndicatorView)mLoadingView.findViewById(R.id.avi);
+                    aviView = (ProgressBar)mLoadingView.findViewById(R.id.avi);
                 } else {
                     mLoadingView.setVisibility(VISIBLE);
                 }

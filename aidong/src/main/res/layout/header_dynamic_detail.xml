@@ -18,8 +18,8 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_centerVertical="true"
-            fresco:roundAsCircle="true"
             fresco:actualImageScaleType="centerCrop"
+            fresco:roundAsCircle="true"
             fresco:placeholderImage="@drawable/place_holder_user"
             fresco:pressedStateOverlayImage="@color/color_image_press" />
 
@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="11dp"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/dv_avatar"
             android:text="这是谁"
             android:textColor="@color/black"
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/tv_name"
             android:layout_below="@+id/tv_name"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="5dp"
             android:text="12分钟前"
             android:textColor="@color/c9"
             android:textSize="12sp" />
@@ -191,25 +191,29 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <!--文字内容-->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/photo_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <!--文字内容-->
     <TextView
         android:id="@+id/tv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="内容"
-        android:layout_marginLeft="@dimen/left_margin"
-        android:layout_marginRight="@dimen/right_margin"/>
+        android:padding="10dp"
+        android:textColor="@color/c3"
+        android:textSize="14sp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"/>
 
     <!--点赞布局-->
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/like_layout"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:gravity="center_vertical"
         android:layout_marginLeft="@dimen/left_margin"
         android:layout_marginRight="@dimen/right_margin"
         android:orientation="horizontal">
@@ -217,16 +221,17 @@
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/icon_like_dynamic_copy" />
+            android:layout_centerVertical="true"
+            android:src="@drawable/btn_praise_normal" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_likes"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"/>
-    </LinearLayout>
+            android:layout_marginLeft="25dp"
+            android:gravity="center_vertical"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
 
     <!--底部点赞 评论 分享布局-->
     <View

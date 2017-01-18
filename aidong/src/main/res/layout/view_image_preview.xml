@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/icon_back"
         android:layout_centerVertical="true"
-        android:padding="@dimen/left_margin"/>
+        android:padding="5dp"/>
     <TextView
         android:id="@+id/tv_page"
         android:layout_width="wrap_content"

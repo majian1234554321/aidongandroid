@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.model.result.MsgResult;
-import com.leyuan.aidong.ui.activity.discover.PublishDynamicActivity;
+import com.leyuan.aidong.ui.activity.media.TabTheIndividualDynaminActivity;
 import com.leyuan.aidong.ui.fragment.discover.DiscoverHomeFragment;
 import com.leyuan.aidong.ui.fragment.home.HomeFragment;
 import com.leyuan.aidong.ui.fragment.mine.MineFragment;
@@ -170,10 +170,11 @@ public class MainActivity extends BaseActivity implements IHttpCallback, View.On
             @Override
             public void onClick(View arg0) {
                 //                if (BaseApp.mInstance.isLogin()) {
-                Intent intent = new Intent(MainActivity.this,
-                        PublishDynamicActivity.class);
-                intent.putExtra("type", 3);
-                startActivity(intent);
+                PermissionGen.with(MainActivity.this)
+                        .addRequestCode(200)
+                        .permissions(Manifest.permission.READ_EXTERNAL_STORAGE)
+                        .request();
+
                 //                } else {
                 //                    Intent intent = new Intent(MainActivity.this,
                 //                            LoginActivity.class);
@@ -349,10 +350,20 @@ public class MainActivity extends BaseActivity implements IHttpCallback, View.On
     }
 
     @PermissionSuccess(requestCode = 100)
-    public void callUp() {
+    public void photo() {
         Intent intent = new Intent(MainActivity.this,
-                PublishDynamicActivity.class);
+                TabTheIndividualDynaminActivity.class);
         intent.putExtra("type", 1);
         startActivity(intent);
+
     }
+
+    @PermissionSuccess(requestCode = 200)
+    public void video() {
+        Intent intent = new Intent(MainActivity.this,
+                TabTheIndividualDynaminActivity.class);
+        intent.putExtra("type", 3);
+        startActivity(intent);
+    }
+
 }

@@ -32,7 +32,7 @@ import kr.co.namee.permissiongen.PermissionSuccess;
 
 /**
  * 预约场馆
- * 上午十点之前,下午三点之前可预约,若今天不可预约日期从明天开始
+ * 上午九点之前,下午三点之前可预约,若今天不可预约日期从明天开始
  * Created by song on 2016/10/26.
  */
 public class AppointVenuesActivity extends BaseActivity implements View.OnClickListener, DateAdapter.ItemClickListener {

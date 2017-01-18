@@ -113,14 +113,23 @@ public class DiscoverFragment extends BaseFragment implements DiscoverFragmentVi
         if(refreshLayout.isRefreshing()){
             refreshLayout.setRefreshing(false);
         }
+
         if(discoverData.getBrand() != null){
             brandsAdapter.setData(discoverData.getBrand());
+        }else {
+            moreVenuesLayout.setVisibility(View.GONE);
         }
+
         if(discoverData.getUser() != null){
             userAdapter.setData(discoverData.getUser());
+        }else {
+            moreUserLayout.setVisibility(View.GONE);
         }
+
         if(discoverData.getNews() != null){
             newsAdapter.setData(discoverData.getNews());
+        }else {
+            moreNewsLayout.setVisibility(View.GONE);
         }
     }
 

@@ -69,4 +69,16 @@ public class CommentBean {
     public void setPublisher(Publisher publisher) {
         this.publisher = publisher;
     }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setPublishedAt(String published_at) {
+        this.published_at = published_at;
+    }
 }

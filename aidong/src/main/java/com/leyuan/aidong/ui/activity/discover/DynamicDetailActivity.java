@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,29 +22,35 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CommentBean;
 import com.leyuan.aidong.entity.DynamicBean;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.discover.adapter.DynamicDetailAdapter;
 import com.leyuan.aidong.ui.activity.discover.adapter.DynamicImageAdapter;
 import com.leyuan.aidong.ui.activity.discover.adapter.DynamicLikeAdapter;
+import com.leyuan.aidong.ui.activity.discover.view.GridItemDecoration;
 import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.DynamicDetailActivityView;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.FormatUtil;
+import com.leyuan.aidong.utils.KeyBoardUtil;
 import com.leyuan.aidong.widget.customview.SquareRelativeLayout;
+import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
+import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
+import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.view.inputmethod.EditorInfo.IME_ACTION_SEND;
-import static com.leyuan.aidong.ui.App.context;
 
 /**
  * Created by song on 2016/12/28.
  */
 
-public class DynamicDetailActivity extends BaseActivity implements DynamicDetailActivityView,View.OnClickListener, TextView.OnEditorActionListener {
+public class DynamicDetailActivity extends BaseActivity implements DynamicDetailActivityView,View.OnClickListener, TextView.OnEditorActionListener, SwipeRefreshLayout.OnRefreshListener, DynamicDetailAdapter.OnItemClickListener {
     private ImageView ivBack;
     private TextView tvReport;
     private SimpleDraweeView dvUserAvatar;
@@ -84,7 +89,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
     private TextView tvContent;
 
     //点赞
-    private LinearLayout likeLayout;
+    private RelativeLayout likeLayout;
     private RecyclerView likesRecyclerView;
 
     //底部信息
@@ -132,12 +137,15 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
         dvUserAvatar = (SimpleDraweeView) findViewById(R.id.dv_user_avatar);
         etComment = (EditText) findViewById(R.id.et_comment);
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
+        setColorSchemeResources(refreshLayout);
         commentView = (RecyclerView)findViewById(R.id.rv_comment);
         commentAdapter = new DynamicDetailAdapter(this);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(commentAdapter);
         commentView.setAdapter(wrapperAdapter);
         commentView.setLayoutManager(new LinearLayoutManager(this));
         RecyclerViewUtils.setHeaderView(commentView,header);
+        etComment.setHorizontallyScrolling(false);
+        etComment.setMaxLines(5);
     }
 
     private void initHeaderView(){
@@ -161,7 +169,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
         dvFiveFourth = (SimpleDraweeView) header.findViewById(R.id.dv_five_fourth);
         dvFiveLast = (SimpleDraweeView) header.findViewById(R.id.dv_five_last);
         tvContent = (TextView) header.findViewById(R.id.tv_content);
-        likeLayout = (LinearLayout) header.findViewById(R.id.like_layout);
+        likeLayout = (RelativeLayout) header.findViewById(R.id.like_layout);
         likesRecyclerView = (RecyclerView) header.findViewById(R.id.rv_likes);
         bottomLikeLayout = (RelativeLayout) header.findViewById(R.id.bottom_like_layout);
         ivLike = (ImageView) header.findViewById(R.id.iv_like);
@@ -183,14 +191,121 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
         bottomCommentLayout.setOnClickListener(this);
         bottomShareLayout.setOnClickListener(this);
         etComment.setOnEditorActionListener(this);
+        refreshLayout.setOnRefreshListener(this);
+        commentView.addOnScrollListener(onScrollListener);
+        commentAdapter.setOnItemClickListener(this);
     }
 
+    @Override
+    public void onRefresh() {
+        currPage = 1;
+        RecyclerViewStateUtils.resetFooterViewState(commentView);
+        dynamicPresent.pullToRefreshComments(dynamic.id);
+    }
+
+    private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
+        @Override
+        public void onLoadNextPage(View view) {
+            currPage ++;
+            if (comments != null && comments.size() >= pageSize) {
+                dynamicPresent.requestMoreComments(commentView,dynamic.id,currPage,pageSize);
+            }
+        }
+
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+            if(newState == RecyclerView.SCROLL_STATE_DRAGGING){
+                KeyBoardUtil.closeKeyboard(etComment,DynamicDetailActivity.this);
+            }
+        }
+    };
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.iv_back:
+                finish();
+                KeyBoardUtil.closeKeyboard(etComment,DynamicDetailActivity.this);
+                break;
+            case R.id.tv_report:
 
+                break;
+            default:
+                break;
+        }
     }
 
+    @Override
+    public void onItemClick(int position) {
+        String other = comments.get(position).getPublisher().getName();
+        other = String.format(getString(R.string.reply_other_user),other);
+        etComment.setText(other);
+        etComment.setSelection(other.length());
+        KeyBoardUtil.openKeyboard(etComment,this);
+    }
+
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if(actionId == IME_ACTION_SEND ){
+            if(TextUtils.isEmpty(etComment.getText())){
+                Toast.makeText(this,"please input comment",Toast.LENGTH_LONG).show();
+                return false;
+            }
+            dynamicPresent.addComment(dynamic.id,etComment.getText().toString());
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    @Override
+    public void addCommentsResult(BaseBean baseBean) {
+
+        if(baseBean.getStatus() == Constant.OK){
+            CommentBean temp = new CommentBean();
+            CommentBean.Publisher publisher = temp.new Publisher();
+            publisher.setAvatar(App.mInstance.getUser().getAvatar());
+            publisher.setName(App.mInstance.getUser().getName());
+            temp.setContent(etComment.getText().toString());
+            temp.setPublishedAt("刚刚");
+            temp.setPublisher(publisher);
+            comments.add(0,temp);
+            wrapperAdapter.notifyItemInserted(0);
+            commentView.scrollToPosition(1);
+            etComment.clearFocus();
+            etComment.setText(Constant.EMPTY);
+            Toast.makeText(this,"评论成功",Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(this,"评论失败",Toast.LENGTH_LONG).show();
+        }
+
+        KeyBoardUtil.closeKeyboard(etComment,this);
+    }
+
+    @Override
+    public void updateComments(List<CommentBean> commentList) {
+        if(refreshLayout.isRefreshing()){
+            comments.clear();
+            refreshLayout.setRefreshing(false);
+        }
+        comments.addAll(commentList);
+        commentAdapter.setData(comments);
+        wrapperAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showEmptyCommentView() {
+        if(refreshLayout.isRefreshing()){
+            comments.clear();
+            refreshLayout.setRefreshing(false);
+        }
+    }
+
+    @Override
+    public void showEndFooterView() {
+        RecyclerViewStateUtils.setFooterViewState(commentView, LoadingFooter.State.TheEnd);
+    }
 
     private void setHeaderView(){
         DynamicBean.Publisher publisher = dynamic.publisher;
@@ -203,7 +318,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
         }
         tvTime.setText(dynamic.published_at);
 
-        //图片
+        //图片和视频
         List<String> images = dynamic.image;
         DynamicImageAdapter imageAdapter = null;
         if(images != null) {
@@ -250,24 +365,24 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
                     photoLayout.setVisibility(View.VISIBLE);
                     threePhotoLayout.setVisibility(View.GONE);
                     fivePhotoLayout.setVisibility(View.GONE);
-                    photoLayout.setLayoutManager(new GridLayoutManager(context,spanCount));
-                    imageAdapter = new DynamicImageAdapter(context);
+                    photoLayout.setLayoutManager(new GridLayoutManager(this,spanCount));
+                    photoLayout.addItemDecoration(new GridItemDecoration(this));
+                    imageAdapter = new DynamicImageAdapter(this);
                     imageAdapter.setData(dynamic.image);
                     photoLayout.setAdapter(imageAdapter);
                     break;
                 default:
                     break;
             }
+        }else {
+            if(dynamic.video != null){
+                videoLayout.setVisibility(View.VISIBLE);
+                photoLayout.setVisibility(View.GONE);
+                threePhotoLayout.setVisibility(View.GONE);
+                fivePhotoLayout.setVisibility(View.GONE);
+                dvVideo.setImageURI(dynamic.video.cover);
+            }
         }
-
-        //视频
-       /* if(dynamic.video != null){
-            videoLayout.setVisibility(View.VISIBLE);
-            photoLayout.setVisibility(View.GONE);
-            threePhotoLayout.setVisibility(View.GONE);
-            fivePhotoLayout.setVisibility(View.GONE);
-            dvVideo.setImageURI(dynamic.video.cover);
-        }*/
 
         //内容
         tvContent.setText(dynamic.content);
@@ -276,8 +391,8 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
         if(FormatUtil.parseInt(dynamic.like.counter) > 0){
             likeLayout.setVisibility(View.VISIBLE);
             likesRecyclerView.setLayoutManager(new LinearLayoutManager
-                    (context,LinearLayoutManager.HORIZONTAL,false));
-            DynamicLikeAdapter likeAdapter = new DynamicLikeAdapter(context);
+                    (this,LinearLayoutManager.HORIZONTAL,false));
+            DynamicLikeAdapter likeAdapter = new DynamicLikeAdapter(this);
             likeAdapter.setData(dynamic.like.item);
             likesRecyclerView.setAdapter(likeAdapter);
         }else {
@@ -287,48 +402,5 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
         //底部操作
         tvLikeCount.setText(dynamic.like.counter);
         tvCommentCount.setText(dynamic.comment.count);
-    }
-
-    @Override
-    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-        if(actionId == IME_ACTION_SEND ){
-            if(TextUtils.isEmpty(etComment.getText())){
-                Toast.makeText(this,"please input comment",Toast.LENGTH_LONG).show();
-                return false;
-            }
-            dynamicPresent.addComment(dynamic.id,etComment.getText().toString());
-            return true;
-        }else {
-            return false;
-        }
-    }
-
-    @Override
-    public void addCommentsResult(BaseBean baseBean) {
-
-    }
-
-    @Override
-    public void updateComments(List<CommentBean> commentList) {
-        if(refreshLayout.isRefreshing()){
-            comments.clear();
-            refreshLayout.setRefreshing(false);
-        }
-        comments.addAll(commentList);
-        commentAdapter.setData(comments);
-        wrapperAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void showEmptyCommentView() {
-        if(refreshLayout.isRefreshing()){
-            comments.clear();
-            refreshLayout.setRefreshing(false);
-        }
-    }
-
-    @Override
-    public void showEndFooterView() {
-
     }
 }

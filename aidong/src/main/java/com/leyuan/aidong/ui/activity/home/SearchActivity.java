@@ -87,7 +87,7 @@ public class SearchActivity extends BaseActivity implements SearchActivityView{
             public void onItemClick(String keyword) {
                 etSearch.setText(keyword);
                 etSearch.setSelection(keyword.length());
-                KeyBoardUtil.closeKeybord(etSearch,SearchActivity.this);
+                KeyBoardUtil.closeKeyboard(etSearch,SearchActivity.this);
                 SearchResultFragment fragment = SearchResultFragment.newInstance(keyword);
                 FragmentManager fm = getSupportFragmentManager();
                 fm.beginTransaction().replace(R.id.fl_container,fragment).commit();
@@ -109,7 +109,7 @@ public class SearchActivity extends BaseActivity implements SearchActivityView{
                     if(TextUtils.isEmpty(etSearch.getText())) {
                         Toast.makeText(SearchActivity.this, R.string.input_content, Toast.LENGTH_LONG).show();
                     }else {
-                        KeyBoardUtil.closeKeybord(etSearch,SearchActivity.this);
+                        KeyBoardUtil.closeKeyboard(etSearch,SearchActivity.this);
                         String keyword = etSearch.getText().toString();
                         SearchResultFragment fragment = SearchResultFragment.newInstance(keyword);
                         FragmentManager fm = getSupportFragmentManager();

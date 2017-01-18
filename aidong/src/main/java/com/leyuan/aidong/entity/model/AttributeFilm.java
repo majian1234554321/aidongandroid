@@ -17,5 +17,7 @@ public class AttributeFilm implements Serializable{
 	public void setFilm(String film) {
 		this.film = film;
 	}
+
+
 	
 }

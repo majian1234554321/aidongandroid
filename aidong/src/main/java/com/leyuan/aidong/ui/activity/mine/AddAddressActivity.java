@@ -85,7 +85,7 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
                     }
                     break;
             case R.id.tv_address:
-                KeyBoardUtil.closeKeybord(etUsername,this);
+                KeyBoardUtil.closeKeyboard(etUsername,this);
                 if(addressPopup == null){
                     addressPopup = new AddressPopupWindow(this);
                     addressPopup.setOnConfirmAddressListener(this);

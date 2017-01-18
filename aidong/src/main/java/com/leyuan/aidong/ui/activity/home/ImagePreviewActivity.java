@@ -103,7 +103,7 @@ public class ImagePreviewActivity extends BaseActivity implements ImagePreviewTo
 
     @Override
     public void onBackClick() {
-        finish();
+        compatFinish();
     }
 
     @Override
