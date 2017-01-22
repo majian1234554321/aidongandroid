@@ -53,7 +53,10 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
     @Override
     public void onBindViewHolder(final GoodsHolder holder, final int position) {
         final GoodsBean bean = data.get(position);
-        holder.cover.setImageURI(bean.getCover());
+        if(!bean.getCover().equals(holder.cover.getTag())) {
+            holder.cover.setTag(bean.getCover());
+            holder.cover.setImageURI(bean.getCover());
+        }
         holder.name.setText(bean.getName());
         ArrayList<String> specValue = bean.getSpec_value();
         StringBuilder skuStr = new StringBuilder();
@@ -61,8 +64,8 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
             skuStr.append(result);
         }
         holder.sku.setText(skuStr);
-        holder.price.setText(String.format
-                (context.getString(R.string.rmb_price),bean.getPrice()));
+        holder.price.setText(String.format(context.getString(R.string.rmb_price_double),
+                FormatUtil.parseDouble(bean.getPrice())));
         holder.count.setText(bean.getAmount());
         holder.check.setChecked(bean.isChecked());
         holder.minus.setImageResource(FormatUtil.parseInt(bean.getAmount()) == 1 ?

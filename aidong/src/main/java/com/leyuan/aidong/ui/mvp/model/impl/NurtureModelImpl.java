@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.mvp.model.impl;
 
 import android.content.Context;
 
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.data.NurtureData;
 import com.leyuan.aidong.entity.data.NurtureDetailData;
@@ -15,6 +16,8 @@ import com.leyuan.aidong.utils.SystemInfoUtils;
 import java.util.ArrayList;
 
 import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * 营养品
@@ -53,6 +56,16 @@ public class NurtureModelImpl implements NurtureModel {
     public void getDeliveryVenues(Subscriber<VenuesData> subscriber, String skuCode, int page) {
         nurtureService.getDeliveryVenues(skuCode,page)
                 .compose(RxHelper.<VenuesData>transform())
+                .subscribe(subscriber);
+
+    }
+
+    @Override
+    public void buyNurtureImmediately(Subscriber<BaseBean> subscriber, String skuCode, int amount,
+                                      String pickUp, String pickUpId) {
+        nurtureService.buyNurtureImmediately(skuCode,amount,pickUp,pickUpId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
 
     }

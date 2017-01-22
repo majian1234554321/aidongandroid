@@ -52,6 +52,7 @@ public class CartShopAdapter extends RecyclerView.Adapter<CartShopAdapter.CartHo
     public void onBindViewHolder(final CartHolder holder, final int position) {
         final ShopBean bean = data.get(position);
         holder.tvShopName.setText(bean.getName());
+        holder.tvDeliveryType.setText(bean.getName().equals("仓库发货") ? "快递" : "自提");
         holder.rvShop.setLayoutManager(new LinearLayoutManager(context));
         final CartGoodsAdapter goodsAdapter = new CartGoodsAdapter(context);
         holder.rvShop.setAdapter(goodsAdapter);

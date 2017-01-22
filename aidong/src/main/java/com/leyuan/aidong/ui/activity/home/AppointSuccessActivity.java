@@ -59,7 +59,7 @@ public class AppointSuccessActivity extends BaseActivity implements View.OnClick
         checkAppointment = (TextView) headerView.findViewById(R.id.tv_appointment);
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
         recyclerView = (RecyclerView) findViewById(R.id.rv_recommend);
-        recommendAdapter = new RecommendAdapter(this,"1");
+        recommendAdapter = new RecommendAdapter(this);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(recommendAdapter);
         recyclerView.setAdapter(wrapperAdapter);
         GridLayoutManager manager = new GridLayoutManager(this,2);

@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.activity.mine.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -37,7 +38,7 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.UserHolder
 
     @Override
     public UserHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = View.inflate(context, R.layout.item_follow, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_follow,parent,false);
         return new UserHolder(view);
     }
 
@@ -47,8 +48,11 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.UserHolder
         holder.avatar.setImageURI(bean.getAvatar());
         holder.nickname.setText(bean.getName());
         holder.distance.setText(bean.getDistance());
-
-
+        if("0".equals(bean.getGender())){   //男
+            holder.gender.setBackgroundResource(R.drawable.icon_man);
+        }else {
+            holder.gender.setBackgroundResource(R.drawable.icon_woman);
+        }
     }
 
     class UserHolder extends RecyclerView.ViewHolder {

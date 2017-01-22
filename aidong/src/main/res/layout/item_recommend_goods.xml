@@ -6,7 +6,9 @@
     android:orientation="vertical"
     android:background="?selectableItemBackground"
     android:paddingBottom="15dp"
-    android:gravity="center">
+    android:gravity="center"
+    android:paddingLeft="@dimen/left_margin"
+    android:paddingRight="@dimen/right_margin">
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/dv_goods"

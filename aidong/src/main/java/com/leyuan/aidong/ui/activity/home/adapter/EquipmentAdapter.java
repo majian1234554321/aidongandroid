@@ -8,8 +8,9 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.EquipmentBean;
+import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.ui.activity.home.OldGoodsDetailActivity;
+import com.leyuan.aidong.utils.FormatUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,13 +24,13 @@ import static com.leyuan.aidong.ui.activity.home.GoodsDetailActivity.TYPE_EQUIPM
  */
 public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.EquipmentViewHolder>{
     private Context context;
-    private List<EquipmentBean> data = new ArrayList<>();
+    private List<GoodsBean> data = new ArrayList<>();
 
     public EquipmentAdapter(Context context) {
         this.context = context;
     }
 
-    public void setData(List<EquipmentBean> data) {
+    public void setData(List<GoodsBean> data) {
         this.data = data;
     }
 
@@ -46,10 +47,11 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.Equi
 
     @Override
     public void onBindViewHolder(final EquipmentViewHolder holder, int position) {
-        final EquipmentBean bean = data.get(position);
+        final GoodsBean bean = data.get(position);
         holder.cover.setImageURI(bean.getCover());
         holder.name.setText(bean.getName());
-        holder.price.setText(String.format(context.getString(R.string.rmb_price),bean.getPrice()));
+        holder.price.setText(String.format(context.getString(R.string.rmb_price_double),
+                FormatUtil.parseDouble(bean.getPrice())));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +60,6 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.Equi
             }
         });
     }
-
 
     static class EquipmentViewHolder extends RecyclerView.ViewHolder{
         SimpleDraweeView cover;

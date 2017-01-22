@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.android.exoplayer.util.Util;
 import com.leyuan.aidong.R;
@@ -21,6 +20,7 @@ import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.activity.discover.DynamicDetailActivity;
 import com.leyuan.aidong.ui.activity.discover.adapter.DynamicAdapter;
 import com.leyuan.aidong.ui.activity.home.ImagePreviewActivity;
+import com.leyuan.aidong.ui.activity.mine.UserInfoActivity;
 import com.leyuan.aidong.ui.activity.video.PlayerActivity;
 import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
@@ -40,7 +40,7 @@ import static com.leyuan.aidong.R.id.rv_dynamic;
  * 爱动圈
  * Created by song on 2016/12/26.
  */
-public class CircleFragment extends BaseFragment implements SportCircleFragmentView{
+public class CircleFragment extends BaseFragment implements SportCircleFragmentView {
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
@@ -52,31 +52,22 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
     private DynamicPresent dynamicPresent;
 
     @Override
-    public View onCreateView(LayoutInflater inflater,  ViewGroup container,Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_circle,null);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_circle, null);
     }
 
     @Override
-    public void onViewCreated(View view,Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        dynamicPresent = new DynamicPresentImpl(getContext(),this);
+        dynamicPresent = new DynamicPresentImpl(getContext(), this);
         initSwipeRefreshLayout(view);
         initRecyclerView(view);
         dynamicPresent.commonLoadData(switcherLayout);
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        recyclerView = null;
-        dynamicAdapter = null;
-        wrapperAdapter = null;
-        Toast.makeText(getContext(),"destroy circle fragment",Toast.LENGTH_LONG).show();
-    }
-
     private void initSwipeRefreshLayout(View view) {
         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout);
-        switcherLayout = new SwitcherLayout(getContext(),refreshLayout);
+        switcherLayout = new SwitcherLayout(getContext(), refreshLayout);
         setColorSchemeResources(refreshLayout);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -92,7 +83,7 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
         });
     }
 
-    private void initRecyclerView(View view){
+    private void initRecyclerView(View view) {
         recyclerView = (RecyclerView) view.findViewById(rv_dynamic);
         dynamicList = new ArrayList<>();
         dynamicAdapter = new DynamicAdapter(getContext());
@@ -103,19 +94,19 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
         recyclerView.addOnScrollListener(onScrollListener);
     }
 
-    private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
+    private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener() {
         @Override
         public void onLoadNextPage(View view) {
-            currPage ++;
+            currPage++;
             if (dynamicList != null && dynamicList.size() >= pageSize) {
-                dynamicPresent.requestMoreData(recyclerView,pageSize,currPage);
+                dynamicPresent.requestMoreData(recyclerView, pageSize, currPage);
             }
         }
     };
 
     @Override
     public void updateRecyclerView(List<DynamicBean> dynamicBeanList) {
-        if(refreshLayout.isRefreshing()){
+        if (refreshLayout.isRefreshing()) {
             dynamicList.clear();
             refreshLayout.setRefreshing(false);
         }
@@ -139,117 +130,64 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
 
     }
 
+    private class HandleDynamicListener implements DynamicAdapter.OnHandleDynamicListener {
 
-   /*{
-        for (int i = 0; i < 7; i++) {
-            DynamicBean b = new DynamicBean();
-            b.content = "内容" + i;
-            List<String> image = new ArrayList<>();
-            if(i == 4){
-                image.add("http://ww4.sinaimg.cn/mw690/61ecbb3djw1fb91u8cc60j20ku0xc7ct.jpg");
-                image.add("http://ww2.sinaimg.cn/mw690/006uFQHgjw1fb54ut8kc8j30zk0qowmb.jpg");
-                image.add("http://ww1.sinaimg.cn/mw690/005EbyOWjw1fbedmg8hqsj30c464t1kx.jpg");
-                image.add("http://ww2.sinaimg.cn/mw690/61ecbb3djw1fbdm5afmycg207r04anpd.gif");
-            }else {
-                for (int j = 0; j < i; j++) {
-                    image.add("http://ww2.sinaimg.cn/mw690/006uFQHgjw1fb54ut8kc8j30zk0qowmb.jpg");
-                }
-            }
-            b.image =  image;
-            DynamicBean.Publisher p = b.new Publisher();
-            p.name = "song";
-            p.avatar = "http://ww4.sinaimg.cn/mw690/61ecbb3djw1fb91u8cc60j20ku0xc7ct.jpg";
-            b.publisher = p;
-            b.published_at = "2016-8-8";
-
-            DynamicBean.LikeUser likeUser = b.new LikeUser();
-            List<DynamicBean.LikeUser.Item> likeUserItem = new ArrayList<>();
-            likeUser.count = i+"";
-            for (int j = 0; j < i; j++) {
-                DynamicBean.LikeUser.Item item = likeUser.new Item();
-                item.avatar = "https://static.dingtalk.com/media/lADOfNttL80JsM0NtA_3508_2480.jpg_620x10000q90g.jpg";
-                likeUserItem.add(item);
-            }
-            likeUser.item = likeUserItem;
-            b.like = likeUser;
-
-            DynamicBean.Comment comment = b.new Comment();
-            List<DynamicBean.Comment.Item> commentItem = new ArrayList<>();
-            comment.count = i +"";
-            for (int j = 0; j < i; j++) {
-                DynamicBean.Comment.Item item = comment.new Item();
-                item.content = "评论内容" + j;
-                DynamicBean.Comment.Item.Publisher pp = item.new Publisher();
-                pp.name = "评论者名字" + j;
-                item.publisher = pp;
-                commentItem.add(item);
-            }
-            comment.item = commentItem;
-            b.comment = comment;
-            dynamicList.add(b);
-            dynamicList.add(b);
-            dynamicList.add(b);
+        @Override
+        public void onAvatarClickListener() {
+            startActivity(new Intent(getContext(),UserInfoActivity.class));
         }
-    }*/
 
-   private class HandleDynamicListener implements DynamicAdapter.OnHandleDynamicListener{
+        @Override
+        public void onImageClickListener(View view, int itemPosition, int imagePosition) {
+            Intent i = new Intent(getContext(), ImagePreviewActivity.class);
+            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation
+                    (getActivity(), view, ViewCompat.getTransitionName(view));
+            i.putExtra("urls", (ArrayList) dynamicList.get(itemPosition).image);
+            i.putExtra("position", imagePosition);
+            startActivity(i, optionsCompat.toBundle());
+            //ImagePreviewActivity.start(context,(ArrayList<String>) data,position);
+        }
 
-       @Override
-       public void onAvatarClickListener() {
+        @Override
+        public void onVideoClickListener(String url) {
+            Intent intent = new Intent(getContext(), PlayerActivity.class)
+                    .setData(Uri.parse(url))
+                    .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_HLS);
+            startActivity(intent);
+        }
 
-       }
+        @Override
+        public void onShowMoreLikeClickListener() {
 
-       @Override
-       public void onImageClickListener(View view,int itemPosition, int imagePosition) {
-           Intent i = new Intent(getContext(), ImagePreviewActivity.class);
-           ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation
-                   (getActivity(), view,ViewCompat.getTransitionName(view));
-           i.putExtra("urls",(ArrayList)dynamicList.get(itemPosition).image);
-           i.putExtra("position",imagePosition);
-           startActivity(i, optionsCompat.toBundle());
-           //ImagePreviewActivity.start(context,(ArrayList<String>) data,position);
-       }
+        }
 
-       @Override
-       public void onVideoClickListener(String  url) {
-           Intent intent = new Intent(getContext(), PlayerActivity.class)
-                   .setData(Uri.parse(url))
-                   .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_HLS);
-           startActivity(intent);
-       }
+        @Override
+        public void onShowMoreCommentClickListener() {
 
-       @Override
-       public void onShowMoreLikeClickListener() {
+        }
 
-       }
-
-       @Override
-       public void onShowMoreCommentClickListener() {
-
-       }
-
-       @Override
-       public void onLikeClickListener(String id, boolean isAddLike) {
-            if(isAddLike){
+        @Override
+        public void onLikeClickListener(String id, boolean isAddLike) {
+            if (isAddLike) {
                 dynamicPresent.cancelLike(id);
-            }else {
+            } else {
                 dynamicPresent.addLike(id);
             }
-       }
+        }
 
-       @Override
-       public void onCommonClickListener(int position) {
-           DynamicDetailActivity.start(getContext(),dynamicList.get(position));
-       }
+        @Override
+        public void onCommonClickListener(int position) {
+            DynamicDetailActivity.start(getContext(), dynamicList.get(position));
+        }
 
-       @Override
-       public void onShareClickListener() {
+        @Override
+        public void onShareClickListener() {
 
-       }
+        }
 
-       @Override
-       public void onDynamicDetailClickListener(int position) {
-           DynamicDetailActivity.start(getContext(),dynamicList.get(position));
-       }
-   }
+        @Override
+        public void onDynamicDetailClickListener(int position) {
+            DynamicDetailActivity.start(getContext(), dynamicList.get(position));
+        }
+    }
 }

@@ -38,11 +38,13 @@
     <string name="stock_out">超出库存范围</string>
     <string name="input_recommend_code">请输入推荐码</string>
     <string name="add_cart_failed">加入购物车失败</string>
+    <string name="add_cart_success">加入购物车成功</string>
     <string name="applicant_count">已参加(%1$d/%2$s)</string>
     <string name="course_applicant_count">已参加(%1$s/%2$s)</string>
     <string name="appoint_time">开始预约时间:%1$s</string>
     <string name="detail_time">%1$s  %2$s - %3$s</string>
     <string name="rmb_price">¥ %1$s</string>
+    <string name="rmb_price_double">¥ %1$.2f</string>
     <string name="rmb_price_scope">¥ %1$.2f - ¥ %2$.2f</string>
     <string name="time_with_line">%1$s—%2$s</string>
     <string name="course_count">&#160;(%1$s/%2$s&#160;人)&#160;&#160;/&#160;&#160;</string>

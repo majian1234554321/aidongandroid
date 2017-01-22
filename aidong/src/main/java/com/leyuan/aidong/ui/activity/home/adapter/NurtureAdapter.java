@@ -8,8 +8,9 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.NurtureBean;
+import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.ui.activity.home.OldGoodsDetailActivity;
+import com.leyuan.aidong.utils.FormatUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,13 +24,13 @@ import static com.leyuan.aidong.ui.activity.home.GoodsDetailActivity.TYPE_NURTUR
  */
 public class NurtureAdapter extends RecyclerView.Adapter<NurtureAdapter.NurtureViewHolder>{
     private Context context;
-    private List<NurtureBean> data = new ArrayList<>();
+    private List<GoodsBean> data = new ArrayList<>();
 
     public NurtureAdapter(Context context) {
         this.context = context;
     }
 
-    public void setData(List<NurtureBean> data) {
+    public void setData(List<GoodsBean> data) {
         this.data = data;
     }
 
@@ -46,10 +47,11 @@ public class NurtureAdapter extends RecyclerView.Adapter<NurtureAdapter.NurtureV
 
     @Override
     public void onBindViewHolder(final NurtureViewHolder holder, int position) {
-        final NurtureBean bean = data.get(position);
+        final GoodsBean bean = data.get(position);
         holder.cover.setImageURI(bean.getCover());
         holder.name.setText(bean.getName());
-        holder.price.setText(String.format(context.getString(R.string.rmb_price),bean.getPrice()));
+        holder.price.setText(String.format(context.getString(R.string.rmb_price_double),
+                FormatUtil.parseDouble(bean.getPrice())));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

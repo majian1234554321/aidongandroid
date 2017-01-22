@@ -178,6 +178,19 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
         //底部操作
         holder.tvLikeCount.setText(dynamic.like.counter);
         holder.tvCommentCount.setText(dynamic.comment.count);
+        /*if(FormatUtil.parseInt(dynamic.like.counter) > 0){
+            boolean hasSelf = false;
+            for (DynamicBean.LikeUser.Item item : dynamic.like.item) {
+                if(item.publisher_id.equals(String.valueOf(App.mInstance.getUser().getId()))){
+                    dynamic.isLiked = true;
+                    hasSelf = true;
+                    break;
+                }
+            }
+            holder.ivLike.setBackgroundResource(hasSelf ? R.drawable.icon_like_pressed
+                    : R.drawable.btn_praise_normal);
+        }*/
+
 
         if(imageAdapter != null) {
             imageAdapter.setImageClickListener(new DynamicImageAdapter.ImageClickListener() {
@@ -219,8 +232,6 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
             }
         });
 
-
-
         holder.bottomLikeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -258,9 +269,6 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
             }
         });
     }
-
-
-
 
     class DynamicHolder extends RecyclerView.ViewHolder{
 

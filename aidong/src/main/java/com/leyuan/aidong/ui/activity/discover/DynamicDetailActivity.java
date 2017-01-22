@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,11 +70,11 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
     private SimpleDraweeView dvVideo;
     private ImageButton ibPlay;
 
-    //1,2,4,5张图
+    //1,2,4,6张图
     private RecyclerView photoLayout;
 
     //3张图
-    private RelativeLayout threePhotoLayout;
+    private LinearLayout threePhotoLayout;
     private SimpleDraweeView dvThreeFirst;
     private SimpleDraweeView dvThreeSecond;
     private SimpleDraweeView dvThreeThird;
@@ -158,7 +160,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
         dvVideo = (SimpleDraweeView) header.findViewById(R.id.dv_video);
         ibPlay = (ImageButton) header.findViewById(R.id.ib_play);
         photoLayout = (RecyclerView) header.findViewById(R.id.photo_layout);
-        threePhotoLayout = (RelativeLayout) header.findViewById(R.id.three_photo_layout);
+        threePhotoLayout = (LinearLayout) header.findViewById(R.id.three_photo_layout);
         dvThreeFirst = (SimpleDraweeView) header.findViewById(R.id.dv_three_first);
         dvThreeSecond = (SimpleDraweeView) header.findViewById(R.id.dv_three_second);
         dvThreeThird = (SimpleDraweeView) header.findViewById(R.id.dv_three_third);
@@ -229,7 +231,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
                 KeyBoardUtil.closeKeyboard(etComment,DynamicDetailActivity.this);
                 break;
             case R.id.tv_report:
-
+                showReportDialog();
                 break;
             default:
                 break;
@@ -402,5 +404,13 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
         //底部操作
         tvLikeCount.setText(dynamic.like.counter);
         tvCommentCount.setText(dynamic.comment.count);
+    }
+
+
+    private void showReportDialog(){
+        View view = View.inflate(this,R.layout.dialog_dynamic_report,null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true).setView(view);
+        builder.show();
     }
 }

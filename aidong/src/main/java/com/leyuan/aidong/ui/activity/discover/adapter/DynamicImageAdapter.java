@@ -19,6 +19,7 @@ import java.util.List;
  * 爱动圈图片适配器
  * Created by song on 2016/12/26.
  */
+//todo 优化 嵌套RecyclerView导致复用失效
 public class DynamicImageAdapter extends RecyclerView.Adapter<DynamicImageAdapter.ImageHolder>{
     private Context context;
     private List<String> data = new ArrayList<>();
@@ -46,7 +47,10 @@ public class DynamicImageAdapter extends RecyclerView.Adapter<DynamicImageAdapte
     public void onBindViewHolder(final ImageHolder holder, final int position) {
         Logger.w("recyclerView","DynamicImageAdapter onBindView" + position);
         String url = data.get(position);
-        holder.image.setImageURI(url);
+        if(!url.equals(holder.image.getTag())) {
+            holder.image.setTag(url);
+            holder.image.setImageURI(url);
+        }
         ViewCompat.setTransitionName(holder.image, String.valueOf(position) + "transition");
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -7,12 +7,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.leyuan.aidong.entity.CategoryBean;
-import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.activity.home.adapter.EquipmentAdapter;
+import com.leyuan.aidong.entity.CategoryBean;
+import com.leyuan.aidong.entity.GoodsBean;
+import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.CategoryAdapter;
-import com.leyuan.aidong.entity.EquipmentBean;
+import com.leyuan.aidong.ui.activity.home.adapter.EquipmentAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.EquipmentPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.EquipmentPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.EquipmentActivityView;
@@ -42,7 +42,7 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
     private RecyclerView recommendView;
 
     private int currPage = 1;
-    private List<EquipmentBean> equipmentList;
+    private List<GoodsBean> equipmentList;
     private EquipmentAdapter equipmentAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private EquipmentPresent present;
@@ -85,6 +85,7 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
             @Override
             public void onRefresh() {
                 currPage = 1;
+                RecyclerViewStateUtils.resetFooterViewState(recommendView);
                 present.pullToRefreshRecommendData();
             }
         });
@@ -92,7 +93,9 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
         switcherLayout.setOnRetryListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               present.commonLoadRecommendData(switcherLayout);
+                currPage = 1;
+                RecyclerViewStateUtils.resetFooterViewState(recommendView);
+                present.commonLoadRecommendData(switcherLayout);
             }
         });
     }
@@ -127,18 +130,24 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
     }
 
     @Override
-    public void updateRecyclerView(List<EquipmentBean> equipmentBeanList) {
+    public void updateRecyclerView(List<GoodsBean> goodsBeanList) {
         if(refreshLayout.isRefreshing()){
             equipmentList.clear();
             refreshLayout.setRefreshing(false);
         }
-        equipmentList.addAll(equipmentBeanList);
+        equipmentList.addAll(goodsBeanList);
         equipmentAdapter.setData(equipmentList);
         wrapperAdapter.notifyDataSetChanged();
     }
 
+
     @Override
     public void showEndFooterView() {
         RecyclerViewStateUtils.setFooterViewState(recommendView, LoadingFooter.State.TheEnd);
+    }
+
+    @Override
+    public void showEmptyView() {
+
     }
 }

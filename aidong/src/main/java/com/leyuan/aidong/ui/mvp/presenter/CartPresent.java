@@ -1,5 +1,7 @@
 package com.leyuan.aidong.ui.mvp.presenter;
 
+import android.support.v7.widget.RecyclerView;
+
 import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.widget.customview.SwitcherLayout;
 
@@ -52,4 +54,9 @@ public interface CartPresent {
      */
     void payCart( String integral, String coin, String coupon, String payType, String pickUpId,
                   PayInterface.PayListener payListener,String... id);
+
+
+    void pullToRefreshRecommendData();
+
+    void requestMoreRecommendData(RecyclerView recyclerView, final int pageSize, int page);
 }

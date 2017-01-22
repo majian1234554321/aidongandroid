@@ -22,6 +22,7 @@ import com.leyuan.aidong.ui.activity.home.AppointSuccessActivity;
 import com.leyuan.aidong.ui.mvp.presenter.AppointmentPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.AppointmentPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointmentDetailActivityView;
+import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.customview.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.customview.ExtendTextView;
@@ -188,11 +189,12 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         tvCampaignTime.setRightContent(bean.getAppoint().getClassTime());
         tvCampaignAddress.setRightContent(bean.getAppoint().getAddress());
 
-        tvTotalPrice.setRightContent(bean.getPay().getTotal());
-        couponPrice.setRightContent(String.format(getString(R.string.minus_rmb),bean.getPay().getCoupon()));
+        tvTotalPrice.setRightContent(String.format(getString(R.string.rmb_price_double),
+                FormatUtil.parseDouble(bean.getPay().getTotal())));
+       /* couponPrice.setRightContent(String.format(getString(R.string.minus_rmb),bean.getPay().getCoupon()));
         campaignPrivilege.setRightContent(String.format(getString(R.string.minus_rmb),"0"));
         tvAibi.setRightContent(String.format(getString(R.string.minus_rmb),bean.getPay().getCoin()));
-        tvAidou.setRightContent(String.format(getString(R.string.minus_rmb),bean.getPay().getIntegral()));
+        tvAidou.setRightContent(String.format(getString(R.string.minus_rmb),bean.getPay().getIntegral()));*/
         tvStartTime.setRightContent(bean.getPay().getCreatedAt());
 
 

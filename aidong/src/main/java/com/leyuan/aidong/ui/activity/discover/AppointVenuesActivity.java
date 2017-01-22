@@ -181,7 +181,7 @@ public class AppointVenuesActivity extends BaseActivity implements View.OnClickL
 
     private void enableMorning() {
         tvMorning.setTextColor(Color.parseColor("#000000"));
-        tvMorning.setBackgroundResource(R.drawable.shape_stroke_white);
+        tvMorning.setBackgroundResource(R.drawable.shape_solid_corner_white);
     }
 
     private void unableMorning() {
@@ -196,7 +196,7 @@ public class AppointVenuesActivity extends BaseActivity implements View.OnClickL
 
     private void enableAfternoon() {
         tvAfternoon.setTextColor(Color.parseColor("#000000"));
-        tvAfternoon.setBackgroundResource(R.drawable.shape_stroke_white);
+        tvAfternoon.setBackgroundResource(R.drawable.shape_solid_corner_white);
     }
 
     private void unableAfternoon() {

@@ -55,4 +55,13 @@ public interface EquipmentPresent {
     void requestMoreEquipmentData(RecyclerView recyclerView, int pageSize, int page,String brandId,
                                   String priceSort, String countSort, String heatSort);
 
+
+    /**
+     * 立即购买
+     * @param skuCode
+     * @param amount
+     * @param pickUp
+     * @param pickUpId
+     */
+    void buyEquipmentImmediately(String skuCode,int amount,String pickUp,String pickUpId);
 }

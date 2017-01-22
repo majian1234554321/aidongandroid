@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.mvp.view;
 
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.entity.ShopBean;
 
 import java.util.List;
@@ -19,7 +20,12 @@ public interface CartActivityView {
     /**
      * 显示购物车没有数据布局
      */
-    void showEmptyView();
+    void showEmptyGoodsView();
+
+    /**
+     * 显示没有推荐商品时的布局
+     */
+    void showEmptyRecommendGoodsView();
 
     /**
      * 修改购物车中商品数量
@@ -32,4 +38,8 @@ public interface CartActivityView {
      * @param baseBean BaseBean
      */
     void setDeleteCart(BaseBean baseBean);
+
+    void updateRecommendGoods(List<GoodsBean> goodsBeanList);
+
+    void showEndFooterView();
 }

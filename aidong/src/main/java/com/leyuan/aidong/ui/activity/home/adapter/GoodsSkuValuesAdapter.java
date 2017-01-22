@@ -52,13 +52,13 @@ public class GoodsSkuValuesAdapter extends RecyclerView.Adapter<GoodsSkuValuesAd
         holder.value.setText(bean.getValue());
         if(bean.isSelected()){
             holder.value.setTextColor(Color.parseColor("#ffffffff"));
-            holder.value.setBackgroundResource(R.drawable.shape_solid_black);
+            holder.value.setBackgroundResource(R.drawable.shape_solid_corner_black);
         }else if(!bean.isAvailable()){
             holder.value.setTextColor(Color.parseColor("#55999999"));
-            holder.value.setBackgroundResource(R.drawable.shape_stroke_white);
+            holder.value.setBackgroundResource(R.drawable.shape_solid_corner_white);
         }else {
             holder.value.setTextColor(Color.parseColor("#ff000000"));
-            holder.value.setBackgroundResource(R.drawable.shape_stroke_white);
+            holder.value.setBackgroundResource(R.drawable.shape_solid_corner_white);
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

@@ -1,7 +1,7 @@
 package com.leyuan.aidong.ui.mvp.view;
 
 import com.leyuan.aidong.entity.CategoryBean;
-import com.leyuan.aidong.entity.NurtureBean;
+import com.leyuan.aidong.entity.GoodsBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +19,14 @@ public interface NurtureActivityView {
 
     /**
      * 更新列表
-     * @param nurtureBeanList List<NurtureBean>
+     * @param goodsBeanList
      */
-    void updateRecyclerView(List<NurtureBean> nurtureBeanList);
+    void updateRecyclerView(List<GoodsBean> goodsBeanList);
 
     /**
      * 显示FooterView，提示没有任何内容了
      */
     void showEndFooterView();
+
+    void showEmptyView();
 }

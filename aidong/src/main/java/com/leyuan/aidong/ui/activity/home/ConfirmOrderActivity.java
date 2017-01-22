@@ -1,17 +1,12 @@
 package com.leyuan.aidong.ui.activity.home;
 
-import android.animation.Animator;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewAnimationUtils;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,7 +24,6 @@ import com.leyuan.aidong.ui.activity.mine.SelectAddressActivity;
 import com.leyuan.aidong.ui.mvp.presenter.CartPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CartPresentImpl;
 import com.leyuan.aidong.utils.Logger;
-import com.leyuan.aidong.utils.ScreenUtil;
 import com.leyuan.aidong.widget.customview.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.customview.ExtendTextView;
 import com.leyuan.aidong.widget.customview.SimpleTitleBar;
@@ -42,22 +36,29 @@ import java.util.List;
  * Created by song on 2016/9/23.
  */
 public class ConfirmOrderActivity extends BaseActivity implements View.OnClickListener, CustomNestRadioGroup.OnCheckedChangeListener {
-    private static final int REQUEST_ADDRESS = 1;
-    private static final int REQUEST_COUPON = 2;
     private static final String ALI_PAY = "alipay";
     private static final String WEI_XIN_PAY = "wxpay";
-    private static final String EXPRESS = "express";                //快递
-    private static final String SELF_DELIVERY = "delivery";         //自提
-    private static final String EXPRESS_AND_SELE_DELIVERY = "all";  //快递加自提
+    private static final Double EXPRESS_PRICE = 15d;
+    private static final int REQUEST_ADDRESS = 1;
+    private static final int REQUEST_COUPON = 2;
+
+    public enum From{
+        CART,
+        NURTURE,
+        EQUIPMENT,
+        FOOD
+    }
 
     private SimpleTitleBar titleBar;
     private NestedScrollView scrollView;
 
-    //收货地址
+    //收货或自提地址
     private RelativeLayout addressLayout;
     private TextView tvName;
     private TextView tvPhone;
     private TextView tvAddress;
+    private LinearLayout selfDeliveryLayout;
+    private TextView tvTime;
 
     //商品
     private RecyclerView rvGoods;
@@ -67,7 +68,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private LinearLayout goldLayout;
 
     //订单信息
-    private ExtendTextView tvTotalPrice;
+    private ExtendTextView tvTotalGoodsPrice;
     private ExtendTextView tvExpressPrice;
     private ExtendTextView tvCouponPrice;
     private ExtendTextView tvDiscountPrice;
@@ -77,7 +78,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     //支付方式及支付状态
     private CustomNestRadioGroup radioGroup;
     private TextView tvTip;
-    private TextView tvPrice;
+    private TextView tvTruePrice;
     private TextView tvPay;
 
     private ConfirmOrderShopAdapter shopAdapter;
@@ -92,13 +93,14 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private String payType;
     private String pickUpId;
 
-    private String totalPrice;
-    private String takeType;    //收货方式
+    private double totalGoodsPrice;
+    private boolean needExpress = false;
 
-    public static void start(Context context, ArrayList<ShopBean> selectedShops) {
+
+    public static void start(Context context, ArrayList<ShopBean> selectedShops,double totalGoodsPrice) {
         Intent starter = new Intent(context, ConfirmOrderActivity.class);
         starter.putParcelableArrayListExtra("selectedShops",selectedShops);
-
+        starter.putExtra("totalGoodsPrice",totalGoodsPrice);
         context.startActivity(starter);
     }
 
@@ -110,6 +112,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         cartPresent = new CartPresentImpl(this);
         if(getIntent() != null){
             shopBeanList = getIntent().getParcelableArrayListExtra("selectedShops");
+            totalGoodsPrice = getIntent().getDoubleExtra("totalGoodsPrice",0f);
         }
 
         initView();
@@ -123,10 +126,12 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         tvName = (TextView) findViewById(R.id.tv_name);
         tvPhone = (TextView)findViewById(R.id.tv_phone);
         tvAddress = (TextView) findViewById(R.id.tv_address);
+        selfDeliveryLayout = (LinearLayout) findViewById(R.id.ll_self_delivery);
+        tvTime = (TextView) findViewById(R.id.tv_time);
         rvGoods = (RecyclerView) findViewById(R.id.rv_goods);
         couponLayout = (LinearLayout) findViewById(R.id.ll_coupon);
         goldLayout = (LinearLayout) findViewById(R.id.ll_gold);
-        tvTotalPrice = (ExtendTextView) findViewById(R.id.tv_total_price);
+        tvTotalGoodsPrice = (ExtendTextView) findViewById(R.id.tv_total_price);
         tvExpressPrice = (ExtendTextView) findViewById(R.id.tv_express_price);
         tvCouponPrice = (ExtendTextView) findViewById(R.id.tv_coupon_price);
         tvDiscountPrice = (ExtendTextView) findViewById(R.id.tv_discount_price);
@@ -134,15 +139,28 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         tvAidou = (ExtendTextView) findViewById(R.id.tv_aidou);
         radioGroup = (CustomNestRadioGroup) findViewById(R.id.radio_group);
         tvTip = (TextView) findViewById(R.id.tv_tip);
-        tvPrice = (TextView) findViewById(R.id.tv_price);
+        tvTruePrice = (TextView) findViewById(R.id.tv_price);
         tvPay = (TextView) findViewById(R.id.tv_pay);
         shopAdapter = new ConfirmOrderShopAdapter(this);
         rvGoods.setLayoutManager(new LinearLayoutManager(this));
         rvGoods.setAdapter(shopAdapter);
         shopAdapter.setData(shopBeanList);
 
-        tvTotalPrice.setRightContent(totalPrice);
-        tvPrice.setText(totalPrice);
+        for (ShopBean shopBean : shopBeanList) {
+            if(shopBean.getName().equals("仓库发货")){
+                needExpress = true;
+                addressLayout.setVisibility(View.VISIBLE);
+            }else {
+                selfDeliveryLayout.setVisibility(View.VISIBLE);
+            }
+        }
+
+        tvTotalGoodsPrice.setRightContent(
+                String.format(getString(R.string.rmb_price_double),totalGoodsPrice));
+        tvExpressPrice.setRightContent(
+                needExpress ? String.format(getString(R.string.rmb_price_double),EXPRESS_PRICE):"¥ 0.00");
+        tvTruePrice.setText(String.format(getString(R.string.rmb_price_double),
+                needExpress ? totalGoodsPrice + EXPRESS_PRICE : totalGoodsPrice));
     }
 
     private void setListener() {
@@ -210,7 +228,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
         @Override
         public void success(String code, Object object) {
-            Toast.makeText(ConfirmOrderActivity.this,"支付成功啦啦啦啦啦绿",Toast.LENGTH_LONG).show();
+            Toast.makeText(ConfirmOrderActivity.this,"支付成功",Toast.LENGTH_LONG).show();
             startActivity(new Intent(ConfirmOrderActivity.this,AppointSuccessActivity.class));
             Logger.w("AppointCourseActivity","success:" + code + object.toString());
         }
@@ -230,16 +248,6 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 tvAddress.setText(sb);
             }
         }
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private void setAnimations(){
-        int cx = ScreenUtil.getScreenWidth(this);
-        int cy = ScreenUtil.getScreenHeight(this);
-        Animator anim = ViewAnimationUtils.createCircularReveal(titleBar, cx, cy, 0, cx);
-        anim.setDuration(300);
-        anim.setInterpolator(new AccelerateDecelerateInterpolator());
-        anim.start();
     }
 
     @Override

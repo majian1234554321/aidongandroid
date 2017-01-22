@@ -90,7 +90,7 @@ public class BrandActivity extends BaseActivity implements BrandActivityView, Vi
         tvDesc.setText(introduce);
         setColorSchemeResources(refreshLayout);
         data = new ArrayList<>();
-        brandAdapter = new RecommendAdapter(this,type);
+        brandAdapter = new RecommendAdapter(this);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(brandAdapter);
         recyclerView.setAdapter(wrapperAdapter);
         GridLayoutManager manager = new GridLayoutManager(this,2);

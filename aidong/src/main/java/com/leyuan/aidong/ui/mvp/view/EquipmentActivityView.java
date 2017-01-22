@@ -1,7 +1,7 @@
 package com.leyuan.aidong.ui.mvp.view;
 
 import com.leyuan.aidong.entity.CategoryBean;
-import com.leyuan.aidong.entity.EquipmentBean;
+import com.leyuan.aidong.entity.GoodsBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +19,14 @@ public interface EquipmentActivityView{
 
     /**
      * 更新列表
-     * @param equipmentBeanList 装备列表实体数据集合
+     * @param goodsBeanList
      */
-    void updateRecyclerView(List<EquipmentBean> equipmentBeanList);
+    void updateRecyclerView(List<GoodsBean> goodsBeanList);
 
     /**
      * 显示FooterView，提示没有任何内容了
      */
     void showEndFooterView();
+
+    void showEmptyView();
 }

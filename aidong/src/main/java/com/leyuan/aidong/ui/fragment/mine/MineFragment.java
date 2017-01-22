@@ -26,6 +26,7 @@ import com.leyuan.aidong.ui.activity.mine.FollowActivity;
 import com.leyuan.aidong.ui.activity.mine.LoveCoinActivity;
 import com.leyuan.aidong.ui.activity.mine.MessageActivity;
 import com.leyuan.aidong.ui.activity.mine.OrderActivity;
+import com.leyuan.aidong.ui.activity.mine.SportsMomentActivity;
 import com.leyuan.aidong.ui.activity.mine.TabMinePersonalSettingsActivity;
 import com.leyuan.aidong.ui.activity.mine.UserInfoActivity;
 import com.leyuan.aidong.ui.activity.mine.account.LoginActivity;
@@ -173,11 +174,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 UiManager.activityJump(getActivity(), CouponActivity.class);
                 break;
             case R.id.item_sport_timing:
-                UiManager.activityJump(getActivity(), TabMinePersonalSettingsActivity.class);
+                UiManager.activityJump(getActivity(), SportsMomentActivity.class);
                 break;
             case R.id.item_address:
-                AddressActivity.start(getActivity());
-               // UiManager.activityJump(getActivity(), AddressActivity.class);
+               // AddressActivity.start(getActivity());
+                UiManager.activityJump(getActivity(), AddressActivity.class);
                 break;
             case R.id.item_recommend_friend:
                 UiManager.activityJump(getActivity(), TabMinePersonalSettingsActivity.class);

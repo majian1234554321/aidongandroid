@@ -84,6 +84,7 @@ public class UserInfoActivity extends BaseActivity implements SmartTabLayout.Tab
         tvAddImage.setOnClickListener(this);
     }
 
+
     @Override
     public void updateUserInfo(UserInfoData userInfoData) {
         dvAvatar.setImageURI(userInfoData.getProfile().getAvatar());
@@ -93,8 +94,7 @@ public class UserInfoActivity extends BaseActivity implements SmartTabLayout.Tab
         FragmentPagerItems pages = new FragmentPagerItems(this);
         UserDynamicFragment dynamicFragment = new UserDynamicFragment();
         UserInfoFragment userInfoFragment = new UserInfoFragment();
-        pages.add(FragmentPagerItem.of(null, dynamicFragment.getClass(),
-                new Bundler().putString("id",id).get()));
+        pages.add(FragmentPagerItem.of(null, dynamicFragment.getClass()));
         pages.add(FragmentPagerItem.of(null, userInfoFragment.getClass(),
                 new Bundler().putParcelable("profile",userInfoData.getProfile()).get()));
         final FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(),pages);

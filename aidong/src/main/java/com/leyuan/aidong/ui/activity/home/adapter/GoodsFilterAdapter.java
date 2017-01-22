@@ -13,6 +13,7 @@ import com.leyuan.aidong.entity.EquipmentBean;
 import com.leyuan.aidong.entity.NurtureBean;
 import com.leyuan.aidong.ui.activity.home.OldGoodsDetailActivity;
 import com.leyuan.aidong.ui.activity.home.GoodsFilterActivity;
+import com.leyuan.aidong.utils.FormatUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +66,8 @@ public class GoodsFilterAdapter extends RecyclerView.Adapter<GoodsFilterAdapter.
             holder.cover.setImageURI(bean.getCover());
             holder.name.setText(bean.getName());
             holder.brand.setText(bean.getMarket_price());
-            holder.price.setText(String.format(context.getString(R.string.rmb_price),bean.getPrice()));
+            holder.price.setText(String.format(context.getString(R.string.rmb_price_double),
+                    FormatUtil.parseDouble(bean.getPrice())));
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -94,7 +94,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/shape_stroke_white"
+            android:background="@drawable/shape_solid_corner_white"
             android:gravity="center"
             android:text="上午"
             android:textColor="@color/black"

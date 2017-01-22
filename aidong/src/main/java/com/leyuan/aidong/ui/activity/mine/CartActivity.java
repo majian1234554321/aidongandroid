@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 /**
  * 购物车
  * Created by song on 2016/9/8.
@@ -40,6 +39,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
     private TextView tvEdit;
 
     //购物车
+    private SwipeRefreshLayout refreshLayout;
     private SwitcherLayout switcherLayout;
     private RecyclerView shopView;
     private CartShopAdapter shopAdapter;
@@ -49,6 +49,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
     private LinearLayout recommendLayout;
     private RecyclerView recommendView;
     private RecommendAdapter recommendAdapter;
+    private List<GoodsBean> recommendList = new ArrayList<>();
 
     private LinearLayout bottomLayout;
     private CheckBox rbSelectAll;
@@ -59,7 +60,8 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
     private TextView tvDelete;
 
     private CartPresent cartPresent;
-    private boolean isEditing = false;          //标记购物车是否处于编辑状态
+    private boolean isEditing = false;
+    private double totalPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,12 +72,14 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
         initView();
         setListener();
         cartPresent.commonLoadingData(switcherLayout);
+        cartPresent.pullToRefreshRecommendData();
     }
 
     private void initView(){
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tvEdit = (TextView) findViewById(R.id.tv_edit);
         shopView = (RecyclerView)findViewById(R.id.rv_cart);
+        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
         switcherLayout = new SwitcherLayout(this,shopView);
         recommendLayout = (LinearLayout) findViewById(R.id.ll_recommend);
         recommendView = (RecyclerView)findViewById(R.id.rv_recommend);
@@ -89,7 +93,9 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
         shopView.setLayoutManager(new LinearLayoutManager(this));
         shopAdapter = new CartShopAdapter(this);
         shopView.setAdapter(shopAdapter);
-        recommendAdapter = new RecommendAdapter(this,"1");
+        shopView.setNestedScrollingEnabled(false);
+        recommendView.setNestedScrollingEnabled(false);
+        recommendAdapter = new RecommendAdapter(this);
         recommendView.setAdapter(recommendAdapter);
         GridLayoutManager manager = new GridLayoutManager(this, 2);
         recommendView.setLayoutManager(manager);
@@ -102,6 +108,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
         tvDelete.setOnClickListener(this);
         rbSelectAll.setOnClickListener(this);
         shopAdapter.setShopChangeListener(this);
+        refreshLayout.setOnRefreshListener(this);
     }
 
     @Override
@@ -115,6 +122,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
                 tvEdit.setText(isEditing ? R.string.finish : R.string.edit);
                 bottomDeleteLayout.setVisibility(isEditing ? View.VISIBLE :View.GONE);
                 bottomNormalLayout.setVisibility(isEditing ? View.GONE : View.VISIBLE);
+                recommendLayout.setVisibility(isEditing ? View.GONE : View.VISIBLE);
                 break;
             case R.id.tv_settlement:
                 ArrayList<ShopBean> selectedShops = getSelectedShops();
@@ -122,7 +130,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
                     Toast.makeText(this,R.string.tip_select_goods,Toast.LENGTH_LONG).show();
                     return;
                 }
-                ConfirmOrderActivity.start(this,selectedShops);
+                ConfirmOrderActivity.start(this,selectedShops,totalPrice);
                 break;
             case R.id.tv_delete:
                 List<GoodsBean> selectedGoods = getSelectedGoods();
@@ -131,8 +139,11 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
                     return;
                 }
                 StringBuilder ids = new StringBuilder();
+                for (int i = 0; i < selectedGoods.size(); i++) {
+
+                }
                 for (GoodsBean selectedGood : selectedGoods) {
-                    ids.append(selectedGood.getId()).append("，");
+                    ids.append(selectedGood.getId()).append(",");
                 }
                 cartPresent.deleteCart(ids.toString());
                 break;
@@ -154,21 +165,41 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
 
     @Override
     public void onRefresh() {
-
+        cartPresent.pullToRefreshData();
+        if(!isEditing) {
+            cartPresent.pullToRefreshRecommendData();
+        }
     }
-
 
     @Override
     public void updateRecyclerView(List<ShopBean> list) {
         tvEdit.setVisibility(View.VISIBLE);
         bottomLayout.setVisibility(View.VISIBLE);
+        switcherLayout.showContentLayout();
+       // recommendList.clear();
+        shopBeanList.clear();
+        if(refreshLayout.isRefreshing()){
+            refreshLayout.setRefreshing(false);
+        }
         shopBeanList.addAll(list);
         shopAdapter.setData(shopBeanList);
     }
 
     @Override
+    public void updateRecommendGoods(List<GoodsBean> goodsBeanList) {
+        recommendLayout.setVisibility(View.VISIBLE);
+        recommendList.clear();
+        if(refreshLayout.isRefreshing()){
+            refreshLayout.setRefreshing(false);
+        }
+        recommendList.addAll(goodsBeanList);
+        recommendAdapter.setData(recommendList);
+    }
+
+    @Override
     public void setUpdateCart(BaseBean baseBean) {
         if(baseBean.getStatus() == 1){
+            onRefresh();
             setTotalPrice();
         }else {
             Toast.makeText(this,R.string.update_fail,Toast.LENGTH_LONG).show();
@@ -178,18 +209,33 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
     @Override
     public void setDeleteCart(BaseBean baseBean) {
         if(baseBean.getStatus() == 1){
-            cartPresent.pullToRefreshData();
+            onRefresh();
             setTotalPrice();
         }else {
             Toast.makeText(this,R.string.delete_fail,Toast.LENGTH_LONG).show();
         }
     }
 
+
+
     @Override
-    public void showEmptyView() {
+    public void showEndFooterView() {
+
+    }
+
+    @Override
+    public void showEmptyGoodsView() {
+        if(refreshLayout.isRefreshing()){
+            refreshLayout.setRefreshing(false);
+        }
         View view = View.inflate(this,R.layout.empty_cart,null);
         switcherLayout.addCustomView(view,"empty");
         switcherLayout.showCustomLayout("empty");
+    }
+
+    @Override
+    public void showEmptyRecommendGoodsView() {
+        recommendLayout.setVisibility(View.GONE);
     }
 
     @Override
@@ -218,12 +264,12 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
     }
 
     private void setTotalPrice(){
-        double totalPrice = 0;
+        totalPrice = 0;
         for (GoodsBean goodsBean : getSelectedGoods()) {
             totalPrice += FormatUtil.parseDouble(goodsBean.getPrice())
                     * FormatUtil.parseInt(goodsBean.getAmount());
         }
-        tvTotalPrice.setText(String.format(getString(R.string.rmb_price),String.valueOf(totalPrice)));
+        tvTotalPrice.setText(String.format(getString(R.string.rmb_price_double),totalPrice));
     }
 
     private List<GoodsBean> getSelectedGoods(){

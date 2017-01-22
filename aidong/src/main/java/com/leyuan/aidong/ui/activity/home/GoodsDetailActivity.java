@@ -41,6 +41,7 @@ import com.leyuan.aidong.ui.mvp.presenter.CouponPresent;
 import com.leyuan.aidong.ui.mvp.presenter.GoodsDetailPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.GoodsDetailPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.GoodsDetailActivityView;
+import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.ImageLoadConfig;
 import com.leyuan.aidong.utils.TransitionHelper;
 import com.leyuan.aidong.widget.customview.SlideDetailsLayout;
@@ -232,9 +233,12 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         bannerUrls.addAll(bean.image);
         bannerUrls.addAll(bean.image);
         bannerLayout.setData(bannerUrls,null);
-        tvTitle.setText(String.format(getString(R.string.rmb_price),bean.price));
-        tvPrice.setText(String.format(getString(R.string.rmb_price),bean.price));
-        tvMarketPrice.setText(String.format(getString(R.string.rmb_price),bean.market_price));
+        tvTitle.setText(String.format(getString(R.string.rmb_price_double),
+                FormatUtil.parseDouble(bean.price)));
+        tvPrice.setText(String.format(getString(R.string.rmb_price_double),
+                FormatUtil.parseDouble(bean.price)));
+        tvMarketPrice.setText(String.format(getString(R.string.rmb_price_double),
+                FormatUtil.parseDouble(bean.market_price)));
         tvMarketPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG );
         tvGoodsName.setText(bean.name);
 
@@ -441,10 +445,6 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             }
         }
     }
-
-
-
-
 
     private class MyOnSlideDetailsListener implements SlideDetailsLayout.OnSlideDetailsListener{
         @Override

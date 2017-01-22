@@ -9,4 +9,5 @@ import com.leyuan.aidong.entity.BaseBean;
 public interface GoodsSkuPopupWindowView {
 
     void addCartResult(BaseBean baseBean);
+
 }

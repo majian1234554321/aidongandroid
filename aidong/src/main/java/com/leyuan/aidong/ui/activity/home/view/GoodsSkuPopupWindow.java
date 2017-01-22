@@ -18,6 +18,7 @@ import com.leyuan.aidong.entity.GoodsSkuBean;
 import com.leyuan.aidong.entity.GoodsSkuValueBean;
 import com.leyuan.aidong.entity.LocalGoodsSkuBean;
 import com.leyuan.aidong.entity.ShopBean;
+import com.leyuan.aidong.ui.activity.home.ConfirmOrderActivity;
 import com.leyuan.aidong.ui.activity.home.GoodsDetailActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.GoodsSkuAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.CartPresent;
@@ -73,7 +74,6 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     private List<String> selectedSkuValues = new ArrayList<>();
     private SelectSkuListener selectSkuListener;
     private CartPresent cartPresent;
-
 
     public GoodsSkuPopupWindow(Context context, GoodsDetailBean detailBean,
                                List<String> selectedSkuValues,String gymId,String count,String from) {
@@ -277,6 +277,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
                 break;
             case R.id.tv_add_cart:
                 if(isAllSkuConfirm()) {
+                    dismiss();
                     addCart();
                 }else {
                     tipUnSelectSku();
@@ -284,8 +285,8 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
                 break;
             case R.id.tv_buy:
                 if(isAllSkuConfirm()){
-                    confirmOrder();
                     dismiss();
+                    confirmOrder();
                 }else {
                    tipUnSelectSku();
                 }
@@ -302,26 +303,45 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     }
 
     private void confirmOrder() {
+       /* if(nurturePresent == null) {
+            nurturePresent = new NurturePresentImpl(this, context);
+        }
+        GoodsSkuBean line = getLine(selectedSkuValues);
+        if(TextUtils.isEmpty(gymId)) {
+            nurturePresent.buyNurtureImmediately(line.code,
+                    FormatUtil.parseInt(tvCount.getText().toString()),"0",null);
+        }else {
+            nurturePresent.buyNurtureImmediately(line.code,
+                    FormatUtil.parseInt(tvCount.getText().toString()),"1",gymId);
+        }*/
         //todo 确认订单
+        GoodsSkuBean line = getLine(selectedSkuValues);
+        ArrayList<ShopBean> shopBeanList = new ArrayList<>();
         ShopBean shopBean = new ShopBean();
         List<GoodsBean> goodsBeanList = new ArrayList<>();
         GoodsBean goodsBean = new GoodsBean();
         goodsBean.setName(detailBean.name);
         goodsBean.setCover(detailBean.image.get(0));
-        goodsBean.setPrice(detailBean.price);
+        goodsBean.setPrice(line.price);
+        goodsBean.setAmount(tvCount.getText().toString());
+        goodsBean.setSpec_value((ArrayList<String>) line.value);
         goodsBeanList.add(goodsBean);
         shopBean.setItem(goodsBeanList);
-      //  ConfirmOrderActivity.start(context,shopBean);
+        shopBean.setName(TextUtils.isEmpty(gymId) ? "仓库发货" : detailBean.pick_up.info.getName());
+        shopBeanList.add(shopBean);
+        ConfirmOrderActivity.start(context,shopBeanList, FormatUtil.parseDouble(line.price)*
+                FormatUtil.parseInt(tvCount.getText().toString()));
     }
 
     @Override
     public void addCartResult(BaseBean baseBean) {
         if(baseBean.getStatus() == 1){
-            dismiss();
+            Toast.makeText(context,context.getString(R.string.add_cart_success),Toast.LENGTH_LONG).show();
         }else {
             Toast.makeText(context,context.getString(R.string.add_cart_failed),Toast.LENGTH_LONG).show();
         }
     }
+
     @Override
     public void dismiss() {
         super.dismiss();

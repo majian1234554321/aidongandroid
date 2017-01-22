@@ -70,7 +70,7 @@
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
             android:gravity="center"
-            android:background="@drawable/shape_stroke_white"
+            android:background="@drawable/shape_solid_corner_white"
             android:textColor="@color/c3"/>
 
         <TextView

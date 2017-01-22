@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.DynamicBean;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.activity.discover.adapter.DynamicAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.UserInfoPresent;
@@ -36,21 +37,17 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
 
     private int currPage = 1;
     private UserInfoPresent userInfoPresent;
-
     private String id;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        Bundle bundle = getArguments();
-        if(bundle != null){
-            id = bundle.getString("id");
-        }
         return inflater.inflate(R.layout.fragment_user_dynamic,null);
     }
 
     @Override
     public void onViewCreated(View view,Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        id = String.valueOf(App.mInstance.getUser().getId());
         userInfoPresent = new UserInfoPresentImpl(getContext(),this);
         initRecyclerView(view);
         userInfoPresent.commonLoadDynamic(id);

@@ -114,6 +114,7 @@
         <activity android:name=".ui.activity.mine.OrderDetailActivity" />
         <activity android:name=".ui.activity.mine.FollowActivity" />
         <activity android:name=".ui.activity.mine.AddAddressActivity" />
+        <activity android:name=".ui.activity.mine.SportsMomentActivity" />
         <activity android:name=".ui.activity.mine.MessageActivity"/>
         <activity android:name=".ui.activity.mine.AddressActivity" />
         <activity android:name=".ui.activity.mine.SelectAddressActivity"/>

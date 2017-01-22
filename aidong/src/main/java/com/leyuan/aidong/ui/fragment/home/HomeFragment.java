@@ -164,6 +164,14 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
                 present.pullToRefreshHomeData();
             }
         });
+
+        switcherLayout.setOnRetryListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currPage = 1;
+                present.pullToRefreshHomeData();
+            }
+        });
     }
 
     private void initRecyclerView(View view) {
