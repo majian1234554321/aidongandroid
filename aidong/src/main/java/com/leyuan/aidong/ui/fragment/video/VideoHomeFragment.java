@@ -31,7 +31,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 
 public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.OnLivingVideoCLickListener,
         HomeVideoAdapter.OnPlaybackClickListener, HomeVideoAdapter.OnSoonLiveVideoClickListener,
-        HomeVideoAdapter.OnVideoClickListener, SwipeRefreshLayout.OnRefreshListener{
+        HomeVideoAdapter.OnVideoClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
@@ -39,16 +39,16 @@ public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.
     private HomeVideoAdapter adapter;
     private int page;
 
-    private static final int COUNT_DOWN =0;
+    private static final int COUNT_DOWN = 0;
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what){
+            switch (msg.what) {
                 case COUNT_DOWN:
                     adapter.notifyCountDown();
-                    mHandler.sendEmptyMessageDelayed(COUNT_DOWN,1000);
+                    mHandler.sendEmptyMessageDelayed(COUNT_DOWN, 1000);
                     break;
             }
         }
@@ -75,7 +75,7 @@ public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.
 
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(manager);
-        adapter = new HomeVideoAdapter(getActivity(), this, this, this,this);
+        adapter = new HomeVideoAdapter(getActivity(), this, this, this, this);
         recyclerView.setAdapter(adapter);
     }
 
@@ -111,7 +111,7 @@ public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.
                 if (result != null && result.getCode() == 1 && result.getResult() != null) {
                     adapter.refreshData(result.getResult());
                     mHandler.removeCallbacksAndMessages(null);
-                    mHandler.sendEmptyMessageDelayed(COUNT_DOWN,1000);
+                    mHandler.sendEmptyMessageDelayed(COUNT_DOWN, 1000);
                     //                    ArrayList<LiveVideoInfo> livingVideos = new ArrayList<>();
                     //                    livingVideos.add(new LiveVideoInfo(1, "颠三倒四", "大多数", "http:\\/\\/7xvyvy.com1.z0.glb.clouddn.com\\/\\/fit\\/livevideo\\/cover\\/07b9fb16-f33f-40b8-a9d7-59c51c7eb3ea.jpg?imageMogr2\\/thumbnail\\/750x750\\/interlace\\/1", "", "", 123213, ""));
                     //                    livingVideos.add(new LiveVideoInfo(1, "颠三倒四", "大多数", "http:\\/\\/7xvyvy.com1.z0.glb.clouddn.com\\/\\/fit\\/livevideo\\/cover\\/07b9fb16-f33f-40b8-a9d7-59c51c7eb3ea.jpg?imageMogr2\\/thumbnail\\/750x750\\/interlace\\/1", "", "", 123213, ""));
@@ -155,7 +155,7 @@ public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.
         public void onSuccess(ResponseInfo<String> responseInfo) {
             swipeRefreshLayout.setRefreshing(false);
             try {
-                LiveVideoListResult result =new Gson().fromJson(responseInfo.result, LiveVideoListResult.class);
+                LiveVideoListResult result = new Gson().fromJson(responseInfo.result, LiveVideoListResult.class);
                 if (result != null && result.getCode() == 1 && result.getResult() != null && result.getResult().getLiveVideoMore() != null && result.getResult().getLiveVideoMore().size() > 0) {
                     adapter.addMoreData(result.getResult().getLiveVideoMore());
                 }
@@ -188,7 +188,7 @@ public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.
     @Override
     public void onLivingVideoCLick(LiveVideoInfo info) {
         Intent intent = new Intent(getActivity(), LivingVideoActivity.class);
-        intent.putExtra(Common.LIVE_INFO,info);
+        intent.putExtra(Common.LIVE_INFO, info);
         startActivity(intent);
     }
 

@@ -115,7 +115,7 @@ public class WXShare {
             public void onLoadingComplete(String imageUri, View view, Bitmap bitmap) {
                 //                        //图片不能超过32kb,需要压缩
                         Logger.i("share","bitmap getWidth = " + bitmap.getWidth());
-                        double targetwidth = Math.sqrt(25.00 * 1000);
+                        double targetwidth = Math.sqrt(22.00 * 1000);
                         if (bitmap.getWidth() > targetwidth || bitmap.getHeight() > targetwidth) {
                             // 创建操作图片用的matrix对象
                             Matrix matrix = new Matrix();
