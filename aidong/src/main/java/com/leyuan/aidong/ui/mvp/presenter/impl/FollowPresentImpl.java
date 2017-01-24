@@ -86,21 +86,25 @@ public class FollowPresentImpl implements FollowPresent {
     }
 
     @Override
-    public void addFollow(int id) {
+    public void addFollow(String id) {
         followModel.addFollow(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
-
+                if(baseBean != null){
+                    followFragmentView.addFollow(baseBean);
+                }
             }
         },id);
     }
 
     @Override
-    public void cancelFollow(int id) {
+    public void cancelFollow(String id) {
         followModel.cancelFollow(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
-
+                if(baseBean != null){
+                    followFragmentView.cancelFollow(baseBean);
+                }
             }
         },id);
     }

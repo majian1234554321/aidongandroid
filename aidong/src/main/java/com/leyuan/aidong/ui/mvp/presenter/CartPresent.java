@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.mvp.presenter;
 
+import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.widget.customview.SwitcherLayout;
 
 /**
@@ -12,7 +13,7 @@ public interface CartPresent {
      * 第一次正常加载数据
      * @param switcherLayout
      */
-    void normalLoadingData(SwitcherLayout switcherLayout);
+    void commonLoadingData(SwitcherLayout switcherLayout);
 
     /**
      * 下拉刷新
@@ -38,5 +39,17 @@ public interface CartPresent {
      * @param skuCode 商品sku码
      * @param amount 数量
      */
-    void addCart(String skuCode, int amount);
+    void addCart(String skuCode, int amount,String gymId);
+
+    /**
+     * 购物车结算
+     * @param id 结算的购物车条目
+     * @param integral 积分
+     * @param coin 爱币
+     * @param coupon 优惠券
+     * @param payType 支付类型
+     * @param pickUpId 自提或地址id
+     */
+    void payCart( String integral, String coin, String coupon, String payType, String pickUpId,
+                  PayInterface.PayListener payListener,String... id);
 }

@@ -13,6 +13,7 @@ import com.leyuan.aidong.ui.mvp.model.impl.AddressModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.AddressPresent;
 import com.leyuan.aidong.ui.mvp.view.AddAddressActivityView;
 import com.leyuan.aidong.ui.mvp.view.AddressActivityView;
+import com.leyuan.aidong.ui.mvp.view.SelectAddressActivityView;
 import com.leyuan.aidong.ui.mvp.view.UpdateAddressActivityView;
 import com.leyuan.aidong.widget.customview.SwitcherLayout;
 
@@ -30,6 +31,7 @@ public class AddressPresentImpl implements AddressPresent{
     private AddressActivityView addressActivityView;                //收货地址列表View层
     private AddAddressActivityView addAddressActivityView;          //新建地址View层
     private UpdateAddressActivityView updateAddressActivityView;    //更新地址View层
+    private SelectAddressActivityView selectAddressActivityView;    //选择收货地址View层
 
     public AddressPresentImpl(Context context, AddressActivityView view) {
         this.context = context;
@@ -55,6 +57,14 @@ public class AddressPresentImpl implements AddressPresent{
         }
     }
 
+    public AddressPresentImpl(Context context, SelectAddressActivityView view) {
+        this.context = context;
+        this.selectAddressActivityView = view;
+        if(addressModel == null){
+            addressModel = new AddressModelImpl();
+        }
+    }
+
     @Override
     public void getAddress(final SwitcherLayout switcherLayout) {
         addressModel.getAddress(new CommonSubscriber<AddressListData>(switcherLayout) {
@@ -68,14 +78,20 @@ public class AddressPresentImpl implements AddressPresent{
                     switcherLayout.showEmptyLayout();
                 }else{
                     switcherLayout.showContentLayout();
-                    addressActivityView.setAddress(addressList);
+                    if(addressActivityView !=  null) {
+                        addressActivityView.setAddress(addressList);
+                    }
+
+                    if(selectAddressActivityView !=  null) {
+                        selectAddressActivityView.setAddress(addressList);
+                    }
                 }
             }
         });
     }
 
     @Override
-    public void addAddress(String id,String name, String phone,String province,String city,String district,  final String address) {
+    public void addAddress(String name, String phone,String province,String city,String district,  final String address) {
         addressModel.addAddress(new ProgressSubscriber<AddressData>(context,false) {
             @Override
             public void onNext(AddressData addressData) {
@@ -83,7 +99,7 @@ public class AddressPresentImpl implements AddressPresent{
                     addAddressActivityView.setAddAddress(addressData.getAddress());
                 }
             }
-        },id,name,phone,province,city,district,address);
+        },name,phone,province,city,district,address);
     }
 
     @Override

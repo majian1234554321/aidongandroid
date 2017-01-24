@@ -14,6 +14,7 @@ import com.leyuan.aidong.ui.mvp.model.impl.HomeModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.HomePresent;
 import com.leyuan.aidong.ui.mvp.view.BrandActivityView;
 import com.leyuan.aidong.ui.mvp.view.HomeFragmentView;
+import com.leyuan.aidong.ui.mvp.view.LocationActivityView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.widget.customview.SwitcherLayout;
 
@@ -30,6 +31,7 @@ public class HomePresentImpl implements HomePresent {
 
     private HomeFragmentView homeFragmentView;            //首页View层实体
     private BrandActivityView brandDetailActivityView;    //品牌详情View层实体
+    private LocationActivityView locationActivityView;    //切换地址view层实体
 
     private List<HomeBean> homeBeanList;
 
@@ -50,9 +52,22 @@ public class HomePresentImpl implements HomePresent {
         }
     }
 
+    public HomePresentImpl(Context context, LocationActivityView view) {
+        this.context = context;
+        this.locationActivityView = view;
+        if(homeModel == null){
+            homeModel = new HomeModelImpl(context);
+        }
+    }
+
     @Override
     public void getPopupBanner() {
         homeFragmentView.setPopupBanner(homeModel.getPopupBanners());
+    }
+
+    @Override
+    public void getOpenCity() {
+        locationActivityView.setOpenCity(homeModel.getOpenCity());
     }
 
     @Override

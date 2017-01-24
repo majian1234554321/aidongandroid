@@ -32,7 +32,7 @@
         android:layout_height="30dp"
         android:layout_alignParentRight="true"
         android:layout_marginTop="30dp"
-        android:src="@drawable/icon_following"/>
+        android:src="@drawable/icon_follow"/>
 
     <TextView
         android:id="@+id/tv_nickname"

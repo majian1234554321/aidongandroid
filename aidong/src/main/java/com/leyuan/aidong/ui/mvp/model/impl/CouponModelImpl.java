@@ -33,6 +33,7 @@ public class CouponModelImpl implements CouponModel{
     public void obtainCoupon(Subscriber<BaseBean> subscriber, String id) {
         couponService.obtainCoupon(id)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
     }
 }

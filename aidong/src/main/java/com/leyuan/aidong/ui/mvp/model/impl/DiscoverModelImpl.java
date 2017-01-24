@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.mvp.model.impl;
 
+import com.leyuan.aidong.entity.data.DiscoverData;
 import com.leyuan.aidong.entity.data.DiscoverNewsData;
 import com.leyuan.aidong.entity.data.DiscoverUserData;
 import com.leyuan.aidong.entity.data.DiscoverVenuesData;
@@ -19,6 +20,13 @@ public class DiscoverModelImpl implements DiscoverModel{
 
     public DiscoverModelImpl() {
         discoverService = RetrofitHelper.createApi(DiscoverService.class);
+    }
+
+    @Override
+    public void getDiscover(Subscriber<DiscoverData> subscriber) {
+        discoverService.getDiscover()
+                .compose(RxHelper.<DiscoverData>transform())
+                .subscribe(subscriber);
     }
 
     @Override

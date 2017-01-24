@@ -3,18 +3,20 @@ package com.leyuan.aidong.ui.mvp.presenter.impl;
 import android.content.Context;
 
 import com.leyuan.aidong.entity.BaseBean;
-import com.leyuan.aidong.entity.GoodsBean;
+import com.leyuan.aidong.entity.data.PayOrderData;
+import com.leyuan.aidong.entity.data.ShopData;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
+import com.leyuan.aidong.module.pay.AliPay;
+import com.leyuan.aidong.module.pay.PayInterface;
+import com.leyuan.aidong.module.pay.WeiXinPay;
 import com.leyuan.aidong.ui.mvp.model.CartModel;
 import com.leyuan.aidong.ui.mvp.model.impl.CartModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.CartPresent;
 import com.leyuan.aidong.ui.mvp.view.CartActivityView;
 import com.leyuan.aidong.ui.mvp.view.GoodsSkuPopupWindowView;
 import com.leyuan.aidong.widget.customview.SwitcherLayout;
-
-import java.util.List;
 
 /**
  * 购物车
@@ -25,6 +27,13 @@ public class CartPresentImpl implements CartPresent {
     private CartModel cartModel;
     private CartActivityView cartActivityView;
     private GoodsSkuPopupWindowView skuPopupWindowView;
+
+    public CartPresentImpl(Context context) {
+        this.context = context;
+        if(cartModel == null){
+            cartModel = new CartModelImpl();
+        }
+    }
 
     public CartPresentImpl(Context context, CartActivityView cartActivityView) {
         this.context = context;
@@ -43,15 +52,15 @@ public class CartPresentImpl implements CartPresent {
     }
 
     @Override
-    public void normalLoadingData(final SwitcherLayout switcherLayout) {
-        cartModel.getCart(new CommonSubscriber<List<GoodsBean>>(switcherLayout) {
+    public void commonLoadingData(final SwitcherLayout switcherLayout) {
+        cartModel.getCart(new CommonSubscriber<ShopData>(switcherLayout) {
             @Override
-            public void onNext(List<GoodsBean> goodsBeanList) {
-                if(goodsBeanList != null && !goodsBeanList.isEmpty()){
+            public void onNext(ShopData shopData) {
+                if(shopData != null && shopData.getCart() != null  && !shopData.getCart().isEmpty()){
                     switcherLayout.showContentLayout();
-                    cartActivityView.updateRecyclerView(goodsBeanList);
-                }else{
-                    switcherLayout.showEmptyLayout();
+                    cartActivityView.updateRecyclerView(shopData.getCart());
+                }else {
+                    cartActivityView.showEmptyView();
                 }
             }
         });
@@ -59,16 +68,15 @@ public class CartPresentImpl implements CartPresent {
 
     @Override
     public void pullToRefreshData() {
-        cartModel.getCart(new RefreshSubscriber<List<GoodsBean>>(context) {
+        cartModel.getCart(new RefreshSubscriber<ShopData>(context) {
             @Override
-            public void onNext(List<GoodsBean> goodsBeanList) {
-                if(goodsBeanList != null && !goodsBeanList.isEmpty()){
-                    cartActivityView.updateRecyclerView(goodsBeanList);
+            public void onNext(ShopData shopData) {
+                if(shopData != null && shopData.getCart() != null  && !shopData.getCart().isEmpty()){
+                    cartActivityView.updateRecyclerView(shopData.getCart());
                 }
             }
         });
     }
-
 
     @Override
     public void deleteCart(String ids) {
@@ -91,12 +99,26 @@ public class CartPresentImpl implements CartPresent {
     }
 
     @Override
-    public void addCart(String skuCode, int amount) {
+    public void addCart(String skuCode, int amount,String gymId) {
         cartModel.addCart(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
-                skuPopupWindowView.addCart(baseBean);   //未作校验 上层自行判断
+                skuPopupWindowView.addCartResult(baseBean);   //未作校验 上层自行判断
             }
-        },skuCode,amount);
+        },skuCode,amount,gymId);
+    }
+
+    @Override
+    public void payCart(String integral, String coin, String coupon, String payType,
+                        String pickUpId, final PayInterface.PayListener listener,String... id) {
+        cartModel.payCart(new ProgressSubscriber<PayOrderData>(context) {
+            @Override
+            public void onNext(PayOrderData payOrderData) {
+                String payType = payOrderData.getOrder().getPayType();
+                PayInterface payInterface = "alipay".equals(payType) ? new AliPay(context,listener)
+                        : new WeiXinPay(context,listener);
+                payInterface.payOrder(payOrderData.getOrder());
+            }
+        },integral,coin,coupon,payType,pickUpId,id);
     }
 }

@@ -9,7 +9,7 @@ import android.view.View;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.NewsBean;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.activity.discover.adapter.SportsNewsAdapter;
+import com.leyuan.aidong.ui.activity.discover.adapter.NewsAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.DiscoverPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DiscoverPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.SportNewsActivityView;
@@ -35,7 +35,7 @@ public class NewsActivity extends BaseActivity implements SportNewsActivityView{
 
     private int currPage = 1;
     private List<NewsBean> data;
-    private SportsNewsAdapter newsAdapter;
+    private NewsAdapter newsAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
 
     private DiscoverPresent discoverPresent;
@@ -73,7 +73,7 @@ public class NewsActivity extends BaseActivity implements SportNewsActivityView{
     private void initRecyclerView(){
         rvNews = (RecyclerView)findViewById(R.id.rv_news);
         data = new ArrayList<>();
-        newsAdapter = new SportsNewsAdapter(this);
+        newsAdapter = new NewsAdapter(this);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(newsAdapter);
         rvNews.setAdapter(wrapperAdapter);
         rvNews.setLayoutManager(new LinearLayoutManager(this));

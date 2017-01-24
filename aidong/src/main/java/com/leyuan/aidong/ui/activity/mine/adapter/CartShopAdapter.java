@@ -51,8 +51,7 @@ public class CartShopAdapter extends RecyclerView.Adapter<CartShopAdapter.CartHo
     @Override
     public void onBindViewHolder(final CartHolder holder, final int position) {
         final ShopBean bean = data.get(position);
-        holder.tvShopName.setText(bean.getShopname());
-        holder.tvTime.setText(bean.getOpentime());
+        holder.tvShopName.setText(bean.getName());
         holder.rvShop.setLayoutManager(new LinearLayoutManager(context));
         final CartGoodsAdapter goodsAdapter = new CartGoodsAdapter(context);
         holder.rvShop.setAdapter(goodsAdapter);
@@ -106,7 +105,6 @@ public class CartShopAdapter extends RecyclerView.Adapter<CartShopAdapter.CartHo
     class CartHolder extends RecyclerView.ViewHolder {
         CheckBox check;
         TextView tvShopName;
-        TextView tvTime;
         TextView tvDeliveryType;
         RecyclerView rvShop;
 
@@ -114,7 +112,6 @@ public class CartShopAdapter extends RecyclerView.Adapter<CartShopAdapter.CartHo
             super(itemView);
             check = (CheckBox) itemView.findViewById(R.id.rb_check);
             tvShopName = (TextView) itemView.findViewById(R.id.tv_shop_name);
-            tvTime = (TextView) itemView.findViewById(R.id.tv_time);
             tvDeliveryType = (TextView) itemView.findViewById(R.id.tv_delivery_type);
             rvShop = (RecyclerView) itemView.findViewById(R.id.rv_shop);
         }

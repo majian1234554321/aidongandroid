@@ -25,9 +25,10 @@ public class CampaignDetailBean implements Parcelable {
     private String market_price;            //活动指导价
     private String enroll_start_time;       //报名开始时间
     private String enroll_end_time;         //报名截至时间
-    private ArrayList<Applicant> applicant; //报名的人
+    private List<UserBean> appicant;        //报名的人
 
     private String status = "";
+
 
     public String getCampaignId() {
         return id;
@@ -149,12 +150,12 @@ public class CampaignDetailBean implements Parcelable {
         this.status = status;
     }
 
-    public ArrayList<Applicant> getApplicant() {
-        return applicant;
+    public List<UserBean> getApplicant() {
+        return appicant;
     }
 
-    public void setApplicant(ArrayList<Applicant> applicant) {
-        this.applicant = applicant;
+    public void setApplicant(ArrayList<UserBean> applicant) {
+        this.appicant = applicant;
     }
 
     public class Applicant {
@@ -209,7 +210,7 @@ public class CampaignDetailBean implements Parcelable {
         dest.writeString(this.market_price);
         dest.writeString(this.enroll_start_time);
         dest.writeString(this.enroll_end_time);
-        dest.writeList(this.applicant);
+        dest.writeList(this.appicant);
     }
 
     public CampaignDetailBean() {
@@ -230,8 +231,8 @@ public class CampaignDetailBean implements Parcelable {
         this.market_price = in.readString();
         this.enroll_start_time = in.readString();
         this.enroll_end_time = in.readString();
-        this.applicant = new ArrayList<Applicant>();
-        in.readList(this.applicant, Applicant.class.getClassLoader());
+        this.appicant = new ArrayList<UserBean>();
+        in.readList(this.appicant, Applicant.class.getClassLoader());
     }
 
     public static final Parcelable.Creator<CampaignDetailBean> CREATOR = new Parcelable.Creator<CampaignDetailBean>() {

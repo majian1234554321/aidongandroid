@@ -58,6 +58,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
             @Override
             public void onClick(View v) {
                 CourseDetailActivity.start(context,bean.getCode());
+
             }
         });
     }

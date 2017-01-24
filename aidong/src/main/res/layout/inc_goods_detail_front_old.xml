@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--google issue  待解决目前此界面必须大于一屏-->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -73,7 +73,7 @@
         android:visibility="visible" />
 
     <LinearLayout
-        android:id="@+id/ll_goods_specification"
+        android:id="@+id/ll_goods_sku"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="?selectableItemBackground"
@@ -82,11 +82,12 @@
         android:paddingRight="@dimen/right_margin">
 
         <TextView
+            android:id="@+id/tv_select"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:text="已选择:"
+            android:text="选择:"
             android:textColor="@color/black"
             android:textSize="15sp" />
 

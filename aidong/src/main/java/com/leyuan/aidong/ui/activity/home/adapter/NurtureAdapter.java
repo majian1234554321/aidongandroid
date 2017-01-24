@@ -9,12 +9,12 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.NurtureBean;
-import com.leyuan.aidong.ui.activity.home.GoodsDetailActivity;
+import com.leyuan.aidong.ui.activity.home.OldGoodsDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.leyuan.aidong.ui.activity.home.OldGoodsDetailActivity.TYPE_NURTURE;
+import static com.leyuan.aidong.ui.activity.home.GoodsDetailActivity.TYPE_NURTURE;
 
 
 /**
@@ -54,7 +54,7 @@ public class NurtureAdapter extends RecyclerView.Adapter<NurtureAdapter.NurtureV
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GoodsDetailActivity.start(context,bean.getId(), TYPE_NURTURE);
+                OldGoodsDetailActivity.start(context,bean.getId(), TYPE_NURTURE);
             }
         });
     }

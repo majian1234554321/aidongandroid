@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.CampaignDetailBean;
+import com.leyuan.aidong.entity.UserBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +16,9 @@ import java.util.List;
  * Created by song on 2016/8/24.
  */
 public class ApplicantAdapter extends RecyclerView.Adapter<ApplicantAdapter.ApplicantHolder>{
-    private List<CampaignDetailBean.Applicant> data = new ArrayList<>();
+    private List<UserBean> data = new ArrayList<>();
 
-    public void setData(List<CampaignDetailBean.Applicant> data) {
+    public void setData(List<UserBean> data) {
         if(data != null){
             this.data = data;
         }
@@ -38,7 +38,7 @@ public class ApplicantAdapter extends RecyclerView.Adapter<ApplicantAdapter.Appl
 
     @Override
     public void onBindViewHolder(ApplicantHolder holder, int position) {
-        CampaignDetailBean.Applicant bean = data.get(position);
+        UserBean bean = data.get(position);
         holder.cover.setImageURI(bean.getAvatar());
     }
 

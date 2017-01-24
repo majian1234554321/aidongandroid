@@ -48,15 +48,18 @@
         android:textSize="12sp"
         android:visibility="gone"/>
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <LinearLayout
-            android:id="@+id/ll_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -70,7 +73,7 @@
                     android:layout_height="200dp"
                     android:background="@drawable/place_holder_logo"
                     app:banner_pageChangeDuration="500"
-                    app:banner_pointAutoPlayAble="true"
+                    app:banner_pointAutoPlayAble="false"
                     app:banner_pointContainerBackground="@android:color/transparent"
                     app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
                     app:banner_pointTopBottomMargin="5dp"
@@ -118,7 +121,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
-                android:src="@drawable/icon_following" />
+                android:background="@drawable/icon_follow" />
 
 
             <!--时间-->
@@ -309,7 +312,7 @@
         </LinearLayout>
 
     </ScrollView>
-
+    </RelativeLayout>
     <LinearLayout
         android:id="@+id/ll_apply"
         android:layout_width="match_parent"

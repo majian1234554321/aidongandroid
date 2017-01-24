@@ -129,6 +129,12 @@
         <item>待参加</item>
     </string-array>
 
+    <string-array name="infoTab">
+        <item>爱动圈</item>
+        <item>资料</item>
+    </string-array>
+
+
     <string-array name="couponTab">
         <item>可使用</item>
         <item>已使用</item>
@@ -158,14 +164,5 @@
         <item>商品详情</item>
         <item>常见问题</item>
         <item>售后服务</item>
-    </string-array>
-    <string-array name="dateTab">
-        <item>星期一</item>
-        <item>星期二</item>
-        <item>星期三</item>
-        <item>星期四</item>
-        <item>星期五</item>
-        <item>星期六</item>
-        <item>星期天</item>
     </string-array>
 </resources>

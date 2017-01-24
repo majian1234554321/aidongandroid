@@ -49,8 +49,7 @@ public class ConfirmOrderShopAdapter extends RecyclerView.Adapter<ConfirmOrderSh
     @Override
     public void onBindViewHolder(final CartHolder holder, final int position) {
         final ShopBean bean = data.get(position);
-        holder.tvShopName.setText(bean.getShopname());
-        holder.tvTime.setText(bean.getOpentime());
+        holder.tvShopName.setText(bean.getName());
         holder.rvShop.setLayoutManager(new LinearLayoutManager(context));
         final ConfirmOrderGoodsAdapter goodsAdapter = new ConfirmOrderGoodsAdapter(context);
         holder.rvShop.setAdapter(goodsAdapter);
@@ -66,14 +65,12 @@ public class ConfirmOrderShopAdapter extends RecyclerView.Adapter<ConfirmOrderSh
 
     class CartHolder extends RecyclerView.ViewHolder {
         TextView tvShopName;
-        TextView tvTime;
         TextView tvDeliveryType;
         RecyclerView rvShop;
 
         public CartHolder(View itemView) {
             super(itemView);
             tvShopName = (TextView) itemView.findViewById(R.id.tv_shop_name);
-            tvTime = (TextView) itemView.findViewById(R.id.tv_time);
             tvDeliveryType = (TextView) itemView.findViewById(R.id.tv_delivery_type);
             rvShop = (RecyclerView) itemView.findViewById(R.id.rv_shop);
         }

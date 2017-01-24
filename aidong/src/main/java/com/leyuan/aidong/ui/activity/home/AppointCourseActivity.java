@@ -18,6 +18,7 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.mine.CouponActivity;
 import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.customview.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.customview.ExtendTextView;
 import com.leyuan.aidong.widget.customview.SimpleTitleBar;
@@ -70,8 +71,10 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
     private String userName;
     private String contactMobile;
 
-    private CourseDetailBean courseDetailBean;
+    private CourseDetailBean bean;
     private CoursePresent coursePresent;
+
+
 
     public static void start(Context context,CourseDetailBean courseDetailBean) {
         Intent starter = new Intent(context, AppointCourseActivity.class);
@@ -85,7 +88,7 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
         setContentView(R.layout.activity_appoint_course);
         payType = ALI_PAY;
         if (getIntent() != null) {
-            courseDetailBean = getIntent().getParcelableExtra("bean");
+            bean = getIntent().getParcelableExtra("bean");
         }
         initView();
         setListener();
@@ -120,13 +123,13 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
         contactMobile = App.mInstance.getUser().getMobile();
         tvUserName.setText(userName);
         tvUserPhone.setText(contactMobile);
-        dvCover.setImageURI(courseDetailBean.getCover());
-        tvCourseName.setText(courseDetailBean.getName());
-        tvTime.setRightTextContent(courseDetailBean.getClassTime());
-        tvAddress.setRightTextContent(courseDetailBean.getGym().getAddress());
-        tvTotalPrice.setRightTextContent(courseDetailBean.getPrice());
-        tvDiscountPrice.setRightTextContent("0");
-        tvPrice.setText(courseDetailBean.getPrice());
+        dvCover.setImageURI(bean.getCover());
+        tvCourseName.setText(bean.getName());
+        tvTime.setRightContent(String.format(getString(R.string.detail_time),
+                bean.getClassDate(),bean.getClassTime(),bean.getBreakTime()));
+        tvAddress.setRightContent(bean.getGym().getAddress());
+        tvTotalPrice.setRightContent(String.format(getString(R.string.rmb_price),bean.getPrice()));
+        tvPrice.setText(String.format(getString(R.string.rmb_price),bean.getPrice()));
     }
 
     private void setListener() {
@@ -161,7 +164,7 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
                 if(coursePresent == null){
                     coursePresent = new CoursePresentImpl(this);
                 }
-                coursePresent.buyCourse(courseDetailBean.getCode(),couponId,integral,payType,
+                coursePresent.buyCourse(bean.getCode(),couponId,integral,payType,
                         userName,contactMobile,payListener);
                 break;
             default:
@@ -172,12 +175,32 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
     private PayInterface.PayListener payListener = new PayInterface.PayListener() {
         @Override
         public void fail(String code, Object object) {
-            Toast.makeText(AppointCourseActivity.this,"failed:" + code + object.toString(),Toast.LENGTH_LONG).show();
+            String tip = "";
+            switch (code){
+                case "4000":
+                    tip = "订单支付失败";
+                    break;
+                case "5000":
+                    tip = "订单重复提交";
+                    break;
+                case "6001":
+                    tip = "订单取消支付";
+                    break;
+                case "6002":
+                    tip = "网络连接出错";
+                    break;
+                default:
+                    break;
+            }
+            Toast.makeText(AppointCourseActivity.this,tip,Toast.LENGTH_LONG).show();
+            Logger.w("AppointCourseActivity","failed:" + code + object.toString());
         }
 
         @Override
         public void success(String code, Object object) {
-            Toast.makeText(AppointCourseActivity.this,"success:" + code + object.toString(),Toast.LENGTH_LONG).show();
+            Toast.makeText(AppointCourseActivity.this,"支付成功啦啦啦啦啦绿",Toast.LENGTH_LONG).show();
+            startActivity(new Intent(AppointCourseActivity.this,AppointSuccessActivity.class));
+            Logger.w("AppointCourseActivity","success:" + code + object.toString());
         }
     };
 

@@ -9,12 +9,12 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.EquipmentBean;
-import com.leyuan.aidong.ui.activity.home.GoodsDetailActivity;
+import com.leyuan.aidong.ui.activity.home.OldGoodsDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.leyuan.aidong.ui.activity.home.OldGoodsDetailActivity.TYPE_EQUIPMENT;
+import static com.leyuan.aidong.ui.activity.home.GoodsDetailActivity.TYPE_EQUIPMENT;
 
 
 /**
@@ -54,7 +54,7 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.Equi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GoodsDetailActivity.start(context,bean.getId(),TYPE_EQUIPMENT);
+                OldGoodsDetailActivity.start(context,bean.getId(),TYPE_EQUIPMENT);
             }
         });
     }

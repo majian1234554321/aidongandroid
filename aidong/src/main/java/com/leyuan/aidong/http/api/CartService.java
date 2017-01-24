@@ -1,9 +1,8 @@
 package com.leyuan.aidong.http.api;
 
 import com.leyuan.aidong.entity.BaseBean;
-import com.leyuan.aidong.entity.GoodsBean;
-
-import java.util.List;
+import com.leyuan.aidong.entity.data.PayOrderData;
+import com.leyuan.aidong.entity.data.ShopData;
 
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
@@ -25,7 +24,7 @@ public interface CartService {
      * @return 商品
      */
     @GET("mine/cart")
-    Observable<BaseBean<List<GoodsBean>>> getCart();
+    Observable<BaseBean<ShopData>> getCart();
 
     /**
      * 添加商品到购物车
@@ -35,7 +34,7 @@ public interface CartService {
      */
     @FormUrlEncoded
     @POST("mine/cart")
-    Observable<BaseBean> addCart(@Field("sku_code") String sku_code, @Field("amount") int amount);
+    Observable<BaseBean> addCart(@Field("code") String sku_code, @Field("amount") int amount,@Field("gym_id") String gymId);
 
     /**
      * 删除购物车中商品
@@ -51,6 +50,23 @@ public interface CartService {
      * @param amount 数量
      * @return
      */
+    @FormUrlEncoded
     @PUT("mine/cart/{id}")
     Observable<BaseBean> updateCart(@Path("id") String id,@Field("amount") int amount);
+
+    /**
+     * 购物车结算
+     * @param id
+     * @param integral
+     * @param coin
+     * @param coupon
+     * @param payType
+     * @param pickUpId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("mine/cart/settle")
+    Observable<BaseBean<PayOrderData>> payCart(@Field("integral") String integral, @Field("coin") String coin,
+                                               @Field("coupon") String coupon, @Field("pay_type") String payType,
+                                               @Field("pick_up_id") String pickUpId,@Field("id[]") String... id);
 }

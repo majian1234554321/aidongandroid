@@ -96,7 +96,9 @@ public class AlbumActivity extends BaseActivity implements AlbumRecyclerAdapter.
         imageRootPath = outFilePath + imageName;// 指定路径;
 
         if (getIntent() != null) {
-            selectImages = getIntent().getParcelableArrayListExtra("selectImages");
+            if( getIntent().getParcelableArrayListExtra("selectImages") != null) {
+                selectImages = getIntent().getParcelableArrayListExtra("selectImages");
+            }
             usefulImageSize = MAX_UPLOAD_IMAGE_COUNT - selectImages.size();
         }
 

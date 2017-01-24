@@ -41,6 +41,7 @@
     <string name="applicant_count">已参加(%1$d/%2$s)</string>
     <string name="course_applicant_count">已参加(%1$s/%2$s)</string>
     <string name="appoint_time">开始预约时间:%1$s</string>
+    <string name="detail_time">%1$s  %2$s - %3$s</string>
     <string name="rmb_price">¥ %1$s</string>
     <string name="rmb_price_scope">¥ %1$.2f - ¥ %2$.2f</string>
     <string name="time_with_line">%1$s—%2$s</string>
@@ -51,6 +52,12 @@
     <string name="tip_select_goods">你还没有选择商品哦!</string>
     <string name="use_price">满%1$s使用</string>
     <string name="real_pay">实付款：¥%1$s</string>
+    <string name="follow_success">关注成功</string>
+    <string name="follow_fail">关注失败</string>
+    <string name="cancel_follow_success">取消关注成功</string>
+    <string name="cancel_follow_fail">取消关注失败</string>
+    <string name="confirm_call_up">确认拨打%1$s ?</string>
+    <string name="input_content">请输入要搜索的内容</string>
 
     <string name="status_appoint">马上预约</string>
     <string name="status_end">预约已结束</string>
@@ -107,6 +114,9 @@
     <string name="coupon_expired">%1$s 到期</string>
     <string name="coupon_time">%1$s - %2$s</string>
     <string name="add_address">%1$s&#160;&#160;%2$s&#160;&#160;%3$s</string>
+
+    <string name="minus_rmb">- ¥ %1$s</string>
+    <string name="reply_other_user">回复%1$s：</string>
 
     <string name="exchange_coupon_success">兑换成功</string>
     <string name="exchange_coupon_fail">兑换码无效</string>

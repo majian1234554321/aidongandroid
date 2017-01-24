@@ -25,9 +25,9 @@ public class AppointmentUserActivity extends BaseActivity{
     private RecyclerView rvUser;
     private List<UserBean> data;
 
-    public static void start(Context context,ArrayList<UserBean> userList) {
+    public static void start(Context context,List<UserBean> userList) {
         Intent starter = new Intent(context, AppointmentUserActivity.class);
-        starter.putParcelableArrayListExtra("userList",userList);
+        starter.putParcelableArrayListExtra("userList",(ArrayList)userList);
         context.startActivity(starter);
     }
 
@@ -36,12 +36,14 @@ public class AppointmentUserActivity extends BaseActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appointment_user);
         if(getIntent() != null){
-            data = getIntent().getParcelableExtra("userList");
+            data = getIntent().getParcelableArrayListExtra("userList");
         }
         titleBar = (SimpleTitleBar)findViewById(R.id.title_bar);
         rvUser = (RecyclerView) findViewById(R.id.rv_user);
         rvUser.setLayoutManager(new LinearLayoutManager(this));
-        rvUser.setAdapter(new UserAdapter(this));
+        UserAdapter userAdapter = new UserAdapter(this);
+        rvUser.setAdapter(userAdapter);
+        userAdapter.setData(data);
         titleBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

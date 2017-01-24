@@ -40,23 +40,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <uses-feature android:name="android.hardware.microphone" />
@@ -127,11 +112,11 @@
         <activity android:name=".ui.activity.mine.AppointmentActivity" />
         <activity android:name=".ui.activity.mine.CouponActivity" />
         <activity android:name=".ui.activity.mine.OrderDetailActivity" />
-        <activity android:name=".ui.activity.mine.AppointmentDetailActivity" />
         <activity android:name=".ui.activity.mine.FollowActivity" />
         <activity android:name=".ui.activity.mine.AddAddressActivity" />
         <activity android:name=".ui.activity.mine.MessageActivity"/>
         <activity android:name=".ui.activity.mine.AddressActivity" />
+        <activity android:name=".ui.activity.mine.SelectAddressActivity"/>
         <activity android:name=".ui.activity.mine.CartActivity" />
         <activity android:name=".ui.activity.mine.CouponExchangeActivity"/>
         <activity android:name=".ui.activity.home.ConfirmOrderActivity"/>
@@ -145,14 +130,16 @@
         <activity android:name=".ui.activity.home.CourseDetailActivity" />
         <activity android:name=".ui.activity.home.CampaignActivity" />
         <activity android:name=".ui.activity.home.SearchActivity" />
+        <activity android:name=".ui.activity.home.CampaignDetailActivity"/>
         <activity android:name=".ui.activity.home.GoodsFilterActivity" />
         <activity android:name=".ui.activity.home.NurtureActivity" />
-        <activity android:name=".ui.activity.home.CampaignDetailActivity" />
-        <activity android:name=".ui.activity.home.OldGoodsDetailActivity" />
+        <activity android:name=".ui.activity.home.OldCampaignDetailActivity" />
+        <activity android:name=".ui.activity.home.GoodsDetailActivity" />
         <activity android:name=".ui.activity.home.AppointCampaignActivity"/>
+        <activity android:name=".ui.activity.mine.AppointCampaignDetailActivity"/>
         <activity android:name=".ui.activity.home.AppointCourseActivity"/>
         <activity android:name=".ui.activity.home.EquipmentActivity" />
-        <activity android:name=".ui.activity.home.LocationActivity"/>
+        <activity android:name=".ui.activity.home.OldCourseDetailActivity"/>
         <activity android:name=".ui.activity.home.BrandActivity"/>
         <activity android:name=".ui.activity.home.DeliveryInfoActivity" />
         <activity android:name=".ui.activity.discover.AppointVenuesActivity"/>
@@ -161,9 +148,11 @@
         <activity android:name=".ui.activity.home.ConfirmGoodsActivity" />
         <activity android:name=".ui.activity.home.ImagePreviewActivity"/>
         <activity android:name=".ui.activity.mine.ApplyServiceNextActivity"/>
-        <activity android:name=".ui.activity.home.AppointmentSuccessActivity"/>
+        <activity android:name=".ui.activity.mine.AppointCourseDetailActivity" />
         <activity android:name=".ui.activity.home.AppointmentUserActivity"/>
         <activity android:name=".ui.activity.mine.UpdateAddressActivity"/>
+        <activity android:name=".ui.activity.discover.DynamicDetailActivity"/>
+        <activity android:name=".ui.activity.mine.UserInfoActivity"/>
         <activity android:name=".ui.WebViewActivity"/>
         <activity android:name=".ui.activity.video.WatchOfficeActivity"/>
         <activity android:name=".ui.activity.video.PlayerActivity"/>
@@ -175,8 +164,9 @@
         <activity android:name=".ui.activity.discover.NewsActivity"/>
         <activity android:name=".ui.activity.discover.NewsDetailActivity"/>
         <activity android:name=".ui.activity.video.VideoCommentActivity"/>
-        <activity android:name=".ui.activity.home.ChangeCityActivity"/>
-        <activity android:name=".ui.activity.home.GoodsDetailActivity"/>
+        <activity android:name=".ui.activity.home.LocationActivity"/>
+        <activity android:name=".ui.activity.home.OldGoodsDetailActivity"/>
+        <activity android:name=".ui.activity.discover.PublishDynamicActivity"/>
         <activity android:name=".ui.activity.mine.ApplyServiceActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
@@ -187,7 +177,6 @@
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".ui.activity.discover.VenuesDetailActivity" />
         <activity android:name=".ui.activity.discover.DiscoverUserActivity" />
-        <activity android:name=".ui.activity.discover.FilterAroundPeopleActivity" />
         <activity android:name=".ui.activity.mine.login.ChangePasswordActivity" />
         <activity android:name=".ui.activity.mine.login.CompleteUserInfomationActivity" />
         <activity android:name=".ui.activity.mine.login.FastLoginActivity" />
@@ -253,10 +242,11 @@
 
         <!-- ********************WeiXinPay************************* -->
         <activity
-            android:name=".wxapi.WXPayEntryActivity"
+            android:name="com.example.aidong.wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTop"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
         <!-- ********************QQ Login Share************************* -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"

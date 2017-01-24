@@ -56,41 +56,50 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.utils.common.Constant;
-import com.leyuan.aidong.utils.common.MXLog;
-import com.leyuan.aidong.utils.common.UrlLink;
-import com.leyuan.aidong.http.HttpConfig;
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.model.AttributeFilm;
 import com.leyuan.aidong.entity.model.AttributeVideo;
 import com.leyuan.aidong.entity.model.location.ImageItem;
 import com.leyuan.aidong.entity.model.result.MsgResult;
 import com.leyuan.aidong.entity.model.result.NewDynamicResult;
+import com.leyuan.aidong.http.HttpConfig;
+import com.leyuan.aidong.ui.App;
+import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
+import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
+import com.leyuan.aidong.ui.mvp.view.PublishDynamicActivityView;
 import com.leyuan.aidong.utils.FileUtil;
+import com.leyuan.aidong.utils.common.Constant;
+import com.leyuan.aidong.utils.common.MXLog;
+import com.leyuan.aidong.utils.common.UrlLink;
 import com.leyuan.aidong.utils.photo.Bimp;
 import com.leyuan.aidong.utils.photo.Res;
+import com.leyuan.aidong.utils.qiniu.QiNiuTokenUtils;
 import com.leyuan.commonlibrary.http.IHttpCallback;
 import com.leyuan.commonlibrary.http.IHttpTask;
 import com.leyuan.commonlibrary.util.ToastUtil;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.qiniu.android.http.ResponseInfo;
+import com.qiniu.android.storage.UpCompletionHandler;
+import com.qiniu.android.storage.UploadManager;
+import com.qiniu.android.storage.UploadOptions;
 
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class TabTheIndividualDynaminActivity extends BaseActivity implements
-        IHttpCallback, Callback {
+        IHttpCallback, Callback,PublishDynamicActivityView {
     protected ImageView mimageview_the_individual_dynamic_back;
     protected Button button_the_individual_dynamic_release;
     protected PopupWindow window = null;
@@ -135,6 +144,11 @@ public class TabTheIndividualDynaminActivity extends BaseActivity implements
     private FileUtil MxFileUtil = FileUtil.getInstance();
     protected ProgressDialog dialog;
 
+    private boolean uploadQiNiuFailed = false;
+    private List<String> qiNiuImageUrls = new ArrayList<>();
+    private UploadManager uploadManager;
+    private DynamicPresent dynamicPresent;
+
 //    public void startloadingDialog() {
 //        dialog = ProgressDialog.show(this, "提示", "加载中...");
 //    }
@@ -164,6 +178,8 @@ public class TabTheIndividualDynaminActivity extends BaseActivity implements
         Res.init(this);
         MAX_COUNT = 1000;
         isfirst = true;
+        uploadManager = new UploadManager();
+        dynamicPresent = new DynamicPresentImpl(this,this);
         switch (getIntent().getIntExtra("type", 0)) {
             case 1:
                 Intent intent = new Intent(App.context, AlbumActivity.class);
@@ -704,13 +720,67 @@ public class TabTheIndividualDynaminActivity extends BaseActivity implements
                     public void onClick(View v) {
                         String individual_dynamic = edittext_the_individual_dynamic
                                 .getText().toString();
-                        File file[] = null;
+
                         if (uploadVideo) {
+                            setLoadingDialog(R.string.tip_sending);
                             publishVideo(individual_dynamic, select_cover, path);
                         } else if (uploadPhoto) {
+
+                            //todo
                             cover = null;
                             video = null;
-                            if (Bimp.tempSelectBitmap.size() > 0) {
+                            setLoadingDialog(R.string.tip_sending);
+
+                            for (int i = 0; i < Bimp.tempSelectBitmap.size(); i++) {
+                                ImageItem bean = Bimp.tempSelectBitmap.get(i);
+                                String path = bean.getImagePath();
+                                String expectKey = "image/" + String.valueOf(System.currentTimeMillis()) + path.substring(path.lastIndexOf("."));
+                                File file =new File(path);
+                                file.mkdirs();
+                                if (!file.exists() && file.length() <= 0) {
+                                    Toast.makeText(TabTheIndividualDynaminActivity.this, "not found...", Toast.LENGTH_LONG).show();
+                                    return;
+                                }
+
+                                byte[] bytes = null;
+                                if (file.length() > 1024 * 1024) {
+                                    Bitmap bitmap = BitmapFactory.decodeFile(path);
+                                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 70, outputStream);
+                                    bytes = outputStream.toByteArray();
+                                    uploadManager.put(bytes, expectKey, QiNiuTokenUtils.getQiNiuToken(), new UpCompletionHandler() {
+                                        @Override
+                                        public void complete(String key, ResponseInfo responseInfo, JSONObject response) {
+                                            if(responseInfo.isOK()){
+                                                qiNiuImageUrls.add(key);
+                                            }else{
+                                                uploadQiNiuFailed = true;
+                                            }
+                                            checkImageUploadResult();
+                                        }
+                                    }, new UploadOptions(null, "test-type", true, null, null));
+                                } else {
+                                    uploadManager.put(path, expectKey, QiNiuTokenUtils.getQiNiuToken(), new UpCompletionHandler() {
+                                        @Override
+                                        public void complete(String key, ResponseInfo responseInfo, JSONObject response) {
+                                            if(responseInfo.isOK()){
+                                                qiNiuImageUrls.add(key);
+                                            }else{
+                                                uploadQiNiuFailed = true;
+                                            }
+                                            checkImageUploadResult();
+                                        }
+                                    }, new UploadOptions(null, "test-type", true, null, null));
+                                }
+                            }
+
+
+
+
+
+                           /*
+                             File file[] = null;
+                           if (Bimp.tempSelectBitmap.size() > 0) {
                                 int size = Bimp.tempSelectBitmap.size();
                                 if (size > Constant.MAX_PHOTO_DYNAMIC_COUNT) {
                                     size = Constant.MAX_PHOTO_DYNAMIC_COUNT;
@@ -724,9 +794,8 @@ public class TabTheIndividualDynaminActivity extends BaseActivity implements
                                 ToastUtil.show("请选择图片", TabTheIndividualDynaminActivity.this);
                                 return;
                             }
-                            setLoadingDialog(R.string.tip_sending);
 
-                            Map<String, Object[]> files = new HashMap<String, Object[]>();
+                           Map<String, Object[]> files = new HashMap<String, Object[]>();
                             List<String> list = new ArrayList<String>();
                             for (int i = 0; i < Bimp.tempSelectBitmap.size(); i++) {
                                 list.add(Bimp.tempSelectBitmap.get(i).getImagePath());
@@ -734,7 +803,7 @@ public class TabTheIndividualDynaminActivity extends BaseActivity implements
 
                             files.put("image", list.toArray());
 
-                            /**
+                            *//**
                              * 发布动态(content可以与动态图片或者视频兼容一起发送，但动态图片不能与视频一起发送)
                              *
                              * @param content
@@ -746,7 +815,7 @@ public class TabTheIndividualDynaminActivity extends BaseActivity implements
                              * @param film
                              *            -视频文件
                              * @param token
-                             */
+                             *//*
                             addTask(TabTheIndividualDynaminActivity.this,
                                     new IHttpTask(UrlLink.MYSHOWDYNAMICS_URL,
                                             paramsinit(individual_dynamic), files,
@@ -775,7 +844,7 @@ public class TabTheIndividualDynaminActivity extends BaseActivity implements
                                 //														file, cover, video),
                                 //												MsgResult.class),
                                 //										HttpConfig.POST, DYNAMICS);
-                            }
+                            }*/
                         }
                     }
                 });
@@ -795,10 +864,54 @@ public class TabTheIndividualDynaminActivity extends BaseActivity implements
         });
     }
 
+
+    private void checkImageUploadResult() {
+        if(uploadQiNiuFailed){
+            stoploadingDialog();
+            Toast.makeText(this, "上传失败,请重新发表...", Toast.LENGTH_LONG).show();
+        }else if(qiNiuImageUrls.size() == Bimp.tempSelectBitmap.size()){
+            uploadImageToServer();
+        }
+    }
+
+    private void uploadImageToServer(){
+        String content = edittext_the_individual_dynamic.getText().toString();
+        String[] image = new String[qiNiuImageUrls.size()];
+        for (int i = 0; i < qiNiuImageUrls.size(); i++) {
+            String urls = qiNiuImageUrls.get(i);
+            image[i] = urls.substring(urls.indexOf("/") + 1);
+        }
+        dynamicPresent.postImageDynamic(content,image);
+    }
+
+    @Override
+    public void publishDynamicResult(BaseBean baseBean) {
+        stoploadingDialog();
+        if(baseBean.getStatus() == 1){
+            Toast.makeText(this,"上传成功", Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(this,"上传失败", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private String videoKey ;
+    //todo
     protected void publishVideo(String content, Bitmap bitmap, String path) {
+        videoKey = "video/" + System.currentTimeMillis() + path.substring(path.lastIndexOf("."));
+        uploadManager.put(path, videoKey, QiNiuTokenUtils.getQiNiuToken(), new UpCompletionHandler() {
+            @Override
+            public void complete(String key, ResponseInfo responseInfo, JSONObject response) {
+                if(responseInfo.isOK()){
+                    uploadVideoToServer();
+                }else{
+                    stoploadingDialog();
+                    Toast.makeText(TabTheIndividualDynaminActivity.this,"上传失败", Toast.LENGTH_LONG).show();
+                }
+            }
+        }, new UploadOptions(null, "test-type", true, null, null));
 
 
-        Map<String, Object[]> files = new HashMap<String, Object[]>();
+       /* Map<String, Object[]> files = new HashMap<String, Object[]>();
         List<Bitmap> list_bitmap = new ArrayList<Bitmap>();
         list_bitmap.add(bitmap);
         files.put("cover", list_bitmap.toArray());
@@ -811,7 +924,12 @@ public class TabTheIndividualDynaminActivity extends BaseActivity implements
                         MsgResult.class), HttpConfig.POST,
                 DYNAMICS);
         Bimp.tempSelectBitmap.clear();
-        startFrameAnimation();
+        startFrameAnimation();*/
+    }
+
+    private void uploadVideoToServer(){
+        String content = edittext_the_individual_dynamic.getText().toString();
+        dynamicPresent.postVideoDynamic(content,videoKey.substring(videoKey.indexOf("/") + 1));
     }
 
     /**
@@ -1220,6 +1338,7 @@ public class TabTheIndividualDynaminActivity extends BaseActivity implements
             e.printStackTrace();
         }
     }
+
 
     @SuppressLint("HandlerLeak")
     public class GridAdapter extends BaseAdapter {

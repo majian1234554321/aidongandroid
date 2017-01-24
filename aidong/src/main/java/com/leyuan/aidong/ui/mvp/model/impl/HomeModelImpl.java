@@ -52,4 +52,9 @@ public class HomeModelImpl implements HomeModel {
     public List<BannerBean> getPopupBanners() {
         return SystemInfoUtils.getHomePopupBanner(context);
     }
+
+    @Override
+    public List<String> getOpenCity() {
+        return SystemInfoUtils.getOpenCity(context);
+    }
 }

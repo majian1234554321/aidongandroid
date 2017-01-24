@@ -4,18 +4,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CourseDetailBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.activity.home.adapter.ApplicantAdapter;
+import com.leyuan.aidong.ui.activity.mine.AppointCourseDetailActivity;
+import com.leyuan.aidong.ui.activity.mine.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CourseDetailActivityView;
@@ -31,7 +38,7 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  * 课程详情
  * Created by song on 2016/11/15.
  */
-public class CourseDetailActivity extends BaseActivity implements View.OnClickListener,CourseDetailActivityView {
+public class CourseDetailActivity extends BaseActivity implements View.OnClickListener,CourseDetailActivityView{
     private static final String STATUS_END = "0";           //预约已结束
     private static final String STATUS_APPOINTED = "1";     //已预约
     private static final String STATUS_FULL = "2";          //预约人数已满
@@ -44,7 +51,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     private TextView tvTitle;
     private ImageView ivShare;
     private SwitcherLayout switcherLayout;
-    private LinearLayout contentLayout;
+    private ScrollView scrollView;
     private TextView tvStartTime;
     private BGABanner banner;
     private TextView tvHot;
@@ -63,8 +70,10 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     private TextView tvState;
 
     private String code;
+    private boolean isFollow;
     private CourseDetailBean detailBean;
     private CoursePresent coursePresent;
+    private ApplicantAdapter applicantAdapter;
 
     public static void start(Context context,String code) {
         Intent starter = new Intent(context, CourseDetailActivity.class);
@@ -91,8 +100,8 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tvTitle = (TextView) findViewById(R.id.tv_title);
         ivShare = (ImageView) findViewById(R.id.iv_share);
-        contentLayout = (LinearLayout) findViewById(R.id.ll_content);
-        switcherLayout = new SwitcherLayout(this,contentLayout);
+        scrollView = (ScrollView) findViewById(R.id.scroll_view);
+        switcherLayout = new SwitcherLayout(this,scrollView);
         tvStartTime = (TextView) findViewById(R.id.tv_start_time);
         banner = (BGABanner) findViewById(R.id.banner);
         tvHot = (TextView) findViewById(R.id.tv_hot);
@@ -115,6 +124,10 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 ImageLoader.getInstance().displayImage((String) model,(ImageView)view);
             }
         });
+
+        applicantAdapter = new ApplicantAdapter();
+        rvApplicant.setAdapter(applicantAdapter);
+        rvApplicant.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
     }
 
     private void setListener(){
@@ -123,6 +136,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         dvAvatar.setOnClickListener(this);
         ivFollow.setOnClickListener(this);
         bottomLayout.setOnClickListener(this);
+        tvCount.setOnClickListener(this);
     }
 
     @Override
@@ -136,6 +150,14 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             case R.id.dv_avatar:
                 break;
             case R.id.iv_follow:
+                if(isFollow){
+                    coursePresent.cancelFollow(detailBean.getCoach().getCoachId());
+                }else {
+                    coursePresent.addFollow(detailBean.getCoach().getCoachId());
+                }
+                break;
+            case R.id.tv_count:
+                AppointmentUserActivity.start(this, detailBean.getApplied());
                 break;
             case R.id.ll_apply:
                 bottomToTargetActivity();
@@ -148,23 +170,48 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void setCourseDetail(CourseDetailBean bean) {
         ivShare.setVisibility(View.VISIBLE);
-        detailBean = bean;
+        this.detailBean = bean;
         tvTitle.setText(bean.getName());
         List<String> cover = new ArrayList<>();
         cover.add(bean.getCover());
         banner.setData(cover,null);
-        dvAvatar.setImageURI(bean.getCover());
-        tvCoachName.setText(bean.getName());
-        tvTime.setText(bean.getClass_date());
+        dvAvatar.setImageURI(bean.getCoach().getAvatar());
+        tvCoachName.setText(bean.getCoach().getName());
+        tvTime.setText(String.format(getString(R.string.detail_time),
+                bean.getClassDate(),bean.getClassTime(),bean.getBreakTime()));
         tvAddress.setText(bean.getGym().getAddress());
         tvVenues.setText(bean.getGym().getName());
         tvRoom.setText(bean.getClassroom());
         tvCount.setText(String.format(getString(R.string.course_applicant_count),
-                bean.getApplied_count(),bean.getStock()));
+                bean.getAppliedCount(),bean.getPlace()));
+        applicantAdapter.setData(bean.getApplied());
         tvDesc.setText(Html.fromHtml(bean.getIntroduce()));
         tvPrice.setText(String.format(getString(R.string.rmb_price),bean.getPrice()));
-        tvStartTime.setText(String.format(getString(R.string.appoint_time),bean.getClassTime()));
+        tvStartTime.setText(String.format(getString(R.string.appoint_time),
+                bean.getClassDate()+bean.getClassTime()));
         setBottomStatus();
+    }
+
+    @Override
+    public void addFollow(BaseBean baseBean) {
+        if(baseBean.getStatus() == 1){
+            isFollow = true;
+            ivFollow.setBackgroundResource(R.drawable.icon_following);
+            Toast.makeText(this,R.string.follow_success,Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(this,R.string.follow_fail,Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void cancelFollow(BaseBean baseBean) {
+        if(baseBean.getStatus() == 1){
+            isFollow = false;
+            ivFollow.setBackgroundResource(R.drawable.icon_follow);
+            Toast.makeText(this,R.string.cancel_follow_success,Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(this,R.string.cancel_follow_fail,Toast.LENGTH_LONG).show();
+        }
     }
 
     private void setBottomStatus(){
@@ -188,6 +235,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 tvState.setText(R.string.status_appointed);
                 bottomLayout.setBackgroundColor(Color.parseColor("#666667"));
                 break;
+
             case STATUS_FULL:
                 tvStartTime.setVisibility(View.GONE);
                 tvPrice.setVisibility(View.GONE);
@@ -218,17 +266,16 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void bottomToTargetActivity(){
-        if(STATUS_APPOINT.equals(detailBean.getStatus())){     //预约
+        if(STATUS_APPOINT.equals(detailBean.getStatus())){           //预约
             if(App.mInstance.isLogin()){
                 //todo 判断同一时间是否已有预约
-                AppointInfoActivity.start(this, AppointInfoActivity.TYPE_COURSE,detailBean);
+                AppointCourseActivity.start(this, detailBean);
             }else {
                 //todo  登录 登录完成之后重新刷接口
+                startActivity(new Intent(this, LoginActivity.class));
             }
-        }else if(STATUS_NOT_PAY.equals(detailBean.getStatus())){
-            AppointCourseActivity.start(this,detailBean);
-        }else {
-            AppointCourseActivity.start(this,detailBean);
+        }else if(STATUS_NOT_PAY.equals(detailBean.getStatus())){    //待支付
+            AppointCourseDetailActivity.start(this, detailBean.getOrderId());
         }
     }
 }

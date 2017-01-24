@@ -1,13 +1,12 @@
 package com.leyuan.aidong.ui.mvp.model.impl;
 
 import com.leyuan.aidong.entity.BaseBean;
-import com.leyuan.aidong.entity.GoodsBean;
+import com.leyuan.aidong.entity.data.PayOrderData;
+import com.leyuan.aidong.entity.data.ShopData;
 import com.leyuan.aidong.http.RetrofitHelper;
 import com.leyuan.aidong.http.RxHelper;
 import com.leyuan.aidong.http.api.CartService;
 import com.leyuan.aidong.ui.mvp.model.CartModel;
-
-import java.util.List;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -26,15 +25,15 @@ public class CartModelImpl implements CartModel{
     }
 
     @Override
-    public void getCart(Subscriber<List<GoodsBean>> subscriber) {
+    public void getCart(Subscriber<ShopData> subscriber) {
         cartService.getCart()
-            .compose(RxHelper.<List<GoodsBean>>transform())
+            .compose(RxHelper.<ShopData>transform())
             .subscribe(subscriber);
     }
 
     @Override
-    public void addCart(Subscriber<BaseBean> subscriber, String skuCode, int mount) {
-        cartService.addCart(skuCode,mount)
+    public void addCart(Subscriber<BaseBean> subscriber, String skuCode, int mount,String gymId) {
+        cartService.addCart(skuCode,mount,gymId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
@@ -53,6 +52,14 @@ public class CartModelImpl implements CartModel{
         cartService.updateCart(id,mount)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
+    @Override
+    public void payCart(Subscriber<PayOrderData> subscriber, String integral, String coin,
+                        String coupon, String payType, String pickUpId, String... id) {
+        cartService.payCart(integral,coin,coupon,payType,pickUpId,id)
+                .compose(RxHelper.<PayOrderData>transform())
                 .subscribe(subscriber);
     }
 }

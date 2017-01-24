@@ -2,7 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/line_color">
+
+    <TextView
+        android:id="@+id/tv_exchange"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="输入优惠劵兑换码"
+        android:gravity="center_horizontal"
+        android:maxLines="1"
+        android:background="@color/white"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"/>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refreshLayout"
@@ -12,8 +24,6 @@
             android:id="@+id/rv_coupon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:paddingLeft="@dimen/left_margin"
-            android:paddingRight="@dimen/right_margin"/>
+            android:layout_marginTop="10dp"/>
     </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

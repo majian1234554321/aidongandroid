@@ -115,6 +115,7 @@
                 android:textColor="@color/color_txt_gray1"
                 android:textSize="@dimen/pref_16dp" />
 
+
             <Button
                 android:id="@+id/button_the_individual_dynamic_release"
                 android:layout_width="match_parent"
@@ -142,7 +143,6 @@
                 android:layout_alignRight="@+id/button_the_individual_dynamic_release"
                 android:layout_alignTop="@+id/textview_the_individual_dynamic_to_share"
                 android:button="@drawable/weibo_selector" />
-
         </RelativeLayout>
     </ScrollView>
     <RelativeLayout

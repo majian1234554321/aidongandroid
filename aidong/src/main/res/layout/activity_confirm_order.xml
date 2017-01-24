@@ -69,8 +69,8 @@
                     android:layout_marginBottom="20dp"
                     android:layout_marginLeft="@dimen/left_margin"
                     android:layout_marginTop="10dp"
-                    android:layout_toLeftOf="@+id/iv_arrow"
-                    android:text="收货地址:上海市徐汇区漕河泾新型技术开发区万达总部未来科技大厦2222"
+                    android:text="收货地址: "
+                    android:layout_marginRight="30dp"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 

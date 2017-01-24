@@ -1,7 +1,6 @@
 package com.leyuan.aidong.ui.activity.mine.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -9,10 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.activity.mine.AppointmentDetailActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.AppointmentBean;
+import com.leyuan.aidong.ui.activity.mine.AppointCampaignDetailActivity;
+import com.leyuan.aidong.ui.activity.mine.AppointCourseDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,10 +22,10 @@ import java.util.List;
  * Created by song on 2016/9/1.
  */
 public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.AppointmentHolder> implements View.OnClickListener{
-    private static final String UN_PAID = "0";          //待付款
-    private static final String UN_JOIN= "1";           //待参加
-    private static final String JOINED = "2";           //已参加
-    private static final String CLOSE = "3";            //已关闭
+    private static final String UN_PAID = "pending";         //待付款
+    private static final String UN_JOIN= "purchased";        //待参加
+    private static final String JOINED = "signed";           //已参加
+    private static final String CLOSE = "canceled";          //已关闭
 
     private Context context;
     private List<AppointmentBean> data = new ArrayList<>();
@@ -51,15 +51,14 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
     @Override
     public void onBindViewHolder(AppointmentHolder holder, int position) {
-        AppointmentBean bean = data.get(position);
+        final AppointmentBean bean = data.get(position);
 
         //与订单状态无关
-        if(bean.getItem() != null){
-            holder.cover.setImageURI(bean.getItem().getCover());
-            holder.name.setText(bean.getItem().getName());
-            holder.address.setText("");
-            holder.price.setText(String.format(context.getString(R.string.rmb_price),bean.getPay_amount()));
-        }
+        holder.cover.setImageURI(bean.getCover());
+        holder.name.setText(bean.getName());
+        holder.address.setText(bean.getSubName());
+        holder.price.setText(String.format(context.getString(R.string.rmb_price),bean.getPrice()));
+
         //与订单状态有关
         if (TextUtils.isEmpty(bean.getStatus())) return;
         switch (bean.getStatus()) {
@@ -100,8 +99,11 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, AppointmentDetailActivity.class);
-                context.startActivity(intent);
+                if("course".equals(bean.getAppointmentType())){
+                    AppointCourseDetailActivity.start(context,bean.getId());
+                }else {
+                    AppointCampaignDetailActivity.start(context,bean.getId());
+                }
             }
         });
     }
@@ -151,5 +153,12 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             tvDelete = (TextView) itemView.findViewById(R.id.tv_delete);
             tvPay = (TextView) itemView.findViewById(R.id.tv_pay);
         }
+    }
+
+    public interface OrderHandleListener{
+        void onPayOrder();
+        void onDeleteOrder();
+        void onConfirmJoin();
+        void onCancelJoin();
     }
 }

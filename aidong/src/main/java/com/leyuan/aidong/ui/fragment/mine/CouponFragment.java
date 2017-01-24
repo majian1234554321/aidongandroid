@@ -9,19 +9,19 @@ import android.support.v7.widget.RecyclerView.LayoutParams;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.CouponBean;
+import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.activity.mine.CouponExchangeActivity;
 import com.leyuan.aidong.ui.activity.mine.adapter.CouponAdapter;
-import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.ui.mvp.presenter.CouponPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CouponPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CouponFragmentView;
 import com.leyuan.aidong.widget.customview.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
-import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 
@@ -42,6 +42,7 @@ public class CouponFragment extends BaseFragment implements CouponFragmentView{
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
+    private TextView tvExchange;
 
     private int currPage = 1;
     private List<CouponBean> data;
@@ -70,11 +71,20 @@ public class CouponFragment extends BaseFragment implements CouponFragmentView{
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        initHeaderView();
+       // initHeaderView();
         initSwipeRefreshLayout(view);
         initSwitcherLayout();
         initRecyclerView(view);
         present.commonLoadData(switcherLayout,type);
+        tvExchange = (TextView) view.findViewById(R.id.tv_exchange);
+        tvExchange.setVisibility(VALID.equals(type)?View.VISIBLE:View.GONE);
+        tvExchange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CouponExchangeActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initHeaderView(){
@@ -120,9 +130,8 @@ public class CouponFragment extends BaseFragment implements CouponFragmentView{
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(wrapperAdapter);
         recyclerView.addOnScrollListener(onScrollListener);
-        if(VALID.equals(type)){
-            RecyclerViewUtils.setHeaderView(recyclerView,headerView);
-        }
+
+        //RecyclerViewUtils.setHeaderView(recyclerView,headerView);
     }
 
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){

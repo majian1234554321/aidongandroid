@@ -20,19 +20,10 @@
         fresco:pressedStateOverlayImage="@color/color_image_press"/>
 
     <ImageView
-        android:id="@+id/iv_man"
+        android:id="@+id/iv_gender"
         android:layout_width="15dp"
         android:layout_height="15dp"
-        android:src="@drawable/icon_man"
-        android:layout_alignBottom="@+id/dv_user_cover"
-        android:layout_alignRight="@+id/dv_user_cover"/>
-
-    <ImageView
-        android:id="@+id/iv_female"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:src="@drawable/icon_female"
-        android:visibility="gone"
+        android:background="@drawable/icon_man"
         android:layout_alignBottom="@+id/dv_user_cover"
         android:layout_alignRight="@+id/dv_user_cover"/>
 

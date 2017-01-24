@@ -51,7 +51,7 @@ public class SearchGoodsAdapter extends RecyclerView.Adapter<SearchGoodsAdapter.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // GoodsDetailActivity.start(context,bean.getId(), GoodsDetailActivity.TYPE_NURTURE);
+               // OldGoodsDetailActivity.start(context,bean.getId(), OldGoodsDetailActivity.TYPE_NURTURE);
             }
         });
     }

@@ -4,6 +4,7 @@ import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.data.CouponData;
 
 import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -20,6 +21,7 @@ public interface CouponService {
     Observable<BaseBean<CouponData>> getCoupons(@Path("type") String type,@Query("page") int page);
 
 
+    @FormUrlEncoded
     @POST("mine/coupons")
     Observable<BaseBean> obtainCoupon(@Field("coupon_id") String id);
 }

@@ -1,295 +1,318 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:orientation="vertical">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar_layout"
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
-        <android.support.design.widget.CollapsingToolbarLayout
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/app_bar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:expandedTitleMarginEnd="64dp"
-            app:expandedTitleMarginStart="48dp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-            <RelativeLayout
+            <android.support.design.widget.CollapsingToolbarLayout
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                app:layout_collapseMode="parallax">
+                android:layout_height="wrap_content"
+                app:expandedTitleMarginEnd="64dp"
+                app:expandedTitleMarginStart="48dp"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
-                <cn.bingoogolapple.bgabanner.BGABanner
-                    android:id="@+id/banner_layout"
+                <RelativeLayout
+                    android:id="@+id/rl_pager"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:banner_pageChangeDuration="1000"
-                    app:banner_pointAutoPlayAble="false"
-                    app:banner_pointContainerBackground="@android:color/transparent"
-                    app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
-                    app:banner_pointTopBottomMargin="5dp"
-                    app:banner_transitionEffect="alpha"
-                    android:background="@drawable/place_holder_logo"/>
+                    android:layout_height="200dp"
+                    android:layout_marginTop="@dimen/height_top_bar"
+                    app:layout_collapseMode="parallax"
+                    android:visibility="gone">
 
-                <TextView
-                    android:id="@+id/tv_hot"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="@dimen/left_margin"
-                    android:background="@drawable/shape_solid_black"
-                    android:drawableLeft="@drawable/icon_fire"
-                    android:drawablePadding="5dp"
-                    android:gravity="center_vertical"
-                    android:padding="5dp"
-                    android:text="11"
-                    android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    <cn.bingoogolapple.bgabanner.BGABanner
+                        android:id="@+id/banner_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/place_holder_logo"
+                        app:banner_pageChangeDuration="1000"
+                        app:banner_pointAutoPlayAble="false"
+                        app:banner_pointContainerBackground="@android:color/transparent"
+                        app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
+                        app:banner_pointTopBottomMargin="5dp"
+                        app:banner_transitionEffect="alpha" />
 
-            </RelativeLayout>
+                    <TextView
+                        android:id="@+id/tv_hot"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="@dimen/left_margin"
+                        android:background="@drawable/shape_solid_black"
+                        android:drawableLeft="@drawable/icon_fire"
+                        android:drawablePadding="5dp"
+                        android:gravity="center_vertical"
+                        android:padding="5dp"
+                        android:text="11"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?android:attr/actionBarSize"
-                app:layout_collapseMode="pin">
+                </RelativeLayout>
 
-                <TextView
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text=""
-                    android:textColor="@color/white" />
-            </android.support.v7.widget.Toolbar>
+                    android:layout_height="@dimen/height_top_bar"
+                    app:layout_collapseMode="pin" />
 
-        </android.support.design.widget.CollapsingToolbarLayout>
-    </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            </android.support.design.widget.CollapsingToolbarLayout>
+        </android.support.design.widget.AppBarLayout>
 
-        <LinearLayout
-            android:id="@+id/ll_content"
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
+            android:clipToPadding="false"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
+                android:id="@+id/ll_content"
                 android:layout_width="match_parent"
-                android:layout_height="88dp"
-                android:layout_marginLeft="@dimen/left_margin"
-                android:layout_marginRight="@dimen/right_margin"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_campaign_name"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginRight="80dp"
-                    android:layout_weight="1"
-                    android:maxLines="2"
-                    android:paddingTop="20dp"
-                    android:text="阿迪达斯-震撼魅跑 BEAUTY FIX"
-                    android:textColor="@color/black"
-                    android:textSize="20sp" />
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="85dp"
-                    android:layout_height="58dp"
-                    android:background="@drawable/shape_solid_black"
-                    android:orientation="vertical"
-                    android:padding="6dp">
+                    android:layout_width="match_parent"
+                    android:layout_height="88dp"
+                    android:layout_marginLeft="@dimen/left_margin"
+                    android:layout_marginRight="@dimen/right_margin"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/tv_landmark"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
+                        android:id="@+id/tv_campaign_name"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="80dp"
                         android:layout_weight="1"
+                        android:maxLines="2"
+                        android:paddingTop="20dp"
+                        android:text="阿迪达斯-震撼魅跑 BEAUTY FIX"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <LinearLayout
+                        android:layout_width="85dp"
+                        android:layout_height="58dp"
+                        android:background="@drawable/shape_solid_black"
+                        android:orientation="vertical"
+                        android:padding="6dp">
+
+                        <TextView
+                            android:id="@+id/tv_landmark"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical|right"
+                            android:singleLine="true"
+                            android:text="徐家汇"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/tv_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical|right"
+                            android:text="2016-09-09"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/tv_time"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical|right"
+                            android:text="12:34"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <include layout="@layout/inc_line" />
+
+                <!--地点-->
+                <LinearLayout
+                    android:id="@+id/ll_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="@dimen/left_margin"
+                    android:layout_marginRight="@dimen/right_margin"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:drawableLeft="@drawable/icon_address"
+                        android:drawablePadding="10dp"
+                        android:gravity="center_vertical"
+                        android:text="地点"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tv_address"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:drawablePadding="5dp"
+                        android:drawableRight="@drawable/icon_right_arrow"
                         android:gravity="center_vertical|right"
                         android:singleLine="true"
-                        android:text="徐家汇"
-                        android:textColor="@color/white"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/tv_date"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical|right"
-                        android:text="2016-09-09"
-                        android:textColor="@color/white"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/tv_time"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical|right"
-                        android:text="12:34"
-                        android:textColor="@color/white"
-                        android:textSize="12sp" />
-
+                        android:text="北京东路"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
                 </LinearLayout>
-            </LinearLayout>
 
-            <include layout="@layout/inc_line" />
+                <include layout="@layout/inc_line" />
 
-            <!--地点-->
-            <LinearLayout
-                android:id="@+id/ll_address"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginLeft="@dimen/left_margin"
-                android:layout_marginRight="@dimen/right_margin"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:drawableLeft="@drawable/icon_address"
-                    android:drawablePadding="10dp"
+                <!--组织方-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="@dimen/left_margin"
+                    android:layout_marginRight="@dimen/right_margin"
                     android:gravity="center_vertical"
-                    android:text="地点"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:drawableLeft="@drawable/icon_organizer"
+                        android:drawablePadding="10dp"
+                        android:gravity="center_vertical"
+                        android:text="组织方"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tv_organizer"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|right"
+                        android:text="爱动健身"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="@color/line_color" />
+
+                <!--已参加-->
 
                 <TextView
-                    android:id="@+id/tv_address"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:drawablePadding="5dp"
+                    android:id="@+id/tv_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="?selectableItemBackground"
                     android:drawableRight="@drawable/icon_right_arrow"
-                    android:gravity="center_vertical|right"
-                    android:text="北京东路"
-                    android:singleLine="true"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/left_margin"
+                    android:paddingRight="@dimen/right_margin"
+                    android:text="@string/applicant_count"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
-            </LinearLayout>
 
-            <include layout="@layout/inc_line" />
+                <include layout="@layout/inc_line" />
 
-            <!--组织方-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginLeft="@dimen/left_margin"
-                android:layout_marginRight="@dimen/right_margin"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_applicant"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginRight="7dp" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="@color/line_color" />
+
+                <!--活动详情-->
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:drawableLeft="@drawable/icon_organizer"
-                    android:drawablePadding="10dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:drawableLeft="@drawable/icon_black_point"
+                    android:drawablePadding="5dp"
+                    android:drawableRight="@drawable/icon_black_point"
                     android:gravity="center_vertical"
-                    android:text="组织方"
+                    android:text="活动详情"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
                 <TextView
-                    android:id="@+id/tv_organizer"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|right"
-                    android:text="爱动健身"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
+                    android:id="@+id/tv_campaign_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/left_margin"
+                    android:layout_marginRight="@dimen/right_margin"
+                    android:paddingBottom="50dp"
+                    android:text="活动详情" />
+
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/line_color" />
+        </android.support.v4.widget.NestedScrollView>
 
-            <!--已参加-->
 
-            <TextView
-                android:id="@+id/tv_count"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="?selectableItemBackground"
-                android:drawableRight="@drawable/icon_right_arrow"
-                android:gravity="center_vertical"
-                android:paddingLeft="@dimen/left_margin"
-                android:paddingRight="@dimen/right_margin"
-                android:text="@string/applicant_count"
-                android:textColor="@color/black"
-                android:textSize="15sp" />
+    </android.support.design.widget.CoordinatorLayout>
 
-            <include layout="@layout/inc_line" />
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_top_bar"
+        android:background="@color/black">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_applicant"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="7dp"
-                android:layout_marginRight="7dp" />
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="?selectableItemBackground"
+            android:padding="5dp"
+            android:src="@drawable/icon_back" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/line_color" />
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center_vertical"
+            android:text="活动详情"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:visibility="visible" />
 
-            <!--活动详情-->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:drawableLeft="@drawable/icon_black_point"
-                android:drawablePadding="5dp"
-                android:drawableRight="@drawable/icon_black_point"
-                android:gravity="center_vertical"
-                android:text="活动详情"
-                android:textColor="@color/black"
-                android:textSize="15sp" />
+        <ImageView
+            android:id="@+id/iv_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="?selectableItemBackground"
+            android:padding="5dp"
+            android:src="@drawable/icon_share" />
 
-            <TextView
-                android:id="@+id/tv_campaign_desc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/left_margin"
-                android:layout_marginRight="@dimen/right_margin"
-                android:paddingBottom="50dp"
-                android:text="活动详情活动详情活动详情活动详情活动详情活动详情
-                活动详情活动详情活动详情
-                活动详情活动详情活动详情活动详情活动详情活动详情
-                活动详情活动详情活动详情
-                活动详情活动详情活动详情活动详情活动详情活动详情
-                活动详情活动详情活动详情
-                活动详情活动详情活动详情活动详情活动详情活动详情
-                活动详情活动详情活动详情活动详情活动详情活动详情活动详情活动详情活动详情
-                活动详情活动详情活动详情
-                活动详情活动详情活动详情活动详情活动详情活动详情
-                活动详情活动详情活动详情
-                活动详情活动详情活动详情活动详情活动详情活动详情
-                活动详情活动详情活动详情
-                活动详情活动详情活动详情活动详情活动详情活动详情
-                活动详情活动详情活动详情
-                活动详情活动详情活动详情活动详情活动详情活动详情
-                活动详情活动详情活动详情
-                活动详情活动详情活动详情活动详情活动详情活动详情
-                活动详情活动详情活动详情
-                " />
-
-        </LinearLayout>
-
-    </android.support.v4.widget.NestedScrollView>
-
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/ll_apply"
@@ -298,8 +321,9 @@
         android:layout_gravity="bottom"
         android:background="@drawable/shape_solid_black"
         android:gravity="center"
+        android:layout_alignParentBottom="true"
         android:orientation="horizontal"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/tv_price"
@@ -318,6 +342,6 @@
             android:textColor="@color/white"
             android:textSize="16sp" />
     </LinearLayout>
-</android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>
 
 

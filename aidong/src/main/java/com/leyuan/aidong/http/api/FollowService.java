@@ -34,8 +34,8 @@ public interface FollowService {
      * @return 状态
      */
     @FormUrlEncoded
-    @POST("mine/followers")
-    Observable<BaseBean> addFollow(@Field("following_id") int id);
+    @POST("mine/followings")
+    Observable<BaseBean> addFollow(@Field("idong") String id);
 
 
     /**
@@ -44,6 +44,6 @@ public interface FollowService {
      * @return 状态
      */
     @FormUrlEncoded
-    @DELETE("mine/followers/{id}")
-    Observable<BaseBean> cancelFollow(@Path("id") int id);
+    @DELETE("mine/followings/{id}")
+    Observable<BaseBean> cancelFollow(@Path("id") String id);
 }

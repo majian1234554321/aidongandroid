@@ -11,6 +11,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
 
+import com.leyuan.aidong.R;
+
 /**
  * PopupWindow基类
  * Created by song on 2016/9/13.
@@ -30,7 +32,7 @@ public class BasePopupWindow extends PopupWindow {
      * 初始化BasePopupWindow的一些信息
      * */
     private void initBasePopupWindow() {
-        setAnimationStyle(android.R.style.Animation_InputMethod);
+        setAnimationStyle(R.style.popupWindow_style);
         setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         setOutsideTouchable(true);  //默认设置outside点击响应

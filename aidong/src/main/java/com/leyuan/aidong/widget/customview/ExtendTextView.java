@@ -85,7 +85,7 @@ public class ExtendTextView extends RelativeLayout{
      * 设置右边文本内容
      * @param content 内容
      */
-    public void setRightTextContent(String content){
+    public void setRightContent(String content){
         rightTextView.setText(content);
     }
 

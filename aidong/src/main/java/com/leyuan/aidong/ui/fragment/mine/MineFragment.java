@@ -25,9 +25,9 @@ import com.leyuan.aidong.ui.activity.mine.CouponActivity;
 import com.leyuan.aidong.ui.activity.mine.FollowActivity;
 import com.leyuan.aidong.ui.activity.mine.LoveCoinActivity;
 import com.leyuan.aidong.ui.activity.mine.MessageActivity;
-import com.leyuan.aidong.ui.activity.mine.MyShowActivityNew;
 import com.leyuan.aidong.ui.activity.mine.OrderActivity;
 import com.leyuan.aidong.ui.activity.mine.TabMinePersonalSettingsActivity;
+import com.leyuan.aidong.ui.activity.mine.UserInfoActivity;
 import com.leyuan.aidong.ui.activity.mine.account.LoginActivity;
 import com.leyuan.aidong.widget.customview.AidongMineItem;
 import com.leyuan.aidong.widget.customview.CircleImageView;
@@ -152,13 +152,13 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 UiManager.activityJump(getActivity(), MessageActivity.class);
                 break;
             case R.id.imageView_head:
+                startActivity(new Intent(getContext(), UserInfoActivity.class));
 
-
-                Intent intent = new Intent();
+               /* Intent intent = new Intent();
                 intent.setClass(getActivity(), MyShowActivityNew.class);
 //                intent.setClass(getActivity(), CompleteUserInfomationActivity.class);
                 intent.putExtra(com.leyuan.aidong.utils.common.Constant.USER,App.mInstance.getUser());
-                startActivity(intent);
+                startActivity(intent);*/
                 break;
             case R.id.relativeLayout_yuyue:
                 UiManager.activityJump(getActivity(), AppointmentActivity.class);

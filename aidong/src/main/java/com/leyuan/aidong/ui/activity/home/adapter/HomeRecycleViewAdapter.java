@@ -84,7 +84,7 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                             bean.getImage(),bean.getIntroduce());
                 }
             });
-            BigAndLittleImageAdapter adapter = new BigAndLittleImageAdapter(context);
+            BigAndLittleImageAdapter adapter = new BigAndLittleImageAdapter(context,bean.getType());
             ((BigAndLittleImageViewHolder) holder).recyclerView.setLayoutManager(
                     new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false));
             ((BigAndLittleImageViewHolder) holder).recyclerView.setAdapter(adapter);

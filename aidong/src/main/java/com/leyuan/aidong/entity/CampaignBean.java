@@ -10,7 +10,7 @@ public class CampaignBean {
     private String cover;
     private String start_time;
     private String landmart;
-
+    
     public String getId() {
         return id;
     }

@@ -721,7 +721,7 @@ public class CommentDetailActivity extends BaseActivity implements
                 if (like_user.size() > 0) {
                     layout_like_user.setVisibility(View.VISIBLE);
                     //					adapter_like_user = new LikeUserHorizontalListAdapter(
-                    //							context, like_user);
+                    //							context, like);
                     //					list_horizontal
                     //							.setAdapter(adapter_like_user);
                     adapter_like_user.freshData(like_user);
@@ -730,9 +730,9 @@ public class CommentDetailActivity extends BaseActivity implements
                     //						@Override
                     //						public void onItemClick(AdapterView<?> parent,
                     //								View view, int position, long id) {
-                    //							if (position < like_user.size()) {
+                    //							if (position < like.size()) {
                     //								ActivityTool
-                    //								.startShowActivity(context, like_user.get(position).getUser());
+                    //								.startShowActivity(context, like.get(position).getUser());
                     //							}
                     //							else{
                     //								Intent intent = new Intent(context, UserWhoClickLikeActivity.class);

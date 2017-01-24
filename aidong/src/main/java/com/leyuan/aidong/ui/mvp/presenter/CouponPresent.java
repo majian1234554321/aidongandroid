@@ -34,8 +34,7 @@ public interface CouponPresent {
 
     /**
      * 领取优惠劵
-     * @param switcherLayout SwitcherLayout
      * @param id 优惠劵编号
      */
-    void obtainCoupon(SwitcherLayout switcherLayout,String id);
+    void obtainCoupon(String id);
 }

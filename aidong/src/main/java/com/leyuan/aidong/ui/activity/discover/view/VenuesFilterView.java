@@ -27,6 +27,7 @@ import java.util.List;
  * 场馆列表筛选控件
  * Created by song on 2016/10/31.
  */
+//todo 逻辑过于混乱,通用性不够,需要重构.
 public class VenuesFilterView extends LinearLayout implements View.OnClickListener {
     private Context context;
     private LinearLayout brandLayout;
@@ -164,6 +165,11 @@ public class VenuesFilterView extends LinearLayout implements View.OnClickListen
         contentLayout.setVisibility(VISIBLE);
         rightListView.setVisibility(VISIBLE);
 
+        if(leftCircleList.isEmpty()){
+            return;
+        }
+
+        //初始化右边列表值
         if(leftSelectedPosition == -1){
             if(leftCircleList.get(0) != null){
                 rightCircleList = leftCircleList.get(0).getDistrictValues();
@@ -198,10 +204,10 @@ public class VenuesFilterView extends LinearLayout implements View.OnClickListen
                     rightCircleAdapter.setCircleDescBeanList(rightCircleList);
                 }
 
-                if(leftPosition != leftSelectedPosition){           //若左边列表实际选中的左边列表不是当前点击位置 去掉之前有右边列表之前选中的item 并将右边列表滑至顶端
+                if(leftPosition != leftSelectedPosition){           //若左边列表实际选中的位置不是当前点击位置 去掉右边列表之前选中的item 并将右边列表滑至顶端
                     rightCircleAdapter.setSelectedBean(null);
                     rightListView.setSelection(0);
-                }else {                                             //若左边列表实际选中的左边列表是当前点击位置 将右边列表滑至顶端
+                }else {                                             //若左边列表实际选中的位置是当前点击位置 将右边列表之前选中的item滑至顶端
                     rightListView.setSelection(rightSelectedPosition);
                 }
 
@@ -209,7 +215,7 @@ public class VenuesFilterView extends LinearLayout implements View.OnClickListen
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int rightPosition, long id) {
                         hidePopup();
-                        leftSelectedPosition = leftPosition;        //改变左边选中item的状态
+                        leftSelectedPosition = leftPosition;             //改变左边选中item的状态
                         leftCircleAdapter.setSelectedBean(leftCircleList.get(leftSelectedPosition));
 
                         rightSelectedPosition = rightPosition;           //改变右边选中item

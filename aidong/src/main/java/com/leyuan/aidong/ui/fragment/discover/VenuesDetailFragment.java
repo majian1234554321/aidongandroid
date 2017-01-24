@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.fragment.discover;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.VenuesDetailBean;
 import com.leyuan.aidong.ui.BaseFragment;
+import com.leyuan.aidong.ui.activity.discover.VenuesDetailActivity;
+import com.leyuan.aidong.ui.activity.home.NurtureActivity;
 import com.leyuan.aidong.ui.mvp.presenter.VenuesPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VenuesPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.VenuesDetailFragmentView;
@@ -46,7 +49,6 @@ public class VenuesDetailFragment extends BaseFragment implements View.OnClickLi
     private ImageView ivFood;
 
     private String id;
-    private VenuesLoadListener loadListener;
     private VenuesDetailBean venuesBean;
 
     @Override
@@ -107,6 +109,7 @@ public class VenuesDetailFragment extends BaseFragment implements View.OnClickLi
             case R.id.tv_food:
                 break;
             case R.id.tv_nurture:
+                startActivity(new Intent(getContext(), NurtureActivity.class));
                 break;
             case R.id.tv_equipment:
                 break;
@@ -123,19 +126,19 @@ public class VenuesDetailFragment extends BaseFragment implements View.OnClickLi
 
     @Override
     public void setVenuesDetail(VenuesDetailBean venuesBean) {
-        if(loadListener != null){
-            loadListener.onLoadFinish(venuesBean);
-        }
+        ((VenuesDetailActivity)getActivity()).loadFinish(venuesBean);
         tvName.setText(venuesBean.getName());
-        tvPhone.setText(venuesBean.getPhone());
         tvAddress.setText(venuesBean.getAddress());
+        tvPhone.setText(venuesBean.getTel());
+        tvOpenTime.setText(venuesBean.getBusiness_time());
+        ivParking.setImageResource(venuesBean.getService().contains("1") ? R.drawable.icon_parking :
+                R.drawable.icon_parking_gray);
+        ivWifi.setImageResource(venuesBean.getService().contains("2") ? R.drawable.icon_wifi :
+                R.drawable.icon_wifi_gray);
+        ivBath.setImageResource(venuesBean.getService().contains("3") ? R.drawable.icon_bath :
+                R.drawable.icon_bath_gray);
+        ivFood.setImageResource(venuesBean.getService().contains("4") ? R.drawable.icon_food :
+                R.drawable.icon_food_gray);
     }
 
-    public void setLoadListener(VenuesLoadListener loadListener) {
-        this.loadListener = loadListener;
-    }
-
-    public interface VenuesLoadListener{
-        void onLoadFinish(VenuesDetailBean venuesBean);
-    }
 }

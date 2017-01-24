@@ -11,7 +11,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.EquipmentBean;
 import com.leyuan.aidong.entity.NurtureBean;
-import com.leyuan.aidong.ui.activity.home.GoodsDetailActivity;
+import com.leyuan.aidong.ui.activity.home.OldGoodsDetailActivity;
 import com.leyuan.aidong.ui.activity.home.GoodsFilterActivity;
 
 import java.util.ArrayList;
@@ -70,7 +70,7 @@ public class GoodsFilterAdapter extends RecyclerView.Adapter<GoodsFilterAdapter.
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    GoodsDetailActivity.start(context,bean.getId(), GoodsDetailActivity.TYPE_NURTURE);
+                    OldGoodsDetailActivity.start(context,bean.getId(), OldGoodsDetailActivity.TYPE_NURTURE);
                 }
             });
         }else {
@@ -83,7 +83,7 @@ public class GoodsFilterAdapter extends RecyclerView.Adapter<GoodsFilterAdapter.
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    GoodsDetailActivity.start(context, bean.getId(), GoodsDetailActivity.TYPE_EQUIPMENT);
+                    OldGoodsDetailActivity.start(context, bean.getId(), OldGoodsDetailActivity.TYPE_EQUIPMENT);
                 }
             });
         }

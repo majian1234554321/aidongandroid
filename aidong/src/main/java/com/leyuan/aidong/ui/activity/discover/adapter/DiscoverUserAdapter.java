@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.leyuan.aidong.R;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.UserBean;
 
 import java.util.ArrayList;
@@ -45,19 +45,21 @@ public class DiscoverUserAdapter extends RecyclerView.Adapter<DiscoverUserAdapte
     public void onBindViewHolder(UserHolder holder, int position) {
         UserBean bean = data.get(position);
         holder.avatar.setImageURI(bean.getAvatar());
-
+        if("0".equals(bean.getGender())){   //男
+            holder.gender.setBackgroundResource(R.drawable.icon_man);
+        }else {
+            holder.gender.setBackgroundResource(R.drawable.icon_woman);
+        }
     }
 
     class UserHolder extends RecyclerView.ViewHolder{
         SimpleDraweeView avatar;
-        ImageView man;
-        ImageView female;
+        ImageView gender;
 
         public UserHolder(View itemView) {
             super(itemView);
             avatar = (SimpleDraweeView)itemView.findViewById(R.id.dv_user_cover);
-            man = (ImageView)itemView.findViewById(R.id.iv_man);
-            female = (ImageView)itemView.findViewById(R.id.iv_female);
+            gender = (ImageView)itemView.findViewById(R.id.iv_gender);
         }
     }
 }

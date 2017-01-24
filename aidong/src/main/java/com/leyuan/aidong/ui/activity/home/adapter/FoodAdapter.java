@@ -9,12 +9,12 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.FoodBean;
-import com.leyuan.aidong.ui.activity.home.GoodsDetailActivity;
+import com.leyuan.aidong.ui.activity.home.OldGoodsDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.leyuan.aidong.ui.activity.home.OldGoodsDetailActivity.TYPE_FOODS;
+import static com.leyuan.aidong.ui.activity.home.GoodsDetailActivity.TYPE_FOODS;
 
 /**
  * 健康列表适配器
@@ -92,7 +92,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GoodsDetailActivity.start(context, bean.getFood_id(),TYPE_FOODS);
+                OldGoodsDetailActivity.start(context, bean.getFood_id(),TYPE_FOODS);
             }
         });
     }

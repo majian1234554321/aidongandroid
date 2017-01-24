@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_gravity="center_horizontal"
-            android:text="收货地址"
+            android:text="管理收货地址"
             android:textColor="@color/white"
             android:textSize="16sp" />
     </RelativeLayout>

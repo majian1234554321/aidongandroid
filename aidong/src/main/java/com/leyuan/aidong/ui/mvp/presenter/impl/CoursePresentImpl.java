@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CourseBean;
 import com.leyuan.aidong.entity.CourseDetailData;
 import com.leyuan.aidong.entity.data.CourseData;
@@ -16,7 +17,9 @@ import com.leyuan.aidong.module.pay.AliPay;
 import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.module.pay.WeiXinPay;
 import com.leyuan.aidong.ui.mvp.model.CourseModel;
+import com.leyuan.aidong.ui.mvp.model.FollowModel;
 import com.leyuan.aidong.ui.mvp.model.impl.CourseModelImpl;
+import com.leyuan.aidong.ui.mvp.model.impl.FollowModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
 import com.leyuan.aidong.ui.mvp.view.AppointmentInfoActivityView;
 import com.leyuan.aidong.ui.mvp.view.CourseActivityView;
@@ -34,9 +37,10 @@ import rx.Subscriber;
  * 课程
  * Created by song on 2016/9/21.
  */
-public class CoursePresentImpl implements CoursePresent {
+public class CoursePresentImpl implements CoursePresent{
     private Context context;
     private CourseModel courseModel;
+    private FollowModel followModel;
 
     private List<CourseBean> courseBeanList;
     private CourserFragmentView courserFragmentView;                //课程列表View层对象
@@ -49,6 +53,9 @@ public class CoursePresentImpl implements CoursePresent {
         this.courseDetailActivityView = view;
         if (courseModel == null) {
             courseModel = new CourseModelImpl(context);
+        }
+        if(followModel == null){
+            followModel = new FollowModelImpl();
         }
     }
 
@@ -150,7 +157,7 @@ public class CoursePresentImpl implements CoursePresent {
             @Override
             public void onError(Throwable e) {
                 Toast.makeText(context, "error:" + e.toString(), Toast.LENGTH_LONG).show();
-                Logger.d("error", e.toString());
+                Logger.d("CommonSubscriber", e.toString());
                 switcherLayout.showExceptionLayout();
             }
 
@@ -172,62 +179,35 @@ public class CoursePresentImpl implements CoursePresent {
         courseModel.buyCourse(new ProgressSubscriber<PayOrderData>(context) {
             @Override
             public void onNext(PayOrderData payOrderData) {
-                String payType = payOrderData.getOrder().getPay_type();
+                String payType = payOrderData.getOrder().getPayType();
                 PayInterface payInterface = "alipay".equals(payType) ? new AliPay(context,listener)
                         : new WeiXinPay(context,listener);
                 payInterface.payOrder(payOrderData.getOrder());
-
             }
         }, id, couponId, integral, payType, contactName, contactMobile);
-       /* courseModel.buyCourse(new Subscriber<PayOrderData>() {
+    }
+
+    @Override
+    public void addFollow(String id) {
+        followModel.addFollow(new ProgressSubscriber<BaseBean>(context) {
             @Override
-            public void onCompleted() {
-                Toast.makeText(context, "onCompleted", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Toast.makeText(context, "failed:" + e.toString(), Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onNext(PayOrderData payOrderData) {
-                // appointActivityView.onAppointFinished(payOrderData.getOrder());
-                String pay_type = payOrderData.getOrder().getPay_type();
-                PayInterface payInterface;
-                if ("alipay".equals(pay_type)) {
-                    payInterface = new AliPay(context, new PayInterface.PayListener() {
-                        @Override
-                        public void fail(String code, Object object) {
-                            Toast.makeText(context, "failed:" + code + object.toString(), Toast.LENGTH_LONG).show();
-                        }
-
-                        @Override
-                        public void success(String code, Object object) {
-                            Toast.makeText(context, "success:" + code + object.toString(), Toast.LENGTH_LONG).show();
-                        }
-                    });
-                } else {
-                    payInterface = new WeiXinPay(context, new PayInterface.PayListener() {
-                        @Override
-                        public void fail(String code, Object object) {
-                            Toast.makeText(context, "failed:" + code + object.toString(), Toast.LENGTH_LONG).show();
-                        }
-
-                        @Override
-                        public void success(String code, Object object) {
-                            Toast.makeText(context, "failed:" + code + object.toString(), Toast.LENGTH_LONG).show();
-                        }
-                    });
+            public void onNext(BaseBean baseBean) {
+                if(baseBean != null){
+                    courseDetailActivityView.addFollow(baseBean);
                 }
-                payInterface.payOrder(payOrderData.getOrder());
             }
-        }, id, couponId, integral, payType, contactName, contactMobile);*/
-       /* courseModel.buyCourse(new ProgressSubscriber<PayOrderData>(context) {
+        },id);
+    }
+
+    @Override
+    public void cancelFollow(String id) {
+        followModel.cancelFollow(new ProgressSubscriber<BaseBean>(context) {
             @Override
-            public void onNext(PayOrderData payOrderData) {
-                appointActivityView.onAppointFinished(payOrderData.getOrder());
+            public void onNext(BaseBean baseBean) {
+                if(baseBean != null){
+                    courseDetailActivityView.addFollow(baseBean);
+                }
             }
-        },id,couponId,integral,payType,contactName,contactMobile);*/
+        },id);
     }
 }

@@ -22,7 +22,6 @@
         android:id="@+id/iv_gender"
         android:layout_width="15dp"
         android:layout_height="15dp"
-        android:src="@drawable/nan"
         android:layout_alignBottom="@+id/dv_coach_cover"
         android:layout_alignRight="@+id/dv_coach_cover"/>
 
@@ -43,20 +42,16 @@
         android:textSize="16sp"
         android:text="nickname"
         android:layout_toRightOf="@+id/dv_coach_cover"
-        android:layout_marginLeft="15dp"/>
+        android:layout_marginLeft="15dp"
+        />
 
-    <TextView
-        android:id="@+id/tv_hot"
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="13dp"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        android:text="100"
-        android:drawablePadding="6dp"
-        android:layout_below="@+id/tv_coach_name"
-        android:drawableLeft="@drawable/icon_fire"
-        android:layout_alignLeft="@+id/tv_coach_name" />
+        android:src="@drawable/icon_coach"
+        android:layout_alignBottom="@+id/tv_coach_name"
+        android:layout_toRightOf="@+id/tv_coach_name"
+        android:layout_marginLeft="10dp"/>
 
     <TextView
         android:id="@+id/tv_distance"
@@ -64,10 +59,12 @@
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:textSize="14sp"
-        android:text="100"
+        android:text="100 km"
         android:layout_toRightOf="@+id/tv_hot"
-        android:layout_marginLeft="20dp"
-        android:layout_alignTop="@id/tv_hot"/>
+        android:layout_marginTop="15dp"
+        android:layout_alignTop="@id/tv_hot"
+        android:layout_alignLeft="@+id/tv_coach_name"
+        android:layout_below="@+id/tv_coach_name"/>
 
     <View
         android:layout_width="match_parent"

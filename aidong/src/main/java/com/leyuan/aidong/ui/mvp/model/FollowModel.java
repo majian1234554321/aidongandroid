@@ -24,12 +24,12 @@ public interface FollowModel {
      * @param subscriber Subscriber
      * @param id 用户id
      */
-    void addFollow(Subscriber<BaseBean> subscriber,int id);
+    void addFollow(Subscriber<BaseBean> subscriber,String id);
 
     /**
      * 取消关注
      * @param subscriber Subscriber
      * @param id 用户id
      */
-    void cancelFollow(Subscriber<BaseBean> subscriber,int id);
+    void cancelFollow(Subscriber<BaseBean> subscriber,String id);
 }

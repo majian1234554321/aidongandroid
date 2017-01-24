@@ -6,10 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.activity.home.CampaignDetailActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CampaignBean;
+import com.leyuan.aidong.ui.activity.home.CampaignDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;

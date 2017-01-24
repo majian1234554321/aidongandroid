@@ -1,44 +1,60 @@
 package com.leyuan.aidong.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
- * 门店自提实体
+ * 商品详情配送实体
  * Created by song on 2016/9/22.
  */
-public class DeliveryBean {
-    private String name;
-    private String address;
-    private String distance;
+public class DeliveryBean implements Parcelable {
+    public String type;        //type: 取货方式, #0-快递　1-自提
+    public VenuesBean info;
 
-    public String getName() {
-        return name;
+    public String getType() {
+        return type;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public String getAddress() {
-        return address;
+    public VenuesBean getInfo() {
+        return info;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getDistance() {
-        return distance;
-    }
-
-    public void setDistance(String distance) {
-        this.distance = distance;
+    public void setInfo(VenuesBean info) {
+        this.info = info;
     }
 
     @Override
-    public String toString() {
-        return "DeliveryBean{" +
-                "name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", distance='" + distance + '\'' +
-                '}';
+    public int describeContents() {
+        return 0;
     }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.type);
+        dest.writeParcelable(this.info, flags);
+    }
+
+    public DeliveryBean() {
+    }
+
+    protected DeliveryBean(Parcel in) {
+        this.type = in.readString();
+        this.info = in.readParcelable(VenuesBean.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<DeliveryBean> CREATOR = new Parcelable.Creator<DeliveryBean>() {
+        @Override
+        public DeliveryBean createFromParcel(Parcel source) {
+            return new DeliveryBean(source);
+        }
+
+        @Override
+        public DeliveryBean[] newArray(int size) {
+            return new DeliveryBean[size];
+        }
+    };
 }

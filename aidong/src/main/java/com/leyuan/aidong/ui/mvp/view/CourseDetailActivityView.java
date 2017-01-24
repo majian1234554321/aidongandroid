@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.mvp.view;
 
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CourseDetailBean;
 
 /**
@@ -14,4 +15,15 @@ public interface CourseDetailActivityView {
      */
     void setCourseDetail(CourseDetailBean courseDetailBean);
 
+    /**
+     * 添加关注
+     * @param baseBean
+     */
+    void addFollow(BaseBean baseBean);
+
+    /**
+     * 取消关注
+     * @param baseBean
+     */
+    void cancelFollow(BaseBean baseBean);
 }

@@ -145,7 +145,7 @@
     <color name="half_transparent">#8f000000</color>
     <color name="main_gray">#c8c7cc</color>
     <color name="main_red">#FF5000</color>
-    <color name="color_image_press">#55F1F1F1</color>
+    <color name="color_image_press">#88888888</color>
     <color name="c3">#333333</color>
     <color name="c9">#999999</color>
     <color name="text_enabled">#FFFFFFFF</color>

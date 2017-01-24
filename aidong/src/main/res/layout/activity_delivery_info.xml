@@ -152,7 +152,8 @@
             android:layout_height="50dp"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/left_margin"
-            android:paddingRight="@dimen/right_margin">
+            android:paddingRight="@dimen/right_margin"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"

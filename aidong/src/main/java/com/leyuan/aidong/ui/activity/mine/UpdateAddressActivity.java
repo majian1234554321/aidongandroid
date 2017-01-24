@@ -111,7 +111,7 @@ public class UpdateAddressActivity extends BaseActivity implements UpdateAddress
                         etPhone.getText().toString(), province,city,district,etDescAddress.getText().toString());
                 break;
             case R.id.tv_address:
-                KeyBoardUtil.closeKeybord(etUsername,this);
+                KeyBoardUtil.closeKeyboard(etUsername,this);
                 if(addressPopup == null){
                     addressPopup = new AddressPopupWindow(this);
                     addressPopup.setOnConfirmAddressListener(this);

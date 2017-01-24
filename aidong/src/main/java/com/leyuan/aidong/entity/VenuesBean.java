@@ -8,19 +8,37 @@ import android.os.Parcelable;
  * Created by pc on 2016/8/2.
  */
 public class VenuesBean implements Parcelable {
-    private String gym_id;          //场馆编号
+    private String id;
     private String name;            //场馆名字
     private String brand_logo;      //场馆封面
     private String address;         //场馆地址
     private String distance;        //距离
     private String price;           //价格
 
-    public String getGym_id() {
-        return gym_id;
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    private boolean isChecked;
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
+
+    public String getGymId() {
+        return id;
     }
 
     public void setGym_id(String gym_id) {
-        this.gym_id = gym_id;
+        this.id = gym_id;
     }
 
     public String getName() {
@@ -66,7 +84,7 @@ public class VenuesBean implements Parcelable {
     @Override
     public String toString() {
         return "VenuesBean{" +
-                "gym_id='" + gym_id + '\'' +
+                "gym_id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", brand_logo='" + brand_logo + '\'' +
                 ", address='" + address + '\'' +
@@ -82,7 +100,7 @@ public class VenuesBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.gym_id);
+        dest.writeString(this.id);
         dest.writeString(this.name);
         dest.writeString(this.brand_logo);
         dest.writeString(this.address);
@@ -94,7 +112,7 @@ public class VenuesBean implements Parcelable {
     }
 
     protected VenuesBean(Parcel in) {
-        this.gym_id = in.readString();
+        this.id = in.readString();
         this.name = in.readString();
         this.brand_logo = in.readString();
         this.address = in.readString();

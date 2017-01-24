@@ -10,6 +10,14 @@ import com.leyuan.aidong.widget.customview.SwitcherLayout;
  */
 public interface DiscoverPresent {
     /**
+     * 发现首页
+     * @param switcherLayout
+     */
+    void commonLoadDiscoverData(SwitcherLayout switcherLayout);
+    void pullToRefreshDiscoverData();
+
+
+    /**
      * 第一次正常加载数据
      */
     void commonLoadUserData(SwitcherLayout switcherLayout,double lat, double lng, String gender, String type);

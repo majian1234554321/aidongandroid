@@ -24,12 +24,12 @@ import com.leyuan.aidong.ui.mvp.presenter.CartPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CartPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CartActivityView;
 import com.leyuan.aidong.utils.FormatUtil;
-import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
-import com.leyuan.aidong.widget.endlessrecyclerview.HeaderSpanSizeLookup;
-import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
+import com.leyuan.aidong.widget.customview.SwitcherLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 /**
  * 购物车
@@ -39,18 +39,18 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
     private ImageView ivBack;
     private TextView tvEdit;
 
-    //商品
-    private View headerView;
+    //购物车
+    private SwitcherLayout switcherLayout;
     private RecyclerView shopView;
     private CartShopAdapter shopAdapter;
     private List<ShopBean> shopBeanList = new ArrayList<>();
 
     //推荐
-    private SwipeRefreshLayout refreshLayout;
+    private LinearLayout recommendLayout;
     private RecyclerView recommendView;
     private RecommendAdapter recommendAdapter;
-    private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
 
+    private LinearLayout bottomLayout;
     private CheckBox rbSelectAll;
     private LinearLayout bottomNormalLayout;
     private TextView tvTotalPrice;
@@ -69,36 +69,30 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
 
         initView();
         setListener();
-        initData();
-        shopAdapter.setData(shopBeanList);
+        cartPresent.commonLoadingData(switcherLayout);
     }
 
     private void initView(){
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tvEdit = (TextView) findViewById(R.id.tv_edit);
-        headerView = View.inflate(this,R.layout.header_cart,null);
-        shopView = (RecyclerView) headerView.findViewById(R.id.rv_cart_header);
-        refreshLayout = (SwipeRefreshLayout)findViewById(R.id.refreshLayout);
-        recommendView = (RecyclerView)findViewById(R.id.rv_goods);
+        shopView = (RecyclerView)findViewById(R.id.rv_cart);
+        switcherLayout = new SwitcherLayout(this,shopView);
+        recommendLayout = (LinearLayout) findViewById(R.id.ll_recommend);
+        recommendView = (RecyclerView)findViewById(R.id.rv_recommend);
+        bottomLayout = (LinearLayout) findViewById(R.id.ll_bottom);
         rbSelectAll = (CheckBox) findViewById(R.id.rb_select_all);
         bottomNormalLayout = (LinearLayout) findViewById(R.id.ll_bottom_normal);
         tvTotalPrice = (TextView) findViewById(R.id.tv_total_price);
         tvSettlement = (TextView) findViewById(R.id.tv_settlement);
         bottomDeleteLayout = (LinearLayout) findViewById(R.id.ll_bottom_delete);
         tvDelete = (TextView) findViewById(R.id.tv_delete);
-
-        setColorSchemeResources(refreshLayout);
         shopView.setLayoutManager(new LinearLayoutManager(this));
         shopAdapter = new CartShopAdapter(this);
         shopView.setAdapter(shopAdapter);
         recommendAdapter = new RecommendAdapter(this,"1");
-        wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(recommendAdapter);
-        recommendView.setAdapter(wrapperAdapter);
+        recommendView.setAdapter(recommendAdapter);
         GridLayoutManager manager = new GridLayoutManager(this, 2);
-        manager.setSpanSizeLookup(new HeaderSpanSizeLookup((HeaderAndFooterRecyclerViewAdapter)
-                recommendView.getAdapter(), manager.getSpanCount()));
         recommendView.setLayoutManager(manager);
-        RecyclerViewUtils.setHeaderView(recommendView,headerView);
     }
 
     private void setListener(){
@@ -106,33 +100,8 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
         tvEdit.setOnClickListener(this);
         tvSettlement.setOnClickListener(this);
         tvDelete.setOnClickListener(this);
-        refreshLayout.setOnRefreshListener(this);
         rbSelectAll.setOnClickListener(this);
         shopAdapter.setShopChangeListener(this);
-    }
-
-    private  void initData(){
-        for (int i = 0; i < 5; i++) {
-            ShopBean bean = new ShopBean();
-            bean.setShopname("第" + (i + 1) +"个商店" );
-
-            List<GoodsBean> goods = new ArrayList<>();
-            for (int i1 = 0; i1 < 2; i1++) {
-                GoodsBean good = new GoodsBean();
-                good.setName("第" + (i + 1) +"个商店中的第" + (i1 + 1)+"件商品");
-                good.setAmount((i+1) + "");
-                if(i1 % 2 == 0){
-                    good.setPrice("10");
-                    good.setCover("http://ww1.sinaimg.cn/mw690/6592c2e0jw1f9dps0ijpjj20qo0ynwht.jpg");
-                }else {
-                    good.setPrice("50");
-                    good.setCover("http://ww4.sinaimg.cn/mw690/718878b5jw1f9dlw9chi5j20f00ciq41.jpg");
-                }
-                goods.add(good);
-            }
-            bean.setItem(goods);
-            this.shopBeanList.add(bean);
-        }
     }
 
     @Override
@@ -183,7 +152,6 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
         }
     }
 
-    //下拉刷新
     @Override
     public void onRefresh() {
 
@@ -191,8 +159,11 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
 
 
     @Override
-    public void updateRecyclerView(List<GoodsBean> goodsBeanList) {
-
+    public void updateRecyclerView(List<ShopBean> list) {
+        tvEdit.setVisibility(View.VISIBLE);
+        bottomLayout.setVisibility(View.VISIBLE);
+        shopBeanList.addAll(list);
+        shopAdapter.setData(shopBeanList);
     }
 
     @Override
@@ -207,6 +178,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
     @Override
     public void setDeleteCart(BaseBean baseBean) {
         if(baseBean.getStatus() == 1){
+            cartPresent.pullToRefreshData();
             setTotalPrice();
         }else {
             Toast.makeText(this,R.string.delete_fail,Toast.LENGTH_LONG).show();
@@ -215,15 +187,16 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
 
     @Override
     public void showEmptyView() {
-
+        View view = View.inflate(this,R.layout.empty_cart,null);
+        switcherLayout.addCustomView(view,"empty");
+        switcherLayout.showCustomLayout("empty");
     }
 
-    //商店选中状态变化时通知更改购物车的状态
     @Override
     public void onShopStatusChanged() {
         boolean isAllShopSelected = true;
         for (ShopBean bean : shopBeanList) {
-            if(!bean.isChecked()){
+           if(!bean.isChecked()){
                 isAllShopSelected = false;
                 break;
             }
@@ -280,8 +253,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
                 }
                 if(!goodsBeanList.isEmpty()){
                     tempShopBean.setItem(goodsBeanList);
-                    tempShopBean.setOpentime(shopBean.getOpentime());
-                    tempShopBean.setShopname(shopBean.getShopname());
+                    tempShopBean.setName(shopBean.getName());
                     selectedShopBeanList.add(tempShopBean);
                 }
             }

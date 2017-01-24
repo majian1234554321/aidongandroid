@@ -24,7 +24,7 @@ public interface AddressService{
 
     @FormUrlEncoded
     @POST("mine/addresses")
-    Observable<BaseBean<AddressData>> addAddress(@Field("id") String id,@Field("name") String name, @Field("mobile") String phone,
+    Observable<BaseBean<AddressData>> addAddress(@Field("name") String name, @Field("mobile") String phone,
                                                  @Field("province") String province, @Field("city") String city,
                                                  @Field("district") String district,@Field("address") String address);
 

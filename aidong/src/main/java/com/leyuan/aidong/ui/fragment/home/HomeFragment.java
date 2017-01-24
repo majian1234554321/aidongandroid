@@ -16,10 +16,10 @@ import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.entity.HomeBean;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.activity.home.CampaignActivity;
-import com.leyuan.aidong.ui.activity.home.ChangeCityActivity;
 import com.leyuan.aidong.ui.activity.home.CourseActivity;
 import com.leyuan.aidong.ui.activity.home.EquipmentActivity;
 import com.leyuan.aidong.ui.activity.home.FoodActivity;
+import com.leyuan.aidong.ui.activity.home.LocationActivity;
 import com.leyuan.aidong.ui.activity.home.NurtureActivity;
 import com.leyuan.aidong.ui.activity.home.SearchActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.HomeRecycleViewAdapter;
@@ -140,6 +140,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), CourseActivity.class);
                 startActivity(intent);
+                //startActivity(new Intent(getContext(), OldCourseDetailActivity.class));
             }
         });
 
@@ -228,7 +229,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
                 startActivity(new Intent(getContext(), SearchActivity.class));
                 break;
             case R.id.tv_location:
-                startActivity(new Intent(getContext(), ChangeCityActivity.class));
+                startActivity(new Intent(getContext(), LocationActivity.class));
                 break;
             default:
                 break;

@@ -10,28 +10,10 @@ import java.util.List;
  * Created by song on 2016/9/23.
  */
 public class ShopBean implements Parcelable {
-    private String shopname;
-    private String opentime;
+    private String name;
     private List<GoodsBean> item;
 
     private boolean checked = false;            //标记该商店是否被选中
-
-
-    public String getShopname() {
-        return shopname;
-    }
-
-    public void setShopname(String shopname) {
-        this.shopname = shopname;
-    }
-
-    public String getOpentime() {
-        return opentime;
-    }
-
-    public void setOpentime(String opentime) {
-        this.opentime = opentime;
-    }
 
     public List<GoodsBean> getItem() {
         return item;
@@ -49,15 +31,12 @@ public class ShopBean implements Parcelable {
         this.checked = checked;
     }
 
+    public String getName() {
+        return name;
+    }
 
-    @Override
-    public String toString() {
-        return "ShopBean{" +
-                "shopname='" + shopname + '\'' +
-                ", opentime='" + opentime + '\'' +
-                ", item=" + item +
-                ", checked=" + checked +
-                '}';
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -67,8 +46,7 @@ public class ShopBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.shopname);
-        dest.writeString(this.opentime);
+        dest.writeString(this.name);
         dest.writeTypedList(this.item);
         dest.writeByte(this.checked ? (byte) 1 : (byte) 0);
     }
@@ -77,13 +55,12 @@ public class ShopBean implements Parcelable {
     }
 
     protected ShopBean(Parcel in) {
-        this.shopname = in.readString();
-        this.opentime = in.readString();
+        this.name = in.readString();
         this.item = in.createTypedArrayList(GoodsBean.CREATOR);
         this.checked = in.readByte() != 0;
     }
 
-    public static final Parcelable.Creator<ShopBean> CREATOR = new Parcelable.Creator<ShopBean>() {
+    public static final Creator<ShopBean> CREATOR = new Creator<ShopBean>() {
         @Override
         public ShopBean createFromParcel(Parcel source) {
             return new ShopBean(source);

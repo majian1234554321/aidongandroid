@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
 import android.support.v4.view.PagerAdapter;
-import android.view.Gravity;
+import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +15,6 @@ import com.davemorrissey.labs.subscaleview.ImageViewState;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.activity.home.view.DonutProgress;
-import com.leyuan.aidong.ui.activity.home.view.ImageOptionPopupWindow;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -44,7 +43,7 @@ public class ImagePreviewAdapter extends PagerAdapter{
     private View itemView;
     private DisplayImageOptions options;
 
-    private OnSingleTagListener onSingleTagListener;
+    private HandleListener listener;
 
     public ImagePreviewAdapter(Context context, List<String> data) {
         this.context = context;
@@ -58,8 +57,8 @@ public class ImagePreviewAdapter extends PagerAdapter{
                 .build();
     }
 
-    public void setOnSingleTagListener(OnSingleTagListener l) {
-        this.onSingleTagListener = l;
+    public void setListener(HandleListener l) {
+        this.listener = l;
     }
 
     @Override
@@ -85,7 +84,9 @@ public class ImagePreviewAdapter extends PagerAdapter{
         final DonutProgress progress = (DonutProgress) itemView.findViewById(R.id.view_progress);
         setOnClickListener(rootView, normalImage,longImage, gifImage);
         setOnLongClickListener(rootView,position,normalImage,longImage, gifImage);
-
+        ViewCompat.setTransitionName(normalImage, String.valueOf(position) + "transition");
+        ViewCompat.setTransitionName(longImage, String.valueOf(position) + "transition");
+        ViewCompat.setTransitionName(gifImage, String.valueOf(position) + "transition");
         ImageLoader.getInstance().loadImage(data.get(position), null, options, new SimpleImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
@@ -94,11 +95,13 @@ public class ImagePreviewAdapter extends PagerAdapter{
                 } else {
                     progress.setVisibility(View.GONE);
                 }
+
             }
 
             @Override
             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
                 progress.setVisibility(View.GONE);
+
             }
 
             @Override
@@ -122,6 +125,7 @@ public class ImagePreviewAdapter extends PagerAdapter{
                 }
                 progress.setProgress(100);
                 progress.setVisibility(View.GONE);
+
             }
         }, new ImageLoadingProgressListener() {
             @Override
@@ -139,36 +143,36 @@ public class ImagePreviewAdapter extends PagerAdapter{
     }
 
     private void setOnClickListener(RelativeLayout rootView, PhotoView normalImage, SubsamplingScaleImageView longImage, GifImageView gifImage) {
-        rootView.setOnClickListener(new View.OnClickListener() {
+       /* rootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               onSingleTagListener.onSingleTag();
+               listener.onSingleTag();
             }
-        });
+        });*/
 
         normalImage.setOnPhotoTapListener(new OnPhotoTapListener() {
             @Override
             public void onPhotoTap(View view, float v, float v1) {
-                onSingleTagListener.onSingleTag();
+                listener.onSingleTag(view);
             }
 
             @Override
             public void onOutsidePhotoTap() {
-                onSingleTagListener.onSingleTag();
+             //   listener.onSingleTag();
             }
         });
 
         longImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onSingleTagListener.onSingleTag();
+                listener.onSingleTag(v);
             }
         });
 
         gifImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               onSingleTagListener.onSingleTag();
+               listener.onSingleTag(v);
             }
         });
     }
@@ -177,7 +181,7 @@ public class ImagePreviewAdapter extends PagerAdapter{
         photoView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                showPopWindow(rootView, position);
+                listener.onLongClick();
                 return false;
             }
         });
@@ -185,7 +189,7 @@ public class ImagePreviewAdapter extends PagerAdapter{
         longImg.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                showPopWindow(rootView, position);
+                listener.onLongClick();
                 return false;
             }
         });
@@ -193,23 +197,17 @@ public class ImagePreviewAdapter extends PagerAdapter{
         gifImageView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                showPopWindow(rootView, position);
+                listener.onLongClick();
                 return false;
             }
         });
     }
 
-    private void showPopWindow(View parent, int position) {
-        ImageOptionPopupWindow popupWindow = new ImageOptionPopupWindow(context);
-        if (popupWindow.isShowing()) {
-            popupWindow.dismiss();
-        } else {
-            popupWindow.showAtLocation(parent, Gravity.BOTTOM, 0, 0);
-        }
-    }
 
-   public interface OnSingleTagListener {
-        void onSingleTag();
+
+   public interface HandleListener {
+       void onSingleTag(View view);
+       void  onLongClick();
     }
 
     private void displayNormalImage(Bitmap bitmap, PhotoView photoView) {

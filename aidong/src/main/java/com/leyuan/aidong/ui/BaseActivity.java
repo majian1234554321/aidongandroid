@@ -2,10 +2,12 @@ package com.leyuan.aidong.ui;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -28,7 +30,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class BaseActivity extends AppCompatActivity implements IHttpToastCallBack {
-    protected int pageSize = 25; //默认分页数据量
+    protected int pageSize = 15; //默认分页数据量
     protected int screenWidth;
     protected int screenHeight;
 
@@ -185,6 +187,15 @@ public class BaseActivity extends AppCompatActivity implements IHttpToastCallBac
         }
     }
 
+    protected void animationFinish(){
+        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP){
+            finishAfterTransition();
+        }else {
+            finish();
+        }
+    }
+
+
     /**
      * 设置下拉刷新颜色
      * @param refreshLayout
@@ -199,6 +210,7 @@ public class BaseActivity extends AppCompatActivity implements IHttpToastCallBac
      * @param id id
      */
     public void toTargetDetailActivity(String type, String id){
+        if(TextUtils.isEmpty(type)) return;
         switch (type){
             case "course":
                 CourseDetailActivity.start(this,id);
@@ -231,6 +243,7 @@ public class BaseActivity extends AppCompatActivity implements IHttpToastCallBac
      * 广告类型,#10-内嵌网页 11-外部网页 20-场馆详情页 21-营养品详情页 22-课程详情页 23-活动详情页
      */
     public void toTargetActivity(BannerBean bannerBean){
+        if(TextUtils.isEmpty(bannerBean.getType())) return;
         switch (bannerBean.getType()){
             case "10":
                 WebViewActivity.start(this,bannerBean.getTitle(),bannerBean.getLink());
@@ -254,6 +267,14 @@ public class BaseActivity extends AppCompatActivity implements IHttpToastCallBac
                 break;
             default:
                 break;
+        }
+    }
+
+    protected void compatFinish(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            finishAfterTransition();
+        } else{
+            finish();
         }
     }
 }

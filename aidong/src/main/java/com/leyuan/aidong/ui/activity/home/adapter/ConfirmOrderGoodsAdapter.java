@@ -51,7 +51,13 @@ public class ConfirmOrderGoodsAdapter extends RecyclerView.Adapter<ConfirmOrderG
         final GoodsBean bean = data.get(position);
         holder.cover.setImageURI(bean.getCover());
         holder.name.setText(bean.getName());
-        holder.sku.setText(bean.getName());
+        holder.count.setText(String.format(context.getString(R.string.x_count),bean.getAmount()));
+        ArrayList<String> specValue = bean.getSpec_value();
+        StringBuilder skuStr = new StringBuilder();
+        for (String result : specValue) {
+            skuStr.append(result);
+        }
+        holder.sku.setText(skuStr);
         holder.price.setText(String.format
                 (context.getString(R.string.rmb_price),bean.getPrice()));
     }
@@ -63,6 +69,7 @@ public class ConfirmOrderGoodsAdapter extends RecyclerView.Adapter<ConfirmOrderG
         TextView price;
         TextView sku;
         TextView code;
+        TextView count;
 
         public GoodsHolder(View itemView) {
             super(itemView);
@@ -72,6 +79,7 @@ public class ConfirmOrderGoodsAdapter extends RecyclerView.Adapter<ConfirmOrderG
             price = (TextView) itemView.findViewById(R.id.tv_goods_price);
             sku = (TextView) itemView.findViewById(R.id.tv_sku);
             code = (TextView) itemView.findViewById(R.id.tv_recommend_code);
+            count = (TextView) itemView.findViewById(R.id.tv_count);
         }
     }
 }

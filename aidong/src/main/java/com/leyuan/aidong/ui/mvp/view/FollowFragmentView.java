@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.mvp.view;
 
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.UserBean;
 
 import java.util.List;
@@ -19,4 +20,16 @@ public interface FollowFragmentView {
      * 显示FooterView，提示没有任何内容了
      */
     void showEndFooterView();
+
+    /**
+     * 添加关注
+     * @param baseBean
+     */
+    void addFollow(BaseBean baseBean);
+
+    /**
+     * 取消关注
+     * @param baseBean
+     */
+    void cancelFollow(BaseBean baseBean);
 }

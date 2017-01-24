@@ -38,4 +38,10 @@ public interface HomeModel {
      * @return
      */
     List<BannerBean> getPopupBanners();
+
+    /**
+     * 获取开通城市
+     * @return
+     */
+    List<String> getOpenCity();
 }
