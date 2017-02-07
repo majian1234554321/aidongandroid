@@ -117,6 +117,7 @@
         <attr name="right_text_color" format="color" />
         <attr name="left_text_size" format="dimension" />
         <attr name="right_text_size" format="dimension" />
+        <attr name="show_right_arrow" format="boolean" />
         <attr name="line_color" format="color" />
         <attr name="left_text" format="string" />
     </declare-styleable>
@@ -289,4 +290,24 @@
         <attr name="imgLeft"/>
         <attr name="titleColor"/>
     </declare-styleable>
+
+    <declare-styleable name="PublicTitleBar">
+        <attr name="titleBarBackground" format="color" />
+        <attr name="titleBarHeight" format="dimension" />
+        <attr name="titleText" format="string" />
+        <attr name="public_titleColor" format="color" />
+        <attr name="titleSize" format="dimension" />
+
+        <attr name="leftText" format="string" />
+        <attr name="leftTextColor" format="color" />
+        <attr name="leftRes" format="reference" />
+        <attr name="left_display" format="boolean" />
+
+        <attr name="rightText" format="string" />
+        <attr name="rightTextColor" format="color" />
+        <attr name="right_display" format="boolean" />
+        <attr name="rightRes" format="reference" />
+
+    </declare-styleable>
+
 </resources>

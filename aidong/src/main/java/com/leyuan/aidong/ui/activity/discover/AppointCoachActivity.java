@@ -19,10 +19,17 @@ import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.CoachBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.discover.adapter.DateAdapter;
+import com.leyuan.aidong.ui.mvp.presenter.VenuesPresent;
+import com.leyuan.aidong.ui.mvp.presenter.impl.VenuesPresentImpl;
+import com.leyuan.aidong.ui.mvp.view.AppointCoachActivityView;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DateUtils;
+import com.leyuan.aidong.widget.customview.SimpleTitleBar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -35,8 +42,11 @@ import kr.co.namee.permissiongen.PermissionSuccess;
  * 预约私教
  * Created by song on 2016/10/26.
  */
-public class AppointCoachActivity extends BaseActivity implements View.OnClickListener, DateAdapter.ItemClickListener
-{
+public class AppointCoachActivity extends BaseActivity implements View.OnClickListener, DateAdapter.ItemClickListener,AppointCoachActivityView {
+    private static final String MORNING = "0";
+    private static final String AFTERNOON = "1";
+
+    private SimpleTitleBar titleBar;
     private SimpleDraweeView dvAvatar;
     private ImageView ivGender;
     private TextView tvName;
@@ -47,25 +57,26 @@ public class AppointCoachActivity extends BaseActivity implements View.OnClickLi
     private TextView tvAfternoon;
     private TextView tvUsername;
     private TextView tvPhone;
+    private TextView tvAppoint;
 
     private List<String> days = new ArrayList<>();
     private DateAdapter dateAdapter;
     private boolean isMorningUnable = false;
     private boolean isAfternoonUnable = false;
     private int selectedPosition = 0;
+    private String venuesId;
+    private CoachBean coachBean;
     private String appointDate;
+    private String appointPeriod;
+    private String userName;
+    private String userPhone;
 
-    private String coachAvatar;
-    private String coachName;
-    private String coachGender;
-    private String coachPhone;
+    private VenuesPresent venuesPresent;
 
-    public static void start(Context context,String avatar,String name,String gender,String phone) {
+    public static void start(Context context, String venuesId, CoachBean coachBean) {
         Intent starter = new Intent(context, AppointCoachActivity.class);
-        starter.putExtra("avatar",avatar);
-        starter.putExtra("name",name);
-        starter.putExtra("gender",gender);
-        starter.putExtra("phone",phone);
+        starter.putExtra("venuesId",venuesId);
+        starter.putExtra("coachBean",coachBean);
         context.startActivity(starter);
     }
 
@@ -73,11 +84,12 @@ public class AppointCoachActivity extends BaseActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appointment_coach);
+        venuesPresent = new VenuesPresentImpl(this,this);
+        userName = App.mInstance.getUser().getName();
+        userPhone = App.mInstance.getUser().getMobile();
         if(getIntent() != null){
-            coachAvatar = getIntent().getStringExtra("avatar");
-            coachName = getIntent().getStringExtra("name");
-            coachGender = getIntent().getStringExtra("gender");
-            coachPhone = getIntent().getStringExtra("phone");
+            venuesId = getIntent().getStringExtra("venuesId");
+            coachBean = getIntent().getParcelableExtra("coachBean");
         }
 
         initView();
@@ -85,6 +97,7 @@ public class AppointCoachActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initView(){
+        titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
         dvAvatar = (SimpleDraweeView) findViewById(R.id.dv_avatar);
         ivGender = (ImageView) findViewById(R.id.iv_gender);
         tvName = (TextView) findViewById(R.id.tv_name);
@@ -95,6 +108,7 @@ public class AppointCoachActivity extends BaseActivity implements View.OnClickLi
         tvAfternoon = (TextView) findViewById(R.id.tv_afternoon);
         tvUsername = (TextView) findViewById(R.id.et_username);
         tvPhone = (TextView) findViewById(R.id.et_phone);
+        tvAppoint = (TextView) findViewById(R.id.tv_appointment);
         initButtonStatus();
         dateAdapter = new DateAdapter(selectedPosition);
         rvDate.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
@@ -102,28 +116,33 @@ public class AppointCoachActivity extends BaseActivity implements View.OnClickLi
         days = DateUtils.getSevenDate();
         dateAdapter.setData(days);
 
-
-        dvAvatar.setImageURI(coachAvatar);
-        tvName.setText(coachName);
-        if("0".equals(coachGender)){   //男
+        dvAvatar.setImageURI(coachBean.getAvatar());
+        tvName.setText(coachBean.getName());
+        if("0".equals(coachBean.getGender())){   //男
             ivGender.setBackgroundResource(R.drawable.icon_man);
         }else {
             ivGender.setBackgroundResource(R.drawable.icon_woman);
         }
-        tvUsername.setText(App.mInstance.getUser().getName());
-        tvPhone.setText(App.mInstance.getUser().getMobile());
+        tvUsername.setText(userName);
+        tvPhone.setText(userPhone);
+        appointDate = days.get(0);
     }
 
     private void setListener() {
+        titleBar.setOnClickListener(this);
         ivPhone.setOnClickListener(this);
         tvMorning.setOnClickListener(this);
         tvAfternoon.setOnClickListener(this);
         dateAdapter.setItemClickListener(this);
+        tvAppoint.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
+            case R.id.iv_back:
+                finish();
+                break;
             case R.id.iv_phone:
                 showCallUpDialog();
                 break;
@@ -147,6 +166,10 @@ public class AppointCoachActivity extends BaseActivity implements View.OnClickLi
                     enableMorning();
                 }
                 break;
+            case R.id.tv_appointment:
+                venuesPresent.appointCoach(venuesId,coachBean.getCoachId(),appointDate,
+                        appointPeriod,userName,userPhone);
+                break;
             default:
                 break;
         }
@@ -168,7 +191,7 @@ public class AppointCoachActivity extends BaseActivity implements View.OnClickLi
 
     private void showCallUpDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(String.format(getString(R.string.confirm_call_up), coachPhone))
+        builder.setMessage(String.format(getString(R.string.confirm_call_up), coachBean.getMobile()))
                 .setCancelable(true)
                 .setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -240,7 +263,7 @@ public class AppointCoachActivity extends BaseActivity implements View.OnClickLi
     @PermissionSuccess(requestCode = 100)
     public void callUp() {
         Intent intent = new Intent(Intent.ACTION_CALL);
-        Uri data = Uri.parse("tel:" + coachPhone);
+        Uri data = Uri.parse("tel:" + coachBean.getMobile());
         intent.setData(data);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -249,8 +272,9 @@ public class AppointCoachActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void selectMorning() {
+        appointPeriod = MORNING;
         tvMorning.setTextColor(Color.parseColor("#ffffff"));
-        tvMorning.setBackgroundResource(R.drawable.shape_solid_black);
+        tvMorning.setBackgroundResource(R.drawable.shape_solid_corner_black);
     }
 
     private void enableMorning() {
@@ -264,8 +288,9 @@ public class AppointCoachActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void selectAfternoon() {
+        appointPeriod = AFTERNOON;
         tvAfternoon.setTextColor(Color.parseColor("#ffffff"));
-        tvAfternoon.setBackgroundResource(R.drawable.shape_solid_black);
+        tvAfternoon.setBackgroundResource(R.drawable.shape_solid_corner_black);
     }
 
     private void enableAfternoon() {
@@ -276,5 +301,14 @@ public class AppointCoachActivity extends BaseActivity implements View.OnClickLi
     private void unableAfternoon() {
         tvAfternoon.setTextColor(Color.parseColor("#ebebeb"));
         tvAfternoon.setBackgroundResource(R.drawable.shape_stroke_gray);
+    }
+
+    @Override
+    public void appointCoachResult(BaseBean baseBean) {
+        if(baseBean.getStatus() == Constant.OK){
+            Toast.makeText(this,"预约成功",Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(this,"预约失败",Toast.LENGTH_LONG).show();
+        }
     }
 }

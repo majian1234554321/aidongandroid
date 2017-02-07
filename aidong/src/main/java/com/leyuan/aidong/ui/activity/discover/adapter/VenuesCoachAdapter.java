@@ -22,10 +22,12 @@ import java.util.List;
  */
 public class VenuesCoachAdapter extends RecyclerView.Adapter<VenuesCoachAdapter.CoachHolder>{
     private Context context;
+    private String venuesId;
     private List<CoachBean> data = new ArrayList<>();
 
-    public VenuesCoachAdapter(Context context) {
+    public VenuesCoachAdapter(Context context,String venuesId) {
         this.context = context;
+        this.venuesId = venuesId;
     }
 
     public void setData(List<CoachBean> data) {
@@ -51,7 +53,6 @@ public class VenuesCoachAdapter extends RecyclerView.Adapter<VenuesCoachAdapter.
         final CoachBean bean = data.get(position);
         holder.cover.setImageURI(bean.getAvatar());
         holder.name.setText(bean.getName());
-      //  holder.distance.setText(String.format(context.getString(R.string.distance_km),bean.getD));
         if("0".equals(bean.getGender())){   //男
             holder.gender.setBackgroundResource(R.drawable.icon_man);
         }else {
@@ -60,7 +61,7 @@ public class VenuesCoachAdapter extends RecyclerView.Adapter<VenuesCoachAdapter.
         holder.appointment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppointCoachActivity.start(context,bean.getAvatar(),bean.getName(),bean.getGender(),"111");
+                AppointCoachActivity.start(context,venuesId,bean);
             }
         });
     }

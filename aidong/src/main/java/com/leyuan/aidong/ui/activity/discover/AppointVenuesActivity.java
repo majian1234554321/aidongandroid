@@ -18,10 +18,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.discover.adapter.DateAdapter;
+import com.leyuan.aidong.ui.mvp.presenter.VenuesPresent;
+import com.leyuan.aidong.ui.mvp.presenter.impl.VenuesPresentImpl;
+import com.leyuan.aidong.ui.mvp.view.AppointVenuesActivityView;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DateUtils;
+import com.leyuan.aidong.widget.customview.SimpleTitleBar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -35,7 +41,11 @@ import kr.co.namee.permissiongen.PermissionSuccess;
  * 上午九点之前,下午三点之前可预约,若今天不可预约日期从明天开始
  * Created by song on 2016/10/26.
  */
-public class AppointVenuesActivity extends BaseActivity implements View.OnClickListener, DateAdapter.ItemClickListener {
+public class AppointVenuesActivity extends BaseActivity implements View.OnClickListener, DateAdapter.ItemClickListener ,AppointVenuesActivityView{
+    private static final String MORNING = "0";
+    private static final String AFTERNOON = "1";
+
+    private SimpleTitleBar titleBar;
     private TextView tvVenuesName;
     private TextView tvAddress;
     private ImageView ivPhone;
@@ -43,24 +53,33 @@ public class AppointVenuesActivity extends BaseActivity implements View.OnClickL
     private TextView tvMorning;
     private TextView tvAfternoon;
     private TextView tvUsername;
-    private TextView tvPhone;
+    private TextView tvUserPhone;
+    private TextView tvAppoint;
 
     private DateAdapter dateAdapter;
     private String venuesName;
     private String venuesAddress;
-    private String phone;
+    private String venuesPhone;
 
     private List<String> days = new ArrayList<>();
-    private String appointDate;
     private int selectedPosition = 0;
     private boolean isMorningUnable = false;
     private boolean isAfternoonUnable = false;
 
-    public static void start(Context context, String name, String address, String phone) {
+    private String venuesId;
+    private String appointDate;
+    private String appointPeriod;
+    private String userName;
+    private String userPhone;
+
+    private VenuesPresent venuesPresent;
+
+    public static void start(Context context, String venuesId,String name, String address, String phone) {
         Intent starter = new Intent(context, AppointVenuesActivity.class);
+        starter.putExtra("venuesId", venuesId);
         starter.putExtra("name", name);
         starter.putExtra("address", address);
-        starter.putExtra("phone", phone);
+        starter.putExtra("venuesPhone", phone);
         context.startActivity(starter);
     }
 
@@ -68,11 +87,14 @@ public class AppointVenuesActivity extends BaseActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appointment_venues);
+        venuesPresent = new VenuesPresentImpl(this,this);
+        userName = App.mInstance.getUser().getName();
+        userPhone = App.mInstance.getUser().getMobile();
         if (getIntent() != null) {
+            venuesId = getIntent().getStringExtra("venuesId");
             venuesName = getIntent().getStringExtra("name");
             venuesAddress = getIntent().getStringExtra("address");
-            phone = getIntent().getStringExtra("phone");
-            phone = "111";
+            venuesPhone = getIntent().getStringExtra("venuesPhone");
         }
         initView();
         setListener();
@@ -102,6 +124,7 @@ public class AppointVenuesActivity extends BaseActivity implements View.OnClickL
     }
 
     private void initView() {
+        titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
         tvVenuesName = (TextView) findViewById(R.id.tv_name);
         tvAddress = (TextView) findViewById(R.id.tv_address);
         ivPhone = (ImageView) findViewById(R.id.iv_phone);
@@ -109,7 +132,8 @@ public class AppointVenuesActivity extends BaseActivity implements View.OnClickL
         tvMorning = (TextView) findViewById(R.id.tv_morning);
         tvAfternoon = (TextView) findViewById(R.id.tv_afternoon);
         tvUsername = (TextView) findViewById(R.id.et_username);
-        tvPhone = (TextView) findViewById(R.id.et_phone);
+        tvUserPhone = (TextView) findViewById(R.id.et_phone);
+        tvAppoint = (TextView) findViewById(R.id.tv_appointment);
         initButtonStatus();
         rvDate.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         dateAdapter = new DateAdapter(selectedPosition);
@@ -118,20 +142,27 @@ public class AppointVenuesActivity extends BaseActivity implements View.OnClickL
         dateAdapter.setData(days);
         tvVenuesName.setText(venuesName);
         tvAddress.setText(venuesAddress);
-        tvUsername.setText(App.mInstance.getUser().getName());
-        tvPhone.setText(App.mInstance.getUser().getMobile());
+
+        appointDate = days.get(0);
+        tvUsername.setText(userName);
+        tvUserPhone.setText(userPhone);
     }
 
     private void setListener() {
+        titleBar.setOnClickListener(this);
         ivPhone.setOnClickListener(this);
         tvMorning.setOnClickListener(this);
         tvAfternoon.setOnClickListener(this);
         dateAdapter.setItemClickListener(this);
+        tvAppoint.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.iv_back:
+                finish();
+                break;
             case R.id.iv_phone:
                 showCallUpDialog();
                 break;
@@ -155,6 +186,9 @@ public class AppointVenuesActivity extends BaseActivity implements View.OnClickL
                     enableMorning();
                 }
                 break;
+            case R.id.tv_appointment:
+                venuesPresent.appointVenues(venuesId,appointDate,appointPeriod,userName,userPhone);
+                break;
             default:
                 break;
         }
@@ -175,8 +209,9 @@ public class AppointVenuesActivity extends BaseActivity implements View.OnClickL
     }
 
     private void selectMorning() {
+        appointPeriod = MORNING;
         tvMorning.setTextColor(Color.parseColor("#ffffff"));
-        tvMorning.setBackgroundResource(R.drawable.shape_solid_black);
+        tvMorning.setBackgroundResource(R.drawable.shape_solid_corner_black);
     }
 
     private void enableMorning() {
@@ -190,8 +225,9 @@ public class AppointVenuesActivity extends BaseActivity implements View.OnClickL
     }
 
     private void selectAfternoon() {
+        appointPeriod = AFTERNOON;
         tvAfternoon.setTextColor(Color.parseColor("#ffffff"));
-        tvAfternoon.setBackgroundResource(R.drawable.shape_solid_black);
+        tvAfternoon.setBackgroundResource(R.drawable.shape_solid_corner_black);
     }
 
     private void enableAfternoon() {
@@ -227,7 +263,7 @@ public class AppointVenuesActivity extends BaseActivity implements View.OnClickL
 
     private void showCallUpDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(String.format(getString(R.string.confirm_call_up), phone))
+        builder.setMessage(String.format(getString(R.string.confirm_call_up), venuesPhone))
                 .setCancelable(true)
                 .setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -255,7 +291,7 @@ public class AppointVenuesActivity extends BaseActivity implements View.OnClickL
     @PermissionSuccess(requestCode = 100)
     public void callUp() {
         Intent intent = new Intent(Intent.ACTION_CALL);
-        Uri data = Uri.parse("tel:" + phone);
+        Uri data = Uri.parse("tel:" + venuesPhone);
         intent.setData(data);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -263,5 +299,13 @@ public class AppointVenuesActivity extends BaseActivity implements View.OnClickL
         startActivity(intent);
     }
 
+    @Override
+    public void appointVenuesResult(BaseBean baseBean) {
+        if(baseBean.getStatus() == Constant.OK){
+            Toast.makeText(this,"预约成功",Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(this,"预约失败",Toast.LENGTH_LONG).show();
+        }
+    }
 
 }

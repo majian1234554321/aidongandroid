@@ -26,7 +26,6 @@ public interface VenuesPresent {
      */
     void commonLoadData(SwitcherLayout switcherLayout);
 
-
     /**
      * 下拉刷新场馆列表数据
      */
@@ -56,4 +55,26 @@ public interface VenuesPresent {
      * @param id 场馆id
      */
     void getCoaches(SwitcherLayout switcherLayout,String id);
+
+    /**
+     * 预约场馆
+     * @param id 场馆id
+     * @param date 日期
+     * @param period 时间段
+     * @param name 用户名
+     * @param mobile 手机
+     */
+    void appointVenues(String id,String date,String period,String name,String mobile);
+
+
+    /**
+     * 预约私教
+     * @param id 场馆id
+     * @param coachId 教练id
+     * @param date 日期
+     * @param period 时间段
+     * @param name 用户名
+     * @param mobile 手机
+     */
+    void appointCoach(String id,String coachId,String date,String period,String name,String mobile);
 }

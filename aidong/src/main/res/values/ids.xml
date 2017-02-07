@@ -11,4 +11,7 @@
   <item type="id" name="quit"/>
   <item type="id" name="restart_preview"/>
   <item type="id" name="return_scan_result"/>
+
+  <item name="left_id" type="id" />
+  <item name="right_id" type="id" />
 </resources>

@@ -3,6 +3,7 @@ package com.leyuan.aidong.ui.mvp.model.impl;
 
 import android.content.Context;
 
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.DistrictBean;
 import com.leyuan.aidong.entity.data.CoachData;
@@ -18,6 +19,8 @@ import com.leyuan.aidong.utils.SystemInfoUtils;
 import java.util.List;
 
 import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * 场馆
@@ -67,6 +70,24 @@ public class VenuesModelImpl implements VenuesModel {
     public void getCourses(Subscriber<CourseData> subscriber, String id) {
         venuesService.getCourses(id)
                 .compose(RxHelper.<CourseData>transform())
+                .subscribe(subscriber);
+    }
+
+    @Override
+    public void appointVenues(Subscriber<BaseBean> subscriber, String id, String date, String period,
+                              String name, String mobile) {
+        venuesService.appointVenues(id,date,period,name,mobile)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
+    @Override
+    public void appointCoach(Subscriber<BaseBean> subscriber, String id, String coachId, String date,
+                             String period, String name, String mobile) {
+        venuesService.appointCoach(id,coachId,date,period,name,mobile)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
     }
 }

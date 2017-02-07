@@ -45,7 +45,7 @@ public class VenuesCoachFragment extends BaseFragment implements VenuesCoachFrag
         switcherLayout = new SwitcherLayout(getContext(),refreshLayout);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv_venues_coach);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        coachAdapter = new VenuesCoachAdapter(getContext());
+        coachAdapter = new VenuesCoachAdapter(getContext(),id);
         recyclerView.setAdapter(coachAdapter);
         venuesPresent.getCoaches(switcherLayout,id);
     }

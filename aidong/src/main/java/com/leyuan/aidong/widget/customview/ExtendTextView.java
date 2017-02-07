@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -28,6 +29,7 @@ public class ExtendTextView extends RelativeLayout{
     private int leftTextColor;
     private int rightTextColor;
     private int lineColor;
+    private boolean showArrow = false;
 
     public ExtendTextView(Context context) {
         this(context,null);
@@ -59,6 +61,7 @@ public class ExtendTextView extends RelativeLayout{
         rightPadding = typedArray.getDimensionPixelSize(R.styleable.ExtendTextView_padding_right, DensityUtil.dp2px(context,12));
         leftTextSize = typedArray.getDimensionPixelSize(R.styleable.ExtendTextView_left_text_size, 14);
         rightTextSize = typedArray.getDimensionPixelSize(R.styleable.ExtendTextView_right_text_size, 14);
+        showArrow = typedArray.getBoolean(R.styleable.ExtendTextView_show_right_arrow,false);
         leftTextColor = typedArray.getColor(R.styleable.ExtendTextView_left_text_color, getResources().getColor(R.color.black));
         rightTextColor = typedArray.getColor(R.styleable.ExtendTextView_right_text_color, getResources().getColor(R.color.black));
         lineColor = typedArray.getColor(R.styleable.ExtendTextView_line_color, getResources().getColor(R.color.black));
@@ -70,6 +73,7 @@ public class ExtendTextView extends RelativeLayout{
         RelativeLayout root = (RelativeLayout)view.findViewById(R.id.root);
         leftTextView = (TextView) view.findViewById(R.id.tv_left);
         rightTextView = (TextView)view.findViewById(R.id.tv_right);
+        ImageView ivArrow = (ImageView) view.findViewById(R.id.iv_arrow);
         View line = view.findViewById(R.id.line);
         root.setPadding(leftPadding,0,rightPadding,0);
         root.getLayoutParams().height = height;
@@ -79,6 +83,7 @@ public class ExtendTextView extends RelativeLayout{
         rightTextView.setTextColor(rightTextColor);
         rightTextView.setTextSize(rightTextSize);
         line.setBackgroundColor(lineColor);
+        ivArrow.setVisibility(showArrow ? VISIBLE : GONE);
     }
 
     /**

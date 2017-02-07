@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.ImageBean;
+import com.leyuan.aidong.entity.ProfileBean;
 import com.leyuan.aidong.entity.data.UserInfoData;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
@@ -39,6 +41,8 @@ import java.util.List;
 public class UserInfoActivity extends BaseActivity implements SmartTabLayout.TabProvider ,UserInfoActivityView, View.OnClickListener {
     private ImageView ivBack;
     private TextView tvTitle;
+    private ImageView ivEdit;
+
     private SwitcherLayout switcherLayout;
     private RelativeLayout contentLayout;
     private TextView tvAddImage;
@@ -52,6 +56,8 @@ public class UserInfoActivity extends BaseActivity implements SmartTabLayout.Tab
     private List<View> allTabView = new ArrayList<>();
     private UserInfoPresent userInfoPresent;
     private String id;
+    private ProfileBean profileBean;
+    private ArrayList<ImageBean> photos = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +73,7 @@ public class UserInfoActivity extends BaseActivity implements SmartTabLayout.Tab
     private void initView(){
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tvTitle = (TextView) findViewById(R.id.tv_title);
+        ivEdit = (ImageView) findViewById(R.id.iv_edit);
         contentLayout = (RelativeLayout) findViewById(R.id.rl_content);
         switcherLayout = new SwitcherLayout(this,contentLayout);
         tvAddImage = (TextView) findViewById(R.id.tv_add_image);
@@ -81,22 +88,24 @@ public class UserInfoActivity extends BaseActivity implements SmartTabLayout.Tab
 
     private void setListener(){
         ivBack.setOnClickListener(this);
+        ivEdit.setOnClickListener(this);
         tvAddImage.setOnClickListener(this);
     }
 
 
     @Override
     public void updateUserInfo(UserInfoData userInfoData) {
-        dvAvatar.setImageURI(userInfoData.getProfile().getAvatar());
-        tvName.setText(userInfoData.getProfile().getName());
-        tvSignature.setText(userInfoData.getProfile().getSignature());
+        profileBean = userInfoData.getProfile();
+        dvAvatar.setImageURI(profileBean.getAvatar());
+        tvName.setText(profileBean.getName());
+        tvSignature.setText(profileBean.getSignature());
 
         FragmentPagerItems pages = new FragmentPagerItems(this);
         UserDynamicFragment dynamicFragment = new UserDynamicFragment();
         UserInfoFragment userInfoFragment = new UserInfoFragment();
         pages.add(FragmentPagerItem.of(null, dynamicFragment.getClass()));
         pages.add(FragmentPagerItem.of(null, userInfoFragment.getClass(),
-                new Bundler().putParcelable("profile",userInfoData.getProfile()).get()));
+                new Bundler().putParcelable("profile",profileBean).get()));
         final FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(),pages);
         viewPager.setAdapter(adapter);
         tabLayout.setCustomTabView(this);
@@ -107,7 +116,7 @@ public class UserInfoActivity extends BaseActivity implements SmartTabLayout.Tab
                 for (int i = 0; i < allTabView.size(); i++) {
                     View tabAt = tabLayout.getTabAt(i);
                     TextView text = (TextView) tabAt.findViewById(R.id.tv_tab_text);
-                    text.setTypeface(i == position ? Typeface.DEFAULT_BOLD :Typeface.DEFAULT);
+                    text.setTypeface(i == position ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
                 }
             }
         });
@@ -129,6 +138,16 @@ public class UserInfoActivity extends BaseActivity implements SmartTabLayout.Tab
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()){
+            case R.id.iv_back:
+                finish();
+                break;
+            case R.id.iv_edit:
+                UpdateUserInfoActivity.start(this,profileBean);
+                break;
+            case R.id.tv_add_image:
+                UpdatePhotoWall.start(this,photos);
+                break;
+        }
     }
 }

@@ -6,7 +6,10 @@ import com.leyuan.aidong.entity.data.CourseData;
 import com.leyuan.aidong.entity.data.VenuesData;
 import com.leyuan.aidong.entity.data.VenuesDetailData;
 
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -47,4 +50,35 @@ public interface VenuesService {
      */
     @GET("gyms/{id}/courses")
     Observable<BaseBean<CourseData>> getCourses(@Path("id") String id);
+
+    /**
+     * 预约场馆
+     * @param id 场馆id
+     * @param date 预约日期
+     * @param period 预约时段（0-上午 1-下午)
+     * @param name 预约人
+     * @param mobile 预约电话
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("gyms/{id}")
+    Observable<BaseBean> appointVenues(@Path("id") String id, @Field("date") String date,
+                                       @Field("period") String period,@Field("name") String name,
+                                       @Field("mobile") String mobile);
+
+    /**
+     * 预约私教
+     * @param id 场馆id
+     * @param coach_id 私教id
+     * @param date 预约日期
+     * @param period 预约时段（0-上午 1-下午)
+     * @param name 预约人
+     * @param mobile 预约电话
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("gyms/{id}/coaches/{coach_id}")
+    Observable<BaseBean> appointCoach(@Path("id") String id,@Path("coach_id") String coach_id,
+                                      @Field("date") String date, @Field("period") String period,
+                                      @Field("name") String name, @Field("mobile") String mobile);
 }
