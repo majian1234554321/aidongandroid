@@ -14,7 +14,7 @@ import android.view.Window;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.home.adapter.ImagePreviewAdapter;
+import com.leyuan.aidong.adapter.home.ImagePreviewAdapter;
 import com.leyuan.aidong.ui.home.view.ImagePreviewTopBar;
 import com.leyuan.aidong.widget.customview.ViewPagerFixed;
 

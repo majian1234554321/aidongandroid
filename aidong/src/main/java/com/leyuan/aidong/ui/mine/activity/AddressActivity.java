@@ -17,7 +17,7 @@ import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.account.LoginActivity;
-import com.leyuan.aidong.ui.mine.adapter.AddressAdapter;
+import com.leyuan.aidong.adapter.mine.AddressAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.AddressPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.AddressPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AddressActivityView;

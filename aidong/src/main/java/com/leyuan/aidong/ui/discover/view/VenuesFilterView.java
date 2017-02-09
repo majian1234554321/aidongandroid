@@ -16,9 +16,9 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.DistrictBean;
 import com.leyuan.aidong.entity.DistrictDescBean;
-import com.leyuan.aidong.ui.home.adapter.LeftFilterAdapter;
-import com.leyuan.aidong.ui.home.adapter.RightFilterAdapter;
-import com.leyuan.aidong.ui.home.adapter.CategoryListAdapter;
+import com.leyuan.aidong.adapter.home.LeftFilterAdapter;
+import com.leyuan.aidong.adapter.home.RightFilterAdapter;
+import com.leyuan.aidong.adapter.home.CategoryListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

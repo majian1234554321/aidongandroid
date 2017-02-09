@@ -23,7 +23,7 @@ import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.entity.GoodsDetailBean;
 import com.leyuan.aidong.entity.ShopBean;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.home.adapter.GoodsDetailCouponAdapter;
+import com.leyuan.aidong.adapter.home.GoodsDetailCouponAdapter;
 import com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow;
 import com.leyuan.aidong.ui.mine.activity.CartActivity;
 import com.leyuan.aidong.ui.mvp.presenter.GoodsDetailPresent;

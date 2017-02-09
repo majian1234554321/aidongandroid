@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mine.adapter.SelectCouponAdapter;
+import com.leyuan.aidong.adapter.mine.SelectCouponAdapter;
 
 /**
  * 选择优惠券

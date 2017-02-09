@@ -8,7 +8,7 @@ import android.view.View;
 
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.home.adapter.CampaignAdapter;
+import com.leyuan.aidong.adapter.home.CampaignAdapter;
 import com.leyuan.aidong.entity.CampaignBean;
 import com.leyuan.aidong.ui.mvp.presenter.CampaignPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CampaignPresentImpl;

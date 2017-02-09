@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.adapter.video.GoodBean;
+import com.leyuan.aidong.entity.GoodBean;
 import com.leyuan.aidong.adapter.video.WatchOfficeRelateCourseAdapter;
 import com.leyuan.aidong.adapter.video.WatchOfficeRelateGoodAdapter;
 import com.leyuan.aidong.adapter.video.WatchOfficeRelateVideoAdapter;

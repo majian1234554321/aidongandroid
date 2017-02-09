@@ -22,7 +22,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.model.location.ImageItem;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.discover.adapter.PublishDynamicAdapter;
+import com.leyuan.aidong.adapter.discover.PublishDynamicAdapter;
 import com.leyuan.aidong.ui.media.AlbumActivity;
 import com.leyuan.aidong.ui.media.SelectVideoActivity;
 import com.leyuan.aidong.ui.media.SelectVideoCoverActivity;

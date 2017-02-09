@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.ShopBean;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mine.adapter.UpdateDeliveryInfoAdapter;
+import com.leyuan.aidong.adapter.mine.UpdateDeliveryInfoAdapter;
 
 /**
  * 确认订单界面修改配送信息

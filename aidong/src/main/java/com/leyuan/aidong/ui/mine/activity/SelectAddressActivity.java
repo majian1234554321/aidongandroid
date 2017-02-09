@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.AddressBean;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mine.adapter.SelectAddressAdapter;
+import com.leyuan.aidong.adapter.mine.SelectAddressAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.AddressPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.AddressPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.SelectAddressActivityView;

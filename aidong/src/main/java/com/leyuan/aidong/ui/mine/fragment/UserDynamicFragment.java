@@ -11,7 +11,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
-import com.leyuan.aidong.ui.discover.adapter.DynamicAdapter;
+import com.leyuan.aidong.adapter.discover.DynamicAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.UserInfoPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.UserInfoPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.UserDynamicFragmentView;

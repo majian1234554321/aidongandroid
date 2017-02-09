@@ -19,9 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.SearchHistory;
+import com.leyuan.aidong.entity.SearchHistoryBean;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.home.adapter.SearchHistoryAdapter;
+import com.leyuan.aidong.adapter.home.SearchHistoryAdapter;
 import com.leyuan.aidong.ui.home.fragment.SearchResultFragment;
 import com.leyuan.aidong.ui.mvp.presenter.SearchPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SearchPresentImpl;
@@ -125,7 +125,7 @@ public class SearchActivity extends BaseActivity implements SearchActivityView{
     }
 
     @Override
-    public void setHistory(List<SearchHistory> histories) {
+    public void setHistory(List<SearchHistoryBean> histories) {
         historyAdapter.setData(histories);
     }
 

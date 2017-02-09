@@ -9,7 +9,7 @@ import android.view.View;
 
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.discover.adapter.UserAdapter;
+import com.leyuan.aidong.adapter.discover.UserAdapter;
 import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.widget.customview.SimpleTitleBar;
 

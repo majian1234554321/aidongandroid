@@ -21,7 +21,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.ProfileBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mine.adapter.StringAdapter;
+import com.leyuan.aidong.adapter.mine.StringAdapter;
 import com.leyuan.aidong.ui.mine.view.AddressPopupWindow;
 import com.leyuan.aidong.widget.customview.ExtendTextView;
 

@@ -14,7 +14,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.OrderDetailBean;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mine.adapter.CartShopAdapter;
+import com.leyuan.aidong.adapter.mine.CartShopAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.OrderPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.OrderPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.OrderDetailActivityView;

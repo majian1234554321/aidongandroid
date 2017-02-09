@@ -1,6 +1,6 @@
 package com.leyuan.aidong.ui.mvp.view;
 
-import com.leyuan.aidong.entity.SearchHistory;
+import com.leyuan.aidong.entity.SearchHistoryBean;
 
 import java.util.List;
 
@@ -10,6 +10,6 @@ import java.util.List;
  */
 public interface SearchActivityView {
 
-    void setHistory(List<SearchHistory> historyList);
+    void setHistory(List<SearchHistoryBean> historyList);
 
 }

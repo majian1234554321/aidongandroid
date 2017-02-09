@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.home.adapter.CityAdapter;
+import com.leyuan.aidong.adapter.home.CityAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.HomePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.HomePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.LocationActivityView;

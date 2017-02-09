@@ -13,7 +13,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.home.adapter.RecommendAdapter;
+import com.leyuan.aidong.adapter.home.RecommendAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.HomePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.HomePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.BrandActivityView;

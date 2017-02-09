@@ -14,9 +14,9 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.home.adapter.FoodAdapter;
-import com.leyuan.aidong.ui.home.adapter.RecommendVenuesAdapter;
-import com.leyuan.aidong.ui.home.adapter.SamplePagerAdapter;
+import com.leyuan.aidong.adapter.home.FoodAdapter;
+import com.leyuan.aidong.adapter.home.RecommendVenuesAdapter;
+import com.leyuan.aidong.adapter.home.SamplePagerAdapter;
 import com.leyuan.aidong.entity.FoodAndVenuesBean;
 import com.leyuan.aidong.entity.FoodBean;
 import com.leyuan.aidong.entity.VenuesBean;

@@ -18,7 +18,7 @@ import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity;
-import com.leyuan.aidong.ui.discover.adapter.DynamicAdapter;
+import com.leyuan.aidong.adapter.discover.DynamicAdapter;
 import com.leyuan.aidong.ui.home.activity.ImagePreviewActivity;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.video.activity.PlayerActivity;

@@ -9,7 +9,7 @@ import android.widget.RelativeLayout;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.home.activity.NurtureActivity;
-import com.leyuan.aidong.ui.home.adapter.SamplePagerAdapter;
+import com.leyuan.aidong.adapter.home.SamplePagerAdapter;
 import com.leyuan.aidong.utils.ImageLoadConfig;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;

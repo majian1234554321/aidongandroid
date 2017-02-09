@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.AppointmentBean;
 import com.leyuan.aidong.ui.BaseFragment;
-import com.leyuan.aidong.ui.mine.adapter.AppointmentAdapter;
+import com.leyuan.aidong.adapter.mine.AppointmentAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.AppointmentPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.AppointmentPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointmentFragmentView;

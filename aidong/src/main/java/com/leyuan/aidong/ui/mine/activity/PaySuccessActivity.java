@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.MainActivity;
-import com.leyuan.aidong.ui.home.adapter.RecommendAdapter;
+import com.leyuan.aidong.adapter.home.RecommendAdapter;
 import com.leyuan.aidong.widget.customview.SimpleTitleBar;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderSpanSizeLookup;

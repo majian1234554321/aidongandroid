@@ -12,7 +12,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CourseBean;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.home.activity.CourseActivity;
-import com.leyuan.aidong.ui.home.adapter.CourseAdapter;
+import com.leyuan.aidong.adapter.home.CourseAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CourserFragmentView;

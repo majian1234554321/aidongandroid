@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.ImageBean;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mine.adapter.PhotoWallAdapter;
+import com.leyuan.aidong.adapter.mine.PhotoWallAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

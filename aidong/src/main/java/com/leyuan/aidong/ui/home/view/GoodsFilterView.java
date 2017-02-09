@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CategoryBean;
-import com.leyuan.aidong.ui.home.adapter.GoodsFilterCategoryAdapter;
+import com.leyuan.aidong.adapter.home.GoodsFilterCategoryAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

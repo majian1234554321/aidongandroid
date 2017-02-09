@@ -9,7 +9,7 @@ import android.view.View;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.NewsBean;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.discover.adapter.NewsAdapter;
+import com.leyuan.aidong.adapter.discover.NewsAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.DiscoverPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DiscoverPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.SportNewsActivityView;

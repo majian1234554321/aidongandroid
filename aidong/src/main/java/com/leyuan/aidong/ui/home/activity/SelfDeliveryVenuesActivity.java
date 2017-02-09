@@ -20,7 +20,7 @@ import com.leyuan.aidong.entity.DistrictBean;
 import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.discover.view.VenuesFilterView;
-import com.leyuan.aidong.ui.home.adapter.SelfDeliveryAdapter;
+import com.leyuan.aidong.adapter.home.SelfDeliveryAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.GoodsDetailPresent;
 import com.leyuan.aidong.ui.mvp.presenter.VenuesPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.GoodsDetailPresentImpl;

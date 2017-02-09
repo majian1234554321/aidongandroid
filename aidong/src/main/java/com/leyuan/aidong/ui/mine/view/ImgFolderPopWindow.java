@@ -13,7 +13,7 @@ import android.widget.PopupWindow;
 import com.leyuan.aidong.R;
 
 import com.leyuan.aidong.entity.AlbumFolderInfoBean;
-import com.leyuan.aidong.ui.mine.adapter.AlbumFolderAdapter;
+import com.leyuan.aidong.adapter.mine.AlbumFolderAdapter;
 import com.leyuan.aidong.utils.ScreenUtil;
 
 import java.util.ArrayList;

@@ -12,7 +12,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.ui.BaseFragment;
-import com.leyuan.aidong.ui.mine.adapter.FollowAdapter;
+import com.leyuan.aidong.adapter.mine.FollowAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.FollowPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.FollowFragmentView;

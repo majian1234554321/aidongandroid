@@ -23,7 +23,7 @@ import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CoachBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.discover.adapter.DateAdapter;
+import com.leyuan.aidong.adapter.discover.DateAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.VenuesPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VenuesPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointCoachActivityView;

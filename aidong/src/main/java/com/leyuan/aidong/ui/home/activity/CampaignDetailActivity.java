@@ -18,7 +18,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CampaignDetailBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.home.adapter.ApplicantAdapter;
+import com.leyuan.aidong.adapter.home.ApplicantAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.CampaignPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CampaignPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CampaignDetailActivityView;

@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.home.adapter.ApplicantAdapter;
+import com.leyuan.aidong.adapter.home.ApplicantAdapter;
 import com.leyuan.aidong.widget.customview.ViewPagerIndicator;
 
 import java.util.ArrayList;

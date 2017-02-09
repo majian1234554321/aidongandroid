@@ -15,7 +15,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.mine.activity.CouponExchangeActivity;
-import com.leyuan.aidong.ui.mine.adapter.CouponAdapter;
+import com.leyuan.aidong.adapter.mine.CouponAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.CouponPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CouponPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CouponFragmentView;

@@ -18,7 +18,7 @@ import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.EquipmentBean;
 import com.leyuan.aidong.entity.NurtureBean;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.home.adapter.GoodsFilterAdapter;
+import com.leyuan.aidong.adapter.home.GoodsFilterAdapter;
 import com.leyuan.aidong.ui.home.view.GoodsFilterView;
 import com.leyuan.aidong.ui.mvp.presenter.EquipmentPresent;
 import com.leyuan.aidong.ui.mvp.presenter.NurturePresent;

@@ -22,7 +22,7 @@ import com.leyuan.aidong.ui.home.activity.FoodActivity;
 import com.leyuan.aidong.ui.home.activity.LocationActivity;
 import com.leyuan.aidong.ui.home.activity.NurtureActivity;
 import com.leyuan.aidong.ui.home.activity.SearchActivity;
-import com.leyuan.aidong.ui.home.adapter.HomeRecycleViewAdapter;
+import com.leyuan.aidong.adapter.home.HomeRecycleViewAdapter;
 import com.leyuan.aidong.ui.home.view.HomeBannerDialog;
 import com.leyuan.aidong.ui.mvp.presenter.HomePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.HomePresentImpl;

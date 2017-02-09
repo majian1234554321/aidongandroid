@@ -14,7 +14,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.ImageInfoBean;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mine.adapter.AddImageAdapter;
+import com.leyuan.aidong.adapter.mine.AddImageAdapter;
 
 import java.util.ArrayList;
 

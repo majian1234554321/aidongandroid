@@ -15,7 +15,7 @@ import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.DistrictBean;
 import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.discover.adapter.VenuesAdapter;
+import com.leyuan.aidong.adapter.discover.VenuesAdapter;
 import com.leyuan.aidong.ui.discover.view.VenuesFilterView;
 import com.leyuan.aidong.ui.home.activity.SearchActivity;
 import com.leyuan.aidong.ui.mvp.presenter.VenuesPresent;

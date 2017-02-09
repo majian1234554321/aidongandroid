@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CoachBean;
 import com.leyuan.aidong.ui.BaseFragment;
-import com.leyuan.aidong.ui.discover.adapter.VenuesCoachAdapter;
+import com.leyuan.aidong.adapter.discover.VenuesCoachAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.VenuesPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VenuesPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.VenuesCoachFragmentView;

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.discover.adapter.VenuesAdapter;
+import com.leyuan.aidong.adapter.discover.VenuesAdapter;
 import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.ui.mvp.presenter.SearchPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SearchPresentImpl;

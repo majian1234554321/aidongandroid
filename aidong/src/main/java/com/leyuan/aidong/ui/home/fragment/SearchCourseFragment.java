@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.home.adapter.CourseAdapter;
+import com.leyuan.aidong.adapter.home.CourseAdapter;
 import com.leyuan.aidong.entity.CourseBean;
 import com.leyuan.aidong.ui.mvp.presenter.SearchPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SearchPresentImpl;

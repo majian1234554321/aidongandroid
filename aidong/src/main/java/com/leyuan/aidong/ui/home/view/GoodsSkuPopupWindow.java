@@ -19,7 +19,7 @@ import com.leyuan.aidong.entity.GoodsSkuValueBean;
 import com.leyuan.aidong.entity.LocalGoodsSkuBean;
 import com.leyuan.aidong.entity.ShopBean;
 import com.leyuan.aidong.ui.home.activity.ConfirmOrderActivity;
-import com.leyuan.aidong.ui.home.adapter.GoodsSkuAdapter;
+import com.leyuan.aidong.adapter.home.GoodsSkuAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.CartPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CartPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.GoodsSkuPopupWindowView;

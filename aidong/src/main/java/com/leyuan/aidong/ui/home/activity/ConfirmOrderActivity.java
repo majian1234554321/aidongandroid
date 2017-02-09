@@ -18,7 +18,7 @@ import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.entity.ShopBean;
 import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.home.adapter.ConfirmOrderShopAdapter;
+import com.leyuan.aidong.adapter.home.ConfirmOrderShopAdapter;
 import com.leyuan.aidong.ui.mine.activity.SelectAddressActivity;
 import com.leyuan.aidong.ui.mine.activity.SelectCouponActivity;
 import com.leyuan.aidong.ui.mvp.presenter.CartPresent;
