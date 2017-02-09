@@ -23,6 +23,8 @@ public class GoodsBean implements Parcelable {
     private ArrayList<String> spec_name;
     private ArrayList<String> spec_value;
     private String amount;                  //商品数量
+    private String recommend_code;          //推荐码
+    private DeliveryBean deliveryBean;      //商品默认取货方式
     private boolean checked = false;        //标记商品是否被选中
 
     public String getSku_code() {

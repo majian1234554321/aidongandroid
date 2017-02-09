@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.ShopBean;
+import com.leyuan.aidong.ui.activity.mine.UpdateDeliveryInfoActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +58,7 @@ public class ConfirmOrderShopAdapter extends RecyclerView.Adapter<ConfirmOrderSh
         holder.tvDeliveryType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  context.startActivity(new Intent(context, DeliveryInfoActivity.class));
+                UpdateDeliveryInfoActivity.start(context,bean);
             }
         });
     }

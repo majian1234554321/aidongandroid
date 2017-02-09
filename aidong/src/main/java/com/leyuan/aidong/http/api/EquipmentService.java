@@ -3,6 +3,7 @@ package com.leyuan.aidong.http.api;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.data.EquipmentData;
 import com.leyuan.aidong.entity.data.EquipmentDetailData;
+import com.leyuan.aidong.entity.data.PayOrderData;
 import com.leyuan.aidong.entity.data.VenuesData;
 
 import retrofit2.http.Field;
@@ -34,8 +35,8 @@ public interface EquipmentService {
 
     @FormUrlEncoded
     @POST("market/equipments/{skuCode}")
-    Observable<BaseBean> buyEquipmentImmediately(@Path("skuCode") String skuCode,
-                                                 @Field("amount") int amount,
-                                                 @Field("pick_up") String pickUp,
-                                                 @Field("pick_up_id") String pickUpId);
+    Observable<BaseBean<PayOrderData>> buyEquipmentImmediately(@Path("skuCode") String skuCode,
+                                                               @Field("amount") int amount,
+                                                               @Field("pick_up") String pickUp,
+                                                               @Field("pick_up_id") String pickUpId);
 }

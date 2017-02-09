@@ -23,7 +23,6 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.activity.mine.account.LoginActivity;
-import com.leyuan.aidong.utils.common.MXLog;
 import com.leyuan.aidong.entity.model.FacePay;
 import com.leyuan.aidong.module.scan.camera.CameraManager;
 import com.leyuan.aidong.module.scan.decoding.CaptureActivityHandler;
@@ -137,7 +136,6 @@ public class MipcaActivityCapture extends BaseActivity implements Callback {
         playBeepSoundAndVibrate();
         String code_type = result.getBarcodeFormat().toString();
         String resultString = result.getText();
-        MXLog.i("erweima", "result : " + resultString);
         if (resultString.equals("")) {
             Toast.makeText(MipcaActivityCapture.this, "Scan failed!", Toast.LENGTH_SHORT).show();
         } else if (isGoodJson(resultString)) {
@@ -161,7 +159,6 @@ public class MipcaActivityCapture extends BaseActivity implements Callback {
             Intent intent = new Intent(this, LoginActivity.class);
             if (resultString.length() > 9) {
                 String id = resultString.substring(9);
-                MXLog.i("signin", id);
                 intent.putExtra("no", id);
                 startActivity(intent);
                 finish();

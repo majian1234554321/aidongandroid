@@ -8,9 +8,9 @@ import android.provider.MediaStore.Images.Media;
 import android.provider.MediaStore.Images.Thumbnails;
 import android.util.Log;
 
-import com.leyuan.aidong.utils.common.MXLog;
 import com.leyuan.aidong.entity.model.location.ImageBucket;
 import com.leyuan.aidong.entity.model.location.ImageItem;
+import com.leyuan.aidong.utils.common.MXLog;
 
 import java.util.ArrayList;
 import java.util.HashMap;

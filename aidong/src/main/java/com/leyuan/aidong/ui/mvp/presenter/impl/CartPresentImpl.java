@@ -126,20 +126,6 @@ public class CartPresentImpl implements CartPresent{
     }
 
     @Override
-    public void payCart(String integral, String coin, String coupon, String payType,
-                        String pickUpId, final PayInterface.PayListener listener,String... id) {
-        cartModel.payCart(new ProgressSubscriber<PayOrderData>(context) {
-            @Override
-            public void onNext(PayOrderData payOrderData) {
-                String payType = payOrderData.getOrder().getPayType();
-                PayInterface payInterface = "alipay".equals(payType) ? new AliPay(context,listener)
-                        : new WeiXinPay(context,listener);
-                payInterface.payOrder(payOrderData.getOrder());
-            }
-        },integral,coin,coupon,payType,pickUpId,id);
-    }
-
-    @Override
     public void pullToRefreshRecommendData() {
         recommendModel.getRecommendGoods(new RefreshSubscriber<GoodsData>(context) {
             @Override
@@ -175,5 +161,19 @@ public class CartPresentImpl implements CartPresent{
                 }
             }
         },TYPE,page);
+    }
+
+    @Override
+    public void payCart(String integral, String coin, String coupon, String payType,
+                        String pickUpId, final PayInterface.PayListener listener,String... id) {
+        cartModel.payCart(new ProgressSubscriber<PayOrderData>(context) {
+            @Override
+            public void onNext(PayOrderData payOrderData) {
+                String payType = payOrderData.getOrder().getPayType();
+                PayInterface payInterface = "alipay".equals(payType) ? new AliPay(context,listener)
+                        : new WeiXinPay(context,listener);
+                payInterface.payOrder(payOrderData.getOrder());
+            }
+        },integral,coin,coupon,payType,pickUpId,id);
     }
 }

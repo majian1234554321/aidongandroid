@@ -4,6 +4,7 @@ package com.leyuan.aidong.http.api;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.data.NurtureData;
 import com.leyuan.aidong.entity.data.NurtureDetailData;
+import com.leyuan.aidong.entity.data.PayOrderData;
 import com.leyuan.aidong.entity.data.VenuesData;
 
 import retrofit2.http.Field;
@@ -35,8 +36,8 @@ public interface NurtureService {
 
     @FormUrlEncoded
     @POST("market/nutrition/{skuCode}")
-    Observable<BaseBean> buyNurtureImmediately(@Path("skuCode") String skuCode,
-                                               @Field("amount") int amount,
-                                               @Field("pick_up") String pickUp,
-                                               @Field("pick_up_id") String pickUpId);
+    Observable<BaseBean<PayOrderData>> buyNurtureImmediately(@Path("skuCode") String skuCode,
+                                                             @Field("amount") int amount,
+                                                             @Field("pick_up") String pickUp,
+                                                             @Field("pick_up_id") String pickUpId);
 }

@@ -11,11 +11,11 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 
-import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.utils.common.UrlLink;
-import com.leyuan.aidong.http.HttpConfig;
 import com.leyuan.aidong.entity.model.result.MsgResult;
+import com.leyuan.aidong.http.HttpConfig;
+import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.utils.common.UrlLink;
 import com.leyuan.aidong.widget.customview.UISwitchButton;
 import com.leyuan.commonlibrary.http.IHttpCallback;
 import com.leyuan.commonlibrary.http.IHttpTask;

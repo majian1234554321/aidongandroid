@@ -19,7 +19,6 @@ import com.leyuan.aidong.entity.GoodsSkuValueBean;
 import com.leyuan.aidong.entity.LocalGoodsSkuBean;
 import com.leyuan.aidong.entity.ShopBean;
 import com.leyuan.aidong.ui.activity.home.ConfirmOrderActivity;
-import com.leyuan.aidong.ui.activity.home.GoodsDetailActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.GoodsSkuAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.CartPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CartPresentImpl;
@@ -37,6 +36,10 @@ import java.util.List;
  */
 //todo 欠缺逻辑 : 当包含该sku但是该点的所有路径库存都为0 初始化该sku点的状态
 public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClickListener, GoodsSkuAdapter.SelectSkuListener,GoodsSkuPopupWindowView {
+    public static final String FROM_SKU = "1";
+    public static final String FROM_BUY = "2";
+    public static final String FROM_ADD_CART = "3";
+
     private static final String BLANK_SPACE = " ";
     private Context context;
     private SimpleDraweeView dvGoodsCover;
@@ -84,9 +87,9 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         this.gymId = gymId;
         this.count = count;
 
-        if(from.equals(GoodsDetailActivity.FROM_SKU)){
+        if(from.equals(FROM_SKU)){
             showConfirmStatus = false;
-        }else if(from.equals(GoodsDetailActivity.FROM_ADD_CART)){
+        }else if(from.equals(FROM_ADD_CART)){
             showConfirmStatus = true;
             isAddCart = true;
         }else {
@@ -329,8 +332,8 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         shopBean.setItem(goodsBeanList);
         shopBean.setName(TextUtils.isEmpty(gymId) ? "仓库发货" : detailBean.pick_up.info.getName());
         shopBeanList.add(shopBean);
-        ConfirmOrderActivity.start(context,shopBeanList, FormatUtil.parseDouble(line.price)*
-                FormatUtil.parseInt(tvCount.getText().toString()));
+        ConfirmOrderActivity.start(context,ConfirmOrderActivity.ORDER_CART,shopBeanList,
+                FormatUtil.parseDouble(line.price)* FormatUtil.parseInt(tvCount.getText().toString()));
     }
 
     @Override

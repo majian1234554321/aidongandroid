@@ -1,9 +1,9 @@
 package com.leyuan.aidong.ui.mvp.model;
 
-import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.data.EquipmentData;
 import com.leyuan.aidong.entity.data.EquipmentDetailData;
+import com.leyuan.aidong.entity.data.PayOrderData;
 import com.leyuan.aidong.entity.data.VenuesData;
 
 import java.util.ArrayList;
@@ -52,6 +52,6 @@ public interface EquipmentModel {
      * @param pickUp 0-快递 1-自提
      * @param pickUpId 自提信息编号
      */
-    void buyEquipmentImmediately(Subscriber<BaseBean> subscriber, String skuCode, int amount,
-                               String pickUp, String pickUpId);
+    void buyEquipmentImmediately(Subscriber<PayOrderData> subscriber, String skuCode, int amount,
+                                 String pickUp, String pickUpId);
 }

@@ -29,6 +29,8 @@ import com.leyuan.aidong.widget.customview.SwitcherLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.leyuan.aidong.ui.activity.home.ConfirmOrderActivity.ORDER_CART;
+
 
 /**
  * 购物车
@@ -130,7 +132,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
                     Toast.makeText(this,R.string.tip_select_goods,Toast.LENGTH_LONG).show();
                     return;
                 }
-                ConfirmOrderActivity.start(this,selectedShops,totalPrice);
+                ConfirmOrderActivity.start(this,ORDER_CART,selectedShops,totalPrice);
                 break;
             case R.id.tv_delete:
                 List<GoodsBean> selectedGoods = getSelectedGoods();

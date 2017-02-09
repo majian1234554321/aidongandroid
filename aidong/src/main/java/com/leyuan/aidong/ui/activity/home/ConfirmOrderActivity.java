@@ -19,10 +19,13 @@ import com.leyuan.aidong.entity.ShopBean;
 import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.activity.home.adapter.ConfirmOrderShopAdapter;
-import com.leyuan.aidong.ui.activity.mine.CouponActivity;
 import com.leyuan.aidong.ui.activity.mine.SelectAddressActivity;
+import com.leyuan.aidong.ui.activity.mine.SelectCouponActivity;
 import com.leyuan.aidong.ui.mvp.presenter.CartPresent;
+import com.leyuan.aidong.ui.mvp.presenter.EquipmentPresent;
+import com.leyuan.aidong.ui.mvp.presenter.NurturePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CartPresentImpl;
+import com.leyuan.aidong.ui.mvp.presenter.impl.NurturePresentImpl;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.customview.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.customview.ExtendTextView;
@@ -36,18 +39,14 @@ import java.util.List;
  * Created by song on 2016/9/23.
  */
 public class ConfirmOrderActivity extends BaseActivity implements View.OnClickListener, CustomNestRadioGroup.OnCheckedChangeListener {
+    public static final int ORDER_CART= 1;
+    public static final int ORDER_BUG_NURTURE_IMMEDIATELY = 2;
+    public static final int ORDER_BUY_EQUIPMENT_IMMEDIATELY = 3;
     private static final String ALI_PAY = "alipay";
     private static final String WEI_XIN_PAY = "wxpay";
     private static final Double EXPRESS_PRICE = 15d;
     private static final int REQUEST_ADDRESS = 1;
     private static final int REQUEST_COUPON = 2;
-
-    public enum From{
-        CART,
-        NURTURE,
-        EQUIPMENT,
-        FOOD
-    }
 
     private SimpleTitleBar titleBar;
     private NestedScrollView scrollView;
@@ -84,23 +83,27 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private ConfirmOrderShopAdapter shopAdapter;
     private List<ShopBean> shopBeanList = new ArrayList<>();
 
-    private CartPresent cartPresent;
-
     private String[] itemIds;
     private String integral;
     private String coin;
     private String coupon;
     private String payType;
-    private String pickUpId;
+    private String expressAddress;
 
+    private int orderType;
     private double totalGoodsPrice;
     private boolean needExpress = false;
 
+    private CartPresent cartPresent;
+    private NurturePresent nurturePresent;
+    private EquipmentPresent equipmentPresent;
 
-    public static void start(Context context, ArrayList<ShopBean> selectedShops,double totalGoodsPrice) {
+    public static void start(Context context, int orderType,ArrayList<ShopBean> selectedShops,
+                             double totalGoodsPrice) {
         Intent starter = new Intent(context, ConfirmOrderActivity.class);
         starter.putParcelableArrayListExtra("selectedShops",selectedShops);
         starter.putExtra("totalGoodsPrice",totalGoodsPrice);
+        starter.putExtra("orderType",orderType);
         context.startActivity(starter);
     }
 
@@ -109,12 +112,11 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_order);
         payType = ALI_PAY;
-        cartPresent = new CartPresentImpl(this);
         if(getIntent() != null){
+            orderType = getIntent().getIntExtra("orderType",1);
             shopBeanList = getIntent().getParcelableArrayListExtra("selectedShops");
             totalGoodsPrice = getIntent().getDoubleExtra("totalGoodsPrice",0f);
         }
-
         initView();
         setListener();
     }
@@ -182,9 +184,48 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 startActivityForResult(intent, REQUEST_ADDRESS);
                 break;
             case R.id.ll_coupon:
-                startActivity(new Intent(this, CouponActivity.class));
+                startActivity(new Intent(this, SelectCouponActivity.class));
                 break;
             case R.id.tv_pay:
+                payOrder();
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(data != null){
+            if(requestCode == REQUEST_ADDRESS){
+                AddressBean address = data.getParcelableExtra("address");
+                tvName.setText(address.getName());
+                tvPhone.setText(address.getMobile());
+                StringBuilder sb = new StringBuilder("收货地址: ");
+                sb.append(address.getProvince()).append(address.getCity())
+                        .append(address.getDistrict()).append(address.getAddress());
+                tvAddress.setText(sb);
+            }
+        }
+    }
+
+    @Override
+    public void onCheckedChanged(CustomNestRadioGroup group, int checkedId) {
+        switch (checkedId){
+            case R.id.cb_alipay:
+                payType = ALI_PAY;
+                break;
+            case R.id.cb_weixin:
+                payType = WEI_XIN_PAY;
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void payOrder(){
+        switch (orderType){
+            case ORDER_CART:
                 List<GoodsBean> goodsList = new ArrayList<>();
                 for (ShopBean shopBean : shopBeanList) {
                     for (GoodsBean goodsBean : shopBean.getItem()) {
@@ -195,7 +236,19 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 for (int i = 0; i < goodsList.size(); i++) {
                     itemIds[i] = goodsList.get(i).getId();
                 }
-                cartPresent.payCart(integral,coin,coupon,payType,pickUpId,payListener,itemIds);
+                if(cartPresent == null){
+                    cartPresent = new CartPresentImpl(this);
+                }
+                cartPresent.payCart(integral,coin,coupon,payType,expressAddress,payListener,itemIds);
+                break;
+            case ORDER_BUG_NURTURE_IMMEDIATELY:
+                if(nurturePresent == null){
+                    nurturePresent = new NurturePresentImpl(this);
+                }
+                //nurturePresent.buyNurtureImmediately();
+                break;
+            case ORDER_BUY_EQUIPMENT_IMMEDIATELY:
+
                 break;
             default:
                 break;
@@ -233,34 +286,4 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             Logger.w("AppointCourseActivity","success:" + code + object.toString());
         }
     };
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(data != null){
-            if(requestCode == REQUEST_ADDRESS){
-                AddressBean address = data.getParcelableExtra("address");
-                tvName.setText(address.getName());
-                tvPhone.setText(address.getMobile());
-                StringBuilder sb = new StringBuilder("收货地址: ");
-                sb.append(address.getProvince()).append(address.getCity())
-                        .append(address.getDistrict()).append(address.getAddress());
-                tvAddress.setText(sb);
-            }
-        }
-    }
-
-    @Override
-    public void onCheckedChanged(CustomNestRadioGroup group, int checkedId) {
-        switch (checkedId){
-            case R.id.cb_alipay:
-                payType = ALI_PAY;
-                break;
-            case R.id.cb_weixin:
-                payType = WEI_XIN_PAY;
-                break;
-            default:
-                break;
-        }
-    }
 }

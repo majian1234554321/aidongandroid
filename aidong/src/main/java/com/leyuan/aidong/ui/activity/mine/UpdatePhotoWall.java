@@ -17,6 +17,8 @@ import com.leyuan.aidong.ui.activity.mine.adapter.PhotoWallAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 /**
  * 修改照片墙
  * Created by song on 2017/2/7.
@@ -74,6 +76,7 @@ public class UpdatePhotoWall extends BaseActivity implements View.OnClickListene
                 break;
         }
     }
+
 
     @Override
     public void onAddImageItemClick() {

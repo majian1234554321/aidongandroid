@@ -58,6 +58,10 @@ import java.util.List;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 
+import static com.leyuan.aidong.ui.activity.home.view.GoodsSkuPopupWindow.FROM_ADD_CART;
+import static com.leyuan.aidong.ui.activity.home.view.GoodsSkuPopupWindow.FROM_BUY;
+import static com.leyuan.aidong.ui.activity.home.view.GoodsSkuPopupWindow.FROM_SKU;
+
 
 /**
  * 商品详情
@@ -67,9 +71,6 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     public static final String TYPE_NURTURE = "nutrition";
     public static final String TYPE_EQUIPMENT = "equipments";
     public static final String TYPE_FOODS = "foods";
-    public static final String FROM_SKU = "2";
-    public static final String FROM_BUY = "3";
-    public static final String FROM_ADD_CART = "4";
     public static final String BLANK_SPACE = " ";
     public static final String EXPRESS = "0";
     public static final String SELF_DELIVERY = "1";
@@ -84,9 +85,8 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     private TextView tvPrice;
     private TextView tvMarketPrice;
     private TextView tvGoodsName;
-    private TextView tvCoupon;
+    private LinearLayout couponLayout;
     private RecyclerView couponView;
-    private View lineCoupon;
     private LinearLayout skuLayout;
     private TextView tvSelect;
     private TextView tvSku;
@@ -165,9 +165,8 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         tvPrice = (TextView) findViewById(R.id.tv_price);
         tvMarketPrice = (TextView) findViewById(R.id.tv_market_price);
         tvGoodsName = (TextView) findViewById(R.id.tv_goods_name);
-        tvCoupon = (TextView) findViewById(R.id.tv_coupon);
+        couponLayout = (LinearLayout) findViewById(R.id.ll_coupon);
         couponView = (RecyclerView) findViewById(R.id.rv_coupon);
-        lineCoupon = findViewById(R.id.line_coupon);
         skuLayout = (LinearLayout) findViewById(R.id.ll_goods_sku);
         tvSelect = (TextView) findViewById(R.id.tv_select);
         tvSku = (TextView) findViewById(R.id.tv_select_specification);
@@ -243,12 +242,10 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         tvGoodsName.setText(bean.name);
 
         if(bean.coupon == null || bean.coupon.isEmpty()){
-            tvCoupon.setVisibility(View.GONE);
-            lineCoupon.setVisibility(View.GONE);
+            couponLayout.setVisibility(View.GONE);
         }else{
             couponAdapter.setData(bean.coupon);
-            tvCoupon.setVisibility(View.VISIBLE);
-            lineCoupon.setVisibility(View.VISIBLE);
+            couponLayout.setVisibility(View.VISIBLE);
         }
 
         StringBuilder skuStr = new StringBuilder();

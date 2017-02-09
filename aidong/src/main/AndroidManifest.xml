@@ -70,7 +70,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.discover.CommentDetailActivity" />
         <activity
             android:name=".ui.activity.media.AlbumActivity"
             android:hardwareAccelerated="true" />
@@ -82,7 +81,6 @@
         <activity android:name=".ui.activity.media.SelectVideoCoverActivity" />
         <activity android:name=".ui.activity.media.TabVideoShowActivity" />
         <activity android:name=".ui.activity.media.ImageShowerActivity" />
-        <activity android:name=".ui.activity.mine.MyShowActivityNew" />
         <activity android:name=".ui.activity.mine.TabMinePersonalDataActivity" />
         <activity android:name=".ui.activity.mine.TabMinePersonalDataFitnessGoalsActivity" />
         <activity android:name=".ui.activity.mine.TabMinePersonalDataFitnessIsGoodActivity" />
@@ -110,6 +108,7 @@
         <activity android:name=".ui.activity.mine.OrderActivity" />
         <activity android:name=".ui.activity.mine.AppointmentActivity" />
         <activity android:name=".ui.activity.mine.CouponActivity" />
+        <activity android:name=".ui.activity.mine.SelectCouponActivity"/>
         <activity android:name=".ui.activity.mine.OrderDetailActivity" />
         <activity android:name=".ui.activity.mine.FollowActivity" />
         <activity android:name=".ui.activity.mine.AddAddressActivity" />
@@ -126,6 +125,8 @@
         <activity android:name=".ui.activity.mine.UpdateAddressActivity"/>
         <activity android:name=".ui.activity.mine.UpdateUserInfoActivity"/>
         <activity android:name=".ui.activity.mine.UpdateSignatureActivity"/>
+        <activity android:name=".ui.activity.mine.UpdateDeliveryInfoActivity"/>
+
         <activity android:name=".ui.activity.mine.UpdatePhotoWall"/>
         <activity android:name=".module.scan.activity.MipcaActivityCapture" />
         <activity android:name=".module.scan.activity.ScanResultActivity" />
@@ -182,7 +183,6 @@
         <activity android:name=".ui.activity.discover.VenuesDetailActivity" />
         <activity android:name=".ui.activity.discover.DiscoverUserActivity" />
         <activity android:name=".ui.activity.mine.login.ChangePasswordActivity" />
-        <activity android:name=".ui.activity.mine.login.CompleteUserInfomationActivity" />
         <activity android:name=".ui.activity.mine.login.FastLoginActivity" />
         <activity android:name=".ui.activity.mine.login.FindPasswordActivity" />
         <activity android:name=".ui.activity.mine.login.RegisterActivity" />

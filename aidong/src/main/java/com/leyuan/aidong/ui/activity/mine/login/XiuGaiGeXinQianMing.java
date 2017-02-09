@@ -15,6 +15,8 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.utils.common.Constant;
 
+
+
 /**
  * Created by user on 2015/8/10.
  */
@@ -28,7 +30,7 @@ public class XiuGaiGeXinQianMing extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.xiugaiqianming);
+        setContentView(R.layout.activity_change_signture);
         content = getIntent().getExtras().getString(Constant.BUNDLE_CONTENT);
         imageView_back = (ImageView) findViewById(R.id.imageView_back);
         editText11 = (EditText) findViewById(R.id.editText11);

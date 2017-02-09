@@ -10,12 +10,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
-import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.model.result.CaptchaResult;
+import com.leyuan.aidong.http.HttpConfig;
+import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.utils.common.Constant;
 import com.leyuan.aidong.utils.common.UrlLink;
-import com.leyuan.aidong.http.HttpConfig;
-import com.leyuan.aidong.entity.model.result.CaptchaResult;
 import com.leyuan.commonlibrary.http.IHttpCallback;
 import com.leyuan.commonlibrary.http.IHttpTask;
 import com.leyuan.commonlibrary.util.ToastUtil;

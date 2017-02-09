@@ -16,7 +16,6 @@ import android.widget.ListView;
 
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.activity.mine.MyShowActivityNew;
 import com.leyuan.aidong.utils.common.Constant;
 import com.leyuan.aidong.utils.interfaces.TabChoniceInterface;
 import com.leyuan.aidong.entity.model.UserCoach;
@@ -392,10 +391,10 @@ public class ActivityTool implements TabChoniceInterface {
 			}
 		}
 		// i.putExtra(BUNDLE_USER, u);
-		i.setClass(context, MyShowActivityNew.class);
+	/*	i.setClass(context, MyShowActivityNew.class);
 		i.putExtra("user", user);
 		i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		context.startActivity(i);
+		context.startActivity(i);*/
 	}
 	
 	

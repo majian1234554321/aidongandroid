@@ -18,7 +18,6 @@ import com.leyuan.aidong.utils.TimeCountUtil;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.widget.CommonTitleLayout;
 import com.leyuan.aidong.widget.DialogImageIdentify;
-import com.leyuan.commonlibrary.manager.UiManager;
 import com.leyuan.commonlibrary.util.DialogUtils;
 import com.leyuan.commonlibrary.util.StringUtils;
 
@@ -151,7 +150,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 //        UiManager.activityJump(this,CompleteUserInfomationActivity.class);
         if (success) {
              ToastUtil.showShort(App.context, "注册成功");
-            UiManager.activityJump(this,CompleteUserInfomationActivity.class);
+           // UiManager.activityJump(this,CompleteUserInfomationActivity.class);
             finish();
         }
 //        else {

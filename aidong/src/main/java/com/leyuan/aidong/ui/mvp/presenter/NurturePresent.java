@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.mvp.presenter;
 
 import android.support.v7.widget.RecyclerView;
 
+import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.widget.customview.SwitcherLayout;
 
 /**
@@ -61,5 +62,6 @@ public interface NurturePresent {
      * @param pickUp
      * @param pickUpId
      */
-    void buyNurtureImmediately(String skuCode,int amount,String pickUp,String pickUpId);
+    void buyNurtureImmediately(String skuCode, int amount, String pickUp, String pickUpId,
+                               PayInterface.PayListener payListener);
 }
