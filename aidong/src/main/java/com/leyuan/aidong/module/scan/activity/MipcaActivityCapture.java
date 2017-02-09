@@ -22,7 +22,7 @@ import android.widget.Toast;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.activity.mine.account.LoginActivity;
+import com.leyuan.aidong.ui.mine.account.LoginActivity;
 import com.leyuan.aidong.entity.model.FacePay;
 import com.leyuan.aidong.module.scan.camera.CameraManager;
 import com.leyuan.aidong.module.scan.decoding.CaptureActivityHandler;

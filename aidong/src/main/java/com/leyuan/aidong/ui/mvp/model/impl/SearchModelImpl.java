@@ -6,7 +6,7 @@ import com.leyuan.aidong.entity.data.FoodData;
 import com.leyuan.aidong.entity.data.SearchGoodsData;
 import com.leyuan.aidong.entity.data.UserData;
 import com.leyuan.aidong.entity.data.VenuesData;
-import com.leyuan.aidong.entity.greendao.SearchHistory;
+import com.leyuan.aidong.entity.SearchHistory;
 import com.leyuan.aidong.http.RetrofitHelper;
 import com.leyuan.aidong.http.RxHelper;
 import com.leyuan.aidong.http.api.SearchService;

@@ -13,7 +13,7 @@ import com.leyuan.aidong.http.subscriber.CommonSubscriber;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
-import com.leyuan.aidong.ui.activity.home.SelfDeliveryVenuesActivity;
+import com.leyuan.aidong.ui.home.activity.SelfDeliveryVenuesActivity;
 import com.leyuan.aidong.ui.mvp.model.VenuesModel;
 import com.leyuan.aidong.ui.mvp.model.impl.VenuesModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.VenuesPresent;

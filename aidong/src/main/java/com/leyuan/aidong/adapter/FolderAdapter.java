@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.activity.media.AlbumActivity;
+import com.leyuan.aidong.ui.media.AlbumActivity;
 import com.leyuan.aidong.entity.model.location.ImageItem;
 import com.leyuan.aidong.utils.photo.BitmapCache;
 

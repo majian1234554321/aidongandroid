@@ -16,11 +16,11 @@ import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.model.result.MsgResult;
-import com.leyuan.aidong.ui.activity.media.TabTheIndividualDynaminActivity;
-import com.leyuan.aidong.ui.fragment.discover.DiscoverHomeFragment;
-import com.leyuan.aidong.ui.fragment.home.HomeFragment;
-import com.leyuan.aidong.ui.fragment.mine.MineFragment;
-import com.leyuan.aidong.ui.fragment.video.VideoHomeFragment;
+import com.leyuan.aidong.ui.media.TabTheIndividualDynaminActivity;
+import com.leyuan.aidong.ui.discover.fragment.DiscoverHomeFragment;
+import com.leyuan.aidong.ui.home.fragment.HomeFragment;
+import com.leyuan.aidong.ui.mine.fragment.MineFragment;
+import com.leyuan.aidong.ui.video.fragment.VideoHomeFragment;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.Utils;
 import com.leyuan.commonlibrary.http.IHttpCallback;

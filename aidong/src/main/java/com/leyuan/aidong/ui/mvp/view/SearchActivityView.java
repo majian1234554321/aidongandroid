@@ -1,6 +1,6 @@
 package com.leyuan.aidong.ui.mvp.view;
 
-import com.leyuan.aidong.entity.greendao.SearchHistory;
+import com.leyuan.aidong.entity.SearchHistory;
 
 import java.util.List;
 
