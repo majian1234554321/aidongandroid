@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 
+import pl.droidsonroids.gif.GifImageView;
+
 /**
  * 动态显示加载中,加载失败,无内容,正常数据显示的布局
  * @author Mehdi Sakout
@@ -135,6 +137,9 @@ public class SwitcherLayout {
 
     private void setDefaultViews(){
         View loadingView = initView(R.layout.view_loading_content, TAG_LOADING);
+        GifImageView gif = (GifImageView) loadingView.findViewById(R.id.loading);
+        gif.setImageResource(R.drawable.loading);
+
         View emptyView = initView(R.layout.view_no_content, TAG_EMPTY);
         View exceptionView = initView(R.layout.view_exception, TAG_EXCEPTION);
 
