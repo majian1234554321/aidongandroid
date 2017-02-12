@@ -10,7 +10,7 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.TabFragmentAdapter;
 import com.leyuan.aidong.ui.mine.fragment.CouponFragment;
-import com.leyuan.aidong.widget.customview.SimpleTitleBar;
+import com.leyuan.aidong.widget.SimpleTitleBar;
 
 import java.util.ArrayList;
 import java.util.Arrays;

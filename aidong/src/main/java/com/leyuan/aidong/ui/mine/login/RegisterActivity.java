@@ -14,12 +14,12 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.RegisterPresenterInterface;
 import com.leyuan.aidong.ui.mvp.presenter.impl.RegisterPresenter;
 import com.leyuan.aidong.ui.mvp.view.RegisterViewInterface;
+import com.leyuan.aidong.utils.DialogUtils;
+import com.leyuan.aidong.utils.StringUtils;
 import com.leyuan.aidong.utils.TimeCountUtil;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.widget.CommonTitleLayout;
 import com.leyuan.aidong.widget.DialogImageIdentify;
-import com.leyuan.commonlibrary.util.DialogUtils;
-import com.leyuan.commonlibrary.util.StringUtils;
 
 
 public class RegisterActivity extends BaseActivity implements View.OnClickListener, RegisterViewInterface {

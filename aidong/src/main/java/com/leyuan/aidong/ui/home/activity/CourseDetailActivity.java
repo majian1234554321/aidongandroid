@@ -26,7 +26,7 @@ import com.leyuan.aidong.ui.mine.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CourseDetailActivityView;
-import com.leyuan.aidong.widget.customview.SwitcherLayout;
+import com.leyuan.aidong.widget.SwitcherLayout;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;

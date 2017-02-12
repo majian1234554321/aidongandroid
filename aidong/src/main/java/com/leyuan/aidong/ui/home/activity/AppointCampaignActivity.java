@@ -18,9 +18,9 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.activity.CouponActivity;
 import com.leyuan.aidong.ui.mvp.presenter.CampaignPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CampaignPresentImpl;
-import com.leyuan.aidong.widget.customview.CustomNestRadioGroup;
-import com.leyuan.aidong.widget.customview.ExtendTextView;
-import com.leyuan.aidong.widget.customview.SimpleTitleBar;
+import com.leyuan.aidong.widget.CustomNestRadioGroup;
+import com.leyuan.aidong.widget.ExtendTextView;
+import com.leyuan.aidong.widget.SimpleTitleBar;
 
 /**
  * 预约活动

@@ -27,7 +27,7 @@ import com.leyuan.aidong.ui.mvp.presenter.DiscoverPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DiscoverPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.DiscoverFragmentView;
 import com.leyuan.aidong.utils.SystemInfoUtils;
-import com.leyuan.aidong.widget.customview.SwitcherLayout;
+import com.leyuan.aidong.widget.SwitcherLayout;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import cn.bingoogolapple.bgabanner.BGABanner;

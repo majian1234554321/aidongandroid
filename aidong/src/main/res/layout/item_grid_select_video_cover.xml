@@ -3,7 +3,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-    <com.leyuan.aidong.widget.customview.SquareRelativeLayout
+    <com.leyuan.aidong.widget.SquareRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="3dp"
@@ -25,7 +25,7 @@
             android:src="@drawable/skyblue_platform_checked_disabled"
             />
 
-    </com.leyuan.aidong.widget.customview.SquareRelativeLayout>
+    </com.leyuan.aidong.widget.SquareRelativeLayout>
 
 
 </RelativeLayout>

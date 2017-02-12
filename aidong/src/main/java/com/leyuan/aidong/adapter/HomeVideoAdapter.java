@@ -18,7 +18,7 @@ import com.leyuan.aidong.entity.video.LiveVideoInfo;
 import com.leyuan.aidong.entity.video.LiveVideoListResult;
 import com.leyuan.aidong.entity.video.LiveVideoSoonInfo;
 import com.leyuan.aidong.utils.LiveDateFilterUtil;
-import com.leyuan.aidong.widget.customview.MyListView;
+import com.leyuan.aidong.widget.MyListView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 

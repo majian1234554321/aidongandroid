@@ -19,13 +19,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.model.result.MsgResult;
-import com.leyuan.aidong.http.HttpConfig;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.utils.common.UrlLink;
-import com.leyuan.commonlibrary.http.IHttpCallback;
-import com.leyuan.commonlibrary.http.IHttpTask;
-import com.leyuan.commonlibrary.util.ToastUtil;
 
 import org.apache.http.message.BasicNameValuePair;
 
@@ -33,8 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class TabMineChangePasswordActivity extends BaseActivity implements
-        IHttpCallback {
+public class TabMineChangePasswordActivity extends BaseActivity  {
     private static final int CHANGEPASSWORD = 0;
     private Button mlayout_tab_mine_change_password_btn;
     private EditText mverification_edittext;
@@ -55,7 +48,7 @@ public class TabMineChangePasswordActivity extends BaseActivity implements
         layout_tab_mine_change_password_img_back = (ImageView) findViewById(R.id.layout_tab_mine_change_password_img_back);
     }
 
-    @Override
+   /* @Override
     public void onGetData(Object data, int requestCode, String response) {
         switch (requestCode) {
             case CHANGEPASSWORD:
@@ -75,7 +68,7 @@ public class TabMineChangePasswordActivity extends BaseActivity implements
     @Override
     public void onError(String reason, int requestCode) {
 
-    }
+    }*/
 
     protected void initData() {
         layout_tab_mine_change_password_img_back
@@ -182,7 +175,7 @@ public class TabMineChangePasswordActivity extends BaseActivity implements
                         return false;
                     }
                 });
-        mlayout_tab_mine_change_password_btn
+        /*mlayout_tab_mine_change_password_btn
                 .setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -201,7 +194,7 @@ public class TabMineChangePasswordActivity extends BaseActivity implements
                         }
 
                     }
-                });
+                });*/
     }
 
     private boolean chagePassword(EditText mverification_edittext,

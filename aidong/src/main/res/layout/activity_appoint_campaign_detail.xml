@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <com.leyuan.aidong.widget.customview.SimpleTitleBar
+    <com.leyuan.aidong.widget.SimpleTitleBar
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
@@ -41,31 +41,31 @@
 
                 <include layout="@layout/inc_line_black" />
 
-                <com.leyuan.aidong.widget.customview.ExtendTextView
+                <com.leyuan.aidong.widget.ExtendTextView
                     android:id="@+id/tv_campaign_user"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:left_text="预约人:" />
 
-                <com.leyuan.aidong.widget.customview.ExtendTextView
+                <com.leyuan.aidong.widget.ExtendTextView
                     android:id="@+id/tv_campaign_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:left_text="手机:" />
 
-                <com.leyuan.aidong.widget.customview.ExtendTextView
+                <com.leyuan.aidong.widget.ExtendTextView
                     android:id="@+id/tv_campaign_organization"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:left_text="主办方:" />
 
-                <com.leyuan.aidong.widget.customview.ExtendTextView
+                <com.leyuan.aidong.widget.ExtendTextView
                     android:id="@+id/tv_campaign_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:left_text="活动时间:" />
 
-                <com.leyuan.aidong.widget.customview.ExtendTextView
+                <com.leyuan.aidong.widget.ExtendTextView
                     android:id="@+id/tv_campaign_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -84,55 +84,55 @@
 
             <include layout="@layout/inc_line_black" />
 
-            <com.leyuan.aidong.widget.customview.ExtendTextView
+            <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_total_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="活动总额:" />
 
-            <com.leyuan.aidong.widget.customview.ExtendTextView
+            <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_express_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="运费:" />
 
-            <com.leyuan.aidong.widget.customview.ExtendTextView
+            <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/coupon_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="优惠劵:" />
 
-            <com.leyuan.aidong.widget.customview.ExtendTextView
+            <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/campaign_privilege"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="活动优惠:" />
 
-            <com.leyuan.aidong.widget.customview.ExtendTextView
+            <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_aibi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="爱币:" />
 
-            <com.leyuan.aidong.widget.customview.ExtendTextView
+            <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_aidou"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="爱豆:" />
 
-            <com.leyuan.aidong.widget.customview.ExtendTextView
+            <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_start_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="下单时间:" />
 
-            <com.leyuan.aidong.widget.customview.ExtendTextView
+            <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_pay_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="支付时间:" />
 
-            <com.leyuan.aidong.widget.customview.ExtendTextView
+            <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_pay_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -156,7 +156,7 @@
 
                 <include layout="@layout/inc_line_black" />
 
-                <com.leyuan.aidong.widget.customview.CustomNestRadioGroup
+                <com.leyuan.aidong.widget.CustomNestRadioGroup
                     android:id="@+id/radio_group"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -219,7 +219,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
-                </com.leyuan.aidong.widget.customview.CustomNestRadioGroup>
+                </com.leyuan.aidong.widget.CustomNestRadioGroup>
 
             </LinearLayout>
 

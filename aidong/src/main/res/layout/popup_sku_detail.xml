@@ -108,7 +108,7 @@
             app:backgroundImage="@drawable/place_holder_logo" />
     </RelativeLayout>
 
-    <com.leyuan.aidong.widget.customview.MaxHeightNestScrollView
+    <com.leyuan.aidong.widget.MaxHeightNestScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -169,7 +169,7 @@
                 android:layout_height="20dp"
                 android:background="@color/white"/>
         </LinearLayout>
-    </com.leyuan.aidong.widget.customview.MaxHeightNestScrollView>
+    </com.leyuan.aidong.widget.MaxHeightNestScrollView>
 
 
     <RelativeLayout

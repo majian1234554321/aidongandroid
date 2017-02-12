@@ -15,15 +15,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.model.result.Captcha;
-import com.leyuan.aidong.http.HttpConfig;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.utils.ActivityTool;
-import com.leyuan.aidong.utils.common.Constant;
-import com.leyuan.aidong.utils.common.UrlLink;
-import com.leyuan.commonlibrary.http.IHttpCallback;
-import com.leyuan.commonlibrary.http.IHttpTask;
-import com.leyuan.commonlibrary.util.ToastUtil;
 
 import org.apache.http.message.BasicNameValuePair;
 
@@ -32,8 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class TabMineBingdingMobilePhoneActivity extends BaseActivity implements
-		IHttpCallback {
+public class TabMineBingdingMobilePhoneActivity extends BaseActivity
+{
 	private ImageView mlayout_tab_mine_binding_mobile_phone_img_back;
 	private Button mlayout_tab_mine_submit_binding_btn;
 	private Button layout_tab_mine_input_phone_number_btn;
@@ -107,23 +100,23 @@ public class TabMineBingdingMobilePhoneActivity extends BaseActivity implements
 					public void onClick(View v) {
 					 if (layout_tab_mine_enter_the_verification_code_edit
 								.getText().toString().trim().length() == 0) {
-							ToastUtil.show(getResources().getString(
-									R.string.pleasecode),TabMineBingdingMobilePhoneActivity.this);
+							//ToastUtil.show(getResources().getString(
+								//	R.string.pleasecode),TabMineBingdingMobilePhoneActivity.this);
 						} else if (layout_tab_mine_bingding_dianhua.getText()
 								.toString().trim().length() == 0) {
-						 ToastUtil.show(getResources().getString(
-								 R.string.pleasenumber),TabMineBingdingMobilePhoneActivity.this);
+						// ToastUtil.show(getResources().getString(
+								// R.string.pleasenumber),TabMineBingdingMobilePhoneActivity.this);
 						} else {
 							setLoadingDialog(R.string.tip_getVerificationcode);
 							HashMap<String, String> map = new HashMap<String, String>();
 							map.put("token", BingToken);
-							addTask(TabMineBingdingMobilePhoneActivity.this,
+							/*addTask(TabMineBingdingMobilePhoneActivity.this,
 									new IHttpTask(
 											UrlLink.CAPTCHACHECK_URL,map,
 											paramsinit2(
 													layout_tab_mine_enter_the_verification_code_edit),
 											Captcha.class), HttpConfig.POST,
-											BANGDING);
+											BANGDING);*/
 						}
 					}
 				});
@@ -133,22 +126,22 @@ public class TabMineBingdingMobilePhoneActivity extends BaseActivity implements
 					public void onClick(View v) {
 						if (layout_tab_mine_bingding_dianhua.getText()
 								.toString().trim().length() == 0) {
-							ToastUtil.show(getResources().getString(
-									R.string.pleasenumber),TabMineBingdingMobilePhoneActivity.this);
+							//ToastUtil.show(getResources().getString(
+									//R.string.pleasenumber),TabMineBingdingMobilePhoneActivity.this);
 						} else {
 							if (!ActivityTool
 									.isMobileNO(layout_tab_mine_bingding_dianhua
 											.getText().toString().trim())) {
-								ToastUtil.show(getResources().getString(
-										R.string.input_phone),TabMineBingdingMobilePhoneActivity.this);
+							//	ToastUtil.show(getResources().getString(
+									//	R.string.input_phone),TabMineBingdingMobilePhoneActivity.this);
 							} else {
 								setLoadingDialog(R.string.tip_getVerificationcode);								
-								addTask(TabMineBingdingMobilePhoneActivity.this,
+								/*addTask(TabMineBingdingMobilePhoneActivity.this,
 										new IHttpTask(
 												UrlLink.BINGDINGIPHONE,
 												paramsinit(layout_tab_mine_bingding_dianhua),
 												Captcha.class),
-										HttpConfig.POST, PASSWORD);
+										HttpConfig.POST, PASSWORD);*/
 							}
 
 						}
@@ -157,7 +150,7 @@ public class TabMineBingdingMobilePhoneActivity extends BaseActivity implements
 
 	}
 
-	@Override
+	/*@Override
 	public void onGetData(Object data, int requestCode, String response) {
 		stoploadingDialog();
 		switch (requestCode) {
@@ -182,7 +175,7 @@ public class TabMineBingdingMobilePhoneActivity extends BaseActivity implements
 			break;
 		}
 
-	}
+	}*/
 
 	public List<BasicNameValuePair> paramsinit(
 			EditText layout_tab_mine_bingding_dianhua) {
@@ -201,9 +194,9 @@ public class TabMineBingdingMobilePhoneActivity extends BaseActivity implements
 		paramsaaa.add(pair1);
 		return paramsaaa;
 	}
-	@Override
+	/*@Override
 	public void onError(String reason, int requestCode) {
 		// TODO Auto-generated method stub
 		stoploadingDialog();
-	}
+	}*/
 }

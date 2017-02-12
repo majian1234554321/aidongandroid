@@ -15,7 +15,7 @@ import com.leyuan.aidong.ui.mvp.view.AddAddressActivityView;
 import com.leyuan.aidong.ui.mvp.view.AddressActivityView;
 import com.leyuan.aidong.ui.mvp.view.SelectAddressActivityView;
 import com.leyuan.aidong.ui.mvp.view.UpdateAddressActivityView;
-import com.leyuan.aidong.widget.customview.SwitcherLayout;
+import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
 import java.util.List;

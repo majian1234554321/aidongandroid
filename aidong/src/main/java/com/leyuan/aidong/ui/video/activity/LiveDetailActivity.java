@@ -18,14 +18,9 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.video.LiveVideoInfo;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.account.LoginActivity;
-import com.leyuan.aidong.utils.Logger;
-import com.leyuan.aidong.utils.common.Common;
-import com.leyuan.aidong.utils.common.Urls;
+import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.Urls;
 import com.leyuan.aidong.widget.video.TextViewPrintly;
-import com.lidroid.xutils.exception.HttpException;
-import com.lidroid.xutils.http.RequestParams;
-import com.lidroid.xutils.http.ResponseInfo;
-import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -81,7 +76,7 @@ public class LiveDetailActivity extends BaseActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         screen_width = getResources().getDisplayMetrics().widthPixels;
-        id = getIntent().getIntExtra(Common.LIVE_ID, 0);
+        id = getIntent().getIntExtra(Constant.LIVE_ID, 0);
         setContentView(R.layout.activity_live_detail);
 
         initView();
@@ -132,14 +127,14 @@ public class LiveDetailActivity extends BaseActivity implements View.OnClickList
     }
 
     public void getDataFromInter() {
-        RequestParams params = new RequestParams();
+       /* RequestParams params = new RequestParams();
         params.addBodyParameter("liveId", String.valueOf(id));
-//        new MyHttpUtils().send(HttpRequest.HttpMethod.POST, Urls.BASE_URL_TEXT + "/getLiveVideoDetail.action", params, callback);
+//        new MyHttpUtils().send(HttpRequest.HttpMethod.POST, Urls.BASE_URL_TEXT + "/getLiveVideoDetail.action", params, callback);*/
     }
 
 
     private LiveVideoInfo info;
-    private RequestCallBack<String> callback = new RequestCallBack<String>() {
+   /* private RequestCallBack<String> callback = new RequestCallBack<String>() {
 
         @Override
         public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -202,7 +197,7 @@ public class LiveDetailActivity extends BaseActivity implements View.OnClickList
         public void onFailure(HttpException e, String s) {
 
         }
-    };
+    };*/
 
     @Override
     protected void onDestroy() {
@@ -234,8 +229,8 @@ public class LiveDetailActivity extends BaseActivity implements View.OnClickList
             case R.id.iv_reply:
 
                 Intent intent = new Intent(this, LiveCommentActivity.class);
-                intent.putExtra(Common.VIDEO_ID, info.getLiveId());
-                intent.putExtra(Common.VIDEO_NAME, info.getLiveName());
+                intent.putExtra(Constant.VIDEO_ID, info.getLiveId());
+                intent.putExtra(Constant.VIDEO_NAME, info.getLiveName());
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_bottom, 0);
 
@@ -262,7 +257,7 @@ public class LiveDetailActivity extends BaseActivity implements View.OnClickList
                 if(liveState == LiveState.BEGINED){
                     Intent intent_live = new Intent(this, LivingVideoActivity.class);
                     if(info !=null)
-                    intent_live.putExtra(Common.LIVE_INFO,info);
+                    intent_live.putExtra(Constant.LIVE_INFO,info);
                     startActivity(intent_live);
                 }
                 break;
@@ -273,14 +268,14 @@ public class LiveDetailActivity extends BaseActivity implements View.OnClickList
     }
 
     private void parseLive() {
-        RequestParams params = new RequestParams();
+      /*  RequestParams params = new RequestParams();
         params.addBodyParameter("liveId", String.valueOf(info.getLiveId()));
         params.addBodyParameter("idongId", idongId);
 //        MyHttpUtilsHttpUtils http = new MyHttpUtils();
-//        http.send(HttpRequest.HttpMethod.POST, Common.URL_LIVE_PRAISE, params, callbackParse);
+//        http.send(HttpRequest.HttpMethod.POST, Common.URL_LIVE_PRAISE, params, callbackParse);*/
     }
 
-    private RequestCallBack<String> callbackParse = new RequestCallBack<String>() {
+   /* private RequestCallBack<String> callbackParse = new RequestCallBack<String>() {
 
         @Override
         public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -303,7 +298,7 @@ public class LiveDetailActivity extends BaseActivity implements View.OnClickList
         public void onFailure(HttpException e, String s) {
 
         }
-    };
+    };*/
 
 //    @Override
 //    protected void onActivityResult(int requestCode, int resultCode, Intent data) {

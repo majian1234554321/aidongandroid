@@ -10,9 +10,9 @@ import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.FastLoginPresenter;
 import com.leyuan.aidong.ui.mvp.view.FastLoginViewInterface;
+import com.leyuan.aidong.utils.StringUtils;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.widget.CommonTitleLayout;
-import com.leyuan.commonlibrary.util.StringUtils;
 
 public class FastLoginActivity extends BaseActivity implements View.OnClickListener, FastLoginViewInterface {
 

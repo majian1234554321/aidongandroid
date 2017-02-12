@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.widget.customview.BaseAddressPopupWindow;
+import com.leyuan.aidong.widget.BaseAddressPopupWindow;
 import com.leyuan.aidong.widget.wheelcity.ArrayWheelAdapter;
 import com.leyuan.aidong.widget.wheelcity.OnWheelChangedListener;
 import com.leyuan.aidong.widget.wheelcity.WheelView;

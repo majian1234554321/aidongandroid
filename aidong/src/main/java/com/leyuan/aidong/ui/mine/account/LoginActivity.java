@@ -11,13 +11,10 @@ import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.module.thirdpartylogin.ThirdLoginUtils;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mine.login.FindPasswordActivity;
-import com.leyuan.aidong.ui.mine.login.RegisterActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.LoginPresenter;
 import com.leyuan.aidong.ui.mvp.view.LoginViewInterface;
+import com.leyuan.aidong.utils.StringUtils;
 import com.leyuan.aidong.utils.ToastUtil;
-import com.leyuan.commonlibrary.manager.UiManager;
-import com.leyuan.commonlibrary.util.StringUtils;
 
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener ,LoginViewInterface {
@@ -59,11 +56,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.forget_password:
 
-                UiManager.activityJump(this,FindPasswordActivity.class);
+               // UiManager.activityJump(this,FindPasswordActivity.class);
                 break;
             case R.id.register:
 
-                UiManager.activityJump(this,RegisterActivity.class);
+               // UiManager.activityJump(this,RegisterActivity.class);
                 break;
             case R.id.button_weixin:
 //                sharePopupWindow.showAtBottom("测试标题","测试内容","http://o8e1adk04.bkt.clouddn.com/image/2016/11/18/941b1d51-9e24-47bb-8b1a-6a172abbdce3.jpg",

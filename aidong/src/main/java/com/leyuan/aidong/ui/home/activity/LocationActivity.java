@@ -12,7 +12,7 @@ import com.leyuan.aidong.adapter.home.CityAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.HomePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.HomePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.LocationActivityView;
-import com.leyuan.aidong.widget.customview.SimpleTitleBar;
+import com.leyuan.aidong.widget.SimpleTitleBar;
 
 import java.util.List;
 

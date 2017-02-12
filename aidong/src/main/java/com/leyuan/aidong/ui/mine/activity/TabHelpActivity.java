@@ -50,7 +50,7 @@ public class TabHelpActivity extends BaseActivity {
 				finish();
 			}
 		});
-		mlayout_tab_help_version_of_the_introduction
+	/*	mlayout_tab_help_version_of_the_introduction
 				.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
@@ -58,7 +58,7 @@ public class TabHelpActivity extends BaseActivity {
 								VersionOfTheIntroductionActivity.class);
 						startActivity(intent);
 					}
-				});
+				});*/
 		mlayout_tab_help_about_mx.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

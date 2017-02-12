@@ -13,7 +13,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.HomeBean;
 import com.leyuan.aidong.ui.home.activity.BrandActivity;
-import com.leyuan.aidong.widget.customview.MyListView;
+import com.leyuan.aidong.widget.MyListView;
 
 import java.util.ArrayList;
 import java.util.List;

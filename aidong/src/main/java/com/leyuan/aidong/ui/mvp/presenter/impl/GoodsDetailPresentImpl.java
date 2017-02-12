@@ -23,7 +23,7 @@ import com.leyuan.aidong.ui.mvp.view.GoodsDetailActivityView;
 import com.leyuan.aidong.ui.mvp.view.SelfDeliveryVenuesActivityView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.Logger;
-import com.leyuan.aidong.widget.customview.SwitcherLayout;
+import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
 import java.util.List;

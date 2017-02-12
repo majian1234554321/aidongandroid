@@ -9,8 +9,8 @@ import android.view.View;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.adapter.mine.LoveCoinAdapter;
-import com.leyuan.aidong.widget.customview.SimpleTitleBar;
-import com.leyuan.aidong.widget.customview.SwitcherLayout;
+import com.leyuan.aidong.widget.SimpleTitleBar;
+import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -13,7 +13,7 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <com.leyuan.aidong.widget.customview.SlideDetailsLayout
+        <com.leyuan.aidong.widget.SlideDetailsLayout
             android:id="@+id/slide_details_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -395,7 +395,7 @@
 
             </LinearLayout>
 
-        </com.leyuan.aidong.widget.customview.SlideDetailsLayout>
+        </com.leyuan.aidong.widget.SlideDetailsLayout>
 
         <RelativeLayout
             android:id="@+id/rl_title"

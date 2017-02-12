@@ -14,7 +14,6 @@ import com.leyuan.aidong.ui.discover.fragment.DiscoverHomeFragment;
 import com.leyuan.aidong.ui.home.fragment.HomeFragment;
 import com.leyuan.aidong.ui.mine.fragment.MineFragment;
 import com.leyuan.aidong.ui.video.fragment.VideoHomeFragment;
-import com.leyuan.aidong.utils.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -160,7 +159,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onBackPressed() {
-        Logger.i("WatchOfficeActivity onBackPressed");
         long mNowTime = System.currentTimeMillis();//获取第一次按键时间
         if ((mNowTime - mPressedTime) > 2000) {//比较两次按键时间差
             Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();

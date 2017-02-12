@@ -17,9 +17,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.R;
-import com.leyuan.commonlibrary.util.ToastUtil;
+import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.utils.ToastUtil;
+
 
 public class TabMinePersonalDataFitnessIsGoodActivity extends BaseActivity {
 	private ImageView mlayout_tab_mine_personal_data_fitness_is_good_img;

@@ -67,7 +67,7 @@
             android:orientation="horizontal"
             android:paddingTop="@dimen/pref_4dp" >
 
-            <com.leyuan.aidong.widget.customview.CircleImageView
+            <com.leyuan.aidong.widget.CircleImageView
                 android:id="@+id/userIcon"
                 android:layout_width="@dimen/pref_32dp"
                 android:layout_height="@dimen/pref_32dp"
@@ -115,7 +115,7 @@
                 android:layout_weight="1"
                 android:gravity="bottom" >
 
-                <com.leyuan.aidong.widget.customview.PasteEditText
+                <com.leyuan.aidong.widget.PasteEditText
                     android:id="@+id/et_sendmessage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -23,7 +23,7 @@ import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.adapter.mine.StringAdapter;
 import com.leyuan.aidong.ui.mine.view.AddressPopupWindow;
-import com.leyuan.aidong.widget.customview.ExtendTextView;
+import com.leyuan.aidong.widget.ExtendTextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;

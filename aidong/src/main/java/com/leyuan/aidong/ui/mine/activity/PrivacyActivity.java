@@ -12,14 +12,8 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.model.result.MsgResult;
-import com.leyuan.aidong.http.HttpConfig;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.utils.common.UrlLink;
-import com.leyuan.aidong.widget.customview.UISwitchButton;
-import com.leyuan.commonlibrary.http.IHttpCallback;
-import com.leyuan.commonlibrary.http.IHttpTask;
-import com.leyuan.commonlibrary.util.ToastUtil;
+import com.leyuan.aidong.widget.UISwitchButton;
 
 import org.apache.http.message.BasicNameValuePair;
 
@@ -27,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class PrivacyActivity extends BaseActivity implements IHttpCallback {
+public class PrivacyActivity extends BaseActivity  {
     private ImageView layout_tab_mine_personal_setting_privacy_img;
     private UISwitchButton uiswitchButton;
     private static final int PRIVACY = 0;
@@ -71,13 +65,13 @@ public class PrivacyActivity extends BaseActivity implements IHttpCallback {
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (!isChecked) {
+             /*   if (!isChecked) {
                     addTask(PrivacyActivity.this, new IHttpTask(UrlLink.PRIVACY_URL, paramsinit(1),
                             MsgResult.class), HttpConfig.PUT, PRIVACY);
                 } else {
                     addTask(PrivacyActivity.this, new IHttpTask(UrlLink.PRIVACY_URL, paramsinit(0),
                             MsgResult.class), HttpConfig.PUT, PRIVACY);
-                }
+                }*/
                 Editor editor = mSharedPreferences.edit();
                 editor.putBoolean("state", isChecked);
                 editor.commit();
@@ -91,7 +85,7 @@ public class PrivacyActivity extends BaseActivity implements IHttpCallback {
         return paramsaaa;
     }
 
-    @Override
+    /*@Override
     public void onGetData(Object data, int requestCode, String response) {
         switch (requestCode) {
             case PRIVACY:
@@ -110,5 +104,5 @@ public class PrivacyActivity extends BaseActivity implements IHttpCallback {
     @Override
     public void onError(String reason, int requestCode) {
 
-    }
+    }*/
 }

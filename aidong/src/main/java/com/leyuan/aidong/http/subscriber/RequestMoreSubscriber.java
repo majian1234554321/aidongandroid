@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.leyuan.aidong.utils.Logger;
-import com.leyuan.aidong.utils.NetUtil;
+import com.leyuan.aidong.utils.NetworkUtil;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 
@@ -85,7 +85,7 @@ public abstract class RequestMoreSubscriber<T> extends Subscriber<T>{
      */
     @Override
     public void onError(Throwable e) {
-        if(!NetUtil.isConnected(context)){
+        if(!NetworkUtil.isConnected(context)){
             showErrorFooterView();
         }else{
             hideFooterView();

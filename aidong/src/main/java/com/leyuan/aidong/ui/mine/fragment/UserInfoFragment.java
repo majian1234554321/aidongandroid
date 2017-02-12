@@ -9,7 +9,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.ProfileBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
-import com.leyuan.aidong.widget.customview.ExtendTextView;
+import com.leyuan.aidong.widget.ExtendTextView;
 
 /**
  * 资料

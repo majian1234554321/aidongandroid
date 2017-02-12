@@ -17,6 +17,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
+import com.leyuan.aidong.ui.mine.account.LoginActivity;
 import com.leyuan.aidong.ui.mine.activity.AddressActivity;
 import com.leyuan.aidong.ui.mine.activity.ApplyServiceActivity;
 import com.leyuan.aidong.ui.mine.activity.AppointmentActivity;
@@ -29,10 +30,9 @@ import com.leyuan.aidong.ui.mine.activity.OrderActivity;
 import com.leyuan.aidong.ui.mine.activity.SportsMomentActivity;
 import com.leyuan.aidong.ui.mine.activity.TabMinePersonalSettingsActivity;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
-import com.leyuan.aidong.ui.mine.account.LoginActivity;
-import com.leyuan.aidong.widget.customview.AidongMineItem;
-import com.leyuan.aidong.widget.customview.CircleImageView;
-import com.leyuan.commonlibrary.manager.UiManager;
+import com.leyuan.aidong.utils.UiManager;
+import com.leyuan.aidong.widget.AidongMineItem;
+import com.leyuan.aidong.widget.CircleImageView;
 
 
 public class MineFragment extends BaseFragment implements View.OnClickListener {

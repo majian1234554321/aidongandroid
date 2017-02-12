@@ -35,7 +35,7 @@
             android:visibility="gone"/>
     </RelativeLayout>
 
-    <com.leyuan.aidong.widget.customview.CustomViewPager
+    <com.leyuan.aidong.widget.CustomViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

@@ -18,7 +18,7 @@ import com.leyuan.aidong.adapter.mine.CartShopAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.OrderPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.OrderPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.OrderDetailActivityView;
-import com.leyuan.aidong.widget.customview.ExtendTextView;
+import com.leyuan.aidong.widget.ExtendTextView;
 
 /**
  * 订单详情

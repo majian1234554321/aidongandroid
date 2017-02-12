@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.widget.customview.UISwitchButton;
+import com.leyuan.aidong.widget.UISwitchButton;
 import com.leyuan.aidong.widget.wheelview.ScreenInfo;
 import com.leyuan.aidong.widget.wheelview.WheelMain;
 

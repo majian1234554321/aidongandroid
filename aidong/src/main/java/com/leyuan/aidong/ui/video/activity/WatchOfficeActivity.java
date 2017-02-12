@@ -10,8 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.Logger;
-import com.leyuan.aidong.utils.common.Common;
 
 import java.util.ArrayList;
 
@@ -29,7 +29,7 @@ public class WatchOfficeActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        video_type = getIntent().getIntExtra(Common.VIDEO_TYPE, 0);
+        video_type = getIntent().getIntExtra(Constant.VIDEO_TYPE, 0);
         setContentView(R.layout.activity_watch_office);
         initView();
         initData();

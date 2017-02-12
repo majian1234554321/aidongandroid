@@ -10,7 +10,7 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.ui.mvp.view.CouponExchangeActivityView;
-import com.leyuan.aidong.widget.customview.SimpleTitleBar;
+import com.leyuan.aidong.widget.SimpleTitleBar;
 
 /**
  * 优惠劵兑换

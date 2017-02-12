@@ -12,20 +12,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.GoodBean;
 import com.leyuan.aidong.adapter.video.WatchOfficeRelateCourseAdapter;
 import com.leyuan.aidong.adapter.video.WatchOfficeRelateGoodAdapter;
 import com.leyuan.aidong.adapter.video.WatchOfficeRelateVideoAdapter;
+import com.leyuan.aidong.entity.GoodBean;
 import com.leyuan.aidong.entity.video.VideoDetail;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.utils.ImageLoadConfig;
-import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.widget.MyListView;
 import com.leyuan.aidong.widget.SmartScrollView;
-import com.leyuan.aidong.widget.customview.MyListView;
-import com.lidroid.xutils.exception.HttpException;
-import com.lidroid.xutils.http.RequestParams;
-import com.lidroid.xutils.http.ResponseInfo;
-import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -117,14 +112,14 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
     }
 
     private void getData() {
-        RequestParams params = new RequestParams();
+       /* RequestParams params = new RequestParams();
         params.addBodyParameter("videoId", videoId);
         params.addBodyParameter("phase", phase);
 //        MyHttpUtils http = new MyHttpUtils();
-//        http.send(HttpRequest.HttpMethod.POST, Common.URL_VIDEO_RELATE_RECOMMEND, params, callback);
+//        http.send(HttpRequest.HttpMethod.POST, Common.URL_VIDEO_RELATE_RECOMMEND, params, callback);*/
     }
 
-    private RequestCallBack<String> callback = new RequestCallBack<String>() {
+   /* private RequestCallBack<String> callback = new RequestCallBack<String>() {
 
         @Override
         public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -145,7 +140,7 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
         public void onFailure(HttpException e, String s) {
             Logger.i("httpResponse", "failure :" + s);
         }
-    };
+    };*/
 
 
 //    private void parserJson(VideoRelateBean relateBean) {

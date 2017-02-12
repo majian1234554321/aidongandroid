@@ -27,10 +27,10 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointmentDetailActivityView;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.Logger;
-import com.leyuan.aidong.widget.customview.CustomNestRadioGroup;
-import com.leyuan.aidong.widget.customview.ExtendTextView;
-import com.leyuan.aidong.widget.customview.SimpleTitleBar;
-import com.leyuan.aidong.widget.customview.SwitcherLayout;
+import com.leyuan.aidong.widget.CustomNestRadioGroup;
+import com.leyuan.aidong.widget.ExtendTextView;
+import com.leyuan.aidong.widget.SimpleTitleBar;
+import com.leyuan.aidong.widget.SwitcherLayout;
 
 /**
  * 课程预约详情

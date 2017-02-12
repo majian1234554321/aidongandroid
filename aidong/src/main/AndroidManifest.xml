@@ -87,10 +87,8 @@
         <activity android:name=".ui.mine.activity.TabMineBingdingMobilePhoneActivity" />
         <activity android:name=".ui.mine.activity.TabMineChangePasswordActivity" />
         <activity android:name=".ui.mine.activity.TabMineDoNotDisturbPeriodActivity" />
-        <activity android:name=".ui.mine.activity.TabMineFeedBackActivity" />
         <activity android:name=".ui.mine.activity.TabMineMessageReminderActivity" />
         <activity android:name=".ui.mine.activity.TabMinePersonalSettingsActivity" />
-        <activity android:name=".ui.mine.activity.VersionOfTheIntroductionActivity" />
         <activity android:name=".ui.mine.activity.LoveCoinActivity"/>
         <activity android:name=".ui.mine.activity.LoveCoinWithDrawActivity"/>
         <activity android:name=".ui.mine.activity.PaymentDetailActivity"/>
@@ -118,7 +116,6 @@
 
         <activity android:name=".ui.mine.activity.UpdatePhotoWallActivity"/>
         <activity android:name=".module.scan.activity.MipcaActivityCapture" />
-        <activity android:name=".module.scan.activity.ScanResultActivity" />
         <activity android:name=".module.scan.activity.ScanActivity" />
         <activity android:name=".ui.home.activity.FoodActivity" />
         <activity android:name=".ui.home.activity.PastCampaignActivity" />

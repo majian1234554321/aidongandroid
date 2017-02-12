@@ -22,7 +22,7 @@ import com.leyuan.aidong.ui.mvp.view.CampaignDetailActivityView;
 import com.leyuan.aidong.ui.mvp.view.CampaignFragmentView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.Logger;
-import com.leyuan.aidong.widget.customview.SwitcherLayout;
+import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
 import java.util.List;

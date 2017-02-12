@@ -16,7 +16,7 @@ import com.leyuan.aidong.ui.mvp.view.BrandActivityView;
 import com.leyuan.aidong.ui.mvp.view.HomeFragmentView;
 import com.leyuan.aidong.ui.mvp.view.LocationActivityView;
 import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.widget.customview.SwitcherLayout;
+import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
 import java.util.List;

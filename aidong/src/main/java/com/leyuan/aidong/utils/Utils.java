@@ -14,16 +14,12 @@ import android.os.Handler;
 import android.telephony.TelephonyManager;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-
-import com.leyuan.aidong.utils.common.Constant;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
@@ -31,7 +27,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Utils {
-	public static final String TAKEPHOTO_SDPATH = Constants.FILE_FOLDER + "/"
+	public static final String TAKEPHOTO_SDPATH = Constant.FILE_FOLDER + "/"
 			+ "photo" + "/";
 	public static void setListViewHeightBasedOnChildren(ListView listView,
 			int attHeight) {
@@ -163,8 +159,8 @@ public class Utils {
 
 	public static File getTakePhotoFileFolder() {
 		File dir = null;
-		if (SDUtil.isExsitSDCard()) {
-			dir = SDUtil.getSDPath(TAKEPHOTO_SDPATH);
+		if (SDCardUtil.isExsitSDCard()) {
+			dir = SDCardUtil.getSDPath(TAKEPHOTO_SDPATH);
 			if (dir == null) {
 				return null;
 			} else if (!dir.exists()) {
@@ -197,42 +193,7 @@ public class Utils {
 	}
 	
 	
-	/**
-	 * 显示用户权限图片
-	 * 
-	 * @param tags
-	 * @param vipView
-	 * @param coachView
-	 */
-	public static void setUserTagView(ArrayList<Integer> tags, ImageView vipView,
-			ImageView coachView, ImageView officalView) {
-		if(tags == null)
-			return;
-		if (vipView != null) {
-			if (tags.get(Constant.ID_VIP) > 0) {
-				vipView.setVisibility(View.VISIBLE);
-			} else {
-				vipView.setVisibility(View.GONE);
-			}
-		}
 
-		if (officalView != null) {
-			if (tags.get(Constant.ID_OFFICAL) > 0) {
-				officalView.setVisibility(View.VISIBLE);
-			} else {
-				officalView.setVisibility(View.GONE);
-			}
-		}
-
-		if (coachView != null) {
-			if (tags.get(Constant.ID_COACH) > 0) {
-				coachView.setVisibility(View.VISIBLE);
-			} else {
-				coachView.setVisibility(View.GONE);
-			}
-		}
-
-	}
 	
 	public static String unixTime(String time)
 	{

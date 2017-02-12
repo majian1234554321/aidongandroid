@@ -1,7 +1,7 @@
 package com.leyuan.aidong.http.subscriber;
 
 import com.leyuan.aidong.utils.Logger;
-import com.leyuan.aidong.widget.customview.SwitcherLayout;
+import com.leyuan.aidong.widget.SwitcherLayout;
 
 import rx.Subscriber;
 

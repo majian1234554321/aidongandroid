@@ -24,30 +24,15 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.model.UserCoach;
-import com.leyuan.aidong.entity.model.result.FriendsResult;
-import com.leyuan.aidong.entity.model.result.MxPersonalDataResult;
-import com.leyuan.aidong.http.HttpConfig;
-import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.MainActivity;
-import com.leyuan.aidong.utils.Constants;
-import com.leyuan.aidong.utils.common.Constant;
-import com.leyuan.aidong.utils.common.MXLog;
-import com.leyuan.aidong.utils.common.UrlLink;
-import com.leyuan.commonlibrary.http.IHttpCallback;
-import com.leyuan.commonlibrary.http.IHttpTask;
-import com.leyuan.commonlibrary.util.ToastUtil;
 
 import org.apache.http.message.BasicNameValuePair;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
-public class PasswordRegistActivity extends BaseActivity implements
-		IHttpCallback {
+public class PasswordRegistActivity extends BaseActivity  {
 	private RelativeLayout layout_regist_password = null;
 	private TextView textRegistAgree;
 	private boolean isLoginSuccess;
@@ -87,7 +72,6 @@ public class PasswordRegistActivity extends BaseActivity implements
 
 	public List<BasicNameValuePair> paramsinitNickname(String nickName,
 			String password) {
-		MXLog.out("password:" + password);
 		List<BasicNameValuePair> paramsaaa = new ArrayList<BasicNameValuePair>();
 		paramsaaa.add(new BasicNameValuePair("name", nickName));
 		paramsaaa.add(new BasicNameValuePair("password", password));
@@ -97,7 +81,7 @@ public class PasswordRegistActivity extends BaseActivity implements
 
 	private void init() {
 		intent = new Intent();
-		token = getIntent().getStringExtra(Constant.BUNDLE_TOKEN);
+		//token = getIntent().getStringExtra(Constant.BUNDLE_TOKEN);
 		layout_regist_password = (RelativeLayout) findViewById(R.id.layout_regist_password);
 		textRegistAgree = (TextView) findViewById(R.id.textRegistAgree);
 		SpannableStringBuilder style = new SpannableStringBuilder(
@@ -133,32 +117,32 @@ public class PasswordRegistActivity extends BaseActivity implements
 				startActivity(intent);
 			}
 		});
-		findViewById(R.id.btnBack).setOnClickListener(
+		/*findViewById(R.id.btnBack).setOnClickListener(
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						// TODO Auto-generated method stub
 						finish();
 					}
-				});
-		findViewById(R.id.btnNext).setOnClickListener(
+				});*/
+	/*	findViewById(R.id.btnNext).setOnClickListener(
 				new OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						// TODO Auto-generated method stub
 						if (editNickName.getText().toString().trim()
-								.equals(Constants.NO_STR)) {
+								.equals(Constant.NO_STR)) {
 							ToastUtil.show(getResources().getString(
 									R.string.error_no_nickname),PasswordRegistActivity.this);
 						} else if (editPswd.getText().toString().trim()
-								.equals(Constants.NO_STR)) {
+								.equals(Constant.NO_STR)) {
 							ToastUtil.show(getResources().getString(
 									R.string.error_no_password),PasswordRegistActivity.this);
 						} else if (editPswd.getText().toString().length() < 6) {
 							ToastUtil.show(getResources().getString(
 									R.string.error_no_password_six),PasswordRegistActivity.this);
 						} else if (editPswdRepeat.getText().toString().trim()
-								.equals(Constants.NO_STR)) {
+								.equals(Constant.NO_STR)) {
 
 							ToastUtil.show(getResources().getString(
 									R.string.error_no_repeatpassword),PasswordRegistActivity.this);
@@ -177,14 +161,14 @@ public class PasswordRegistActivity extends BaseActivity implements
 							HashMap<String, String> map = new HashMap<String, String>();
 							map.put("token", token);
 
-							addTask(PasswordRegistActivity.this, new IHttpTask(
-									UrlLink.PERSONALDATA_IRL, map,
+						*//*	addTask(PasswordRegistActivity.this, new IHttpTask(
+									Urls.PERSONALDATA_IRL, map,
 									paramsinitNickname(nickName, passwrod),
 									MxPersonalDataResult.class),
-									HttpConfig.PUT, ANDPASSWORD);
+									HttpConfig.PUT, ANDPASSWORD);*//*
 						}
 					}
-				});
+				});*/
 	}
 
 	public void setLoadingDialog(int string) {
@@ -198,7 +182,7 @@ public class PasswordRegistActivity extends BaseActivity implements
 		}
 	}
 
-	@Override
+	/*@Override
 	public void onGetData(Object data, int requestCode, String response) {
 		stoploadingDialog();
 		switch (requestCode) {
@@ -264,7 +248,7 @@ public class PasswordRegistActivity extends BaseActivity implements
 		default:
 			break;
 		}
-	}
+	}*/
 
 	String currentUsername;
 	String currentPassword;
@@ -402,10 +386,10 @@ public class PasswordRegistActivity extends BaseActivity implements
 		return paramsaaa;
 	}
 
-	@Override
+	/*@Override
 	public void onError(String reason, int requestCode) {
 
-	}
+	}*/
 
 	private class NoLineClickSpan extends ClickableSpan {
 		String text;

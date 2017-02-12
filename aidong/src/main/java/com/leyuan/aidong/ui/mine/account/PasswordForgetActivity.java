@@ -1,41 +1,23 @@
 package com.leyuan.aidong.ui.mine.account;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
-import android.text.Html;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.model.UserCoach;
-import com.leyuan.aidong.entity.model.result.ChangeResult;
-import com.leyuan.aidong.entity.model.result.CheckResult;
-import com.leyuan.aidong.http.HttpConfig;
-import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.utils.common.UrlLink;
-import com.leyuan.commonlibrary.http.IHttpCallback;
-import com.leyuan.commonlibrary.http.IHttpTask;
-import com.leyuan.commonlibrary.util.ToastUtil;
 
 import org.apache.http.message.BasicNameValuePair;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class PasswordForgetActivity extends BaseActivity implements
-        IHttpCallback {
+public class PasswordForgetActivity extends BaseActivity {
     private Button mbtnGetActiveCode, mBtnReset;
     private TextView mtxt_automatic_acquisition, mtxt_60s;
     private View mview12;
@@ -64,7 +46,7 @@ public class PasswordForgetActivity extends BaseActivity implements
         time = new TimeCount(60000, 1000);
     }
 
-    @Override
+   /* @Override
     public void onGetData(Object data, int requestCode, String response) {
         switch (requestCode) {
             case CAPTCHACHECK:
@@ -99,7 +81,7 @@ public class PasswordForgetActivity extends BaseActivity implements
     @Override
     public void onError(String reason, int requestCode) {
 
-    }
+    }*/
 
     private void initView() {
         mtxt_automatic_acquisition = (TextView) findViewById(R.id.txt_automatic_acquisition);
@@ -141,7 +123,7 @@ public class PasswordForgetActivity extends BaseActivity implements
     }
 
     private void setClick() {
-        layout_password_forget = (RelativeLayout) findViewById(R.id.layout_password_forget);
+      /*  layout_password_forget = (RelativeLayout) findViewById(R.id.layout_password_forget);
         layout_password_forget.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -167,18 +149,18 @@ public class PasswordForgetActivity extends BaseActivity implements
             @Override
             public void onClick(View v) {
                 mobile = meditPhonenum.getText().toString().trim();
-                if (mobile == null || mobile.length() == 0) {
-                    ToastUtil.show(getResources().getString(
+               *//* if (mobile == null || mobile.length() == 0) {
+                  *//**//*  ToastUtil.show(getResources().getString(
                             R.string.pleasenumber),PasswordForgetActivity.this);
                     //					meditPhonenum.setError(Html.fromHtml("<font color=#808183>"
                     //							+ getResources().getString(R.string.pleasenumber)
-                    //							+ "</font>"));
+                    //					*//**//*		+ "</font>"));*//*
                 } else {
-                    ToastUtil.show(getResources().getString(
+               *//*     ToastUtil.show(getResources().getString(
                             R.string.sendpassword),PasswordForgetActivity.this);
-                    addTask(PasswordForgetActivity.this, new IHttpTask(
+                   *//**//* addTask(PasswordForgetActivity.this, new IHttpTask(
                             UrlLink.CAPTCHACHANGE_URL, paramsinit(),
-                            ChangeResult.class), HttpConfig.POST, CAPTCHACHANGE);
+                            ChangeResult.class), HttpConfig.POST, CAPTCHACHANGE);*//*
                     time.start();
                 }
             }
@@ -212,13 +194,13 @@ public class PasswordForgetActivity extends BaseActivity implements
                     }
 
 
-                    addTask(PasswordForgetActivity.this, new IHttpTask(
+                   *//* addTask(PasswordForgetActivity.this, new IHttpTask(
                             UrlLink.CAPTCHACHECK_URL, head, paramsinitReset(newPassword),
-                            CheckResult.class), HttpConfig.POST, CAPTCHACHECK);
+                            CheckResult.class), HttpConfig.POST, CAPTCHACHECK);*//*
 
                 }
             }
-        });
+        });*/
     }
 
     public List<BasicNameValuePair> paramsinit() {

@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.widget.customview.SwitchButton;
+import com.leyuan.aidong.widget.SwitchButton;
 
 
 public class TabMineMessageReminderActivity extends BaseActivity {

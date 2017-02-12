@@ -29,7 +29,7 @@ import com.leyuan.aidong.ui.mvp.view.SearchGoodsFragmentView;
 import com.leyuan.aidong.ui.mvp.view.SearchUserFragmentView;
 import com.leyuan.aidong.ui.mvp.view.SearchVenuesFragmentView;
 import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.widget.customview.SwitcherLayout;
+import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
 import java.util.List;

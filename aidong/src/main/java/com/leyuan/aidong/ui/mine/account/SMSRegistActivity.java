@@ -11,14 +11,8 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.model.result.CaptchaResult;
-import com.leyuan.aidong.http.HttpConfig;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.utils.common.Constant;
-import com.leyuan.aidong.utils.common.UrlLink;
-import com.leyuan.commonlibrary.http.IHttpCallback;
-import com.leyuan.commonlibrary.http.IHttpTask;
-import com.leyuan.commonlibrary.util.ToastUtil;
+import com.leyuan.aidong.utils.ToastUtil;
 
 import org.apache.http.message.BasicNameValuePair;
 
@@ -26,7 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class SMSRegistActivity extends BaseActivity implements IHttpCallback {
+public class SMSRegistActivity extends BaseActivity {
 	private static final int VERCODE = 0;
 	private static final int BANGDING = 1;
 	private Button mbtnGetActiveCode;
@@ -89,11 +83,11 @@ public class SMSRegistActivity extends BaseActivity implements IHttpCallback {
 								.length() > 0) {
 							HashMap<String, String> map = new HashMap<String, String>();
 							map.put("token", BingToken);
-							addTask(SMSRegistActivity.this, new IHttpTask(
+							/*addTask(SMSRegistActivity.this, new IHttpTask(
 									UrlLink.CAPTCHACHECK_URL, map,
 									paramsinit2(mEditActiveCode),
 									CaptchaResult.class), HttpConfig.POST,
-									BANGDING);
+									BANGDING);*/
 						} else {
 							ToastUtil.show(getResources().getString(
 									R.string.error_no_activecode),SMSRegistActivity.this);
@@ -108,9 +102,9 @@ public class SMSRegistActivity extends BaseActivity implements IHttpCallback {
 							R.string.input_phone),SMSRegistActivity.this);
 				} else {
 					mobile = meditPhonenum.getText().toString().trim();
-					addTask(SMSRegistActivity.this, new IHttpTask(
+					/*addTask(SMSRegistActivity.this, new IHttpTask(
 							UrlLink.CAPTCHA_URL, paramsinit(mobile),
-							CaptchaResult.class), HttpConfig.POST, VERCODE);
+							CaptchaResult.class), HttpConfig.POST, VERCODE);*/
 				}
 
 			}
@@ -131,7 +125,7 @@ public class SMSRegistActivity extends BaseActivity implements IHttpCallback {
 		return paramsaaa;
 	}
 
-	@Override
+	/*@Override
 	public void onGetData(Object data, int requestCode, String response) {
 		switch (requestCode) {
 		case VERCODE:
@@ -153,23 +147,23 @@ public class SMSRegistActivity extends BaseActivity implements IHttpCallback {
 		case BANGDING:
 			CaptchaResult captchaResult1 = (CaptchaResult) data;
 			if (captchaResult1.getCode() == 1) {
-				intent.setClass(SMSRegistActivity.this,
+			*//*	intent.setClass(SMSRegistActivity.this,
 						PasswordRegistActivity.class);
 				intent.putExtra(Constant.BUNDLE_TOKEN, captchaResult1.getData().getToken());
 				startActivity(intent);
-				finish();
+				finish();*//*
 			}
 			break;
 		default:
 			break;
 		}
-	}
+	}*/
 
-	@Override
+	/*@Override
 	public void onError(String reason, int requestCode) {
 
 	}
-
+*/
 	class TimeCount extends CountDownTimer {
 		public TimeCount(long millisInFuture, long countDownInterval) {
 			super(millisInFuture, countDownInterval);

@@ -8,7 +8,7 @@ import android.support.annotation.Nullable;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.mvp.presenter.SystemPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SystemPresentImpl;
-import com.leyuan.commonlibrary.manager.UiManager;
+import com.leyuan.aidong.utils.UiManager;
 
 
 public class SplashActivity extends BaseActivity {

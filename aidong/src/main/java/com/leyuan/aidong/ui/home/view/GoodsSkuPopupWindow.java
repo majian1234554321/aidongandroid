@@ -24,7 +24,7 @@ import com.leyuan.aidong.ui.mvp.presenter.CartPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CartPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.GoodsSkuPopupWindowView;
 import com.leyuan.aidong.utils.FormatUtil;
-import com.leyuan.aidong.widget.customview.BasePopupWindow;
+import com.leyuan.aidong.widget.BasePopupWindow;
 
 import java.util.ArrayList;
 import java.util.Collections;

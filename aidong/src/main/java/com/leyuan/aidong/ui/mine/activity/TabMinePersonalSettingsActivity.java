@@ -3,7 +3,6 @@ package com.leyuan.aidong.ui.mine.activity;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -15,27 +14,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.model.result.ContactUsResult;
-import com.leyuan.aidong.entity.model.result.MsgResult;
-import com.leyuan.aidong.http.HttpConfig;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.MainActivity;
 import com.leyuan.aidong.ui.mine.account.LoginActivity;
 import com.leyuan.aidong.utils.DataCleanManager;
 import com.leyuan.aidong.utils.MyDbUtils;
-import com.leyuan.aidong.utils.common.UrlLink;
-import com.leyuan.commonlibrary.http.IHttpCallback;
-import com.leyuan.commonlibrary.http.IHttpTask;
-import com.leyuan.commonlibrary.util.ToastUtil;
+import com.leyuan.aidong.utils.ToastUtil;
 
-import org.apache.http.message.BasicNameValuePair;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 
-public class TabMinePersonalSettingsActivity extends BaseActivity implements
-        IHttpCallback {
+public class TabMinePersonalSettingsActivity extends BaseActivity  {
     private ImageView layout_tab_mine_personal_settings_title_img_back;
     private RelativeLayout layout_tab_mine_personal_settings_update_password_rel;
     private Intent intent;
@@ -54,7 +43,7 @@ public class TabMinePersonalSettingsActivity extends BaseActivity implements
     private TextView settings_contactus_txt;
     private String mobile = "";
 
-    @Override
+   /* @Override
     public void onGetData(Object data, int requestCode, String response) {
         switch (requestCode) {
             case LOGINOUT:
@@ -92,7 +81,7 @@ public class TabMinePersonalSettingsActivity extends BaseActivity implements
     @Override
     public void onError(String reason, int requestCode) {
 
-    }
+    }*/
 
 
     @Override
@@ -105,9 +94,9 @@ public class TabMinePersonalSettingsActivity extends BaseActivity implements
     protected void setupView() {
         setContentView(R.layout.layout_tab_mine_personal_settings);
         init();
-        addTask(this, new IHttpTask(UrlLink.CUSTOMERSERVICEPHONE_URL,
+       /* addTask(this, new IHttpTask(UrlLink.CUSTOMERSERVICEPHONE_URL,
                         new ArrayList<BasicNameValuePair>(), ContactUsResult.class),
-                HttpConfig.GET, CUSTOMERSERVICEPHONE);
+                HttpConfig.GET, CUSTOMERSERVICEPHONE);*/
 
     }
 
@@ -294,14 +283,14 @@ public class TabMinePersonalSettingsActivity extends BaseActivity implements
 
                     }
                 });
-        layout_tab_mine_feedback_rel.setOnClickListener(new OnClickListener() {
+       /* layout_tab_mine_feedback_rel.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 intent.setClass(getApplicationContext(),
                         TabMineFeedBackActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
         layout_tab_mine_help_rel.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -326,10 +315,10 @@ public class TabMinePersonalSettingsActivity extends BaseActivity implements
 //            BaseApp.mInstance.logout(null);
             HashMap<String, String> map = new HashMap<String, String>();
             map.put("token", App.mInstance.getUser().getToken());
-            addTask(this, new IHttpTask(UrlLink.LOGOUT_URL, map,
+         /*   addTask(this, new IHttpTask(UrlLink.LOGOUT_URL, map,
                             new ArrayList<BasicNameValuePair>(), MsgResult.class),
                     HttpConfig.DELETE, LOGINOUT);
-
+*/
         } catch (Exception e) {
             e.printStackTrace();
         }

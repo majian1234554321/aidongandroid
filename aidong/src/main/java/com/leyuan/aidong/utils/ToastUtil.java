@@ -96,5 +96,12 @@ public class ToastUtil {
     }
 
 
+    public static void show(String txt,Context context){
+        if(toast == null){
+            toast = Toast.makeText(context,"",Toast.LENGTH_SHORT);
+        }
+        toast.setText(txt);
+        toast.show();
+    }
 
 }

@@ -11,7 +11,7 @@
         android:background="@color/white"
         android:orientation="vertical">
 
-        <com.leyuan.aidong.widget.customview.ExtendTextView
+        <com.leyuan.aidong.widget.ExtendTextView
             android:id="@+id/id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
             app:line_color="@color/line_color"
             app:text_height="45dp" />
 
-        <com.leyuan.aidong.widget.customview.ExtendTextView
+        <com.leyuan.aidong.widget.ExtendTextView
             android:id="@+id/identify"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
             app:line_color="@color/line_color"
             app:text_height="45dp" />
 
-        <com.leyuan.aidong.widget.customview.ExtendTextView
+        <com.leyuan.aidong.widget.ExtendTextView
             android:id="@+id/hot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
             app:line_color="@color/line_color"
             app:text_height="45dp" />
 
-        <com.leyuan.aidong.widget.customview.ExtendTextView
+        <com.leyuan.aidong.widget.ExtendTextView
             android:id="@+id/signature"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
 
         <include layout="@layout/inc_bold_line" />
 
-        <com.leyuan.aidong.widget.customview.ExtendTextView
+        <com.leyuan.aidong.widget.ExtendTextView
             android:id="@+id/address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
             app:line_color="@color/line_color"
             app:text_height="45dp" />
 
-        <com.leyuan.aidong.widget.customview.ExtendTextView
+        <com.leyuan.aidong.widget.ExtendTextView
             android:id="@+id/birthday"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
             app:line_color="@color/line_color"
             app:text_height="45dp" />
 
-        <com.leyuan.aidong.widget.customview.ExtendTextView
+        <com.leyuan.aidong.widget.ExtendTextView
             android:id="@+id/zodiac"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
 
         <include layout="@layout/inc_bold_line" />
 
-        <com.leyuan.aidong.widget.customview.ExtendTextView
+        <com.leyuan.aidong.widget.ExtendTextView
             android:id="@+id/height"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -79,7 +79,7 @@
             app:line_color="@color/line_color"
             app:text_height="45dp" />
 
-        <com.leyuan.aidong.widget.customview.ExtendTextView
+        <com.leyuan.aidong.widget.ExtendTextView
             android:id="@+id/weight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -87,7 +87,7 @@
             app:line_color="@color/line_color"
             app:text_height="45dp" />
 
-        <com.leyuan.aidong.widget.customview.ExtendTextView
+        <com.leyuan.aidong.widget.ExtendTextView
             android:id="@+id/bmi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -95,7 +95,7 @@
             app:line_color="@color/line_color"
             app:text_height="45dp" />
 
-        <com.leyuan.aidong.widget.customview.ExtendTextView
+        <com.leyuan.aidong.widget.ExtendTextView
             android:id="@+id/frequency"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

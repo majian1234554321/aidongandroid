@@ -4,7 +4,6 @@ package com.leyuan.aidong.ui.video.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,28 +16,17 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.android.exoplayer.util.Util;
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.CommonViewPagerAdapter;
-import com.leyuan.aidong.entity.model.result.BaseResult;
 import com.leyuan.aidong.entity.video.VideoDetail;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.account.LoginActivity;
-import com.leyuan.aidong.utils.FastBlur;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.Logger;
-import com.leyuan.aidong.utils.common.Common;
-import com.leyuan.aidong.utils.common.Urls;
+import com.leyuan.aidong.utils.Urls;
 import com.leyuan.aidong.widget.video.TextViewPrintly;
-import com.lidroid.xutils.exception.HttpException;
-import com.lidroid.xutils.http.RequestParams;
-import com.lidroid.xutils.http.ResponseInfo;
-import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.util.ArrayList;
 
@@ -161,15 +149,15 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
     }
 
     public void getDataFromInter() {
-        RequestParams params = new RequestParams();
+      /*  RequestParams params = new RequestParams();
         params.addBodyParameter("videoId", String.valueOf(id));
-//        new MyHttpUtils().send(HttpRequest.HttpMethod.POST, Urls.BASE_URL_TEXT + "/getVideoDetailList.action", params, callback);
+//        new MyHttpUtils().send(HttpRequest.HttpMethod.POST, Urls.BASE_URL_TEXT + "/getVideoDetailList.action", params, callback);*/
     }
 
     private ArrayList<VideoDetail> videos = new ArrayList<>();
 
     //    private boolean isFirstInto = true;
-    private RequestCallBack<String> callback = new RequestCallBack<String>() {
+  /*  private RequestCallBack<String> callback = new RequestCallBack<String>() {
 
         @Override
         public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -268,7 +256,7 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
         public void onFailure(HttpException e, String s) {
 
         }
-    };
+    };*/
 
     private int tag_width;
     @SuppressLint("HandlerLeak")
@@ -391,9 +379,9 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
                 if (videos != null && videos.size() > 0) {
                     VideoDetail detail_commont = videos.get(viewPager.getCurrentItem());
                     Intent intent = new Intent(this, VideoCommentActivity.class);
-                    intent.putExtra(Common.VIDEO_ID, detail_commont.getContentId());
-                    intent.putExtra(Common.VIDEO_NAME, detail_commont.getVideoName());
-                    intent.putExtra(Common.POSITION, viewPager.getCurrentItem());
+                    intent.putExtra(Constant.VIDEO_ID, detail_commont.getContentId());
+                    intent.putExtra(Constant.VIDEO_NAME, detail_commont.getVideoName());
+                    intent.putExtra(Constant.POSITION, viewPager.getCurrentItem());
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_in_bottom, 0);
                 }
@@ -417,14 +405,14 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
     }
 
     private void parseVideo(int currentItem) {
-        RequestParams params = new RequestParams();
+       /* RequestParams params = new RequestParams();
         params.addBodyParameter("videoId", String.valueOf(videos.get(currentItem).getContentId()));
         params.addBodyParameter("idongId", idongId);
 //        MyHttpUtils http = new MyHttpUtils();
-//        http.send(HttpRequest.HttpMethod.POST, Common.URL_VIDEO_PARSED, params, callbackParse);
+//        http.send(HttpRequest.HttpMethod.POST, Common.URL_VIDEO_PARSED, params, callbackParse);*/
     }
 
-    private RequestCallBack<String> callbackParse = new RequestCallBack<String>() {
+    /*private RequestCallBack<String> callbackParse = new RequestCallBack<String>() {
 
         @Override
         public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -448,7 +436,7 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
         public void onFailure(HttpException e, String s) {
 
         }
-    };
+    };*/
 
 
     private void share(VideoDetail video) {

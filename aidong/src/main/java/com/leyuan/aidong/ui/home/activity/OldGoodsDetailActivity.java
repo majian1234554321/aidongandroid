@@ -31,9 +31,9 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.GoodsDetailPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.GoodsDetailActivityView;
 import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.ImageLoadConfig;
-import com.leyuan.aidong.widget.customview.ObserveScrollView;
-import com.leyuan.aidong.widget.customview.SlideDetailsLayout;
-import com.leyuan.aidong.widget.customview.SwitcherLayout;
+import com.leyuan.aidong.widget.ObserveScrollView;
+import com.leyuan.aidong.widget.SlideDetailsLayout;
+import com.leyuan.aidong.widget.SwitcherLayout;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;

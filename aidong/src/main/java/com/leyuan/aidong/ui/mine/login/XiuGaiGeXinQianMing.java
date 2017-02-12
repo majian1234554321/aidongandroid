@@ -13,8 +13,6 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.utils.ToastUtil;
-import com.leyuan.aidong.utils.common.Constant;
-
 
 
 /**
@@ -31,7 +29,7 @@ public class XiuGaiGeXinQianMing extends BaseActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_signture);
-        content = getIntent().getExtras().getString(Constant.BUNDLE_CONTENT);
+       // content = getIntent().getExtras().getString(Constant.BUNDLE_CONTENT);
         imageView_back = (ImageView) findViewById(R.id.imageView_back);
         editText11 = (EditText) findViewById(R.id.editText11);
         if (content != null || !content.equals("")) {
@@ -53,8 +51,8 @@ public class XiuGaiGeXinQianMing extends BaseActivity {
 //                        ToastTools.showToast(XiuGaiGeXinQianMing.this, "最多20个字");
                     } else {
                         Intent intent = new Intent();
-                        intent.putExtra(Constant.PERSION_SIGN,sign);
-                         setResult(Constant.RESULT_CODE_SIGN,intent);
+                       /* intent.putExtra(Constant.PERSION_SIGN,sign);
+                         setResult(Constant.RESULT_CODE_SIGN,intent);*/
                         finish();
                     }
 

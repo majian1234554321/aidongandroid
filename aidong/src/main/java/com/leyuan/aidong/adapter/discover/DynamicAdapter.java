@@ -20,7 +20,7 @@ import com.leyuan.aidong.ui.discover.view.GridItemDecoration;
 import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.Logger;
-import com.leyuan.aidong.widget.customview.SquareRelativeLayout;
+import com.leyuan.aidong.widget.SquareRelativeLayout;
 
 import java.util.ArrayList;
 import java.util.List;

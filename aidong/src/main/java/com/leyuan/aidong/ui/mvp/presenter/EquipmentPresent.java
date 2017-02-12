@@ -3,7 +3,7 @@ package com.leyuan.aidong.ui.mvp.presenter;
 import android.support.v7.widget.RecyclerView;
 
 import com.leyuan.aidong.module.pay.PayInterface;
-import com.leyuan.aidong.widget.customview.SwitcherLayout;
+import com.leyuan.aidong.widget.SwitcherLayout;
 
 /**
  * 装备

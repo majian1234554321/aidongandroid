@@ -16,7 +16,6 @@ import android.widget.ListView;
 
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.utils.common.Constant;
 import com.leyuan.aidong.utils.interfaces.TabChoniceInterface;
 import com.leyuan.aidong.entity.model.UserCoach;
 
@@ -205,7 +204,7 @@ public class ActivityTool implements TabChoniceInterface {
 			return version;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Constants.NO_STR;
+			return Constant.NO_STR;
 		}
 	}
 

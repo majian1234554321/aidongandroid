@@ -24,7 +24,7 @@ import com.leyuan.aidong.ui.mvp.view.VenuesCoachFragmentView;
 import com.leyuan.aidong.ui.mvp.view.VenuesCourseFragmentView;
 import com.leyuan.aidong.ui.mvp.view.VenuesDetailFragmentView;
 import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.widget.customview.SwitcherLayout;
+import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
 import java.util.List;

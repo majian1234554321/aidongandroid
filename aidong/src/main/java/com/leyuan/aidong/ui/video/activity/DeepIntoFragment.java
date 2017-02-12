@@ -23,10 +23,6 @@ import com.leyuan.aidong.adapter.DeepIntoAdapter;
 import com.leyuan.aidong.entity.video.SpecialTopicInfo;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.CustomLayoutManager;
-import com.lidroid.xutils.exception.HttpException;
-import com.lidroid.xutils.http.RequestParams;
-import com.lidroid.xutils.http.ResponseInfo;
-import com.lidroid.xutils.http.callback.RequestCallBack;
 
 
 public class DeepIntoFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
@@ -255,17 +251,17 @@ public class DeepIntoFragment extends Fragment implements SwipeRefreshLayout.OnR
     };
 
     private void getDataFromInter() {
-        page = 1;
+      /*  page = 1;
         adapter.setFirst(true);
         RequestParams params = new RequestParams();
         params.addBodyParameter("pageCurrent", String.valueOf(page));
         params.addBodyParameter("list", "family");
         params.addBodyParameter("areaId", city_id);
 //        MyHttpUtils http = new MyHttpUtils();
-//        http.send(HttpRequest.HttpMethod.POST, Urls.BASE_URL_TEXT + "/getVideoList.action", params, callback);
+//        http.send(HttpRequest.HttpMethod.POST, Urls.BASE_URL_TEXT + "/getVideoList.action", params, callback);*/
     }
 
-    private RequestCallBack<String> callback = new RequestCallBack<String>() {
+   /* private RequestCallBack<String> callback = new RequestCallBack<String>() {
 
         @Override
         public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -300,9 +296,9 @@ public class DeepIntoFragment extends Fragment implements SwipeRefreshLayout.OnR
             layout_refresh.setRefreshing(false);
 
         }
-    };
+    };*/
 
-    private RequestCallBack<String> callbackMore = new RequestCallBack<String>() {
+  /*  private RequestCallBack<String> callbackMore = new RequestCallBack<String>() {
 
         @Override
         public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -321,15 +317,15 @@ public class DeepIntoFragment extends Fragment implements SwipeRefreshLayout.OnR
 //                e.printStackTrace();
 //            }
 
-        }
+        }*/
 
-        @Override
+       /* @Override
         public void onFailure(HttpException e, String s) {
             isLoading = false;
             layout_refresh.setRefreshing(false);
 
         }
-    };
+    };*/
 
 
     private int valueColor(int height) {
@@ -364,14 +360,14 @@ public class DeepIntoFragment extends Fragment implements SwipeRefreshLayout.OnR
 //    }
 
     private void getMoreDataFromInter() {
-        isLoading = true;
+     /*   isLoading = true;
         page++;
         RequestParams params = new RequestParams();
         params.addBodyParameter("pageCurrent", String.valueOf(page));
         params.addBodyParameter("list", "family");
         params.addBodyParameter("areaId", city_id);
 //        MyHttpUtils http = new MyHttpUtils();
-//        http.send(HttpRequest.HttpMethod.POST, Urls.BASE_URL_TEXT + "/getVideoList.action", params, callbackMore);
+//        http.send(HttpRequest.HttpMethod.POST, Urls.BASE_URL_TEXT + "/getVideoList.action", params, callbackMore);*/
     }
 
     @Override

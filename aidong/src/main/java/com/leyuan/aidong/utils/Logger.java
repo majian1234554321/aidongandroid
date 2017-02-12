@@ -2,13 +2,7 @@ package com.leyuan.aidong.utils;
 
 import android.util.Log;
 
-import com.leyuan.aidong.utils.common.Urls;
 
-
-
-/**
-
- */
 public final class Logger {
 
     /**

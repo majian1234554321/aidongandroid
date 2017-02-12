@@ -11,12 +11,11 @@ import android.widget.Toast;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.video.LiveVideoInfo;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.LiveDateFilterUtil;
 import com.leyuan.aidong.utils.Logger;
-import com.leyuan.aidong.utils.common.Common;
-import com.leyuan.aidong.utils.common.Urls;
+import com.leyuan.aidong.utils.Urls;
 import com.leyuan.aidong.widget.media.IjkVideoView;
-import com.lidroid.xutils.http.RequestParams;
 
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
@@ -35,8 +34,8 @@ public class LivingVideoActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mVideoPath = getIntent().getStringExtra(Common.VIDEO_PATH);
-        mLiveVideoInfo = (LiveVideoInfo) getIntent().getSerializableExtra(Common.LIVE_INFO);
+        mVideoPath = getIntent().getStringExtra(Constant.VIDEO_PATH);
+        mLiveVideoInfo = (LiveVideoInfo) getIntent().getSerializableExtra(Constant.LIVE_INFO);
 
         setContentView(R.layout.living_video_activity);
         IjkMediaPlayer.loadLibrariesOnce(null);
@@ -48,11 +47,11 @@ public class LivingVideoActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void addLivingMsg() {
-        RequestParams params = new RequestParams();
+       /* RequestParams params = new RequestParams();
         if (mLiveVideoInfo != null)
             params.addBodyParameter("liveId", String.valueOf(mLiveVideoInfo.getLiveId()));
 //        MyHttpUtils http = new MyHttpUtils();
-//        http.send(HttpRequest.HttpMethod.POST, Urls.BASE_URL_TEXT + "/addLivingMsg.action", params, null);
+//        http.send(HttpRequest.HttpMethod.POST, Urls.BASE_URL_TEXT + "/addLivingMsg.action", params, null);*/
     }
 
     private void initView() {
@@ -161,19 +160,19 @@ public class LivingVideoActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.img_special:
                 Intent intent = new Intent(this, WatchOfficeActivity.class);
-                intent.putExtra(Common.VIDEO_TYPE, 0);
+                intent.putExtra(Constant.VIDEO_TYPE, 0);
                 startActivity(intent);
                 finish();
                 break;
             case R.id.img_deep_into:
                 Intent intentDeep = new Intent(this, WatchOfficeActivity.class);
-                intentDeep.putExtra(Common.VIDEO_TYPE, 1);
+                intentDeep.putExtra(Constant.VIDEO_TYPE, 1);
                 startActivity(intentDeep);
                 finish();
                 break;
             case R.id.img_celebrity:
                 Intent intentCele = new Intent(this, WatchOfficeActivity.class);
-                intentCele.putExtra(Common.VIDEO_TYPE, 2);
+                intentCele.putExtra(Constant.VIDEO_TYPE, 2);
                 startActivity(intentCele);
                 finish();
                 break;

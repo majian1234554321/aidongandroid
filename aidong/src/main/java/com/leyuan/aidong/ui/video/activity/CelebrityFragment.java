@@ -23,10 +23,7 @@ import com.leyuan.aidong.adapter.CelebrityFragmentAdapter;
 import com.leyuan.aidong.entity.video.SpecialTopicInfo;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.CustomLayoutManager;
-import com.lidroid.xutils.exception.HttpException;
-import com.lidroid.xutils.http.RequestParams;
-import com.lidroid.xutils.http.ResponseInfo;
-import com.lidroid.xutils.http.callback.RequestCallBack;
+
 
 
 public class CelebrityFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
@@ -63,7 +60,7 @@ public class CelebrityFragment extends Fragment implements SwipeRefreshLayout.On
             if (action.equals("select_ctiy")) {
                 city_id = intent.getStringExtra("id");
                 //接受到城市切换，更新列表
-                getDataFromInter();
+                //getDataFromInter();
             }
         }
     };
@@ -96,7 +93,7 @@ public class CelebrityFragment extends Fragment implements SwipeRefreshLayout.On
 
         initReceiver();
         initRecyclerView();
-        getDataFromInter();
+      //  getDataFromInter();
         return rootView;
     }
 
@@ -257,80 +254,6 @@ public class CelebrityFragment extends Fragment implements SwipeRefreshLayout.On
         }
     };
 
-    private void getDataFromInter() {
-        page = 1;
-        adapter.setFirst(true);
-        RequestParams params = new RequestParams();
-        params.addBodyParameter("pageCurrent", String.valueOf(page));
-        params.addBodyParameter("list", "celebrity");
-        params.addBodyParameter("areaId", city_id);
-//        MyHttpUtils http = new MyHttpUtils();
-//        http.send(HttpRequest.HttpMethod.POST, Urls.BASE_URL_TEXT + "/getVideoList.action", params, callback);
-    }
-
-    private RequestCallBack<String> callback = new RequestCallBack<String>() {
-
-        @Override
-        public void onSuccess(ResponseInfo<String> responseInfo) {
-            //            ToastTools.show("刷新成功",getActivity());
-            layout_refresh.setRefreshing(false);
-            Logger.i("" + responseInfo.result);
-//            try {
-//                BaseResult<VideoListResult> result = gson.fromJson(responseInfo.result,
-//                        new TypeToken<BaseResult<VideoListResult>>() {
-//                        }.getType());
-//                if (result.getCode() == 1 && result.getResult() != null && result.getResult().getVideo() != null) {
-//                    ArrayList<SpecialTopicInfo> videos = result.getResult().getVideo();
-//                    scrollDirection = 1;
-//                    adapter.freshData(videos);
-//                    if (videos.size() > 0) {
-//                        mRecyclerView.setVisibility(View.VISIBLE);
-//                        layout_video_empty.setVisibility(View.GONE);
-//                    } else {
-//                        mRecyclerView.setVisibility(View.INVISIBLE);
-//                        layout_video_empty.setVisibility(View.VISIBLE);
-//                    }
-//                }
-//            } catch (JsonSyntaxException e) {
-//                e.printStackTrace();
-//            }
-
-        }
-
-        @Override
-        public void onFailure(HttpException e, String s) {
-            layout_refresh.setRefreshing(false);
-
-        }
-    };
-
-    private RequestCallBack<String> callbackMore = new RequestCallBack<String>() {
-
-        @Override
-        public void onSuccess(ResponseInfo<String> responseInfo) {
-            layout_refresh.setRefreshing(false);
-            isLoading = false;
-            Logger.i("callbackMore" + responseInfo.result);
-//            try {
-//                BaseResult<VideoListResult> result = gson.fromJson(responseInfo.result,
-//                        new TypeToken<BaseResult<VideoListResult>>() {
-//                        }.getType());
-//                if (result.getCode() == 1 && result.getResult() != null && result.getResult().getVideo() != null && result.getResult().getVideo().size() > 0) {
-//                    ArrayList<SpecialTopicInfo> videos = result.getResult().getVideo();
-//                    adapter.addData(videos);
-//                }
-//            } catch (JsonSyntaxException e) {
-//                e.printStackTrace();
-//            }
-
-        }
-
-        @Override
-        public void onFailure(HttpException e, String s) {
-            isLoading = false;
-            layout_refresh.setRefreshing(false);
-        }
-    };
 
 
     private int valueColor(int height) {
@@ -364,14 +287,14 @@ public class CelebrityFragment extends Fragment implements SwipeRefreshLayout.On
 //    }
 
     private void getMoreDataFromInter() {
-        isLoading = true;
+     /*   isLoading = true;
         page++;
         RequestParams params = new RequestParams();
         params.addBodyParameter("pageCurrent", String.valueOf(page));
         params.addBodyParameter("list", "celebrity");
         params.addBodyParameter("areaId", city_id);
 //        MyHttpUtils http = new MyHttpUtils();
-//        http.send(HttpRequest.HttpMethod.POST, Urls.BASE_URL_TEXT + "/getVideoList.action", params, callbackMore);
+//        http.send(HttpRequest.HttpMethod.POST, Urls.BASE_URL_TEXT + "/getVideoList.action", params, callbackMore);*/
     }
 
     @Override
@@ -384,6 +307,6 @@ public class CelebrityFragment extends Fragment implements SwipeRefreshLayout.On
 
     @Override
     public void onRefresh() {
-        getDataFromInter();
+       // getDataFromInter();
     }
 }

@@ -19,22 +19,21 @@ import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 import android.widget.Toast;
 
-import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.App;
-import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.mine.account.LoginActivity;
-import com.leyuan.aidong.entity.model.FacePay;
-import com.leyuan.aidong.module.scan.camera.CameraManager;
-import com.leyuan.aidong.module.scan.decoding.CaptureActivityHandler;
-import com.leyuan.aidong.module.scan.decoding.InactivityTimer;
-import com.leyuan.aidong.module.scan.view.ViewfinderView;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
-import com.leyuan.commonlibrary.util.ToastUtil;
+import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.model.FacePay;
+import com.leyuan.aidong.module.scan.camera.CameraManager;
+import com.leyuan.aidong.module.scan.decoding.CaptureActivityHandler;
+import com.leyuan.aidong.module.scan.decoding.InactivityTimer;
+import com.leyuan.aidong.module.scan.view.ViewfinderView;
+import com.leyuan.aidong.ui.App;
+import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.mine.account.LoginActivity;
 
 import org.apache.http.message.BasicNameValuePair;
 
@@ -75,7 +74,7 @@ public class MipcaActivityCapture extends BaseActivity implements Callback {
 
     protected void setupView() {
         setContentView(R.layout.scancode_capture);
-        initTop("扫一扫", true);
+        //initTop("扫一扫", true);
         CameraManager.init(getApplication());
         viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
         hasSurface = false;
@@ -163,7 +162,7 @@ public class MipcaActivityCapture extends BaseActivity implements Callback {
                 startActivity(intent);
                 finish();
             } else {
-                ToastUtil.show("获取美型号失败", this);
+                //ToastUtil.show("获取美型号失败", this);
             }
 
         } else {

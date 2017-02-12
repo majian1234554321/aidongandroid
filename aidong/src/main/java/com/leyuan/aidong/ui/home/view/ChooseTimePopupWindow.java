@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.ChooseTimeAdapter;
-import com.leyuan.aidong.widget.customview.BasePopupWindow;
+import com.leyuan.aidong.widget.BasePopupWindow;
 
 import java.util.ArrayList;
 import java.util.List;

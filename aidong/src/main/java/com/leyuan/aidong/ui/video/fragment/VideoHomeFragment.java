@@ -13,21 +13,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.gson.Gson;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.HomeVideoAdapter;
 import com.leyuan.aidong.entity.video.LiveVideoInfo;
-import com.leyuan.aidong.entity.video.LiveVideoListResult;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.video.activity.LiveDetailActivity;
 import com.leyuan.aidong.ui.video.activity.LivingVideoActivity;
 import com.leyuan.aidong.ui.video.activity.VideoDetailActivity;
 import com.leyuan.aidong.ui.video.activity.WatchOfficeActivity;
-import com.leyuan.aidong.utils.common.Common;
-import com.lidroid.xutils.exception.HttpException;
-import com.lidroid.xutils.http.RequestParams;
-import com.lidroid.xutils.http.ResponseInfo;
-import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.leyuan.aidong.utils.Constant;
 
 public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.OnLivingVideoCLickListener,
         HomeVideoAdapter.OnPlaybackClickListener, HomeVideoAdapter.OnSoonLiveVideoClickListener,
@@ -87,22 +81,22 @@ public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.
 
     private void getDataFromInter() {
         page = 1;
-        RequestParams params = new RequestParams();
+      /*  RequestParams params = new RequestParams();
         params.addBodyParameter("pageCurrent", String.valueOf(page));
 //        MyHttpUtils http = new MyHttpUtils();
-//        http.send(HttpRequest.HttpMethod.POST, Common.URL_LIVING_VIDEO_HOME, params, callback);
+//        http.send(HttpRequest.HttpMethod.POST, Common.URL_LIVING_VIDEO_HOME, params, callback);*/
     }
 
 
     private void getMoreDataFromInter() {
         page++;
-        RequestParams params = new RequestParams();
+        /*RequestParams params = new RequestParams();
         params.addBodyParameter("pageCurrent", String.valueOf(page));
 //        MyHttpUtils http = new MyHttpUtils();
-//        http.send(HttpRequest.HttpMethod.POST, Common.URL_LIVING_VIDEO_HOME, params, callbackMore);
+//        http.send(HttpRequest.HttpMethod.POST, Common.URL_LIVING_VIDEO_HOME, params, callbackMore);*/
     }
 
-    private RequestCallBack<String> callback = new RequestCallBack<String>() {
+   /* private RequestCallBack<String> callback = new RequestCallBack<String>() {
         @Override
         public void onSuccess(ResponseInfo<String> responseInfo) {
             swipeRefreshLayout.setRefreshing(false);
@@ -147,10 +141,10 @@ public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.
 
 
         }
-    };
+    };*/
 
 
-    private RequestCallBack<String> callbackMore = new RequestCallBack<String>() {
+   /* private RequestCallBack<String> callbackMore = new RequestCallBack<String>() {
         @Override
         public void onSuccess(ResponseInfo<String> responseInfo) {
             swipeRefreshLayout.setRefreshing(false);
@@ -169,7 +163,7 @@ public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.
         public void onFailure(HttpException e, String s) {
             swipeRefreshLayout.setRefreshing(false);
         }
-    };
+    };*/
 
 //    @Override
 //    public void onRefresh(SwipyRefreshLayoutDirection direction) {
@@ -188,21 +182,21 @@ public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.
     @Override
     public void onLivingVideoCLick(LiveVideoInfo info) {
         Intent intent = new Intent(getActivity(), LivingVideoActivity.class);
-        intent.putExtra(Common.LIVE_INFO,info);
+        intent.putExtra(Constant.LIVE_INFO,info);
         startActivity(intent);
     }
 
     @Override
     public void onSpecialClick() {
         Intent intent = new Intent(getActivity(), WatchOfficeActivity.class);
-        intent.putExtra(Common.VIDEO_TYPE, 0);
+        intent.putExtra(Constant.VIDEO_TYPE, 0);
         startActivity(intent);
     }
 
     @Override
     public void onDeepIntoClick() {
         Intent intent = new Intent(getActivity(), WatchOfficeActivity.class);
-        intent.putExtra(Common.VIDEO_TYPE, 1);
+        intent.putExtra(Constant.VIDEO_TYPE, 1);
         startActivity(intent);
 
     }
@@ -210,14 +204,14 @@ public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.
     @Override
     public void onCelebrityClick() {
         Intent intent = new Intent(getActivity(), WatchOfficeActivity.class);
-        intent.putExtra(Common.VIDEO_TYPE, 2);
+        intent.putExtra(Constant.VIDEO_TYPE, 2);
         startActivity(intent);
     }
 
     @Override
     public void onSoonLivingVideoCLick(int liveId) {
         Intent intent = new Intent(getActivity(), LiveDetailActivity.class);
-        intent.putExtra(Common.LIVE_ID, liveId);
+        intent.putExtra(Constant.LIVE_ID, liveId);
         startActivity(intent);
     }
 

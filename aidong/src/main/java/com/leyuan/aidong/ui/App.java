@@ -22,7 +22,6 @@ import com.leyuan.aidong.utils.AppUtil;
 import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.SharePrefUtils;
-import com.lidroid.xutils.DbUtils;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -43,8 +42,6 @@ public class App extends Application {
     public static String city = "上海";
     public static String addressStr;
 
-    public DbUtils db;
-
     public LocationClient mLocationClient = null;
     public BDLocationListener myListener = new MyLocationListener();
 
@@ -63,7 +60,7 @@ public class App extends Application {
         Fresco.initialize(this);
         initBaiduLoc();
         initImageLoader(getApplicationContext());
-        initDbUtils();
+        //initDbUtils();
         initEMchat();
         IBoxingMediaLoader loader = new BoxingFrescoLoader(this);
         BoxingMediaLoader.getInstance().init(loader);
@@ -121,7 +118,7 @@ public class App extends Application {
 
     private void initDbUtils() {
         try {
-            db = DbUtils.create(this, "mxing.db");
+            //db = DbUtils.create(this, "mxing.db");
         } catch (Exception e) {
             e.printStackTrace();
         }

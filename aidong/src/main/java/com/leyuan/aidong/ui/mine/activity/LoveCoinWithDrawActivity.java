@@ -16,10 +16,8 @@ import com.google.gson.JsonSyntaxException;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.model.result.BaseResult;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.commonlibrary.util.ToastUtil;
-import com.lidroid.xutils.exception.HttpException;
-import com.lidroid.xutils.http.ResponseInfo;
-import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.leyuan.aidong.utils.ToastUtil;
+
 
 public class LoveCoinWithDrawActivity extends BaseActivity implements View.OnClickListener {
     private ImageView img_back;
@@ -91,27 +89,7 @@ public class LoveCoinWithDrawActivity extends BaseActivity implements View.OnCli
 ////        }
     }
 
-    private RequestCallBack<String> callback = new RequestCallBack<String>() {
-        @Override
-        public void onSuccess(ResponseInfo<String> responseInfo) {
-            Log.i("httpResponse", "success :" + responseInfo.result);
-            try {
-                BaseResult result = new Gson().fromJson(responseInfo.result, BaseResult.class);
-                if (result.getCode() == 1) {
-                    showDialog("提现申请成功，我们会尽快进行处理", 1);
-                } else {
-                    showDialog("提现失败," + result.getMessage(), 0);
-                }
-            } catch (JsonSyntaxException e) {
-                e.printStackTrace();
-            }
-        }
 
-        @Override
-        public void onFailure(HttpException e, String s) {
-
-        }
-    };
 
     private void showDialog(String message, final int code) {
         AlertDialog.Builder builder = new AlertDialog.Builder(LoveCoinWithDrawActivity.this);

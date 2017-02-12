@@ -25,7 +25,6 @@ import com.leyuan.aidong.ui.mine.activity.AlbumActivity;
 import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.PublishDynamicActivityView;
-import com.leyuan.aidong.utils.common.Constant;
 import com.qiniu.android.storage.UploadManager;
 
 import java.util.ArrayList;
@@ -229,11 +228,11 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode){
-            case Constant.RC_SELECTABLUMN:
+           /* case Constant.RC_SELECTABLUMN:
                 if (resultCode == RESULT_OK) {
                    // imageAdapter.setData(Bimp.tempSelectBitmap,PublishDynamicAdapter.TYPE_PHOTO);
                 }
-                break;
+                break;*/
             case REQUEST_SELECT_VIDEO:
                 if (resultCode == RESULT_SELECT_VIDEO) {
                     path = data.getStringExtra("path");
@@ -265,7 +264,7 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
     private void toSelectPhotoActivity(){
         Intent intent = new Intent(this, AlbumActivity.class);
       //  intent.putExtra(Constant.BUNDLE_CLASS,TabTheIndividualDynaminActivity.class);
-        startActivityForResult(intent, Constant.RC_SELECTABLUMN);
+       // startActivityForResult(intent, Constant.RC_SELECTABLUMN);
     }
 
     private void toSelectVideoActivity(){

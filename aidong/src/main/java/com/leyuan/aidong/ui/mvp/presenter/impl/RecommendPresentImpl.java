@@ -15,7 +15,7 @@ import com.leyuan.aidong.ui.mvp.view.CartActivityView;
 import com.leyuan.aidong.ui.mvp.view.EquipmentActivityView;
 import com.leyuan.aidong.ui.mvp.view.NurtureActivityView;
 import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.widget.customview.SwitcherLayout;
+import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
 import java.util.List;

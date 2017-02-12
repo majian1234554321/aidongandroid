@@ -16,7 +16,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.adapter.home.ImagePreviewAdapter;
 import com.leyuan.aidong.ui.home.view.ImagePreviewTopBar;
-import com.leyuan.aidong.widget.customview.ViewPagerFixed;
+import com.leyuan.aidong.widget.ViewPagerFixed;
 
 import java.util.ArrayList;
 import java.util.List;
