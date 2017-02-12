@@ -26,13 +26,4 @@
         </include>
     </LinearLayout>
 
-    <View
-        android:id="@+id/hazy_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#cc000000"
-        android:clickable="true"
-        android:visibility="gone" >
-    </View>
-
 </FrameLayout>

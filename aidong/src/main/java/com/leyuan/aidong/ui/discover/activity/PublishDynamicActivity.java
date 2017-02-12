@@ -2,7 +2,6 @@ package com.leyuan.aidong.ui.discover.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,29 +18,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.BaseBean;
-import com.leyuan.aidong.entity.model.location.ImageItem;
-import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.adapter.discover.PublishDynamicAdapter;
-import com.leyuan.aidong.ui.media.AlbumActivity;
-import com.leyuan.aidong.ui.media.SelectVideoActivity;
-import com.leyuan.aidong.ui.media.SelectVideoCoverActivity;
-import com.leyuan.aidong.ui.media.TabTheIndividualDynaminActivity;
+import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.mine.activity.AlbumActivity;
 import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.PublishDynamicActivityView;
 import com.leyuan.aidong.utils.common.Constant;
-import com.leyuan.aidong.utils.photo.Bimp;
-import com.leyuan.aidong.utils.qiniu.QiNiuTokenUtils;
-import com.qiniu.android.http.ResponseInfo;
-import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UploadManager;
-import com.qiniu.android.storage.UploadOptions;
 
-import org.json.JSONObject;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,9 +62,9 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             if (!TextUtils.isEmpty(path)) {
-                Intent intent = new Intent(PublishDynamicActivity.this, SelectVideoCoverActivity.class);
+               /* Intent intent = new Intent(PublishDynamicActivity.this, SelectVideoCoverActivity.class);
                 intent.putExtra("path", path);
-                startActivityForResult(intent, REQUEST_SELECT_VIDEO_COVER);
+                startActivityForResult(intent, REQUEST_SELECT_VIDEO_COVER);*/
             }
         }
     };
@@ -162,7 +148,7 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
     }
 
     private void uploadImageToQiNiu(){
-        Toast.makeText(PublishDynamicActivity.this, "上传中...", Toast.LENGTH_LONG).show();
+       /* Toast.makeText(PublishDynamicActivity.this, "上传中...", Toast.LENGTH_LONG).show();
         for (int i = 0; i < Bimp.tempSelectBitmap.size(); i++) {
             ImageItem bean = Bimp.tempSelectBitmap.get(i);
             String expectKey = "image/" + String.valueOf(System.currentTimeMillis());
@@ -204,15 +190,15 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
                     }
                 }, new UploadOptions(null, "test-type", true, null, null));
             }
-        }
+        }*/
     }
 
     private void checkImageUploadResult() {
-        if(uploadQiNiuFailed){
+     /*   if(uploadQiNiuFailed){
             Toast.makeText(PublishDynamicActivity.this, "上传失败,请重新发表...", Toast.LENGTH_LONG).show();
         }else if(qiNiuImageUrls.size() == Bimp.tempSelectBitmap.size()){
             uploadToServer();
-        }
+        }*/
     }
 
 
@@ -245,7 +231,7 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
         switch (requestCode){
             case Constant.RC_SELECTABLUMN:
                 if (resultCode == RESULT_OK) {
-                    imageAdapter.setData(Bimp.tempSelectBitmap,PublishDynamicAdapter.TYPE_PHOTO);
+                   // imageAdapter.setData(Bimp.tempSelectBitmap,PublishDynamicAdapter.TYPE_PHOTO);
                 }
                 break;
             case REQUEST_SELECT_VIDEO:
@@ -264,11 +250,11 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
                 }
 
                if (select_cover != null) {
-                    //uploadVideo = true;
+                 /*   //uploadVideo = true;
                     //uploadPhoto = false;
                     Bimp.tempSelectBitmap.clear();
                     Bimp.tempSelectBitmap.add(new ImageItem());
-                    imageAdapter.notifyDataSetChanged();
+                    imageAdapter.notifyDataSetChanged();*/
 
                 }
                 break;
@@ -278,13 +264,13 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
 
     private void toSelectPhotoActivity(){
         Intent intent = new Intent(this, AlbumActivity.class);
-        intent.putExtra(Constant.BUNDLE_CLASS,TabTheIndividualDynaminActivity.class);
+      //  intent.putExtra(Constant.BUNDLE_CLASS,TabTheIndividualDynaminActivity.class);
         startActivityForResult(intent, Constant.RC_SELECTABLUMN);
     }
 
     private void toSelectVideoActivity(){
-        Intent intent = new Intent(this, SelectVideoActivity.class);
-        startActivityForResult(intent, REQUEST_SELECT_VIDEO);
+        //Intent intent = new Intent(this, SelectVideoActivity.class);
+       // startActivityForResult(intent, REQUEST_SELECT_VIDEO);
     }
 
 

@@ -9,7 +9,7 @@ import android.widget.ImageView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.model.location.ImageItem;
+import com.leyuan.aidong.entity.ImageBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,14 +28,14 @@ public class PublishDynamicAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     private Context context;
     private String type;
-    private List<ImageItem> data = new ArrayList<>();
+    private List<ImageBean> data = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
 
     public PublishDynamicAdapter(Context context) {
         this.context = context;
     }
 
-    public void setData(List<ImageItem> data, String type) {
+    public void setData(List<ImageBean> data, String type) {
         if(data != null) {
             this.data = data;
             this.type = type;
@@ -84,7 +84,7 @@ public class PublishDynamicAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof ImageHolder) {
-            ((ImageHolder) holder).image.setImageURI("file://" + data.get(position).getImagePath());
+            //((ImageHolder) holder).image.setImageURI("file://" + data.get(position).getImagePath());
             ((ImageHolder) holder).delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

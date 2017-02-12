@@ -88,24 +88,6 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/tabMsgLayout"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:clickable="false"
-        android:gravity="center">
-
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            />
-
-    </RelativeLayout>
-
-    <RelativeLayout
         android:id="@+id/tabContactorLayout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

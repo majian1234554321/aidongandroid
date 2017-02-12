@@ -63,25 +63,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.MainActivity" />
-        <activity android:name=".ui.media.VideoPlayerActivity" />
         <activity android:name=".ui.mine.account.LoginActivity" >
             <intent-filter>
                 <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.media.AlbumActivity"
-            android:hardwareAccelerated="true" />
-        <activity android:name=".ui.media.TabPhotoWallActivity" />
         <activity android:name=".ui.media.TabTheIndividualDynaminActivity" />
-        <activity android:name=".ui.media.MyRecorderVideoActivity" />
-        <activity android:name=".ui.media.PreviewViedoShowActivity" />
-        <activity android:name=".ui.media.SelectVideoActivity" />
-        <activity android:name=".ui.media.SelectVideoCoverActivity" />
-        <activity android:name=".ui.media.TabVideoShowActivity" />
         <activity android:name=".ui.media.ImageShowerActivity" />
-        <activity android:name=".ui.mine.activity.TabMinePersonalDataActivity" />
         <activity android:name=".ui.mine.activity.TabMinePersonalDataFitnessGoalsActivity" />
         <activity android:name=".ui.mine.activity.TabMinePersonalDataFitnessIsGoodActivity" />
         <activity android:name=".ui.mine.activity.TabMinePersonalDataIndividualitySignatureActivity" />
@@ -163,7 +152,6 @@
         <activity android:name=".ui.discover.activity.DiscoverVenuesActivity"/>
         <activity android:name=".ui.discover.activity.NewsActivity"/>
         <activity android:name=".ui.discover.activity.NewsDetailActivity"/>
-        <activity android:name=".ui.discover.activity.UserWhoClickLikeActivity" />
         <activity android:name=".ui.video.activity.WatchOfficeActivity"/>
         <activity android:name=".ui.video.activity.PlayerActivity"/>
         <activity android:name=".ui.video.activity.VideoDetailActivity"/>

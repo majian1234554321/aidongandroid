@@ -1,43 +1,15 @@
 package com.leyuan.aidong.ui.video.activity;
 
-import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.leyuan.aidong.R;
-import com.leyuan.aidong.adapter.VideoCommentAdapter;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mine.account.LoginActivity;
-import com.leyuan.aidong.utils.Logger;
-import com.leyuan.aidong.utils.ToastUtil;
-import com.leyuan.aidong.utils.common.Common;
-import com.leyuan.aidong.widget.video.CircleImageView;
-import com.lidroid.xutils.exception.HttpException;
-import com.lidroid.xutils.http.RequestParams;
-import com.lidroid.xutils.http.ResponseInfo;
-import com.lidroid.xutils.http.callback.RequestCallBack;
-import com.nostra13.universalimageloader.core.ImageLoader;
-
-import java.io.UnsupportedEncodingException;
 
 
 /**
  * 视频评论界面
  * Created by song on 2016/7/22.
  */
-public class LiveCommentActivity extends BaseActivity implements PullToRefreshBase.OnRefreshListener2 {
+public class LiveCommentActivity extends BaseActivity {
 
-//    private TextView tvCourseName;
+/*//    private TextView tvCourseName;
     private PullToRefreshListView listView;
     private VideoCommentAdapter adapter;
     private CircleImageView img_header;
@@ -248,5 +220,5 @@ public class LiveCommentActivity extends BaseActivity implements PullToRefreshBa
         finish();
         overridePendingTransition(0, R.anim.slide_out_from_top);
 
-    }
+    }*/
 }
