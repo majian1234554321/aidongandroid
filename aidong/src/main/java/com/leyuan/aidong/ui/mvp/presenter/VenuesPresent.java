@@ -47,8 +47,9 @@ public interface VenuesPresent {
     /**
      * 获取场馆课程列表
      * @param id 场馆id
+     * @day 0..6#0表示今天，1表示明天，依次类推
      */
-    void getCourses(SwitcherLayout switcherLayout,String id);
+    void getCourses(SwitcherLayout switcherLayout,String id,String day);
 
     /**
      * 获取场馆教练列表

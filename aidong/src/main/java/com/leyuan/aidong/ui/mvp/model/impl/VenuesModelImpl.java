@@ -67,8 +67,8 @@ public class VenuesModelImpl implements VenuesModel {
     }
 
     @Override
-    public void getCourses(Subscriber<CourseData> subscriber, String id) {
-        venuesService.getCourses(id)
+    public void getCourses(Subscriber<CourseData> subscriber, String id,String day) {
+        venuesService.getCourses(id,day)
                 .compose(RxHelper.<CourseData>transform())
                 .subscribe(subscriber);
     }

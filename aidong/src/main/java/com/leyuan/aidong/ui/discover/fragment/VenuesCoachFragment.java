@@ -1,7 +1,6 @@
 package com.leyuan.aidong.ui.discover.fragment;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,9 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.adapter.discover.VenuesCoachAdapter;
 import com.leyuan.aidong.entity.CoachBean;
 import com.leyuan.aidong.ui.BaseFragment;
-import com.leyuan.aidong.adapter.discover.VenuesCoachAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.VenuesPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VenuesPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.VenuesCoachFragmentView;
@@ -25,7 +24,6 @@ import java.util.List;
  */
 public class VenuesCoachFragment extends BaseFragment implements VenuesCoachFragmentView{
     private SwitcherLayout switcherLayout;
-    private SwipeRefreshLayout refreshLayout;
     private VenuesCoachAdapter coachAdapter;
     private String id;
 
@@ -40,10 +38,9 @@ public class VenuesCoachFragment extends BaseFragment implements VenuesCoachFrag
         if(bundle != null){
             id = bundle.getString("id");
         }
-        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout);
         VenuesPresent venuesPresent = new VenuesPresentImpl(getContext(),this);
-        switcherLayout = new SwitcherLayout(getContext(),refreshLayout);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv_venues_coach);
+        switcherLayout = new SwitcherLayout(getContext(),recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         coachAdapter = new VenuesCoachAdapter(getContext(),id);
         recyclerView.setAdapter(coachAdapter);

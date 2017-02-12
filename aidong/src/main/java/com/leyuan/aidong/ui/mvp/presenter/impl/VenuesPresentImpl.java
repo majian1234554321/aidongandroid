@@ -192,7 +192,7 @@ public class VenuesPresentImpl implements VenuesPresent{
     }
 
     @Override
-    public void getCourses(final SwitcherLayout switcherLayout,String id) {
+    public void getCourses(final SwitcherLayout switcherLayout,String id,String day) {
         venuesModel.getCourses(new CommonSubscriber<CourseData>(switcherLayout) {
             @Override
             public void onNext(CourseData courseData) {
@@ -203,7 +203,7 @@ public class VenuesPresentImpl implements VenuesPresent{
                     switcherLayout.showEmptyLayout();
                 }
             }
-        },id);
+        },id,day);
     }
 
     @Override

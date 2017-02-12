@@ -8,7 +8,7 @@ import android.os.Parcelable;
  * Created by song on 2016/9/21.
  */
 public class AddressBean implements Parcelable{
-    private String address_id;
+    private String id;
     private String name;
     private String mobile;
     private String province;
@@ -17,11 +17,11 @@ public class AddressBean implements Parcelable{
     private String address;
 
     public String getId() {
-        return address_id;
+        return id;
     }
 
     public void setId(String id) {
-        this.address_id = id;
+        this.id = id;
     }
 
     public String getName() {
@@ -49,11 +49,11 @@ public class AddressBean implements Parcelable{
     }
 
     public String getAddress_id() {
-        return address_id;
+        return id;
     }
 
     public void setAddress_id(String address_id) {
-        this.address_id = address_id;
+        this.id = address_id;
     }
 
     public String getProvince() {
@@ -83,7 +83,7 @@ public class AddressBean implements Parcelable{
     @Override
     public String toString() {
         return "AddressBean{" +
-                "address_id='" + address_id + '\'' +
+                "address_id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", mobile='" + mobile + '\'' +
                 ", province='" + province + '\'' +
@@ -100,7 +100,7 @@ public class AddressBean implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.address_id);
+        dest.writeString(this.id);
         dest.writeString(this.name);
         dest.writeString(this.mobile);
         dest.writeString(this.province);
@@ -113,7 +113,7 @@ public class AddressBean implements Parcelable{
     }
 
     protected AddressBean(Parcel in) {
-        this.address_id = in.readString();
+        this.id = in.readString();
         this.name = in.readString();
         this.mobile = in.readString();
         this.province = in.readString();

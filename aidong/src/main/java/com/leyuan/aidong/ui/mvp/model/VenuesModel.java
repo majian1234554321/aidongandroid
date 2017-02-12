@@ -58,7 +58,7 @@ public interface VenuesModel {
      * @param subscriber 返回Subscriber
      * @param id  场馆id
      */
-    void getCourses(Subscriber<CourseData> subscriber, String id);
+    void getCourses(Subscriber<CourseData> subscriber, String id,String day);
 
     /**
      * 预约场馆

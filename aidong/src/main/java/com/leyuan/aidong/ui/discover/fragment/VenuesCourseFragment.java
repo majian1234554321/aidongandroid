@@ -16,6 +16,7 @@ import com.leyuan.aidong.adapter.discover.VenuesCourseAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.VenuesPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VenuesPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.VenuesCourseFragmentView;
+import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.widget.customview.SwitcherLayout;
 
 import java.util.List;
@@ -25,12 +26,14 @@ import java.util.List;
  * 场馆详情-课程
  * Created by song on 2016/8/27.
  */
-public class VenuesCourseFragment extends BaseFragment implements VenuesCourseFragmentView{
+public class VenuesCourseFragment extends BaseFragment implements VenuesCourseFragmentView, DateAdapter.ItemClickListener {
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
     private VenuesCourseAdapter courseAdapter;
     private DateAdapter dateAdapter;
     private String id;
+    private String day = "0";
+    private VenuesPresent venuesPresent;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,13 +43,13 @@ public class VenuesCourseFragment extends BaseFragment implements VenuesCourseFr
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        VenuesPresent venuesPresent = new VenuesPresentImpl(getContext(),this);
+        venuesPresent = new VenuesPresentImpl(getContext(),this);
         Bundle bundle = getArguments();
         if(bundle != null){
             id = bundle.getString("id");
         }
         initView(view);
-        venuesPresent.getCourses(switcherLayout,id);
+        venuesPresent.getCourses(switcherLayout,id,day);
     }
 
     private void initView(View view) {
@@ -61,11 +64,18 @@ public class VenuesCourseFragment extends BaseFragment implements VenuesCourseFr
         dateAdapter = new DateAdapter();
         dateView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
         dateView.setAdapter(dateAdapter);
+        dateAdapter.setData(DateUtils.getSevenDate());
+        dateAdapter.setItemClickListener(this);
     }
 
     @Override
     public void setCourses(List<CourseBean> courseBeanList) {
         courseAdapter.setData(courseBeanList);
-        dateAdapter.setData(null);
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        day = String.valueOf(position);
+        venuesPresent.getCourses(switcherLayout,id,day);
     }
 }

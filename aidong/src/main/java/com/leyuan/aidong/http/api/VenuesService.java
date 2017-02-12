@@ -49,7 +49,7 @@ public interface VenuesService {
      * @return
      */
     @GET("gyms/{id}/courses")
-    Observable<BaseBean<CourseData>> getCourses(@Path("id") String id);
+    Observable<BaseBean<CourseData>> getCourses(@Path("id") String id ,@Query("day") String day);
 
     /**
      * 预约场馆

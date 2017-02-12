@@ -79,4 +79,5 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateHolder>{
     public interface ItemClickListener{
         void onItemClick(int position);
     }
+
 }
