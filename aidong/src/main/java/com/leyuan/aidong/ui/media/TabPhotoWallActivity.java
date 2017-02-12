@@ -160,7 +160,7 @@ public class TabPhotoWallActivity extends BaseActivity implements IHttpCallback 
                 }
                 //				ll_popup.startAnimation(AnimationUtils.loadAnimation(
                 //						TabPhotoWallActivity.this,
-                //						R.anim.activity_translate_in));
+                //						R.anim.translate_in));
                 //				window.showAtLocation(parentView, Gravity.BOTTOM, 0, 0);
             }
         });

@@ -217,4 +217,13 @@
     <color name="divider_pop">#eeeeee</color>
     <color name="bike_no_select">#999999</color>
 
+
+    <color name="colorPrimaryAlpha">#44000000</color>
+    <color name="gray1">#333333</color>
+    <color name="white1">#fafafa</color>
+    <color name="white2">#eaeaea</color>
+    <color name="black1">#1b1b1b</color>
+    <color name="black_alpha15">#26000000</color>
+    <color name="black_alpha20">#33000000</color>
+    <color name="black_alpha25">#3c000000</color>
 </resources>

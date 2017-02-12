@@ -240,7 +240,7 @@ public class PopupWindowUitl {
 		
 //		ll_popup.startAnimation(AnimationUtils.loadAnimation(
 //				mContext,
-//				R.anim.activity_translate_in));
+//				R.anim.translate_in));
 		window.showAtLocation(view.findViewById(R.id.popmenu_report),
 				Gravity.BOTTOM, 0, 0);
 		if (backgroud != null) {
@@ -252,7 +252,7 @@ public class PopupWindowUitl {
 	
 //		ll_popup.startAnimation(AnimationUtils.loadAnimation(
 //				mContext,
-//				R.anim.activity_translate_in));
+//				R.anim.translate_in));
 		window.showAtLocation(parentView,
 				Gravity.BOTTOM, 0, 0);
 		if (backgroud != null) {

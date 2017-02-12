@@ -9,7 +9,7 @@ import android.widget.ImageView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.ImageBean;
+import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,14 +25,14 @@ public class PhotoWallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private static final int ITEM_TYPE_ADD_IMAGE = 2;
 
     private Context context;
-    private List<ImageBean> data = new ArrayList<>();
+    private List<BaseMedia> data = new ArrayList<>();
     private OnItemClickListener listener;
 
     public PhotoWallAdapter(Context context) {
         this.context = context;
     }
 
-    public void setData(List<ImageBean> data){
+    public void setData(List<BaseMedia> data){
         if(data != null){
             this.data = data;
             notifyDataSetChanged();
@@ -76,7 +76,7 @@ public class PhotoWallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof PhotoWallAdapter.ImageHolder) {
-            ((PhotoWallAdapter.ImageHolder) holder).image.setImageURI(data.get(position).getUrl());
+            ((PhotoWallAdapter.ImageHolder) holder).image.setImageURI(data.get(position).getPath());
             ((PhotoWallAdapter.ImageHolder) holder).delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

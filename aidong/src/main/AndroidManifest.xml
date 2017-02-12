@@ -127,7 +127,7 @@
         <activity android:name=".ui.mine.activity.UpdateSignatureActivity"/>
         <activity android:name=".ui.mine.activity.UpdateDeliveryInfoActivity"/>
 
-        <activity android:name=".ui.mine.activity.UpdatePhotoWall"/>
+        <activity android:name=".ui.mine.activity.UpdatePhotoWallActivity"/>
         <activity android:name=".module.scan.activity.MipcaActivityCapture" />
         <activity android:name=".module.scan.activity.ScanResultActivity" />
         <activity android:name=".module.scan.activity.ScanActivity" />
@@ -188,6 +188,20 @@
         <activity android:name=".ui.mine.login.RegisterActivity" />
         <activity android:name=".ui.mine.login.XiuGaiGeXinQianMing" />
         <activity android:name=".widget.wheelcity.LoadAddressDataActivity" />
+        <activity
+            android:name=".module.photopicker.boxing_impl.ui.BoxingActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+        <activity
+            android:name=".module.photopicker.boxing_impl.ui.BoxingViewActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
         <!-- ********************share sdk************************* -->
         <!--<activity-->
             <!--android:name="com.mob.tools.MobUIShell"-->

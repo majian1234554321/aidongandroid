@@ -13,6 +13,11 @@ import com.facebook.stetho.Stetho;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMOptions;
 import com.leyuan.aidong.entity.model.UserCoach;
+import com.leyuan.aidong.module.photopicker.BoxingFrescoLoader;
+import com.leyuan.aidong.module.photopicker.BoxingUcrop;
+import com.leyuan.aidong.module.photopicker.boxing.BoxingCrop;
+import com.leyuan.aidong.module.photopicker.boxing.BoxingMediaLoader;
+import com.leyuan.aidong.module.photopicker.boxing.loader.IBoxingMediaLoader;
 import com.leyuan.aidong.utils.AppUtil;
 import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.Logger;
@@ -60,6 +65,9 @@ public class App extends Application {
         initImageLoader(getApplicationContext());
         initDbUtils();
         initEMchat();
+        IBoxingMediaLoader loader = new BoxingFrescoLoader(this);
+        BoxingMediaLoader.getInstance().init(loader);
+        BoxingCrop.getInstance().init(new BoxingUcrop());
      //   initImagePicker();
 
 

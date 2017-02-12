@@ -146,7 +146,7 @@ public class UserInfoActivity extends BaseActivity implements SmartTabLayout.Tab
                 UpdateUserInfoActivity.start(this,profileBean);
                 break;
             case R.id.tv_add_image:
-                UpdatePhotoWall.start(this,photos);
+                UpdatePhotoWallActivity.start(this,photos);
                 break;
         }
     }

@@ -235,6 +235,13 @@
 
     <fraction name="item_max_mask_alpha">25%</fraction>
     <fraction name="item_normal_mask_alpha">55%</fraction>
+    <dimen name="text_size_xlarge">16sp</dimen>
+    <dimen name="text_size_large">14sp</dimen>
+    <dimen name="text_size_medium">12sp</dimen>
+    <dimen name="text_size_small">10sp</dimen>
 
-
+    <dimen name="item_spacing">8dp</dimen>
+    <dimen name="item_half_spacing">4dp</dimen>
+    <dimen name="media_margin">2dp</dimen>
+    <dimen name="corner_radius">2dp</dimen>
 </resources>

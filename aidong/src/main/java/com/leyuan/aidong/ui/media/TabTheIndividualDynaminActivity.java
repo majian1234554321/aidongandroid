@@ -399,7 +399,7 @@ public class TabTheIndividualDynaminActivity extends BaseActivity implements
                         0);
                 ll_popup.startAnimation(AnimationUtils.loadAnimation(
                         TabTheIndividualDynaminActivity.this,
-                        R.anim.activity_translate_in));
+                        R.anim.translate_in));
                 window.showAtLocation(parentView, Gravity.BOTTOM, 0, 0);
             }
         });

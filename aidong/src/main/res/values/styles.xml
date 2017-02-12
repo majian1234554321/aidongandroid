@@ -399,8 +399,7 @@
 
 
     <style name="ActionSheetDialogAnimation" parent="@android:style/Animation.Dialog">
-        <item name="android:windowEnterAnimation">@anim/actionsheet_dialog_in</item>
-        <item name="android:windowExitAnimation">@anim/actionsheet_dialog_out</item>
+       
     </style>
 
     <style name="time_dialog" parent="@android:style/Theme.Holo.Light.Dialog">
@@ -423,4 +422,21 @@
     </style>
 
     <color name="subtransparent">#77000000</color>
+
+    <style name="PopupAnimation" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/fade_in</item>
+        <item name="android:windowExitAnimation">@anim/fade_out</item>
+    </style>
+
+    <style name="ToolbarTheme" parent="AppTheme.NoActionBar" >
+        <item name="titleTextColor">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@color/colorPrimaryDark</item>
+    </style>
+
+    <!-- TextAppearance -->
+    <style name="TextAppearance.App.Medium" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+    </style>
 </resources>
