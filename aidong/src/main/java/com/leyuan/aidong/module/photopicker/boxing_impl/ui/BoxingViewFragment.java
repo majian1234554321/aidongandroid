@@ -57,7 +57,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A full implement for {@link com.bilibili.boxing.presenter.PickerContract.View} supporting all the mode
+ * A full implement for {@link com.leyuan.aidong.module.photopicker.boxing.presenter.PickerContract.View} supporting all the mode
  * in {@link BoxingConfig.Mode}.
  * use this to pick the picture.
  *
@@ -490,7 +490,7 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
                 }
             }
             photoMedia.setSelected(isSelected);
-            layout.setChecked(isSelected);
+            layout.setAnimatedChecked(isSelected);
             updateMultiPickerLayoutState(selectedMedias);
         }
     }

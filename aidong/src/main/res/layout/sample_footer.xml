@@ -12,7 +12,6 @@
         android:background="@color/black" />
 
     <TextView
-        android:id="@+id/person_video_list_honey_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="4dp"

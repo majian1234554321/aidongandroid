@@ -48,8 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/line_color"
-        android:id="@+id/view5" />
+        android:background="@color/line_color" />
 
     <TextView
         android:id="@+id/tv_add_address"

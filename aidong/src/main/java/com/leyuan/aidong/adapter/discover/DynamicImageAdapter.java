@@ -9,8 +9,10 @@ import android.view.ViewGroup;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ScreenUtil;
+import com.leyuan.aidong.utils.qiniu.QiNiuImageProcessUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,18 +40,20 @@ public class DynamicImageAdapter extends RecyclerView.Adapter<DynamicImageAdapte
 
     @Override
     public ImageHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Logger.w("recyclerView","DynamicImageAdapter onCreateViewHolder" );
+      //  Logger.w("recyclerView","DynamicImageAdapter onCreateViewHolder" );
         View view = LayoutInflater.from(context).inflate(R.layout.item_dynamic_image,parent,false);
         return new ImageHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ImageHolder holder, final int position) {
-        Logger.w("recyclerView","DynamicImageAdapter onBindView" + position);
+       // Logger.w("recyclerView","DynamicImageAdapter onBindView" + position);
         String url = data.get(position);
         if(!url.equals(holder.image.getTag())) {
             holder.image.setTag(url);
-            holder.image.setImageURI(url);
+            int minWidth = holder.image.getLayoutParams().width;
+            holder.image.setImageURI(QiNiuImageProcessUtils.minWidthScale(url,minWidth));
+            Logger.w("recyclerView","DynamicImageAdapter " + QiNiuImageProcessUtils.minWidthScale(url,minWidth));
         }
         ViewCompat.setTransitionName(holder.image, String.valueOf(position) + "transition");
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -76,11 +80,11 @@ public class DynamicImageAdapter extends RecyclerView.Adapter<DynamicImageAdapte
                 image.getLayoutParams().width = ScreenUtil.getScreenWidth(context);
                 image.getLayoutParams().height = ScreenUtil.getScreenWidth(context);
             }else if(data.size() == 2 || data.size() == 4){
-                image.getLayoutParams().width = ScreenUtil.getScreenWidth(context)/2;
-                image.getLayoutParams().height = ScreenUtil.getScreenWidth(context)/2;
+                image.getLayoutParams().width = (ScreenUtil.getScreenWidth(context) - DensityUtil.dp2px(context,5))/2 ;
+                image.getLayoutParams().height = (ScreenUtil.getScreenWidth(context) - DensityUtil.dp2px(context,5))/2;
             }else if(data.size() == 6){
-                image.getLayoutParams().width = ScreenUtil.getScreenWidth(context)/3;
-                image.getLayoutParams().height = ScreenUtil.getScreenWidth(context)/3;
+                image.getLayoutParams().width = (ScreenUtil.getScreenWidth(context)- DensityUtil.dp2px(context,10))/3 ;
+                image.getLayoutParams().height = (ScreenUtil.getScreenWidth(context)- DensityUtil.dp2px(context,10))/3;
             }
         }
     }

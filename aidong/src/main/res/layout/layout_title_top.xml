@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/layoutTitleTop"
-                android:layout_width="fill_parent"
+    android:layout_width="fill_parent"
                 android:layout_height="50dp"
                 android:background="@color/color_black" >
 
@@ -13,7 +12,6 @@
     </ImageView>
 
     <TextView
-        android:id="@+id/txtTopLeft"
         style="@style/titleTextStyle"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
@@ -25,7 +23,6 @@
     </TextView>
 
     <TextView
-        android:id="@+id/txtTopRight"
         style="@style/titleTextStyle"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
@@ -36,7 +33,6 @@
     </TextView>
 
     <RelativeLayout
-        android:id="@+id/rel_imgmessgae"
         android:layout_width="@dimen/pref_30dp"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
@@ -65,7 +61,6 @@
         </ImageButton>
 
         <View
-            android:id="@+id/tabMsgCircleLayout"
             android:layout_width="@dimen/pref_10dp"
             android:layout_height="@dimen/pref_10dp"
             android:layout_alignParentRight="true"
@@ -76,7 +71,6 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/txtTopTitle"
         style="@style/titleTextStyle"
         android:layout_centerInParent="true"
         android:textColor="@color/color_white"

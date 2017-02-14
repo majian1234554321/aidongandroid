@@ -85,7 +85,6 @@
 
 
                     <LinearLayout
-                        android:id="@+id/linearLayout"
                         android:layout_width="fill_parent"
                         android:layout_height="40dp"
                         android:layout_below="@+id/textView_name"
@@ -241,7 +240,6 @@
 
 
                     <RelativeLayout
-                        android:id="@+id/relativeLayout_yynum"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@+id/textView86"
@@ -283,7 +281,6 @@
 
 
                     <RelativeLayout
-                        android:id="@+id/relativeLayout_ddnum"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@+id/textView144"
@@ -420,7 +417,6 @@
     </ScrollView>
 
     <RelativeLayout
-        android:id="@+id/top_title"
         android:layout_width="match_parent"
         android:layout_height="@dimen/pref_50dp">
 

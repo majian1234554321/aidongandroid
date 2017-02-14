@@ -1,24 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="sex">
-        <item>不限</item>
+    <string-array name="gender">
         <item>男</item>
         <item>女</item>
     </string-array>
 
-    <string-array name="age">
-        <item>不限</item>
-        <item>18-23</item>
-        <item>24-29</item>
-        <item>30-35</item>
-        <item>36-41</item>
-        <item>42-47</item>
-        <item>48-53</item>
-        <item>54-59</item>
+    <string-array name="identify">
+        <item>健身爱好者</item>
+        <item>教练</item>
     </string-array>
 
     <string-array name="height">
-        <item>不限</item>
         <item>150-155cm</item>
         <item>155-160cm</item>
         <item>160-165cm</item>
@@ -26,29 +18,29 @@
         <item>170-175cm</item>
         <item>175-180cm</item>
         <item>180-185cm</item>
-        <item>186-191cm</item>
-        <item>192-197cm</item>
-        <item>198-203cm</item>
+        <item>186-190cm</item>
+        <item>190-195cm</item>
+        <item>195-200cm</item>
     </string-array>
 
-    <string-array name="constellation">
-        <item>不限</item>
-        <item>白羊座</item>
-        <item>金牛座</item>
-        <item>双子座</item>
-        <item>巨蟹座</item>
-        <item>狮子座</item>
-        <item>处女座</item>
-        <item>天秤座</item>
-        <item>天蝎座</item>
-        <item>射手座</item>
-        <item>摩羯座</item>
-        <item>水瓶座</item>
-        <item>双鱼座</item>
+
+    <string-array name="weight">
+        <item>40-45kg</item>
+        <item>45-50kg</item>
+        <item>50-55kg</item>
+        <item>55-60kg</item>
+        <item>60-65kg</item>
+        <item>65-70kg</item>
+        <item>70-75cm</item>
+        <item>75-80cm</item>
+        <item>80-85cm</item>
+        <item>85-90cm</item>
+        <item>90-95cm</item>
+        <item>95-100cm</item>
     </string-array>
 
-    <string-array name="sportTimes">
-        <item>不限</item>
+
+    <string-array name="frequency">
         <item>1次/周</item>
         <item>2次/周</item>
         <item>3次/周</item>
@@ -58,53 +50,9 @@
         <item>7次/周</item>
     </string-array>
 
-    <string-array name="characterTag">
-        <item>人鱼线</item>
-        <item>六块腹肌</item>
-        <item>臂膀宽厚</item>
-        <item>大长腿</item>
-        <item>美胸</item>
-        <item>翘臀</item>
-        <item>小蛮腰</item>
-        <item>马甲线</item>
-    </string-array>
-
-    <string-array name="sportTag">
-        <item>健身</item>
-        <item>跑步</item>
-        <item>舞蹈</item>
-        <item>游泳</item>
-        <item>搏击</item>
-        <item>瑜伽</item>
-        <item>足球</item>
-        <item>篮球</item>
-        <item>排球</item>
-        <item>网球</item>
-        <item>羽毛球</item>
-        <item>乒乓球</item>
-        <item>高尔夫球</item>
-        <item>壁球</item>
-        <item>溜冰</item>
-        <item>射箭</item>
-        <item>攀岩</item>
-        <item>骑行</item>
-    </string-array>
-
-    <string-array name="bodyTag">
-        <item>脸部</item>
-        <item>颈部</item>
-        <item>胸部</item>
-        <item>臂膀</item>
-        <item>腰部</item>
-        <item>臀部</item>
-        <item>腿部</item>
-        <item>脚部</item>
-    </string-array>
-
-    <string-array name="venuesCondition">
-        <item>全部品牌</item>
-        <item>全部商圈</item>
-        <item>全部类型</item>
+    <string-array name="mediaType">
+        <item>照片</item>
+        <item>视频</item>
     </string-array>
 
     <string-array name="searchTab">
@@ -144,11 +92,6 @@
     <string-array name="followTab">
         <item>关注</item>
         <item>粉丝</item>
-    </string-array>
-
-    <string-array name="discoverTab">
-        <item>发现</item>
-        <item>爱动圈</item>
     </string-array>
 
     <string-array name="campaignTab">

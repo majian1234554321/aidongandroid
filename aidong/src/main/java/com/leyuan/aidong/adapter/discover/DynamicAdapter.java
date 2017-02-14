@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.DynamicBean;
-import com.leyuan.aidong.ui.discover.view.GridItemDecoration;
 import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.Logger;
@@ -355,7 +354,6 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
             tvCommentCount = (TextView) itemView.findViewById(R.id.tv_comment_count);
             bottomShareLayout = (RelativeLayout) itemView.findViewById(R.id.bottom_share_layout);
             ivShare = (ImageView) itemView.findViewById(R.id.iv_share);
-            photoLayout.addItemDecoration(new GridItemDecoration(context));
             photoLayout.setNestedScrollingEnabled(false);
             likesRecyclerView.setNestedScrollingEnabled(false);
             commentRecyclerView.setNestedScrollingEnabled(false);

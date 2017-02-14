@@ -4,16 +4,11 @@
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#333333</color>
 
-    <color name="grey">#f2f2f2</color><!--灰色 -->
+    <!--灰色 -->
     <color name="gray">#808080</color><!--灰色 -->
     <color name="red">#FF0000</color><!--红色 -->
     <color name="drop_down_selected">#FF5000</color>
     <color name="drop_down_unselected">#111111</color>
-    <color name="mask_color">#88888888</color>
-    <color name="check_bg">#f2f2f2</color>
-    <color name="un_press_color">#9C27B0</color>
-    <color name="rippleColor">#808080</color>
-    <color name="lineColor">#808080</color>
 
     <color name="color_white">#FFFFFF</color>
     <color name="color_black">#000000</color>
@@ -21,102 +16,34 @@
     <color name="color_light_blue">#19C7EC</color>
     <color name="color_light_blue2">#0076FF</color>
     <color name="color_light_white">#eaebf0</color>
-    <color name="color_light_green">#1FCC61</color>
     <color name="color_line_gray">#C6C5CA</color>
     <color name="color_txt_gray1">#999999</color>
     <color name="green">#00dd00</color>
-    <color name="color_txt_gray2">#68676C</color>
-    <color name="color_near_title_no_select">#87EAFF</color>
     <color name="color_home_tab_bg">#ffffff</color>
-    <color name="color_tab_bg">#333333</color>
-    <color name="color_f_two">#f2f2f2</color>
     <color name="color_tab_txt_default">#929292</color>
     <color name="color_tab_txt_select">#234969</color>
     <color name="color_list_distance">#C8C7CC</color>
-    <color name="color_female">#ff0000</color>
-    <color name="color_male">#0076FF</color>
     <color name="color_search_bg1">#F9F9FB</color>
-    <color name="color_blue">#00ccff</color>
-    <color name="color_search_bg2">#F7F7F9</color>
     <color name="gray_normal">#666667</color>
-    <color name="adadad">#adadad</color>
     <color name="e_five">#eaebf0</color>
-    <color name="color_contactor_pagerTitle_bg">#F0F0F2</color>
-    <color name="color_contactor_pagerTitle_font_unselect">#7B7B7B</color>
-    <color name="color_contactor_pagerTitle_font_select">#313131</color>
-    <color name="eight_six">#888888</color>
-    <color name="eight_zero">#808080</color>
-    <color name="typeface_eight">#ace1f8</color>
     <color name="typeface_seven">#4d4d4d</color>
     <color name="typeface_five">#b3b3b3</color>
     <color name="background_one">#00c1eb</color>
     <color name="store">#8d97a6</color>
     <color name="sort">#ff572f</color>
-    <color name="b_four_b_b_c_five">#b4bbc5</color>
     <color name="new_background_one">#000000</color>
-    <color name="dialog_intetface">#666666</color>
-    <color name="seven_two_seven">#727171</color>
-    <color name="touming_black">#00000000</color>
-    <color name="six_night">#69696969</color>
-    <color name="eight_seven">#87CEFA</color>
     <color name="cecece">#cecece</color>
-    <color name="btn_gray_normal">#c0c0c0</color>
-    <color name="btn_gray_pressed_status">#b5b5b6</color>
-    <color name="btn_blue_normal">#1e90ff</color>
-    <color name="btn_blue_pressed">#0066FF</color>
     <color name="orange">#FFA500</color>
-    <color name="common_bg">#fcfcfc</color>
-    <color name="top_bar_normal_bg">#4ebcd3</color>
-    <color name="bottom_text_color_normal">#ffffff</color>
-    <color name="trans">#00000000</color>
     <color name="black">#000000</color>
     <color name="alertdialog_line">#c6c6c6</color>
     <color name="actionsheet_blue">#037BFF</color>
-    <color name="guaguawei">#1fcc61</color>
-    <color name="actionsheet_red">#FD4A2E</color>
     <color name="actionsheet_gray">#8F8F8F</color>
     <color name="white">#ffffffff</color>
-    <color name="picker_pink_color">#fffd6c8e</color>
-    <color name="filter_tab_bottom_line">#ffdddede</color>
-    <color name="none_color">#00000000</color>
     <color name="blue">#0000ff</color>
-    <color name="albumback">#E1E0DE</color>
-    <color name="seven_zero">#7f000000</color>
-    <color name="person_like">#F76630</color>
-
-    <color name="no_xingxiu">#33ccff</color>
-    <color name="voip_interface_text_color">#bababa</color>
-    <color name="btn_register_normal">#2dafa3</color>
-    <color name="btn_register_pressed">#4ebcd3</color>
-    <color name="grid_state_pressed">#1Affffff</color>
-    <color name="grid_state_focused">#80000000</color>
-    <color name="popwindow">#a5000000</color>
-    <color name="d_f">#dfdfdf</color>
-    <color name="f_seven">#f7f7f9</color>
-    <color name="five_sevenzero">#50000000</color>
-    <color name="mangirl">#febb1b</color>
-    <color name="blacktwo">#23000000</color>
-    <color name="mxlist_two">#f47a30</color>
-    <color name="mxlist_three">#febb1b</color>
-    <color name="f_likes">#f86330</color>
 
 
     <!-- v2 -->
-    <color name="e_six">#e6e6e8</color>
-    <color name="coupon_text_color">#f65155</color>
-    <color name="line_kuang">#c8c7cc</color>
-    <color name="line_nei">#f7f7f9</color>
-    <color name="line_gray">#e5e5e5</color>
-    <color name="blue_v2">#00c1eb</color>
-    <color name="money_v2">#dd656e</color>
-    <color name="coupon_canel">#f4a7a9</color>
 
-    <color name="class_sort_header_red">#fa6060</color>
-    <color name="class_sort_header_bule">#0096ff</color>
-    <color name="class_sort_header_yellow">#f89a00</color>
-    <color name="class_sort_header_purple">#8663c5</color>
-
-    <color name="line_grey_d0d1d6">#d0d1d6</color>
     <color name="text_blue">#157efb</color>
     <color name="viewfinder_mask">#60000000</color>
     <color name="result_view">#b0000000</color>
@@ -130,12 +57,6 @@
     <color name="main_tophead">#404040</color>
     <color name="list_line_color">#d9d9d9</color>
 
-    <color name="refresh_blue">#ff00ddff</color>
-    <color name="refresh_orange">#ffffbb33</color>
-    <color name="refresh_red">#ffff4444</color>
-    <color name="refresh_green">#ff99cc00</color>
-    <color name="color_ff">#F0F0F0</color>
-    <color name="color_00">#8A000000</color>
     <color name="base_theme">#ebebeb</color>
     <color name="mine_divider">#dfe0e6</color>
 
@@ -151,79 +72,21 @@
     <color name="text_enabled">#FFFFFFFF</color>
     <color name="text_disabled">#747474</color>
 
-    <color name="bg_color">#ededed</color>
-    <color name="contents_text">#ff000000</color>
-    <color name="encode_view">#ffffffff</color>
-    <color name="help_button_view">#ffcccccc</color>
-    <color name="help_view">#ff404040</color>
-    <color name="result_image_border">#ffffffff</color>
-    <color name="result_minor_text">#ffc0c0c0</color>
-    <color name="result_points">#c000ff00</color>
-    <color name="result_text">#ffffffff</color>
-    <color name="sbc_header_text">#ff808080</color>
-    <color name="sbc_header_view">#ffffffff</color>
-    <color name="sbc_list_item">#fffff0e0</color>
-    <color name="sbc_layout_view">#ffffffff</color>
-    <color name="sbc_page_number_text">#ff000000</color>
-    <color name="sbc_snippet_text">#ff4b4b4b</color>
-    <color name="share_text">#ff000000</color>
-    <color name="share_view">#ffffffff</color>
-    <color name="status_view">#50000000</color>
-    <color name="status_text">#ffffffff</color>
-    <color name="viewfinder_frame">#ff000000</color>
-    <color name="viewfinder_laser">#ffff0000</color>
-    <color name="chat_list_item_background_color">#FFFFFF</color>
-    <color name="header">#58567D</color>
-    <color name="grgray">#686868</color>
-    <color name="lighter_gray">#ffd3d3d3</color>
-    <color name="black_95">#d6000000</color>
-    <color name="blank_bg">#cc000000</color>
-    <color name="common_gray">#999999</color>
-    <color name="black_10">#19000000</color>
     <color name="background_color">#e7e7ee</color>
-    <color name="common_black">#656074</color>
-    <color name="choose_eara_item_press_color">#f4f4f4</color>
-    <color name="popup_main_background">#b0000000</color>
     <color name="text_gray">#999999</color>
-    <color name="background_check">#f0f2f7</color>
-    <color name="renyuxian">#b67beb</color>
-    <color name="yundongzhe">#2168c9</color>
-    <color name="yundongdaren">#6acbf6</color>
-    <color name="tinengdashi">#00cc00</color>
-    <color name="daren">#ff7674</color>
-    <color name="yujiatianshi">#ff9966</color>
-    <color name="sliver_grey">#666666</color>
 
-    <color name="bg_shop_detail_time">#f7f7f7</color>
     <!-- SeekBar 缓冲颜色 -->
-    <drawable name="seven_transparent_background">#B2000000</drawable>
-    <color name="province_line_border">#C7C7C7</color>
-    <color name="jianxi">#EBEBEB</color>
     <color name="text_veiw_red">#FF5000</color>
-    <color name="my_tc_black">#1A1A1A</color>
-    <color name="my_tv_black">#4D4D4D</color>
-    <color name="fitness_festival">#000000</color>
-    <color name="ticket_tag_color">#D2B763</color>
     <color name="txt_black">#333333</color>
-    <color name="title_bg">#1C4987</color>
     <color name="text_color_common">#999999</color>
     <color name="common_divider_color">#dfe0e6</color>
     <color name="light_black">#333333</color>
     <color name="transpance">#00000000</color>
     <color name="background_main">#ffffff</color>
-    <color name="light_white">#f0f0f0</color>
-    <color name="mine_txt_color">#a5a5a5</color>
-    <color name="blue_select">#1C4987</color>
-    <color name="divider_pop">#eeeeee</color>
-    <color name="bike_no_select">#999999</color>
 
 
     <color name="colorPrimaryAlpha">#44000000</color>
     <color name="gray1">#333333</color>
-    <color name="white1">#fafafa</color>
-    <color name="white2">#eaeaea</color>
     <color name="black1">#1b1b1b</color>
     <color name="black_alpha15">#26000000</color>
-    <color name="black_alpha20">#33000000</color>
-    <color name="black_alpha25">#3c000000</color>
 </resources>

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingTop="10dp">
+    android:padding="10dp">
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/dv_image"
@@ -11,7 +11,6 @@
         android:layout_height="100dp"
         android:scaleType="centerCrop"
         app:actualImageScaleType="centerCrop"
-        app:placeholderImage="@drawable/place_holder_logo"
         app:pressedStateOverlayImage="@color/color_image_press"/>
 
     <ImageView
@@ -21,6 +20,6 @@
         android:layout_gravity="top|right"
         android:paddingBottom="10dp"
         android:paddingLeft="10dp"
-        android:src="@drawable/icon_delete"
+        android:src="@drawable/icon_delete_black"
         android:drawableTint="#CEB164"/>
 </FrameLayout>

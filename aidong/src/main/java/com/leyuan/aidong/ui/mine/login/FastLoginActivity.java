@@ -8,7 +8,7 @@ import android.widget.EditText;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mvp.presenter.FastLoginPresenter;
+import com.leyuan.aidong.ui.mvp.presenter.impl.FastLoginPresenter;
 import com.leyuan.aidong.ui.mvp.view.FastLoginViewInterface;
 import com.leyuan.aidong.utils.StringUtils;
 import com.leyuan.aidong.utils.ToastUtil;

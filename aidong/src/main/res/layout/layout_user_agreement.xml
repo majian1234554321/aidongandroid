@@ -30,13 +30,11 @@
     </RelativeLayout>
 
     <ScrollView
-        android:id="@+id/scrollview_user_agreement"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/relativelayout_user_agreement_title" >
 
         <RelativeLayout
-            android:id="@+id/relativelayout_user_agreement"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
@@ -1060,7 +1058,6 @@
                 android:textColor="@color/color_black" />
 
             <TextView
-                android:id="@+id/textview_user_agreement125"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textview_user_agreement124"

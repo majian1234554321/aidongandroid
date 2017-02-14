@@ -1,6 +1,5 @@
 package com.leyuan.aidong.adapter.discover;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,36 +8,30 @@ import android.widget.ImageView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.ImageBean;
+import com.leyuan.aidong.module.photopicker.boxing.BoxingMediaLoader;
+import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 /**
- * 发表动态
+ * 发表动态适配器
  * Created by song on 2017/1/13.
  */
-public class PublishDynamicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    public static final int DEFAULT_MAX_IMAGE_COUNT = 6;
-    public static final String TYPE_PHOTO = "photo";
-    private static final String TYPE_VIDEO = "video";
+public class PublishDynamicAdapter extends RecyclerView.Adapter<PublishDynamicAdapter.ImageHolder> {
+    private static final int DEFAULT_MAX_IMAGE_COUNT = 6;
     private static final int ITEM_TYPE_IMAGE = 1;
-    private static final int ITEM_TYPE_ADD = 2;
+    private static final int ITEM_TYPE_ADD_IMAGE = 2;
 
-    private Context context;
-    private String type;
-    private List<ImageBean> data = new ArrayList<>();
+    private boolean isPhoto;
+    private List<BaseMedia> data = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
 
-    public PublishDynamicAdapter(Context context) {
-        this.context = context;
-    }
-
-    public void setData(List<ImageBean> data, String type) {
+    public void setData(List<BaseMedia> data, boolean isPhoto) {
         if(data != null) {
             this.data = data;
-            this.type = type;
+            this.isPhoto = isPhoto;
             notifyDataSetChanged();
         }
     }
@@ -46,7 +39,7 @@ public class PublishDynamicAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public int getItemCount() {
         if (data != null && data.size() > 0) {
-            if(TYPE_VIDEO.equals(type)) {
+            if(!isPhoto) {
                 return 1;
             }else{
                 if (data.size() < DEFAULT_MAX_IMAGE_COUNT) {
@@ -62,46 +55,35 @@ public class PublishDynamicAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public int getItemViewType(int position) {
-        if (data.size() > 0 && position < data.size()) {
-            return ITEM_TYPE_IMAGE;
-        } else {
-            return ITEM_TYPE_ADD;
-        }
+        return data.size() > 0 && position < data.size() ? ITEM_TYPE_IMAGE : ITEM_TYPE_ADD_IMAGE;
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == ITEM_TYPE_IMAGE) {
-            View view = LayoutInflater.from(context).inflate(R.layout.item_image, parent, false);
-            return new ImageHolder(view);
-        } else if (viewType == ITEM_TYPE_ADD) {
-            View view = LayoutInflater.from(context).inflate(R.layout.item_add_image, parent, false);
-            return new AddHolder(view);
-        }
-        return null;
+    public ImageHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_image,parent, false);
+        return new ImageHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        if (holder instanceof ImageHolder) {
-            //((ImageHolder) holder).image.setImageURI("file://" + data.get(position).getImagePath());
-            ((ImageHolder) holder).delete.setOnClickListener(new View.OnClickListener() {
+    public void onBindViewHolder(ImageHolder holder, final int pos) {
+        final int position = holder.getAdapterPosition();
+        if(getItemViewType(position) == ITEM_TYPE_IMAGE){
+            BoxingMediaLoader.getInstance().displayThumbnail(holder.image, data.get(position).getPath(),
+                    150, 150);
+            //holder.image.setImageURI("file://" + data.get(position).getPath());
+            holder.delete.setVisibility(View.VISIBLE);
+            holder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     data.remove(position);
-                    notifyDataSetChanged();
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position,data.size());
                 }
             });
-            ((ImageHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(onItemClickListener != null){
-                        onItemClickListener.onImageItemClick(position);
-                    }
-                }
-            });
-        } else if (holder instanceof AddHolder) {
-            ((AddHolder) holder).add.setOnClickListener(new View.OnClickListener() {
+        }else {
+            holder.image.setBackgroundResource(R.drawable.icon_add_photo);
+            holder.delete.setVisibility(View.GONE);
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(onItemClickListener != null){
@@ -112,7 +94,7 @@ public class PublishDynamicAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
     }
 
-    private class ImageHolder extends RecyclerView.ViewHolder {
+    class ImageHolder extends RecyclerView.ViewHolder {
         SimpleDraweeView image;
         ImageView delete;
 
@@ -123,21 +105,11 @@ public class PublishDynamicAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
     }
 
-    private class AddHolder extends RecyclerView.ViewHolder {
-        ImageView add;
-
-        public AddHolder(View itemView) {
-            super(itemView);
-            add = (ImageView) itemView.findViewById(R.id.iv_add);
-        }
-    }
-
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.onItemClickListener = listener;
     }
 
     public interface OnItemClickListener {
-        void onImageItemClick(int position);
         void onAddImageClick();
     }
 }

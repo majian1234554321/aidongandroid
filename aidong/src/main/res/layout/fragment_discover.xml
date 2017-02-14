@@ -114,7 +114,6 @@
             <include layout="@layout/inc_bold_line" />
 
             <TextView
-                android:id="@+id/tv_news_title"
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
                 android:layout_gravity="center_horizontal"
@@ -141,7 +140,6 @@
                 android:background="?selectableItemBackground">
 
                 <TextView
-                    android:id="@+id/tv_more_news"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
                     android:layout_gravity="center_horizontal"

@@ -25,6 +25,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,8 +36,7 @@ import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
 import com.leyuan.aidong.module.photopicker.boxing.model.entity.impl.ImageMedia;
 import com.leyuan.aidong.module.photopicker.boxing.model.entity.impl.VideoMedia;
 import com.leyuan.aidong.module.photopicker.boxing_impl.WindowManagerHelper;
-
-
+import com.leyuan.aidong.module.photopicker.boxing_impl.utils.OptAnimationLoader;
 
 
 /**
@@ -47,6 +47,7 @@ import com.leyuan.aidong.module.photopicker.boxing_impl.WindowManagerHelper;
 public class MediaItemLayout extends FrameLayout {
     private static final int BIG_IMG_SIZE = 5 * 1024 * 1024;
 
+    private Context context;
     private ImageView mCheckImg;
     private View mVideoLayout;
     private View mFontLayout;
@@ -76,6 +77,7 @@ public class MediaItemLayout extends FrameLayout {
 
     public MediaItemLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.context = context;
         View view = LayoutInflater.from(context).inflate(R.layout.layout_media_item, this, true);
         mCoverImg = (ImageView) view.findViewById(R.id.media_item);
         mCheckImg = (ImageView) view.findViewById(R.id.media_item_check);
@@ -145,14 +147,28 @@ public class MediaItemLayout extends FrameLayout {
         BoxingMediaLoader.getInstance().displayThumbnail(mCoverImg, path, mScreenType.getValue(), mScreenType.getValue());
     }
 
+    public void setAnimatedChecked(boolean isChecked){
+        if (isChecked) {
+            mFontLayout.setVisibility(View.VISIBLE);
+            mCheckImg.setImageDrawable(getResources().getDrawable(R.drawable.sel));
+            Animation animation = OptAnimationLoader.loadAnimation(context, R.anim.modal_in);
+            mCheckImg.startAnimation(animation);
+        } else {
+            mFontLayout.setVisibility(View.GONE);
+            mCheckImg.setImageDrawable(getResources().getDrawable(R.drawable.def));
+            Animation animation = OptAnimationLoader.loadAnimation(context, R.anim.modal_out);
+            mCheckImg.startAnimation(animation);
+        }
+    }
+
     @SuppressWarnings("deprecation")
     public void setChecked(boolean isChecked) {
         if (isChecked) {
             mFontLayout.setVisibility(View.VISIBLE);
-            mCheckImg.setImageDrawable(getResources().getDrawable(R.drawable.ic_checked));
+            mCheckImg.setImageDrawable(getResources().getDrawable(R.drawable.sel));
         } else {
             mFontLayout.setVisibility(View.GONE);
-            mCheckImg.setImageDrawable(getResources().getDrawable(R.drawable.ic_unchecked));
+            mCheckImg.setImageDrawable(getResources().getDrawable(R.drawable.def));
         }
     }
 

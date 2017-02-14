@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.discover.fragment;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -10,8 +11,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.module.photopicker.boxing.Boxing;
+import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
+import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
+import com.leyuan.aidong.module.photopicker.boxing_impl.ui.BoxingActivity;
 import com.leyuan.aidong.ui.BaseFragment;
+import com.leyuan.aidong.ui.discover.activity.PublishDynamicActivity;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
@@ -20,13 +27,18 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
+
 
 /**
  * 发现
  * Created by song on 2016/11/19.
  */
 public class DiscoverHomeFragment extends BaseFragment implements SmartTabLayout.TabProvider{
+    public static final int REQUEST_PHOTO = 1;
+    public static final int REQUEST_VIDEO = 2;
     private List<View> allTabView = new ArrayList<>();
+    private ArrayList<BaseMedia> selectedImages = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
@@ -40,6 +52,7 @@ public class DiscoverHomeFragment extends BaseFragment implements SmartTabLayout
         final SmartTabLayout tabLayout = (SmartTabLayout) view.findViewById(R.id.tab_layout);
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.view_pager);
         tabLayout.setCustomTabView(this);
+        camera.setOnClickListener(cameraClickListener);
 
         FragmentPagerItems pages = new FragmentPagerItems(getContext());
         pages.add(FragmentPagerItem.of(null,DiscoverFragment.class));
@@ -80,5 +93,43 @@ public class DiscoverHomeFragment extends BaseFragment implements SmartTabLayout
         }
         allTabView.add(tabView);
         return tabView;
+    }
+
+    private View.OnClickListener cameraClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            new MaterialDialog.Builder(getContext())
+                    .items(R.array.mediaType)
+                    .itemsCallback(new MaterialDialog.ListCallback() {
+                        @Override
+                        public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                            if(position == 0){
+                                takePhotos();
+                            }else {
+                                takeVideo();
+                            }
+                        }
+                    })
+                    .show();
+        }
+    };
+
+    private void takePhotos(){
+        BoxingConfig multi = new BoxingConfig(BoxingConfig.Mode.MULTI_IMG);
+        multi.needCamera().maxCount(6).isNeedPaging();
+        Boxing.of(multi).withIntent(getContext(), BoxingActivity.class,selectedImages).start(this, REQUEST_PHOTO);
+    }
+
+    private void takeVideo(){
+        BoxingConfig videoConfig = new BoxingConfig(BoxingConfig.Mode.VIDEO);
+        Boxing.of(videoConfig).withIntent(getContext(), BoxingActivity.class).start(this, REQUEST_VIDEO);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            PublishDynamicActivity.start(getContext(),requestCode == REQUEST_PHOTO,Boxing.getResult(data));
+        }
     }
 }

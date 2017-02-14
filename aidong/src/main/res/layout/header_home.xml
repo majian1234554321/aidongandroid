@@ -62,7 +62,6 @@
             android:drawableTop="@drawable/home_food"/>
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/ll"
         android:layout_width="match_parent"
         android:layout_height="90dp"
         android:orientation="horizontal"

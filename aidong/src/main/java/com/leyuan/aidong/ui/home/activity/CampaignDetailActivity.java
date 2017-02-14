@@ -24,6 +24,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.CampaignPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CampaignDetailActivityView;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.zzhoujay.richtext.RichText;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 
@@ -84,6 +85,12 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
         initView();
         setListener();
         campaignPresent.getCampaignDetail(switcherLayout,id);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RichText.clear(this);
     }
 
     private void initView(){
@@ -163,8 +170,8 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
         tvTime.setText(bean.getStartTime());
         tvAddress.setText(bean.getAddress());
         tvOrganizer.setText(bean.getOrganizer());
-        tvCampaignDesc.setText(bean.getIntroduce());
         applicantAdapter.setData(bean.getApplicant());
+        //RichText.from(bean.getIntroduce()).into(tvCampaignDesc);
         if(bean.getApplicant() == null || bean.getApplicant().isEmpty()){
             tvCount.setText(String.format(getString(R.string.applicant_count),0,bean.getPlace()));
         }else{

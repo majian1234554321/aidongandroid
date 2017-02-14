@@ -20,9 +20,7 @@
             android:background="@color/color_list_distance"
             android:layout_height="0.5dp" />
 
-        <include
-            android:id="@+id/tabLayout"
-            layout="@layout/layout_home_tab_bottom" >
+        <include layout="@layout/layout_home_tab_bottom" >
         </include>
     </LinearLayout>
 

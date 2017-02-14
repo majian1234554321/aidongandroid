@@ -24,10 +24,11 @@
 
             <pl.droidsonroids.gif.GifImageView
                 android:id="@+id/loading"
-                android:layout_width="150dp"
-                android:layout_height="70dp"
+                android:layout_width="125dp"
+                android:layout_height="60dp"
                 android:layout_centerInParent="true"
                 android:scaleType="fitCenter" />
+
             <!--<com.leyuan.aidong.widget.loadingindicator.AVLoadingIndicatorView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="30dp"
@@ -35,7 +36,6 @@
                 android:layout_gravity="center_horizontal"
                 app:indicatorName="BallPulseIndicator"
                 app:indicatorColor="@color/black"/>
-
 
             <TextView
                 android:layout_width="wrap_content"

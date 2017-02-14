@@ -69,8 +69,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.media.TabTheIndividualDynaminActivity" />
-        <activity android:name=".ui.media.ImageShowerActivity" />
         <activity android:name=".ui.mine.activity.TabMinePersonalDataFitnessGoalsActivity" />
         <activity android:name=".ui.mine.activity.TabMinePersonalDataFitnessIsGoodActivity" />
         <activity android:name=".ui.mine.activity.TabMinePersonalDataIndividualitySignatureActivity" />
@@ -186,6 +184,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <!-- ********************share sdk************************* -->
         <!--<activity-->

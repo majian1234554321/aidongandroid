@@ -3,12 +3,12 @@ package com.leyuan.aidong.ui.mine.activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.annotation.NonNull;
+import android.text.InputType;
+import android.text.TextUtils;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -16,24 +16,31 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.ProfileBean;
+import com.leyuan.aidong.module.photopicker.boxing.Boxing;
+import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
+import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingCropOption;
+import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
+import com.leyuan.aidong.module.photopicker.boxing.utils.BoxingFileHelper;
+import com.leyuan.aidong.module.photopicker.boxing_impl.ui.BoxingActivity;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.adapter.mine.StringAdapter;
 import com.leyuan.aidong.ui.mine.view.AddressPopupWindow;
 import com.leyuan.aidong.widget.ExtendTextView;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * 修改用户资料
  * Created by song on 2017/2/6.
  */
 public class UpdateUserInfoActivity extends BaseActivity implements View.OnClickListener, AddressPopupWindow.OnConfirmAddressListener {
+    private static final int REQUEST_CODE = 1024;
     private LinearLayout rootLayout;
     private ImageView ivBack;
     private TextView tvFinish;
@@ -105,6 +112,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements View.OnClick
     private void setListener(){
         ivBack.setOnClickListener(this);
         tvFinish.setOnClickListener(this);
+        dvAvatar.setOnClickListener(this);
         gender.setOnClickListener(this);
         identify.setOnClickListener(this);
         signature.setOnClickListener(this);
@@ -126,7 +134,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements View.OnClick
 
                 break;
             case R.id.dv_avatar:
-
+                updateAvatar();
                 break;
             case R.id.gender:
                 showGenderDialog();
@@ -135,7 +143,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements View.OnClick
                 showIdentifyDialog();
                 break;
             case R.id.signature:
-                startActivity(new Intent(this,UpdateSignatureActivity.class));
+                showSignatureDialog();
                 break;
             case R.id.address:
                 showAddressPopupWindow();
@@ -160,18 +168,68 @@ public class UpdateUserInfoActivity extends BaseActivity implements View.OnClick
         }
     }
 
+    private void updateAvatar(){
+        String cachePath = BoxingFileHelper.getCacheDir(this);
+        if (TextUtils.isEmpty(cachePath)) {
+            Toast.makeText(getApplicationContext(), R.string.storage_deny, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Uri destUri = new Uri.Builder()
+                .scheme("file")
+                .appendPath(cachePath)
+                .appendPath(String.format(Locale.US, "%s.jpg", System.currentTimeMillis()))
+                .build();
+        BoxingConfig singleCropImgConfig = new BoxingConfig(BoxingConfig.Mode.SINGLE_IMG)
+                .withCropOption(new BoxingCropOption(destUri))
+                .needCamera();
+        Boxing.of(singleCropImgConfig).withIntent(this, BoxingActivity.class).start(this, REQUEST_CODE);
+    }
+
     private void showGenderDialog() {
-        View view = View.inflate(this,R.layout.dialog_gender,null);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(true).setView(view);
-        builder.show();
+        new MaterialDialog.Builder(this)
+                .title(R.string.confirm_gender)
+                .items(R.array.gender)
+                .itemsCallbackSingleChoice(0,new MaterialDialog.ListCallbackSingleChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                        gender.setRightContent(text.toString());
+                        return false;
+                    }
+                })
+                .positiveText(R.string.sure)
+                .show();
     }
 
     private void showIdentifyDialog() {
-        View view = View.inflate(this,R.layout.dialog_identify,null);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(true).setView(view);
-        builder.show();
+        new MaterialDialog.Builder(this)
+                .title(R.string.confirm_gender)
+                .items(R.array.identify)
+                .itemsCallbackSingleChoice(0,new MaterialDialog.ListCallbackSingleChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                        identify.setRightContent(text.toString());
+                        return false;
+                    }
+                })
+                .positiveText(R.string.sure)
+                .show();
+    }
+
+    private void showSignatureDialog(){
+        new MaterialDialog.Builder(this)
+                .title(R.string.confirm_signature)
+                .inputType(InputType.TYPE_CLASS_TEXT |
+                        InputType.TYPE_TEXT_VARIATION_PERSON_NAME |
+                        InputType.TYPE_TEXT_FLAG_CAP_WORDS)
+                .inputRange(1, 20)
+                .positiveText(R.string.sure)
+                .input(getString(R.string.confirm_signature_hint), signature.getText(), false, new MaterialDialog.InputCallback() {
+                    @Override
+                    public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
+                        signature.setRightContent(input.toString());
+                    }
+                })
+                .show();
     }
 
     private void showAddressPopupWindow(){
@@ -182,26 +240,26 @@ public class UpdateUserInfoActivity extends BaseActivity implements View.OnClick
         addressPopupWindow.showAtLocation(rootLayout, Gravity.BOTTOM,0,0);
     }
 
-    private int years = 1990, mothers = 00, days = 01;
-    private Calendar start_calender = Calendar.getInstance();
-    private Calendar new_calenser = Calendar.getInstance();
+    private int years = 1990;
+    private int mothers = 0;
+    private int days = 1;
+    private Calendar startCalender = Calendar.getInstance();
+    private Calendar newCalender = Calendar.getInstance();
     private void showBirthdayDialog(){
-        DatePickerDialog dialog = new DatePickerDialog(this, R.style.time_dialog,
+        DatePickerDialog dialog = new DatePickerDialog(this, R.style.MD_Light,
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-
                         Calendar temp = Calendar.getInstance();
                         temp.set(year, monthOfYear, dayOfMonth);
-
-
-                        if (temp.after(new_calenser)) {
+                        if (temp.after(newCalender)) {
                             Toast.makeText(UpdateUserInfoActivity.this, "不能大于当前时间",Toast.LENGTH_LONG).show();
                         } else {
-                            start_calender.set(year, monthOfYear, dayOfMonth);
+                            startCalender.set(year, monthOfYear, dayOfMonth);
                             years = year;
                             mothers = monthOfYear;
                             days = dayOfMonth;
+                            birthday.setRightContent(years +"年" + (mothers + 1) + "月" + days + "日");
                         }
                     }
                 }, years, mothers, days);
@@ -209,39 +267,42 @@ public class UpdateUserInfoActivity extends BaseActivity implements View.OnClick
     }
 
     private void showHeightDialog(){
-        View view = LayoutInflater.from(this).inflate(R.layout.dialog_height,null);
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        StringAdapter stringAdapter = new StringAdapter();
-        stringAdapter.setData(generateHeightData());
-        recyclerView.setAdapter(stringAdapter);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(true).setView(view);
-        builder.show();
+        new MaterialDialog.Builder(this).title(R.string.confirm_height)
+                .items(R.array.height)
+                .itemsCallback(new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                        height.setRightContent(text.toString());
+                    }
+                })
+                .positiveText(android.R.string.cancel)
+                .show();
     }
 
     private void showWeightDialog(){
-        View view = LayoutInflater.from(this).inflate(R.layout.dialog_weight,null);
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        StringAdapter stringAdapter = new StringAdapter();
-        stringAdapter.setData(generateWeightData());
-        recyclerView.setAdapter(stringAdapter);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(true).setView(view);
-        builder.show();
+        new MaterialDialog.Builder(this).title(R.string.confirm_weight)
+                .items(R.array.weight)
+                .itemsCallback(new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                        weight.setRightContent(text.toString());
+                    }
+                })
+                .positiveText(android.R.string.cancel)
+                .show();
     }
 
     private void showFrequencyDialog(){
-        View view = LayoutInflater.from(this).inflate(R.layout.dialog_frequency,null);
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        StringAdapter stringAdapter = new StringAdapter();
-        stringAdapter.setData(generateFrequencyData());
-        recyclerView.setAdapter(stringAdapter);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(true).setView(view);
-        builder.show();
+        new MaterialDialog.Builder(this).title(R.string.confirm_frequency)
+                .items(R.array.frequency)
+                .itemsCallback(new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                        frequency.setRightContent(text.toString());
+                    }
+                })
+                .positiveText(android.R.string.cancel)
+                .show();
     }
 
     @Override
@@ -249,27 +310,17 @@ public class UpdateUserInfoActivity extends BaseActivity implements View.OnClick
 
     }
 
-    private List<String> generateHeightData(){
-        List<String> height = new ArrayList<>();
-        for (int i = 150; i < 200; i++) {
-            height.add(String.valueOf(i));
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            List<BaseMedia> medias = Boxing.getResult(data);
+            if(medias != null && !medias.isEmpty()){
+                dvAvatar.setImageURI("file://" + medias.get(0).getPath());
+               // BoxingMediaLoader.getInstance().displayThumbnail(dvAvatar, medias.get(0).getPath(), 70,70);
+            }
         }
-        return height;
     }
 
-    private List<String> generateWeightData(){
-        List<String> weight = new ArrayList<>();
-        for (int i = 40; i < 100; i++) {
-            weight.add(String.valueOf(i));
-        }
-        return weight;
-    }
-
-    private List<String> generateFrequencyData(){
-        List<String> frequency = new ArrayList<>();
-        for (int i = 1; i < 8; i++) {
-            frequency.add(i +"周/每次");
-        }
-        return frequency;
-    }
 }

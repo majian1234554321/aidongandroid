@@ -42,33 +42,6 @@
         <item name="android:gravity">center_vertical</item>
     </style>
 
-    <style name="listDistanceTextStyle">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:singleLine">true</item>
-        <item name="android:textColor">@color/color_list_distance</item>
-        <item name="android:textSize">@dimen/pref_14dp</item>
-        <item name="android:gravity">center_vertical|left</item>
-    </style>
-
-    <style name="listTimeTextStyle" parent="@style/listDistanceTextStyle"></style>
-
-    <style name="listUsernameTextStyle">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:singleLine">true</item>
-        <item name="android:textColor">@color/color_black</item>
-        <item name="android:textSize">@dimen/pref_15dp</item>
-        <item name="android:gravity">center_vertical|left</item>
-        <item name="android:ellipsize">end</item>
-    </style>
-
-    <style name="listSubjectTextStyle" parent="@style/listUsernameTextStyle">
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:ellipsize">end</item>
-        <item name="android:textSize">@dimen/pref_15dp</item>
-    </style>
-
     <style name="album_checkbox" parent="@android:style/Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/alnum_selector</item>
     </style>
@@ -101,11 +74,6 @@
         <item name="android:progressDrawable">@drawable/progress_horizontal</item>
     </style>
 
-    <style name="popupDownStyle">
-        <item name="android:windowEnterAnimation">@anim/popup_anim_down</item>
-        <item name="android:windowExitAnimation">@anim/popup_anim_up</item>
-    </style>
-
     <style name="ImageloadingDialogStyle" parent="android:Theme.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowFrame">@null</item>
@@ -128,13 +96,6 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
-    <style name="myTransparent">
-        <item name="android:windowBackground">@color/transparent</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
-    </style>
-
     <style name="loginTextStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -151,40 +112,9 @@
         <item name="android:paddingRight">@dimen/pref_5dp</item>
     </style>
 
-    <style name="listHobbyTextStyle">
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:singleLine">true</item>
-        <item name="android:textColor">@color/color_txt_gray1</item>
-        <item name="android:textSize">@dimen/pref_16dp</item>
-        <item name="android:gravity">center_vertical|left</item>
-        <item name="android:ellipsize">end</item>
-    </style>
-
-    <style name="myInformationText">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">@dimen/length22</item>
-        <item name="android:textColor">@color/text_black</item>
-        <item name="android:layout_marginLeft">10dp</item>
-        <item name="android:layout_centerVertical">true</item>
-        <item name="android:layout_alignParentLeft">true</item>
-    </style>
-
-    <style name="popup_style">
-        <item name="android:windowEnterAnimation">@anim/popup_anim_in</item>
-        <item name="android:windowExitAnimation">@anim/popup_anim_out</item>
-    </style>
-
     <style name="popupWindow_style">
         <item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>
         <item name="android:windowExitAnimation">@anim/slide_out_from_top</item>
-    </style>
-
-    <style name="bt_tag">
-        <item name="android:background">@drawable/bt_tag</item>
-        <item name="android:textColor">@color/text_black</item>
-        <item name="android:textSize">@dimen/length28</item>
     </style>
 
 
@@ -232,32 +162,6 @@
         <item name="android:backgroundDimEnabled">true</item>
     </style>
 
-    <style name="exception"></style>
-
-    <style name="exception.title">
-        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
-        <item name="android:layout_gravity">center_horizontal</item>
-        <item name="android:gravity">center</item>
-        <item name="android:layout_marginBottom">5dip</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:text">@string/dynamicbox_internet_off_title</item>
-    </style>
-
-    <style name="exception.message">
-        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
-        <item name="android:layout_gravity">center_horizontal</item>
-        <item name="android:gravity">center</item>
-        <item name="android:layout_marginTop">0dip</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:text">@string/dynamicbox_internet_off_message</item>
-    </style>
-
-    <style name="exception.button">
-        <item name="android:layout_marginTop">25dip</item>
-    </style>
-
     <style name="AppTheme.FullScreen.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.FullScreen.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
@@ -284,18 +188,6 @@
     <style name="common_img_left_style" parent="baseImageStyle">
         <item name="android:layout_marginLeft">15dp</item>
         <item name="android:layout_centerVertical">true</item>
-    </style>
-
-    <style name="baseTextStyle">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-
-    <style name="Common_txt_style" parent="baseTextStyle">
-        <item name="android:layout_centerVertical">true</item>
-        <item name="android:layout_marginLeft">45dp</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/mine_txt_color</item>
     </style>
 
     <style name="baseEditStyle">

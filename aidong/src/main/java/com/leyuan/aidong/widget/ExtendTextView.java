@@ -101,4 +101,8 @@ public class ExtendTextView extends RelativeLayout{
     public void setLeftTextContent(String content){
         leftTextView.setText(content);
     }
+
+    public String  getText(){
+       return rightTextView.getText().toString();
+    }
 }
