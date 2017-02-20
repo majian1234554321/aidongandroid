@@ -20,6 +20,7 @@ import java.util.List;
 /**
  * 爱动圈适配器
  * Created by song on 2017/2/16.
+ * //todo 用自定义控件显示图片替换根据图片数量引用不同布局的写法
  */
 public class CircleDynamicAdapter extends BaseRecyclerViewAdapter<DynamicBean> {
     private SparseArray<ViewHolderInfo> viewHolderKeyArray;

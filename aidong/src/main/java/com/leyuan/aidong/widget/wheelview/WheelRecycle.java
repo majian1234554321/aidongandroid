@@ -17,13 +17,13 @@
  *  limitations under the License.
  */
 
-package com.leyuan.aidong.widget.wheelcity;
-
-import java.util.LinkedList;
-import java.util.List;
+package com.leyuan.aidong.widget.wheelview;
 
 import android.view.View;
 import android.widget.LinearLayout;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Recycle stores wheel items to reuse. 

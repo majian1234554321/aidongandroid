@@ -155,7 +155,7 @@
                     android:textSize="15sp" />
             </LinearLayout>
 
-            <include layout="@layout/inc_line" />
+            <include layout="@layout/inc_line_with_margin" />
 
             <!--地点-->
             <LinearLayout
@@ -191,7 +191,7 @@
                     android:textSize="15sp" />
             </LinearLayout>
 
-            <include layout="@layout/inc_line" />
+            <include layout="@layout/inc_line_with_margin" />
 
             <!--场馆-->
             <LinearLayout
@@ -224,7 +224,7 @@
                     android:textSize="15sp" />
             </LinearLayout>
 
-            <include layout="@layout/inc_line" />
+            <include layout="@layout/inc_line_with_margin" />
 
             <!--教室-->
             <LinearLayout
@@ -274,7 +274,7 @@
                 android:textColor="@color/black"
                 android:textSize="15sp" />
 
-            <include layout="@layout/inc_line" />
+            <include layout="@layout/inc_line_with_margin" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_applicant"

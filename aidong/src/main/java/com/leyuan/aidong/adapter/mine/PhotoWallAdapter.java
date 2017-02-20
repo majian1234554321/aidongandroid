@@ -9,7 +9,9 @@ import android.widget.ImageView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.module.photopicker.boxing.BoxingMediaLoader;
 import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
+import com.leyuan.aidong.utils.ScreenUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,24 +78,17 @@ public class PhotoWallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof PhotoWallAdapter.ImageHolder) {
-            ((PhotoWallAdapter.ImageHolder) holder).image.setImageURI(data.get(position).getPath());
+            BoxingMediaLoader.getInstance().displayThumbnail(((PhotoWallAdapter.ImageHolder) holder).image, data.get(position).getPath(),
+                    100, 100);
+           // ((PhotoWallAdapter.ImageHolder) holder).image.setImageURI("file//" + data.get(position).getPath());
             ((PhotoWallAdapter.ImageHolder) holder).delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     data.remove(position);
-                    notifyDataSetChanged();
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position,data.size());
                 }
             });
-
-            ((PhotoWallAdapter.ImageHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(listener != null){
-                        listener.onPhotoItemClick(position);
-                    }
-                }
-            });
-
         } else if (holder instanceof PhotoWallAdapter.AddHolder) {
             ((PhotoWallAdapter.AddHolder) holder).add.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -114,6 +109,10 @@ public class PhotoWallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             super(itemView);
             image = (SimpleDraweeView) itemView.findViewById(R.id.dv_image);
             delete = (ImageView) itemView.findViewById(R.id.iv_delete);
+            int width = (ScreenUtil.getScreenWidth(context) -
+                    5 * context.getResources().getDimensionPixelOffset(R.dimen.photo_wall_margin))/4;
+            image.getLayoutParams().width = width;
+            image.getLayoutParams().height = width;
         }
     }
 
@@ -123,6 +122,10 @@ public class PhotoWallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         public AddHolder(View itemView) {
             super(itemView);
             add = (ImageView) itemView.findViewById(R.id.iv_add);
+            int width = (ScreenUtil.getScreenWidth(context) -
+                    5 * context.getResources().getDimensionPixelOffset(R.dimen.photo_wall_margin))/4;
+            add.getLayoutParams().width = width;
+            add.getLayoutParams().height = width;
         }
     }
 
@@ -132,6 +135,6 @@ public class PhotoWallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public interface OnItemClickListener {
         void onAddImageItemClick();
-        void onPhotoItemClick(int position);
+       // void onDeleteImage();
     }
 }

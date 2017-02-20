@@ -1,5 +1,5 @@
 /*
- *  Copyright 2010 Yuri Kanivets
+ *  Copyright 2011 Yuri Kanivets
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -14,20 +14,19 @@
  *  limitations under the License.
  */
 
-package com.leyuan.aidong.widget.wheelcity;
+package com.leyuan.aidong.widget.wheelview;
 
 /**
- * Wheel changed listener interface.
- * <p>The currentItemChanged() method is called whenever current wheel positions is changed:
+ * Wheel clicked listener interface.
+ * <p>The onItemClicked() method is called whenever a wheel item is clicked
  * <li> New Wheel position is set
  * <li> Wheel view is scrolled
  */
-public interface OnWheelChangedListener {
-	/**
-	 * Callback method to be invoked when current item changed
-	 * @param wheel the wheel view whose state has changed
-	 * @param oldValue the old value of current item
-	 * @param newValue the new value of current item
-	 */
-	void onChanged(WheelView wheel, int oldValue, int newValue);
+public interface OnWheelClickedListener {
+    /**
+     * Callback method to be invoked when current item clicked
+     * @param wheel the wheel view
+     * @param itemIndex the index of clicked item
+     */
+    void onItemClicked(WheelView wheel, int itemIndex);
 }

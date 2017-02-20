@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -19,6 +18,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.ProfileBean;
 import com.leyuan.aidong.module.photopicker.boxing.Boxing;
 import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
@@ -28,7 +28,10 @@ import com.leyuan.aidong.module.photopicker.boxing.utils.BoxingFileHelper;
 import com.leyuan.aidong.module.photopicker.boxing_impl.ui.BoxingActivity;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mine.view.AddressPopupWindow;
+import com.leyuan.aidong.ui.mine.view.AddressDialog;
+import com.leyuan.aidong.ui.mvp.presenter.UserInfoPresent;
+import com.leyuan.aidong.ui.mvp.presenter.impl.UserInfoPresentImpl;
+import com.leyuan.aidong.ui.mvp.view.UpdateUserInfoActivityView;
 import com.leyuan.aidong.widget.ExtendTextView;
 
 import java.util.Calendar;
@@ -39,7 +42,7 @@ import java.util.Locale;
  * 修改用户资料
  * Created by song on 2017/2/6.
  */
-public class UpdateUserInfoActivity extends BaseActivity implements View.OnClickListener, AddressPopupWindow.OnConfirmAddressListener {
+public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserInfoActivityView,View.OnClickListener, AddressDialog.OnConfirmAddressListener {
     private static final int REQUEST_CODE = 1024;
     private LinearLayout rootLayout;
     private ImageView ivBack;
@@ -57,8 +60,12 @@ public class UpdateUserInfoActivity extends BaseActivity implements View.OnClick
     private ExtendTextView bmi;
     private ExtendTextView frequency;
 
+    private String province;
+    private String city;
+    private String area;
     private ProfileBean profileBean;
-    private AddressPopupWindow addressPopupWindow;
+    private AddressDialog addressDialog;
+    private UserInfoPresent userInfoPresent;
 
     public static void start(Context context, ProfileBean profileBean) {
         Intent starter = new Intent(context, UpdateUserInfoActivity.class);
@@ -70,10 +77,10 @@ public class UpdateUserInfoActivity extends BaseActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_user_info);
+        userInfoPresent = new UserInfoPresentImpl(this,this);
         if(getIntent() != null){
             profileBean = getIntent().getParcelableExtra("profileBean");
         }
-
         initView();
         setListener();
     }
@@ -131,7 +138,8 @@ public class UpdateUserInfoActivity extends BaseActivity implements View.OnClick
                 finish();
                 break;
             case R.id.tv_finish:
-
+                userInfoPresent.updateUserInfo(gender.getText(),birthday.getText(),signature.getText(),
+                        province,city,area,height.getText(),weight.getText(),frequency.getText());
                 break;
             case R.id.dv_avatar:
                 updateAvatar();
@@ -233,11 +241,11 @@ public class UpdateUserInfoActivity extends BaseActivity implements View.OnClick
     }
 
     private void showAddressPopupWindow(){
-        if(addressPopupWindow == null){
-            addressPopupWindow = new AddressPopupWindow(this);
-            addressPopupWindow.setOnConfirmAddressListener(this);
+        if(addressDialog == null){
+            addressDialog = new AddressDialog(this,R.style.time_dialog);
+            addressDialog.setOnConfirmAddressListener(this);
         }
-        addressPopupWindow.showAtLocation(rootLayout, Gravity.BOTTOM,0,0);
+        addressDialog.show();
     }
 
     private int years = 1990;
@@ -246,7 +254,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements View.OnClick
     private Calendar startCalender = Calendar.getInstance();
     private Calendar newCalender = Calendar.getInstance();
     private void showBirthdayDialog(){
-        DatePickerDialog dialog = new DatePickerDialog(this, R.style.MD_Light,
+        DatePickerDialog dialog = new DatePickerDialog(this, R.style.AppTheme_AppDate,
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -263,6 +271,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements View.OnClick
                         }
                     }
                 }, years, mothers, days);
+        dialog.setCanceledOnTouchOutside(true);
         dialog.show();
     }
 
@@ -307,7 +316,10 @@ public class UpdateUserInfoActivity extends BaseActivity implements View.OnClick
 
     @Override
     public void onAddressConfirm(String province, String city, String area) {
-
+        this.province = province;
+        this.city = city;
+        this.area = area;
+        address.setRightContent(new StringBuilder(province).append(city).append(area).toString());
     }
 
 
@@ -323,4 +335,8 @@ public class UpdateUserInfoActivity extends BaseActivity implements View.OnClick
         }
     }
 
+    @Override
+    public void updateResult(BaseBean baseBean) {
+
+    }
 }

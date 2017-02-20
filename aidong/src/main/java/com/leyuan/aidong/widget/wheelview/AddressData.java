@@ -1,4 +1,4 @@
-package com.leyuan.aidong.widget.wheelcity;
+package com.leyuan.aidong.widget.wheelview;
 
 /**
  * 城市信息

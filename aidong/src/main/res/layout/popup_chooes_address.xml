@@ -1,6 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/img_pop_bg"
     android:orientation="vertical">
 
@@ -48,27 +48,27 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <com.leyuan.aidong.widget.wheelcity.WheelView
+        <com.leyuan.aidong.widget.wheelview.WheelView
             android:id="@+id/wv_province"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1">
-        </com.leyuan.aidong.widget.wheelcity.WheelView>
+        </com.leyuan.aidong.widget.wheelview.WheelView>
 
-        <com.leyuan.aidong.widget.wheelcity.WheelView
+        <com.leyuan.aidong.widget.wheelview.WheelView
             android:id="@+id/wv_city"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/gray_normal">
-        </com.leyuan.aidong.widget.wheelcity.WheelView>
+        </com.leyuan.aidong.widget.wheelview.WheelView>
 
-        <com.leyuan.aidong.widget.wheelcity.WheelView
+        <com.leyuan.aidong.widget.wheelview.WheelView
             android:id="@+id/wv_district"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/gray_normal">
-        </com.leyuan.aidong.widget.wheelcity.WheelView>
+        </com.leyuan.aidong.widget.wheelview.WheelView>
     </LinearLayout>
 </LinearLayout>

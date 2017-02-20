@@ -33,7 +33,7 @@ public class UploadQiNiuManager {
         return INSTANCE;
     }
 
-    //todo 优化上传七牛过程
+    //todo 优化上传七牛过程及判断依据
     public void uploadToQiNiu(boolean isPhoto,List<BaseMedia> selectedMedia,IQiNiuCallback callback){
         this.isPhoto = isPhoto;
         this.callback = callback;

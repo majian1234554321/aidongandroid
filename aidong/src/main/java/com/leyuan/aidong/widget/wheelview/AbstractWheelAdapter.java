@@ -14,14 +14,14 @@
  *  limitations under the License.
  */
 
-package com.leyuan.aidong.widget.wheelcity;
-
-import java.util.LinkedList;
-import java.util.List;
+package com.leyuan.aidong.widget.wheelview;
 
 import android.database.DataSetObserver;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Abstract Wheel adapter.

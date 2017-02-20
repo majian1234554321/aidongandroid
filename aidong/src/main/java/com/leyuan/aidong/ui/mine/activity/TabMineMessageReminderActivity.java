@@ -77,9 +77,9 @@ public class TabMineMessageReminderActivity extends BaseActivity {
                 .setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        intent.setClass(TabMineMessageReminderActivity.this,
+                        /*intent.setClass(TabMineMessageReminderActivity.this,
                                 TabMineDoNotDisturbPeriodActivity.class);
-                        startActivity(intent);
+                        startActivity(intent);*/
                     }
                 });
         mswitch1.setOnCheckedChangeListener(new OnCheckedChangeListener() {

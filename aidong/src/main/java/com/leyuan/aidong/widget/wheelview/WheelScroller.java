@@ -17,7 +17,7 @@
  *  limitations under the License.
  */
 
-package com.leyuan.aidong.widget.wheelcity;
+package com.leyuan.aidong.widget.wheelview;
 
 import android.content.Context;
 import android.os.Handler;

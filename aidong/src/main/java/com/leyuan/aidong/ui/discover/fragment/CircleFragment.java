@@ -29,6 +29,7 @@ import com.leyuan.aidong.ui.discover.viewholder.SixImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.ThreeImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.TwoImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.VideoViewHolder;
+import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.SportCircleFragmentView;
@@ -138,14 +139,6 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
         RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
     }
 
-    @Override
-    public void updateLikeStatus(boolean isAdd,BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
-            circleDynamicAdapter.notifyDataSetChanged();
-        }
-    }
-
-
     private class DynamicCallback implements IDynamicCallback{
 
         @Override
@@ -156,7 +149,7 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
 
         @Override
         public void onAvatarClick(String id) {
-
+            UserInfoActivity.start(getContext(),id);
         }
 
         @Override
@@ -170,7 +163,7 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
         @Override
         public void onImageClick(List<String> photoUrls, List<Rect> viewLocalRect, int currentPhotoPosition) {
             PhotoBrowseInfo info = PhotoBrowseInfo.create(photoUrls, viewLocalRect, currentPhotoPosition);
-            PhotoBrowseActivity.startToPhotoBrowseActivity((Activity) getContext(), info);
+            PhotoBrowseActivity.start((Activity) getContext(), info);
         }
 
         @Override
@@ -190,6 +183,13 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
         @Override
         public void onShareClick() {
 
+        }
+    }
+
+    @Override
+    public void updateLikeStatus(boolean isAdd,BaseBean baseBean) {
+        if(baseBean.getStatus() == Constant.OK){
+            circleDynamicAdapter.notifyDataSetChanged();
         }
     }
 }

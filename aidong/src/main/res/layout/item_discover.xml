@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:paddingBottom="10dp"/>
 
-    <include layout="@layout/inc_line"/>
+    <include layout="@layout/inc_line_with_margin"/>
 
     <TextView
         android:id="@+id/tv_more"

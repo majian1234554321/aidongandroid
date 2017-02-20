@@ -97,7 +97,7 @@ public class PhotoBrowseActivity extends BaseActivity {
     }
 
     //=============================================================Tools method
-    public static void startToPhotoBrowseActivity(Activity from, @NonNull PhotoBrowseInfo info) {
+    public static void start(Activity from, @NonNull PhotoBrowseInfo info) {
         if (info == null || !info.isValided()) return;
         Intent intent = new Intent(from, PhotoBrowseActivity.class);
         intent.putExtra("photoinfo", info);

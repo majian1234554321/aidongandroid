@@ -128,7 +128,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             @Override
             public void onClick(View v) {
                 if (callback != null) {
-                    callback.onAvatarClick(dynamic.publisher.publisher_id);
+                    callback.onAvatarClick(dynamic.publisher.id);
                 }
             }
         });
@@ -167,8 +167,6 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
                 }
             }
         });
-
-
     }
 
     public void setCallback(IDynamicCallback callback) {

@@ -26,8 +26,6 @@ import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.PublishDynamicActivityView;
 import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.utils.qiniu.IQiNiuCallback;
-import com.leyuan.aidong.utils.qiniu.UploadQiNiuManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -121,16 +119,8 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
 
 
     private void uploadToQiNiu(){
-        UploadQiNiuManager.getInstance().uploadToQiNiu(isPhoto,selectedMedia, new IQiNiuCallback(){
-            @Override
-            public void onSuccess(List<String> urls) {
-                uploadToServer(urls);
-            }
-            @Override
-            public void onFail() {
-                Toast.makeText(PublishDynamicActivity.this,"上传失败",Toast.LENGTH_LONG).show();
-            }
-        });
+
+
     }
 
     private void uploadToServer(List<String> qiNiuMediaUrls){

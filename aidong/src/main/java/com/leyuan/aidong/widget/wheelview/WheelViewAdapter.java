@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.leyuan.aidong.widget.wheelcity;
+package com.leyuan.aidong.widget.wheelview;
 
 import android.database.DataSetObserver;
 import android.view.View;

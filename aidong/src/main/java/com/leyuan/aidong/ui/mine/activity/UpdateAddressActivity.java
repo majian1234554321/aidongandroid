@@ -3,7 +3,6 @@ package com.leyuan.aidong.ui.mine.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -14,7 +13,7 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.AddressBean;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mine.view.AddressPopupWindow;
+import com.leyuan.aidong.ui.mine.view.AddressDialog;
 import com.leyuan.aidong.ui.mvp.presenter.AddressPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.AddressPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.UpdateAddressActivityView;
@@ -24,7 +23,7 @@ import com.leyuan.aidong.utils.KeyBoardUtil;
  * 更新地址
  * Created by song on 2016/10/28.
  */
-public class UpdateAddressActivity extends BaseActivity implements UpdateAddressActivityView, View.OnClickListener, AddressPopupWindow.OnConfirmAddressListener {
+public class UpdateAddressActivity extends BaseActivity implements UpdateAddressActivityView, View.OnClickListener, AddressDialog.OnConfirmAddressListener {
     private LinearLayout rootLayout;
     private ImageView ivBack;
     private TextView tvTitle;
@@ -35,7 +34,7 @@ public class UpdateAddressActivity extends BaseActivity implements UpdateAddress
     private EditText etDescAddress;
     private RadioButton rbDefault;
 
-    private AddressPopupWindow addressPopup;
+    private AddressDialog addressDialog;
     private AddressBean bean;
 
     private AddressPresent addressPresent;
@@ -112,11 +111,11 @@ public class UpdateAddressActivity extends BaseActivity implements UpdateAddress
                 break;
             case R.id.tv_address:
                 KeyBoardUtil.closeKeyboard(etUsername,this);
-                if(addressPopup == null){
-                    addressPopup = new AddressPopupWindow(this);
-                    addressPopup.setOnConfirmAddressListener(this);
+                if(addressDialog == null){
+                    addressDialog = new AddressDialog(this);
+                    addressDialog.setOnConfirmAddressListener(this);
                 }
-                addressPopup.showAtLocation(rootLayout, Gravity.BOTTOM,0,0);
+                addressDialog.show();
                 break;
             default:
                 break;

@@ -22,7 +22,7 @@ public interface UserInfoService {
     Observable<BaseBean<UserInfoData>> getUserInfo(@Path("idongId") String idongId);
 
     @FormUrlEncoded
-    @PUT("users/profile")
+    @PUT("mine/profile")
     Observable<BaseBean> updateUserInfo(@Field("name") String name,
                                                       @Field("avatar") String avatar,
                                                       @Field("gender") String gender,

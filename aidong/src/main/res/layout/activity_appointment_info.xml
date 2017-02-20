@@ -65,7 +65,7 @@
 
             </LinearLayout>
 
-            <include layout="@layout/inc_line" />
+            <include layout="@layout/inc_line_with_margin" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -153,7 +153,7 @@
                     android:textSize="15sp" />
             </RelativeLayout>
 
-            <include layout="@layout/inc_line" />
+            <include layout="@layout/inc_line_with_margin" />
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_time"
@@ -162,7 +162,7 @@
                 android:gravity="center_vertical"
                 app:left_text="课程或活动时间:" />
 
-            <include layout="@layout/inc_line" />
+            <include layout="@layout/inc_line_with_margin" />
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_address"
@@ -203,7 +203,7 @@
 
             </LinearLayout>
 
-            <include layout="@layout/inc_line" />
+            <include layout="@layout/inc_line_with_margin" />
 
             <LinearLayout
                 android:id="@+id/ll_gold"

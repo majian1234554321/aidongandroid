@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.widget.BaseAddressPopupWindow;
+import com.leyuan.aidong.widget.BaseAddressDialog;
 import com.leyuan.aidong.widget.wheelview.ArrayWheelAdapter;
 import com.leyuan.aidong.widget.wheelview.OnWheelChangedListener;
 import com.leyuan.aidong.widget.wheelview.WheelView;
@@ -14,7 +14,7 @@ import com.leyuan.aidong.widget.wheelview.WheelView;
  * 新建地址选择地址弹框
  * Created by song on 2016/9/20.
  */
-public class AddressPopupWindow extends BaseAddressPopupWindow implements View.OnClickListener,OnWheelChangedListener{
+public class AddressDialog extends BaseAddressDialog implements View.OnClickListener,OnWheelChangedListener{
     private Context context;
     private WheelView wvProvince;
     private WheelView wvCity;
@@ -23,7 +23,7 @@ public class AddressPopupWindow extends BaseAddressPopupWindow implements View.O
     private TextView cancel;
     private OnConfirmAddressListener listener;
 
-    public AddressPopupWindow(Context context) {
+    public AddressDialog(Context context) {
         super(context);
         this.context = context;
         initView();
@@ -31,13 +31,21 @@ public class AddressPopupWindow extends BaseAddressPopupWindow implements View.O
         setWheelView();
     }
 
+    public AddressDialog(Context context, int theme) {
+        super(context, theme);
+        this.context = context;
+        initView();
+        setListener();
+        setWheelView();
+    }
+
     private void initView() {
-        View view = View.inflate(context, R.layout.popup_chooes_address,null);
+        View view = View.inflate(context, R.layout.dialog_chooes_address,null);
         setContentView(view);
         wvProvince = (WheelView) view.findViewById(R.id.wv_province);
         wvCity = (WheelView) view.findViewById(R.id.wv_city);
         wvDistrict = (WheelView) view.findViewById(R.id.wv_district);
-        sure = (TextView) view.findViewById(R.id.btn_confirm);
+        sure = (TextView) view.findViewById(R.id.tv_sure);
         cancel = (TextView) view.findViewById(R.id.tv_cancel);
     }
 
@@ -82,7 +90,7 @@ public class AddressPopupWindow extends BaseAddressPopupWindow implements View.O
             case R.id.tv_cancel:
                 dismiss();
                 break;
-            case R.id.btn_confirm:
+            case R.id.tv_sure:
                 if(listener!=null){
                     listener.onAddressConfirm(currentProvinceName,currentCityName,currentDistrictName);
                 }
@@ -121,6 +129,6 @@ public class AddressPopupWindow extends BaseAddressPopupWindow implements View.O
     }
 
     public interface OnConfirmAddressListener{
-        void onAddressConfirm( String province, String city, String area);
+        void onAddressConfirm(String province, String city, String area);
     }
 }

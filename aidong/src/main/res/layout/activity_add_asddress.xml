@@ -67,7 +67,7 @@
             android:background="@null"/>
     </LinearLayout>
 
-    <include layout="@layout/inc_line"/>
+    <include layout="@layout/inc_line_with_margin"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -99,7 +99,7 @@
             android:inputType="phone"/>
     </LinearLayout>
 
-    <include layout="@layout/inc_line"/>
+    <include layout="@layout/inc_line_with_margin"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -130,7 +130,7 @@
             android:gravity="center_vertical"/>
     </LinearLayout>
 
-    <include layout="@layout/inc_line"/>
+    <include layout="@layout/inc_line_with_margin"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -161,7 +161,7 @@
             android:background="@null"/>
     </LinearLayout>
 
-    <include layout="@layout/inc_line"/>
+    <include layout="@layout/inc_line_with_margin"/>
 
     <LinearLayout
         android:layout_width="wrap_content"

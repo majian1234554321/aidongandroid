@@ -77,7 +77,7 @@
 
     </RelativeLayout>
 
-    <include layout="@layout/inc_line"/>
+    <include layout="@layout/inc_line_with_margin"/>
 
     <include layout="@layout/inc_appointment_bottom_state"/>
 </LinearLayout>

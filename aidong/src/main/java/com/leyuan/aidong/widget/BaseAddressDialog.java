@@ -1,9 +1,9 @@
-package com.leyuan.aidong.widget.wheelcity;
+package com.leyuan.aidong.widget;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.res.AssetManager;
 import android.text.TextUtils;
-
-import com.leyuan.aidong.ui.BaseActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,28 +14,36 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LoadAddressDataActivity extends BaseActivity {
+/**
+ * 地址弹框
+ * Created by song on 2017/2/20.
+ */
+public class BaseAddressDialog extends Dialog{
+
+    private Context context;
 
     protected String[] provinceData; // 省份
     protected String[] citiesData;   // 城市
-    protected String[] areaData;      // 地区
+    protected String[] areaData;     // 地区
 
     protected Map<String, String[]> citiesDataMap = new HashMap<>();  // 存储省对应的所有市
     protected Map<String, String[]> areaDataMap = new HashMap<>();    // 存储市对应的所有区
 
-    /**
-     * 省名
-     */
     protected String currentProvinceName;
-    /**
-     * 城市名
-     */
     protected String currentCityName;
-    /**
-     * 县区名
-     */
     protected String currentDistrictName;
 
+    public BaseAddressDialog(Context context) {
+        super(context);
+        this.context = context;
+        loadAddressFromLocal();
+    }
+
+    public BaseAddressDialog(Context context, int theme) {
+        super(context, theme);
+        this.context = context;
+        loadAddressFromLocal();
+    }
 
     /**
      * 开始解析城市数据
@@ -142,7 +150,7 @@ public class LoadAddressDataActivity extends BaseActivity {
      */
     private String initData() {
         StringBuffer sb = new StringBuffer();
-        AssetManager mAssetManager = this.getAssets();
+        AssetManager mAssetManager = context.getAssets();
         try {
             InputStream is = mAssetManager.open("city.json");
             byte[] data = new byte[is.available()];
