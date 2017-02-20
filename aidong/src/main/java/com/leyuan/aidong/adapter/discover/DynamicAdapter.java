@@ -30,6 +30,7 @@ import static com.leyuan.aidong.utils.DateUtils.yyyyMMddHHmmss;
  * 发现界面动态适配器
  * Created by song on 2016/8/29.
  */
+@Deprecated
 public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicHolder>  {
     private Context context;
     private int counter;

@@ -31,6 +31,13 @@
         <attr name="divider_visible" format="boolean"/>
 
     </declare-styleable>
+
+
+    <!--ForceClickImageView-->
+    <declare-styleable name="ForceClickImageView">
+        <attr name="foregroundColor" format="reference|color"/>
+    </declare-styleable>
+
     <declare-styleable name="ViewPagerIndicator">
         <attr name="ci_width" format="dimension"/>
         <attr name="ci_height" format="dimension"/>

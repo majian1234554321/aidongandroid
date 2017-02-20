@@ -8,13 +8,21 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
-import com.leyuan.aidong.adapter.discover.DynamicAdapter;
+import com.leyuan.aidong.ui.discover.viewholder.FiveImageViewHolder;
+import com.leyuan.aidong.ui.discover.viewholder.FourImageViewHolder;
+import com.leyuan.aidong.ui.discover.viewholder.OneImageViewHolder;
+import com.leyuan.aidong.ui.discover.viewholder.SixImageViewHolder;
+import com.leyuan.aidong.ui.discover.viewholder.ThreeImageViewHolder;
+import com.leyuan.aidong.ui.discover.viewholder.TwoImageViewHolder;
+import com.leyuan.aidong.ui.discover.viewholder.VideoViewHolder;
 import com.leyuan.aidong.ui.mvp.presenter.UserInfoPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.UserInfoPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.UserDynamicFragmentView;
+import com.leyuan.aidong.utils.DynamicType;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
@@ -31,7 +39,7 @@ import static com.leyuan.aidong.R.id.rv_dynamic;
  */
 public class UserDynamicFragment extends BaseFragment implements UserDynamicFragmentView{
     private RecyclerView recyclerView;
-    private DynamicAdapter dynamicAdapter;
+    private CircleDynamicAdapter circleDynamicAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private List<DynamicBean> dynamicList;
 
@@ -57,10 +65,20 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
     private void initRecyclerView(View view){
         recyclerView = (RecyclerView) view.findViewById(rv_dynamic);
         dynamicList = new ArrayList<>();
-        dynamicAdapter = new DynamicAdapter(getContext());
-        wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(dynamicAdapter);
-        recyclerView.setAdapter(wrapperAdapter);
+        dynamicList = new ArrayList<>();
+        CircleDynamicAdapter.Builder<DynamicBean> builder = new CircleDynamicAdapter.Builder<>(getContext());
+        builder.addType(VideoViewHolder.class, DynamicType.VIDEO, R.layout.vh_dynamic_video)
+                .addType(OneImageViewHolder.class, DynamicType.ONE_IMAGE, R.layout.vh_dynamic_one_photo)
+                .addType(TwoImageViewHolder.class, DynamicType.TWO_IMAGE, R.layout.vh_dynamic_two_photos)
+                .addType(ThreeImageViewHolder.class, DynamicType.THREE_IMAGE, R.layout.vh_dynamic_three_photos)
+                .addType(FourImageViewHolder.class, DynamicType.FOUR_IMAGE, R.layout.vh_dynamic_four_photos)
+                .addType(FiveImageViewHolder.class, DynamicType.FIVE_IMAGE, R.layout.vh_dynamic_five_photos)
+                .addType(SixImageViewHolder.class, DynamicType.SIX_IMAGE, R.layout.vh_dynamic_six_photos)
+                .showLikeAndCommentLayout(true);
+        circleDynamicAdapter = builder.build();
+        wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(circleDynamicAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(wrapperAdapter);
         recyclerView.addOnScrollListener(onScrollListener);
     }
 
@@ -79,7 +97,7 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
     @Override
     public void updateDynamic(List<DynamicBean> dynamicBeanList) {
         dynamicList.addAll(dynamicBeanList);
-        dynamicAdapter.setData(dynamicList);
+        circleDynamicAdapter.updateData(dynamicList);
         wrapperAdapter.notifyDataSetChanged();
     }
 

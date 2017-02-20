@@ -79,8 +79,8 @@ public class BoxingRawImageFragment extends Fragment {
         mProgress = (ProgressBar) view.findViewById(R.id.loading);
         mImageView = (PhotoView) view.findViewById(R.id.photo_view);
         mAttacher = new PhotoViewAttacher(mImageView);
-       /* mAttacher.setRotatable(true);
-        mAttacher.setToRightAngle(true);*/
+        //mAttacher.setRotatable(true);
+        //mAttacher.setToRightAngle(true);
         ((AbsBoxingViewActivity) getActivity()).loadRawImage(mImageView, mMedia.getPath(), new BoxingCallback(this));
     }
 

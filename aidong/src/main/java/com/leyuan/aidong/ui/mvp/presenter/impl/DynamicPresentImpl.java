@@ -195,7 +195,7 @@ public class DynamicPresentImpl implements DynamicPresent{
             @Override
             public void onNext(BaseBean baseBean) {
                 if(sportCircleFragmentView != null){
-                    sportCircleFragmentView.updateAddLike(baseBean);
+                    sportCircleFragmentView.updateLikeStatus(true,baseBean);
                 }
             }
         },id);
@@ -207,7 +207,7 @@ public class DynamicPresentImpl implements DynamicPresent{
             @Override
             public void onNext(BaseBean baseBean) {
                 if(sportCircleFragmentView != null){
-                    sportCircleFragmentView.updateCancelLike(baseBean);
+                    sportCircleFragmentView.updateLikeStatus(false,baseBean);
                 }
             }
         },id);

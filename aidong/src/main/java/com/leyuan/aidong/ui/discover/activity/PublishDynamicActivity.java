@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,15 +26,19 @@ import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.PublishDynamicActivityView;
 import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.utils.interfaces.SimpleTextWatcher;
 import com.leyuan.aidong.utils.qiniu.IQiNiuCallback;
 import com.leyuan.aidong.utils.qiniu.UploadQiNiuManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * 发表动态
+ * Created by song on 2017/2/2.
+ */
 public class PublishDynamicActivity extends BaseActivity implements PublishDynamicActivityView,View.OnClickListener, PublishDynamicAdapter.OnItemClickListener {
+    private static final int REQUEST_PHOTO = 1;
+    private static final int REQUEST_VIDEO = 2;
     private static final int MAX_TEXT_COUNT = 14;
     private static final int REQUEST_CODE = 1024;
 
@@ -104,8 +110,13 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
 
     @Override
     public void onAddImageClick() {
-        BoxingConfig config = new BoxingConfig(BoxingConfig.Mode.MULTI_IMG).needCamera();
-        Boxing.of(config).withIntent(this, BoxingActivity.class, selectedMedia).start(this, REQUEST_CODE);
+        if(isPhoto) {
+            BoxingConfig config = new BoxingConfig(BoxingConfig.Mode.MULTI_IMG).needCamera();
+            Boxing.of(config).withIntent(this, BoxingActivity.class, selectedMedia).start(this, REQUEST_PHOTO);
+        }else {
+            BoxingConfig config = new BoxingConfig(BoxingConfig.Mode.VIDEO).needCamera();
+            Boxing.of(config).withIntent(this, BoxingActivity.class, selectedMedia).start(this, REQUEST_VIDEO);
+        }
     }
 
 
@@ -136,7 +147,6 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
         }
     }
 
-
     @Override
     public void publishDynamicResult(BaseBean baseBean) {
         if(baseBean.getStatus() == Constant.OK){
@@ -148,20 +158,6 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
         }
     }
 
-    private class OnTextWatcher extends SimpleTextWatcher {
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            super.onTextChanged(s, start, before, count);
-            tvContentCount.setText(String.valueOf(s.length()));
-            if(s.length() > MAX_TEXT_COUNT){
-                etContent.setSelection(MAX_TEXT_COUNT);
-                etContent.setText(s.toString().substring(0, MAX_TEXT_COUNT));
-                tvContentCount.setText(String.valueOf(MAX_TEXT_COUNT));
-                Toast.makeText(PublishDynamicActivity.this,"最多输入"+ MAX_TEXT_COUNT +"个字符",Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -170,11 +166,35 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
                 return;
             }
             final List<BaseMedia> medias = Boxing.getResult(data);
-            if (requestCode == REQUEST_CODE) {
+            if (requestCode == REQUEST_PHOTO) {
                 selectedMedia.clear();
                 selectedMedia.addAll(medias);
                 mediaAdapter.setData(selectedMedia,isPhoto);
             }
+        }
+    }
+
+    private class OnTextWatcher implements TextWatcher {
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            tvContentCount.setText(String.valueOf(s.length()));
+            if(s.length() > MAX_TEXT_COUNT){
+                etContent.setSelection(MAX_TEXT_COUNT);
+                etContent.setText(s.toString().substring(0, MAX_TEXT_COUNT));
+                tvContentCount.setText(String.valueOf(MAX_TEXT_COUNT));
+                Toast.makeText(PublishDynamicActivity.this,"最多输入"+ MAX_TEXT_COUNT +"个字符",Toast.LENGTH_LONG).show();
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
         }
     }
 }

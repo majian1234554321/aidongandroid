@@ -123,7 +123,7 @@
     <string name="image_preview_ok_fmt">%1$s/%2$s 确定</string>
     <string name="image_select_ok_fmt">(%1$s/%2$s) 确定</string>
     <string name="album_images_fmt">(%d)</string>
-    <string name="max_image_over">你最多只能选择九张图片</string>
+    <string name="max_image_over">你最多只能选择六张图片</string>
     <string name="gif_too_big">您选择的gif图片过大，请压缩后再上传</string>
     <string name="video_title">视频相册</string>
     <string name="storage_permission_deny">需要访问你的存储设备来选择图片，请在“系统设置”或授权对话框中允许“存储空间”权限。</string>
@@ -135,6 +135,7 @@
     <string name="too_many_picture">您最多只能选择九张图片</string>
 
     <string name="confirm_gender">请选择性别</string>
+    <string name="confirm_report">举报类型</string>
     <string name="confirm_signature">请输入个性签名</string>
     <string name="confirm_signature_hint">最多20个字</string>
     <string name="confirm_height">请选择身高</string>

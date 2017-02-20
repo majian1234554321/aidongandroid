@@ -25,6 +25,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.module.photopicker.boxing.model.BoxingManager;
@@ -35,6 +36,7 @@ import com.leyuan.aidong.module.photopicker.boxing_impl.view.MediaItemLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 
 
@@ -74,7 +76,7 @@ public class BoxingMediaAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0 && mMediaConfig.isNeedCamera() && !mMediaConfig.isVideoMode()) {
+        if (position == 0 && mMediaConfig.isNeedCamera()) {
             return CAMERA_TYPE;
         }
         return NORMAL_TYPE;
@@ -179,10 +181,15 @@ public class BoxingMediaAdapter extends RecyclerView.Adapter {
 
     private static class CameraViewHolder extends RecyclerView.ViewHolder {
         View mCameraLayout;
+        ImageView imageView;
 
         CameraViewHolder(final View itemView) {
             super(itemView);
             mCameraLayout = itemView.findViewById(R.id.camera_layout);
+            imageView = (ImageView) itemView.findViewById(R.id.camera_txt);
+            if (BoxingManager.getInstance().getBoxingConfig().isVideoMode()) {
+                imageView.setImageResource(R.drawable.ic_video_white);
+            }
         }
     }
 

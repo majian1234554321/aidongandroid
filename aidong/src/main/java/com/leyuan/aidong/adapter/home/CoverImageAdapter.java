@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.adapter.BaseAdapter;
+import com.leyuan.aidong.adapter.baseadapter.BaseListAdapter;
 import com.leyuan.aidong.entity.HomeItemBean;
 import com.leyuan.aidong.ui.MainActivity;
 
@@ -14,7 +14,7 @@ import com.leyuan.aidong.ui.MainActivity;
  * 首页推荐活动列表适配器
  * Created by song on 2016/7/14.
  */
-public class CoverImageAdapter extends BaseAdapter<HomeItemBean> {
+public class CoverImageAdapter extends BaseListAdapter<HomeItemBean> {
     private Context context;
 
     public CoverImageAdapter(Context context) {

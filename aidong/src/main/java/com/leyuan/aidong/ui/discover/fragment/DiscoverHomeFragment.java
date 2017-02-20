@@ -121,7 +121,7 @@ public class DiscoverHomeFragment extends BaseFragment implements SmartTabLayout
     }
 
     private void takeVideo(){
-        BoxingConfig videoConfig = new BoxingConfig(BoxingConfig.Mode.VIDEO);
+        BoxingConfig videoConfig = new BoxingConfig(BoxingConfig.Mode.VIDEO).needCamera();
         Boxing.of(videoConfig).withIntent(getContext(), BoxingActivity.class).start(this, REQUEST_VIDEO);
     }
 

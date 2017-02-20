@@ -1,5 +1,7 @@
 package com.leyuan.aidong.entity;
 
+import com.leyuan.aidong.utils.DynamicType;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +64,28 @@ public class DynamicBean implements Serializable{
                 public String gender;
 
             }
+        }
+    }
+
+    public int getDynamicType(){
+        if(image != null && !image.isEmpty()){
+            if(image.size() == 1){
+                return DynamicType.ONE_IMAGE;
+            }else if(image.size() == 2){
+                return DynamicType.TWO_IMAGE;
+            }else if(image.size() == 3){
+                return DynamicType.THREE_IMAGE;
+            }else if(image.size() == 4){
+                return DynamicType.FOUR_IMAGE;
+            }else if(image.size() == 5){
+                return DynamicType.FIVE_IMAGE;
+            }else if(image.size() == 6){
+                return DynamicType.SIX_IMAGE;
+            }else {
+                return -1;
+            }
+        }else {
+            return DynamicType.VIDEO;
         }
     }
 }

@@ -16,7 +16,6 @@ public abstract class CommonSubscriber<T> extends Subscriber<T> {
 
     public CommonSubscriber(SwitcherLayout switcherLayout) {
         this.switcherLayout = switcherLayout;
-
     }
 
     /**

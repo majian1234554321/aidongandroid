@@ -43,7 +43,7 @@
     <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-feature android:name="android.hardware.microphone" />
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
@@ -97,7 +97,7 @@
         <activity android:name=".ui.mine.activity.OrderDetailActivity" />
         <activity android:name=".ui.mine.activity.FollowActivity" />
         <activity android:name=".ui.mine.activity.AddAddressActivity" />
-        <activity android:name=".ui.mine.activity.SportsMomentActivity" />
+        <activity android:name=".ui.mine.activity.AiDongMomentActivity" />
         <activity android:name=".ui.mine.activity.MessageActivity"/>
         <activity android:name=".ui.mine.activity.AddressActivity" />
         <activity android:name=".ui.mine.activity.SelectAddressActivity"/>
@@ -189,6 +189,18 @@
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity
+            android:name=".ui.discover.activity.PhotoBrowseActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
+            android:theme="@style/Transparent"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".module.photopicker.boxing_impl.record.VideoCaptureActivity"
+            android:screenOrientation="portrait">
+        </activity>
 
         <!-- ********************share sdk************************* -->
         <!--<activity-->

@@ -54,7 +54,7 @@ import java.util.List;
 public class BoxingViewActivity extends AbsBoxingViewActivity {
     public static final String EXTRA_TYPE_BACK = "com.bilibili.boxing_impl.ui.BoxingViewActivity.type_back";
 
-    private static final int MAX_NUMBER = 9;
+    private static final int MAX_NUMBER = 6;
 
     HackyViewPager mGallery;
     ProgressBar mProgressBar;
@@ -209,7 +209,7 @@ public class BoxingViewActivity extends AbsBoxingViewActivity {
 
     private void setMenuIcon(boolean isSelected) {
         if (mNeedEdit) {
-            mSelectedMenuItem.setIcon(isSelected ? R.drawable.ic_checked : R.drawable.ic_unchecked);
+            mSelectedMenuItem.setIcon(isSelected ? R.drawable.sel : R.drawable.def);
         }
     }
 

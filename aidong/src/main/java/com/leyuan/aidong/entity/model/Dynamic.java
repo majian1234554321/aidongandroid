@@ -114,8 +114,6 @@ public class Dynamic implements Serializable{
 	public AttributeFindDynamics translationToAttribute(){
 		AttributeFindDynamics dynamic = new AttributeFindDynamics();
 		dynamic.setUser(getPublisher());
-		
-		
 		AttributeDynamics d = new AttributeDynamics();
 		d.setComments(getComments());
 		d.setContent(getContent());
@@ -125,13 +123,7 @@ public class Dynamic implements Serializable{
 		d.setLike_user(getLike_user());
 		d.setLikes(getLikes());
 		d.setNo(getId());
-		
 		dynamic.setDynamic(d);
-		
-		
-		
-		
-		
 		return dynamic;
 	}
 

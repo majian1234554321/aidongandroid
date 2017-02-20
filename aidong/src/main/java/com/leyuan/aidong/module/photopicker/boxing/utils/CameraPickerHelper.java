@@ -30,12 +30,18 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
 
+import com.leyuan.aidong.module.photopicker.boxing_impl.record.VideoCaptureActivity;
+import com.leyuan.aidong.module.photopicker.boxing_impl.record.configuration.CaptureConfiguration;
+import com.leyuan.aidong.module.photopicker.boxing_impl.record.configuration.PredefinedCaptureConfigurations;
+import com.leyuan.aidong.module.photopicker.boxing_impl.record.configuration.PredefinedCaptureConfigurations.CaptureQuality;
+import com.leyuan.aidong.module.photopicker.boxing_impl.record.configuration.PredefinedCaptureConfigurations.CaptureResolution;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -46,12 +52,13 @@ import java.util.concurrent.FutureTask;
 
 /**
  * A helper to start camera.<br/>
- * used by {@link AbsBoxingViewFragment}
+ * used by {@link com.leyuan.aidong.module.photopicker.boxing.AbsBoxingViewFragment}
  *
  * @author ChenSL
  */
 public class CameraPickerHelper {
     public static final int REQ_CODE_CAMERA = 0x2001;
+    public static final int REQ_CODE_REC = 0x1774;
     private static final String STATE_SAVED_KEY = "com.bilibili.boxing.utils.CameraPickerHelper.saved_state";
 
     private String mSourceFilePath;
@@ -118,6 +125,36 @@ public class CameraPickerHelper {
                 callbackError();
             }
 
+        }
+    }
+
+    /**
+     * +     * start system camera to record a video
+     * +     *
+     * +     * @param activity      not null if fragment is null.
+     * +     * @param fragment      not null if activity is null.
+     * +     * @param subFolderPath a folder in external DCIM, must start with "/".
+     * +
+     */
+    public void startRecord(final Activity activity, final Fragment fragment, final String subFolderPath) {
+        CaptureResolution resolution = CaptureResolution.RES_720P;
+        CaptureQuality quality = CaptureQuality.MEDIUM;
+        int fileSize = CaptureConfiguration.NO_FILESIZE_LIMIT;
+        int fileDuration = CaptureConfiguration.DEFAULT_DURATION;
+        int fps = PredefinedCaptureConfigurations.FPS_30;
+        boolean showTimer = true;
+        boolean allowFrontCamera = true;
+       // String cameraOutDir = BoxingFileHelper.getExternalDCIM(subFolderPath);
+
+        CaptureConfiguration config = new CaptureConfiguration(resolution, quality,
+                fileDuration, fileSize, showTimer, allowFrontCamera, fps);
+        final Intent intent = new Intent(activity, VideoCaptureActivity.class);
+        intent.putExtra(VideoCaptureActivity.EXTRA_CAPTURE_CONFIGURATION, config);
+        intent.putExtra(VideoCaptureActivity.EXTRA_OUTPUT_FILENAME, SystemClock.currentThreadTimeMillis() + ".mp4");
+        try {
+            startActivityForResult(activity, fragment, intent, REQ_CODE_REC);
+        } catch (ActivityNotFoundException ignore) {
+            callbackError();
         }
     }
 
@@ -192,30 +229,36 @@ public class CameraPickerHelper {
     /**
      * deal with the system camera's shot.
      */
-    public boolean onActivityResult(final int requestCode, final int resultCode) {
-        if (requestCode != REQ_CODE_CAMERA) {
-            return false;
-        }
+    public boolean onActivityResult(final int requestCode, final int resultCode, Intent data) {
         if (resultCode != Activity.RESULT_OK) {
             callbackError();
             return false;
         }
-        FutureTask<Boolean> task = BoxingExecutor.getInstance().runWorker(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return rotateImage(resultCode);
-            }
-        });
-        try {
-            if (task != null && task.get()) {
-                callbackFinish();
-            } else {
+        if (requestCode == REQ_CODE_CAMERA) {
+            FutureTask<Boolean> task = BoxingExecutor.getInstance().runWorker(new Callable<Boolean>() {
+                @Override
+                public Boolean call() throws Exception {
+                    return rotateImage(resultCode);
+                }
+            });
+            try {
+                if (task != null && task.get()) {
+                    callbackFinish();
+                } else {
+                    callbackError();
+                }
+            } catch (InterruptedException | ExecutionException ignore) {
                 callbackError();
             }
-        } catch (InterruptedException | ExecutionException ignore) {
-            callbackError();
+            return true;
+        } else if (requestCode == REQ_CODE_REC) {
+            Uri uri = data.getData();
+            if (uri == null) {
+                return false;
+            }
+            callbackFinish();
         }
-        return true;
+        return false;
     }
 
     private boolean rotateSourceFile(File file) throws IOException {

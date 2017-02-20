@@ -16,7 +16,6 @@ import android.widget.ListView;
 
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.utils.interfaces.TabChoniceInterface;
 import com.leyuan.aidong.entity.model.UserCoach;
 
 import java.lang.reflect.Method;
@@ -29,7 +28,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class ActivityTool implements TabChoniceInterface {
+public class ActivityTool   {
 
 	private static final String TAG = "ActivityTool";
 	public static final int CODE_MAN = 0;

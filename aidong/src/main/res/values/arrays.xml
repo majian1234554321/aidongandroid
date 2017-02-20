@@ -108,4 +108,12 @@
         <item>常见问题</item>
         <item>售后服务</item>
     </string-array>
+
+    <string-array name="reportType">
+        <item>色情</item>
+        <item>恶意营销</item>
+        <item>诱导分享</item>
+        <item>侮辱诋毁</item>
+        <item>侵权举报</item>
+    </string-array>
 </resources>

@@ -1,10 +1,10 @@
 package com.leyuan.aidong.ui.discover.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,17 +14,27 @@ import android.view.ViewGroup;
 
 import com.google.android.exoplayer.util.Util;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter;
+import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter.IDynamicCallback;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.DynamicBean;
+import com.leyuan.aidong.entity.PhotoBrowseInfo;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity;
-import com.leyuan.aidong.adapter.discover.DynamicAdapter;
-import com.leyuan.aidong.ui.home.activity.ImagePreviewActivity;
-import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
-import com.leyuan.aidong.ui.video.activity.PlayerActivity;
+import com.leyuan.aidong.ui.discover.activity.PhotoBrowseActivity;
+import com.leyuan.aidong.ui.discover.viewholder.FiveImageViewHolder;
+import com.leyuan.aidong.ui.discover.viewholder.FourImageViewHolder;
+import com.leyuan.aidong.ui.discover.viewholder.OneImageViewHolder;
+import com.leyuan.aidong.ui.discover.viewholder.SixImageViewHolder;
+import com.leyuan.aidong.ui.discover.viewholder.ThreeImageViewHolder;
+import com.leyuan.aidong.ui.discover.viewholder.TwoImageViewHolder;
+import com.leyuan.aidong.ui.discover.viewholder.VideoViewHolder;
 import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.SportCircleFragmentView;
+import com.leyuan.aidong.ui.video.activity.PlayerActivity;
+import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.DynamicType;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -34,7 +44,6 @@ import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.leyuan.aidong.R.id.rv_dynamic;
 
 /**
  * 爱动圈
@@ -44,7 +53,7 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
-    private DynamicAdapter dynamicAdapter;
+    private CircleDynamicAdapter circleDynamicAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private List<DynamicBean> dynamicList;
 
@@ -84,13 +93,22 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
     }
 
     private void initRecyclerView(View view) {
-        recyclerView = (RecyclerView) view.findViewById(rv_dynamic);
+        recyclerView = (RecyclerView) view.findViewById(R.id.rv_dynamic_list);
         dynamicList = new ArrayList<>();
-        dynamicAdapter = new DynamicAdapter(getContext());
-        wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(dynamicAdapter);
-        recyclerView.setAdapter(wrapperAdapter);
+        CircleDynamicAdapter.Builder<DynamicBean> builder = new CircleDynamicAdapter.Builder<>(getContext());
+        builder.addType(VideoViewHolder.class, DynamicType.VIDEO, R.layout.vh_dynamic_video)
+                .addType(OneImageViewHolder.class, DynamicType.ONE_IMAGE, R.layout.vh_dynamic_one_photo)
+                .addType(TwoImageViewHolder.class, DynamicType.TWO_IMAGE, R.layout.vh_dynamic_two_photos)
+                .addType(ThreeImageViewHolder.class, DynamicType.THREE_IMAGE, R.layout.vh_dynamic_three_photos)
+                .addType(FourImageViewHolder.class, DynamicType.FOUR_IMAGE, R.layout.vh_dynamic_four_photos)
+                .addType(FiveImageViewHolder.class, DynamicType.FIVE_IMAGE, R.layout.vh_dynamic_five_photos)
+                .addType(SixImageViewHolder.class, DynamicType.SIX_IMAGE, R.layout.vh_dynamic_six_photos)
+                .showLikeAndCommentLayout(true)
+                .setDynamicCallback(new DynamicCallback());
+        circleDynamicAdapter = builder.build();
+        wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(circleDynamicAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        dynamicAdapter.setHandleDynamicListener(new HandleDynamicListener());
+        recyclerView.setAdapter(wrapperAdapter);
         recyclerView.addOnScrollListener(onScrollListener);
     }
 
@@ -111,7 +129,7 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
             refreshLayout.setRefreshing(false);
         }
         dynamicList.addAll(dynamicBeanList);
-        dynamicAdapter.setData(dynamicList);
+        circleDynamicAdapter.updateData(dynamicList);
         wrapperAdapter.notifyDataSetChanged();
     }
 
@@ -121,35 +139,28 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
     }
 
     @Override
-    public void updateAddLike(BaseBean baseBean) {
-
+    public void updateLikeStatus(boolean isAdd,BaseBean baseBean) {
+        if(baseBean.getStatus() == Constant.OK){
+            circleDynamicAdapter.notifyDataSetChanged();
+        }
     }
 
-    @Override
-    public void updateCancelLike(BaseBean baseBean) {
 
-    }
-
-    private class HandleDynamicListener implements DynamicAdapter.OnHandleDynamicListener {
+    private class DynamicCallback implements IDynamicCallback{
 
         @Override
-        public void onAvatarClickListener() {
-            startActivity(new Intent(getContext(),UserInfoActivity.class));
+        public void onBackgroundClick(DynamicBean dynamicBean) {
+            DynamicDetailActivity.start(getContext(),dynamicBean);
+        }
+
+
+        @Override
+        public void onAvatarClick(String id) {
+
         }
 
         @Override
-        public void onImageClickListener(View view, int itemPosition, int imagePosition) {
-            Intent i = new Intent(getContext(), ImagePreviewActivity.class);
-            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation
-                    (getActivity(), view, ViewCompat.getTransitionName(view));
-            i.putExtra("urls", (ArrayList) dynamicList.get(itemPosition).image);
-            i.putExtra("position", imagePosition);
-            startActivity(i, optionsCompat.toBundle());
-            //ImagePreviewActivity.start(context,(ArrayList<String>) data,position);
-        }
-
-        @Override
-        public void onVideoClickListener(String url) {
+        public void onVideoClick(String url) {
             Intent intent = new Intent(getContext(), PlayerActivity.class)
                     .setData(Uri.parse(url))
                     .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_HLS);
@@ -157,18 +168,14 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
         }
 
         @Override
-        public void onShowMoreLikeClickListener() {
-
+        public void onImageClick(List<String> photoUrls, List<Rect> viewLocalRect, int currentPhotoPosition) {
+            PhotoBrowseInfo info = PhotoBrowseInfo.create(photoUrls, viewLocalRect, currentPhotoPosition);
+            PhotoBrowseActivity.startToPhotoBrowseActivity((Activity) getContext(), info);
         }
 
         @Override
-        public void onShowMoreCommentClickListener() {
-
-        }
-
-        @Override
-        public void onLikeClickListener(String id, boolean isAddLike) {
-            if (isAddLike) {
+        public void onLikeClick(int position, String id, boolean isLike) {
+            if (isLike) {
                 dynamicPresent.cancelLike(id);
             } else {
                 dynamicPresent.addLike(id);
@@ -176,18 +183,13 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
         }
 
         @Override
-        public void onCommonClickListener(int position) {
-            DynamicDetailActivity.start(getContext(), dynamicList.get(position));
-        }
-
-        @Override
-        public void onShareClickListener() {
+        public void onCommentClick() {
 
         }
 
         @Override
-        public void onDynamicDetailClickListener(int position) {
-            DynamicDetailActivity.start(getContext(), dynamicList.get(position));
+        public void onShareClick() {
+
         }
     }
 }
