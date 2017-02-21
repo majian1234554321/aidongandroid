@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.adapter.home.HomeRecycleViewAdapter;
 import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.entity.HomeBean;
 import com.leyuan.aidong.ui.BaseFragment;
@@ -22,18 +23,17 @@ import com.leyuan.aidong.ui.home.activity.FoodActivity;
 import com.leyuan.aidong.ui.home.activity.LocationActivity;
 import com.leyuan.aidong.ui.home.activity.NurtureActivity;
 import com.leyuan.aidong.ui.home.activity.SearchActivity;
-import com.leyuan.aidong.adapter.home.HomeRecycleViewAdapter;
 import com.leyuan.aidong.ui.home.view.HomeBannerDialog;
 import com.leyuan.aidong.ui.mvp.presenter.HomePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.HomePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.HomeFragmentView;
+import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,7 +94,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
         banner.setAdapter(new BGABanner.Adapter() {
             @Override
             public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
-                ImageLoader.getInstance().displayImage(((BannerBean)model).getImage(),(ImageView)view);
+                GlideLoader.getInstance().displayImage((String)model, (ImageView)view);
             }
         });
         banner.setOnItemClickListener(new BGABanner.OnItemClickListener() {

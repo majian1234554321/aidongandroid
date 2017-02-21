@@ -28,25 +28,24 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.adapter.home.GoodsDetailCouponAdapter;
 import com.leyuan.aidong.entity.DeliveryBean;
 import com.leyuan.aidong.entity.GoodsDetailBean;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.adapter.home.GoodsDetailCouponAdapter;
-import com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow;
-import com.leyuan.aidong.ui.mine.activity.CartActivity;
 import com.leyuan.aidong.ui.home.fragment.GoodsDetailFragment;
 import com.leyuan.aidong.ui.home.fragment.GoodsProblemFragment;
 import com.leyuan.aidong.ui.home.fragment.GoodsServiceFragment;
+import com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow;
+import com.leyuan.aidong.ui.mine.activity.CartActivity;
 import com.leyuan.aidong.ui.mvp.presenter.CouponPresent;
 import com.leyuan.aidong.ui.mvp.presenter.GoodsDetailPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.GoodsDetailPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.GoodsDetailActivityView;
 import com.leyuan.aidong.utils.FormatUtil;
-import com.leyuan.aidong.utils.ImageLoadConfig;
+import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.TransitionHelper;
 import com.leyuan.aidong.widget.SlideDetailsLayout;
 import com.leyuan.aidong.widget.SwitcherLayout;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
@@ -192,8 +191,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         bannerLayout.setAdapter(new BGABanner.Adapter() {
             @Override
             public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
-                ImageLoader.getInstance().displayImage((String)model,(ImageView)view,
-                        new ImageLoadConfig().getOptions(R.drawable.place_holder_logo));
+                GlideLoader.getInstance().displayImage((String)model, (ImageView)view);
             }
         });
 

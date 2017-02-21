@@ -16,7 +16,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.ImageBean;
 import com.leyuan.aidong.entity.ProfileBean;
@@ -29,6 +28,7 @@ import com.leyuan.aidong.ui.mvp.presenter.UserInfoPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.UserInfoPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.UserInfoActivityView;
 import com.leyuan.aidong.utils.DensityUtil;
+import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
@@ -52,7 +52,7 @@ public class UserInfoActivity extends BaseActivity implements SmartTabLayout.Tab
     private RelativeLayout contentLayout;
     private TextView tvAddImage;
     private RecyclerView rvPhoto;
-    private SimpleDraweeView dvAvatar;
+    private ImageView dvAvatar;
     private TextView tvName;
     private TextView tvSignature;
     private LinearLayout publishLayout;
@@ -99,7 +99,7 @@ public class UserInfoActivity extends BaseActivity implements SmartTabLayout.Tab
         switcherLayout = new SwitcherLayout(this,contentLayout);
         tvAddImage = (TextView) findViewById(R.id.tv_add_image);
         rvPhoto = (RecyclerView) findViewById(R.id.rv_photo);
-        dvAvatar = (SimpleDraweeView) findViewById(R.id.dv_avatar);
+        dvAvatar = (ImageView) findViewById(R.id.dv_avatar);
         tvName = (TextView) findViewById(R.id.tv_name);
         tvSignature = (TextView) findViewById(R.id.tv_signature);
         publishLayout = (LinearLayout) findViewById(R.id.ll_publish);
@@ -132,7 +132,7 @@ public class UserInfoActivity extends BaseActivity implements SmartTabLayout.Tab
     @Override
     public void updateUserInfo(UserInfoData userInfoData) {
         profileBean = userInfoData.getProfile();
-        dvAvatar.setImageURI(profileBean.getAvatar());
+        GlideLoader.getInstance().displayImage(profileBean.getAvatar(), dvAvatar);
         tvName.setText(profileBean.getName());
         tvSignature.setText(profileBean.getSignature());
 

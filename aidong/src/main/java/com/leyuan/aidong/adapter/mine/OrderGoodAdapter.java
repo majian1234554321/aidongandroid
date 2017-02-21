@@ -5,11 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.GoodsBean;
+import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +42,7 @@ public class OrderGoodAdapter extends RecyclerView.Adapter<OrderGoodAdapter.Good
     @Override
     public void onBindViewHolder(GoodHolder holder, int position) {
         final GoodsBean bean = data.get(position);
-        holder.cover.setImageURI(bean.getCover());
+        GlideLoader.getInstance().displayImage(bean.getCover(), holder.cover);
         holder.name.setText(bean.getName());
         holder.price.setText(String.format(context.getString(R.string.rmb_price),bean.getPrice()));
         holder.count.setText(String.format(context.getString(R.string.x_count),bean.getAmount()));
@@ -55,7 +56,7 @@ public class OrderGoodAdapter extends RecyclerView.Adapter<OrderGoodAdapter.Good
     }
 
     class GoodHolder extends RecyclerView.ViewHolder{
-        SimpleDraweeView cover;
+        ImageView cover;
         TextView name;
         TextView price;
         TextView desc;
@@ -63,7 +64,7 @@ public class OrderGoodAdapter extends RecyclerView.Adapter<OrderGoodAdapter.Good
 
         public GoodHolder(View itemView) {
             super(itemView);
-            cover = (SimpleDraweeView)itemView.findViewById(R.id.dv_goods_cover);
+            cover = (ImageView)itemView.findViewById(R.id.dv_goods_cover);
             name = (TextView)itemView.findViewById(R.id.tv_good_name);
             price = (TextView)itemView.findViewById(R.id.tv_goods_price);
             desc = (TextView)itemView.findViewById(R.id.tv_good_desc);

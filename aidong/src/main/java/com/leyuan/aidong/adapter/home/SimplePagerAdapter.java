@@ -5,9 +5,10 @@ import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,8 +46,8 @@ public class SimplePagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup view, final int position) {
         String image = data.get(position);
         View root = LayoutInflater.from(context).inflate(R.layout.item_goods_photo,null);
-        final SimpleDraweeView banner = (SimpleDraweeView) root.findViewById(R.id.image);
-        banner.setImageURI(image);
+        final ImageView banner = (ImageView) root.findViewById(R.id.image);
+        GlideLoader.getInstance().displayImage(image, banner);
         view.addView(banner, ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
         banner.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +65,6 @@ public class SimplePagerAdapter extends PagerAdapter {
     }
 
     public interface OnItemClickListener{
-        void onItemClick(SimpleDraweeView image,int position);
+        void onItemClick(ImageView image,int position);
     }
 }

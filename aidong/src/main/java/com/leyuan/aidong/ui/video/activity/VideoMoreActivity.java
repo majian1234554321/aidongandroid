@@ -18,11 +18,9 @@ import com.leyuan.aidong.adapter.video.WatchOfficeRelateVideoAdapter;
 import com.leyuan.aidong.entity.GoodBean;
 import com.leyuan.aidong.entity.video.VideoDetail;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.utils.ImageLoadConfig;
 import com.leyuan.aidong.widget.MyListView;
 import com.leyuan.aidong.widget.SmartScrollView;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+
 
 /**
  * 视界专题详情界面展开
@@ -33,8 +31,6 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
     private WatchOfficeRelateVideoAdapter videoAdapter;
     private WatchOfficeRelateCourseAdapter courseAdapter;
     private WatchOfficeRelateGoodAdapter goodAdapter;
-
-    private DisplayImageOptions options;
 
     private String videoName;
     private String videoId;
@@ -64,7 +60,6 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_special_more);
-        options = new ImageLoadConfig().getOptions(R.drawable.img_default);
         Intent intent = getIntent();
         if (intent != null) {
             videoName = intent.getStringExtra("videoName");
@@ -100,14 +95,14 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
         ivBack.setOnClickListener(backListener);
         RecyclerView videoRecyclerView = (RecyclerView) findViewById(R.id.rv_relate_relate_video);
         videoRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        videoAdapter = new WatchOfficeRelateVideoAdapter(this,  ImageLoader.getInstance(), options,this);
+        videoAdapter = new WatchOfficeRelateVideoAdapter(this,this);
         videoRecyclerView.setAdapter(videoAdapter);
         MyListView courseListView = (MyListView) findViewById(R.id.lv_relate_course);
-        courseAdapter = new WatchOfficeRelateCourseAdapter(this,  ImageLoader.getInstance(), options);
+        courseAdapter = new WatchOfficeRelateCourseAdapter(this);
         courseListView.setAdapter(courseAdapter);
         RecyclerView goodRecyclerView = (RecyclerView) findViewById(R.id.rv_relate_good);
         goodRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        goodAdapter = new WatchOfficeRelateGoodAdapter(this,  ImageLoader.getInstance(), options,this);
+        goodAdapter = new WatchOfficeRelateGoodAdapter(this,this);
         goodRecyclerView.setAdapter(goodAdapter);
     }
 

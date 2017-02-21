@@ -28,6 +28,10 @@ public class UploadQiNiuManager {
     private IQiNiuCallback callback;
     private List<String> qiNiuMediaUrls = new ArrayList<>();
 
+
+    private UploadQiNiuManager(){
+
+    }
     private static UploadQiNiuManager INSTANCE = new UploadQiNiuManager();
     public static UploadQiNiuManager getInstance() {
         return INSTANCE;

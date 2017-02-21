@@ -77,11 +77,10 @@
 
         </RelativeLayout>
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/dv_food_cover"
             android:layout_width="90dp"
             android:layout_height="90dp"
-            android:layout_gravity="center_vertical"
-            app:placeholderImage="@drawable/place_holder_logo" />
+            android:layout_gravity="center_vertical" />
     </LinearLayout>
 </LinearLayout>

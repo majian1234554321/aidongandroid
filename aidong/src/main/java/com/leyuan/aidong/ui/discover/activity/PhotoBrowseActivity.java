@@ -17,9 +17,9 @@ import com.leyuan.aidong.entity.PhotoBrowseInfo;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.discover.view.DotIndicator;
 import com.leyuan.aidong.ui.discover.view.GalleryPhotoView;
+import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.HackyViewPager;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -146,7 +146,7 @@ public class PhotoBrowseActivity extends BaseActivity {
             GalleryPhotoView photoView = viewBuckets.get(position);
             String photoUrl = photoBrowseInfo.getPhotoUrls().get(position);
 
-            ImageLoader.getInstance().displayImage(photoUrl,photoView);
+            GlideLoader.getInstance().displayImage(photoUrl, photoView);
             container.addView(photoView);
             return photoView;
         }

@@ -57,13 +57,11 @@
                 android:layout_marginRight="@dimen/right_margin"
                 android:layout_marginTop="10dp">
 
-                <com.facebook.drawee.view.SimpleDraweeView
+                <ImageView
                     android:id="@+id/dv_cover"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    app:actualImageScaleType="centerCrop"
-                    app:placeholderImage="@drawable/place_holder_logo"
-                    app:pressedStateOverlayImage="@color/color_image_press" />
+                    />
 
                 <TextView
                     android:id="@+id/tv_name"

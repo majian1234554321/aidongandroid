@@ -8,12 +8,11 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
-import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.stetho.Stetho;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMOptions;
 import com.leyuan.aidong.entity.model.UserCoach;
-import com.leyuan.aidong.module.photopicker.BoxingFrescoLoader;
+import com.leyuan.aidong.module.photopicker.BoxingGlideLoader;
 import com.leyuan.aidong.module.photopicker.BoxingUcrop;
 import com.leyuan.aidong.module.photopicker.boxing.BoxingCrop;
 import com.leyuan.aidong.module.photopicker.boxing.BoxingMediaLoader;
@@ -22,10 +21,7 @@ import com.leyuan.aidong.utils.AppUtil;
 import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.SharePrefUtils;
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+
 import com.squareup.leakcanary.LeakCanary;
 
 import io.realm.Realm;
@@ -57,12 +53,11 @@ public class App extends Application {
     private void initConfig() {
         LeakCanary.install(this);
         SDKInitializer.initialize(this);
-        Fresco.initialize(this);
         initBaiduLoc();
-        initImageLoader(getApplicationContext());
+
         //initDbUtils();
         initEMchat();
-        IBoxingMediaLoader loader = new BoxingFrescoLoader(this);
+        IBoxingMediaLoader loader = new BoxingGlideLoader();
         BoxingMediaLoader.getInstance().init(loader);
         BoxingCrop.getInstance().init(new BoxingUcrop());
      //   initImagePicker();
@@ -131,16 +126,7 @@ public class App extends Application {
         mLocationClient.start();
     }
 
-    public static void initImageLoader(Context context) {
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
-                .threadPriority(Thread.NORM_PRIORITY - 2)
-                .denyCacheImageMultipleSizesInMemory()
-                .diskCacheFileNameGenerator(new Md5FileNameGenerator())
-                .tasksProcessingOrder(QueueProcessingType.LIFO)
-                .writeDebugLogs()
-                .build();
-        ImageLoader.getInstance().init(config);
-    }
+
 
     private void initLocation() {
         LocationClientOption option = new LocationClientOption();

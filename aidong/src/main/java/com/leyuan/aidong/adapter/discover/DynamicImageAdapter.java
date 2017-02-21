@@ -6,10 +6,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.utils.DensityUtil;
+import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ScreenUtil;
 import com.leyuan.aidong.utils.qiniu.QiNiuImageProcessUtils;
@@ -52,7 +53,7 @@ public class DynamicImageAdapter extends RecyclerView.Adapter<DynamicImageAdapte
         if(!url.equals(holder.image.getTag())) {
             holder.image.setTag(url);
             int minWidth = holder.image.getLayoutParams().width;
-            holder.image.setImageURI(QiNiuImageProcessUtils.minWidthScale(url,minWidth));
+            GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(url,minWidth), holder.image);
             Logger.w("recyclerView","DynamicImageAdapter " + QiNiuImageProcessUtils.minWidthScale(url,minWidth));
         }
         ViewCompat.setTransitionName(holder.image, String.valueOf(position) + "transition");
@@ -72,10 +73,10 @@ public class DynamicImageAdapter extends RecyclerView.Adapter<DynamicImageAdapte
     }
 
     class ImageHolder extends RecyclerView.ViewHolder{
-        SimpleDraweeView image;
+        ImageView image;
         public ImageHolder(View itemView) {
             super(itemView);
-            image = (SimpleDraweeView)itemView.findViewById(R.id.dv_image);
+            image = (ImageView)itemView.findViewById(R.id.dv_image);
             if(data.size() == 1){
                 image.getLayoutParams().width = ScreenUtil.getScreenWidth(context);
                 image.getLayoutParams().height = ScreenUtil.getScreenWidth(context);

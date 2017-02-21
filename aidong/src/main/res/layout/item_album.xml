@@ -5,12 +5,10 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/dv_photo"
         android:layout_width="118dp"
-        android:layout_height="118dp"
-        app:actualImageScaleType="centerCrop"
-        app:placeholderImage="@color/line_color" />
+        android:layout_height="118dp" />
 
 
     <ImageView

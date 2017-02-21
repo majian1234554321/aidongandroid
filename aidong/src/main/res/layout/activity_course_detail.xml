@@ -91,14 +91,12 @@
                     android:textColor="@color/white"
                     android:textSize="14sp" />
 
-                <com.facebook.drawee.view.SimpleDraweeView
+                <ImageView
                     android:id="@+id/dv_avatar"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
-                    app:roundAsCircle="true"
-                    app:placeholderImage="@drawable/place_holder_user"
                     android:elevation="15dp"/>
             </RelativeLayout>
 

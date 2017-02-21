@@ -16,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.ProfileBean;
@@ -32,6 +31,7 @@ import com.leyuan.aidong.ui.mine.view.AddressDialog;
 import com.leyuan.aidong.ui.mvp.presenter.UserInfoPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.UserInfoPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.UpdateUserInfoActivityView;
+import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.widget.ExtendTextView;
 
 import java.util.Calendar;
@@ -47,7 +47,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
     private LinearLayout rootLayout;
     private ImageView ivBack;
     private TextView tvFinish;
-    private SimpleDraweeView dvAvatar;
+    private ImageView dvAvatar;
     private ExtendTextView nickname;
     private ExtendTextView gender;
     private ExtendTextView identify;
@@ -89,7 +89,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
         rootLayout = (LinearLayout) findViewById(R.id.ll_root);
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tvFinish = (TextView) findViewById(R.id.tv_finish);
-        dvAvatar = (SimpleDraweeView) findViewById(R.id.dv_avatar);
+        dvAvatar = (ImageView) findViewById(R.id.dv_avatar);
         nickname = (ExtendTextView) findViewById(R.id.nickname);
         gender = (ExtendTextView) findViewById(R.id.gender);
         identify = (ExtendTextView) findViewById(R.id.identify);
@@ -329,7 +329,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
         if (resultCode == RESULT_OK) {
             List<BaseMedia> medias = Boxing.getResult(data);
             if(medias != null && !medias.isEmpty()){
-                dvAvatar.setImageURI("file://" + medias.get(0).getPath());
+                GlideLoader.getInstance().displayImage("file://" + medias.get(0).getPath(), dvAvatar);
                // BoxingMediaLoader.getInstance().displayThumbnail(dvAvatar, medias.get(0).getPath(), 70,70);
             }
         }

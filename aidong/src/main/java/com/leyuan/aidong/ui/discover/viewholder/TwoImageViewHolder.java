@@ -7,9 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.DynamicBean;
+import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.ImageRectUtils;
 
 import java.util.LinkedList;
@@ -20,8 +20,8 @@ import java.util.List;
  * Created by song on 2017/2/16.
  */
 public class TwoImageViewHolder extends BaseCircleViewHolder{
-    private SimpleDraweeView one;
-    private SimpleDraweeView two;
+    private ImageView one;
+    private ImageView two;
 
     public TwoImageViewHolder(Context context, ViewGroup viewGroup, int layoutResId) {
         super(context, viewGroup, layoutResId);
@@ -29,14 +29,14 @@ public class TwoImageViewHolder extends BaseCircleViewHolder{
 
     @Override
     public void onFindChildView(@NonNull View rootView) {
-        one = (SimpleDraweeView) itemView.findViewById(R.id.dv_one);
-        two = (SimpleDraweeView) itemView.findViewById(R.id.dv_two);
+        one = (ImageView) itemView.findViewById(R.id.dv_one);
+        two = (ImageView) itemView.findViewById(R.id.dv_two);
     }
 
     @Override
     public void onBindDataToChildView(@NonNull final DynamicBean data, int position, int viewType) {
-        one.setImageURI(data.image.get(0));
-        two.setImageURI(data.image.get(1));
+        GlideLoader.getInstance().displayImage(data.image.get(0), one);
+        GlideLoader.getInstance().displayImage(data.image.get(1), two);
 
         final List<ImageView>  imageViewList = new LinkedList<>();
         imageViewList.add(one);

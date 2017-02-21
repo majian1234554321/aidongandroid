@@ -4,12 +4,13 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CampaignBean;
 import com.leyuan.aidong.ui.home.activity.CampaignDetailActivity;
+import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +46,7 @@ public class CampaignAdapter extends RecyclerView.Adapter<CampaignAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final CampaignBean bean = data.get(position);
-        holder.cover.setImageURI(bean.getCover());
+        GlideLoader.getInstance().displayImage(bean.getCover(), holder.cover);
         holder.hot.setText(bean.getName());
         holder.address.setText(bean.getLandmart());
         holder.time.setText(bean.getStart_time());
@@ -59,14 +60,14 @@ public class CampaignAdapter extends RecyclerView.Adapter<CampaignAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public SimpleDraweeView cover;
+        public ImageView cover;
         public TextView hot;
         public TextView address;
         public TextView time;
 
         public ViewHolder (View itemView) {
             super(itemView);
-            cover = (SimpleDraweeView)itemView.findViewById(R.id.dv_campaign_cover);
+            cover = (ImageView)itemView.findViewById(R.id.dv_campaign_cover);
             hot = (TextView)itemView.findViewById(R.id.tv_campaign_hot);
             address = (TextView)itemView.findViewById(R.id.tv_campaign_address);
             time = (TextView)itemView.findViewById(R.id.tv_campaign_time);

@@ -5,15 +5,12 @@
     android:layout_height="wrap_content">
 
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/dv_cover"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        fresco:actualImageScaleType="centerCrop"
         android:background="#E8E9EF"
-        fresco:placeholderImageScaleType="fitCenter"
-        fresco:placeholderImage="@drawable/place_holder_logo"
-        fresco:pressedStateOverlayImage="@color/color_image_press" />
+         />
 
     <TextView
         android:id="@+id/tv_title"

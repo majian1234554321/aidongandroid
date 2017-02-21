@@ -6,13 +6,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.utils.FormatUtil;
+import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +49,7 @@ public class UpdateDeliveryInfoAdapter extends RecyclerView.Adapter<UpdateDelive
     @Override
     public void onBindViewHolder(final DeliveryInfoHolder holder, int position) {
         GoodsBean bean = data.get(position);
-        holder.dvCover.setImageURI(bean.getCover());
+        GlideLoader.getInstance().displayImage(bean.getCover(), holder.dvCover);
         holder.tvGoodsName.setText(bean.getName());
         holder.tvCount.setText(String.format(context.getString(R.string.x_count),bean.getAmount()));
         ArrayList<String> specValue = bean.getSpec_value();
@@ -85,7 +86,7 @@ public class UpdateDeliveryInfoAdapter extends RecyclerView.Adapter<UpdateDelive
     }
 
     class DeliveryInfoHolder extends RecyclerView.ViewHolder {
-        SimpleDraweeView dvCover;
+        ImageView dvCover;
         TextView tvGoodsName;
         TextView tvGoodsPrice;
         TextView tvSku;
@@ -101,7 +102,7 @@ public class UpdateDeliveryInfoAdapter extends RecyclerView.Adapter<UpdateDelive
 
         public DeliveryInfoHolder(View itemView) {
             super(itemView);
-            dvCover = (SimpleDraweeView) itemView.findViewById(R.id.dv_cover);
+            dvCover = (ImageView) itemView.findViewById(R.id.dv_cover);
             tvGoodsName = (TextView) itemView.findViewById(R.id.tv_goods_name);
             tvGoodsPrice = (TextView) itemView.findViewById(R.id.tv_goods_price);
             tvSku = (TextView) itemView.findViewById(R.id.tv_sku);

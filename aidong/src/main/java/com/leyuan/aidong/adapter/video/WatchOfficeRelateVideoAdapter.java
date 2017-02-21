@@ -9,8 +9,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.video.VideoDetail;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +21,9 @@ import java.util.List;
 public class WatchOfficeRelateVideoAdapter extends RecyclerView.Adapter<WatchOfficeRelateVideoAdapter.RelateVideoViewHolder>{
     private List<VideoDetail> data = new ArrayList<>();
     private Context context;
-    private ImageLoader imageLoader ;
-    private DisplayImageOptions options;
     private OnVideoItemCLickListener listener;
-    public WatchOfficeRelateVideoAdapter(Context context, ImageLoader imageLoader, DisplayImageOptions options,OnVideoItemCLickListener listener) {
+    public WatchOfficeRelateVideoAdapter(Context context,OnVideoItemCLickListener listener) {
         this.context = context;
-        this.imageLoader = imageLoader;
-        this.options = options;
         this.listener = listener;
     }
 
@@ -52,7 +47,7 @@ public class WatchOfficeRelateVideoAdapter extends RecyclerView.Adapter<WatchOff
     @Override
     public void onBindViewHolder(RelateVideoViewHolder holder, int position) {
         final VideoDetail bean = data.get(position);
-        imageLoader.displayImage(bean.getCover(),holder.cover,options);
+        GlideLoader.getInstance().displayImage(bean.getCover(), holder.cover);
         holder.name.setText(bean.getVideoName());
         holder.timeAndIndex.setText(new StringBuilder().append("第"+bean.getPhase()+"集").append("/").append(bean.getDuring()));
         holder.itemView.setOnClickListener(new View.OnClickListener() {

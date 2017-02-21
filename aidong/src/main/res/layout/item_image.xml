@@ -4,14 +4,13 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/dv_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
-        app:actualImageScaleType="centerCrop"
         android:layout_margin="5dp"
-        app:pressedStateOverlayImage="@color/color_image_press"/>
+       />
 
     <ImageView
         android:id="@+id/iv_delete"

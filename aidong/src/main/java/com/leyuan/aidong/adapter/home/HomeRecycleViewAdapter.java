@@ -7,12 +7,13 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.HomeBean;
 import com.leyuan.aidong.ui.home.activity.BrandActivity;
+import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.widget.MyListView;
 
 import java.util.ArrayList;
@@ -76,7 +77,7 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             ((CoverImageViewHolder) holder).listView.setAdapter(adapter);
             adapter.addList(bean.getItem());
         }else if(holder instanceof BigAndLittleImageViewHolder){
-            ((BigAndLittleImageViewHolder) holder).cover.setImageURI(bean.getImage());
+            GlideLoader.getInstance().displayImage(bean.getImage(), ((BigAndLittleImageViewHolder) holder).cover);
             ((BigAndLittleImageViewHolder) holder).cover.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -104,12 +105,12 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
      * 大图加小图ViewHolder
      */
     private static class BigAndLittleImageViewHolder extends RecyclerView.ViewHolder {
-        SimpleDraweeView cover;
+        ImageView cover;
         RecyclerView recyclerView;
 
         public BigAndLittleImageViewHolder(View itemView) {
             super(itemView);
-            cover = (SimpleDraweeView) itemView.findViewById(R.id.dv_cover);
+            cover = (ImageView) itemView.findViewById(R.id.dv_cover);
             recyclerView = (RecyclerView) itemView.findViewById(R.id.rv_recommend_good);
         }
     }

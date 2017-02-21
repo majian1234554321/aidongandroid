@@ -12,16 +12,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.Logger;
 
 
 public class DialogImageIdentify extends Dialog {
 
-    private SimpleDraweeView imgIdentify;
+    private ImageView imgIdentify;
     private TextView txtRefresh;
     private ImageView imgClose;
 //    private ImageLoader mImageLoader = ImageLoader.getInstance();
@@ -76,7 +75,7 @@ public class DialogImageIdentify extends Dialog {
     }
 
     private void initView() {
-        imgIdentify = (SimpleDraweeView) findViewById(R.id.img_identify);
+        imgIdentify = (ImageView) findViewById(R.id.img_identify);
         txtRefresh = (TextView) findViewById(R.id.txt_refresh);
         imgClose = (ImageView) findViewById(R.id.img_close);
     }
@@ -103,8 +102,7 @@ public class DialogImageIdentify extends Dialog {
     public void refreshImage(String mobile) {
 //        mImageLoader.displayImage(Common.URL_IMAGE_IDENTIFY_CODE + mobile, imgIdentify, mOptions);
 //        imgIdentify.destroyDrawingCache();
-        Fresco.getImagePipeline().clearCaches();
-        imgIdentify.setImageURI(Constant.BASE_URL+"captcha_image/" + mobile);
+        GlideLoader.getInstance().displayImage(Constant.BASE_URL+"captcha_image/" + mobile, imgIdentify);
     }
 
     private void initEvent() {

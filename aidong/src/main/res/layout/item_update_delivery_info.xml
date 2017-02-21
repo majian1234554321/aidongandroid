@@ -16,14 +16,13 @@
         android:paddingRight="@dimen/right_margin"
         android:layout_height="70dp">
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/dv_cover"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/rb_check"
-            fresco:actualImageScaleType="centerCrop"
-            fresco:placeholderImage="@drawable/place_holder_logo"/>
+           />
 
         <TextView
             android:id="@+id/tv_goods_name"

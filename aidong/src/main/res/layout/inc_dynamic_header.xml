@@ -13,14 +13,12 @@
         android:layout_marginLeft="@dimen/left_margin"
         android:layout_marginRight="@dimen/right_margin">
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/dv_avatar"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_centerVertical="true"
-            fresco:actualImageScaleType="centerCrop"
-            fresco:roundAsCircle="true"
-            fresco:placeholderImage="@drawable/place_holder_user" />
+          />
 
         <TextView
             android:id="@+id/tv_name"

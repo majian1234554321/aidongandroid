@@ -9,8 +9,7 @@ import android.widget.ImageView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.video.WatchOfficeCourseBean;
 import com.leyuan.aidong.ui.home.activity.CourseActivity;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.leyuan.aidong.utils.GlideLoader;
 
 
 /**
@@ -19,13 +18,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
  */
 public class WatchOfficeRelateCourseAdapter extends MyBaseAdapter<WatchOfficeCourseBean>{
     private Context context;
-    private ImageLoader imageLoader ;
-    private DisplayImageOptions options;
 
-    public WatchOfficeRelateCourseAdapter(Context context, ImageLoader imageLoader, DisplayImageOptions options) {
+    public WatchOfficeRelateCourseAdapter(Context context) {
         this.context = context;
-        this.imageLoader = imageLoader;
-        this.options = options;
     }
 
     @Override
@@ -37,7 +32,7 @@ public class WatchOfficeRelateCourseAdapter extends MyBaseAdapter<WatchOfficeCou
     public void initView(View view, int position, ViewGroup parent) {
         ImageView cover = getView(view,R.id.iv_course_cover);
         final WatchOfficeCourseBean bean = getItem(position);
-        imageLoader.displayImage(bean.getConUrl(),cover,options);
+        GlideLoader.getInstance().displayImage(bean.getConUrl(), cover);
         cover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

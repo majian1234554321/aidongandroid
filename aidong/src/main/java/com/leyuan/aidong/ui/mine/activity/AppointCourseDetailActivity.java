@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
@@ -11,7 +12,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.AppointmentDetailBean;
 import com.leyuan.aidong.module.pay.AliPay;
@@ -26,6 +26,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.AppointmentPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointmentDetailActivityView;
 import com.leyuan.aidong.utils.FormatUtil;
+import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.ExtendTextView;
@@ -52,12 +53,12 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
     private TextView tvState;
     private TextView tvTimeOrNum;
     private RelativeLayout courseLayout;
-    private SimpleDraweeView courseCover;
+    private ImageView courseCover;
     private TextView tvCourseName;
     private TextView tvCourseInfo;
     private RelativeLayout qrCodeLayout;
     private TextView tvNum;
-    private SimpleDraweeView dvQr;
+    private ImageView dvQr;
 
     //预约信息
     private ExtendTextView tvUserName;
@@ -132,12 +133,12 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
         tvState = (TextView) findViewById(R.id.tv_state);
         tvTimeOrNum = (TextView) findViewById(R.id.tv_time_or_num);
         courseLayout = (RelativeLayout) findViewById(R.id.rl_detail);
-        courseCover = (SimpleDraweeView) findViewById(R.id.dv_goods_cover);
+        courseCover = (ImageView) findViewById(R.id.dv_goods_cover);
         tvCourseName = (TextView) findViewById(R.id.tv_name);
         tvCourseInfo = (TextView) findViewById(R.id.tv_info);
         qrCodeLayout = (RelativeLayout) findViewById(R.id.rl_qr_code);
         tvNum = (TextView) findViewById(R.id.tv_num);
-        dvQr = (SimpleDraweeView) findViewById(R.id.dv_qr);
+        dvQr = (ImageView) findViewById(R.id.dv_qr);
 
         tvUserName = (ExtendTextView) findViewById(R.id.tv_course_user);
         tvPhone = (ExtendTextView) findViewById(R.id.tv_course_phone);
@@ -196,7 +197,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
         }
 
         //与订单状态无关:活动信息,预约信息及部分订单信息
-        courseCover.setImageURI(bean.getCover());
+        GlideLoader.getInstance().displayImage(bean.getCover(), courseCover);
         tvCourseName.setText(bean.getName());
         tvCourseInfo.setText(bean.getSubName());
 

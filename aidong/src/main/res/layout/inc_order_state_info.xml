@@ -34,11 +34,10 @@
         android:layout_width="match_parent"
         android:layout_height="60dp">
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/dv_express"
             android:layout_width="23dp"
             android:layout_height="19dp"
-            app:actualImageScaleType="centerCrop"
             android:layout_marginLeft="17dp"
             android:layout_centerVertical="true"/>
 
@@ -89,14 +88,10 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"/>
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/dv_code"
             android:layout_width="294dp"
             android:layout_height="73dp"
-            app:actualImageScaleType="fitXY"
-            app:placeholderImageScaleType="centerCrop"
-            app:placeholderImage="@drawable/place_holder_logo"
-            app:pressedStateOverlayImage="@color/color_image_press"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="25dp" />
     </LinearLayout>

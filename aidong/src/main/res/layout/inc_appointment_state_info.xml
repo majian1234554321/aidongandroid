@@ -37,14 +37,12 @@
         android:paddingRight="@dimen/right_margin"
         android:background="?selectableItemBackground">
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/dv_goods_cover"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_centerVertical="true"
-            app:actualImageScaleType="centerCrop"
-            app:placeholderImage="@drawable/place_holder_logo"
-            app:pressedStateOverlayImage="@color/color_image_press" />
+            />
 
         <TextView
             android:id="@+id/tv_name"
@@ -100,18 +98,16 @@
             android:textColor="@color/black"
             android:textSize="30sp" />
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/dv_qr"
             android:layout_width="294dp"
             android:layout_height="73dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="25dp"
-            app:actualImageScaleType="centerCrop"
             android:background="@color/line_color"
             android:layout_below="@+id/tv_num"
             android:layout_centerHorizontal="true"
-            app:placeholderImage="@drawable/place_holder_logo"
-            app:pressedStateOverlayImage="@color/color_image_press" />
+            />
 
         <ImageView
             android:layout_width="match_parent"

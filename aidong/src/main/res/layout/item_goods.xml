@@ -10,14 +10,11 @@
     android:paddingRight="7.5dp"
     android:paddingTop="15dp">
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/dv_goods"
         android:layout_width="82dp"
         android:layout_height="82dp"
-        fresco:actualImageScaleType="centerCrop"
-        fresco:placeholderImage="@drawable/place_holder_logo"
-        fresco:placeholderImageScaleType="fitCenter"
-        fresco:pressedStateOverlayImage="@color/color_image_press" />
+        />
 
     <TextView
         android:id="@+id/tv_name"

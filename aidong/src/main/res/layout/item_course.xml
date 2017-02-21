@@ -11,14 +11,12 @@
         android:layout_height="10dp"
         android:background="@color/line_color" />
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/dv_course_cover"
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:layout_below="@+id/line"
-        app:actualImageScaleType="centerCrop"
-        app:placeholderImageScaleType="centerCrop"
-        app:placeholderImage="@drawable/place_holder_logo" />
+       />
 
     <TextView
         android:id="@+id/tv_course_price"

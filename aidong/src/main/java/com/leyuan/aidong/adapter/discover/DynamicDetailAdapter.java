@@ -5,11 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CommentBean;
+import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +41,7 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<DynamicDetailAdap
     @Override
     public void onBindViewHolder(CommentHolder holder, final int position) {
         CommentBean bean = data.get(position);
-        holder.avatar.setImageURI(bean.getPublisher().getAvatar());
+        GlideLoader.getInstance().displayImage(bean.getPublisher().getAvatar(), holder.avatar);
         holder.name.setText(bean.getPublisher().getName());
         holder.content.setText(bean.getContent());
         holder.time.setText(bean.getPublishedAt());
@@ -61,13 +62,13 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<DynamicDetailAdap
     }
 
     class CommentHolder extends RecyclerView.ViewHolder{
-        SimpleDraweeView avatar;
+        ImageView avatar;
         TextView name;
         TextView content;
         TextView time;
         public CommentHolder(View itemView) {
             super(itemView);
-            avatar = (SimpleDraweeView) itemView.findViewById(R.id.dv_avatar);
+            avatar = (ImageView) itemView.findViewById(R.id.dv_avatar);
             name = (TextView) itemView.findViewById(R.id.tv_name);
             content = (TextView) itemView.findViewById(R.id.tv_content);
             time = (TextView) itemView.findViewById(R.id.tv_time);

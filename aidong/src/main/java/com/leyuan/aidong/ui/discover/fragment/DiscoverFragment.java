@@ -26,9 +26,9 @@ import com.leyuan.aidong.adapter.discover.DiscoverUserAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.DiscoverPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DiscoverPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.DiscoverFragmentView;
+import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.widget.SwitcherLayout;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 
@@ -96,7 +96,7 @@ public class DiscoverFragment extends BaseFragment implements DiscoverFragmentVi
         banner.setAdapter(new BGABanner.Adapter() {
             @Override
             public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
-                ImageLoader.getInstance().displayImage(((BannerBean)model).getImage(),(ImageView)view);
+                GlideLoader.getInstance().displayImage(((BannerBean)model).getImage(), (ImageView)view);
             }
         });
     }

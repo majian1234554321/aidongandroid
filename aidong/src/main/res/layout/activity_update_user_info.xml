@@ -48,13 +48,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.facebook.drawee.view.SimpleDraweeView
+            <ImageView
                 android:id="@+id/dv_avatar"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                app:roundAsCircle="true"
                 android:layout_marginTop="20dp"
-                app:placeholderImage="@drawable/place_holder_user"
                 android:layout_gravity="center_horizontal"/>
 
             <TextView

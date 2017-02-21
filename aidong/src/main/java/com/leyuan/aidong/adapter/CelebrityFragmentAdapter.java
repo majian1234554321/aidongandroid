@@ -1,7 +1,6 @@
 package com.leyuan.aidong.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -15,9 +14,8 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.video.SpecialTopicInfo;
 import com.leyuan.aidong.ui.video.activity.CelebrityFragment;
+import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.Logger;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 
@@ -40,8 +38,7 @@ public class CelebrityFragmentAdapter extends RecyclerView.Adapter<CelebrityFrag
 
     private int rootViewHeight;
     private OnItemClickListener mListener;
-    private ImageLoader mImageLoader = ImageLoader.getInstance();
-    private DisplayImageOptions mOptions;
+
 
     public CelebrityFragmentAdapter(Context context, OnItemClickListener listener) {
         mContext = context;
@@ -53,14 +50,6 @@ public class CelebrityFragmentAdapter extends RecyclerView.Adapter<CelebrityFrag
         item_normal_alpha = context.getResources().getFraction(R.fraction.item_normal_mask_alpha, 1, 1);
         item_max_alpha = context.getResources().getFraction(R.fraction.item_max_mask_alpha, 1, 1);
 
-
-        mOptions = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.drawable.img_default)
-                .showImageForEmptyUri(R.drawable.img_default)
-                .showImageOnFail(R.drawable.img_default)
-                .cacheInMemory(true)
-                .cacheOnDisk(true).considerExifParams(true)
-                .bitmapConfig(Bitmap.Config.RGB_565).build();
     }
 
     @Override
@@ -147,7 +136,7 @@ public class CelebrityFragmentAdapter extends RecyclerView.Adapter<CelebrityFrag
                 }
                 final SpecialTopicInfo info = mInfos.get(i);
 
-                mImageLoader.displayImage(info.getLatest().getCover(), holder.imgView, mOptions);
+                GlideLoader.getInstance().displayImage(info.getLatest().getCover(), holder.imgView);
 
                 holder.txt_time.setText("" + info.getLatest().getUpdated());
                 holder.txt_type.setText("" + info.getLatest().getVideoName());

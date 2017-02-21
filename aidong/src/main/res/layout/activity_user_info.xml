@@ -124,13 +124,11 @@
                         android:paddingRight="@dimen/right_margin"
                         app:layout_scrollFlags="scroll|enterAlways">
 
-                        <com.facebook.drawee.view.SimpleDraweeView
+                        <ImageView
                             android:id="@+id/dv_avatar"
                             android:layout_width="70dp"
                             android:layout_height="70dp"
-                            android:layout_centerVertical="true"
-                            app:roundAsCircle="true"
-                            app:placeholderImage="@drawable/place_holder_user"/>
+                            android:layout_centerVertical="true" />
 
                         <TextView
                             android:id="@+id/tv_name"

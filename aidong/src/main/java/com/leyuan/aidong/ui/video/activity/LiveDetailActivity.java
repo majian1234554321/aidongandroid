@@ -21,8 +21,7 @@ import com.leyuan.aidong.ui.mine.account.LoginActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.Urls;
 import com.leyuan.aidong.widget.video.TextViewPrintly;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+
 
 import java.util.ArrayList;
 
@@ -43,9 +42,6 @@ public class LiveDetailActivity extends BaseActivity implements View.OnClickList
     private ArrayList<View> mViews = new ArrayList<>();
     private ArrayList<Bitmap> mBitmaps = new ArrayList<>();
     public static Bitmap blurBitmaps;
-
-    private ImageLoader mImageLoader = ImageLoader.getInstance();
-    private DisplayImageOptions option;
 
     private boolean isPrased;
 
@@ -111,13 +107,6 @@ public class LiveDetailActivity extends BaseActivity implements View.OnClickList
     }
 
     private void initData() {
-        option = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.drawable.img_default)
-                .showImageForEmptyUri(R.drawable.img_default)
-                .showImageOnFail(R.drawable.img_default)
-                .cacheInMemory(true)
-                .cacheOnDisk(true).considerExifParams(true)
-                .bitmapConfig(Bitmap.Config.RGB_565).build();
 
         iv_back.setOnClickListener(this);
         iv_share.setOnClickListener(this);
@@ -143,7 +132,7 @@ public class LiveDetailActivity extends BaseActivity implements View.OnClickList
 //                LiveVideoListResult result = gson.fromJson(responseInfo.result, LiveVideoListResult.class);
 //                if (result != null && result.getCode() == 1 && result.getResult() != null && result.getResult().getLiveDetail() != null) {
 //                    info = result.getResult().getLiveDetail();
-//                    mImageLoader.loadImage(info.getLiveCover(), option, new SimpleImageLoadingListener() {
+//                    mImageLoader.displayImage(info.getLiveCover(), option, new SimpleImageLoadingListener() {
 //                        @Override
 //                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
 //                            super.onLoadingComplete(imageUri, view, loadedImage);

@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.module.photopicker.boxing.BoxingMediaLoader;
 import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
@@ -95,12 +94,12 @@ public class PublishDynamicAdapter extends RecyclerView.Adapter<PublishDynamicAd
     }
 
     class ImageHolder extends RecyclerView.ViewHolder {
-        SimpleDraweeView image;
+        ImageView image;
         ImageView delete;
 
         public ImageHolder(View itemView) {
             super(itemView);
-            image = (SimpleDraweeView) itemView.findViewById(R.id.dv_image);
+            image = (ImageView) itemView.findViewById(R.id.dv_image);
             delete = (ImageView) itemView.findViewById(R.id.iv_delete);
         }
     }

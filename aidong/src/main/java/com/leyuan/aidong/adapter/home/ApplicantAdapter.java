@@ -3,10 +3,11 @@ package com.leyuan.aidong.adapter.home;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.UserBean;
+import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,15 +40,15 @@ public class ApplicantAdapter extends RecyclerView.Adapter<ApplicantAdapter.Appl
     @Override
     public void onBindViewHolder(ApplicantHolder holder, int position) {
         UserBean bean = data.get(position);
-        holder.cover.setImageURI(bean.getAvatar());
+        GlideLoader.getInstance().displayImage(bean.getAvatar(), holder.cover);
     }
 
     class  ApplicantHolder extends RecyclerView.ViewHolder{
 
-        SimpleDraweeView cover;
+        ImageView cover;
         public ApplicantHolder(View itemView) {
             super(itemView);
-            cover = (SimpleDraweeView)itemView.findViewById(R.id.dv_user_cover);
+            cover = (ImageView)itemView.findViewById(R.id.dv_user_cover);
         }
     }
 }

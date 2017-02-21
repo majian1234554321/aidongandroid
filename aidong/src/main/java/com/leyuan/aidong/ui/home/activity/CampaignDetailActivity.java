@@ -22,8 +22,8 @@ import com.leyuan.aidong.adapter.home.ApplicantAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.CampaignPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CampaignPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CampaignDetailActivityView;
+import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.widget.SwitcherLayout;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zzhoujay.richtext.RichText;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
@@ -116,7 +116,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
         bannerLayout.setAdapter(new BGABanner.Adapter() {
             @Override
             public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
-                ImageLoader.getInstance().displayImage((String)model,(ImageView)view);
+                GlideLoader.getInstance().displayImage((String)model, (ImageView)view);
             }
         });
 

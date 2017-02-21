@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.AlbumFolderInfoBean;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.leyuan.aidong.utils.GlideLoader;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,6 @@ public class AlbumFolderAdapter extends BaseAdapter{
     private Context context;
     private int currFolder;
     private List<AlbumFolderInfoBean> data = new ArrayList<AlbumFolderInfoBean>();
-    private static DisplayImageOptions options = new DisplayImageOptions.Builder().build();
 
     public AlbumFolderAdapter(Context context, List<AlbumFolderInfoBean> data, int currentFolder) {
         this.context = context;
@@ -66,7 +65,7 @@ public class AlbumFolderAdapter extends BaseAdapter{
         } else {
             holder.itemView.setBackgroundColor(Color.parseColor("#ffffff"));
         }
-        ImageLoader.getInstance().displayImage("file:///" + object.getFrontCover().getAbsolutePath(), holder.cover, options);
+        GlideLoader.getInstance().displayImage("file:///" + object.getFrontCover().getAbsolutePath(), holder.cover);
         holder.name.setText(object.getFolderName());
         holder.count.setText("(" + object.getImageInfoList().size() + ")");
     }

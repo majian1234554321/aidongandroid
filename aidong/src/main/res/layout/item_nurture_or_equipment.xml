@@ -10,13 +10,10 @@
     android:clickable="true"
     android:background="?selectableItemBackground">
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/dv_nurture_cover"
         android:layout_width="165dp"
         android:layout_height="165dp"
-        app:placeholderImage="@drawable/place_holder_logo"
-        app:actualImageScaleType="centerCrop"
-        app:pressedStateOverlayImage="@color/color_image_press"
         android:layout_gravity="center_horizontal"/>
 
 

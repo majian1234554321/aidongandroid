@@ -14,20 +14,19 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.adapter.home.ApplicantAdapter;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CourseDetailBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.adapter.home.ApplicantAdapter;
-import com.leyuan.aidong.ui.mine.activity.AppointCourseDetailActivity;
 import com.leyuan.aidong.ui.mine.account.LoginActivity;
+import com.leyuan.aidong.ui.mine.activity.AppointCourseDetailActivity;
 import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CourseDetailActivityView;
+import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.widget.SwitcherLayout;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +54,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     private TextView tvStartTime;
     private BGABanner banner;
     private TextView tvHot;
-    private SimpleDraweeView dvAvatar;
+    private ImageView dvAvatar;
     private TextView tvCoachName;
     private ImageView ivFollow;
     private TextView tvTime;
@@ -105,7 +104,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         tvStartTime = (TextView) findViewById(R.id.tv_start_time);
         banner = (BGABanner) findViewById(R.id.banner);
         tvHot = (TextView) findViewById(R.id.tv_hot);
-        dvAvatar = (SimpleDraweeView) findViewById(R.id.dv_avatar);
+        dvAvatar = (ImageView) findViewById(R.id.dv_avatar);
         tvCoachName = (TextView) findViewById(R.id.tv_coach_name);
         ivFollow = (ImageView) findViewById(R.id.iv_follow);
         tvTime = (TextView) findViewById(R.id.tv_time);
@@ -121,7 +120,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         banner.setAdapter(new BGABanner.Adapter() {
             @Override
             public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
-                ImageLoader.getInstance().displayImage((String) model,(ImageView)view);
+                GlideLoader.getInstance().displayImage((String) model, (ImageView)view);
             }
         });
 
@@ -175,7 +174,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         List<String> cover = new ArrayList<>();
         cover.add(bean.getCover());
         banner.setData(cover,null);
-        dvAvatar.setImageURI(bean.getCoach().getAvatar());
+        GlideLoader.getInstance().displayImage(bean.getCoach().getAvatar(), dvAvatar);
         tvCoachName.setText(bean.getCoach().getName());
         tvTime.setText(String.format(getString(R.string.detail_time),
                 bean.getClassDate(),bean.getClassTime(),bean.getBreakTime()));

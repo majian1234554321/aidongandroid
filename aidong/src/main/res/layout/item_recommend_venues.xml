@@ -9,12 +9,11 @@
     android:paddingRight="13dp"
     android:paddingBottom="10dp" >
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/dv_venues_cover"
         android:layout_width="90dp"
         android:layout_height="90dp"
-        android:layout_centerHorizontal="true"
-        app:placeholderImage="@drawable/place_holder_logo"/>
+        android:layout_centerHorizontal="true" />
 
     
     <TextView

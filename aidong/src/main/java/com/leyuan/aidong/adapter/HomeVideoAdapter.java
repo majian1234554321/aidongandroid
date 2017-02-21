@@ -1,7 +1,6 @@
 package com.leyuan.aidong.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
@@ -17,10 +16,9 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.video.LiveVideoInfo;
 import com.leyuan.aidong.entity.video.LiveVideoListResult;
 import com.leyuan.aidong.entity.video.LiveVideoSoonInfo;
+import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.LiveDateFilterUtil;
 import com.leyuan.aidong.widget.MyListView;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,8 +38,7 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
     private OnVideoClickListener mOnVideoClickListener;
 
     public static final int TYPE_HEADER = 1, TYPE_ITEM = 2;
-    private ImageLoader mImageLoader = ImageLoader.getInstance();
-    private DisplayImageOptions mOptions;
+
 
     private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
     private Calendar calendar = Calendar.getInstance();
@@ -56,13 +53,7 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
         mOnPlaybackClickListener = onPlaybackClickListener;
         mOnSoonLiveVideoClickListener = onSoonLiveVideoClickListener;
         mOnVideoClickListener = onVideoClickListener;
-        mOptions = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.drawable.img_default)
-                .showImageForEmptyUri(R.drawable.img_default)
-                .showImageOnFail(R.drawable.img_default)
-                .cacheInMemory(true)
-                .cacheOnDisk(true).considerExifParams(true)
-                .bitmapConfig(Bitmap.Config.RGB_565).build();
+
     }
 
     public void refreshData(ArrayList<LiveVideoInfo> livingVideos, ArrayList<LiveVideoSoonInfo> liveDateArray) {
@@ -169,7 +160,7 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
         for (final LiveVideoInfo info : livingVideos) {
             View itemView = View.inflate(context, R.layout.item_living_video_adpater, null);
             ImageView img_living_bg = (ImageView) itemView.findViewById(R.id.img_living_bg);
-            mImageLoader.displayImage(info.getLiveCover(), img_living_bg, mOptions);
+            GlideLoader.getInstance().displayImage(info.getLiveCover(), img_living_bg);
             img_living_bg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -217,7 +208,7 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
             holder.layout_single_living.setVisibility(View.VISIBLE);
 
             final LiveVideoInfo info = livingVideos.get(0);
-            mImageLoader.displayImage(info.getLiveCover(), holder.img_living_bg, mOptions);
+            GlideLoader.getInstance().displayImage(info.getLiveCover(), holder.img_living_bg);
             holder.txt_author.setText("" + info.getLiveAuthor());
             holder.txt_course.setText("" + info.getLiveName());
             holder.txt_viewers.setText("" + info.getPersonCou());
@@ -231,7 +222,7 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
             holder.viewPager_living.setVisibility(View.GONE);
             holder.img_default_none_live.setVisibility(View.VISIBLE);
             holder.layout_single_living.setVisibility(View.GONE);
-            mImageLoader.displayImage(liveHome.getLiveCover(), holder.img_default_none_live, mOptions);
+            GlideLoader.getInstance().displayImage(liveHome.getLiveCover(), holder.img_default_none_live);
             holder.img_default_none_live.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.facebook.drawee.view.SimpleDraweeView xmlns:app="http://schemas.android.com/apk/res-auto"
+<ImageView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/dv_image"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:scaleType="fitCenter"
-        android:background="@color/line_color"
-        app:placeholderImage="@color/line_color">
-</com.facebook.drawee.view.SimpleDraweeView>
+        android:background="@color/line_color">
+</ImageView>

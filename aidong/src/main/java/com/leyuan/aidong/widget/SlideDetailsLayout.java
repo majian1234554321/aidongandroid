@@ -29,9 +29,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
+import com.baidu.platform.comapi.map.L;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.utils.Logger;
-import com.nostra13.universalimageloader.utils.L;
 
 
 /**
@@ -664,7 +664,7 @@ public class SlideDetailsLayout extends ViewGroup {
 
     protected boolean canRecyclerViewSroll(RecyclerView absListView) {
         if (mStatus == Status.OPEN) {
-            L.i(absListView.getScrollY() + ":scaleY" + "\t");
+            Logger.i(absListView.getScrollY() + ":scaleY" + "\t");
 
             return absListView.getChildCount() > 0
                     && (absListView.getScrollY() > 0 || absListView.getChildAt(0)

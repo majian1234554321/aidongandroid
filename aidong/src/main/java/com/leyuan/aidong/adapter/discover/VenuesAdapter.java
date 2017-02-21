@@ -4,12 +4,13 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.ui.discover.activity.VenuesDetailActivity;
+import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +47,7 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.VenuesHold
     @Override
     public void onBindViewHolder(VenuesHolder holder, int position) {
         VenuesBean bean = data.get(position);
-        holder.cover.setImageURI(bean.getBrand_logo());
+        GlideLoader.getInstance().displayImage(bean.getBrandLogo(), holder.cover);
         holder.name.setText(bean.getName());
         holder.address.setText(bean.getAddress());
         holder.distance.setText(bean.getDistance());
@@ -60,14 +61,14 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.VenuesHold
     }
 
     class VenuesHolder extends RecyclerView.ViewHolder{
-        SimpleDraweeView cover;
+        ImageView cover;
         TextView name;
         TextView address;
         TextView distance;
 
         public VenuesHolder(View itemView) {
             super(itemView);
-            cover = (SimpleDraweeView)itemView.findViewById(R.id.dv_venues_cover);
+            cover = (ImageView)itemView.findViewById(R.id.dv_venues_cover);
             name = (TextView)itemView.findViewById(R.id.tv_venues_name);
             address = (TextView)itemView.findViewById(R.id.tv_venues_address);
             distance = (TextView)itemView.findViewById(R.id.tv_venues_distance);

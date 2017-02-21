@@ -5,16 +5,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.adapter.mine.CartShopAdapter;
 import com.leyuan.aidong.entity.OrderDetailBean;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.adapter.mine.CartShopAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.OrderPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.OrderPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.OrderDetailActivityView;
@@ -41,12 +41,12 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
     private TextView tvState;
     private TextView tvTimeOrNum;
     private RelativeLayout rlExpress;
-    private SimpleDraweeView dvExpress;
+    private ImageView dvExpress;
     private TextView tvExpressAddress;
     private TextView tvExpressTime;
     private LinearLayout llCode;
     private TextView tvCodeNum;
-    private SimpleDraweeView dvCode;
+    private ImageView dvCode;
 
     //收货信息
     private ExtendTextView tvBuyer;
@@ -113,12 +113,12 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
         tvState = (TextView) findViewById(R.id.tv_state);
         tvTimeOrNum = (TextView) findViewById(R.id.tv_time_or_num);
         rlExpress = (RelativeLayout) findViewById(R.id.rl_express);
-        dvExpress = (SimpleDraweeView) findViewById(R.id.dv_express);
+        dvExpress = (ImageView) findViewById(R.id.dv_express);
         tvExpressAddress = (TextView) findViewById(R.id.tv_express_address);
         tvExpressTime = (TextView) findViewById(R.id.tv_express_time);
         llCode = (LinearLayout) findViewById(R.id.ll_code);
         tvCodeNum = (TextView) findViewById(R.id.tv_code_num);
-        dvCode = (SimpleDraweeView) findViewById(R.id.dv_code);
+        dvCode = (ImageView) findViewById(R.id.dv_code);
 
         tvBuyer = (ExtendTextView) findViewById(R.id.tv_buyer);
         tvPhone = (ExtendTextView) findViewById(R.id.tv_phone);
