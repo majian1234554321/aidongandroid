@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 public abstract class BaseRecyclerViewHolder<T> extends RecyclerView.ViewHolder {
 
-    private int viewType;
 
     public BaseRecyclerViewHolder(Context context, ViewGroup viewGroup, int layoutResId) {
         super(LayoutInflater.from(context).inflate(layoutResId, viewGroup, false));
@@ -16,9 +15,6 @@ public abstract class BaseRecyclerViewHolder<T> extends RecyclerView.ViewHolder 
 
     public abstract void onBindData(T data, int position);
 
-    protected int getViewType() {
-        return viewType;
-    }
 
     protected Context getContext(){
         return itemView.getContext();

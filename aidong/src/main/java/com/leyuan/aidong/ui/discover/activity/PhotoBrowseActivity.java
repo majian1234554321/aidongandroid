@@ -11,13 +11,12 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.PhotoBrowseInfo;
-
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.discover.view.DotIndicator;
 import com.leyuan.aidong.ui.discover.view.GalleryPhotoView;
-import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.HackyViewPager;
 
@@ -146,7 +145,8 @@ public class PhotoBrowseActivity extends BaseActivity {
             GalleryPhotoView photoView = viewBuckets.get(position);
             String photoUrl = photoBrowseInfo.getPhotoUrls().get(position);
 
-            GlideLoader.getInstance().displayImage(photoUrl, photoView);
+            Glide.with(PhotoBrowseActivity.this).load(photoUrl).into(photoView);
+            //GlideLoader.getInstance().displayImage(photoUrl, photoView);
             container.addView(photoView);
             return photoView;
         }

@@ -1,5 +1,7 @@
 package com.leyuan.aidong.entity;
 
+import com.leyuan.aidong.utils.HomeItemType;
+
 import java.util.List;
 
 /**
@@ -69,6 +71,17 @@ public class HomeBean {
 
     public void setIntroduce(String introduce) {
         this.introduce = introduce;
+    }
+
+
+    public int getItemType(){
+        if("list".equals(style)){
+            return HomeItemType.IMAGE_AND_HORIZONTAL_LIST;
+        }else if("cover".equals(style)){
+            return HomeItemType.TITLE_AND_VERTICAL_LIST;
+        }else {
+            return -1;
+        }
     }
 
     @Override

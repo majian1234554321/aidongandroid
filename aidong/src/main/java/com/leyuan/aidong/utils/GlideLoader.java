@@ -35,7 +35,6 @@ public class GlideLoader {
                 .load(imgUrl)
                 .bitmapTransform(new CropCircleTransformation(getContext(imageView)))
                 .placeholder(R.drawable.place_holder_user)
-                .centerCrop()
                 .into(imageView);
     }
 

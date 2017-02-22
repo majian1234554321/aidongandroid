@@ -31,7 +31,6 @@ public class HomeRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private Context context;
     private List<HomeBean> data = new ArrayList<>();
 
-
     public HomeRecycleViewAdapter(Context context) {
         this.context = context;
     }

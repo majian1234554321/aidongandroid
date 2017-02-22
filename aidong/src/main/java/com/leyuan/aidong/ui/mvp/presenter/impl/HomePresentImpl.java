@@ -62,7 +62,7 @@ public class HomePresentImpl implements HomePresent {
 
     @Override
     public void getPopupBanner() {
-        homeFragmentView.setPopupBanner(homeModel.getPopupBanners());
+        homeFragmentView.updatePopupBanner(homeModel.getPopupBanners());
     }
 
     @Override

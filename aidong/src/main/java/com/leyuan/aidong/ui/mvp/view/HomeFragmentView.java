@@ -21,7 +21,7 @@ public interface HomeFragmentView {
      * 设置弹出广告
      * @param banner
      */
-    void setPopupBanner(List<BannerBean> banner);
+    void updatePopupBanner(List<BannerBean> banner);
 
     /**
      * 更新列表

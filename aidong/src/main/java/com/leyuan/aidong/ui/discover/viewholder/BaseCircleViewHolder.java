@@ -112,7 +112,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
 
         tvLikeCount.setText(dynamic.like.counter);
         tvCommentCount.setText(dynamic.comment.count);
-        onBindDataToChildView(dynamic, position, getViewType());
+        onBindDataToChildView(dynamic, position, dynamic.getDynamicType());
 
 
         root.setOnClickListener(new View.OnClickListener() {

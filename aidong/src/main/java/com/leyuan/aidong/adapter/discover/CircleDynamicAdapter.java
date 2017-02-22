@@ -7,10 +7,9 @@ import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.leyuan.aidong.adapter.baseadapter.BaseRecyclerViewAdapter;
+import com.leyuan.aidong.adapter.baseadapter.BaseHolderViewAdapter;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.ui.discover.viewholder.BaseCircleViewHolder;
-import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
 import com.leyuan.aidong.utils.Logger;
 
 import java.lang.reflect.Constructor;
@@ -22,30 +21,21 @@ import java.util.List;
  * Created by song on 2017/2/16.
  * //todo 用自定义控件显示图片替换根据图片数量引用不同布局的写法
  */
-public class CircleDynamicAdapter extends BaseRecyclerViewAdapter<DynamicBean> {
+public class CircleDynamicAdapter extends BaseHolderViewAdapter<DynamicBean> {
     private SparseArray<ViewHolderInfo> viewHolderKeyArray;
     private IDynamicCallback callback;
     private boolean showLikeAndCommentLayout;
 
     private CircleDynamicAdapter(Builder builder) {
-        this(builder.context, builder.data);
+        super(builder.context, builder.data);
         this.viewHolderKeyArray = builder.viewHolderKeyArray;
         this.callback = builder.callback;
         this.showLikeAndCommentLayout = builder.showLikeAndCommentLayout;
     }
 
-    private CircleDynamicAdapter(@NonNull Context context, @NonNull List<DynamicBean> data) {
-        super(context, data);
-    }
-
     @Override
     protected int getViewType(int position, @NonNull DynamicBean data) {
         return data.getDynamicType();
-    }
-
-    @Override
-    protected int getLayoutResId(int viewType) {
-        return 0;
     }
 
     @Override
@@ -65,21 +55,20 @@ public class CircleDynamicAdapter extends BaseRecyclerViewAdapter<DynamicBean> {
 
     public static final class Builder<T> {
         private Context context;
-        private SparseArray<ViewHolderInfo> viewHolderKeyArray = new SparseArray<>();
+        private SparseArray<ViewHolderInfo> viewHolderKeyArray ;
         private List<T> data;
-        private DynamicPresent dynamicPresent;
         private IDynamicCallback callback;
         private boolean showLikeAndCommentLayout;
 
         public Builder(Context context) {
             this.context = context;
             data = new ArrayList<>();
+            viewHolderKeyArray = new SparseArray<>();
         }
 
         public Builder<T> addType(Class<? extends BaseCircleViewHolder> viewHolderClass, int viewType, int layoutResId) {
             final ViewHolderInfo info = new ViewHolderInfo();
             info.holderClass = viewHolderClass;
-            info.viewType = viewType;
             info.layoutResID = layoutResId;
             viewHolderKeyArray.put(viewType, info);
             return this;
@@ -106,9 +95,8 @@ public class CircleDynamicAdapter extends BaseRecyclerViewAdapter<DynamicBean> {
     }
 
     private static final class ViewHolderInfo {
-        public Class<? extends BaseCircleViewHolder> holderClass;
-        public int viewType;
-        public int layoutResID;
+        private Class<? extends BaseCircleViewHolder> holderClass;
+        private int layoutResID;
     }
 
     private BaseCircleViewHolder createCircleViewHolder(Context context, ViewGroup viewGroup, ViewHolderInfo viewHolderInfo) {
@@ -117,7 +105,7 @@ public class CircleDynamicAdapter extends BaseRecyclerViewAdapter<DynamicBean> {
         }
         Class<? extends BaseCircleViewHolder> className = viewHolderInfo.holderClass;
         Logger.i("class  >>>  " + className);
-        Constructor constructor = null;
+        Constructor constructor;
         try {
             constructor = className.getConstructor(Context.class, ViewGroup.class, int.class);
             return (BaseCircleViewHolder) constructor.newInstance(context, viewGroup, viewHolderInfo.layoutResID);
@@ -128,7 +116,6 @@ public class CircleDynamicAdapter extends BaseRecyclerViewAdapter<DynamicBean> {
     }
 
     public interface IDynamicCallback {
-
         void onBackgroundClick(DynamicBean dynamicBean);
         void onAvatarClick(String id);
         void onVideoClick(String url);

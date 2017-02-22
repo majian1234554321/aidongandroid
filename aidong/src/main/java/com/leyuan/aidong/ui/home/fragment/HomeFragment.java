@@ -12,22 +12,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.adapter.home.HomeRecycleViewAdapter;
+import com.leyuan.aidong.adapter.home.HomeAdapter;
 import com.leyuan.aidong.entity.BannerBean;
+import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.HomeBean;
 import com.leyuan.aidong.ui.BaseFragment;
-import com.leyuan.aidong.ui.home.activity.CampaignActivity;
-import com.leyuan.aidong.ui.home.activity.CourseActivity;
-import com.leyuan.aidong.ui.home.activity.EquipmentActivity;
-import com.leyuan.aidong.ui.home.activity.FoodActivity;
 import com.leyuan.aidong.ui.home.activity.LocationActivity;
-import com.leyuan.aidong.ui.home.activity.NurtureActivity;
 import com.leyuan.aidong.ui.home.activity.SearchActivity;
 import com.leyuan.aidong.ui.home.view.HomeBannerDialog;
+import com.leyuan.aidong.ui.home.view.HomeHeaderView;
+import com.leyuan.aidong.ui.home.viewholder.ImageAndHorizontalListHolder;
+import com.leyuan.aidong.ui.home.viewholder.TitleAndVerticalListHolder;
 import com.leyuan.aidong.ui.mvp.presenter.HomePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.HomePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.HomeFragmentView;
-import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.HomeItemType;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -38,19 +37,14 @@ import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.bingoogolapple.bgabanner.BGABanner;
-
 /**
  * 首页
  * @author song
  */
-public class HomeFragment extends BaseFragment implements HomeFragmentView,View.OnClickListener{
+public class HomeFragment extends BaseFragment implements HomeFragmentView,View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
     private TextView tvLocation;
     private ImageView ivSearch;
-
-    private View headerView;
-    private BGABanner banner;
-
+    private HomeHeaderView headerView;
     private SwitcherLayout switcherLayout;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout refreshLayout;
@@ -58,7 +52,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
     private int currPage = 1;
     private ArrayList<HomeBean> data = new ArrayList<>();
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
-    private HomeRecycleViewAdapter homeAdapter;
+    private HomeAdapter homeAdapter;
     private HomePresent present;
 
     @Override
@@ -69,151 +63,77 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        pageSize = 20;
         present = new HomePresentImpl(getContext(),this);
 
+        initView(view);
+        setListener();
+        initData();
+    }
+
+    private void initView(View view){
         tvLocation = (TextView)view.findViewById(R.id.tv_location);
         ivSearch = (ImageView) view.findViewById(R.id.iv_search);
-        tvLocation.setOnClickListener(this);
-
-        initHeaderView();
-        initSwipeRefreshLayout(view);
-        initRecyclerView(view);
-        setListener();
-
-        present.getPopupBanner();
-        present.getBanners();
-        present.commonLoadData(switcherLayout);
-    }
-
-
-    private void initHeaderView(){
-        headerView = View.inflate(getContext(),R.layout.header_home,null);
-        banner = (BGABanner) headerView.findViewById(R.id.banner);
-
-        banner.setAdapter(new BGABanner.Adapter() {
-            @Override
-            public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
-                GlideLoader.getInstance().displayImage((String)model, (ImageView)view);
-            }
-        });
-        banner.setOnItemClickListener(new BGABanner.OnItemClickListener() {
-            @Override
-            public void onBannerItemClick(BGABanner banner, View view, Object model, int position) {
-                toTargetActivity((BannerBean)model);
-            }
-        });
-
-        headerView.findViewById(R.id.tv_food).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), FoodActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        headerView.findViewById(R.id.tv_activity).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CampaignActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        headerView.findViewById(R.id.tv_nurture).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), NurtureActivity.class);
-                startActivity(intent);
-            }
-        });
-        headerView.findViewById(R.id.tv_equipment).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), EquipmentActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        headerView.findViewById(R.id.tv_course).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CourseActivity.class);
-                startActivity(intent);
-                //startActivity(new Intent(getContext(), OldCourseDetailActivity.class));
-            }
-        });
-
-        headerView.findViewById(R.id.tv_competition).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               // ConfirmOrderActivity.start(getContext());
-            }
-        });
-
-    }
-
-    private void initSwipeRefreshLayout(View view) {
         refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.sr_refresh);
         switcherLayout = new SwitcherLayout(getContext(),refreshLayout);
         setColorSchemeResources(refreshLayout);
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                currPage = 1;
-                present.pullToRefreshHomeData();
-            }
-        });
-
-        switcherLayout.setOnRetryListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currPage = 1;
-                present.pullToRefreshHomeData();
-            }
-        });
-    }
-
-    private void initRecyclerView(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_home);
         data = new ArrayList<>();
-        homeAdapter = new HomeRecycleViewAdapter(getActivity());
+        HomeAdapter.Builder<DynamicBean> builder = new HomeAdapter.Builder<>(getContext());
+        builder.addType(ImageAndHorizontalListHolder.class,
+                HomeItemType.IMAGE_AND_HORIZONTAL_LIST, R.layout.vh_image_and_horizontal_list)
+                .addType(TitleAndVerticalListHolder.class,
+                        HomeItemType.TITLE_AND_VERTICAL_LIST, R.layout.vh_title_and_vertical_list);
+        homeAdapter = builder.build();
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(homeAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(wrapperAdapter);
         recyclerView.addOnScrollListener(onScrollListener);
+        headerView = new HomeHeaderView(getContext());
         RecyclerViewUtils.setHeaderView(recyclerView, headerView);
     }
 
     private void setListener(){
         tvLocation.setOnClickListener(this);
         ivSearch.setOnClickListener(this);
+        refreshLayout.setOnRefreshListener(this);
+    }
+
+    private void initData(){
+        present.getPopupBanner();
+        present.getBanners();
+        present.commonLoadData(switcherLayout);
+    }
+
+    @Override
+    public void onRefresh() {
+        currPage = 1;
+        RecyclerViewStateUtils.resetFooterViewState(recyclerView);
+        present.pullToRefreshHomeData();
     }
 
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
         @Override
         public void onLoadNextPage(View view) {
             currPage ++;
-            if (data != null && !data.isEmpty()) {
-               // present.requestMoreHomeData(recyclerView,pageSize,currPage);
+            if (data != null && data.size() >= pageSize) {
+                present.requestMoreHomeData(recyclerView,pageSize,currPage);
             }
         }
     };
 
-
     @Override
     public void updateBanner(List<BannerBean> bannerBeanList) {
         if(bannerBeanList != null && !bannerBeanList.isEmpty()){
-            banner.setVisibility(View.VISIBLE);
-            banner.setAutoPlayAble(bannerBeanList.size() > 1);
-            banner.setData(bannerBeanList,null);
+            headerView.getBannerView().setVisibility(View.VISIBLE);
+            headerView.getBannerView().setAutoPlayAble(bannerBeanList.size() > 1);
+            headerView.getBannerView().setData(bannerBeanList,null);
         }else{
-            banner.setVisibility(View.GONE);
+            headerView.getBannerView().setVisibility(View.GONE);
         }
     }
 
     @Override
-    public void setPopupBanner(List<BannerBean> banner) {
+    public void updatePopupBanner(List<BannerBean> banner) {
         if(banner != null && !banner.isEmpty()){
            new HomeBannerDialog(getContext(),banner).show();
         }
@@ -226,7 +146,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
             refreshLayout.setRefreshing(false);
         }
         data.addAll(homeBeanList);
-        homeAdapter.setData(data);
+        homeAdapter.updateData(data);
         wrapperAdapter.notifyDataSetChanged();
     }
 
@@ -244,11 +164,8 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
         }
     }
 
-
     @Override
     public void showEndFooterView() {
         RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
     }
-
-
 }
