@@ -47,9 +47,9 @@ public class GlideLoader {
                 .into(imageView);
     }
 
-    public void displayGifImage(String imgUrl,ImageView imageView){
+    public void displayLocalGifImage(int resId, ImageView imageView){
         Glide.with(getContext(imageView))
-                .load(imgUrl)
+                .load(resId)
                 .asGif()
                 .into(imageView);
     }

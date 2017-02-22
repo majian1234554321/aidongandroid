@@ -139,8 +139,8 @@ public class SwitcherLayout {
 
     private void setDefaultViews(){
         View loadingView = initView(R.layout.view_loading_content, TAG_LOADING);
-        ImageView imageView = (ImageView) loadingView.findViewById(R.id.loading);
-        GlideLoader.getInstance().displayGifImage("android.resource://loading",imageView);
+        ImageView imageView = (ImageView) loadingView.findViewById(R.id.iv_loading);
+        GlideLoader.getInstance().displayLocalGifImage(R.drawable.loading,imageView);
 
         View emptyView = initView(R.layout.view_no_content, TAG_EMPTY);
         View exceptionView = initView(R.layout.view_exception, TAG_EXCEPTION);

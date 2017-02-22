@@ -34,7 +34,7 @@ public interface CartPresent {
      * @param id 商品id
      * @param mount 数量
      */
-    void updateCart(String id, int mount);
+    void updateCart(String id, int mount,int shopPosition,int goodsPosition);
 
     /**
      * 添加商品到购物车

@@ -144,7 +144,7 @@ public class RecommendPresentImpl implements RecommendPresent{
             equipmentActivityView.showEmptyView();
         }
         if(cartActivityView != null){
-            cartActivityView.showEmptyGoodsView();
+           // cartActivityView.showEmptyGoodsView();
         }
     }
 }

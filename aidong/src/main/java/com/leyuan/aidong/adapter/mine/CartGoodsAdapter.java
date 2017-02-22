@@ -84,7 +84,7 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
                 int count = FormatUtil.parseInt(holder.count.getText().toString());
                 count ++;
                 if(goodsChangeListener != null){
-                    goodsChangeListener.onGoodsCountChanged(data.get(position).getId(),count);
+                    goodsChangeListener.onGoodsCountChanged(data.get(position).getId(),count,position);
                 }
             }
         });
@@ -98,7 +98,7 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
                 }
                 count --;
                 if(goodsChangeListener != null){
-                    goodsChangeListener.onGoodsCountChanged(data.get(position).getId(),count);
+                    goodsChangeListener.onGoodsCountChanged(data.get(position).getId(),count,position);
                 }
             }
         });
@@ -166,6 +166,6 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
     public interface GoodsChangeListener {
         void onGoodsStatusChanged();
         void onGoodsDeleted(String goodsId);
-        void onGoodsCountChanged(String goodsId,int count);
+        void onGoodsCountChanged(String goodsId,int count,int goodsPosition);
     }
 }

@@ -32,7 +32,6 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Good
     public void setData(List<GoodsBean> data) {
         if(data != null){
             this.data = data;
-            notifyDataSetChanged();
         }
     }
 
