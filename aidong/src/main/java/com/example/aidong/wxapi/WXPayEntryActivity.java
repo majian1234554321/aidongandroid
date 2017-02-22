@@ -47,13 +47,13 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
             switch (code) {
                 case 0:		//成功
                     if (null != payListener) {
-                        payListener.success(code + "", resp);
+                        payListener.onSuccess(code + "", resp);
                     }
                     break;
 
                 default:
                     if (null != payListener) {
-                        payListener.fail(code + "", resp);
+                        payListener.onFail(code + "", resp);
                     }
                     break;
             }

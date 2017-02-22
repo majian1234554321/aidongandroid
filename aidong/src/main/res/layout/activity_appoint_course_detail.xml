@@ -44,36 +44,42 @@
                     android:id="@+id/tv_course_user"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:line_color="@color/transparent"
                     app:left_text="预约人:" />
 
                 <com.leyuan.aidong.widget.ExtendTextView
                     android:id="@+id/tv_course_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:line_color="@color/transparent"
                     app:left_text="手机:" />
 
                 <com.leyuan.aidong.widget.ExtendTextView
                     android:id="@+id/tv_venues"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:line_color="@color/transparent"
                     app:left_text="上课场馆:" />
 
                 <com.leyuan.aidong.widget.ExtendTextView
                     android:id="@+id/tv_course_room"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:line_color="@color/transparent"
                     app:left_text="上课教室:" />
 
                 <com.leyuan.aidong.widget.ExtendTextView
                     android:id="@+id/tv_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:line_color="@color/transparent"
                     app:left_text="课程时间:" />
 
                 <com.leyuan.aidong.widget.ExtendTextView
                     android:id="@+id/tv_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:line_color="@color/transparent"
                     app:left_text="上课地址:" />
             </LinearLayout>
 
@@ -98,48 +104,56 @@
                 android:id="@+id/tv_total_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:line_color="@color/transparent"
                 app:left_text="课程总额:" />
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/coupon_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:line_color="@color/transparent"
                 app:left_text="优惠劵:" />
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/course_privilege"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:line_color="@color/transparent"
                 app:left_text="课程优惠:" />
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_aibi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:line_color="@color/transparent"
                 app:left_text="爱币:" />
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_aidou"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:line_color="@color/transparent"
                 app:left_text="爱豆:" />
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_start_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:line_color="@color/transparent"
                 app:left_text="下单时间:" />
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_pay_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:line_color="@color/transparent"
                 app:left_text="支付时间:" />
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_pay_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:line_color="@color/transparent"
                 app:left_text="支付方式:" />
 
             <!--支付信息-->

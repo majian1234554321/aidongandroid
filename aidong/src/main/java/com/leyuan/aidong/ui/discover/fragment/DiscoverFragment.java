@@ -14,21 +14,23 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.adapter.discover.DiscoverBrandsAdapter;
+import com.leyuan.aidong.adapter.discover.DiscoverNewsAdapter;
+import com.leyuan.aidong.adapter.discover.DiscoverUserAdapter;
 import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.entity.data.DiscoverData;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.discover.activity.DiscoverUserActivity;
 import com.leyuan.aidong.ui.discover.activity.DiscoverVenuesActivity;
 import com.leyuan.aidong.ui.discover.activity.NewsActivity;
-import com.leyuan.aidong.adapter.discover.DiscoverBrandsAdapter;
-import com.leyuan.aidong.adapter.discover.DiscoverNewsAdapter;
-import com.leyuan.aidong.adapter.discover.DiscoverUserAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.DiscoverPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DiscoverPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.DiscoverFragmentView;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.widget.SwitcherLayout;
+
+import java.util.List;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 
@@ -56,7 +58,7 @@ public class DiscoverFragment extends BaseFragment implements DiscoverFragmentVi
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_discover,null);
+        return inflater.inflate(R.layout.fragment_discover,container,false);
     }
 
     @Override
@@ -92,7 +94,6 @@ public class DiscoverFragment extends BaseFragment implements DiscoverFragmentVi
         rvVenues.setAdapter(brandsAdapter);
         rvUser.setAdapter(userAdapter);
         rvNews.setAdapter(newsAdapter);
-        banner.setData(SystemInfoUtils.getHomeBanner(getContext()),null);
         banner.setAdapter(new BGABanner.Adapter() {
             @Override
             public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
@@ -114,19 +115,30 @@ public class DiscoverFragment extends BaseFragment implements DiscoverFragmentVi
             refreshLayout.setRefreshing(false);
         }
 
-        if(discoverData.getBrand() != null){
+        List<BannerBean> bannerList = SystemInfoUtils.getHomeBanner(getContext());
+        if(bannerList == null || bannerList.isEmpty()){
+            banner.setVisibility(View.GONE);
+        }else {
+            banner.setVisibility(View.VISIBLE);
+            banner.setData(bannerList,null);
+        }
+
+        if(discoverData.getBrand() != null && !discoverData.getBrand().isEmpty()){
+            moreVenuesLayout.setVisibility(View.VISIBLE);
             brandsAdapter.setData(discoverData.getBrand());
         }else {
             moreVenuesLayout.setVisibility(View.GONE);
         }
 
-        if(discoverData.getUser() != null){
+        if(discoverData.getUser() != null && !discoverData.getUser().isEmpty()){
+            moreUserLayout.setVisibility(View.VISIBLE);
             userAdapter.setData(discoverData.getUser());
         }else {
             moreUserLayout.setVisibility(View.GONE);
         }
 
-        if(discoverData.getNews() != null){
+        if(discoverData.getNews() != null && !discoverData.getNews().isEmpty()){
+            moreNewsLayout.setVisibility(View.VISIBLE);
             newsAdapter.setData(discoverData.getNews());
         }else {
             moreNewsLayout.setVisibility(View.GONE);

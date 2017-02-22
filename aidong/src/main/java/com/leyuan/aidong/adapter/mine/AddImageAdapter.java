@@ -15,7 +15,7 @@ import com.leyuan.aidong.utils.GlideLoader;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.leyuan.aidong.utils.Constant.MAX_UPLOAD_IMAGE_COUNT;
+import static com.leyuan.aidong.utils.Constant.DEFAULT_MAX_UPLOAD_IMAGE_COUNT;
 
 
 /**
@@ -54,10 +54,10 @@ public class AddImageAdapter extends RecyclerView.Adapter<ViewHolder> {
     @Override
     public int getItemCount() {
         if (data != null && data.size() > 0) {
-            if(data.size() < MAX_UPLOAD_IMAGE_COUNT){
+            if(data.size() < DEFAULT_MAX_UPLOAD_IMAGE_COUNT){
                 return data.size() + 1;
             }else{
-                return MAX_UPLOAD_IMAGE_COUNT;
+                return DEFAULT_MAX_UPLOAD_IMAGE_COUNT;
             }
         } else {
             return 1;

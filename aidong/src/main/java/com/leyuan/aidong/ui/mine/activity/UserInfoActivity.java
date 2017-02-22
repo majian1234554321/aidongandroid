@@ -132,7 +132,7 @@ public class UserInfoActivity extends BaseActivity implements SmartTabLayout.Tab
     @Override
     public void updateUserInfo(UserInfoData userInfoData) {
         profileBean = userInfoData.getProfile();
-        GlideLoader.getInstance().displayImage(profileBean.getAvatar(), dvAvatar);
+        GlideLoader.getInstance().displayCircleImage(profileBean.getAvatar(), dvAvatar);
         tvName.setText(profileBean.getName());
         tvSignature.setText(profileBean.getSignature());
 

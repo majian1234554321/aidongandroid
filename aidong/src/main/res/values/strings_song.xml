@@ -135,6 +135,7 @@
     <string name="too_many_picture">您最多只能选择九张图片</string>
 
     <string name="confirm_gender">请选择性别</string>
+    <string name="confirm_date">请选择自提时间</string>
     <string name="confirm_report">举报类型</string>
     <string name="confirm_signature">请输入个性签名</string>
     <string name="confirm_signature_hint">最多20个字</string>

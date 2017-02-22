@@ -15,13 +15,12 @@ import com.leyuan.aidong.utils.ScreenUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.leyuan.aidong.utils.Constant.MAX_UPLOAD_IMAGE_COUNT;
-
 /**
  * 照片墙适配器
  * Created by song on 2017/2/7.
  */
 public class PhotoWallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+    private static final int MAX_UPLOAD_IMAGE_COUNT = 8;        //上传照片数量限制
     private static final int ITEM_TYPE_IMAGE = 1;
     private static final int ITEM_TYPE_ADD_IMAGE = 2;
 

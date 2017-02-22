@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.UserBean;
+import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
@@ -46,8 +47,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder>{
 
     @Override
     public void onBindViewHolder(UserHolder holder, int position) {
-        UserBean bean = data.get(position);
-        GlideLoader.getInstance().displayImage(bean.getAvatar(), holder.cover);
+        final UserBean bean = data.get(position);
+        GlideLoader.getInstance().displayCircleImage(bean.getAvatar(), holder.cover);
         holder.nickname.setText(bean.getName());
         holder.distance.setText(bean.getDistance());
         if("0".equals(bean.getGender())){   //男
@@ -55,6 +56,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder>{
         }else {
             holder.gender.setBackgroundResource(R.drawable.icon_woman);
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserInfoActivity.start(context,bean.getId());
+            }
+        });
     }
 
     class UserHolder extends RecyclerView.ViewHolder{

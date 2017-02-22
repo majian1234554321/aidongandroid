@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CampaignDetailBean;
 import com.leyuan.aidong.module.pay.PayInterface;
+import com.leyuan.aidong.module.pay.SimplePayListener;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.activity.CouponActivity;
@@ -169,15 +170,10 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
         }
     }
 
-    private PayInterface.PayListener payListener = new PayInterface.PayListener() {
+    private PayInterface.PayListener payListener = new SimplePayListener(this) {
         @Override
-        public void fail(String code, Object object) {
-            Toast.makeText(AppointCampaignActivity.this,"failed:" + code + object.toString(),Toast.LENGTH_LONG).show();
-        }
-
-        @Override
-        public void success(String code, Object object) {
-            Toast.makeText(AppointCampaignActivity.this,"success:" + code + object.toString(),Toast.LENGTH_LONG).show();
+        public void onSuccess(String code, Object object) {
+            Toast.makeText(AppointCampaignActivity.this,"onSuccess:" + code + object.toString(),Toast.LENGTH_LONG).show();
         }
     };
 

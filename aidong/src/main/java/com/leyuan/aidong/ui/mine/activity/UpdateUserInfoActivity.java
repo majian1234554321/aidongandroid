@@ -11,7 +11,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +30,10 @@ import com.leyuan.aidong.ui.mine.view.AddressDialog;
 import com.leyuan.aidong.ui.mvp.presenter.UserInfoPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.UserInfoPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.UpdateUserInfoActivityView;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.qiniu.IQiNiuCallback;
+import com.leyuan.aidong.utils.qiniu.UploadQiNiuManager;
 import com.leyuan.aidong.widget.ExtendTextView;
 
 import java.util.Calendar;
@@ -44,27 +46,29 @@ import java.util.Locale;
  */
 public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserInfoActivityView,View.OnClickListener, AddressDialog.OnConfirmAddressListener {
     private static final int REQUEST_CODE = 1024;
-    private LinearLayout rootLayout;
     private ImageView ivBack;
     private TextView tvFinish;
-    private ImageView dvAvatar;
-    private ExtendTextView nickname;
-    private ExtendTextView gender;
-    private ExtendTextView identify;
-    private ExtendTextView signature;
-    private ExtendTextView address;
-    private ExtendTextView birthday;
-    private ExtendTextView zodiac;
-    private ExtendTextView height;
-    private ExtendTextView weight;
-    private ExtendTextView bmi;
-    private ExtendTextView frequency;
+    private ImageView ivAvatar;
+    private ExtendTextView tvNickname;
+    private ExtendTextView tvGender;
+    private ExtendTextView tvIdentify;
+    private ExtendTextView tvSignature;
+    private ExtendTextView tvAddress;
+    private ExtendTextView tvBirthday;
+    private ExtendTextView tvZodiac;
+    private ExtendTextView tvHeight;
+    private ExtendTextView tvWeight;
+    private ExtendTextView tvBmi;
+    private ExtendTextView tvFrequency;
 
+    private ProfileBean profileBean;
+    private AddressDialog addressDialog;
+    private String avatarPath;
+    private String avatarUrl;
     private String province;
     private String city;
     private String area;
-    private ProfileBean profileBean;
-    private AddressDialog addressDialog;
+
     private UserInfoPresent userInfoPresent;
 
     public static void start(Context context, ProfileBean profileBean) {
@@ -86,49 +90,48 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
     }
 
     private void initView(){
-        rootLayout = (LinearLayout) findViewById(R.id.ll_root);
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tvFinish = (TextView) findViewById(R.id.tv_finish);
-        dvAvatar = (ImageView) findViewById(R.id.dv_avatar);
-        nickname = (ExtendTextView) findViewById(R.id.nickname);
-        gender = (ExtendTextView) findViewById(R.id.gender);
-        identify = (ExtendTextView) findViewById(R.id.identify);
-        signature = (ExtendTextView) findViewById(R.id.signature);
-        address = (ExtendTextView) findViewById(R.id.address);
-        birthday = (ExtendTextView) findViewById(R.id.birthday);
-        zodiac = (ExtendTextView) findViewById(R.id.zodiac);
-        height = (ExtendTextView) findViewById(R.id.height);
-        weight = (ExtendTextView) findViewById(R.id.weight);
-        bmi = (ExtendTextView) findViewById(R.id.bmi);
-        frequency = (ExtendTextView) findViewById(R.id.frequency);
+        ivAvatar = (ImageView) findViewById(R.id.dv_avatar);
+        tvNickname = (ExtendTextView) findViewById(R.id.nickname);
+        tvGender = (ExtendTextView) findViewById(R.id.gender);
+        tvIdentify = (ExtendTextView) findViewById(R.id.identify);
+        tvSignature = (ExtendTextView) findViewById(R.id.signature);
+        tvAddress = (ExtendTextView) findViewById(R.id.address);
+        tvBirthday = (ExtendTextView) findViewById(R.id.birthday);
+        tvZodiac = (ExtendTextView) findViewById(R.id.zodiac);
+        tvHeight = (ExtendTextView) findViewById(R.id.height);
+        tvWeight = (ExtendTextView) findViewById(R.id.weight);
+        tvBmi = (ExtendTextView) findViewById(R.id.bmi);
+        tvFrequency = (ExtendTextView) findViewById(R.id.frequency);
 
-        nickname.setRightContent(App.mInstance.getUser().getUsername());
-        gender.setRightContent(profileBean.getGender());
-        identify.setRightContent("健身爱好者");
-        signature.setRightContent(profileBean.getSignature());
-        address.setRightContent(profileBean.getProvince() + profileBean.getCity() +
-                profileBean.getArea());
-        birthday.setRightContent(profileBean.getBirthday());
-        zodiac.setRightContent(profileBean.getZodiac());
-        height.setRightContent(profileBean.getHeight());
-        weight.setRightContent(profileBean.getWeight());
-        bmi.setRightContent(profileBean.getBmi());
-        frequency.setRightContent(profileBean.getFrequency());
+        tvNickname.setRightContent(App.mInstance.getUser().getUsername());
+        tvGender.setRightContent(profileBean.getGender());
+        tvIdentify.setRightContent("健身爱好者");
+        tvSignature.setRightContent(profileBean.getSignature());
+        tvAddress.setRightContent(profileBean.getProvince()+profileBean.getCity()+profileBean.getArea());
+        tvBirthday.setRightContent(profileBean.getBirthday());
+        tvZodiac.setRightContent(profileBean.getZodiac());
+        tvHeight.setRightContent(profileBean.getHeight());
+        tvWeight.setRightContent(profileBean.getWeight());
+        tvBmi.setRightContent(profileBean.getBmi());
+        tvFrequency.setRightContent(profileBean.getFrequency());
+        GlideLoader.getInstance().displayCircleImage(profileBean.getAvatar(), ivAvatar);
     }
 
     private void setListener(){
         ivBack.setOnClickListener(this);
         tvFinish.setOnClickListener(this);
-        dvAvatar.setOnClickListener(this);
-        gender.setOnClickListener(this);
-        identify.setOnClickListener(this);
-        signature.setOnClickListener(this);
-        address.setOnClickListener(this);
-        birthday.setOnClickListener(this);
-        height.setOnClickListener(this);
-        weight.setOnClickListener(this);
-        bmi.setOnClickListener(this);
-        frequency.setOnClickListener(this);
+        ivAvatar.setOnClickListener(this);
+        tvGender.setOnClickListener(this);
+        tvIdentify.setOnClickListener(this);
+        tvSignature.setOnClickListener(this);
+        tvAddress.setOnClickListener(this);
+        tvBirthday.setOnClickListener(this);
+        tvHeight.setOnClickListener(this);
+        tvWeight.setOnClickListener(this);
+        tvBmi.setOnClickListener(this);
+        tvFrequency.setOnClickListener(this);
     }
 
     @Override
@@ -138,11 +141,10 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
                 finish();
                 break;
             case R.id.tv_finish:
-                userInfoPresent.updateUserInfo(gender.getText(),birthday.getText(),signature.getText(),
-                        province,city,area,height.getText(),weight.getText(),frequency.getText());
+                uploadToQiNiu();
                 break;
             case R.id.dv_avatar:
-                updateAvatar();
+                selectAvatar();
                 break;
             case R.id.gender:
                 showGenderDialog();
@@ -165,9 +167,6 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
             case R.id.weight:
                 showWeightDialog();
                 break;
-            case R.id.bmi:
-
-                break;
             case R.id.frequency:
                 showFrequencyDialog();
                 break;
@@ -176,7 +175,38 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
         }
     }
 
-    private void updateAvatar(){
+    private void uploadToQiNiu(){
+        UploadQiNiuManager.getInstance().uploadSingleImage(avatarPath, new IQiNiuCallback() {
+            @Override
+            public void onSuccess(List<String> urls) {
+                if(urls != null && !urls.isEmpty()){
+                    avatarUrl = urls.get(0);
+                    uploadToServer();
+                }
+            }
+
+            @Override
+            public void onFail() {
+                Toast.makeText(UpdateUserInfoActivity.this,"修改失败",Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void uploadToServer(){
+        userInfoPresent.updateUserInfo(avatarUrl, tvGender.getText(), tvBirthday.getText(), tvSignature.getText(),
+                province,city,area, tvHeight.getText(), tvWeight.getText(), tvFrequency.getText());
+    }
+
+    @Override
+    public void updateResult(BaseBean baseBean) {
+        if(baseBean.getStatus() == Constant.OK){
+            Toast.makeText(UpdateUserInfoActivity.this,"修改成功",Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(UpdateUserInfoActivity.this,"修改失败",Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void selectAvatar(){
         String cachePath = BoxingFileHelper.getCacheDir(this);
         if (TextUtils.isEmpty(cachePath)) {
             Toast.makeText(getApplicationContext(), R.string.storage_deny, Toast.LENGTH_SHORT).show();
@@ -200,7 +230,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
                 .itemsCallbackSingleChoice(0,new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
-                        gender.setRightContent(text.toString());
+                        tvGender.setRightContent(text.toString());
                         return false;
                     }
                 })
@@ -215,7 +245,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
                 .itemsCallbackSingleChoice(0,new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
-                        identify.setRightContent(text.toString());
+                        tvIdentify.setRightContent(text.toString());
                         return false;
                     }
                 })
@@ -231,10 +261,10 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
                         InputType.TYPE_TEXT_FLAG_CAP_WORDS)
                 .inputRange(1, 20)
                 .positiveText(R.string.sure)
-                .input(getString(R.string.confirm_signature_hint), signature.getText(), false, new MaterialDialog.InputCallback() {
+                .input(getString(R.string.confirm_signature_hint), tvSignature.getText(), false, new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
-                        signature.setRightContent(input.toString());
+                        tvSignature.setRightContent(input.toString());
                     }
                 })
                 .show();
@@ -267,7 +297,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
                             years = year;
                             mothers = monthOfYear;
                             days = dayOfMonth;
-                            birthday.setRightContent(years +"年" + (mothers + 1) + "月" + days + "日");
+                            tvBirthday.setRightContent(years +"年" + (mothers + 1) + "月" + days + "日");
                         }
                     }
                 }, years, mothers, days);
@@ -281,7 +311,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
                     public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
-                        height.setRightContent(text.toString());
+                        tvHeight.setRightContent(text.toString());
                     }
                 })
                 .positiveText(android.R.string.cancel)
@@ -294,7 +324,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
                     public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
-                        weight.setRightContent(text.toString());
+                        tvWeight.setRightContent(text.toString());
                     }
                 })
                 .positiveText(android.R.string.cancel)
@@ -307,7 +337,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
                     public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
-                        frequency.setRightContent(text.toString());
+                        tvFrequency.setRightContent(text.toString());
                     }
                 })
                 .positiveText(android.R.string.cancel)
@@ -319,7 +349,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
         this.province = province;
         this.city = city;
         this.area = area;
-        address.setRightContent(new StringBuilder(province).append(city).append(area).toString());
+        tvAddress.setRightContent(new StringBuilder(province).append(city).append(area).toString());
     }
 
 
@@ -329,14 +359,9 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
         if (resultCode == RESULT_OK) {
             List<BaseMedia> medias = Boxing.getResult(data);
             if(medias != null && !medias.isEmpty()){
-                GlideLoader.getInstance().displayImage("file://" + medias.get(0).getPath(), dvAvatar);
-               // BoxingMediaLoader.getInstance().displayThumbnail(dvAvatar, medias.get(0).getPath(), 70,70);
+                avatarPath = medias.get(0).getPath();
+                GlideLoader.getInstance().displayCircleImage("file://" + avatarPath, ivAvatar);
             }
         }
-    }
-
-    @Override
-    public void updateResult(BaseBean baseBean) {
-
     }
 }

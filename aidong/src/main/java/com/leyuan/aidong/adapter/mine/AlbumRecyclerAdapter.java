@@ -16,7 +16,7 @@ import com.leyuan.aidong.utils.GlideLoader;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.leyuan.aidong.utils.Constant.MAX_UPLOAD_IMAGE_COUNT;
+import static com.leyuan.aidong.utils.Constant.DEFAULT_MAX_UPLOAD_IMAGE_COUNT;
 
 /**
  * 相册图片适配器
@@ -39,7 +39,7 @@ public class AlbumRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
     public void setData(List<ImageInfoBean> albumImages, ArrayList<ImageInfoBean> selectImages) {
         this.albumImages = albumImages;
         this.selectImages = selectImages;
-        this.usefulImageSize = MAX_UPLOAD_IMAGE_COUNT - selectImages.size();
+        this.usefulImageSize = DEFAULT_MAX_UPLOAD_IMAGE_COUNT - selectImages.size();
         notifyDataSetChanged();
     }
 
@@ -80,7 +80,7 @@ public class AlbumRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
                 @Override
                 public void onClick(View v) {
                     if (selectImages.size() >= usefulImageSize) {
-                        Toast.makeText(context,"最多只能选择"+ MAX_UPLOAD_IMAGE_COUNT +"张图片",Toast.LENGTH_LONG).show();
+                        Toast.makeText(context,"最多只能选择"+ DEFAULT_MAX_UPLOAD_IMAGE_COUNT +"张图片",Toast.LENGTH_LONG).show();
                         return;
                     }
                     onImgSelectListener.onStartCamera();
@@ -112,7 +112,7 @@ public class AlbumRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
                         onImgSelectListener.OnDisSelect(selectImages);
                     }else {   //图片没有被选中
                         if (selectImages.size() >= usefulImageSize) {
-                            Toast.makeText(context,"最多只能选择"+ MAX_UPLOAD_IMAGE_COUNT +"张图片",Toast.LENGTH_LONG).show();
+                            Toast.makeText(context,"最多只能选择"+ DEFAULT_MAX_UPLOAD_IMAGE_COUNT +"张图片",Toast.LENGTH_LONG).show();
                             return;
                         }
                         albumHolder.select.setImageResource(R.drawable.radio_checked);

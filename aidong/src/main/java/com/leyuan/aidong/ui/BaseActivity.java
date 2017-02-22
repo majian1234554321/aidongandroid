@@ -56,17 +56,9 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    protected void animationFinish(){
-        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP){
-            finishAfterTransition();
-        }else {
-            finish();
-        }
-    }
-
 
     /**
-     * 设置下拉刷新颜色
+     * 设置SwipeRefreshLayout下拉刷新颜色
      * @param refreshLayout
      */
     protected void setColorSchemeResources(SwipeRefreshLayout refreshLayout){

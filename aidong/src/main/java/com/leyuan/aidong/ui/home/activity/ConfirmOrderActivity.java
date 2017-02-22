@@ -12,13 +12,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.adapter.home.ConfirmOrderShopAdapter;
 import com.leyuan.aidong.entity.AddressBean;
 import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.entity.ShopBean;
 import com.leyuan.aidong.module.pay.PayInterface;
+import com.leyuan.aidong.module.pay.SimplePayListener;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.adapter.home.ConfirmOrderShopAdapter;
 import com.leyuan.aidong.ui.mine.activity.SelectAddressActivity;
 import com.leyuan.aidong.ui.mine.activity.SelectCouponActivity;
 import com.leyuan.aidong.ui.mvp.presenter.CartPresent;
@@ -26,7 +28,7 @@ import com.leyuan.aidong.ui.mvp.presenter.EquipmentPresent;
 import com.leyuan.aidong.ui.mvp.presenter.NurturePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CartPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.NurturePresentImpl;
-import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.widget.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.ExtendTextView;
 import com.leyuan.aidong.widget.SimpleTitleBar;
@@ -82,6 +84,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
     private ConfirmOrderShopAdapter shopAdapter;
     private List<ShopBean> shopBeanList = new ArrayList<>();
+    private List<String> days = new ArrayList<>();
 
     private String[] itemIds;
     private String integral;
@@ -112,6 +115,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_order);
         payType = ALI_PAY;
+        days = DateUtils.getSevenDate();
         if(getIntent() != null){
             orderType = getIntent().getIntExtra("orderType",1);
             shopBeanList = getIntent().getParcelableArrayListExtra("selectedShops");
@@ -153,10 +157,10 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 needExpress = true;
                 addressLayout.setVisibility(View.VISIBLE);
             }else {
+                tvTime.setText(days.get(0));
                 selfDeliveryLayout.setVisibility(View.VISIBLE);
             }
         }
-
         tvTotalGoodsPrice.setRightContent(
                 String.format(getString(R.string.rmb_price_double),totalGoodsPrice));
         tvExpressPrice.setRightContent(
@@ -171,6 +175,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         couponLayout.setOnClickListener(this);
         tvPay.setOnClickListener(this);
         radioGroup.setOnCheckedChangeListener(this);
+        selfDeliveryLayout.setOnClickListener(this);
     }
 
     @Override
@@ -178,6 +183,9 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         switch (v.getId()){
             case R.id.title_bar:
                 finish();
+                break;
+            case R.id.ll_self_delivery:
+                showDeliveryDateDialog();
                 break;
             case R.id.rl_address:
                 Intent  intent = new Intent(this,SelectAddressActivity.class);
@@ -255,35 +263,24 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
-    private PayInterface.PayListener payListener = new PayInterface.PayListener() {
+    private PayInterface.PayListener payListener = new SimplePayListener(this) {
         @Override
-        public void fail(String code, Object object) {
-            String tip = "";
-            switch (code){
-                case "4000":
-                    tip = "订单支付失败";
-                    break;
-                case "5000":
-                    tip = "订单重复提交";
-                    break;
-                case "6001":
-                    tip = "订单取消支付";
-                    break;
-                case "6002":
-                    tip = "网络连接出错";
-                    break;
-                default:
-                    break;
-            }
-            Toast.makeText(ConfirmOrderActivity.this,tip,Toast.LENGTH_LONG).show();
-            Logger.w("AppointCourseActivity","failed:" + code + object.toString());
-        }
-
-        @Override
-        public void success(String code, Object object) {
-            Toast.makeText(ConfirmOrderActivity.this,"支付成功",Toast.LENGTH_LONG).show();
+        public void onSuccess(String code, Object object) {
+            Toast.makeText(ConfirmOrderActivity.this,"支付成功啦",Toast.LENGTH_LONG).show();
             startActivity(new Intent(ConfirmOrderActivity.this,AppointSuccessActivity.class));
-            Logger.w("AppointCourseActivity","success:" + code + object.toString());
         }
     };
+
+    private void showDeliveryDateDialog(){
+        new MaterialDialog.Builder(this)
+                .title(R.string.confirm_date)
+                .items(days)
+                .itemsCallback(new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                        tvTime.setText(days.get(position));
+                    }
+                })
+                .show();
+    }
 }

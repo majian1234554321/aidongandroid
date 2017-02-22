@@ -16,6 +16,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.AppointmentDetailBean;
 import com.leyuan.aidong.module.pay.AliPay;
 import com.leyuan.aidong.module.pay.PayInterface;
+import com.leyuan.aidong.module.pay.SimplePayListener;
 import com.leyuan.aidong.module.pay.WeiXinPay;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.home.activity.AppointSuccessActivity;
@@ -24,7 +25,6 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.AppointmentPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointmentDetailActivityView;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
-import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.ExtendTextView;
 import com.leyuan.aidong.widget.SimpleTitleBar;
@@ -243,35 +243,11 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         }
     }
 
-    private PayInterface.PayListener payListener = new PayInterface.PayListener() {
+    private PayInterface.PayListener payListener = new SimplePayListener(this) {
         @Override
-        public void fail(String code, Object object) {
-            String tip = "";
-            switch (code){
-                case "4000":
-                    tip = "订单支付失败";
-                    break;
-                case "5000":
-                    tip = "订单重复提交";
-                    break;
-                case "6001":
-                    tip = "订单取消支付";
-                    break;
-                case "6002":
-                    tip = "网络连接出错";
-                    break;
-                default:
-                    break;
-            }
-            Toast.makeText(AppointCampaignDetailActivity.this,tip,Toast.LENGTH_LONG).show();
-            Logger.w("AppointCourseActivity","failed:" + code + object.toString());
-        }
-
-        @Override
-        public void success(String code, Object object) {
-            Toast.makeText(AppointCampaignDetailActivity.this,"支付成功啦啦啦啦啦绿",Toast.LENGTH_LONG).show();
+        public void onSuccess(String code, Object object) {
+            Toast.makeText(AppointCampaignDetailActivity.this,"支付成功",Toast.LENGTH_LONG).show();
             startActivity(new Intent(AppointCampaignDetailActivity.this,AppointSuccessActivity.class));
-            Logger.w("AppointCourseActivity","success:" + code + object.toString());
         }
     };
 

@@ -45,7 +45,6 @@ public class UpdatePhotoWallActivity extends BaseActivity implements View.OnClic
     private ArrayList<BaseMedia> selectedImages = new ArrayList<>();
     private PhotoWallPresent photoWallPresent;
 
-
     public static void start(Context context, ArrayList<ImageBean> photos) {
         Intent starter = new Intent(context, UpdatePhotoWallActivity.class);
         starter.putParcelableArrayListExtra("photos",photos);
@@ -97,7 +96,7 @@ public class UpdatePhotoWallActivity extends BaseActivity implements View.OnClic
     }
 
     private void uploadToQiNiu(){
-        UploadQiNiuManager.getInstance().uploadToQiNiu(true,selectedImages, new IQiNiuCallback(){
+        UploadQiNiuManager.getInstance().uploadImages(selectedImages, new IQiNiuCallback(){
             @Override
             public void onSuccess(List<String> urls) {
                 uploadToServer(urls);
@@ -139,7 +138,6 @@ public class UpdatePhotoWallActivity extends BaseActivity implements View.OnClic
             }
         }
     }
-
 
     @Override
     public void deletePhotoResult(BaseBean baseBean) {

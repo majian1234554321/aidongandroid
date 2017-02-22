@@ -32,7 +32,7 @@ public interface UserInfoPresent {
 
     void updateFrequency(String frequency);
 
-    void updateUserInfo(String gender,String birthday,String signature,String province,String city,
+    void updateUserInfo(String avatar,String gender,String birthday,String signature,String province,String city,
                         String area,String height,String weight,String frequency);
 
 

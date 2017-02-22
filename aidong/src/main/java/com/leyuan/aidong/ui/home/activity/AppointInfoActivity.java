@@ -197,13 +197,13 @@ public class AppointInfoActivity extends BaseActivity implements View.OnClickLis
 
     private PayInterface.PayListener payListener = new PayInterface.PayListener() {
         @Override
-        public void fail(String code, Object object) {
+        public void onFail(String code, Object object) {
             Toast.makeText(AppointInfoActivity.this,"failed:" + code + object.toString(),Toast.LENGTH_LONG).show();
         }
 
         @Override
-        public void success(String code, Object object) {
-            Toast.makeText(AppointInfoActivity.this,"success:" + code + object.toString(),Toast.LENGTH_LONG).show();
+        public void onSuccess(String code, Object object) {
+            Toast.makeText(AppointInfoActivity.this,"onSuccess:" + code + object.toString(),Toast.LENGTH_LONG).show();
         }
     };
 

@@ -16,6 +16,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.AppointmentDetailBean;
 import com.leyuan.aidong.module.pay.AliPay;
 import com.leyuan.aidong.module.pay.PayInterface;
+import com.leyuan.aidong.module.pay.SimplePayListener;
 import com.leyuan.aidong.module.pay.WeiXinPay;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.home.activity.AppointSuccessActivity;
@@ -27,7 +28,6 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointmentDetailActivityView;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
-import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.ExtendTextView;
 import com.leyuan.aidong.widget.SimpleTitleBar;
@@ -233,7 +233,6 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
                 break;
             case CLOSE:
                 tvState.setText(getString(R.string.order_close));
-
                 break;
             default:
                 break;
@@ -249,8 +248,6 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
             case R.id.tv_pay:
                 PayInterface payInterface = payType.equals(detailBean.getPay().getPayType()) ?
                         new AliPay(this,payListener) : new WeiXinPay(this,payListener);
-               // PayOrderBean bean =  detailBean.getPay();
-                //bean.getpayOption().setPay_string("_input_charset=utf-8&body=培训课程4-1&it_b_pay=30m&notify_url=&out_trade_no=483610338301&partner=2088021345411340&payment_type=1&seller_id=2088021345411340&service=mobile.securitypay.pay&subject=培训课程4-1&total_fee=88.8&sign_type=RSA&sign=Oaoqco9BIbH89WT5aCAsXvV23qImwg0CfvXnRZAbrpBlBqq6MSzpIIePVh8oJyXIPmqrhvANbFeILdV7eThU9E3%2BpKZWxNJuK4%2FjGhoCwLYZaDVhZ5%2F9nLu4zxYK72UkcchPT90eVLtMUu2TnvpuakuJJ2aajhFcOWDcwXn14UQ%3D");
                 payInterface.payOrder(detailBean.getPay());
                 break;
             case R.id.rl_detail:
@@ -261,36 +258,11 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
         }
     }
 
-    private PayInterface.PayListener payListener = new PayInterface.PayListener() {
+    private PayInterface.PayListener payListener = new SimplePayListener(this) {
         @Override
-        public void fail(String code, Object object) {
-            String tip = "";
-            switch (code){
-                case "4000":
-                    tip = "订单支付失败";
-                    break;
-                case "5000":
-                    tip = "订单重复提交";
-                    break;
-                case "6001":
-                    tip = "订单取消支付";
-                    break;
-                case "6002":
-                    tip = "网络连接出错";
-                    break;
-                default:
-                    tip = code +":::"+ object.toString();
-                    break;
-            }
-            Toast.makeText(AppointCourseDetailActivity.this,tip,Toast.LENGTH_LONG).show();
-            Logger.w("AppointCourseActivity","failed:" + code + object.toString());
-        }
-
-        @Override
-        public void success(String code, Object object) {
-            Toast.makeText(AppointCourseDetailActivity.this,"支付成功啦啦啦啦啦绿",Toast.LENGTH_LONG).show();
+        public void onSuccess(String code, Object object) {
+            Toast.makeText(AppointCourseDetailActivity.this,"支付成功啦",Toast.LENGTH_LONG).show();
             startActivity(new Intent(AppointCourseDetailActivity.this,AppointSuccessActivity.class));
-            Logger.w("AppointCourseActivity","success:" + code + object.toString());
         }
     };
 

@@ -143,7 +143,7 @@ public class UserInfoPresentImpl implements UserInfoPresent{
     }
 
     @Override
-    public void updateUserInfo(String gender, String birthday, String signature, String province,
+    public void updateUserInfo(String avatar,String gender, String birthday, String signature, String province,
                                String city, String area, String height, String weight, String frequency) {
         userInfoModel.updateUserInfo(new ProgressSubscriber<BaseBean>(context) {
             @Override

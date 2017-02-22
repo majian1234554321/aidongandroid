@@ -21,6 +21,7 @@ import com.leyuan.aidong.module.photopicker.boxing.Boxing;
 import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
 import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
 import com.leyuan.aidong.module.photopicker.boxing_impl.ui.BoxingActivity;
+import com.leyuan.aidong.module.photopicker.boxing_impl.view.SpacesItemDecoration;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
@@ -80,6 +81,8 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
         btPublish = (Button) findViewById(R.id.bt_publish);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
         recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.addItemDecoration(new SpacesItemDecoration(
+                getResources().getDimensionPixelOffset(R.dimen.media_margin), 3));
         mediaAdapter = new PublishDynamicAdapter();
         recyclerView.setAdapter(mediaAdapter);
         mediaAdapter.setData(selectedMedia,isPhoto);
