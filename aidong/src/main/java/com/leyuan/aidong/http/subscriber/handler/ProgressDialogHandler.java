@@ -7,7 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.widget.customview.CustomProgressDialog;
+import com.leyuan.aidong.widget.CustomProgressDialog;
 
 
 public class ProgressDialogHandler extends Handler {

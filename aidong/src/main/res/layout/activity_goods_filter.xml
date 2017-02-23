@@ -55,7 +55,7 @@
             </android.support.v7.widget.RecyclerView>
         </android.support.v4.widget.SwipeRefreshLayout>
 
-        <com.leyuan.aidong.ui.activity.home.view.GoodsFilterView
+        <com.leyuan.aidong.ui.home.view.GoodsFilterView
             android:id="@+id/view_filter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

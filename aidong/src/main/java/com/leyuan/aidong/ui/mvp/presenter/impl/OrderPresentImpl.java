@@ -16,7 +16,7 @@ import com.leyuan.aidong.ui.mvp.presenter.OrderPresent;
 import com.leyuan.aidong.ui.mvp.view.OrderDetailActivityView;
 import com.leyuan.aidong.ui.mvp.view.OrderFragmentView;
 import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.widget.customview.SwitcherLayout;
+import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
 import java.util.List;

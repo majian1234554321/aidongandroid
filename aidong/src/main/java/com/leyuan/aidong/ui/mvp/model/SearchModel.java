@@ -1,12 +1,12 @@
 package com.leyuan.aidong.ui.mvp.model;
 
+import com.leyuan.aidong.entity.SearchHistoryBean;
 import com.leyuan.aidong.entity.data.CampaignData;
 import com.leyuan.aidong.entity.data.CourseData;
 import com.leyuan.aidong.entity.data.FoodData;
 import com.leyuan.aidong.entity.data.SearchGoodsData;
 import com.leyuan.aidong.entity.data.UserData;
 import com.leyuan.aidong.entity.data.VenuesData;
-import com.leyuan.aidong.entity.greendao.SearchHistory;
 
 import java.util.List;
 
@@ -71,7 +71,7 @@ public interface SearchModel {
     /**
      * 查找搜索历史
      */
-    List<SearchHistory> getSearchHistory();
+    List<SearchHistoryBean> getSearchHistory();
 
     /**
      * 插入搜索历史

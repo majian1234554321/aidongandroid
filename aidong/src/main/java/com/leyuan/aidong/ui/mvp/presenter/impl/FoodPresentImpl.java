@@ -12,7 +12,7 @@ import com.leyuan.aidong.ui.mvp.model.impl.FoodModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.FoodPresenter;
 import com.leyuan.aidong.ui.mvp.view.FoodActivityView;
 import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.widget.customview.SwitcherLayout;
+import com.leyuan.aidong.widget.SwitcherLayout;
 
 /**
  * 健康餐饮

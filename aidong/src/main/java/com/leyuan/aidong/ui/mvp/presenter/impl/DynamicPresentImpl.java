@@ -20,7 +20,7 @@ import com.leyuan.aidong.ui.mvp.view.DynamicDetailActivityView;
 import com.leyuan.aidong.ui.mvp.view.PublishDynamicActivityView;
 import com.leyuan.aidong.ui.mvp.view.SportCircleFragmentView;
 import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.widget.customview.SwitcherLayout;
+import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -195,7 +195,7 @@ public class DynamicPresentImpl implements DynamicPresent{
             @Override
             public void onNext(BaseBean baseBean) {
                 if(sportCircleFragmentView != null){
-                    sportCircleFragmentView.updateAddLike(baseBean);
+                    sportCircleFragmentView.updateLikeStatus(true,baseBean);
                 }
             }
         },id);
@@ -207,7 +207,7 @@ public class DynamicPresentImpl implements DynamicPresent{
             @Override
             public void onNext(BaseBean baseBean) {
                 if(sportCircleFragmentView != null){
-                    sportCircleFragmentView.updateCancelLike(baseBean);
+                    sportCircleFragmentView.updateLikeStatus(false,baseBean);
                 }
             }
         },id);

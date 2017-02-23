@@ -1,13 +1,5 @@
 package com.leyuan.aidong.utils;
 
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -16,6 +8,14 @@ import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.webkit.MimeTypeMap;
 
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 public class FileUtil {
 	private static final String SHARE_GOOD_INFO = "SHARE_GOOD_INFO";
 	private static final String SHARE_GOOD_PERSON_INFO = "SHARE_GOOD_PERSON_INFO";
@@ -23,10 +23,10 @@ public class FileUtil {
 	private static FileUtil instance;
 	public static final String VIDEO_MP4 = "video/mp4";
 	public static final String VIDEO_3GPP = "video/3gpp";
-	public static final String MX_CACHE = Constants.FILE_FOLDER + "/" + "cache";
-	public static final String MX_BIGIMAGE = Constants.FILE_FOLDER + "/"
+	public static final String MX_CACHE = Constant.FILE_FOLDER + "/" + "cache";
+	public static final String MX_BIGIMAGE = Constant.FILE_FOLDER + "/"
 			+ "image";
-	public static final String TAKEPHOTO_SDPATH = Constants.FILE_FOLDER + "/"
+	public static final String TAKEPHOTO_SDPATH = Constant.FILE_FOLDER + "/"
 			+ "photo" + "/";
 	public static FileUtil getInstance() {
 		if (instance == null) {
@@ -144,10 +144,10 @@ public class FileUtil {
 		return f;
 	}
 
-	public File getTakePhotoFileFolder() {
+public File getTakePhotoFileFolder() {
 		File dir = null;
-		if (SDUtil.isExsitSDCard()) {
-			dir = SDUtil.getSDPath(TAKEPHOTO_SDPATH);
+		if (SDCardUtil.isExsitSDCard()) {
+			dir = SDCardUtil.getSDPath(TAKEPHOTO_SDPATH);
 			if (dir == null) {
 				return null;
 			} else if (!dir.exists()) {
@@ -184,8 +184,8 @@ public class FileUtil {
 	public Bitmap getBigImageBitmap(String FileName) {
 		Bitmap bitmap = null;
 		File dir = null;
-		if (SDUtil.isExsitSDCard()) {
-			dir = SDUtil.getSDPath(MX_BIGIMAGE);
+		if (SDCardUtil.isExsitSDCard()) {
+			dir = SDCardUtil.getSDPath(MX_BIGIMAGE);
 			if (dir == null) {
 				return null;
 			} else if (!dir.exists()) {
@@ -209,8 +209,8 @@ public class FileUtil {
 	public boolean saveBigBitmapInSD(String fileName, Bitmap bm) {
 		boolean saveSuccess = false;
 		File dir = null;
-		if (SDUtil.isExsitSDCard()) {
-			dir = SDUtil.getSDPath(MX_BIGIMAGE);
+		if (SDCardUtil.isExsitSDCard()) {
+			dir = SDCardUtil.getSDPath(MX_BIGIMAGE);
 			if (dir == null) {
 				return false;
 			} else if (!dir.exists()) {

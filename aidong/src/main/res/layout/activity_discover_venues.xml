@@ -52,7 +52,7 @@
                 android:scrollbars="vertical"/>
         </android.support.v4.widget.SwipeRefreshLayout>
 
-        <com.leyuan.aidong.ui.activity.discover.view.VenuesFilterView
+        <com.leyuan.aidong.ui.discover.view.VenuesFilterView
             android:id="@+id/filter_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

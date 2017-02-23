@@ -15,7 +15,7 @@ import com.leyuan.aidong.ui.mvp.model.impl.FollowModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.FollowPresent;
 import com.leyuan.aidong.ui.mvp.view.FollowFragmentView;
 import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.widget.customview.SwitcherLayout;
+import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
 import java.util.List;

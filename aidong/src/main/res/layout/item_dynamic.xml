@@ -3,7 +3,7 @@
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?selectableItemBackground"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <!--头部用户信息布局-->
@@ -56,7 +56,7 @@
     </RelativeLayout>
 
     <!--视频的布局-->
-    <com.leyuan.aidong.widget.customview.SquareRelativeLayout
+    <com.leyuan.aidong.widget.SquareRelativeLayout
         android:id="@+id/video_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -69,7 +69,7 @@
             android:layout_height="match_parent"
             android:background="@color/line_color"
             fresco:placeholderImage="@color/line_color"
-            fresco:placeholderImageScaleType="centerInside"
+            fresco:placeholderImageScaleType="fitCenter"
             fresco:pressedStateOverlayImage="@color/color_image_press"/>
 
 
@@ -81,7 +81,7 @@
             android:adjustViewBounds="true"
             android:background="@drawable/play_small"
             android:scaleType="centerCrop" />
-    </com.leyuan.aidong.widget.customview.SquareRelativeLayout>
+    </com.leyuan.aidong.widget.SquareRelativeLayout>
 
     <!--1,2,4,6张图片的布局-->
     <android.support.v7.widget.RecyclerView
@@ -134,11 +134,7 @@
                 fresco:placeholderImage="@color/line_color"
                 fresco:placeholderImageScaleType="fitCenter"
                 fresco:pressedStateOverlayImage="@color/color_image_press" />
-
         </LinearLayout>
-
-
-
     </LinearLayout>
 
     <!-- 5张图片的布局  -->
@@ -185,7 +181,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="122dp"
-            fresco:actualImageScaleType="centerCrop"
+            fresco:actualImageScaleType="fitCenter"
             fresco:placeholderImage="@color/line_color"
             fresco:placeholderImageScaleType="fitCenter"
             fresco:pressedStateOverlayImage="@color/color_image_press" />
@@ -196,7 +192,7 @@
             android:layout_weight="1"
             android:layout_height="122dp"
             android:layout_marginLeft="5dp"
-            fresco:actualImageScaleType="centerCrop"
+            fresco:actualImageScaleType="fitCenter"
             fresco:placeholderImage="@color/line_color"
             fresco:pressedStateOverlayImage="@color/color_image_press" />
 
@@ -206,7 +202,7 @@
             android:layout_weight="1"
             android:layout_height="122dp"
             android:layout_marginLeft="5dp"
-            fresco:actualImageScaleType="centerCrop"
+            fresco:actualImageScaleType="fitCenter"
             fresco:placeholderImage="@color/line_color"
             fresco:placeholderImageScaleType="fitCenter"
             fresco:pressedStateOverlayImage="@color/color_image_press" />
@@ -299,7 +295,7 @@
                 android:layout_width="26dp"
                 android:layout_height="26dp"
                 android:layout_centerInParent="true"
-                android:src="@drawable/btn_praise_normal" />
+                android:background="@drawable/btn_praise_normal" />
 
             <TextView
                 android:id="@+id/tv_like_count"

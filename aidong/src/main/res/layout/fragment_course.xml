@@ -19,7 +19,6 @@
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <TextView
-        android:id="@+id/tv_no_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="没有内容"

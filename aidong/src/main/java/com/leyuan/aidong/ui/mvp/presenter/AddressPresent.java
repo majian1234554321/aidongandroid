@@ -1,6 +1,6 @@
 package com.leyuan.aidong.ui.mvp.presenter;
 
-import com.leyuan.aidong.widget.customview.SwitcherLayout;
+import com.leyuan.aidong.widget.SwitcherLayout;
 
 /**
  * 收货地址

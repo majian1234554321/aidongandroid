@@ -20,19 +20,8 @@
             android:background="@color/color_list_distance"
             android:layout_height="0.5dp" />
 
-        <include
-            android:id="@+id/tabLayout"
-            layout="@layout/layout_home_tab_bottom" >
+        <include layout="@layout/layout_home_tab_bottom" >
         </include>
     </LinearLayout>
-
-    <View
-        android:id="@+id/hazy_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#cc000000"
-        android:clickable="true"
-        android:visibility="gone" >
-    </View>
 
 </FrameLayout>

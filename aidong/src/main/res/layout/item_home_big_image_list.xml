@@ -18,7 +18,7 @@
         android:drawableLeft="@drawable/icon_black_point"
         android:drawableRight="@drawable/icon_black_point"/>
 
-    <com.leyuan.aidong.widget.customview.MyListView
+    <com.leyuan.aidong.widget.MyListView
         android:id="@+id/lv_recommend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

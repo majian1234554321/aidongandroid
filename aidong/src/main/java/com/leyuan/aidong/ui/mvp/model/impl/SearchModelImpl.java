@@ -1,12 +1,12 @@
 package com.leyuan.aidong.ui.mvp.model.impl;
 
+import com.leyuan.aidong.entity.SearchHistoryBean;
 import com.leyuan.aidong.entity.data.CampaignData;
 import com.leyuan.aidong.entity.data.CourseData;
 import com.leyuan.aidong.entity.data.FoodData;
 import com.leyuan.aidong.entity.data.SearchGoodsData;
 import com.leyuan.aidong.entity.data.UserData;
 import com.leyuan.aidong.entity.data.VenuesData;
-import com.leyuan.aidong.entity.greendao.SearchHistory;
 import com.leyuan.aidong.http.RetrofitHelper;
 import com.leyuan.aidong.http.RxHelper;
 import com.leyuan.aidong.http.api.SearchService;
@@ -86,14 +86,14 @@ public class SearchModelImpl implements SearchModel {
     }
 
     @Override
-    public List<SearchHistory> getSearchHistory() {
-        return realm.where(SearchHistory.class).findAll();
+    public List<SearchHistoryBean> getSearchHistory() {
+        return realm.where(SearchHistoryBean.class).findAll();
     }
 
     @Override
     public void insertSearchHistory(String keyword){
         realm.beginTransaction();
-        SearchHistory history = realm.createObject(SearchHistory.class);
+        SearchHistoryBean history = realm.createObject(SearchHistoryBean.class);
         history.setKeyword(keyword);
         realm.commitTransaction();
     }
@@ -101,7 +101,7 @@ public class SearchModelImpl implements SearchModel {
     @Override
     public void deleteSearchHistory() {
         realm.beginTransaction();
-        RealmResults<SearchHistory> results = realm.where(SearchHistory.class).findAll();
+        RealmResults<SearchHistoryBean> results = realm.where(SearchHistoryBean.class).findAll();
         results.deleteAllFromRealm();
         realm.commitTransaction();
     }

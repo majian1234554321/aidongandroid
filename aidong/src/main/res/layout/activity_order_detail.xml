@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:background="@color/white">
     
-    <com.leyuan.aidong.widget.customview.SimpleTitleBar
+    <com.leyuan.aidong.widget.SimpleTitleBar
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
@@ -50,7 +50,7 @@
 
                 <include layout="@layout/inc_line_black" />
 
-                <com.leyuan.aidong.widget.customview.CustomNestRadioGroup
+                <com.leyuan.aidong.widget.CustomNestRadioGroup
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -111,7 +111,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
-                </com.leyuan.aidong.widget.customview.CustomNestRadioGroup>
+                </com.leyuan.aidong.widget.CustomNestRadioGroup>
             </LinearLayout>
 
             <!--底部操作按钮信息-->

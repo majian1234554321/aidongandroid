@@ -44,7 +44,6 @@
         android:background="@color/color_white" >
 
         <TextView
-            android:id="@+id/layout_tab_mine_privacy_rel_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -54,7 +53,7 @@
             android:textColor="@color/color_black"
             android:textSize="@dimen/pref_16dp" />
 
-        <com.leyuan.aidong.widget.customview.UISwitchButton
+        <com.leyuan.aidong.widget.UISwitchButton
             xmlns:switch="http://schemas.android.com/apk/res-auto"
             android:id="@+id/switch1"
             android:layout_width="wrap_content"

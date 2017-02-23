@@ -6,7 +6,7 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <com.leyuan.aidong.widget.customview.SimpleTitleBar
+    <com.leyuan.aidong.widget.SimpleTitleBar
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
@@ -21,9 +21,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:focusable="true"
-            android:focusableInTouchMode="true">
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
 
             <!--默认收货地址-->
             <RelativeLayout
@@ -31,7 +31,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?selectableItemBackground"
-                android:paddingTop="20dp">
+                android:paddingTop="20dp"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/iv_default"
@@ -68,9 +69,9 @@
                     android:layout_below="@+id/tv_name"
                     android:layout_marginBottom="20dp"
                     android:layout_marginLeft="@dimen/left_margin"
+                    android:layout_marginRight="30dp"
                     android:layout_marginTop="10dp"
                     android:text="收货地址: "
-                    android:layout_marginRight="30dp"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
@@ -82,22 +83,57 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/right_margin"
                     android:src="@drawable/icon_right_arrow" />
-
-                <ImageView
-                    android:id="@+id/iv_line"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_address"
-                    android:src="@drawable/icon_dotted_line" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_below="@+id/iv_line"
-                    android:background="@color/line_color" />
-
             </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_self_delivery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <include layout="@layout/inc_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="?selectableItemBackground"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/left_margin"
+                    android:paddingRight="@dimen/right_margin"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="自提时间:"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tv_time"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:drawablePadding="5dp"
+                        android:drawableRight="@drawable/right_icon"
+                        android:gravity="right|center_vertical"
+                        android:text="07-27"
+                        android:textColor="@color/c3"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_address"
+                android:src="@drawable/icon_dotted_line" />
+
+            <include layout="@layout/inc_bold_line" />
 
             <!--购买商品-->
             <android.support.v7.widget.RecyclerView
@@ -187,37 +223,37 @@
 
             <include layout="@layout/inc_line_black" />
 
-            <com.leyuan.aidong.widget.customview.ExtendTextView
+            <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_total_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="商品总额:" />
 
-            <com.leyuan.aidong.widget.customview.ExtendTextView
+            <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_express_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="运费:" />
 
-            <com.leyuan.aidong.widget.customview.ExtendTextView
+            <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_coupon_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="优惠劵:" />
 
-            <com.leyuan.aidong.widget.customview.ExtendTextView
+            <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_discount_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="商品优惠:" />
 
-            <com.leyuan.aidong.widget.customview.ExtendTextView
+            <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_aibi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="爱币:" />
 
-            <com.leyuan.aidong.widget.customview.ExtendTextView
+            <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_aidou"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

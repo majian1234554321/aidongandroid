@@ -2,7 +2,7 @@ package com.leyuan.aidong.ui.mvp.presenter;
 
 import android.support.v7.widget.RecyclerView;
 
-import com.leyuan.aidong.widget.customview.SwitcherLayout;
+import com.leyuan.aidong.widget.SwitcherLayout;
 
 /**
  * 场馆
@@ -26,7 +26,6 @@ public interface VenuesPresent {
      */
     void commonLoadData(SwitcherLayout switcherLayout);
 
-
     /**
      * 下拉刷新场馆列表数据
      */
@@ -48,12 +47,35 @@ public interface VenuesPresent {
     /**
      * 获取场馆课程列表
      * @param id 场馆id
+     * @day 0..6#0表示今天，1表示明天，依次类推
      */
-    void getCourses(SwitcherLayout switcherLayout,String id);
+    void getCourses(SwitcherLayout switcherLayout,String id,String day);
 
     /**
      * 获取场馆教练列表
      * @param id 场馆id
      */
     void getCoaches(SwitcherLayout switcherLayout,String id);
+
+    /**
+     * 预约场馆
+     * @param id 场馆id
+     * @param date 日期
+     * @param period 时间段
+     * @param name 用户名
+     * @param mobile 手机
+     */
+    void appointVenues(String id,String date,String period,String name,String mobile);
+
+
+    /**
+     * 预约私教
+     * @param id 场馆id
+     * @param coachId 教练id
+     * @param date 日期
+     * @param period 时间段
+     * @param name 用户名
+     * @param mobile 手机
+     */
+    void appointCoach(String id,String coachId,String date,String period,String name,String mobile);
 }

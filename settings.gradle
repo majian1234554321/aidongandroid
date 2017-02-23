@@ -1,1 +1,2 @@
-include ':aidong', ':commonlibrary', ':ijkplayer-java', ':ijkplayer-exo'
+include ':aidong', ':ijkplayer-java', ':ijkplayer-exo', ':photoview'
+include ':easeui'

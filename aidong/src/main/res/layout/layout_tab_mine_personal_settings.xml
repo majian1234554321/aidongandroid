@@ -30,13 +30,11 @@
     </RelativeLayout>
 
     <ScrollView
-        android:id="@+id/layout_tab_mine_scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/layout_tab_mine_personal_settings_title_rel" >
 
         <RelativeLayout
-            android:id="@+id/layout_tab_mine_rel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
@@ -74,7 +72,6 @@
                     android:textSize="@dimen/pref_16dp" />
 
                 <TextView
-                    android:id="@+id/layout_tab_mine_personal_settings_binding_mobile_phone_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -101,7 +98,6 @@
                 android:background="@color/color_white" >
 
                 <ImageView
-                    android:id="@+id/layout_tab_mine_personal_settings_binding_third_party_community_img_go"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -110,7 +106,6 @@
                     android:src="@drawable/jiantou_two" />
 
                 <TextView
-                    android:id="@+id/layout_tab_mine_personal_settings_binding_third_party_community_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -137,7 +132,6 @@
                 android:background="@color/color_white" >
 
                 <ImageView
-                    android:id="@+id/layout_tab_mine_personal_settings_message_reminder_img_go"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -146,7 +140,6 @@
                     android:src="@drawable/jiantou_two" />
 
                 <TextView
-                    android:id="@+id/layout_tab_mine_personal_settings_message_reminder_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -173,7 +166,6 @@
                 android:background="@color/color_white" >
 
                 <ImageView
-                    android:id="@+id/layout_tab_mine_personal_settings_Privacy_img_go"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -182,7 +174,6 @@
                     android:src="@drawable/jiantou_two" />
 
                 <TextView
-                    android:id="@+id/layout_tab_mine_personal_settings_Privacy_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -215,7 +206,6 @@
                 android:background="@color/color_white" >
 
                 <ImageView
-                    android:id="@+id/layout_tab_mine_personal_settings_update_password_go"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -224,7 +214,6 @@
                     android:src="@drawable/jiantou_two" />
 
                 <TextView
-                    android:id="@+id/layout_tab_mine_personal_settings_update_password_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -251,7 +240,6 @@
                 android:background="@color/color_white" >
 
                 <ImageView
-                    android:id="@+id/layout_tab_mine_personal_settings_clear_the_cache_go"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -260,7 +248,6 @@
                     android:src="@drawable/jiantou_two" />
 
                 <TextView
-                    android:id="@+id/layout_tab_mine_personal_settings_clear_the_cache_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -293,7 +280,6 @@
                 android:background="@color/color_white" >
 
                 <TextView
-                    android:id="@+id/layout_tab_mine_help_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -303,7 +289,6 @@
                     android:textSize="@dimen/pref_16dp" />
 
                 <ImageView
-                    android:id="@+id/layout_tab_mine_help_img_go"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -328,7 +313,6 @@
                 android:background="@color/color_white" >
 
                 <TextView
-                    android:id="@+id/layout_tab_mine_feedback_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -338,7 +322,6 @@
                     android:textSize="@dimen/pref_16dp" />
 
                 <ImageView
-                    android:id="@+id/layout_tab_mine_feedback_img_go"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -379,7 +362,6 @@
                     android:src="@drawable/jiantou_two" />
 
                 <TextView
-                    android:id="@+id/layout_tab_mine_personal_settings_contactus_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -422,7 +404,6 @@
                 android:textSize="@dimen/pref_16dp" />
 
             <RelativeLayout
-                android:id="@+id/btnaddcourses_rel"
                 android:layout_width="fill_parent"
                 android:layout_height="@dimen/pref_15dp"
                 android:layout_below="@id/button_personal_settings_unlogin"

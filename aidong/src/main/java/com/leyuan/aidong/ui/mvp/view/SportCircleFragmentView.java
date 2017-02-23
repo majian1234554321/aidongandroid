@@ -22,8 +22,8 @@ public interface SportCircleFragmentView {
      */
     void showEndFooterView();
 
-    void updateAddLike(BaseBean baseBean);
+    void updateLikeStatus(boolean isAdd,BaseBean baseBean);
 
-    void updateCancelLike(BaseBean baseBean);
+
 
 }

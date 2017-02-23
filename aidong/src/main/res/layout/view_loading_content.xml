@@ -22,7 +22,14 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp" >
 
-            <com.leyuan.aidong.widget.loadingindicator.AVLoadingIndicatorView
+            <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/loading"
+                android:layout_width="125dp"
+                android:layout_height="60dp"
+                android:layout_centerInParent="true"
+                android:scaleType="fitCenter" />
+
+            <!--<com.leyuan.aidong.widget.loadingindicator.AVLoadingIndicatorView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -30,13 +37,12 @@
                 app:indicatorName="BallPulseIndicator"
                 app:indicatorColor="@color/black"/>
 
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="玩命加载中..."
                 android:textSize="12sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"/>-->
 
         </LinearLayout>
 

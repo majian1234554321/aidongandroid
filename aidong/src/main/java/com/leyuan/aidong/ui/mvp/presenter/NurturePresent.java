@@ -2,7 +2,8 @@ package com.leyuan.aidong.ui.mvp.presenter;
 
 import android.support.v7.widget.RecyclerView;
 
-import com.leyuan.aidong.widget.customview.SwitcherLayout;
+import com.leyuan.aidong.module.pay.PayInterface;
+import com.leyuan.aidong.widget.SwitcherLayout;
 
 /**
  * 营养品
@@ -53,4 +54,14 @@ public interface NurturePresent {
      */
     void requestMoreNurtureData(RecyclerView recyclerView, int pageSize, int page, String brandId,
                                 String priceSort, String countSort, String heatSort);
+
+    /**
+     * 立即购买
+     * @param skuCode
+     * @param amount
+     * @param pickUp
+     * @param pickUpId
+     */
+    void buyNurtureImmediately(String skuCode, int amount, String pickUp, String pickUpId,
+                               PayInterface.PayListener payListener);
 }

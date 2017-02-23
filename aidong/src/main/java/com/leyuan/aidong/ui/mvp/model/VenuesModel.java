@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.mvp.model;
 
 
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.DistrictBean;
 import com.leyuan.aidong.entity.data.CoachData;
@@ -57,6 +58,31 @@ public interface VenuesModel {
      * @param subscriber 返回Subscriber
      * @param id  场馆id
      */
-    void getCourses(Subscriber<CourseData> subscriber, String id);
+    void getCourses(Subscriber<CourseData> subscriber, String id,String day);
+
+    /**
+     * 预约场馆
+     * @param subscriber 返回Subscriber
+     * @param id 场馆id
+     * @param date 预约时间
+     * @param period 预约时段
+     * @param name 用户名
+     * @param mobile 电话
+     */
+    void appointVenues(Subscriber<BaseBean> subscriber,String id,String date,String period,
+                       String name,String mobile);
+
+    /**
+     * 预约教练
+     * @param subscriber 返回Subscriber
+     * @param id 场馆id
+     * @param coachId 教练id
+     * @param date 预约时间
+     * @param period 预约时段
+     * @param name 用户名
+     * @param mobile 电话
+     */
+    void appointCoach(Subscriber<BaseBean> subscriber,String id,String coachId,String date,
+                      String period, String name,String mobile);
 
 }

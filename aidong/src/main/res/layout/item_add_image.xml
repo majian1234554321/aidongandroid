@@ -2,5 +2,5 @@
     android:id="@+id/iv_add"
     android:layout_width="100dp"
     android:layout_height="100dp"
-    android:layout_marginTop="10dp"
-    android:src="@drawable/icon_add_photo" />
+    android:src="@drawable/icon_add_photo"
+    android:background="@color/white"/>

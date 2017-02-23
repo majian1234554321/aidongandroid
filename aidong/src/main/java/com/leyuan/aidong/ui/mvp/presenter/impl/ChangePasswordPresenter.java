@@ -5,7 +5,7 @@ import android.content.Context;
 import com.leyuan.aidong.entity.model.result.LoginResult;
 import com.leyuan.aidong.http.subscriber.BaseSubscriber;
 import com.leyuan.aidong.ui.App;
-import com.leyuan.aidong.ui.mvp.model.ChangePasswordModel;
+import com.leyuan.aidong.ui.mvp.model.impl.ChangePasswordModel;
 import com.leyuan.aidong.ui.mvp.view.ChangePasswordViewInterface;
 
 

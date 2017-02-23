@@ -3,137 +3,34 @@
     <dimen name="size_title">15sp</dimen>  <!--标题字体大小-->
     <dimen name="height_top_bar">46dp</dimen> <!--标题高度-->
 
-    <dimen name="item_max_text_size">16dp</dimen>
-    <dimen name="item_min_text_size">13dp</dimen>
-
     <!--屏幕左右间隙-->
     <dimen name="left_margin">12dp</dimen>
     <dimen name="right_margin">12dp</dimen>
 
     <!--分割线高度-->
-    <dimen name="line_height">0.5dp</dimen>
 
-    <dimen name="padding_search_bar">5dp</dimen>
-    <dimen name="height_row_weixin">65dp</dimen>
-    <dimen name="size_avatar">50dp</dimen>
-    <dimen name="margin_chat_activity">5dp</dimen>
-    <dimen name="field_textsize">14sp</dimen>
-    <dimen name="field_margin_right">5dp</dimen>
-    <dimen name="call_button_padding_vertical">10dp</dimen>
-    <dimen name="call_button_padding_left">25dp</dimen>
-    <dimen name="call_button_padding_right">25dp</dimen>
-    <dimen name="sidebar_text_size">10dp</dimen>
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="image_thumbnail_size">100dp</dimen>
-    <dimen name="image_thumbnail_spacing">1dp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="ui_10_dip">10dp</dimen>
-    <dimen name="margin">1dp</dimen>
     <!-- The width that is used when creating thumbnails of applications. -->
-    <dimen name="thumbnail_width">84dp</dimen>
     <!-- The height that is used when creating thumbnails of applications. -->
-    <dimen name="thumbnail_height">63dp</dimen>
     <!--
          The standard size (both width and height) of an application icon that
          will be displayed in the app launcher and elsewhere.
     -->
-    <dimen name="app_icon_size">48dip</dimen>
-    <dimen name="toast_y_offset">64dip</dimen>
     <!-- Height of the status bar -->
-    <dimen name="status_bar_height">25dip</dimen>
     <!-- Size of the fastscroll hint letter -->
-    <dimen name="fastscroll_overlay_size">104dp</dimen>
     <!-- Width of the fastscroll thumb -->
-    <dimen name="fastscroll_thumb_width">64dp</dimen>
     <!-- Height of the fastscroll thumb -->
-    <dimen name="fastscroll_thumb_height">52dp</dimen>
-
-
-    <dimen name="action_button_size">72dp</dimen>
-    <dimen name="action_button_content_margin">16dp</dimen>
-    <dimen name="action_button_margin">12dp</dimen>
-    <dimen name="action_menu_radius">96dp</dimen>
-
-    <dimen name="sub_action_button_size">36dp</dimen>
-    <dimen name="sub_action_button_content_margin">6dp</dimen>
 
 
     <dimen name="pref_1px">1px</dimen>
-    <dimen name="pref_120px">120px</dimen>
-    <dimen name="pref_354px">354px</dimen>
-    <dimen name="pref_200px">200px</dimen>
-    <dimen name="pref_1dip">1dip</dimen>
-    <dimen name="pref_2dip">2dip</dimen>
-    <dimen name="pref_5dip">5dip</dimen>
-    <dimen name="pref_6dip">6dip</dimen>
-    <dimen name="pref_7dip">7dip</dimen>
-    <dimen name="pref_8dip">8dip</dimen>
-    <dimen name="pref_9dip">9dip</dimen>
-    <dimen name="pref_10dip">10dip</dimen>
-    <dimen name="pref_18dip">18dip</dimen>
-    <dimen name="pref_26dip">26dip</dimen>
-    <dimen name="pref_15dip">15dip</dimen>
-    <dimen name="pref_16dip">16dip</dimen>
-    <dimen name="pref_20dip">20dip</dimen>
-    <dimen name="pref_24dip">24dip</dimen>
-    <dimen name="pref_25dip">25dip</dimen>
-    <dimen name="pref_30dip">30dip</dimen>
-    <dimen name="pref_35dip">35dip</dimen>
-    <dimen name="pref_40dip">40dip</dimen>
-    <dimen name="pref_45dip">45dip</dimen>
-    <dimen name="pref_50dip">50dip</dimen>
-    <dimen name="pref_55dip">55dip</dimen>
-    <dimen name="pref_60dip">60dip</dimen>
-    <dimen name="pref_65dip">65dip</dimen>
-    <dimen name="pref_70dip">70dip</dimen>
-    <dimen name="pref_75dip">75dip</dimen>
-    <dimen name="pref_80dip">80dip</dimen>
-    <dimen name="pref_100dip">100dip</dimen>
-    <dimen name="pref_120dip">120dip</dimen>
-    <dimen name="pref_130dip">130dip</dimen>
-    <dimen name="pref_160dip">160dip</dimen>
-    <dimen name="pref_163dip">163dip</dimen>
-    <dimen name="pref_180dip">180dip</dimen>
-    <dimen name="pref_195dip">195dip</dimen>
-    <dimen name="pref_200dip">200dip</dimen>
-    <dimen name="pref_230dip">230dip</dimen>
-    <dimen name="pref_247dip">247dip</dimen>
-    <dimen name="pref_300dip">300dip</dimen>
-    <dimen name="pref_211dip">211dip</dimen>
-    <dimen name="pref_79dip">79dip</dimen>
-    <dimen name="font_10sp">10sp</dimen>
-    <dimen name="font_11sp">11sp</dimen>
-    <dimen name="font_12sp">12sp</dimen>
-    <dimen name="font_13sp">13sp</dimen>
-    <dimen name="font_14sp">14sp</dimen>
-    <dimen name="font_15sp">15sp</dimen>
     <dimen name="font_16sp">16sp</dimen>
-    <dimen name="font_17sp">17sp</dimen>
-    <dimen name="font_18sp">18sp</dimen>
-    <dimen name="font_19sp">19sp</dimen>
-    <dimen name="font_20sp">20sp</dimen>
-    <dimen name="font_21sp">21sp</dimen>
-    <dimen name="font_22sp">22sp</dimen>
-    <dimen name="font_25sp">25sp</dimen>
-    <dimen name="font_26sp">26sp</dimen>
-    <dimen name="font_28sp">28sp</dimen>
     <dimen name="pref__1dp">-1dp</dimen>
-    <dimen name="pref__5dp">-5dp</dimen>
     <dimen name="pref_0.5dp">0.5dp</dimen>
     <dimen name="pref_0dp">0dp</dimen>
     <dimen name="pref_1dp">1dp</dimen>
-    <dimen name="pref_2dp">2dp</dimen>
-    <dimen name="pref_2_5dp">2.5dp</dimen>
-    <dimen name="pref_3dp">3dp</dimen>
-    <dimen name="pref_4dp">4dp</dimen>
     <dimen name="pref_5dp">5dp</dimen>
-    <dimen name="pref_6dp">6dp</dimen>
     <dimen name="pref_7dp">7dp</dimen>
-    <dimen name="pref_8dp">8dp</dimen>
-    <dimen name="pref_9dp">9dp</dimen>
     <dimen name="pref_10dp">10dp</dimen>
-    <dimen name="pref_11dp">11dp</dimen>
     <dimen name="pref_12dp">12dp</dimen>
     <dimen name="pref_13dp">13dp</dimen>
     <dimen name="pref_14dp">14dp</dimen>
@@ -145,87 +42,25 @@
     <dimen name="pref_20dp">20dp</dimen>
     <dimen name="pref_24dp">24dp</dimen>
     <dimen name="pref_25dp">25dp</dimen>
-    <dimen name="pref_26dp">26dp</dimen>
-    <dimen name="pref_27dp">27dp</dimen>
-    <dimen name="pref_28dp">28dp</dimen>
     <dimen name="pref_30dp">30dp</dimen>
-    <dimen name="pref_32dp">32dp</dimen>
-    <dimen name="pref_33dp">33dp</dimen>
     <dimen name="pref_35dp">35dp</dimen>
-    <dimen name="pref_36dp">36dp</dimen>
-    <dimen name="pref_38dp">38dp</dimen>
-    <dimen name="pref_40dp">40dp</dimen>
     <dimen name="pref_43dp">43dp</dimen>
-    <dimen name="pref_44dp">44dp</dimen>
     <dimen name="pref_45dp">45dp</dimen>
-    <dimen name="pref_48dp">48dp</dimen>
     <dimen name="pref_50dp">50dp</dimen>
-    <dimen name="pref_53dp">53dp</dimen>
     <dimen name="pref_56dp">56dp</dimen>
-    <dimen name="pref_60dp">60dp</dimen>
-    <dimen name="pref_64dp">64dp</dimen>
-    <dimen name="pref_65dp">65dp</dimen>
-    <dimen name="pref_67dp">67dp</dimen>
-    <dimen name="pref_70dp">70dp</dimen>
-    <dimen name="pref_77dp">77dp</dimen>
-    <dimen name="pref_79dp">79dp</dimen>
-    <dimen name="pref_80dp">80dp</dimen>
     <dimen name="pref_100dp">100dp</dimen>
     <dimen name="pref_109dp">109dp</dimen>
-    <dimen name="pref_110dp">110dp</dimen>
-    <dimen name="pref_130dp">130dp</dimen>
-    <dimen name="pref_145dp">145dp</dimen>
     <dimen name="pref_150dp">150dp</dimen>
-    <dimen name="pref_160dp">160dp</dimen>
-    <dimen name="pref_168dp">168dp</dimen>
-    <dimen name="pref_170dp">170dp</dimen>
-    <dimen name="pref_200dp">200dp</dimen>
-    <dimen name="pref_221dp">221dp</dimen>
-    <dimen name="pref_230dp">230dp</dimen>
-    <dimen name="pref_235dp">235dp</dimen>
-    <dimen name="pref_280dp">280dp</dimen>
-    <dimen name="pref_361dp">361dp</dimen>
 
 
     <dimen name="top_hight">48dp</dimen>
     <dimen name="length34">19sp</dimen>
-    <dimen name="length30">17sp</dimen>
     <dimen name="length28">15sp</dimen>
     <dimen name="length22">13sp</dimen>
 
-    <dimen name="dp_066">0.66dp</dimen>
-    <dimen name="dp_4">4dp</dimen>
-    <dimen name="dp_8">8dp</dimen>
     <dimen name="dp_10">10dp</dimen>
-    <dimen name="dp_14">14dp</dimen>
-    <dimen name="dp_22">22dp</dimen>
-    <dimen name="dp_36">36dp</dimen>
-    <dimen name="dp_40">40dp</dimen>
-    <dimen name="dp_45">45dp</dimen>
-    <dimen name="dp_60">60dp</dimen>
-    <dimen name="dp_72">72dp</dimen>
 
-    <dimen name="sp_12">12sp</dimen>
-    <dimen name="sp_14">14sp</dimen>
-    <dimen name="sp_16">16sp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="nav_header_vertical_spacing">16dp</dimen>
-    <dimen name="nav_header_height">160dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
-    <dimen name="date_width">85dp</dimen>
-    <dimen name="length32">20sp</dimen>
-    <dimen name="length29">16sp</dimen>
-    <dimen name="length20">12sp</dimen>
-    <dimen name="news_hight">145dp</dimen>
-    <dimen name="text_twelve_sp">12sp</dimen>
-    <dimen name="bottom_button_high">40dp</dimen>
-    <dimen name="grid_item">120dp</dimen>
-    <dimen name="grid_sports_item">170dp</dimen>
-    <dimen name="grid_commodity_item">165dp</dimen>
-    <dimen name="detail_height">130dp</dimen>
-    <dimen name="ad_viewpager_height">190dp</dimen>
-    <dimen name="ad_viewpager_height_1">140dp</dimen>
-    <dimen name="commodity_list_item_height">130dp</dimen>
 
     <dimen name="video_item_max_height">360dp</dimen>
     <dimen name="video_item_normal_height">100dp</dimen>
@@ -235,7 +70,10 @@
 
     <fraction name="item_max_mask_alpha">25%</fraction>
     <fraction name="item_normal_mask_alpha">55%</fraction>
+    <dimen name="text_size_medium">12sp</dimen>
 
-
-
+    <dimen name="item_spacing">8dp</dimen>
+    <dimen name="item_half_spacing">4dp</dimen>
+    <dimen name="media_margin">10dp</dimen>
+    <dimen name="corner_radius">2dp</dimen>
 </resources>

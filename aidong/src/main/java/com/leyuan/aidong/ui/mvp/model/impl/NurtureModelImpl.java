@@ -5,6 +5,7 @@ import android.content.Context;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.data.NurtureData;
 import com.leyuan.aidong.entity.data.NurtureDetailData;
+import com.leyuan.aidong.entity.data.PayOrderData;
 import com.leyuan.aidong.entity.data.VenuesData;
 import com.leyuan.aidong.http.RetrofitHelper;
 import com.leyuan.aidong.http.RxHelper;
@@ -53,6 +54,15 @@ public class NurtureModelImpl implements NurtureModel {
     public void getDeliveryVenues(Subscriber<VenuesData> subscriber, String skuCode, int page) {
         nurtureService.getDeliveryVenues(skuCode,page)
                 .compose(RxHelper.<VenuesData>transform())
+                .subscribe(subscriber);
+
+    }
+
+    @Override
+    public void buyNurtureImmediately(Subscriber<PayOrderData> subscriber, String skuCode, int amount,
+                                      String pickUp, String pickUpId) {
+        nurtureService.buyNurtureImmediately(skuCode,amount,pickUp,pickUpId)
+                .compose(RxHelper.<PayOrderData>transform())
                 .subscribe(subscriber);
 
     }

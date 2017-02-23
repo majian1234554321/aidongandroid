@@ -8,18 +8,18 @@ import android.os.Parcelable;
  * Created by song on 2016/8/2.
  */
 public class CoachBean implements Parcelable {
-    private String coach_id;
+    private String id;
     private String name;
     private String avatar;
     private String gender;
-
+    private String mobile;
 
     public String getCoachId() {
-        return coach_id;
+        return id;
     }
 
     public void setCoach_id(String coach_id) {
-        this.coach_id = coach_id;
+        this.id = coach_id;
     }
 
     public String getName() {
@@ -46,6 +46,14 @@ public class CoachBean implements Parcelable {
         this.gender = gender;
     }
 
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -53,23 +61,25 @@ public class CoachBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.coach_id);
+        dest.writeString(this.id);
         dest.writeString(this.name);
         dest.writeString(this.avatar);
         dest.writeString(this.gender);
+        dest.writeString(this.mobile);
     }
 
     public CoachBean() {
     }
 
     protected CoachBean(Parcel in) {
-        this.coach_id = in.readString();
+        this.id = in.readString();
         this.name = in.readString();
         this.avatar = in.readString();
         this.gender = in.readString();
+        this.mobile = in.readString();
     }
 
-    public static final Parcelable.Creator<CoachBean> CREATOR = new Parcelable.Creator<CoachBean>() {
+    public static final Creator<CoachBean> CREATOR = new Creator<CoachBean>() {
         @Override
         public CoachBean createFromParcel(Parcel source) {
             return new CoachBean(source);

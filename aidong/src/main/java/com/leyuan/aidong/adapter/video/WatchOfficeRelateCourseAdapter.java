@@ -8,7 +8,7 @@ import android.widget.ImageView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.video.WatchOfficeCourseBean;
-import com.leyuan.aidong.ui.activity.home.CourseActivity;
+import com.leyuan.aidong.ui.home.activity.CourseActivity;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 

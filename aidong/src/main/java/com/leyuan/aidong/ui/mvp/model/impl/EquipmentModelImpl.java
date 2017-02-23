@@ -5,6 +5,7 @@ import android.content.Context;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.data.EquipmentData;
 import com.leyuan.aidong.entity.data.EquipmentDetailData;
+import com.leyuan.aidong.entity.data.PayOrderData;
 import com.leyuan.aidong.entity.data.VenuesData;
 import com.leyuan.aidong.http.RetrofitHelper;
 import com.leyuan.aidong.http.RxHelper;
@@ -55,6 +56,14 @@ public class EquipmentModelImpl implements EquipmentModel {
     public void getDeliveryVenues(Subscriber<VenuesData> subscriber, String skuCode, int page) {
         equipmentService.getDeliveryVenues(skuCode,page)
                 .compose(RxHelper.<VenuesData>transform())
+                .subscribe(subscriber);
+    }
+
+    @Override
+    public void buyEquipmentImmediately(Subscriber<PayOrderData> subscriber, String skuCode, int amount,
+                                        String pickUp, String pickUpId) {
+        equipmentService.buyEquipmentImmediately(skuCode,amount,pickUp,pickUpId)
+                .compose(RxHelper.<PayOrderData>transform())
                 .subscribe(subscriber);
     }
 }

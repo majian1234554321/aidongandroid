@@ -127,5 +127,13 @@ public class SDCardUtil {
         return null;
     }
 
+    public static boolean isExsitSDCard(){
+        boolean sdCardExist = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
+        return sdCardExist;
+    }
 
+    public static File getSDPath(String dirName) {
+        File sdDir = new File(Environment.getExternalStorageDirectory() + "/" + dirName);
+        return sdDir;
+    }
 }

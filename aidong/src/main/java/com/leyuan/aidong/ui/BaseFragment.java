@@ -8,50 +8,14 @@ import android.support.v4.widget.SwipeRefreshLayout;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.BannerBean;
-import com.leyuan.aidong.http.Logic;
-import com.leyuan.aidong.ui.activity.discover.VenuesDetailActivity;
-import com.leyuan.aidong.ui.activity.home.CampaignDetailActivity;
-import com.leyuan.aidong.ui.activity.home.CourseDetailActivity;
-import com.leyuan.aidong.ui.activity.home.GoodsDetailActivity;
-import com.leyuan.commonlibrary.http.IHttpCallback;
-import com.leyuan.commonlibrary.http.IHttpTask;
-import com.leyuan.commonlibrary.http.IHttpToastCallBack;
+import com.leyuan.aidong.ui.discover.activity.VenuesDetailActivity;
+import com.leyuan.aidong.ui.home.activity.CampaignDetailActivity;
+import com.leyuan.aidong.ui.home.activity.CourseDetailActivity;
+import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
 
-import org.apache.http.message.BasicNameValuePair;
-
-import java.util.ArrayList;
-import java.util.List;
-
-public class BaseFragment extends Fragment implements IHttpToastCallBack {
+public class BaseFragment extends Fragment  {
     private static final String TAG = "BaseFragment";
-    protected int pageSize = 15; //分页数据量
-
-    protected Logic logic;
-
-    public void addTask(IHttpCallback callBack, IHttpTask tsk, int method,
-                        int requestCode) {
-        if(logic ==null)
-            logic =new Logic();
-        logic.doLogic(callBack, tsk, method, requestCode, this);
-    }
-    public void addTask(IHttpCallback callBack, IHttpTask tsk, int method,
-                        int requestCode, IHttpToastCallBack base) {
-        if(logic ==null)
-            logic =new Logic();
-        logic.doLogic(callBack, tsk, method, requestCode, base);
-    }
-
-    @Override
-    public void showToastOnUiThread(CharSequence msg) {
-
-    }
-
-
-    protected List<BasicNameValuePair> paramsInit(int page) {
-        List<BasicNameValuePair> params = new ArrayList<>();
-        params.add(new BasicNameValuePair("page", "" + page));
-        return params;
-    }
+    protected int pageSize = 25; //分页数据量
 
     /**
      * 设置下拉刷新颜色

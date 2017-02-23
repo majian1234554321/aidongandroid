@@ -20,7 +20,7 @@ import static android.content.Context.ACTIVITY_SERVICE;
 public class EmConfigManager {
 
 
-    private static void initialize(Context context) {
+    public static void initialize(Context context) {
         EMOptions options = new EMOptions();
         // 默认添加好友时，是不需要验证的，改成需要验证
         // options.setAcceptInvitationAlways(false);
@@ -45,7 +45,7 @@ public class EmConfigManager {
         EMClient.getInstance().setDebugMode(true);
     }
 
-    public static String  getAppName(int pID,Context context) {
+    private static String  getAppName(int pID,Context context) {
         String processName = null;
         ActivityManager am = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
         List l = am.getRunningAppProcesses();

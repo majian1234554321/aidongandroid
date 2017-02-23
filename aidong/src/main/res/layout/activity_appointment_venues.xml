@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <com.leyuan.aidong.widget.customview.SimpleTitleBar
+    <com.leyuan.aidong.widget.SimpleTitleBar
+        android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
         app:stb_title="预约场馆"/>
@@ -68,7 +69,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/shape_solid_black"
+            android:background="@drawable/shape_solid_corner_black"
             android:gravity="center"
             android:text="上午"
             android:textColor="@color/white"
@@ -80,7 +81,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
-            android:background="@drawable/shape_stroke_white"
+            android:background="@drawable/shape_solid_corner_white"
             android:gravity="center"
             android:text="下午"
             android:textColor="@color/black"

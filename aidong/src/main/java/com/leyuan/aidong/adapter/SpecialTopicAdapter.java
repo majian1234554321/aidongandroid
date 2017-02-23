@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.video.SpecialTopicInfo;
-import com.leyuan.aidong.ui.activity.video.SpecialTopicFragment;
+import com.leyuan.aidong.ui.video.activity.SpecialTopicFragment;
 import com.leyuan.aidong.utils.Logger;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;

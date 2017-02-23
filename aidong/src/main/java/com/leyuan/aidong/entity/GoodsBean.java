@@ -16,13 +16,15 @@ public class GoodsBean implements Parcelable {
     private  String cover;         //商品封面
     private  String name;          //商品名字
     private  String price;         //商品售价
-    private  String  market_price; //商品市场价
-
+    private  String market_price; //商品市场价
+    private  String type;
 
     /******订单商品中需要用到的字段******/
     private ArrayList<String> spec_name;
     private ArrayList<String> spec_value;
     private String amount;                  //商品数量
+    private String recommend_code;          //推荐码
+    private DeliveryBean deliveryBean;      //商品默认取货方式
     private boolean checked = false;        //标记商品是否被选中
 
     public String getSku_code() {
@@ -113,6 +115,13 @@ public class GoodsBean implements Parcelable {
         this.code = code;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     @Override
     public String toString() {
@@ -131,6 +140,9 @@ public class GoodsBean implements Parcelable {
                 '}';
     }
 
+    public GoodsBean() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -145,13 +157,11 @@ public class GoodsBean implements Parcelable {
         dest.writeString(this.name);
         dest.writeString(this.price);
         dest.writeString(this.market_price);
+        dest.writeString(this.type);
         dest.writeStringList(this.spec_name);
         dest.writeStringList(this.spec_value);
         dest.writeString(this.amount);
         dest.writeByte(this.checked ? (byte) 1 : (byte) 0);
-    }
-
-    public GoodsBean() {
     }
 
     protected GoodsBean(Parcel in) {
@@ -162,6 +172,7 @@ public class GoodsBean implements Parcelable {
         this.name = in.readString();
         this.price = in.readString();
         this.market_price = in.readString();
+        this.type = in.readString();
         this.spec_name = in.createStringArrayList();
         this.spec_value = in.createStringArrayList();
         this.amount = in.readString();

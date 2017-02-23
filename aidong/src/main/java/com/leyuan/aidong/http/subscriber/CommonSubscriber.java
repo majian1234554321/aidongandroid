@@ -1,7 +1,7 @@
 package com.leyuan.aidong.http.subscriber;
 
 import com.leyuan.aidong.utils.Logger;
-import com.leyuan.aidong.widget.customview.SwitcherLayout;
+import com.leyuan.aidong.widget.SwitcherLayout;
 
 import rx.Subscriber;
 
@@ -16,7 +16,6 @@ public abstract class CommonSubscriber<T> extends Subscriber<T> {
 
     public CommonSubscriber(SwitcherLayout switcherLayout) {
         this.switcherLayout = switcherLayout;
-
     }
 
     /**

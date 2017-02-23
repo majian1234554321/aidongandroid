@@ -21,7 +21,7 @@ public class FormatUtil {
     /**
      * 将String转换成float
      * @param str String
-     * @return -1表示转换失败
+     * @return -1.0表示转换失败
      */
     public static float parseFloat(String str){
         float result = -1;
@@ -36,7 +36,7 @@ public class FormatUtil {
     /**
      * 将String转换成float
      * @param str String
-     * @return -1表示转换失败
+     * @return -1.0表示转换失败
      */
     public static double parseDouble(String str){
         double result = -1;

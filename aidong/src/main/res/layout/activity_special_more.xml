@@ -62,7 +62,6 @@
 
             <TextView
 
-                android:id="@+id/tv_relate_video"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -93,7 +92,6 @@
                 android:background="#77ebebeb"/>
 
             <TextView
-                android:id="@+id/tv_relate_course"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rv_relate_relate_video"
@@ -104,7 +102,7 @@
                 android:textColor="@color/white"
                 android:textSize="13sp"/>
 
-            <com.leyuan.aidong.widget.customview.MyListView
+            <com.leyuan.aidong.widget.MyListView
                 android:id="@+id/lv_relate_course"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -113,7 +111,7 @@
                 android:divider="@null"
                 android:dividerHeight="10dp"
                 android:paddingBottom="10dp">
-            </com.leyuan.aidong.widget.customview.MyListView>
+            </com.leyuan.aidong.widget.MyListView>
 
 
             <View
@@ -125,7 +123,6 @@
                 android:background="#77ebebeb"/>
 
             <TextView
-                android:id="@+id/tv_relate_good"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/view_middle"

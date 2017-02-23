@@ -14,7 +14,7 @@ import com.leyuan.aidong.ui.mvp.presenter.UserInfoPresent;
 import com.leyuan.aidong.ui.mvp.view.UserDynamicFragmentView;
 import com.leyuan.aidong.ui.mvp.view.UserInfoActivityView;
 import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.widget.customview.SwitcherLayout;
+import com.leyuan.aidong.widget.SwitcherLayout;
 
 /**
  * 用户资料

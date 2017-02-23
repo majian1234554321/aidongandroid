@@ -4,8 +4,8 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
-
     <RelativeLayout
+        android:id="@+id/rl_top"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
         android:background="@color/black"
@@ -31,7 +31,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/line_color">
+        android:background="@color/line_color"
+        android:layout_below="@+id/rl_top">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -63,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentBottom="true"
-                    android:text="1000字"
+                    android:text="140字"
                     android:textColor="@color/c9"
                     android:layout_marginRight="@dimen/right_margin"
                     android:layout_marginBottom="@dimen/right_margin"/>
@@ -73,9 +74,7 @@
                 android:id="@+id/rv_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:paddingBottom="15dp" />
-
 
             <Button
                 android:id="@+id/bt_publish"
@@ -83,49 +82,11 @@
                 android:layout_height="@dimen/height_top_bar"
                 android:layout_marginLeft="@dimen/pref_10dp"
                 android:layout_marginRight="@dimen/pref_10dp"
-                android:layout_marginTop="@dimen/pref_50dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/btn_shape_green"
                 android:text="@string/release"
                 android:textColor="@color/color_white"
                 android:textSize="16sp" />
         </LinearLayout>
-
-
     </ScrollView>
-
-    <RelativeLayout
-        android:id="@+id/rl_rotate_bg"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-
-        >
-        <RelativeLayout
-            android:layout_width="100dp"
-            android:layout_height="80dp"
-            android:layout_centerInParent="true"
-            android:background="#77000000"
-
-            >
-            <ImageView
-                android:id="@+id/img_progress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:background="@drawable/progress_1"
-
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/img_progress"
-                android:layout_centerHorizontal="true"
-                android:textColor="#77000000"
-                android:textSize="12sp"
-                android:text="正在压缩视频"
-
-                />
-        </RelativeLayout>
-
-    </RelativeLayout>
 </RelativeLayout>

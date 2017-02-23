@@ -30,8 +30,7 @@
                 android:gravity="center"
                 android:text="爱动同道"
                 android:textColor="@color/white"
-                android:textSize="17sp"
-                android:id="@+id/textView3" />
+                android:textSize="17sp" />
 
             <TextView
                 android:id="@+id/tv_filter"

@@ -33,7 +33,7 @@
             android:textSize="15sp"
             android:textColor="@color/black"
             android:gravity="center"
-            android:background="@drawable/shape_stroke_white"/>
+            android:background="@drawable/shape_solid_corner_white"/>
 
         <TextView
             android:id="@+id/tv_no_vip"

@@ -1,6 +1,7 @@
 package com.leyuan.aidong.module.chat;
 
 import com.hyphenate.EMCallBack;
+import com.hyphenate.EMError;
 import com.hyphenate.chat.EMClient;
 import com.leyuan.aidong.utils.Logger;
 
@@ -18,7 +19,7 @@ public class EmChatLoginManager {
 //
 //    自动登录在以下几种情况下会被取消：
 //
-//    用户调用了 SDK 的登出动作；
+//    用户调用了 SDK 的登出动作;
 //    用户在别的设备上更改了密码，导致此设备上自动登录失败；
 //    用户的账号被从服务器端删除；
 //    用户从另一个设备登录，把当前设备上登录的用户踢出。
@@ -42,8 +43,12 @@ public class EmChatLoginManager {
 
             @Override
             public void onError(int code, String message) {
-                Logger.d("EMCHAT", "登录聊天服务器失败！");
+                Logger.d("EMCHAT", "登录聊天服务器失败！ error code = " + code);
                 listner.onLogin(false);
+                if (code == EMError.USER_NOT_FOUND) {
+                    listner.onUserNotFound();
+                }
+
             }
         });
     }
@@ -51,7 +56,7 @@ public class EmChatLoginManager {
     public interface OnLoginListner {
         void onLogin(boolean result);
 
-        void loginOut(boolean result);
+        void onUserNotFound();
     }
 
     public void loginOut() {
@@ -75,7 +80,6 @@ public class EmChatLoginManager {
             }
         });
     }
-
 
 
 }

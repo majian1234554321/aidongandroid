@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <!--头部用户信息布局-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="@dimen/left_margin"
+        android:layout_marginRight="@dimen/right_margin">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/dv_avatar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            fresco:actualImageScaleType="centerCrop"
+            fresco:roundAsCircle="true"
+            fresco:placeholderImage="@drawable/place_holder_user" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/dv_avatar"
+            android:text="这是谁"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/iv_coach_flag"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="13dp"
+            android:layout_toRightOf="@+id/tv_name"
+            android:src="@drawable/icon_coach" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tv_name"
+            android:layout_below="@+id/tv_name"
+            android:layout_marginTop="5dp"
+            android:text="12分钟前"
+            android:textColor="@color/c9"
+            android:textSize="12sp" />
+    </RelativeLayout>
+</LinearLayout>

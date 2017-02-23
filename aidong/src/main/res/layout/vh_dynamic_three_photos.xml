@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:id="@+id/ll_root"
+    android:orientation="vertical">
+
+    <include layout="@layout/inc_dynamic_header" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="238dp"
+        android:orientation="horizontal">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/dv_one"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            fresco:actualImageScaleType="centerCrop"
+            fresco:placeholderImage="@color/line_color"
+            fresco:placeholderImageScaleType="fitCenter"
+            fresco:pressedStateOverlayImage="@color/color_image_press" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/dv_two"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                fresco:actualImageScaleType="centerCrop"
+                fresco:placeholderImage="@color/line_color"
+                fresco:placeholderImageScaleType="fitCenter"
+                fresco:pressedStateOverlayImage="@color/color_image_press" />
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/dv_three"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                fresco:actualImageScaleType="centerCrop"
+                fresco:placeholderImage="@color/line_color"
+                fresco:placeholderImageScaleType="fitCenter"
+                fresco:pressedStateOverlayImage="@color/color_image_press" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <include layout="@layout/inc_dynamic_bottom" />
+</LinearLayout>

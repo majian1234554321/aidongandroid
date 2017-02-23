@@ -10,14 +10,15 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.stetho.Stetho;
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMOptions;
 import com.leyuan.aidong.entity.model.UserCoach;
-import com.leyuan.aidong.utils.AppUtil;
+import com.leyuan.aidong.module.chat.EmConfigManager;
+import com.leyuan.aidong.module.photopicker.BoxingFrescoLoader;
+import com.leyuan.aidong.module.photopicker.BoxingUcrop;
+import com.leyuan.aidong.module.photopicker.boxing.BoxingCrop;
+import com.leyuan.aidong.module.photopicker.boxing.BoxingMediaLoader;
+import com.leyuan.aidong.module.photopicker.boxing.loader.IBoxingMediaLoader;
 import com.leyuan.aidong.utils.LogAidong;
-import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.SharePrefUtils;
-import com.lidroid.xutils.DbUtils;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -38,8 +39,6 @@ public class App extends Application {
     public static String city = "上海";
     public static String addressStr;
 
-    public DbUtils db;
-
     public LocationClient mLocationClient = null;
     public BDLocationListener myListener = new MyLocationListener();
 
@@ -58,8 +57,12 @@ public class App extends Application {
         Fresco.initialize(this);
         initBaiduLoc();
         initImageLoader(getApplicationContext());
-        initDbUtils();
-        initEMchat();
+        //initDbUtils();
+        EmConfigManager.initialize(this);
+        IBoxingMediaLoader loader = new BoxingFrescoLoader(this);
+        BoxingMediaLoader.getInstance().init(loader);
+        BoxingCrop.getInstance().init(new BoxingUcrop());
+        //   initImagePicker();
 
 
         Realm.init(context);
@@ -68,36 +71,26 @@ public class App extends Application {
     }
 
 
-
-
-    private void initEMchat() {
-        EMOptions options = new EMOptions();
-        // 默认添加好友时，是不需要验证的，改成需要验证
-        // options.setAcceptInvitationAlways(false);
-        //自动登录属性默认是 true 打开的，如果不需要自动登录,设置为 false 关闭。
-        //  options.setAutoLogin(false);
-
-        int pid = android.os.Process.myPid();
-        String processAppName = AppUtil.getAppName(pid,this);
-        // 如果APP启用了远程的service，此application:onCreate会被调用2次
-        // 为了防止环信SDK被初始化2次，加此判断会保证SDK被初始化1次
-        // 默认的APP会在以包名为默认的process name下运行，如果查到的process name不是APP的process name就立即返回
-
-        if (processAppName == null ||!processAppName.equalsIgnoreCase(this.getPackageName())) {
-            Logger.e("","enter the service process!");
-            // 则此application::onCreate 是被service 调用的，直接返回
-            return;
-        }
-
-        //初始化
-        EMClient.getInstance().init(this, options);
-        //在做打包混淆时，关闭debug模式，避免消耗不必要的资源
-        EMClient.getInstance().setDebugMode(true);
-    }
+    /**
+     * 初始化仿微信控件ImagePicker
+     */
+    /*private void initImagePicker() {
+        ImagePicker imagePicker = ImagePicker.getInstance();
+        imagePicker.setImageLoader(new UILImageLoader());   //设置图片加载器
+        imagePicker.setShowCamera(true);  //显示拍照按钮
+        imagePicker.setCrop(false);        //允许裁剪（单选才有效）
+        imagePicker.setSaveRectangle(true); //是否按矩形区域保存
+        imagePicker.setSelectLimit(9);    //选中数量限制
+        imagePicker.setStyle(CropImageView.Style.RECTANGLE);  //裁剪框的形状
+        imagePicker.setFocusWidth(800);   //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
+        imagePicker.setFocusHeight(800);  //裁剪框的高度。单位像素（圆形自动取宽高最小值）
+        imagePicker.setOutPutX(1000);//保存文件的宽度。单位像素
+        imagePicker.setOutPutY(1000);//保存文件的高度。单位像素
+    }*/
 
     private void initDbUtils() {
         try {
-            db = DbUtils.create(this, "mxing.db");
+            //db = DbUtils.create(this, "mxing.db");
         } catch (Exception e) {
             e.printStackTrace();
         }
