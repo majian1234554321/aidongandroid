@@ -13,11 +13,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.FormatUtil;
+import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.SquareRelativeLayout;
 
@@ -68,7 +68,7 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
         if (publisher != null) {
             holder.tvName.setText(publisher.name);
             holder.dvAvatar.setTag(publisher);
-            holder.dvAvatar.setImageURI(publisher.avatar);
+            GlideLoader.getInstance().displayImage(publisher.avatar, holder.dvAvatar);
             holder.dvAvatar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -107,20 +107,20 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
                     holder.photoLayout.setVisibility(View.GONE);
                     holder.threePhotoLayout.setVisibility(View.VISIBLE);
                     holder.fivePhotoLayout.setVisibility(View.GONE);
-                    holder.dvThreeFirst.setImageURI(images.get(0));
-                    holder.dvThreeSecond.setImageURI(images.get(1));
-                    holder.dvThreeThird.setImageURI(images.get(2));
+                    GlideLoader.getInstance().displayImage(images.get(0), holder.dvThreeFirst);
+                    GlideLoader.getInstance().displayImage(images.get(1), holder.dvThreeSecond);
+                    GlideLoader.getInstance().displayImage(images.get(2), holder.dvThreeThird);
                     break;
                 case 5:
                     holder.videoLayout.setVisibility(View.GONE);
                     holder.photoLayout.setVisibility(View.GONE);
                     holder.threePhotoLayout.setVisibility(View.GONE);
                     holder.fivePhotoLayout.setVisibility(View.VISIBLE);
-                    holder.dvFiveFirst.setImageURI(images.get(0));
-                    holder.dvFiveSecond.setImageURI(images.get(1));
-                    holder.dvFiveThird.setImageURI(images.get(2));
-                    holder.dvFiveFourth.setImageURI(images.get(3));
-                    holder.dvFiveLast.setImageURI(images.get(4));
+                    GlideLoader.getInstance().displayImage(images.get(0), holder.dvThreeFirst);
+                    GlideLoader.getInstance().displayImage(images.get(1), holder.dvThreeSecond);
+                    GlideLoader.getInstance().displayImage(images.get(2), holder.dvThreeThird);
+                    GlideLoader.getInstance().displayImage(images.get(3), holder.dvFiveFourth);
+                    GlideLoader.getInstance().displayImage(images.get(4), holder.dvFiveFirst);
                     break;
                 case 1:
                 case 2:
@@ -144,7 +144,7 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
                 holder.photoLayout.setVisibility(View.GONE);
                 holder.threePhotoLayout.setVisibility(View.GONE);
                 holder.fivePhotoLayout.setVisibility(View.GONE);
-                holder.dvVideo.setImageURI(dynamic.video.cover);
+                GlideLoader.getInstance().displayImage(dynamic.video.cover, holder.dvVideo);
             }
         }
 
@@ -273,14 +273,14 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
     class DynamicHolder extends RecyclerView.ViewHolder{
 
         //头部信息
-        private SimpleDraweeView dvAvatar;
+        private ImageView dvAvatar;
         private TextView tvName;
         private ImageView ivCoachFlag;
         private TextView tvTime;
 
         //视频
         private SquareRelativeLayout videoLayout;
-        private SimpleDraweeView dvVideo;
+        private ImageView dvVideo;
         private ImageButton ibPlay;
 
         //1,2,4,5张图
@@ -288,17 +288,17 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
 
         //3张图
         private LinearLayout threePhotoLayout;
-        private SimpleDraweeView dvThreeFirst;
-        private SimpleDraweeView dvThreeSecond;
-        private SimpleDraweeView dvThreeThird;
+        private ImageView dvThreeFirst;
+        private ImageView dvThreeSecond;
+        private ImageView dvThreeThird;
 
         //5张图
         private RelativeLayout fivePhotoLayout;
-        private SimpleDraweeView dvFiveFirst;
-        private SimpleDraweeView dvFiveSecond;
-        private SimpleDraweeView dvFiveThird;
-        private SimpleDraweeView dvFiveFourth;
-        private SimpleDraweeView dvFiveLast;
+        private ImageView dvFiveFirst;
+        private ImageView dvFiveSecond;
+        private ImageView dvFiveThird;
+        private ImageView dvFiveFourth;
+        private ImageView dvFiveLast;
 
         //内容
         private TextView tvContent;
@@ -324,24 +324,24 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
         public DynamicHolder(View itemView) {
             super(itemView);
 
-            dvAvatar = (SimpleDraweeView) itemView.findViewById(R.id.dv_avatar);
+            dvAvatar = (ImageView) itemView.findViewById(R.id.dv_avatar);
             tvName = (TextView) itemView.findViewById(R.id.tv_name);
             ivCoachFlag = (ImageView) itemView.findViewById(R.id.iv_coach_flag);
             tvTime = (TextView) itemView.findViewById(R.id.tv_time);
             videoLayout = (SquareRelativeLayout) itemView.findViewById(R.id.video_layout);
-            dvVideo = (SimpleDraweeView) itemView.findViewById(R.id.dv_video);
+            dvVideo = (ImageView) itemView.findViewById(R.id.dv_video);
             ibPlay = (ImageButton) itemView.findViewById(R.id.ib_play);
             photoLayout = (RecyclerView) itemView.findViewById(R.id.photo_layout);
             threePhotoLayout = (LinearLayout) itemView.findViewById(R.id.three_photo_layout);
-            dvThreeFirst = (SimpleDraweeView) itemView.findViewById(R.id.dv_three_first);
-            dvThreeSecond = (SimpleDraweeView) itemView.findViewById(R.id.dv_three_second);
-            dvThreeThird = (SimpleDraweeView) itemView.findViewById(R.id.dv_three_third);
+            dvThreeFirst = (ImageView) itemView.findViewById(R.id.dv_three_first);
+            dvThreeSecond = (ImageView) itemView.findViewById(R.id.dv_three_second);
+            dvThreeThird = (ImageView) itemView.findViewById(R.id.dv_three_third);
             fivePhotoLayout = (RelativeLayout) itemView.findViewById(R.id.five_photo_layout);
-            dvFiveFirst = (SimpleDraweeView) itemView.findViewById(R.id.dv_five_first);
-            dvFiveSecond = (SimpleDraweeView) itemView.findViewById(R.id.dv_five_second);
-            dvFiveThird = (SimpleDraweeView) itemView.findViewById(R.id.dv_five_third);
-            dvFiveFourth = (SimpleDraweeView) itemView.findViewById(R.id.dv_five_fourth);
-            dvFiveLast = (SimpleDraweeView) itemView.findViewById(R.id.dv_five_last);
+            dvFiveFirst = (ImageView) itemView.findViewById(R.id.dv_five_first);
+            dvFiveSecond = (ImageView) itemView.findViewById(R.id.dv_five_second);
+            dvFiveThird = (ImageView) itemView.findViewById(R.id.dv_five_third);
+            dvFiveFourth = (ImageView) itemView.findViewById(R.id.dv_five_fourth);
+            dvFiveLast = (ImageView) itemView.findViewById(R.id.dv_five_last);
             tvContent = (TextView) itemView.findViewById(R.id.tv_content);
             likeLayout = (RelativeLayout) itemView.findViewById(R.id.like_layout);
             likesRecyclerView = (RecyclerView) itemView.findViewById(R.id.rv_likes);

@@ -9,8 +9,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.GoodBean;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,13 +22,10 @@ import java.util.List;
 public class WatchOfficeRelateGoodAdapter extends RecyclerView.Adapter<WatchOfficeRelateGoodAdapter.RelateVideoViewHolder>{
     private List<GoodBean> data = new ArrayList<>();
     private Context context;
-    private ImageLoader imageLoader ;
-    private DisplayImageOptions options;
+
     private OnGoodsItemClickListener listener;
-    public WatchOfficeRelateGoodAdapter(Context context, ImageLoader imageLoader, DisplayImageOptions options,OnGoodsItemClickListener listener) {
+    public WatchOfficeRelateGoodAdapter(Context context,OnGoodsItemClickListener listener) {
         this.context = context;
-        this.imageLoader = imageLoader;
-        this.options = options;
         this.listener = listener;
     }
 
@@ -53,7 +49,7 @@ public class WatchOfficeRelateGoodAdapter extends RecyclerView.Adapter<WatchOffi
     @Override
     public void onBindViewHolder(RelateVideoViewHolder holder, int position) {
         final GoodBean bean = data.get(position);
-        imageLoader.displayImage(bean.getFoodUrl(),holder.cover,options);
+        GlideLoader.getInstance().displayImage(bean.getFoodUrl(), holder.cover);
         holder.name.setText(bean.getFoodName());
         holder.price.setText(new StringBuilder().append("¥").append(bean.getFoodPrice()));
         holder.cover.setOnClickListener(new View.OnClickListener() {

@@ -11,10 +11,10 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.utils.FormatUtil;
+import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,10 +53,7 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
     @Override
     public void onBindViewHolder(final GoodsHolder holder, final int position) {
         final GoodsBean bean = data.get(position);
-        if(!bean.getCover().equals(holder.cover.getTag())) {
-            holder.cover.setTag(bean.getCover());
-            holder.cover.setImageURI(bean.getCover());
-        }
+        GlideLoader.getInstance().displayImage(bean.getCover(), holder.cover);
         holder.name.setText(bean.getName());
         ArrayList<String> specValue = bean.getSpec_value();
         StringBuilder skuStr = new StringBuilder();
@@ -87,7 +84,7 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
                 int count = FormatUtil.parseInt(holder.count.getText().toString());
                 count ++;
                 if(goodsChangeListener != null){
-                    goodsChangeListener.onGoodsCountChanged(data.get(position).getId(),count);
+                    goodsChangeListener.onGoodsCountChanged(data.get(position).getId(),count,position);
                 }
             }
         });
@@ -101,7 +98,7 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
                 }
                 count --;
                 if(goodsChangeListener != null){
-                    goodsChangeListener.onGoodsCountChanged(data.get(position).getId(),count);
+                    goodsChangeListener.onGoodsCountChanged(data.get(position).getId(),count,position);
                 }
             }
         });
@@ -139,7 +136,7 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
 
     class GoodsHolder extends RecyclerView.ViewHolder {
         CheckBox check;
-        SimpleDraweeView cover;
+        ImageView cover;
         TextView name;
         TextView price;
         TextView sku;
@@ -151,7 +148,7 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
         public GoodsHolder(View itemView) {
             super(itemView);
             check = (CheckBox) itemView.findViewById(R.id.rb_check);
-            cover = (SimpleDraweeView) itemView.findViewById(R.id.dv_cover);
+            cover = (ImageView) itemView.findViewById(R.id.dv_cover);
             name = (TextView) itemView.findViewById(R.id.tv_goods_name);
             price = (TextView) itemView.findViewById(R.id.tv_goods_price);
             sku = (TextView) itemView.findViewById(R.id.tv_sku);
@@ -169,6 +166,6 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
     public interface GoodsChangeListener {
         void onGoodsStatusChanged();
         void onGoodsDeleted(String goodsId);
-        void onGoodsCountChanged(String goodsId,int count);
+        void onGoodsCountChanged(String goodsId,int count,int goodsPosition);
     }
 }

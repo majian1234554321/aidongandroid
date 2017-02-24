@@ -9,8 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.entity.UserBean;
+import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +45,7 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.UserHolder
     @Override
     public void onBindViewHolder(UserHolder holder, int position) {
         UserBean bean = data.get(position);
-        holder.avatar.setImageURI(bean.getAvatar());
+        GlideLoader.getInstance().displayImage(bean.getAvatar(), holder.avatar);
         holder.nickname.setText(bean.getName());
         holder.distance.setText(bean.getDistance());
         if("0".equals(bean.getGender())){   //男
@@ -56,7 +56,7 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.UserHolder
     }
 
     class UserHolder extends RecyclerView.ViewHolder {
-        SimpleDraweeView avatar;
+        ImageView avatar;
         ImageView gender;
         ImageView follow;
         TextView nickname;
@@ -64,7 +64,7 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.UserHolder
 
         public UserHolder(View itemView) {
             super(itemView);
-            avatar = (SimpleDraweeView) itemView.findViewById(R.id.dv_user_cover);
+            avatar = (ImageView) itemView.findViewById(R.id.dv_user_cover);
             gender = (ImageView) itemView.findViewById(R.id.iv_gender);
             follow = (ImageView) itemView.findViewById(R.id.iv_follow);
             nickname = (TextView) itemView.findViewById(R.id.tv_nickname);

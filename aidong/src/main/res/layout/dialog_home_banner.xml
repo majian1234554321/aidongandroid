@@ -17,15 +17,12 @@
             android:orientation="vertical">
 
             <!-- 一张图 -->
-            <com.facebook.drawee.view.SimpleDraweeView
+            <ImageView
                 android:id="@+id/dv_cover"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                app:actualImageScaleType="centerCrop"
-                android:background="?selectableItemBackground"
-                app:placeholderImage="@drawable/place_holder_logo"
-                app:placeholderImageScaleType="centerCrop"/>
+                android:background="?selectableItemBackground" />
 
             <!-- 多张图 -->
             <cn.bingoogolapple.bgabanner.BGABanner

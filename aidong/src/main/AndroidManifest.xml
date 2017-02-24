@@ -84,7 +84,6 @@
         <activity android:name=".ui.mine.activity.TabHelpActivity" />
         <activity android:name=".ui.mine.activity.TabMineBingdingMobilePhoneActivity" />
         <activity android:name=".ui.mine.activity.TabMineChangePasswordActivity" />
-        <activity android:name=".ui.mine.activity.TabMineDoNotDisturbPeriodActivity" />
         <activity android:name=".ui.mine.activity.TabMineMessageReminderActivity" />
         <activity android:name=".ui.mine.activity.TabMinePersonalSettingsActivity" />
         <activity android:name=".ui.mine.activity.LoveCoinActivity"/>
@@ -170,7 +169,7 @@
         <activity android:name=".ui.mine.login.FindPasswordActivity" />
         <activity android:name=".ui.mine.login.RegisterActivity" />
         <activity android:name=".ui.mine.login.XiuGaiGeXinQianMing" />
-        <activity android:name=".widget.wheelcity.LoadAddressDataActivity" />
+
         <activity
             android:name=".module.photopicker.boxing_impl.ui.BoxingActivity"
             android:launchMode="singleTop"

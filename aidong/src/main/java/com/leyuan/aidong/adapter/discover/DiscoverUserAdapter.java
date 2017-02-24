@@ -6,9 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.UserBean;
+import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
+import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,22 +44,29 @@ public class DiscoverUserAdapter extends RecyclerView.Adapter<DiscoverUserAdapte
 
     @Override
     public void onBindViewHolder(UserHolder holder, int position) {
-        UserBean bean = data.get(position);
-        holder.avatar.setImageURI(bean.getAvatar());
+        final UserBean bean = data.get(position);
+        GlideLoader.getInstance().displayCircleImage(bean.getAvatar(), holder.avatar);
         if("0".equals(bean.getGender())){   //男
             holder.gender.setBackgroundResource(R.drawable.icon_man);
         }else {
             holder.gender.setBackgroundResource(R.drawable.icon_woman);
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserInfoActivity.start(context,bean.getId());
+            }
+        });
     }
 
     class UserHolder extends RecyclerView.ViewHolder{
-        SimpleDraweeView avatar;
+        ImageView avatar;
         ImageView gender;
 
         public UserHolder(View itemView) {
             super(itemView);
-            avatar = (SimpleDraweeView)itemView.findViewById(R.id.dv_user_cover);
+            avatar = (ImageView)itemView.findViewById(R.id.dv_user_cover);
             gender = (ImageView)itemView.findViewById(R.id.iv_gender);
         }
     }

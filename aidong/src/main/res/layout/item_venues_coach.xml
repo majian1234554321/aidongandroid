@@ -7,16 +7,12 @@
     android:paddingRight="@dimen/right_margin"
     android:background="@color/white">
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/dv_coach_cover"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        fresco:roundAsCircle="true"
         android:layout_centerVertical="true"
-        fresco:actualImageScaleType="centerCrop"
-        fresco:backgroundImage="@color/blue"
-        fresco:placeholderImage="@drawable/place_holder_logo"
-        fresco:pressedStateOverlayImage="@color/color_image_press"/>
+       />
 
     <ImageView
         android:id="@+id/iv_gender"

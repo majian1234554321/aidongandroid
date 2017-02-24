@@ -91,14 +91,12 @@
                     android:textColor="@color/white"
                     android:textSize="14sp" />
 
-                <com.facebook.drawee.view.SimpleDraweeView
+                <ImageView
                     android:id="@+id/dv_avatar"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
-                    app:roundAsCircle="true"
-                    app:placeholderImage="@drawable/place_holder_user"
                     android:elevation="15dp"/>
             </RelativeLayout>
 
@@ -155,7 +153,7 @@
                     android:textSize="15sp" />
             </LinearLayout>
 
-            <include layout="@layout/inc_line" />
+            <include layout="@layout/inc_line_with_margin" />
 
             <!--地点-->
             <LinearLayout
@@ -191,7 +189,7 @@
                     android:textSize="15sp" />
             </LinearLayout>
 
-            <include layout="@layout/inc_line" />
+            <include layout="@layout/inc_line_with_margin" />
 
             <!--场馆-->
             <LinearLayout
@@ -224,7 +222,7 @@
                     android:textSize="15sp" />
             </LinearLayout>
 
-            <include layout="@layout/inc_line" />
+            <include layout="@layout/inc_line_with_margin" />
 
             <!--教室-->
             <LinearLayout
@@ -274,7 +272,7 @@
                 android:textColor="@color/black"
                 android:textSize="15sp" />
 
-            <include layout="@layout/inc_line" />
+            <include layout="@layout/inc_line_with_margin" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_applicant"

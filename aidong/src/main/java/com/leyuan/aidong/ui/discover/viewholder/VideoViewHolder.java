@@ -5,10 +5,11 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.DynamicBean;
+import com.leyuan.aidong.utils.GlideLoader;
 
 /**
  * 视频
@@ -16,7 +17,7 @@ import com.leyuan.aidong.entity.DynamicBean;
  */
 public class VideoViewHolder extends BaseCircleViewHolder{
 
-    private SimpleDraweeView dvVideo;
+    private ImageView dvVideo;
     private ImageButton ibPlay;
 
     public VideoViewHolder(Context context, ViewGroup viewGroup, int layoutResId) {
@@ -26,15 +27,14 @@ public class VideoViewHolder extends BaseCircleViewHolder{
     @Override
     public void onFindChildView(@NonNull View rootView) {
 
-        dvVideo = (SimpleDraweeView) itemView.findViewById(R.id.dv_video);
+        dvVideo = (ImageView) itemView.findViewById(R.id.dv_video);
         ibPlay = (ImageButton) itemView.findViewById(R.id.ib_play);
 
     }
 
     @Override
     public void onBindDataToChildView(@NonNull final DynamicBean data, int position, int viewType) {
-        dvVideo.setImageURI(data.video.cover);
-
+        GlideLoader.getInstance().displayImage(data.video.cover, dvVideo);
         dvVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

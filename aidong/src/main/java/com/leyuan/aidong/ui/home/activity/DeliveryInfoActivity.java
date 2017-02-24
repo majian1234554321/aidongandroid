@@ -86,13 +86,13 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.tv_back:
-                animationFinish();
+                compatFinish();
                 break;
             case R.id.tv_finish:
                 Intent result = new Intent();
                 result.putExtra("deliveryBean",deliveryBean);
                 setResult(RESULT_OK,result);
-                animationFinish();
+                compatFinish();
                 break;
             case R.id.tv_express:
                 tvExpress.setTextColor(Color.parseColor("#ffffff"));

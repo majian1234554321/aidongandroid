@@ -116,4 +116,9 @@
         <item>侮辱诋毁</item>
         <item>侵权举报</item>
     </string-array>
+
+    <string-array name="editTab">
+        <item>修改资料</item>
+        <item>修改照片墙</item>
+    </string-array>
 </resources>

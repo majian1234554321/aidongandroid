@@ -5,15 +5,13 @@
     android:layout_height="wrap_content"
     android:background="@color/white">
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/dv_venues_cover"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="23dp"
-        fresco:actualImageScaleType="centerCrop"
-        fresco:roundedCornerRadius="2dp"
-        fresco:placeholderImage="@drawable/place_holder_logo"/>
+       />
 
     <TextView
         android:id="@+id/tv_venues_name"

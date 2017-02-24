@@ -36,7 +36,7 @@ import com.leyuan.aidong.utils.ScreenUtil;
 import java.io.File;
 import java.util.ArrayList;
 
-import static com.leyuan.aidong.utils.Constant.MAX_UPLOAD_IMAGE_COUNT;
+import static com.leyuan.aidong.utils.Constant.DEFAULT_MAX_UPLOAD_IMAGE_COUNT;
 
 
 /**
@@ -99,7 +99,7 @@ public class AlbumActivity extends BaseActivity implements AlbumRecyclerAdapter.
             if( getIntent().getParcelableArrayListExtra("selectImages") != null) {
                 selectImages = getIntent().getParcelableArrayListExtra("selectImages");
             }
-            usefulImageSize = MAX_UPLOAD_IMAGE_COUNT - selectImages.size();
+            usefulImageSize = DEFAULT_MAX_UPLOAD_IMAGE_COUNT - selectImages.size();
         }
 
         initView();

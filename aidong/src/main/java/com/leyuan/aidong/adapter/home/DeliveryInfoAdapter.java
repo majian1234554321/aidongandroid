@@ -5,10 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 
 /**
@@ -39,7 +39,7 @@ public class DeliveryInfoAdapter extends RecyclerView.Adapter<DeliveryInfoAdapte
     }
 
     class DeliveryInfoHolder extends RecyclerView.ViewHolder {
-        SimpleDraweeView dvGoodsCover;
+        ImageView dvGoodsCover;
         TextView tvGoodsPrice;
         TextView tvGoodDesc;
         TextView tvGoodCount;
@@ -55,7 +55,7 @@ public class DeliveryInfoAdapter extends RecyclerView.Adapter<DeliveryInfoAdapte
         public DeliveryInfoHolder(View itemView) {
             super(itemView);
 
-            dvGoodsCover = (SimpleDraweeView) itemView.findViewById(R.id.dv_goods_cover);
+            dvGoodsCover = (ImageView) itemView.findViewById(R.id.dv_goods_cover);
             tvGoodsPrice = (TextView) itemView.findViewById(R.id.tv_goods_price);
             tvGoodDesc = (TextView) itemView.findViewById(R.id.tv_good_desc);
             tvGoodCount = (TextView) itemView.findViewById(R.id.tv_good_count);

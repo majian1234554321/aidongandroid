@@ -41,12 +41,12 @@ public class LoginPresenter implements LoginPresenterInterface {
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
-                loginViewInterface.loginResult(false);
+                loginViewInterface.loginResult(null);
             }
 
             @Override
             public void onNext(LoginResult user) {
-                loginViewInterface.loginResult(true);
+                loginViewInterface.loginResult(user.getUser());
                 App.mInstance.setUser(user.getUser());
             }
         }, accout, password);
@@ -68,13 +68,15 @@ public class LoginPresenter implements LoginPresenterInterface {
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
+                loginViewInterface.loginResult(null);
                 //                loginViewInterface.loginResult(false);
             }
 
             @Override
             public void onNext(LoginResult user) {
-                loginViewInterface.loginResult(true);
                 App.mInstance.setUser(user.getUser());
+                loginViewInterface.loginResult(user.getUser());
+
             }
         }, sns, access);
 

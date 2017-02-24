@@ -1,37 +1,23 @@
 package com.leyuan.aidong.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.video.VideoComment;
+import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.widget.video.CircleImageView;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 
 public class VideoCommentAdapter extends android.widget.BaseAdapter {
-
     private Context context;
-    private ImageLoader loader;
-    private DisplayImageOptions options;
     private ArrayList<VideoComment> mComments = new ArrayList<>();
 
-    public VideoCommentAdapter(Context context, ImageLoader loader) {
+    public VideoCommentAdapter(Context context) {
         this.context = context;
-        this.loader = loader;
-
-        options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.drawable.img_default)
-                .showImageForEmptyUri(R.drawable.img_default)
-                .showImageOnFail(R.drawable.img_default)
-                .cacheInMemory(true)
-                .cacheOnDisk(true).considerExifParams(true)
-                .bitmapConfig(Bitmap.Config.RGB_565).build();
     }
 
     public void freshData(ArrayList<VideoComment> comments) {
@@ -82,7 +68,7 @@ public class VideoCommentAdapter extends android.widget.BaseAdapter {
         }
         VideoComment comment = mComments.get(position);
 
-        loader.displayImage(comment.getAuthor().getImgUrl(),holder.img_avatar,options);
+        GlideLoader.getInstance().displayImage(comment.getAuthor().getImgUrl(), holder.img_avatar);
         holder.txt_user.setText(""+comment.getAuthor().getName());
         holder.txt_content.setText(""+comment.getContent());
         holder.txt_time.setText(""+comment.getTime());

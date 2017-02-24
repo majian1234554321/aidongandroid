@@ -2,16 +2,14 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:padding="10dp">
+    android:layout_height="wrap_content">
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/dv_image"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:scaleType="centerCrop"
-        app:actualImageScaleType="centerCrop"
-        app:pressedStateOverlayImage="@color/color_image_press"/>
+       />
 
     <ImageView
         android:id="@+id/iv_delete"
@@ -20,6 +18,5 @@
         android:layout_gravity="top|right"
         android:paddingBottom="10dp"
         android:paddingLeft="10dp"
-        android:src="@drawable/icon_delete_black"
-        android:drawableTint="#CEB164"/>
+        android:src="@drawable/icon_delete_black" />
 </FrameLayout>

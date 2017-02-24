@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.GoodsBean;
@@ -24,6 +23,7 @@ import com.leyuan.aidong.ui.mvp.presenter.CartPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CartPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.GoodsSkuPopupWindowView;
 import com.leyuan.aidong.utils.FormatUtil;
+import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.widget.BasePopupWindow;
 
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
 
     private static final String BLANK_SPACE = " ";
     private Context context;
-    private SimpleDraweeView dvGoodsCover;
+    private ImageView dvGoodsCover;
     private ImageView ivCancel;
     private TextView tvGoodName;
     private TextView tvGoodsPrice;
@@ -188,7 +188,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     }
 
     private void initView(View view) {
-        dvGoodsCover = (SimpleDraweeView) view.findViewById(R.id.dv_goods_cover);
+        dvGoodsCover = (ImageView) view.findViewById(R.id.dv_goods_cover);
         ivCancel = (ImageView) view.findViewById(R.id.iv_cancel);
         tvGoodName = (TextView) view.findViewById(R.id.tv_good_name);
         tvGoodsPrice = (TextView) view.findViewById(R.id.tv_goods_price);
@@ -212,12 +212,12 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         tvGoodName.setText(detailBean.name);
         tvSkuTip.setText(skuTip.toString());
         if(isAllSkuConfirm()){
-            dvGoodsCover.setImageURI(confirmedSkuCover);
+            GlideLoader.getInstance().displayImage(confirmedSkuCover, dvGoodsCover);
             tvSelect.setText(context.getString(R.string.selected));
             tvGoodsPrice.setText(String.format(context.getString(R.string.rmb_price),String.valueOf(price)));
             tvStock.setText(String.format(context.getString(R.string.int_stock_count), stock));
         }else {
-            dvGoodsCover.setImageURI(unConfirmedSkuCover);
+            GlideLoader.getInstance().displayImage(unConfirmedSkuCover, dvGoodsCover);
             tvSelect.setText(context.getString(R.string.please_select));
             tvGoodsPrice.setText(maxPrice == minPrice ? String.valueOf(maxPrice):
                     String.format(context.getString(R.string.rmb_price_scope),minPrice,maxPrice));
@@ -362,7 +362,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
             if(line != null){
                 tvGoodsPrice.setText(String.format(context.getString(R.string.rmb_price),line.price));
                 tvStock.setText(String.format(context.getString(R.string.stock_count),line.stock));
-                dvGoodsCover.setImageURI(line.cover);
+                GlideLoader.getInstance().displayImage(line.cover, dvGoodsCover);
                 stock = FormatUtil.parseInt(line.stock);
                 if(Integer.parseInt(tvCount.getText().toString()) > stock){
                     tvCount.setText(line.stock);
@@ -376,7 +376,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
             tvSelect.setText(context.getString(R.string.selected));
             tvSkuTip.setText(skuTip.toString());
         }else {
-            dvGoodsCover.setImageURI(unConfirmedSkuCover);
+            GlideLoader.getInstance().displayImage(unConfirmedSkuCover, dvGoodsCover);
             tvGoodsPrice.setText(maxPrice==minPrice?String.valueOf(maxPrice):
                     String.format(context.getString(R.string.rmb_price_scope),minPrice,maxPrice));
             tvStock.setText(String.format(context.getString(R.string.int_stock_count), totalStock));

@@ -7,11 +7,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.List;
 
@@ -23,7 +22,7 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  */
 public class HomeBannerDialog extends Dialog implements View.OnClickListener {
     private Context context;
-    private SimpleDraweeView dvCover;
+    private ImageView dvCover;
     private BGABanner bgaBanner;
     private TextView tvFinish;
     private TextView tvDesc;
@@ -39,7 +38,7 @@ public class HomeBannerDialog extends Dialog implements View.OnClickListener {
 
     private void initView(){
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_home_banner,null);
-        dvCover = (SimpleDraweeView)view.findViewById(R.id.dv_cover);
+        dvCover = (ImageView)view.findViewById(R.id.dv_cover);
         bgaBanner = (BGABanner) view.findViewById(R.id.banner);
         tvFinish = (TextView)view.findViewById(R.id.tv_finish);
         tvDesc = (TextView)view.findViewById(R.id.tv_desc);
@@ -48,14 +47,14 @@ public class HomeBannerDialog extends Dialog implements View.OnClickListener {
         if(banner.size() == 1){
             dvCover.setVisibility(View.VISIBLE);
             bgaBanner.setVisibility(View.GONE);
-            dvCover.setImageURI(banner.get(0).getImage());
+            GlideLoader.getInstance().displayImage(banner.get(0).getImage(), dvCover);
         }else {
             dvCover.setVisibility(View.GONE);
             bgaBanner.setVisibility(View.VISIBLE);
             bgaBanner.setAdapter(new BGABanner.Adapter() {
                 @Override
                 public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
-                    ImageLoader.getInstance().displayImage(((BannerBean)model).getImage(),(ImageView)view);
+                    GlideLoader.getInstance().displayImage((String)model, (ImageView)view);
                 }
             });
             bgaBanner.setData(banner,null);

@@ -31,15 +31,10 @@ import com.leyuan.aidong.module.scan.camera.CameraManager;
 import com.leyuan.aidong.module.scan.decoding.CaptureActivityHandler;
 import com.leyuan.aidong.module.scan.decoding.InactivityTimer;
 import com.leyuan.aidong.module.scan.view.ViewfinderView;
-import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.account.LoginActivity;
 
-import org.apache.http.message.BasicNameValuePair;
-
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -203,19 +198,6 @@ public class MipcaActivityCapture extends BaseActivity implements Callback {
         Pattern p = Pattern.compile("^meix_shop(.*)");
         Matcher m = p.matcher(resultString);
         return m.matches();
-    }
-
-    public List<BasicNameValuePair> paramsinit(String code) {
-        List<BasicNameValuePair> paramsaaa = new ArrayList<BasicNameValuePair>();
-        paramsaaa.add(new BasicNameValuePair("student", String.valueOf(App.mInstance.getUser().getMxid())));
-        paramsaaa.add(new BasicNameValuePair("code", code));
-        return paramsaaa;
-    }
-
-    public List<BasicNameValuePair> paramsfollow(String mxid) {
-        List<BasicNameValuePair> paramsaaa = new ArrayList<BasicNameValuePair>();
-        paramsaaa.add(new BasicNameValuePair("mxid", mxid));
-        return paramsaaa;
     }
 
     private void initCamera(SurfaceHolder surfaceHolder) {

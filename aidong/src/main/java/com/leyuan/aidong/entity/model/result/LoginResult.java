@@ -10,9 +10,7 @@ public class LoginResult  {
 //	public LoginData getData() {
 //		return data;
 //	}
-//
-//
-//
+
 //	public void setNurtureList(LoginData data) {
 //		this.data = data;
 //	}

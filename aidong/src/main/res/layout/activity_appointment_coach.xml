@@ -19,13 +19,10 @@
         android:paddingRight="@dimen/right_margin"
         android:paddingTop="15dp">
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/dv_avatar"
             android:layout_width="70dp"
-            android:layout_height="70dp"
-            app:actualImageScaleType="focusCrop"
-            app:roundAsCircle="true"
-            app:placeholderImage="@drawable/place_holder_user"/>
+            android:layout_height="70dp"/>
 
         <ImageView
             android:id="@+id/iv_gender"

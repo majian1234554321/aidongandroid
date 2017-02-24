@@ -57,4 +57,11 @@
 -keep class com.qiniu.**{public <init>();}
 -ignorewarnings
 
+#----------------------Glide---------------------------------------
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep classcom.bumptech.glide.integration.okhttp.OkHttpGlideModule
+-keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}
 

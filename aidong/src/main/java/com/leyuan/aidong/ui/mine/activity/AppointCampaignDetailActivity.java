@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
@@ -11,11 +12,11 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.AppointmentDetailBean;
 import com.leyuan.aidong.module.pay.AliPay;
 import com.leyuan.aidong.module.pay.PayInterface;
+import com.leyuan.aidong.module.pay.SimplePayListener;
 import com.leyuan.aidong.module.pay.WeiXinPay;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.home.activity.AppointSuccessActivity;
@@ -23,7 +24,7 @@ import com.leyuan.aidong.ui.mvp.presenter.AppointmentPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.AppointmentPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointmentDetailActivityView;
 import com.leyuan.aidong.utils.FormatUtil;
-import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.widget.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.ExtendTextView;
 import com.leyuan.aidong.widget.SimpleTitleBar;
@@ -48,12 +49,12 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
     //预约状态信息
     private TextView tvState;
     private TextView tvTimeOrNum;
-    private SimpleDraweeView dvGoodsCover;
+    private ImageView dvGoodsCover;
     private TextView tvName;
     private TextView tvInfo;
     private RelativeLayout codeLayout;
     private TextView tvNum;
-    private SimpleDraweeView dvQr;
+    private ImageView dvQr;
 
     //预约信息
     private ExtendTextView tvCampaignUser;
@@ -123,12 +124,12 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
 
         tvState = (TextView) findViewById(R.id.tv_state);
         tvTimeOrNum = (TextView) findViewById(R.id.tv_time_or_num);
-        dvGoodsCover = (SimpleDraweeView) findViewById(R.id.dv_goods_cover);
+        dvGoodsCover = (ImageView) findViewById(R.id.dv_goods_cover);
         tvName = (TextView) findViewById(R.id.tv_name);
         tvInfo = (TextView) findViewById(R.id.tv_info);
         codeLayout = (RelativeLayout) findViewById(R.id.rl_qr_code);
         tvNum = (TextView) findViewById(R.id.tv_num);
-        dvQr = (SimpleDraweeView) findViewById(R.id.dv_qr);
+        dvQr = (ImageView) findViewById(R.id.dv_qr);
 
         tvCampaignUser = (ExtendTextView) findViewById(R.id.tv_campaign_user);
         tvCampaignPhone = (ExtendTextView) findViewById(R.id.tv_campaign_phone);
@@ -179,7 +180,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         }
 
         //与订单状态无关: 订单信息
-        dvGoodsCover.setImageURI(bean.getCover());
+        GlideLoader.getInstance().displayImage(bean.getCover(), dvGoodsCover);
         tvName.setText(bean.getName());
         tvInfo.setText(bean.getSubName());
 
@@ -242,35 +243,11 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         }
     }
 
-    private PayInterface.PayListener payListener = new PayInterface.PayListener() {
+    private PayInterface.PayListener payListener = new SimplePayListener(this) {
         @Override
-        public void fail(String code, Object object) {
-            String tip = "";
-            switch (code){
-                case "4000":
-                    tip = "订单支付失败";
-                    break;
-                case "5000":
-                    tip = "订单重复提交";
-                    break;
-                case "6001":
-                    tip = "订单取消支付";
-                    break;
-                case "6002":
-                    tip = "网络连接出错";
-                    break;
-                default:
-                    break;
-            }
-            Toast.makeText(AppointCampaignDetailActivity.this,tip,Toast.LENGTH_LONG).show();
-            Logger.w("AppointCourseActivity","failed:" + code + object.toString());
-        }
-
-        @Override
-        public void success(String code, Object object) {
-            Toast.makeText(AppointCampaignDetailActivity.this,"支付成功啦啦啦啦啦绿",Toast.LENGTH_LONG).show();
+        public void onSuccess(String code, Object object) {
+            Toast.makeText(AppointCampaignDetailActivity.this,"支付成功",Toast.LENGTH_LONG).show();
             startActivity(new Intent(AppointCampaignDetailActivity.this,AppointSuccessActivity.class));
-            Logger.w("AppointCourseActivity","success:" + code + object.toString());
         }
     };
 

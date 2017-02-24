@@ -5,10 +5,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.DynamicBean;
+import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,14 +45,14 @@ public class DynamicLikeAdapter extends RecyclerView.Adapter<DynamicLikeAdapter.
     @Override
     public void onBindViewHolder(UserHolder holder, int position) {
         DynamicBean.LikeUser.Item bean = data.get(position);
-        holder.avatar.setImageURI(bean.avatar);
+        GlideLoader.getInstance().displayImage(bean.avatar, holder.avatar);
     }
 
     class UserHolder extends RecyclerView.ViewHolder{
-        SimpleDraweeView avatar;
+        ImageView avatar;
         public UserHolder(View itemView) {
             super(itemView);
-            avatar = (SimpleDraweeView) itemView.findViewById(R.id.dv_avatar);
+            avatar = (ImageView) itemView.findViewById(R.id.dv_avatar);
         }
     }
 }

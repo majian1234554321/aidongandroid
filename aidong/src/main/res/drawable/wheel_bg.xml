@@ -26,13 +26,13 @@
         <shape android:shape="rectangle" >
             <gradient
                 android:angle="0"
-                android:centerColor="#ebebeb"
-                android:endColor="#ebebeb"
-                android:startColor="#ebebeb" />
+                android:centerColor="#ffffff"
+                android:endColor="#ffffff"
+                android:startColor="#ffffff" />
 
             <stroke
                 android:width="1dp"
-                android:color="#ebebeb" />
+                android:color="#ffffff" />
         </shape>
     </item>
     <item
@@ -43,9 +43,9 @@
         <shape android:shape="rectangle" >
             <gradient
                 android:angle="0"
-                android:centerColor="#ebebeb"
-                android:endColor="#ebebeb"
-                android:startColor="#ebebeb" />
+                android:centerColor="#ffffff"
+                android:endColor="#ffffff"
+                android:startColor="#ffffff" />
         </shape>
     </item>
 

@@ -67,9 +67,9 @@ public class CartShopAdapter extends RecyclerView.Adapter<CartShopAdapter.CartHo
             }
 
             @Override
-            public void onGoodsCountChanged(String goodsId,int count) {
+            public void onGoodsCountChanged(String goodsId,int count,int goodsPosition) {
                 if (shopChangeListener != null) {
-                    shopChangeListener.onGoodsCountChanged(goodsId,count);
+                    shopChangeListener.onGoodsCountChanged(goodsId,count,position,goodsPosition);
                 }
             }
 
@@ -84,7 +84,7 @@ public class CartShopAdapter extends RecyclerView.Adapter<CartShopAdapter.CartHo
                 }
                 bean.setChecked(isAllGoodsSelected);
                 if (shopChangeListener != null) {
-                    shopChangeListener.onShopStatusChanged();
+                    shopChangeListener.onShopStatusChanged(position);
                 }
             }
         });
@@ -97,7 +97,7 @@ public class CartShopAdapter extends RecyclerView.Adapter<CartShopAdapter.CartHo
                     goodsBean.setChecked(bean.isChecked());
                 }
                 if (shopChangeListener != null) {
-                    shopChangeListener.onShopStatusChanged();
+                    shopChangeListener.onShopStatusChanged(position);
                 }
             }
         });
@@ -123,8 +123,8 @@ public class CartShopAdapter extends RecyclerView.Adapter<CartShopAdapter.CartHo
     }
 
     public interface ShopChangeListener {
-        void onShopStatusChanged();
+        void onShopStatusChanged(int position);
         void onGoodsDeleted(String goodsId);
-        void onGoodsCountChanged(String goodsId,int count);
+        void onGoodsCountChanged(String goodsId,int count,int shopPosition,int goodsPosition);
     }
 }

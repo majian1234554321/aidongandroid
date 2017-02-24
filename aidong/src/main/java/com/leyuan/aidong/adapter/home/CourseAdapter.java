@@ -4,12 +4,13 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CourseBean;
 import com.leyuan.aidong.ui.home.activity.CourseDetailActivity;
+import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +47,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
     @Override
     public void onBindViewHolder(CourseViewHolder holder, int position) {
         final CourseBean bean = data.get(position);
-        holder.cover.setImageURI(bean.getCover());
+        GlideLoader.getInstance().displayImage(bean.getCover(), holder.cover);
         holder.price.setText(String.format(context.getString(R.string.rmb_price),bean.getPrice()));
         holder.name.setText(bean.getName());
         holder.address.setText(bean.getAddress());
@@ -64,7 +65,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
     }
 
     class CourseViewHolder extends RecyclerView.ViewHolder {
-        SimpleDraweeView cover;
+        ImageView cover;
         TextView price;
         TextView name;
         TextView address;
@@ -75,7 +76,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
         public CourseViewHolder (View itemView) {
             super(itemView);
 
-            cover = (SimpleDraweeView)itemView.findViewById(R.id.dv_course_cover);
+            cover = (ImageView)itemView.findViewById(R.id.dv_course_cover);
             price = (TextView)itemView.findViewById(R.id.tv_course_price);
             name = (TextView)itemView.findViewById(R.id.tv_course_name);
             address = (TextView)itemView.findViewById(R.id.tv_course_address);

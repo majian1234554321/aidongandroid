@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.baseadapter.BaseRecyclerViewHolder;
 import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter.IDynamicCallback;
@@ -20,8 +19,8 @@ import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.FormatUtil;
+import com.leyuan.aidong.utils.GlideLoader;
 
-import static com.leyuan.aidong.ui.App.context;
 import static com.leyuan.aidong.utils.DateUtils.yyyyMMddHHmmss;
 
 
@@ -29,8 +28,9 @@ import static com.leyuan.aidong.utils.DateUtils.yyyyMMddHHmmss;
  * 爱动圈动态
  */
 public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<DynamicBean> implements IViewHolder<DynamicBean> {
+    private Context context;
     private LinearLayout root;
-    private SimpleDraweeView dvAvatar;
+    private ImageView ivAvatar;
     private TextView tvName;
     private TextView tvTime;
 
@@ -53,8 +53,9 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
 
     public BaseCircleViewHolder(Context context, ViewGroup viewGroup, int layoutResId) {
         super(context, viewGroup, layoutResId);
+        this.context = context;
         root = (LinearLayout) itemView.findViewById(R.id.ll_root);
-        dvAvatar = (SimpleDraweeView) itemView.findViewById(R.id.dv_avatar);
+        ivAvatar = (ImageView) itemView.findViewById(R.id.dv_avatar);
         tvName = (TextView) itemView.findViewById(R.id.tv_name);
         tvTime = (TextView) itemView.findViewById(R.id.tv_time);
         tvContent = (TextView) itemView.findViewById(R.id.tv_content);
@@ -78,8 +79,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
     public void onBindData(final DynamicBean dynamic, final int position) {
         if (dynamic.publisher != null) {
             tvName.setText(dynamic.publisher.name);
-            dvAvatar.setTag(dynamic.publisher);
-            dvAvatar.setImageURI(dynamic.publisher.avatar);
+            GlideLoader.getInstance().displayCircleImage(dynamic.publisher.avatar, ivAvatar);
             tvTime.setText(DateUtils.translateDate(DateUtils.parseDate
                     (dynamic.published_at, yyyyMMddHHmmss).getTime(), System.currentTimeMillis()));
         }
@@ -112,7 +112,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
 
         tvLikeCount.setText(dynamic.like.counter);
         tvCommentCount.setText(dynamic.comment.count);
-        onBindDataToChildView(dynamic, position, getViewType());
+        onBindDataToChildView(dynamic, position, dynamic.getDynamicType());
 
 
         root.setOnClickListener(new View.OnClickListener() {
@@ -124,20 +124,22 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             }
         });
 
-        dvAvatar.setOnClickListener(new View.OnClickListener() {
+        ivAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (callback != null) {
-                    callback.onAvatarClick(dynamic.publisher.publisher_id);
+                    callback.onAvatarClick(dynamic.publisher.id);
                 }
             }
         });
 
         boolean isLiked = false;
-        for (DynamicBean.LikeUser.Item item : dynamic.like.item) {
-            if (item.publisher_id.equals(String.valueOf(App.mInstance.getUser().getId()))) {
-                isLiked = true;
-                break;
+        if(App.mInstance.isLogin()) {
+            for (DynamicBean.LikeUser.Item item : dynamic.like.item) {
+                if (item.publisher_id.equals(String.valueOf(App.mInstance.getUser().getId()))) {
+                    isLiked = true;
+                    break;
+                }
             }
         }
         final boolean like = isLiked;
@@ -167,8 +169,6 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
                 }
             }
         });
-
-
     }
 
     public void setCallback(IDynamicCallback callback) {

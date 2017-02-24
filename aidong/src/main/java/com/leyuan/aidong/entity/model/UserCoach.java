@@ -1,448 +1,316 @@
 package com.leyuan.aidong.entity.model;
 
-import com.leyuan.aidong.entity.user.User;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-
-public class UserCoach extends User implements Serializable{
-	private String token; // '用户token值',
-private int id; // 美型号,
-private int true_age; // 年龄
-private int identity;//是否是服务号
-	private ArrayList<Integer> tags;// 图标
-	private String address;
-	private String tip;
-	private int courses;
-	private Coordinate coordinate;
+import java.util.Arrays;
+
+public class UserCoach implements Serializable {
+    private String token; // '用户token值',
+    private int id; // 美型号,
+    private String header;
+    private String username;
+    private String name;
+    private  String avatar;
+    private  int gender;
+    private  String birthday;
+    private  int age;
+    private   String zodiac;
+    private  String signature;
+    private String province;
+    private  String city;
+    private  String area;
+    private   String mobile;
+    private  int height;
+    private   int weight;
+    private  int bmi;
+    private  String bust;
+    private  String waist;
+    private  boolean hip;
+    private  String charm_site;
+    private  String frequency;
+
+    private  String[] sport;
+    private   UserTag tag[];
+
+    public String getZodiac() {
+        return zodiac;
+    }
+
+    public void setZodiac(String zodiac) {
+        this.zodiac = zodiac;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+    public int getBmi() {
+        return bmi;
+    }
+
+    public void setBmi(int bmi) {
+        this.bmi = bmi;
+    }
+
+
+    public String getCharm_site() {
+        return charm_site;
+    }
+
+    public void setCharm_site(String charm_site) {
+        this.charm_site = charm_site;
+    }
+
+    public String[] getSport() {
+        return sport;
+    }
+
+    public void setSport(String[] sport) {
+        this.sport = sport;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public UserTag[] getTag() {
+        return tag;
+    }
+
+    public void setTag(UserTag[] tag) {
+        this.tag = tag;
+    }
+
+    public class UserTag {
+        String name;
+        int color;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public int getColor() {
+            return color;
+        }
+
+        public void setColor(int color) {
+            this.color = color;
+        }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 
-	private String target;
-	private String skill;
-	private String interests;
-	private String often;
-	private boolean isBindMobile;
+    public int getGender() {
+        return gender;
+    }
 
-
-	private int unreadMsgCount;
-	private String header;
-	private String username;
-	private String nick;
-
-	private int likes;
-
-	/** 照片墙*/
-	private ArrayList<AttributeImages> photowall;
-
-	/** 兴趣*/
-	private ArrayList<String> fpg;
-
-	public ArrayList<String> getFpg() {
-		return fpg;
-	}
-
-	public void setFpg(ArrayList<String> fpg) {
-		this.fpg = fpg;
-	}
-
-	public int getLikes() {
-		return likes;
-	}
-
-	public void setLikes(int likes) {
-		this.likes = likes;
-	}
-
-	public String getTip() {
-		return tip;
-	}
-
-	public void setTip(String tip) {
-		this.tip = tip;
-	}
-
-	public int getCourses() {
-		return courses;
-	}
-
-	public void setCourses(int courses) {
-		this.courses = courses;
-	}
-
-	public Coordinate getCoordinate() {
-		return coordinate;
-	}
-
-	public void setCoordinate(Coordinate coordinate) {
-		this.coordinate = coordinate;
-	}
-
-	public int getTrue_age() {
-		return true_age;
-	}
-
-	public void setTrue_age(int true_age) {
-		this.true_age = true_age;
-	}
-
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getTarget() {
-		return target;
-	}
-
-	public void setTarget(String target) {
-		this.target = target;
-	}
-
-	public String getSkill() {
-		return skill;
-	}
-
-	public void setSkill(String skill) {
-		this.skill = skill;
-	}
-
-	public String getOften() {
-		return often;
-	}
-
-	public void setOften(String often) {
-		this.often = often;
-	}
-
-	public boolean isBindMobile() {
-		return isBindMobile;
-	}
-
-	public void setBindMobile(boolean isBindMobile) {
-		this.isBindMobile = isBindMobile;
-	}
-
-	//	public Contact1 getContact() {
-	//		return contact;
-	//	}
-	//
-	//	public void setContact(Contact1 contact) {
-	//		this.contact = contact;
-	//	}
-
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
-	}
-
-//	public String getName() {
-//		return name;
-//	}
-//
-//	public void setName(String name) {
-//		this.name = name;
-//	}
-
-	public int getMxid() {
-		return id;
-	}
-
-	public void setMxid(int mxid) {
-		this.id = mxid;
-	}
-
-//	public String getAvatar() {
-//		return avatar;
-//	}
-//
-//	public void setAvatar(String avatar) {
-//		this.avatar = avatar;
-//	}
-
-//	public int getGender() {
-//		return gender;
-//	}
-//
-//	public void setGender(int gender) {
-//		this.gender = gender;
-//	}
-
-//	public int getAge() {
-//		return age;
-//	}
-//
-//	public void setAge(int age) {
-//		this.age = age;
-//	}
-
-//	public String getSignature() {
-//		return signature;
-//	}
-//
-//	public void setSignature(String signature) {
-//		this.signature = signature;
-//	}
-
-	public int getIdentity() {
-		return identity;
-	}
-
-	public void setIdentity(int identity) {
-		this.identity = identity;
-	}
-
-	/**
-	 * 已弃用
-	 * @return
-	 */
-	@Deprecated
-	public ArrayList<Integer> getTags() {
-		//		if(tags == null){
-		tags = new ArrayList<Integer>();
-		switch (identity) {
-			case 0:
-				tags.add(0);
-				tags.add(0);
-				tags.add(0);
-				break;
-			case 1:
-				tags.add(0);
-				tags.add(0);
-				tags.add(1);
-				break;
-			case 2:
-				tags.add(0);
-				tags.add(1);
-				tags.add(0);
-				break;
-
-			default:
-				break;
-		}
-		//		}
-		return tags;
-	}
-
-	public void setTags(ArrayList<Integer> tags) {
-		this.tags = tags;
-	}
-
-//	public String getMobile() {
-//		return mobile;
-//	}
-//
-//	public void setMobile(String mobile) {
-//		this.mobile = mobile;
-//	}
-
-
-	public String getInterests() {
-		return interests;
-	}
-
-	public void setInterests(String interests) {
-		this.interests = interests;
-	}
-
-//	public String getBirthday() {
-//		return birthday;
-//	}
-//
-//	public void setBirthday(String birthday) {
-//		this.birthday = birthday;
-//	}
-
-
-	public class Contact1 {
-		private String name;
-		private String photo;
-
-		public String getName() {
-			return name;
-		}
-
-		public void setName(String name) {
-			this.name = name;
-		}
-
-		public String getPhoto() {
-			return photo;
-		}
-
-		public void setPhoto(String photo) {
-			this.photo = photo;
-		}
-
-	}
-
-	public ArrayList<AttributeImages> getPhotowall() {
-		return photowall;
-	}
-	public void setPhotowall(ArrayList<AttributeImages> photowall) {
-		this.photowall = photowall;
-	}
-
-
-
-
-	public String getNick() {
-		return nick;
-	}
-
-	public void setNick(String nick) {
-		this.nick = nick;
-	}
-
-	public String getUsername() {
-		if(username == null)
-			username = getName();
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public UserCoach() {
-	}
-
-	public UserCoach(String username) {
-		this.username = username;
-	}
-
-	public String getHeader() {
-		return header;
-	}
-
-	public void setHeader(String header) {
-		this.header = header;
-	}
-
-	public int getUnreadMsgCount() {
-		return unreadMsgCount;
-	}
-
-	public void setUnreadMsgCount(int unreadMsgCount) {
-		this.unreadMsgCount = unreadMsgCount;
-	}
-
-	//	@Override
-	//	public void writeToParcel(Parcel out, int flags) {
-	//		out.writeString(token);
-	//		out.writeString(name);
-	//		out.writeInt(mxid);
-	//		out.writeString(avatar);
-	//		out.writeInt(gender);
-	//		out.writeInt(age);
-	//		out.writeString(signature);
-	//		out.writeInt(identity);
-	//		out.writeArray(tags.toArray(new Integer[tags.size()]));
-	//		out.writeString(mobile);
-	//		out.writeString(address);
-	//		out.writeString(target);
-	//		out.writeString(skill);
-	//		out.writeString(often);
-	//	}
-	//	public static final Parcelable.Creator<UserCoach> CREATOR = new Creator<UserCoach>() {
-	//		@Override
-	//		public UserCoach[] newArray(int size) {
-	//			return new UserCoach[size];
-	//		}
-	//
-	//		@Override
-	//		public UserCoach createFromParcel(Parcel in) {
-	//			return new UserCoach(in);
-	//		}
-	//	};
-	//
-	//	public UserCoach(Parcel in) {
-	//		token = in.readString();
-	//		name = in.readString();
-	//		mxid = in.readInt();
-	//		avatar = in.readString();
-	//		gender = in.readInt();
-	//		signature = in.readString();
-	//		identity = in.readInt();
-	//		tags = in.readArrayList(ArrayList.class.getClassLoader());
-	//		mobile = in.readString();
-	//		address = in.readString();
-	//		target = in.readString();
-	//		skill = in.readString();
-	//		often = in.readString();
-	//	}
-
-	@Override
-	public int hashCode() {
-		return 17 * getUsername().hashCode();
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		try {
-			if (o == null || !(o instanceof UserCoach)) {
-				return false;
-			}
-			return getUsername().equals(((UserCoach) o).getUsername());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return false;
-	}
-
-	@Override
-	public String toString() {
-		return "UserCoach{" +
-				"token='" + token + '\'' +
-//				", name='" + name + '\'' +
-				", id=" + id +
-//				", avatar='" + avatar + '\'' +
-//				", gender=" + gender +
-//				", age=" + age +
-				", true_age=" + true_age +
-//				", signature='" + signature + '\'' +
-				", identity=" + identity +
-				", tags=" + tags +
-//				", mobile='" + mobile + '\'' +
-				", address='" + address + '\'' +
-				", tip='" + tip + '\'' +
-				", courses=" + courses +
-				", coordinate=" + coordinate +
-				", target='" + target + '\'' +
-				", skill='" + skill + '\'' +
-				", interests='" + interests + '\'' +
-				", often='" + often + '\'' +
-//				", birthday='" + birthday + '\'' +
-				", isBindMobile=" + isBindMobile +
-				", unreadMsgCount=" + unreadMsgCount +
-				", header='" + header + '\'' +
-				", username='" + username + '\'' +
-				", nick='" + nick + '\'' +
-				", likes=" + likes +
-				", photowall=" + photowall +
-				", fpg=" + fpg +
-				'}';
-	}
-//	@Override
-	//	public int describeContents() {
-	//		// TODO Auto-generated method stub
-	//		return 0;
-	//	}
-
-
-
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getBust() {
+        return bust;
+    }
+
+    public void setBust(String bust) {
+        this.bust = bust;
+    }
+
+    public String getWaist() {
+        return waist;
+    }
+
+    public void setWaist(String waist) {
+        this.waist = waist;
+    }
+
+    public boolean isHip() {
+        return hip;
+    }
+
+    public void setHip(boolean hip) {
+        this.hip = hip;
+    }
+
+    public String getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(String frequency) {
+        this.frequency = frequency;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getUsername() {
+        if (username == null)
+            username = getName();
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public UserCoach() {
+    }
+
+    public UserCoach(String username) {
+        this.username = username;
+    }
+
+    public String getHeader() {
+        return header;
+    }
+
+    public void setHeader(String header) {
+        this.header = header;
+    }
+
+
+    @Override
+    public int hashCode() {
+        return 17 * getUsername().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        try {
+            if (o == null || !(o instanceof UserCoach)) {
+                return false;
+            }
+            return getUsername().equals(((UserCoach) o).getUsername());
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return "UserCoach{" +
+                "token='" + token + '\'' +
+                ", id=" + id +
+                ", header='" + header + '\'' +
+                ", username='" + username + '\'' +
+                ", name='" + name + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", gender=" + gender +
+                ", birthday='" + birthday + '\'' +
+                ", age=" + age +
+                ", zodiac='" + zodiac + '\'' +
+                ", signature='" + signature + '\'' +
+                ", province='" + province + '\'' +
+                ", city='" + city + '\'' +
+                ", area='" + area + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", height=" + height +
+                ", weight=" + weight +
+                ", bmi=" + bmi +
+                ", bust='" + bust + '\'' +
+                ", waist='" + waist + '\'' +
+                ", hip=" + hip +
+                ", charm_site='" + charm_site + '\'' +
+                ", frequency='" + frequency + '\'' +
+                ", sport=" + Arrays.toString(sport) +
+                ", tag=" + Arrays.toString(tag) +
+                '}';
+    }
 }

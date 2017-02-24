@@ -6,9 +6,9 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.widget.BaseAddressPopupWindow;
-import com.leyuan.aidong.widget.wheelcity.ArrayWheelAdapter;
-import com.leyuan.aidong.widget.wheelcity.OnWheelChangedListener;
-import com.leyuan.aidong.widget.wheelcity.WheelView;
+import com.leyuan.aidong.widget.wheelview.ArrayWheelAdapter;
+import com.leyuan.aidong.widget.wheelview.OnWheelChangedListener;
+import com.leyuan.aidong.widget.wheelview.WheelView;
 
 /**
  * 新建地址选择地址弹框

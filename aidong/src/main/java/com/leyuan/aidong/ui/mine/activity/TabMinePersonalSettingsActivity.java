@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.module.chat.EmChatLoginManager;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.MainActivity;
@@ -24,7 +25,7 @@ import com.leyuan.aidong.utils.ToastUtil;
 
 import java.util.HashMap;
 
-public class TabMinePersonalSettingsActivity extends BaseActivity  {
+public class TabMinePersonalSettingsActivity extends BaseActivity {
     private ImageView layout_tab_mine_personal_settings_title_img_back;
     private RelativeLayout layout_tab_mine_personal_settings_update_password_rel;
     private Intent intent;
@@ -308,9 +309,10 @@ public class TabMinePersonalSettingsActivity extends BaseActivity  {
     private void loginOut() {
         try {
             MyDbUtils.clearZanmap();
-//            SharePrefUtils.setLogin(this,true);
-//            Ap.mInstance.setUser(null);
             App.mInstance.exitLogin();
+            EmChatLoginManager.loginOut();
+
+
 //            BaseApp.mInstance.getParamsHelper().setPreInt("islogin", 0);
 //            BaseApp.mInstance.logout(null);
             HashMap<String, String> map = new HashMap<String, String>();
@@ -318,6 +320,7 @@ public class TabMinePersonalSettingsActivity extends BaseActivity  {
          /*   addTask(this, new IHttpTask(UrlLink.LOGOUT_URL, map,
                             new ArrayList<BasicNameValuePair>(), MsgResult.class),
                     HttpConfig.DELETE, LOGINOUT);
+
 */
         } catch (Exception e) {
             e.printStackTrace();
@@ -332,7 +335,7 @@ public class TabMinePersonalSettingsActivity extends BaseActivity  {
     @Override
     protected void onActivityResult(int request, int result, Intent arg2) {
         if (result == RESULT_OK) {
-            App.mInstance.getUser().setBindMobile(true);
+//            App.mInstance.getUser().setBindMobile(true);
             layout_tab_mine_personal_settings_binding_mobile_phone_unbound_txt
                     .setText(R.string.the_bound);
         }

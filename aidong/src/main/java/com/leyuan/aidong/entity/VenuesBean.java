@@ -49,7 +49,7 @@ public class VenuesBean implements Parcelable {
         this.name = name;
     }
 
-    public String getBrand_logo() {
+    public String getBrandLogo() {
         return brand_logo;
     }
 

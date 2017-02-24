@@ -5,20 +5,21 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CourseDetailBean;
 import com.leyuan.aidong.module.pay.PayInterface;
+import com.leyuan.aidong.module.pay.SimplePayListener;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.activity.CouponActivity;
 import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
-import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.widget.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.ExtendTextView;
 import com.leyuan.aidong.widget.SimpleTitleBar;
@@ -39,7 +40,7 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
 
     //课程信息
     private TextView tvType;
-    private SimpleDraweeView dvCover;
+    private ImageView dvCover;
     private TextView tvCourseName;
     private TextView tvShop;
     private ExtendTextView tvTime;
@@ -99,7 +100,7 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
         tvUserName = (TextView) findViewById(R.id.tv_input_name);
         tvUserPhone = (TextView) findViewById(R.id.tv_input_phone);
         tvType = (TextView) findViewById(R.id.tv_type);
-        dvCover = (SimpleDraweeView) findViewById(R.id.dv_cover);
+        dvCover = (ImageView) findViewById(R.id.dv_cover);
         tvCourseName = (TextView) findViewById(R.id.tv_name);
         tvShop = (TextView) findViewById(R.id.tv_shop);
         tvTime = (ExtendTextView) findViewById(R.id.tv_time);
@@ -123,7 +124,7 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
         contactMobile = App.mInstance.getUser().getMobile();
         tvUserName.setText(userName);
         tvUserPhone.setText(contactMobile);
-        dvCover.setImageURI(bean.getCover());
+        GlideLoader.getInstance().displayImage(bean.getCover(), dvCover);
         tvCourseName.setText(bean.getName());
         tvTime.setRightContent(String.format(getString(R.string.detail_time),
                 bean.getClassDate(),bean.getClassTime(),bean.getBreakTime()));
@@ -172,35 +173,11 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
         }
     }
 
-    private PayInterface.PayListener payListener = new PayInterface.PayListener() {
+    private PayInterface.PayListener payListener = new SimplePayListener(this) {
         @Override
-        public void fail(String code, Object object) {
-            String tip = "";
-            switch (code){
-                case "4000":
-                    tip = "订单支付失败";
-                    break;
-                case "5000":
-                    tip = "订单重复提交";
-                    break;
-                case "6001":
-                    tip = "订单取消支付";
-                    break;
-                case "6002":
-                    tip = "网络连接出错";
-                    break;
-                default:
-                    break;
-            }
-            Toast.makeText(AppointCourseActivity.this,tip,Toast.LENGTH_LONG).show();
-            Logger.w("AppointCourseActivity","failed:" + code + object.toString());
-        }
-
-        @Override
-        public void success(String code, Object object) {
-            Toast.makeText(AppointCourseActivity.this,"支付成功啦啦啦啦啦绿",Toast.LENGTH_LONG).show();
+        public void onSuccess(String code, Object object) {
+            Toast.makeText(AppointCourseActivity.this,"支付成功啦",Toast.LENGTH_LONG).show();
             startActivity(new Intent(AppointCourseActivity.this,AppointSuccessActivity.class));
-            Logger.w("AppointCourseActivity","success:" + code + object.toString());
         }
     };
 

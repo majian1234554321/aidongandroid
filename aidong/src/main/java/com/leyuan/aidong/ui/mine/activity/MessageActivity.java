@@ -1,9 +1,11 @@
 package com.leyuan.aidong.ui.mine.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.RecyclerView;
 
+import com.hyphenate.chat.EMConversation;
+import com.hyphenate.easeui.EaseConstant;
+import com.hyphenate.easeui.ui.EaseConversationListFragment;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.widget.SimpleTitleBar;
@@ -14,8 +16,7 @@ import com.leyuan.aidong.widget.SimpleTitleBar;
  */
 public class MessageActivity extends BaseActivity {
     private SimpleTitleBar titleBar;
-    private SwipeRefreshLayout refreshLayout;
-    private RecyclerView rvMessage;
+    private EaseConversationListFragment conversationListFragment;
 
 
     @Override
@@ -24,12 +25,23 @@ public class MessageActivity extends BaseActivity {
         setContentView(R.layout.activity_message);
 
         initView();
+        initData();
+    }
+
+    private void initData() {
+        conversationListFragment = new EaseConversationListFragment();
+        conversationListFragment.setConversationListItemClickListener(new EaseConversationListFragment.EaseConversationListItemClickListener() {
+
+            @Override
+            public void onListItemClicked(EMConversation conversation) {
+                startActivity(new Intent(MessageActivity.this, EMChatActivity.class).
+                        putExtra(EaseConstant.EXTRA_USER_ID, conversation.getLastMessage().getMsgId()));
+            }
+        });
     }
 
     private void initView() {
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
-        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
-        rvMessage = (RecyclerView) findViewById(R.id.rv_message);
 
     }
 }

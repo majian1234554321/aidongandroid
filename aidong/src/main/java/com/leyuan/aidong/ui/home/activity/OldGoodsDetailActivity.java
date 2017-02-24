@@ -19,22 +19,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.adapter.home.GoodsDetailCouponAdapter;
 import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.entity.GoodsDetailBean;
 import com.leyuan.aidong.entity.ShopBean;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.adapter.home.GoodsDetailCouponAdapter;
 import com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow;
 import com.leyuan.aidong.ui.mine.activity.CartActivity;
 import com.leyuan.aidong.ui.mvp.presenter.GoodsDetailPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.GoodsDetailPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.GoodsDetailActivityView;
 import com.leyuan.aidong.utils.DensityUtil;
-import com.leyuan.aidong.utils.ImageLoadConfig;
+import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.widget.ObserveScrollView;
 import com.leyuan.aidong.widget.SlideDetailsLayout;
 import com.leyuan.aidong.widget.SwitcherLayout;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -150,8 +149,7 @@ public class OldGoodsDetailActivity extends BaseActivity implements View.OnClick
         bannerLayout.setAdapter(new BGABanner.Adapter() {
             @Override
             public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
-                ImageLoader.getInstance().displayImage((String)model,(ImageView)view,
-                        new ImageLoadConfig().getOptions(R.drawable.place_holder_logo));
+                GlideLoader.getInstance().displayImage((String)model, (ImageView)view);
             }
         });
         couponView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));

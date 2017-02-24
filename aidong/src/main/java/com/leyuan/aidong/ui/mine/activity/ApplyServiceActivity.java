@@ -9,12 +9,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
-
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.adapter.mine.AddImageAdapter;
 import com.leyuan.aidong.entity.ImageInfoBean;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.adapter.mine.AddImageAdapter;
 
 import java.util.ArrayList;
 
@@ -27,7 +25,7 @@ import static com.leyuan.aidong.utils.Constant.CODE_OPEN_ALBUM;
 public class ApplyServiceActivity extends BaseActivity implements View.OnClickListener, AddImageAdapter.OnItemClickListener, AddImageAdapter.OnAddImageClickListener {
     private ImageView ivBack;
     private TextView tvNext;
-    private SimpleDraweeView dvCover;
+    private ImageView dvCover;
     private TextView tvName;
     private TextView tvReturn;
     private TextView tvExchange;
@@ -49,7 +47,7 @@ public class ApplyServiceActivity extends BaseActivity implements View.OnClickLi
     private void initView(){
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tvNext = (TextView) findViewById(R.id.tv_next);
-        dvCover = (SimpleDraweeView) findViewById(R.id.dv_cover);
+        dvCover = (ImageView) findViewById(R.id.dv_cover);
         tvName = (TextView) findViewById(R.id.tv_name);
         tvReturn = (TextView) findViewById(R.id.tv_return);
         tvExchange = (TextView) findViewById(R.id.tv_exchange);

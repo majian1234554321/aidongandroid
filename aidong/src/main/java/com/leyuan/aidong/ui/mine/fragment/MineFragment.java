@@ -1,6 +1,5 @@
 package com.leyuan.aidong.ui.mine.fragment;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,6 +18,7 @@ import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.mine.account.LoginActivity;
 import com.leyuan.aidong.ui.mine.activity.AddressActivity;
+import com.leyuan.aidong.ui.mine.activity.AiDongMomentActivity;
 import com.leyuan.aidong.ui.mine.activity.ApplyServiceActivity;
 import com.leyuan.aidong.ui.mine.activity.AppointmentActivity;
 import com.leyuan.aidong.ui.mine.activity.CartActivity;
@@ -27,7 +27,6 @@ import com.leyuan.aidong.ui.mine.activity.FollowActivity;
 import com.leyuan.aidong.ui.mine.activity.LoveCoinActivity;
 import com.leyuan.aidong.ui.mine.activity.MessageActivity;
 import com.leyuan.aidong.ui.mine.activity.OrderActivity;
-import com.leyuan.aidong.ui.mine.activity.AiDongMomentActivity;
 import com.leyuan.aidong.ui.mine.activity.TabMinePersonalSettingsActivity;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.utils.UiManager;
@@ -153,7 +152,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 UiManager.activityJump(getActivity(), MessageActivity.class);
                 break;
             case R.id.imageView_head:
-                startActivity(new Intent(getContext(), UserInfoActivity.class));
+                UserInfoActivity.start(getContext(),String.valueOf(App.mInstance.getUser().getId()));
+                //startActivity(new Intent(getContext(), UserInfoActivity.class));
 
                /* Intent intent = new Intent();
                 intent.setClass(getActivity(), MyShowActivityNew.class);

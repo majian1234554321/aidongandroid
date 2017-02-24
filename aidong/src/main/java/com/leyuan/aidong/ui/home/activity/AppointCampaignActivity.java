@@ -5,19 +5,21 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CampaignDetailBean;
 import com.leyuan.aidong.module.pay.PayInterface;
+import com.leyuan.aidong.module.pay.SimplePayListener;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.activity.CouponActivity;
 import com.leyuan.aidong.ui.mvp.presenter.CampaignPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CampaignPresentImpl;
+import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.widget.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.ExtendTextView;
 import com.leyuan.aidong.widget.SimpleTitleBar;
@@ -38,7 +40,7 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
 
     //活动信息
     private TextView tvType;
-    private SimpleDraweeView dvCover;
+    private ImageView dvCover;
     private TextView tvCourseName;
     private TextView tvShop;
     private ExtendTextView tvTime;
@@ -96,7 +98,7 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
         tvUserName = (TextView) findViewById(R.id.tv_input_name);
         tvUserPhone = (TextView) findViewById(R.id.tv_input_phone);
         tvType = (TextView) findViewById(R.id.tv_type);
-        dvCover = (SimpleDraweeView) findViewById(R.id.dv_cover);
+        dvCover = (ImageView) findViewById(R.id.dv_cover);
         tvCourseName = (TextView) findViewById(R.id.tv_name);
         tvShop = (TextView) findViewById(R.id.tv_shop);
         tvTime = (ExtendTextView) findViewById(R.id.tv_time);
@@ -121,7 +123,7 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
         tvUserName.setText(userName);
         tvUserPhone.setText(contactMobile);
         tvCourseName.setText( campaignBean.getName());
-        dvCover.setImageURI(campaignBean.getImage().get(0));
+        GlideLoader.getInstance().displayImage(campaignBean.getImage().get(0), dvCover);
         tvTime.setRightContent(campaignBean.getStartTime());
         tvAddress.setRightContent(campaignBean.getAddress());
         tvTotalPrice.setRightContent(String.format(getString(R.string.rmb_price),campaignBean.getPrice()));
@@ -168,15 +170,10 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
         }
     }
 
-    private PayInterface.PayListener payListener = new PayInterface.PayListener() {
+    private PayInterface.PayListener payListener = new SimplePayListener(this) {
         @Override
-        public void fail(String code, Object object) {
-            Toast.makeText(AppointCampaignActivity.this,"failed:" + code + object.toString(),Toast.LENGTH_LONG).show();
-        }
-
-        @Override
-        public void success(String code, Object object) {
-            Toast.makeText(AppointCampaignActivity.this,"success:" + code + object.toString(),Toast.LENGTH_LONG).show();
+        public void onSuccess(String code, Object object) {
+            Toast.makeText(AppointCampaignActivity.this,"onSuccess:" + code + object.toString(),Toast.LENGTH_LONG).show();
         }
     };
 

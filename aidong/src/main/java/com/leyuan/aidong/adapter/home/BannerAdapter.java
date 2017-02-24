@@ -4,9 +4,10 @@ import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.entity.BannerBean;
+import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,8 +44,8 @@ public class BannerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup view, int position) {
         BannerBean bean = data.get(position);
-        SimpleDraweeView banner = new SimpleDraweeView(context);
-        banner.setImageURI(bean.getImage());
+        ImageView banner = new ImageView(context);
+        GlideLoader.getInstance().displayImage(bean.getImage(), banner);
         view.addView(banner, ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
         return banner;
     }

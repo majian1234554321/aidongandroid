@@ -4,15 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.view.View;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.module.weibo.WeiBoConstants;
 import com.leyuan.aidong.utils.Logger;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.sina.weibo.sdk.api.ImageObject;
 import com.sina.weibo.sdk.api.TextObject;
 import com.sina.weibo.sdk.api.WebpageObject;
@@ -23,7 +18,6 @@ import com.sina.weibo.sdk.api.share.IWeiboShareAPI;
 import com.sina.weibo.sdk.api.share.SendMultiMessageToWeiboRequest;
 import com.sina.weibo.sdk.api.share.WeiboShareSDK;
 import com.sina.weibo.sdk.constant.WBConstants;
-import com.tencent.open.utils.ThreadManager;
 
 /**
  * Created by user on 2016/12/6.
@@ -102,7 +96,7 @@ public class WeiBoShare implements IWeiboHandler.Response {
     }
 
     public  void share(final String title, final String content, String imageUrl, final String webUrl) {
-        ImageLoader.getInstance().loadImage(imageUrl, new ImageLoadingListener() {
+        /*ImageLoader.getInstance().loadImage(imageUrl, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
 
@@ -144,7 +138,7 @@ public class WeiBoShare implements IWeiboHandler.Response {
             public void onLoadingCancelled(String imageUri, View view) {
 
             }
-        });
+        });*/
 
 
     }

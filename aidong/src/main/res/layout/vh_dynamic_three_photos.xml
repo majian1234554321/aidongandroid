@@ -14,15 +14,12 @@
         android:layout_height="238dp"
         android:orientation="horizontal">
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/dv_one"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            fresco:actualImageScaleType="centerCrop"
-            fresco:placeholderImage="@color/line_color"
-            fresco:placeholderImageScaleType="fitCenter"
-            fresco:pressedStateOverlayImage="@color/color_image_press" />
+             />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -31,26 +28,20 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <com.facebook.drawee.view.SimpleDraweeView
+            <ImageView
                 android:id="@+id/dv_two"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                fresco:actualImageScaleType="centerCrop"
-                fresco:placeholderImage="@color/line_color"
-                fresco:placeholderImageScaleType="fitCenter"
-                fresco:pressedStateOverlayImage="@color/color_image_press" />
+                />
 
-            <com.facebook.drawee.view.SimpleDraweeView
+            <ImageView
                 android:id="@+id/dv_three"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
-                fresco:actualImageScaleType="centerCrop"
-                fresco:placeholderImage="@color/line_color"
-                fresco:placeholderImageScaleType="fitCenter"
-                fresco:pressedStateOverlayImage="@color/color_image_press" />
+              />
         </LinearLayout>
     </LinearLayout>
 

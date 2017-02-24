@@ -6,13 +6,14 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.AppointmentBean;
 import com.leyuan.aidong.ui.mine.activity.AppointCampaignDetailActivity;
 import com.leyuan.aidong.ui.mine.activity.AppointCourseDetailActivity;
+import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +55,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         final AppointmentBean bean = data.get(position);
 
         //与订单状态无关
-        holder.cover.setImageURI(bean.getCover());
+        GlideLoader.getInstance().displayImage(bean.getCover(), holder.cover);
         holder.name.setText(bean.getName());
         holder.address.setText(bean.getSubName());
         holder.price.setText(String.format(context.getString(R.string.rmb_price),bean.getPrice()));
@@ -128,7 +129,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     class AppointmentHolder extends RecyclerView.ViewHolder {
         TextView state;
         TextView timeOrId;
-        SimpleDraweeView cover;
+        ImageView cover;
         TextView name;
         TextView address;
         TextView payTip;
@@ -143,7 +144,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
             state = (TextView) itemView.findViewById(R.id.tv_state);
             timeOrId = (TextView) itemView.findViewById(R.id.tv_id_or_time);
-            cover = (SimpleDraweeView) itemView.findViewById(R.id.dv_goods_cover);
+            cover = (ImageView) itemView.findViewById(R.id.dv_goods_cover);
             name = (TextView) itemView.findViewById(R.id.tv_name);
             address = (TextView) itemView.findViewById(R.id.tv_address);
             price = (TextView) itemView.findViewById(R.id.tv_price);

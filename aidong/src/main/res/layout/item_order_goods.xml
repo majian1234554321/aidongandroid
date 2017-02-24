@@ -7,14 +7,12 @@
     android:paddingRight="@dimen/right_margin"
     android:background="?selectableItemBackground">
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/dv_goods_cover"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        fresco:actualImageScaleType="centerCrop"
         android:layout_centerVertical="true"
-        fresco:placeholderImage="@drawable/place_holder_logo"
-        fresco:pressedStateOverlayImage="@color/color_image_press"/>
+       />
 
     <TextView
         android:id="@+id/tv_goods_price"

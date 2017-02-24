@@ -299,7 +299,7 @@
     </declare-styleable>
 
     <declare-styleable name="PublicTitleBar">
-        <attr name="titleBarBackground" format="color" />
+        <attr name="publicTitleBarBackground" format="color" />
         <attr name="titleBarHeight" format="dimension" />
         <attr name="titleText" format="string" />
         <attr name="public_titleColor" format="color" />

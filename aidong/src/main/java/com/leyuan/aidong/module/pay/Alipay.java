@@ -54,7 +54,7 @@ public class AliPay implements PayInterface {
                                         ((Activity)context).runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
-                                                payListener.success("9000", payResult);
+                                                payListener.onSuccess("9000", payResult);
                                             }
                                         });
                                         break;
@@ -63,7 +63,7 @@ public class AliPay implements PayInterface {
                                         ((Activity) context).runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
-                                                payListener.fail(code, result);
+                                                payListener.onFail(code, result);
                                             }
                                         });
                                         break;

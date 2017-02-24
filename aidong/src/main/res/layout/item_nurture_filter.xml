@@ -7,15 +7,14 @@
     android:paddingRight="@dimen/right_margin"
     android:background="?selectableItemBackground">
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/dv_nurture_cover"
         android:layout_width="110dp"
         android:layout_height="110dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        app:actualImageScaleType="centerCrop"
         android:layout_centerVertical="true"
-        app:placeholderImage="@drawable/place_holder_logo"/>
+        />
 
     <TextView
         android:id="@+id/tv_nurture_name"

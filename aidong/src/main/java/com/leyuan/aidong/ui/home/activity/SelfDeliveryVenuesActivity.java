@@ -151,7 +151,7 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.iv_back:
-                animationFinish();
+                compatFinish();
                 break;
             case R.id.tv_finish:
                 VenuesBean checked = null;
@@ -167,7 +167,7 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
                     Intent intent = new Intent();
                     intent.putExtra("venues",checked);
                     setResult(RESULT_OK,intent);
-                    animationFinish();
+                    compatFinish();
                 }
                 break;
             default:

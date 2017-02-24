@@ -7,17 +7,19 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ViewSwitcher;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 
-import pl.droidsonroids.gif.GifImageView;
+
 
 /**
  * 动态显示加载中,加载失败,无内容,正常数据显示的布局
@@ -137,8 +139,8 @@ public class SwitcherLayout {
 
     private void setDefaultViews(){
         View loadingView = initView(R.layout.view_loading_content, TAG_LOADING);
-        GifImageView gif = (GifImageView) loadingView.findViewById(R.id.loading);
-        gif.setImageResource(R.drawable.loading);
+        ImageView imageView = (ImageView) loadingView.findViewById(R.id.iv_loading);
+        GlideLoader.getInstance().displayLocalGifImage(R.drawable.loading,imageView);
 
         View emptyView = initView(R.layout.view_no_content, TAG_EMPTY);
         View exceptionView = initView(R.layout.view_exception, TAG_EXCEPTION);

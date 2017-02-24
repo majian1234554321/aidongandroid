@@ -5,11 +5,11 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CampaignDetailBean;
 import com.leyuan.aidong.entity.CourseDetailBean;
@@ -44,7 +44,7 @@ public class AppointInfoActivity extends BaseActivity implements View.OnClickLis
 
     //课程或活动信息
     private TextView tvType;
-    private SimpleDraweeView dvCover;
+    private ImageView dvCover;
     private TextView tvCourseName;
     private TextView tvShop;
     private ExtendTextView tvTime;
@@ -118,7 +118,7 @@ public class AppointInfoActivity extends BaseActivity implements View.OnClickLis
         tvUserName = (TextView) findViewById(R.id.tv_input_name);
         tvUserPhone = (TextView) findViewById(R.id.tv_input_phone);
         tvType = (TextView) findViewById(R.id.tv_type);
-        dvCover = (SimpleDraweeView) findViewById(R.id.dv_cover);
+        dvCover = (ImageView) findViewById(R.id.dv_cover);
         tvCourseName = (TextView) findViewById(R.id.tv_name);
         tvShop = (TextView) findViewById(R.id.tv_shop);
         tvTime = (ExtendTextView) findViewById(R.id.tv_time);
@@ -197,13 +197,13 @@ public class AppointInfoActivity extends BaseActivity implements View.OnClickLis
 
     private PayInterface.PayListener payListener = new PayInterface.PayListener() {
         @Override
-        public void fail(String code, Object object) {
+        public void onFail(String code, Object object) {
             Toast.makeText(AppointInfoActivity.this,"failed:" + code + object.toString(),Toast.LENGTH_LONG).show();
         }
 
         @Override
-        public void success(String code, Object object) {
-            Toast.makeText(AppointInfoActivity.this,"success:" + code + object.toString(),Toast.LENGTH_LONG).show();
+        public void onSuccess(String code, Object object) {
+            Toast.makeText(AppointInfoActivity.this,"onSuccess:" + code + object.toString(),Toast.LENGTH_LONG).show();
         }
     };
 

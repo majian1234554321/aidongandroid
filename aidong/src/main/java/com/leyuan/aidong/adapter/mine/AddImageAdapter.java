@@ -8,14 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.ImageInfoBean;
+import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.leyuan.aidong.utils.Constant.MAX_UPLOAD_IMAGE_COUNT;
+import static com.leyuan.aidong.utils.Constant.DEFAULT_MAX_UPLOAD_IMAGE_COUNT;
 
 
 /**
@@ -54,10 +54,10 @@ public class AddImageAdapter extends RecyclerView.Adapter<ViewHolder> {
     @Override
     public int getItemCount() {
         if (data != null && data.size() > 0) {
-            if(data.size() < MAX_UPLOAD_IMAGE_COUNT){
+            if(data.size() < DEFAULT_MAX_UPLOAD_IMAGE_COUNT){
                 return data.size() + 1;
             }else{
-                return MAX_UPLOAD_IMAGE_COUNT;
+                return DEFAULT_MAX_UPLOAD_IMAGE_COUNT;
             }
         } else {
             return 1;
@@ -88,8 +88,7 @@ public class AddImageAdapter extends RecyclerView.Adapter<ViewHolder> {
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         if (holder instanceof ImageHolder) {
-            ((ImageHolder) holder).image.setImageURI("file:///" + data.get(position).getImageFile().getAbsolutePath());
-
+            GlideLoader.getInstance().displayImage("file:///" + data.get(position).getImageFile().getAbsolutePath(), ((ImageHolder) holder).image);
             ((ImageHolder) holder).delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -119,12 +118,12 @@ public class AddImageAdapter extends RecyclerView.Adapter<ViewHolder> {
 
 
     private class ImageHolder extends ViewHolder {
-        SimpleDraweeView image;
+        ImageView image;
         ImageView delete;
 
         public ImageHolder(View itemView) {
             super(itemView);
-            image = (SimpleDraweeView) itemView.findViewById(R.id.dv_image);
+            image = (ImageView) itemView.findViewById(R.id.dv_image);
             delete = (ImageView) itemView.findViewById(R.id.iv_delete);
         }
     }

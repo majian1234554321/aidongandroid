@@ -13,15 +13,12 @@
         android:layout_marginLeft="@dimen/left_margin"
         android:layout_marginRight="@dimen/right_margin">
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/dv_avatar"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_centerVertical="true"
-            fresco:actualImageScaleType="centerCrop"
-            fresco:roundAsCircle="true"
-            fresco:placeholderImage="@drawable/place_holder_user"
-            fresco:pressedStateOverlayImage="@color/color_image_press" />
+          />
 
         <TextView
             android:id="@+id/tv_name"
@@ -63,14 +60,12 @@
         android:descendantFocusability="beforeDescendants"
         android:visibility="gone">
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/dv_video"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/line_color"
-            fresco:placeholderImage="@color/line_color"
-            fresco:placeholderImageScaleType="fitCenter"
-            fresco:pressedStateOverlayImage="@color/color_image_press"/>
+           />
 
 
         <ImageButton
@@ -97,15 +92,12 @@
         android:orientation="horizontal"
         android:visibility="gone">
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/dv_three_first"
             android:layout_width="0dp"
             android:layout_weight="2"
             android:layout_height="match_parent"
-            fresco:actualImageScaleType="centerCrop"
-            fresco:placeholderImage="@color/line_color"
-            fresco:placeholderImageScaleType="fitCenter"
-            fresco:pressedStateOverlayImage="@color/color_image_press" />
+          />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -114,26 +106,20 @@
             android:orientation="vertical"
             android:layout_marginLeft="5dp">
 
-            <com.facebook.drawee.view.SimpleDraweeView
+            <ImageView
                 android:id="@+id/dv_three_second"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                fresco:actualImageScaleType="centerCrop"
-                fresco:placeholderImage="@color/line_color"
-                fresco:placeholderImageScaleType="fitCenter"
-                fresco:pressedStateOverlayImage="@color/color_image_press" />
+                />
 
-            <com.facebook.drawee.view.SimpleDraweeView
+            <ImageView
                 android:id="@+id/dv_three_third"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:layout_marginTop="5dp"
-                fresco:actualImageScaleType="centerCrop"
-                fresco:placeholderImage="@color/line_color"
-                fresco:placeholderImageScaleType="fitCenter"
-                fresco:pressedStateOverlayImage="@color/color_image_press" />
+                 />
         </LinearLayout>
     </LinearLayout>
 
@@ -148,26 +134,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <com.facebook.drawee.view.SimpleDraweeView
+            <ImageView
                 android:id="@+id/dv_five_first"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="185dp"
-                fresco:actualImageScaleType="centerCrop"
-                fresco:placeholderImage="@color/line_color"
-                fresco:placeholderImageScaleType="fitCenter"
-                fresco:pressedStateOverlayImage="@color/color_image_press" />
+               />
 
-            <com.facebook.drawee.view.SimpleDraweeView
+            <ImageView
                 android:id="@+id/dv_five_second"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="185dp"
-                fresco:actualImageScaleType="centerCrop"
                 android:layout_marginLeft="5dp"
-                fresco:placeholderImage="@color/line_color"
-                fresco:placeholderImageScaleType="fitCenter"
-                fresco:pressedStateOverlayImage="@color/color_image_press" />
+               />
         </LinearLayout>
 
         <LinearLayout
@@ -176,36 +156,28 @@
             android:orientation="horizontal"
             android:layout_below="@id/ll_top"
             android:layout_marginTop="5dp">
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/dv_five_third"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="122dp"
-            fresco:actualImageScaleType="fitCenter"
-            fresco:placeholderImage="@color/line_color"
-            fresco:placeholderImageScaleType="fitCenter"
-            fresco:pressedStateOverlayImage="@color/color_image_press" />
+            />
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/dv_five_fourth"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="122dp"
             android:layout_marginLeft="5dp"
-            fresco:actualImageScaleType="fitCenter"
-            fresco:placeholderImage="@color/line_color"
-            fresco:pressedStateOverlayImage="@color/color_image_press" />
+           />
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/dv_five_last"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="122dp"
             android:layout_marginLeft="5dp"
-            fresco:actualImageScaleType="fitCenter"
-            fresco:placeholderImage="@color/line_color"
-            fresco:placeholderImageScaleType="fitCenter"
-            fresco:pressedStateOverlayImage="@color/color_image_press" />
+            />
         </LinearLayout>
     </RelativeLayout>
 

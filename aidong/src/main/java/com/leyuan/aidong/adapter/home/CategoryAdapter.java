@@ -5,12 +5,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.ui.home.activity.GoodsFilterActivity;
+import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
 
@@ -49,7 +50,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.FoodVi
     @Override
     public void onBindViewHolder(FoodViewHolder holder, final int position) {
         CategoryBean bean = data.get(position);
-        holder.cover.setImageURI(bean.getImage());
+        GlideLoader.getInstance().displayRoundImage(bean.getImage(), holder.cover);
         holder.name.setText(bean.getName());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,12 +61,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.FoodVi
     }
 
     class FoodViewHolder extends RecyclerView.ViewHolder {
-        SimpleDraweeView cover;
+        ImageView cover;
         TextView name;
 
         public FoodViewHolder (View itemView) {
             super(itemView);
-            cover = (SimpleDraweeView)itemView.findViewById(R.id.dv_category_cover);
+            cover = (ImageView)itemView.findViewById(R.id.dv_category_cover);
             name = (TextView)itemView.findViewById(R.id.tv_category_name);
         }
     }

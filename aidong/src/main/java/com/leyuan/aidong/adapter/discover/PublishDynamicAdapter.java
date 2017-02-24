@@ -6,13 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.module.photopicker.boxing.BoxingMediaLoader;
 import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
+import com.leyuan.aidong.utils.ScreenUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.leyuan.aidong.ui.App.context;
 
 
 /**
@@ -70,7 +72,6 @@ public class PublishDynamicAdapter extends RecyclerView.Adapter<PublishDynamicAd
         if(getItemViewType(position) == ITEM_TYPE_IMAGE){
             BoxingMediaLoader.getInstance().displayThumbnail(holder.image, data.get(position).getPath(),
                     150, 150);
-            //holder.image.setImageURI("file://" + data.get(position).getPath());
             holder.delete.setVisibility(View.VISIBLE);
             holder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -95,13 +96,17 @@ public class PublishDynamicAdapter extends RecyclerView.Adapter<PublishDynamicAd
     }
 
     class ImageHolder extends RecyclerView.ViewHolder {
-        SimpleDraweeView image;
+        ImageView image;
         ImageView delete;
 
         public ImageHolder(View itemView) {
             super(itemView);
-            image = (SimpleDraweeView) itemView.findViewById(R.id.dv_image);
+            image = (ImageView) itemView.findViewById(R.id.dv_image);
             delete = (ImageView) itemView.findViewById(R.id.iv_delete);
+            int width = (ScreenUtil.getScreenWidth(context) -
+                    4 * context.getResources().getDimensionPixelOffset(R.dimen.media_margin))/3;
+            image.getLayoutParams().width = width;
+            image.getLayoutParams().height = width;
         }
     }
 

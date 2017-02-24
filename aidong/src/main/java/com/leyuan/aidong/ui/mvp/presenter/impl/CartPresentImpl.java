@@ -15,6 +15,7 @@ import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.aidong.module.pay.AliPay;
 import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.module.pay.WeiXinPay;
+import com.leyuan.aidong.ui.mine.view.CartHeaderView;
 import com.leyuan.aidong.ui.mvp.model.CartModel;
 import com.leyuan.aidong.ui.mvp.model.RecommendModel;
 import com.leyuan.aidong.ui.mvp.model.impl.CartModelImpl;
@@ -37,6 +38,7 @@ public class CartPresentImpl implements CartPresent{
     private Context context;
     private CartModel cartModel;
     private RecommendModel recommendModel;
+    private CartHeaderView cartHeaderView;
     private CartActivityView cartActivityView;
     private GoodsSkuPopupWindowView skuPopupWindowView;
 
@@ -50,6 +52,17 @@ public class CartPresentImpl implements CartPresent{
     public CartPresentImpl(Context context, CartActivityView cartActivityView) {
         this.context = context;
         this.cartActivityView = cartActivityView;
+        if(cartModel == null){
+            cartModel = new CartModelImpl();
+        }
+        if(recommendModel == null){
+            recommendModel = new RecommendModelImpl();
+        }
+    }
+
+    public CartPresentImpl(Context context, CartHeaderView cartHeaderView) {
+        this.context = context;
+        this.cartHeaderView = cartHeaderView;
         if(cartModel == null){
             cartModel = new CartModelImpl();
         }
@@ -73,9 +86,11 @@ public class CartPresentImpl implements CartPresent{
             public void onNext(ShopData shopData) {
                 if(shopData != null && shopData.getCart() != null  && !shopData.getCart().isEmpty()){
                     switcherLayout.showContentLayout();
-                    cartActivityView.updateRecyclerView(shopData.getCart());
+                    cartHeaderView.updateRecyclerView(shopData.getCart());
+                    //cartActivityView.updateRecyclerView(shopData.getCart());
                 }else {
-                    cartActivityView.showEmptyGoodsView();
+                    cartHeaderView.showEmptyGoodsView();
+                    //cartActivityView.showEmptyGoodsView();
                 }
             }
         });
@@ -87,9 +102,11 @@ public class CartPresentImpl implements CartPresent{
             @Override
             public void onNext(ShopData shopData) {
                 if(shopData != null && shopData.getCart() != null  && !shopData.getCart().isEmpty()){
-                    cartActivityView.updateRecyclerView(shopData.getCart());
+                    cartHeaderView.updateRecyclerView(shopData.getCart());
+                    //cartActivityView.updateRecyclerView(shopData.getCart());
                 }else {
-                    cartActivityView.showEmptyGoodsView();
+                    cartHeaderView.showEmptyGoodsView();
+                    //cartActivityView.showEmptyGoodsView();
                 }
             }
         });
@@ -100,17 +117,19 @@ public class CartPresentImpl implements CartPresent{
         cartModel.deleteCart(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
-                cartActivityView.setDeleteCart(baseBean);  //未作校验 上层自行判断
+                cartHeaderView.setDeleteGoodsResult(baseBean);
+                //cartActivityView.setDeleteGoodsResult(baseBean);
             }
         },ids);
     }
 
     @Override
-    public void updateCart(String id, int mount) {
+    public void updateCart(String id, int mount,final int shopPosition,final int goodsPosition) {
         cartModel.updateCart(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
-                cartActivityView.setUpdateCart(baseBean);  //未作校验 上层自行判断
+                cartHeaderView.updateGoodsCountResult(baseBean,shopPosition,goodsPosition);  //未作校验 上层自行判断
+                //cartActivityView.updateGoodsCountResult(baseBean);  //未作校验 上层自行判断
             }
         },id,mount);
     }
@@ -135,7 +154,7 @@ public class CartPresentImpl implements CartPresent{
                     goodsList = goodsData.getProduct();
                 }
                 if(goodsList.isEmpty()){
-                    cartActivityView.showEmptyRecommendGoodsView();
+                    //cartActivityView.showEmptyRecommendGoodsView();
                 }else {
                     cartActivityView.updateRecommendGoods(goodsList);
                 }

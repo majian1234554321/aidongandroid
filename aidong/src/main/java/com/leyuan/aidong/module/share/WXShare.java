@@ -3,22 +3,16 @@ package com.leyuan.aidong.module.share;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.view.View;
 import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.utils.Logger;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXTextObject;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
-import com.tencent.open.utils.ThreadManager;
 
 import java.io.ByteArrayOutputStream;
 
@@ -100,7 +94,7 @@ public class WXShare {
 //
 //                    }
 //                }).build();
-        ImageLoader.getInstance().loadImage(imageUrl, new ImageLoadingListener() {
+        /*ImageLoader.getInstance().loadImage(imageUrl, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
 
@@ -142,7 +136,7 @@ public class WXShare {
             public void onLoadingCancelled(String imageUri, View view) {
 
             }
-        });
+        });*/
 
 
     }

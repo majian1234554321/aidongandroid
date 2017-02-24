@@ -65,7 +65,7 @@
 
             </LinearLayout>
 
-            <include layout="@layout/inc_line" />
+            <include layout="@layout/inc_line_with_margin" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -120,13 +120,11 @@
                 android:layout_marginLeft="@dimen/left_margin"
                 android:layout_marginRight="@dimen/right_margin">
 
-                <com.facebook.drawee.view.SimpleDraweeView
+                <ImageView
                     android:id="@+id/dv_cover"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:layout_centerVertical="true"
-                    app:actualImageScaleType="centerCrop"
-                    app:placeholderImage="@drawable/place_holder_logo" />
+                    android:layout_centerVertical="true" />
 
                 <TextView
                     android:id="@+id/tv_name"
@@ -153,7 +151,7 @@
                     android:textSize="15sp" />
             </RelativeLayout>
 
-            <include layout="@layout/inc_line" />
+            <include layout="@layout/inc_line_with_margin" />
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_time"
@@ -162,7 +160,7 @@
                 android:gravity="center_vertical"
                 app:left_text="课程或活动时间:" />
 
-            <include layout="@layout/inc_line" />
+            <include layout="@layout/inc_line_with_margin" />
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_address"
@@ -203,7 +201,7 @@
 
             </LinearLayout>
 
-            <include layout="@layout/inc_line" />
+            <include layout="@layout/inc_line_with_margin" />
 
             <LinearLayout
                 android:id="@+id/ll_gold"

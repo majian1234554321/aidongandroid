@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -36,10 +35,45 @@
             android:layout_centerVertical="true"/>
     </RelativeLayout>
 
+    <LinearLayout
+        android:id="@+id/ll_contact"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/tv_message"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="私信"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:background="@color/gray"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/tv_coach"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="预约"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:background="@color/main_red"
+            android:gravity="center"/>
+    </LinearLayout>
+
     <RelativeLayout
         android:id="@+id/rl_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingBottom="50dp"
+        android:paddingTop="@dimen/height_top_bar"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
@@ -90,13 +124,11 @@
                         android:paddingRight="@dimen/right_margin"
                         app:layout_scrollFlags="scroll|enterAlways">
 
-                        <com.facebook.drawee.view.SimpleDraweeView
+                        <ImageView
                             android:id="@+id/dv_avatar"
                             android:layout_width="70dp"
                             android:layout_height="70dp"
-                            android:layout_centerVertical="true"
-                            app:roundAsCircle="true"
-                            app:placeholderImage="@drawable/place_holder_user"/>
+                            android:layout_centerVertical="true" />
 
                         <TextView
                             android:id="@+id/tv_name"
@@ -120,15 +152,38 @@
                             android:textColor="@color/gray_normal"
                             android:textSize="15sp" />
 
-                        <TextView
+                        <LinearLayout
+                            android:id="@+id/ll_publish"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/icon_camera"
+                                android:tint="@color/main_red"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="发布"
+                                android:textColor="@color/main_red"
+                                android:textSize="15sp" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/iv_follow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:drawableTop="@drawable/icon_camera"
-                            android:text="发布"
-                            android:textColor="@color/main_red"
-                            android:textSize="15sp" />
+                            android:src="@drawable/icon_follow"
+                            android:visibility="gone">
+                        </ImageView>
                     </RelativeLayout>
                     <include layout="@layout/inc_line"/>
                 </LinearLayout>
@@ -160,4 +215,4 @@
 
         </android.support.design.widget.CoordinatorLayout>
     </RelativeLayout>
-</LinearLayout>
+</RelativeLayout>

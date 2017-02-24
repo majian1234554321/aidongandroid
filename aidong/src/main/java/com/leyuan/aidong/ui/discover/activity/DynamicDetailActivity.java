@@ -15,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter;
 import com.leyuan.aidong.adapter.discover.DynamicDetailAdapter;
@@ -55,7 +54,7 @@ import static android.view.inputmethod.EditorInfo.IME_ACTION_SEND;
 public class DynamicDetailActivity extends BaseActivity implements DynamicDetailActivityView,View.OnClickListener, TextView.OnEditorActionListener, SwipeRefreshLayout.OnRefreshListener, DynamicDetailAdapter.OnItemClickListener {
     private ImageView ivBack;
     private TextView tvReport;
-    private SimpleDraweeView dvUserAvatar;
+    private ImageView dvUserAvatar;
     private EditText etComment;
 
     private View header;
@@ -91,7 +90,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
         initHeaderView();
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tvReport = (TextView) findViewById(R.id.tv_report);
-        dvUserAvatar = (SimpleDraweeView) findViewById(R.id.dv_user_avatar);
+        dvUserAvatar = (ImageView) findViewById(R.id.dv_user_avatar);
         etComment = (EditText) findViewById(R.id.et_comment);
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
         setColorSchemeResources(refreshLayout);

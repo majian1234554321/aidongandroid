@@ -6,12 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.utils.FormatUtil;
+import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +51,7 @@ public class ConfirmOrderGoodsAdapter extends RecyclerView.Adapter<ConfirmOrderG
     @Override
     public void onBindViewHolder(final GoodsHolder holder, final int position) {
         final GoodsBean bean = data.get(position);
-        holder.cover.setImageURI(bean.getCover());
+        GlideLoader.getInstance().displayImage(bean.getCover(), holder.cover);
         holder.name.setText(bean.getName());
         holder.count.setText(String.format(context.getString(R.string.x_count),bean.getAmount()));
         ArrayList<String> specValue = bean.getSpec_value();
@@ -65,7 +66,7 @@ public class ConfirmOrderGoodsAdapter extends RecyclerView.Adapter<ConfirmOrderG
 
     class GoodsHolder extends RecyclerView.ViewHolder {
         CheckBox check;
-        SimpleDraweeView cover;
+        ImageView cover;
         TextView name;
         TextView price;
         TextView sku;
@@ -75,7 +76,7 @@ public class ConfirmOrderGoodsAdapter extends RecyclerView.Adapter<ConfirmOrderG
         public GoodsHolder(View itemView) {
             super(itemView);
             check = (CheckBox) itemView.findViewById(R.id.rb_check);
-            cover = (SimpleDraweeView) itemView.findViewById(R.id.dv_cover);
+            cover = (ImageView) itemView.findViewById(R.id.dv_cover);
             name = (TextView) itemView.findViewById(R.id.tv_goods_name);
             price = (TextView) itemView.findViewById(R.id.tv_goods_price);
             sku = (TextView) itemView.findViewById(R.id.tv_sku);

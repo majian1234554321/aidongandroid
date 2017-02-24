@@ -17,9 +17,9 @@ public interface PayInterface {
      */
      interface PayListener {
 
-        void fail(String code, Object object);
+        void onFail(String code, Object object);
 
-        void success(String code, Object object);
+        void onSuccess(String code, Object object);
     }
 }
 

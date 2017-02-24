@@ -5,13 +5,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.utils.FormatUtil;
+import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,6 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Good
     public void setData(List<GoodsBean> data) {
         if(data != null){
             this.data = data;
-            notifyDataSetChanged();
         }
     }
 
@@ -49,7 +49,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Good
     @Override
     public void onBindViewHolder(GoodsHolder holder, int position) {
         final GoodsBean bean = data.get(position);
-        holder.dvGoods.setImageURI(bean.getCover());
+        GlideLoader.getInstance().displayImage(bean.getCover(), holder.dvGoods);
         holder.tvName.setText(bean.getName());
         holder.tvPrice.setText(String.format(context.getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.getPrice())));
@@ -62,14 +62,14 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Good
     }
 
     class GoodsHolder extends RecyclerView.ViewHolder {
-         SimpleDraweeView dvGoods;
+         ImageView dvGoods;
          TextView tvName;
          TextView tvPrice;
 
         public GoodsHolder(View itemView) {
             super(itemView);
 
-            dvGoods = (SimpleDraweeView)itemView.findViewById(R.id.dv_goods);
+            dvGoods = (ImageView) itemView.findViewById(R.id.dv_goods);
             tvName = (TextView) itemView.findViewById(R.id.tv_name);
             tvPrice = (TextView)itemView. findViewById(R.id.tv_price);
         }

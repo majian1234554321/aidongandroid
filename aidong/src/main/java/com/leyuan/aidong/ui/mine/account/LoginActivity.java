@@ -7,9 +7,11 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.model.UserCoach;
+import com.leyuan.aidong.module.chat.EmChatLoginManager;
+import com.leyuan.aidong.module.chat.EmChatRegisterManager;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.module.thirdpartylogin.ThirdLoginUtils;
-import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.login.FindPasswordActivity;
 import com.leyuan.aidong.ui.mine.login.RegisterActivity;
@@ -21,12 +23,14 @@ import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.utils.UiManager;
 
 
-public class LoginActivity extends BaseActivity implements View.OnClickListener, LoginViewInterface {
+public class LoginActivity extends BaseActivity implements View.OnClickListener, LoginViewInterface, EmChatLoginManager.OnLoginListner, EmChatRegisterManager.OnRigsterCallback {
 
     private LoginPresenter loginPresenter;
     private String telephone;
     private String password;
     private SharePopupWindow sharePopupWindow;
+    private EmChatLoginManager chatLoginManager;
+    private EmChatRegisterManager chatRegisterManager;
 
 
     @Override
@@ -34,6 +38,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
         loginPresenter = new LoginPresenter(this, this);
+        chatLoginManager = new EmChatLoginManager(this);
         sharePopupWindow = new SharePopupWindow(this);
 
         findViewById(R.id.btn_back).setOnClickListener(this);
@@ -111,10 +116,38 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     }
 
     @Override
-    public void loginResult(boolean success) {
+    public void loginResult(UserCoach user) {
         DialogUtils.dismissDialog();
-        if (success) {
-            ToastUtil.showShort(App.context, "登录成功");
+        if (user != null) {
+            DialogUtils.showDialog(this, "", false);
+            chatLoginManager.login(String.valueOf(user.getId()));
+        }
+    }
+
+    @Override
+    public void onChatLogin(boolean result) {
+        DialogUtils.dismissDialog();
+        if (result) {
+            ToastUtil.showConsecutiveShort("登陆成功");
+            finish();
+        }
+    }
+
+    @Override
+    public void onNeedRegister(final String userName) {
+        DialogUtils.showDialog(this, "", false);
+        if (chatRegisterManager == null)
+            chatRegisterManager = new EmChatRegisterManager(this);
+        chatRegisterManager.registerEmChat(userName);
+
+    }
+
+    @Override
+    public void onRigster(boolean success, String userName) {
+        DialogUtils.dismissDialog();
+        if (success && userName != null) {
+            DialogUtils.showDialog(this, "", false);
+            chatLoginManager.login(userName);
         }
     }
 
@@ -138,5 +171,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     protected void onDestroy() {
         super.onDestroy();
         DialogUtils.releaseDialog();
+        chatLoginManager.release();
+        if (chatRegisterManager != null)
+            chatRegisterManager.release();
     }
+
 }

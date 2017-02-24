@@ -37,14 +37,10 @@
         android:layout_alignLeft="@+id/dv_venues_cover"
         android:layout_alignRight="@+id/dv_venues_cover"/>
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/dv_venues_cover"
         android:layout_width="90dp"
         android:layout_height="90dp"
-        fresco:roundedCornerRadius="5dp"
-        fresco:actualImageScaleType="centerCrop"
-        fresco:placeholderImage="@drawable/place_holder_logo"
-        fresco:pressedStateOverlayImage="@color/color_image_press"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 

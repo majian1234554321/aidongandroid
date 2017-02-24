@@ -22,12 +22,12 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp" >
 
-            <pl.droidsonroids.gif.GifImageView
-                android:id="@+id/loading"
+            <ImageView
+                android:id="@+id/iv_loading"
                 android:layout_width="125dp"
                 android:layout_height="60dp"
                 android:layout_centerInParent="true"
-                android:scaleType="fitCenter" />
+              />
 
             <!--<com.leyuan.aidong.widget.loadingindicator.AVLoadingIndicatorView
                 xmlns:app="http://schemas.android.com/apk/res-auto"

@@ -7,9 +7,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.ui.BaseActivity;
@@ -17,6 +17,7 @@ import com.leyuan.aidong.adapter.home.RecommendAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.HomePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.HomePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.BrandActivityView;
+import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -32,7 +33,7 @@ import java.util.List;
  */
 public class BrandActivity extends BaseActivity implements BrandActivityView, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
     private SimpleTitleBar titleBar;
-    private SimpleDraweeView dvCover;
+    private ImageView dvCover;
     private TextView tvDesc;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
@@ -81,12 +82,12 @@ public class BrandActivity extends BaseActivity implements BrandActivityView, Vi
     private void initView(){
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
         View headerView = View.inflate(this,R.layout.header_brand_detail,null);
-        dvCover = (SimpleDraweeView)headerView.findViewById(R.id.dv_cover);
+        dvCover = (ImageView) headerView.findViewById(R.id.dv_cover);
         tvDesc = (TextView)headerView.findViewById(R.id.tv_brand_desc);
         refreshLayout = (SwipeRefreshLayout)findViewById(R.id.refreshLayout);
         recyclerView = (RecyclerView)findViewById(R.id.rv_brand_detail);
         titleBar.setTitle(title);
-        dvCover.setImageURI(url);
+        GlideLoader.getInstance().displayImage(url, dvCover);
         tvDesc.setText(introduce);
         setColorSchemeResources(refreshLayout);
         data = new ArrayList<>();

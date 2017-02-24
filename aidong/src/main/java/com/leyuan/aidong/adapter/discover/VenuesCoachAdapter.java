@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CoachBean;
 import com.leyuan.aidong.ui.discover.activity.AppointCoachActivity;
+import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +51,7 @@ public class VenuesCoachAdapter extends RecyclerView.Adapter<VenuesCoachAdapter.
     @Override
     public void onBindViewHolder(CoachHolder holder, int position) {
         final CoachBean bean = data.get(position);
-        holder.cover.setImageURI(bean.getAvatar());
+        GlideLoader.getInstance().displayCircleImage(bean.getAvatar(), holder.cover);
         holder.name.setText(bean.getName());
         if("0".equals(bean.getGender())){   //男
             holder.gender.setBackgroundResource(R.drawable.icon_man);
@@ -67,7 +67,7 @@ public class VenuesCoachAdapter extends RecyclerView.Adapter<VenuesCoachAdapter.
     }
 
     class CoachHolder extends RecyclerView.ViewHolder{
-        SimpleDraweeView cover;
+        ImageView cover;
         ImageView gender;
         TextView name;
         TextView distance;
@@ -76,7 +76,7 @@ public class VenuesCoachAdapter extends RecyclerView.Adapter<VenuesCoachAdapter.
 
         public CoachHolder(View itemView) {
             super(itemView);
-            cover = (SimpleDraweeView)itemView.findViewById(R.id.dv_coach_cover);
+            cover = (ImageView)itemView.findViewById(R.id.dv_coach_cover);
             name = (TextView)itemView.findViewById(R.id.tv_coach_name);
             distance = (TextView)itemView.findViewById(R.id.tv_distance);
             hot = (TextView)itemView.findViewById(R.id.tv_hot);

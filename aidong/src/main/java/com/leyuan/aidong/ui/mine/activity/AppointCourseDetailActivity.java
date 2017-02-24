@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
@@ -11,11 +12,11 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.AppointmentDetailBean;
 import com.leyuan.aidong.module.pay.AliPay;
 import com.leyuan.aidong.module.pay.PayInterface;
+import com.leyuan.aidong.module.pay.SimplePayListener;
 import com.leyuan.aidong.module.pay.WeiXinPay;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.home.activity.AppointSuccessActivity;
@@ -26,7 +27,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.AppointmentPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointmentDetailActivityView;
 import com.leyuan.aidong.utils.FormatUtil;
-import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.widget.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.ExtendTextView;
 import com.leyuan.aidong.widget.SimpleTitleBar;
@@ -52,12 +53,12 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
     private TextView tvState;
     private TextView tvTimeOrNum;
     private RelativeLayout courseLayout;
-    private SimpleDraweeView courseCover;
+    private ImageView courseCover;
     private TextView tvCourseName;
     private TextView tvCourseInfo;
     private RelativeLayout qrCodeLayout;
     private TextView tvNum;
-    private SimpleDraweeView dvQr;
+    private ImageView dvQr;
 
     //预约信息
     private ExtendTextView tvUserName;
@@ -132,12 +133,12 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
         tvState = (TextView) findViewById(R.id.tv_state);
         tvTimeOrNum = (TextView) findViewById(R.id.tv_time_or_num);
         courseLayout = (RelativeLayout) findViewById(R.id.rl_detail);
-        courseCover = (SimpleDraweeView) findViewById(R.id.dv_goods_cover);
+        courseCover = (ImageView) findViewById(R.id.dv_goods_cover);
         tvCourseName = (TextView) findViewById(R.id.tv_name);
         tvCourseInfo = (TextView) findViewById(R.id.tv_info);
         qrCodeLayout = (RelativeLayout) findViewById(R.id.rl_qr_code);
         tvNum = (TextView) findViewById(R.id.tv_num);
-        dvQr = (SimpleDraweeView) findViewById(R.id.dv_qr);
+        dvQr = (ImageView) findViewById(R.id.dv_qr);
 
         tvUserName = (ExtendTextView) findViewById(R.id.tv_course_user);
         tvPhone = (ExtendTextView) findViewById(R.id.tv_course_phone);
@@ -196,7 +197,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
         }
 
         //与订单状态无关:活动信息,预约信息及部分订单信息
-        courseCover.setImageURI(bean.getCover());
+        GlideLoader.getInstance().displayImage(bean.getCover(), courseCover);
         tvCourseName.setText(bean.getName());
         tvCourseInfo.setText(bean.getSubName());
 
@@ -232,7 +233,6 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
                 break;
             case CLOSE:
                 tvState.setText(getString(R.string.order_close));
-
                 break;
             default:
                 break;
@@ -248,8 +248,6 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
             case R.id.tv_pay:
                 PayInterface payInterface = payType.equals(detailBean.getPay().getPayType()) ?
                         new AliPay(this,payListener) : new WeiXinPay(this,payListener);
-               // PayOrderBean bean =  detailBean.getPay();
-                //bean.getpayOption().setPay_string("_input_charset=utf-8&body=培训课程4-1&it_b_pay=30m&notify_url=&out_trade_no=483610338301&partner=2088021345411340&payment_type=1&seller_id=2088021345411340&service=mobile.securitypay.pay&subject=培训课程4-1&total_fee=88.8&sign_type=RSA&sign=Oaoqco9BIbH89WT5aCAsXvV23qImwg0CfvXnRZAbrpBlBqq6MSzpIIePVh8oJyXIPmqrhvANbFeILdV7eThU9E3%2BpKZWxNJuK4%2FjGhoCwLYZaDVhZ5%2F9nLu4zxYK72UkcchPT90eVLtMUu2TnvpuakuJJ2aajhFcOWDcwXn14UQ%3D");
                 payInterface.payOrder(detailBean.getPay());
                 break;
             case R.id.rl_detail:
@@ -260,36 +258,11 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
         }
     }
 
-    private PayInterface.PayListener payListener = new PayInterface.PayListener() {
+    private PayInterface.PayListener payListener = new SimplePayListener(this) {
         @Override
-        public void fail(String code, Object object) {
-            String tip = "";
-            switch (code){
-                case "4000":
-                    tip = "订单支付失败";
-                    break;
-                case "5000":
-                    tip = "订单重复提交";
-                    break;
-                case "6001":
-                    tip = "订单取消支付";
-                    break;
-                case "6002":
-                    tip = "网络连接出错";
-                    break;
-                default:
-                    tip = code +":::"+ object.toString();
-                    break;
-            }
-            Toast.makeText(AppointCourseDetailActivity.this,tip,Toast.LENGTH_LONG).show();
-            Logger.w("AppointCourseActivity","failed:" + code + object.toString());
-        }
-
-        @Override
-        public void success(String code, Object object) {
-            Toast.makeText(AppointCourseDetailActivity.this,"支付成功啦啦啦啦啦绿",Toast.LENGTH_LONG).show();
+        public void onSuccess(String code, Object object) {
+            Toast.makeText(AppointCourseDetailActivity.this,"支付成功啦",Toast.LENGTH_LONG).show();
             startActivity(new Intent(AppointCourseDetailActivity.this,AppointSuccessActivity.class));
-            Logger.w("AppointCourseActivity","success:" + code + object.toString());
         }
     };
 

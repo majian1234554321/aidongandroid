@@ -28,7 +28,7 @@ public class DynamicBean implements Serializable{
     }
 
     public class Publisher implements Serializable{
-        public String publisher_id;
+        public String id;
         public String name;
         public String avatar;
         public String gender;

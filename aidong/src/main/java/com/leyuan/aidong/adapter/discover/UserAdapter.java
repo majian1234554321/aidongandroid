@@ -8,9 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.UserBean;
+import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
+import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,8 +47,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder>{
 
     @Override
     public void onBindViewHolder(UserHolder holder, int position) {
-        UserBean bean = data.get(position);
-        holder.cover.setImageURI(bean.getAvatar());
+        final UserBean bean = data.get(position);
+        GlideLoader.getInstance().displayCircleImage(bean.getAvatar(), holder.cover);
         holder.nickname.setText(bean.getName());
         holder.distance.setText(bean.getDistance());
         if("0".equals(bean.getGender())){   //男
@@ -55,10 +56,17 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder>{
         }else {
             holder.gender.setBackgroundResource(R.drawable.icon_woman);
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserInfoActivity.start(context,bean.getId());
+            }
+        });
     }
 
     class UserHolder extends RecyclerView.ViewHolder{
-        SimpleDraweeView cover;
+        ImageView cover;
         ImageView gender;
         TextView nickname;
         TextView distance;
@@ -66,7 +74,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder>{
 
         public UserHolder(View itemView) {
             super(itemView);
-            cover = (SimpleDraweeView)itemView.findViewById(R.id.dv_user_cover);
+            cover = (ImageView)itemView.findViewById(R.id.dv_user_cover);
             gender = (ImageView)itemView.findViewById(R.id.iv_gender);
             nickname = (TextView)itemView.findViewById(R.id.tv_nickname);
             distance = (TextView)itemView.findViewById(R.id.tv_distance);

@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.user.User;
+import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.ChangePasswordPresenter;
 import com.leyuan.aidong.ui.mvp.view.ChangePasswordViewInterface;
@@ -83,7 +83,7 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
     }
 
     @Override
-    public void onChangePasswordResult(User user) {
+    public void onChangePasswordResult(UserCoach user) {
         if (user != null) {
             ToastUtil.showShort(this, "密码修改成功");
         } else {

@@ -21,13 +21,12 @@ import com.leyuan.aidong.module.photopicker.boxing.Boxing;
 import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
 import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
 import com.leyuan.aidong.module.photopicker.boxing_impl.ui.BoxingActivity;
+import com.leyuan.aidong.module.photopicker.boxing_impl.view.SpacesItemDecoration;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.PublishDynamicActivityView;
 import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.utils.qiniu.IQiNiuCallback;
-import com.leyuan.aidong.utils.qiniu.UploadQiNiuManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +81,8 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
         btPublish = (Button) findViewById(R.id.bt_publish);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
         recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.addItemDecoration(new SpacesItemDecoration(
+                getResources().getDimensionPixelOffset(R.dimen.media_margin), 3));
         mediaAdapter = new PublishDynamicAdapter();
         recyclerView.setAdapter(mediaAdapter);
         mediaAdapter.setData(selectedMedia,isPhoto);
@@ -121,16 +122,8 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
 
 
     private void uploadToQiNiu(){
-        UploadQiNiuManager.getInstance().uploadToQiNiu(isPhoto,selectedMedia, new IQiNiuCallback(){
-            @Override
-            public void onSuccess(List<String> urls) {
-                uploadToServer(urls);
-            }
-            @Override
-            public void onFail() {
-                Toast.makeText(PublishDynamicActivity.this,"上传失败",Toast.LENGTH_LONG).show();
-            }
-        });
+
+
     }
 
     private void uploadToServer(List<String> qiNiuMediaUrls){

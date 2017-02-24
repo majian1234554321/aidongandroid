@@ -13,7 +13,7 @@
         android:textSize="15sp"
         android:background="?selectableItemBackground"/>
 
-    <include layout="@layout/inc_line" />
+    <include layout="@layout/inc_line_with_margin" />
 
     <TextView
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
         android:textSize="15sp"
         android:background="?selectableItemBackground"/>
 
-    <include layout="@layout/inc_line" />
+    <include layout="@layout/inc_line_with_margin" />
 
     <TextView
         android:layout_width="match_parent"
@@ -35,7 +35,7 @@
         android:textSize="15sp"
         android:background="?selectableItemBackground"/>
 
-    <include layout="@layout/inc_line" />
+    <include layout="@layout/inc_line_with_margin" />
 
     <TextView
         android:layout_width="match_parent"
@@ -46,7 +46,7 @@
         android:textSize="15sp"
         android:background="?selectableItemBackground"/>
 
-    <include layout="@layout/inc_line" />
+    <include layout="@layout/inc_line_with_margin" />
 
     <TextView
         android:layout_width="match_parent"

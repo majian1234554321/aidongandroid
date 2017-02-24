@@ -3,14 +3,17 @@ package com.leyuan.aidong.ui.mvp.presenter.impl;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.data.DynamicsData;
 import com.leyuan.aidong.entity.data.UserInfoData;
 import com.leyuan.aidong.http.subscriber.BaseSubscriber;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
+import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.aidong.ui.mvp.model.UserInfoModel;
 import com.leyuan.aidong.ui.mvp.model.impl.UserInfoModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.UserInfoPresent;
+import com.leyuan.aidong.ui.mvp.view.UpdateUserInfoActivityView;
 import com.leyuan.aidong.ui.mvp.view.UserDynamicFragmentView;
 import com.leyuan.aidong.ui.mvp.view.UserInfoActivityView;
 import com.leyuan.aidong.utils.Constant;
@@ -24,11 +27,20 @@ public class UserInfoPresentImpl implements UserInfoPresent{
     private Context context;
     private UserInfoModel userInfoModel;
     private UserInfoActivityView userInfoActivityView;
+    private UpdateUserInfoActivityView updateUserInfoActivityView;
     private UserDynamicFragmentView dynamicFragmentView;
 
     public UserInfoPresentImpl(Context context, UserInfoActivityView view) {
         this.context = context;
         this.userInfoActivityView = view;
+        if(userInfoModel == null){
+            this.userInfoModel = new UserInfoModelImpl(context);
+        }
+    }
+
+    public UserInfoPresentImpl(Context context, UpdateUserInfoActivityView view) {
+        this.context = context;
+        this.updateUserInfoActivityView = view;
         if(userInfoModel == null){
             this.userInfoModel = new UserInfoModelImpl(context);
         }
@@ -128,5 +140,16 @@ public class UserInfoPresentImpl implements UserInfoPresent{
     @Override
     public void updateFrequency(String frequency) {
 
+    }
+
+    @Override
+    public void updateUserInfo(String avatar,String gender, String birthday, String signature, String province,
+                               String city, String area, String height, String weight, String frequency) {
+        userInfoModel.updateUserInfo(new ProgressSubscriber<BaseBean>(context) {
+            @Override
+            public void onNext(BaseBean baseBean) {
+                updateUserInfoActivityView.updateResult(baseBean);
+            }
+        },null,null,gender,birthday,signature,null,null,province,city,area,height,weight,null, null,null,null,frequency);
     }
 }

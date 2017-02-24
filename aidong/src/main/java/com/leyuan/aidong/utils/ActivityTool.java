@@ -3,7 +3,6 @@ package com.leyuan.aidong.utils;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -14,12 +13,9 @@ import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.model.UserCoach;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -358,42 +354,7 @@ public class ActivityTool   {
 		return true;
 	}
 
-	public static void startShowActivity(Context context, UserCoach user) {
-		ArrayList<Integer> tags = user.getTags();
-		Intent i = new Intent();
-		if (App.mInstance.isLogin() && App.mInstance.getUser() != null) {
-			if (user.getMxid() == App.mInstance.getUser().getMxid()) {
-				if(tags.get(Constant.ID_COACH) > 0){
-//					i.setClass(context, PtMyshowActivity.class);
-				}else{
-//					i.setClass(context, TabMineMyShowActivity.class);
-//					i.setClass(context, MyShowActivityNew.class);
-				}
-				
-			} else {
-				if (tags.get(Constant.ID_OFFICAL) > 0) {
-//					i.setClass(context, MyShowVenuesActivity.class);
-				} else if (tags.get(Constant.ID_COACH) > 0) {
-//					i.setClass(context, PtMyshowActivity.class);
-				} else {
-//					i.setClass(context, MyShowActivityNew.class);
-				}
-			}
-		} else {
-			if (tags.get(Constant.ID_OFFICAL) > 0) {
-//				i.setClass(context, MyShowVenuesActivity.class);
-			} else if (tags.get(Constant.ID_COACH) > 0) {
-//				i.setClass(context, PtMyshowActivity.class);
-			} else {
-//				i.setClass(context, MyShowActivityNew.class);
-			}
-		}
-		// i.putExtra(BUNDLE_USER, u);
-	/*	i.setClass(context, MyShowActivityNew.class);
-		i.putExtra("user", user);
-		i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		context.startActivity(i);*/
-	}
+
 	
 	
 	
@@ -401,32 +362,6 @@ public class ActivityTool   {
 	
 	
 	
-	
-	public static void startShowByIdentity(Context context, UserCoach user) {
-		
-//
-//		int identity = user.getIdentity();
-//		Intent intent = new Intent();
-//		if (identity == 0) {
-//			intent.setClass(context, MyShowActivityNew.class);
-//
-//		}else if (identity == 1) {
-//			intent.setClass(context, PtMyshowActivity.class);
-//		} else if(identity == 2){
-//			intent.setClass(context, MyShowVenuesActivity.class);
-//			Venues venues = new Venues();
-//			venues.setMxid(user.getMxid());
-//			venues.setName(user.getName());
-//			venues.setAvatar(user.getAvatar());
-//			venues.setAddress(user.getAddress());
-//			venues.setAuth(1);
-//
-//			intent.putExtra("venues", venues);
-//		}
-//		intent.putExtra("user", user);
-//		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//		context.startActivity(intent);
-	}
 	public static ActivityClass[] getSearchActivityClassArray() {
 		return SEARCH_CLASS;
 	}

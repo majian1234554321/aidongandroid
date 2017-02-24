@@ -5,12 +5,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.NewsBean;
 import com.leyuan.aidong.ui.discover.activity.NewsDetailActivity;
+import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +42,7 @@ public class DiscoverNewsAdapter extends RecyclerView.Adapter<DiscoverNewsAdapte
     @Override
     public void onBindViewHolder(NewsHolder holder, int position) {
         final NewsBean bean = news.get(position);
-        holder.cover.setImageURI(bean.getCover());
+        GlideLoader.getInstance().displayImage(bean.getCover(), holder.cover);
         holder.title.setText(bean.getTitle());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -58,12 +59,12 @@ public class DiscoverNewsAdapter extends RecyclerView.Adapter<DiscoverNewsAdapte
     }
 
     class NewsHolder extends RecyclerView.ViewHolder{
-        SimpleDraweeView cover;
+        ImageView cover;
         TextView title;
 
         public NewsHolder(View itemView) {
             super(itemView);
-            cover = (SimpleDraweeView) itemView.findViewById(R.id.dv_cover);
+            cover = (ImageView) itemView.findViewById(R.id.dv_cover);
             title = (TextView) itemView.findViewById(R.id.tv_title);
         }
     }

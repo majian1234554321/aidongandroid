@@ -4,9 +4,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ScrollView;
 
-/**
- * Created by song on 2016/9/13.
- */
 public class ObserveScrollView extends ScrollView{
 
     public  interface ScrollViewListener {
