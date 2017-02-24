@@ -73,8 +73,8 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
                 }
                 break;
             case R.id.button_login:
-                if(verifyEdit()){
-                    presenter.checkIdentify(mobile,code,password);
+                if (verifyEdit()) {
+                    presenter.checkIdentify(mobile, code, password);
                 }
                 break;
         }
@@ -113,12 +113,12 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
 
         if (success) {
             ToastUtil.showShort(App.context, "验证码已发送,请查看");
-            if(mDialogImageIdentify!=null && mDialogImageIdentify.isShowing()){
+            if (mDialogImageIdentify != null && mDialogImageIdentify.isShowing()) {
                 mDialogImageIdentify.dismiss();
             }
-            new TimeCountUtil(60000, 1000, (Button)findViewById(R.id.btn_identify)).start();
+            new TimeCountUtil(60000, 1000, (Button) findViewById(R.id.btn_identify)).start();
 
-        }else  if(mDialogImageIdentify!=null && mDialogImageIdentify.isShowing()){
+        } else if (mDialogImageIdentify != null && mDialogImageIdentify.isShowing()) {
             mDialogImageIdentify.clearContent();
             mDialogImageIdentify.refreshImage(mobile);
         }
@@ -127,19 +127,19 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void register(boolean success) {
 
-        if(success){
-            ToastUtil.showShort(App.context,"注册成功");
+        if (success) {
+            ToastUtil.showShort(App.context, "注册成功");
             finish();
-        }else{
-            ToastUtil.showShort(App.context,"注册失败 请重新提交");
+        } else {
+            ToastUtil.showShort(App.context, "注册失败 请重新提交");
         }
     }
 
     @Override
     public void checkCaptchaImage(boolean success, String mobile) {
-        if(success ){
+        if (success) {
             presenter.foundIdentify(mobile);
-        }else  if(mDialogImageIdentify!=null && mDialogImageIdentify.isShowing()){
+        } else if (mDialogImageIdentify != null && mDialogImageIdentify.isShowing()) {
             mDialogImageIdentify.clearContent();
             mDialogImageIdentify.refreshImage(mobile);
         }
@@ -158,7 +158,7 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void inputIdentify(String imageIndentify) {
 //                presenter.regitserIdentify(tel,imageIndentify);
-                presenter.checkCaptchaImage(tel,imageIndentify);
+                presenter.checkCaptchaImage(tel, imageIndentify);
             }
 
             @Override

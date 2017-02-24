@@ -20,6 +20,12 @@ import static android.content.Context.ACTIVITY_SERVICE;
 
 public class EmConfigManager {
 
+    public static void initializeEaseUi(Context context) {
+        EMOptions options = new EMOptions();
+        EaseUI.getInstance().init(context, options);
+        EMClient.getInstance().setDebugMode(true);
+
+    }
 
     public static void initialize(Context context) {
         EMOptions options = new EMOptions();
@@ -41,8 +47,7 @@ public class EmConfigManager {
         }
 
         //初始化
-        EaseUI.getInstance().init(context, options);
-//        EMClient.getInstance().init(context, options);
+        EMClient.getInstance().init(context, options);
         //在做打包混淆时，关闭debug模式，避免消耗不必要的资源
         EMClient.getInstance().setDebugMode(true);
     }

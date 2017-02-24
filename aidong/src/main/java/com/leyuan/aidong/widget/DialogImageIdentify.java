@@ -23,24 +23,11 @@ public class DialogImageIdentify extends Dialog {
     private ImageView imgIdentify;
     private TextView txtRefresh;
     private ImageView imgClose;
-//    private ImageLoader mImageLoader = ImageLoader.getInstance();
-
-//    private BitmapUtils mBitmapUtils;
-
-//    private DisplayImageOptions mOptions = new DisplayImageOptions.Builder()
-//            .showImageOnLoading(R.drawable.img_default)
-//            .showImageForEmptyUri(R.drawable.img_default)
-//            .showImageOnFail(R.drawable.img_default)
-//            .cacheInMemory(false)
-//            .cacheOnDisk(false).considerExifParams(true)
-//            .bitmapConfig(Bitmap.Config.ARGB_8888).build();
     private OnInputCompleteListener listener;
 
 
     public DialogImageIdentify(Context context) {
         super(context, R.style.MyDialog);
-        //        mBitmapUtils = new BitmapUtils(context);
-        //        mBitmapUtils.clearCache();
     }
 
     private EditText getEditFirst() {
@@ -100,9 +87,8 @@ public class DialogImageIdentify extends Dialog {
 
 
     public void refreshImage(String mobile) {
-//        mImageLoader.displayImage(Common.URL_IMAGE_IDENTIFY_CODE + mobile, imgIdentify, mOptions);
-//        imgIdentify.destroyDrawingCache();
-        GlideLoader.getInstance().displayImage(Constant.BASE_URL+"captcha_image/" + mobile, imgIdentify);
+//        Glide.get(App.mInstance).clearMemory();
+        GlideLoader.getInstance().displayImage(Constant.BASE_URL + "captcha_image/" + mobile+"?time="+System.currentTimeMillis(), imgIdentify);
     }
 
     private void initEvent() {

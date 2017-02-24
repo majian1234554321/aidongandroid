@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 
+import com.hyphenate.chat.EMClient;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.mvp.presenter.SystemPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SystemPresentImpl;
@@ -42,11 +43,10 @@ public class SplashActivity extends BaseActivity {
 
     private void initData() {
         mHandler.sendEmptyMessageDelayed(1, 2000);
-//        if (App.mInstance.isLogin()) {
-//            EMClient.getInstance().groupManager().loadAllGroups();
-//            EMClient.getInstance().chatManager().loadAllConversations();
-//        }
-
+        if (App.mInstance.isLogin()) {
+            EMClient.getInstance().groupManager().loadAllGroups();
+            EMClient.getInstance().chatManager().loadAllConversations();
+        }
     }
 
     @Override

@@ -11,6 +11,7 @@ import com.baidu.mapapi.SDKInitializer;
 import com.facebook.stetho.Stetho;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.module.chat.EmConfigManager;
+import com.leyuan.aidong.module.chat.EmMessageManager;
 import com.leyuan.aidong.module.photopicker.BoxingGlideLoader;
 import com.leyuan.aidong.module.photopicker.BoxingUcrop;
 import com.leyuan.aidong.module.photopicker.boxing.BoxingCrop;
@@ -43,7 +44,7 @@ public class App extends Application {
         mInstance = this;
         context = getApplicationContext();
         initConfig();
-        Stetho.initializeWithDefaults(this);
+
     }
 
     private void initConfig() {
@@ -52,14 +53,15 @@ public class App extends Application {
         initBaiduLoc();
 
         //initDbUtils();
-        EmConfigManager.initialize(this);
+        EmConfigManager.initializeEaseUi(this);
+        new EmMessageManager().registerMessageListener();
         IBoxingMediaLoader loader = new BoxingGlideLoader();
         BoxingMediaLoader.getInstance().init(loader);
         BoxingCrop.getInstance().init(new BoxingUcrop());
         //   initImagePicker();
 
-
         Realm.init(context);
+        Stetho.initializeWithDefaults(this);
 //        WXAPIFactory.createWXAPI(this, "wx365ab323b9269d30", false).registerApp("wx365ab323b9269d30");
 //        new WXShare(this);
     }

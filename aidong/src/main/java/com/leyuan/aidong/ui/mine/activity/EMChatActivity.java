@@ -25,7 +25,7 @@ public class EMChatActivity extends BaseActivity {
         //传入参数
         Bundle args = new Bundle();
         args.putInt(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_SINGLE);
-        args.putString(EaseConstant.EXTRA_USER_ID, "zw123");
+        args.putString(EaseConstant.EXTRA_USER_ID,  getIntent().getStringExtra(EaseConstant.EXTRA_USER_ID));
         chatFragment.setArguments(args);
 
         getSupportFragmentManager().beginTransaction().add(R.id.ec_layout_container, chatFragment).commit();
