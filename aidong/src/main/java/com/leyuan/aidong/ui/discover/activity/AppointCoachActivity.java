@@ -35,8 +35,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import kr.co.namee.permissiongen.PermissionGen;
-import kr.co.namee.permissiongen.PermissionSuccess;
+
 
 /**
  * 预约私教
@@ -195,11 +194,11 @@ public class AppointCoachActivity extends BaseActivity implements View.OnClickLi
                 .setCancelable(true)
                 .setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        PermissionGen.with(AppointCoachActivity.this)
+                     /*   PermissionGen.with(AppointCoachActivity.this)
                                 .addRequestCode(100)
                                 .permissions(Manifest.permission.CALL_PHONE)
                                 .request();
-                        dialog.dismiss();
+                        dialog.dismiss();*/
                     }
                 })
                 .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
@@ -254,13 +253,9 @@ public class AppointCoachActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
 
-    }
 
-    @PermissionSuccess(requestCode = 100)
+
     public void callUp() {
         Intent intent = new Intent(Intent.ACTION_CALL);
         Uri data = Uri.parse("tel:" + coachBean.getMobile());

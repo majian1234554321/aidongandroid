@@ -61,7 +61,7 @@ public class UserInfoFragment extends BaseFragment{
     }
 
     private void setView(){
-        id.setRightContent(String.valueOf(App.mInstance.getUser().getId()));
+        id.setRightContent(profileBean.getId());
         identify.setRightContent("");
         hot.setRightContent("");
         signature.setRightContent(profileBean.getSignature());

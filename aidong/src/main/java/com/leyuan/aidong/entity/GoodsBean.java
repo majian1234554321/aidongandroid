@@ -23,7 +23,7 @@ public class GoodsBean implements Parcelable {
     private ArrayList<String> spec_name;
     private ArrayList<String> spec_value;
     private String amount;                  //商品数量
-    private String recommend_code;          //推荐码
+    private String recommend_coach_id;          //推荐码
     private DeliveryBean deliveryBean;      //商品默认取货方式
     private boolean checked = false;        //标记商品是否被选中
 
@@ -124,11 +124,11 @@ public class GoodsBean implements Parcelable {
     }
 
     public String getRecommendCode() {
-        return recommend_code;
+        return recommend_coach_id;
     }
 
     public void setRecommend_code(String recommend_code) {
-        this.recommend_code = recommend_code;
+        this.recommend_coach_id = recommend_code;
     }
 
     @Override

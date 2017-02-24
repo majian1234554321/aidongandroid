@@ -15,10 +15,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.adapter.home.ApplicantAdapter;
 import com.leyuan.aidong.entity.CampaignDetailBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.adapter.home.ApplicantAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.CampaignPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CampaignPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CampaignDetailActivityView;
@@ -28,7 +28,7 @@ import com.zzhoujay.richtext.RichText;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 
-import static com.leyuan.aidong.R.id.toolbar;
+import static com.leyuan.aidong.R.id.iv_back;
 
 /**
  * 活动详情
@@ -144,7 +144,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case toolbar:          //回退
+            case iv_back:          //回退
                 finish();
                 break;
             case R.id.tv_count:         //查看报名的人

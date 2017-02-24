@@ -91,7 +91,11 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         setContentView(R.layout.activity_user_info);
         if (getIntent() != null) {
             userId = getIntent().getStringExtra("userId");
-            isSelf = String.valueOf(App.mInstance.getUser().getId()).equals(userId);
+            if(App.mInstance.getUser() == null){
+                isSelf = false;
+            }else {
+                isSelf = String.valueOf(App.mInstance.getUser().getId()).equals(userId);
+            }
         }
         userInfoPresent = new UserInfoPresentImpl(this, this);
         initView();

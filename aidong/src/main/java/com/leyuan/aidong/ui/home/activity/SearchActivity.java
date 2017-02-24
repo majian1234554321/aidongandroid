@@ -1,13 +1,10 @@
 package com.leyuan.aidong.ui.home.activity;
 
-import android.annotation.TargetApi;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.transition.Fade;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -47,7 +44,7 @@ public class SearchActivity extends BaseActivity implements SearchActivityView{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setupWindowAnimations();
+        fadeInAnimations();
         setContentView(R.layout.activity_search);
         realm = Realm.getDefaultInstance();
         searchPresent = new SearchPresentImpl(this,this,realm);
@@ -128,11 +125,5 @@ public class SearchActivity extends BaseActivity implements SearchActivityView{
         historyAdapter.setData(histories);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private void setupWindowAnimations() {
-        Fade bottomSlide = new Fade();
-        bottomSlide.setDuration(300);
-        bottomSlide.setMode(Fade.MODE_IN);
-        getWindow().setEnterTransition(bottomSlide);
-    }
+
 }

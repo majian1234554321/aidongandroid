@@ -110,7 +110,7 @@
         <activity android:name=".ui.mine.activity.UpdateUserInfoActivity"/>
         <activity android:name=".ui.mine.activity.UpdateSignatureActivity"/>
         <activity android:name=".ui.mine.activity.UpdateDeliveryInfoActivity"/>
-
+        <activity android:name=".ui.GuideActivity"/>
         <activity android:name=".ui.mine.activity.UpdatePhotoWallActivity"/>
         <activity android:name=".module.scan.activity.MipcaActivityCapture" />
         <activity android:name=".module.scan.activity.ScanActivity" />
