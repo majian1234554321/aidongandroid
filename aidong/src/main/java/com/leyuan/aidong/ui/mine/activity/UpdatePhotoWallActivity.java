@@ -70,11 +70,8 @@ public class UpdatePhotoWallActivity extends BaseActivity implements View.OnClic
         photoWallAdapter = new PhotoWallAdapter(this);
         rvPhoto.setAdapter(photoWallAdapter);
         rvPhoto.setLayoutManager(new GridLayoutManager(this,4));
-        rvPhoto.addItemDecoration(new SpacesItemDecoration(
-                getResources().getDimensionPixelOffset(R.dimen.photo_wall_margin), 4));
-        if(!selectedImages.isEmpty()){
-            photoWallAdapter.setData(selectedImages);
-        }
+        rvPhoto.addItemDecoration(new SpacesItemDecoration(getResources().getDimensionPixelOffset(R.dimen.photo_wall_margin), 4));
+        photoWallAdapter.setData(selectedImages);
     }
 
     private void setListener(){
@@ -92,6 +89,8 @@ public class UpdatePhotoWallActivity extends BaseActivity implements View.OnClic
             case R.id.tv_finish:
                 uploadToQiNiu();
                 break;
+            default:
+                break;
         }
     }
 
@@ -99,6 +98,7 @@ public class UpdatePhotoWallActivity extends BaseActivity implements View.OnClic
         UploadQiNiuManager.getInstance().uploadImages(selectedImages, new IQiNiuCallback(){
             @Override
             public void onSuccess(List<String> urls) {
+                Toast.makeText(UpdatePhotoWallActivity.this,"上传七牛成功",Toast.LENGTH_LONG).show();
                 uploadToServer(urls);
             }
             @Override
@@ -108,12 +108,13 @@ public class UpdatePhotoWallActivity extends BaseActivity implements View.OnClic
         });
     }
 
-    private void uploadToServer(List<String> urls){
-        String[] urlArray = new String[urls.size()];
-        for (int i = 0; i < urls.size(); i++) {
-            urlArray[i] = urls.get(i);
+    private void uploadToServer(List<String> qiNiuUrls){
+        String[] photo = new String[qiNiuUrls.size()];
+        for (int i = 0; i < qiNiuUrls.size(); i++) {
+            String urls = qiNiuUrls.get(i);
+            photo[i] = urls.substring(urls.indexOf("/") + 1);
         }
-        photoWallPresent.addPhotos(urlArray);
+        photoWallPresent.addPhotos(photo);
     }
 
     @Override
@@ -149,7 +150,7 @@ public class UpdatePhotoWallActivity extends BaseActivity implements View.OnClic
         if(baseBean.getStatus() == Constant.OK){
             Toast.makeText(this,"添加成功",Toast.LENGTH_LONG).show();
         }else {
-            Toast.makeText(this,"添加失败",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,baseBean.getMessage(),Toast.LENGTH_LONG).show();
         }
     }
 }

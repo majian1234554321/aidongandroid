@@ -24,7 +24,7 @@ public interface CartModel {
      * @param skuCode 商品sku码
      * @param mount 数量
      */
-    void addCart(Subscriber<BaseBean> subscriber,String skuCode,int mount,String gymId);
+    void addCart(Subscriber<BaseBean> subscriber,String skuCode,int mount,String gymId,String recommendId);
 
     /**
      * 删除购物车

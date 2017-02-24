@@ -1,10 +1,12 @@
 package com.leyuan.aidong.entity;
 
+import java.io.Serializable;
+
 /**
  * 商圈筛选数据右边实体
  * Created by song on 2016/11/1.
  */
-public class DistrictDescBean {
+public class DistrictDescBean implements Serializable{
 
     private String areaId;
     private String area;

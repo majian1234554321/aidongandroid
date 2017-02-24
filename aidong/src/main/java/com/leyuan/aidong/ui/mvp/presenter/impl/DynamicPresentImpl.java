@@ -77,7 +77,7 @@ public class DynamicPresentImpl implements DynamicPresent{
                     switcherLayout.showEmptyLayout();
                 }
             }
-        },Constant.FIRST_PAGE);
+        },Constant.PAGE_FIRST);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class DynamicPresentImpl implements DynamicPresent{
                     sportCircleFragmentView.updateRecyclerView(dynamicBeanList);
                 }
             }
-        },Constant.FIRST_PAGE);
+        },Constant.PAGE_FIRST);
     }
 
     @Override
@@ -167,7 +167,7 @@ public class DynamicPresentImpl implements DynamicPresent{
                     dynamicDetailActivityView.showEmptyCommentView();
                 }
             }
-        },id,Constant.FIRST_PAGE);
+        },id,Constant.PAGE_FIRST);
     }
 
     @Override

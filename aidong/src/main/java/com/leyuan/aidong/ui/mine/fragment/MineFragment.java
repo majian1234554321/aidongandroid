@@ -1,6 +1,5 @@
 package com.leyuan.aidong.ui.mine.fragment;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -29,9 +28,9 @@ import com.leyuan.aidong.ui.mine.activity.MessageActivity;
 import com.leyuan.aidong.ui.mine.activity.OrderActivity;
 import com.leyuan.aidong.ui.mine.activity.TabMinePersonalSettingsActivity;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
+import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.UiManager;
 import com.leyuan.aidong.widget.AidongMineItem;
-import com.leyuan.aidong.widget.CircleImageView;
 
 
 public class MineFragment extends BaseFragment implements View.OnClickListener {
@@ -40,7 +39,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private LinearLayout layout_no_login, linearLayout_guanzhu, linearLayout_beiguanzhu, layout_hot;
     private ImageButton button_login, btn_shop_car, btn_message;
     private RelativeLayout relativeLayout_my_logo, relativeLayout_yuyue, relativeLayout_dingdang;
-    private CircleImageView imageView_head;
+    private ImageView imageView_head;
     private ImageView imageView_xinbie;
     private TextView textView_name, textView_guanzhushu, textView_beiguanzhushu, textView_popularity, textView_yysl, textView_yyjrw, textView_dd, textView_ddjrw;
     private AidongMineItem item_my_coin, item_my_coupon, item_sport_timing, item_address,
@@ -76,7 +75,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         relativeLayout_yuyue = (RelativeLayout) rootView.findViewById(R.id.relativeLayout_yuyue);
         relativeLayout_dingdang = (RelativeLayout) rootView.findViewById(R.id.relativeLayout_dingdang);
 
-        imageView_head = (CircleImageView) rootView.findViewById(R.id.imageView_head);
+        imageView_head = (ImageView) rootView.findViewById(R.id.imageView_head);
         imageView_xinbie = (ImageView) rootView.findViewById(R.id.imageView_xinbie);
 
         textView_name = (TextView) rootView.findViewById(R.id.textView_name);
@@ -131,7 +130,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             user = App.mInstance.getUser();
             textView_name.setText(user.getName());
 //            +"- " +user.getMobile()+"https://www.zhihu.com/question/31660075"
-            imageView_head.setImageURI(Uri.parse(user.getAvatar()));
+            //imageView_head.setImageURI(Uri.parse(user.getAvatar()));
+            GlideLoader.getInstance().displayCircleImage(user.getAvatar(),imageView_head);
         }else{
             relativeLayout_my_logo.setVisibility(View.GONE);
             layout_no_login.setVisibility(View.VISIBLE);

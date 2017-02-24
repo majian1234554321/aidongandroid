@@ -2,6 +2,7 @@ package com.leyuan.aidong.utils;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.widget.ImageView;
 
@@ -47,7 +48,7 @@ public class GlideLoader {
                 .into(imageView);
     }
 
-    public void displayLocalGifImage(int resId, ImageView imageView){
+    public void displayDrawableGifImage(@DrawableRes int resId, ImageView imageView){
         Glide.with(getContext(imageView))
                 .load(resId)
                 .asGif()

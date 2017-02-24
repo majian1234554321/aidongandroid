@@ -71,7 +71,7 @@ public class CouponPresentImpl implements CouponPresent {
                     switcherLayout.showEmptyLayout();
                 }
             }
-        },type, Constant.FIRST_PAGE);
+        },type, Constant.PAGE_FIRST);
     }
 
     @Override
@@ -86,7 +86,7 @@ public class CouponPresentImpl implements CouponPresent {
                     couponView.updateRecyclerView(couponList);
                 }
             }
-        },type,Constant.FIRST_PAGE);
+        },type,Constant.PAGE_FIRST);
     }
 
     @Override

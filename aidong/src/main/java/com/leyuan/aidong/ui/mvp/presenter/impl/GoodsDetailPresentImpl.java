@@ -150,7 +150,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                             switcherLayout.showEmptyLayout();
                         }
                     }
-                },sku, Constant.FIRST_PAGE);
+                },sku, Constant.PAGE_FIRST);
                 break;
             case TYPE_NURTURE:
                 if(nurtureModel == null){
@@ -169,7 +169,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                             switcherLayout.showEmptyLayout();
                         }
                     }
-                },sku, Constant.FIRST_PAGE);
+                },sku, Constant.PAGE_FIRST);
 
                 break;
             case TYPE_FOOD:
@@ -189,7 +189,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                             switcherLayout.showEmptyLayout();
                         }
                     }
-                },sku, Constant.FIRST_PAGE);
+                },sku, Constant.PAGE_FIRST);
                 break;
             default:
                 Logger.e("GoodsDetailPresentImpl","type must be foods,equipments or nutrition");
@@ -214,7 +214,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                             venuesActivityView.updateRecyclerView(venuesBeanList);
                         }
                     }
-                },sku,Constant.FIRST_PAGE);
+                },sku,Constant.PAGE_FIRST);
 
                 break;
             case TYPE_NURTURE:
@@ -231,7 +231,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                             venuesActivityView.updateRecyclerView(venuesBeanList);
                         }
                     }
-                },sku,Constant.FIRST_PAGE);
+                },sku,Constant.PAGE_FIRST);
                 break;
             case TYPE_FOOD:
                 if(foodModel == null){
@@ -247,7 +247,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                             venuesActivityView.updateRecyclerView(venuesBeanList);
                         }
                     }
-                },sku,Constant.FIRST_PAGE);
+                },sku,Constant.PAGE_FIRST);
                 break;
             default:
                 Logger.e("GoodsDetailPresentImpl","type must be foods,equipments or nutrition");

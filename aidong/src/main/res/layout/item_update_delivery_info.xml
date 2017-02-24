@@ -4,13 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@color/white">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="@color/line_color"/>
-
     <RelativeLayout
-        xmlns:fresco="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:paddingLeft="@dimen/left_margin"
         android:paddingRight="@dimen/right_margin"
@@ -51,24 +45,29 @@
             android:id="@+id/tv_sku"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="sku"
+            android:text="sku1111111"
             android:textSize="13sp"
             android:textColor="@color/c9"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:layout_marginRight="15dp"
             android:layout_below="@+id/tv_goods_name"
-            android:layout_alignLeft="@+id/tv_goods_name"/>
+            android:layout_alignLeft="@+id/tv_goods_name"
+            />
 
         <TextView
             android:id="@+id/tv_recommend_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="推荐码：211111"
+            android:text="推荐码：123456"
             android:textSize="13sp"
             android:textColor="@color/c9"
             android:layout_marginTop="15dp"
-            android:layout_marginLeft="10dp"
+            android:singleLine="true"
             android:layout_alignBottom="@+id/tv_sku"
-            android:layout_toRightOf="@+id/tv_sku"/>
+            android:layout_toRightOf="@+id/tv_sku"
+            android:layout_marginRight="15sp"/>
 
         <TextView
             android:id="@+id/tv_count"
@@ -222,10 +221,11 @@
                 android:text="请选择"
                 android:textColor="@color/c9"
                 android:textSize="15sp" />
-
         </LinearLayout>
-
-        <include layout="@layout/inc_line_with_margin" />
-
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/line_color"/>
 </LinearLayout>

@@ -36,16 +36,18 @@ import com.leyuan.aidong.widget.SimpleTitleBar;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.leyuan.aidong.utils.Constant.PAY_ALI;
+import static com.leyuan.aidong.utils.Constant.ORDER_BUY_NURTURE_IMMEDIATELY;
+import static com.leyuan.aidong.utils.Constant.ORDER_BUY_EQUIPMENT_IMMEDIATELY;
+import static com.leyuan.aidong.utils.Constant.ORDER_FROM_CART;
+import static com.leyuan.aidong.utils.Constant.PAY_WEI_XIN;
+
 /**
  * 确认订单
  * Created by song on 2016/9/23.
  */
-public class ConfirmOrderActivity extends BaseActivity implements View.OnClickListener, CustomNestRadioGroup.OnCheckedChangeListener {
-    public static final int ORDER_CART= 1;
-    public static final int ORDER_BUG_NURTURE_IMMEDIATELY = 2;
-    public static final int ORDER_BUY_EQUIPMENT_IMMEDIATELY = 3;
-    private static final String ALI_PAY = "alipay";
-    private static final String WEI_XIN_PAY = "wxpay";
+public class ConfirmOrderActivity extends BaseActivity implements View.OnClickListener,
+        CustomNestRadioGroup.OnCheckedChangeListener {
     private static final Double EXPRESS_PRICE = 15d;
     private static final int REQUEST_ADDRESS = 1;
     private static final int REQUEST_COUPON = 2;
@@ -91,7 +93,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private String coin;
     private String coupon;
     private String payType;
-    private String expressAddress;
+    private String expressAddressId;
 
     private int orderType;
     private double totalGoodsPrice;
@@ -114,7 +116,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_order);
-        payType = ALI_PAY;
+        payType = PAY_ALI;
         days = DateUtils.getSevenDate();
         if(getIntent() != null){
             orderType = getIntent().getIntExtra("orderType",1);
@@ -213,6 +215,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 sb.append(address.getProvince()).append(address.getCity())
                         .append(address.getDistrict()).append(address.getAddress());
                 tvAddress.setText(sb);
+                expressAddressId = address.getAddressId();
             }
         }
     }
@@ -221,10 +224,10 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     public void onCheckedChanged(CustomNestRadioGroup group, int checkedId) {
         switch (checkedId){
             case R.id.cb_alipay:
-                payType = ALI_PAY;
+                payType = PAY_ALI;
                 break;
             case R.id.cb_weixin:
-                payType = WEI_XIN_PAY;
+                payType = PAY_WEI_XIN;
                 break;
             default:
                 break;
@@ -233,7 +236,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
     private void payOrder(){
         switch (orderType){
-            case ORDER_CART:
+            case ORDER_FROM_CART:
                 List<GoodsBean> goodsList = new ArrayList<>();
                 for (ShopBean shopBean : shopBeanList) {
                     for (GoodsBean goodsBean : shopBean.getItem()) {
@@ -247,9 +250,9 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 if(cartPresent == null){
                     cartPresent = new CartPresentImpl(this);
                 }
-                cartPresent.payCart(integral,coin,coupon,payType,expressAddress,payListener,itemIds);
+                cartPresent.payCart(integral,coin,coupon,payType, expressAddressId,payListener,itemIds);
                 break;
-            case ORDER_BUG_NURTURE_IMMEDIATELY:
+            case ORDER_BUY_NURTURE_IMMEDIATELY:
                 if(nurturePresent == null){
                     nurturePresent = new NurturePresentImpl(this);
                 }

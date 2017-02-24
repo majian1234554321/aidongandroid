@@ -15,8 +15,8 @@ import com.leyuan.aidong.adapter.home.RecommendAdapter;
 import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.view.CartHeaderView;
-import com.leyuan.aidong.ui.mvp.presenter.CartPresent;
-import com.leyuan.aidong.ui.mvp.presenter.impl.CartPresentImpl;
+import com.leyuan.aidong.ui.mvp.presenter.RecommendPresent;
+import com.leyuan.aidong.ui.mvp.presenter.impl.RecommendPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CartActivityView;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -27,6 +27,8 @@ import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.leyuan.aidong.utils.Constant.RECOMMEND_TYPE_CART;
 
 
 /**
@@ -44,8 +46,9 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
     private RecyclerView recommendView;
     private int currPage = 1;
     private RecommendAdapter recommendAdapter;
-    private HeaderAndFooterRecyclerViewAdapter wrapAdapter;
+    private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private List<GoodsBean> recommendList = new ArrayList<>();
+    private List<GoodsBean> emptyList = new ArrayList<>();
 
     private LinearLayout bottomLayout;
     private CheckBox rbSelectAll;
@@ -55,18 +58,17 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
     private LinearLayout bottomDeleteLayout;
     private TextView tvDelete;
 
-    private CartPresent cartPresent;
+    private RecommendPresent recommendPresent;
     private boolean isEditing = false;
-
+    private boolean isFirstGetData = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
-        cartPresent = new CartPresentImpl(this,this);
+        recommendPresent = new RecommendPresentImpl(this,this);
         initView();
         setListener();
-        cartPresent.pullToRefreshRecommendData();
     }
 
     private void initView(){
@@ -82,8 +84,8 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
         bottomDeleteLayout = (LinearLayout) findViewById(R.id.ll_bottom_delete);
         tvDelete = (TextView) findViewById(R.id.tv_delete);
         recommendAdapter = new RecommendAdapter(this);
-        wrapAdapter = new HeaderAndFooterRecyclerViewAdapter(recommendAdapter);
-        recommendView.setAdapter(wrapAdapter);
+        wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(recommendAdapter);
+        recommendView.setAdapter(wrapperAdapter);
         GridLayoutManager manager = new GridLayoutManager(this, 2);
         manager.setSpanSizeLookup(new HeaderSpanSizeLookup((HeaderAndFooterRecyclerViewAdapter)
                 recommendView.getAdapter(), manager.getSpanCount()));
@@ -106,8 +108,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
     @Override
     public void onRefresh() {
         currPage = 1;
-        RecyclerViewStateUtils.resetFooterViewState(recommendView);
-        cartPresent.pullToRefreshRecommendData();
+        cartHeaderView.pullToRefreshCartData();
     }
 
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
@@ -115,7 +116,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
         public void onLoadNextPage(View view) {
             currPage ++;
             if (recommendList != null && recommendList.size() >= pageSize) {
-                cartPresent.requestMoreRecommendData(recommendView,pageSize,currPage);
+                recommendPresent.requestMoreData(recommendView,pageSize,currPage,RECOMMEND_TYPE_CART);
             }
         }
     };
@@ -128,9 +129,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
                 break;
             case R.id.tv_edit:
                 isEditing = !isEditing;
-                tvEdit.setText(isEditing ? R.string.finish : R.string.edit);
-                bottomDeleteLayout.setVisibility(isEditing ? View.VISIBLE :View.GONE);
-                bottomNormalLayout.setVisibility(isEditing ? View.GONE : View.VISIBLE);
+                updateEditStatus();
                 break;
             case R.id.tv_settlement:
                 cartHeaderView.settlementSelectGoods();
@@ -148,13 +147,9 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
 
     @Override
     public void updateRecommendGoods(List<GoodsBean> goodsBeanList) {
-        if(refreshLayout.isRefreshing()){
-            recommendList.clear();
-            refreshLayout.setRefreshing(false);
-        }
         recommendList.addAll(goodsBeanList);
         recommendAdapter.setData(recommendList);
-        wrapAdapter.notifyDataSetChanged();
+        wrapperAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -164,8 +159,16 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
 
     @Override
     public void onCartDataLoadFinish() {
-        tvEdit.setVisibility(View.VISIBLE);
-        bottomLayout.setVisibility(View.VISIBLE);
+        if(isFirstGetData) {
+            isFirstGetData = false;
+            tvEdit.setVisibility(View.VISIBLE);
+            bottomLayout.setVisibility(View.VISIBLE);
+            cartHeaderView.showRecommendText(!isEditing);
+            recommendPresent.pullToRefreshData(RECOMMEND_TYPE_CART);
+        }
+        if(refreshLayout.isRefreshing()){
+            refreshLayout.setRefreshing(false);
+        }
     }
 
     @Override
@@ -176,5 +179,20 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
     @Override
     public void onTotalPriceChanged(double totalPrice) {
         tvTotalPrice.setText(String.format(getString(R.string.rmb_price_double),totalPrice));
+    }
+
+    @Override
+    public void onAllGoodsDeleted() {
+        isEditing = false;
+        updateEditStatus();
+    }
+
+    private void updateEditStatus(){
+        tvEdit.setText(isEditing ? R.string.finish : R.string.edit);
+        bottomDeleteLayout.setVisibility(isEditing ? View.VISIBLE :View.GONE);
+        bottomNormalLayout.setVisibility(isEditing ? View.GONE : View.VISIBLE);
+        cartHeaderView.showRecommendText(!isEditing);
+        recommendAdapter.setData(isEditing ? emptyList : recommendList);
+        wrapperAdapter.notifyDataSetChanged();
     }
 }

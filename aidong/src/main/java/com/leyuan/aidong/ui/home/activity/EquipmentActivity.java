@@ -28,6 +28,8 @@ import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.leyuan.aidong.utils.Constant.TYPE_EQUIPMENT;
+
 /**
  * 装备
  * Created by song on 2016/8/25
@@ -65,7 +67,7 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
     private void initTopLayout(){
         titleBar = (SimpleTitleBar)findViewById(R.id.title_bar);
         categoryView = (RecyclerView)findViewById(R.id.rv_category);
-        categoryAdapter = new CategoryAdapter(this,GoodsFilterActivity.TYPE_EQUIPMENT);
+        categoryAdapter = new CategoryAdapter(this,TYPE_EQUIPMENT);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
         categoryView.setLayoutManager(layoutManager);
         categoryView.setAdapter(categoryAdapter);

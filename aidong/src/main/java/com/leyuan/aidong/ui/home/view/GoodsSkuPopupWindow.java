@@ -30,6 +30,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static com.leyuan.aidong.utils.Constant.ORDER_FROM_CART;
+
 /**
  * 商品详情页选择商品信息弹框
  * Created by song on 2016/9/13.
@@ -69,6 +71,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
 
     private String gymId;
     private String count;
+    private String recommendId;
     private StringBuilder skuTip;
     private GoodsDetailBean detailBean;
     private List<LocalGoodsSkuBean> localSkuBeanList;
@@ -79,13 +82,15 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     private CartPresent cartPresent;
 
     public GoodsSkuPopupWindow(Context context, GoodsDetailBean detailBean,
-                               List<String> selectedSkuValues,String gymId,String count,String from) {
+                               List<String> selectedSkuValues,String gymId,String count,
+                               String recommendId,String from) {
         super(context);
         this.context = context;
         this.detailBean = detailBean;
         this.selectedSkuValues = selectedSkuValues;
         this.gymId = gymId;
         this.count = count;
+        this.recommendId = recommendId;
 
         if(from.equals(FROM_SKU)){
             showConfirmStatus = false;
@@ -302,7 +307,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     private void addCart() {
         GoodsSkuBean line = getLine(selectedSkuValues);
         String countStr = tvCount.getText().toString();
-        cartPresent.addCart(line.code,Integer.parseInt(countStr),gymId);
+        cartPresent.addCart(line.code,Integer.parseInt(countStr),gymId,recommendId);
     }
 
     private void confirmOrder() {
@@ -332,7 +337,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         shopBean.setItem(goodsBeanList);
         shopBean.setName(TextUtils.isEmpty(gymId) ? "仓库发货" : detailBean.pick_up.info.getName());
         shopBeanList.add(shopBean);
-        ConfirmOrderActivity.start(context,ConfirmOrderActivity.ORDER_CART,shopBeanList,
+        ConfirmOrderActivity.start(context,ORDER_FROM_CART,shopBeanList,
                 FormatUtil.parseDouble(line.price)* FormatUtil.parseInt(tvCount.getText().toString()));
     }
 

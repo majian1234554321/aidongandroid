@@ -7,8 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.transition.Slide;
-import android.view.Gravity;
+import android.transition.Fade;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -19,9 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.adapter.home.SearchHistoryAdapter;
 import com.leyuan.aidong.entity.SearchHistoryBean;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.adapter.home.SearchHistoryAdapter;
 import com.leyuan.aidong.ui.home.fragment.SearchResultFragment;
 import com.leyuan.aidong.ui.mvp.presenter.SearchPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SearchPresentImpl;
@@ -79,7 +78,7 @@ public class SearchActivity extends BaseActivity implements SearchActivityView{
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                compatFinish();
             }
         });
         historyAdapter.setItemClickListener(new SearchHistoryAdapter.ItemClickListener() {
@@ -131,11 +130,9 @@ public class SearchActivity extends BaseActivity implements SearchActivityView{
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void setupWindowAnimations() {
-        Slide bottomSlide = new Slide();
-        bottomSlide.setDuration(200);
-        bottomSlide.excludeTarget(android.R.id.statusBarBackground,true);
-        bottomSlide.excludeTarget(R.id.ll_search_1,true);
-        bottomSlide.setSlideEdge(Gravity.BOTTOM);
+        Fade bottomSlide = new Fade();
+        bottomSlide.setDuration(300);
+        bottomSlide.setMode(Fade.MODE_IN);
         getWindow().setEnterTransition(bottomSlide);
     }
 }

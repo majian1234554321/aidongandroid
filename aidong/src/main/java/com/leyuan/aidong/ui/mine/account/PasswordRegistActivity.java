@@ -131,18 +131,18 @@ public class PasswordRegistActivity extends BaseActivity  {
 					public void onClick(View v) {
 						// TODO Auto-generated method stub
 						if (editNickName.getText().toString().trim()
-								.equals(Constant.NO_STR)) {
+								.equals(Constant.EMPTY_STR)) {
 							ToastUtil.show(getResources().getString(
 									R.string.error_no_nickname),PasswordRegistActivity.this);
 						} else if (editPswd.getText().toString().trim()
-								.equals(Constant.NO_STR)) {
+								.equals(Constant.EMPTY_STR)) {
 							ToastUtil.show(getResources().getString(
 									R.string.error_no_password),PasswordRegistActivity.this);
 						} else if (editPswd.getText().toString().length() < 6) {
 							ToastUtil.show(getResources().getString(
 									R.string.error_no_password_six),PasswordRegistActivity.this);
 						} else if (editPswdRepeat.getText().toString().trim()
-								.equals(Constant.NO_STR)) {
+								.equals(Constant.EMPTY_STR)) {
 
 							ToastUtil.show(getResources().getString(
 									R.string.error_no_repeatpassword),PasswordRegistActivity.this);

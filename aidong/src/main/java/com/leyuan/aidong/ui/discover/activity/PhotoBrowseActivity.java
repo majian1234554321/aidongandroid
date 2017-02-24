@@ -96,7 +96,7 @@ public class PhotoBrowseActivity extends BaseActivity {
     }
 
     //=============================================================Tools method
-    public static void start(Activity from, @NonNull PhotoBrowseInfo info) {
+    public static void start(Activity from, PhotoBrowseInfo info) {
         if (info == null || !info.isValided()) return;
         Intent intent = new Intent(from, PhotoBrowseActivity.class);
         intent.putExtra("photoinfo", info);
@@ -145,7 +145,7 @@ public class PhotoBrowseActivity extends BaseActivity {
             GalleryPhotoView photoView = viewBuckets.get(position);
             String photoUrl = photoBrowseInfo.getPhotoUrls().get(position);
 
-            Glide.with(PhotoBrowseActivity.this).load(photoUrl).into(photoView);
+            Glide.with(PhotoBrowseActivity.this).load(photoUrl).thumbnail(0.1f).into(photoView);
             //GlideLoader.getInstance().displayImage(photoUrl, photoView);
             container.addView(photoView);
             return photoView;

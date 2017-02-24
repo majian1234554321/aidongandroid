@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.leyuan.aidong.R;
@@ -43,6 +44,9 @@ public class DiscoverFragment extends BaseFragment implements DiscoverFragmentVi
     private SwipeRefreshLayout refreshLayout;
     private NestedScrollView scrollView;
     private BGABanner banner;
+    private LinearLayout venuesLayout;
+    private LinearLayout userLayout;
+    private LinearLayout newsLayout;
     private RecyclerView rvVenues;
     private RecyclerView rvUser;
     private RecyclerView rvNews;
@@ -75,6 +79,9 @@ public class DiscoverFragment extends BaseFragment implements DiscoverFragmentVi
         scrollView = (NestedScrollView) view.findViewById(R.id.scroll_view);
         switcherLayout = new SwitcherLayout(getContext(),scrollView);
         banner = (BGABanner) view.findViewById(R.id.banner);
+        venuesLayout = (LinearLayout) view.findViewById(R.id.ll_venues);
+        userLayout = (LinearLayout) view.findViewById(R.id.ll_user);
+        newsLayout = (LinearLayout) view.findViewById(R.id.ll_news);
         rvVenues = (RecyclerView) view.findViewById(R.id.rv_venues);
         rvUser = (RecyclerView) view.findViewById(R.id.rv_user);
         rvNews = (RecyclerView) view.findViewById(R.id.rv_news);
@@ -110,6 +117,11 @@ public class DiscoverFragment extends BaseFragment implements DiscoverFragmentVi
     }
 
     @Override
+    public void onRefresh() {
+        discoverPresent.pullToRefreshDiscoverData();
+    }
+
+    @Override
     public void setDiscoverData(DiscoverData discoverData) {
         if(refreshLayout.isRefreshing()){
             refreshLayout.setRefreshing(false);
@@ -124,30 +136,25 @@ public class DiscoverFragment extends BaseFragment implements DiscoverFragmentVi
         }
 
         if(discoverData.getBrand() != null && !discoverData.getBrand().isEmpty()){
-            moreVenuesLayout.setVisibility(View.VISIBLE);
+            venuesLayout.setVisibility(View.VISIBLE);
             brandsAdapter.setData(discoverData.getBrand());
         }else {
-            moreVenuesLayout.setVisibility(View.GONE);
+            venuesLayout.setVisibility(View.GONE);
         }
 
         if(discoverData.getUser() != null && !discoverData.getUser().isEmpty()){
-            moreUserLayout.setVisibility(View.VISIBLE);
+            userLayout.setVisibility(View.VISIBLE);
             userAdapter.setData(discoverData.getUser());
         }else {
-            moreUserLayout.setVisibility(View.GONE);
+            userLayout.setVisibility(View.GONE);
         }
 
         if(discoverData.getNews() != null && !discoverData.getNews().isEmpty()){
-            moreNewsLayout.setVisibility(View.VISIBLE);
+            newsLayout.setVisibility(View.VISIBLE);
             newsAdapter.setData(discoverData.getNews());
         }else {
-            moreNewsLayout.setVisibility(View.GONE);
+            newsLayout.setVisibility(View.GONE);
         }
-    }
-
-    @Override
-    public void onRefresh() {
-        discoverPresent.pullToRefreshDiscoverData();
     }
 
     @Override

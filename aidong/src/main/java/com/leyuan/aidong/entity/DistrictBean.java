@@ -3,6 +3,7 @@ package com.leyuan.aidong.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  * 商圈左边筛选数据实体
  * Created by song on 2016/11/1.
  */
-public class DistrictBean implements Parcelable {
+public class DistrictBean implements Parcelable ,Serializable{
     private String areaId;
     private String district_name;
     private List<DistrictDescBean> district_values;

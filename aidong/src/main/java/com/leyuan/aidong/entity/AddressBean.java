@@ -48,7 +48,7 @@ public class AddressBean implements Parcelable{
         this.address = address;
     }
 
-    public String getAddress_id() {
+    public String getAddressId() {
         return id;
     }
 

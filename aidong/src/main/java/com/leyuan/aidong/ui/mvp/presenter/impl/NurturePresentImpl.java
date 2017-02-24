@@ -90,7 +90,7 @@ public class NurturePresentImpl implements NurturePresent{
                     switcherLayout.showEmptyLayout();
                 }
             }
-        },Constant.FIRST_PAGE,brandId,priceSort,countSort,heatSort);
+        },Constant.PAGE_FIRST,brandId,priceSort,countSort,heatSort);
     }
 
     @Override
@@ -105,7 +105,7 @@ public class NurturePresentImpl implements NurturePresent{
                     filterActivityView.updateNurtureRecyclerView(nurtureBeanList);
                 }
             }
-        }, Constant.FIRST_PAGE,brandId,priceSort,countSort,heatSort);
+        }, Constant.PAGE_FIRST,brandId,priceSort,countSort,heatSort);
     }
 
     @Override
@@ -144,7 +144,7 @@ public class NurturePresentImpl implements NurturePresent{
                     switcherLayout.showEmptyLayout();
                 }
             }
-        },TYPE, Constant.FIRST_PAGE);
+        },TYPE, Constant.PAGE_FIRST);
     }
 
     @Override
@@ -162,7 +162,7 @@ public class NurturePresentImpl implements NurturePresent{
                     nurtureActivityView.showEmptyView();
                 }
             }
-        },TYPE,Constant.FIRST_PAGE);
+        },TYPE,Constant.PAGE_FIRST);
     }
 
     @Override

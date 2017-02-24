@@ -68,7 +68,7 @@ public class OrderPresentImpl implements OrderPresent {
                     orderFragmentView.updateRecyclerView(orderBeanList);
                 }
             }
-        },list,Constant.FIRST_PAGE);
+        },list,Constant.PAGE_FIRST);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class OrderPresentImpl implements OrderPresent {
                     orderFragmentView.updateRecyclerView(orderData.getOrder());
                 }
             }
-        },list, Constant.FIRST_PAGE);
+        },list, Constant.PAGE_FIRST);
     }
 
     @Override

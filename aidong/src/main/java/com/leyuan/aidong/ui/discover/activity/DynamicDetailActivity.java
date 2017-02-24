@@ -35,6 +35,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.DynamicDetailActivityView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DynamicType;
+import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.KeyBoardUtil;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -54,7 +55,7 @@ import static android.view.inputmethod.EditorInfo.IME_ACTION_SEND;
 public class DynamicDetailActivity extends BaseActivity implements DynamicDetailActivityView,View.OnClickListener, TextView.OnEditorActionListener, SwipeRefreshLayout.OnRefreshListener, DynamicDetailAdapter.OnItemClickListener {
     private ImageView ivBack;
     private TextView tvReport;
-    private ImageView dvUserAvatar;
+    private ImageView ivUserAvatar;
     private EditText etComment;
 
     private View header;
@@ -90,7 +91,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
         initHeaderView();
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tvReport = (TextView) findViewById(R.id.tv_report);
-        dvUserAvatar = (ImageView) findViewById(R.id.dv_user_avatar);
+        ivUserAvatar = (ImageView) findViewById(R.id.dv_user_avatar);
         etComment = (EditText) findViewById(R.id.et_comment);
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
         setColorSchemeResources(refreshLayout);
@@ -102,6 +103,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
         RecyclerViewUtils.setHeaderView(commentView,header);
         etComment.setHorizontallyScrolling(false);
         etComment.setMaxLines(5);
+        GlideLoader.getInstance().displayCircleImage(App.mInstance.getUser().getAvatar(), ivUserAvatar);
     }
 
     private void initHeaderView(){
@@ -127,7 +129,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
     private void setListener(){
         ivBack.setOnClickListener(this);
         tvReport.setOnClickListener(this);
-        dvUserAvatar.setOnClickListener(this);
+        ivUserAvatar.setOnClickListener(this);
         etComment.setOnEditorActionListener(this);
         refreshLayout.setOnRefreshListener(this);
         commentView.addOnScrollListener(onScrollListener);
@@ -211,7 +213,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
             wrapperAdapter.notifyItemInserted(0);
             commentView.scrollToPosition(1);
             etComment.clearFocus();
-            etComment.setText(Constant.EMPTY);
+            etComment.setText(Constant.EMPTY_STR);
             Toast.makeText(this,"评论成功",Toast.LENGTH_LONG).show();
         }else {
             Toast.makeText(this,"评论失败",Toast.LENGTH_LONG).show();

@@ -116,7 +116,8 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
         tvWeight.setRightContent(profileBean.getWeight());
         tvBmi.setRightContent(profileBean.getBmi());
         tvFrequency.setRightContent(profileBean.getFrequency());
-        GlideLoader.getInstance().displayCircleImage(profileBean.getAvatar(), ivAvatar);
+        avatarUrl = profileBean.getAvatar();
+        GlideLoader.getInstance().displayCircleImage(avatarUrl, ivAvatar);
     }
 
     private void setListener(){
@@ -141,7 +142,11 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
                 finish();
                 break;
             case R.id.tv_finish:
-                uploadToQiNiu();
+                if(TextUtils.isEmpty(avatarPath)){
+                    uploadToServer();
+                }else {
+                    uploadToQiNiu();
+                }
                 break;
             case R.id.dv_avatar:
                 selectAvatar();
@@ -180,7 +185,8 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
             @Override
             public void onSuccess(List<String> urls) {
                 if(urls != null && !urls.isEmpty()){
-                    avatarUrl = urls.get(0);
+                    String url = urls.get(0);
+                    avatarUrl = url.substring(url.indexOf("/") + 1);
                     uploadToServer();
                 }
             }
@@ -349,7 +355,9 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
         this.province = province;
         this.city = city;
         this.area = area;
-        tvAddress.setRightContent(new StringBuilder(province).append(city).append(area).toString());
+        StringBuilder sb = new StringBuilder();
+        sb.append(province).append(city).append(area);
+        tvAddress.setRightContent(sb.toString());
     }
 
 

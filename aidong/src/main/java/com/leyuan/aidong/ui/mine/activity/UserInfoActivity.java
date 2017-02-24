@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,9 +18,11 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.adapter.mine.UserInfoPhotoAdapter;
 import com.leyuan.aidong.entity.ImageBean;
 import com.leyuan.aidong.entity.ProfileBean;
 import com.leyuan.aidong.entity.data.UserInfoData;
+import com.leyuan.aidong.module.photopicker.boxing_impl.view.SpacesItemDecoration;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.fragment.UserDynamicFragment;
@@ -39,37 +42,42 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * 用户资料
  * Created by song on 2016/12/27.
  */
-public class UserInfoActivity extends BaseActivity implements SmartTabLayout.TabProvider, UserInfoActivityView, View.OnClickListener {
+public class UserInfoActivity extends BaseActivity implements UserInfoActivityView, View.OnClickListener,
+        SmartTabLayout.TabProvider{
     private ImageView ivBack;
     private TextView tvTitle;
     private ImageView ivEdit;
-
     private SwitcherLayout switcherLayout;
     private RelativeLayout contentLayout;
+    private RelativeLayout otherNoPhotoLayout;
+    private RelativeLayout selfNoPhotoLayout;
     private TextView tvAddImage;
     private RecyclerView rvPhoto;
     private ImageView dvAvatar;
     private TextView tvName;
     private TextView tvSignature;
-    private LinearLayout publishLayout;
-    private ImageView ivFollow;
+    private ImageView ivFollowOrPublish;
     private SmartTabLayout tabLayout;
     private ViewPager viewPager;
     private LinearLayout contactLayout;
     private TextView tvAppoint;
 
+    private UserInfoPhotoAdapter wallAdapter;
     private List<View> allTabView = new ArrayList<>();
-    private UserInfoPresent userInfoPresent;
-    private ProfileBean profileBean;
     private ArrayList<ImageBean> photos = new ArrayList<>();
+
     private String userId;
     private boolean isCoach = false;
+    private boolean isFollow = false;
     private boolean isSelf = false;
 
+    private ProfileBean profileBean;
+    private UserInfoPresent userInfoPresent;
 
     public static void start(Context context, String userId) {
         Intent starter = new Intent(context, UserInfoActivity.class);
@@ -96,31 +104,42 @@ public class UserInfoActivity extends BaseActivity implements SmartTabLayout.Tab
         tvTitle = (TextView) findViewById(R.id.tv_title);
         ivEdit = (ImageView) findViewById(R.id.iv_edit);
         contentLayout = (RelativeLayout) findViewById(R.id.rl_content);
-        switcherLayout = new SwitcherLayout(this, contentLayout);
+        switcherLayout = new SwitcherLayout(this,contentLayout);
+        otherNoPhotoLayout = (RelativeLayout) findViewById(R.id.rl_other_empty);
+        selfNoPhotoLayout = (RelativeLayout) findViewById(R.id.rl_self_empty);
         tvAddImage = (TextView) findViewById(R.id.tv_add_image);
         rvPhoto = (RecyclerView) findViewById(R.id.rv_photo);
         dvAvatar = (ImageView) findViewById(R.id.dv_avatar);
         tvName = (TextView) findViewById(R.id.tv_name);
         tvSignature = (TextView) findViewById(R.id.tv_signature);
-        publishLayout = (LinearLayout) findViewById(R.id.ll_publish);
-        ivFollow = (ImageView) findViewById(R.id.iv_follow);
+        ivFollowOrPublish = (ImageView) findViewById(R.id.iv_follow_or_publish);
         tabLayout = (SmartTabLayout) findViewById(R.id.tab_layout);
         tabLayout = (SmartTabLayout) findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.vp_content);
         contactLayout = (LinearLayout) findViewById(R.id.ll_contact);
         tvAppoint = (TextView) findViewById(R.id.tv_coach);
-
-        tvTitle.setText(isSelf ? "我的资料" : "TA的资料");
-        ivEdit.setVisibility(isSelf ? View.VISIBLE : View.GONE);
-        publishLayout.setVisibility(isSelf ? View.VISIBLE : View.GONE);
-        ivFollow.setVisibility(isSelf ? View.GONE : View.VISIBLE);
-        contactLayout.setVisibility(isSelf ? View.GONE : View.VISIBLE);
-        tvAppoint.setVisibility(isSelf ? View.GONE : isCoach ? View.VISIBLE : View.GONE);
-        if (isSelf) {
-            contentLayout.setPadding(0, DensityUtil.dp2px(this, 46), 0, (int) getResources().getDimension(R.dimen.dp_0));
-        } else {
-            contentLayout.setPadding(0, DensityUtil.dp2px(this, 46), 0, (int) getResources().getDimension(R.dimen.pref_50dp));
+        if(isSelf){
+            tvTitle.setText("我的资料");
+            ivEdit.setVisibility(View.VISIBLE);
+            ivFollowOrPublish.setBackgroundResource(R.drawable.icon_mine_publish);
+            contactLayout.setVisibility(View.GONE);
+            tvAppoint.setVisibility(View.GONE);
+            contentLayout.setPadding(0, DensityUtil.dp2px(this,46),0,(int)getResources().getDimension(R.dimen.dp_0));
+        }else {
+            tvTitle.setText("TA的资料");
+            ivEdit.setVisibility(View.GONE);
+            ivFollowOrPublish.setBackgroundResource(isFollow ?
+                    R.drawable.icon_following : R.drawable.icon_follow);
+            contactLayout.setVisibility(View.VISIBLE);
+            tvAppoint.setVisibility(isCoach ? View.VISIBLE : View.GONE);
+            contentLayout.setPadding(0, DensityUtil.dp2px(this,46),0,(int)getResources().getDimension(R.dimen.pref_50dp));
         }
+
+        wallAdapter = new UserInfoPhotoAdapter(this,isSelf);
+        rvPhoto.setAdapter(wallAdapter);
+        rvPhoto.setLayoutManager(new GridLayoutManager(this,4));
+        rvPhoto.addItemDecoration(new SpacesItemDecoration(
+                getResources().getDimensionPixelOffset(R.dimen.photo_wall_margin), 4));
     }
 
     private void setListener() {
@@ -135,11 +154,20 @@ public class UserInfoActivity extends BaseActivity implements SmartTabLayout.Tab
         GlideLoader.getInstance().displayCircleImage(profileBean.getAvatar(), dvAvatar);
         tvName.setText(profileBean.getName());
         tvSignature.setText(profileBean.getSignature());
-
+        if(userInfoData.getPhotoWall().isEmpty()){
+            if(isSelf){
+                selfNoPhotoLayout.setVisibility(View.VISIBLE);
+            }else {
+                otherNoPhotoLayout.setVisibility(View.VISIBLE);
+            }
+        }else {
+            wallAdapter.setData(userInfoData.getPhotoWall());
+        }
         FragmentPagerItems pages = new FragmentPagerItems(this);
         UserDynamicFragment dynamicFragment = new UserDynamicFragment();
         UserInfoFragment userInfoFragment = new UserInfoFragment();
-        pages.add(FragmentPagerItem.of(null, dynamicFragment.getClass()));
+        pages.add(FragmentPagerItem.of(null, dynamicFragment.getClass(),
+                new Bundler().putString("userId",userId).get()));
         pages.add(FragmentPagerItem.of(null, userInfoFragment.getClass(),
                 new Bundler().putParcelable("profile", profileBean).get()));
         final FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);

@@ -21,6 +21,10 @@ import com.leyuan.aidong.utils.ScreenUtil;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.leyuan.aidong.utils.Constant.TYPE_EQUIPMENT;
+import static com.leyuan.aidong.utils.Constant.TYPE_NURTURE;
+import static com.leyuan.aidong.utils.Constant.TYPE_FOODS;
+
 public class BaseActivity extends AppCompatActivity {
     protected int pageSize = 25; //默认分页数据量
     protected int screenWidth;
@@ -83,19 +87,18 @@ public class BaseActivity extends AppCompatActivity {
                 Logger.e("TAG","developing");
                 break;
             case "food":
-                GoodsDetailActivity.start(this,id, GoodsDetailActivity.TYPE_FOODS);
+                GoodsDetailActivity.start(this,id,TYPE_FOODS);
                 break;
             case "nutrition":
-                GoodsDetailActivity.start(this,id, GoodsDetailActivity.TYPE_NURTURE);
+                GoodsDetailActivity.start(this,id, TYPE_NURTURE);
                 break;
             case "equipment":
-                GoodsDetailActivity.start(this,id, GoodsDetailActivity.TYPE_EQUIPMENT);
+                GoodsDetailActivity.start(this,id, TYPE_EQUIPMENT);
                 break;
             default:
                 Logger.e("TAG","can not support this type,please check it");
                 break;
         }
-
     }
 
     /**
@@ -118,7 +121,7 @@ public class BaseActivity extends AppCompatActivity {
                 VenuesDetailActivity.start(this,bannerBean.getLink());
                 break;
             case "21":
-                GoodsDetailActivity.start(this,bannerBean.getLink(), GoodsDetailActivity.TYPE_NURTURE);
+                GoodsDetailActivity.start(this,bannerBean.getLink(), TYPE_NURTURE);
                 break;
             case "22":
                 CourseDetailActivity.start(this,bannerBean.getLink());

@@ -93,7 +93,7 @@ public class HomePresentImpl implements HomePresent {
                 }*/
 
             }
-        },Constant.FIRST_PAGE);
+        },Constant.PAGE_FIRST);
     }
 
     @Override
@@ -105,7 +105,7 @@ public class HomePresentImpl implements HomePresent {
                     homeFragmentView.updateRecyclerView(homeBean.getHome());
                 }
             }
-        }, Constant.FIRST_PAGE);
+        }, Constant.PAGE_FIRST);
     }
 
     @Override
@@ -133,7 +133,7 @@ public class HomePresentImpl implements HomePresent {
                 if(goodsBean != null)
                 brandDetailActivityView.updateRecyclerView(goodsBean.getItem());
             }
-        },id, Constant.FIRST_PAGE);
+        },id, Constant.PAGE_FIRST);
     }
 
     @Override

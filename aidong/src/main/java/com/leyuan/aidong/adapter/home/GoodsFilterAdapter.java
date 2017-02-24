@@ -12,12 +12,14 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.EquipmentBean;
 import com.leyuan.aidong.entity.NurtureBean;
 import com.leyuan.aidong.ui.home.activity.OldGoodsDetailActivity;
-import com.leyuan.aidong.ui.home.activity.GoodsFilterActivity;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.leyuan.aidong.utils.Constant.TYPE_EQUIPMENT;
+import static com.leyuan.aidong.utils.Constant.TYPE_NURTURE;
 
 /**
  * 营养品筛选界面适配器
@@ -25,11 +27,11 @@ import java.util.List;
  */
 public class GoodsFilterAdapter extends RecyclerView.Adapter<GoodsFilterAdapter.FilterViewHolder>{
     private Context context;
-    private int type;
+    private String type;
     private List<NurtureBean> nurtureList = new ArrayList<>();
     private List<EquipmentBean> equipmentList = new ArrayList<>();
 
-    public GoodsFilterAdapter(Context context,int type) {
+    public GoodsFilterAdapter(Context context,String type) {
         this.context = context;
         this.type = type;
     }
@@ -47,7 +49,7 @@ public class GoodsFilterAdapter extends RecyclerView.Adapter<GoodsFilterAdapter.
 
     @Override
     public int getItemCount() {
-        if(type == GoodsFilterActivity.TYPE_EQUIPMENT){
+        if(type == TYPE_EQUIPMENT){
             return equipmentList.size();
         }else {
             return nurtureList.size();
@@ -62,7 +64,7 @@ public class GoodsFilterAdapter extends RecyclerView.Adapter<GoodsFilterAdapter.
 
     @Override
     public void onBindViewHolder(FilterViewHolder holder, int position) {
-        if(type == GoodsFilterActivity.TYPE_NURTURE){
+        if(TYPE_NURTURE.equals(type)){
             final NurtureBean bean = nurtureList.get(position);
             GlideLoader.getInstance().displayImage(bean.getCover(), holder.cover);
             holder.name.setText(bean.getName());

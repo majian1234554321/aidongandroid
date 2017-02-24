@@ -8,7 +8,7 @@ public class FanProfile extends UserCoach {
 //	private ArrayList<AttributeImages> photowall;
 	/** 兴趣*/
 	private ArrayList<String> hobby;
-//	public ArrayList<AttributeImages> getPhotowall() {
+//	public ArrayList<AttributeImages> getPhotoWall() {
 //		return photowall;
 //	}
 //	public void setPhotowall(ArrayList<AttributeImages> photowall) {
