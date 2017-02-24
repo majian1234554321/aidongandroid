@@ -101,7 +101,7 @@ public class DiscoverPresentImpl implements DiscoverPresent {
                     switcherLayout.showEmptyLayout();
                 }
             }
-        },lat,lng, Constant.FIRST_PAGE,gender,type);
+        },lat,lng, Constant.PAGE_FIRST,gender,type);
     }
 
     @Override
@@ -116,7 +116,7 @@ public class DiscoverPresentImpl implements DiscoverPresent {
                     discoverUserActivityView.updateRecyclerView(userBeanList);
                 }
             }
-        },lat,lng, Constant.FIRST_PAGE,gender,type);
+        },lat,lng, Constant.PAGE_FIRST,gender,type);
     }
 
     @Override
@@ -153,7 +153,7 @@ public class DiscoverPresentImpl implements DiscoverPresent {
                     switcherLayout.showEmptyLayout();
                 }
             }
-        },Constant.FIRST_PAGE);
+        },Constant.PAGE_FIRST);
     }
 
     @Override
@@ -168,7 +168,7 @@ public class DiscoverPresentImpl implements DiscoverPresent {
                     sportNewsActivityView.updateRecyclerView(newsBeanList);
                 }
             }
-        },Constant.FIRST_PAGE);
+        },Constant.PAGE_FIRST);
     }
 
     @Override

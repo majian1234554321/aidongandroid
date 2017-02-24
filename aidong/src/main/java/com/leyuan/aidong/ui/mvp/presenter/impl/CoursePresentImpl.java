@@ -104,7 +104,7 @@ public class CoursePresentImpl implements CoursePresent{
                     switcherLayout.showEmptyLayout();
                 }
             }
-        }, day, category, landmark, Constant.FIRST_PAGE);
+        }, day, category, landmark, Constant.PAGE_FIRST);
     }
 
     @Override
@@ -118,7 +118,7 @@ public class CoursePresentImpl implements CoursePresent{
                     courserFragmentView.showEmptyView();
                 }
             }
-        }, day, category, landmark, Constant.FIRST_PAGE);
+        }, day, category, landmark, Constant.PAGE_FIRST);
     }
 
     @Override

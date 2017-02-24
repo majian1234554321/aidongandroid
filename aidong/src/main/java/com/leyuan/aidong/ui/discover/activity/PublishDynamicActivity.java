@@ -27,6 +27,8 @@ import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.PublishDynamicActivityView;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.qiniu.IQiNiuCallback;
+import com.leyuan.aidong.utils.qiniu.UploadQiNiuManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +37,8 @@ import java.util.List;
  * 发表动态
  * Created by song on 2017/2/2.
  */
-public class PublishDynamicActivity extends BaseActivity implements PublishDynamicActivityView,View.OnClickListener, PublishDynamicAdapter.OnItemClickListener {
+public class PublishDynamicActivity extends BaseActivity implements PublishDynamicActivityView,View.OnClickListener,
+        PublishDynamicAdapter.OnItemClickListener {
     private static final int REQUEST_PHOTO = 1;
     private static final int REQUEST_VIDEO = 2;
     private static final int MAX_TEXT_COUNT = 14;
@@ -122,8 +125,17 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
 
 
     private void uploadToQiNiu(){
+        UploadQiNiuManager.getInstance().uploadImages(selectedMedia, new IQiNiuCallback() {
+            @Override
+            public void onSuccess(List<String> urls) {
+                uploadToServer(urls);
+            }
 
-
+            @Override
+            public void onFail() {
+                Toast.makeText(PublishDynamicActivity.this,"上传失败",Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void uploadToServer(List<String> qiNiuMediaUrls){

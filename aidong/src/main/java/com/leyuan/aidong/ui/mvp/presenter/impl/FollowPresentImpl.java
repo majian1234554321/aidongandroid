@@ -51,7 +51,7 @@ public class FollowPresentImpl implements FollowPresent {
                     switcherLayout.showEmptyLayout();
                 }
             }
-        },type,Constant.FIRST_PAGE);
+        },type,Constant.PAGE_FIRST);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class FollowPresentImpl implements FollowPresent {
                     followFragmentView.updateRecyclerView(followData.getFollow());
                 }
             }
-        },type,Constant.FIRST_PAGE);
+        },type,Constant.PAGE_FIRST);
     }
 
     @Override

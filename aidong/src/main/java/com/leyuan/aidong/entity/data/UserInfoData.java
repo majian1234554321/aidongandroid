@@ -1,6 +1,9 @@
 package com.leyuan.aidong.entity.data;
 
+import com.leyuan.aidong.entity.ImageBean;
 import com.leyuan.aidong.entity.ProfileBean;
+
+import java.util.List;
 
 /**
  * 用户资料
@@ -8,15 +11,15 @@ import com.leyuan.aidong.entity.ProfileBean;
  */
 public class UserInfoData {
 
-    private String id;
+    private List<ImageBean> photowall;
     private ProfileBean profile;
 
-    public String getId() {
-        return id;
+    public List<ImageBean> getPhotoWall() {
+        return photowall;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setPhotowall(List<ImageBean> photoWall) {
+        this.photowall = photoWall;
     }
 
     public ProfileBean getProfile() {

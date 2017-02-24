@@ -13,6 +13,8 @@ import com.leyuan.aidong.ui.home.activity.CampaignDetailActivity;
 import com.leyuan.aidong.ui.home.activity.CourseDetailActivity;
 import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
 
+import static com.leyuan.aidong.utils.Constant.TYPE_NURTURE;
+
 public class BaseFragment extends Fragment  {
     private static final String TAG = "BaseFragment";
     protected int pageSize = 25; //分页数据量
@@ -45,7 +47,7 @@ public class BaseFragment extends Fragment  {
                 VenuesDetailActivity.start(getContext(),bannerBean.getLink());
                 break;
             case "21":
-                GoodsDetailActivity.start(getContext(),bannerBean.getLink(), GoodsDetailActivity.TYPE_NURTURE);
+                GoodsDetailActivity.start(getContext(),bannerBean.getLink(),TYPE_NURTURE);
                 break;
             case "22":
                 CourseDetailActivity.start(getContext(),bannerBean.getLink());

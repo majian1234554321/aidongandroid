@@ -3,8 +3,6 @@ package com.leyuan.aidong.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.List;
-
 /**
  * 用户资料
  * Created by song on 2017/1/16.
@@ -16,8 +14,7 @@ public class ProfileBean implements Parcelable {
     private String birthday;
     private String age;
     private String zodiac;
-    private List<String> photowall;
-    private String signature;
+    private String signture;
     private String province;
     private String city;
     private String area;
@@ -77,20 +74,12 @@ public class ProfileBean implements Parcelable {
         this.zodiac = zodiac;
     }
 
-    public List<String> getPhotowall() {
-        return photowall;
-    }
-
-    public void setPhotowall(List<String> photowall) {
-        this.photowall = photowall;
-    }
-
     public String getSignature() {
-        return signature;
+        return signture;
     }
 
-    public void setSignature(String signature) {
-        this.signature = signature;
+    public void setSignature(String signture) {
+        this.signture = signture;
     }
 
     public String getProvince() {
@@ -186,8 +175,7 @@ public class ProfileBean implements Parcelable {
         dest.writeString(this.birthday);
         dest.writeString(this.age);
         dest.writeString(this.zodiac);
-        dest.writeStringList(this.photowall);
-        dest.writeString(this.signature);
+        dest.writeString(this.signture);
         dest.writeString(this.province);
         dest.writeString(this.city);
         dest.writeString(this.area);
@@ -210,8 +198,7 @@ public class ProfileBean implements Parcelable {
         this.birthday = in.readString();
         this.age = in.readString();
         this.zodiac = in.readString();
-        this.photowall = in.createStringArrayList();
-        this.signature = in.readString();
+        this.signture = in.readString();
         this.province = in.readString();
         this.city = in.readString();
         this.area = in.readString();

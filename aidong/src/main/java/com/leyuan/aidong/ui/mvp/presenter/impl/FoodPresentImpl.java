@@ -46,7 +46,7 @@ public class FoodPresentImpl implements FoodPresenter {
                     switcherLayout.showEmptyLayout();
                 }
             }
-        },Constant.FIRST_PAGE);
+        },Constant.PAGE_FIRST);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class FoodPresentImpl implements FoodPresenter {
                     foodActivityView.updateRecyclerView(foodAndVenuesBean);
                 }
             }
-        }, Constant.FIRST_PAGE);
+        }, Constant.PAGE_FIRST);
     }
 
     @Override

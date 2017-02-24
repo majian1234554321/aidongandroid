@@ -15,8 +15,7 @@ import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.leyuan.aidong.ui.home.activity.GoodsDetailActivity.TYPE_EQUIPMENT;
+import static com.leyuan.aidong.utils.Constant.TYPE_EQUIPMENT;
 
 
 /**

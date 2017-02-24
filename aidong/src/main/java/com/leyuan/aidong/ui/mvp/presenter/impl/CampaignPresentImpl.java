@@ -77,7 +77,7 @@ public class CampaignPresentImpl implements CampaignPresent {
                     switcherLayout.showEmptyLayout();
                 }
             }
-        },Constant.FIRST_PAGE);
+        },Constant.PAGE_FIRST);
     }
 
     @Override
@@ -89,7 +89,7 @@ public class CampaignPresentImpl implements CampaignPresent {
                     campaignActivityView.updateRecyclerView(campaignBean.getCampaign());
                 }
             }
-        }, Constant.FIRST_PAGE);
+        }, Constant.PAGE_FIRST);
     }
 
     @Override

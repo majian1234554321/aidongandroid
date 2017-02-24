@@ -89,7 +89,7 @@ public class EquipmentPresentImpl implements EquipmentPresent{
                     switcherLayout.showEmptyLayout();
                 }
             }
-        },TYPE, Constant.FIRST_PAGE);
+        },TYPE, Constant.PAGE_FIRST);
     }
 
     @Override
@@ -107,7 +107,7 @@ public class EquipmentPresentImpl implements EquipmentPresent{
                     equipmentActivityView.showEmptyView();
                 }
             }
-        },TYPE,Constant.FIRST_PAGE);
+        },TYPE,Constant.PAGE_FIRST);
     }
 
     @Override
@@ -146,7 +146,7 @@ public class EquipmentPresentImpl implements EquipmentPresent{
                     switcherLayout.showEmptyLayout();
                 }
             }
-        },Constant.FIRST_PAGE,brandId,priceSort,countSort,heatSort);
+        },Constant.PAGE_FIRST,brandId,priceSort,countSort,heatSort);
     }
 
     @Override
@@ -161,7 +161,7 @@ public class EquipmentPresentImpl implements EquipmentPresent{
                     filterActivityView.updateEquipmentRecyclerView(equipmentBeanList);
                 }
             }
-        },Constant.FIRST_PAGE,brandId,priceSort,countSort,heatSort);
+        },Constant.PAGE_FIRST,brandId,priceSort,countSort,heatSort);
     }
 
     @Override

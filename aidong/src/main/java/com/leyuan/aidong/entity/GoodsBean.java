@@ -123,6 +123,14 @@ public class GoodsBean implements Parcelable {
         this.type = type;
     }
 
+    public String getRecommendCode() {
+        return recommend_code;
+    }
+
+    public void setRecommend_code(String recommend_code) {
+        this.recommend_code = recommend_code;
+    }
+
     @Override
     public String toString() {
         return "GoodsBean{" +

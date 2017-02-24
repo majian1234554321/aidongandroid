@@ -27,132 +27,154 @@
                 app:banner_pointTopBottomMargin="5dp"
                 app:banner_transitionEffect="fade" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="55dp"
-                android:layout_gravity="center_horizontal"
-                android:drawableLeft="@drawable/icon_point"
-                android:drawablePadding="5dp"
-                android:drawableRight="@drawable/icon_point"
-                android:gravity="center_vertical"
-                android:text="品牌场馆"
-                android:textColor="@color/c3"
-                android:textSize="16sp" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_venues"
+            <LinearLayout
+                android:id="@+id/ll_venues"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="7.5dp"
-                android:paddingRight="7.5dp"
-                android:clipChildren="false"
-                android:clipToPadding="false"
-                android:paddingBottom="10dp" />
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:layout_gravity="center_horizontal"
+                    android:drawableLeft="@drawable/icon_point"
+                    android:drawablePadding="5dp"
+                    android:drawableRight="@drawable/icon_point"
+                    android:gravity="center_vertical"
+                    android:text="品牌场馆"
+                    android:textColor="@color/c3"
+                    android:textSize="16sp" />
 
-            <include layout="@layout/inc_line_with_margin" />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_venues"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="7.5dp"
+                    android:paddingRight="7.5dp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:paddingBottom="10dp" />
 
-            <RelativeLayout
-                android:id="@+id/rl_more_venues"
+                <include layout="@layout/inc_line_with_margin" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_more_venues"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?selectableItemBackground">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center_horizontal"
+                        android:drawablePadding="5dp"
+                        android:drawableRight="@drawable/icon_arrow_toward_right"
+                        android:gravity="center"
+                        android:text="附近场馆"
+                        android:textColor="@color/c3"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+                <include layout="@layout/inc_bold_line" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?selectableItemBackground">
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="45dp"
-                    android:layout_centerInParent="true"
+                    android:layout_height="55dp"
                     android:layout_gravity="center_horizontal"
+                    android:drawableLeft="@drawable/icon_point"
                     android:drawablePadding="5dp"
-                    android:drawableRight="@drawable/icon_arrow_toward_right"
-                    android:gravity="center"
-                    android:text="附近场馆"
+                    android:drawableRight="@drawable/icon_point"
+                    android:gravity="center_vertical"
+                    android:text="爱动同道"
                     android:textColor="@color/c3"
-                    android:textSize="14sp" />
-            </RelativeLayout>
+                    android:textSize="16sp" />
 
-            <include layout="@layout/inc_bold_line" />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="55dp"
-                android:layout_gravity="center_horizontal"
-                android:drawableLeft="@drawable/icon_point"
-                android:drawablePadding="5dp"
-                android:drawableRight="@drawable/icon_point"
-                android:gravity="center_vertical"
-                android:text="爱动同道"
-                android:textColor="@color/c3"
-                android:textSize="16sp" />
+                <include layout="@layout/inc_line_with_margin" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_user"
+                <RelativeLayout
+                    android:id="@+id/rl_more_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?selectableItemBackground">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center_horizontal"
+                        android:drawablePadding="5dp"
+                        android:drawableRight="@drawable/icon_arrow_toward_right"
+                        android:gravity="center"
+                        android:text="附近的人"
+                        android:layout_centerInParent="true"
+                        android:textColor="@color/c3"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+                <include layout="@layout/inc_bold_line" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_news"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="10dp" />
-
-            <include layout="@layout/inc_line_with_margin" />
-
-            <RelativeLayout
-                android:id="@+id/rl_more_user"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?selectableItemBackground">
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="45dp"
+                    android:layout_height="55dp"
                     android:layout_gravity="center_horizontal"
+                    android:drawableLeft="@drawable/icon_point"
                     android:drawablePadding="5dp"
-                    android:drawableRight="@drawable/icon_arrow_toward_right"
-                    android:gravity="center"
-                    android:text="附近的人"
-                    android:layout_centerInParent="true"
+                    android:drawableRight="@drawable/icon_point"
+                    android:gravity="center_vertical"
+                    android:text="爱动世界"
                     android:textColor="@color/c3"
-                    android:textSize="14sp" />
-            </RelativeLayout>
+                    android:textSize="16sp" />
 
-            <include layout="@layout/inc_bold_line" />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_news"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="55dp"
-                android:layout_gravity="center_horizontal"
-                android:drawableLeft="@drawable/icon_point"
-                android:drawablePadding="5dp"
-                android:drawableRight="@drawable/icon_point"
-                android:gravity="center_vertical"
-                android:text="爱动世界"
-                android:textColor="@color/c3"
-                android:textSize="16sp" />
+                <include layout="@layout/inc_line_with_margin" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_news"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="10dp" />
+                <RelativeLayout
+                    android:id="@+id/rl_more_news"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?selectableItemBackground">
 
-            <include layout="@layout/inc_line_with_margin" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center_horizontal"
+                        android:drawablePadding="5dp"
+                        android:drawableRight="@drawable/icon_arrow_toward_right"
+                        android:gravity="center"
+                        android:layout_centerInParent="true"
+                        android:text="世界之窗"
+                        android:textColor="@color/c3"
+                        android:textSize="14sp" />
+                </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/rl_more_news"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?selectableItemBackground">
+                <include layout="@layout/inc_bold_line" />
+            </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="45dp"
-                    android:layout_gravity="center_horizontal"
-                    android:drawablePadding="5dp"
-                    android:drawableRight="@drawable/icon_arrow_toward_right"
-                    android:gravity="center"
-                    android:layout_centerInParent="true"
-                    android:text="世界之窗"
-                    android:textColor="@color/c3"
-                    android:textSize="14sp" />
-            </RelativeLayout>
 
-            <include layout="@layout/inc_bold_line" />
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

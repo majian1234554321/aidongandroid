@@ -139,7 +139,7 @@ public class VenuesPresentImpl implements VenuesPresent{
                     switcherLayout.showEmptyLayout();
                 }
             }
-        },Constant.FIRST_PAGE);
+        },Constant.PAGE_FIRST);
     }
 
     @Override
@@ -154,7 +154,7 @@ public class VenuesPresentImpl implements VenuesPresent{
                     discoverVenuesActivityView.updateRecyclerView(venuesBeanList);
                 }
             }
-        },Constant.FIRST_PAGE);
+        },Constant.PAGE_FIRST);
     }
 
     @Override

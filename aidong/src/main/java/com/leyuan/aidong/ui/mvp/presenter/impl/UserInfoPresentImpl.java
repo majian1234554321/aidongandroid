@@ -81,7 +81,7 @@ public class UserInfoPresentImpl implements UserInfoPresent{
                     dynamicFragmentView.showEmptyLayout();
                 }
             }
-        },id, Constant.FIRST_PAGE);
+        },id, Constant.PAGE_FIRST);
     }
 
     @Override
@@ -150,6 +150,6 @@ public class UserInfoPresentImpl implements UserInfoPresent{
             public void onNext(BaseBean baseBean) {
                 updateUserInfoActivityView.updateResult(baseBean);
             }
-        },null,null,gender,birthday,signature,null,null,province,city,area,height,weight,null, null,null,null,frequency);
+        },null,avatar,gender,birthday,signature,null,null,province,city,area,height,weight,null, null,null,null,frequency);
     }
 }

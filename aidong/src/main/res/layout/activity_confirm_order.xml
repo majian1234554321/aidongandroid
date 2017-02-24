@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:background="?selectableItemBackground"
                 android:paddingTop="20dp"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/iv_default"
@@ -90,7 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <include layout="@layout/inc_line_with_margin" />
 

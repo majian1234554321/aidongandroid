@@ -1,7 +1,5 @@
 package com.leyuan.aidong.ui.mvp.presenter;
 
-import android.support.v7.widget.RecyclerView;
-
 import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
@@ -15,7 +13,7 @@ public interface CartPresent {
      * 第一次正常加载数据
      * @param switcherLayout
      */
-    void commonLoadingData(SwitcherLayout switcherLayout);
+    void commonLoadData(SwitcherLayout switcherLayout);
 
     /**
      * 下拉刷新
@@ -41,7 +39,7 @@ public interface CartPresent {
      * @param skuCode 商品sku码
      * @param amount 数量
      */
-    void addCart(String skuCode, int amount,String gymId);
+    void addCart(String skuCode, int amount,String gymId,String recommendId);
 
     /**
      * 购物车结算
@@ -50,13 +48,9 @@ public interface CartPresent {
      * @param coin 爱币
      * @param coupon 优惠券
      * @param payType 支付类型
-     * @param pickUpId 自提或地址id
+     * @param pickUpId 快递地址id
      */
     void payCart( String integral, String coin, String coupon, String payType, String pickUpId,
                   PayInterface.PayListener payListener,String... id);
 
-
-    void pullToRefreshRecommendData();
-
-    void requestMoreRecommendData(RecyclerView recyclerView, final int pageSize, int page);
 }

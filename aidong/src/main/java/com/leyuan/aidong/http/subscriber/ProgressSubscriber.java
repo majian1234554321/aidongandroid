@@ -56,7 +56,6 @@ public abstract class ProgressSubscriber<T> extends Subscriber<T> implements Pro
         if(showDialog){
             showProgressDialog();
         }
-
     }
 
     /**

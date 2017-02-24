@@ -71,7 +71,7 @@ public class RecommendPresentImpl implements RecommendPresent{
                     switcherLayout.showEmptyLayout();
                 }
             }
-        },type, Constant.FIRST_PAGE);
+        },type, Constant.PAGE_FIRST);
     }
 
     @Override
@@ -89,7 +89,7 @@ public class RecommendPresentImpl implements RecommendPresent{
                     showEmptyView();
                 }
             }
-        },type,Constant.FIRST_PAGE);
+        },type,Constant.PAGE_FIRST);
     }
 
     @Override

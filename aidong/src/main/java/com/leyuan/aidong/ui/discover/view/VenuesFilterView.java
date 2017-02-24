@@ -287,4 +287,12 @@ public class VenuesFilterView extends LinearLayout implements View.OnClickListen
         if(circleList != null)
         this.leftCircleList = circleList;
     }
+
+    public boolean isPopupShowing() {
+        return isPopupShowing;
+    }
+
+    public void dismissPopup() {
+        hidePopup();
+    }
 }

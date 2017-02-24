@@ -26,6 +26,7 @@ import static com.leyuan.aidong.utils.DateUtils.yyyyMMddHHmmss;
 
 /**
  * 爱动圈动态
+ * @author song
  */
 public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<DynamicBean> implements IViewHolder<DynamicBean> {
     private Context context;
@@ -47,6 +48,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
     private RelativeLayout bottomLikeLayout;
     private RelativeLayout bottomCommentLayout;
     private RelativeLayout bottomShareLayout;
+    private View line;
 
     protected IDynamicCallback callback;
     private boolean showLikeAndCommentLayout = true;
@@ -71,6 +73,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         bottomCommentLayout = (RelativeLayout) itemView.findViewById(R.id.bottom_comment_layout);
         bottomLikeLayout = (RelativeLayout) itemView.findViewById(R.id.bottom_like_layout);
         bottomShareLayout = (RelativeLayout) itemView.findViewById(R.id.bottom_share_layout);
+        line = itemView.findViewById(R.id.view_line);
         onFindChildView(itemView);
     }
 
@@ -105,15 +108,16 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             } else {
                 commentLayout.setVisibility(View.GONE);
             }
+            line.setVisibility(View.VISIBLE);
         }else {
             likeLayout.setVisibility(View.GONE);
             commentLayout.setVisibility(View.GONE);
+            line.setVisibility(View.GONE);
         }
 
         tvLikeCount.setText(dynamic.like.counter);
         tvCommentCount.setText(dynamic.comment.count);
         onBindDataToChildView(dynamic, position, dynamic.getDynamicType());
-
 
         root.setOnClickListener(new View.OnClickListener() {
             @Override

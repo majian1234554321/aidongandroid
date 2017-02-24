@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter;
 import com.leyuan.aidong.entity.DynamicBean;
-import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.discover.viewholder.FiveImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.FourImageViewHolder;
@@ -45,7 +44,7 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
 
     private int currPage = 1;
     private UserInfoPresent userInfoPresent;
-    private String id;
+    private String useId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
@@ -55,10 +54,13 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
     @Override
     public void onViewCreated(View view,Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        id = String.valueOf(App.mInstance.getUser().getId());
+        Bundle bundle = getArguments();
+        if(bundle != null){
+            useId = bundle.getString("userId");
+        }
         userInfoPresent = new UserInfoPresentImpl(getContext(),this);
         initRecyclerView(view);
-        userInfoPresent.commonLoadDynamic(id);
+        userInfoPresent.commonLoadDynamic(useId);
     }
 
 
@@ -88,7 +90,7 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
         public void onLoadNextPage(View view) {
             currPage ++;
             if (dynamicList != null && dynamicList.size() >= pageSize) {
-                userInfoPresent.requestMoreDynamic(id,recyclerView,pageSize,currPage);
+                userInfoPresent.requestMoreDynamic(useId,recyclerView,pageSize,currPage);
             }
         }
     };

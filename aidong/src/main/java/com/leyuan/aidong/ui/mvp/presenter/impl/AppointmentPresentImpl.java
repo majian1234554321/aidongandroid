@@ -68,7 +68,7 @@ public class AppointmentPresentImpl implements AppointmentPresent {
                     appointmentFragmentView.updateRecyclerView(appointmentBeanList);
                 }
             }
-        },type,Constant.FIRST_PAGE);
+        },type,Constant.PAGE_FIRST);
     }
 
     @Override
@@ -83,7 +83,7 @@ public class AppointmentPresentImpl implements AppointmentPresent {
                     appointmentFragmentView.updateRecyclerView(appointmentBeanList);
                 }
             }
-        },type, Constant.FIRST_PAGE);
+        },type, Constant.PAGE_FIRST);
     }
 
     @Override

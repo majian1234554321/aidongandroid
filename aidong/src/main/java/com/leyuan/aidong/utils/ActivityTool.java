@@ -203,7 +203,7 @@ public class ActivityTool   {
 			return version;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Constant.NO_STR;
+			return Constant.EMPTY_STR;
 		}
 	}
 

@@ -32,5 +32,5 @@ public interface ICartHeaderView {
      * 删除购物车中商品
      * @param baseBean BaseBean
      */
-    void setDeleteGoodsResult(BaseBean baseBean);
+    void setDeleteGoodsResult(BaseBean baseBean,String ids);
 }

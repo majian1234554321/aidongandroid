@@ -28,6 +28,8 @@ import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.leyuan.aidong.utils.Constant.TYPE_NURTURE;
+
 /**
  * 营养品界面
  * @author song
@@ -64,7 +66,7 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
     private void initTopLayout(){
         titleBar = (SimpleTitleBar)findViewById(R.id.title_bar);
         categoryView = (RecyclerView)findViewById(R.id.rv_category);
-        categoryAdapter = new CategoryAdapter(this,GoodsFilterActivity.TYPE_NURTURE);
+        categoryAdapter = new CategoryAdapter(this,TYPE_NURTURE);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
         categoryView.setLayoutManager(layoutManager);
         categoryView.setAdapter(categoryAdapter);
@@ -139,8 +141,6 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
         nurtureAdapter.setData(nurtureList);
         wrapperAdapter.notifyDataSetChanged();
     }
-
-
 
     @Override
     public void showEndFooterView() {

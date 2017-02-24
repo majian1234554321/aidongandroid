@@ -41,22 +41,25 @@
         android:id="@+id/tv_sku"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="sku"
+        android:text="sku11"
+        android:singleLine="true"
         android:textSize="13sp"
         android:textColor="@color/c9"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/tv_goods_name"
+        android:layout_marginRight="20dp"
         android:layout_alignLeft="@+id/tv_goods_name"/>
 
     <TextView
         android:id="@+id/tv_recommend_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="推荐码：211111"
+        android:text="推荐码：111"
+        android:singleLine="true"
         android:textSize="13sp"
         android:textColor="@color/c9"
         android:layout_marginTop="15dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginRight="30dp"
         android:layout_alignBottom="@+id/tv_sku"
         android:layout_toRightOf="@+id/tv_sku"/>
 

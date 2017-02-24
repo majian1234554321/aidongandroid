@@ -26,7 +26,7 @@ public class PhotoWallPresentImpl implements PhotoWallPresent{
 
     @Override
     public void addPhotos(String... photos) {
-        photoWallModel.addPhotos(new ProgressSubscriber<BaseBean>(context) {
+        photoWallModel.addPhotos(new ProgressSubscriber<BaseBean>(context,false) {
             @Override
             public void onNext(BaseBean baseBean) {
                 photoWallActivityView.addPhotosResult(baseBean);
@@ -36,7 +36,7 @@ public class PhotoWallPresentImpl implements PhotoWallPresent{
 
     @Override
     public void deletePhotos(String id) {
-        photoWallModel.deletePhotos(new ProgressSubscriber<BaseBean>(context) {
+        photoWallModel.deletePhotos(new ProgressSubscriber<BaseBean>(context,false) {
             @Override
             public void onNext(BaseBean baseBean) {
                 photoWallActivityView.deletePhotoResult(baseBean);

@@ -151,7 +151,7 @@ public class SearchPresentImpl implements SearchPresent{
                     campaignView.updateRecyclerView(campaignList);
                 }
             }
-        },keyword, Constant.FIRST_PAGE);
+        },keyword, Constant.PAGE_FIRST);
     }
 
     @Override
@@ -169,7 +169,7 @@ public class SearchPresentImpl implements SearchPresent{
                     goodsView.updateRecyclerView(goodsList);
                 }
             }
-        },keyword, Constant.FIRST_PAGE);
+        },keyword, Constant.PAGE_FIRST);
     }
 
     @Override
@@ -187,7 +187,7 @@ public class SearchPresentImpl implements SearchPresent{
                     courseView.updateRecyclerView(courseList);
                 }
             }
-        },keyword, Constant.FIRST_PAGE);
+        },keyword, Constant.PAGE_FIRST);
     }
 
     @Override
@@ -205,7 +205,7 @@ public class SearchPresentImpl implements SearchPresent{
                     foodView.updateRecyclerView(foodList);
                 }
             }
-        },keyword, Constant.FIRST_PAGE);
+        },keyword, Constant.PAGE_FIRST);
     }
 
     @Override
@@ -223,7 +223,7 @@ public class SearchPresentImpl implements SearchPresent{
                     userView.updateRecyclerView(userList);
                 }
             }
-        },keyword, Constant.FIRST_PAGE);
+        },keyword, Constant.PAGE_FIRST);
     }
 
     @Override
@@ -241,7 +241,7 @@ public class SearchPresentImpl implements SearchPresent{
                     venuesView.updateRecyclerView(venuesList);
                 }
             }
-        },keyword, Constant.FIRST_PAGE);
+        },keyword, Constant.PAGE_FIRST);
     }
 
     @Override
@@ -256,7 +256,7 @@ public class SearchPresentImpl implements SearchPresent{
                     campaignView.updateRecyclerView(campaignList);
                 }
             }
-        },keyword,Constant.FIRST_PAGE);
+        },keyword,Constant.PAGE_FIRST);
     }
 
     @Override
@@ -271,7 +271,7 @@ public class SearchPresentImpl implements SearchPresent{
                     goodsView.updateRecyclerView(goodsList);
                 }
             }
-        },keyword,Constant.FIRST_PAGE);
+        },keyword,Constant.PAGE_FIRST);
     }
 
     @Override
@@ -286,7 +286,7 @@ public class SearchPresentImpl implements SearchPresent{
                     courseView.updateRecyclerView(courseList);
                 }
             }
-        },keyword,Constant.FIRST_PAGE);
+        },keyword,Constant.PAGE_FIRST);
     }
 
     @Override
@@ -301,7 +301,7 @@ public class SearchPresentImpl implements SearchPresent{
                     foodView.updateRecyclerView(foodList);
                 }
             }
-        },keyword,Constant.FIRST_PAGE);
+        },keyword,Constant.PAGE_FIRST);
     }
 
     @Override
@@ -316,7 +316,7 @@ public class SearchPresentImpl implements SearchPresent{
                     userView.updateRecyclerView(userList);
                 }
             }
-        },keyword,Constant.FIRST_PAGE);
+        },keyword,Constant.PAGE_FIRST);
     }
 
     @Override
@@ -331,7 +331,7 @@ public class SearchPresentImpl implements SearchPresent{
                     venuesView.updateRecyclerView(venuesList);
                 }
             }
-        },keyword,Constant.FIRST_PAGE);
+        },keyword,Constant.PAGE_FIRST);
     }
 
     @Override

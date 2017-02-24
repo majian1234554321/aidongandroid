@@ -3,6 +3,7 @@ package com.leyuan.aidong.adapter.mine;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,6 +61,9 @@ public class UpdateDeliveryInfoAdapter extends RecyclerView.Adapter<UpdateDelive
         holder.tvSku.setText(skuStr);
         holder.tvGoodsPrice.setText(String.format(context.getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.getPrice())));
+        if(!TextUtils.isEmpty(bean.getRecommendCode())){
+            holder.tvRecommendCode.setText("推荐码:" + bean.getRecommendCode());
+        }
 
         holder.tvExpress.setOnClickListener(new View.OnClickListener() {
             @Override

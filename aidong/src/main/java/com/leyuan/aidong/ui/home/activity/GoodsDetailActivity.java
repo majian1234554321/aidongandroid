@@ -60,21 +60,17 @@ import cn.bingoogolapple.bgabanner.BGABanner;
 import static com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow.FROM_ADD_CART;
 import static com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow.FROM_BUY;
 import static com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow.FROM_SKU;
+import static com.leyuan.aidong.utils.Constant.EMPTY_STR;
+import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
 
 
 /**
  * 商品详情
  * Created by song on 2016/9/12.
  */
-public class GoodsDetailActivity extends BaseActivity implements View.OnClickListener, GoodsDetailActivityView, BGABanner.OnItemClickListener, GoodsSkuPopupWindow.SelectSkuListener, SmartTabLayout.TabProvider, PopupWindow.OnDismissListener{
-    public static final String TYPE_NURTURE = "nutrition";
-    public static final String TYPE_EQUIPMENT = "equipments";
-    public static final String TYPE_FOODS = "foods";
-    public static final String BLANK_SPACE = " ";
-    public static final String EXPRESS = "0";
-    public static final String SELF_DELIVERY = "1";
+public class GoodsDetailActivity extends BaseActivity implements PopupWindow.OnDismissListener,BGABanner.OnItemClickListener,
+        GoodsDetailActivityView, GoodsSkuPopupWindow.SelectSkuListener, SmartTabLayout.TabProvider,View.OnClickListener {
     private static final int CODE_SELECT_ADDRESS = 1;
-
     private SwitcherLayout switcherLayout;
     private LinearLayout rootLayout;
     private SlideDetailsLayout detailsLayout;
@@ -248,11 +244,11 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
 
         StringBuilder skuStr = new StringBuilder();
         for (String s : detailBean.spec.name) {
-            skuStr.append(s).append(BLANK_SPACE);
+            skuStr.append(s).append(EMPTY_STR);
         }
         tvSku.setText(skuStr);
         if(bean.pick_up != null) {
-            if(EXPRESS.equals(bean.pick_up.type)){
+            if(DELIVERY_EXPRESS.equals(bean.pick_up.type)){
                 gymId = null;
                 tvAddressInfo.setVisibility(View.GONE);
                 tvDeliveryInfo.setText("快递");
@@ -356,7 +352,8 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         //contentLayout.animate().rotationX(0.8f).setInterpolator(new AccelerateInterpolator(2)).start();
         //todo optimize
        // if(skuPopupWindow == null){
-            skuPopupWindow = new GoodsSkuPopupWindow(context,detailBean,selectedSkuValues,gymId,count,from);
+            skuPopupWindow = new GoodsSkuPopupWindow(context,detailBean,selectedSkuValues,gymId,
+                    count,tvRecommendCode.getText().toString(),from);
             skuPopupWindow.setSelectSkuListener(this);
         skuPopupWindow.setOnDismissListener(this);
         //}
@@ -427,7 +424,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         if(requestCode == CODE_SELECT_ADDRESS){
             DeliveryBean deliveryBean = data.getParcelableExtra("deliveryBean");
             if(deliveryBean!= null) {
-                if(EXPRESS.equals(deliveryBean.type)){
+                if(DELIVERY_EXPRESS.equals(deliveryBean.type)){
                     gymId = null;
                     tvAddressInfo.setVisibility(View.GONE);
                     tvDeliveryInfo.setText("快递");

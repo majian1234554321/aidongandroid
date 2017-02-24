@@ -25,7 +25,7 @@ import com.leyuan.aidong.widget.SwitcherLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.leyuan.aidong.ui.home.activity.ConfirmOrderActivity.ORDER_CART;
+import static com.leyuan.aidong.utils.Constant.ORDER_FROM_CART;
 
 /**
  * the header of cart view
@@ -56,7 +56,7 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
         this.context = context;
         cartPresent = new CartPresentImpl(context, this);
         initView();
-        cartPresent.commonLoadingData(switcherLayout);
+        cartPresent.commonLoadData(switcherLayout);
     }
 
     private void initView(){
@@ -70,19 +70,26 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
         shopAdapter.setShopChangeListener(this);
     }
 
+    public void pullToRefreshCartData(){
+        cartPresent.pullToRefreshData();
+    }
+
     @Override
     public void updateRecyclerView(List<ShopBean> list) {
         shopBeanList.clear();
         shopBeanList.addAll(list);
         shopAdapter.setData(shopBeanList);
-        tvRecommend.setVisibility(VISIBLE);
-        if(callback != null){
+        if(callback != null ){
             callback.onCartDataLoadFinish();
         }
     }
 
     @Override
     public void showEmptyGoodsView() {
+        if(callback != null ){
+            callback.onCartDataLoadFinish();
+            callback.onAllGoodsDeleted();
+        }
         View view = View.inflate(context,R.layout.empty_cart,null);
         switcherLayout.addCustomView(view,"empty");
         switcherLayout.showCustomLayout("empty");
@@ -127,9 +134,8 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
     }
 
     @Override
-    public void setDeleteGoodsResult(BaseBean baseBean) {
+    public void setDeleteGoodsResult(BaseBean baseBean,String ids) {
         if(baseBean.getStatus() == 1){
-            cartPresent.pullToRefreshData();
             if(callback != null){
                 callback.onTotalPriceChanged(calculateTotalPrice());
             }
@@ -189,7 +195,7 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
             Toast.makeText(context,R.string.tip_select_goods,Toast.LENGTH_LONG).show();
             return;
         }
-        ConfirmOrderActivity.start(context,ORDER_CART,selectedShops,calculateTotalPrice());
+        ConfirmOrderActivity.start(context, ORDER_FROM_CART,selectedShops,calculateTotalPrice());
     }
 
     public void selectAllGoods(boolean checked){
@@ -203,6 +209,10 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
             callback.onTotalPriceChanged(calculateTotalPrice());
         }
         shopAdapter.notifyDataSetChanged();
+    }
+
+    public void showRecommendText(boolean visibility){
+        tvRecommend.setVisibility(visibility ? VISIBLE : GONE);
     }
 
     private ArrayList<ShopBean> getSelectedShops(){
@@ -236,5 +246,6 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
         void onCartDataLoadFinish();
         void onAllShopChecked(boolean allChecked);
         void onTotalPriceChanged(double totalPrice);
+        void onAllGoodsDeleted();
     }
 }

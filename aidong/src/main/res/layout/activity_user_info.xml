@@ -95,19 +95,45 @@
                     <!--背景墙-->
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
+                        android:layout_height="wrap_content"
                         android:background="@color/black">
 
-                        <TextView
-                            android:id="@+id/tv_add_image"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:drawablePadding="20dp"
-                            android:drawableTop="@drawable/icon_add_photo"
-                            android:text="添加背景图,展示你的资料"
-                            android:textColor="@color/gray_normal"
-                            android:textSize="15sp" />
+                        <RelativeLayout
+                            android:id="@+id/rl_other_empty"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:background="@color/gray"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="TA还没有上传照片"
+                                android:textSize="15sp"
+                                android:textColor="@color/white"
+                                android:layout_centerInParent="true"/>
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/rl_self_empty"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:background="@color/black"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:id="@+id/tv_add_image"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="添加背景图,展示你的资料"
+                                android:textColor="@color/white"
+                                android:textSize="15sp"
+                                android:drawablePadding="50dp"
+                                android:drawableTop="@drawable/icon_add_photo"
+                                android:layout_centerInParent="true"/>
+
+                        </RelativeLayout>
 
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/rv_photo"
@@ -152,37 +178,16 @@
                             android:textColor="@color/gray_normal"
                             android:textSize="15sp" />
 
-                        <LinearLayout
-                            android:id="@+id/ll_publish"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/icon_camera"
-                                android:tint="@color/main_red"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="发布"
-                                android:textColor="@color/main_red"
-                                android:textSize="15sp" />
-                        </LinearLayout>
-
                         <ImageView
-                            android:id="@+id/iv_follow"
+                            android:id="@+id/iv_follow_or_publish"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:layout_alignParentRight="true"
+                            android:background="@drawable/icon_follow"
+                            android:visibility="visible"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/icon_follow"
-                            android:visibility="gone">
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true">
                         </ImageView>
                     </RelativeLayout>
                     <include layout="@layout/inc_line"/>

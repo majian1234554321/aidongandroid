@@ -21,10 +21,10 @@ import java.util.ArrayList;
  */
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.FoodViewHolder>{
     private Context context;
-    private int type;
+    private String type;
     private ArrayList<CategoryBean> data = new ArrayList<>();
 
-    public CategoryAdapter(Context context,int type) {
+    public CategoryAdapter(Context context,String type) {
         this.context = context;
         this.type = type;
     }
