@@ -43,7 +43,8 @@
     <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
     <uses-feature android:name="android.hardware.microphone" />
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
@@ -63,7 +64,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.MainActivity" />
-        <activity android:name=".ui.mine.account.LoginActivity" >
+        <activity android:name=".ui.mine.account.LoginActivity">
             <intent-filter>
                 <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -86,78 +87,79 @@
         <activity android:name=".ui.mine.activity.TabMineChangePasswordActivity" />
         <activity android:name=".ui.mine.activity.TabMineMessageReminderActivity" />
         <activity android:name=".ui.mine.activity.TabMinePersonalSettingsActivity" />
-        <activity android:name=".ui.mine.activity.LoveCoinActivity"/>
-        <activity android:name=".ui.mine.activity.LoveCoinWithDrawActivity"/>
-        <activity android:name=".ui.mine.activity.PaymentDetailActivity"/>
+        <activity android:name=".ui.mine.activity.LoveCoinActivity" />
+        <activity android:name=".ui.mine.activity.LoveCoinWithDrawActivity" />
+        <activity android:name=".ui.mine.activity.PaymentDetailActivity" />
         <activity android:name=".ui.mine.activity.OrderActivity" />
         <activity android:name=".ui.mine.activity.AppointmentActivity" />
         <activity android:name=".ui.mine.activity.CouponActivity" />
-        <activity android:name=".ui.mine.activity.SelectCouponActivity"/>
+        <activity android:name=".ui.mine.activity.SelectCouponActivity" />
         <activity android:name=".ui.mine.activity.OrderDetailActivity" />
         <activity android:name=".ui.mine.activity.FollowActivity" />
         <activity android:name=".ui.mine.activity.AddAddressActivity" />
         <activity android:name=".ui.mine.activity.AiDongMomentActivity" />
-        <activity android:name=".ui.mine.activity.MessageActivity"/>
+        <activity android:name=".ui.mine.activity.MessageActivity" />
         <activity android:name=".ui.mine.activity.AddressActivity" />
-        <activity android:name=".ui.mine.activity.SelectAddressActivity"/>
+        <activity android:name=".ui.mine.activity.SelectAddressActivity" />
         <activity android:name=".ui.mine.activity.CartActivity" />
-        <activity android:name=".ui.mine.activity.CouponExchangeActivity"/>
-        <activity android:name=".ui.mine.activity.PaySuccessActivity"/>
-        <activity android:name=".ui.mine.activity.ApplyServiceNextActivity"/>
+        <activity android:name=".ui.mine.activity.CouponExchangeActivity" />
+        <activity android:name=".ui.mine.activity.PaySuccessActivity" />
+        <activity android:name=".ui.mine.activity.ApplyServiceNextActivity" />
         <activity android:name=".ui.mine.activity.AppointCourseDetailActivity" />
-        <activity android:name=".ui.mine.activity.UserInfoActivity"/>
-        <activity android:name=".ui.mine.activity.UpdateAddressActivity"/>
-        <activity android:name=".ui.mine.activity.UpdateUserInfoActivity"/>
-        <activity android:name=".ui.mine.activity.UpdateSignatureActivity"/>
-        <activity android:name=".ui.mine.activity.UpdateDeliveryInfoActivity"/>
+        <activity android:name=".ui.mine.activity.UserInfoActivity" />
+        <activity android:name=".ui.mine.activity.UpdateAddressActivity" />
+        <activity android:name=".ui.mine.activity.UpdateUserInfoActivity" />
+        <activity android:name=".ui.mine.activity.UpdateSignatureActivity" />
+        <activity android:name=".ui.mine.activity.UpdateDeliveryInfoActivity" />
 
-        <activity android:name=".ui.mine.activity.UpdatePhotoWallActivity"/>
+        <activity android:name=".ui.mine.activity.UpdatePhotoWallActivity" />
         <activity android:name=".module.scan.activity.MipcaActivityCapture" />
         <activity android:name=".module.scan.activity.ScanActivity" />
         <activity android:name=".ui.home.activity.FoodActivity" />
         <activity android:name=".ui.home.activity.PastCampaignActivity" />
-        <activity android:name=".ui.home.activity.CourseActivity"/>
+        <activity android:name=".ui.home.activity.CourseActivity" />
         <activity android:name=".ui.home.activity.CourseDetailActivity" />
         <activity android:name=".ui.home.activity.CampaignActivity" />
         <activity android:name=".ui.home.activity.SearchActivity" />
-        <activity android:name=".ui.home.activity.CampaignDetailActivity"/>
+        <activity android:name=".ui.home.activity.CampaignDetailActivity" />
         <activity android:name=".ui.home.activity.GoodsFilterActivity" />
         <activity android:name=".ui.home.activity.NurtureActivity" />
         <activity android:name=".ui.home.activity.OldCampaignDetailActivity" />
         <activity android:name=".ui.home.activity.GoodsDetailActivity" />
-        <activity android:name=".ui.home.activity.AppointCampaignActivity"/>
-        <activity android:name=".ui.mine.activity.AppointCampaignDetailActivity"/>
-        <activity android:name=".ui.home.activity.AppointCourseActivity"/>
+        <activity android:name=".ui.home.activity.AppointCampaignActivity" />
+        <activity android:name=".ui.mine.activity.AppointCampaignDetailActivity" />
+        <activity android:name=".ui.home.activity.AppointCourseActivity" />
         <activity android:name=".ui.home.activity.EquipmentActivity" />
-        <activity android:name=".ui.home.activity.OldCourseDetailActivity"/>
-        <activity android:name=".ui.home.activity.BrandActivity"/>
+        <activity android:name=".ui.home.activity.OldCourseDetailActivity" />
+        <activity android:name=".ui.home.activity.BrandActivity" />
         <activity android:name=".ui.home.activity.DeliveryInfoActivity" />
-        <activity android:name=".ui.home.activity.ConfirmOrderActivity"/>
+        <activity android:name=".ui.home.activity.ConfirmOrderActivity" />
         <activity android:name=".ui.home.activity.SelfDeliveryVenuesActivity" />
         <activity android:name=".ui.home.activity.ConfirmGoodsActivity" />
-        <activity android:name=".ui.home.activity.ImagePreviewActivity"/>
-        <activity android:name=".ui.home.activity.AppointmentUserActivity"/>
-        <activity android:name=".ui.home.activity.LocationActivity"/>
-        <activity android:name=".ui.home.activity.OldGoodsDetailActivity"/>
-        <activity android:name=".ui.discover.activity.PublishDynamicActivity"/>
-        <activity android:name=".ui.discover.activity.DynamicDetailActivity"/>
-        <activity android:name=".ui.discover.activity.AppointVenuesActivity"/>
-        <activity android:name=".ui.discover.activity.AppointCoachActivity"/>
-        <activity android:name=".ui.discover.activity.DiscoverVenuesActivity"/>
-        <activity android:name=".ui.discover.activity.NewsActivity"/>
-        <activity android:name=".ui.discover.activity.NewsDetailActivity"/>
-        <activity android:name=".ui.video.activity.WatchOfficeActivity"/>
-        <activity android:name=".ui.video.activity.PlayerActivity"/>
-        <activity android:name=".ui.video.activity.VideoDetailActivity"/>
-        <activity android:name=".ui.video.activity.LiveCommentActivity"/>
-        <activity android:name=".ui.video.activity.LiveDetailActivity"/>
-        <activity android:name=".ui.video.activity.LivingVideoActivity"/>
-        <activity android:name=".ui.video.activity.VideoCommentActivity"/>
-        <activity android:name=".ui.WebViewActivity"/>
-        <activity android:name=".ui.mine.activity.ApplyServiceActivity"
+        <activity android:name=".ui.home.activity.ImagePreviewActivity" />
+        <activity android:name=".ui.home.activity.AppointmentUserActivity" />
+        <activity android:name=".ui.home.activity.LocationActivity" />
+        <activity android:name=".ui.home.activity.OldGoodsDetailActivity" />
+        <activity android:name=".ui.discover.activity.PublishDynamicActivity" />
+        <activity android:name=".ui.discover.activity.DynamicDetailActivity" />
+        <activity android:name=".ui.discover.activity.AppointVenuesActivity" />
+        <activity android:name=".ui.discover.activity.AppointCoachActivity" />
+        <activity android:name=".ui.discover.activity.DiscoverVenuesActivity" />
+        <activity android:name=".ui.discover.activity.NewsActivity" />
+        <activity android:name=".ui.discover.activity.NewsDetailActivity" />
+        <activity android:name=".ui.video.activity.WatchOfficeActivity" />
+        <activity android:name=".ui.video.activity.PlayerActivity" />
+        <activity android:name=".ui.video.activity.VideoDetailActivity" />
+        <activity android:name=".ui.video.activity.LiveCommentActivity" />
+        <activity android:name=".ui.video.activity.LiveDetailActivity" />
+        <activity android:name=".ui.video.activity.LivingVideoActivity" />
+        <activity android:name=".ui.video.activity.VideoCommentActivity" />
+        <activity android:name=".ui.WebViewActivity" />
+        <activity
+            android:name=".ui.mine.activity.ApplyServiceActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".ui.mine.activity.AlbumActivity"/>
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".ui.mine.activity.AlbumActivity" />
         <activity
             android:name=".ui.home.activity.AppointInfoActivity"
             android:screenOrientation="portrait"
@@ -169,53 +171,51 @@
         <activity android:name=".ui.mine.login.FindPasswordActivity" />
         <activity android:name=".ui.mine.login.RegisterActivity" />
         <activity android:name=".ui.mine.login.XiuGaiGeXinQianMing" />
+        <activity android:name=".ui.mine.activity.EMChatActivity" />
 
         <activity
             android:name=".module.photopicker.boxing_impl.ui.BoxingActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
             android:name=".module.photopicker.boxing_impl.ui.BoxingViewActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".ui.discover.activity.PhotoBrowseActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
-            android:theme="@style/Transparent"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/Transparent" />
 
         <activity
             android:name=".module.photopicker.boxing_impl.record.VideoCaptureActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
 
         <!-- ********************share sdk************************* -->
         <!--<activity-->
-            <!--android:name="com.mob.tools.MobUIShell"-->
-            <!--android:configChanges="keyboardHidden|orientation|screenSize"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:theme="@android:style/Theme.Translucent.NoTitleBar"-->
-            <!--android:windowSoftInputMode="stateHidden|adjustResize">-->
-            <!--<intent-filter>-->
-                <!--<nurtureList android:scheme="换成腾讯appid" />-->
+        <!--android:name="com.mob.tools.MobUIShell"-->
+        <!--android:configChanges="keyboardHidden|orientation|screenSize"-->
+        <!--android:screenOrientation="portrait"-->
+        <!--android:theme="@android:style/Theme.Translucent.NoTitleBar"-->
+        <!--android:windowSoftInputMode="stateHidden|adjustResize">-->
+        <!--<intent-filter>-->
+        <!--<nurtureList android:scheme="换成腾讯appid" />-->
 
-                <!--<action android:name="android.intent.action.VIEW" />-->
+        <!--<action android:name="android.intent.action.VIEW" />-->
 
-                <!--<category android:name="android.intent.category.BROWSABLE" />-->
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
-            <!--</intent-filter>-->
+        <!--<category android:name="android.intent.category.BROWSABLE" />-->
+        <!--<category android:name="android.intent.category.DEFAULT" />-->
+        <!--</intent-filter>-->
         <!--</activity>-->
 
         <!-- ********************WeiXin Login Share************************* -->
@@ -227,7 +227,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <receiver
             android:name=".receivers.WeixinRegisterReceiver"
-            android:permission="com.tencent.mm.plugin.permission.SEND" >
+            android:permission="com.tencent.mm.plugin.permission.SEND">
             <intent-filter>
                 <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />
             </intent-filter>
@@ -248,14 +248,12 @@
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
-        </activity>
+            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
         <activity
             android:name="com.alipay.sdk.auth.AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
-            android:screenOrientation="behind" >
-        </activity>
+            android:screenOrientation="behind"></activity>
 
         <!-- ********************WeiXinPay************************* -->
         <activity
@@ -267,27 +265,29 @@
         <!-- ********************QQ Login Share************************* -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
-            android:noHistory="true"
-            android:launchMode="singleTask" >
+            android:launchMode="singleTask"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="1104718858" />
             </intent-filter>
         </activity>
-        <activity android:name="com.tencent.connect.common.AssistActivity"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            />
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <!--********************Weibo Login Share************************* -->
-        <activity android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
+        <activity
+            android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
             android:configChanges="keyboardHidden|orientation"
-            android:windowSoftInputMode="adjustResize"
-            android:exported="false" >
-        </activity>
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"></activity>
 
         <meta-data
             android:name="WEIBO_APPKEY"
@@ -298,30 +298,32 @@
 
         <service
             android:name="com.sina.weibo.sdk.net.DownloadService"
-            android:exported="false" >
-        </service>
+            android:exported="false"></service>
 
         <!-- 设置环信应用的AppKey -->
-        <meta-data android:name="EASEMOB_APPKEY"  android:value="leyuan-aidong#aidongtest" />
+        <meta-data
+            android:name="EASEMOB_APPKEY"
+            android:value="leyuan-aidong#aidongtest" />
         <!-- 声明SDK所需的service SDK核心功能-->
-        <service android:name="com.hyphenate.chat.EMChatService" android:exported="true"/>
-        <service android:name="com.hyphenate.chat.EMJobService"
-            android:permission="android.permission.BIND_JOB_SERVICE"
+        <service
+            android:name="com.hyphenate.chat.EMChatService"
+            android:exported="true" />
+        <service
+            android:name="com.hyphenate.chat.EMJobService"
             android:exported="true"
-            />
+            android:permission="android.permission.BIND_JOB_SERVICE" />
         <!-- 声明SDK所需的receiver -->
         <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
-                <data android:scheme="package"/>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <data android:scheme="package" />
             </intent-filter>
             <!-- 可选filter -->
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
-
 
 
     </application>
