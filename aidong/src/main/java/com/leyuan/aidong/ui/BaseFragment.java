@@ -3,8 +3,10 @@ package com.leyuan.aidong.ui;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.BannerBean;
@@ -13,9 +15,14 @@ import com.leyuan.aidong.ui.home.activity.CampaignDetailActivity;
 import com.leyuan.aidong.ui.home.activity.CourseDetailActivity;
 import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
 
+import java.util.List;
+
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
+
 import static com.leyuan.aidong.utils.Constant.TYPE_NURTURE;
 
-public class BaseFragment extends Fragment  {
+public class BaseFragment extends Fragment implements EasyPermissions.PermissionCallbacks {
     private static final String TAG = "BaseFragment";
     protected int pageSize = 25; //分页数据量
 
@@ -57,6 +64,29 @@ public class BaseFragment extends Fragment  {
                 break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        // EasyPermissions handles the request result.
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+        Log.d(TAG, "onPermissionsGranted:" + requestCode + ":" + perms.size());
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        Log.d(TAG, "onPermissionsDenied:" + requestCode + ":" + perms.size());
+
+        // (Optional) Check whether the user denied any permissions and checked "NEVER ASK AGAIN."
+        // This will display a dialog directing them to enable the permission in app settings.
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            new AppSettingsDialog.Builder(this).build().show();
         }
     }
 }
