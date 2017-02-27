@@ -12,6 +12,7 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.RegisterPresenterInterface;
 import com.leyuan.aidong.ui.mvp.presenter.impl.RegisterPresenter;
 import com.leyuan.aidong.ui.mvp.view.RegisterViewInterface;
+import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.StringUtils;
 import com.leyuan.aidong.utils.TimeCountUtil;
 import com.leyuan.aidong.utils.ToastUtil;
@@ -74,7 +75,8 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.button_login:
                 if (verifyEdit()) {
-                    presenter.checkIdentify(mobile, code, password);
+                    LogAidong.i("checkIdentify token = ", "" + App.mInstance.getToken());
+                    presenter.checkIdentify(App.mInstance.getToken(), code, password);
                 }
                 break;
         }
@@ -99,11 +101,11 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
             return false;
         }
 
-        re_password = getEidtRePassword().getText().toString().trim();
-        if (TextUtils.isEmpty(re_password)) {
-            getEidtRePassword().setError("请输入密码");
-            return false;
-        }
+//        re_password = getEidtRePassword().getText().toString().trim();
+//        if (TextUtils.isEmpty(re_password)) {
+//            getEidtRePassword().setError("请输入密码");
+//            return false;
+//        }
 
         return true;
     }
@@ -128,10 +130,10 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
     public void register(boolean success) {
 
         if (success) {
-            ToastUtil.showShort(App.context, "注册成功");
+            ToastUtil.showShort(App.context, "修改成功");
             finish();
         } else {
-            ToastUtil.showShort(App.context, "注册失败 请重新提交");
+            ToastUtil.showShort(App.context, "修改失败 请重新提交");
         }
     }
 

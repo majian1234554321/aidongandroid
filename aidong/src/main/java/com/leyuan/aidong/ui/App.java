@@ -11,7 +11,6 @@ import com.baidu.mapapi.SDKInitializer;
 import com.facebook.stetho.Stetho;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.module.chat.EmConfigManager;
-import com.leyuan.aidong.module.chat.EmMessageManager;
 import com.leyuan.aidong.module.photopicker.BoxingGlideLoader;
 import com.leyuan.aidong.module.photopicker.BoxingUcrop;
 import com.leyuan.aidong.module.photopicker.boxing.BoxingCrop;
@@ -19,7 +18,6 @@ import com.leyuan.aidong.module.photopicker.boxing.BoxingMediaLoader;
 import com.leyuan.aidong.module.photopicker.boxing.loader.IBoxingMediaLoader;
 import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.SharePrefUtils;
-import com.squareup.leakcanary.LeakCanary;
 
 import io.realm.Realm;
 
@@ -48,13 +46,13 @@ public class App extends Application {
     }
 
     private void initConfig() {
-        LeakCanary.install(this);
+//        LeakCanary.install(this);
         SDKInitializer.initialize(this);
         initBaiduLoc();
 
         //initDbUtils();
-        EmConfigManager.initializeEaseUi(this);
-        new EmMessageManager().registerMessageListener();
+        EmConfigManager.getInstance().initializeEaseUi(this);
+//        new EmMessageManager().registerMessageListener();
         IBoxingMediaLoader loader = new BoxingGlideLoader();
         BoxingMediaLoader.getInstance().init(loader);
         BoxingCrop.getInstance().init(new BoxingUcrop());
@@ -136,10 +134,7 @@ public class App extends Application {
     }
 
     public boolean isLogin() {
-        if (getUser() == null) {
-            return false;
-        }
-        return true;
+        return getUser() != null;
     }
 
     public void exitLogin() {

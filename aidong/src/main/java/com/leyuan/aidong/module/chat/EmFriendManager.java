@@ -12,6 +12,18 @@ import java.util.List;
 
 public class EmFriendManager {
 
+    private static EmFriendManager instance;
+
+    private EmFriendManager() {
+    }
+
+    public synchronized static EmFriendManager getInstance() {
+        if (instance == null) {
+            instance = new EmFriendManager();
+        }
+        return instance;
+    }
+
     public List<String> getAllFriendName() {
 
         List<String> userNames = null;
@@ -89,6 +101,5 @@ public class EmFriendManager {
             }
         });
     }
-
 
 }
