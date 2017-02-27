@@ -48,7 +48,7 @@ public class ImagePreviewActivity extends BaseActivity implements ImagePreviewTo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setupWindowAnimations();
+
 
         setContentView(R.layout.activity_image_preview);
         if(getIntent() != null){
@@ -141,16 +141,6 @@ public class ImagePreviewActivity extends BaseActivity implements ImagePreviewTo
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private void setupWindowAnimations() {
-        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-        /*Fade fade = new Fade();
-        fade.setDuration(100);
-        fade.setInterpolator(new AccelerateInterpolator(2));
-        fade.setMode(Visibility.MODE_IN);
-        getWindow().setEnterTransition(fade);
-        getWindow().setSharedElementEnterTransition(new ChangeBounds());*/
-    }
 
 
 }

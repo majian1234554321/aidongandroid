@@ -132,7 +132,7 @@
     <string name="handling">处理中</string>
     <string name="default_album">默认相册</string>
     <string name="nothing_found">什么也找不到</string>
-    <string name="too_many_picture">您最多只能选择九张图片</string>
+    <string name="too_many_picture">图片选择完成</string>
 
     <string name="confirm_gender">请选择性别</string>
     <string name="confirm_date">请选择自提时间</string>
@@ -142,4 +142,6 @@
     <string name="confirm_height">请选择身高</string>
     <string name="confirm_weight">请选择体重</string>
     <string name="confirm_frequency">请选择运动频次</string>
+    <string name="rationale_storage">App需要读取手机内存权限才能查看多媒体资源，请授予该权限</string>
+    <string name="rationale_camera">App需要使用相机权限才能拍照和录像，请授予该权限</string>
 </resources>

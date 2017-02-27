@@ -17,24 +17,20 @@
 
 package com.leyuan.aidong.module.photopicker.boxing;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 
-import com.leyuan.aidong.module.photopicker.boxing.model.BoxingBuilderConfig;
+import com.leyuan.aidong.R;
 import com.leyuan.aidong.module.photopicker.boxing.model.BoxingManager;
 import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
 import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingCropOption;
@@ -44,26 +40,29 @@ import com.leyuan.aidong.module.photopicker.boxing.model.entity.impl.ImageMedia;
 import com.leyuan.aidong.module.photopicker.boxing.model.entity.impl.VideoMedia;
 import com.leyuan.aidong.module.photopicker.boxing.presenter.PickerContract;
 import com.leyuan.aidong.module.photopicker.boxing.utils.CameraPickerHelper;
+import com.leyuan.aidong.ui.BaseFragment;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.support.v4.content.PermissionChecker.PERMISSION_GRANTED;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
+
+import static android.Manifest.permission.CAMERA;
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 
 /**
  * A abstract class which implements {@link PickerContract.View} for custom media view.
- * only one methods need to override {@link #startLoading()}, but there is more function to achieve by
+ * only one methods need to override {@link #startLoadingMedia()}, but there is more function to achieve by
  * checking every method can override.
  *
  * @author ChenSL
  */
-public abstract class AbsBoxingViewFragment extends Fragment implements PickerContract.View {
-    public static final String[] STORAGE_PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
-    public static final String[] CAMERA_PERMISSIONS = {Manifest.permission.CAMERA};
-
-    private static final int REQUEST_CODE_PERMISSION = 233;
+public abstract class AbsBoxingViewFragment extends BaseFragment implements PickerContract.View {
+    protected static final int STORAGE_PERMISSION = 1;
+    protected static final int CAMERA_PERMISSIONS = 2;
 
     private PickerContract.Presenter mPresenter;
     private CameraPickerHelper mCameraPicker;
@@ -73,21 +72,7 @@ public abstract class AbsBoxingViewFragment extends Fragment implements PickerCo
      * start loading when the permission request is completed.
      * call {@link #loadMedias()} or {@link #loadMedias(int, String)}, call {@link #loadAlbum()} if albums needed.
      */
-    public abstract void startLoading();
-
-    /**
-     * called when request {@link Manifest.permission#WRITE_EXTERNAL_STORAGE} and {@link Manifest.permission#CAMERA} permission error.
-     *
-     * @param e a IllegalArgumentException, IllegalStateException or SecurityException will be throw
-     */
-    public void onRequestPermissionError(String[] permissions, Exception e) {
-    }
-
-    /**
-     * called when request {@link Manifest.permission#WRITE_EXTERNAL_STORAGE} and {@link Manifest.permission#CAMERA} permission successfully.
-     */
-    public void onRequestPermissionSuc(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-    }
+    public abstract void startLoadingMedia();
 
     /**
      * get the result of using camera to take a photo.
@@ -180,32 +165,18 @@ public abstract class AbsBoxingViewFragment extends Fragment implements PickerCo
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        checkPermissionAndLoad();
+        checkPermissionAndLoadMedia();
     }
 
-    private void checkPermissionAndLoad() {
-        try {
-            if (!BoxingBuilderConfig.TESTING &&  Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                    && ContextCompat.checkSelfPermission(getActivity(), STORAGE_PERMISSIONS[0]) != PERMISSION_GRANTED) {
-                requestPermissions(STORAGE_PERMISSIONS, REQUEST_CODE_PERMISSION);
-            } else {
-                startLoading();
-            }
-        } catch (IllegalArgumentException | IllegalStateException e) {
-            onRequestPermissionError(STORAGE_PERMISSIONS, e);
-        }
-
-    }
-
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (REQUEST_CODE_PERMISSION == requestCode) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                onRequestPermissionSuc(requestCode, permissions, grantResults);
-            } else {
-                onRequestPermissionError(permissions, new SecurityException("request " + permissions[0] + " error."));
-            }
+    @AfterPermissionGranted(STORAGE_PERMISSION)
+    public void checkPermissionAndLoadMedia() {
+        if (EasyPermissions.hasPermissions(getContext(), READ_EXTERNAL_STORAGE)) {
+            // Have permission, do the thing!
+            startLoadingMedia();
+        } else {
+            // Ask for one permission
+            EasyPermissions.requestPermissions(this, getString(R.string.rationale_storage),
+                    STORAGE_PERMISSION, READ_EXTERNAL_STORAGE);
         }
     }
 
@@ -294,7 +265,7 @@ public abstract class AbsBoxingViewFragment extends Fragment implements PickerCo
      * @param config {@link BoxingConfig}
      */
     @Override
-    public final void setPickerConfig(@NonNull BoxingConfig config) {
+    public final void setPickerConfig(BoxingConfig config) {
         if (config == null) {
             return;
         }
@@ -423,19 +394,19 @@ public abstract class AbsBoxingViewFragment extends Fragment implements PickerCo
      * @param fragment      the caller fragment, may be null.
      * @param subFolderPath the folder name in "DCIM/bili/boxing/"
      */
+    @AfterPermissionGranted(CAMERA_PERMISSIONS)
     public final void startCamera(Activity activity, Fragment fragment, String subFolderPath) {
-        try {
-            if (!BoxingBuilderConfig.TESTING && ContextCompat.checkSelfPermission(getActivity(), CAMERA_PERMISSIONS[0]) != PERMISSION_GRANTED) {
-                requestPermissions(CAMERA_PERMISSIONS, REQUEST_CODE_PERMISSION);
+        if (EasyPermissions.hasPermissions(getContext(), CAMERA)) {
+            // Have permission, do the thing!
+            if (BoxingManager.getInstance().getBoxingConfig().isVideoMode()) {
+                mCameraPicker.startRecord(activity, fragment, subFolderPath);
             } else {
-                if (BoxingManager.getInstance().getBoxingConfig().isVideoMode()) {
-                    mCameraPicker.startRecord(activity, fragment, subFolderPath);
-                } else {
-                    mCameraPicker.startCamera(activity, fragment, subFolderPath);
-                }
+                mCameraPicker.startCamera(activity, fragment, subFolderPath);
             }
-        } catch (IllegalArgumentException | IllegalStateException e) {
-            onRequestPermissionError(CAMERA_PERMISSIONS, e);
+        } else {
+            // Ask for one permission
+            EasyPermissions.requestPermissions(this, getString(R.string.rationale_camera),
+                    CAMERA_PERMISSIONS, CAMERA);
         }
     }
 

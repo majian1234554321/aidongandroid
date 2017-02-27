@@ -17,7 +17,6 @@
 
 package com.leyuan.aidong.module.photopicker.boxing_impl.ui;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -64,7 +63,7 @@ import java.util.List;
  * @author ChenSL
  */
 public class BoxingViewFragment extends AbsBoxingViewFragment implements View.OnClickListener {
-    public static final String TAG = "com.bilibili.boxing_impl.ui.BoxingViewFragment";
+    public static final String TAG = "BoxingViewFragment";
     private static final int IMAGE_PREVIEW_REQUEST_CODE = 9086;
     private static final int IMAGE_CROP_REQUEST_CODE = 9087;
 
@@ -97,31 +96,33 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
     }
 
     @Override
-    public void startLoading() {
+    public void startLoadingMedia() {
         loadMedias();
         loadAlbum();
     }
 
     @Override
-    public void onRequestPermissionError(String[] permissions, Exception e) {
-        if (permissions.length > 0) {
-            if (permissions[0].equals(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                Toast.makeText(getContext(), R.string.storage_permission_deny, Toast.LENGTH_SHORT).show();
-                showEmptyData();
-            } else if (permissions[0].equals(Manifest.permission.CAMERA)){
-                Toast.makeText(getContext(), R.string.camera_permission_deny, Toast.LENGTH_SHORT).show();
-            }
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+        super.onPermissionsGranted(requestCode, perms);
+        if(requestCode == STORAGE_PERMISSION) {
+            startLoadingMedia();
+        }else if(requestCode == CAMERA_PERMISSIONS){
+            startCamera(getActivity(), this, null);
         }
     }
 
     @Override
-    public void onRequestPermissionSuc(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (permissions[0].equals(STORAGE_PERMISSIONS[0])) {
-            startLoading();
-        } else if (permissions[0].equals(CAMERA_PERMISSIONS[0])) {
-            startCamera(getActivity(), this, null);
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        super.onPermissionsDenied(requestCode, perms);
+
+        if(requestCode == STORAGE_PERMISSION) {
+            Toast.makeText(getContext(), R.string.storage_permission_deny, Toast.LENGTH_SHORT).show();
+            showEmptyData();
+        }else if(requestCode == CAMERA_PERMISSIONS){
+            Toast.makeText(getContext(), R.string.camera_permission_deny, Toast.LENGTH_SHORT).show();
         }
     }
+
 
     @Nullable
     @Override

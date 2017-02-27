@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -8,6 +9,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.transition.Fade;
+import android.transition.Slide;
+import android.view.Gravity;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.BannerBean;
@@ -141,4 +145,23 @@ public class BaseActivity extends AppCompatActivity {
             finish();
         }
     }
+
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    protected void fadeInAnimations(){
+        Fade fade = new Fade();
+        fade.setDuration(300);
+        fade.setMode(Fade.MODE_IN);
+        getWindow().setEnterTransition(fade);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    protected void slideFromBottomAnimations(){
+        Slide slide = new Slide();
+        slide.setDuration(300);
+        slide.setSlideEdge(Gravity.BOTTOM);
+        slide.excludeTarget(android.R.id.statusBarBackground,true);
+        getWindow().setEnterTransition(slide);
+    }
+
 }

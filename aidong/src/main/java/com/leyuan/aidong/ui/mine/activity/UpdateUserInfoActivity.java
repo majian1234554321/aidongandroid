@@ -36,6 +36,7 @@ import com.leyuan.aidong.utils.qiniu.IQiNiuCallback;
 import com.leyuan.aidong.utils.qiniu.UploadQiNiuManager;
 import com.leyuan.aidong.widget.ExtendTextView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -313,11 +314,11 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
 
     private void showHeightDialog(){
         new MaterialDialog.Builder(this).title(R.string.confirm_height)
-                .items(R.array.height)
+                .items(generateHeightData())
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
                     public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
-                        tvHeight.setRightContent(text.toString());
+                        tvHeight.setRightContent(text+"cm");
                     }
                 })
                 .positiveText(android.R.string.cancel)
@@ -326,11 +327,11 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
 
     private void showWeightDialog(){
         new MaterialDialog.Builder(this).title(R.string.confirm_weight)
-                .items(R.array.weight)
+                .items(generateWeightData())
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
                     public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
-                        tvWeight.setRightContent(text.toString());
+                        tvWeight.setRightContent(text+"kg");
                     }
                 })
                 .positiveText(android.R.string.cancel)
@@ -371,5 +372,21 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
                 GlideLoader.getInstance().displayCircleImage("file://" + avatarPath, ivAvatar);
             }
         }
+    }
+
+    private List<String> generateHeightData(){
+        List<String> height = new ArrayList<>();
+        for (int i=150;i <200;i++){
+            height.add(String.valueOf(i));
+        }
+        return height;
+    }
+
+    private List<String> generateWeightData(){
+        List<String> weight = new ArrayList<>();
+        for (int i=40;i <100;i++){
+            weight.add(String.valueOf(i));
+        }
+        return weight;
     }
 }

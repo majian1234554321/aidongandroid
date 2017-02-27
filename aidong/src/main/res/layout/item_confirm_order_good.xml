@@ -54,7 +54,7 @@
         android:id="@+id/tv_recommend_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="推荐码：111"
+        android:text=""
         android:singleLine="true"
         android:textSize="13sp"
         android:textColor="@color/c9"

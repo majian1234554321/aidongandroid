@@ -8,6 +8,7 @@ import android.os.Parcelable;
  * Created by song on 2017/1/16.
  */
 public class ProfileBean implements Parcelable {
+    private String id;
     private String name;
     private String avatar;
     private String gender;
@@ -162,6 +163,15 @@ public class ProfileBean implements Parcelable {
         this.frequency = frequency;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+
     @Override
     public int describeContents() {
         return 0;
@@ -169,6 +179,7 @@ public class ProfileBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
         dest.writeString(this.name);
         dest.writeString(this.avatar);
         dest.writeString(this.gender);
@@ -192,6 +203,7 @@ public class ProfileBean implements Parcelable {
     }
 
     protected ProfileBean(Parcel in) {
+        this.id = in.readString();
         this.name = in.readString();
         this.avatar = in.readString();
         this.gender = in.readString();
@@ -211,7 +223,7 @@ public class ProfileBean implements Parcelable {
         this.frequency = in.readString();
     }
 
-    public static final Parcelable.Creator<ProfileBean> CREATOR = new Parcelable.Creator<ProfileBean>() {
+    public static final Creator<ProfileBean> CREATOR = new Creator<ProfileBean>() {
         @Override
         public ProfileBean createFromParcel(Parcel source) {
             return new ProfileBean(source);
