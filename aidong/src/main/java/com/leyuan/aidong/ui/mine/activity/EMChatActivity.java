@@ -22,7 +22,7 @@ public class EMChatActivity extends BaseActivity {
         setContentView(R.layout.activity_chat);
         activityInstance = this;
         mChatId = getIntent().getStringExtra(EaseConstant.EXTRA_USER_ID);
-
+        initView();
 
         // 这里直接使用EaseUI封装好的聊天界面
 
@@ -35,7 +35,7 @@ public class EMChatActivity extends BaseActivity {
 
         getSupportFragmentManager().beginTransaction().add(R.id.ec_layout_container, chatFragment).commit();
 
-        initView();
+
     }
 
     /**

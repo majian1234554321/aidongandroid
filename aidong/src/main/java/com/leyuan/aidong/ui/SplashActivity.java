@@ -8,6 +8,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.view.View;
 
+import com.hyphenate.chat.EMClient;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.mvp.presenter.SystemPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SystemPresentImpl;
@@ -49,6 +50,8 @@ public class SplashActivity extends BaseActivity {
         systemPresent.getSystemInfo(OS);
         isFirstEnter = SharePrefUtils.getBoolean(SplashActivity.this, "isFirstEnter", true);
         handler.sendEmptyMessageDelayed(MESSAGE, DURATION);
+//        EMClient.getInstance().groupManager().loadAllGroups();
+        EMClient.getInstance().chatManager().loadAllConversations();
     }
 
     @Override
