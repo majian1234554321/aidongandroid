@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.mine.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.easeui.EaseConstant;
@@ -28,6 +29,17 @@ public class MessageActivity extends BaseActivity {
         initData();
     }
 
+    private void initView() {
+        titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
+        titleBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+    }
+
     private void initData() {
         conversationListFragment = new EaseConversationListFragment();
         conversationListFragment.setConversationListItemClickListener(new EaseConversationListFragment.EaseConversationListItemClickListener() {
@@ -35,13 +47,11 @@ public class MessageActivity extends BaseActivity {
             @Override
             public void onListItemClicked(EMConversation conversation) {
                 startActivity(new Intent(MessageActivity.this, EMChatActivity.class).
-                        putExtra(EaseConstant.EXTRA_USER_ID, conversation.getLastMessage().getMsgId()));
+                        putExtra(EaseConstant.EXTRA_USER_ID, conversation.conversationId()));
             }
         });
-    }
-
-    private void initView() {
-        titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
+        getSupportFragmentManager().beginTransaction().add(R.id.layout_container, conversationListFragment).commit();
 
     }
+
 }

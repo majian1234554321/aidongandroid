@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
+import com.hyphenate.chat.EMClient;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.mvp.presenter.SystemPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SystemPresentImpl;
@@ -22,9 +23,10 @@ public class SplashActivity extends BaseActivity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            if(msg.what == MESSAGE){
-                if(isFirstEnter) {
+            if (msg.what == MESSAGE) {
+                if (isFirstEnter) {
                     UiManager.activityJump(SplashActivity.this, GuideActivity.class);
+
                 }else {
                     UiManager.activityJump(SplashActivity.this, MainActivity.class);
                 }
@@ -39,8 +41,10 @@ public class SplashActivity extends BaseActivity {
         setContentView(R.layout.activity_splash);
         SystemPresent systemPresent = new SystemPresentImpl(this);
         systemPresent.getSystemInfo(OS);
-        isFirstEnter = SharePrefUtils.getBoolean(SplashActivity.this,"isFirstEnter",true);
+        isFirstEnter = SharePrefUtils.getBoolean(SplashActivity.this, "isFirstEnter", true);
         handler.sendEmptyMessageDelayed(MESSAGE, DURATION);
+//        EMClient.getInstance().groupManager().loadAllGroups();
+        EMClient.getInstance().chatManager().loadAllConversations();
     }
 
     @Override

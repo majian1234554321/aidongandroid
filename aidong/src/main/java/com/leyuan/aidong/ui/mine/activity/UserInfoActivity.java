@@ -26,9 +26,11 @@ import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.PhotoBrowseInfo;
 import com.leyuan.aidong.entity.ProfileBean;
 import com.leyuan.aidong.entity.data.UserInfoData;
+
 import com.leyuan.aidong.module.photopicker.boxing.Boxing;
 import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
 import com.leyuan.aidong.module.photopicker.boxing_impl.ui.BoxingActivity;
+import com.leyuan.aidong.module.chat.EmFriendManager;
 import com.leyuan.aidong.module.photopicker.boxing_impl.view.SpacesItemDecoration;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
@@ -104,9 +106,9 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         setContentView(R.layout.activity_user_info);
         if (getIntent() != null) {
             userId = getIntent().getStringExtra("userId");
-            if(App.mInstance.getUser() == null){
+            if (App.mInstance.getUser() == null) {
                 isSelf = false;
-            }else {
+            } else {
                 isSelf = String.valueOf(App.mInstance.getUser().getId()).equals(userId);
             }
         }
@@ -254,8 +256,9 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
                 UpdatePhotoWallActivity.start(this, userInfoData.getPhotoWall());
                 break;
             case R.id.tv_message:
+                EmFriendManager.getInstance().addFriend(userId, "meimei");
                 startActivity(new Intent(this, EMChatActivity.class).
-                        putExtra(EaseConstant.EXTRA_USER_ID,userId ));
+                        putExtra(EaseConstant.EXTRA_USER_ID, userId));
                 break;
             case R.id.iv_follow_or_publish:
                 if(isSelf){

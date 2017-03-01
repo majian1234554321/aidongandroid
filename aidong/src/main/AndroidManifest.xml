@@ -106,13 +106,13 @@
         <activity android:name=".ui.mine.activity.PaySuccessActivity" />
         <activity android:name=".ui.mine.activity.ApplyServiceNextActivity" />
         <activity android:name=".ui.mine.activity.AppointCourseDetailActivity" />
-        <activity android:name=".ui.mine.activity.UserInfoActivity"/>
-        <activity android:name=".ui.mine.activity.UpdateAddressActivity"/>
-        <activity android:name=".ui.mine.activity.UpdateUserInfoActivity"/>
-        <activity android:name=".ui.mine.activity.UpdateSignatureActivity"/>
-        <activity android:name=".ui.mine.activity.UpdateDeliveryInfoActivity"/>
-        <activity android:name=".ui.GuideActivity"/>
-        <activity android:name=".ui.mine.activity.UpdatePhotoWallActivity"/>
+        <activity android:name=".ui.mine.activity.UserInfoActivity" />
+        <activity android:name=".ui.mine.activity.UpdateAddressActivity" />
+        <activity android:name=".ui.mine.activity.UpdateUserInfoActivity" />
+        <activity android:name=".ui.mine.activity.UpdateSignatureActivity" />
+        <activity android:name=".ui.mine.activity.UpdateDeliveryInfoActivity" />
+        <activity android:name=".ui.GuideActivity" />
+        <activity android:name=".ui.mine.activity.UpdatePhotoWallActivity" />
         <activity android:name=".module.scan.activity.MipcaActivityCapture" />
         <activity android:name=".module.scan.activity.ScanActivity" />
         <activity android:name=".ui.home.activity.FoodActivity" />
@@ -171,7 +171,11 @@
         <activity android:name=".ui.mine.login.FindPasswordActivity" />
         <activity android:name=".ui.mine.login.RegisterActivity" />
         <activity android:name=".ui.mine.login.XiuGaiGeXinQianMing" />
-        <activity android:name=".ui.mine.activity.EMChatActivity" />
+        <activity
+            android:name=".ui.mine.activity.EMChatActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".module.photopicker.boxing_impl.ui.BoxingActivity"

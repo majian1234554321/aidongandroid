@@ -65,7 +65,7 @@ public class EmMessageManager {
 
         @Override
         public void onMessageReceived(List<EMMessage> list) {
-
+            saveMessage(list);
         }
 
         @Override

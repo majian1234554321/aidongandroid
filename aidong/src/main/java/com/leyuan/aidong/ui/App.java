@@ -43,51 +43,30 @@ public class App extends Application {
         mInstance = this;
         context = getApplicationContext();
         initConfig();
-        Stetho.initializeWithDefaults(this);
+
     }
 
     private void initConfig() {
         LeakCanary.install(this);
         SDKInitializer.initialize(this);
         initBaiduLoc();
+        initImagePicker();
 
-        initDbUtils();
-        EmConfigManager.initialize(this);
-        IBoxingMediaLoader loader = new BoxingGlideLoader();
-        BoxingMediaLoader.getInstance().init(loader);
-        BoxingCrop.getInstance().init(new BoxingUCrop());
-        //   initImagePicker();
-
-
+        EmConfigManager.getInstance().initializeEaseUi(this);
+//        new EmMessageManager().registerMessageListener();
         Realm.init(context);
+        Stetho.initializeWithDefaults(this);
 //        WXAPIFactory.createWXAPI(this, "wx365ab323b9269d30", false).registerApp("wx365ab323b9269d30");
 //        new WXShare(this);
     }
 
 
-    /**
-     * 初始化仿微信控件ImagePicker
-     */
-    /*private void initImagePicker() {
-        ImagePicker imagePicker = ImagePicker.getInstance();
-        imagePicker.setImageLoader(new UILImageLoader());   //设置图片加载器
-        imagePicker.setShowCamera(true);  //显示拍照按钮
-        imagePicker.setCrop(false);        //允许裁剪（单选才有效）
-        imagePicker.setSaveRectangle(true); //是否按矩形区域保存
-        imagePicker.setSelectLimit(9);    //选中数量限制
-        imagePicker.setStyle(CropImageView.Style.RECTANGLE);  //裁剪框的形状
-        imagePicker.setFocusWidth(800);   //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
-        imagePicker.setFocusHeight(800);  //裁剪框的高度。单位像素（圆形自动取宽高最小值）
-        imagePicker.setOutPutX(1000);//保存文件的宽度。单位像素
-        imagePicker.setOutPutY(1000);//保存文件的高度。单位像素
-    }*/
-    private void initDbUtils() {
-        try {
-            //db = DbUtils.create(this, "mxing.db");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private void initImagePicker() {
+        IBoxingMediaLoader loader = new BoxingGlideLoader();
+        BoxingMediaLoader.getInstance().init(loader);
+        BoxingCrop.getInstance().init(new BoxingUCrop());
     }
+
 
     private void initBaiduLoc() {
         mLocationClient = new LocationClient(getApplicationContext());
@@ -134,10 +113,7 @@ public class App extends Application {
     }
 
     public boolean isLogin() {
-        if (getUser() == null) {
-            return false;
-        }
-        return true;
+        return getUser() != null;
     }
 
     public void exitLogin() {
