@@ -42,7 +42,9 @@
         android:layout_marginTop="6dp"
         android:layout_toRightOf="@id/avatar_container"
         android:textColor="@color/list_itease_primary_color"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:text="11111"
+        />
 
     <TextView
         android:id="@+id/time"
