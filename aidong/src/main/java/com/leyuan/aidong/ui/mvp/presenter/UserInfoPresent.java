@@ -16,24 +16,12 @@ public interface UserInfoPresent {
 
     void requestMoreDynamic(String id,RecyclerView recyclerView, int pageSize, int page);
 
-    void updateAvatar(String avatar);
-
-    void updateGender(String gender);
-
-    void updateBirthday(String birthday);
-
-    void updateSignature(String signature);
-
-    void updateAddress(String province,String city,String area);
-
-    void updateHeight(String height);
-
-    void updateWeight(String weight);
-
-    void updateFrequency(String frequency);
 
     void updateUserInfo(String avatar,String gender,String birthday,String signature,String province,String city,
                         String area,String height,String weight,String frequency);
 
 
+    void addFollow(String userId);
+
+    void cancelFollow(String userId);
 }

@@ -15,6 +15,10 @@ public class AppointmentBean {
     private String price;                   //产品价格
     private String pay_amount;              //实付款总额
     private String status;                  //订单状态
+    private String little_time;             //订单剩余支付时间
+    private String startDate;
+    private String startTime;
+    private String payAmount;
 
     public String getId() {
         return id;
@@ -94,5 +98,37 @@ public class AppointmentBean {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getLittleTime() {
+        return little_time;
+    }
+
+    public void setLittle_time(String little_time) {
+        this.little_time = little_time;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getPayAmount() {
+        return payAmount;
+    }
+
+    public void setPayAmount(String payAmount) {
+        this.payAmount = payAmount;
     }
 }

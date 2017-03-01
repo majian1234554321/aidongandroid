@@ -43,7 +43,6 @@ public interface FollowService {
      * @param id 取消关注的用户id
      * @return 状态
      */
-    @FormUrlEncoded
     @DELETE("mine/followings/{id}")
     Observable<BaseBean> cancelFollow(@Path("id") String id);
 }

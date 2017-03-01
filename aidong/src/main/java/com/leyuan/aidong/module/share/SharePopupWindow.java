@@ -46,7 +46,7 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
         this.setTouchable(true);
         this.setFocusable(true);
         this.setOutsideTouchable(true);
-        this.setAnimationStyle(R.style.popuStyle);
+        this.setAnimationStyle(R.style.popupStyle);
 
         ColorDrawable background = new ColorDrawable(0x4f000000);
         this.setBackgroundDrawable(background);

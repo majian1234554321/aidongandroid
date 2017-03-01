@@ -17,11 +17,8 @@ import com.leyuan.aidong.adapter.discover.DynamicCommentAdapter;
 import com.leyuan.aidong.adapter.discover.DynamicLikeAdapter;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.ui.App;
-import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
-
-import static com.leyuan.aidong.utils.DateUtils.yyyyMMddHHmmss;
 
 
 /**
@@ -83,8 +80,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         if (dynamic.publisher != null) {
             tvName.setText(dynamic.publisher.name);
             GlideLoader.getInstance().displayCircleImage(dynamic.publisher.avatar, ivAvatar);
-            tvTime.setText(DateUtils.translateDate(DateUtils.parseDate
-                    (dynamic.published_at, yyyyMMddHHmmss).getTime(), System.currentTimeMillis()));
+            tvTime.setText(dynamic.published_at);
         }
 
         tvContent.setText(dynamic.content);
@@ -160,7 +156,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             @Override
             public void onClick(View v) {
                 if (callback != null) {
-                    callback.onCommentClick();
+                    callback.onCommentClick(dynamic);
                 }
             }
         });

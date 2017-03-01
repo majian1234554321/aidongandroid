@@ -1,6 +1,7 @@
-package com.leyuan.aidong.widget.video;
+package com.leyuan.aidong.widget.media;
 
 /**
+ *
  * Created by user on 2016/10/29.
  */
 

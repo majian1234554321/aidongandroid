@@ -82,17 +82,27 @@ public class CartPresentImpl implements CartPresent{
     }
 
     @Override
-    public void deleteCart(final String ids) {
+    public void deleteSingleGoods(final String id, final int shopPosition, final int goodsPosition) {
         cartModel.deleteCart(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
-                cartHeaderView.setDeleteGoodsResult(baseBean,ids);
+                cartHeaderView.deleteSingleGoodsResult(baseBean,id,shopPosition,goodsPosition);
+            }
+        },id);
+    }
+
+    @Override
+    public void deleteMultiGoods(final String ids) {
+        cartModel.deleteCart(new ProgressSubscriber<BaseBean>(context) {
+            @Override
+            public void onNext(BaseBean baseBean) {
+                cartHeaderView.deleteMultiGoodsResult(baseBean);
             }
         },ids);
     }
 
     @Override
-    public void updateCart(String id, int mount,final int shopPosition,final int goodsPosition) {
+    public void updateGoodsCount(String id, int mount, final int shopPosition, final int goodsPosition) {
         cartModel.updateCart(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {

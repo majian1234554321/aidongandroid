@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -31,7 +32,9 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.GoodsDetailCouponAdapter;
 import com.leyuan.aidong.entity.DeliveryBean;
 import com.leyuan.aidong.entity.GoodsDetailBean;
+import com.leyuan.aidong.entity.PhotoBrowseInfo;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.discover.activity.PhotoBrowseActivity;
 import com.leyuan.aidong.ui.home.fragment.GoodsDetailFragment;
 import com.leyuan.aidong.ui.home.fragment.GoodsProblemFragment;
 import com.leyuan.aidong.ui.home.fragment.GoodsServiceFragment;
@@ -43,6 +46,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.GoodsDetailPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.GoodsDetailActivityView;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.ImageRectUtils;
 import com.leyuan.aidong.utils.TransitionHelper;
 import com.leyuan.aidong.widget.SlideDetailsLayout;
 import com.leyuan.aidong.widget.SwitcherLayout;
@@ -60,16 +64,17 @@ import cn.bingoogolapple.bgabanner.BGABanner;
 import static com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow.FROM_ADD_CART;
 import static com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow.FROM_BUY;
 import static com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow.FROM_SKU;
-import static com.leyuan.aidong.utils.Constant.EMPTY_STR;
 import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
+import static com.leyuan.aidong.utils.Constant.EMPTY_STR;
 
 
 /**
  * 商品详情
  * Created by song on 2016/9/12.
  */
-public class GoodsDetailActivity extends BaseActivity implements PopupWindow.OnDismissListener,BGABanner.OnItemClickListener,
-        GoodsDetailActivityView, GoodsSkuPopupWindow.SelectSkuListener, SmartTabLayout.TabProvider,View.OnClickListener {
+public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnItemClickListener,
+        GoodsSkuPopupWindow.SelectSkuListener,SmartTabLayout.TabProvider,View.OnClickListener,
+        GoodsDetailActivityView,PopupWindow.OnDismissListener{
     private static final int CODE_SELECT_ADDRESS = 1;
     private SwitcherLayout switcherLayout;
     private LinearLayout rootLayout;
@@ -118,6 +123,8 @@ public class GoodsDetailActivity extends BaseActivity implements PopupWindow.OnD
     private List<String> selectedSkuValues = new ArrayList<>();
 
     private CouponPresent couponPresent;
+
+
 
   /*  private ViewPager bannerViewPager;
     private SimplePagerAdapter pagerAdapter;*/
@@ -197,10 +204,6 @@ public class GoodsDetailActivity extends BaseActivity implements PopupWindow.OnD
         couponAdapter = new GoodsDetailCouponAdapter(this);
         couponView.setNestedScrollingEnabled(false);
         couponView.setAdapter(couponAdapter);
-
-       /* bannerViewPager = (ViewPager) findViewById(R.id.view_pager);
-        pagerAdapter = new SimplePagerAdapter(this);
-        bannerViewPager.setAdapter(pagerAdapter);*/
     }
 
     private void setListener() {
@@ -270,7 +273,8 @@ public class GoodsDetailActivity extends BaseActivity implements PopupWindow.OnD
                 new Bundler().putString("problemText",detailBean.question).get()));
         pages.add(FragmentPagerItem.of(null,service.getClass(),
                 new Bundler().putString("serviceText", detailBean.service).get()));
-        final FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(),pages);
+        final FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter
+                (getSupportFragmentManager(),pages);
 
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(3);
@@ -287,25 +291,6 @@ public class GoodsDetailActivity extends BaseActivity implements PopupWindow.OnD
                 }
             }
         });
-
-       /* pagerAdapter.setData(bannerUrls);
-        pagerAdapter.setListener(new SimplePagerAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(SimpleDraweeView image, int position) {
-                //ImagePreviewActivity.start(GoodsDetailActivity.this,bannerUrls,position);
-                Intent intent = new Intent(GoodsDetailActivity.this,ImagePreviewActivity.class);
-                intent.putExtra("position",position);
-                intent.putStringArrayListExtra("urls",bannerUrls);
-                View sharedView = image;
-                String transitionName = getString(R.string.transitionName);
-                ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(GoodsDetailActivity.this, sharedView, transitionName);
-                startActivity(intent, transitionActivityOptions.toBundle());
-
-                *//*final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(GoodsDetailActivity.this, false);
-                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(GoodsDetailActivity.this, pairs);
-                startActivity(intent,optionsCompat.toBundle());*//*
-            }
-        });*/
     }
 
     @Override
@@ -327,8 +312,10 @@ public class GoodsDetailActivity extends BaseActivity implements PopupWindow.OnD
                 intent.putExtra("id",id);
                 intent.putExtra("type",type);
                 intent.putExtra("deliveryBean",detailBean.pick_up);
-                final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(this, false);
-                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, pairs);
+                final Pair<View, String>[] pairs = TransitionHelper.
+                        createSafeTransitionParticipants(this, false);
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.
+                        makeSceneTransitionAnimation(this, pairs);
                 startActivityForResult(intent,CODE_SELECT_ADDRESS,optionsCompat.toBundle());
                 break;
             case R.id.iv_cart:
@@ -346,7 +333,8 @@ public class GoodsDetailActivity extends BaseActivity implements PopupWindow.OnD
     }
 
 
-    private void showSkuPopupWindow(Context context, GoodsDetailBean detailBean,List<String> selectedSkuValues,String from) {
+    private void showSkuPopupWindow(Context context, GoodsDetailBean detailBean,
+                                    List<String> selectedSkuValues,String from) {
        /* rootLayout.animate().scaleY(0.95f).setInterpolator(new AccelerateInterpolator(2)).start();
         rootLayout.animate().scaleX(0.95f).setInterpolator(new AccelerateInterpolator(2)).start();*/
         //contentLayout.animate().rotationX(0.8f).setInterpolator(new AccelerateInterpolator(2)).start();
@@ -381,15 +369,16 @@ public class GoodsDetailActivity extends BaseActivity implements PopupWindow.OnD
         builder.show();
     }
 
+
     @Override
     public void onBannerItemClick(BGABanner banner, View view, Object model, int position) {
-        Intent intent = new Intent(this,ImagePreviewActivity.class);
-        final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(this, false);
-        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, pairs);
-        intent.putExtra("position",position);
-        intent.putExtra("urls",bannerUrls);
-        startActivity(intent,optionsCompat.toBundle());
-        //ImagePreviewActivity.start(this,bannerUrls,position);
+        List<ImageView> imageViewList = new ArrayList<>();
+        for (int i = 0; i < bannerUrls.size(); i++) {
+            imageViewList.add((ImageView) view);
+        }
+        List<Rect> drawableRectList = ImageRectUtils.getDrawableRects(imageViewList);
+        PhotoBrowseInfo info = PhotoBrowseInfo.create(bannerUrls, drawableRectList, position);
+        PhotoBrowseActivity.start(this, info);
     }
 
     @Override
@@ -445,13 +434,13 @@ public class GoodsDetailActivity extends BaseActivity implements PopupWindow.OnD
                 tvTip.setText(getString(R.string.tip_close));
                 ivArrow.setBackgroundResource(R.drawable.icon_arrow_down);
                 tvTitle.setVisibility(View.VISIBLE);
-                tvTitle.animate().translationY(0).setInterpolator
-                        (new AccelerateDecelerateInterpolator()).start();
+                tvTitle.animate().scaleX(1).scaleY(1).setInterpolator
+                        (new AccelerateDecelerateInterpolator()).setDuration(200).start();
             }else{
                 tvTip.setText(getString(R.string.tip_open));
                 ivArrow.setBackgroundResource(R.drawable.icon_arrow_up);
-                tvTitle.animate().translationY(tvTitle.getHeight()).setInterpolator
-                        (new AccelerateDecelerateInterpolator()).start();
+                tvTitle.animate().scaleX(0).scaleY(0).setInterpolator
+                        (new AccelerateDecelerateInterpolator()).setDuration(200).start();
             }
         }
     }

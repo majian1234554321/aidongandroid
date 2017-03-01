@@ -29,8 +29,14 @@ public interface ICartHeaderView {
     void updateGoodsCountResult(BaseBean baseBean,int shopPosition,int goodsPosition);
 
     /**
-     * 删除购物车中商品
+     * 删除购物车中单类型商品
      * @param baseBean BaseBean
      */
-    void setDeleteGoodsResult(BaseBean baseBean,String ids);
+    void deleteSingleGoodsResult(BaseBean baseBean,String id,int shopPosition,int goodsPosition);
+
+    /**
+     * 删除购物车中多类型商品
+     * @param baseBean
+     */
+    void deleteMultiGoodsResult(BaseBean baseBean);
 }

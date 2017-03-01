@@ -23,7 +23,7 @@ import static com.leyuan.aidong.ui.App.context;
  */
 public class PublishDynamicAdapter extends RecyclerView.Adapter<PublishDynamicAdapter.ImageHolder> {
     private static final int DEFAULT_MAX_IMAGE_COUNT = 6;
-    private static final int ITEM_TYPE_IMAGE = 1;
+    private static final int ITEM_TYPE_MEDIA = 1;
     private static final int ITEM_TYPE_ADD_IMAGE = 2;
 
     private boolean isPhoto;
@@ -57,7 +57,7 @@ public class PublishDynamicAdapter extends RecyclerView.Adapter<PublishDynamicAd
 
     @Override
     public int getItemViewType(int position) {
-        return data.size() > 0 && position < data.size() ? ITEM_TYPE_IMAGE : ITEM_TYPE_ADD_IMAGE;
+        return data.size() > 0 && position < data.size() ? ITEM_TYPE_MEDIA : ITEM_TYPE_ADD_IMAGE;
     }
 
     @Override
@@ -69,26 +69,29 @@ public class PublishDynamicAdapter extends RecyclerView.Adapter<PublishDynamicAd
     @Override
     public void onBindViewHolder(ImageHolder holder, final int pos) {
         final int position = holder.getAdapterPosition();
-        if(getItemViewType(position) == ITEM_TYPE_IMAGE){
+        if(getItemViewType(position) == ITEM_TYPE_MEDIA){
             BoxingMediaLoader.getInstance().displayThumbnail(holder.image, data.get(position).getPath(),
-                    150, 150);
+                    holder.itemView.getLayoutParams().width, holder.itemView.getLayoutParams().height);
             holder.delete.setVisibility(View.VISIBLE);
+            holder.ivPlay.setVisibility(data.get(position).getType() == BaseMedia.TYPE.IMAGE
+                    ? View.GONE : View.VISIBLE);
             holder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    data.remove(position);
-                    notifyItemRemoved(position);
-                    notifyItemRangeChanged(position,data.size());
+                    if(onItemClickListener != null){
+                        onItemClickListener.onDeleteMediaClick(position);
+                    }
                 }
             });
         }else {
             holder.image.setBackgroundResource(R.drawable.icon_add_photo);
             holder.delete.setVisibility(View.GONE);
+            holder.ivPlay.setVisibility(View.GONE);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(onItemClickListener != null){
-                        onItemClickListener.onAddImageClick();
+                        onItemClickListener.onAddMediaClick();
                     }
                 }
             });
@@ -98,15 +101,18 @@ public class PublishDynamicAdapter extends RecyclerView.Adapter<PublishDynamicAd
     class ImageHolder extends RecyclerView.ViewHolder {
         ImageView image;
         ImageView delete;
+        ImageView ivPlay;
 
-        public ImageHolder(View itemView) {
+        private ImageHolder(View itemView) {
             super(itemView);
             image = (ImageView) itemView.findViewById(R.id.dv_image);
             delete = (ImageView) itemView.findViewById(R.id.iv_delete);
+            ivPlay = (ImageView) itemView.findViewById(R.id.iv_play);
             int width = (ScreenUtil.getScreenWidth(context) -
                     4 * context.getResources().getDimensionPixelOffset(R.dimen.media_margin))/3;
-            image.getLayoutParams().width = width;
-            image.getLayoutParams().height = width;
+            int height = width;
+            itemView.getLayoutParams().width = width;
+            itemView.getLayoutParams().height = height;
         }
     }
 
@@ -115,6 +121,7 @@ public class PublishDynamicAdapter extends RecyclerView.Adapter<PublishDynamicAd
     }
 
     public interface OnItemClickListener {
-        void onAddImageClick();
+        void onAddMediaClick();
+        void onDeleteMediaClick(int position);
     }
 }

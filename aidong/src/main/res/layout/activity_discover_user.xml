@@ -34,11 +34,12 @@
 
             <TextView
                 android:id="@+id/tv_filter"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right"
                 android:text="筛选"
                 android:padding="@dimen/right_margin"
+                android:layout_alignParentRight="true"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
         </RelativeLayout>

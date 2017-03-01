@@ -176,8 +176,8 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
         }
 
         @Override
-        public void onCommentClick() {
-
+        public void onCommentClick(DynamicBean dynamicBean) {
+            DynamicDetailActivity.start(getContext(),dynamicBean);
         }
 
         @Override

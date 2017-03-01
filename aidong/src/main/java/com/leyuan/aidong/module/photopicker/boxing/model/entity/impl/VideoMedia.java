@@ -50,7 +50,7 @@ public class VideoMedia extends BaseMedia {
         super(builder.mId, builder.mPath);
         this.mTitle = builder.mTitle;
         this.mDuration = builder.mDuration;
-        this.mSize = builder.mSize;
+        this.size = builder.mSize;
         this.mDateTaken = builder.mDateTaken;
         this.mMimeType = builder.mMimeType;
     }

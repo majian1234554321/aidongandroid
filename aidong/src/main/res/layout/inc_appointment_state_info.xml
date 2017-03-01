@@ -17,7 +17,7 @@
         android:textSize="15sp" />
 
     <TextView
-        android:id="@+id/tv_time_or_num"
+        android:id="@+id/tv_order_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -26,6 +26,43 @@
         android:text="订单号:2252"
         android:textColor="@color/c9"
         android:textSize="13sp" />
+
+    <LinearLayout
+        android:id="@+id/ll_timer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="15dp"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="支付时间:"
+            android:textSize="14sp"
+            android:textColor="@color/main_red"/>
+
+        <cn.iwgang.countdownview.CountdownView
+            android:id="@+id/timer"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:isHideTimeBackground="true"
+            app:isShowDay="false"
+            app:isShowHour="true"
+            app:isShowMinute="true"
+            app:isShowSecond="true"
+            app:timeTextSize="14sp"
+            app:isTimeTextBold="false"
+            android:layout_gravity="center"
+            app:isShowMillisecond="false"
+            app:timeTextColor="@color/main_red"
+            app:suffixTextColor="@color/main_red"/>
+    </LinearLayout>
+
 
     <include layout="@layout/inc_line_black" />
 
@@ -49,7 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="21dp"
+            android:layout_marginTop="18dp"
             android:layout_toRightOf="@+id/dv_goods_cover"
             android:singleLine="true"
             android:text="阿迪达斯-举重"
@@ -62,7 +99,7 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/tv_name"
             android:layout_below="@+id/tv_name"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="12dp"
             android:text="爱动"
             android:textColor="@color/c9"
             android:textSize="13sp" />
@@ -106,8 +143,7 @@
             android:layout_marginTop="25dp"
             android:background="@color/line_color"
             android:layout_below="@+id/tv_num"
-            android:layout_centerHorizontal="true"
-            />
+            android:layout_centerHorizontal="true" />
 
         <ImageView
             android:layout_width="match_parent"

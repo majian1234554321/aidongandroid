@@ -60,9 +60,9 @@ public class CartShopAdapter extends RecyclerView.Adapter<CartShopAdapter.CartHo
         holder.check.setChecked(bean.isChecked());
         goodsAdapter.setGoodsChangeListener(new CartGoodsAdapter.GoodsChangeListener() {
             @Override
-            public void onGoodsDeleted(String goodsId) {
+            public void onGoodsDeleted(String goodsId,int goodsPosition) {
                 if (shopChangeListener != null) {
-                    shopChangeListener.onGoodsDeleted(goodsId);
+                    shopChangeListener.onGoodsDeleted(goodsId,position,goodsPosition);
                 }
             }
 
@@ -124,7 +124,7 @@ public class CartShopAdapter extends RecyclerView.Adapter<CartShopAdapter.CartHo
 
     public interface ShopChangeListener {
         void onShopStatusChanged(int position);
-        void onGoodsDeleted(String goodsId);
+        void onGoodsDeleted(String goodsId,int shopPosition,int goodsPosition);
         void onGoodsCountChanged(String goodsId,int count,int shopPosition,int goodsPosition);
     }
 }

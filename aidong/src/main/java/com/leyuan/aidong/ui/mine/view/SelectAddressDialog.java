@@ -14,7 +14,7 @@ import com.leyuan.aidong.widget.wheelview.WheelView;
  * 新建地址选择地址弹框
  * Created by song on 2016/9/20.
  */
-public class AddressDialog extends BaseAddressDialog implements View.OnClickListener,OnWheelChangedListener{
+public class SelectAddressDialog extends BaseAddressDialog implements View.OnClickListener,OnWheelChangedListener{
     private Context context;
     private WheelView wvProvince;
     private WheelView wvCity;
@@ -23,7 +23,7 @@ public class AddressDialog extends BaseAddressDialog implements View.OnClickList
     private TextView cancel;
     private OnConfirmAddressListener listener;
 
-    public AddressDialog(Context context) {
+    public SelectAddressDialog(Context context) {
         super(context);
         this.context = context;
         initView();
@@ -31,7 +31,7 @@ public class AddressDialog extends BaseAddressDialog implements View.OnClickList
         setWheelView();
     }
 
-    public AddressDialog(Context context, int theme) {
+    public SelectAddressDialog(Context context, int theme) {
         super(context, theme);
         this.context = context;
         initView();

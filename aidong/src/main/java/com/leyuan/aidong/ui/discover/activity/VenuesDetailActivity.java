@@ -11,13 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.VenuesDetailBean;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.discover.fragment.VenuesCoachFragment;
 import com.leyuan.aidong.ui.discover.fragment.VenuesCourseFragment;
 import com.leyuan.aidong.ui.discover.fragment.VenuesDetailFragment;
+import com.leyuan.aidong.ui.mine.account.LoginActivity;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
@@ -93,8 +96,13 @@ public class VenuesDetailActivity extends BaseActivity implements SmartTabLayout
         tvAppointment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppointVenuesActivity.start(VenuesDetailActivity.this,id,venuesBean.getName(),
-                        venuesBean.getAddress(),venuesBean.getTel());
+                if(App.mInstance.isLogin()) {
+                    AppointVenuesActivity.start(VenuesDetailActivity.this, id, venuesBean.getName(),
+                            venuesBean.getAddress(), venuesBean.getTel());
+                }else {
+                    Toast.makeText(VenuesDetailActivity.this,"请先登陆",Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(VenuesDetailActivity.this, LoginActivity.class));
+                }
             }
         });
     }

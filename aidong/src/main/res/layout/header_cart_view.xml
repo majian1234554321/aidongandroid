@@ -1,23 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:id="@+id/root"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_cart"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="@color/white" />
+
 
     <TextView
         android:id="@+id/tv_recommend"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
+        android:layout_centerInParent="true"
         android:layout_gravity="center"
         android:drawableLeft="@drawable/icon_black_point"
-        android:drawableRight="@drawable/icon_black_point"
         android:drawablePadding="5dp"
+        android:drawableRight="@drawable/icon_black_point"
         android:gravity="center"
         android:text="推荐商品"
         android:textColor="@color/black"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 </LinearLayout>

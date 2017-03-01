@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_gray"
-    android:orientation="vertical">
+    android:background="@color/bg_gray">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
         android:background="@color/black">
-
         <ImageView
             android:id="@+id/iv_back"
             android:layout_width="wrap_content"
@@ -29,25 +27,21 @@
             android:textSize="16sp" />
     </RelativeLayout>
 
-    <FrameLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_address"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_address"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </FrameLayout>
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/height_top_bar"
+        android:paddingBottom="45dp" />
 
     <TextView
         android:id="@+id/tv_add_address"
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
         android:background="@color/main_red"
         android:gravity="center"
         android:text="新建地址"
         android:textColor="@color/white"
         android:textSize="15sp" />
-</LinearLayout>
+</RelativeLayout>

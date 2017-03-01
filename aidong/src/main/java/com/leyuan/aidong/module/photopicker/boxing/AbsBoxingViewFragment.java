@@ -17,6 +17,7 @@
 
 package com.leyuan.aidong.module.photopicker.boxing;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -50,7 +51,6 @@ import java.util.List;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
-import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 
 /**
@@ -62,7 +62,7 @@ import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
  */
 public abstract class AbsBoxingViewFragment extends BaseFragment implements PickerContract.View {
     protected static final int STORAGE_PERMISSION = 1;
-    protected static final int CAMERA_PERMISSIONS = 2;
+    protected static final int CAMERA_AND_AUDIO_PERMISSIONS = 2;
 
     private PickerContract.Presenter mPresenter;
     private CameraPickerHelper mCameraPicker;
@@ -394,9 +394,10 @@ public abstract class AbsBoxingViewFragment extends BaseFragment implements Pick
      * @param fragment      the caller fragment, may be null.
      * @param subFolderPath the folder name in "DCIM/bili/boxing/"
      */
-    @AfterPermissionGranted(CAMERA_PERMISSIONS)
+    @AfterPermissionGranted(CAMERA_AND_AUDIO_PERMISSIONS)
     public final void startCamera(Activity activity, Fragment fragment, String subFolderPath) {
-        if (EasyPermissions.hasPermissions(getContext(), CAMERA)) {
+        String[] perms = { Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO };
+        if (EasyPermissions.hasPermissions(getContext(), perms)) {
             // Have permission, do the thing!
             if (BoxingManager.getInstance().getBoxingConfig().isVideoMode()) {
                 mCameraPicker.startRecord(activity, fragment, subFolderPath);
@@ -405,8 +406,8 @@ public abstract class AbsBoxingViewFragment extends BaseFragment implements Pick
             }
         } else {
             // Ask for one permission
-            EasyPermissions.requestPermissions(this, getString(R.string.rationale_camera),
-                    CAMERA_PERMISSIONS, CAMERA);
+            EasyPermissions.requestPermissions(this, getString(R.string.rationale_camera_and_audio),
+                    CAMERA_AND_AUDIO_PERMISSIONS, perms);
         }
     }
 

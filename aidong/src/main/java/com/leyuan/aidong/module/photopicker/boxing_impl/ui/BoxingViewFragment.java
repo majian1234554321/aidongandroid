@@ -106,7 +106,7 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
         super.onPermissionsGranted(requestCode, perms);
         if(requestCode == STORAGE_PERMISSION) {
             startLoadingMedia();
-        }else if(requestCode == CAMERA_PERMISSIONS){
+        }else if(requestCode == CAMERA_AND_AUDIO_PERMISSIONS){
             startCamera(getActivity(), this, null);
         }
     }
@@ -118,11 +118,10 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
         if(requestCode == STORAGE_PERMISSION) {
             Toast.makeText(getContext(), R.string.storage_permission_deny, Toast.LENGTH_SHORT).show();
             showEmptyData();
-        }else if(requestCode == CAMERA_PERMISSIONS){
+        }else if(requestCode == CAMERA_AND_AUDIO_PERMISSIONS){
             Toast.makeText(getContext(), R.string.camera_permission_deny, Toast.LENGTH_SHORT).show();
         }
     }
-
 
     @Nullable
     @Override
@@ -351,7 +350,7 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
                     View windowView = createWindowView();
                     mAlbumPopWindow = new PopupWindow(windowView, ViewGroup.LayoutParams.MATCH_PARENT,
                             height, true);
-                    mAlbumPopWindow.setAnimationStyle(R.style.PopupAnimation);
+                    //mAlbumPopWindow.setAnimationStyle(R.style.progressDialog);
                     mAlbumPopWindow.setOutsideTouchable(true);
                     mAlbumPopWindow.setBackgroundDrawable(new ColorDrawable
                             (ContextCompat.getColor(v.getContext(), R.color.colorPrimaryAlpha)));
@@ -432,10 +431,9 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
                 mIsPreview = true;
 
                 ArrayList<BaseMedia> medias = (ArrayList<BaseMedia>) mMediaAdapter.getSelectedMedias();
-
                 Boxing.get().withIntent(getContext(), BoxingViewActivity.class, medias, pos, albumId)
-                        .start(BoxingViewFragment.this, BoxingViewFragment.IMAGE_PREVIEW_REQUEST_CODE, BoxingConfig.ViewMode.EDIT);
-
+                        .start(BoxingViewFragment.this, BoxingViewFragment.IMAGE_PREVIEW_REQUEST_CODE,
+                                BoxingConfig.ViewMode.EDIT);
             }
         }
 
@@ -455,9 +453,12 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
 
         @Override
         public void onClick(View v) {
-            if (!mIsCamera) {
+            if (!mIsCamera && mMediaAdapter.getSelectedMedias().size() < mMaxCount) {
                 mIsCamera = true;
                 startCamera(getActivity(), BoxingViewFragment.this, BoxingFileHelper.DEFAULT_SUB_DIR);
+            }else {
+                Toast.makeText(getActivity(),String.format(getString(R.string.too_many_picture)
+                        ,mMaxCount), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -475,7 +476,8 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
             List<BaseMedia> selectedMedias = mMediaAdapter.getSelectedMedias();
             if (isSelected) {
                 if (selectedMedias.size() >= mMaxCount) {
-                    Toast.makeText(getActivity(), R.string.too_many_picture, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),String.format(getString(R.string.too_many_picture)
+                            ,mMaxCount), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (!selectedMedias.contains(photoMedia)) {

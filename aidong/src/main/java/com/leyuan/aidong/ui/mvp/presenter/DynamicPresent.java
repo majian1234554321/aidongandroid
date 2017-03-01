@@ -14,11 +14,7 @@ public interface DynamicPresent {
     void pullToRefreshData();
     void requestMoreData(RecyclerView recyclerView, int size, int page);
 
-
-    void postImageDynamic(String content,String...image);
-    void postVideoDynamic(String content, String video);
-    void postDynamic(String content, String video,String...image);
-
+    void postDynamic(boolean isPhoto,String content,String...media);
 
     void addComment(String id,String content);
 

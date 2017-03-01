@@ -8,8 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.ImageBean;
 import com.leyuan.aidong.module.photopicker.boxing.BoxingMediaLoader;
-import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
+import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.ScreenUtil;
 
 import java.util.ArrayList;
@@ -19,20 +20,20 @@ import java.util.List;
  * 照片墙适配器
  * Created by song on 2017/2/7.
  */
-public class PhotoWallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class PhotoWallAdapter extends RecyclerView.Adapter<PhotoWallAdapter.ImageHolder>{
     private static final int MAX_UPLOAD_IMAGE_COUNT = 8;        //上传照片数量限制
     private static final int ITEM_TYPE_IMAGE = 1;
     private static final int ITEM_TYPE_ADD_IMAGE = 2;
 
     private Context context;
-    private List<BaseMedia> data = new ArrayList<>();
+    private List<ImageBean> data = new ArrayList<>();
     private OnItemClickListener listener;
 
     public PhotoWallAdapter(Context context) {
         this.context = context;
     }
 
-    public void setData(List<BaseMedia> data){
+    public void setData(List<ImageBean> data){
         if(data != null){
             this.data = data;
             notifyDataSetChanged();
@@ -62,33 +63,42 @@ public class PhotoWallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == ITEM_TYPE_IMAGE) {
-            View view = LayoutInflater.from(context).inflate(R.layout.item_image, parent, false);
-            return new PhotoWallAdapter.ImageHolder(view);
-        } else if (viewType == ITEM_TYPE_ADD_IMAGE) {
-            View view = LayoutInflater.from(context).inflate(R.layout.item_add_image, parent, false);
-            return new PhotoWallAdapter.AddHolder(view);
-        }
-        return null;
+    public ImageHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_update_photo_image, parent, false);
+        return new PhotoWallAdapter.ImageHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
-        if (holder instanceof PhotoWallAdapter.ImageHolder) {
-            BoxingMediaLoader.getInstance().displayThumbnail(((PhotoWallAdapter.ImageHolder) holder).image, data.get(position).getPath(),
-                    100, 100);
-           // ((PhotoWallAdapter.ImageHolder) holder).image.setImageURI("file//" + data.get(position).getPath());
-            ((PhotoWallAdapter.ImageHolder) holder).delete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    data.remove(position);
-                    notifyItemRemoved(position);
-                    notifyItemRangeChanged(position,data.size());
-                }
-            });
-        } else if (holder instanceof PhotoWallAdapter.AddHolder) {
-            ((PhotoWallAdapter.AddHolder) holder).add.setOnClickListener(new View.OnClickListener() {
+    public void onBindViewHolder(final ImageHolder holder, final int pos) {
+        final int position = holder.getAdapterPosition();
+        if(getItemViewType(position) == ITEM_TYPE_IMAGE){
+            ImageBean bean = data.get(position);
+            if(bean.getType() == ImageBean.TYPE.LOCAL_IMAGE){
+                BoxingMediaLoader.getInstance().displayThumbnail( holder.image, bean.getPath(),100, 100);
+                holder.delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(listener != null){
+                            listener.onDeleteLocalImage(position);
+                        }
+                    }
+                });
+            }else {
+                GlideLoader.getInstance().displayImage(bean.getUrl(),holder.image);
+                holder.delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(listener != null){
+                            listener.onDeleteNetImage(position);
+                        }
+                    }
+                });
+            }
+            holder.delete.setVisibility(View.VISIBLE);
+        } else {
+            holder.image.setBackgroundResource(R.drawable.icon_add_photo);
+            holder.delete.setVisibility(View.GONE);
+            holder.image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(listener != null){
@@ -99,33 +109,23 @@ public class PhotoWallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
     }
 
-    private class ImageHolder extends RecyclerView.ViewHolder {
+    class ImageHolder extends RecyclerView.ViewHolder {
         ImageView image;
         ImageView delete;
 
-        public ImageHolder(View itemView) {
+        private ImageHolder(View itemView) {
             super(itemView);
             image = (ImageView) itemView.findViewById(R.id.dv_image);
             delete = (ImageView) itemView.findViewById(R.id.iv_delete);
             int width = (ScreenUtil.getScreenWidth(context) -
                     5 * context.getResources().getDimensionPixelOffset(R.dimen.photo_wall_margin))/4;
-            image.getLayoutParams().width = width;
-            image.getLayoutParams().height = width;
+            int height = width;
+            itemView.getLayoutParams().width = width;
+            itemView.getLayoutParams().height = height;
         }
     }
 
-    private class AddHolder extends RecyclerView.ViewHolder {
-        ImageView add;
 
-        public AddHolder(View itemView) {
-            super(itemView);
-            add = (ImageView) itemView.findViewById(R.id.iv_add);
-            int width = (ScreenUtil.getScreenWidth(context) -
-                    5 * context.getResources().getDimensionPixelOffset(R.dimen.photo_wall_margin))/4;
-            add.getLayoutParams().width = width;
-            add.getLayoutParams().height = width;
-        }
-    }
 
     public void setListener(OnItemClickListener listener) {
         this.listener = listener;
@@ -133,6 +133,7 @@ public class PhotoWallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public interface OnItemClickListener {
         void onAddImageItemClick();
-       // void onDeleteImage();
+        void onDeleteNetImage(int position);
+        void onDeleteLocalImage(int position);
     }
 }

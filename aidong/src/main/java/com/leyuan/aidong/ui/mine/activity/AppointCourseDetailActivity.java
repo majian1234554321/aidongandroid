@@ -2,6 +2,8 @@ package com.leyuan.aidong.ui.mine.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,12 +28,20 @@ import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.AppointmentPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointmentDetailActivityView;
+import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.QRCodeUtil;
 import com.leyuan.aidong.widget.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.ExtendTextView;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.leyuan.aidong.widget.SwitcherLayout;
+
+import cn.iwgang.countdownview.CountdownView;
+
+import static com.leyuan.aidong.ui.App.context;
+import static com.leyuan.aidong.utils.Constant.PAY_ALI;
+import static com.leyuan.aidong.utils.Constant.PAY_WEI_XIN;
 
 /**
  * 课程预约详情
@@ -42,8 +52,8 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
     private static final String UN_JOIN= "purchased";        //待参加
     private static final String JOINED = "signed";           //已参加
     private static final String CLOSE = "canceled";          //已关闭
-    private static final String PAY_ALI = "alipay";
-    private static final String PAY_WEIXIN = "weixin";
+    private static final String REFUNDING = "4";             //退款中
+    private static final String REFUNDED = "5";              //已退款
 
     private SimpleTitleBar titleBar;
     private SwitcherLayout switcherLayout;
@@ -51,14 +61,16 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
 
     //预约状态信息
     private TextView tvState;
-    private TextView tvTimeOrNum;
+    private TextView tvOrderNo;
+    private LinearLayout timerLayout;
+    private CountdownView timer;
     private RelativeLayout courseLayout;
     private ImageView courseCover;
     private TextView tvCourseName;
     private TextView tvCourseInfo;
-    private RelativeLayout qrCodeLayout;
-    private TextView tvNum;
-    private ImageView dvQr;
+    private RelativeLayout codeLayout;
+    private TextView tvCodeNum;
+    private ImageView ivCode;
 
     //预约信息
     private ExtendTextView tvUserName;
@@ -79,7 +91,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
     private ExtendTextView tvPayType;
 
     //支付方式信息
-    private LinearLayout llPay;
+    private LinearLayout payLayout;
     private CustomNestRadioGroup payGroup;
     private RadioButton rbAliPay;
     private RadioButton rbWeiXinPay;
@@ -91,7 +103,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
     private TextView tvCancel;
     private TextView tvPay;
     private TextView tvExpress;
-    private TextView tvReceiving;
+    private TextView tvConfirm;
     private TextView tvDelete;
     private TextView tvAgainBuy;
 
@@ -131,14 +143,16 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
         switcherLayout = new SwitcherLayout(this,scrollView);
 
         tvState = (TextView) findViewById(R.id.tv_state);
-        tvTimeOrNum = (TextView) findViewById(R.id.tv_time_or_num);
+        tvOrderNo = (TextView) findViewById(R.id.tv_order_num);
+        timerLayout = (LinearLayout) findViewById(R.id.ll_timer);
+        timer = (CountdownView) findViewById(R.id.timer);
         courseLayout = (RelativeLayout) findViewById(R.id.rl_detail);
         courseCover = (ImageView) findViewById(R.id.dv_goods_cover);
         tvCourseName = (TextView) findViewById(R.id.tv_name);
         tvCourseInfo = (TextView) findViewById(R.id.tv_info);
-        qrCodeLayout = (RelativeLayout) findViewById(R.id.rl_qr_code);
-        tvNum = (TextView) findViewById(R.id.tv_num);
-        dvQr = (ImageView) findViewById(R.id.dv_qr);
+        codeLayout = (RelativeLayout) findViewById(R.id.rl_qr_code);
+        tvCodeNum = (TextView) findViewById(R.id.tv_num);
+        ivCode = (ImageView) findViewById(R.id.dv_qr);
 
         tvUserName = (ExtendTextView) findViewById(R.id.tv_course_user);
         tvPhone = (ExtendTextView) findViewById(R.id.tv_course_phone);
@@ -156,7 +170,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
         tvPayTime = (ExtendTextView) findViewById(R.id.tv_pay_time);
         tvPayType = (ExtendTextView) findViewById(R.id.tv_pay_type);
 
-        llPay = (LinearLayout) findViewById(R.id.ll_pay);
+        payLayout = (LinearLayout) findViewById(R.id.ll_pay);
         payGroup = (CustomNestRadioGroup) findViewById(R.id.radio_group);
         rbAliPay = (RadioButton) findViewById(R.id.cb_alipay);
         rbWeiXinPay = (RadioButton) findViewById(R.id.cb_weixin);
@@ -167,11 +181,9 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
         tvCancel = (TextView) findViewById(R.id.tv_cancel);
         tvPay = (TextView) findViewById(R.id.tv_pay);
         tvExpress = (TextView) findViewById(R.id.tv_express);
-        tvReceiving = (TextView) findViewById(R.id.tv_receiving);
+        tvConfirm = (TextView) findViewById(R.id.tv_confirm);
         tvDelete = (TextView) findViewById(R.id.tv_delete);
         tvAgainBuy = (TextView) findViewById(R.id.tv_again_buy);
-
-        qrCodeLayout.setVisibility(View.GONE);
     }
 
     private void setListener(){
@@ -182,7 +194,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
         tvDelete.setOnClickListener(this);
         tvAgainBuy.setOnClickListener(this);
         tvExpress.setOnClickListener(this);
-        tvReceiving.setOnClickListener(this);
+        tvConfirm.setOnClickListener(this);
         courseLayout.setOnClickListener(this);
     }
 
@@ -196,47 +208,118 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
             rbWeiXinPay.setChecked(true);
         }
 
-        //与订单状态无关:活动信息,预约信息及部分订单信息
+        //与订单状态无关: 订单信息
         GlideLoader.getInstance().displayImage(bean.getCover(), courseCover);
         tvCourseName.setText(bean.getName());
         tvCourseInfo.setText(bean.getSubName());
-
         tvUserName.setRightContent(bean.getAppoint().getName());
         tvPhone.setRightContent(bean.getAppoint().getMobile());
         tvVenues.setRightContent(bean.getAppoint().getGym());
         tvCourseRoom.setRightContent(bean.getAppoint().getClassroom());
         tvCourseTime.setRightContent(bean.getAppoint().getClassTime());
         tvCourseAddress.setRightContent(bean.getAppoint().getAddress());
-
         tvTotalPrice.setRightContent(String.format(getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.getPay().getTotal())));
-      /*  couponPrice.setRightContent(String.format(getString(R.string.minus_rmb),bean.getPay().getCoupon()));
-        coursePrivilege.setRightContent(String.format(getString(R.string.minus_rmb),"0"));
-        tvAibi.setRightContent(String.format(getString(R.string.minus_rmb),bean.getPay().getCoin()));
-        tvAidou.setRightContent(String.format(getString(R.string.minus_rmb),bean.getPay().getIntegral()));*/
         tvStartTime.setRightContent(bean.getPay().getCreatedAt());
 
-        //与订单状态有关: 预约状态信息及部分订单信息  支付方式信息 底部预约操作状态及价格信息
-        switch (bean.getPay().getStatus()){
-            case UN_PAID:
-                tvState.setText(getString(R.string.un_paid));
-                qrCodeLayout.setVisibility(View.GONE);
-                tvPayType.setVisibility(View.GONE);
-                tvPayTime.setVisibility(View.GONE);
+        //与订单状态有关: 预约状态信息 课程预约信息/活动预约信息 支付方式信息 底部预约操作状态及价格信息
+        switch (bean.getPay().getStatus()) {
+            case UN_PAID:           //待付款
+                tvState.setText(context.getString(R.string.un_paid));
+                //timer.start(Long.parseLong(bean.getPayInfo().getLimitTime()) * 1000);
+                timerLayout.setVisibility(View.VISIBLE);
+                tvOrderNo.setVisibility(View.GONE);
+                codeLayout.setVisibility(View.GONE);
+                tvCancel.setVisibility(View.VISIBLE);
+                tvPay.setVisibility(View.VISIBLE);
+                tvDelete.setVisibility(View.GONE);
+                tvConfirm.setVisibility(View.GONE);
+                payLayout.setVisibility(View.VISIBLE);
                 break;
-            case UN_JOIN:
-                tvState.setText(getString(R.string.appointment_un_joined));
-
+            case UN_JOIN:           //待参加
+                tvState.setText(context.getString(R.string.appointment_un_joined));
+                tvOrderNo.setText(String.format(getString(R.string.order_no),bean.getId()));
+                tvOrderNo.setVisibility(View.VISIBLE);
+                timerLayout.setVisibility(View.GONE);
+                tvCancel.setVisibility(FormatUtil.parseDouble(bean.getPay().getPayAmount()) == 0 ?
+                        View.VISIBLE : View.GONE);
+                tvConfirm.setVisibility(View.VISIBLE);
+                tvPay.setVisibility(View.GONE);
+                tvDelete.setVisibility(View.GONE);
+                codeLayout.setVisibility(View.VISIBLE);
+                payLayout.setVisibility(View.GONE);
+                tvCodeNum.setTextColor(Color.parseColor("#000000"));
+                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this,0xFF000000,bean.getId(),
+                        DensityUtil.dp2px(this,294),DensityUtil.dp2px(this,73),false));
                 break;
-            case JOINED:
-                tvState.setText(getString(R.string.appointment_joined));
+            case JOINED:            //已参加
+                tvState.setText(context.getString(R.string.appointment_joined));
+                tvOrderNo.setText(String.format(getString(R.string.order_no),bean.getId()));
+                tvOrderNo.setVisibility(View.VISIBLE);
+                timerLayout.setVisibility(View.GONE);
+                tvDelete.setVisibility(View.VISIBLE);
+                tvPay.setVisibility(View.GONE);
+                tvCancel.setVisibility(View.GONE);
+                tvConfirm.setVisibility(View.GONE);
+                codeLayout.setVisibility(View.VISIBLE);
+                payLayout.setVisibility(View.GONE);
+                tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG );
+                tvCodeNum.setTextColor(Color.parseColor("#ebebeb"));
+                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this,0xFFebebeb,bean.getId(),
+                        DensityUtil.dp2px(this,294),DensityUtil.dp2px(this,73),false));
                 break;
-            case CLOSE:
-                tvState.setText(getString(R.string.order_close));
+            case CLOSE:             //已关闭
+                tvState.setText(context.getString(R.string.order_close));
+                tvOrderNo.setText(String.format(getString(R.string.order_no),bean.getId()));
+                tvOrderNo.setVisibility(View.VISIBLE);
+                timerLayout.setVisibility(View.GONE);
+                tvDelete.setVisibility(View.VISIBLE);
+                tvPay.setVisibility(View.GONE);
+                tvCancel.setVisibility(View.GONE);
+                tvConfirm.setVisibility(View.GONE);
+                codeLayout.setVisibility(View.VISIBLE);
+                payLayout.setVisibility(View.GONE);
+                tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG );
+                tvCodeNum.setTextColor(Color.parseColor("#ebebeb"));
+                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this,0xFFebebeb,bean.getId(),
+                        DensityUtil.dp2px(this,294),DensityUtil.dp2px(this,73),false));
+                break;
+            case REFUNDING:           //退款中
+                tvState.setText(context.getString(R.string.order_refunding));
+                tvOrderNo.setText(String.format(getString(R.string.order_no),bean.getId()));
+                tvOrderNo.setVisibility(View.VISIBLE);
+                timerLayout.setVisibility(View.GONE);
+                tvDelete.setVisibility(View.VISIBLE);
+                tvPay.setVisibility(View.GONE);
+                tvCancel.setVisibility(View.GONE);
+                tvConfirm.setVisibility(View.GONE);
+                codeLayout.setVisibility(View.VISIBLE);
+                payLayout.setVisibility(View.GONE);
+                tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG );
+                tvCodeNum.setTextColor(Color.parseColor("#ebebeb"));
+                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this,0xFFebebeb,bean.getId(),
+                        DensityUtil.dp2px(this,294),DensityUtil.dp2px(this,73),false));
+                break;
+            case REFUNDED:             //已退款
+                tvState.setText(context.getString(R.string.order_refunded));
+                tvOrderNo.setText(String.format(getString(R.string.order_no),bean.getId()));
+                tvOrderNo.setVisibility(View.VISIBLE);
+                timerLayout.setVisibility(View.GONE);
+                tvDelete.setVisibility(View.VISIBLE);
+                tvPay.setVisibility(View.GONE);
+                tvCancel.setVisibility(View.GONE);
+                tvConfirm.setVisibility(View.GONE);
+                codeLayout.setVisibility(View.VISIBLE);
+                payLayout.setVisibility(View.GONE);
+                tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG );
+                tvCodeNum.setTextColor(Color.parseColor("#ebebeb"));
+                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this,0xFFebebeb,bean.getId(),
+                        DensityUtil.dp2px(this,294),DensityUtil.dp2px(this,73),false));
                 break;
             default:
                 break;
         }
+
     }
 
     @Override
@@ -273,7 +356,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
                 payType = PAY_ALI;
                 break;
             case R.id.cb_weixin:
-                payType = PAY_WEIXIN;
+                payType = PAY_WEI_XIN;
                 break;
             default:
                 break;

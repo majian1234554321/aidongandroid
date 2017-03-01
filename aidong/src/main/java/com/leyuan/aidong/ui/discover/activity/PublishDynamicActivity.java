@@ -27,6 +27,7 @@ import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.PublishDynamicActivityView;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.qiniu.IQiNiuCallback;
 import com.leyuan.aidong.utils.qiniu.UploadQiNiuManager;
 
@@ -37,18 +38,16 @@ import java.util.List;
  * 发表动态
  * Created by song on 2017/2/2.
  */
-public class PublishDynamicActivity extends BaseActivity implements PublishDynamicActivityView,View.OnClickListener,
-        PublishDynamicAdapter.OnItemClickListener {
-    private static final int REQUEST_PHOTO = 1;
-    private static final int REQUEST_VIDEO = 2;
+public class PublishDynamicActivity extends BaseActivity implements PublishDynamicActivityView,
+        View.OnClickListener, PublishDynamicAdapter.OnItemClickListener {
+    private static final int REQUEST_MEDIA = 1;
     private static final int MAX_TEXT_COUNT = 14;
-    private static final int REQUEST_CODE = 1024;
 
     private ImageView ivBack;
     private EditText etContent;
     private TextView tvContentCount;
     private RecyclerView recyclerView;
-    private Button btPublish;
+    private Button btSend;
 
     private boolean isPhoto;    //区分上传图片还是视频
     private PublishDynamicAdapter mediaAdapter;
@@ -79,9 +78,9 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
         ivBack = (ImageView) findViewById(R.id.iv_back);
         etContent = (EditText) findViewById(R.id.et_content);
         tvContentCount = (TextView) findViewById(R.id.tv_content_count);
-        tvContentCount.setText(String.valueOf(MAX_TEXT_COUNT));
         recyclerView = (RecyclerView) findViewById(R.id.rv_image);
-        btPublish = (Button) findViewById(R.id.bt_publish);
+        btSend = (Button) findViewById(R.id.bt_send);
+        btSend.setEnabled(!selectedMedia.isEmpty());
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.addItemDecoration(new SpacesItemDecoration(
@@ -94,7 +93,7 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
     private void setListener(){
         ivBack.setOnClickListener(this);
         mediaAdapter.setOnItemClickListener(this);
-        btPublish.setOnClickListener(this);
+        btSend.setOnClickListener(this);
         etContent.addTextChangedListener(new OnTextWatcher());
     }
 
@@ -104,7 +103,13 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
             case R.id.iv_back:
                 finish();
                 break;
-            case R.id.bt_publish:
+            case R.id.bt_send:
+                if(FormatUtil.parseInt(tvContentCount.getText().toString()) > MAX_TEXT_COUNT){
+                    Toast.makeText(PublishDynamicActivity.this,
+                            String.format(getString(R.string.too_many_text),MAX_TEXT_COUNT)
+                            ,Toast.LENGTH_LONG).show();
+                    return;
+                }
                 uploadToQiNiu();
                 break;
             default:
@@ -113,19 +118,25 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
     }
 
     @Override
-    public void onAddImageClick() {
-        if(isPhoto) {
-            BoxingConfig config = new BoxingConfig(BoxingConfig.Mode.MULTI_IMG).needCamera();
-            Boxing.of(config).withIntent(this, BoxingActivity.class, selectedMedia).start(this, REQUEST_PHOTO);
-        }else {
-            BoxingConfig config = new BoxingConfig(BoxingConfig.Mode.VIDEO).needCamera();
-            Boxing.of(config).withIntent(this, BoxingActivity.class, selectedMedia).start(this, REQUEST_VIDEO);
-        }
+    public void onAddMediaClick() {
+        BoxingConfig config = new BoxingConfig(isPhoto ? BoxingConfig.Mode.MULTI_IMG :
+                BoxingConfig.Mode.VIDEO).needCamera();
+        Boxing.of(config)
+                .withIntent(this, BoxingActivity.class, selectedMedia)
+                .start(this, REQUEST_MEDIA);
     }
 
+    @Override
+    public void onDeleteMediaClick(int position) {
+        selectedMedia.remove(position);
+        mediaAdapter.notifyItemRemoved(position);
+        mediaAdapter.notifyItemRangeChanged(position,selectedMedia.size());
+        btSend.setEnabled(!selectedMedia.isEmpty());
+    }
 
     private void uploadToQiNiu(){
-        UploadQiNiuManager.getInstance().uploadImages(selectedMedia, new IQiNiuCallback() {
+        showProgressDialog();
+        UploadQiNiuManager.getInstance().uploadMedia(isPhoto, selectedMedia, new IQiNiuCallback() {
             @Override
             public void onSuccess(List<String> urls) {
                 uploadToServer(urls);
@@ -133,33 +144,31 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
 
             @Override
             public void onFail() {
-                Toast.makeText(PublishDynamicActivity.this,"上传失败",Toast.LENGTH_LONG).show();
+                dismissProgressDialog();
+                Toast.makeText(PublishDynamicActivity.this, "上传失败", Toast.LENGTH_LONG).show();
             }
         });
     }
 
     private void uploadToServer(List<String> qiNiuMediaUrls){
         String content = etContent.getText().toString();
-        String[] image = new String[qiNiuMediaUrls.size()];
+        String[] media = new String[qiNiuMediaUrls.size()];
         for (int i = 0; i < qiNiuMediaUrls.size(); i++) {
             String urls = qiNiuMediaUrls.get(i);
-            image[i] = urls.substring(urls.indexOf("/") + 1);
+            media[i] = urls.substring(urls.indexOf("/") + 1);
         }
-        if(isPhoto) {
-            dynamicPresent.postImageDynamic(content,image);
-        }else {
-            dynamicPresent.postVideoDynamic(content,image[0]);
-        }
+        dynamicPresent.postDynamic(isPhoto,content,media);
     }
 
     @Override
     public void publishDynamicResult(BaseBean baseBean) {
+        dismissProgressDialog();
         if(baseBean.getStatus() == Constant.OK){
             finish();
             selectedMedia.clear();
             Toast.makeText(this,"上传成功", Toast.LENGTH_LONG).show();
         }else {
-            Toast.makeText(this,"上传失败...", Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"上传失败:" + baseBean.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -171,11 +180,10 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
                 return;
             }
             final List<BaseMedia> medias = Boxing.getResult(data);
-            if (requestCode == REQUEST_PHOTO) {
-                selectedMedia.clear();
-                selectedMedia.addAll(medias);
-                mediaAdapter.setData(selectedMedia,isPhoto);
-            }
+            selectedMedia.clear();
+            selectedMedia.addAll(medias);
+            mediaAdapter.setData(selectedMedia,isPhoto);
+            btSend.setEnabled(!selectedMedia.isEmpty());
         }
     }
 
@@ -189,12 +197,8 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             tvContentCount.setText(String.valueOf(s.length()));
-            if(s.length() > MAX_TEXT_COUNT){
-                etContent.setSelection(MAX_TEXT_COUNT);
-                etContent.setText(s.toString().substring(0, MAX_TEXT_COUNT));
-                tvContentCount.setText(String.valueOf(MAX_TEXT_COUNT));
-                Toast.makeText(PublishDynamicActivity.this,"最多输入"+ MAX_TEXT_COUNT +"个字符",Toast.LENGTH_LONG).show();
-            }
+            tvContentCount.setTextColor(s.length() > MAX_TEXT_COUNT ? getResources()
+                    .getColor(R.color.main_red) :getResources().getColor(R.color.c9));
         }
 
         @Override

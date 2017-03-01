@@ -140,7 +140,7 @@ public class PayOrderBean {
         this.pay_type = pay_type;
     }
 
-    public String getPay_amount() {
+    public String getPayAmount() {
         return pay_amount;
     }
 

@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.mine.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -15,22 +16,30 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.hyphenate.easeui.EaseConstant;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.mine.UserInfoPhotoAdapter;
-import com.leyuan.aidong.entity.ImageBean;
+import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.PhotoBrowseInfo;
 import com.leyuan.aidong.entity.ProfileBean;
 import com.leyuan.aidong.entity.data.UserInfoData;
+import com.leyuan.aidong.module.photopicker.boxing.Boxing;
+import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
+import com.leyuan.aidong.module.photopicker.boxing_impl.ui.BoxingActivity;
 import com.leyuan.aidong.module.photopicker.boxing_impl.view.SpacesItemDecoration;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.discover.activity.PhotoBrowseActivity;
+import com.leyuan.aidong.ui.discover.activity.PublishDynamicActivity;
 import com.leyuan.aidong.ui.mine.fragment.UserDynamicFragment;
 import com.leyuan.aidong.ui.mine.fragment.UserInfoFragment;
 import com.leyuan.aidong.ui.mvp.presenter.UserInfoPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.UserInfoPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.UserInfoActivityView;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.widget.SwitcherLayout;
@@ -44,6 +53,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.leyuan.aidong.R.id.tv_message;
+import static com.leyuan.aidong.ui.discover.fragment.DiscoverHomeFragment.REQUEST_PHOTO;
+import static com.leyuan.aidong.ui.discover.fragment.DiscoverHomeFragment.REQUEST_VIDEO;
 
 
 /**
@@ -51,14 +62,16 @@ import static com.leyuan.aidong.R.id.tv_message;
  * Created by song on 2016/12/27.
  */
 public class UserInfoActivity extends BaseActivity implements UserInfoActivityView, View.OnClickListener,
-        SmartTabLayout.TabProvider {
+        SmartTabLayout.TabProvider, UserInfoPhotoAdapter.OnItemClickListener {
+    private List<View> allTabView = new ArrayList<>();
+
     private ImageView ivBack;
     private TextView tvTitle;
     private ImageView ivEdit;
     private SwitcherLayout switcherLayout;
     private RelativeLayout contentLayout;
-    private RelativeLayout otherNoPhotoLayout;
-    private RelativeLayout selfNoPhotoLayout;
+    private RelativeLayout otherEmptyPhotoLayout;
+    private RelativeLayout selfEmptyPhotoLayout;
     private TextView tvAddImage;
     private RecyclerView rvPhoto;
     private ImageView dvAvatar;
@@ -71,18 +84,13 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     private TextView tvAppoint;
     private TextView tvMessage;
 
-    private UserInfoPhotoAdapter wallAdapter;
-    private List<View> allTabView = new ArrayList<>();
-    private ArrayList<ImageBean> photos = new ArrayList<>();
-
     private String userId;
     private boolean isCoach = false;
     private boolean isFollow = false;
     private boolean isSelf = false;
-
-    private ProfileBean profileBean;
+    private UserInfoData userInfoData;
+    private UserInfoPhotoAdapter wallAdapter;
     private UserInfoPresent userInfoPresent;
-
 
     public static void start(Context context, String userId) {
         Intent starter = new Intent(context, UserInfoActivity.class);
@@ -114,8 +122,8 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         ivEdit = (ImageView) findViewById(R.id.iv_edit);
         contentLayout = (RelativeLayout) findViewById(R.id.rl_content);
         switcherLayout = new SwitcherLayout(this, contentLayout);
-        otherNoPhotoLayout = (RelativeLayout) findViewById(R.id.rl_other_empty);
-        selfNoPhotoLayout = (RelativeLayout) findViewById(R.id.rl_self_empty);
+        otherEmptyPhotoLayout = (RelativeLayout) findViewById(R.id.rl_other_empty);
+        selfEmptyPhotoLayout = (RelativeLayout) findViewById(R.id.rl_self_empty);
         tvAddImage = (TextView) findViewById(R.id.tv_add_image);
         rvPhoto = (RecyclerView) findViewById(R.id.rv_photo);
         dvAvatar = (ImageView) findViewById(R.id.dv_avatar);
@@ -157,19 +165,22 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         ivEdit.setOnClickListener(this);
         tvAddImage.setOnClickListener(this);
         tvMessage.setOnClickListener(this);
+        ivFollowOrPublish.setOnClickListener(this);
+        wallAdapter.setListener(this);
     }
 
     @Override
     public void updateUserInfo(UserInfoData userInfoData) {
-        profileBean = userInfoData.getProfile();
-        GlideLoader.getInstance().displayCircleImage(profileBean.getAvatar(), dvAvatar);
-        tvName.setText(profileBean.getName());
-        tvSignature.setText(profileBean.getSignature());
+        this.userInfoData = userInfoData;
+        ProfileBean profile = userInfoData.getProfile();
+        GlideLoader.getInstance().displayCircleImage(profile.getAvatar(), dvAvatar);
+        tvName.setText(profile.getName());
+        tvSignature.setText(profile.getSignature());
         if (userInfoData.getPhotoWall().isEmpty()) {
             if (isSelf) {
-                selfNoPhotoLayout.setVisibility(View.VISIBLE);
+                selfEmptyPhotoLayout.setVisibility(View.VISIBLE);
             } else {
-                otherNoPhotoLayout.setVisibility(View.VISIBLE);
+                otherEmptyPhotoLayout.setVisibility(View.VISIBLE);
             }
         } else {
             wallAdapter.setData(userInfoData.getPhotoWall());
@@ -180,7 +191,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         pages.add(FragmentPagerItem.of(null, dynamicFragment.getClass(),
                 new Bundler().putString("userId", userId).get()));
         pages.add(FragmentPagerItem.of(null, userInfoFragment.getClass(),
-                new Bundler().putParcelable("profile", profileBean).get()));
+                new Bundler().putParcelable("profile", profile).get()));
         final FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);
         viewPager.setAdapter(adapter);
         tabLayout.setCustomTabView(this);
@@ -195,6 +206,26 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
                 }
             }
         });
+    }
+
+    @Override
+    public void addFollowResult(BaseBean baseBean) {
+        if(baseBean.getStatus() == Constant.OK){
+            isFollow = true;
+            ivFollowOrPublish.setBackgroundResource(R.drawable.icon_following);
+        }else {
+            Toast.makeText(this,"关注失败",Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void cancelFollowResult(BaseBean baseBean) {
+        if (baseBean.getStatus() == Constant.OK) {
+            isFollow = false;
+            ivFollowOrPublish.setBackgroundResource(R.drawable.icon_follow);
+        } else {
+            Toast.makeText(this, "取消关注失败", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -220,11 +251,22 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
                 showEditDialog();
                 break;
             case R.id.tv_add_image:
-                UpdatePhotoWallActivity.start(this, photos);
+                UpdatePhotoWallActivity.start(this, userInfoData.getPhotoWall());
                 break;
             case R.id.tv_message:
                 startActivity(new Intent(this, EMChatActivity.class).
                         putExtra(EaseConstant.EXTRA_USER_ID,userId ));
+                break;
+            case R.id.iv_follow_or_publish:
+                if(isSelf){
+                    publishDynamic();
+                }else if(isFollow){
+                    userInfoPresent.cancelFollow(userId);
+                }else {
+                    userInfoPresent.addFollow(userId);
+                }
+                break;
+            default:
                 break;
         }
     }
@@ -236,12 +278,60 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
                     @Override
                     public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
                         if (position == 0) {
-                            UpdateUserInfoActivity.start(UserInfoActivity.this, profileBean);
+                            UpdateUserInfoActivity.start(UserInfoActivity.this, userInfoData.getProfile());
                         } else {
-                            UpdatePhotoWallActivity.start(UserInfoActivity.this, photos);
+                            UpdatePhotoWallActivity.start(UserInfoActivity.this, userInfoData.getPhotoWall());
                         }
                     }
                 })
                 .show();
+    }
+
+
+    //todo
+    private void publishDynamic(){
+        new MaterialDialog.Builder(this)
+            .items(R.array.mediaType)
+            .itemsCallback(new MaterialDialog.ListCallback() {
+                @Override
+                public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                    if(position == 0){
+                        takePhotos();
+                    }else {
+                        takeVideo();
+                    }
+                }
+            })
+            .show();
+    }
+
+    private void takePhotos(){
+        BoxingConfig multi = new BoxingConfig(BoxingConfig.Mode.MULTI_IMG);
+        multi.needCamera().maxCount(6).isNeedPaging();
+        Boxing.of(multi).withIntent(this, BoxingActivity.class).start(this, REQUEST_PHOTO);
+    }
+
+    private void takeVideo(){
+        BoxingConfig videoConfig = new BoxingConfig(BoxingConfig.Mode.VIDEO).needCamera();
+        Boxing.of(videoConfig).withIntent(this, BoxingActivity.class).start(this, REQUEST_VIDEO);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            PublishDynamicActivity.start(this,requestCode == REQUEST_PHOTO,Boxing.getResult(data));
+        }
+    }
+
+    @Override
+    public void onAddImageItemClick() {
+
+    }
+
+    @Override
+    public void onPreviewImage(List<String> urls, List<Rect> rectList,int currPosition) {
+        PhotoBrowseInfo info = PhotoBrowseInfo.create(urls, rectList, currPosition);
+        PhotoBrowseActivity.start(this, info);
     }
 }

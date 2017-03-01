@@ -7,26 +7,33 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.AppointmentBean;
 import com.leyuan.aidong.ui.mine.activity.AppointCampaignDetailActivity;
 import com.leyuan.aidong.ui.mine.activity.AppointCourseDetailActivity;
+import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.iwgang.countdownview.CountdownView;
+
 /**
  * 预约适配器
  * Created by song on 2016/9/1.
  */
-public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.AppointmentHolder> implements View.OnClickListener{
+public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.AppointmentHolder>
+        implements View.OnClickListener{
     private static final String UN_PAID = "pending";         //待付款
     private static final String UN_JOIN= "purchased";        //待参加
     private static final String JOINED = "signed";           //已参加
     private static final String CLOSE = "canceled";          //已关闭
+    private static final String REFUNDING = "4";             //退款中
+    private static final String REFUNDED = "5";              //已退款
 
     private Context context;
     private List<AppointmentBean> data = new ArrayList<>();
@@ -59,34 +66,79 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         holder.name.setText(bean.getName());
         holder.address.setText(bean.getSubName());
         holder.price.setText(String.format(context.getString(R.string.rmb_price),bean.getPrice()));
+       // holder.timer.start(Long.parseLong(bean.getLittleTime()) * 1000);
 
         //与订单状态有关
         if (TextUtils.isEmpty(bean.getStatus())) return;
         switch (bean.getStatus()) {
             case UN_PAID:           //待付款
                 holder.state.setText(context.getString(R.string.un_paid));
-                holder.timeOrId.setText(bean.getStatus());
                 holder.payTip.setText(context.getString(R.string.need_pay));
+                holder.date.setVisibility(View.GONE);
+                holder.timerLayout.setVisibility(View.VISIBLE);
                 holder.tvCancel.setVisibility(View.VISIBLE);
                 holder.tvPay.setVisibility(View.VISIBLE);
+                holder.tvDelete.setVisibility(View.GONE);
+                holder.tvConfirm.setVisibility(View.GONE);
                 break;
             case UN_JOIN:           //待参加
                 holder.state.setText(context.getString(R.string.appointment_un_joined));
-                holder.timeOrId.setText(bean.getId());
                 holder.payTip.setText(context.getString(R.string.true_pay));
-                holder.tvCancel.setVisibility(View.VISIBLE);
+                holder.date.setText(String.format(context.getString(R.string.order_train_time),
+                        bean.getStartDate(), bean.getStartTime()));
+                holder.date.setVisibility(View.VISIBLE);
+                holder.timerLayout.setVisibility(View.GONE);
+                holder.tvCancel.setVisibility(FormatUtil.parseDouble(bean.getPayAmount()) == 0 ?
+                        View.VISIBLE : View.GONE);
                 holder.tvConfirm.setVisibility(View.VISIBLE);
+                holder.tvPay.setVisibility(View.GONE);
+                holder.tvDelete.setVisibility(View.GONE);
                 break;
             case JOINED:            //已参加
                 holder.state.setText(context.getString(R.string.appointment_joined));
-                holder.timeOrId.setText(bean.getId());
                 holder.payTip.setText(context.getString(R.string.true_pay));
+                holder.date.setText(String.format(context.getString(R.string.order_train_time),
+                        bean.getStartDate(), bean.getStartTime()));
+                holder.date.setVisibility(View.VISIBLE);
+                holder.timerLayout.setVisibility(View.GONE);
                 holder.tvDelete.setVisibility(View.VISIBLE);
+                holder.tvPay.setVisibility(View.GONE);
+                holder.tvCancel.setVisibility(View.GONE);
+                holder.tvConfirm.setVisibility(View.GONE);
                 break;
             case CLOSE:             //已关闭
                 holder.state.setText(context.getString(R.string.order_close));
                 holder.payTip.setText(context.getString(R.string.true_pay));
+                holder.date.setText(String.format(context.getString(R.string.order_train_time),
+                        bean.getStartDate(), bean.getStartTime()));
+                holder.date.setVisibility(View.VISIBLE);
+                holder.timerLayout.setVisibility(View.GONE);
                 holder.tvDelete.setVisibility(View.VISIBLE);
+                holder.tvPay.setVisibility(View.GONE);
+                holder.tvCancel.setVisibility(View.GONE);
+                holder.tvConfirm.setVisibility(View.GONE);
+                break;
+            case REFUNDING:           //退款中
+                holder.state.setText(context.getString(R.string.order_refunding));
+                holder.date.setText(String.format(context.getString(R.string.order_train_time),
+                        bean.getStartDate(), bean.getStartTime()));
+                holder.date.setVisibility(View.VISIBLE);
+                holder.timerLayout.setVisibility(View.GONE);
+                holder.tvDelete.setVisibility(View.VISIBLE);
+                holder.tvPay.setVisibility(View.GONE);
+                holder.tvCancel.setVisibility(View.GONE);
+                holder.tvConfirm.setVisibility(View.GONE);
+                break;
+            case REFUNDED:             //已退款
+                holder.state.setText(context.getString(R.string.order_refunded));
+                holder.date.setText(String.format(context.getString(R.string.order_train_time),
+                        bean.getStartDate(), bean.getStartTime()));
+                holder.date.setVisibility(View.VISIBLE);
+                holder.timerLayout.setVisibility(View.GONE);
+                holder.tvDelete.setVisibility(View.VISIBLE);
+                holder.tvPay.setVisibility(View.GONE);
+                holder.tvCancel.setVisibility(View.GONE);
+                holder.tvConfirm.setVisibility(View.GONE);
                 break;
             default:
                 break;
@@ -128,7 +180,9 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
     class AppointmentHolder extends RecyclerView.ViewHolder {
         TextView state;
-        TextView timeOrId;
+        TextView date;
+        LinearLayout timerLayout;
+        CountdownView timer;
         ImageView cover;
         TextView name;
         TextView address;
@@ -143,7 +197,9 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             super(itemView);
 
             state = (TextView) itemView.findViewById(R.id.tv_state);
-            timeOrId = (TextView) itemView.findViewById(R.id.tv_id_or_time);
+            date = (TextView) itemView.findViewById(R.id.tv_date);
+            timerLayout = (LinearLayout) itemView.findViewById(R.id.ll_timer);
+            timer = (CountdownView)itemView.findViewById(R.id.timer);
             cover = (ImageView) itemView.findViewById(R.id.dv_goods_cover);
             name = (TextView) itemView.findViewById(R.id.tv_name);
             address = (TextView) itemView.findViewById(R.id.tv_address);

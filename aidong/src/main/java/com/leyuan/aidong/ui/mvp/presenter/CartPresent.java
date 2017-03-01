@@ -20,19 +20,24 @@ public interface CartPresent {
      */
     void pullToRefreshData();
 
+    /**
+     * 删除购物车中单类型商品
+     * @param id 商品id
+     */
+    void deleteSingleGoods(String id,int shopPosition,int goodsPosition);
 
     /**
-     * 删除购物车中商品
-     * @param ids 商品id 多个以逗号隔开
+     * 删除购物车中多类型商品
+     * @param ids 不同商品id 多个以逗号隔开
      */
-    void deleteCart(String ids);
+    void deleteMultiGoods(String ids);
 
     /**
      * 更新商品数量
      * @param id 商品id
      * @param mount 数量
      */
-    void updateCart(String id, int mount,int shopPosition,int goodsPosition);
+    void updateGoodsCount(String id, int mount, int shopPosition, int goodsPosition);
 
     /**
      * 添加商品到购物车

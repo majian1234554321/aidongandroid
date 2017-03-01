@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.video.VideoComment;
 import com.leyuan.aidong.utils.GlideLoader;
-import com.leyuan.aidong.widget.video.CircleImageView;
+import com.leyuan.aidong.widget.media.CircleImageView;
 
 import java.util.ArrayList;
 

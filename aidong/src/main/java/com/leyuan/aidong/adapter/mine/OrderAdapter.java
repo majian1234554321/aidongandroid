@@ -151,7 +151,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
                 break;
             case R.id.tv_express:
                 break;
-            case R.id.tv_receiving:
+            case R.id.tv_confirm:
                 break;
             case R.id.tv_delete:
                 break;
@@ -187,7 +187,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
             tvCancel = (TextView) itemView.findViewById(R.id.tv_cancel);
             tvPay = (TextView) itemView.findViewById(R.id.tv_pay);
             tvExpress = (TextView) itemView.findViewById(R.id.tv_express);
-            tvReceiving = (TextView) itemView.findViewById(R.id.tv_receiving);
+            tvReceiving = (TextView) itemView.findViewById(R.id.tv_confirm);
             tvDelete = (TextView) itemView.findViewById(R.id.tv_delete);
             tvAgainBuy = (TextView) itemView.findViewById(R.id.tv_again_buy);
             recyclerView.setLayoutManager(new LinearLayoutManager(context));

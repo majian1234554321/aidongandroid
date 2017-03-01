@@ -1,18 +1,13 @@
 package com.leyuan.aidong.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.util.Pair;
-import android.view.View;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.mvp.presenter.SystemPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SystemPresentImpl;
 import com.leyuan.aidong.utils.SharePrefUtils;
-import com.leyuan.aidong.utils.TransitionHelper;
 import com.leyuan.aidong.utils.UiManager;
 
 
@@ -31,10 +26,7 @@ public class SplashActivity extends BaseActivity {
                 if(isFirstEnter) {
                     UiManager.activityJump(SplashActivity.this, GuideActivity.class);
                 }else {
-                    Intent intent = new Intent(SplashActivity.this,MainActivity.class);
-                    final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(SplashActivity.this, false);
-                    ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(SplashActivity.this, pairs);
-                    startActivity(intent,optionsCompat.toBundle());
+                    UiManager.activityJump(SplashActivity.this, MainActivity.class);
                 }
                 finish();
             }

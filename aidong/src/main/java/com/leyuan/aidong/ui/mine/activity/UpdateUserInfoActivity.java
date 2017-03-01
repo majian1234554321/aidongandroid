@@ -26,12 +26,14 @@ import com.leyuan.aidong.module.photopicker.boxing.utils.BoxingFileHelper;
 import com.leyuan.aidong.module.photopicker.boxing_impl.ui.BoxingActivity;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mine.view.AddressDialog;
+import com.leyuan.aidong.ui.mine.view.SelectAddressDialog;
 import com.leyuan.aidong.ui.mvp.presenter.UserInfoPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.UserInfoPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.UpdateUserInfoActivityView;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.Utils;
 import com.leyuan.aidong.utils.qiniu.IQiNiuCallback;
 import com.leyuan.aidong.utils.qiniu.UploadQiNiuManager;
 import com.leyuan.aidong.widget.ExtendTextView;
@@ -45,7 +47,7 @@ import java.util.Locale;
  * 修改用户资料
  * Created by song on 2017/2/6.
  */
-public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserInfoActivityView,View.OnClickListener, AddressDialog.OnConfirmAddressListener {
+public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserInfoActivityView,View.OnClickListener, SelectAddressDialog.OnConfirmAddressListener {
     private static final int REQUEST_CODE = 1024;
     private ImageView ivBack;
     private TextView tvFinish;
@@ -63,7 +65,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
     private ExtendTextView tvFrequency;
 
     private ProfileBean profileBean;
-    private AddressDialog addressDialog;
+    private SelectAddressDialog addressDialog;
     private String avatarPath;
     private String avatarUrl;
     private String province;
@@ -119,6 +121,10 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
         tvFrequency.setRightContent(profileBean.getFrequency());
         avatarUrl = profileBean.getAvatar();
         GlideLoader.getInstance().displayCircleImage(avatarUrl, ivAvatar);
+
+        weight = FormatUtil.parseFloat(profileBean.getWeight());
+        height = FormatUtil.parseFloat(profileBean.getHeight());
+        setBMI();
     }
 
     private void setListener(){
@@ -162,7 +168,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
                 showSignatureDialog();
                 break;
             case R.id.address:
-                showAddressPopupWindow();
+                showAddressDialog();
                 break;
             case R.id.birthday:
                 showBirthdayDialog();
@@ -277,9 +283,9 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
                 .show();
     }
 
-    private void showAddressPopupWindow(){
+    private void showAddressDialog(){
         if(addressDialog == null){
-            addressDialog = new AddressDialog(this,R.style.time_dialog);
+            addressDialog = new SelectAddressDialog(this);
             addressDialog.setOnConfirmAddressListener(this);
         }
         addressDialog.show();
@@ -305,6 +311,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
                             mothers = monthOfYear;
                             days = dayOfMonth;
                             tvBirthday.setRightContent(years +"年" + (mothers + 1) + "月" + days + "日");
+                            tvZodiac.setRightContent(Utils.getConstellation(mothers+1,days));
                         }
                     }
                 }, years, mothers, days);
@@ -318,7 +325,9 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
                     public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                        height = FormatUtil.parseFloat(text.toString()) / 100;
                         tvHeight.setRightContent(text+"cm");
+                        setBMI();
                     }
                 })
                 .positiveText(android.R.string.cancel)
@@ -331,7 +340,9 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
                     public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                        weight = FormatUtil.parseFloat(text.toString());
                         tvWeight.setRightContent(text+"kg");
+                        setBMI();
                     }
                 })
                 .positiveText(android.R.string.cancel)
@@ -388,5 +399,13 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
             weight.add(String.valueOf(i));
         }
         return weight;
+    }
+
+    private float height;
+    private float weight;
+    private void setBMI(){
+        if(height != 0f && weight != 0f){
+            tvBmi.setRightContent(String.valueOf(Utils.calBMI(weight,height)));
+        }
     }
 }

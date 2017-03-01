@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ import static com.leyuan.aidong.utils.Constant.ORDER_FROM_CART;
  */
 public class CartHeaderView extends RelativeLayout implements ICartHeaderView,CartShopAdapter.ShopChangeListener{
     private Context context;
+    private LinearLayout root;
     private SwitcherLayout switcherLayout;
     private TextView tvRecommend;
     private RecyclerView shopView;
@@ -61,6 +63,7 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
 
     private void initView(){
         View headerView = LayoutInflater.from(context).inflate(R.layout.header_cart_view,this,true);
+        root = (LinearLayout) headerView.findViewById(R.id.root);
         shopView = (RecyclerView)headerView.findViewById(R.id.rv_cart);
         tvRecommend = (TextView) headerView.findViewById(R.id.tv_recommend);
         switcherLayout = new SwitcherLayout(context,shopView);
@@ -72,6 +75,10 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
 
     public void pullToRefreshCartData(){
         cartPresent.pullToRefreshData();
+        if(callback != null ){
+            callback.onTotalPriceChanged(0f);
+            callback.onAllCheckedChanged(false);
+        }
     }
 
     @Override
@@ -90,6 +97,8 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
             callback.onCartDataLoadFinish();
             callback.onAllGoodsDeleted();
         }
+        shopBeanList.clear();
+        shopAdapter.setData(shopBeanList);
         View view = View.inflate(context,R.layout.empty_cart,null);
         switcherLayout.addCustomView(view,"empty");
         switcherLayout.showCustomLayout("empty");
@@ -100,21 +109,21 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
         boolean isAllShopChecked = isAllShopChecked();
         double totalPrice = calculateTotalPrice();
         if(callback != null){
-            callback.onAllShopChecked(isAllShopChecked);
+            callback.onAllCheckedChanged(isAllShopChecked);
             callback.onTotalPriceChanged(totalPrice);
         }
         shopAdapter.notifyItemChanged(position);
     }
 
     @Override
-    public void onGoodsDeleted(String goodsId) {
-        cartPresent.deleteCart(goodsId);
+    public void onGoodsDeleted(String goodsId,int shopPosition,int goodsPosition) {
+        cartPresent.deleteSingleGoods(goodsId,shopPosition,goodsPosition);
     }
 
     @Override
     public void onGoodsCountChanged(String goodsId,int count,int shopPosition,int goodsPosition) {
         this.goodsCount = count;
-        cartPresent.updateCart(goodsId,count,shopPosition,goodsPosition);
+        cartPresent.updateGoodsCount(goodsId,count,shopPosition,goodsPosition);
     }
 
     @Override
@@ -134,17 +143,48 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
     }
 
     @Override
-    public void setDeleteGoodsResult(BaseBean baseBean,String ids) {
+    public void deleteSingleGoodsResult(BaseBean baseBean,String id,int shopPosition,int goodsPosition) {
         if(baseBean.getStatus() == 1){
+            //change date local
+            ShopBean shop = shopBeanList.get(shopPosition); // first,remove this goods
+            shop.getItem().remove(goodsPosition);
+            if(shop.getItem().isEmpty()){   //if the shop is empty ,remove it
+                shopBeanList.remove(shop);
+                if(shopBeanList.isEmpty()){ //if the cart is empty ,show empty cart
+                    showEmptyGoodsView();
+                    return;
+                }
+                shopAdapter.notifyItemRemoved(shopPosition);
+            }else {                        // if the shop's goods is all checked , check the shop too.
+                boolean isAllCheck = true;
+                for (GoodsBean bean : shop.getItem()) {
+                    if(!bean.isChecked()){
+                        isAllCheck = false;
+                        break;
+                    }
+                }
+                shop.setChecked(isAllCheck);
+                shopAdapter.notifyItemChanged(shopPosition);
+            }
             if(callback != null){
                 callback.onTotalPriceChanged(calculateTotalPrice());
+                callback.onAllCheckedChanged(isAllShopChecked());
             }
         }else {
             Toast.makeText(context,R.string.delete_fail,Toast.LENGTH_LONG).show();
         }
     }
 
+    @Override
+    public void deleteMultiGoodsResult(BaseBean baseBean) {
+        pullToRefreshCartData();
+    }
+
     private boolean isAllShopChecked(){
+        if(shopBeanList == null || shopBeanList.isEmpty()){
+            return false;
+        }
+
         boolean isAllShopChecked = true;
         for (ShopBean bean : shopBeanList) {
             if(!bean.isChecked()){
@@ -186,7 +226,7 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
         for (GoodsBean selectedGood : selectedGoods) {
             ids.append(selectedGood.getId()).append(",");
         }
-        cartPresent.deleteCart(ids.toString());
+        cartPresent.deleteMultiGoods(ids.toString());
     }
 
     public void settlementSelectGoods(){
@@ -198,7 +238,7 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
         ConfirmOrderActivity.start(context, ORDER_FROM_CART,selectedShops,calculateTotalPrice());
     }
 
-    public void selectAllGoods(boolean checked){
+    public void changeAllGoodsStatus(boolean checked){
         for (ShopBean bean : shopBeanList) {
             bean.setChecked(checked);
             for (GoodsBean goodsBean : bean.getItem()) {
@@ -244,7 +284,7 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
 
     public interface CartHeaderCallback{
         void onCartDataLoadFinish();
-        void onAllShopChecked(boolean allChecked);
+        void onAllCheckedChanged(boolean allChecked);
         void onTotalPriceChanged(double totalPrice);
         void onAllGoodsDeleted();
     }

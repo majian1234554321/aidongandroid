@@ -1,173 +1,181 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ll_filter"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/left_margin"
-    android:paddingRight="@dimen/right_margin"
     android:background="@color/white">
-    
-    <RelativeLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:focusable="true"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/left_margin"
+        android:paddingRight="@dimen/right_margin">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_finish_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="完成"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="筛选"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/line_color" />
+
         <TextView
-            android:id="@+id/tv_finish_filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="完成"
-            android:textSize="16sp"
-            android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:textColor="@color/black" />
+            android:paddingTop="10dp"
+            android:text="身份"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/line_color" />
+
+        <RadioGroup
+            android:id="@+id/rg_identify"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_all_identify"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/selector_filter_user_bg"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:text="全部"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <RadioButton
+                android:id="@+id/rb_user"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_filter_user_bg"
+                android:button="@null"
+                android:gravity="center"
+                android:text="健身爱好者"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <RadioButton
+                android:id="@+id/rb_coach"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_filter_user_bg"
+                android:button="@null"
+                android:gravity="center"
+                android:text="私教"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+        </RadioGroup>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/line_color" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="筛选"
-            android:textSize="16sp"
-            android:textColor="@color/black"
-            android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:layout_centerHorizontal="true"/>
-    </RelativeLayout>
-   
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/line_color"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="身份"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/line_color"/>
-
-    <RadioGroup
-        android:id="@+id/rg_identify"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
-
-        <RadioButton
-            android:id="@+id/rb_all_identify"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:text="全部"
-            android:textSize="14sp"
-            android:button="@null"
-            android:gravity="center"
-            android:checked="true"
+            android:paddingTop="10dp"
+            android:text="性别"
             android:textColor="@color/black"
-            android:background="@drawable/selector_filter_user_bg"/>
+            android:textSize="14sp" />
 
-        <RadioButton
-            android:id="@+id/rb_user"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:text="健身爱好者"
-            android:textSize="14sp"
-            android:button="@null"
-            android:gravity="center"
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/black"
-            android:background="@drawable/selector_filter_user_bg"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/line_color" />
 
-        <RadioButton
-            android:id="@+id/rb_coach"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:text="私教"
-            android:textSize="14sp"
-            android:button="@null"
-            android:gravity="center"
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/black"
-            android:background="@drawable/selector_filter_user_bg"/>
-    </RadioGroup>
+        <RadioGroup
+            android:id="@+id/rg_gender"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/line_color"/>
+            <RadioButton
+                android:id="@+id/rb_all_gender"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/selector_filter_user_bg"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:text="全部"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="性别"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"/>
+            <RadioButton
+                android:id="@+id/rb_man"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_filter_user_bg"
+                android:button="@null"
+                android:gravity="center"
+                android:text="男"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/line_color"/>
+            <RadioButton
+                android:id="@+id/rb_woman"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_filter_user_bg"
+                android:button="@null"
+                android:gravity="center"
+                android:text="女"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+        </RadioGroup>
 
-    <RadioGroup
-        android:id="@+id/rg_gender"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
-
-        <RadioButton
-            android:id="@+id/rb_all_gender"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:text="全部"
-            android:textSize="14sp"
-            android:button="@null"
-            android:gravity="center"
-            android:checked="true"
-            android:textColor="@color/black"
-            android:background="@drawable/selector_filter_user_bg"/>
-
-        <RadioButton
-            android:id="@+id/rb_man"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:text="男"
-            android:textSize="14sp"
-            android:button="@null"
-            android:gravity="center"
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/black"
-            android:background="@drawable/selector_filter_user_bg"/>
-
-        <RadioButton
-            android:id="@+id/rb_woman"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:text="女"
-            android:textSize="14sp"
-            android:button="@null"
-            android:gravity="center"
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/black"
-            android:background="@drawable/selector_filter_user_bg"/>
-    </RadioGroup>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/line_color"/>
-</LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/line_color" />
+    </LinearLayout>
+</ScrollView>

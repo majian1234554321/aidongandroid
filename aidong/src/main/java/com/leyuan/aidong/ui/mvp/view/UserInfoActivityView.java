@@ -1,9 +1,7 @@
 package com.leyuan.aidong.ui.mvp.view;
 
-import com.leyuan.aidong.entity.DynamicBean;
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.data.UserInfoData;
-
-import java.util.List;
 
 /**
  * 用户资料
@@ -12,5 +10,7 @@ import java.util.List;
 public interface UserInfoActivityView {
     void updateUserInfo(UserInfoData userInfoData);
 
+    void addFollowResult(BaseBean baseBean);
 
+    void cancelFollowResult(BaseBean baseBean);
 }

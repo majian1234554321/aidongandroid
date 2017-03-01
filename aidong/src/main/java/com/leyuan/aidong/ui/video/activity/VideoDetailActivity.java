@@ -24,7 +24,7 @@ import com.leyuan.aidong.ui.mine.account.LoginActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.Urls;
-import com.leyuan.aidong.widget.video.TextViewPrintly;
+import com.leyuan.aidong.widget.media.TextViewPrintly;
 
 
 import java.util.ArrayList;

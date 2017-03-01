@@ -19,31 +19,36 @@
         android:id="@+id/tv_buyer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:left_text="收货人:" />
+        app:left_text="收货人:"
+        app:line_color="@color/transparent"/>
 
     <com.leyuan.aidong.widget.ExtendTextView
         android:id="@+id/tv_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:left_text="联系方式:" />
+        app:left_text="联系方式:"
+        app:line_color="@color/transparent"/>
 
     <com.leyuan.aidong.widget.ExtendTextView
         android:id="@+id/tv_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:left_text="收货地址:" />
+        app:left_text="收货地址:"
+        app:line_color="@color/transparent"/>
 
     <com.leyuan.aidong.widget.ExtendTextView
         android:id="@+id/tv_invoice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:left_text="发票信息:" />
+        app:left_text="发票信息:"
+        app:line_color="@color/transparent"/>
 
     <com.leyuan.aidong.widget.ExtendTextView
         android:id="@+id/tv_remarks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:left_text="备注:" />
+        app:left_text="备注:"
+        app:line_color="@color/transparent" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_goods"

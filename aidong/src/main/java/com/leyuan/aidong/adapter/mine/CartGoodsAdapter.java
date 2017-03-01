@@ -124,7 +124,7 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
                         .setPositiveButton(context.getString(R.string.sure), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 if(goodsChangeListener != null){
-                                    goodsChangeListener.onGoodsDeleted(data.get(position).getId());
+                                    goodsChangeListener.onGoodsDeleted(data.get(position).getId(),position);
                                 }
                             }
                         })
@@ -170,7 +170,7 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
 
     public interface GoodsChangeListener {
         void onGoodsStatusChanged();
-        void onGoodsDeleted(String goodsId);
+        void onGoodsDeleted(String goodsId,int goodsPosition);
         void onGoodsCountChanged(String goodsId,int count,int goodsPosition);
     }
 }

@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
+
+import com.leyuan.aidong.ui.App;
+import com.leyuan.aidong.ui.mine.account.LoginActivity;
 
 public class UiManager {
 
@@ -11,6 +15,18 @@ public class UiManager {
         Intent intent = new Intent();
         intent.setClass(from, to);
         from.startActivity(intent);
+    }
+
+    public static void activityCheckLoginJump(Context from, Class<?> to) {
+        if(App.mInstance.isLogin()) {
+            Intent intent = new Intent();
+            intent.setClass(from, to);
+            from.startActivity(intent);
+        }else {
+            Toast.makeText(from,"请先登陆",Toast.LENGTH_LONG).show();
+            from.startActivity(new Intent(from, LoginActivity.class));
+        }
+
     }
 
     public static void activityJump(Context from, Bundle bundle, Class<?> to) {

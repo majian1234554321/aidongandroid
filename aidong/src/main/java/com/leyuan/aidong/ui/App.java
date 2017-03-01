@@ -12,7 +12,7 @@ import com.facebook.stetho.Stetho;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.module.chat.EmConfigManager;
 import com.leyuan.aidong.module.photopicker.BoxingGlideLoader;
-import com.leyuan.aidong.module.photopicker.BoxingUcrop;
+import com.leyuan.aidong.module.photopicker.BoxingUCrop;
 import com.leyuan.aidong.module.photopicker.boxing.BoxingCrop;
 import com.leyuan.aidong.module.photopicker.boxing.BoxingMediaLoader;
 import com.leyuan.aidong.module.photopicker.boxing.loader.IBoxingMediaLoader;
@@ -51,11 +51,11 @@ public class App extends Application {
         SDKInitializer.initialize(this);
         initBaiduLoc();
 
-        //initDbUtils();
+        initDbUtils();
         EmConfigManager.initialize(this);
         IBoxingMediaLoader loader = new BoxingGlideLoader();
         BoxingMediaLoader.getInstance().init(loader);
-        BoxingCrop.getInstance().init(new BoxingUcrop());
+        BoxingCrop.getInstance().init(new BoxingUCrop());
         //   initImagePicker();
 
 

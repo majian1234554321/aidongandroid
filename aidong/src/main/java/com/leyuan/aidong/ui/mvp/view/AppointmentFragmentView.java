@@ -9,11 +9,18 @@ import java.util.List;
  * Created by song on 2016/9/1.
  */
 public interface AppointmentFragmentView {
+
     /**
-     * 更新列表
+     * 刷新回调
      * @param appointmentBeanList
      */
-    void updateRecyclerView(List<AppointmentBean> appointmentBeanList);
+    void onRecyclerViewRefresh(List<AppointmentBean> appointmentBeanList);
+
+    /**
+     * 加载更多回调
+     * @param appointmentBeanList
+     */
+    void onRecyclerViewLoadMore(List<AppointmentBean> appointmentBeanList);
 
     /**
      * 显示空值界面

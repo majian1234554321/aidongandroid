@@ -17,6 +17,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.leyuan.aidong.utils.FileUtil.File2byte;
+
 /**
  * 七牛上传
  * Created by song on 2017/2/13.
@@ -35,6 +37,7 @@ public class UploadQiNiuManager {
     }
 
     public void uploadSingleImage(String path, final IQiNiuCallback callback){
+        qiNiuMediaUrls.clear();
         UploadManager uploadManager = new UploadManager();
         String expectKey = generateExpectKey(path,true);
         File file = new File(path);
@@ -42,7 +45,7 @@ public class UploadQiNiuManager {
         if (!file.exists() && file.length() <= 0) {
             return;
         }
-        byte[] bytes = file.length() > PHOTO_SIZE_LIMIT ? compressFile(path) : FileUtil.File2byte(path);
+        byte[] bytes = file.length() > PHOTO_SIZE_LIMIT ? compressFile(path) : File2byte(path);
         uploadManager.put(bytes, expectKey, QiNiuTokenUtils.getQiNiuToken(), new UpCompletionHandler() {
             @Override
             public void complete(String key, ResponseInfo responseInfo, JSONObject response) {
@@ -56,29 +59,42 @@ public class UploadQiNiuManager {
         }, new UploadOptions(null, "test-type", true, null, null));
     }
 
-    public void uploadSigleVideo(String path, final IQiNiuCallback callback) {
+    public void uploadMedia(boolean isPhoto,final List<BaseMedia> selectedMedia, final IQiNiuCallback callback){
+        qiNiuMediaUrls.clear();
         UploadManager uploadManager = new UploadManager();
-        String expectKey = generateExpectKey(path,false);
-        File file = new File(path);
-        file.mkdirs();
-        if (!file.exists() && file.length() <= 0) {
-            return;
-        }
-        byte[] bytes = FileUtil.File2byte(path);
-        uploadManager.put(bytes, expectKey, QiNiuTokenUtils.getQiNiuToken(), new UpCompletionHandler() {
-            @Override
-            public void complete(String key, ResponseInfo responseInfo, JSONObject response) {
-                if (responseInfo.isOK()) {
-                    qiNiuMediaUrls.add(key);
-                    callback.onSuccess(qiNiuMediaUrls);
-                }else {
-                    callback.onFail();
-                }
+        for (int i = 0; i < selectedMedia.size(); i++) {
+            BaseMedia bean = selectedMedia.get(i);
+            String path = bean.getPath();
+            String expectKey = generateExpectKey(path,isPhoto);
+            File file = new File(path);
+            file.mkdirs();
+            if (!file.exists() && file.length() <= 0) {
+                return;
             }
-        }, new UploadOptions(null, "test-type", true, null, null));
+            byte[] bytes;
+            if(isPhoto && file.length() > PHOTO_SIZE_LIMIT ){
+                bytes = compressFile(path);
+            }else {
+                bytes = FileUtil.File2byte(path);
+            }
+            uploadManager.put(bytes, expectKey, QiNiuTokenUtils.getQiNiuToken(), new UpCompletionHandler() {
+                @Override
+                public void complete(String key, ResponseInfo responseInfo, JSONObject response) {
+                    if (responseInfo.isOK()) {
+                        qiNiuMediaUrls.add(key);
+                        if (qiNiuMediaUrls.size() == selectedMedia.size()) {
+                            callback.onSuccess(qiNiuMediaUrls);
+                        }
+                    }else {
+                        callback.onFail();
+                    }
+                }
+            }, new UploadOptions(null, "test-type", true, null, null));
+        }
     }
 
-    public void uploadImages(final List<BaseMedia> selectedImages, final IQiNiuCallback callback){
+    public void uploadImages(final List<? extends BaseMedia> selectedImages, final IQiNiuCallback callback){
+        qiNiuMediaUrls.clear();
         UploadManager uploadManager = new UploadManager();
         for (int i = 0; i < selectedImages.size(); i++) {
             BaseMedia bean = selectedImages.get(i);
@@ -89,7 +105,7 @@ public class UploadQiNiuManager {
             if (!file.exists() && file.length() <= 0) {
                 return;
             }
-            byte[] bytes = file.length() > PHOTO_SIZE_LIMIT ? compressFile(path) : FileUtil.File2byte(path);
+            byte[] bytes = file.length() > PHOTO_SIZE_LIMIT ? compressFile(path) : File2byte(path);
             uploadManager.put(bytes, expectKey, QiNiuTokenUtils.getQiNiuToken(), new UpCompletionHandler() {
                 @Override
                 public void complete(String key, ResponseInfo responseInfo, JSONObject response) {
