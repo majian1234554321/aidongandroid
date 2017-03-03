@@ -10,7 +10,7 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
 import com.facebook.stetho.Stetho;
 import com.leyuan.aidong.entity.model.UserCoach;
-import com.leyuan.aidong.module.chat.EmConfigManager;
+import com.leyuan.aidong.module.chat.manager.EmConfigManager;
 import com.leyuan.aidong.module.photopicker.BoxingGlideLoader;
 import com.leyuan.aidong.module.photopicker.BoxingUcrop;
 import com.leyuan.aidong.module.photopicker.boxing.BoxingCrop;
@@ -159,14 +159,16 @@ public class App extends Application {
 
     public String getToken() {
         if (token == null) {
-            token = SharePrefUtils.getString(context, "token", null);
+            token = SharePrefUtils.getToken(context);
+
         }
         return token;
     }
 
     public void setToken(String token) {
         this.token = token;
-        SharePrefUtils.putString(context, "token", token);
+        SharePrefUtils.setToken(context,token);
+
     }
 
 

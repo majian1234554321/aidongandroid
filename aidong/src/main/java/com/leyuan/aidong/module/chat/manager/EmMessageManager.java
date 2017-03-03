@@ -1,10 +1,11 @@
-package com.leyuan.aidong.module.chat;
+package com.leyuan.aidong.module.chat.manager;
 
 import com.hyphenate.EMCallBack;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
+import com.leyuan.aidong.ui.App;
 
 import java.util.List;
 import java.util.Map;
@@ -118,7 +119,7 @@ public class EmMessageManager {
     }
 
 
-    public List<EMMessage> getAllMessages(String username) {
+    public static List<EMMessage> getAllMessages(String username) {
         EMConversation conversation = EMClient.getInstance().chatManager().getConversation(username);
 //获取此会话的所有消息
         List<EMMessage> messages = conversation.getAllMessages();
@@ -129,12 +130,18 @@ public class EmMessageManager {
         return messages;
     }
 
-    public int getUnReadMessageNum(String username) {
+    public static int getUnReadMessageNum(String username) {
         EMConversation conversation = EMClient.getInstance().chatManager().getConversation(username);
+        if (conversation == null)
+            return 0;
         return conversation.getUnreadMsgCount();
     }
 
-    public int getAllMessageNum(String username) {
+    public static int getUnReadMessageNum() {
+        return EMClient.getInstance().chatManager().getUnreadMessageCount();
+    }
+
+    public static int getAllMessageNum(String username) {
         EMConversation conversation = EMClient.getInstance().chatManager().getConversation(username);
 //获取此会话在本地的所有的消息数量
         conversation.getAllMsgCount();
@@ -142,7 +149,7 @@ public class EmMessageManager {
         return conversation.getAllMessages().size();
     }
 
-    public Map<String, EMConversation> getAllConversations() {
+    public static Map<String, EMConversation> getAllConversations() {
         //如果出现偶尔返回的conversations的sizi为0，
         // 那很有可能是没有调用EMClient.getInstance().chatManager().loadAllConversations()，
         // 或者调用顺序不对，具体用法请参考登录章节。
@@ -165,4 +172,7 @@ public class EmMessageManager {
         EMClient.getInstance().chatManager().importMessages(msgs);
     }
 
+    public static boolean isHaveUnreadMessage() {
+        return App.mInstance.isLogin() && getUnReadMessageNum() > 0;
+    }
 }

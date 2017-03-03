@@ -1,14 +1,20 @@
 package com.leyuan.aidong.entity.video;
 
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * 视界模块相关课程实体
  * Created song pc on 2016/7/25.
  */
 public class WatchOfficeCourseBean {
 
+    @SerializedName("cover")
     private String conUrl;
+    @SerializedName("id")
     private String conID;
+
+    @SerializedName("name")
     private String dictName;
 
     public String getConUrl() {

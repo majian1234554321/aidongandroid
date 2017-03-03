@@ -1,4 +1,4 @@
-package com.leyuan.aidong.module.chat;
+package com.leyuan.aidong.module.chat.manager;
 
 import com.hyphenate.EMContactListener;
 import com.hyphenate.chat.EMClient;

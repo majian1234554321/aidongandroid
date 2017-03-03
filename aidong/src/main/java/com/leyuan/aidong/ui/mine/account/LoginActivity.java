@@ -8,8 +8,8 @@ import android.widget.EditText;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.model.UserCoach;
-import com.leyuan.aidong.module.chat.EmChatLoginManager;
-import com.leyuan.aidong.module.chat.EmChatRegisterManager;
+import com.leyuan.aidong.module.chat.manager.EmChatLoginManager;
+import com.leyuan.aidong.module.chat.manager.EmChatRegisterManager;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.module.thirdpartylogin.ThirdLoginUtils;
 import com.leyuan.aidong.ui.BaseActivity;

@@ -5,6 +5,8 @@ package com.leyuan.aidong.entity;
  * 首页商品实体
  * Created by song on 2016/7/14.
  */
+
+@Deprecated
 public class GoodBean {
 
     private String ruleId;           //商品编码

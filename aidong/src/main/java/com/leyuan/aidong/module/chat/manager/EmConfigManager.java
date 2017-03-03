@@ -1,4 +1,4 @@
-package com.leyuan.aidong.module.chat;
+package com.leyuan.aidong.module.chat.manager;
 
 import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
@@ -20,6 +20,11 @@ import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.model.EaseNotifier;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.util.EMLog;
+import com.leyuan.aidong.entity.model.UserCoach;
+import com.leyuan.aidong.module.chat.CallReceiver;
+import com.leyuan.aidong.module.chat.MyContactListener;
+import com.leyuan.aidong.module.chat.MyGroupChangeListener;
+import com.leyuan.aidong.module.chat.db.DemoDBManager;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.mine.activity.EMChatActivity;
 import com.leyuan.aidong.utils.LogAidong;
@@ -38,7 +43,6 @@ import static android.content.Context.ACTIVITY_SERVICE;
 public class EmConfigManager {
 
     private static final String TAG = "EMChatConfigManager";
-    private static EmConfigManager instance;
     private EaseUI easeUI;
     private ArrayList<DataSyncListener> syncGroupsListeners;
     private ArrayList<DataSyncListener> syncContactsListeners;
@@ -49,12 +53,15 @@ public class EmConfigManager {
     private boolean isGroupAndContactListenerRegisted;
     private EMMessageListener messageListener;
 
+    private EmConfigManager() {
+    }
 
-    public synchronized static EmConfigManager getInstance() {
-        if (instance == null) {
-            instance = new EmConfigManager();
-        }
-        return instance;
+    private static class Inner {
+        private static EmConfigManager instance = new EmConfigManager();
+    }
+
+    public static EmConfigManager getInstance() {
+        return Inner.instance;
     }
 
     public void initializeEaseUi(Context context) {
@@ -305,14 +312,17 @@ public class EmConfigManager {
         // To get instance of EaseUser, here we get it from the user list in memory
         // You'd better cache it if you get it from your server
         EaseUser user = null;
-//        if(username.equals(EMClient.getInstance().getCurrentUser()))
-//            return getUserProfileManager().getCurrentUserInfo();
-//        user = getContactList().get(username);
-//        if(user == null && getRobotList() != null){
-//            user = getRobotList().get(username);
-//        }
-
-        // if user is not in your contacts, set inital letter for him/her
+        if (App.mInstance.isLogin()) {
+            if (username.equals(EMClient.getInstance().getCurrentUser())) {
+                UserCoach userCoach = App.mInstance.getUser();
+                user = new EaseUser(username);
+                user.setNickname(userCoach.getName());
+                user.setAvatar(userCoach.getAvatar());
+            } else {
+                user = DemoDBManager.getInstance().getContactList().get(username);
+                LogAidong.i("chat", "user = " + user + ", id = " + username);
+            }
+        }
         if (user == null) {
             user = new EaseUser(username);
             EaseCommonUtils.setUserInitialLetter(user);

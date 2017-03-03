@@ -1,18 +1,39 @@
 package com.leyuan.aidong.entity.video;
 
 
+import android.text.TextUtils;
+
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class LiveVideoInfo implements Serializable {
+    @SerializedName("id")
     private int liveId;
+
+    @SerializedName("title")
     private String liveName;
+    @SerializedName("author")
     private String liveAuthor;
+    @SerializedName("cover")
     private String liveCover;
+    @SerializedName("begin_time")
     private String liveBeginTime;
+
+    @SerializedName("over_time")
     private String liveEndTime;
+
+    @SerializedName("online")
     private int personCou;
+
+    @SerializedName("path")
     private String livePath;
+
+    @SerializedName("summary")
     private String liveContent;
+
+    @SerializedName("chat_room_id")
+    private String chat_room_id;
     private int commentsCou;
     private int praiseCou;
 
@@ -38,6 +59,14 @@ public class LiveVideoInfo implements Serializable {
 
     public void setPraiseCou(int praiseCou) {
         this.praiseCou = praiseCou;
+    }
+
+    public String getChat_room_id() {
+        return chat_room_id;
+    }
+
+    public void setChat_room_id(String chat_room_id) {
+        this.chat_room_id = chat_room_id;
     }
 
     public LiveVideoInfo() {
@@ -117,5 +146,22 @@ public class LiveVideoInfo implements Serializable {
 
     public void setLiveEndTime(String liveEndTime) {
         this.liveEndTime = liveEndTime;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    public boolean equalDateSimple(LiveVideoInfo info) {
+        if (TextUtils.equals(info.getDate(), this.getDate()))
+            return true;
+        return false;
+    }
+
+    private CharSequence getDate() {
+        if (liveBeginTime == null)
+            return null;
+        return liveBeginTime.substring(0, 10);
     }
 }

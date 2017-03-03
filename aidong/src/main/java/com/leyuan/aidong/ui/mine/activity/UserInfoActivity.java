@@ -18,12 +18,13 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.hyphenate.easeui.EaseConstant;
+import com.hyphenate.easeui.domain.EaseUser;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.mine.UserInfoPhotoAdapter;
 import com.leyuan.aidong.entity.ImageBean;
 import com.leyuan.aidong.entity.ProfileBean;
 import com.leyuan.aidong.entity.data.UserInfoData;
-import com.leyuan.aidong.module.chat.EmFriendManager;
+import com.leyuan.aidong.module.chat.db.DemoDBManager;
 import com.leyuan.aidong.module.photopicker.boxing_impl.view.SpacesItemDecoration;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
@@ -214,6 +215,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+
             case R.id.iv_back:
                 finish();
                 break;
@@ -224,7 +226,11 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
                 UpdatePhotoWallActivity.start(this, photos);
                 break;
             case R.id.tv_message:
-                EmFriendManager.getInstance().addFriend(userId, "meimei");
+//                EmFriendManager.getInstance().addFriend(userId, "meimei");
+                EaseUser user = new EaseUser(profileBean.getId());
+                user.setNickname(profileBean.getName());
+                user.setAvatar(profileBean.getAvatar());
+                DemoDBManager.getInstance().saveContact(user);
                 startActivity(new Intent(this, EMChatActivity.class).
                         putExtra(EaseConstant.EXTRA_USER_ID, userId));
                 break;
