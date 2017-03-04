@@ -1,40 +1,125 @@
 package com.leyuan.aidong.ui.video.activity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.leyuan.aidong.R;
+import com.leyuan.aidong.adapter.VideoCommentAdapter;
+import com.leyuan.aidong.entity.CommentBean;
+import com.leyuan.aidong.entity.model.UserCoach;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.mine.account.LoginActivity;
+import com.leyuan.aidong.ui.mvp.presenter.impl.VideoPresenterImpl;
+import com.leyuan.aidong.ui.mvp.view.VideoCommentView;
+import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.utils.ToastUtil;
+import com.leyuan.aidong.utils.UiManager;
+import com.leyuan.aidong.widget.CircleImageView;
+
+import java.util.List;
 
 
 /**
  * 视频评论界面
  * Created by song on 2016/7/22.
  */
-public class VideoCommentActivity extends BaseActivity {
-
-/*//    private TextView tvCourseName;
+public class VideoCommentActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, VideoCommentView {
 
     private VideoCommentAdapter adapter;
     private CircleImageView img_header;
     private EditText edit_comment;
     private ImageView video_detail_down_arrow;
+    private RecyclerView listView;
+    private SwipeRefreshLayout swipeLayout;
 
     private int videoId;
     private String videoName;
     private String idongId;
-    private int pageCurrent = 1;
     private String myHeadUrl;
     private int position;
+
+    private String series_id;
+    private String phase;
+    private int page;
+
+    private VideoPresenterImpl presenter;
+
+
+    public static void newInstance(Context context, int series_id, int phase, String videoName) {
+        Bundle bundle = new Bundle();
+        bundle.putInt(Constant.SEIRES_ID, series_id);
+        bundle.putInt(Constant.PHASE, phase);
+        bundle.putString(Constant.VIDEO_NAME, videoName);
+        UiManager.activityJump(context, bundle, VideoCommentActivity.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        videoId = getIntent().getIntExtra(Common.VIDEO_ID, 0);
-        videoName = getIntent().getStringExtra(Common.VIDEO_NAME);
-        position = getIntent().getIntExtra("position", 0);
-       // setContentView(R.layout.activity_video_comment);
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            series_id = String.valueOf(bundle.getInt(Constant.SEIRES_ID, 0));
+            phase = String.valueOf(bundle.getInt(Constant.PHASE, 0));
+            videoName = bundle.getString(Constant.VIDEO_NAME);
+        }
+        presenter = new VideoPresenterImpl(this);
+        presenter.setVideoCommentView(this);
+
+        setContentView(R.layout.activity_video_comment);
 
         initView();
         initData();
         getData();
     }
+
+    private void initView() {
+        swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+        listView = (RecyclerView) findViewById(R.id.lv_comment);
+        img_header = (CircleImageView) findViewById(R.id.img_header);
+        edit_comment = (EditText) findViewById(R.id.edit_comment);
+        video_detail_down_arrow = (ImageView) findViewById(R.id.video_detail_down_arrow);
+
+        edit_comment.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEND
+                        || actionId == EditorInfo.IME_ACTION_DONE
+//                        || (event != null && KeyEvent.KEYCODE_ENTER == event.getKeyCode() && KeyEvent.ACTION_DOWN == event.getAction())
+                        ) {
+                    if (TextUtils.isEmpty(idongId)) {
+                        startActivity(new Intent(VideoCommentActivity.this, LoginActivity.class));
+                    } else {
+                        String comment = edit_comment.getText().toString().trim();
+                        if (TextUtils.isEmpty(comment)) {
+                            ToastUtil.showConsecutiveShort("请输入内容");
+                        } else {
+                            edit_comment.setText("");
+                            pushComment(comment);
+                        }
+                    }
+                }
+                return false;
+            }
+        });
+
+        swipeLayout.setOnRefreshListener(this);
+    }
+
 
     private void initData() {
         if (videoName != null) {
@@ -52,164 +137,36 @@ public class VideoCommentActivity extends BaseActivity {
                 overridePendingTransition(0, R.anim.slide_out_from_top);
             }
         });
-        adapter = new VideoCommentAdapter(this, ImageLoader.getInstance());
+        adapter = new VideoCommentAdapter(this);
         listView.setAdapter(adapter);
     }
+
+
+    private void getData() {
+        page = 1;
+        presenter.getComments(series_id, phase, String.valueOf(page));
+    }
+
+    private void getMoreData() {
+        page++;
+        presenter.getComments(series_id, phase, String.valueOf(page));
+    }
+
 
     @Override
     protected void onResume() {
         super.onResume();
-//        idongId = mUtils.get("user");
-//        myHeadUrl = mUtils.get("headurl");
-        if (myHeadUrl != null) {
-            ImageLoader.getInstance().displayImage(myHeadUrl, img_header);
+        if (App.mInstance.isLogin()) {
+            UserCoach user = App.mInstance.getUser();
+            idongId = user.getId() + "";
+            myHeadUrl = user.getAvatar();
+            GlideLoader.getInstance().displayCircleImage(myHeadUrl, img_header);
         }
-    }
-
-    private void initView() {
-//        tvCourseName = (TextView) findViewById(R.id.tv_title);
-        listView = (PullToRefreshListView) findViewById(R.id.lv_comment);
-        img_header = (CircleImageView) findViewById(R.id.img_header);
-        edit_comment = (EditText) findViewById(R.id.edit_comment);
-        video_detail_down_arrow = (ImageView) findViewById(R.id.video_detail_down_arrow);
-
-        edit_comment.setOnEditorActionListener(new EditText.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEND
-                        || actionId == EditorInfo.IME_ACTION_DONE
-//                        || (event != null && KeyEvent.KEYCODE_ENTER == event.getKeyCode() && KeyEvent.ACTION_DOWN == event.getAction())
-                        ) {
-                    if (TextUtils.isEmpty(idongId)) {
-                        startActivity(new Intent(VideoCommentActivity.this, LoginActivity.class));
-                    } else {
-                        String comment = edit_comment.getText().toString().trim();
-                        if (TextUtils.isEmpty(comment)) {
-//                            ToastTools.makeShortText("请输入内容");
-                        } else {
-                            edit_comment.setText("");
-                            pushComment(comment);
-                        }
-                    }
-                }
-                return false;
-            }
-        });
-
-        listView.setOnRefreshListener(this);
     }
 
     private void pushComment(String comment) {
         Logger.i("videoComment ----------- ", comment);
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("videoId", String.valueOf(videoId));
-        params.addQueryStringParameter("idongId", idongId);
-        try {
-            params.addQueryStringParameter("comment", new String(comment.getBytes(), "UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-//        MyHttpUtils http = new MyHttpUtils();
-//        http.send(HttpRequest.HttpMethod.POST, Common.URL_PUSH_VIDEO_COMMENT, params, callbackPushComment);
-    }
-
-    private void getData() {
-        RequestParams params = new RequestParams();
-        params.addBodyParameter("videoId", String.valueOf(videoId));
-        params.addBodyParameter("pageCurrent", String.valueOf(pageCurrent));
-//        MyHttpUtils http = new MyHttpUtils();
-//        http.send(HttpRequest.HttpMethod.POST, Common.URL_VIDEO_COMMENT, params, callback);
-    }
-
-    private void getMoreData() {
-        RequestParams params = new RequestParams();
-        params.addBodyParameter("videoId", String.valueOf(videoId));
-        params.addBodyParameter("pageCurrent", String.valueOf(pageCurrent));
-//        MyHttpUtils http = new MyHttpUtils();
-//        http.send(HttpRequest.HttpMethod.POST, Common.URL_VIDEO_COMMENT, params, callbackMoreData);
-    }
-
-    private RequestCallBack<String> callbackPushComment = new RequestCallBack<String>() {
-        @Override
-        public void onSuccess(ResponseInfo<String> responseInfo) {
-            Logger.i("callbackPushComment" + "success :" + responseInfo.result);
-//            try {
-//                BaseResult<String> result = gson.fromJson(responseInfo.result, new TypeToken<BaseResult<String>>() {
-//                }.getType());
-//                if (Constants.SUCCESS_CODE == result.getCode()) {
-//                    //评论成功
-//                    pageCurrent = 1;
-//                    getData();
-//
-//                }
-//            } catch (JsonSyntaxException e) {
-//                e.printStackTrace();
-//            }
-        }
-
-        @Override
-        public void onFailure(HttpException e, String s) {
-
-        }
-    };
-
-    private RequestCallBack<String> callback = new RequestCallBack<String>() {
-        @Override
-        public void onSuccess(ResponseInfo<String> responseInfo) {
-            listView.onRefreshComplete();
-            Logger.i("httpResponse" + "success :" + responseInfo.result);
-//            try {
-//                BaseResult<ArrayList<VideoComment>> result = gson.fromJson(responseInfo.result, new TypeToken<BaseResult<ArrayList<VideoComment>>>() {
-//                }.getType());
-//                if (Constants.SUCCESS_CODE == result.getCode() && result.getResult() != null) {
-//                    adapter.freshData(result.getResult());
-//                    listView.setSelection(1);
-//                }
-//            } catch (JsonSyntaxException e) {
-//                e.printStackTrace();
-//            }
-        }
-
-        @Override
-        public void onFailure(HttpException e, String s) {
-            Log.i("httpResponse", "failure :" + s);
-            listView.onRefreshComplete();
-        }
-    };
-
-    private RequestCallBack<String> callbackMoreData = new RequestCallBack<String>() {
-
-        @Override
-        public void onSuccess(ResponseInfo<String> responseInfo) {
-            listView.onRefreshComplete();
-            Logger.i("callbackMoreData" + "success :" + responseInfo.result);
-//            try {
-//                BaseResult<ArrayList<VideoComment>> result = gson.fromJson(responseInfo.result, new TypeToken<BaseResult<ArrayList<VideoComment>>>() {
-//                }.getType());
-//                if (Constants.SUCCESS_CODE == result.getCode() && result.getResult() != null) {
-//                    adapter.addData(result.getResult());
-//                }
-//            } catch (JsonSyntaxException e) {
-//                e.printStackTrace();
-//            }
-        }
-
-        @Override
-        public void onFailure(HttpException e, String s) {
-            listView.onRefreshComplete();
-        }
-    };
-
-    @Override
-    public void onPullUpToRefresh(PullToRefreshBase refreshView) {
-        pageCurrent++;
-        getMoreData();
-    }
-
-    @Override
-    public void onPullDownToRefresh(PullToRefreshBase refreshView) {
-        pageCurrent = 1;
-        getData();
+        presenter.commentVideo(comment, series_id, phase);
     }
 
     @Override
@@ -218,5 +175,26 @@ public class VideoCommentActivity extends BaseActivity {
         finish();
         overridePendingTransition(0, R.anim.slide_out_from_top);
 
-    }*/
+    }
+
+    @Override
+    public void onRefresh() {
+        page = 1;
+        getData();
+    }
+
+    @Override
+    public void onGetCommentList(List<CommentBean> comment) {
+        adapter.freshData(comment);
+        listView.smoothScrollToPosition(0);
+    }
+
+    @Override
+    public void onPostCommentResult(boolean success) {
+        if (success) {
+            page = 1;
+            getData();
+        }
+    }
+
 }

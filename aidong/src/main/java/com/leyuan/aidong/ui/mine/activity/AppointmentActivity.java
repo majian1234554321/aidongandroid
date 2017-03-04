@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.mine.activity;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -30,6 +31,8 @@ public class AppointmentActivity extends BaseActivity implements SmartTabLayout.
     private SimpleTitleBar titleBar;
     private SmartTabLayout tabLayout;
     private ViewPager viewPager;
+    private FragmentPagerItemAdapter adapter;
+    private int currentItem = 0;
     private List<View> allTabView = new ArrayList<>();
 
     @Override
@@ -41,7 +44,6 @@ public class AppointmentActivity extends BaseActivity implements SmartTabLayout.
         tabLayout = (SmartTabLayout) findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.vp_content);
 
-
         FragmentPagerItems pages = new FragmentPagerItems(this);
         AppointmentFragment all = new AppointmentFragment();
         AppointmentFragment joined = new AppointmentFragment();
@@ -52,9 +54,10 @@ public class AppointmentActivity extends BaseActivity implements SmartTabLayout.
                 new Bundler().putString("type",AppointmentFragment.JOINED).get()));
         pages.add(FragmentPagerItem.of(null,unJoined.getClass(),
                 new Bundler().putString("type", AppointmentFragment.UN_JOIN).get()));
-        final FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(),pages);
+        adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(),pages);
 
         viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(currentItem);
         tabLayout.setCustomTabView(this);
         tabLayout.setViewPager(viewPager);
         tabLayout.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
@@ -65,6 +68,7 @@ public class AppointmentActivity extends BaseActivity implements SmartTabLayout.
                     TextView text = (TextView) tabAt.findViewById(R.id.tv_tab_text);
                     text.setTypeface(i == position ? Typeface.DEFAULT_BOLD :Typeface.DEFAULT);
                 }
+                currentItem = position;
             }
         });
 
@@ -74,6 +78,15 @@ public class AppointmentActivity extends BaseActivity implements SmartTabLayout.
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Fragment page = adapter.getPage(currentItem);
+        if(page != null && page instanceof AppointmentFragment){
+            ((AppointmentFragment) page).initData();
+        }
     }
 
     @Override

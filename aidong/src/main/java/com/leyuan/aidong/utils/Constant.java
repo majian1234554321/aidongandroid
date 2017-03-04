@@ -25,6 +25,8 @@ public class Constant {
     public static final String DELIVERY_EXPRESS = "0";
     public static final String DELIVERY_SELF = "1";
     public static final int DEFAULT_MAX_UPLOAD_IMAGE_COUNT = 6;        //上传照片数量限制
+    public static final String SEIRES_ID = "series_id";
+    public static final String PHASE = "phase";
 
     public static SystemBean systemInfoBean;
 

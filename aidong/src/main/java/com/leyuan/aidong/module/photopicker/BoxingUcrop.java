@@ -34,7 +34,7 @@ import com.yalantis.ucrop.UCrop;
  *
  * @author ChenSL
  */
-public class BoxingUcrop implements IBoxingCrop {
+public class BoxingUCrop implements IBoxingCrop {
 
     @Override
     public void onStartCrop(Context context, Fragment fragment, @NonNull BoxingCropOption cropConfig,

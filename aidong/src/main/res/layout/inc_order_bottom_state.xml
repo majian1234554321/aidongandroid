@@ -86,7 +86,7 @@
             android:visibility="gone"/>
 
         <TextView
-            android:id="@+id/tv_receiving"
+            android:id="@+id/tv_confirm"
             android:layout_width="168dp"
             android:layout_height="wrap_content"
             android:text="确认收货"

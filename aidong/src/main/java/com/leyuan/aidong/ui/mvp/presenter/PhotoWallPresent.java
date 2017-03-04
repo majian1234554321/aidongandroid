@@ -16,5 +16,5 @@ public interface PhotoWallPresent {
      * delete photo from photo wall
      * @param id the id of photo
      */
-    void deletePhotos(String id);
+    void deletePhotos(String id,int position);
 }

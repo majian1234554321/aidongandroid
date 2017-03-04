@@ -65,7 +65,7 @@ public class AppointmentPresentImpl implements AppointmentPresent {
                     appointmentFragmentView.showEmptyView();
                 }else{
                     switcherLayout.showContentLayout();
-                    appointmentFragmentView.updateRecyclerView(appointmentBeanList);
+                    appointmentFragmentView.onRecyclerViewRefresh(appointmentBeanList);
                 }
             }
         },type,Constant.PAGE_FIRST);
@@ -80,7 +80,7 @@ public class AppointmentPresentImpl implements AppointmentPresent {
                     appointmentBeanList = appointmentData.getAppointment();
                 }
                 if(!appointmentBeanList.isEmpty()){
-                    appointmentFragmentView.updateRecyclerView(appointmentBeanList);
+                    appointmentFragmentView.onRecyclerViewRefresh(appointmentBeanList);
                 }
             }
         },type, Constant.PAGE_FIRST);
@@ -95,7 +95,7 @@ public class AppointmentPresentImpl implements AppointmentPresent {
                     appointmentBeanList = appointmentData.getAppointment();
                 }
                 if(!appointmentBeanList.isEmpty()){
-                    appointmentFragmentView.updateRecyclerView(appointmentBeanList);
+                    appointmentFragmentView.onRecyclerViewLoadMore(appointmentBeanList);
                 }
                 //没有更多数据了显示到底提示
                 if(appointmentBeanList.size() < pageSize){

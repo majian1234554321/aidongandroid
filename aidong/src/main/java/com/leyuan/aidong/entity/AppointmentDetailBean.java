@@ -13,6 +13,7 @@ public class AppointmentDetailBean {
     private String cover;             //产品封面
     private AppointInfo appointment;    //预约信息
     private PayOrderBean pay;            //支付信息
+    private PayInfo payInfo;
 
 
     public class AppointInfo{
@@ -81,6 +82,7 @@ public class AppointmentDetailBean {
         private String pay_type;
         private String pay_option;
         private String status;
+        private String limitTime;
 
         public String getTotal() {
             return total;
@@ -144,6 +146,14 @@ public class AppointmentDetailBean {
 
         public void setStatus(String status) {
             this.status = status;
+        }
+
+        public String getLimitTime() {
+            return limitTime;
+        }
+
+        public void setLimitTime(String limitTime) {
+            this.limitTime = limitTime;
         }
     }
 
@@ -213,5 +223,13 @@ public class AppointmentDetailBean {
 
     public void setPay(PayOrderBean pay) {
         this.pay = pay;
+    }
+
+    public PayInfo getPayInfo() {
+        return payInfo;
+    }
+
+    public void setPayInfo(PayInfo payInfo) {
+        this.payInfo = payInfo;
     }
 }

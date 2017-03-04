@@ -53,6 +53,8 @@ public class ImageMedia extends BaseMedia implements Parcelable {
     private IMAGE_TYPE mImageType;
     private String mMimeType;
 
+    private String url;
+
     public enum IMAGE_TYPE {
         PNG, JPG, GIF
     }
@@ -62,16 +64,16 @@ public class ImageMedia extends BaseMedia implements Parcelable {
     }
 
     public ImageMedia(@NonNull File file) {
-        this.mId = String.valueOf(System.currentTimeMillis());
-        this.mPath = file.getAbsolutePath();
-        this.mSize = String.valueOf(file.length());
+        this.id = String.valueOf(System.currentTimeMillis());
+        this.path = file.getAbsolutePath();
+        this.size = String.valueOf(file.length());
         this.mIsSelected = true;
     }
 
     public ImageMedia(Builder builder) {
         super(builder.mId, builder.mImagePath);
         this.mThumbnailPath = builder.mThumbnailPath;
-        this.mSize = builder.mSize;
+        this.size = builder.mSize;
         this.mHeight = builder.mHeight;
         this.mIsSelected = builder.mIsSelected;
         this.mWidth = builder.mWidth;
@@ -106,6 +108,14 @@ public class ImageMedia extends BaseMedia implements Parcelable {
 
     public boolean compress(ImageCompressor imageCompressor, int maxSize) {
         return CompressTask.compress(imageCompressor, this, maxSize);
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     /**
@@ -144,7 +154,7 @@ public class ImageMedia extends BaseMedia implements Parcelable {
     }
 
     public String getId() {
-        return mId;
+        return id;
     }
 
     public int getHeight() {
@@ -183,7 +193,7 @@ public class ImageMedia extends BaseMedia implements Parcelable {
     }
 
     public void setSize(String size) {
-        mSize = size;
+        this.size = size;
     }
 
     public void setHeight(int height) {
@@ -199,15 +209,15 @@ public class ImageMedia extends BaseMedia implements Parcelable {
         return "ImageMedia{" +
                 ", mThumbnailPath='" + mThumbnailPath + '\'' +
                 ", mCompressPath='" + mCompressPath + '\'' +
-                ", mSize='" + mSize + '\'' +
+                ", size='" + size + '\'' +
                 ", mHeight=" + mHeight +
                 ", mWidth=" + mWidth;
     }
 
     @Override
     public int hashCode() {
-        int result = mId.hashCode();
-        result = 31 * result + (mPath != null ? mPath.hashCode() : 0);
+        int result = id.hashCode();
+        result = 31 * result + (path != null ? path.hashCode() : 0);
         return result;
     }
 
@@ -218,7 +228,7 @@ public class ImageMedia extends BaseMedia implements Parcelable {
         } else if (!TextUtils.isEmpty(mCompressPath)) {
             return mCompressPath;
         }
-        return mPath;
+        return path;
     }
 
 
@@ -231,7 +241,7 @@ public class ImageMedia extends BaseMedia implements Parcelable {
         if (getClass() != obj.getClass())
             return false;
         final ImageMedia other = (ImageMedia) obj;
-        return !(TextUtils.isEmpty(mPath) || TextUtils.isEmpty(other.mPath)) && this.mPath.equals(other.mPath);
+        return !(TextUtils.isEmpty(path) || TextUtils.isEmpty(other.path)) && this.path.equals(other.path);
     }
 
     public static class Builder {

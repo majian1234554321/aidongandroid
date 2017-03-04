@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="58dp">
 
-        <com.leyuan.aidong.widget.video.CircleImageView
+        <com.leyuan.aidong.widget.media.CircleImageView
             android:id="@+id/img_avatar"
             android:layout_width="36dp"
             android:layout_height="36dp"

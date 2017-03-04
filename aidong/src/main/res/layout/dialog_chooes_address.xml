@@ -40,6 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="right"
+        android:paddingRight="@dimen/right_margin"
         android:orientation="horizontal">
 
         <TextView
@@ -47,9 +48,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="取消"
-            android:padding="15dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             android:textColor="@color/c3"
-            android:textSize="15sp"
+            android:textSize="14sp"
+            android:layout_gravity="center_vertical"
             android:background="?selectableItemBackground" />
 
         <TextView
@@ -57,11 +62,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="确定"
-            android:padding="15dp"
-            android:layout_marginRight="@dimen/right_margin"
-            android:layout_marginLeft="@dimen/left_margin"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             android:textColor="@color/c3"
-            android:textSize="15sp"
+            android:textSize="14sp"
+            android:layout_gravity="center_vertical"
             android:background="?selectableItemBackground"/>
     </LinearLayout>
 </LinearLayout>

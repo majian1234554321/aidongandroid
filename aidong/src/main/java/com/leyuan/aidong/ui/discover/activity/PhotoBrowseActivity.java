@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -113,7 +112,7 @@ public class PhotoBrowseActivity extends BaseActivity {
             super.finish();
             return;
         }
-
+        dotIndicator.setVisibility(View.GONE);
         final Rect endRect = photoBrowseInfo.getViewLocalRects().get(photoViewpager.getCurrentItem());
         currentPhotoView.playExitAnima(endRect, blackBackground, new GalleryPhotoView.OnExitAnimaEndListener() {
             @Override

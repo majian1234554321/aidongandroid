@@ -2,10 +2,10 @@ package com.leyuan.aidong.http.api;
 
 import com.leyuan.aidong.entity.BaseBean;
 
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
-import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import rx.Observable;
 
@@ -19,8 +19,7 @@ public interface PhotoWallService {
     @POST("mine/photowall")
     Observable<BaseBean> addPhotos(@Field("photo[]") String... photo);
 
-    @FormUrlEncoded
-    @PUT("mine/photowall/{id}")
+    @DELETE("mine/photowall/{id}")
     Observable<BaseBean> deletePhotos(@Path("id") String id);
 
 }

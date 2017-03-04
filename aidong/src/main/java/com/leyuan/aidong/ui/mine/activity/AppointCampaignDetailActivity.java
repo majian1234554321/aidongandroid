@@ -158,7 +158,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         tvCancel = (TextView) findViewById(R.id.tv_cancel);
         tvPay = (TextView) findViewById(R.id.tv_pay);
         tvExpress = (TextView) findViewById(R.id.tv_express);
-        tvReceiving = (TextView) findViewById(R.id.tv_receiving);
+        tvReceiving = (TextView) findViewById(R.id.tv_confirm);
         tvDelete = (TextView) findViewById(R.id.tv_delete);
         tvAgainBuy = (TextView) findViewById(R.id.tv_again_buy);
     }

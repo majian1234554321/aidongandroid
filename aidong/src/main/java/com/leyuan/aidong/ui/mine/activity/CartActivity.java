@@ -34,7 +34,7 @@ import static com.leyuan.aidong.utils.Constant.RECOMMEND_TYPE_CART;
 /**
  * 购物车
  * Created by song on 2016/9/8.
- * //todo 购物车的实现需要重构
+ * //todo shit 购物车的实现需要重构
  */
 public class CartActivity extends BaseActivity implements CartActivityView, View.OnClickListener,
         SwipeRefreshLayout.OnRefreshListener, CartHeaderView.CartHeaderCallback {
@@ -138,7 +138,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
                 cartHeaderView.deleteSelectedGoods();
                 break;
             case R.id.rb_select_all:
-                cartHeaderView.selectAllGoods(rbSelectAll.isChecked());
+                cartHeaderView.changeAllGoodsStatus(rbSelectAll.isChecked());
                 break;
             default:
                 break;
@@ -159,6 +159,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
 
     @Override
     public void onCartDataLoadFinish() {
+        refreshLayout.setRefreshing(false);
         if(isFirstGetData) {
             isFirstGetData = false;
             tvEdit.setVisibility(View.VISIBLE);
@@ -166,13 +167,10 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
             cartHeaderView.showRecommendText(!isEditing);
             recommendPresent.pullToRefreshData(RECOMMEND_TYPE_CART);
         }
-        if(refreshLayout.isRefreshing()){
-            refreshLayout.setRefreshing(false);
-        }
     }
 
     @Override
-    public void onAllShopChecked(boolean allChecked) {
+    public void onAllCheckedChanged(boolean allChecked) {
         rbSelectAll.setChecked(allChecked);
     }
 

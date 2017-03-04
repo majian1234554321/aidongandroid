@@ -2,11 +2,10 @@ package com.leyuan.aidong.ui.mine.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,7 +13,7 @@ import android.widget.Toast;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.AddressBean;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mine.view.AddressPopupWindow;
+import com.leyuan.aidong.ui.mine.view.SelectAddressDialog;
 import com.leyuan.aidong.ui.mvp.presenter.AddressPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.AddressPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AddAddressActivityView;
@@ -25,8 +24,8 @@ import com.leyuan.aidong.utils.Utils;
  * 新增地址
  * Created by song on 2016/9/20.
  */
-public class AddAddressActivity extends BaseActivity implements View.OnClickListener,AddAddressActivityView, AddressPopupWindow.OnConfirmAddressListener {
-    private LinearLayout rootLayout;
+public class AddAddressActivity extends BaseActivity implements View.OnClickListener,
+        AddAddressActivityView, SelectAddressDialog.OnConfirmAddressListener {
     private ImageView ivBack;
     private TextView tvFinish;
     private EditText etUsername;
@@ -35,7 +34,7 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
     private EditText etDescAddress;
     private RadioButton rbDefault;
 
-    private AddressPopupWindow addressPopup;
+    private SelectAddressDialog addressDialog;
     private AddressPresent addressPresent;
 
     private String province;
@@ -53,7 +52,6 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
     }
 
     private void initView(){
-        rootLayout = (LinearLayout)findViewById(R.id.ll_root);
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tvFinish = (TextView) findViewById(R.id.tv_finish);
         etUsername = (EditText) findViewById(R.id.et_username);
@@ -77,20 +75,18 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
                 finish();
                 break;
             case R.id.tv_finish:
-                    if(Utils.isMobileNO(etPhone.getText().toString())) {
-                        addressPresent.addAddress(etUsername.getText().toString(), etPhone.getText().toString(),
-                                province, city, district, etDescAddress.getText().toString());
-                    }else {
-                        Toast.makeText(this,"请输入正确的手机号码!",Toast.LENGTH_LONG).show();
-                    }
-                    break;
+                if (checkInfo()) {
+                    addressPresent.addAddress(etUsername.getText().toString(), etPhone.getText().toString(),
+                            province, city, district, etDescAddress.getText().toString());
+                }
+                break;
             case R.id.tv_address:
                 KeyBoardUtil.closeKeyboard(etUsername,this);
-                if(addressPopup == null){
-                    addressPopup = new AddressPopupWindow(this);
-                    addressPopup.setOnConfirmAddressListener(this);
+                if(addressDialog == null){
+                    addressDialog = new SelectAddressDialog(this);
+                    addressDialog.setOnConfirmAddressListener(this);
                 }
-                addressPopup.showAtLocation(rootLayout, Gravity.BOTTOM,0,0);
+                addressDialog.show();
                 break;
             default:
                 break;
@@ -112,5 +108,30 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
         this.city = city;
         this.district = area;
         tvAddress.setText(new StringBuilder(province).append(city).append(area));
+    }
+
+    private boolean checkInfo() {
+        if(TextUtils.isEmpty(etUsername.getText())){
+            Toast.makeText(this,"请输入收件人!",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if(TextUtils.isEmpty(etPhone.getText())){
+            Toast.makeText(this,"请输入手机号码!",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if(TextUtils.isEmpty(tvAddress.getText())){
+            Toast.makeText(this,"请选择地址!",Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if(TextUtils.isEmpty(etDescAddress.getText())){
+            Toast.makeText(this,"请填写详细地址!",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if(!Utils.isMobileNO(etPhone.getText().toString())) {
+            Toast.makeText(this,"请输入正确的手机号码!",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
     }
 }

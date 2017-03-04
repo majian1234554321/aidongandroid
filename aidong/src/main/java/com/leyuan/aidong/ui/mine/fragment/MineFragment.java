@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.mine.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.model.UserCoach;
@@ -32,6 +34,8 @@ import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.UiManager;
 import com.leyuan.aidong.widget.AidongMineItem;
+
+import retrofit2.http.HEAD;
 
 
 public class MineFragment extends BaseFragment implements View.OnClickListener {
@@ -148,10 +152,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 UiManager.activityJump(getActivity(), LoginActivity.class);
                 break;
             case R.id.btn_shop_car:
-                UiManager.activityJump(getActivity(), CartActivity.class);
+                UiManager.activityCheckLoginJump(getActivity(), CartActivity.class);
                 break;
             case R.id.btn_message:
-                UiManager.activityJump(getActivity(), MessageActivity.class);
+                UiManager.activityCheckLoginJump(getActivity(), MessageActivity.class);
                 break;
             case R.id.imageView_head:
                 UserInfoActivity.start(getContext(), String.valueOf(App.mInstance.getUser().getId()));
@@ -164,23 +168,23 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(intent);*/
                 break;
             case R.id.relativeLayout_yuyue:
-                UiManager.activityJump(getActivity(), AppointmentActivity.class);
+                UiManager.activityCheckLoginJump(getActivity(), AppointmentActivity.class);
                 break;
             case R.id.relativeLayout_dingdang:
-                UiManager.activityJump(getActivity(), OrderActivity.class);
+                UiManager.activityCheckLoginJump(getActivity(), OrderActivity.class);
                 break;
             case R.id.item_my_coin:
                 UiManager.activityJump(getActivity(), LoveCoinActivity.class);
                 break;
             case R.id.item_my_coupon:
-                UiManager.activityJump(getActivity(), CouponActivity.class);
+                UiManager.activityCheckLoginJump(getActivity(), CouponActivity.class);
                 break;
             case R.id.item_sport_timing:
-                UiManager.activityJump(getActivity(), AiDongMomentActivity.class);
+                UiManager.activityCheckLoginJump(getActivity(), AiDongMomentActivity.class);
                 break;
             case R.id.item_address:
                 // AddressActivity.start(getActivity());
-                UiManager.activityJump(getActivity(), AddressActivity.class);
+                UiManager.activityCheckLoginJump(getActivity(), AddressActivity.class);
                 break;
             case R.id.item_recommend_friend:
                 UiManager.activityJump(getActivity(), TabMinePersonalSettingsActivity.class);
@@ -192,10 +196,15 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 UiManager.activityJump(getActivity(), TabMinePersonalSettingsActivity.class);
                 break;
             case R.id.linearLayout_guanzhu:
-                UiManager.activityJump(getActivity(), FollowActivity.class);
+                UiManager.activityCheckLoginJump(getActivity(), FollowActivity.class);
                 break;
             case R.id.linearLayout_beiguanzhu:
-                FollowActivity.start(getContext(), 1);
+                if (App.mInstance.isLogin()) {
+                    FollowActivity.start(getContext(), 1);
+                } else {
+                    Toast.makeText(getContext(), "请先登陆", Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(getContext(), LoginActivity.class));
+                }
                 break;
         }
     }

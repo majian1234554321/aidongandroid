@@ -28,9 +28,15 @@ public class VideoPresenterImpl {
     VideoRelationView videoRelationView;
     VideoCommentView videoCommentView;
 
+
     public VideoPresenterImpl(Context context) {
         this.context = context;
         videoModel = new VideoModelImpl();
+    }
+
+
+    public void setVideoCommentView(VideoCommentView videoCommentView) {
+        this.videoCommentView = videoCommentView;
     }
 
     public void setVideoListViewListener(VideoListViewLister listener) {
@@ -62,7 +68,7 @@ public class VideoPresenterImpl {
         }, page, type);
     }
 
-    public void getVideoDetail(String id) {
+    public void getVideoDetail(String series_id) {
         videoModel.getVideoDetail(new BaseSubscriber<VideoDetailResult>(context) {
             @Override
             public void onNext(VideoDetailResult videoDetailResult) {
@@ -78,7 +84,7 @@ public class VideoPresenterImpl {
                     videoDetailView.onGetVideoDetailList(null);
                 }
             }
-        }, id);
+        }, series_id);
     }
 
     public void likeVideo(String series_id, String video_id) {

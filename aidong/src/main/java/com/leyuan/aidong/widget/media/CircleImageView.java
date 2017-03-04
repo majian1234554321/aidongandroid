@@ -1,4 +1,4 @@
-package com.leyuan.aidong.widget.video;
+package com.leyuan.aidong.widget.media;
 
 /*
  * Copyright (C) 2014 The Android Open Source Project

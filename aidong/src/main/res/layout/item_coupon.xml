@@ -98,7 +98,7 @@
         android:layout_below="@+id/line"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="6dp"
         android:orientation="horizontal">
 
         <TextView
@@ -139,6 +139,7 @@
         android:layout_marginRight="15dp"
         android:layout_marginTop="10dp"
         android:textSize="14sp"
-        android:textColor="@color/c3" />
+        android:textColor="@color/c3"
+        android:visibility="gone"/>
 
 </RelativeLayout>

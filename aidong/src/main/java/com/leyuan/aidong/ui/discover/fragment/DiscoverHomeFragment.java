@@ -10,15 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.module.photopicker.boxing.Boxing;
 import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
-import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
 import com.leyuan.aidong.module.photopicker.boxing_impl.ui.BoxingActivity;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.discover.activity.PublishDynamicActivity;
+import com.leyuan.aidong.ui.mine.account.LoginActivity;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
@@ -38,7 +40,6 @@ public class DiscoverHomeFragment extends BaseFragment implements SmartTabLayout
     public static final int REQUEST_PHOTO = 1;
     public static final int REQUEST_VIDEO = 2;
     private List<View> allTabView = new ArrayList<>();
-    private ArrayList<BaseMedia> selectedImages = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
@@ -98,26 +99,31 @@ public class DiscoverHomeFragment extends BaseFragment implements SmartTabLayout
     private View.OnClickListener cameraClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            new MaterialDialog.Builder(getContext())
-                    .items(R.array.mediaType)
-                    .itemsCallback(new MaterialDialog.ListCallback() {
-                        @Override
-                        public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
-                            if(position == 0){
-                                takePhotos();
-                            }else {
-                                takeVideo();
+            if(App.mInstance.isLogin()) {
+                new MaterialDialog.Builder(getContext())
+                        .items(R.array.mediaType)
+                        .itemsCallback(new MaterialDialog.ListCallback() {
+                            @Override
+                            public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                                if (position == 0) {
+                                    takePhotos();
+                                } else {
+                                    takeVideo();
+                                }
                             }
-                        }
-                    })
-                    .show();
+                        })
+                        .show();
+            }else {
+                Toast.makeText(getContext(),"请先登陆再来发帖",Toast.LENGTH_LONG).show();
+                startActivity(new Intent(getContext(), LoginActivity.class));
+            }
         }
     };
 
     private void takePhotos(){
         BoxingConfig multi = new BoxingConfig(BoxingConfig.Mode.MULTI_IMG);
         multi.needCamera().maxCount(6).isNeedPaging();
-        Boxing.of(multi).withIntent(getContext(), BoxingActivity.class,selectedImages).start(this, REQUEST_PHOTO);
+        Boxing.of(multi).withIntent(getContext(), BoxingActivity.class).start(this, REQUEST_PHOTO);
     }
 
     private void takeVideo(){

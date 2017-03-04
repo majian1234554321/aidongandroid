@@ -7,15 +7,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.adapter.discover.UserAdapter;
 import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.adapter.discover.UserAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.DiscoverPresent;
 import com.leyuan.aidong.ui.mvp.presenter.FollowPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DiscoverPresentImpl;
@@ -48,7 +48,7 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
     private RecyclerView recyclerView;
 
     private DrawerLayout drawerLayout;
-    private LinearLayout filterLayout;
+    private ScrollView filterLayout;
     private TextView tvFinishFilter;
     private RadioGroup identifyGroup;
     private RadioGroup genderGroup;
@@ -62,6 +62,7 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
     private String gender = GENDER_ALL_GENDER;
     private DiscoverPresent userPresent;
     private FollowPresent followPresent;
+    private boolean isChange = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +84,7 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
         switcherLayout = new SwitcherLayout(this,refreshLayout);
         recyclerView = (RecyclerView)findViewById(R.id.rv_user);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        filterLayout = (LinearLayout) findViewById(R.id.ll_filter);
+        filterLayout = (ScrollView) findViewById(R.id.ll_filter);
         tvFinishFilter = (TextView) findViewById(R.id.tv_finish_filter);
         identifyGroup = (RadioGroup) findViewById(R.id.rg_identify);
         genderGroup = (RadioGroup) findViewById(R.id.rg_gender);
@@ -158,6 +159,7 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
+        isChange = true;
         if(group.getId() == R.id.rg_identify){
             switch (checkedId){
                 case R.id.rb_all_identify:
@@ -199,13 +201,20 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
     }
 
     private class SimpleDrawerDrawerListener extends  DrawerLayout.SimpleDrawerListener{
+        @Override
+        public void onDrawerOpened(View drawerView) {
+            super.onDrawerOpened(drawerView);
+            isChange = false;
+        }
 
         @Override
         public void onDrawerClosed(View drawerView) {
-            currPage = 1;
-            refreshLayout.setRefreshing(true);
-            RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-            userPresent.commonLoadUserData(switcherLayout,App.lat,App.lon,gender,type);
+            if(isChange) {
+                currPage = 1;
+                refreshLayout.setRefreshing(true);
+                RecyclerViewStateUtils.resetFooterViewState(recyclerView);
+                userPresent.pullToRefreshUserData(App.lat, App.lon, gender, type);
+            }
            // onRefresh();
         }
     }

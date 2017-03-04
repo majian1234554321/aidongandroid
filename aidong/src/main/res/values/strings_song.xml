@@ -50,6 +50,8 @@
     <string name="cancel_follow_fail">取消关注失败</string>
     <string name="confirm_call_up">确认拨打%1$s ?</string>
     <string name="input_content">请输入要搜索的内容</string>
+    <string name="order_train_time">活动时间：%1$s %2$s</string>
+    <string name="un_join_confirm">确认取消参加吗?</string>
 
     <string name="status_appoint">马上预约</string>
     <string name="status_end">预约已结束</string>
@@ -83,6 +85,8 @@
     <string name="delivered">已发货</string>
     <string name="order_finish">已完成</string>
     <string name="order_close">已关闭</string>
+    <string name="order_refunding">退款中</string>
+    <string name="order_refunded">已退款</string>
     <string name="un_self_delivery">待自提</string>
     <string name="self_delivered">已自提</string>
     <string name="appointment_joined">已参加</string>
@@ -91,7 +95,7 @@
     <string name="coupon_used">%1$s 已使用</string>
     <string name="coupon_expired">%1$s 到期</string>
     <string name="coupon_time">%1$s - %2$s</string>
-
+    <string name="order_no">预约号：%1$s </string>
     <string name="reply_other_user">回复%1$s：</string>
 
     <string name="exchange_coupon_success">兑换成功</string>
@@ -132,7 +136,8 @@
     <string name="handling">处理中</string>
     <string name="default_album">默认相册</string>
     <string name="nothing_found">什么也找不到</string>
-    <string name="too_many_picture">图片选择完成</string>
+    <string name="too_many_picture">最多选择%1$d张图片</string>
+    <string name="too_many_text">最多发送%1$d个字符</string>
 
     <string name="confirm_gender">请选择性别</string>
     <string name="confirm_date">请选择自提时间</string>
@@ -143,5 +148,5 @@
     <string name="confirm_weight">请选择体重</string>
     <string name="confirm_frequency">请选择运动频次</string>
     <string name="rationale_storage">App需要读取手机内存权限才能查看多媒体资源，请授予该权限</string>
-    <string name="rationale_camera">App需要使用相机权限才能拍照和录像，请授予该权限</string>
+    <string name="rationale_camera_and_audio">App需要使用相机和录音权限才能拍照和录像，请授予该权限</string>
 </resources>

@@ -63,12 +63,14 @@ public class WXShare {
     public void shareWeb(final String title, final String desc, String imageUrl, final String url, final boolean isCircleOfFriends) {
 
         if (api == null) {
-            api = WXAPIFactory.createWXAPI(context,  context.getString(R.string.weixingAppID), false);
+            api = WXAPIFactory.createWXAPI(context, context.getString(R.string.weixingAppID), false);
         }
         if (!api.isWXAppInstalled()) {
             Toast.makeText(context, "没有安装微信", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        shareWeb(title, desc, BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher), url, isCircleOfFriends);
 
 //        ImageRequestBuilder.newBuilderWithSource(Uri.parse(imageUrl))
 //                .setPostprocessor(new BasePostprocessor() {
@@ -144,7 +146,7 @@ public class WXShare {
 
     public void shareWeb(String title, String desc, Bitmap bitmap, String url, boolean isCircleOfFriends) {
 
-        Logger.i("share","shareWeb  bitmap getWidth = " + bitmap.getWidth()+",  height = " +bitmap.getHeight());
+        Logger.i("share", "shareWeb  bitmap getWidth = " + bitmap.getWidth() + ",  height = " + bitmap.getHeight());
         WXWebpageObject webpage = new WXWebpageObject();
         webpage.webpageUrl = url;
 
@@ -152,7 +154,7 @@ public class WXShare {
         msg.title = title;
         msg.description = desc;
 
-        bitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.ic_launcher);
+        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher);
         msg.thumbData = bmpToByteArray(bitmap, true);
 
 
@@ -160,9 +162,9 @@ public class WXShare {
         req.transaction = buildTransaction("webpage");
         req.message = msg;
         req.scene = isCircleOfFriends ? SendMessageToWX.Req.WXSceneTimeline : SendMessageToWX.Req.WXSceneSession;
-       boolean result =  api.sendReq(req);
+        boolean result = api.sendReq(req);
 
-        Logger.i("share","api.sendReq(req) return value = "  + result);
+        Logger.i("share", "api.sendReq(req) return value = " + result);
 
     }
 

@@ -12,15 +12,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.adapter.mine.AddressAdapter;
 import com.leyuan.aidong.entity.AddressBean;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.account.LoginActivity;
-import com.leyuan.aidong.adapter.mine.AddressAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.AddressPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.AddressPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AddressActivityView;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ import java.util.List;
  * Created by song on 2016/9/20.
  */
 public class AddressActivity extends BaseActivity implements View.OnClickListener, AddressActivityView, AddressAdapter.EditAddressListener {
+    private static final int MAX_ADDRESS_SIZE = 20;
     private static final int CODE_UPDATE_ADDRESS = 1;
     private static final int CODE_ADD_ADDRESS = 2;
 
@@ -97,11 +99,10 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void setAddress(List<AddressBean> addressBeanList) {
-        addressList = addressBeanList;
-        addressAdapter.setData(addressBeanList);
-        setAddAddressEnable();
+        addressList.addAll(addressBeanList);
+        addressAdapter.setData(addressList);
+        setAddAddressBarEnable();
     }
-
 
     @Override
     public void showEmptyView() {
@@ -116,10 +117,11 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void setDeleteAddress(BaseBean baseBean) {
-        if(baseBean.getStatus() == 1){
+        if(baseBean.getStatus() == Constant.OK){
             addressList.remove(position);
-            addressAdapter.setData(addressList);
-            setAddAddressEnable();
+            addressAdapter.notifyItemRemoved(position);
+            setEmptyView();
+            setAddAddressBarEnable();
         }else{
             Toast.makeText(this,getString(R.string.delete_fail),Toast.LENGTH_LONG).show();
         }
@@ -145,18 +147,27 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
                 AddressBean addressBean = data.getParcelableExtra("address");
                 addressList.add(0,addressBean);
                 addressAdapter.setData(addressList);
-                setAddAddressEnable();
+                setEmptyView();
+                setAddAddressBarEnable();
             }
         }
     }
 
-    private void setAddAddressEnable(){
-        if(addressList.size() >= 7){
+    private void setAddAddressBarEnable(){
+        if(addressList.size() >= MAX_ADDRESS_SIZE){
             tvAddAddress.setEnabled(false);
             tvAddAddress.setBackgroundResource(R.color.gray_normal);
         }else {
             tvAddAddress.setEnabled(true);
             tvAddAddress.setBackgroundResource(R.color.main_red);
+        }
+    }
+
+    private void setEmptyView(){
+        if(addressList.size() > 0){
+            switcherLayout.showContentLayout();
+        }else {
+            switcherLayout.showEmptyLayout();
         }
     }
 }

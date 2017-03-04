@@ -115,8 +115,16 @@ public class DynamicPresentImpl implements DynamicPresent{
     }
 
     @Override
-    public void postImageDynamic(String content, String... image) {
-        dynamicModel.postDynamic(new ProgressSubscriber<BaseBean>(context) {
+    public void postDynamic(boolean isPhoto,String content,String... media) {
+        if(isPhoto){
+            postImageDynamic(content,media);
+        }else {
+            postVideoDynamic(content,media[0]);
+        }
+    }
+
+    private void postImageDynamic(String content, String... image) {
+        dynamicModel.postDynamic(new ProgressSubscriber<BaseBean>(context,false) {
             @Override
             public void onNext(BaseBean baseBean) {
                 publishDynamicActivityView.publishDynamicResult(baseBean);
@@ -124,26 +132,14 @@ public class DynamicPresentImpl implements DynamicPresent{
         },content,null,image);
     }
 
-    @Override
-    public void postVideoDynamic(String content, String video) {
-        dynamicModel.postDynamic(new ProgressSubscriber<BaseBean>(context) {
+    private void postVideoDynamic(String content, String video) {
+        dynamicModel.postDynamic(new ProgressSubscriber<BaseBean>(context,false) {
             @Override
             public void onNext(BaseBean baseBean) {
                 publishDynamicActivityView.publishDynamicResult(baseBean);
             }
         },content,video,new String[]{});
     }
-
-    @Override
-    public void postDynamic(String content, String video, String... image) {
-        dynamicModel.postDynamic(new ProgressSubscriber<BaseBean>(context) {
-            @Override
-            public void onNext(BaseBean baseBean) {
-                publishDynamicActivityView.publishDynamicResult(baseBean);
-            }
-        },content,video,image);
-    }
-
 
     @Override
     public void addComment(String id, String content) {
@@ -217,6 +213,4 @@ public class DynamicPresentImpl implements DynamicPresent{
     public void getLikes(String id, int page) {
 
     }
-
-
 }

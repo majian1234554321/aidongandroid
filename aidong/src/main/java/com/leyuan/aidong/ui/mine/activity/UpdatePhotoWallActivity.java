@@ -35,19 +35,23 @@ import java.util.List;
  * 修改照片墙
  * Created by song on 2017/2/7.
  */
-public class UpdatePhotoWallActivity extends BaseActivity implements View.OnClickListener, PhotoWallAdapter.OnItemClickListener, UpdatePhotoWallActivityView {
+public class UpdatePhotoWallActivity extends BaseActivity implements View.OnClickListener,
+        PhotoWallAdapter.OnItemClickListener, UpdatePhotoWallActivityView {
+
     private static final int REQUEST_CODE = 1024;
 
     private ImageView ivBack;
     private TextView tvFinish;
     private RecyclerView rvPhoto;
     private PhotoWallAdapter photoWallAdapter;
-    private ArrayList<BaseMedia> selectedImages = new ArrayList<>();
+    private ArrayList<ImageBean> allSelectedImages = new ArrayList<>();
+    private ArrayList<ImageBean> selectedNetImages = new ArrayList<>();
+    private ArrayList<BaseMedia> selectedLocalImages = new ArrayList<>();
     private PhotoWallPresent photoWallPresent;
 
-    public static void start(Context context, ArrayList<ImageBean> photos) {
+    public static void start(Context context, List<ImageBean> photos) {
         Intent starter = new Intent(context, UpdatePhotoWallActivity.class);
-        starter.putParcelableArrayListExtra("photos",photos);
+        starter.putParcelableArrayListExtra("photos",(ArrayList<ImageBean>) photos);
         context.startActivity(starter);
     }
 
@@ -57,7 +61,8 @@ public class UpdatePhotoWallActivity extends BaseActivity implements View.OnClic
         setContentView(R.layout.activity_update_photo_wall);
         photoWallPresent = new PhotoWallPresentImpl(this,this);
         if(getIntent() != null){
-            selectedImages = getIntent().getParcelableArrayListExtra("photos");
+            selectedNetImages = getIntent().getParcelableArrayListExtra("photos");
+            allSelectedImages.addAll(selectedNetImages);
         }
         initView();
         setListener();
@@ -71,7 +76,7 @@ public class UpdatePhotoWallActivity extends BaseActivity implements View.OnClic
         rvPhoto.setAdapter(photoWallAdapter);
         rvPhoto.setLayoutManager(new GridLayoutManager(this,4));
         rvPhoto.addItemDecoration(new SpacesItemDecoration(getResources().getDimensionPixelOffset(R.dimen.photo_wall_margin), 4));
-        photoWallAdapter.setData(selectedImages);
+        photoWallAdapter.setData(selectedNetImages);
     }
 
     private void setListener(){
@@ -87,6 +92,10 @@ public class UpdatePhotoWallActivity extends BaseActivity implements View.OnClic
                 finish();
                 break;
             case R.id.tv_finish:
+                if(selectedNetImages.isEmpty()){
+                    Toast.makeText(UpdatePhotoWallActivity.this,"请先选择要上传的本地图片",Toast.LENGTH_LONG).show();
+                    return;
+                }
                 uploadToQiNiu();
                 break;
             default:
@@ -95,14 +104,15 @@ public class UpdatePhotoWallActivity extends BaseActivity implements View.OnClic
     }
 
     private void uploadToQiNiu(){
-        UploadQiNiuManager.getInstance().uploadImages(selectedImages, new IQiNiuCallback(){
+        showProgressDialog();
+        UploadQiNiuManager.getInstance().uploadImages(selectedLocalImages, new IQiNiuCallback(){
             @Override
             public void onSuccess(List<String> urls) {
-                Toast.makeText(UpdatePhotoWallActivity.this,"上传七牛成功",Toast.LENGTH_LONG).show();
                 uploadToServer(urls);
             }
             @Override
             public void onFail() {
+                dismissProgressDialog();
                 Toast.makeText(UpdatePhotoWallActivity.this,"上传失败",Toast.LENGTH_LONG).show();
             }
         });
@@ -120,8 +130,21 @@ public class UpdatePhotoWallActivity extends BaseActivity implements View.OnClic
     @Override
     public void onAddImageItemClick() {
         BoxingConfig multi = new BoxingConfig(BoxingConfig.Mode.MULTI_IMG);
-        multi.maxCount(8).isNeedPaging();
-        Boxing.of(multi).withIntent(this, BoxingActivity.class,selectedImages).start(this, REQUEST_CODE);
+        multi.maxCount(8 - selectedNetImages.size()).isNeedPaging();
+        Boxing.of(multi).withIntent(this, BoxingActivity.class,selectedLocalImages).start(this, REQUEST_CODE);
+    }
+
+    @Override
+    public void onDeleteNetImage(int position) {
+        photoWallPresent.deletePhotos(allSelectedImages.get(position).getId(),position);
+    }
+
+    @Override
+    public void onDeleteLocalImage(int position) {
+        allSelectedImages.remove(position);
+        photoWallAdapter.notifyItemRemoved(position);
+        photoWallAdapter.notifyItemRangeChanged(position,allSelectedImages.size());
+        selectedLocalImages.remove(position - selectedNetImages.size());
     }
 
     @Override
@@ -133,20 +156,37 @@ public class UpdatePhotoWallActivity extends BaseActivity implements View.OnClic
             }
             final ArrayList<BaseMedia> medias = Boxing.getResult(data);
             if (requestCode == REQUEST_CODE) {
-                selectedImages.clear();
-                selectedImages.addAll(medias);
-                photoWallAdapter.setData(selectedImages);
+                selectedLocalImages.clear();
+                selectedLocalImages.addAll(medias);
+
+                allSelectedImages.clear();
+                allSelectedImages.addAll(selectedNetImages);
+                for (BaseMedia selectedLocalImage : selectedLocalImages) {
+                    ImageBean imageBean = new ImageBean();
+                    imageBean.setPath(selectedLocalImage.getPath());
+                    allSelectedImages.add(imageBean);
+                }
+                photoWallAdapter.setData(allSelectedImages);
             }
         }
     }
 
     @Override
-    public void deletePhotoResult(BaseBean baseBean) {
-
+    public void deletePhotoResult(BaseBean baseBean,int position) {
+        if(baseBean.getStatus() == Constant.OK){
+            selectedNetImages.remove(position);
+            allSelectedImages.remove(position);
+            photoWallAdapter.notifyItemRemoved(position);
+            photoWallAdapter.notifyItemRangeChanged(position,allSelectedImages.size());
+            Toast.makeText(this,"删除成功",Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(this,"删除失败"+baseBean.getMessage(),Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
     public void addPhotosResult(BaseBean baseBean) {
+        dismissProgressDialog();
         if(baseBean.getStatus() == Constant.OK){
             Toast.makeText(this,"添加成功",Toast.LENGTH_LONG).show();
         }else {

@@ -26,32 +26,32 @@ import android.os.Parcelable;
  * @author ChenSL
  */
 public abstract class BaseMedia implements Parcelable {
-    protected enum TYPE {
+    public enum TYPE {
         IMAGE, VIDEO
     }
 
-    protected String mPath;
-    protected String mId;
-    protected String mSize;
-    protected String url;
+    protected String path;
+    protected String size;
+    protected String id;
+
 
     public BaseMedia() {
     }
 
     public BaseMedia(String id, String path) {
-        mId = id;
-        mPath = path;
+        this.id = id;
+        this.path = path;
     }
 
     public abstract TYPE getType();
 
     public String getId() {
-        return mId;
+        return id;
     }
 
     public long getSize() {
         try {
-            long result = Long.valueOf(mSize);
+            long result = Long.valueOf(size);
             return result > 0 ? result : 0;
         }catch (NumberFormatException size) {
             return 0;
@@ -59,19 +59,20 @@ public abstract class BaseMedia implements Parcelable {
     }
 
     public void setId(String id) {
-        mId = id;
+        this.id = id;
     }
 
     public void setSize(String size) {
-        mSize = size;
+        this.size = size;
     }
     public String getPath(){
-        return mPath;
+        return path;
     }
 
     public void setPath(String path) {
-        mPath = path;
+        this.path = path;
     }
+
 
 
     @Override
@@ -81,15 +82,15 @@ public abstract class BaseMedia implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.mPath);
-        dest.writeString(this.mId);
-        dest.writeString(this.mSize);
+        dest.writeString(this.path);
+        dest.writeString(this.id);
+        dest.writeString(this.size);
     }
 
     protected BaseMedia(Parcel in) {
-        this.mPath = in.readString();
-        this.mId = in.readString();
-        this.mSize = in.readString();
+        this.path = in.readString();
+        this.id = in.readString();
+        this.size = in.readString();
     }
 
 }

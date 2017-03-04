@@ -38,15 +38,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
-
-
 /**
  * A RecyclerView.Adapter for image or video picker showing.
  *
  * @author ChenSL
  */
 public class BoxingMediaAdapter extends RecyclerView.Adapter {
+
     private static final int CAMERA_TYPE = 0;
     private static final int NORMAL_TYPE = 1;
 

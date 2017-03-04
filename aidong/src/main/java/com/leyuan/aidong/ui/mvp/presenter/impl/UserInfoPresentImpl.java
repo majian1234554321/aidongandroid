@@ -10,7 +10,9 @@ import com.leyuan.aidong.http.subscriber.BaseSubscriber;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
+import com.leyuan.aidong.ui.mvp.model.FollowModel;
 import com.leyuan.aidong.ui.mvp.model.UserInfoModel;
+import com.leyuan.aidong.ui.mvp.model.impl.FollowModelImpl;
 import com.leyuan.aidong.ui.mvp.model.impl.UserInfoModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.UserInfoPresent;
 import com.leyuan.aidong.ui.mvp.view.UpdateUserInfoActivityView;
@@ -26,6 +28,7 @@ import com.leyuan.aidong.widget.SwitcherLayout;
 public class UserInfoPresentImpl implements UserInfoPresent{
     private Context context;
     private UserInfoModel userInfoModel;
+    private FollowModel followModel;
     private UserInfoActivityView userInfoActivityView;
     private UpdateUserInfoActivityView updateUserInfoActivityView;
     private UserDynamicFragmentView dynamicFragmentView;
@@ -36,6 +39,7 @@ public class UserInfoPresentImpl implements UserInfoPresent{
         if(userInfoModel == null){
             this.userInfoModel = new UserInfoModelImpl(context);
         }
+
     }
 
     public UserInfoPresentImpl(Context context, UpdateUserInfoActivityView view) {
@@ -102,45 +106,7 @@ public class UserInfoPresentImpl implements UserInfoPresent{
         },id,page);
     }
 
-    @Override
-    public void updateAvatar(String avatar) {
 
-    }
-
-    @Override
-    public void updateGender(String gender) {
-
-    }
-
-    @Override
-    public void updateBirthday(String birthday) {
-
-    }
-
-    @Override
-    public void updateSignature(String signature) {
-
-    }
-
-    @Override
-    public void updateAddress(String province, String city, String area) {
-
-    }
-
-    @Override
-    public void updateHeight(String height) {
-
-    }
-
-    @Override
-    public void updateWeight(String weight) {
-
-    }
-
-    @Override
-    public void updateFrequency(String frequency) {
-
-    }
 
     @Override
     public void updateUserInfo(String avatar,String gender, String birthday, String signature, String province,
@@ -151,5 +117,34 @@ public class UserInfoPresentImpl implements UserInfoPresent{
                 updateUserInfoActivityView.updateResult(baseBean);
             }
         },null,avatar,gender,birthday,signature,null,null,province,city,area,height,weight,null, null,null,null,frequency);
+    }
+
+    @Override
+    public void addFollow(String userId) {
+        if(followModel == null){
+            followModel = new FollowModelImpl();
+        }
+
+        followModel.addFollow(new ProgressSubscriber<BaseBean>(context) {
+            @Override
+            public void onNext(BaseBean baseBean) {
+                userInfoActivityView.addFollowResult(baseBean);
+            }
+        },userId);
+
+    }
+
+    @Override
+    public void cancelFollow(String userId) {
+        if(followModel == null){
+            followModel = new FollowModelImpl();
+        }
+
+        followModel.cancelFollow(new ProgressSubscriber<BaseBean>(context) {
+            @Override
+            public void onNext(BaseBean baseBean) {
+                userInfoActivityView.cancelFollowResult(baseBean);
+            }
+        },userId);
     }
 }

@@ -15,6 +15,7 @@ import android.view.Gravity;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.BannerBean;
+import com.leyuan.aidong.http.subscriber.handler.ProgressDialogHandler;
 import com.leyuan.aidong.ui.discover.activity.VenuesDetailActivity;
 import com.leyuan.aidong.ui.home.activity.CampaignDetailActivity;
 import com.leyuan.aidong.ui.home.activity.CourseDetailActivity;
@@ -33,6 +34,7 @@ public class BaseActivity extends AppCompatActivity {
     protected int pageSize = 25; //默认分页数据量
     protected int screenWidth;
     protected int screenHeight;
+    protected ProgressDialogHandler progressDialogHandler;
     public final static List<BaseActivity> mActivities = new LinkedList<>();
 
     @Override
@@ -162,6 +164,22 @@ public class BaseActivity extends AppCompatActivity {
         slide.setSlideEdge(Gravity.BOTTOM);
         slide.excludeTarget(android.R.id.statusBarBackground,true);
         getWindow().setEnterTransition(slide);
+    }
+
+    /**显示一个不能取消的加载提示框**/
+    protected void showProgressDialog(){
+        if (progressDialogHandler == null) {
+            progressDialogHandler = new ProgressDialogHandler(this,null,false);
+            progressDialogHandler.obtainMessage(ProgressDialogHandler.SHOW_PROGRESS_DIALOG).sendToTarget();
+        }
+    }
+
+    /**隐藏一个不能取消的加载提示框**/
+    protected void dismissProgressDialog(){
+        if (progressDialogHandler != null) {
+            progressDialogHandler.obtainMessage(ProgressDialogHandler.DISMISS_PROGRESS_DIALOG).sendToTarget();
+            progressDialogHandler = null;
+        }
     }
 
 }

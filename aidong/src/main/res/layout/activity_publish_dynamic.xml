@@ -26,6 +26,18 @@
             android:text="个人动态"
             android:textColor="@color/white"
             android:textSize="17sp" />
+
+        <Button
+            android:id="@+id/bt_send"
+            android:layout_width="45dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="发送"
+            android:textSize="14sp"
+            android:layout_marginRight="@dimen/right_margin"
+            android:textColor="@color/white"
+            android:background="@drawable/selector_button_send"/>
     </RelativeLayout>
 
     <ScrollView
@@ -64,7 +76,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentBottom="true"
-                    android:text="140字"
+                    android:text=""
+                    android:textSize="14sp"
                     android:textColor="@color/c9"
                     android:layout_marginRight="@dimen/right_margin"
                     android:layout_marginBottom="@dimen/right_margin"/>
@@ -86,7 +99,8 @@
                 android:background="@drawable/btn_shape_green"
                 android:text="@string/release"
                 android:textColor="@color/color_white"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:visibility="gone"/>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

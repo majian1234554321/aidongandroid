@@ -29,7 +29,7 @@ public class ServerException extends RuntimeException {
                 message = "该用户不存在";
                 break;
             case WRONG_PASSWORD:
-                message = "密码错误";
+                message = "您还未登陆";
                 break;
             default:
                 message = "未知错误";

@@ -37,8 +37,8 @@ public class VideoModelImpl {
                 .subscribe(subscriber);
     }
 
-    public void getVideoDetail(Observer<VideoDetailResult> subscriber, String id) {
-        service.getVideoDetail(id)
+    public void getVideoDetail(Observer<VideoDetailResult> subscriber, String series_id) {
+        service.getVideoDetail(series_id)
                 .compose(RxHelper.<VideoDetailResult>transform())
                 .subscribe(subscriber);
     }

@@ -60,7 +60,6 @@ public class CouponFragment extends BaseFragment implements CouponFragmentView{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        pageSize = 20;
         present = new CouponPresentImpl(getContext(),this);
         Bundle bundle = getArguments();
         if(bundle != null){

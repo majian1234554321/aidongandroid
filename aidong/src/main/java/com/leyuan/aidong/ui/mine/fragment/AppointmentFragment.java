@@ -6,12 +6,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.AppointmentBean;
-import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.adapter.mine.AppointmentAdapter;
+import com.leyuan.aidong.entity.AppointmentBean;
+import com.leyuan.aidong.ui.BaseLazyFragment;
 import com.leyuan.aidong.ui.mvp.presenter.AppointmentPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.AppointmentPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointmentFragmentView;
@@ -28,7 +27,7 @@ import java.util.List;
  * 预约
  * Created by song on 2016/8/31.
  */
-public class AppointmentFragment extends BaseFragment implements AppointmentFragmentView{
+public class AppointmentFragment extends BaseLazyFragment implements AppointmentFragmentView{
     public static final String ALL = "all";
     public static final String JOINED = "joined";
     public static final String UN_JOIN = "unJoin";
@@ -44,34 +43,27 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
 
     private AppointmentPresent present;
 
-    public static AppointmentFragment newInstance(String type){
-        Bundle bundle = new Bundle();
-        bundle.putString("type", type);
-        AppointmentFragment fragment = new AppointmentFragment();
-        fragment.setArguments(bundle);
-        return fragment;
-    }
-
     @Override
-    public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState){
-        present = new AppointmentPresentImpl(getContext(),this);
+    public View initView() {
         Bundle bundle = getArguments();
         if(bundle != null){
             type = bundle.getString("type");
         }
-        return inflater.inflate(R.layout.fragment_appointment,null);
+        present = new AppointmentPresentImpl(getContext(),this);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_appointment,null);
+        initSwipeRefreshLayout(view);
+        initRecyclerView(view);
+        return view;
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        initSwipeRefreshLayout(view);
-        initSwitcherLayout();
-        initRecyclerView(view);
+    public void initData() {
         present.commonLoadData(switcherLayout,type);
     }
 
     private void initSwipeRefreshLayout(View view) {
         refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.refreshLayout);
+        switcherLayout = new SwitcherLayout(getContext(),refreshLayout);
         setColorSchemeResources(refreshLayout);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -79,16 +71,6 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recyclerView);
                 present.pullToRefreshData(type);
-            }
-        });
-    }
-
-    private void initSwitcherLayout(){
-        switcherLayout = new SwitcherLayout(getContext(),refreshLayout);
-        switcherLayout.setOnRetryListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                present.commonLoadData(switcherLayout,type);
             }
         });
     }
@@ -114,11 +96,18 @@ public class AppointmentFragment extends BaseFragment implements AppointmentFrag
     };
 
     @Override
-    public void updateRecyclerView(List<AppointmentBean> appointmentBeanList) {
+    public void onRecyclerViewRefresh(List<AppointmentBean> appointmentBeanList) {
         if(refreshLayout.isRefreshing()){
-            data.clear();
             refreshLayout.setRefreshing(false);
         }
+        data.clear();
+        data.addAll(appointmentBeanList);
+        appointmentAdapter.setData(data);
+        wrapperAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onRecyclerViewLoadMore(List<AppointmentBean> appointmentBeanList) {
         data.addAll(appointmentBeanList);
         appointmentAdapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();
