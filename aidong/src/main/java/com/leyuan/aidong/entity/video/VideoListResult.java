@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class VideoListResult {
 
-    @SerializedName("video")
+    @SerializedName("videos")
     ArrayList<SpecialTopicInfo> video;
 
     public ArrayList<SpecialTopicInfo> getVideo() {

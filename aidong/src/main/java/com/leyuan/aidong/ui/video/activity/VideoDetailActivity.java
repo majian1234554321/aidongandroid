@@ -149,8 +149,8 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
                             int position = viewPager.getCurrentItem();
                             if (videos != null && videos.size() > 0) {
                                 VideoDetail detail = videos.get(position);
-                                VideoMoreActivity.newInstance(VideoDetailActivity.this, detail.getVideoName(),
-                                        String.valueOf(detail.getvId()), String.valueOf(detail.getPhase()), position);
+                                VideoMoreActivity.newInstance(VideoDetailActivity.this, detail.getVideoName()
+                                        , String.valueOf(series_id), position);
                             }
 
                         }
@@ -255,7 +255,7 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
                 if (videos != null && videos.size() > 0) {
                     VideoDetail detail = videos.get(position);
                     VideoMoreActivity.newInstance(VideoDetailActivity.this, detail.getVideoName(),
-                            String.valueOf(detail.getvId()), String.valueOf(detail.getPhase()), position);
+                            String.valueOf(series_id), position);
                 }
                 break;
             case R.id.iv_share:
@@ -268,16 +268,7 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
             case R.id.iv_reply:
                 if (videos != null && videos.size() > 0) {
                     VideoDetail detail_commont = videos.get(viewPager.getCurrentItem());
-
-                    VideoCommentActivity.newInstance(this,series_id,detail_commont.getPhase(),detail_commont.getVideoName());
-//
-//                            Intent intent = new Intent(this, VideoCommentActivity.class);
-//                    intent.putExtra(Constant.VIDEO_ID, detail_commont.getContentId());
-//                    intent.putExtra(Constant.VIDEO_NAME, detail_commont.getVideoName());
-//                    intent.putExtra(Constant.POSITION, viewPager.getCurrentItem());
-//
-//                    startActivity(intent);
-                    overridePendingTransition(R.anim.slide_in_bottom, 0);
+                    VideoCommentActivity.newInstance(this, series_id, detail_commont.getPhase(), detail_commont.getVideoName());
                 }
 
                 //评论
@@ -321,8 +312,8 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
     }
 
     @Override
-    public void onGetVideoDetailList(ArrayList<VideoDetail> videos) {
-
+    public void onGetVideoDetailList(ArrayList<VideoDetail> vs) {
+        this.videos = vs;
         if (phase == -1) {
             phase = videos.size() - 1;
         }

@@ -25,9 +25,9 @@ public class VideoModelImpl {
         service = RetrofitHelper.createApi(LiveVideoService.class);
     }
 
-    public void getHomeLives(Observer<LiveHomeResult> subscriber) {
+    public void getHomeLives(Observer<LiveHomeResult.LiveHome> subscriber) {
         service.getHomeLives()
-                .compose(RxHelper.<LiveHomeResult>transform())
+                .compose(RxHelper.<LiveHomeResult.LiveHome>transform())
                 .subscribe(subscriber);
     }
 
@@ -43,9 +43,9 @@ public class VideoModelImpl {
                 .subscribe(subscriber);
     }
 
-    public void getVideoRelation(Observer<VideoRelationResult> subscriber, String id, String page) {
+    public void getVideoRelation(Observer<VideoRelationResult.VideoRelation> subscriber, String id, String page) {
         service.getVideoRelation(id, page)
-                .compose(RxHelper.<VideoRelationResult>transform())
+                .compose(RxHelper.<VideoRelationResult.VideoRelation>transform())
                 .subscribe(subscriber);
     }
 

@@ -69,6 +69,15 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
         context.overridePendingTransition(R.anim.slide_in_bottom, 0);
     }
 
+    public static void newInstance(Activity context, String videoName, String series_id, int position) {
+        Intent intent = new Intent(context, VideoMoreActivity.class);
+        intent.putExtra("videoName", videoName);
+        intent.putExtra("series_id", series_id);
+        intent.putExtra("position", position);
+        context.startActivity(intent);
+        context.overridePendingTransition(R.anim.slide_in_bottom, 0);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +85,7 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
         Intent intent = getIntent();
         if (intent != null) {
             videoName = intent.getStringExtra("videoName");
-            videoId = intent.getStringExtra("videoId");
+            series_id = intent.getStringExtra("series_id");
             phase = intent.getStringExtra("phase");
             position = intent.getIntExtra("position", 0);
 
@@ -124,6 +133,7 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
 
     private void getData() {
         presenter.getVideoRelation(series_id, String.valueOf(page));
+//        presenter.getVideoRelation("5", String.valueOf(page));
     }
 
 
@@ -160,6 +170,8 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
 
     @Override
     public void onGetRelation(VideoRelationResult.VideoRelation relateBean) {
+        if (relateBean == null)
+            return;
         List<VideoDetail> videoList = relateBean.getVideo();
         List<WatchOfficeCourseBean> courseList = relateBean.getCourse();
         List<GoodsBean> goodList = relateBean.getGood();

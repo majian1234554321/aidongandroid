@@ -68,6 +68,25 @@ public class VideoPresenterImpl {
         }, page, type);
     }
 
+
+    public void getMoreVideoList(String page, String type) {
+        videoModel.getVideoList(new BaseSubscriber<VideoListResult>(context) {
+            @Override
+            public void onNext(VideoListResult videoListResult) {
+                if (viewListener != null)
+                    viewListener.onGetMoreVideoList(videoListResult.getVideo());
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                if (viewListener != null)
+                    viewListener.onGetMoreVideoList(null);
+            }
+        }, page, type);
+    }
+
+
     public void getVideoDetail(String series_id) {
         videoModel.getVideoDetail(new BaseSubscriber<VideoDetailResult>(context) {
             @Override
@@ -144,11 +163,11 @@ public class VideoPresenterImpl {
     }
 
     public void getVideoRelation(String id, String page) {
-        videoModel.getVideoRelation(new BaseSubscriber<VideoRelationResult>(context) {
+        videoModel.getVideoRelation(new BaseSubscriber<VideoRelationResult.VideoRelation>(context) {
             @Override
-            public void onNext(VideoRelationResult videoRelationResult) {
+            public void onNext(VideoRelationResult.VideoRelation videoRelation) {
                 if (videoRelationView != null)
-                    videoRelationView.onGetRelation(videoRelationResult.getRelation());
+                    videoRelationView.onGetRelation(videoRelation);
             }
 
             @Override
@@ -159,6 +178,5 @@ public class VideoPresenterImpl {
             }
         }, id, page);
     }
-
 
 }

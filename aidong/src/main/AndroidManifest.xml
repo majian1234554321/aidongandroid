@@ -148,13 +148,30 @@
         <activity android:name=".ui.discover.activity.NewsActivity" />
         <activity android:name=".ui.discover.activity.NewsDetailActivity" />
         <activity android:name=".ui.video.activity.WatchOfficeActivity" />
-        <activity android:name=".ui.video.activity.PlayerActivity" />
         <activity android:name=".ui.video.activity.VideoDetailActivity" />
         <activity android:name=".ui.video.activity.LiveCommentActivity" />
         <activity android:name=".ui.video.activity.LiveDetailActivity" />
         <activity android:name=".ui.video.activity.LivingVideoActivity" />
         <activity android:name=".ui.video.activity.VideoCommentActivity" />
+        <activity android:name=".ui.video.activity.VideoMoreActivity" />
         <activity android:name=".ui.WebViewActivity" />
+        <activity
+            android:name=".ui.video.activity.PlayerActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:launchMode="singleInstance"
+            android:screenOrientation="landscape"
+            android:theme="@style/PlayerTheme">
+            <intent-filter>
+                <action android:name="com.google.android.exoplayer.demo.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:scheme="content" />
+                <data android:scheme="asset" />
+                <data android:scheme="file" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.mine.activity.ApplyServiceActivity"
             android:screenOrientation="portrait"

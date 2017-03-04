@@ -22,7 +22,7 @@ import rx.Observable;
 public interface LiveVideoService {
 
     @GET("lives")
-    Observable<BaseBean<LiveHomeResult>> getHomeLives();
+    Observable<BaseBean<LiveHomeResult.LiveHome>> getHomeLives();
 
     //page-页码 list-类型(family-家庭 professional-专业 celebrity-名人)
     @GET("videos")
@@ -31,22 +31,22 @@ public interface LiveVideoService {
     @GET("videos/{series_id}")
     Observable<BaseBean<VideoDetailResult>> getVideoDetail(@Path("series_id") String series_id);
 
-    @FormUrlEncoded
-    @POST("videos/{series_id}/likes")
+//    @FormUrlEncoded
+    @POST("videos/{series_id}_{video_id}/likes")
     Observable<BaseBean<Object>> addLikes(@Path("series_id") String series_id,
-                                          @Field("video_id") String video_id);
+                                          @Path("video_id") String video_id);
 
     @GET("videos/{series_id}_{phase}/comments")
     Observable<BaseBean<CommentsVideoResult>> getComments(@Path("series_id") String series_id,
                                                           @Path("phase") String phase, @Query("page") String page);
 
     @FormUrlEncoded
-    @POST("videos/{series_id}/comments")
+    @POST("videos/{series_id}_{video_id}/comments")
     Observable<BaseBean<Object>> addCommont(@Path("series_id") String series_id,
-                                            @Field("content") String content, @Field("video_id") String video_id);
+                                            @Field("content") String content, @Path("video_id") String video_id);
 
-    @GET("vidoes/{id}/relations")
-    Observable<BaseBean<VideoRelationResult>> getVideoRelation(@Path("id") String id, @Query("page") String page);
+    @GET("videos/{id}/relations")
+    Observable<BaseBean<VideoRelationResult.VideoRelation>> getVideoRelation(@Path("id") String id, @Query("page") String page);
 
 
 }

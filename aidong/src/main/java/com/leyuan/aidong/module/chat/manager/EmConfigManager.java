@@ -20,6 +20,7 @@ import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.model.EaseNotifier;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.util.EMLog;
+import com.leyuan.aidong.entity.ProfileBean;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.module.chat.CallReceiver;
 import com.leyuan.aidong.module.chat.MyContactListener;
@@ -27,6 +28,8 @@ import com.leyuan.aidong.module.chat.MyGroupChangeListener;
 import com.leyuan.aidong.module.chat.db.DemoDBManager;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.mine.activity.EMChatActivity;
+import com.leyuan.aidong.ui.mvp.presenter.impl.ChatPresentImpl;
+import com.leyuan.aidong.ui.mvp.view.EmChatView;
 import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.Logger;
 
@@ -40,7 +43,7 @@ import static android.content.Context.ACTIVITY_SERVICE;
  * Created by user on 2016/12/15.
  */
 
-public class EmConfigManager {
+public class EmConfigManager implements EmChatView {
 
     private static final String TAG = "EMChatConfigManager";
     private EaseUI easeUI;
@@ -52,6 +55,8 @@ public class EmConfigManager {
     private Context appContext;
     private boolean isGroupAndContactListenerRegisted;
     private EMMessageListener messageListener;
+
+    private ChatPresentImpl present;
 
     private EmConfigManager() {
     }
@@ -72,6 +77,7 @@ public class EmConfigManager {
             EMClient.getInstance().setDebugMode(true);
             appContext = context;
             easeUI = EaseUI.getInstance();
+            present = new ChatPresentImpl(context, this);
             setEaseUIProviders();
             setGlobalListeners();
 
@@ -154,9 +160,11 @@ public class EmConfigManager {
                 for (EMMessage message : messages) {
                     EMLog.d(TAG, "onMessageReceived id : " + message.getMsgId());
                     // in background, do not refresh UI, notify it in notification bar
+                    setUserDb(message.getFrom());
                     if (!easeUI.hasForegroundActivies()) {
                         getNotifier().onNewMsg(message);
                     }
+
                 }
             }
 
@@ -203,6 +211,27 @@ public class EmConfigManager {
         };
 
         EMClient.getInstance().chatManager().addMessageListener(messageListener);
+    }
+
+    private void setUserDb(String fromId) {
+        EaseUser user = DemoDBManager.getInstance().getContactList().get(fromId);
+        if (user == null) {
+            ArrayList<String> ids = new ArrayList<>();
+            ids.add(fromId);
+            present.getUserInfo(ids);
+        }
+    }
+
+    @Override
+    public void onGetUserInfo(List<ProfileBean> profile) {
+        if (profile != null && !profile.isEmpty()) {
+            ProfileBean profileBean = profile.get(0);
+            EaseUser user = new EaseUser(profileBean.getId());
+            user.setAvatar(profileBean.getAvatar());
+            user.setNickname(profileBean.getName());
+            DemoDBManager.getInstance().saveContact(user);
+        }
+
     }
 
     private EaseNotifier getNotifier() {

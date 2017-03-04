@@ -10,4 +10,7 @@ import java.util.ArrayList;
 public interface VideoListViewLister {
 
     void onGetVideoList(ArrayList<SpecialTopicInfo> video);
+
+
+    void onGetMoreVideoList(ArrayList<SpecialTopicInfo> video);
 }

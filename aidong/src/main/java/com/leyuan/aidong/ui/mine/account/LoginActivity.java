@@ -72,10 +72,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 UiManager.activityJump(this, RegisterActivity.class);
                 break;
             case R.id.button_weixin:
-                sharePopupWindow.showAtBottom("测试标题","测试内容","http://o8e1adk04.bkt.clouddn.com/image/2016/11/18/941b1d51-9e24-47bb-8b1a-6a172abbdce3.jpg",
-                        "http://www.baidu.com");
-//                loginPresenter.loginThirdParty(ThirdLoginUtils.LOGIN_WEIXIN);
-//                DialogUtils.showDialog(this, "", false);
+//                sharePopupWindow.showAtBottom("测试标题","测试内容","http://o8e1adk04.bkt.clouddn.com/image/2016/11/18/941b1d51-9e24-47bb-8b1a-6a172abbdce3.jpg",
+//                        "http://www.baidu.com");
+                loginPresenter.loginThirdParty(ThirdLoginUtils.LOGIN_WEIXIN);
+                DialogUtils.showDialog(this, "", false);
 
                 break;
             case R.id.button_weibo:

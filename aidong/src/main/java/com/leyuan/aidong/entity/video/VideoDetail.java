@@ -15,6 +15,8 @@ public class VideoDetail {
     @SerializedName("phase")
     private int phase;
 
+
+    @SerializedName("name")
     private String videoName;
 
     @SerializedName("author")
@@ -31,9 +33,19 @@ public class VideoDetail {
     @SerializedName("comments_counter")
     private String commentsCount;
 
+    @SerializedName("updated_at")
+    private String updated_at;
     private int contentId;
 
-//    public VideoDetail(int vId, String cover, String video, int phase, String videoName,
+    public String getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(String updated_at) {
+        this.updated_at = updated_at;
+    }
+
+    //    public VideoDetail(int vId, String cover, String video, int phase, String videoName,
 //                       String author, String during, String introduce, String likesCount, String commentsCount) {
 //        this.vId = vId;
 //        this.cover = cover;

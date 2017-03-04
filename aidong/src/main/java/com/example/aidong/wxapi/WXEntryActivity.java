@@ -46,6 +46,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 		switch (resp.errCode) {
 			case BaseResp.ErrCode.ERR_OK:
 				result = "发送成功";
+
 				code_code = ((SendAuth.Resp) resp).code;
 				//此处进行数据请求，请求用户信息
 				Toast.makeText(this, result+code_code, Toast.LENGTH_LONG).show();

@@ -10,7 +10,7 @@ public class SpecialTopicInfo {
     private String name;
 
     @SerializedName("finished")
-    private int finished;
+    private boolean finished;
 
     @SerializedName("latest")
     private Latest latest;
@@ -31,11 +31,11 @@ public class SpecialTopicInfo {
         this.name = name;
     }
 
-    public int getFinished() {
+    public boolean getFinished() {
         return finished;
     }
 
-    public void setFinished(int finished) {
+    public void setFinished(boolean finished) {
         this.finished = finished;
     }
 
@@ -53,7 +53,7 @@ public class SpecialTopicInfo {
         private int phase;
         @SerializedName("author")
         private String author;
-        @SerializedName("updated_at")
+        @SerializedName("created_at")
         private String updated;
         @SerializedName("name")
         private String videoName;

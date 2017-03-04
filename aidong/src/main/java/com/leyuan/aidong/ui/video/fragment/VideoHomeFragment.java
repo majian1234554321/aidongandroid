@@ -237,10 +237,9 @@ public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.
     }
 
     @Override
-    public void onGetLiveHomeData(LiveHomeResult liveHomeResult) {
+    public void onGetLiveHomeData(LiveHomeResult.LiveHome liveHome) {
         swipeRefreshLayout.setRefreshing(false);
-        if (liveHomeResult != null && liveHomeResult.getLive() != null) {
-            LiveHomeResult.LiveHome liveHome = liveHomeResult.getLive();
+        if (liveHome != null) {
             adapter.refreshData(liveHome.getNow(),
                     LiveVideoSoonInfo.createMoreLive(liveHome.getMore()), liveHome.getEmpty());
             mHandler.removeCallbacksAndMessages(null);

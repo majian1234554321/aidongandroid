@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -26,7 +25,7 @@
             android:layout_marginTop="18dp"
             android:text="课程名字"
             android:textColor="@color/white"
-            android:textSize="17sp"/>
+            android:textSize="17sp" />
 
         <ImageView
             android:id="@+id/iv_down_arrow"
@@ -35,17 +34,17 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="2dp"
             android:padding="15dp"
-            android:src="@drawable/video_detail_down_arrow"/>
+            android:src="@drawable/video_detail_down_arrow" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="57dp"
-            android:background="#77ebebeb"/>
+            android:background="#77ebebeb" />
     </RelativeLayout>
 
-    <com.example.aidong.view.SmartScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <com.leyuan.aidong.widget.SmartScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -70,26 +69,25 @@
                 android:drawablePadding="6dp"
                 android:text="相关视频"
                 android:textColor="@color/white"
-                android:textSize="13sp"/>
+                android:textSize="13sp" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_relate_relate_video"
                 android:layout_width="match_parent"
                 android:layout_height="146dp"
-                android:scrollbars="none"
                 android:layout_marginLeft="7.5dp"
                 android:layout_marginRight="7.5dp"
                 android:layout_marginTop="33dp"
                 android:clipChildren="false"
-                android:clipToPadding="false">
-            </android.support.v7.widget.RecyclerView>
+                android:clipToPadding="false"
+                android:scrollbars="none"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_below="@+id/rv_relate_relate_video"
                 android:layout_marginLeft="15dp"
-                android:background="#77ebebeb"/>
+                android:background="#77ebebeb" />
 
             <TextView
                 android:id="@+id/tv_relate_course"
@@ -101,9 +99,9 @@
                 android:drawablePadding="6dp"
                 android:text="相关课程"
                 android:textColor="@color/white"
-                android:textSize="13sp"/>
+                android:textSize="13sp" />
 
-            <com.example.aidong.view.MyListView
+            <com.leyuan.aidong.widget.MyListView
                 android:id="@+id/lv_relate_course"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -111,8 +109,7 @@
                 android:layout_marginTop="33dp"
                 android:divider="@null"
                 android:dividerHeight="10dp"
-                android:paddingBottom="10dp">
-            </com.example.aidong.view.MyListView>
+                android:paddingBottom="10dp"/>
 
 
             <View
@@ -121,7 +118,7 @@
                 android:layout_height="0.5dp"
                 android:layout_below="@+id/lv_relate_course"
                 android:layout_marginLeft="15dp"
-                android:background="#77ebebeb"/>
+                android:background="#77ebebeb" />
 
             <TextView
                 android:id="@+id/tv_relate_good"
@@ -133,7 +130,7 @@
                 android:drawablePadding="6dp"
                 android:text="相关商品"
                 android:textColor="@color/white"
-                android:textSize="13sp"/>
+                android:textSize="13sp" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_relate_good"
@@ -142,15 +139,14 @@
                 android:layout_below="@+id/view_middle"
                 android:layout_marginLeft="7.5dp"
                 android:layout_marginRight="7.5dp"
-                android:layout_marginTop="33dp">
-            </android.support.v7.widget.RecyclerView>
+                android:layout_marginTop="33dp"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_below="@+id/rv_relate_good"
                 android:layout_marginLeft="15dp"
-                android:background="#77ebebeb"/>
+                android:background="#77ebebeb" />
 
             <ImageView
                 android:id="@+id/iv_end"
@@ -159,15 +155,15 @@
                 android:layout_below="@+id/rv_relate_good"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="25dp"
-                android:src="@drawable/img_end_white"/>
+                android:src="@drawable/img_end_white" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="87dp"
                 android:layout_below="@+id/iv_end"
-                android:background="#00000000"/>
+                android:background="#00000000" />
         </RelativeLayout>
-    </com.example.aidong.view.SmartScrollView>
+    </com.leyuan.aidong.widget.SmartScrollView>
 
 
 </FrameLayout>

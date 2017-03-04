@@ -2,24 +2,25 @@ package com.leyuan.aidong.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CommentBean;
 import com.leyuan.aidong.utils.GlideLoader;
-import com.leyuan.aidong.widget.media.CircleImageView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class VideoCommentAdapter extends RecyclerView.Adapter<VideoCommentAdapter.ViewHolder> {
-    private Context context;
+    private LayoutInflater inflaster;
     private List<CommentBean> mComments = new ArrayList<>();
 
     public VideoCommentAdapter(Context context) {
-        this.context = context;
+        inflaster = LayoutInflater.from(context);
     }
 
     public void freshData(List<CommentBean> comments) {
@@ -40,7 +41,7 @@ public class VideoCommentAdapter extends RecyclerView.Adapter<VideoCommentAdapte
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = View.inflate(context, R.layout.item_video_comments, null);
+        View view = inflaster.inflate(R.layout.item_video_comments, parent, false);
         return new ViewHolder(view);
     }
 
@@ -51,7 +52,7 @@ public class VideoCommentAdapter extends RecyclerView.Adapter<VideoCommentAdapte
         GlideLoader.getInstance().displayImage(comment.getPublisher().getAvatar(), holder.img_avatar);
         holder.txt_user.setText("" + comment.getPublisher().getName());
         holder.txt_content.setText("" + comment.getContent());
-        holder.txt_time.setText("" + comment.getContent());
+        holder.txt_time.setText("" + comment.getPublishedAt());
     }
 
 
@@ -66,12 +67,12 @@ public class VideoCommentAdapter extends RecyclerView.Adapter<VideoCommentAdapte
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        CircleImageView img_avatar;
+        ImageView img_avatar;
         TextView txt_user, txt_content, txt_time;
 
         public ViewHolder(View convertView) {
             super(convertView);
-            img_avatar = (CircleImageView) convertView.findViewById(R.id.img_avatar);
+            img_avatar = (ImageView) convertView.findViewById(R.id.img_avatar);
             txt_user = (TextView) convertView.findViewById(R.id.txt_user);
             txt_content = (TextView) convertView.findViewById(R.id.txt_content);
             txt_time = (TextView) convertView.findViewById(R.id.txt_time);

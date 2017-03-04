@@ -289,6 +289,13 @@ public class SpecialTopicFragment extends Fragment implements SwipeRefreshLayout
 
     }
 
+    @Override
+    public void onGetMoreVideoList(ArrayList<SpecialTopicInfo> video) {
+        isLoading = false;
+        layout_refresh.setRefreshing(false);
+        adapter.addData(video);
+    }
+
     private int valueColor(int height) {
         if (height >= item_max_height) {
             return 0xffffffff;
@@ -311,7 +318,7 @@ public class SpecialTopicFragment extends Fragment implements SwipeRefreshLayout
     private void getMoreDataFromInter() {
         isLoading = true;
         page++;
-        presenter.getVideoList(String.valueOf(page), VideoPresenterImpl.family);
+        presenter.getMoreVideoList(String.valueOf(page), VideoPresenterImpl.family);
     }
 
     @Override

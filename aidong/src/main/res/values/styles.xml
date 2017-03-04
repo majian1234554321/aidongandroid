@@ -343,4 +343,20 @@
     <style name="TextAppearance.App.Medium" parent="TextAppearance.AppCompat">
         <item name="android:textSize">@dimen/text_size_medium</item>
     </style>
+
+    <style name="RootTheme" parent="android:Theme.Holo">
+    </style>
+
+    <style name="PlayerTheme" parent="@style/RootTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@android:color/black</item>
+    </style>
+
+    <style name="livePlayerTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
 </resources>

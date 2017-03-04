@@ -1,10 +1,11 @@
 package com.leyuan.aidong.ui.video.activity;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -59,12 +60,13 @@ public class VideoCommentActivity extends BaseActivity implements SwipeRefreshLa
     private VideoPresenterImpl presenter;
 
 
-    public static void newInstance(Context context, int series_id, int phase, String videoName) {
+    public static void newInstance(Activity context, int series_id, int phase, String videoName) {
         Bundle bundle = new Bundle();
         bundle.putInt(Constant.SEIRES_ID, series_id);
         bundle.putInt(Constant.PHASE, phase);
         bundle.putString(Constant.VIDEO_NAME, videoName);
         UiManager.activityJump(context, bundle, VideoCommentActivity.class);
+        context.overridePendingTransition(R.anim.slide_in_bottom, 0);
     }
 
     @Override
@@ -138,6 +140,7 @@ public class VideoCommentActivity extends BaseActivity implements SwipeRefreshLa
             }
         });
         adapter = new VideoCommentAdapter(this);
+        listView.setLayoutManager(new LinearLayoutManager(this));
         listView.setAdapter(adapter);
     }
 
@@ -185,6 +188,7 @@ public class VideoCommentActivity extends BaseActivity implements SwipeRefreshLa
 
     @Override
     public void onGetCommentList(List<CommentBean> comment) {
+        swipeLayout.setRefreshing(false);
         adapter.freshData(comment);
         listView.smoothScrollToPosition(0);
     }

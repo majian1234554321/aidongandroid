@@ -10,11 +10,20 @@ public class CommentBean {
     private String published_at;
     private Publisher publisher;
 
-    public class Publisher{
+    public class Publisher {
         private String publisher_id;
         private String name;
         private String avatar;
         private String gender;
+        private String id;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
 
         public String getPublisher_id() {
             return publisher_id;

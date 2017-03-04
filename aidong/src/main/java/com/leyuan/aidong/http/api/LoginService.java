@@ -19,5 +19,5 @@ public interface LoginService {
 
     @FormUrlEncoded
     @POST("login/sns")
-    Observable<BaseBean<LoginResult>> loginSns(@Field("sns") String sns, @Field("access_token") String access_token);
+    Observable<BaseBean<LoginResult>> loginSns(@Field("sns") String sns, @Field("code") String access_token);
 }

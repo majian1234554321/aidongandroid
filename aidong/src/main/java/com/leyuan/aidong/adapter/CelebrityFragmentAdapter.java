@@ -141,7 +141,7 @@ public class CelebrityFragmentAdapter extends RecyclerView.Adapter<CelebrityFrag
                 holder.txt_time.setText("" + info.getLatest().getUpdated());
                 holder.txt_type.setText("" + info.getLatest().getVideoName());
                 holder.txt_author.setText("" + info.getLatest().getAuthor());
-                if (info.getFinished() == 1) {
+                if (info.getFinished()) {
                     holder.txt_number.setText("/共" + info.getLatest().getPhase() + "集/");
                 } else {
                     holder.txt_number.setText("更新 / 第" + info.getLatest().getPhase() + "集 /");

@@ -23,10 +23,10 @@ public class LivePresenterImpl {
     }
 
     public void getLiveHome() {
-        model.getHomeLives(new BaseSubscriber<LiveHomeResult>(context) {
+        model.getHomeLives(new BaseSubscriber<LiveHomeResult.LiveHome>(context) {
             @Override
-            public void onNext(LiveHomeResult liveHomeResult) {
-                viewListener.onGetLiveHomeData(liveHomeResult);
+            public void onNext(LiveHomeResult.LiveHome liveHome) {
+                viewListener.onGetLiveHomeData(liveHome);
             }
 
             @Override
