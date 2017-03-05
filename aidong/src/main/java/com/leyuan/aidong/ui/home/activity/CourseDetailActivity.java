@@ -6,7 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,8 +25,10 @@ import com.leyuan.aidong.ui.mine.activity.AppointCourseDetailActivity;
 import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CourseDetailActivityView;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.widget.SwitcherLayout;
+import com.zzhoujay.richtext.RichText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +56,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     private TextView tvStartTime;
     private BGABanner banner;
     private TextView tvHot;
-    private ImageView dvAvatar;
+    private ImageView ivAvatar;
     private TextView tvCoachName;
     private ImageView ivFollow;
     private TextView tvTime;
@@ -84,7 +86,6 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_detail);
-        pageSize = 20;
         coursePresent = new CoursePresentImpl(this,this);
         if(getIntent() != null){
             code = getIntent().getStringExtra("code");
@@ -104,7 +105,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         tvStartTime = (TextView) findViewById(R.id.tv_start_time);
         banner = (BGABanner) findViewById(R.id.banner);
         tvHot = (TextView) findViewById(R.id.tv_hot);
-        dvAvatar = (ImageView) findViewById(R.id.dv_avatar);
+        ivAvatar = (ImageView) findViewById(R.id.dv_avatar);
         tvCoachName = (TextView) findViewById(R.id.tv_coach_name);
         ivFollow = (ImageView) findViewById(R.id.iv_follow);
         tvTime = (TextView) findViewById(R.id.tv_time);
@@ -126,13 +127,14 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
 
         applicantAdapter = new ApplicantAdapter();
         rvApplicant.setAdapter(applicantAdapter);
-        rvApplicant.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        rvApplicant.setLayoutManager(new LinearLayoutManager
+                (this,LinearLayoutManager.HORIZONTAL,false));
     }
 
     private void setListener(){
         ivBack.setOnClickListener(this);
         ivShare.setOnClickListener(this);
-        dvAvatar.setOnClickListener(this);
+        ivAvatar.setOnClickListener(this);
         ivFollow.setOnClickListener(this);
         bottomLayout.setOnClickListener(this);
         tvCount.setOnClickListener(this);
@@ -174,7 +176,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         List<String> cover = new ArrayList<>();
         cover.add(bean.getCover());
         banner.setData(cover,null);
-        GlideLoader.getInstance().displayImage(bean.getCoach().getAvatar(), dvAvatar);
+        GlideLoader.getInstance().displayCircleImage(bean.getCoach().getAvatar(), ivAvatar);
         tvCoachName.setText(bean.getCoach().getName());
         tvTime.setText(String.format(getString(R.string.detail_time),
                 bean.getClassDate(),bean.getClassTime(),bean.getBreakTime()));
@@ -184,7 +186,9 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         tvCount.setText(String.format(getString(R.string.course_applicant_count),
                 bean.getAppliedCount(),bean.getPlace()));
         applicantAdapter.setData(bean.getApplied());
-        tvDesc.setText(Html.fromHtml(bean.getIntroduce()));
+        if(!TextUtils.isEmpty(bean.getIntroduce())) {
+            RichText.from(bean.getIntroduce()).into(tvDesc);
+        }
         tvPrice.setText(String.format(getString(R.string.rmb_price),bean.getPrice()));
         tvStartTime.setText(String.format(getString(R.string.appoint_time),
                 bean.getClassDate()+bean.getClassTime()));
@@ -193,7 +197,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void addFollow(BaseBean baseBean) {
-        if(baseBean.getStatus() == 1){
+        if(baseBean.getStatus() == Constant.OK){
             isFollow = true;
             ivFollow.setBackgroundResource(R.drawable.icon_following);
             Toast.makeText(this,R.string.follow_success,Toast.LENGTH_LONG).show();
@@ -204,7 +208,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void cancelFollow(BaseBean baseBean) {
-        if(baseBean.getStatus() == 1){
+        if(baseBean.getStatus() == Constant.OK){
             isFollow = false;
             ivFollow.setBackgroundResource(R.drawable.icon_follow);
             Toast.makeText(this,R.string.cancel_follow_success,Toast.LENGTH_LONG).show();
@@ -234,7 +238,6 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 tvState.setText(R.string.status_appointed);
                 bottomLayout.setBackgroundColor(Color.parseColor("#666667"));
                 break;
-
             case STATUS_FULL:
                 tvStartTime.setVisibility(View.GONE);
                 tvPrice.setVisibility(View.GONE);

@@ -32,7 +32,7 @@ import java.util.concurrent.ExecutionException;
  * @author ChenSL
  */
 public class BoxingFileHelper {
-    public static final String DEFAULT_SUB_DIR = "/bili/boxing";
+    public static final String DEFAULT_SUB_DIR = "/aidong/boxing";
 
     public static boolean createFile(String path) throws ExecutionException, InterruptedException {
         if (TextUtils.isEmpty(path)) {

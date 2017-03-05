@@ -16,25 +16,6 @@ public interface NurturePresent {
     void getCategory();
 
     /**
-     * 第一次进入界面加载营养品推荐列表数据
-     * @param switcherLayout SwitcherLayout
-     */
-    void commonLoadRecommendData(SwitcherLayout switcherLayout);
-
-    /**
-     * 下拉刷新营养品推荐列表数据
-     */
-    void pullToRefreshRecommendData();
-
-    /**
-     * 上拉加载更多营养品推荐列表数据
-     * @param recyclerView RecyclerView
-     * @param pageSize 每页加载数
-     * @param page 页码
-     */
-    void requestMoreRecommendData(RecyclerView recyclerView, int pageSize, int page);
-
-    /**
      * 第一次进入界面加载营养品列表数据
      * @param switcherLayout SwitcherLayout
      */
@@ -57,11 +38,20 @@ public interface NurturePresent {
 
     /**
      * 立即购买
-     * @param skuCode
-     * @param amount
-     * @param pickUp
-     * @param pickUpId
+     * @param skuCode skuCode
+     * @param amount 数量
+     * @param coupon  优惠券
+     * @param integral 积分
+     * @param coin  爱币
+     * @param payType 支付方式
+     * @param pickUpWay 取货方式(0-快递 1-自提)
+     * @param pickUpId 快递地址id
+     * @param pickUpDate 自提时间
+     * @param payListener payListener
      */
-    void buyNurtureImmediately(String skuCode, int amount, String pickUp, String pickUpId,
-                               PayInterface.PayListener payListener);
+    void buyNurtureImmediately(String skuCode, int amount, String coupon, String integral,
+                               String coin, String payType, String pickUpWay, String pickUpId,
+                               String pickUpDate,PayInterface.PayListener payListener);
+
+
 }

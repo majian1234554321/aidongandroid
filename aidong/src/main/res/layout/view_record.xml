@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:id="@+id/iv_outer"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/record_outer"/>
+
+    <ImageView
+        android:id="@+id/iv_inner"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/record_inner"
+        android:layout_centerInParent="true"/>
+
+    <com.leyuan.aidong.module.photopicker.boxing_impl.record.view.RingProgressBar
+        android:id="@+id/progress"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
+</RelativeLayout>

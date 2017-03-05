@@ -61,9 +61,6 @@ import java.util.List;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 
-import static com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow.FROM_ADD_CART;
-import static com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow.FROM_BUY;
-import static com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow.FROM_SKU;
 import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
 import static com.leyuan.aidong.utils.Constant.EMPTY_STR;
 
@@ -75,7 +72,11 @@ import static com.leyuan.aidong.utils.Constant.EMPTY_STR;
 public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnItemClickListener,
         GoodsSkuPopupWindow.SelectSkuListener,SmartTabLayout.TabProvider,View.OnClickListener,
         GoodsDetailActivityView,PopupWindow.OnDismissListener{
+    public static final String FROM_SKU = "1";
+    public static final String FROM_BUY = "2";
+    public static final String FROM_ADD_CART = "3";
     private static final int CODE_SELECT_ADDRESS = 1;
+
     private SwitcherLayout switcherLayout;
     private LinearLayout rootLayout;
     private SlideDetailsLayout detailsLayout;
@@ -121,14 +122,7 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
     private String gymId;
     private String count;
     private List<String> selectedSkuValues = new ArrayList<>();
-
     private CouponPresent couponPresent;
-
-
-
-  /*  private ViewPager bannerViewPager;
-    private SimplePagerAdapter pagerAdapter;*/
-
 
     public static void start(Context context,String id,String type) {
         Intent starter = new Intent(context, GoodsDetailActivity.class);
@@ -341,7 +335,7 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
         //todo optimize
        // if(skuPopupWindow == null){
             skuPopupWindow = new GoodsSkuPopupWindow(context,detailBean,selectedSkuValues,gymId,
-                    count,tvRecommendCode.getText().toString(),from);
+                    count,tvRecommendCode.getText().toString(),type,from);
             skuPopupWindow.setSelectSkuListener(this);
         skuPopupWindow.setOnDismissListener(this);
         //}

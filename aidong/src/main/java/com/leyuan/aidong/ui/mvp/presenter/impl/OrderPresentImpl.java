@@ -3,11 +3,13 @@ package com.leyuan.aidong.ui.mvp.presenter.impl;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.OrderBean;
 import com.leyuan.aidong.entity.OrderDetailBean;
 import com.leyuan.aidong.entity.data.OrderData;
 import com.leyuan.aidong.entity.data.OrderDetailData;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
+import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.aidong.ui.mvp.model.OrderModel;
@@ -117,6 +119,36 @@ public class OrderPresentImpl implements OrderPresent {
                 }else {
                     switcherLayout.showEmptyLayout();
                 }
+            }
+        },id);
+    }
+
+    @Override
+    public void cancelOrder(String id) {
+        orderModel.cancelOrder(new ProgressSubscriber<BaseBean>(context) {
+            @Override
+            public void onNext(BaseBean baseBean) {
+                orderFragmentView.cancelOrderResult(baseBean);
+            }
+        },id);
+    }
+
+    @Override
+    public void confirmOrder(String id) {
+        orderModel.confirmOrder(new ProgressSubscriber<BaseBean>(context) {
+            @Override
+            public void onNext(BaseBean baseBean) {
+                orderFragmentView.confirmOrderResult(baseBean);
+            }
+        },id);
+    }
+
+    @Override
+    public void deleteOrder(String id) {
+        orderModel.deleteOrder(new ProgressSubscriber<BaseBean>(context) {
+            @Override
+            public void onNext(BaseBean baseBean) {
+                orderFragmentView.deleteOrderResult(baseBean);
             }
         },id);
     }

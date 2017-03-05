@@ -38,4 +38,24 @@ public interface OrderPresent {
      * @param switcherLayout SwitcherLayout
      */
     void getOrderDetail(String id,SwitcherLayout switcherLayout);
+
+
+    /**
+     * 取消订单
+     * @param id
+     */
+    void cancelOrder(String id);
+
+    /**
+     * 确认订单
+     * @param id
+     */
+    void confirmOrder(String id);
+
+    /**
+     * 删除订单
+     * @param id
+     */
+    void deleteOrder(String id);
+
 }

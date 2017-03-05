@@ -1,5 +1,7 @@
 package com.leyuan.aidong.ui.discover.fragment;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -40,6 +42,7 @@ public class DiscoverHomeFragment extends BaseFragment implements SmartTabLayout
     public static final int REQUEST_PHOTO = 1;
     public static final int REQUEST_VIDEO = 2;
     private List<View> allTabView = new ArrayList<>();
+    private ImageView camera;
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
@@ -49,11 +52,12 @@ public class DiscoverHomeFragment extends BaseFragment implements SmartTabLayout
     @Override
     public void onViewCreated(View view,Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final ImageView camera = (ImageView) view.findViewById(R.id.iv_camera);
+        camera = (ImageView) view.findViewById(R.id.iv_camera);
         final SmartTabLayout tabLayout = (SmartTabLayout) view.findViewById(R.id.tab_layout);
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.view_pager);
         tabLayout.setCustomTabView(this);
         camera.setOnClickListener(cameraClickListener);
+        camera.animate().scaleX(0).scaleY(0).setDuration(10);
 
         FragmentPagerItems pages = new FragmentPagerItems(getContext());
         pages.add(FragmentPagerItem.of(null,DiscoverFragment.class));
@@ -64,7 +68,7 @@ public class DiscoverHomeFragment extends BaseFragment implements SmartTabLayout
         tabLayout.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
             @Override
             public void onPageSelected(int position) {
-                camera.setVisibility(position == 0 ? View.GONE : View.VISIBLE);
+                setCameraVisible(position == 1);
 
                 //reset tip dot
                 View tip = tabLayout.getTabAt(position).findViewById(R.id.tv_tab_tip);
@@ -134,8 +138,29 @@ public class DiscoverHomeFragment extends BaseFragment implements SmartTabLayout
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
+        if (resultCode == RESULT_OK ) {
             PublishDynamicActivity.start(getContext(),requestCode == REQUEST_PHOTO,Boxing.getResult(data));
+        }
+    }
+
+    private void setCameraVisible(boolean visible){
+        if(visible){
+            camera.setVisibility(View.VISIBLE);
+            camera.animate().scaleX(1).scaleY(1).setDuration(300)
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            camera.setVisibility(View.VISIBLE);
+                        }
+                    }).start();
+        }else {
+            camera.animate().scaleX(0).scaleY(0).setDuration(300)
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            camera.setVisibility(View.GONE);
+                        }
+                    }).start();
         }
     }
 }

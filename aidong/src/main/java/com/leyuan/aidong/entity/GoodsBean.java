@@ -27,11 +27,11 @@ public class GoodsBean implements Parcelable {
     private DeliveryBean deliveryBean;      //商品默认取货方式
     private boolean checked = false;        //标记商品是否被选中
 
-    public String getSku_code() {
+    public String getSkuCode() {
         return sku_code;
     }
 
-    public void setSku_code(String sku_code) {
+    public void setSkuCode(String sku_code) {
         this.sku_code = sku_code;
     }
 

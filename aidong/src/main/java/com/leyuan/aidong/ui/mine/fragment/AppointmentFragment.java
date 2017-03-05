@@ -6,14 +6,17 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.mine.AppointmentAdapter;
 import com.leyuan.aidong.entity.AppointmentBean;
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.ui.BaseLazyFragment;
 import com.leyuan.aidong.ui.mvp.presenter.AppointmentPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.AppointmentPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointmentFragmentView;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -83,6 +86,7 @@ public class AppointmentFragment extends BaseLazyFragment implements Appointment
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(wrapperAdapter);
         recyclerView.addOnScrollListener(onScrollListener);
+        appointmentAdapter.setAppointmentListener(new AppointCallback());
     }
 
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
@@ -121,5 +125,56 @@ public class AppointmentFragment extends BaseLazyFragment implements Appointment
     @Override
     public void showEndFooterView() {
         RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
+    }
+
+
+    private class AppointCallback implements AppointmentAdapter.AppointmentListener{
+
+        @Override
+        public void onPayOrder() {
+
+        }
+
+        @Override
+        public void onDeleteOrder(String id) {
+            present.deleteAppoint(id);
+        }
+
+        @Override
+        public void onConfirmJoin(String id) {
+            present.confirmAppoint(id);
+        }
+
+        @Override
+        public void onCancelJoin(String id) {
+            present.cancelAppoint(id);
+        }
+    }
+
+    @Override
+    public void cancelAppointmentResult(BaseBean baseBean) {
+        if(baseBean.getStatus() == Constant.OK){
+            Toast.makeText(getContext(),"取消成功",Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(getContext(),"取消失败" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void confirmAppointmentResult(BaseBean baseBean) {
+        if(baseBean.getStatus() == Constant.OK){
+            Toast.makeText(getContext(),"确认成功",Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(getContext(),"确认失败" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void deleteAppointmentResult(BaseBean baseBean) {
+        if(baseBean.getStatus() == Constant.OK){
+            Toast.makeText(getContext(),"确认成功",Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(getContext(),"确认失败" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+        }
     }
 }

@@ -30,6 +30,9 @@ public abstract class BaseHolderViewAdapter<T> extends RecyclerView.Adapter<Base
 
     @Override
     public int getItemViewType(int position) {
+        if(data == null || data.isEmpty()){
+            return -1;
+        }
         return getViewType(position, data.get(position));
     }
 

@@ -26,7 +26,6 @@ import com.leyuan.aidong.ui.mvp.view.CourseActivityView;
 import com.leyuan.aidong.ui.mvp.view.CourseDetailActivityView;
 import com.leyuan.aidong.ui.mvp.view.CourserFragmentView;
 import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.List;
@@ -156,8 +155,7 @@ public class CoursePresentImpl implements CoursePresent{
 
             @Override
             public void onError(Throwable e) {
-                Toast.makeText(context, "error:" + e.toString(), Toast.LENGTH_LONG).show();
-                Logger.d("CommonSubscriber", e.toString());
+                Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
                 switcherLayout.showExceptionLayout();
             }
 

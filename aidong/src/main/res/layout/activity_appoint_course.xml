@@ -160,7 +160,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:gravity="center_vertical"
-                app:left_text="课程时间:" />
+                app:left_text="课程时间:"
+                app:line_color="@color/transparent"/>
 
             <include layout="@layout/inc_line_with_margin" />
 
@@ -169,7 +170,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:gravity="center_vertical"
-                app:left_text="上课地址:" />
+                app:left_text="上课地址:"
+                app:line_color="@color/transparent"/>
 
             <include layout="@layout/inc_bold_line" />
 
@@ -260,31 +262,36 @@
                 android:id="@+id/tv_total_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:left_text="课程总额:" />
+                app:left_text="课程总额:"
+                app:line_color="@color/transparent"/>
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_coupon_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:left_text="优惠劵:" />
+                app:left_text="优惠劵:"
+                app:line_color="@color/transparent"/>
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_discount_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:left_text="课程优惠:" />
+                app:left_text="课程优惠:"
+                app:line_color="@color/transparent"/>
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_aibi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:left_text="爱币:" />
+                app:left_text="爱币:"
+                app:line_color="@color/transparent"/>
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_aidou"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:left_text="爱豆:" />
+                app:left_text="爱豆:"
+                app:line_color="@color/transparent"/>
 
             <!--支付方式-->
 

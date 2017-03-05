@@ -127,7 +127,7 @@
     <string name="image_preview_ok_fmt">%1$s/%2$s 确定</string>
     <string name="image_select_ok_fmt">(%1$s/%2$s) 确定</string>
     <string name="album_images_fmt">(%d)</string>
-    <string name="max_image_over">你最多只能选择六张图片</string>
+    <string name="max_image_over">最多只能选择%1$d张图片</string>
     <string name="gif_too_big">您选择的gif图片过大，请压缩后再上传</string>
     <string name="video_title">视频相册</string>
     <string name="storage_permission_deny">需要访问你的存储设备来选择图片，请在“系统设置”或授权对话框中允许“存储空间”权限。</string>
@@ -148,5 +148,6 @@
     <string name="confirm_weight">请选择体重</string>
     <string name="confirm_frequency">请选择运动频次</string>
     <string name="rationale_storage">App需要读取手机内存权限才能查看多媒体资源，请授予该权限</string>
+    <string name="rationale_phone">App需要获取打电话权限才能拨打电话，请授予该权限</string>
     <string name="rationale_camera_and_audio">App需要使用相机和录音权限才能拍照和录像，请授予该权限</string>
 </resources>

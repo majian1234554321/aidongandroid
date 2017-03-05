@@ -130,6 +130,12 @@ public class VideoCaptureActivity extends Activity implements RecordingButtonInt
     }
 
     @Override
+    public void onBack() {
+        onRecordButtonClicked();
+        finish();
+    }
+
+    @Override
     public void onDeclineButtonClicked() {
         finishCancelled();
     }

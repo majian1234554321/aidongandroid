@@ -11,11 +11,7 @@ import java.util.List;
  * Created by song on 2016/8/15.
  */
 public interface EquipmentActivityView{
-    /**
-     * 设置装备分类列表
-     * @param categoryBeanList
-     */
-    void setCategory(ArrayList<CategoryBean> categoryBeanList);
+
 
     /**
      * 更新列表

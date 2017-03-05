@@ -270,7 +270,7 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
                 }
                 if(!goodsBeanList.isEmpty()){
                     tempShopBean.setItem(goodsBeanList);
-                    tempShopBean.setName(shopBean.getName());
+                    tempShopBean.setPickUp(shopBean.getPickUp());
                     selectedShopBeanList.add(tempShopBean);
                 }
             }

@@ -174,6 +174,9 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
         if(leftSelectedPosition != -1){
             leftListView.setSelection(leftSelectedPosition);
             leftCircleAdapter.setSelectedBean(leftCircleList.get(leftSelectedPosition));
+        }else {
+            leftListView.setSelection(0);
+            leftCircleAdapter.setSelectedBean(leftCircleList.get(0));
         }
 
         //右边列表

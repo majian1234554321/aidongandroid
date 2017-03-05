@@ -59,7 +59,7 @@ public class GlideLoader {
         return Glide.with(getContext(imageView))
                 .load(imgUrl)
                 .asBitmap()
-                .thumbnail(0.1f)
+                .thumbnail(0.2f)
                 .centerCrop()
                 .placeholder(new ColorDrawable(0xffc6c6c6));
     }

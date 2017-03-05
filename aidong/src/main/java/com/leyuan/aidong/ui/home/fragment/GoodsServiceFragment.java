@@ -1,9 +1,11 @@
 package com.leyuan.aidong.ui.home.fragment;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseFragment;
@@ -13,15 +15,23 @@ import com.leyuan.aidong.ui.BaseFragment;
  * Created by song on 2016/9/12.
  */
 public class GoodsServiceFragment extends BaseFragment {
-
+    private String content;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Bundle bundle = getArguments();
+        if(bundle != null){
+            content = bundle.getString("serviceText");
+        }
         return inflater.inflate(R.layout.fragment_goods_service,null);
     }
 
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-
+        TextView tvContent = (TextView) view.findViewById(R.id.tv_content);
+        if(!TextUtils.isEmpty(content)){
+            tvContent.setText(content);
+        }
     }
 }

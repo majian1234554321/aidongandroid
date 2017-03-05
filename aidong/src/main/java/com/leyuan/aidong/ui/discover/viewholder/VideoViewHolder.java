@@ -34,12 +34,16 @@ public class VideoViewHolder extends BaseCircleViewHolder{
 
     @Override
     public void onBindDataToChildView(@NonNull final DynamicBean data, int position, int viewType) {
-        GlideLoader.getInstance().displayImage(data.video.cover, dvVideo);
+        if(data.videos == null){
+            return;
+        }
+
+        GlideLoader.getInstance().displayImage(data.videos.cover, dvVideo);
         dvVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(callback != null){
-                    callback.onVideoClick(data.video.url);
+                    callback.onVideoClick(data.videos.url);
                 }
             }
         });

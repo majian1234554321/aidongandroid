@@ -64,7 +64,6 @@ public class BrandActivity extends BaseActivity implements BrandActivityView, Vi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_brand_detail);
-        pageSize = 20;
         present = new HomePresentImpl(this,this);
         if(getIntent() != null){
             type = getIntent().getStringExtra("type");

@@ -62,13 +62,13 @@ import java.util.List;
  *
  * @author ChenSL
  */
-public class BoxingViewFragment extends AbsBoxingViewFragment implements View.OnClickListener {
-    public static final String TAG = "BoxingViewFragment";
+public class BoxingFragment extends AbsBoxingViewFragment implements View.OnClickListener {
+    public static final String TAG = "BoxingFragment";
     private static final int IMAGE_PREVIEW_REQUEST_CODE = 9086;
     private static final int IMAGE_CROP_REQUEST_CODE = 9087;
 
     private static final int GRID_COUNT = 3;
-    private int mMaxCount;
+    private int mMaxCount = 6;
     private boolean mIsPreview;
     private boolean mIsCamera;
 
@@ -83,8 +83,8 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
     private PopupWindow mAlbumPopWindow;
     private ProgressBar mLoadingView;
 
-    public static BoxingViewFragment newInstance() {
-        return new BoxingViewFragment();
+    public static BoxingFragment newInstance() {
+        return new BoxingFragment();
     }
 
     @Override
@@ -114,7 +114,6 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms) {
         super.onPermissionsDenied(requestCode, perms);
-
         if(requestCode == STORAGE_PERMISSION) {
             Toast.makeText(getContext(), R.string.storage_permission_deny, Toast.LENGTH_SHORT).show();
             showEmptyData();
@@ -268,8 +267,8 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
             if (!mIsPreview) {
                 mIsPreview = true;
                 ArrayList<BaseMedia> medias = (ArrayList<BaseMedia>) mMediaAdapter.getSelectedMedias();
-                Boxing.get().withIntent(getActivity(), BoxingViewActivity.class, medias)
-                        .start(this, BoxingViewFragment.IMAGE_PREVIEW_REQUEST_CODE, BoxingConfig.ViewMode.PRE_EDIT);
+                Boxing.get().withIntent(getActivity(), BoxingPreviewActivity.class, medias)
+                        .start(this, BoxingFragment.IMAGE_PREVIEW_REQUEST_CODE, BoxingConfig.ViewMode.PRE_EDIT);
 
             }
         }
@@ -284,7 +283,7 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
         }
         if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PREVIEW_REQUEST_CODE) {
             mIsPreview = false;
-            boolean isBackClick = data.getBooleanExtra(BoxingViewActivity.EXTRA_TYPE_BACK, false);
+            boolean isBackClick = data.getBooleanExtra(BoxingPreviewActivity.EXTRA_TYPE_BACK, false);
             List<BaseMedia> selectedMedias = data.getParcelableArrayListExtra(Boxing.EXTRA_SELECTED_MEDIA);
             onViewActivityRequest(selectedMedias, mMediaAdapter.getAllMedias(), isBackClick);
             if (isBackClick) {
@@ -431,8 +430,8 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
                 mIsPreview = true;
 
                 ArrayList<BaseMedia> medias = (ArrayList<BaseMedia>) mMediaAdapter.getSelectedMedias();
-                Boxing.get().withIntent(getContext(), BoxingViewActivity.class, medias, pos, albumId)
-                        .start(BoxingViewFragment.this, BoxingViewFragment.IMAGE_PREVIEW_REQUEST_CODE,
+                Boxing.get().withIntent(getContext(), BoxingPreviewActivity.class, medias, pos, albumId)
+                        .start(BoxingFragment.this, BoxingFragment.IMAGE_PREVIEW_REQUEST_CODE,
                                 BoxingConfig.ViewMode.EDIT);
             }
         }
@@ -453,12 +452,18 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
 
         @Override
         public void onClick(View v) {
-            if (!mIsCamera && mMediaAdapter.getSelectedMedias().size() < mMaxCount) {
-                mIsCamera = true;
-                startCamera(getActivity(), BoxingViewFragment.this, BoxingFileHelper.DEFAULT_SUB_DIR);
+            if(mIsCamera) {
+                return;
+            }
+            if(BoxingManager.getInstance().getBoxingConfig().isVideoMode()){
+                startCamera(getActivity(), BoxingFragment.this, BoxingFileHelper.DEFAULT_SUB_DIR);
             }else {
-                Toast.makeText(getActivity(),String.format(getString(R.string.too_many_picture)
-                        ,mMaxCount), Toast.LENGTH_SHORT).show();
+                if(mMediaAdapter.getSelectedMedias().size() < mMaxCount){
+                    startCamera(getActivity(), BoxingFragment.this, BoxingFileHelper.DEFAULT_SUB_DIR);
+                }else {
+                    Toast.makeText(getActivity(),String.format(getString(R.string.too_many_picture)
+                            ,mMaxCount), Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }

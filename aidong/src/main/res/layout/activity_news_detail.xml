@@ -58,8 +58,8 @@
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:text="06-16 09:09"/>
-    <WebView
-        android:id="@+id/wv_news"
+    <TextView
+        android:id="@+id/tv_news"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>

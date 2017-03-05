@@ -300,8 +300,6 @@
         <item name="android:backgroundDimEnabled">true</item>
     </style>
 
-
-
     <style name="ActionSheetDialogAnimation" parent="@android:style/Animation.Dialog">
        
     </style>
@@ -336,7 +334,7 @@
         <item name="titleTextColor">@color/white</item>
         <item name="android:textColorSecondary">@color/white</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="android:background">@color/black</item>
     </style>
 
     <!-- TextAppearance -->

@@ -52,7 +52,7 @@ public class OptAnimationLoader {
 
         Animation anim = null;
 
-        // Make sure we are on a start tag.
+        // Make sure we are on a start tag_address.
         int type;
         int depth = parser.getDepth();
 

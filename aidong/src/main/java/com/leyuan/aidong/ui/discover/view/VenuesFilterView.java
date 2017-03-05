@@ -48,7 +48,7 @@ public class VenuesFilterView extends LinearLayout implements View.OnClickListen
     //商圈
     private LeftFilterAdapter leftCircleAdapter;
     private RightFilterAdapter rightCircleAdapter;
-    private int leftSelectedPosition = -1;  //左边列表实际选中的位置 ：只有当右边列表选中其中一个item时，此时的左边列表实际位置才确定，否则当临时选中位置处理，即只改变选中的效果
+    private int leftSelectedPosition = -1;  //左边列表实际选中的位置
     private int rightSelectedPosition = -1; //右边列表实际选中的位置
     private List<DistrictBean> leftCircleList = new ArrayList<>();
     private List<DistrictDescBean> rightCircleList = new ArrayList<>();
@@ -184,6 +184,9 @@ public class VenuesFilterView extends LinearLayout implements View.OnClickListen
         if(leftSelectedPosition != -1){
             leftListView.setSelection(leftSelectedPosition);
             leftCircleAdapter.setSelectedBean(leftCircleList.get(leftSelectedPosition));
+        }else {
+            leftListView.setSelection(0);
+            leftCircleAdapter.setSelectedBean(leftCircleList.get(0));
         }
 
         //右边列表

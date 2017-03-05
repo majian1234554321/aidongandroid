@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.adapter.home.GoodsSkuAdapter;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.entity.GoodsDetailBean;
@@ -18,10 +19,10 @@ import com.leyuan.aidong.entity.GoodsSkuValueBean;
 import com.leyuan.aidong.entity.LocalGoodsSkuBean;
 import com.leyuan.aidong.entity.ShopBean;
 import com.leyuan.aidong.ui.home.activity.ConfirmOrderActivity;
-import com.leyuan.aidong.adapter.home.GoodsSkuAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.CartPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CartPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.GoodsSkuPopupWindowView;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.widget.BasePopupWindow;
@@ -30,19 +31,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static com.leyuan.aidong.utils.Constant.ORDER_FROM_CART;
+import static com.leyuan.aidong.ui.home.activity.GoodsDetailActivity.FROM_ADD_CART;
+import static com.leyuan.aidong.ui.home.activity.GoodsDetailActivity.FROM_SKU;
 
 /**
  * 商品详情页选择商品信息弹框
  * Created by song on 2016/9/13.
  */
 //todo 欠缺逻辑 : 当包含该sku但是该点的所有路径库存都为0 初始化该sku点的状态
-public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClickListener, GoodsSkuAdapter.SelectSkuListener,GoodsSkuPopupWindowView {
-    public static final String FROM_SKU = "1";
-    public static final String FROM_BUY = "2";
-    public static final String FROM_ADD_CART = "3";
+public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClickListener,
+        GoodsSkuAdapter.SelectSkuListener,GoodsSkuPopupWindowView {
 
-    private static final String BLANK_SPACE = " ";
     private Context context;
     private ImageView dvGoodsCover;
     private ImageView ivCancel;
@@ -69,6 +68,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     private int stock = Integer.MAX_VALUE;          //具体sku的库存
     private String confirmedSkuCover;               //具体sku的图片
 
+    private String type;
     private String gymId;
     private String count;
     private String recommendId;
@@ -83,7 +83,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
 
     public GoodsSkuPopupWindow(Context context, GoodsDetailBean detailBean,
                                List<String> selectedSkuValues,String gymId,String count,
-                               String recommendId,String from) {
+                               String recommendId,String type,String from) {
         super(context);
         this.context = context;
         this.detailBean = detailBean;
@@ -91,6 +91,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         this.gymId = gymId;
         this.count = count;
         this.recommendId = recommendId;
+        this.type = type;
 
         if(from.equals(FROM_SKU)){
             showConfirmStatus = false;
@@ -163,7 +164,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
             List<String> selectedValues = new ArrayList<>();
             for (String selectedSkuValue : selectedSkuValues) {
                 selectedValues.add(selectedSkuValue);
-                skuTip.append(selectedSkuValue).append(BLANK_SPACE);
+                skuTip.append(selectedSkuValue).append(Constant.EMPTY_STR);
             }
             GoodsSkuBean line = getLine(selectedValues);
             price = FormatUtil.parseDouble(line.price);
@@ -173,7 +174,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
             skuTip = new StringBuilder();
             for (LocalGoodsSkuBean localGoodsSkuBean : localSkuBeanList) {
                 if(!localGoodsSkuBean.isSelected()){
-                    skuTip.append(localGoodsSkuBean.getSkuName()).append(BLANK_SPACE);
+                    skuTip.append(localGoodsSkuBean.getSkuName()).append(Constant.EMPTY_STR);
                 }
             }
         }
@@ -208,7 +209,8 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         tvBuy = (TextView) view.findViewById(R.id.tv_buy);
         skuRecyclerView = (RecyclerView) view.findViewById(R.id.rv_sku);
         skuRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-        goodsSkuAdapter = new GoodsSkuAdapter(context,localSkuBeanList,detailBean.spec.item,selectedSkuValues);
+        goodsSkuAdapter = new GoodsSkuAdapter(context,localSkuBeanList,
+                detailBean.spec.item,selectedSkuValues);
         skuRecyclerView.setAdapter(goodsSkuAdapter);
 
         tvConfirm.setVisibility(showConfirmStatus ? View.VISIBLE : View.GONE);
@@ -248,7 +250,8 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         switch (v.getId()){
             case R.id.iv_cancel:
                 if(selectSkuListener != null){
-                    selectSkuListener.onSelectSkuChanged(selectedSkuValues,skuTip.toString(),tvCount.getText().toString());
+                    selectSkuListener.onSelectSkuChanged(selectedSkuValues,skuTip.toString(),
+                            tvCount.getText().toString());
                 }
                 dismiss();
                 break;
@@ -311,34 +314,23 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     }
 
     private void confirmOrder() {
-       /* if(nurturePresent == null) {
-            nurturePresent = new NurturePresentImpl(this, context);
-        }
         GoodsSkuBean line = getLine(selectedSkuValues);
-        if(TextUtils.isEmpty(gymId)) {
-            nurturePresent.buyNurtureImmediately(line.code,
-                    FormatUtil.parseInt(tvCount.getText().toString()),"0",null);
-        }else {
-            nurturePresent.buyNurtureImmediately(line.code,
-                    FormatUtil.parseInt(tvCount.getText().toString()),"1",gymId);
-        }*/
-        //todo 确认订单
-        GoodsSkuBean line = getLine(selectedSkuValues);
-        ArrayList<ShopBean> shopBeanList = new ArrayList<>();
         ShopBean shopBean = new ShopBean();
         List<GoodsBean> goodsBeanList = new ArrayList<>();
         GoodsBean goodsBean = new GoodsBean();
         goodsBean.setName(detailBean.name);
+        goodsBean.setSkuCode(line.code);
         goodsBean.setCover(detailBean.image.get(0));
         goodsBean.setPrice(line.price);
+        goodsBean.setType(type);
         goodsBean.setAmount(tvCount.getText().toString());
         goodsBean.setSpec_value((ArrayList<String>) line.value);
         goodsBeanList.add(goodsBean);
         shopBean.setItem(goodsBeanList);
-        shopBean.setName(TextUtils.isEmpty(gymId) ? "仓库发货" : detailBean.pick_up.info.getName());
-        shopBeanList.add(shopBean);
-        ConfirmOrderActivity.start(context,ORDER_FROM_CART,shopBeanList,
-                FormatUtil.parseDouble(line.price)* FormatUtil.parseInt(tvCount.getText().toString()));
+        shopBean.setPickUp(detailBean.pick_up);
+       /* int orderType = Constant.TYPE_NURTURE.equals(type) ? Constant.ORDER_BUY_NURTURE_IMMEDIATELY
+                :Constant.ORDER_BUY_EQUIPMENT_IMMEDIATELY;*/
+        ConfirmOrderActivity.start(context,shopBean);
     }
 
     @Override
@@ -376,7 +368,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
                         R.drawable.icon_minus : R.drawable.icon_minus_gray);
             }
             for (String selectedNode : allSelectedNodes) {
-                skuTip.append(selectedNode).append(BLANK_SPACE);
+                skuTip.append(selectedNode).append(Constant.EMPTY_STR);
             }
             tvSelect.setText(context.getString(R.string.selected));
             tvSkuTip.setText(skuTip.toString());
@@ -387,7 +379,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
             tvStock.setText(String.format(context.getString(R.string.int_stock_count), totalStock));
             List<LocalGoodsSkuBean> unSelectedSkuBeanList = onGetUnSelectSku();
             for (LocalGoodsSkuBean localGoodsSkuBean : unSelectedSkuBeanList) {
-                skuTip.append(localGoodsSkuBean.getSkuName()).append(BLANK_SPACE);
+                skuTip.append(localGoodsSkuBean.getSkuName()).append(Constant.EMPTY_STR);
             }
             tvSelect.setText(context.getString(R.string.please_select));
             tvSkuTip.setText(skuTip.toString());
@@ -436,7 +428,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         result.append(context.getString(R.string.please_choose));
         List<LocalGoodsSkuBean> unSelectedSkuBeanList = onGetUnSelectSku();
         for (LocalGoodsSkuBean localGoodsSkuBean : unSelectedSkuBeanList) {
-            result.append(localGoodsSkuBean.getSkuName()).append(BLANK_SPACE);
+            result.append(localGoodsSkuBean.getSkuName()).append(Constant.EMPTY_STR);
         }
         Toast.makeText(context,result,Toast.LENGTH_LONG).show();
     }

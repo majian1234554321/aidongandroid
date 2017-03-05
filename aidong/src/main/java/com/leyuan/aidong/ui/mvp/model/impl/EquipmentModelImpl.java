@@ -60,9 +60,12 @@ public class EquipmentModelImpl implements EquipmentModel {
     }
 
     @Override
-    public void buyEquipmentImmediately(Subscriber<PayOrderData> subscriber, String skuCode, int amount,
-                                        String pickUp, String pickUpId) {
-        equipmentService.buyEquipmentImmediately(skuCode,amount,pickUp,pickUpId)
+    public void buyEquipmentImmediately(Subscriber<PayOrderData> subscriber, String skuCode,
+                                        int amount, String coupon, String integral, String coin,
+                                        String payType, String pickUpWay, String pickUpId,
+                                        String pickUpDate) {
+        equipmentService.buyEquipmentImmediately(skuCode,amount,coupon,integral,coin,payType,
+                pickUpWay, pickUpId,pickUpDate)
                 .compose(RxHelper.<PayOrderData>transform())
                 .subscribe(subscriber);
     }

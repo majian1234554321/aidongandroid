@@ -45,16 +45,16 @@ import uk.co.senab.photoview.PhotoViewAttacher;
  *
  * @author ChenSL
  */
-public class BoxingRawImageFragment extends Fragment {
-    private static final String BUNDLE_IMAGE = "com.bilibili.boxing_impl.ui.BoxingRawImageFragment.image";
+public class BoxingPreviewFragment extends Fragment {
+    private static final String BUNDLE_IMAGE = "com.bilibili.boxing_impl.ui.BoxingPreviewFragment.image";
     private static final int MAX_SCALE = 15;
     private PhotoView mImageView;
     private ProgressBar mProgress;
     private ImageMedia mMedia;
     private PhotoViewAttacher mAttacher;
 
-    public static BoxingRawImageFragment newInstance(@NonNull ImageMedia image) {
-        BoxingRawImageFragment fragment = new BoxingRawImageFragment();
+    public static BoxingPreviewFragment newInstance(@NonNull ImageMedia image) {
+        BoxingPreviewFragment fragment = new BoxingPreviewFragment();
         Bundle args = new Bundle();
         args.putParcelable(BUNDLE_IMAGE, image);
         fragment.setArguments(args);
@@ -88,16 +88,16 @@ public class BoxingRawImageFragment extends Fragment {
         if (mProgress != null) {
             mProgress.setVisibility(View.GONE);
         }
-        BoxingViewActivity activity = getThisActivity();
+        BoxingPreviewActivity activity = getThisActivity();
         if (activity != null && activity.mProgressBar != null) {
             activity.mProgressBar.setVisibility(View.GONE);
         }
     }
 
-    private BoxingViewActivity getThisActivity() {
+    private BoxingPreviewActivity getThisActivity() {
         Activity activity = getActivity();
-        if (activity instanceof BoxingViewActivity) {
-            return (BoxingViewActivity) activity;
+        if (activity instanceof BoxingPreviewActivity) {
+            return (BoxingPreviewActivity) activity;
         }
         return null;
     }
@@ -113,9 +113,9 @@ public class BoxingRawImageFragment extends Fragment {
     }
 
     private static class BoxingCallback implements IBoxingCallback {
-        private WeakReference<BoxingRawImageFragment> mWr;
+        private WeakReference<BoxingPreviewFragment> mWr;
 
-        BoxingCallback(BoxingRawImageFragment fragment) {
+        BoxingCallback(BoxingPreviewFragment fragment) {
             mWr = new WeakReference<>(fragment);
         }
 
@@ -137,7 +137,7 @@ public class BoxingRawImageFragment extends Fragment {
                 }
                 attacher.update();
             }
-            BoxingViewActivity activity = mWr.get().getThisActivity();
+            BoxingPreviewActivity activity = mWr.get().getThisActivity();
             if (activity != null && activity.mGallery != null) {
                 activity.mGallery.setVisibility(View.VISIBLE);
             }

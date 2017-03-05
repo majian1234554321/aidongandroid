@@ -13,10 +13,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.adapter.home.ApplicantAdapter;
 import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.adapter.home.ApplicantAdapter;
-import com.leyuan.aidong.widget.ViewPagerIndicator;
 
 import java.util.ArrayList;
 
@@ -29,7 +28,7 @@ public class OldCourseDetailActivity extends BaseActivity implements View.OnClic
     private CoordinatorLayout mainContent;
 
 
-    private ViewPagerIndicator indicator;
+    //private ViewPagerIndicator indicator;
     private TextView tvHot;
     private NestedScrollView nestedScrollView;
     private TextView tvCoachName;

@@ -49,8 +49,8 @@ public interface CartModel {
      * @param coin 爱币
      * @param coupon 优惠券
      * @param payType 支付类型
-     * @param pickUpId 自提或地址id
+     * @param pickUpId 快递地址id
      */
     void payCart(Subscriber<PayOrderData> subscriber, String integral, String coin ,
-                 String coupon, String payType, String pickUpId,String... id);
+                 String coupon, String payType, String pickUpId,String pickUpDate,String... id);
 }

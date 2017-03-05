@@ -310,7 +310,7 @@ public class UserCoach implements Serializable {
                 ", charm_site='" + charm_site + '\'' +
                 ", frequency='" + frequency + '\'' +
                 ", sport=" + Arrays.toString(sport) +
-                ", tag=" + Arrays.toString(tag) +
+                ", tag_address=" + Arrays.toString(tag) +
                 '}';
     }
 }

@@ -5,9 +5,11 @@ import android.support.v7.widget.RecyclerView;
 
 import com.leyuan.aidong.entity.AppointmentBean;
 import com.leyuan.aidong.entity.AppointmentDetailBean;
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.data.AppointmentData;
 import com.leyuan.aidong.entity.data.AppointmentDetailData;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
+import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.aidong.ui.mvp.model.AppointmentModel;
@@ -120,6 +122,36 @@ public class AppointmentPresentImpl implements AppointmentPresent {
                 }else {
                     switcherLayout.showEmptyLayout();
                 }
+            }
+        },id);
+    }
+
+    @Override
+    public void cancelAppoint(String id) {
+        appointmentModel.cancelAppointment(new ProgressSubscriber<BaseBean>(context) {
+            @Override
+            public void onNext(BaseBean baseBean) {
+                appointmentFragmentView.cancelAppointmentResult(baseBean);
+            }
+        },id);
+    }
+
+    @Override
+    public void confirmAppoint(String id) {
+        appointmentModel.confirmAppointment(new ProgressSubscriber<BaseBean>(context) {
+            @Override
+            public void onNext(BaseBean baseBean) {
+                appointmentFragmentView.confirmAppointmentResult(baseBean);
+            }
+        },id);
+    }
+
+    @Override
+    public void deleteAppoint(String id) {
+        appointmentModel.deleteAppointment(new ProgressSubscriber<BaseBean>(context) {
+            @Override
+            public void onNext(BaseBean baseBean) {
+                appointmentFragmentView.deleteAppointmentResult(baseBean);
             }
         },id);
     }

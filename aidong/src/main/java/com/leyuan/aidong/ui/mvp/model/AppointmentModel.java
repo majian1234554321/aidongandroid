@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.mvp.model;
 
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.data.AppointmentData;
 import com.leyuan.aidong.entity.data.AppointmentDetailData;
 
@@ -26,4 +27,25 @@ public interface AppointmentModel {
      * @param id 订单id
      */
     void getAppointmentDetail(Subscriber<AppointmentDetailData> subscriber, String id);
+
+    /**
+     * 取消预约
+     * @param subscriber
+     * @param id 订单id
+     */
+    void cancelAppointment(Subscriber<BaseBean> subscriber,String id);
+
+    /**
+     * 确认预约
+     * @param subscriber
+     * @param id 订单id
+     */
+    void confirmAppointment(Subscriber<BaseBean> subscriber,String id);
+
+    /**
+     * 删除预约
+     * @param subscriber
+     * @param id 订单id
+     */
+    void deleteAppointment(Subscriber<BaseBean> subscriber,String id);
 }

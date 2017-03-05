@@ -90,9 +90,7 @@ public class FollowPresentImpl implements FollowPresent {
         followModel.addFollow(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
-                if(baseBean != null){
-                    followFragmentView.addFollow(baseBean);
-                }
+                //no matter success or fail
             }
         },id);
     }
@@ -102,9 +100,7 @@ public class FollowPresentImpl implements FollowPresent {
         followModel.cancelFollow(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
-                if(baseBean != null){
-                    followFragmentView.cancelFollow(baseBean);
-                }
+                //no matter success or fail
             }
         },id);
     }

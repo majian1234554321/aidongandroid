@@ -38,4 +38,22 @@ public interface AppointmentPresent {
      * @param id 预约id
      */
     void getAppointmentDetail(SwitcherLayout switcherLayout, String id);
+
+    /**
+     * 取消预约
+     * @param id
+     */
+    void cancelAppoint(String id);
+
+    /**
+     * 确认预约
+     * @param id
+     */
+    void confirmAppoint(String id);
+
+    /**
+     * 删除预约
+     * @param id
+     */
+    void deleteAppoint(String id);
 }

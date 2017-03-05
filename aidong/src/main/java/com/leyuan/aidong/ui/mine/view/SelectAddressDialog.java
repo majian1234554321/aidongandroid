@@ -24,11 +24,7 @@ public class SelectAddressDialog extends BaseAddressDialog implements View.OnCli
     private OnConfirmAddressListener listener;
 
     public SelectAddressDialog(Context context) {
-        super(context);
-        this.context = context;
-        initView();
-        setListener();
-        setWheelView();
+        this(context,0);
     }
 
     public SelectAddressDialog(Context context, int theme) {
