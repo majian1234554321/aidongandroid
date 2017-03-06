@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.leyuan.aidong.ui.mvp.presenter.impl.LoginPresenter;
 import com.leyuan.aidong.utils.Logger;
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
@@ -23,14 +22,14 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     private static final String APP_ID = "wx365ab323b9269d30";
     private IWXAPI api;
     private String code_code;
-    LoginPresenter loginPresenter;
+//    LoginPresenter loginPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         api = WXAPIFactory.createWXAPI(this, APP_ID, true);
         api.handleIntent(getIntent(), this);
-        loginPresenter = new LoginPresenter(this);
+//        loginPresenter = new LoginPresenter(this);
     }
 
     @Override
@@ -56,7 +55,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 if (RETURN_MSG_TYPE_LOGIN == resp.getType()) {
                       //此处进行数据请求，请求用户信息
                     Logger.i("share"," loginPresenter.loginSns(\"weixin\", code_code);");
-                    loginPresenter.loginSns("weixin", code_code);
+
 
                 } else {
                     Toast.makeText(this, "分享成功", Toast.LENGTH_LONG).show();
