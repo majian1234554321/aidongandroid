@@ -31,25 +31,14 @@ import com.leyuan.aidong.widget.dialog.DialogSingleButton;
 public class SplashActivity extends BaseActivity implements VersionViewListener, LoginAutoView {
 
     private static final int MESSAGE = 1;
-    private static final int DURATION = 3000;
+    private static final int DURATION = 2000;
     private static final String OS = "android";
     private boolean isFirstEnter = true;
 
     private SplashPresenterImpl splashPresenter;
     private VersionPresenterImpl versionPresenter;
+    private VersionInformation versionInfomation;
 
-    private PermissionManager.OnCheckPermissionListener permissinListener = new PermissionManager.OnCheckPermissionListener() {
-        @Override
-        public void checkOver() {
-            if (isFirstEnter) {
-                UiManager.activityJump(SplashActivity.this, GuideActivity.class);
-
-            } else {
-                UiManager.activityJump(SplashActivity.this, MainActivity.class);
-            }
-            finish();
-        }
-    };
     //todo
     private Handler handler = new Handler() {
         @Override
@@ -60,7 +49,18 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
             }
         }
     };
-    private VersionInformation versionInfomation;
+
+    private PermissionManager.OnCheckPermissionListener permissinListener = new PermissionManager.OnCheckPermissionListener() {
+        @Override
+        public void checkOver() {
+            if (isFirstEnter) {
+                UiManager.activityJump(SplashActivity.this, GuideActivity.class);
+            } else {
+                UiManager.activityJump(SplashActivity.this, MainActivity.class);
+            }
+            finish();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,13 +160,6 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
                 }).show();
     }
 
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        handler.removeCallbacksAndMessages(null);
-    }
-
     @Override
     public void onAutoLoginResult(boolean success) {
         handler.removeCallbacksAndMessages(null);
@@ -178,4 +171,11 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         splashPresenter.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacksAndMessages(null);
+    }
+
 }
