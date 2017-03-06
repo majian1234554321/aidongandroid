@@ -12,9 +12,10 @@ public interface LoginService {
     @FormUrlEncoded
     @POST("login/mobile")
     Observable<BaseBean<LoginResult>> login(@Field("mobile") String account, @Field("password") String password);
-//                                            @Field("device_type") String device_type, @Field("device_token") String device_token);
-    @FormUrlEncoded
-    @POST("users/autoLogin")
+
+    //                                            @Field("device_type") String device_type, @Field("device_token") String device_token);
+//    @FormUrlEncoded
+    @POST("login/auto")
     Observable<BaseBean<LoginResult>> autoLogin();
 
     @FormUrlEncoded
