@@ -26,7 +26,7 @@ public class WeiBoLogin {
     public  WeiBoLogin(Activity context, ThirdLoginUtils.OnThirdPartyLogin listner){
         this.context = context;
         this.listner = listner;
-        mAuthInfo = new AuthInfo(context, WeiBoConstants.APP_KEY, WeiBoConstants.REDIRECT_URL,WeiBoConstants.SCOPE);
+        mAuthInfo = new AuthInfo(context, WeiBoConstants.APP_KEY, WeiBoConstants.REDIRECT_URL,null);
 
         mSsoHandler = new SsoHandler(context, mAuthInfo);
 //        mSsoHandler.authorize(new AuthListener());

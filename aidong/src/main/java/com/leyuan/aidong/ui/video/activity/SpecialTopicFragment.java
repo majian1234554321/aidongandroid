@@ -17,16 +17,18 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 
-import com.google.gson.Gson;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.SpecialTopicAdapter;
 import com.leyuan.aidong.entity.video.SpecialTopicInfo;
+import com.leyuan.aidong.ui.mvp.presenter.impl.VideoPresenterImpl;
+import com.leyuan.aidong.ui.mvp.view.VideoListViewLister;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.CustomLayoutManager;
 
+import java.util.ArrayList;
 
 
-public class SpecialTopicFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class SpecialTopicFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, VideoListViewLister {
 
     private int item_normal_height;
     private int item_max_height;
@@ -43,14 +45,13 @@ public class SpecialTopicFragment extends Fragment implements SwipeRefreshLayout
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout layout_refresh;
     private LinearLayout layout_video_empty;
+    private VideoPresenterImpl presenter;
 
-    private Gson gson = new Gson();
     private SpecialTopicAdapter adapter;
     private CustomLayoutManager mLinearLayoutManager;
     public static int scrollDirection = 1; //1向上 0 向下
     private int lastVisibleItem;
     private boolean isLoading;
-
 
     private int page = 1;
     private String city_id;
@@ -68,8 +69,9 @@ public class SpecialTopicFragment extends Fragment implements SwipeRefreshLayout
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
+        super.onCreate(savedInstanceState);
+        initReceiver();
         item_max_height = (int) getResources().getDimension(R.dimen.video_item_max_height);
         item_normal_height = (int) getResources().getDimension(R.dimen.video_item_normal_height);
         item_normal_font_size = getResources().getDimension(R.dimen.item_normal_font_size);
@@ -83,16 +85,25 @@ public class SpecialTopicFragment extends Fragment implements SwipeRefreshLayout
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_special_topic, container, false);
-        layout_refresh = (SwipeRefreshLayout) rootView.findViewById(R.id.layout_refresh);
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
-        layout_video_empty = (LinearLayout) rootView.findViewById(R.id.layout_video_empty);
-        layout_refresh.setOnRefreshListener(this);
+        return inflater.inflate(R.layout.fragment_special_topic, container, false);
+    }
 
-        initReceiver();
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        layout_refresh = (SwipeRefreshLayout) view.findViewById(R.id.layout_refresh);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        layout_video_empty = (LinearLayout) view.findViewById(R.id.layout_video_empty);
+        layout_refresh.setOnRefreshListener(this);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        presenter = new VideoPresenterImpl(getActivity());
+        presenter.setVideoListViewListener(this);
         initRecyclerView();
         getDataFromInter();
-        return rootView;
     }
 
     private void initReceiver() {
@@ -240,7 +251,7 @@ public class SpecialTopicFragment extends Fragment implements SwipeRefreshLayout
                 //                ToastTools.makeShortText("跳");
                 Intent intent = new Intent(getActivity(), VideoDetailActivity.class);
                 intent.putExtra("id", info.getId());
-                intent.putExtra("phase", info.getLatest().getPhase()-1);
+                intent.putExtra("phase", info.getLatest().getPhase() - 1);
                 getActivity().startActivity(intent);
             } else {
                 View v = mRecyclerView.getChildAt(position - mLinearLayoutManager.findFirstVisibleItemPosition());
@@ -254,80 +265,36 @@ public class SpecialTopicFragment extends Fragment implements SwipeRefreshLayout
     private void getDataFromInter() {
         page = 1;
         adapter.setFirst(true);
-     /*   RequestParams params = new RequestParams();
-        params.addBodyParameter("pageCurrent", String.valueOf(page));
-        params.addBodyParameter("list", "professional");
-        params.addBodyParameter("areaId", city_id);
-//        MyHttpUtils http = new MyHttpUtils();
-//        http.send(HttpRequest.HttpMethod.POST, Urls.BASE_URL_TEXT + "/getVideoList.action", params, callback);*/
+        presenter.getVideoList(page + "", VideoPresenterImpl.family);
     }
 
-    /*private RequestCallBack<String> callback = new RequestCallBack<String>() {
 
-        @Override
-        public void onSuccess(ResponseInfo<String> responseInfo) {
-//            ToastTools.show("刷新成功",getActivity());
-            layout_refresh.setRefreshing(false);
-            Logger.i("" + responseInfo.result);
-//            try {
-//                BaseResult<VideoListResult> result = gson.fromJson(responseInfo.result,
-//                        new TypeToken<BaseResult<VideoListResult>>() {
-//                        }.getType());
-//                if (result.getCode() == 1 && result.getResult() != null && result.getResult().getVideo() != null) {
-//                    ArrayList<SpecialTopicInfo> videos = result.getResult().getVideo();
-//                    scrollDirection = 1;
-//                    adapter.freshData(videos);
-//                    if (videos.size() > 0) {
-//                        mRecyclerView.setVisibility(View.VISIBLE);
-//                        layout_video_empty.setVisibility(View.GONE);
-//                    } else {
-//                        mRecyclerView.setVisibility(View.INVISIBLE);
-//                        layout_video_empty.setVisibility(View.VISIBLE);
-//                    }
-//
-//                }
-//            } catch (JsonSyntaxException e) {
-//                e.printStackTrace();
-//            }
+    @Override
+    public void onRefresh() {
+        getDataFromInter();
+    }
 
+    @Override
+    public void onGetVideoList(ArrayList<SpecialTopicInfo> videos) {
+        layout_refresh.setRefreshing(false);
+        scrollDirection = 1;
+        adapter.freshData(videos);
+        if (videos != null && !videos.isEmpty()) {
+            mRecyclerView.setVisibility(View.VISIBLE);
+            layout_video_empty.setVisibility(View.GONE);
+        } else {
+            mRecyclerView.setVisibility(View.INVISIBLE);
+            layout_video_empty.setVisibility(View.VISIBLE);
         }
 
-        @Override
-        public void onFailure(HttpException e, String s) {
-            layout_refresh.setRefreshing(false);
+    }
 
-        }
-    };*/
-
-    /*private RequestCallBack<String> callbackMore = new RequestCallBack<String>() {
-
-        @Override
-        public void onSuccess(ResponseInfo<String> responseInfo) {
-            isLoading = false;
-            layout_refresh.setRefreshing(false);
-            Logger.i("callbackMore" + responseInfo.result);
-//            try {
-//                BaseResult<VideoListResult> result = gson.fromJson(responseInfo.result,
-//                        new TypeToken<BaseResult<VideoListResult>>() {
-//                        }.getType());
-//                if (result.getCode() == 1 && result.getResult() != null && result.getResult().getVideo() != null && result.getResult().getVideo().size() > 0) {
-//                    ArrayList<SpecialTopicInfo> videos = result.getResult().getVideo();
-//                    adapter.addData(videos);
-//                }
-//            } catch (JsonSyntaxException e) {
-//                e.printStackTrace();
-//            }
-
-        }
-
-        @Override
-        public void onFailure(HttpException e, String s) {
-            isLoading = false;
-            layout_refresh.setRefreshing(false);
-
-        }
-    };*/
-
+    @Override
+    public void onGetMoreVideoList(ArrayList<SpecialTopicInfo> video) {
+        isLoading = false;
+        layout_refresh.setRefreshing(false);
+        adapter.addData(video);
+    }
 
     private int valueColor(int height) {
         if (height >= item_max_height) {
@@ -346,30 +313,12 @@ public class SpecialTopicFragment extends Fragment implements SwipeRefreshLayout
         }
         return height / (item_max_height - 200);
 
-
     }
 
-
-//    @Override
-//    public void onRefresh(SwipyRefreshLayoutDirection direction) {
-//        if (direction == SwipyRefreshLayoutDirection.TOP) {
-//            getDataFromInter();
-//
-//        } else {
-//            getMoreDataFromInter();
-//        }
-//    }
-
     private void getMoreDataFromInter() {
-       /* isLoading = true;
-
+        isLoading = true;
         page++;
-        RequestParams params = new RequestParams();
-        params.addBodyParameter("pageCurrent", String.valueOf(page));
-        params.addBodyParameter("list", "professional");
-        params.addBodyParameter("areaId", city_id);
-//        MyHttpUtils http = new MyHttpUtils();
-//        http.send(HttpRequest.HttpMethod.POST, Urls.BASE_URL_TEXT + "/getVideoList.action", params, callbackMore);*/
+        presenter.getMoreVideoList(String.valueOf(page), VideoPresenterImpl.family);
     }
 
     @Override
@@ -380,8 +329,4 @@ public class SpecialTopicFragment extends Fragment implements SwipeRefreshLayout
         }
     }
 
-    @Override
-    public void onRefresh() {
-        getDataFromInter();
-    }
 }

@@ -139,7 +139,7 @@ public class DeepIntoAdapter extends RecyclerView.Adapter<DeepIntoAdapter.ViewHo
                 GlideLoader.getInstance().displayImage(info.getLatest().getCover(), holder.imgView);
                 holder.txt_belong.setText("" + info.getLatest().getAuthor());
                 holder.txt_type.setText("" + info.getLatest().getVideoName());
-                if(info.getFinished() == 1){
+                if(info.getFinished()){
                     holder.txt_course.setText("/共" + info.getLatest().getPhase() + "集/");
                 }else{
                     holder.txt_course.setText("更新 / 第" + info.getLatest().getPhase() + "集 /");

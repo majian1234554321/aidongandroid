@@ -23,7 +23,7 @@ public class RetrofitHelper {
     private static final int DEFAULT_TIMEOUT = 30;
     private static Retrofit singleton;
 
-    public static <T> T createApi( Class<T> clazz) {
+    public static <T> T createApi(Class<T> clazz) {
         if (singleton == null) {
             synchronized (RetrofitHelper.class) {
                 if (singleton == null) {
@@ -40,20 +40,20 @@ public class RetrofitHelper {
     }
 
     public static OkHttpClient createClient() {
-        return  new OkHttpClient.Builder()
+        return new OkHttpClient.Builder()
                 .addInterceptor(new Interceptor() {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
-                       Request.Builder builder= chain.request().newBuilder();
-                        if(mInstance.isLogin() && mInstance.getToken() != null){
+                        Request.Builder builder = chain.request().newBuilder();
+                        if (mInstance.isLogin() && mInstance.getToken() != null) {
                             builder.addHeader("token", mInstance.getToken());
                         }
                         builder.addHeader("city", URLEncoder.encode(App.city, "UTF-8"));
-
-//                        builder.addHeader("city",App.city);
-                        builder.addHeader("lat",String.valueOf(App.lat));
-                        builder.addHeader("lng",String.valueOf(App.lon));
-
+//                        builder.addHeader("device", "android");
+                        builder.addHeader("lat", String.valueOf(App.lat));
+                        builder.addHeader("lng", String.valueOf(App.lon));
+//                        builder.addHeader("version", App.getInstance().getVersionName());
+//                        builder.addHeader("deviceName", DeviceManager.getPhoneBrand());
 
                         Request authorised = builder.build();
                         return chain.proceed(authorised);

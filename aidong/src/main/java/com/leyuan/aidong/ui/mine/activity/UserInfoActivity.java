@@ -20,17 +20,17 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.hyphenate.easeui.EaseConstant;
+import com.hyphenate.easeui.domain.EaseUser;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.mine.UserInfoPhotoAdapter;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.PhotoBrowseInfo;
 import com.leyuan.aidong.entity.ProfileBean;
 import com.leyuan.aidong.entity.data.UserInfoData;
-
+import com.leyuan.aidong.module.chat.db.DemoDBManager;
 import com.leyuan.aidong.module.photopicker.boxing.Boxing;
 import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
 import com.leyuan.aidong.module.photopicker.boxing_impl.ui.BoxingActivity;
-import com.leyuan.aidong.module.chat.EmFriendManager;
 import com.leyuan.aidong.module.photopicker.boxing_impl.view.SpacesItemDecoration;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
@@ -212,11 +212,11 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
 
     @Override
     public void addFollowResult(BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
+        if (baseBean.getStatus() == Constant.OK) {
             isFollow = true;
             ivFollowOrPublish.setBackgroundResource(R.drawable.icon_following);
-        }else {
-            Toast.makeText(this,"关注失败",Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "关注失败", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -246,6 +246,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+
             case R.id.iv_back:
                 finish();
                 break;
@@ -256,16 +257,22 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
                 UpdatePhotoWallActivity.start(this, userInfoData.getPhotoWall());
                 break;
             case R.id.tv_message:
-                EmFriendManager.getInstance().addFriend(userId, "meimei");
+//                EmFriendManager.getInstance().addFriend(userId, "meimei");
+
+                ProfileBean profile = userInfoData.getProfile();
+                EaseUser user = new EaseUser(profile.getId());
+                user.setNickname(profile.getName());
+                user.setAvatar(profile.getAvatar());
+                DemoDBManager.getInstance().saveContact(user);
                 startActivity(new Intent(this, EMChatActivity.class).
                         putExtra(EaseConstant.EXTRA_USER_ID, userId));
                 break;
             case R.id.iv_follow_or_publish:
-                if(isSelf){
+                if (isSelf) {
                     publishDynamic();
-                }else if(isFollow){
+                } else if (isFollow) {
                     userInfoPresent.cancelFollow(userId);
-                }else {
+                } else {
                     userInfoPresent.addFollow(userId);
                 }
                 break;
@@ -292,29 +299,29 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
 
 
     //todo
-    private void publishDynamic(){
+    private void publishDynamic() {
         new MaterialDialog.Builder(this)
-            .items(R.array.mediaType)
-            .itemsCallback(new MaterialDialog.ListCallback() {
-                @Override
-                public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
-                    if(position == 0){
-                        takePhotos();
-                    }else {
-                        takeVideo();
+                .items(R.array.mediaType)
+                .itemsCallback(new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                        if (position == 0) {
+                            takePhotos();
+                        } else {
+                            takeVideo();
+                        }
                     }
-                }
-            })
-            .show();
+                })
+                .show();
     }
 
-    private void takePhotos(){
+    private void takePhotos() {
         BoxingConfig multi = new BoxingConfig(BoxingConfig.Mode.MULTI_IMG);
         multi.needCamera().maxCount(6).isNeedPaging();
         Boxing.of(multi).withIntent(this, BoxingActivity.class).start(this, REQUEST_PHOTO);
     }
 
-    private void takeVideo(){
+    private void takeVideo() {
         BoxingConfig videoConfig = new BoxingConfig(BoxingConfig.Mode.VIDEO).needCamera();
         Boxing.of(videoConfig).withIntent(this, BoxingActivity.class).start(this, REQUEST_VIDEO);
     }
@@ -323,7 +330,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            PublishDynamicActivity.start(this,requestCode == REQUEST_PHOTO,Boxing.getResult(data));
+            PublishDynamicActivity.start(this, requestCode == REQUEST_PHOTO, Boxing.getResult(data));
         }
     }
 
@@ -333,7 +340,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     }
 
     @Override
-    public void onPreviewImage(List<String> urls, List<Rect> rectList,int currPosition) {
+    public void onPreviewImage(List<String> urls, List<Rect> rectList, int currPosition) {
         PhotoBrowseInfo info = PhotoBrowseInfo.create(urls, rectList, currPosition);
         PhotoBrowseActivity.start(this, info);
     }

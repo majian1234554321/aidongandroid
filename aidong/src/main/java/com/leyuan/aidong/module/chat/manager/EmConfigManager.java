@@ -1,4 +1,4 @@
-package com.leyuan.aidong.module.chat;
+package com.leyuan.aidong.module.chat.manager;
 
 import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
@@ -20,8 +20,16 @@ import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.model.EaseNotifier;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.util.EMLog;
+import com.leyuan.aidong.entity.ProfileBean;
+import com.leyuan.aidong.entity.model.UserCoach;
+import com.leyuan.aidong.module.chat.CallReceiver;
+import com.leyuan.aidong.module.chat.MyContactListener;
+import com.leyuan.aidong.module.chat.MyGroupChangeListener;
+import com.leyuan.aidong.module.chat.db.DemoDBManager;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.mine.activity.EMChatActivity;
+import com.leyuan.aidong.ui.mvp.presenter.impl.ChatPresentImpl;
+import com.leyuan.aidong.ui.mvp.view.EmChatView;
 import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.Logger;
 
@@ -35,10 +43,9 @@ import static android.content.Context.ACTIVITY_SERVICE;
  * Created by user on 2016/12/15.
  */
 
-public class EmConfigManager {
+public class EmConfigManager implements EmChatView {
 
     private static final String TAG = "EMChatConfigManager";
-    private static EmConfigManager instance;
     private EaseUI easeUI;
     private ArrayList<DataSyncListener> syncGroupsListeners;
     private ArrayList<DataSyncListener> syncContactsListeners;
@@ -49,22 +56,28 @@ public class EmConfigManager {
     private boolean isGroupAndContactListenerRegisted;
     private EMMessageListener messageListener;
 
+    private ChatPresentImpl present;
 
-    public synchronized static EmConfigManager getInstance() {
-        if (instance == null) {
-            instance = new EmConfigManager();
-        }
-        return instance;
+    private EmConfigManager() {
+    }
+
+    private static class Inner {
+        private static EmConfigManager instance = new EmConfigManager();
+    }
+
+    public static EmConfigManager getInstance() {
+        return Inner.instance;
     }
 
     public void initializeEaseUi(Context context) {
-        EMOptions options = new EMOptions();
+        EMOptions options = initChatOptions();
 
         if (EaseUI.getInstance().init(context, options)) {
             LogAidong.i("emChat", "EaseUI.getInstance().init success");
             EMClient.getInstance().setDebugMode(true);
             appContext = context;
             easeUI = EaseUI.getInstance();
+            present = new ChatPresentImpl(context, this);
             setEaseUIProviders();
             setGlobalListeners();
 
@@ -147,9 +160,11 @@ public class EmConfigManager {
                 for (EMMessage message : messages) {
                     EMLog.d(TAG, "onMessageReceived id : " + message.getMsgId());
                     // in background, do not refresh UI, notify it in notification bar
+                    setUserDb(message.getFrom());
                     if (!easeUI.hasForegroundActivies()) {
                         getNotifier().onNewMsg(message);
                     }
+
                 }
             }
 
@@ -196,6 +211,27 @@ public class EmConfigManager {
         };
 
         EMClient.getInstance().chatManager().addMessageListener(messageListener);
+    }
+
+    private void setUserDb(String fromId) {
+        EaseUser user = DemoDBManager.getInstance().getContactList().get(fromId);
+        if (user == null) {
+            ArrayList<String> ids = new ArrayList<>();
+            ids.add(fromId);
+            present.getUserInfo(ids);
+        }
+    }
+
+    @Override
+    public void onGetUserInfo(List<ProfileBean> profile) {
+        if (profile != null && !profile.isEmpty()) {
+            ProfileBean profileBean = profile.get(0);
+            EaseUser user = new EaseUser(profileBean.getId());
+            user.setAvatar(profileBean.getAvatar());
+            user.setNickname(profileBean.getName());
+            DemoDBManager.getInstance().saveContact(user);
+        }
+
     }
 
     private EaseNotifier getNotifier() {
@@ -305,14 +341,17 @@ public class EmConfigManager {
         // To get instance of EaseUser, here we get it from the user list in memory
         // You'd better cache it if you get it from your server
         EaseUser user = null;
-//        if(username.equals(EMClient.getInstance().getCurrentUser()))
-//            return getUserProfileManager().getCurrentUserInfo();
-//        user = getContactList().get(username);
-//        if(user == null && getRobotList() != null){
-//            user = getRobotList().get(username);
-//        }
-
-        // if user is not in your contacts, set inital letter for him/her
+        if (App.mInstance.isLogin()) {
+            if (username.equals(EMClient.getInstance().getCurrentUser())) {
+                UserCoach userCoach = App.mInstance.getUser();
+                user = new EaseUser(username);
+                user.setNickname(userCoach.getName());
+                user.setAvatar(userCoach.getAvatar());
+            } else {
+                user = DemoDBManager.getInstance().getContactList().get(username);
+                LogAidong.i("chat", "user = " + user + ", id = " + username);
+            }
+        }
         if (user == null) {
             user = new EaseUser(username);
             EaseCommonUtils.setUserInitialLetter(user);
@@ -377,8 +416,8 @@ public class EmConfigManager {
         options.setRequireAck(true);
         //设置是否需要接受方送达确认,默认false
         options.setRequireDeliveryAck(false);
-        options.setMipushConfig("2882303761517426801", "5381742660801");
-        options.setHuaweiPushAppId("10492024");
+        options.setMipushConfig("2882303761517375065", "5381737527065");
+        options.setHuaweiPushAppId("10537884");
 
         return options;
     }

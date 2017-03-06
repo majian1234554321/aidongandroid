@@ -6,10 +6,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.module.chat.manager.EmMessageManager;
 import com.leyuan.aidong.ui.discover.fragment.DiscoverHomeFragment;
 import com.leyuan.aidong.ui.home.fragment.HomeFragment;
 import com.leyuan.aidong.ui.mine.fragment.MineFragment;
@@ -25,10 +27,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private RelativeLayout tabFoundLayout;
     private RelativeLayout tabDiscoverLayout;
     private RelativeLayout tabMineLayout;
+    private ImageView img_new_message;
 
     private List<Fragment> mFragments = new ArrayList<>();
     private FragmentManager fm;
     private FragmentTransaction ft;
+
+    private long mPressedTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +48,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         tabFoundLayout = (RelativeLayout) findViewById(R.id.tabFoundLayout);
         tabDiscoverLayout = (RelativeLayout) findViewById(R.id.tabContactorLayout);
         tabMineLayout = (RelativeLayout) findViewById(R.id.tabMineLayout);
+        img_new_message = (ImageView) findViewById(R.id.img_new_message);
     }
 
     private void initData() {
@@ -154,7 +160,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         tabMineLayout.setClickable(true);
     }
 
-    private long mPressedTime = 0;
+    @Override
+    protected void onResume() {
+        super.onResume();
+        img_new_message.setVisibility(EmMessageManager.isHaveUnreadMessage() ? View.VISIBLE : View.GONE);
+    }
 
     @Override
     public void onBackPressed() {

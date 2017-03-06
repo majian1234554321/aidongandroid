@@ -3,12 +3,9 @@ package com.leyuan.aidong.module.share;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
-import com.leyuan.aidong.R;
 import com.leyuan.aidong.module.weibo.WeiBoConstants;
 import com.leyuan.aidong.utils.Logger;
-import com.sina.weibo.sdk.api.ImageObject;
 import com.sina.weibo.sdk.api.TextObject;
 import com.sina.weibo.sdk.api.WebpageObject;
 import com.sina.weibo.sdk.api.WeiboMultiMessage;
@@ -73,11 +70,11 @@ public class WeiBoShare implements IWeiboHandler.Response {
         weiboMessage.textObject = textObject;
 
         //图片不能超过32kb
-        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.back);
-        Logger.i("share"," bitmap size  = " +bitmap.getByteCount());
-        ImageObject imageObject = new ImageObject();
-        imageObject.setImageObject(bitmap);
-        weiboMessage.imageObject = imageObject;
+//        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.back);
+//        Logger.i("share"," bitmap size  = " +bitmap.getByteCount());
+//        ImageObject imageObject = new ImageObject();
+//        imageObject.setImageObject(bitmap);
+//        weiboMessage.imageObject = imageObject;
 
 
         WebpageObject mediaObject = new WebpageObject();
@@ -96,6 +93,9 @@ public class WeiBoShare implements IWeiboHandler.Response {
     }
 
     public  void share(final String title, final String content, String imageUrl, final String webUrl) {
+
+        sendMessage(title, content, null, webUrl);
+
         /*ImageLoader.getInstance().loadImage(imageUrl, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {

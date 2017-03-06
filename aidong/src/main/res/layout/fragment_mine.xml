@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/base_theme">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_theme">
 
 
     <ScrollView
@@ -34,16 +34,14 @@
                         android:layout_marginTop="75dp"
                         android:text="@string/find_your_club"
                         android:textColor="@color/color_txt_gray1"
-                        android:textSize="13sp"
-                        />
+                        android:textSize="13sp" />
 
                     <ImageButton
                         android:id="@+id/button_login"
                         android:layout_width="95dp"
                         android:layout_height="35dp"
                         android:layout_marginTop="20dp"
-                        android:background="@drawable/mine_login_button"
-                        />
+                        android:background="@drawable/mine_login_button" />
 
                 </LinearLayout>
 
@@ -78,10 +76,10 @@
                         android:layout_below="@+id/imageView_head"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        android:text="姓名"
                         android:autoLink="web"
+                        android:text="姓名"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/length28"/>
+                        android:textSize="@dimen/length28" />
 
 
                     <LinearLayout
@@ -186,6 +184,7 @@
                 </RelativeLayout>
 
             </FrameLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="95dp"
@@ -352,66 +351,67 @@
                 </RelativeLayout>
 
             </LinearLayout>
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/mine_divider"/>
+                android:background="@color/mine_divider" />
 
             <com.leyuan.aidong.widget.AidongMineItem
                 android:id="@+id/item_my_coin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:img_tag="@drawable/mine_love_coin"
-                app:txt_name="我的爱币"
+                android:visibility="gone"
                 app:divider_visible="true"
-                android:visibility="gone"/>
+                app:img_tag="@drawable/mine_love_coin"
+                app:txt_name="我的爱币" />
+
             <com.leyuan.aidong.widget.AidongMineItem
                 android:id="@+id/item_my_coupon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:img_tag="@drawable/mine_coupon"
-                app:txt_name="我的优惠券"
                 app:divider_visible="true"
-                />
+                app:img_tag="@drawable/mine_coupon"
+                app:txt_name="我的优惠券" />
+
             <com.leyuan.aidong.widget.AidongMineItem
                 android:id="@+id/item_sport_timing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:img_tag="@drawable/mine_love_sport_timing"
-                app:txt_name="爱动时刻"
                 app:divider_visible="true"
-                />
+                app:img_tag="@drawable/mine_love_sport_timing"
+                app:txt_name="爱动时刻" />
+
             <com.leyuan.aidong.widget.AidongMineItem
                 android:id="@+id/item_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:img_tag="@drawable/mine_shopping_address"
-                app:txt_name="收货地址"
-                />
+                app:txt_name="收货地址" />
+
             <com.leyuan.aidong.widget.AidongMineItem
                 android:id="@+id/item_recommend_friend"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/pref_10dp"
-                app:img_tag="@drawable/mine_add_friend"
-                app:txt_name="推荐好友"
                 app:divider_visible="true"
-                />
+                app:img_tag="@drawable/mine_add_friend"
+                app:txt_name="推荐好友" />
+
             <com.leyuan.aidong.widget.AidongMineItem
                 android:id="@+id/item_after_sale"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:img_tag="@drawable/mine_after_sale"
-                app:txt_name="售后/退款"
                 app:divider_visible="true"
-                />
+                app:img_tag="@drawable/mine_after_sale"
+                app:txt_name="售后/退款" />
+
             <com.leyuan.aidong.widget.AidongMineItem
                 android:id="@+id/item_setting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:img_tag="@drawable/mine_setting"
-                app:txt_name="设置"
-                />
+                app:txt_name="设置" />
         </LinearLayout>
 
     </ScrollView>
@@ -427,8 +427,17 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:background="@color/transparent"
-            android:src="@drawable/mine_shopping_basket"
-            />
+            android:src="@drawable/mine_shopping_basket" />
+
+        <ImageView
+            android:id="@+id/img_new_message"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/shape_circle_red"
+            android:visibility="gone" />
 
         <ImageButton
             android:id="@+id/btn_message"
@@ -438,8 +447,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
             android:background="@color/transparent"
-            android:src="@drawable/mine_message"
-            />
+            android:src="@drawable/mine_message" />
 
 
     </RelativeLayout>

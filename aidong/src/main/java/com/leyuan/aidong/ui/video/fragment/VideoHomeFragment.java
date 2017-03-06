@@ -15,26 +15,29 @@ import android.view.ViewGroup;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.HomeVideoAdapter;
+import com.leyuan.aidong.entity.video.LiveHomeResult;
 import com.leyuan.aidong.entity.video.LiveVideoInfo;
+import com.leyuan.aidong.entity.video.LiveVideoSoonInfo;
 import com.leyuan.aidong.ui.BaseFragment;
+import com.leyuan.aidong.ui.mvp.presenter.impl.LivePresenterImpl;
+import com.leyuan.aidong.ui.mvp.view.LiveHomeView;
 import com.leyuan.aidong.ui.video.activity.LiveDetailActivity;
 import com.leyuan.aidong.ui.video.activity.LivingVideoActivity;
 import com.leyuan.aidong.ui.video.activity.VideoDetailActivity;
 import com.leyuan.aidong.ui.video.activity.WatchOfficeActivity;
 import com.leyuan.aidong.utils.Constant;
 
-import static com.leyuan.aidong.R.layout.main;
-import static com.leyuan.aidong.R.string.aidong;
 
 public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.OnLivingVideoCLickListener,
         HomeVideoAdapter.OnPlaybackClickListener, HomeVideoAdapter.OnSoonLiveVideoClickListener,
-        HomeVideoAdapter.OnVideoClickListener, SwipeRefreshLayout.OnRefreshListener {
+        HomeVideoAdapter.OnVideoClickListener, SwipeRefreshLayout.OnRefreshListener, LiveHomeView {
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
 
     private HomeVideoAdapter adapter;
     private int page;
+    private LivePresenterImpl presenter;
 
     private static final int COUNT_DOWN = 0;
     @SuppressLint("HandlerLeak")
@@ -60,7 +63,7 @@ public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        presenter = new LivePresenterImpl(getActivity(), this);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
 
@@ -84,6 +87,7 @@ public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.
 
     private void getDataFromInter() {
         page = 1;
+        presenter.getLiveHome();
       /*  RequestParams params = new RequestParams();
         params.addBodyParameter("pageCurrent", String.valueOf(page));
 //        MyHttpUtils http = new MyHttpUtils();
@@ -232,4 +236,14 @@ public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.
         startActivity(intent);
     }
 
+    @Override
+    public void onGetLiveHomeData(LiveHomeResult.LiveHome liveHome) {
+        swipeRefreshLayout.setRefreshing(false);
+        if (liveHome != null) {
+            adapter.refreshData(liveHome.getNow(),
+                    LiveVideoSoonInfo.createMoreLive(liveHome.getMore()), liveHome.getEmpty());
+            mHandler.removeCallbacksAndMessages(null);
+            mHandler.sendEmptyMessageDelayed(COUNT_DOWN, 1000);
+        }
+    }
 }

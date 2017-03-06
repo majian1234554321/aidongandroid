@@ -10,7 +10,7 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
 import com.facebook.stetho.Stetho;
 import com.leyuan.aidong.entity.model.UserCoach;
-import com.leyuan.aidong.module.chat.EmConfigManager;
+import com.leyuan.aidong.module.chat.manager.EmConfigManager;
 import com.leyuan.aidong.module.photopicker.BoxingGlideLoader;
 import com.leyuan.aidong.module.photopicker.BoxingUCrop;
 import com.leyuan.aidong.module.photopicker.boxing.BoxingCrop;
@@ -18,6 +18,7 @@ import com.leyuan.aidong.module.photopicker.boxing.BoxingMediaLoader;
 import com.leyuan.aidong.module.photopicker.boxing.loader.IBoxingMediaLoader;
 import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.SharePrefUtils;
+import com.leyuan.aidong.utils.VersionManager;
 import com.squareup.leakcanary.LeakCanary;
 
 import io.realm.Realm;
@@ -33,6 +34,7 @@ public class App extends Application {
     public static double lon;
     public static String city = "上海";
     public static String addressStr;
+    private String versionName;
 
     public LocationClient mLocationClient = null;
     public BDLocationListener myListener = new MyLocationListener();
@@ -138,15 +140,25 @@ public class App extends Application {
 
     public String getToken() {
         if (token == null) {
-            token = SharePrefUtils.getString(context, "token", null);
+            token = SharePrefUtils.getToken(context);
         }
         return token;
     }
 
     public void setToken(String token) {
         this.token = token;
-        SharePrefUtils.putString(context, "token", token);
+        SharePrefUtils.setToken(context, token);
     }
 
+    public static App getInstance() {
+        return mInstance;
+    }
+
+    public String getVersionName() {
+        if (versionName == null) {
+            versionName = VersionManager.getVersionName(context);
+        }
+        return versionName;
+    }
 
 }

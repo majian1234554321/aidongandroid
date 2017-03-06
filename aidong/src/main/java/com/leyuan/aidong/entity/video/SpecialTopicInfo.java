@@ -1,11 +1,18 @@
 package com.leyuan.aidong.entity.video;
 
+import com.google.gson.annotations.SerializedName;
+
 public class SpecialTopicInfo {
 
+    @SerializedName("id")
     private int vId;
+    @SerializedName("name")
     private String name;
-    //    private String cover;
-    private int finished;
+
+    @SerializedName("finished")
+    private boolean finished;
+
+    @SerializedName("latest")
     private Latest latest;
 
     public int getId() {
@@ -24,27 +31,33 @@ public class SpecialTopicInfo {
         this.name = name;
     }
 
-    public int getFinished() {
+    public boolean getFinished() {
         return finished;
     }
 
-    public void setFinished(int finished) {
+    public void setFinished(boolean finished) {
         this.finished = finished;
     }
 
-    public  Latest getLatest() {
+    public Latest getLatest() {
         return latest;
     }
 
-    public void setLatest( Latest latest) {
+    public void setLatest(Latest latest) {
         this.latest = latest;
     }
 
     public class Latest {
+
+        @SerializedName("phase")
         private int phase;
+        @SerializedName("author")
         private String author;
+        @SerializedName("created_at")
         private String updated;
+        @SerializedName("name")
         private String videoName;
+        @SerializedName("cover")
         private String cover;
 
         public String getVideoName() {

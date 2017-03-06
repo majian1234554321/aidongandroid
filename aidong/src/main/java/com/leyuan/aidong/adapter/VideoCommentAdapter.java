@@ -1,26 +1,29 @@
 package com.leyuan.aidong.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.video.VideoComment;
+import com.leyuan.aidong.entity.CommentBean;
 import com.leyuan.aidong.utils.GlideLoader;
-import com.leyuan.aidong.widget.media.CircleImageView;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class VideoCommentAdapter extends android.widget.BaseAdapter {
-    private Context context;
-    private ArrayList<VideoComment> mComments = new ArrayList<>();
+public class VideoCommentAdapter extends RecyclerView.Adapter<VideoCommentAdapter.ViewHolder> {
+    private LayoutInflater inflaster;
+    private List<CommentBean> mComments = new ArrayList<>();
 
     public VideoCommentAdapter(Context context) {
-        this.context = context;
+        inflaster = LayoutInflater.from(context);
     }
 
-    public void freshData(ArrayList<VideoComment> comments) {
+    public void freshData(List<CommentBean> comments) {
         mComments.clear();
         if (comments != null) {
             mComments.addAll(comments);
@@ -28,7 +31,7 @@ public class VideoCommentAdapter extends android.widget.BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public void addData(ArrayList<VideoComment> comments) {
+    public void addData(List<CommentBean> comments) {
 
         if (comments != null) {
             mComments.addAll(comments);
@@ -37,15 +40,21 @@ public class VideoCommentAdapter extends android.widget.BaseAdapter {
     }
 
     @Override
-    public int getCount() {
-        return mComments.size();
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = inflaster.inflate(R.layout.item_video_comments, parent, false);
+        return new ViewHolder(view);
     }
-
 
     @Override
-    public Object getItem(int position) {
-        return mComments.get(position);
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        CommentBean comment = mComments.get(position);
+
+        GlideLoader.getInstance().displayImage(comment.getPublisher().getAvatar(), holder.img_avatar);
+        holder.txt_user.setText("" + comment.getPublisher().getName());
+        holder.txt_content.setText("" + comment.getContent());
+        holder.txt_time.setText("" + comment.getPublishedAt());
     }
+
 
     @Override
     public long getItemId(int position) {
@@ -53,31 +62,21 @@ public class VideoCommentAdapter extends android.widget.BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder = null;
-        if (convertView == null) {
-            convertView = View.inflate(context, R.layout.item_video_comments, null);
-            holder = new ViewHolder();
-            holder.img_avatar = (CircleImageView) convertView.findViewById(R.id.img_avatar);
-            holder.txt_user = (TextView) convertView.findViewById(R.id.txt_user);
-            holder.txt_content = (TextView) convertView.findViewById(R.id.txt_content);
-            holder.txt_time = (TextView) convertView.findViewById(R.id.txt_time);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-        VideoComment comment = mComments.get(position);
-
-        GlideLoader.getInstance().displayImage(comment.getAuthor().getImgUrl(), holder.img_avatar);
-        holder.txt_user.setText(""+comment.getAuthor().getName());
-        holder.txt_content.setText(""+comment.getContent());
-        holder.txt_time.setText(""+comment.getTime());
-        return convertView;
+    public int getItemCount() {
+        return mComments.size();
     }
 
-    static class ViewHolder {
-        CircleImageView img_avatar;
+    class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView img_avatar;
         TextView txt_user, txt_content, txt_time;
+
+        public ViewHolder(View convertView) {
+            super(convertView);
+            img_avatar = (ImageView) convertView.findViewById(R.id.img_avatar);
+            txt_user = (TextView) convertView.findViewById(R.id.txt_user);
+            txt_content = (TextView) convertView.findViewById(R.id.txt_content);
+            txt_time = (TextView) convertView.findViewById(R.id.txt_time);
+        }
     }
 
 }

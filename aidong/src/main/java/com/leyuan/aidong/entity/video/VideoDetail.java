@@ -1,20 +1,51 @@
 package com.leyuan.aidong.entity.video;
 
-public class VideoDetail {
+import com.google.gson.annotations.SerializedName;
 
+public class VideoDetail {
+    @SerializedName("id")
     private int vId;
+
+    @SerializedName("cover")
     private String cover;
+
+    @SerializedName("m3u8")
     private String video;
+
+    @SerializedName("phase")
     private int phase;
+
+
+    @SerializedName("name")
     private String videoName;
+
+    @SerializedName("author")
     private String author;
+
+    @SerializedName("during")
     private String during;
+
+    @SerializedName("introduce")
     private String introduce;
+
+    @SerializedName("likes_counter")
     private int likesCount;
+    @SerializedName("comments_counter")
     private String commentsCount;
+
+    @SerializedName("updated_at")
+    private String updated_at;
     private int contentId;
 
-//    public VideoDetail(int vId, String cover, String video, int phase, String videoName,
+    public String getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(String updated_at) {
+        this.updated_at = updated_at;
+    }
+
+    //    public VideoDetail(int vId, String cover, String video, int phase, String videoName,
 //                       String author, String during, String introduce, String likesCount, String commentsCount) {
 //        this.vId = vId;
 //        this.cover = cover;

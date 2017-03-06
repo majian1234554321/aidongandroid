@@ -8,8 +8,8 @@ import android.widget.EditText;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.model.UserCoach;
-import com.leyuan.aidong.module.chat.EmChatLoginManager;
-import com.leyuan.aidong.module.chat.EmChatRegisterManager;
+import com.leyuan.aidong.module.chat.manager.EmChatLoginManager;
+import com.leyuan.aidong.module.chat.manager.EmChatRegisterManager;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.module.thirdpartylogin.ThirdLoginUtils;
 import com.leyuan.aidong.ui.BaseActivity;
@@ -37,9 +37,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
-        loginPresenter = new LoginPresenter(this, this);
+        loginPresenter = new LoginPresenter(this);
         chatLoginManager = new EmChatLoginManager(this);
         sharePopupWindow = new SharePopupWindow(this);
+        loginPresenter.setLoginViewInterface(this);
 
         findViewById(R.id.btn_back).setOnClickListener(this);
         findViewById(R.id.btn_login).setOnClickListener(this);

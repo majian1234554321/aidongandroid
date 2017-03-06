@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.video.LiveHomeResult;
 import com.leyuan.aidong.entity.video.LiveVideoInfo;
 import com.leyuan.aidong.entity.video.LiveVideoListResult;
 import com.leyuan.aidong.entity.video.LiveVideoSoonInfo;
@@ -56,7 +57,18 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
 
     }
 
-    public void refreshData(ArrayList<LiveVideoInfo> livingVideos, ArrayList<LiveVideoSoonInfo> liveDateArray) {
+    public void refreshData(LiveHomeResult.LiveHome liveHome) {
+        this.livingVideos.clear();
+        this.liveDateArray.clear();
+        this.liveHome = liveHome.getEmpty();
+        if (liveHome.getNow() != null)
+            this.livingVideos.addAll(liveHome.getNow());
+
+
+    }
+
+    public void refreshData(ArrayList<LiveVideoInfo> livingVideos, ArrayList<LiveVideoSoonInfo> liveDateArray, LiveVideoInfo empty) {
+        this.liveHome = empty;
         this.livingVideos.clear();
         if (livingVideos != null)
             this.livingVideos.addAll(livingVideos);
@@ -182,7 +194,7 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
 
             livingViews.clear();
 
-            while (livingViews.size() < 5){
+            while (livingViews.size() < 5) {
                 initLivingViews();
             }
 

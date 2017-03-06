@@ -4,7 +4,6 @@ package com.leyuan.aidong.entity;
 public class BaseBean<T> {
 
     private int status;
-    private int code;
     private String message;
     private T data;
 
@@ -22,14 +21,6 @@ public class BaseBean<T> {
 
     public void setStatus(int status) {
         this.status = status;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
     }
 
     public T getData() {

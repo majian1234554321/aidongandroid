@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.GoodBean;
+import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ import java.util.List;
  * Created song pc on 2016/7/25.
  */
 public class WatchOfficeRelateGoodAdapter extends RecyclerView.Adapter<WatchOfficeRelateGoodAdapter.RelateVideoViewHolder>{
-    private List<GoodBean> data = new ArrayList<>();
+    private List<GoodsBean> data = new ArrayList<>();
     private Context context;
 
     private OnGoodsItemClickListener listener;
@@ -29,7 +29,7 @@ public class WatchOfficeRelateGoodAdapter extends RecyclerView.Adapter<WatchOffi
         this.listener = listener;
     }
 
-    public void setData(List<GoodBean> data) {
+    public void setData(List<GoodsBean> data) {
         this.data = data;
         notifyDataSetChanged();
     }
@@ -48,10 +48,10 @@ public class WatchOfficeRelateGoodAdapter extends RecyclerView.Adapter<WatchOffi
 
     @Override
     public void onBindViewHolder(RelateVideoViewHolder holder, int position) {
-        final GoodBean bean = data.get(position);
-        GlideLoader.getInstance().displayImage(bean.getFoodUrl(), holder.cover);
-        holder.name.setText(bean.getFoodName());
-        holder.price.setText(new StringBuilder().append("¥").append(bean.getFoodPrice()));
+        final GoodsBean bean = data.get(position);
+        GlideLoader.getInstance().displayImage(bean.getCover(), holder.cover);
+        holder.name.setText(bean.getName());
+        holder.price.setText(new StringBuilder().append("¥").append(bean.getPrice()));
         holder.cover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,6 +75,6 @@ public class WatchOfficeRelateGoodAdapter extends RecyclerView.Adapter<WatchOffi
     }
 
     public interface OnGoodsItemClickListener{
-        void onGoodsClick(GoodBean bean);
+        void onGoodsClick(GoodsBean bean);
     }
 }
