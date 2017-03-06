@@ -39,6 +39,7 @@
     <string name="rmb_price_scope">¥ %1$.2f - ¥ %2$.2f</string>
     <string name="time_with_line">%1$s—%2$s</string>
     <string name="course_count">&#160;(%1$s/%2$s&#160;人)&#160;&#160;/&#160;&#160;</string>
+    <string name="venues_course_count">&#160;(%1$s/%2$s&#160;人)</string>
     <string name="distance_km"> %1$s km </string>
     <string name="x_count"> x %1$s</string>
     <string name="goods_count"> 共%1$s件商品</string>

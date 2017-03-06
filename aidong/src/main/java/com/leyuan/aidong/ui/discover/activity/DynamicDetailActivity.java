@@ -34,7 +34,7 @@ import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.DynamicDetailActivityView;
 import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.utils.DynamicType;
+import com.leyuan.aidong.utils.constant.DynamicType;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.KeyBoardUtil;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;

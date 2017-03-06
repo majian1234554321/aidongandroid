@@ -68,8 +68,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     private int stock = Integer.MAX_VALUE;          //具体sku的库存
     private String confirmedSkuCover;               //具体sku的图片
 
-    private String type;
-    private String gymId;
+    private String goodsType;
     private String count;
     private String recommendId;
     private StringBuilder skuTip;
@@ -82,16 +81,15 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     private CartPresent cartPresent;
 
     public GoodsSkuPopupWindow(Context context, GoodsDetailBean detailBean,
-                               List<String> selectedSkuValues,String gymId,String count,
-                               String recommendId,String type,String from) {
+                               List<String> selectedSkuValues,String count,
+                               String recommendId,String goodsType,String from) {
         super(context);
         this.context = context;
         this.detailBean = detailBean;
         this.selectedSkuValues = selectedSkuValues;
-        this.gymId = gymId;
-        this.count = count;
         this.recommendId = recommendId;
-        this.type = type;
+        this.count = count;
+        this.goodsType = goodsType;
 
         if(from.equals(FROM_SKU)){
             showConfirmStatus = false;
@@ -310,7 +308,8 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     private void addCart() {
         GoodsSkuBean line = getLine(selectedSkuValues);
         String countStr = tvCount.getText().toString();
-        cartPresent.addCart(line.code,Integer.parseInt(countStr),gymId,recommendId);
+        String id = detailBean.pick_up.getInfo().getId();
+        cartPresent.addCart(line.code,Integer.parseInt(countStr),id,recommendId);
     }
 
     private void confirmOrder() {
@@ -322,13 +321,13 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         goodsBean.setSkuCode(line.code);
         goodsBean.setCover(detailBean.image.get(0));
         goodsBean.setPrice(line.price);
-        goodsBean.setType(type);
+        goodsBean.setType(goodsType);
         goodsBean.setAmount(tvCount.getText().toString());
         goodsBean.setSpec_value((ArrayList<String>) line.value);
         goodsBeanList.add(goodsBean);
         shopBean.setItem(goodsBeanList);
         shopBean.setPickUp(detailBean.pick_up);
-       /* int orderType = Constant.TYPE_NURTURE.equals(type) ? Constant.ORDER_BUY_NURTURE_IMMEDIATELY
+       /* int orderType = Constant.TYPE_NURTURE.equals(goodsType) ? Constant.ORDER_BUY_NURTURE_IMMEDIATELY
                 :Constant.ORDER_BUY_EQUIPMENT_IMMEDIATELY;*/
         ConfirmOrderActivity.start(context,shopBean);
     }

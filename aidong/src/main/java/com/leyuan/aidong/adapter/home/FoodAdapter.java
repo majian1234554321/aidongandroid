@@ -11,11 +11,13 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.FoodBean;
 import com.leyuan.aidong.ui.home.activity.OldGoodsDetailActivity;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.constant.GoodsType;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.leyuan.aidong.utils.Constant.TYPE_FOODS;
+
+
 
 /**
  * 健康列表适配器
@@ -93,7 +95,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OldGoodsDetailActivity.start(context, bean.getFood_id(),TYPE_FOODS);
+                OldGoodsDetailActivity.start(context, bean.getFoodId(), GoodsType.FOOD);
             }
         });
     }

@@ -14,13 +14,13 @@ import com.leyuan.aidong.ui.discover.activity.VenuesDetailActivity;
 import com.leyuan.aidong.ui.home.activity.CampaignDetailActivity;
 import com.leyuan.aidong.ui.home.activity.CourseDetailActivity;
 import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
+import com.leyuan.aidong.utils.constant.GoodsType;
 
 import java.util.List;
 
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
-import static com.leyuan.aidong.utils.Constant.TYPE_NURTURE;
 
 public class BaseFragment extends Fragment implements EasyPermissions.PermissionCallbacks {
     private static final String TAG = "BaseFragment";
@@ -54,7 +54,7 @@ public class BaseFragment extends Fragment implements EasyPermissions.Permission
                 VenuesDetailActivity.start(getContext(),bannerBean.getLink());
                 break;
             case "21":
-                GoodsDetailActivity.start(getContext(),bannerBean.getLink(),TYPE_NURTURE);
+                GoodsDetailActivity.start(getContext(),bannerBean.getLink(), GoodsType.NUTRITION);
                 break;
             case "22":
                 CourseDetailActivity.start(getContext(),bannerBean.getLink());

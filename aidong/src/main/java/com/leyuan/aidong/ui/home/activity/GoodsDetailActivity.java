@@ -48,6 +48,7 @@ import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.ImageRectUtils;
 import com.leyuan.aidong.utils.TransitionHelper;
+import com.leyuan.aidong.utils.constant.DeliveryType;
 import com.leyuan.aidong.widget.SlideDetailsLayout;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
@@ -61,7 +62,6 @@ import java.util.List;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 
-import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
 import static com.leyuan.aidong.utils.Constant.EMPTY_STR;
 
 
@@ -118,16 +118,15 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
     private GoodsDetailBean detailBean;
 
     private String id;
-    private String type ;
-    private String gymId;
     private String count;
+    private String goodsType;
     private List<String> selectedSkuValues = new ArrayList<>();
     private CouponPresent couponPresent;
 
-    public static void start(Context context,String id,String type) {
+    public static void start(Context context,String id,String goodsType) {
         Intent starter = new Intent(context, GoodsDetailActivity.class);
         starter.putExtra("id",id);
-        starter.putExtra("type",type);
+        starter.putExtra("goodsType",goodsType);
         context.startActivity(starter);
     }
 
@@ -138,11 +137,11 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
         GoodsDetailPresent goodsDetailPresent = new GoodsDetailPresentImpl(this,this);
         if(getIntent() != null){
             id = getIntent().getStringExtra("id");
-            type = getIntent().getStringExtra("type");
+            goodsType = getIntent().getStringExtra("goodsType");
         }
         initView();
         setListener();
-        goodsDetailPresent.getGoodsDetail(switcherLayout,type,id);
+        goodsDetailPresent.getGoodsDetail(switcherLayout, goodsType,id);
     }
 
     @Override
@@ -210,7 +209,6 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
         tvAddCart.setOnClickListener(this);
         tvPay.setOnClickListener(this);
         bannerLayout.setOnItemClickListener(this);
-
         detailsLayout.setOnSlideDetailsListener(new MyOnSlideDetailsListener());
         appBarLayout.addOnOffsetChangedListener(new MyOnOffsetChangedListener());
     }
@@ -245,12 +243,10 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
         }
         tvSku.setText(skuStr);
         if(bean.pick_up != null) {
-            if(DELIVERY_EXPRESS.equals(bean.pick_up.type)){
-                gymId = null;
+            if(DeliveryType.EXPRESS.equals(bean.pick_up.type)){
                 tvAddressInfo.setVisibility(View.GONE);
                 tvDeliveryInfo.setText("快递");
             }else {
-                gymId = bean.pick_up.info.getId();
                 tvAddressInfo.setVisibility(View.VISIBLE);
                 tvAddressInfo.setText(bean.pick_up.info.getAddress());
                 tvDeliveryInfo.setText("自提");
@@ -304,7 +300,7 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
             case R.id.ll_address:
                 Intent intent = new Intent(this,DeliveryInfoActivity.class);
                 intent.putExtra("id",id);
-                intent.putExtra("type",type);
+                intent.putExtra("goodsType", goodsType);
                 intent.putExtra("deliveryBean",detailBean.pick_up);
                 final Pair<View, String>[] pairs = TransitionHelper.
                         createSafeTransitionParticipants(this, false);
@@ -334,8 +330,8 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
         //contentLayout.animate().rotationX(0.8f).setInterpolator(new AccelerateInterpolator(2)).start();
         //todo optimize
        // if(skuPopupWindow == null){
-            skuPopupWindow = new GoodsSkuPopupWindow(context,detailBean,selectedSkuValues,gymId,
-                    count,tvRecommendCode.getText().toString(),type,from);
+            skuPopupWindow = new GoodsSkuPopupWindow(context,detailBean,selectedSkuValues,
+                    count,tvRecommendCode.getText().toString(), goodsType,from);
             skuPopupWindow.setSelectSkuListener(this);
         skuPopupWindow.setOnDismissListener(this);
         //}
@@ -404,15 +400,15 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
         if(data == null){
             return;
         }
+
         if(requestCode == CODE_SELECT_ADDRESS){
             DeliveryBean deliveryBean = data.getParcelableExtra("deliveryBean");
+            detailBean.pick_up = deliveryBean;
             if(deliveryBean!= null) {
-                if(DELIVERY_EXPRESS.equals(deliveryBean.type)){
-                    gymId = null;
+                if(DeliveryType.EXPRESS.equals(deliveryBean.type)){
                     tvAddressInfo.setVisibility(View.GONE);
                     tvDeliveryInfo.setText("快递");
                 }else {
-                    gymId = deliveryBean.info.getId();
                     tvAddressInfo.setVisibility(View.VISIBLE);
                     tvAddressInfo.setText(deliveryBean.info.getAddress());
                     tvDeliveryInfo.setText("自提");

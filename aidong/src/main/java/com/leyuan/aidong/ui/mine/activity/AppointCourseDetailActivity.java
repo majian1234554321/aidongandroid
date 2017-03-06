@@ -32,6 +32,7 @@ import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.QRCodeUtil;
+import com.leyuan.aidong.utils.constant.PayType;
 import com.leyuan.aidong.widget.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.ExtendTextView;
 import com.leyuan.aidong.widget.SimpleTitleBar;
@@ -40,14 +41,14 @@ import com.leyuan.aidong.widget.SwitcherLayout;
 import cn.iwgang.countdownview.CountdownView;
 
 import static com.leyuan.aidong.ui.App.context;
-import static com.leyuan.aidong.utils.Constant.PAY_ALI;
-import static com.leyuan.aidong.utils.Constant.PAY_WEI_XIN;
+
 
 /**
  * 课程预约详情
  * Created by song on 2016/9/2.
  */
-public class AppointCourseDetailActivity extends BaseActivity implements AppointmentDetailActivityView, View.OnClickListener, CustomNestRadioGroup.OnCheckedChangeListener {
+public class AppointCourseDetailActivity extends BaseActivity implements AppointmentDetailActivityView,
+        View.OnClickListener, CustomNestRadioGroup.OnCheckedChangeListener {
     private static final String UN_PAID = "pending";         //待付款
     private static final String UN_JOIN= "purchased";        //待参加
     private static final String JOINED = "signed";           //已参加
@@ -202,7 +203,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
     public void setAppointmentDetail(AppointmentDetailBean bean) {
         detailBean = bean;
         payType = bean.getPay().getPayType();
-        if(PAY_ALI.equals(payType)){
+        if(PayType.ALI.equals(payType)){
             rbAliPay.setChecked(true);
         }else {
             rbWeiXinPay.setChecked(true);
@@ -353,10 +354,10 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
     public void onCheckedChanged(CustomNestRadioGroup group, int checkedId) {
         switch (checkedId){
             case R.id.cb_alipay:
-                payType = PAY_ALI;
+                payType = PayType.ALI;
                 break;
             case R.id.cb_weixin:
-                payType = PAY_WEI_XIN;
+                payType = PayType.WEIXIN;
                 break;
             default:
                 break;

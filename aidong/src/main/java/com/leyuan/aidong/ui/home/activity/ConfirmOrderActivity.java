@@ -29,9 +29,12 @@ import com.leyuan.aidong.ui.mvp.presenter.NurturePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CartPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.EquipmentPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.NurturePresentImpl;
-import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.FormatUtil;
+import com.leyuan.aidong.utils.constant.DeliveryType;
+import com.leyuan.aidong.utils.constant.GoodsType;
+import com.leyuan.aidong.utils.constant.PayType;
+import com.leyuan.aidong.utils.constant.SettlementType;
 import com.leyuan.aidong.widget.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.ExtendTextView;
 import com.leyuan.aidong.widget.SimpleTitleBar;
@@ -39,11 +42,7 @@ import com.leyuan.aidong.widget.SimpleTitleBar;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.leyuan.aidong.utils.Constant.ORDER_BUY_EQUIPMENT_IMMEDIATELY;
-import static com.leyuan.aidong.utils.Constant.ORDER_BUY_NURTURE_IMMEDIATELY;
-import static com.leyuan.aidong.utils.Constant.ORDER_FROM_CART;
-import static com.leyuan.aidong.utils.Constant.PAY_ALI;
-import static com.leyuan.aidong.utils.Constant.PAY_WEI_XIN;
+
 
 /**
  * 确认订单
@@ -102,7 +101,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private String pickUpId;            //自提门店id或快递地址id
     private String pickUpDate;          //自提时间
 
-    private int orderType;
+    private int settlementType;
     private double totalGoodsPrice;
     private boolean needExpress = false;
 
@@ -121,7 +120,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         Intent starter = new Intent(context, ConfirmOrderActivity.class);
         starter.putParcelableArrayListExtra("selectedShops",selectedShops);
         starter.putExtra("totalGoodsPrice",totalGoodsPrice);
-        starter.putExtra("orderType",orderType);
+        starter.putExtra("settlementType",orderType);
         context.startActivity(starter);
     }
 
@@ -135,7 +134,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initVariable(){
-        payType = PAY_ALI;
+        payType = PayType.ALI;
         days = DateUtils.getSevenDate();
         pickUpDate = days.get(0);
         if(getIntent() == null) {
@@ -148,19 +147,22 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             shopBeanList.add(shop);
             pickUpId = shop.getPickUp().info.getId();
             pickUpWay = shop.getPickUp().getType();
+            if(DeliveryType.EXPRESS.equals(pickUpWay)){
+                pickUpDate = null;
+            }
             if(!shop.getItem().isEmpty()){
                 GoodsBean goods = shop.getItem().get(0);
                 skuCode = goods.getSkuCode();
                 amount = FormatUtil.parseInt(goods.getAmount());
                 totalGoodsPrice = FormatUtil.parseDouble(goods.getPrice())* amount;
-                if(Constant.TYPE_NURTURE.equals(goods.getType())){
-                    orderType = Constant.ORDER_BUY_NURTURE_IMMEDIATELY;
+                if(GoodsType.NUTRITION.equals(goods.getType())){
+                    settlementType = SettlementType.NURTURE_IMMEDIATELY;
                 }else {
-                    orderType = Constant.ORDER_BUY_EQUIPMENT_IMMEDIATELY;
+                    settlementType = SettlementType.EQUIPMENT_IMMEDIATELY;
                 }
             }
         }else {
-            orderType = getIntent().getIntExtra("orderType",1);
+            settlementType = getIntent().getIntExtra("settlementType",1);
             totalGoodsPrice = getIntent().getDoubleExtra("totalGoodsPrice", 0f);
         }
     }
@@ -193,7 +195,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         shopAdapter.setData(shopBeanList);
 
         for (ShopBean shopBean : shopBeanList) {
-            if(Constant.DELIVERY_EXPRESS.equals(shopBean.getPickUp().getType())){
+            if(DeliveryType.EXPRESS.equals(shopBean.getPickUp().getType())){
                 needExpress = true;
                 addressLayout.setVisibility(View.VISIBLE);
             }else {
@@ -243,8 +245,8 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void payOrder(){
-        switch (orderType){
-            case ORDER_FROM_CART:
+        switch (settlementType){
+            case SettlementType.CART:
                 List<GoodsBean> goodsList = new ArrayList<>();
                 for (ShopBean shopBean : shopBeanList) {
                     for (GoodsBean goodsBean : shopBean.getItem()) {
@@ -261,14 +263,14 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 cartPresent.payCart(integral,coin,coupon,payType, pickUpId,
                         pickUpDate,payListener,itemIds);
                 break;
-            case ORDER_BUY_NURTURE_IMMEDIATELY:
+            case SettlementType.NURTURE_IMMEDIATELY:
                 if(nurturePresent == null){
                     nurturePresent = new NurturePresentImpl(this);
                 }
                 nurturePresent.buyNurtureImmediately(skuCode,amount,coupon,integral,coin,payType,
                         String.valueOf(pickUpWay), pickUpId,pickUpDate,payListener);
                 break;
-            case ORDER_BUY_EQUIPMENT_IMMEDIATELY:
+            case SettlementType.EQUIPMENT_IMMEDIATELY:
                 if(equipmentPresent == null){
                     equipmentPresent = new EquipmentPresentImpl(this);
                 }
@@ -322,10 +324,10 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     public void onCheckedChanged(CustomNestRadioGroup group, int checkedId) {
         switch (checkedId){
             case R.id.cb_alipay:
-                payType = PAY_ALI;
+                payType = PayType.ALI;
                 break;
             case R.id.cb_weixin:
-                payType = PAY_WEI_XIN;
+                payType = PayType.WEIXIN;
                 break;
             default:
                 break;

@@ -9,7 +9,6 @@ import com.leyuan.aidong.entity.data.FoodDetailData;
 import com.leyuan.aidong.entity.data.NurtureDetailData;
 import com.leyuan.aidong.entity.data.VenuesData;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
-import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.aidong.ui.mvp.model.EquipmentModel;
@@ -23,6 +22,7 @@ import com.leyuan.aidong.ui.mvp.view.GoodsDetailActivityView;
 import com.leyuan.aidong.ui.mvp.view.SelfDeliveryVenuesActivityView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.utils.constant.GoodsType;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
@@ -34,10 +34,6 @@ import java.util.List;
  */
 //todo 重复代码
 public class GoodsDetailPresentImpl implements GoodsDetailPresent {
-    private static final String TYPE_FOOD = "foods";
-    private static final String TYPE_EQUIPMENT = "equipments";
-    private static final String TYPE_NURTURE = "nutrition";
-
     private Context context;
     private GoodsDetailActivityView goodsDetailView;            //商品详情View层对象
     private SelfDeliveryVenuesActivityView venuesActivityView;  //自提场馆列表数据
@@ -57,24 +53,9 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
     }
 
     @Override
-    public void getGoodsDetail(String type, String id) {
-        if(type.equals(TYPE_NURTURE)){
-            if(nurtureModel == null){
-                nurtureModel = new NurtureModelImpl(context);
-            }
-            nurtureModel.getNurtureDetail(new ProgressSubscriber<NurtureDetailData>(context) {
-                @Override
-                public void onNext(NurtureDetailData nurtureDetailData) {
-                    goodsDetailView.setGoodsDetail(nurtureDetailData.getNurture());
-                }
-            },id);
-        }
-    }
-
-    @Override
     public void getGoodsDetail(final SwitcherLayout switcherLayout, String type, String id) {
         switch (type){
-            case TYPE_FOOD:
+            case GoodsType.FOOD:
                 if(foodModel == null){
                     foodModel = new FoodModelImpl();
                 }
@@ -91,7 +72,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                 },id);
                 break;
 
-            case TYPE_EQUIPMENT:
+            case GoodsType.EQUIPMENT:
                 if(equipmentModel == null){
                     equipmentModel = new EquipmentModelImpl(context);
                 }
@@ -108,7 +89,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                 },id);
                 break;
 
-            case TYPE_NURTURE:
+            case GoodsType.NUTRITION:
                 if(nurtureModel == null){
                     nurtureModel = new NurtureModelImpl(context);
                 }
@@ -133,7 +114,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
     @Override
     public void commonLoadVenues(final SwitcherLayout switcherLayout, String type, String sku) {
         switch (type){
-            case TYPE_EQUIPMENT:
+            case GoodsType.EQUIPMENT:
                 if(equipmentModel == null){
                     equipmentModel = new EquipmentModelImpl(context);
                 }
@@ -152,7 +133,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                     }
                 },sku, Constant.PAGE_FIRST);
                 break;
-            case TYPE_NURTURE:
+            case GoodsType.NUTRITION:
                 if(nurtureModel == null){
                     nurtureModel = new NurtureModelImpl(context);
                 }
@@ -172,7 +153,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                 },sku, Constant.PAGE_FIRST);
 
                 break;
-            case TYPE_FOOD:
+            case GoodsType.FOOD:
                 if(foodModel == null){
                     foodModel = new FoodModelImpl();
                 }
@@ -200,7 +181,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
     @Override
     public void pullToRefreshVenues(String type, String sku) {
         switch (type){
-            case TYPE_EQUIPMENT:
+            case GoodsType.EQUIPMENT:
                 if(equipmentModel == null){
                     equipmentModel = new EquipmentModelImpl(context);
                 }
@@ -217,7 +198,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                 },sku,Constant.PAGE_FIRST);
 
                 break;
-            case TYPE_NURTURE:
+            case GoodsType.NUTRITION:
                 if(nurtureModel == null){
                     nurtureModel = new NurtureModelImpl(context);
                 }
@@ -233,7 +214,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                     }
                 },sku,Constant.PAGE_FIRST);
                 break;
-            case TYPE_FOOD:
+            case GoodsType.FOOD:
                 if(foodModel == null){
                     foodModel = new FoodModelImpl();
                 }
@@ -258,7 +239,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
     @Override
     public void requestMoreVenues(RecyclerView recyclerView, final int pageSize, String type, String sku, int page) {
         switch (type) {
-            case TYPE_EQUIPMENT:
+            case GoodsType.EQUIPMENT:
                 if (equipmentModel == null) {
                     equipmentModel = new EquipmentModelImpl(context);
                 }
@@ -278,7 +259,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                     }
                 }, sku, page);
                 break;
-            case TYPE_NURTURE:
+            case GoodsType.NUTRITION:
                 if (nurtureModel == null) {
                     nurtureModel = new NurtureModelImpl(context);
                 }
@@ -298,7 +279,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                     }
                 }, sku, page);
                 break;
-            case TYPE_FOOD:
+            case GoodsType.FOOD:
                 if (foodModel == null) {
                     foodModel = new FoodModelImpl();
                 }

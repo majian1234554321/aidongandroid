@@ -46,7 +46,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     private static final String STATUS_NOT_START = "3";     //即将开始预约
     private static final String STATUS_NOT_PAY = "4";       //待支付
     private static final String STATUS_NOT_NEED= "5";       //无需预约
-    private static final String STATUS_APPOINT = "6";       //马上预约
+    private static final String STATUS_APPOINT = "8";       //马上预约
 
     private ImageView ivBack;
     private TextView tvTitle;

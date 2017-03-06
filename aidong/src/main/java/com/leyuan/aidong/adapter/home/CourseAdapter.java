@@ -51,8 +51,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
         holder.price.setText(String.format(context.getString(R.string.rmb_price),bean.getPrice()));
         holder.name.setText(bean.getName());
         holder.address.setText(bean.getAddress());
-        holder.time.setText(String.format(context.getString(R.string.time_with_line),bean.getClass_time(),bean.getBreak_time()));
-        holder.count.setText(String.format(context.getString(R.string.course_count),bean.getApplied_count(),bean.getPlace()));
+        holder.time.setText(String.format(context.getString(R.string.time_with_line),bean.getClassTime(),bean.getBreakTime()));
+        holder.count.setText(String.format(context.getString(R.string.course_count),bean.getAppliedCount(),bean.getPlace()));
         holder.distance.setText(String.format(context.getString(R.string.distance_km),bean.getDistance()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

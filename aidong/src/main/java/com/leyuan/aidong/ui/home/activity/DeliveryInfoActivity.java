@@ -36,7 +36,7 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
     private TextView tvVenuesAddress;
 
     private String id;
-    private String type;
+    private String goodsType;
     private DeliveryBean deliveryBean;
 
     @Override
@@ -46,7 +46,7 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
         setContentView(R.layout.activity_delivery_info);
         if(getIntent() != null){
             id = getIntent().getStringExtra("id");
-            type = getIntent().getStringExtra("type");
+            goodsType = getIntent().getStringExtra("goodsType");
             deliveryBean = getIntent().getParcelableExtra("deliveryBean");
         }
         initView();
@@ -96,6 +96,7 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
                 tvSelfDelivery.setBackgroundResource(R.drawable.shape_solid_corner_white);
                 deliveryLayout.setVisibility(View.GONE);
                 deliveryBean.setType(EXPRESS);
+                deliveryBean.getInfo().setGymId(null);
                 break;
             case R.id.tv_self_delivery:
                 tvExpress.setTextColor(Color.parseColor("#000000"));
@@ -107,7 +108,7 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.ll_delivery_address:
                 Intent intent = new Intent(this,SelfDeliveryVenuesActivity.class);
-                intent.putExtra("type",type);
+                intent.putExtra("goodsType",goodsType);
                 intent.putExtra("id",id);
                 final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(this, false);
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, pairs);

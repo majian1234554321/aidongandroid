@@ -16,7 +16,7 @@ public class FoodBean {
     private ArrayList<String> material;        //主要食材
     private ArrayList<String> crowd;           //推荐人群
 
-    public String getFood_id() {
+    public String getFoodId() {
         return food_id;
     }
 

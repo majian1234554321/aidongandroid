@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CoachBean;
 import com.leyuan.aidong.ui.discover.activity.AppointCoachActivity;
+import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
@@ -62,6 +63,13 @@ public class VenuesCoachAdapter extends RecyclerView.Adapter<VenuesCoachAdapter.
             @Override
             public void onClick(View v) {
                 AppointCoachActivity.start(context,venuesId,bean);
+            }
+        });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserInfoActivity.start(context,bean.getCoachId());
             }
         });
     }

@@ -26,6 +26,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.EquipmentPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.NurturePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.GoodsFilterActivityView;
 import com.leyuan.aidong.utils.TransitionHelper;
+import com.leyuan.aidong.utils.constant.GoodsType;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -35,8 +36,6 @@ import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.leyuan.aidong.utils.Constant.TYPE_EQUIPMENT;
-import static com.leyuan.aidong.utils.Constant.TYPE_NURTURE;
 
 /**
  * 营养品和装备筛选
@@ -60,7 +59,7 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
     private GoodsFilterAdapter adapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
 
-    private String type;
+    private String goodsType;
     private int selectedCategoryPosition = 0;
     private List<CategoryBean> categoryBeanList;
     private NurturePresent nurturePresent;
@@ -74,7 +73,7 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
 
     public static void start(Context context, String type, ArrayList<CategoryBean> categoryList,int pos) {
         Intent starter = new Intent(context, GoodsFilterActivity.class);
-        starter.putExtra("type",type);
+        starter.putExtra("goodsType",type);
         starter.putExtra("pos",pos);
         starter.putParcelableArrayListExtra("categoryList",categoryList);
         context.startActivity(starter);
@@ -87,7 +86,7 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
         nurturePresent = new NurturePresentImpl(this,this);
         equipmentPresent = new EquipmentPresentImpl(this,this);
         if(getIntent() != null){
-            type = getIntent().getStringExtra("type");
+            goodsType = getIntent().getStringExtra("goodsType");
             selectedCategoryPosition = getIntent().getIntExtra("pos",0);
             categoryBeanList = getIntent().getParcelableArrayListExtra("categoryList");
             brandId = categoryBeanList.get(selectedCategoryPosition).getId();
@@ -158,7 +157,8 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
         recyclerView = (RecyclerView)findViewById(R.id.rv_goods);
         equipmentList = new ArrayList<>();
         nurtureList = new ArrayList<>();
-        adapter = new GoodsFilterAdapter(this,TYPE_NURTURE.equals(type) ? TYPE_NURTURE : TYPE_EQUIPMENT);
+        adapter = new GoodsFilterAdapter(this, GoodsType.NUTRITION.equals(goodsType) ?
+                GoodsType.NUTRITION : GoodsType.EQUIPMENT);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(wrapperAdapter);
@@ -219,7 +219,7 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
     private void getListData(int operation){
         switch (operation){
             case COMMEND_LOAD_DATA:
-                if(TYPE_NURTURE.equals(type)){
+                if(GoodsType.NUTRITION.equals(goodsType)){
                     nurturePresent.commendLoadNurtureData(switcherLayout,brandId,
                             priceSort,countSort,heatSort);
                 }else {
@@ -231,7 +231,7 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
                 currPage = 1;
                 refreshLayout.setRefreshing(true);
                 RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-                if(TYPE_NURTURE.equals(type)){
+                if(GoodsType.NUTRITION.equals(goodsType)){
                     nurturePresent.pullToRefreshNurtureData(brandId,priceSort,countSort,heatSort);
                 }else {
                     equipmentPresent.pullToRefreshEquipmentData(brandId,priceSort,countSort,heatSort);
@@ -239,10 +239,10 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
                 break;
             case REQUEST_MORE_DATA:
                 currPage ++;
-                if(TYPE_NURTURE.equals(type) && nurtureList.size() >= pageSize){
+                if(GoodsType.NUTRITION.equals(goodsType) && nurtureList.size() >= pageSize){
                     nurturePresent.requestMoreNurtureData(recyclerView,pageSize,currPage,
                             brandId,priceSort,countSort,heatSort);
-                }else if(TYPE_EQUIPMENT.equals(type) && equipmentList.size() >= pageSize){
+                }else if(GoodsType.NUTRITION.equals(goodsType) && equipmentList.size() >= pageSize){
                     equipmentPresent.requestMoreEquipmentData(recyclerView,pageSize,currPage,
                             brandId,priceSort,countSort,heatSort);
                 }

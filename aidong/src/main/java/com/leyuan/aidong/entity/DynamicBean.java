@@ -1,6 +1,6 @@
 package com.leyuan.aidong.entity;
 
-import com.leyuan.aidong.utils.DynamicType;
+import com.leyuan.aidong.utils.constant.DynamicType;
 
 import java.io.Serializable;
 import java.util.ArrayList;

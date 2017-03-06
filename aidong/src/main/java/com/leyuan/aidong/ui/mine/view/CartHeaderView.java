@@ -21,12 +21,11 @@ import com.leyuan.aidong.ui.mvp.presenter.CartPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CartPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.ICartHeaderView;
 import com.leyuan.aidong.utils.FormatUtil;
+import com.leyuan.aidong.utils.constant.SettlementType;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.leyuan.aidong.utils.Constant.ORDER_FROM_CART;
 
 /**
  * the header of cart view
@@ -235,7 +234,7 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
             Toast.makeText(context,R.string.tip_select_goods,Toast.LENGTH_LONG).show();
             return;
         }
-        ConfirmOrderActivity.start(context, ORDER_FROM_CART,selectedShops,calculateTotalPrice());
+        ConfirmOrderActivity.start(context, SettlementType.CART,selectedShops,calculateTotalPrice());
     }
 
     public void changeAllGoodsStatus(boolean checked){

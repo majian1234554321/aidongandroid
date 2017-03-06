@@ -21,7 +21,7 @@ import com.leyuan.aidong.ui.discover.viewholder.VideoViewHolder;
 import com.leyuan.aidong.ui.mvp.presenter.UserInfoPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.UserInfoPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.UserDynamicFragmentView;
-import com.leyuan.aidong.utils.DynamicType;
+import com.leyuan.aidong.utils.constant.DynamicType;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;

@@ -18,6 +18,7 @@ import com.leyuan.aidong.ui.mine.view.CartHeaderView;
 import com.leyuan.aidong.ui.mvp.presenter.RecommendPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.RecommendPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CartActivityView;
+import com.leyuan.aidong.utils.constant.RecommendGoodsPosition;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderSpanSizeLookup;
@@ -28,7 +29,7 @@ import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.leyuan.aidong.utils.Constant.RECOMMEND_TYPE_CART;
+
 
 
 /**
@@ -116,7 +117,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
         public void onLoadNextPage(View view) {
             currPage ++;
             if (recommendList != null && recommendList.size() >= pageSize) {
-                recommendPresent.requestMoreData(recommendView,pageSize,currPage,RECOMMEND_TYPE_CART);
+                recommendPresent.requestMoreRecommendData(recommendView,pageSize,currPage, RecommendGoodsPosition.CART);
             }
         }
     };
@@ -165,7 +166,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
             tvEdit.setVisibility(View.VISIBLE);
             bottomLayout.setVisibility(View.VISIBLE);
             cartHeaderView.showRecommendText(!isEditing);
-            recommendPresent.pullToRefreshData(RECOMMEND_TYPE_CART);
+            recommendPresent.pullToRefreshRecommendData(RecommendGoodsPosition.CART);
         }
     }
 

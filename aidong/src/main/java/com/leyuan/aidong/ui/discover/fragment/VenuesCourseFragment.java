@@ -1,7 +1,6 @@
 package com.leyuan.aidong.ui.discover.fragment;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,10 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.CourseBean;
-import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.adapter.discover.DateAdapter;
 import com.leyuan.aidong.adapter.discover.VenuesCourseAdapter;
+import com.leyuan.aidong.entity.CourseBean;
+import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.mvp.presenter.VenuesPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VenuesPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.VenuesCourseFragmentView;
@@ -28,43 +27,41 @@ import java.util.List;
  */
 public class VenuesCourseFragment extends BaseFragment implements VenuesCourseFragmentView, DateAdapter.ItemClickListener {
     private SwitcherLayout switcherLayout;
-    private SwipeRefreshLayout refreshLayout;
     private VenuesCourseAdapter courseAdapter;
-    private DateAdapter dateAdapter;
     private String id;
-    private String day = "0";
+    private List<String> days;
     private VenuesPresent venuesPresent;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_venues_course,null);
+        return inflater.inflate(R.layout.fragment_venues_course,container,false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        days = DateUtils.getSevenDate();
         venuesPresent = new VenuesPresentImpl(getContext(),this);
         Bundle bundle = getArguments();
         if(bundle != null){
             id = bundle.getString("id");
         }
         initView(view);
-        venuesPresent.getCourses(switcherLayout,id,day);
+        venuesPresent.getCourses(switcherLayout,id, days.get(0));
     }
 
     private void initView(View view) {
-        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout);
-        switcherLayout = new SwitcherLayout(getContext(),refreshLayout);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv_venues_course);
+        switcherLayout = new SwitcherLayout(getContext(),recyclerView);
         courseAdapter = new VenuesCourseAdapter(getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(courseAdapter);
 
         RecyclerView dateView = (RecyclerView)view.findViewById(R.id.rv_date);
-        dateAdapter = new DateAdapter();
+        DateAdapter dateAdapter = new DateAdapter();
         dateView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
         dateView.setAdapter(dateAdapter);
-        dateAdapter.setData(DateUtils.getSevenDate());
+        dateAdapter.setData(days);
         dateAdapter.setItemClickListener(this);
     }
 
@@ -75,7 +72,6 @@ public class VenuesCourseFragment extends BaseFragment implements VenuesCourseFr
 
     @Override
     public void onItemClick(int position) {
-        day = String.valueOf(position);
-        venuesPresent.getCourses(switcherLayout,id,day);
+        venuesPresent.getCourses(switcherLayout,id, days.get(position));
     }
 }
