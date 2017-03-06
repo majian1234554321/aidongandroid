@@ -62,12 +62,17 @@ public interface CartService {
      * @param coin
      * @param coupon
      * @param payType
-     * @param pickUpId
+     * @param pickUpId  快递地址id
+     * @param pickUpDate 自提时间
      * @return
      */
     @FormUrlEncoded
     @POST("mine/cart/settle")
-    Observable<BaseBean<PayOrderData>> payCart(@Field("integral") String integral, @Field("coin") String coin,
-                                               @Field("coupon") String coupon, @Field("pay_type") String payType,
-                                               @Field("pick_up_id") String pickUpId,@Field("id[]") String... id);
+    Observable<BaseBean<PayOrderData>> payCart(@Field("integral") String integral,
+                                               @Field("coin") String coin,
+                                               @Field("coupon") String coupon,
+                                               @Field("pay_type") String payType,
+                                               @Field("pick_up_id") String pickUpId,
+                                               @Field("pick_up_date") String pickUpDate,
+                                               @Field("id[]") String... id);
 }

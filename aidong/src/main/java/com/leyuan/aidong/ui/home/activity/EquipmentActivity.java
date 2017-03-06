@@ -8,14 +8,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.CategoryBean;
-import com.leyuan.aidong.entity.GoodsBean;
-import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.adapter.home.CategoryAdapter;
 import com.leyuan.aidong.adapter.home.EquipmentAdapter;
-import com.leyuan.aidong.ui.mvp.presenter.EquipmentPresent;
-import com.leyuan.aidong.ui.mvp.presenter.impl.EquipmentPresentImpl;
+import com.leyuan.aidong.entity.GoodsBean;
+import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.mvp.presenter.RecommendPresent;
+import com.leyuan.aidong.ui.mvp.presenter.impl.RecommendPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.EquipmentActivityView;
+import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
@@ -35,10 +36,6 @@ import static com.leyuan.aidong.utils.Constant.TYPE_EQUIPMENT;
  * Created by song on 2016/8/25
  */
 public class EquipmentActivity extends BaseActivity implements EquipmentActivityView{
-    private SimpleTitleBar titleBar;
-    private RecyclerView categoryView;
-    private CategoryAdapter categoryAdapter;
-
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recommendView;
@@ -47,30 +44,29 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
     private List<GoodsBean> equipmentList;
     private EquipmentAdapter equipmentAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
-    private EquipmentPresent present;
+    private RecommendPresent present;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment);
-        pageSize = 20;
-        present = new EquipmentPresentImpl(this,this);
+        present = new RecommendPresentImpl(this,this);
 
         initTopLayout();
         initSwipeRefreshLayout();
         initRecommendRecyclerView();
-
-        present.getCategory();
-        present.commonLoadRecommendData(switcherLayout);
+        present.commendLoadData(switcherLayout, Constant.RECOMMEND_TYPE_EQUIPMENT);
     }
 
     private void initTopLayout(){
-        titleBar = (SimpleTitleBar)findViewById(R.id.title_bar);
-        categoryView = (RecyclerView)findViewById(R.id.rv_category);
-        categoryAdapter = new CategoryAdapter(this,TYPE_EQUIPMENT);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+        SimpleTitleBar titleBar = (SimpleTitleBar)findViewById(R.id.title_bar);
+        RecyclerView categoryView = (RecyclerView)findViewById(R.id.rv_category);
+        CategoryAdapter categoryAdapter = new CategoryAdapter(this,TYPE_EQUIPMENT);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this,
+                LinearLayoutManager.HORIZONTAL,false);
         categoryView.setLayoutManager(layoutManager);
         categoryView.setAdapter(categoryAdapter);
+        categoryAdapter.setData(SystemInfoUtils.getEquipmentCategory(this));
         titleBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,7 +84,7 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
             public void onRefresh() {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recommendView);
-                present.pullToRefreshRecommendData();
+                present.pullToRefreshData(Constant.RECOMMEND_TYPE_EQUIPMENT);
             }
         });
 
@@ -97,7 +93,7 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
             public void onClick(View v) {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recommendView);
-                present.commonLoadRecommendData(switcherLayout);
+                present.commendLoadData(switcherLayout,Constant.RECOMMEND_TYPE_EQUIPMENT);
             }
         });
     }
@@ -113,7 +109,7 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
                 recommendView.getAdapter(), manager.getSpanCount()));
         recommendView.setLayoutManager(manager);
         recommendView.addOnScrollListener(onScrollListener);
-        RecyclerViewUtils.setHeaderView(recommendView, View.inflate(this,R.layout.header_nurture_or_equipment,null));
+        RecyclerViewUtils.setHeaderView(recommendView, View.inflate(this,R.layout.header_nurture,null));
     }
 
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
@@ -121,15 +117,10 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
         public void onLoadNextPage(View view) {
             currPage ++;
             if (equipmentList != null && equipmentList.size() >= pageSize) {
-                present.requestMoreRecommendData(recommendView,pageSize,currPage);
+                present.requestMoreData(recommendView,pageSize,currPage,Constant.RECOMMEND_TYPE_EQUIPMENT);
             }
         }
     };
-
-    @Override
-    public void setCategory(ArrayList<CategoryBean> categoryBeanList) {
-        categoryAdapter.setData(categoryBeanList);
-    }
 
     @Override
     public void updateRecyclerView(List<GoodsBean> goodsBeanList) {

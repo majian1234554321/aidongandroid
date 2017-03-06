@@ -28,7 +28,7 @@ public interface UserInfoService {
                                                       @Field("gender") String gender,
                                                       @Field("birthday") String birthday,
                                                       @Field("signature") String signature,
-                                                      @Field("tag") String tag,
+                                                      @Field("tag_address") String tag,
                                                       @Field("sport") String sport,
                                                       @Field("province") String province,
                                                       @Field("city") String city,

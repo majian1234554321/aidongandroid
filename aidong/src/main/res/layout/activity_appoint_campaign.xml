@@ -150,6 +150,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_toRightOf="@+id/dv_cover"
                     android:text="地址"
+                    android:singleLine="true"
                     android:textColor="@color/c3"
                     android:textSize="15sp" />
             </RelativeLayout>
@@ -161,7 +162,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:gravity="center_vertical"
-                app:left_text="活动时间:" />
+                app:left_text="活动时间:"
+                app:line_color="@color/transparent"/>
 
             <include layout="@layout/inc_line_with_margin" />
 
@@ -170,7 +172,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:gravity="center_vertical"
-                app:left_text="活动地址:" />
+                app:left_text="活动地址:"
+                app:line_color="@color/transparent"/>
 
             <include layout="@layout/inc_bold_line" />
 
@@ -261,31 +264,36 @@
                 android:id="@+id/tv_total_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:left_text="活动总额:" />
+                app:left_text="活动总额:"
+                app:line_color="@color/transparent"/>
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_coupon_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:left_text="优惠劵:" />
+                app:left_text="优惠劵:"
+                app:line_color="@color/transparent"/>
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_discount_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:left_text="活动优惠:" />
+                app:left_text="活动优惠:"
+                app:line_color="@color/transparent"/>
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_aibi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:left_text="爱币:" />
+                app:left_text="爱币:"
+                app:line_color="@color/transparent"/>
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_aidou"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:left_text="爱豆:" />
+                app:left_text="爱豆:"
+                app:line_color="@color/transparent"/>
 
             <!--支付方式-->
 

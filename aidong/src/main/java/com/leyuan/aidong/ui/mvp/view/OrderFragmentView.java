@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.mvp.view;
 
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.OrderBean;
 
 import java.util.List;
@@ -24,4 +25,22 @@ public interface OrderFragmentView {
      * 显示FooterView，提示没有任何内容了
      */
     void showEndFooterView();
+
+    /**
+     * 取消订单
+     * @param baseBean
+     */
+    void cancelOrderResult(BaseBean baseBean);
+
+    /**
+     * 确认订单
+     * @param baseBean
+     */
+    void confirmOrderResult(BaseBean baseBean);
+
+    /**
+     * 删除订单
+     * @param baseBean
+     */
+    void deleteOrderResult(BaseBean baseBean);
 }

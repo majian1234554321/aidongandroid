@@ -198,13 +198,13 @@
             android:name=".module.photopicker.boxing_impl.ui.BoxingActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
-            android:name=".module.photopicker.boxing_impl.ui.BoxingViewActivity"
+            android:name=".module.photopicker.boxing_impl.ui.BoxingPreviewActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
@@ -220,7 +220,7 @@
 
         <activity
             android:name=".module.photopicker.boxing_impl.record.VideoCaptureActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
 
         <!-- ********************share sdk************************* -->
         <!--<activity-->
@@ -269,12 +269,12 @@
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
         <activity
             android:name="com.alipay.sdk.auth.AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
-            android:screenOrientation="behind"></activity>
+            android:screenOrientation="behind"/>
 
         <!-- ********************WeiXinPay************************* -->
         <activity
@@ -308,7 +308,7 @@
             android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
             android:configChanges="keyboardHidden|orientation"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize"/>
 
         <meta-data
             android:name="WEIBO_APPKEY"
@@ -317,9 +317,6 @@
             android:name="WEIBO_CHANNEL"
             android:value="weibo" />
 
-        <service
-            android:name="com.sina.weibo.sdk.net.DownloadService"
-            android:exported="false"></service>
 
         <!-- 设置环信应用的AppKey -->
         <meta-data

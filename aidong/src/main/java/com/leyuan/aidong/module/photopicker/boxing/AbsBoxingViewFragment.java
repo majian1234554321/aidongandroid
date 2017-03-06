@@ -232,7 +232,6 @@ public abstract class AbsBoxingViewFragment extends BaseFragment implements Pick
         if (mOnFinishListener != null) {
             mOnFinishListener.onBoxingFinish(intent, medias);
         }
-
     }
 
     /**

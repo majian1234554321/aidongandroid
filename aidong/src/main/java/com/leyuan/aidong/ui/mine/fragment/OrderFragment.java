@@ -7,14 +7,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.OrderBean;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.adapter.mine.OrderAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.OrderPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.OrderPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.OrderFragmentView;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -106,6 +109,7 @@ public class OrderFragment extends BaseFragment implements OrderFragmentView{
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(wrapperAdapter);
         recyclerView.addOnScrollListener(onScrollListener);
+        orderAdapter.setOrderListener(new OrderCallback());
     }
 
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
@@ -138,5 +142,66 @@ public class OrderFragment extends BaseFragment implements OrderFragmentView{
     @Override
     public void showEndFooterView() {
         RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
+    }
+
+    private class OrderCallback implements OrderAdapter.OrderListener{
+
+        @Override
+        public void onPayOrder() {
+
+        }
+
+        @Override
+        public void onCancelOrder(String id) {
+            present.cancelOrder(id);
+        }
+
+        @Override
+        public void onDeleteOrder(String id) {
+            present.deleteOrder(id);
+        }
+
+        @Override
+        public void onConfirmOrder(String id) {
+            present.cancelOrder(id);
+        }
+
+        @Override
+        public void onCheckExpressInfo(String id) {
+
+        }
+
+        @Override
+        public void onBuyAgain() {
+
+        }
+    }
+
+
+    @Override
+    public void cancelOrderResult(BaseBean baseBean) {
+        if(baseBean.getStatus() == Constant.OK){
+            Toast.makeText(getContext(),"取消成功",Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(getContext(),"取消失败" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void confirmOrderResult(BaseBean baseBean) {
+        if(baseBean.getStatus() == Constant.OK){
+            Toast.makeText(getContext(),"确认成功",Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(getContext(),"确认失败" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void deleteOrderResult(BaseBean baseBean) {
+        if(baseBean.getStatus() == Constant.OK){
+            Toast.makeText(getContext(),"删除成功",Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(getContext(),"删除失败" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+        }
     }
 }

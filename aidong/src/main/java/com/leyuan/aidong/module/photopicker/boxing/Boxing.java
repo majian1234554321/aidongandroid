@@ -19,6 +19,7 @@ package com.leyuan.aidong.module.photopicker.boxing;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -181,22 +182,39 @@ public class Boxing {
      * @param viewMode {@link BoxingConfig.ViewMode}
      */
     public void start(@NonNull Activity activity, BoxingConfig.ViewMode viewMode) {
-        BoxingManager.getInstance().getBoxingConfig().withViewer(viewMode);
-        activity.startActivity(mIntent);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ActivityOptions optionsCompat = ActivityOptions.makeSceneTransitionAnimation(activity);
+            BoxingManager.getInstance().getBoxingConfig().withViewer(viewMode);
+            activity.startActivity(mIntent,optionsCompat.toBundle());
+        }else {
+            BoxingManager.getInstance().getBoxingConfig().withViewer(viewMode);
+            activity.startActivity(mIntent);
+        }
+
     }
 
     /**
      * same as {@link Activity#startActivityForResult(Intent, int, Bundle)}
      */
     public void start(@NonNull Activity activity, int requestCode) {
-        activity.startActivityForResult(mIntent, requestCode);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ActivityOptions optionsCompat = ActivityOptions.makeSceneTransitionAnimation(activity);
+            activity.startActivityForResult(mIntent, requestCode,optionsCompat.toBundle());
+        }else {
+            activity.startActivityForResult(mIntent, requestCode);
+        }
     }
 
     /**
      * same as {@link Fragment#startActivityForResult(Intent, int, Bundle)}
      */
     public void start(@NonNull Fragment fragment, int requestCode) {
-        fragment.startActivityForResult(mIntent, requestCode);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ActivityOptions optionsCompat = ActivityOptions.makeSceneTransitionAnimation(fragment.getActivity());
+            fragment.startActivityForResult(mIntent, requestCode, optionsCompat.toBundle());
+        }else {
+            fragment.startActivityForResult(mIntent, requestCode);
+        }
     }
 
     /**
@@ -205,8 +223,14 @@ public class Boxing {
      * @param viewMode {@link BoxingConfig.ViewMode}
      */
     public void start(@NonNull Fragment fragment, int requestCode, BoxingConfig.ViewMode viewMode) {
-        BoxingManager.getInstance().getBoxingConfig().withViewer(viewMode);
-        fragment.startActivityForResult(mIntent, requestCode);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ActivityOptions optionsCompat = ActivityOptions.makeSceneTransitionAnimation(fragment.getActivity());
+            BoxingManager.getInstance().getBoxingConfig().withViewer(viewMode);
+            fragment.startActivityForResult(mIntent, requestCode,optionsCompat.toBundle());
+        }else {
+            BoxingManager.getInstance().getBoxingConfig().withViewer(viewMode);
+            fragment.startActivityForResult(mIntent, requestCode);
+        }
     }
 
     /**
@@ -244,11 +268,7 @@ public class Boxing {
      */
     public interface OnBoxingFinishListener {
 
-        /**
-         * live with {@link com.bilibili.boxing.presenter.PickerContract.View#onFinish(List)}
-         *
-         * @param medias the selection of medias.
-         */
+
         void onBoxingFinish(Intent intent, @Nullable List<BaseMedia> medias);
     }
 

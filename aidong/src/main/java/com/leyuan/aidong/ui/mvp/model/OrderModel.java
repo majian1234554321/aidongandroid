@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.mvp.model;
 
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.data.OrderData;
 import com.leyuan.aidong.entity.data.OrderDetailData;
 
@@ -26,4 +27,26 @@ public interface OrderModel {
      * @param id 订单id
      */
     void getOrderDetail(Subscriber<OrderDetailData> subscriber,String id);
+
+
+    /**
+     * 取消订单
+     * @param subscriber
+     * @param id 订单id
+     */
+    void cancelOrder(Subscriber<BaseBean> subscriber, String id);
+
+    /**
+     * 确认订单
+     * @param subscriber
+     * @param id 订单id
+     */
+    void confirmOrder(Subscriber<BaseBean> subscriber,String id);
+
+    /**
+     * 删除订单
+     * @param subscriber
+     * @param id 订单id
+     */
+    void deleteOrder(Subscriber<BaseBean> subscriber,String id);
 }

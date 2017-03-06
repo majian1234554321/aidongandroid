@@ -3,17 +3,12 @@ package com.leyuan.aidong.ui;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.leyuan.aidong.R;
 
-
-public abstract class BaseLazyFragment extends Fragment {
-    protected int pageSize = 20;
+public abstract class BaseLazyFragment extends BaseFragment {
     protected View rootView;
     public Context context;
     protected boolean isVisible;
@@ -68,9 +63,4 @@ public abstract class BaseLazyFragment extends Fragment {
     public abstract View initView();
 
     public abstract void initData();
-
-    protected void setColorSchemeResources(SwipeRefreshLayout refreshLayout){
-        refreshLayout.setColorSchemeResources(R.color.black, R.color.red, R.color.orange,R.color.gray);
-    }
-
 }

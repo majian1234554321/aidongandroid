@@ -1,7 +1,9 @@
 package com.leyuan.aidong.http;
 
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.http.api.exception.NotLoginException;
 import com.leyuan.aidong.http.api.exception.ServerException;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.Logger;
 
 import rx.Observable;
@@ -32,8 +34,10 @@ public class RxHelper {
                     @Override
                     public Observable<T> call(BaseBean<T> result) {
                         Logger.i("retrofit","result from network : " + result);
-                        if (result.getStatus() == 1) {
+                        if (result.getStatus() == Constant.OK) {
                             return createDataObservable(result.getData());
+                        } else if (result.getCode() == Constant.NOT_LOGIN) {
+                            return Observable.error(new NotLoginException(result.getMessage()));
                         } else {
                             // the exception will callback at Subscriber's onError
                             return Observable.error(new ServerException(result.getMessage()));

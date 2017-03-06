@@ -108,7 +108,7 @@ public class ImageFactory {
 	       if (exif != null) {
 	           int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, -1);
 	           if (orientation != -1) {
-	               // We only recognize a subset of orientation tag values.
+	               // We only recognize a subset of orientation tag_address values.
 	               switch (orientation) {
 	               case ExifInterface.ORIENTATION_ROTATE_90:
 	                   degree = 90;

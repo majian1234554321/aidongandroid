@@ -5,9 +5,10 @@ import com.leyuan.aidong.entity.SystemBean;
 
 public class Constant {
     //public static final String  BASE_URL = "http://192.168.0.223:5000/";
-    public static final String  BASE_URL = "http://192.168.0.207:3000/";
+    public static final String BASE_URL = "http://192.168.0.207:3000/";
 
     public static final int OK = 1;
+    public static int NOT_LOGIN = 101;
     public static final int PAGE_FIRST = 1;
     public static final int CODE_OPEN_ALBUM = 11;
     public static final int ORDER_FROM_CART = 1;
@@ -20,7 +21,7 @@ public class Constant {
     public static final String TYPE_FOODS = "foods";
     public static final String RECOMMEND_TYPE_CART = "cart";
     public static final String RECOMMEND_TYPE_EQUIPMENT = "equipment";
-    public static final String RECOMMEND_TYPE_NUTRITION= "nutrition";
+    public static final String RECOMMEND_TYPE_NUTRITION = "nutrition";
     public static final String EMPTY_STR = " ";
     public static final String DELIVERY_EXPRESS = "0";
     public static final String DELIVERY_SELF = "1";
@@ -41,4 +42,5 @@ public class Constant {
     public static final String VIDEO_PATH = "/aidong/1";
     public static final String COPY_IMAGE = "copy_image";
     public static final String POSITION = "position";
+
 }

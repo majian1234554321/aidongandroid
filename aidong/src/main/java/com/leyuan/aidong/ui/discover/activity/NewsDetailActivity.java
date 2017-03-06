@@ -3,13 +3,14 @@ package com.leyuan.aidong.ui.discover.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.zzhoujay.richtext.RichText;
 
 /**
  * 资讯详情
@@ -18,9 +19,6 @@ import com.leyuan.aidong.ui.BaseActivity;
 public class NewsDetailActivity extends BaseActivity implements View.OnClickListener {
     private ImageView ivBack;
     private ImageView ivShare;
-    private TextView tvTitle;
-    private TextView tvDate;
-    private WebView wvNews;
 
     private String title;
     private String date;
@@ -51,12 +49,14 @@ public class NewsDetailActivity extends BaseActivity implements View.OnClickList
     private void initView(){
         ivBack = (ImageView) findViewById(R.id.iv_back);
         ivShare = (ImageView) findViewById(R.id.iv_share);
-        tvTitle = (TextView) findViewById(R.id.tv_title);
-        tvDate = (TextView) findViewById(R.id.tv_date);
-        wvNews = (WebView) findViewById(R.id.wv_news);
+        TextView tvTitle = (TextView) findViewById(R.id.tv_title);
+        TextView tvDate = (TextView) findViewById(R.id.tv_date);
+        TextView tvNews = (TextView) findViewById(R.id.tv_news);
         tvTitle.setText(title);
         tvDate.setText(date);
-        wvNews.loadUrl("http://www.jianshu.com/p/556510db02b9");
+        if(!TextUtils.isEmpty(body)){
+            RichText.from(body).into(tvNews);
+        }
     }
 
     private void setListener(){

@@ -37,12 +37,12 @@
 
     <ImageView
         android:id="@+id/videocapture_recordbtn_iv"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/states_btn_capture"
+        android:src="@drawable/states_btn_capture"
         android:clickable="true" />
 
     <ImageView
@@ -56,40 +56,58 @@
         android:layout_marginTop="10dp"
         android:clickable="true"
         android:padding="8dp"
-        android:src="@drawable/ic_change_camera_front"
+        android:src="@drawable/ic_change_camera"
         android:visibility="visible" />
 
     <ImageView
         android:id="@+id/videocapture_declinebtn_iv"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-
-        android:layout_alignBottom="@+id/videocapture_recordbtn_iv"
-        android:layout_marginBottom="20dp"
-        android:layout_marginEnd="13dp"
-        android:layout_marginRight="15dp"
-        android:layout_toLeftOf="@+id/videocapture_recordbtn_iv"
-        android:layout_toStartOf="@+id/videocapture_recordbtn_iv"
-        android:background="@drawable/states_btn_acceptdecline"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:clickable="true"
-        android:padding="8dp"
         android:src="@drawable/btn_decline"
-        android:visibility="gone" />
+        android:visibility="visible"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"/>
 
     <ImageView
         android:id="@+id/videocapture_acceptbtn_iv"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_alignBottom="@+id/videocapture_recordbtn_iv"
-        android:layout_alignTop="@+id/videocapture_declinebtn_iv"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="14dp"
-        android:layout_toRightOf="@+id/videocapture_recordbtn_iv"
-        android:background="@drawable/states_btn_acceptdecline"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:clickable="true"
-        android:padding="8dp"
         android:src="@drawable/btn_accept"
-        android:visibility="gone" />
+        android:visibility="visible"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"/>
 
+    <com.leyuan.aidong.module.photopicker.boxing_impl.record.view.RecordButton
+        android:id="@+id/record_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"/>
+
+    <TextView
+        android:id="@+id/tv_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="长按录像"
+        android:textColor="@color/white"
+        android:layout_marginBottom="10dp"
+        android:textSize="13sp"
+        android:layout_above="@+id/record_view"
+        android:layout_centerHorizontal="true"/>
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_arrow_down"
+        android:tint="@color/white"
+        android:layout_alignParentBottom="true"
+        android:padding="15dp"
+        android:layout_marginBottom="55dp"
+        android:layout_marginLeft="50dp"/>
 </RelativeLayout>

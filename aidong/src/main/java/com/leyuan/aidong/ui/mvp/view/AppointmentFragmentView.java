@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.mvp.view;
 
 import com.leyuan.aidong.entity.AppointmentBean;
+import com.leyuan.aidong.entity.BaseBean;
 
 import java.util.List;
 
@@ -31,4 +32,22 @@ public interface AppointmentFragmentView {
      * 显示FooterView，提示没有任何内容了
      */
     void showEndFooterView();
+
+    /**
+     * 取消订单
+     * @param baseBean
+     */
+    void cancelAppointmentResult(BaseBean baseBean);
+
+    /**
+     * 确认订单
+     * @param baseBean
+     */
+    void confirmAppointmentResult(BaseBean baseBean);
+
+    /**
+     * 删除订单
+     * @param baseBean
+     */
+    void deleteAppointmentResult(BaseBean baseBean);
 }

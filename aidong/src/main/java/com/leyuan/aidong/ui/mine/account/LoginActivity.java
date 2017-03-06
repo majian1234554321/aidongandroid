@@ -37,9 +37,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
-        loginPresenter = new LoginPresenter(this, this);
+        loginPresenter = new LoginPresenter(this);
         chatLoginManager = new EmChatLoginManager(this);
         sharePopupWindow = new SharePopupWindow(this);
+        loginPresenter.setLoginViewInterface(this);
 
         findViewById(R.id.btn_back).setOnClickListener(this);
         findViewById(R.id.btn_login).setOnClickListener(this);

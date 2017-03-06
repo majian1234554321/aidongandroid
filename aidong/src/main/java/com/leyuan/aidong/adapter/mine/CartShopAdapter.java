@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.entity.ShopBean;
+import com.leyuan.aidong.utils.Constant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,8 +52,9 @@ public class CartShopAdapter extends RecyclerView.Adapter<CartShopAdapter.CartHo
     @Override
     public void onBindViewHolder(final CartHolder holder, final int position) {
         final ShopBean bean = data.get(position);
-        holder.tvShopName.setText(bean.getName());
-        holder.tvDeliveryType.setText(bean.getName().equals("仓库发货") ? "快递" : "自提");
+        holder.tvShopName.setText(bean.getPickUp().getInfo().getName());
+        String type = Constant.DELIVERY_EXPRESS.equals(bean.getPickUp().getType()) ? "快递" : "自提";
+        holder.tvDeliveryType.setText(type);
         holder.rvShop.setLayoutManager(new LinearLayoutManager(context));
         final CartGoodsAdapter goodsAdapter = new CartGoodsAdapter(context);
         holder.rvShop.setAdapter(goodsAdapter);

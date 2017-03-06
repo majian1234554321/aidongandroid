@@ -139,12 +139,12 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
                     break;
             }
         }else {
-            if(dynamic.video != null){
+            if(dynamic.videos != null){
                 holder.videoLayout.setVisibility(View.VISIBLE);
                 holder.photoLayout.setVisibility(View.GONE);
                 holder.threePhotoLayout.setVisibility(View.GONE);
                 holder.fivePhotoLayout.setVisibility(View.GONE);
-                GlideLoader.getInstance().displayImage(dynamic.video.cover, holder.dvVideo);
+                GlideLoader.getInstance().displayImage(dynamic.videos.cover, holder.dvVideo);
             }
         }
 
@@ -218,7 +218,7 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
             @Override
             public void onClick(View v) {
                 if(handleDynamicListener != null){
-                    handleDynamicListener.onVideoClickListener(dynamic.video.url);
+                    handleDynamicListener.onVideoClickListener(dynamic.videos.url);
                 }
             }
         });
@@ -227,7 +227,7 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
             @Override
             public void onClick(View v) {
                 if(handleDynamicListener != null){
-                    handleDynamicListener.onVideoClickListener(dynamic.video.url);
+                    handleDynamicListener.onVideoClickListener(dynamic.videos.url);
                 }
             }
         });

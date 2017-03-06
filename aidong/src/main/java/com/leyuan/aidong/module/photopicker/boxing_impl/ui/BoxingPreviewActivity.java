@@ -47,14 +47,12 @@ import java.util.List;
 
 
 /**
- * An Activity to show raw image by holding {@link BoxingViewFragment}.
+ * An Activity to show raw image by holding {@link BoxingFragment}.
  *
  * @author ChenSL
  */
-public class BoxingViewActivity extends AbsBoxingViewActivity {
-    public static final String EXTRA_TYPE_BACK = "com.bilibili.boxing_impl.ui.BoxingViewActivity.type_back";
-
-    private static final int MAX_NUMBER = 6;
+public class BoxingPreviewActivity extends AbsBoxingViewActivity {
+    public static final String EXTRA_TYPE_BACK = "com.bilibili.boxing_impl.ui.BoxingPreviewActivity.type_back";
 
     HackyViewPager mGallery;
     ProgressBar mProgressBar;
@@ -76,6 +74,7 @@ public class BoxingViewActivity extends AbsBoxingViewActivity {
     private ArrayList<BaseMedia> mImages;
     private ArrayList<BaseMedia> mSelectedImages;
     private MenuItem mSelectedMenuItem;
+    private int mMaxCount ;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -104,6 +103,7 @@ public class BoxingViewActivity extends AbsBoxingViewActivity {
         mSelectedImages = getSelectedImages();
         mAlbumId = getAlbumId();
         mStartPos = getStartPos();
+        mMaxCount = BoxingManager.getInstance().getBoxingConfig().getMaxCount();
         mNeedLoading = BoxingManager.getInstance().getBoxingConfig().isNeedLoading();
         mNeedEdit = BoxingManager.getInstance().getBoxingConfig().isNeedEdit();
         if (mNeedLoading && mImages == null) {
@@ -137,7 +137,7 @@ public class BoxingViewActivity extends AbsBoxingViewActivity {
     private void setOkTextNumber() {
         if (mImages != null && mNeedEdit) {
             int selectedSize = mSelectedImages.size();
-            int size = Math.max(mSelectedImages.size(), MAX_NUMBER);
+            int size = Math.max(mSelectedImages.size(), mMaxCount);
             mOkBtn.setText(getString(R.string.image_preview_ok_fmt, String.valueOf(selectedSize)
                     , String.valueOf(size)));
             mOkBtn.setEnabled(selectedSize > 0);
@@ -175,8 +175,9 @@ public class BoxingViewActivity extends AbsBoxingViewActivity {
             if (mCurrentImageItem == null) {
                 return false;
             }
-            if (mSelectedImages.size() >= MAX_NUMBER && !mCurrentImageItem.isSelected()) {
-                Toast.makeText(this, R.string.max_image_over, Toast.LENGTH_SHORT).show();
+            if (mSelectedImages.size() >= mMaxCount && !mCurrentImageItem.isSelected()) {
+                Toast.makeText(this, String.format(
+                        getString(R.string.max_image_over),mMaxCount), Toast.LENGTH_SHORT).show();
                 return true;
             }
             if (mCurrentImageItem.isSelected()) {
@@ -304,7 +305,7 @@ public class BoxingViewActivity extends AbsBoxingViewActivity {
 
         @Override
         public Fragment getItem(int i) {
-            return BoxingRawImageFragment.newInstance((ImageMedia) mMedias.get(i));
+            return BoxingPreviewFragment.newInstance((ImageMedia) mMedias.get(i));
         }
 
         @Override

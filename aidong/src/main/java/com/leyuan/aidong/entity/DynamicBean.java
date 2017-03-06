@@ -14,7 +14,7 @@ public class DynamicBean implements Serializable{
     public String id;
     public String content;
     public List<String> image;
-    public Video video;
+    public Video videos;
     public Publisher publisher;
     public String published_at;
     public LikeUser like;

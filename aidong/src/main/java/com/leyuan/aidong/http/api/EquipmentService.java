@@ -37,6 +37,11 @@ public interface EquipmentService {
     @POST("market/equipments/{skuCode}")
     Observable<BaseBean<PayOrderData>> buyEquipmentImmediately(@Path("skuCode") String skuCode,
                                                                @Field("amount") int amount,
-                                                               @Field("pick_up") String pickUp,
-                                                               @Field("pick_up_id") String pickUpId);
+                                                               @Field("coupon") String coupon,
+                                                               @Field("integral") String integral,
+                                                               @Field("coin") String coin,
+                                                               @Field("pay_type") String payType,
+                                                               @Field("pick_up_way") String pickUpWay,
+                                                               @Field("pick_up_id") String pickUpId,
+                                                               @Field("pick_up_date") String pickUpDate);
 }

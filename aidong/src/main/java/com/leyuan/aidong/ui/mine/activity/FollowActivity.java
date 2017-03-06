@@ -59,7 +59,8 @@ public class FollowActivity extends BaseActivity implements SmartTabLayout.TabPr
                 new Bundler().putString("type", FollowFragment.FOLLOW).get()));
         pages.add(FragmentPagerItem.of(null,fansFragment.getClass(),
                 new Bundler().putString("type", FollowFragment.FANS).get()));
-        final FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);
+        final FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
+                getSupportFragmentManager(), pages);
 
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(position);

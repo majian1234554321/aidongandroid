@@ -4,14 +4,12 @@ import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.database.DataSetObserver;
 import android.os.Build;
 import android.support.annotation.AnimatorRes;
 import android.support.annotation.DrawableRes;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Interpolator;
 import android.widget.LinearLayout;
@@ -73,7 +71,7 @@ public class ViewPagerIndicator extends LinearLayout {
             return;
         }
 
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ViewPagerIndicator);
+        /*TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ViewPagerIndicator);
         mIndicatorWidth = typedArray.getDimensionPixelSize(R.styleable.ViewPagerIndicator_ci_width, -1);
         mIndicatorHeight = typedArray.getDimensionPixelSize(R.styleable.ViewPagerIndicator_ci_height, -1);
         mIndicatorMargin = typedArray.getDimensionPixelSize(R.styleable.ViewPagerIndicator_ci_margin, -1);
@@ -85,7 +83,7 @@ public class ViewPagerIndicator extends LinearLayout {
         setOrientation(orientation == VERTICAL ? VERTICAL : HORIZONTAL);
         int gravity = typedArray.getInt(R.styleable.ViewPagerIndicator_ci_gravity, -1);
         setGravity(gravity >= 0 ? gravity : Gravity.CENTER);
-        typedArray.recycle();
+        typedArray.recycle();*/
     }
 
     /**

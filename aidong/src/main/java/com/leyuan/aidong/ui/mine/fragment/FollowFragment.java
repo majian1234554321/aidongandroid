@@ -9,10 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.adapter.mine.FollowAdapter;
 import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.ui.BaseFragment;
-import com.leyuan.aidong.adapter.mine.FollowAdapter;
+import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mvp.presenter.FollowPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.FollowFragmentView;
@@ -29,7 +29,7 @@ import java.util.List;
  * 关注
  * Created by song on 2016/9/10.
  */
-public class FollowFragment extends BaseFragment implements FollowFragmentView{
+public class FollowFragment extends BaseFragment implements FollowFragmentView, FollowAdapter.FollowListener {
     public static final String FOLLOW = "followings";
     public static final String FANS = "followers";
     private String type;
@@ -47,13 +47,12 @@ public class FollowFragment extends BaseFragment implements FollowFragmentView{
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
-        pageSize = 20;
         present = new FollowPresentImpl(getContext(),this);
         Bundle bundle = getArguments();
         if(bundle != null){
             type = bundle.getString("type");
         }
-        return inflater.inflate(R.layout.fragment_follow,null);
+        return inflater.inflate(R.layout.fragment_follow,container,false);
     }
 
     @Override
@@ -95,6 +94,7 @@ public class FollowFragment extends BaseFragment implements FollowFragmentView{
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(wrapperAdapter);
         recyclerView.addOnScrollListener(onScrollListener);
+        followAdapter.setFollowListener(this);
     }
 
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
@@ -124,12 +124,17 @@ public class FollowFragment extends BaseFragment implements FollowFragmentView{
     }
 
     @Override
-    public void addFollow(BaseBean baseBean) {
-
+    public void onAddFollow(String id) {
+        present.addFollow(id);
     }
 
     @Override
-    public void cancelFollow(BaseBean baseBean) {
+    public void onCancelFollow(String id) {
+        present.cancelFollow(id);
+    }
 
+    @Override
+    public void onItemClick(String id) {
+        UserInfoActivity.start(getContext(),id);
     }
 }

@@ -1,9 +1,7 @@
 package com.leyuan.aidong.ui.mvp.view;
 
-import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.GoodsBean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,12 +9,6 @@ import java.util.List;
  * Created by song on 2016/8/15.
  */
 public interface NurtureActivityView {
-    /**
-     * 设置营养品的分类信息
-     * @param categoryBeanList CategoryBean
-     */
-    void setCategory(ArrayList<CategoryBean> categoryBeanList);
-
     /**
      * 更新列表
      * @param goodsBeanList

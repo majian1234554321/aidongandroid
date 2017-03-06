@@ -9,9 +9,9 @@ import java.util.List;
  * 购物车中商家实体
  * Created by song on 2016/9/23.
  */
-public class ShopBean implements Parcelable {
-    private String name;
+public class ShopBean implements Parcelable{
     private List<GoodsBean> item;
+    private DeliveryBean pick_up;
 
     private boolean checked = false;            //标记该商店是否被选中
 
@@ -31,12 +31,12 @@ public class ShopBean implements Parcelable {
         this.checked = checked;
     }
 
-    public String getName() {
-        return name;
+    public DeliveryBean getPickUp() {
+        return pick_up;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPickUp(DeliveryBean pick_up) {
+        this.pick_up = pick_up;
     }
 
     @Override
@@ -46,8 +46,8 @@ public class ShopBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.name);
         dest.writeTypedList(this.item);
+        dest.writeParcelable(this.pick_up, flags);
         dest.writeByte(this.checked ? (byte) 1 : (byte) 0);
     }
 
@@ -55,8 +55,8 @@ public class ShopBean implements Parcelable {
     }
 
     protected ShopBean(Parcel in) {
-        this.name = in.readString();
         this.item = in.createTypedArrayList(GoodsBean.CREATOR);
+        this.pick_up = in.readParcelable(DeliveryBean.class.getClassLoader());
         this.checked = in.readByte() != 0;
     }
 

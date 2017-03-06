@@ -19,6 +19,7 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.activity.CouponActivity;
 import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.widget.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.ExtendTextView;
@@ -28,10 +29,8 @@ import com.leyuan.aidong.widget.SimpleTitleBar;
  * 预约课程信息
  * Created by song on 2016/9/12.
  */
-public class AppointCourseActivity extends BaseActivity implements View.OnClickListener,CustomNestRadioGroup.OnCheckedChangeListener {
-    private static final String ALI_PAY = "alipay";
-    private static final String WEI_XIN_PAY = "wxpay";
-
+public class AppointCourseActivity extends BaseActivity implements View.OnClickListener,
+        CustomNestRadioGroup.OnCheckedChangeListener {
     private SimpleTitleBar titleBar;
 
     //预约人信息
@@ -87,7 +86,7 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appoint_course);
-        payType = ALI_PAY;
+        payType = Constant.PAY_ALI;
         if (getIntent() != null) {
             bean = getIntent().getParcelableExtra("bean");
         }
@@ -134,6 +133,7 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
     }
 
     private void setListener() {
+        titleBar.setOnClickListener(this);
         couponLayout.setOnClickListener(this);
         tvVip.setOnClickListener(this);
         tvNoVip.setOnClickListener(this);
@@ -144,6 +144,9 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.iv_back:
+                finish();
+                break;
             case R.id.ll_coupon:
                 startActivity(new Intent(this, CouponActivity.class));
                 break;
@@ -151,14 +154,14 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
                 tvNoVip.setTextColor(Color.parseColor("#000000"));
                 tvVip.setTextColor(Color.parseColor("#ffffff"));
                 tvNoVip.setBackgroundResource(R.drawable.shape_solid_corner_white);
-                tvVip.setBackgroundResource(R.drawable.shape_solid_black);
+                tvVip.setBackgroundResource(R.drawable.shape_solid_corner_black);
                 vipTipLayout.setVisibility(View.GONE);
                 break;
             case R.id.tv_no_vip:
                 tvVip.setTextColor(Color.parseColor("#000000"));
                 tvNoVip.setTextColor(Color.parseColor("#ffffff"));
                 tvVip.setBackgroundResource(R.drawable.shape_solid_corner_white);
-                tvNoVip.setBackgroundResource(R.drawable.shape_solid_black);
+                tvNoVip.setBackgroundResource(R.drawable.shape_solid_corner_black);
                 vipTipLayout.setVisibility(View.VISIBLE);
                 break;
             case R.id.tv_pay:
@@ -181,15 +184,14 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
         }
     };
 
-
     @Override
     public void onCheckedChanged(CustomNestRadioGroup group, int checkedId) {
         switch (checkedId){
             case R.id.cb_alipay:
-                payType = ALI_PAY;
+                payType = Constant.PAY_ALI;
                 break;
             case R.id.cb_weixin:
-                payType = WEI_XIN_PAY;
+                payType = Constant.PAY_WEI_XIN;
                 break;
             default:
                 break;

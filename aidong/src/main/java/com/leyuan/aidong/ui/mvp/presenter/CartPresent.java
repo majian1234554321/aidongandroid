@@ -54,8 +54,9 @@ public interface CartPresent {
      * @param coupon 优惠券
      * @param payType 支付类型
      * @param pickUpId 快递地址id
+     * @param pickUpDate 自提时间
      */
     void payCart( String integral, String coin, String coupon, String payType, String pickUpId,
-                  PayInterface.PayListener payListener,String... id);
+                  String pickUpDate,PayInterface.PayListener payListener,String... id);
 
 }

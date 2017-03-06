@@ -70,7 +70,7 @@ public class EmConfigManager implements EmChatView {
     }
 
     public void initializeEaseUi(Context context) {
-        EMOptions options = new EMOptions();
+        EMOptions options = initChatOptions();
 
         if (EaseUI.getInstance().init(context, options)) {
             LogAidong.i("emChat", "EaseUI.getInstance().init success");
@@ -416,8 +416,8 @@ public class EmConfigManager implements EmChatView {
         options.setRequireAck(true);
         //设置是否需要接受方送达确认,默认false
         options.setRequireDeliveryAck(false);
-        options.setMipushConfig("2882303761517426801", "5381742660801");
-        options.setHuaweiPushAppId("10492024");
+        options.setMipushConfig("2882303761517375065", "5381737527065");
+        options.setHuaweiPushAppId("10537884");
 
         return options;
     }

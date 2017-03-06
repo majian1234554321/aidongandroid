@@ -8,14 +8,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.CategoryBean;
-import com.leyuan.aidong.entity.GoodsBean;
-import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.adapter.home.CategoryAdapter;
 import com.leyuan.aidong.adapter.home.NurtureAdapter;
-import com.leyuan.aidong.ui.mvp.presenter.NurturePresent;
-import com.leyuan.aidong.ui.mvp.presenter.impl.NurturePresentImpl;
+import com.leyuan.aidong.entity.GoodsBean;
+import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.mvp.presenter.RecommendPresent;
+import com.leyuan.aidong.ui.mvp.presenter.impl.RecommendPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.NurtureActivityView;
+import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
@@ -35,10 +36,6 @@ import static com.leyuan.aidong.utils.Constant.TYPE_NURTURE;
  * @author song
  */
 public class NurtureActivity extends BaseActivity implements NurtureActivityView{
-    private SimpleTitleBar titleBar;
-    private RecyclerView categoryView;
-    private CategoryAdapter categoryAdapter;
-
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recommendView;
@@ -47,29 +44,28 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
     private List<GoodsBean> nurtureList;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private NurtureAdapter nurtureAdapter;
-    private NurturePresent nurturePresent;
-
+    private RecommendPresent recommendPresent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nurture);
-        pageSize = 20;
-        nurturePresent = new NurturePresentImpl(this,this);
+        recommendPresent = new RecommendPresentImpl(this,this);
         initTopLayout();
         initSwipeRefreshLayout();
         initRecommendRecyclerView();
-        nurturePresent.getCategory();
-        nurturePresent.commonLoadRecommendData(switcherLayout);
+        recommendPresent.commendLoadData(switcherLayout, Constant.RECOMMEND_TYPE_NUTRITION);
     }
 
     private void initTopLayout(){
-        titleBar = (SimpleTitleBar)findViewById(R.id.title_bar);
-        categoryView = (RecyclerView)findViewById(R.id.rv_category);
-        categoryAdapter = new CategoryAdapter(this,TYPE_NURTURE);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+        SimpleTitleBar titleBar = (SimpleTitleBar)findViewById(R.id.title_bar);
+        RecyclerView categoryView = (RecyclerView)findViewById(R.id.rv_category);
+        CategoryAdapter categoryAdapter = new CategoryAdapter(this,TYPE_NURTURE);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this,
+                LinearLayoutManager.HORIZONTAL,false);
         categoryView.setLayoutManager(layoutManager);
         categoryView.setAdapter(categoryAdapter);
+        categoryAdapter.setData(SystemInfoUtils.getNurtureCategory(this));
         titleBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,7 +83,7 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
             public void onRefresh() {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recommendView);
-                nurturePresent.pullToRefreshRecommendData();
+                recommendPresent.pullToRefreshData(Constant.RECOMMEND_TYPE_NUTRITION);
             }
         });
 
@@ -96,7 +92,7 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
             public void onClick(View v) {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recommendView);
-                nurturePresent.commonLoadRecommendData(switcherLayout);
+                recommendPresent.commendLoadData(switcherLayout,Constant.RECOMMEND_TYPE_NUTRITION);
             }
         });
     }
@@ -109,10 +105,11 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(nurtureAdapter);
         recommendView.setAdapter(wrapperAdapter);
         GridLayoutManager manager = new GridLayoutManager(this,2);
-        manager.setSpanSizeLookup(new HeaderSpanSizeLookup((HeaderAndFooterRecyclerViewAdapter) recommendView.getAdapter(), manager.getSpanCount()));
+        manager.setSpanSizeLookup(new HeaderSpanSizeLookup((HeaderAndFooterRecyclerViewAdapter)
+                recommendView.getAdapter(), manager.getSpanCount()));
         recommendView.setLayoutManager(manager);
         recommendView.addOnScrollListener(onScrollListener);
-        RecyclerViewUtils.setHeaderView(recommendView,View.inflate(this,R.layout.header_nurture_or_equipment,null));
+        RecyclerViewUtils.setHeaderView(recommendView,View.inflate(this,R.layout.header_nurture,null));
     }
 
 
@@ -121,15 +118,10 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
         public void onLoadNextPage(View view) {
             currPage ++;
             if (nurtureList != null && nurtureList.size() >= pageSize) {
-                nurturePresent.requestMoreRecommendData(recommendView,pageSize,currPage);
+                recommendPresent.requestMoreData(recommendView,pageSize,currPage,Constant.RECOMMEND_TYPE_NUTRITION);
             }
         }
     };
-
-    @Override
-    public void setCategory(ArrayList<CategoryBean> categoryBeanList) {
-        categoryAdapter.setData(categoryBeanList);
-    }
 
     @Override
     public void updateRecyclerView(List<GoodsBean> goodsBeanList) {

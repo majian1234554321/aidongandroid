@@ -57,8 +57,8 @@ public class CartModelImpl implements CartModel{
 
     @Override
     public void payCart(Subscriber<PayOrderData> subscriber, String integral, String coin,
-                        String coupon, String payType, String pickUpId, String... id) {
-        cartService.payCart(integral,coin,coupon,payType,pickUpId,id)
+                        String coupon, String payType, String pickUpId, String pickUpDate, String... id) {
+        cartService.payCart(integral,coin,coupon,payType,pickUpId,pickUpDate,id)
                 .compose(RxHelper.<PayOrderData>transform())
                 .subscribe(subscriber);
     }

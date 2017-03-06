@@ -26,8 +26,7 @@ import cn.iwgang.countdownview.CountdownView;
  * 预约适配器
  * Created by song on 2016/9/1.
  */
-public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.AppointmentHolder>
-        implements View.OnClickListener{
+public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.AppointmentHolder> {
     private static final String UN_PAID = "pending";         //待付款
     private static final String UN_JOIN= "purchased";        //待参加
     private static final String JOINED = "signed";           //已参加
@@ -37,6 +36,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
     private Context context;
     private List<AppointmentBean> data = new ArrayList<>();
+    private AppointmentListener appointmentListener;
 
     public AppointmentAdapter(Context context) {
         this.context = context;
@@ -144,11 +144,6 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                 break;
         }
 
-        holder.tvCancel.setOnClickListener(this);
-        holder.tvPay.setOnClickListener(this);
-        holder.tvDelete.setOnClickListener(this);
-        holder.tvConfirm.setOnClickListener(this);
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -159,24 +154,44 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                 }
             }
         });
+
+        holder.tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(appointmentListener != null){
+                    appointmentListener.onCancelJoin(bean.getId());
+                }
+            }
+        });
+
+        holder.tvDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(appointmentListener != null){
+                    appointmentListener.onDeleteOrder(bean.getId());
+                }
+            }
+        });
+
+        holder.tvConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(appointmentListener != null){
+                    appointmentListener.onConfirmJoin(bean.getId());
+                }
+            }
+        });
+
+        holder.tvPay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(appointmentListener != null){
+                    appointmentListener.onPayOrder();
+                }
+            }
+        });
     }
 
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.tv_cancel:
-                break;
-            case R.id.tv_confirm:
-                break;
-            case R.id.tv_delete:
-                break;
-            case R.id.tv_pay:
-                break;
-            default:
-                break;
-        }
-    }
 
     class AppointmentHolder extends RecyclerView.ViewHolder {
         TextView state;
@@ -212,10 +227,14 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         }
     }
 
-    public interface OrderHandleListener{
+    public void setAppointmentListener(AppointmentListener appointmentListener) {
+        this.appointmentListener = appointmentListener;
+    }
+
+    public interface AppointmentListener {
         void onPayOrder();
-        void onDeleteOrder();
-        void onConfirmJoin();
-        void onCancelJoin();
+        void onDeleteOrder(String id);
+        void onConfirmJoin(String id);
+        void onCancelJoin(String id);
     }
 }

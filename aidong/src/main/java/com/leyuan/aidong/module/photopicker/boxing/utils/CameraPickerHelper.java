@@ -28,6 +28,7 @@ import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.SystemClock;
@@ -145,12 +146,17 @@ public class CameraPickerHelper {
         boolean showTimer = true;
         boolean allowFrontCamera = true;
        // String cameraOutDir = BoxingFileHelper.getExternalDCIM(subFolderPath);
+        String filename =  SystemClock.currentThreadTimeMillis() + ".mp4";
+        File cameraOutDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);
+
+        mOutputFile = new File(cameraOutDir, filename);
+        mSourceFilePath = mOutputFile.getPath();
 
         CaptureConfiguration config = new CaptureConfiguration(resolution, quality,
                 fileDuration, fileSize, showTimer, allowFrontCamera, fps);
         final Intent intent = new Intent(activity, VideoCaptureActivity.class);
         intent.putExtra(VideoCaptureActivity.EXTRA_CAPTURE_CONFIGURATION, config);
-        intent.putExtra(VideoCaptureActivity.EXTRA_OUTPUT_FILENAME, SystemClock.currentThreadTimeMillis() + ".mp4");
+        intent.putExtra(VideoCaptureActivity.EXTRA_OUTPUT_FILENAME,filename);
         try {
             startActivityForResult(activity, fragment, intent, REQ_CODE_REC);
         } catch (ActivityNotFoundException ignore) {
@@ -213,6 +219,7 @@ public class CameraPickerHelper {
 
     }
 
+
     private Uri getFileUri(@NonNull Context context, @NonNull File file) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             return FileProvider.getUriForFile(context,
@@ -252,8 +259,9 @@ public class CameraPickerHelper {
             }
             return true;
         } else if (requestCode == REQ_CODE_REC) {
-            Uri uri = data.getData();
-            if (uri == null) {
+
+            String filename =  data.getStringExtra(VideoCaptureActivity.EXTRA_OUTPUT_FILENAME);
+            if (filename == null) {
                 return false;
             }
             callbackFinish();

@@ -44,14 +44,22 @@ public interface EquipmentModel {
      */
     void getDeliveryVenues(Subscriber<VenuesData> subscriber, String skuCode, int page);
 
+
     /**
      * 立即购买
      * @param subscriber Subscriber
-     * @param skuCode sku码
+     * @param skuCode skuCode
      * @param amount 数量
-     * @param pickUp 0-快递 1-自提
-     * @param pickUpId 自提信息编号
+     * @param coupon  优惠券
+     * @param integral 积分
+     * @param coin  爱币
+     * @param payType 支付方式
+     * @param pickUpWay 取货方式(0-快递 1-自提)
+     * @param pickUpId 快递地址id
+     * @param pickUpDate 自提时间
      */
     void buyEquipmentImmediately(Subscriber<PayOrderData> subscriber, String skuCode, int amount,
-                                 String pickUp, String pickUpId);
+                               String coupon, String integral, String coin, String payType,
+                               String pickUpWay, String pickUpId, String pickUpDate
+    );
 }
