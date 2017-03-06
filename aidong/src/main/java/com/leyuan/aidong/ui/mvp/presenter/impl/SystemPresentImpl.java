@@ -17,7 +17,7 @@ import static com.leyuan.aidong.utils.Constant.systemInfoBean;
  * 系统配置
  * Created by song on 2016/11/10.
  */
-public class SystemPresentImpl implements SystemPresent{
+public class SystemPresentImpl implements SystemPresent {
     private Context context;
     private SystemModel systemModel;
 
@@ -41,11 +41,11 @@ public class SystemPresentImpl implements SystemPresent{
 
             @Override
             public void onNext(SystemBean systemBean) {
-                if(systemBean != null){
+                if (systemBean != null) {
                     systemInfoBean = systemBean;
-                    SystemInfoUtils.putSystemInfoBean(context,systemBean);  //保存到本地
+                    SystemInfoUtils.putSystemInfoBean(context, systemBean);  //保存到本地
                 }
             }
-        },os);
+        }, os);
     }
 }

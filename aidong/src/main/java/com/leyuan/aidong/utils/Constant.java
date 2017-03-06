@@ -8,7 +8,7 @@ public class Constant {
     public static final String BASE_URL = "http://192.168.0.207:3000/";
 
     public static final int OK = 1;
-    public static int NOT_LOGIN = 101;
+    public static final int NOT_LOGIN = 101;
     public static final int PAGE_FIRST = 1;
     public static final int CODE_OPEN_ALBUM = 11;
     public static final int ORDER_FROM_CART = 1;

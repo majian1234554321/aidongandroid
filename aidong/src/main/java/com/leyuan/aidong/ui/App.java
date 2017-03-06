@@ -19,6 +19,7 @@ import com.leyuan.aidong.module.photopicker.boxing.loader.IBoxingMediaLoader;
 import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.SharePrefUtils;
 import com.leyuan.aidong.utils.VersionManager;
+import com.squareup.leakcanary.LeakCanary;
 
 import io.realm.Realm;
 
@@ -48,7 +49,7 @@ public class App extends Application {
     }
 
     private void initConfig() {
-//        LeakCanary.install(this);
+        LeakCanary.install(this);
         SDKInitializer.initialize(this);
         initBaiduLoc();
         initImagePicker();

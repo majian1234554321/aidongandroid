@@ -3,7 +3,6 @@ package com.leyuan.aidong.http;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.utils.DeviceManager;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -50,11 +49,11 @@ public class RetrofitHelper {
                             builder.addHeader("token", mInstance.getToken());
                         }
                         builder.addHeader("city", URLEncoder.encode(App.city, "UTF-8"));
-                        builder.addHeader("device", "android");
+//                        builder.addHeader("device", "android");
                         builder.addHeader("lat", String.valueOf(App.lat));
                         builder.addHeader("lng", String.valueOf(App.lon));
-                        builder.addHeader("version", App.getInstance().getVersionName());
-                        builder.addHeader("deviceName", DeviceManager.getPhoneBrand());
+//                        builder.addHeader("version", App.getInstance().getVersionName());
+//                        builder.addHeader("deviceName", DeviceManager.getPhoneBrand());
 
                         Request authorised = builder.build();
                         return chain.proceed(authorised);
