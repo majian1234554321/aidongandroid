@@ -1,4 +1,4 @@
-package com.leyuan.aidong.utils;
+package com.leyuan.aidong.utils.constant;
 
 /**
  * 动态类型

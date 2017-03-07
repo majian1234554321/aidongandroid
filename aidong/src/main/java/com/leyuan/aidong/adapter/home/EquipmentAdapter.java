@@ -9,13 +9,15 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.GoodsBean;
-import com.leyuan.aidong.ui.home.activity.OldGoodsDetailActivity;
+import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.constant.GoodsType;
 
 import java.util.ArrayList;
 import java.util.List;
-import static com.leyuan.aidong.utils.Constant.TYPE_EQUIPMENT;
+
+
 
 
 /**
@@ -56,7 +58,7 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.Equi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OldGoodsDetailActivity.start(context,bean.getId(),TYPE_EQUIPMENT);
+                GoodsDetailActivity.start(context,bean.getId(), GoodsType.EQUIPMENT);
             }
         });
     }

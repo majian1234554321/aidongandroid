@@ -2,6 +2,7 @@ package com.leyuan.aidong.adapter.discover;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -40,22 +41,22 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.VenuesHold
 
     @Override
     public VenuesHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = View.inflate(context, R.layout.item_venues,null);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_venues,parent,false);
         return new VenuesHolder(view);
     }
 
     @Override
     public void onBindViewHolder(VenuesHolder holder, int position) {
-        VenuesBean bean = data.get(position);
+        final VenuesBean bean = data.get(position);
         GlideLoader.getInstance().displayImage(bean.getBrandLogo(), holder.cover);
         holder.name.setText(bean.getName());
         holder.address.setText(bean.getAddress());
-        holder.distance.setText(bean.getDistance());
+        holder.distance.setText(String.format(context.getString(R.string.distance_km),bean.getDistance()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                VenuesDetailActivity.start(context,"1");
+                VenuesDetailActivity.start(context,bean.getId());
             }
         });
     }

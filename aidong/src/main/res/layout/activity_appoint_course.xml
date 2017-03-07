@@ -234,10 +234,11 @@
                     android:textColor="@color/c9"
                     android:textSize="15sp" />
 
-                <CheckBox
+                <Switch
+                    android:text="@null"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical" />
+                    android:layout_gravity="center_vertical"/>
             </LinearLayout>
 
             <include layout="@layout/inc_bold_line" />

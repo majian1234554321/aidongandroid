@@ -14,16 +14,16 @@ public interface RecommendPresent {
      * 第一次进入界面列表数据
      * @param switcherLayout SwitcherLayout
      */
-    void commendLoadData(SwitcherLayout switcherLayout, String type);
+    void commendLoadRecommendData(SwitcherLayout switcherLayout, String type);
 
     /**
      * 下拉刷新列表数据
      */
-    void pullToRefreshData(String type);
+    void pullToRefreshRecommendData(String type);
 
     /**
      * 上拉加载更多列表数据
      */
-    void requestMoreData(RecyclerView recyclerView, int pageSize, int page,String type);
+    void requestMoreRecommendData(RecyclerView recyclerView, int pageSize, int page, String type);
 
 }

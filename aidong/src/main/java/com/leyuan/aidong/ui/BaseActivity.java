@@ -24,6 +24,7 @@ import com.leyuan.aidong.ui.home.activity.CourseDetailActivity;
 import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ScreenUtil;
+import com.leyuan.aidong.utils.constant.GoodsType;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -31,9 +32,6 @@ import java.util.List;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
-import static com.leyuan.aidong.utils.Constant.TYPE_EQUIPMENT;
-import static com.leyuan.aidong.utils.Constant.TYPE_NURTURE;
-import static com.leyuan.aidong.utils.Constant.TYPE_FOODS;
 
 public class BaseActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks{
     private static final String TAG = "BaseActivity";
@@ -100,13 +98,13 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
                 Logger.e("TAG","developing");
                 break;
             case "food":
-                GoodsDetailActivity.start(this,id,TYPE_FOODS);
+                GoodsDetailActivity.start(this,id, GoodsType.FOOD);
                 break;
             case "nutrition":
-                GoodsDetailActivity.start(this,id, TYPE_NURTURE);
+                GoodsDetailActivity.start(this,id, GoodsType.NUTRITION);
                 break;
             case "equipment":
-                GoodsDetailActivity.start(this,id, TYPE_EQUIPMENT);
+                GoodsDetailActivity.start(this,id, GoodsType.EQUIPMENT);
                 break;
             default:
                 Logger.e("TAG","can not support this type,please check it");
@@ -134,7 +132,7 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
                 VenuesDetailActivity.start(this,bannerBean.getLink());
                 break;
             case "21":
-                GoodsDetailActivity.start(this,bannerBean.getLink(), TYPE_NURTURE);
+                GoodsDetailActivity.start(this,bannerBean.getLink(), GoodsType.NUTRITION);
                 break;
             case "22":
                 CourseDetailActivity.start(this,bannerBean.getLink());

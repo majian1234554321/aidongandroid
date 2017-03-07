@@ -15,8 +15,9 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.RecommendPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.RecommendPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.EquipmentActivityView;
-import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.SystemInfoUtils;
+import com.leyuan.aidong.utils.constant.GoodsType;
+import com.leyuan.aidong.utils.constant.RecommendGoodsPosition;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
@@ -29,7 +30,6 @@ import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.leyuan.aidong.utils.Constant.TYPE_EQUIPMENT;
 
 /**
  * 装备
@@ -55,13 +55,13 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
         initTopLayout();
         initSwipeRefreshLayout();
         initRecommendRecyclerView();
-        present.commendLoadData(switcherLayout, Constant.RECOMMEND_TYPE_EQUIPMENT);
+        present.commendLoadRecommendData(switcherLayout, RecommendGoodsPosition.EQUIPMENT);
     }
 
     private void initTopLayout(){
         SimpleTitleBar titleBar = (SimpleTitleBar)findViewById(R.id.title_bar);
         RecyclerView categoryView = (RecyclerView)findViewById(R.id.rv_category);
-        CategoryAdapter categoryAdapter = new CategoryAdapter(this,TYPE_EQUIPMENT);
+        CategoryAdapter categoryAdapter = new CategoryAdapter(this,GoodsType.EQUIPMENT);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.HORIZONTAL,false);
         categoryView.setLayoutManager(layoutManager);
@@ -84,7 +84,7 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
             public void onRefresh() {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recommendView);
-                present.pullToRefreshData(Constant.RECOMMEND_TYPE_EQUIPMENT);
+                present.pullToRefreshRecommendData( RecommendGoodsPosition.EQUIPMENT);
             }
         });
 
@@ -93,7 +93,7 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
             public void onClick(View v) {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recommendView);
-                present.commendLoadData(switcherLayout,Constant.RECOMMEND_TYPE_EQUIPMENT);
+                present.commendLoadRecommendData(switcherLayout, RecommendGoodsPosition.EQUIPMENT);
             }
         });
     }
@@ -117,7 +117,7 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
         public void onLoadNextPage(View view) {
             currPage ++;
             if (equipmentList != null && equipmentList.size() >= pageSize) {
-                present.requestMoreData(recommendView,pageSize,currPage,Constant.RECOMMEND_TYPE_EQUIPMENT);
+                present.requestMoreRecommendData(recommendView,pageSize,currPage, RecommendGoodsPosition.EQUIPMENT);
             }
         }
     };

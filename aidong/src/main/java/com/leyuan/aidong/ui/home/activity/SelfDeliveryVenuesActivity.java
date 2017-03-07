@@ -15,12 +15,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.adapter.home.SelfDeliveryAdapter;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.DistrictBean;
 import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.discover.view.VenuesFilterView;
-import com.leyuan.aidong.adapter.home.SelfDeliveryAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.GoodsDetailPresent;
 import com.leyuan.aidong.ui.mvp.presenter.VenuesPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.GoodsDetailPresentImpl;
@@ -55,7 +55,7 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
 
     private GoodsDetailPresent goodsPresent;
     private VenuesPresent venuesPresent;
-    private String type;
+    private String goodsType;
     private String id;
     private String brandId;
     private String businessCircle;
@@ -69,7 +69,7 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
         goodsPresent = new GoodsDetailPresentImpl(this,this);
         venuesPresent = new VenuesPresentImpl(this,this);
         if(getIntent() != null){
-            type = getIntent().getStringExtra("type");
+            goodsType = getIntent().getStringExtra("goodsType");
             id = getIntent().getStringExtra("id");
         }
 
@@ -78,7 +78,7 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
 
         venuesPresent.getGymBrand();
         venuesPresent.getBusinessCircle();
-        goodsPresent.commonLoadVenues(switcherLayout,type,id);
+        goodsPresent.commonLoadVenues(switcherLayout,goodsType,id);
     }
 
 
@@ -121,7 +121,7 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
             public void onRefresh() {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-                goodsPresent.pullToRefreshVenues(type,id);
+                goodsPresent.pullToRefreshVenues(goodsType,id);
             }
         });
 
@@ -142,7 +142,7 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
         public void onLoadNextPage(View view) {
             currPage ++;
             if (data != null && data.size() >= pageSize) {
-                goodsPresent.requestMoreVenues(recyclerView,pageSize,type,id,currPage);
+                goodsPresent.requestMoreVenues(recyclerView,pageSize,goodsType,id,currPage);
             }
         }
     };

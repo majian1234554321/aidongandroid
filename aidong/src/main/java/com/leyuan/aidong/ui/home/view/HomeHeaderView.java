@@ -14,7 +14,6 @@ import com.leyuan.aidong.ui.MainActivity;
 import com.leyuan.aidong.ui.home.activity.CampaignActivity;
 import com.leyuan.aidong.ui.home.activity.CourseActivity;
 import com.leyuan.aidong.ui.home.activity.EquipmentActivity;
-import com.leyuan.aidong.ui.home.activity.FoodActivity;
 import com.leyuan.aidong.ui.home.activity.NurtureActivity;
 import com.leyuan.aidong.utils.GlideLoader;
 
@@ -58,8 +57,8 @@ public class HomeHeaderView extends RelativeLayout{
         headerView.findViewById(R.id.tv_food).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, FoodActivity.class);
-                (context).startActivity(intent);
+                /*Intent intent = new Intent(context, FoodActivity.class);
+                (context).startActivity(intent);*/
             }
         });
 

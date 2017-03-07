@@ -46,9 +46,6 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  */
 @Deprecated
 public class OldGoodsDetailActivity extends BaseActivity implements View.OnClickListener,GoodsDetailActivityView, BGABanner.OnItemClickListener, ObserveScrollView.ScrollViewListener, GoodsSkuPopupWindow.SelectSkuListener {
-    public static final String TYPE_NURTURE = "nutrition";
-    public static final String TYPE_EQUIPMENT = "equipments";
-    public static final String TYPE_FOODS = "foods";
     private SwitcherLayout switcherLayout;
     private LinearLayout rootLayout;
     private RelativeLayout contentLayout;

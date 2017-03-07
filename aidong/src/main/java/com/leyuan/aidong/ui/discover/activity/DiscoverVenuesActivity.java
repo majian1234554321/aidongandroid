@@ -36,7 +36,7 @@ import java.util.List;
  */
 public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenuesActivityView{
     private static final int HIDE_THRESHOLD = 80;
-    private int scrolledDistance = 0;
+    private int scrolledDistance;
     private boolean filterViewVisible = true;
 
     private ImageView ivBack;

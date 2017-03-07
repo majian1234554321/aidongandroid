@@ -11,27 +11,16 @@ public class Constant {
     public static final int NOT_LOGIN = 101;
     public static final int PAGE_FIRST = 1;
     public static final int CODE_OPEN_ALBUM = 11;
-    public static final int ORDER_FROM_CART = 1;
-    public static final int ORDER_BUY_NURTURE_IMMEDIATELY = 2;
-    public static final int ORDER_BUY_EQUIPMENT_IMMEDIATELY = 3;
-    public static final String PAY_ALI = "alipay";
-    public static final String PAY_WEI_XIN = "wxpay";
-    public static final String TYPE_NURTURE = "nutrition";
-    public static final String TYPE_EQUIPMENT = "equipments";
-    public static final String TYPE_FOODS = "foods";
-    public static final String RECOMMEND_TYPE_CART = "cart";
-    public static final String RECOMMEND_TYPE_EQUIPMENT = "equipment";
-    public static final String RECOMMEND_TYPE_NUTRITION = "nutrition";
-    public static final String EMPTY_STR = " ";
-    public static final String DELIVERY_EXPRESS = "0";
-    public static final String DELIVERY_SELF = "1";
+
     public static final int DEFAULT_MAX_UPLOAD_IMAGE_COUNT = 6;        //上传照片数量限制
+    public static final String FILE_FOLDER = "Aidong";
+    public static final String EMPTY_STR = " ";
+
     public static final String SEIRES_ID = "series_id";
     public static final String PHASE = "phase";
-
+    public static final String WX_LOGIN_CODE = "wx_login_code";
     public static SystemBean systemInfoBean;
 
-    public static final String FILE_FOLDER = "Aidong";
     public static final byte ID_OFFICAL = 1;
     public static final byte ID_COACH = 2;
     public static final String LIVE_ID = "live_id";

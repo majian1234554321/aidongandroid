@@ -65,7 +65,7 @@ public class CourseBean {
         this.place = place;
     }
 
-    public String getApplied_count() {
+    public String getAppliedCount() {
         return applied_count;
     }
 
@@ -73,7 +73,7 @@ public class CourseBean {
         this.applied_count = applied_count;
     }
 
-    public String getClass_time() {
+    public String getClassTime() {
         return class_time;
     }
 
@@ -81,7 +81,7 @@ public class CourseBean {
         this.class_time = class_time;
     }
 
-    public String getBreak_time() {
+    public String getBreakTime() {
         return break_time;
     }
 

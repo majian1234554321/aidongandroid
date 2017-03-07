@@ -17,7 +17,9 @@ import com.leyuan.aidong.ui.mine.login.FindPasswordActivity;
 import com.leyuan.aidong.ui.mine.login.RegisterActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.LoginPresenter;
 import com.leyuan.aidong.ui.mvp.view.LoginViewInterface;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DialogUtils;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.StringUtils;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.utils.UiManager;
@@ -25,6 +27,7 @@ import com.leyuan.aidong.utils.UiManager;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener, LoginViewInterface, EmChatLoginManager.OnLoginListner, EmChatRegisterManager.OnRigsterCallback {
 
+    private static final String TAG = "LoginActivity";
     private LoginPresenter loginPresenter;
     private String telephone;
     private String password;
@@ -36,11 +39,23 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Logger.i("share" + TAG, " onCreate");
         setContentView(R.layout.activity_log_in);
         loginPresenter = new LoginPresenter(this);
         chatLoginManager = new EmChatLoginManager(this);
         sharePopupWindow = new SharePopupWindow(this);
         loginPresenter.setLoginViewInterface(this);
+
+
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            String code = getIntent().getExtras().getString(Constant.WX_LOGIN_CODE, null);
+            Logger.i("share", " login code  = " + code);
+            if (code != null) {
+                DialogUtils.showDialog(this, "", false);
+                loginPresenter.loginSns("weixin", code);
+            }
+
+        }
 
         findViewById(R.id.btn_back).setOnClickListener(this);
         findViewById(R.id.btn_login).setOnClickListener(this);
@@ -165,7 +180,22 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+
+        Logger.i("share", " loginactivity onNewIntent");
         sharePopupWindow.onNewIntent(intent);
+        DialogUtils.dismissDialog();
+
+
+        if (intent!= null && intent.getExtras() != null) {
+            String code = intent.getExtras().getString(Constant.WX_LOGIN_CODE, null);
+            Logger.i("share", " login code  = " + code);
+            if (code != null) {
+                DialogUtils.showDialog(this, "", false);
+                loginPresenter.loginSns("weixin", code);
+            }
+
+        }
+
     }
 
     @Override

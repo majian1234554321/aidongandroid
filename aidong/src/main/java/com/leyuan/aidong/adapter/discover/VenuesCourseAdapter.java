@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CourseBean;
+import com.leyuan.aidong.ui.home.activity.CourseDetailActivity;
+import com.leyuan.aidong.utils.FormatUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,22 +34,7 @@ public class VenuesCourseAdapter extends RecyclerView.Adapter<VenuesCourseAdapte
     public void setData(List<CourseBean> data) {
         if(data != null){
             this.data = data;
-        }else {
-            for (int i = 0; i < 10; i++) {
-                CourseBean bean = new CourseBean();
-                if( i % 2 == 0){
-                    bean.setPrice("999");
-                    bean.setAddress("日本东京大道");
-                    bean.setName("AiFukuhara ");
-                }else{
-                    bean.setPrice("888");
-                    bean.setAddress("上海长宁区妇幼保健院");
-                    bean.setName("保健 ");
-                }
-                this.data.add(bean);
-            }
         }
-
         notifyDataSetChanged();
     }
 
@@ -64,11 +51,22 @@ public class VenuesCourseAdapter extends RecyclerView.Adapter<VenuesCourseAdapte
 
     @Override
     public void onBindViewHolder(CourseHolder holder, int position) {
-        CourseBean bean = data.get(position);
+        final CourseBean bean = data.get(position);
         holder.name.setText(bean.getName());
-        holder.price.setText(bean.getPrice());
+        holder.price.setText(String.format(context.getString(R.string.rmb_price_double),
+                FormatUtil.parseDouble(bean.getPrice())));
         holder.address.setText(bean.getAddress());
-        //holder.count.setText();
+        holder.time.setText(String.format(context.getString(R.string.time_with_line),
+                bean.getClassTime(),bean.getBreakTime()));
+        holder.count.setText(String.format(context.getString(R.string.venues_course_count),
+                bean.getAppliedCount(),bean.getPlace()));
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CourseDetailActivity.start(context,bean.getCode());
+            }
+        });
     }
 
     class CourseHolder extends RecyclerView.ViewHolder{

@@ -58,7 +58,7 @@ public class RecommendPresentImpl implements RecommendPresent{
 
 
     @Override
-    public void commendLoadData(final SwitcherLayout switcherLayout, String type) {
+    public void commendLoadRecommendData(final SwitcherLayout switcherLayout, String type) {
         recommendModel.getRecommendGoods(new CommonSubscriber<GoodsData>(switcherLayout) {
             @Override
             public void onNext(GoodsData goodsData) {
@@ -77,7 +77,7 @@ public class RecommendPresentImpl implements RecommendPresent{
     }
 
     @Override
-    public void pullToRefreshData(String type) {
+    public void pullToRefreshRecommendData(String type) {
         recommendModel.getRecommendGoods(new RefreshSubscriber<GoodsData>(context) {
             @Override
             public void onNext(GoodsData goodsData) {
@@ -95,7 +95,7 @@ public class RecommendPresentImpl implements RecommendPresent{
     }
 
     @Override
-    public void requestMoreData(RecyclerView recyclerView,final int pageSize, int page, String type) {
+    public void requestMoreRecommendData(RecyclerView recyclerView, final int pageSize, int page, String type) {
         recommendModel.getRecommendGoods(new RequestMoreSubscriber<GoodsData>(context,recyclerView,pageSize) {
             @Override
             public void onNext(GoodsData goodsData) {

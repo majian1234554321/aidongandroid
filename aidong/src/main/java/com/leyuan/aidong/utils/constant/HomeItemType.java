@@ -1,4 +1,4 @@
-package com.leyuan.aidong.utils;
+package com.leyuan.aidong.utils.constant;
 
 /**
  * the item type of home pager

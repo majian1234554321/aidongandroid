@@ -15,8 +15,9 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.RecommendPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.RecommendPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.NurtureActivityView;
-import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.SystemInfoUtils;
+import com.leyuan.aidong.utils.constant.GoodsType;
+import com.leyuan.aidong.utils.constant.RecommendGoodsPosition;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
@@ -29,7 +30,6 @@ import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.leyuan.aidong.utils.Constant.TYPE_NURTURE;
 
 /**
  * 营养品界面
@@ -54,13 +54,13 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
         initTopLayout();
         initSwipeRefreshLayout();
         initRecommendRecyclerView();
-        recommendPresent.commendLoadData(switcherLayout, Constant.RECOMMEND_TYPE_NUTRITION);
+        recommendPresent.commendLoadRecommendData(switcherLayout, RecommendGoodsPosition.NUTRITION);
     }
 
     private void initTopLayout(){
         SimpleTitleBar titleBar = (SimpleTitleBar)findViewById(R.id.title_bar);
         RecyclerView categoryView = (RecyclerView)findViewById(R.id.rv_category);
-        CategoryAdapter categoryAdapter = new CategoryAdapter(this,TYPE_NURTURE);
+        CategoryAdapter categoryAdapter = new CategoryAdapter(this,GoodsType.NUTRITION);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.HORIZONTAL,false);
         categoryView.setLayoutManager(layoutManager);
@@ -83,7 +83,7 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
             public void onRefresh() {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recommendView);
-                recommendPresent.pullToRefreshData(Constant.RECOMMEND_TYPE_NUTRITION);
+                recommendPresent.pullToRefreshRecommendData(RecommendGoodsPosition.NUTRITION);
             }
         });
 
@@ -92,7 +92,7 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
             public void onClick(View v) {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recommendView);
-                recommendPresent.commendLoadData(switcherLayout,Constant.RECOMMEND_TYPE_NUTRITION);
+                recommendPresent.commendLoadRecommendData(switcherLayout,RecommendGoodsPosition.NUTRITION);
             }
         });
     }
@@ -118,7 +118,7 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
         public void onLoadNextPage(View view) {
             currPage ++;
             if (nurtureList != null && nurtureList.size() >= pageSize) {
-                recommendPresent.requestMoreData(recommendView,pageSize,currPage,Constant.RECOMMEND_TYPE_NUTRITION);
+                recommendPresent.requestMoreRecommendData(recommendView,pageSize,currPage,RecommendGoodsPosition.NUTRITION);
             }
         }
     };

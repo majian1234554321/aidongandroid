@@ -64,11 +64,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.MainActivity" />
-        <activity android:name=".ui.mine.account.LoginActivity">
-            <intent-filter>
-                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
+        <activity android:name=".ui.mine.account.LoginActivity"
+            android:launchMode="singleTop"
+            >
+            <!--<intent-filter>-->
+                <!--<action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />-->
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity android:name=".ui.mine.activity.TabMinePersonalDataFitnessGoalsActivity" />
         <activity android:name=".ui.mine.activity.TabMinePersonalDataFitnessIsGoodActivity" />

@@ -37,12 +37,12 @@ public class UiManager {
         from.startActivity(intent);
     }
 
-    public static void activityJump(Activity from, Bundle bundle, Class<?> to, int requestCode) {
-        Intent intent = new Intent();
-        intent.putExtras(bundle);
-        intent.setClass(from, to);
-        from.startActivityForResult(intent, requestCode);
-    }
+//    public static void activityJump(Activity from, Bundle bundle, Class<?> to, int requestCode) {
+//        Intent intent = new Intent();
+//        intent.putExtras(bundle);
+//        intent.setClass(from, to);
+//        from.startActivityForResult(intent, requestCode);
+//    }
 
     public static void activityJumpForResult(Activity from, Bundle bundle, Class<?> to, int requestCode) {
         Intent intent = new Intent();

@@ -19,8 +19,8 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.activity.CouponActivity;
 import com.leyuan.aidong.ui.mvp.presenter.CampaignPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CampaignPresentImpl;
-import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.constant.PayType;
 import com.leyuan.aidong.widget.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.ExtendTextView;
 import com.leyuan.aidong.widget.SimpleTitleBar;
@@ -84,7 +84,7 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appoint_campaign);
-        payType = Constant.PAY_ALI;
+        payType = PayType.ALI;
         if (getIntent() != null) {
             campaignBean = getIntent().getParcelableExtra("bean");
         }
@@ -184,10 +184,10 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
     public void onCheckedChanged(CustomNestRadioGroup group, int checkedId) {
         switch (checkedId){
             case R.id.cb_alipay:
-                payType = Constant.PAY_ALI;
+                payType = PayType.ALI;
                 break;
             case R.id.cb_weixin:
-                payType = Constant.PAY_WEI_XIN;
+                payType = PayType.WEIXIN;
                 break;
             default:
                 break;

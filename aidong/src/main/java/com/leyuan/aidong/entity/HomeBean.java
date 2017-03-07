@@ -1,6 +1,6 @@
 package com.leyuan.aidong.entity;
 
-import com.leyuan.aidong.utils.HomeItemType;
+import com.leyuan.aidong.utils.constant.HomeItemType;
 
 import java.util.List;
 

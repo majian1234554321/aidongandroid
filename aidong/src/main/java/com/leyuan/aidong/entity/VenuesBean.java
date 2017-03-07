@@ -37,7 +37,7 @@ public class VenuesBean implements Parcelable {
         return id;
     }
 
-    public void setGym_id(String gym_id) {
+    public void setGymId(String gym_id) {
         this.id = gym_id;
     }
 

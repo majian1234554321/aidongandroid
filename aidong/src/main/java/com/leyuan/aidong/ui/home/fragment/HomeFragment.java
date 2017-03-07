@@ -26,7 +26,7 @@ import com.leyuan.aidong.ui.home.viewholder.TitleAndVerticalListHolder;
 import com.leyuan.aidong.ui.mvp.presenter.HomePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.HomePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.HomeFragmentView;
-import com.leyuan.aidong.utils.HomeItemType;
+import com.leyuan.aidong.utils.constant.HomeItemType;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
