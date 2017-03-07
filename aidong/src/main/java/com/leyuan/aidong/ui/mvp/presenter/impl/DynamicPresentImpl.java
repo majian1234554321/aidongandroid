@@ -186,24 +186,24 @@ public class DynamicPresentImpl implements DynamicPresent{
     }
 
     @Override
-    public void addLike(String id) {
+    public void addLike(String id, final int position) {
         dynamicModel.addLike(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
                 if(sportCircleFragmentView != null){
-                    sportCircleFragmentView.updateLikeStatus(true,baseBean);
+                    sportCircleFragmentView.addLikeResult(position,baseBean);
                 }
             }
         },id);
     }
 
     @Override
-    public void cancelLike(String id) {
+    public void cancelLike(String id,final int position) {
         dynamicModel.cancelLike(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
                 if(sportCircleFragmentView != null){
-                    sportCircleFragmentView.updateLikeStatus(false,baseBean);
+                    sportCircleFragmentView.cancelLikeResult(position,baseBean);
                 }
             }
         },id);

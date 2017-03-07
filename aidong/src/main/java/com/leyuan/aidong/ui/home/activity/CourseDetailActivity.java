@@ -40,13 +40,15 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  * Created by song on 2016/11/15.
  */
 public class CourseDetailActivity extends BaseActivity implements View.OnClickListener,CourseDetailActivityView{
-    private static final String STATUS_END = "0";           //预约已结束
-    private static final String STATUS_APPOINTED = "1";     //已预约
-    private static final String STATUS_FULL = "2";          //预约人数已满
-    private static final String STATUS_NOT_START = "3";     //即将开始预约
-    private static final String STATUS_NOT_PAY = "4";       //待支付
-    private static final String STATUS_NOT_NEED= "5";       //无需预约
-    private static final String STATUS_APPOINT = "8";       //马上预约
+    private static final String STATUS_APPOINT = "1";       //马上预约
+    private static final String STATUS_NOT_START = "2";     //即将开始预约
+    private static final String STATUS_APPOINT_END = "3";   //预约已结束
+    private static final String STATUS_APPOINTED = "4";     //已预约
+    private static final String STATUS_NOT_PAY = "5";       //待支付
+    private static final String STATUS_FULL = "6";          //预约人数已满
+    private static final String STATUS_COURSE_END = "7";    //课程结束
+    private static final String STATUS_NOT_NEED= "8";       //无需预约
+
 
     private ImageView ivBack;
     private TextView tvTitle;
@@ -226,10 +228,16 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 tvState.setText(R.string.status_appoint);
                 bottomLayout.setBackgroundColor(Color.parseColor("#000000"));
                 break;
-            case STATUS_END:
+            case STATUS_APPOINT_END:
                 tvStartTime.setVisibility(View.GONE);
                 tvPrice.setVisibility(View.GONE);
-                tvState.setText(R.string.status_end);
+                tvState.setText(R.string.status_appoint_end);
+                bottomLayout.setBackgroundColor(Color.parseColor("#666667"));
+                break;
+            case STATUS_COURSE_END:
+                tvStartTime.setVisibility(View.GONE);
+                tvPrice.setVisibility(View.GONE);
+                tvState.setText(R.string.status_course_end);
                 bottomLayout.setBackgroundColor(Color.parseColor("#666667"));
                 break;
             case STATUS_APPOINTED:

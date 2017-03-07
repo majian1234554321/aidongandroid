@@ -48,6 +48,15 @@ public class GlideLoader {
                 .into(imageView);
     }
 
+
+    public void displayCircleImage(@DrawableRes int resId, ImageView imageView){
+        Glide.with(getContext(imageView))
+                .load(resId)
+                .bitmapTransform(new CropCircleTransformation(getContext(imageView)))
+                .placeholder(R.drawable.place_holder_user)
+                .into(imageView);
+    }
+
     public void displayDrawableGifImage(@DrawableRes int resId, ImageView imageView){
         Glide.with(getContext(imageView))
                 .load(resId)

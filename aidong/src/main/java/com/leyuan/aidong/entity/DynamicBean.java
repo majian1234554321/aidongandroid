@@ -20,7 +20,7 @@ public class DynamicBean implements Serializable{
     public LikeUser like;
     public Comment comment;
 
-    public boolean isLiked; //标记是否点赞
+    public boolean isLiked = false; //标记是否点赞
 
     public class Video implements Serializable{
         public String url;
@@ -36,10 +36,10 @@ public class DynamicBean implements Serializable{
     }
 
     public class LikeUser implements Serializable{
-        public String counter;
+        public int counter;
         public List<Item> item = new ArrayList<>();
         public class  Item implements Serializable{
-            public String publisher_id;
+            public String id;
             public String name;
             public String avatar;
             public String gender;
@@ -48,7 +48,7 @@ public class DynamicBean implements Serializable{
 
 
     public class Comment implements Serializable{
-        public String count;
+        public int count;
 
         public List<Item> item = new ArrayList<>();
         public class  Item implements Serializable{

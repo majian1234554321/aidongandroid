@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.utils.DateUtils;
-import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.SquareRelativeLayout;
@@ -152,12 +151,12 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
         holder.tvContent.setText(dynamic.content);
 
         //点赞
-        if (FormatUtil.parseInt(dynamic.like.counter) > 0) {
+        if (dynamic.like.counter > 0) {
             holder.likeLayout.setVisibility(View.VISIBLE);
             holder.likesRecyclerView.setLayoutManager(new LinearLayoutManager
                     (context, LinearLayoutManager.HORIZONTAL, false));
             DynamicLikeAdapter likeAdapter = new DynamicLikeAdapter(context);
-            likeAdapter.setData(dynamic.like.item);
+            likeAdapter.setData(dynamic.like.item,dynamic.like.counter);
             holder.likesRecyclerView.setAdapter(likeAdapter);
         } else {
             holder.likeLayout.setVisibility(View.GONE);
@@ -165,7 +164,7 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
 
         //评论
         DynamicCommentAdapter commonAdapter = null;
-        if(FormatUtil.parseInt(dynamic.comment.count) > 0){
+        if(dynamic.comment.count> 0){
             holder.commentLayout.setVisibility(View.VISIBLE);
             commonAdapter = new DynamicCommentAdapter(context);
             holder.commentRecyclerView.setAdapter(commonAdapter);
@@ -198,17 +197,6 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
                 public void onImageClick(View view, int imagePosition) {
                     if(handleDynamicListener != null){
                         handleDynamicListener.onImageClickListener(view,position,imagePosition);
-                    }
-                }
-            });
-        }
-
-        if(commonAdapter != null){
-            commonAdapter.setCommentListener(new DynamicCommentAdapter.CommentListener() {
-                @Override
-                public void onCommentClick() {
-                    if(handleDynamicListener != null){
-                        handleDynamicListener.onDynamicDetailClickListener(position);
                     }
                 }
             });

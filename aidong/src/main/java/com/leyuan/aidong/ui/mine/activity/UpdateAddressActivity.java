@@ -7,7 +7,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +24,10 @@ import com.leyuan.aidong.utils.Utils;
  * 更新地址
  * Created by song on 2016/10/28.
  */
-public class UpdateAddressActivity extends BaseActivity implements UpdateAddressActivityView, View.OnClickListener, SelectAddressDialog.OnConfirmAddressListener {
+public class UpdateAddressActivity extends BaseActivity implements UpdateAddressActivityView,
+        View.OnClickListener, SelectAddressDialog.OnConfirmAddressListener{
+    private static final String DEFAULT = "1";
+    private static final String UN_DEFAULT = "0";
     private ImageView ivBack;
     private TextView tvTitle;
     private TextView tvFinish;
@@ -33,7 +35,6 @@ public class UpdateAddressActivity extends BaseActivity implements UpdateAddress
     private EditText etPhone;
     private TextView tvAddress;
     private EditText etDescAddress;
-    private RadioButton rbDefault;
 
     private SelectAddressDialog addressDialog;
     private AddressBean bean;
@@ -43,6 +44,7 @@ public class UpdateAddressActivity extends BaseActivity implements UpdateAddress
     private String province;
     private String city;
     private String district;
+    private String isDefault;
 
     public static void start(Context context, AddressBean address){
         Intent intent = new Intent(context, AddAddressActivity.class);
@@ -53,10 +55,11 @@ public class UpdateAddressActivity extends BaseActivity implements UpdateAddress
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_asddress);
+        setContentView(R.layout.activity_update_asddress);
         addressPresent = new AddressPresentImpl(this,this);
         if(getIntent() != null){
             bean = getIntent().getParcelableExtra("address");
+            isDefault = bean.isDefault() ? DEFAULT : UN_DEFAULT;
         }
 
         initView();
@@ -72,14 +75,12 @@ public class UpdateAddressActivity extends BaseActivity implements UpdateAddress
         etPhone = (EditText) findViewById(R.id.et_phone);
         tvAddress = (TextView) findViewById(R.id.tv_address);
         etDescAddress = (EditText) findViewById(R.id.et_desc_address);
-        rbDefault = (RadioButton) findViewById(R.id.rb_default);
     }
 
     private void setListener() {
         ivBack.setOnClickListener(this);
         tvFinish.setOnClickListener(this);
         tvAddress.setOnClickListener(this);
-        // rbDefault.setOnCheckedChangeListener(this);
     }
 
     private void initAddressInfo(){
@@ -108,7 +109,8 @@ public class UpdateAddressActivity extends BaseActivity implements UpdateAddress
             case R.id.tv_finish:
                 if(checkInfo()) {
                     addressPresent.updateAddress(bean.getId(), etUsername.getText().toString(),
-                            etPhone.getText().toString(), province, city, district, etDescAddress.getText().toString());
+                            etPhone.getText().toString(), province, city, district,
+                            etDescAddress.getText().toString(),isDefault);
                 }
                 break;
             case R.id.tv_address:

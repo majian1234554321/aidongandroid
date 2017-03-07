@@ -35,11 +35,12 @@ import static com.leyuan.aidong.R.id.iv_back;
  */
 public class CampaignDetailActivity extends BaseActivity implements CampaignDetailActivityView,View.OnClickListener{
     private static final String STATUS_APPLY = "1";                //马上报名
-    private static final String STATUS_END = "2";                  //活动已结束
-    private static final String STATUS_APPLIED = "3";              //已报名
-    private static final String STATUS_NOT_START = "4";            //即将开始报名
+    private static final String STATUS_NOT_START = "2";            //即将开始报名
+    private static final String STATUS_APPOINT_END = "3";          //报名已结束
+    private static final String STATUS_APPLIED = "4";              //已报名
     private static final String STATUS_NOT_PAY = "5";              //待支付
     private static final String STATUS_FULL = "6";                 //报名人数已满
+    private static final String STATUS_CAMPAIGN_END = "7";         //活动已结束
     private String status;
 
     private ImageView ivBack;
@@ -208,9 +209,14 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
                 tvState.setText(R.string.campaign_status_apply);
                 bottomLayout.setBackgroundColor(Color.parseColor("#000000"));
                 break;
-            case STATUS_END:
+            case STATUS_CAMPAIGN_END:
                 tvPrice.setVisibility(View.GONE);
                 tvState.setText(R.string.campaign_status_end);
+                bottomLayout.setBackgroundColor(Color.parseColor("#666667"));
+                break;
+            case STATUS_APPOINT_END:
+                tvPrice.setVisibility(View.GONE);
+                tvState.setText(R.string.campaign_appoint_end);
                 bottomLayout.setBackgroundColor(Color.parseColor("#666667"));
                 break;
             case STATUS_APPLIED:

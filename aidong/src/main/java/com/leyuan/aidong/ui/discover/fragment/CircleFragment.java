@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.exoplayer.util.Util;
 import com.leyuan.aidong.R;
@@ -19,6 +20,8 @@ import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter.IDynamicCallback;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.PhotoBrowseInfo;
+import com.leyuan.aidong.entity.model.UserCoach;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity;
 import com.leyuan.aidong.ui.discover.activity.PhotoBrowseActivity;
@@ -63,7 +66,7 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_circle, null);
+        return inflater.inflate(R.layout.fragment_circle, container,false);
     }
 
     @Override
@@ -169,9 +172,9 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
         @Override
         public void onLikeClick(int position, String id, boolean isLike) {
             if (isLike) {
-                dynamicPresent.cancelLike(id);
+                dynamicPresent.cancelLike(id,position);
             } else {
-                dynamicPresent.addLike(id);
+                dynamicPresent.addLike(id,position);
             }
         }
 
@@ -187,9 +190,40 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
     }
 
     @Override
-    public void updateLikeStatus(boolean isAdd,BaseBean baseBean) {
+    public void addLikeResult(int position, BaseBean baseBean) {
         if(baseBean.getStatus() == Constant.OK){
-            circleDynamicAdapter.notifyDataSetChanged();
+            dynamicList.get(position).like.counter += 1;
+            DynamicBean dynamic = new DynamicBean();
+            DynamicBean.LikeUser likeUser = dynamic.new LikeUser();
+            DynamicBean.LikeUser.Item item = likeUser.new Item();
+            UserCoach user = App.mInstance.getUser();
+            item.avatar = user.getAvatar();
+            item.id = String.valueOf(user.getId());
+            dynamicList.get(position).like.item.add(item);
+            circleDynamicAdapter.notifyItemChanged(position);
+            Toast.makeText(getContext(),"点赞成功",Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(getContext(),"点赞失败:" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
         }
     }
+
+    @Override
+    public void cancelLikeResult(int position, BaseBean baseBean) {
+        if(baseBean.getStatus() == Constant.OK){
+            dynamicList.get(position).like.counter -= 1;
+            List<DynamicBean.LikeUser.Item> item = dynamicList.get(position).like.item;
+            int myPosition = 0;
+            for (int i = 0; i < item.size(); i++) {
+                if(item.get(i).id.equals(String.valueOf(App.mInstance.getUser().getId()))){
+                    myPosition = i;
+                }
+            }
+            item.remove(myPosition);
+            circleDynamicAdapter.notifyItemChanged(position);
+            Toast.makeText(getContext(),"取消赞成功",Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(getContext(),"取消赞失败:"+baseBean.getMessage(),Toast.LENGTH_LONG).show();
+        }
+    }
+
 }

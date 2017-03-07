@@ -251,7 +251,9 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
                 finish();
                 break;
             case R.id.iv_edit:
-                showEditDialog();
+                if(userInfoData != null) {
+                    showEditDialog();
+                }
                 break;
             case R.id.tv_add_image:
                 UpdatePhotoWallActivity.start(this, userInfoData.getPhotoWall());

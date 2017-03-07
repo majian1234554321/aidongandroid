@@ -78,4 +78,11 @@
         android:layout_height="match_parent"
         android:visibility="gone"
         android:background="@color/black_alpha15"/>
+
+    <View
+        android:id="@+id/media_disabled"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="@color/video_mask"/>
 </merge>

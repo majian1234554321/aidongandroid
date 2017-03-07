@@ -28,7 +28,6 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<DynamicDetailAdap
     public void setData(List<CommentBean> data) {
         if (data != null) {
             this.data = data;
-            notifyDataSetChanged();
         }
     }
 
@@ -41,7 +40,7 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<DynamicDetailAdap
     @Override
     public void onBindViewHolder(CommentHolder holder, final int position) {
         CommentBean bean = data.get(position);
-        GlideLoader.getInstance().displayImage(bean.getPublisher().getAvatar(), holder.avatar);
+        GlideLoader.getInstance().displayCircleImage(bean.getPublisher().getAvatar(), holder.avatar);
         holder.name.setText(bean.getPublisher().getName());
         holder.content.setText(bean.getContent());
         holder.time.setText(bean.getPublishedAt());

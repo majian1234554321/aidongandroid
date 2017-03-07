@@ -51,6 +51,7 @@ public class MediaItemLayout extends FrameLayout {
     private ImageView mCheckImg;
     private View mVideoLayout;
     private View mFontLayout;
+    private View disabledLayout;
     private ImageView mCoverImg;
     private ScreenType mScreenType;
 
@@ -83,6 +84,7 @@ public class MediaItemLayout extends FrameLayout {
         mCheckImg = (ImageView) view.findViewById(R.id.media_item_check);
         mVideoLayout = view.findViewById(R.id.video_layout);
         mFontLayout = view.findViewById(R.id.media_font_layout);
+        disabledLayout = view.findViewById(R.id.media_disabled);
         mScreenType = getScreenType(context);
         setImageRect(context);
     }
@@ -130,19 +132,33 @@ public class MediaItemLayout extends FrameLayout {
     public void setMedia(BaseMedia media) {
         if (media instanceof ImageMedia) {
             mVideoLayout.setVisibility(GONE);
-            setCover(((ImageMedia) media).getThumbnailPath());
+            setImageCover(((ImageMedia) media).getThumbnailPath());
         } else if (media instanceof VideoMedia) {
             mVideoLayout.setVisibility(VISIBLE);
             VideoMedia videoMedia = (VideoMedia) media;
             ((TextView) mVideoLayout.findViewById(R.id.video_duration_txt)).setText(videoMedia.getDuration());
             ((TextView) mVideoLayout.findViewById(R.id.video_size_txt)).setText(videoMedia.getSizeByUnit());
-            setCover(videoMedia.getPath());
+            setVideoCover(videoMedia.getPath(),videoMedia.getOriginalDuration());
         }
     }
 
-    private void setCover(@NonNull String path) {
+    private void setImageCover(@NonNull String path) {
         if (mCoverImg == null || TextUtils.isEmpty(path)) {
             return;
+        }
+        BoxingMediaLoader.getInstance().displayThumbnail(mCoverImg, path, mScreenType.getValue(), mScreenType.getValue());
+    }
+
+    private void setVideoCover(@NonNull String path,Long during) {
+        if (mCoverImg == null || TextUtils.isEmpty(path)) {
+            return;
+        }
+        if(during > 1000 * 15){
+            disabledLayout.setVisibility(VISIBLE);
+        }else if(during < 1000 * 5) {
+            disabledLayout.setVisibility(VISIBLE);
+        }else {
+            disabledLayout.setVisibility(GONE);
         }
         BoxingMediaLoader.getInstance().displayThumbnail(mCoverImg, path, mScreenType.getValue(), mScreenType.getValue());
     }

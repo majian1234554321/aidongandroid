@@ -91,7 +91,25 @@ public class AddressPresentImpl implements AddressPresent{
     }
 
     @Override
-    public void addAddress(String name, String phone,String province,String city,String district,  final String address) {
+    public void getAddress() {
+        addressModel.getAddress(new ProgressSubscriber<AddressListData>(context, false) {
+            @Override
+            public void onNext(AddressListData addressListData) {
+                List<AddressBean> addressList = new ArrayList<>();
+                if (addressListData != null && addressListData.getAddress() != null) {
+                    addressList = addressListData.getAddress();
+                }
+
+                if (!addressList.isEmpty()) {
+                    addressActivityView.setAddress(addressList);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void addAddress(String name, String phone,String province,String city,String district,
+                           String address,String def) {
         addressModel.addAddress(new ProgressSubscriber<AddressData>(context,false) {
             @Override
             public void onNext(AddressData addressData) {
@@ -99,11 +117,12 @@ public class AddressPresentImpl implements AddressPresent{
                     addAddressActivityView.setAddAddress(addressData.getAddress());
                 }
             }
-        },name,phone,province,city,district,address);
+        },name,phone,province,city,district,address,def);
     }
 
     @Override
-    public void updateAddress(String id, String name, String phone,String province,String city,String district,  String address) {
+    public void updateAddress(String id, String name, String phone,String province,
+                              String city,String district,  String address,String def) {
         addressModel.updateAddress(new ProgressSubscriber<AddressData>(context,false) {
             @Override
             public void onNext(AddressData addressData) {
@@ -111,15 +130,25 @@ public class AddressPresentImpl implements AddressPresent{
                     updateAddressActivityView.setUpdateAddress(addressData.getAddress());
                 }
             }
-        },id,name,phone,province,city,district,address);
+        },id,name,phone,province,city,district,address,def);
     }
 
     @Override
-    public void deleteAddress(String id) {
+    public void setDefaultAddress(String id,final int position) {
+        addressModel.updateAddress(new ProgressSubscriber<AddressData>(context,true) {
+            @Override
+            public void onNext(AddressData addressData) {
+                addressActivityView.setAddressDefaultResult(position);
+            }
+        },id,null,null,null,null,null,null,"1");
+    }
+
+    @Override
+    public void deleteAddress(String id, final int position) {
         addressModel.deleteAddress(new ProgressSubscriber<BaseBean>(context,false) {
             @Override
             public void onNext(BaseBean baseBean) {
-                addressActivityView.setDeleteAddress(baseBean);
+                addressActivityView.deleteAddressResult(baseBean,position);
             }
         },id);
     }

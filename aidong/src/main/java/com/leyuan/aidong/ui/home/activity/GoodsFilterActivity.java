@@ -14,11 +14,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.adapter.home.GoodsFilterAdapter;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.EquipmentBean;
 import com.leyuan.aidong.entity.NurtureBean;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.adapter.home.GoodsFilterAdapter;
 import com.leyuan.aidong.ui.home.view.GoodsFilterView;
 import com.leyuan.aidong.ui.mvp.presenter.EquipmentPresent;
 import com.leyuan.aidong.ui.mvp.presenter.NurturePresent;
@@ -71,9 +71,9 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
 
 
 
-    public static void start(Context context, String type, ArrayList<CategoryBean> categoryList,int pos) {
+    public static void start(Context context, String goodsType, ArrayList<CategoryBean> categoryList,int pos) {
         Intent starter = new Intent(context, GoodsFilterActivity.class);
-        starter.putExtra("goodsType",type);
+        starter.putExtra("goodsType",goodsType);
         starter.putExtra("pos",pos);
         starter.putParcelableArrayListExtra("categoryList",categoryList);
         context.startActivity(starter);
@@ -157,8 +157,7 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
         recyclerView = (RecyclerView)findViewById(R.id.rv_goods);
         equipmentList = new ArrayList<>();
         nurtureList = new ArrayList<>();
-        adapter = new GoodsFilterAdapter(this, GoodsType.NUTRITION.equals(goodsType) ?
-                GoodsType.NUTRITION : GoodsType.EQUIPMENT);
+        adapter = new GoodsFilterAdapter(this,goodsType);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(wrapperAdapter);

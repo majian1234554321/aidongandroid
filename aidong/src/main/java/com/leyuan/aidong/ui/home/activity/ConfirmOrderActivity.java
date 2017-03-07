@@ -315,7 +315,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 sb.append(address.getProvince()).append(address.getCity())
                         .append(address.getDistrict()).append(address.getAddress());
                 tvAddress.setText(sb);
-                pickUpId = address.getAddressId();
+                pickUpId = address.getId();
             }
         }
     }
