@@ -311,7 +311,7 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
     }
 
     public interface OnSoonLiveVideoClickListener {
-        void onSoonLivingVideoCLick(int liveId);
+        void onSoonLivingVideoCLick(LiveVideoInfo liveInfo);
     }
 
     public interface OnVideoClickListener {

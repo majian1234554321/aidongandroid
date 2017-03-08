@@ -6,6 +6,8 @@ import com.leyuan.aidong.entity.SystemBean;
 public class Constant {
     //public static final String  BASE_URL = "http://192.168.0.223:5000/";
     public static final String BASE_URL = "http://192.168.0.207:3000/";
+    public static final String CAPTCHA_IMAGE = BASE_URL + "captcha_image/";
+
 
     public static final int OK = 1;
     public static final int NOT_LOGIN = 101;
@@ -19,6 +21,8 @@ public class Constant {
     public static final String SEIRES_ID = "series_id";
     public static final String PHASE = "phase";
     public static final String WX_LOGIN_CODE = "wx_login_code";
+    public static final String WX_LOGIN_SUCCESS_ACTION = "com.leyuan.login.wx";
+
     public static SystemBean systemInfoBean;
 
     public static final byte ID_OFFICAL = 1;

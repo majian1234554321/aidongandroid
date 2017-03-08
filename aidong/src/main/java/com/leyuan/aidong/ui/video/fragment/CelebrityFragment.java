@@ -1,4 +1,4 @@
-package com.leyuan.aidong.ui.video.activity;
+package com.leyuan.aidong.ui.video.fragment;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -19,13 +19,15 @@ import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.adapter.DeepIntoAdapter;
+import com.leyuan.aidong.adapter.CelebrityFragmentAdapter;
 import com.leyuan.aidong.entity.video.SpecialTopicInfo;
+import com.leyuan.aidong.ui.video.activity.VideoDetailActivity;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.CustomLayoutManager;
 
 
-public class DeepIntoFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+
+public class CelebrityFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private int item_normal_height;
     private int item_max_height;
@@ -42,13 +44,13 @@ public class DeepIntoFragment extends Fragment implements SwipeRefreshLayout.OnR
     private Gson gson = new Gson();
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout layout_refresh;
-    private DeepIntoAdapter adapter;
     private LinearLayout layout_video_empty;
-
+    private CelebrityFragmentAdapter adapter;
     private CustomLayoutManager mLinearLayoutManager;
+
     public static int scrollDirection = 1; //1向上 0 向下
-    private boolean isLoading;
     private int lastVisibleItem;
+    private boolean isLoading;
 
     private int page = 1;
     private String city_id;
@@ -59,11 +61,10 @@ public class DeepIntoFragment extends Fragment implements SwipeRefreshLayout.OnR
             if (action.equals("select_ctiy")) {
                 city_id = intent.getStringExtra("id");
                 //接受到城市切换，更新列表
-                getDataFromInter();
+                //getDataFromInter();
             }
         }
     };
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,11 +94,13 @@ public class DeepIntoFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         initReceiver();
         initRecyclerView();
-        getDataFromInter();
+      //  getDataFromInter();
         return rootView;
     }
 
     private void initReceiver() {
+//        city_id = SharedPreferencesUtils
+//                .getInstance(getActivity()).get("select_ctiy_id");
         if (null == city_id || city_id.equals("")) {
             city_id = "1211000000";
         }
@@ -123,13 +126,14 @@ public class DeepIntoFragment extends Fragment implements SwipeRefreshLayout.OnR
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerView.setHasFixedSize(false);
 
-        adapter = new DeepIntoAdapter(getActivity(), item_listener);
+        adapter = new CelebrityFragmentAdapter(getActivity(), item_listener);
         mRecyclerView.setAdapter(adapter);
 
         mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
+
                 Logger.i("old_scroll_state = " + current_sroll_state + ",   new state = " + newState);
 
                 if (current_sroll_state != newState && newState == RecyclerView.SCROLL_STATE_IDLE) {
@@ -147,12 +151,12 @@ public class DeepIntoFragment extends Fragment implements SwipeRefreshLayout.OnR
                             Logger.i("== 1  v.getTop = " + v.getTop());
                             recyclerView.smoothScrollBy(0, v.getTop());
                         }
-                    }
-                    if(!isLoading &&scrollDirection ==1 && lastVisibleItem +1 >= mLinearLayoutManager.getItemCount()){
-                        getMoreDataFromInter();
+
                     }
                 }
-
+                if (!isLoading && scrollDirection == 1 && lastVisibleItem + 1 >= mLinearLayoutManager.getItemCount()) {
+                    getMoreDataFromInter();
+                }
                 current_sroll_state = newState;
             }
 
@@ -168,35 +172,38 @@ public class DeepIntoFragment extends Fragment implements SwipeRefreshLayout.OnR
                 Logger.i("dy = " + dy);
                 first_complete_visible_position = mLinearLayoutManager.findFirstCompletelyVisibleItemPosition();
                 RecyclerView.ViewHolder firstHolder = recyclerView.findViewHolderForPosition(first_complete_visible_position);
-                if (firstHolder != null && firstHolder instanceof DeepIntoAdapter.ViewHolder) {
-                    DeepIntoAdapter.ViewHolder holder = (DeepIntoAdapter.ViewHolder) firstHolder;
-                    if (holder.getItemViewType() == DeepIntoAdapter.TYPE_ITEM) {
+                if (firstHolder != null && firstHolder instanceof CelebrityFragmentAdapter.ViewHolder) {
+                    CelebrityFragmentAdapter.ViewHolder holder = (CelebrityFragmentAdapter.ViewHolder) firstHolder;
+                    if (holder.getItemViewType() == CelebrityFragmentAdapter.TYPE_ITEM) {
 
                         int height = holder.relView.getLayoutParams().height;
                         if (height + dy <= item_max_height && height + dy >= item_normal_height) {
                             holder.relView.getLayoutParams().height = height + dy;
+
                             holder.relView.setLayoutParams(holder.relView.getLayoutParams());
-                            //                            holder.mark.setAlpha(holder.mark.getAlpha() + dy * alpha_d / item_normal_height);
                             //                            holder.txt_type.setTextSize(TypedValue.COMPLEX_UNIT_PX,
                             //                                    holder.txt_type.getTextSize() + dy * font_size_d / item_normal_height);
-
+                            //                            holder.txt_author.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                            //                                    holder.txt_type.getTextSize() + dy * font_size_d / item_normal_height);
                             float size = holder.txt_type.getTextSize() + dy * font_size_d / item_normal_height;
                             if (size > item_max_font_size) {
                                 holder.txt_type.setTextSize(TypedValue.COMPLEX_UNIT_PX, item_max_font_size);
+                                holder.txt_author.setTextSize(TypedValue.COMPLEX_UNIT_PX, item_max_font_size);
                             } else if (size < item_normal_font_size) {
                                 holder.txt_type.setTextSize(TypedValue.COMPLEX_UNIT_PX, item_normal_font_size);
+                                holder.txt_author.setTextSize(TypedValue.COMPLEX_UNIT_PX, item_normal_font_size);
                             } else {
                                 holder.txt_type.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+                                holder.txt_author.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
                             }
-                            holder.txt_course.setAlpha(valueAlpha(height));
-                            holder.txt_belong.setAlpha(valueAlpha(height));
+                            holder.txt_number.setAlpha(valueAlpha(height));
+                            holder.txt_time.setAlpha(valueAlpha(height));
                         }
                     }
                 }
                 lastVisibleItem = mLinearLayoutManager.findLastVisibleItemPosition();
             }
         });
-
         mRecyclerView.setOnTouchListener(touchListener);
     }
 
@@ -224,14 +231,12 @@ public class DeepIntoFragment extends Fragment implements SwipeRefreshLayout.OnR
                     }
                     return true;
                 }
-
             }
             return false;
-
         }
     };
 
-    private DeepIntoAdapter.OnItemClickListener item_listener = new DeepIntoAdapter.OnItemClickListener() {
+    private CelebrityFragmentAdapter.OnItemClickListener item_listener = new CelebrityFragmentAdapter.OnItemClickListener() {
         @Override
         public void OnClick(int position, View itemView, SpecialTopicInfo info) {
             int first_complete_visible_position = mLinearLayoutManager.findFirstCompletelyVisibleItemPosition();
@@ -250,82 +255,6 @@ public class DeepIntoFragment extends Fragment implements SwipeRefreshLayout.OnR
         }
     };
 
-    private void getDataFromInter() {
-      /*  page = 1;
-        adapter.setFirst(true);
-        RequestParams params = new RequestParams();
-        params.addBodyParameter("pageCurrent", String.valueOf(page));
-        params.addBodyParameter("list", "family");
-        params.addBodyParameter("areaId", city_id);
-//        MyHttpUtils http = new MyHttpUtils();
-//        http.send(HttpRequest.HttpMethod.POST, Urls.BASE_URL_TEXT + "/getVideoList.action", params, callback);*/
-    }
-
-   /* private RequestCallBack<String> callback = new RequestCallBack<String>() {
-
-        @Override
-        public void onSuccess(ResponseInfo<String> responseInfo) {
-//            ToastTools.show("刷新成功",getActivity());
-            layout_refresh.setRefreshing(false);
-
-            Logger.i("" + responseInfo.result);
-//            try {
-//                BaseResult<VideoListResult> result = gson.fromJson(responseInfo.result,
-//                        new TypeToken<BaseResult<VideoListResult>>() {
-//                        }.getType());
-//                if (result.getCode() == 1 && result.getResult() != null && result.getResult().getVideo() != null) {
-//                    ArrayList<SpecialTopicInfo> videos = result.getResult().getVideo();
-//                    scrollDirection = 1;
-//                    adapter.freshData(videos);
-//                    if (videos.size() > 0) {
-//                        mRecyclerView.setVisibility(View.VISIBLE);
-//                        layout_video_empty.setVisibility(View.GONE);
-//                    } else {
-//                        mRecyclerView.setVisibility(View.INVISIBLE);
-//                        layout_video_empty.setVisibility(View.VISIBLE);
-//                    }
-//                }
-//            } catch (JsonSyntaxException e) {
-//                e.printStackTrace();
-//            }
-
-        }
-
-        @Override
-        public void onFailure(HttpException e, String s) {
-            layout_refresh.setRefreshing(false);
-
-        }
-    };*/
-
-  /*  private RequestCallBack<String> callbackMore = new RequestCallBack<String>() {
-
-        @Override
-        public void onSuccess(ResponseInfo<String> responseInfo) {
-            isLoading = false;
-            layout_refresh.setRefreshing(false);
-            Logger.i("callbackMore" + responseInfo.result);
-//            try {
-//                BaseResult<VideoListResult> result = gson.fromJson(responseInfo.result,
-//                        new TypeToken<BaseResult<VideoListResult>>() {
-//                        }.getType());
-//                if (result.getCode() == 1 && result.getResult() != null && result.getResult().getVideo() != null && result.getResult().getVideo().size() > 0) {
-//                    ArrayList<SpecialTopicInfo> videos = result.getResult().getVideo();
-//                    adapter.addData(videos);
-//                }
-//            } catch (JsonSyntaxException e) {
-//                e.printStackTrace();
-//            }
-
-        }*/
-
-       /* @Override
-        public void onFailure(HttpException e, String s) {
-            isLoading = false;
-            layout_refresh.setRefreshing(false);
-
-        }
-    };*/
 
 
     private int valueColor(int height) {
@@ -353,7 +282,6 @@ public class DeepIntoFragment extends Fragment implements SwipeRefreshLayout.OnR
 //    public void onRefresh(SwipyRefreshLayoutDirection direction) {
 //        if (direction == SwipyRefreshLayoutDirection.TOP) {
 //            getDataFromInter();
-//
 //        } else {
 //            getMoreDataFromInter();
 //        }
@@ -364,7 +292,7 @@ public class DeepIntoFragment extends Fragment implements SwipeRefreshLayout.OnR
         page++;
         RequestParams params = new RequestParams();
         params.addBodyParameter("pageCurrent", String.valueOf(page));
-        params.addBodyParameter("list", "family");
+        params.addBodyParameter("list", "celebrity");
         params.addBodyParameter("areaId", city_id);
 //        MyHttpUtils http = new MyHttpUtils();
 //        http.send(HttpRequest.HttpMethod.POST, Urls.BASE_URL_TEXT + "/getVideoList.action", params, callbackMore);*/
@@ -380,6 +308,6 @@ public class DeepIntoFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void onRefresh() {
-        getDataFromInter();
+       // getDataFromInter();
     }
 }

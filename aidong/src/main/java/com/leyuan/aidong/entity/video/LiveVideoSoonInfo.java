@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class LiveVideoSoonInfo {
     private String time;
-    private ArrayList<LiveVideoInfo> liveVideoList;
+    private ArrayList<LiveVideoInfo> liveVideoList = new ArrayList<>();
 
     public LiveVideoSoonInfo() {
 
@@ -39,17 +39,16 @@ public class LiveVideoSoonInfo {
             return null;
         ArrayList<LiveVideoSoonInfo> array = new ArrayList<>();
         LiveVideoSoonInfo soonInfo = new LiveVideoSoonInfo();
-        LiveVideoInfo pre = more.get(0);
-        soonInfo.addLiveVide(pre);
+        LiveVideoInfo pre = new LiveVideoInfo();
 
         for (LiveVideoInfo liveVideo : more) {
             if (pre.equalDateSimple(liveVideo)) {
                 soonInfo.addLiveVide(liveVideo);
             } else {
-                array.add(soonInfo);
                 pre = liveVideo;
                 soonInfo = new LiveVideoSoonInfo();
                 soonInfo.addLiveVide(pre);
+                array.add(soonInfo);
             }
         }
 

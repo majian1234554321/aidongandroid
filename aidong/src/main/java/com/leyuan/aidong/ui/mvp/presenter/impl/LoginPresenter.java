@@ -78,18 +78,18 @@ public class LoginPresenter implements LoginPresenterInterface {
             @Override
             public void onStart() {
                 super.onStart();
-                Logger.i("share", "onStart");
+                Logger.i("loginSns", "onStart");
             }
 
             @Override
             public void onCompleted() {
-                Logger.i("share", "onCompleted");
+                Logger.i("loginSns", "onCompleted");
             }
 
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
-                Logger.i("share", "onError");
+                Logger.i("loginSns", "onError");
                 if (loginViewInterface != null)
                     loginViewInterface.loginResult(null);
                 //                loginViewInterface.loginResult(false);
@@ -97,7 +97,7 @@ public class LoginPresenter implements LoginPresenterInterface {
 
             @Override
             public void onNext(LoginResult user) {
-                Logger.i("share", "onNext");
+                Logger.i("loginSns", "onNext");
                 App.mInstance.setUser(user.getUser());
                 if (loginViewInterface != null)
                     loginViewInterface.loginResult(user.getUser());

@@ -1,6 +1,9 @@
 package com.leyuan.aidong.ui.mine.account;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -10,7 +13,6 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.module.chat.manager.EmChatLoginManager;
 import com.leyuan.aidong.module.chat.manager.EmChatRegisterManager;
-import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.module.thirdpartylogin.ThirdLoginUtils;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.login.FindPasswordActivity;
@@ -31,31 +33,21 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private LoginPresenter loginPresenter;
     private String telephone;
     private String password;
-    private SharePopupWindow sharePopupWindow;
+
     private EmChatLoginManager chatLoginManager;
     private EmChatRegisterManager chatRegisterManager;
+    private LocalReceiver receiver;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Logger.i("share" + TAG, " onCreate");
+        Logger.i("login " + TAG, " onCreate");
         setContentView(R.layout.activity_log_in);
         loginPresenter = new LoginPresenter(this);
         chatLoginManager = new EmChatLoginManager(this);
-        sharePopupWindow = new SharePopupWindow(this);
+
         loginPresenter.setLoginViewInterface(this);
-
-
-        if (getIntent() != null && getIntent().getExtras() != null) {
-            String code = getIntent().getExtras().getString(Constant.WX_LOGIN_CODE, null);
-            Logger.i("share", " login code  = " + code);
-            if (code != null) {
-                DialogUtils.showDialog(this, "", false);
-                loginPresenter.loginSns("weixin", code);
-            }
-
-        }
 
         findViewById(R.id.btn_back).setOnClickListener(this);
         findViewById(R.id.btn_login).setOnClickListener(this);
@@ -65,6 +57,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         findViewById(R.id.button_weibo).setOnClickListener(this);
         findViewById(R.id.button_qq).setOnClickListener(this);
 
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Constant.WX_LOGIN_SUCCESS_ACTION);
+        receiver = new LocalReceiver();
+        registerReceiver(receiver, intentFilter);
     }
 
     @Override
@@ -88,8 +84,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 UiManager.activityJump(this, RegisterActivity.class);
                 break;
             case R.id.button_weixin:
-//                sharePopupWindow.showAtBottom("测试标题","测试内容","http://o8e1adk04.bkt.clouddn.com/image/2016/11/18/941b1d51-9e24-47bb-8b1a-6a172abbdce3.jpg",
-//                        "http://www.baidu.com");
+
                 loginPresenter.loginThirdParty(ThirdLoginUtils.LOGIN_WEIXIN);
                 DialogUtils.showDialog(this, "", false);
 
@@ -173,28 +168,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         DialogUtils.dismissDialog();
         loginPresenter.onActivityResultData(requestCode, resultCode, data);
-        sharePopupWindow.onActivityResult(requestCode, resultCode, data);
+
     }
 
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-
-        Logger.i("share", " loginactivity onNewIntent");
-        sharePopupWindow.onNewIntent(intent);
         DialogUtils.dismissDialog();
+        Logger.i("share", " loginactivity onNewIntent");
 
-
-        if (intent!= null && intent.getExtras() != null) {
-            String code = intent.getExtras().getString(Constant.WX_LOGIN_CODE, null);
-            Logger.i("share", " login code  = " + code);
-            if (code != null) {
-                DialogUtils.showDialog(this, "", false);
-                loginPresenter.loginSns("weixin", code);
-            }
-
-        }
 
     }
 
@@ -205,6 +188,27 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         chatLoginManager.release();
         if (chatRegisterManager != null)
             chatRegisterManager.release();
+        unregisterReceiver(receiver);
+        receiver = null;
     }
 
+    public class LocalReceiver extends BroadcastReceiver {
+
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Logger.i("Login Receiver ，", "onReceive");
+            DialogUtils.dismissDialog();
+            if (intent != null) {
+                String code = intent.getStringExtra(Constant.WX_LOGIN_CODE);
+                Logger.i("login wx onReceive ", " login code  = " + code);
+                if (code != null) {
+                    DialogUtils.showDialog(LoginActivity.this, "", false);
+                    loginPresenter.loginSns("weixin", code);
+                }
+
+            }
+
+        }
+    }
 }

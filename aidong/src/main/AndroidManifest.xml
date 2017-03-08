@@ -64,13 +64,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.MainActivity" />
-        <activity android:name=".ui.mine.account.LoginActivity"
-            android:launchMode="singleTop"
-            >
-            <!--<intent-filter>-->
-                <!--<action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />-->
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
-            <!--</intent-filter>-->
+        <activity
+            android:name=".ui.mine.account.LoginActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" >
+            <!-- 微博分享需要-->
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity android:name=".ui.mine.activity.TabMinePersonalDataFitnessGoalsActivity" />
         <activity android:name=".ui.mine.activity.TabMinePersonalDataFitnessIsGoodActivity" />
@@ -78,8 +80,6 @@
         <activity android:name=".ui.mine.activity.TabMinePersonalDataNicknameActivity" />
         <activity android:name=".ui.mine.activity.TabMinePersonalDataOftenGymActivity" />
         <activity android:name=".ui.mine.account.PasswordForgetActivity" />
-        <activity android:name=".ui.mine.account.PasswordRegistActivity" />
-        <activity android:name=".ui.mine.account.SMSRegistActivity" />
         <activity android:name=".ui.mine.account.UserAgreementActivity" />
         <activity android:name=".ui.mine.activity.AboutMxActivity" />
         <activity android:name=".ui.mine.activity.BingdingCommunityActivity" />
@@ -200,13 +200,13 @@
             android:name=".module.photopicker.boxing_impl.ui.BoxingActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".module.photopicker.boxing_impl.ui.BoxingPreviewActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
@@ -222,7 +222,7 @@
 
         <activity
             android:name=".module.photopicker.boxing_impl.record.VideoCaptureActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <!-- ********************share sdk************************* -->
         <!--<activity-->
@@ -271,12 +271,12 @@
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name="com.alipay.sdk.auth.AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
-            android:screenOrientation="behind"/>
+            android:screenOrientation="behind" />
 
         <!-- ********************WeiXinPay************************* -->
         <activity
@@ -310,7 +310,7 @@
             android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
             android:configChanges="keyboardHidden|orientation"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
 
         <meta-data
             android:name="WEIBO_APPKEY"

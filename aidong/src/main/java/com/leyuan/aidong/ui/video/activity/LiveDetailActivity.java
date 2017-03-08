@@ -14,21 +14,23 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.video.LiveVideoInfo;
+import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.account.LoginActivity;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.FastBlur;
+import com.leyuan.aidong.utils.LiveDateFilterUtil;
 import com.leyuan.aidong.utils.Urls;
 import com.leyuan.aidong.widget.media.TextViewPrintly;
 
 
-import java.util.ArrayList;
-
-
 public class LiveDetailActivity extends BaseActivity implements View.OnClickListener {
 
-    private static final int BITMAP_BLUR_OK = 3;
     private static final int LIVE_ENDED = 0;
     private static final int LIVE_BEGIN = 1;
 
@@ -38,17 +40,12 @@ public class LiveDetailActivity extends BaseActivity implements View.OnClickList
     private TextView tv_reply_count, tv_like_count, txt_page_tag;
 
     private TextViewPrintly tv_course_desc, tv_course_name, tv_auth_and_time;
-    private int id;
-    private ArrayList<View> mViews = new ArrayList<>();
-    private ArrayList<Bitmap> mBitmaps = new ArrayList<>();
     public static Bitmap blurBitmaps;
-
     private boolean isPrased;
-
-    private boolean isJustInto = true;
-
-    private int screen_width;
     private String idongId;
+    private LiveVideoInfo info;
+
+    private SharePopupWindow sharePopupWindow;
 
 
     @SuppressLint("HandlerLeak")
@@ -59,21 +56,19 @@ public class LiveDetailActivity extends BaseActivity implements View.OnClickList
             if (msg.what == LIVE_ENDED) {
                 liveState = LiveState.ENDED;
                 img_live_begin_or_end.setImageResource(R.drawable.live_end);
-            }else if(msg.what == LIVE_BEGIN){
+            } else if (msg.what == LIVE_BEGIN) {
                 liveState = LiveState.BEGINED;
                 img_live_begin_or_end.setImageResource(R.drawable.live_detail_living);
             }
         }
     };
 
-    //    private PopupwindowVideoRelated mPopupwindowVideoRelated;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        screen_width = getResources().getDisplayMetrics().widthPixels;
-        id = getIntent().getIntExtra(Constant.LIVE_ID, 0);
+        info = (LiveVideoInfo) getIntent().getSerializableExtra(Constant.LIVE_INFO);
         setContentView(R.layout.activity_live_detail);
+        sharePopupWindow = new SharePopupWindow(this, savedInstanceState);
 
         initView();
         initData();
@@ -116,77 +111,47 @@ public class LiveDetailActivity extends BaseActivity implements View.OnClickList
     }
 
     public void getDataFromInter() {
-       /* RequestParams params = new RequestParams();
-        params.addBodyParameter("liveId", String.valueOf(id));
-//        new MyHttpUtils().send(HttpRequest.HttpMethod.POST, Urls.BASE_URL_TEXT + "/getLiveVideoDetail.action", params, callback);*/
+
+        Glide.with(this).load(info.getLiveCover()).asBitmap()
+                .into(new SimpleTarget<Bitmap>(750, 750) {
+                    @Override
+                    public void onResourceReady(Bitmap loadedImage, GlideAnimation<? super Bitmap> glideAnimation) {
+                        if (loadedImage != null) {
+                            img_bg.setImageBitmap(loadedImage);
+                            blurBitmaps = FastBlur.doBlur(Bitmap.createScaledBitmap(loadedImage,
+                                    250, 250, false), 60, true);
+                            img_blur.setImageBitmap(blurBitmaps);
+
+                        }
+                    }
+                });
+
+        tv_course_name.setText("" + info.getLiveName());
+        tv_auth_and_time.setText(info.getLiveBeginTime() + " / " + info.getLiveAuthor());
+        tv_course_desc.setText("" + info.getLiveContent());
+        tv_reply_count.setText("" + info.getCommentsCou());
+        tv_like_count.setText("" + info.getPraiseCou());
+        if (LiveDateFilterUtil.compareTime(info.getLiveBeginTime()) > 0) {
+            img_live_begin_or_end.setImageResource(R.drawable.live_not_start);
+            liveState = LiveState.NO_BEGIN;
+        } else if (LiveDateFilterUtil.compareTime(info.getLiveEndTime()) > 0) {
+            img_live_begin_or_end.setImageResource(R.drawable.live_detail_living);
+            liveState = LiveState.BEGINED;
+        } else {
+            img_live_begin_or_end.setImageResource(R.drawable.live_end);
+            liveState = LiveState.ENDED;
+        }
+
+        int startTime = LiveDateFilterUtil.compareTime(info.getLiveBeginTime());
+        int endTime = LiveDateFilterUtil.compareTime(info.getLiveEndTime());
+
+        if (startTime > 0) {
+            mHandler.sendEmptyMessageDelayed(LIVE_BEGIN, startTime * 1000);
+        }
+        if (endTime > 0) {
+            mHandler.sendEmptyMessageDelayed(LIVE_ENDED, endTime * 1000);
+        }
     }
-
-
-    private LiveVideoInfo info;
-   /* private RequestCallBack<String> callback = new RequestCallBack<String>() {
-
-        @Override
-        public void onSuccess(ResponseInfo<String> responseInfo) {
-            Logger.i("" + responseInfo.result);
-//            try {
-//                LiveVideoListResult result = gson.fromJson(responseInfo.result, LiveVideoListResult.class);
-//                if (result != null && result.getCode() == 1 && result.getResult() != null && result.getResult().getLiveDetail() != null) {
-//                    info = result.getResult().getLiveDetail();
-//                    mImageLoader.displayImage(info.getLiveCover(), option, new SimpleImageLoadingListener() {
-//                        @Override
-//                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-//                            super.onLoadingComplete(imageUri, view, loadedImage);
-//                            if (loadedImage != null) {
-//                                img_bg.setImageBitmap(loadedImage);
-//                                blurBitmaps = FastBlur.doBlur(Bitmap.createScaledBitmap(loadedImage, loadedImage.getWidth() / 3,
-//                                        loadedImage.getHeight() / 3, false), 60, true);
-//                                img_blur.setImageBitmap(blurBitmaps);
-//
-//                            }
-//                        }
-//                    });
-//                    tv_course_name.setText("" + info.getLiveName());
-//                    tv_auth_and_time.setText(info.getLiveBeginTime() + " / " + info.getLiveAuthor());
-//                    tv_course_desc.setText("" + info.getLiveContent());
-//                    tv_reply_count.setText("" + info.getCommentsCou());
-//                    tv_like_count.setText("" + info.getPraiseCou());
-//                    if (LiveDateFilterUtil.compareTime(info.getLiveBeginTime()) > 0) {
-//                        img_live_begin_or_end.setImageResource(R.drawable.live_not_start);
-//                        liveState = LiveState.NO_BEGIN;
-//                    } else if (LiveDateFilterUtil.compareTime(info.getLiveEndTime()) > 0) {
-//                        img_live_begin_or_end.setImageResource(R.drawable.live_detail_living);
-//                        liveState = LiveState.BEGINED;
-//                    } else {
-//                        img_live_begin_or_end.setImageResource(R.drawable.live_end);
-//                        liveState = LiveState.ENDED;
-//                    }
-//
-//                    int startTime = LiveDateFilterUtil.compareTime(info.getLiveBeginTime());
-//                    int endTime = LiveDateFilterUtil.compareTime(info.getLiveEndTime());
-//
-//                    if(startTime >0){
-//                        mHandler.sendEmptyMessageDelayed(LIVE_BEGIN, startTime * 1000);
-//                    }
-//                    if (endTime > 0) {
-//                        mHandler.sendEmptyMessageDelayed(LIVE_ENDED, endTime * 1000);
-//                    }
-//
-//
-//
-//
-//                }
-//
-//            } catch (JsonSyntaxException e) {
-//                e.printStackTrace();
-//            }
-
-        }
-
-        @Override
-        public void onFailure(HttpException e, String s) {
-
-        }
-    };*/
 
     @Override
     protected void onDestroy() {
@@ -209,9 +174,7 @@ public class LiveDetailActivity extends BaseActivity implements View.OnClickList
                 //分享
                 if (info != null) {
                     String url = Urls.LIVE_SHARE + info.getLiveId();
-//                    SharePopToolVideo sharePopTool = new SharePopToolVideo(this, ((ViewGroup) findViewById(android.R.id.content)).getChildAt(0),
-//                            url, mController, info.getLiveCover(), info.getLiveContent(), info.getLiveName());
-//                    sharePopTool.showChoseBox();
+                    sharePopupWindow.showAtBottom(info.getLiveName(), info.getLiveContent(), info.getLiveCover(), url);
                 }
 
                 break;
@@ -243,10 +206,10 @@ public class LiveDetailActivity extends BaseActivity implements View.OnClickList
 
                 break;
             case R.id.img_live_begin_or_end:
-                if(liveState == LiveState.BEGINED){
+                if (liveState == LiveState.BEGINED) {
                     Intent intent_live = new Intent(this, LivingVideoActivity.class);
-                    if(info !=null)
-                    intent_live.putExtra(Constant.LIVE_INFO,info);
+                    if (info != null)
+                        intent_live.putExtra(Constant.LIVE_INFO, info);
                     startActivity(intent_live);
                 }
                 break;
@@ -257,50 +220,22 @@ public class LiveDetailActivity extends BaseActivity implements View.OnClickList
     }
 
     private void parseLive() {
-      /*  RequestParams params = new RequestParams();
-        params.addBodyParameter("liveId", String.valueOf(info.getLiveId()));
-        params.addBodyParameter("idongId", idongId);
-//        MyHttpUtilsHttpUtils http = new MyHttpUtils();
-//        http.send(HttpRequest.HttpMethod.POST, Common.URL_LIVE_PRAISE, params, callbackParse);*/
     }
 
-   /* private RequestCallBack<String> callbackParse = new RequestCallBack<String>() {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        sharePopupWindow.onActivityResult(requestCode, resultCode, data);
+    }
 
-        @Override
-        public void onSuccess(ResponseInfo<String> responseInfo) {
-            Logger.i("callbackPushComment" + "success :" + responseInfo.result);
-//            try {
-//                BaseResult<String> result = gson.fromJson(responseInfo.result, new TypeToken<BaseResult<String>>() {
-//                }.getType());
-//                if (Constants.SUCCESS_CODE == result.getCode()) {
-//                    //点赞成功
-//                    //                    iv_like.setImageResource(R.drawable.details_like);
-//
-//
-//                }
-//            } catch (JsonSyntaxException e) {
-//                e.printStackTrace();
-//            }
-        }
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        sharePopupWindow.onNewIntent(intent);
+    }
 
-        @Override
-        public void onFailure(HttpException e, String s) {
-
-        }
-    };*/
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        /**使用SSO授权必须添加如下代码 */
-//        UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(requestCode);
-//        if (ssoHandler != null) {
-//            ssoHandler.authorizeCallBack(requestCode, resultCode, data);
-//        }
-//    }
-
-  enum LiveState{
-      NO_BEGIN,BEGINED,ENDED
-  }
+    enum LiveState {
+        NO_BEGIN, BEGINED, ENDED
+    }
 
 }

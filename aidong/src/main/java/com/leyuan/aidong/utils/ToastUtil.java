@@ -86,19 +86,28 @@ public class ToastUtil {
             Toast.makeText(context, message, duration).show();
     }
 
-    private static  Toast toast;
-    public static void showConsecutiveShort(String message){
-           if(toast == null){
-               toast = Toast.makeText(App.context,"",Toast.LENGTH_SHORT);
-           }
+    private static Toast toast;
+
+    public static void showConsecutiveShort(String message) {
+        if (toast == null) {
+            toast = Toast.makeText(App.context, "", Toast.LENGTH_SHORT);
+        }
+        toast.setText(message);
+        toast.show();
+    }
+
+    public static void showConsecutiveShort(int message) {
+        if (toast == null) {
+            toast = Toast.makeText(App.context, "", Toast.LENGTH_SHORT);
+        }
         toast.setText(message);
         toast.show();
     }
 
 
-    public static void show(String txt,Context context){
-        if(toast == null){
-            toast = Toast.makeText(context,"",Toast.LENGTH_SHORT);
+    public static void show(String txt, Context context) {
+        if (toast == null) {
+            toast = Toast.makeText(context, "", Toast.LENGTH_SHORT);
         }
         toast.setText(txt);
         toast.show();

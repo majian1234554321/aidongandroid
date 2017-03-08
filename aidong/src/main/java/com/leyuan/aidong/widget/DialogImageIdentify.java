@@ -12,9 +12,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.Logger;
 
 
@@ -24,10 +24,12 @@ public class DialogImageIdentify extends Dialog {
     private TextView txtRefresh;
     private ImageView imgClose;
     private OnInputCompleteListener listener;
+    private Context context;
 
 
     public DialogImageIdentify(Context context) {
         super(context, R.style.MyDialog);
+        this.context = context;
     }
 
     private EditText getEditFirst() {
@@ -87,8 +89,8 @@ public class DialogImageIdentify extends Dialog {
 
 
     public void refreshImage(String mobile) {
-//        Glide.get(App.mInstance).clearMemory();
-        GlideLoader.getInstance().displayImage(Constant.BASE_URL + "captcha_image/" + mobile+"?time="+System.currentTimeMillis(), imgIdentify);
+        Glide.with(context).load(Constant.CAPTCHA_IMAGE + mobile + "?time=" + System.currentTimeMillis())
+                .into(imgIdentify);
     }
 
     private void initEvent() {

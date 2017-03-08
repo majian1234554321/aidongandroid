@@ -3,6 +3,7 @@ package com.leyuan.aidong.module.share;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,10 +30,10 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
     private String imageUrl;
     private String webUrl;
 
-    public SharePopupWindow(Activity context) {
+    public SharePopupWindow(Activity context, Bundle savedInstanceState) {
         super(context);
         this.context = context;
-        myShareUtils = new MyShareUtils(context);
+        myShareUtils = new MyShareUtils(context,savedInstanceState);
         myShareUtils.onNewIntent(context.getIntent());
         initView();
         initData();

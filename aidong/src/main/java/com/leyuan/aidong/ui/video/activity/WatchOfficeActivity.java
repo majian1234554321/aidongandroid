@@ -10,6 +10,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.ui.video.fragment.CelebrityFragment;
+import com.leyuan.aidong.ui.video.fragment.DeepIntoFragment;
+import com.leyuan.aidong.ui.video.fragment.SpecialTopicFragment;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.Logger;
 
