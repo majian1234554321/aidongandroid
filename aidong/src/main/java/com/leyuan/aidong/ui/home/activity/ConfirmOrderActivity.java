@@ -3,7 +3,6 @@ package com.leyuan.aidong.ui.home.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -16,19 +15,18 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.ConfirmOrderShopAdapter;
 import com.leyuan.aidong.entity.AddressBean;
+import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.entity.ShopBean;
 import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.module.pay.SimplePayListener;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.mine.activity.AddAddressActivity;
 import com.leyuan.aidong.ui.mine.activity.SelectAddressActivity;
 import com.leyuan.aidong.ui.mine.activity.SelectCouponActivity;
-import com.leyuan.aidong.ui.mvp.presenter.CartPresent;
-import com.leyuan.aidong.ui.mvp.presenter.EquipmentPresent;
-import com.leyuan.aidong.ui.mvp.presenter.NurturePresent;
-import com.leyuan.aidong.ui.mvp.presenter.impl.CartPresentImpl;
-import com.leyuan.aidong.ui.mvp.presenter.impl.EquipmentPresentImpl;
-import com.leyuan.aidong.ui.mvp.presenter.impl.NurturePresentImpl;
+import com.leyuan.aidong.ui.mvp.presenter.ConfirmOrderPresent;
+import com.leyuan.aidong.ui.mvp.presenter.impl.ConfirmOrderPresentImpl;
+import com.leyuan.aidong.ui.mvp.view.ConfirmOrderActivityView;
 import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.constant.DeliveryType;
@@ -38,10 +36,10 @@ import com.leyuan.aidong.utils.constant.SettlementType;
 import com.leyuan.aidong.widget.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.ExtendTextView;
 import com.leyuan.aidong.widget.SimpleTitleBar;
+import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 
 /**
@@ -49,15 +47,18 @@ import java.util.List;
  * Created by song on 2016/9/23.
  */
 public class ConfirmOrderActivity extends BaseActivity implements View.OnClickListener,
-        CustomNestRadioGroup.OnCheckedChangeListener {
+        CustomNestRadioGroup.OnCheckedChangeListener ,ConfirmOrderActivityView{
     private static final Double EXPRESS_PRICE = 15d;
-    private static final int REQUEST_ADDRESS = 2;
-    private static final int REQUEST_COUPON = 3;
+    private static final int REQUEST_ADD_ADDRESS = 1;
+    private static final int REQUEST_SELECT_ADDRESS = 2;
+    private static final int REQUEST_SELECT_COUPON = 3;
 
     private SimpleTitleBar titleBar;
-    private NestedScrollView scrollView;
+    private LinearLayout contentLayout;
+    private SwitcherLayout switcherLayout;
 
     //收货或自提地址
+    private RelativeLayout emptyAddressLayout;
     private RelativeLayout addressLayout;
     private TextView tvName;
     private TextView tvPhone;
@@ -69,7 +70,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private RecyclerView rvGoods;
 
     //优惠劵与金币
-    private LinearLayout couponLayout;
+    private TextView tvCoupon;
     private LinearLayout goldLayout;
 
     //订单信息
@@ -82,13 +83,15 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
     //支付方式及支付状态
     private CustomNestRadioGroup radioGroup;
+    private LinearLayout bottomLayout;
     private TextView tvTip;
-    private TextView tvTruePrice;
+    private TextView tvFinalPrice;
     private TextView tvPay;
 
-    private ConfirmOrderShopAdapter shopAdapter;
-    private List<ShopBean> shopBeanList = new ArrayList<>();
     private List<String> days = new ArrayList<>();
+    private List<ShopBean> shopBeanList = new ArrayList<>();
+    private List<CouponBean> usableCoupons = new ArrayList<>();
+    private ConfirmOrderShopAdapter shopAdapter;
 
     private String skuCode;
     private int amount;
@@ -101,13 +104,11 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private String pickUpId;            //自提门店id或快递地址id
     private String pickUpDate;          //自提时间
 
-    private int settlementType;
+    private String settlementType;
     private double totalGoodsPrice;
     private boolean needExpress = false;
 
-    private CartPresent cartPresent;
-    private NurturePresent nurturePresent;
-    private EquipmentPresent equipmentPresent;
+    private ConfirmOrderPresent present;
 
     public static void start(Context context, ShopBean shop) {
         Intent starter = new Intent(context, ConfirmOrderActivity.class);
@@ -115,7 +116,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         context.startActivity(starter);
     }
 
-    public static void start(Context context, int orderType,ArrayList<ShopBean> selectedShops,
+    public static void start(Context context, String orderType,ArrayList<ShopBean> selectedShops,
                              double totalGoodsPrice) {
         Intent starter = new Intent(context, ConfirmOrderActivity.class);
         starter.putParcelableArrayListExtra("selectedShops",selectedShops);
@@ -131,6 +132,11 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         initVariable();
         initView();
         setListener();
+        if(needExpress) {
+            bottomLayout.setVisibility(View.GONE);
+            present.getDefaultAddress(switcherLayout);
+        }
+        present.getSpecifyGoodsCoupon(settlementType,itemIds);
     }
 
     private void initVariable(){
@@ -162,14 +168,29 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 }
             }
         }else {
-            settlementType = getIntent().getIntExtra("settlementType",1);
+            settlementType = getIntent().getStringExtra("settlementType");
             totalGoodsPrice = getIntent().getDoubleExtra("totalGoodsPrice", 0f);
         }
+
+        List<GoodsBean> goodsList = new ArrayList<>();
+        for (ShopBean shopBean : shopBeanList) {
+            for (GoodsBean goodsBean : shopBean.getItem()) {
+                goodsList.add(goodsBean);
+            }
+        }
+        itemIds = new String[goodsList.size()];
+        for (int i = 0; i < goodsList.size(); i++) {
+            itemIds[i] = goodsList.get(i).getId();
+        }
+
+        present = new ConfirmOrderPresentImpl(this,this);
     }
 
     private void initView() {
-        scrollView= (NestedScrollView) findViewById(R.id.nested_scrollView);
+        contentLayout = (LinearLayout) findViewById(R.id.ll_content);
+        switcherLayout = new SwitcherLayout(this, contentLayout);
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
+        emptyAddressLayout = (RelativeLayout) findViewById(R.id.rl_empty_address);
         addressLayout = (RelativeLayout) findViewById(R.id.rl_address);
         tvName = (TextView) findViewById(R.id.tv_name);
         tvPhone = (TextView)findViewById(R.id.tv_phone);
@@ -177,7 +198,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         selfDeliveryLayout = (LinearLayout) findViewById(R.id.ll_self_delivery);
         tvTime = (TextView) findViewById(R.id.tv_time);
         rvGoods = (RecyclerView) findViewById(R.id.rv_goods);
-        couponLayout = (LinearLayout) findViewById(R.id.ll_coupon);
+        tvCoupon = (TextView) findViewById(R.id.tv_coupon);
         goldLayout = (LinearLayout) findViewById(R.id.ll_gold);
         tvTotalGoodsPrice = (ExtendTextView) findViewById(R.id.tv_total_price);
         tvExpressPrice = (ExtendTextView) findViewById(R.id.tv_express_price);
@@ -186,9 +207,11 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         tvAibi = (ExtendTextView) findViewById(R.id.tv_aibi);
         tvAidou = (ExtendTextView) findViewById(R.id.tv_aidou);
         radioGroup = (CustomNestRadioGroup) findViewById(R.id.radio_group);
+        bottomLayout = (LinearLayout) findViewById(R.id.ll_bottom);
         tvTip = (TextView) findViewById(R.id.tv_tip);
-        tvTruePrice = (TextView) findViewById(R.id.tv_price);
+        tvFinalPrice = (TextView) findViewById(R.id.tv_price);
         tvPay = (TextView) findViewById(R.id.tv_pay);
+
         shopAdapter = new ConfirmOrderShopAdapter(this);
         rvGoods.setLayoutManager(new LinearLayoutManager(this));
         rvGoods.setAdapter(shopAdapter);
@@ -207,14 +230,15 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 String.format(getString(R.string.rmb_price_double),totalGoodsPrice));
         tvExpressPrice.setRightContent(
                 needExpress ? String.format(getString(R.string.rmb_price_double),EXPRESS_PRICE):"¥ 0.00");
-        tvTruePrice.setText(String.format(getString(R.string.rmb_price_double),
+        tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double),
                 needExpress ? totalGoodsPrice + EXPRESS_PRICE : totalGoodsPrice));
     }
 
     private void setListener() {
         titleBar.setOnClickListener(this);
         addressLayout.setOnClickListener(this);
-        couponLayout.setOnClickListener(this);
+        emptyAddressLayout.setOnClickListener(this);
+        tvCoupon.setOnClickListener(this);
         tvPay.setOnClickListener(this);
         radioGroup.setOnCheckedChangeListener(this);
         selfDeliveryLayout.setOnClickListener(this);
@@ -229,12 +253,16 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             case R.id.ll_self_delivery:
                 showDeliveryDateDialog();
                 break;
-            case R.id.rl_address:
-                Intent  intent = new Intent(this,SelectAddressActivity.class);
-                startActivityForResult(intent, REQUEST_ADDRESS);
+            case R.id.rl_empty_address:
+                startActivityForResult(new Intent(this,AddAddressActivity.class), REQUEST_ADD_ADDRESS);
                 break;
-            case R.id.ll_coupon:
-                startActivity(new Intent(this, SelectCouponActivity.class));
+            case R.id.rl_address:
+                startActivityForResult(new Intent(this,SelectAddressActivity.class), REQUEST_SELECT_ADDRESS);
+                break;
+            case R.id.tv_coupon:
+                if(usableCoupons != null && !usableCoupons.isEmpty()) {
+                    startActivityForResult(new Intent(this, SelectCouponActivity.class), REQUEST_SELECT_COUPON);
+                }
                 break;
             case R.id.tv_pay:
                 payOrder();
@@ -247,34 +275,15 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private void payOrder(){
         switch (settlementType){
             case SettlementType.CART:
-                List<GoodsBean> goodsList = new ArrayList<>();
-                for (ShopBean shopBean : shopBeanList) {
-                    for (GoodsBean goodsBean : shopBean.getItem()) {
-                        goodsList.add(goodsBean);
-                    }
-                }
-                itemIds = new String[goodsList.size()];
-                for (int i = 0; i < goodsList.size(); i++) {
-                    itemIds[i] = goodsList.get(i).getId();
-                }
-                if(cartPresent == null){
-                    cartPresent = new CartPresentImpl(this);
-                }
-                cartPresent.payCart(integral,coin,coupon,payType, pickUpId,
+                present.payCart(integral,coin,coupon,payType, pickUpId,
                         pickUpDate,payListener,itemIds);
                 break;
             case SettlementType.NURTURE_IMMEDIATELY:
-                if(nurturePresent == null){
-                    nurturePresent = new NurturePresentImpl(this);
-                }
-                nurturePresent.buyNurtureImmediately(skuCode,amount,coupon,integral,coin,payType,
+                present.buyNurtureImmediately(skuCode,amount,coupon,integral,coin,payType,
                         String.valueOf(pickUpWay), pickUpId,pickUpDate,payListener);
                 break;
             case SettlementType.EQUIPMENT_IMMEDIATELY:
-                if(equipmentPresent == null){
-                    equipmentPresent = new EquipmentPresentImpl(this);
-                }
-                equipmentPresent.buyEquipmentImmediately(skuCode,amount,coupon,integral,coin,payType,
+                present.buyEquipmentImmediately(skuCode,amount,coupon,integral,coin,payType,
                         String.valueOf(pickUpWay), pickUpId,pickUpDate,payListener);
                 break;
             default:
@@ -305,22 +314,6 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(data != null){
-            if(requestCode == REQUEST_ADDRESS){
-                AddressBean address = data.getParcelableExtra("address");
-                tvName.setText(address.getName());
-                tvPhone.setText(address.getMobile());
-                StringBuilder sb = new StringBuilder("收货地址: ");
-                sb.append(address.getProvince()).append(address.getCity())
-                        .append(address.getDistrict()).append(address.getAddress());
-                tvAddress.setText(sb);
-                pickUpId = address.getId();
-            }
-        }
-    }
-
-    @Override
     public void onCheckedChanged(CustomNestRadioGroup group, int checkedId) {
         switch (checkedId){
             case R.id.cb_alipay:
@@ -332,5 +325,56 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             default:
                 break;
         }
+    }
+
+    @Override
+    public void setDefaultAddressResult(AddressBean address) {
+        bottomLayout.setVisibility(View.VISIBLE);
+        updateAddressStatus(address);
+    }
+
+    @Override
+    public void setSpecifyGoodsCouponResult(List<CouponBean> usableCoupons) {
+        this.usableCoupons = usableCoupons;
+        if(usableCoupons == null || usableCoupons.isEmpty()){
+            tvCoupon.setText("无可用");
+            tvCoupon.setCompoundDrawables(null,null,null,null);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(data != null){
+            if(requestCode == REQUEST_SELECT_ADDRESS){
+                AddressBean address = data.getParcelableExtra("address");
+                setAddressInfo(address);
+            }else if(requestCode == REQUEST_ADD_ADDRESS){
+                AddressBean address = data.getParcelableExtra("address");
+                updateAddressStatus(address);
+            }else if(requestCode == REQUEST_SELECT_COUPON){
+
+            }
+        }
+    }
+
+    private void updateAddressStatus(AddressBean address){
+        if(address == null){
+            addressLayout.setVisibility(View.GONE);
+            emptyAddressLayout.setVisibility(View.VISIBLE);
+        }else {
+            setAddressInfo(address);
+            addressLayout.setVisibility(View.VISIBLE);
+            emptyAddressLayout.setVisibility(View.GONE);
+        }
+    }
+
+    private void setAddressInfo(AddressBean address){
+        tvName.setText(address.getName());
+        tvPhone.setText(address.getMobile());
+        StringBuilder sb = new StringBuilder("收货地址: ");
+        sb.append(address.getProvince()).append(address.getCity())
+                .append(address.getDistrict()).append(address.getAddress());
+        tvAddress.setText(sb);
+        pickUpId = address.getId();
     }
 }

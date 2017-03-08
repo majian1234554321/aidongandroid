@@ -43,7 +43,7 @@ public class SelectAddressDialog extends BaseAddressDialog implements View.OnCli
         wvCity = (WheelView) view.findViewById(R.id.wv_city);
         wvDistrict = (WheelView) view.findViewById(R.id.wv_district);
         sure = (TextView) view.findViewById(R.id.tv_sure);
-        cancel = (TextView) view.findViewById(R.id.tv_cancel);
+        cancel = (TextView) view.findViewById(R.id.tv_cancel_join);
     }
 
     private void setListener() {
@@ -84,7 +84,7 @@ public class SelectAddressDialog extends BaseAddressDialog implements View.OnCli
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.tv_cancel:
+            case R.id.tv_cancel_join:
                 dismiss();
                 break;
             case R.id.tv_sure:

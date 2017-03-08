@@ -12,9 +12,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.GoodsBean;
+import com.leyuan.aidong.entity.UpdateDeliveryBean;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.constant.DeliveryType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,13 +26,14 @@ import java.util.List;
  */
 public class UpdateDeliveryInfoAdapter extends RecyclerView.Adapter<UpdateDeliveryInfoAdapter.DeliveryInfoHolder> {
     private Context context;
-    private List<GoodsBean> data = new ArrayList<>();
+    private List<UpdateDeliveryBean> data = new ArrayList<>();
+    private SelfDeliveryShopListener listener;
 
     public UpdateDeliveryInfoAdapter(Context context) {
         this.context = context;
     }
 
-    public void setData(List<GoodsBean> data) {
+    public void setData(List<UpdateDeliveryBean> data) {
         this.data = data;
         notifyDataSetChanged();
     }
@@ -48,45 +50,70 @@ public class UpdateDeliveryInfoAdapter extends RecyclerView.Adapter<UpdateDelive
     }
 
     @Override
-    public void onBindViewHolder(final DeliveryInfoHolder holder, int position) {
-        GoodsBean bean = data.get(position);
-        GlideLoader.getInstance().displayImage(bean.getCover(), holder.dvCover);
-        holder.tvGoodsName.setText(bean.getName());
-        holder.tvCount.setText(String.format(context.getString(R.string.x_count),bean.getAmount()));
-        ArrayList<String> specValue = bean.getSpec_value();
+    public void onBindViewHolder(final DeliveryInfoHolder holder, final int position) {
+        final UpdateDeliveryBean bean = data.get(position);
+        GlideLoader.getInstance().displayImage(bean.getGoods().getCover(), holder.dvCover);
+        holder.tvGoodsName.setText(bean.getGoods().getName());
+        holder.tvCount.setText(String.format(context.getString(R.string.x_count),bean.getGoods().getAmount()));
+        ArrayList<String> specValue = bean.getGoods().getSpecValue();
         StringBuilder skuStr = new StringBuilder();
         for (String result : specValue) {
             skuStr.append(result);
         }
         holder.tvSku.setText(skuStr);
         holder.tvGoodsPrice.setText(String.format(context.getString(R.string.rmb_price_double),
-                FormatUtil.parseDouble(bean.getPrice())));
-        if(!TextUtils.isEmpty(bean.getRecommendCode())){
-            holder.tvRecommendCode.setText("推荐码:" + bean.getRecommendCode());
+                FormatUtil.parseDouble(bean.getGoods().getPrice())));
+        if(!TextUtils.isEmpty(bean.getGoods().getRecommendCode())){
+            holder.tvRecommendCode.setText(String.format(context.getString(R.string.recommend_code),
+                    bean.getGoods().getRecommendCode()));
+        }
+        holder.tvShop.setText(bean.getDeliveryInfo().getInfo().getName());
+        holder.tvShopAddress.setText(bean.getDeliveryInfo().getInfo().getAddress());
+
+        if(DeliveryType.EXPRESS.equals(bean.getDeliveryInfo().getType())){
+            selectExpress(holder);
+        }else {
+            selectSelfDelivery(holder);
         }
 
         holder.tvExpress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.tvExpress.setTextColor(Color.parseColor("#ffffff"));
-                holder.tvSelfDelivery.setTextColor(Color.parseColor("#000000"));
-                holder.tvExpress.setBackgroundResource(R.drawable.shape_solid_corner_black);
-                holder.tvSelfDelivery.setBackgroundResource(R.drawable.shape_solid_corner_white);
-                holder.llSelfDelivery.setVisibility(View.GONE);
+            selectExpress(holder);
             }
         });
 
         holder.tvSelfDelivery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.tvExpress.setTextColor(Color.parseColor("#000000"));
-                holder.tvSelfDelivery.setTextColor(Color.parseColor("#ffffff"));
-                holder.tvExpress.setBackgroundResource(R.drawable.shape_solid_corner_white);
-                holder.tvSelfDelivery.setBackgroundResource(R.drawable.shape_solid_corner_black);
-                holder.llSelfDelivery.setVisibility(View.VISIBLE);
+                selectSelfDelivery(holder);
             }
         });
 
+        holder.llSelfDelivery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(listener != null){
+                    listener.onChangeShop(position);
+                }
+            }
+        });
+    }
+
+    private void selectExpress(DeliveryInfoHolder holder){
+        holder.tvExpress.setTextColor(Color.parseColor("#ffffff"));
+        holder.tvSelfDelivery.setTextColor(Color.parseColor("#000000"));
+        holder.tvExpress.setBackgroundResource(R.drawable.shape_solid_corner_black);
+        holder.tvSelfDelivery.setBackgroundResource(R.drawable.shape_solid_corner_white);
+        holder.llSelfDelivery.setVisibility(View.GONE);
+    }
+
+    private void selectSelfDelivery(DeliveryInfoHolder holder){
+        holder.tvExpress.setTextColor(Color.parseColor("#000000"));
+        holder.tvSelfDelivery.setTextColor(Color.parseColor("#ffffff"));
+        holder.tvExpress.setBackgroundResource(R.drawable.shape_solid_corner_white);
+        holder.tvSelfDelivery.setBackgroundResource(R.drawable.shape_solid_corner_black);
+        holder.llSelfDelivery.setVisibility(View.VISIBLE);
     }
 
     class DeliveryInfoHolder extends RecyclerView.ViewHolder {
@@ -120,5 +147,13 @@ public class UpdateDeliveryInfoAdapter extends RecyclerView.Adapter<UpdateDelive
             tvShopAddress = (TextView) itemView.findViewById(R.id.tv_shop_address);
             tvDeliveryTime = (TextView) itemView.findViewById(R.id.tv_delivery_time);
         }
+    }
+
+    public void setListener(SelfDeliveryShopListener listener) {
+        this.listener = listener;
+    }
+
+    public interface SelfDeliveryShopListener{
+        void onChangeShop(int position);
     }
 }

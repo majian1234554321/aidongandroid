@@ -56,7 +56,7 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
         final GoodsBean bean = data.get(position);
         GlideLoader.getInstance().displayImage(bean.getCover(), holder.cover);
         holder.name.setText(bean.getName());
-        ArrayList<String> specValue = bean.getSpec_value();
+        ArrayList<String> specValue = bean.getSpecValue();
         StringBuilder skuStr = new StringBuilder();
         for (String result : specValue) {
             skuStr.append(result);

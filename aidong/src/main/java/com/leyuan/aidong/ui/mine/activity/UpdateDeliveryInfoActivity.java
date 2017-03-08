@@ -10,20 +10,28 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.ShopBean;
-import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.adapter.mine.UpdateDeliveryInfoAdapter;
+import com.leyuan.aidong.entity.ShopBean;
+import com.leyuan.aidong.entity.UpdateDeliveryBean;
+import com.leyuan.aidong.entity.VenuesBean;
+import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.home.activity.SelfDeliveryVenuesActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 确认订单界面修改配送信息
  * Created by song on 2017/2/8.
  */
-public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnClickListener {
+public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnClickListener,
+        UpdateDeliveryInfoAdapter.SelfDeliveryShopListener {
+    private static final int REQUEST_SELECT_DELIVERY = 1;
     private ImageView ivBack;
     private TextView tvFinish;
-    private RecyclerView recyclerView;
     private UpdateDeliveryInfoAdapter deliveryInfoAdapter;
-    private ShopBean shopBean;
+    private List<UpdateDeliveryBean> data = new ArrayList<>();
+    private int position;
 
     public static void start(Context context, ShopBean shopBean) {
         Intent starter = new Intent(context, UpdateDeliveryInfoActivity.class);
@@ -35,8 +43,15 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_delivery_info);
         if(getIntent() != null){
-            shopBean = getIntent().getParcelableExtra("shopBean");
+            ShopBean shopBean = getIntent().getParcelableExtra("shopBean");
+            for (int i = 0; i < shopBean.getItem().size(); i++) {
+                UpdateDeliveryBean bean = new UpdateDeliveryBean();
+                bean.setGoods(shopBean.getItem().get(i));
+                bean.setDeliveryInfo(shopBean.getPickUp());
+                data.add(bean);
+            }
         }
+
         initView();
         setListener();
     }
@@ -44,16 +59,17 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
     private void initView(){
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tvFinish = (TextView) findViewById(R.id.tv_finish);
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         deliveryInfoAdapter = new UpdateDeliveryInfoAdapter(this);
         recyclerView.setAdapter(deliveryInfoAdapter);
-        deliveryInfoAdapter.setData(shopBean.getItem());
+        deliveryInfoAdapter.setData(data);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void setListener(){
         ivBack.setOnClickListener(this);
         tvFinish.setOnClickListener(this);
+        deliveryInfoAdapter.setListener(this);
     }
 
     @Override
@@ -64,6 +80,27 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
                 break;
             case R.id.tv_finish:
                 break;
+        }
+    }
+
+    @Override
+    public void onChangeShop(int position) {
+        this.position = position;
+        Intent intent = new Intent(this,SelfDeliveryVenuesActivity.class);
+        intent.putExtra("id",data.get(position).getGoods().getId());
+        intent.putExtra("goodsType",data.get(position).getGoods().getType());
+        startActivityForResult(intent,REQUEST_SELECT_DELIVERY);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if(intent != null){
+            if(requestCode == REQUEST_SELECT_DELIVERY){
+                VenuesBean venuesBean = intent.getParcelableExtra("venues");
+                data.get(position).getDeliveryInfo().setInfo(venuesBean);
+                deliveryInfoAdapter.notifyDataSetChanged();
+            }
         }
     }
 }

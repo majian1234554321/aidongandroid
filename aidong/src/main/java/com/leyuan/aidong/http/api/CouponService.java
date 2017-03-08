@@ -24,4 +24,8 @@ public interface CouponService {
     @FormUrlEncoded
     @POST("mine/coupons")
     Observable<BaseBean> obtainCoupon(@Field("coupon_id") String id);
+
+
+    @GET("mine/coupons")
+    Observable<BaseBean<CouponData>> getSpecifyGoodsCoupon(@Query("from") String from,@Query("id[]") String... id);
 }

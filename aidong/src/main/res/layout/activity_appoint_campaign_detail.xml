@@ -44,31 +44,36 @@
                     android:id="@+id/tv_campaign_user"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:left_text="预约人:" />
+                    app:left_text="预约人:"
+                    app:line_color="@color/transparent"/>
 
                 <com.leyuan.aidong.widget.ExtendTextView
                     android:id="@+id/tv_campaign_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:left_text="手机:" />
+                    app:left_text="手机:"
+                    app:line_color="@color/transparent"/>
 
                 <com.leyuan.aidong.widget.ExtendTextView
                     android:id="@+id/tv_campaign_organization"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:left_text="主办方:" />
+                    app:left_text="主办方:"
+                    app:line_color="@color/transparent"/>
 
                 <com.leyuan.aidong.widget.ExtendTextView
                     android:id="@+id/tv_campaign_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:left_text="活动时间:" />
+                    app:left_text="活动时间:"
+                    app:line_color="@color/transparent"/>
 
                 <com.leyuan.aidong.widget.ExtendTextView
                     android:id="@+id/tv_campaign_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:left_text="活动地址:" />
+                    app:left_text="活动地址:"
+                    app:line_color="@color/transparent"/>
             </LinearLayout>
 
             <!--订单信息-->
@@ -87,58 +92,68 @@
                 android:id="@+id/tv_total_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:left_text="活动总额:" />
+                app:left_text="活动总额:"
+                app:line_color="@color/transparent"/>
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_express_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:left_text="运费:" />
+                app:left_text="运费:"
+                app:line_color="@color/transparent"/>
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/coupon_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:left_text="优惠劵:" />
+                app:left_text="优惠劵:"
+                app:line_color="@color/transparent"/>
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/campaign_privilege"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:left_text="活动优惠:" />
+                app:left_text="活动优惠:"
+                app:line_color="@color/transparent"/>
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_aibi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:left_text="爱币:" />
+                app:left_text="爱币:"
+                app:line_color="@color/transparent"/>
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_aidou"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:left_text="爱豆:" />
+                app:left_text="爱豆:"
+                app:line_color="@color/transparent"/>
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_start_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:left_text="下单时间:" />
+                app:left_text="下单时间:"
+                app:line_color="@color/transparent"/>
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_pay_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:left_text="支付时间:" />
+                app:left_text="支付时间:"
+                app:line_color="@color/transparent"/>
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_pay_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:left_text="支付方式:" />
+                app:left_text="支付方式:"
+                app:line_color="@color/transparent"/>
 
             <!--支付信息-->
             <LinearLayout
+                android:id="@+id/ll_pay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"

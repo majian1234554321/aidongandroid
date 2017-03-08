@@ -75,7 +75,7 @@ public class GoodsBean implements Parcelable {
         this.spec_name = spec_name;
     }
 
-    public ArrayList<String> getSpec_value() {
+    public ArrayList<String> getSpecValue() {
         return spec_value;
     }
 
