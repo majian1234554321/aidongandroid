@@ -26,13 +26,15 @@ public interface AddressService{
     @POST("mine/addresses")
     Observable<BaseBean<AddressData>> addAddress(@Field("name") String name, @Field("mobile") String phone,
                                                  @Field("province") String province, @Field("city") String city,
-                                                 @Field("district") String district,@Field("address") String address);
+                                                 @Field("district") String district,@Field("address") String address,
+                                                 @Field("default") String def);
 
     @FormUrlEncoded
     @PUT("mine/addresses/{id}")
     Observable<BaseBean<AddressData>> updateAddress(@Path("id") String id ,@Field("name") String name, @Field("mobile") String phone,
                                                     @Field("province") String province, @Field("city") String city,
-                                                    @Field("district") String district, @Field("address") String address);
+                                                    @Field("district") String district, @Field("address") String address,
+                                                    @Field("default") String def);
 
 
     @DELETE("mine/addresses/{id}")

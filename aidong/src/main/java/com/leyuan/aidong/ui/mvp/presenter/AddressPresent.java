@@ -14,13 +14,16 @@ public interface AddressPresent {
      */
     void getAddress(SwitcherLayout switcherLayout);
 
+    void getAddress();
+
     /**
      * 添加收货地址
      * @param name 名字
      * @param phone 电话
      * @param address 地址
      */
-    void addAddress(String name, String phone,String province,String city,String district,String address);
+    void addAddress(String name, String phone,String province,String city,String district,
+                    String address,String def);
 
     /**
      * 修改收货地址信息
@@ -29,12 +32,19 @@ public interface AddressPresent {
      * @param phone 电话
      * @param address 地址
      */
-    void updateAddress(String id,String name, String phone,String province,String city,String district,String address);
+    void updateAddress(String id,String name, String phone,String province,
+                       String city,String district,String address,String def);
 
     /**
      * 删除收货地址
      * @param id 地址id
      */
-    void deleteAddress(String id);
+    void deleteAddress(String id,int position);
+
+    /**
+     * 更改
+     * @param id
+     */
+    void setDefaultAddress(String id,int position);
 
 }

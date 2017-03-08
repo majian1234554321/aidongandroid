@@ -29,9 +29,9 @@ public class BaseAddressDialog extends Dialog{
     protected Map<String, String[]> citiesDataMap = new HashMap<>();  // 存储省对应的所有市
     protected Map<String, String[]> areaDataMap = new HashMap<>();    // 存储市对应的所有区
 
-    protected String currentProvinceName;
-    protected String currentCityName;
-    protected String currentDistrictName;
+    protected String currProvinceName;
+    protected String currCityName;
+    protected String currDistrictName;
 
     public BaseAddressDialog(Context context) {
         super(context);

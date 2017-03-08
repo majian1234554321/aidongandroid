@@ -64,6 +64,10 @@ public class VideoMedia extends BaseMedia {
         }
     }
 
+    public Long getOriginalDuration(){
+        return  Long.parseLong(mDuration);
+    }
+
     public String formatTimeWithMin(long duration) {
         if (duration <= 0) {
             return String.format(Locale.US, "%02d:%02d", 0, 0);

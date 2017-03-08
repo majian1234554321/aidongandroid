@@ -18,29 +18,28 @@
         android:layout_marginRight="2dp"/>
 
     <!--点赞布局-->
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/like_layout"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:gravity="center_vertical"
         android:paddingLeft="@dimen/left_margin"
-        android:paddingRight="@dimen/right_margin"
-        android:orientation="horizontal">
+        android:paddingRight="9.5dp"
+        android:orientation="horizontal"
+        android:background="@color/white">
 
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
             android:src="@drawable/btn_praise_normal" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_likes"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="25dp"
-            android:gravity="center_vertical"
-            android:layout_centerVertical="true" />
-    </RelativeLayout>
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="7.5dp" />
+    </LinearLayout>
 
     <!--评论布局-->
     <LinearLayout
@@ -51,7 +50,10 @@
         android:paddingLeft="@dimen/left_margin"
         android:orientation="horizontal"
         android:paddingTop="5dp"
-        android:paddingBottom="5dp">
+        android:paddingBottom="5dp"
+        android:focusable="false"
+        android:clickable="false"
+        android:descendantFocusability="blocksDescendants">
 
         <ImageView
             android:layout_width="20dp"
@@ -61,8 +63,6 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_comment"
-            android:focusable="false"
-            android:clickable="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp" />

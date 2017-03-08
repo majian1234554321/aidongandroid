@@ -4,9 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,21 +19,23 @@ import com.leyuan.aidong.ui.mvp.presenter.AddressPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.AddressPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AddAddressActivityView;
 import com.leyuan.aidong.utils.KeyBoardUtil;
-import com.leyuan.aidong.utils.Utils;
 
 /**
  * 新增地址
  * Created by song on 2016/9/20.
  */
 public class AddAddressActivity extends BaseActivity implements View.OnClickListener,
-        AddAddressActivityView, SelectAddressDialog.OnConfirmAddressListener {
+        AddAddressActivityView, SelectAddressDialog.OnConfirmAddressListener, CompoundButton.OnCheckedChangeListener {
+    private static final String DEFAULT = "1";
+    private static final String UN_DEFAULT = "0";
+
     private ImageView ivBack;
     private TextView tvFinish;
     private EditText etUsername;
     private EditText etPhone;
     private TextView tvAddress;
     private EditText etDescAddress;
-    private RadioButton rbDefault;
+    private CheckBox rbDefault;
 
     private SelectAddressDialog addressDialog;
     private AddressPresent addressPresent;
@@ -40,6 +43,7 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
     private String province;
     private String city;
     private String district;
+    private String isDefault;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,14 +62,14 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
         etPhone = (EditText) findViewById(R.id.et_phone);
         tvAddress = (TextView) findViewById(R.id.tv_address);
         etDescAddress = (EditText) findViewById(R.id.et_desc_address);
-        rbDefault = (RadioButton) findViewById(R.id.rb_default);
+        rbDefault = (CheckBox) findViewById(R.id.rb_default);
     }
 
     private void setListener() {
         ivBack.setOnClickListener(this);
         tvFinish.setOnClickListener(this);
         tvAddress.setOnClickListener(this);
-       // rbDefault.setOnCheckedChangeListener(this);
+        rbDefault.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -76,8 +80,8 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
                 break;
             case R.id.tv_finish:
                 if (checkInfo()) {
-                    addressPresent.addAddress(etUsername.getText().toString(), etPhone.getText().toString(),
-                            province, city, district, etDescAddress.getText().toString());
+                    addressPresent.addAddress(etUsername.getText().toString() , etPhone.getText().toString(),
+                            province, city, district, etDescAddress.getText().toString(),isDefault);
                 }
                 break;
             case R.id.tv_address:
@@ -110,6 +114,11 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
         tvAddress.setText(new StringBuilder(province).append(city).append(area));
     }
 
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        isDefault = isChecked ? DEFAULT : UN_DEFAULT;
+    }
+
     private boolean checkInfo() {
         if(TextUtils.isEmpty(etUsername.getText())){
             Toast.makeText(this,"请输入收件人!",Toast.LENGTH_LONG).show();
@@ -128,10 +137,10 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
             Toast.makeText(this,"请填写详细地址!",Toast.LENGTH_LONG).show();
             return false;
         }
-        if(!Utils.isMobileNO(etPhone.getText().toString())) {
+       /* if(!Utils.isMobileNO(etPhone.getText().toString())) {
             Toast.makeText(this,"请输入正确的手机号码!",Toast.LENGTH_LONG).show();
             return false;
-        }
+        }*/
         return true;
     }
 }

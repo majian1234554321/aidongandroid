@@ -63,8 +63,8 @@ public class NurturePresentImpl implements NurturePresent{
                     nurtureBeanList = nurtureDataBean.getNutrition();
                 }
                 if(!nurtureBeanList.isEmpty()){
-                    filterActivityView.updateNurtureRecyclerView(nurtureBeanList);
                     switcherLayout.showContentLayout();
+                    filterActivityView.updateNurtureRecyclerView(nurtureBeanList);
                 }else{
                     switcherLayout.showEmptyLayout();
                 }

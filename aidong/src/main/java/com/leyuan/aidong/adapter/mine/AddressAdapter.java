@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -47,17 +48,35 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressH
 
     @Override
     public AddressHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = View.inflate(context,R.layout.item_address,null);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_address,parent,false);
         return new AddressHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(AddressHolder holder, final int position) {
-        AddressBean bean = data.get(position);
+    public void onBindViewHolder(final AddressHolder holder, final int position) {
+        final AddressBean bean = data.get(position);
         holder.name.setText(bean.getName());
         holder.phone.setText(bean.getMobile());
         holder.address.setText(new StringBuilder(bean.getProvince()).append(bean.getCity())
                 .append(bean.getDistrict()).append(bean.getAddress()));
+        if(bean.isDefault()){
+            holder.rbDefault.setChecked(true);
+            holder.tvDefault.setText("默认地址");
+            holder.tvDefault.setTextColor(context.getResources().getColor(R.color.main_red));
+        }else{
+            holder.rbDefault.setChecked(false);
+            holder.tvDefault.setText("设为默认");
+            holder.tvDefault.setTextColor(context.getResources().getColor(R.color.c3));
+
+            holder.rbDefault.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(editAddressListener != null){
+                        editAddressListener.onChangeDefaultAddress(bean.getId(),position);
+                    }
+                }
+            });
+        }
 
         holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,11 +86,12 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressH
                 }
             }
         });
-
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDeleteDialog(position);
+                if(editAddressListener != null) {
+                    showDeleteDialog(position);
+                }
             }
         });
     }
@@ -98,6 +118,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressH
     class AddressHolder extends RecyclerView.ViewHolder {
         LinearLayout itemLayout;
         RadioButton rbDefault;
+        TextView tvDefault;
         TextView edit;
         ImageView delete;
         TextView name;
@@ -108,6 +129,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressH
             super(itemView);
             itemLayout = (LinearLayout)itemView.findViewById(R.id.item_view);
             rbDefault = (RadioButton) itemView.findViewById(R.id.rb_default);
+            tvDefault = (TextView) itemView.findViewById(R.id.tv_default);
             edit = (TextView) itemView.findViewById(R.id.tv_edit);
             delete = (ImageView) itemView.findViewById(R.id.iv_delete);
             name = (TextView) itemView.findViewById(R.id.tv_name);
@@ -119,5 +141,6 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressH
     public interface EditAddressListener{
         void onDeleteAddress(int position);
         void onUpdateAddress(int position);
+        void onChangeDefaultAddress(String id,int position);
     }
 }

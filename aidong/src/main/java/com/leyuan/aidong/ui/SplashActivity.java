@@ -8,7 +8,6 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 
 import com.hyphenate.chat.EMClient;
-import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.VersionInformation;
 import com.leyuan.aidong.ui.mvp.presenter.SystemPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SplashPresenterImpl;
@@ -65,7 +64,7 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+//        setContentView(R.layout.activity_splash);
 
         SystemPresent systemPresent = new SystemPresentImpl(this);
         systemPresent.getSystemInfo(OS);

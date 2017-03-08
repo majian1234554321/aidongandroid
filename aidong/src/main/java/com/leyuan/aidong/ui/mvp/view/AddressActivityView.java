@@ -21,10 +21,12 @@ public interface AddressActivityView {
      * 设置删除地址信息
      * @param baseBean BaseBean
      */
-    void setDeleteAddress(BaseBean baseBean);
+    void deleteAddressResult(BaseBean baseBean,int position);
 
     /**
      * 显示没有地址视图
      */
     void showEmptyView();
+
+    void setAddressDefaultResult(int position);
 }

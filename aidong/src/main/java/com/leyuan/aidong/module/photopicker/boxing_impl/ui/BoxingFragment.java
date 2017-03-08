@@ -45,6 +45,7 @@ import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
 import com.leyuan.aidong.module.photopicker.boxing.model.entity.AlbumEntity;
 import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
 import com.leyuan.aidong.module.photopicker.boxing.model.entity.impl.ImageMedia;
+import com.leyuan.aidong.module.photopicker.boxing.model.entity.impl.VideoMedia;
 import com.leyuan.aidong.module.photopicker.boxing.utils.BoxingFileHelper;
 import com.leyuan.aidong.module.photopicker.boxing_impl.WindowManagerHelper;
 import com.leyuan.aidong.module.photopicker.boxing_impl.adapter.BoxingAlbumAdapter;
@@ -418,9 +419,15 @@ public class BoxingFragment extends AbsBoxingViewFragment implements View.OnClic
         }
 
         private void videoClick(BaseMedia media) {
-            ArrayList<BaseMedia> iMedias = new ArrayList<>();
-            iMedias.add(media);
-            onFinish(iMedias);
+            if(((VideoMedia)media).getOriginalDuration() > 1000 * 15){
+                Toast.makeText(getContext(),"视频大于15s,暂不支持",Toast.LENGTH_LONG).show();
+            }else if(((VideoMedia)media).getOriginalDuration() < 1000 * 5){
+                Toast.makeText(getContext(),"视频少于5s,暂不支持",Toast.LENGTH_LONG).show();
+            }else {
+                ArrayList<BaseMedia> iMedias = new ArrayList<>();
+                iMedias.add(media);
+                onFinish(iMedias);
+            }
         }
 
         private void multiImageClick(int pos) {

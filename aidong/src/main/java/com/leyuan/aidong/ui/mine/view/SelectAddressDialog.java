@@ -38,6 +38,7 @@ public class SelectAddressDialog extends BaseAddressDialog implements View.OnCli
     private void initView() {
         View view = View.inflate(context, R.layout.dialog_chooes_address,null);
         setContentView(view);
+      //  setTitle(context.getString(R.string.select_address));
         wvProvince = (WheelView) view.findViewById(R.id.wv_province);
         wvCity = (WheelView) view.findViewById(R.id.wv_city);
         wvDistrict = (WheelView) view.findViewById(R.id.wv_district);
@@ -73,7 +74,7 @@ public class SelectAddressDialog extends BaseAddressDialog implements View.OnCli
                 updateAreas();
                 break;
             case  R.id.wv_district:
-                currentDistrictName = areaDataMap.get(currentCityName)[newValue];
+                currDistrictName = areaDataMap.get(currCityName)[newValue];
                 break;
             default:
                 break;
@@ -88,7 +89,7 @@ public class SelectAddressDialog extends BaseAddressDialog implements View.OnCli
                 break;
             case R.id.tv_sure:
                 if(listener!=null){
-                    listener.onAddressConfirm(currentProvinceName,currentCityName,currentDistrictName);
+                    listener.onAddressConfirm(currProvinceName, currCityName, currDistrictName);
                 }
                 dismiss();
                 break;
@@ -97,8 +98,8 @@ public class SelectAddressDialog extends BaseAddressDialog implements View.OnCli
 
     private void updateCities() {
         int pCurrent = wvProvince.getCurrentItem();
-        currentProvinceName = provinceData[pCurrent];
-        String[] cities = citiesDataMap.get(currentProvinceName);
+        currProvinceName = provinceData[pCurrent];
+        String[] cities = citiesDataMap.get(currProvinceName);
         if (cities == null) {
             cities = new String[]{""};
         }
@@ -109,15 +110,15 @@ public class SelectAddressDialog extends BaseAddressDialog implements View.OnCli
 
     private void updateAreas() {
         int pCurrent = wvCity.getCurrentItem();
-        currentCityName =  citiesDataMap.get(currentProvinceName)[pCurrent];
-        String[] areas =  areaDataMap.get(currentCityName);
+        currCityName =  citiesDataMap.get(currProvinceName)[pCurrent];
+        String[] areas =  areaDataMap.get(currCityName);
 
         if (areas == null) {
             areas = new String[]{""};
         }
         wvDistrict.setViewAdapter(new ArrayWheelAdapter<>(context, areas));
         wvDistrict.setCurrentItem(0);
-        currentDistrictName = areas[0];
+        currDistrictName = areas[0];
     }
 
     public  void setOnConfirmAddressListener(OnConfirmAddressListener listener){

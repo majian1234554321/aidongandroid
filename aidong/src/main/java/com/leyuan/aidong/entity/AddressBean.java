@@ -3,11 +3,13 @@ package com.leyuan.aidong.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * 收货地址实体
  * Created by song on 2016/9/21.
  */
-public class AddressBean implements Parcelable{
+public class AddressBean implements Parcelable {
     private String id;
     private String name;
     private String mobile;
@@ -15,6 +17,8 @@ public class AddressBean implements Parcelable{
     private String city;
     private String district;
     private String address;
+    @SerializedName("default")
+    private boolean isDefault;
 
     public String getId() {
         return id;
@@ -38,22 +42,6 @@ public class AddressBean implements Parcelable{
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getAddressId() {
-        return id;
-    }
-
-    public void setAddress_id(String address_id) {
-        this.id = address_id;
     }
 
     public String getProvince() {
@@ -80,18 +68,22 @@ public class AddressBean implements Parcelable{
         this.district = district;
     }
 
-    @Override
-    public String toString() {
-        return "AddressBean{" +
-                "address_id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", mobile='" + mobile + '\'' +
-                ", province='" + province + '\'' +
-                ", city='" + city + '\'' +
-                ", district='" + district + '\'' +
-                ", address='" + address + '\'' +
-                '}';
+    public String getAddress() {
+        return address;
     }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public boolean isDefault() {
+        return isDefault;
+    }
+
+    public void setDefault(boolean aDefault) {
+        this.isDefault = aDefault;
+    }
+
 
     @Override
     public int describeContents() {
@@ -107,6 +99,7 @@ public class AddressBean implements Parcelable{
         dest.writeString(this.city);
         dest.writeString(this.district);
         dest.writeString(this.address);
+        dest.writeByte(this.isDefault ? (byte) 1 : (byte) 0);
     }
 
     public AddressBean() {
@@ -120,6 +113,7 @@ public class AddressBean implements Parcelable{
         this.city = in.readString();
         this.district = in.readString();
         this.address = in.readString();
+        this.isDefault = in.readByte() != 0;
     }
 
     public static final Creator<AddressBean> CREATOR = new Creator<AddressBean>() {

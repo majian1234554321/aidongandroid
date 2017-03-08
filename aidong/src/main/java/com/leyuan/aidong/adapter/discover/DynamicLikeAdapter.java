@@ -9,7 +9,10 @@ import android.widget.ImageView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.DynamicBean;
+import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
+import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.ScreenUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,21 +22,43 @@ import java.util.List;
  * Created by song on 2016/12/26.
  */
 public class DynamicLikeAdapter extends RecyclerView.Adapter<DynamicLikeAdapter.UserHolder>{
+    private static final int MAM_USER_COUNT = 10;
+    private static final int TYPE_USER = 1;
+    private static final int TYPE_MORE = 2;
+
     private Context context;
+    private int totalCount;
     private List<DynamicBean.LikeUser.Item> data = new ArrayList<>();
 
     public DynamicLikeAdapter(Context context) {
         this.context = context;
     }
 
-    public void setData(List<DynamicBean.LikeUser.Item> data) {
+    public void setData(List<DynamicBean.LikeUser.Item> data,int totalCount) {
         this.data = data;
+        this.totalCount = totalCount;
+        while (this.data.size() > MAM_USER_COUNT){
+            this.data.remove(MAM_USER_COUNT);
+        }
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
         return data.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if(totalCount <= MAM_USER_COUNT){
+            return TYPE_USER;
+        }else {
+            if(position == MAM_USER_COUNT - 1){
+                return TYPE_MORE;
+            }else {
+                return TYPE_USER;
+            }
+        }
     }
 
     @Override
@@ -44,8 +69,24 @@ public class DynamicLikeAdapter extends RecyclerView.Adapter<DynamicLikeAdapter.
 
     @Override
     public void onBindViewHolder(UserHolder holder, int position) {
-        DynamicBean.LikeUser.Item bean = data.get(position);
-        GlideLoader.getInstance().displayImage(bean.avatar, holder.avatar);
+        if(getItemViewType(position) == TYPE_USER) {
+            final DynamicBean.LikeUser.Item bean = data.get(position);
+            GlideLoader.getInstance().displayCircleImage(bean.avatar, holder.avatar);
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    UserInfoActivity.start(context, bean.id);
+                }
+            });
+        }else {
+            GlideLoader.getInstance().displayCircleImage(R.drawable.camera_tag_delete_left,holder.avatar);
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+        }
     }
 
     class UserHolder extends RecyclerView.ViewHolder{
@@ -53,6 +94,10 @@ public class DynamicLikeAdapter extends RecyclerView.Adapter<DynamicLikeAdapter.
         public UserHolder(View itemView) {
             super(itemView);
             avatar = (ImageView) itemView.findViewById(R.id.dv_avatar);
+            itemView.getLayoutParams().width =
+                    (ScreenUtil.getScreenWidth(context) - DensityUtil.dp2px(context,49))/10;
+            itemView.getLayoutParams().height =
+                    (ScreenUtil.getScreenWidth(context) - DensityUtil.dp2px(context,49))/10;
         }
     }
 }

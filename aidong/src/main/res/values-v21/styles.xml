@@ -2,7 +2,7 @@
 
     <style name="ImageTranslucentTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>  
+        <item name="windowNoTitle">true</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
@@ -13,8 +13,10 @@
     <style name="AppTheme.FullScreen" parent="AppTheme.NoActionBar">
         <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
         <item name="android:windowBackground">@color/color_light_white</item>
-        <item name="android:screenOrientation">portrait</item>
         <item name="android:windowContentTransitions">true</item>
+    </style>
 
+    <style name="SplashBackgroundTheme" parent="AppTheme.FullScreen">
+        <item name="android:windowBackground">@drawable/guide2</item>
     </style>
 </resources>

@@ -47,7 +47,7 @@ public class GoodsFilterAdapter extends RecyclerView.Adapter<GoodsFilterAdapter.
 
     @Override
     public int getItemCount() {
-        if(type.equals(GoodsType.NUTRITION)){
+        if(type.equals(GoodsType.EQUIPMENT)){
             return equipmentList.size();
         }else {
             return nurtureList.size();

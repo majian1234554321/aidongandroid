@@ -2,7 +2,6 @@ package com.leyuan.aidong.ui;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -46,8 +45,6 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         screenWidth = ScreenUtil.getScreenWidth(this);
         screenHeight = ScreenUtil.getScreenHeight(this);
         synchronized (mActivities) {

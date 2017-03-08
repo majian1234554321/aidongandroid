@@ -55,12 +55,13 @@
     <string name="un_join_confirm">确认取消参加吗?</string>
 
     <string name="status_appoint">马上预约</string>
-    <string name="status_end">预约已结束</string>
+    <string name="status_appoint_end">预约已结束</string>
     <string name="status_appointed">已预约</string>
     <string name="status_full">预约人数已满</string>
     <string name="status_not_start">即将开始预约</string>
     <string name="status_not_pay">待支付</string>
     <string name="status_not_need">无需预约</string>
+    <string name="status_course_end">课程已结束</string>
 
     <string name="campaign_status_apply">马上报名</string>
     <string name="campaign_status_end">活动已结束</string>
@@ -68,6 +69,7 @@
     <string name="campaign_status_not_start">即将开始报名</string>
     <string name="campaign_status_not_pay">待支付</string>
     <string name="campaign_status_full">报名人数已满</string>
+    <string name="campaign_appoint_end">活动已结束</string>
 
     <string name="food_material">主要食材: %1$s</string>
     <string name="user_condition">满%1$s元可用</string>
@@ -105,7 +107,7 @@
     <string name="delete_fail">删除失败</string>
     <string name="update_fail">修改失败</string>
     <string name="update_address">更新地址</string>
-
+    <string name="select_address">选择地址</string>
     <!-- Time -->
     <string name="just_now">刚刚</string>
     <string name="min">分钟前</string>

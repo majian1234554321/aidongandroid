@@ -210,13 +210,14 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
             temp.setPublishedAt("刚刚");
             temp.setPublisher(publisher);
             comments.add(0,temp);
-            wrapperAdapter.notifyItemInserted(0);
+            commentAdapter.setData(comments);
+            wrapperAdapter.notifyDataSetChanged();
             commentView.scrollToPosition(1);
             etComment.clearFocus();
             etComment.setText(Constant.EMPTY_STR);
             Toast.makeText(this,"评论成功",Toast.LENGTH_LONG).show();
         }else {
-            Toast.makeText(this,"评论失败",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"评论失败:" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
         }
 
         KeyBoardUtil.closeKeyboard(etComment,this);

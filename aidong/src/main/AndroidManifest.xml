@@ -56,107 +56,275 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.FullScreen">
-        <activity android:name=".ui.SplashActivity">
+        <activity
+            android:name=".ui.SplashActivity"
+            android:theme="@style/SplashBackgroundTheme"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.MainActivity" />
+        <activity
+            android:name=".ui.MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.mine.account.LoginActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <!-- 微博分享需要-->
             <intent-filter>
                 <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.mine.activity.TabMinePersonalDataFitnessGoalsActivity" />
-        <activity android:name=".ui.mine.activity.TabMinePersonalDataFitnessIsGoodActivity" />
-        <activity android:name=".ui.mine.activity.TabMinePersonalDataIndividualitySignatureActivity" />
-        <activity android:name=".ui.mine.activity.TabMinePersonalDataNicknameActivity" />
-        <activity android:name=".ui.mine.activity.TabMinePersonalDataOftenGymActivity" />
-        <activity android:name=".ui.mine.account.PasswordForgetActivity" />
-        <activity android:name=".ui.mine.account.UserAgreementActivity" />
-        <activity android:name=".ui.mine.activity.AboutMxActivity" />
-        <activity android:name=".ui.mine.activity.BingdingCommunityActivity" />
-        <activity android:name=".ui.mine.activity.PrivacyActivity" />
-        <activity android:name=".ui.mine.activity.TabHelpActivity" />
-        <activity android:name=".ui.mine.activity.TabMineBingdingMobilePhoneActivity" />
-        <activity android:name=".ui.mine.activity.TabMineChangePasswordActivity" />
-        <activity android:name=".ui.mine.activity.TabMineMessageReminderActivity" />
-        <activity android:name=".ui.mine.activity.TabMinePersonalSettingsActivity" />
-        <activity android:name=".ui.mine.activity.LoveCoinActivity" />
-        <activity android:name=".ui.mine.activity.LoveCoinWithDrawActivity" />
-        <activity android:name=".ui.mine.activity.PaymentDetailActivity" />
-        <activity android:name=".ui.mine.activity.OrderActivity" />
-        <activity android:name=".ui.mine.activity.AppointmentActivity" />
-        <activity android:name=".ui.mine.activity.CouponActivity" />
-        <activity android:name=".ui.mine.activity.SelectCouponActivity" />
-        <activity android:name=".ui.mine.activity.OrderDetailActivity" />
-        <activity android:name=".ui.mine.activity.FollowActivity" />
-        <activity android:name=".ui.mine.activity.AddAddressActivity" />
-        <activity android:name=".ui.mine.activity.AiDongMomentActivity" />
-        <activity android:name=".ui.mine.activity.MessageActivity" />
-        <activity android:name=".ui.mine.activity.AddressActivity" />
-        <activity android:name=".ui.mine.activity.SelectAddressActivity" />
-        <activity android:name=".ui.mine.activity.CartActivity" />
-        <activity android:name=".ui.mine.activity.CouponExchangeActivity" />
-        <activity android:name=".ui.mine.activity.PaySuccessActivity" />
-        <activity android:name=".ui.mine.activity.ApplyServiceNextActivity" />
-        <activity android:name=".ui.mine.activity.AppointCourseDetailActivity" />
-        <activity android:name=".ui.mine.activity.UserInfoActivity" />
-        <activity android:name=".ui.mine.activity.UpdateAddressActivity" />
-        <activity android:name=".ui.mine.activity.UpdateUserInfoActivity" />
-        <activity android:name=".ui.mine.activity.UpdateSignatureActivity" />
-        <activity android:name=".ui.mine.activity.UpdateDeliveryInfoActivity" />
-        <activity android:name=".ui.GuideActivity" />
-        <activity android:name=".ui.mine.activity.UpdatePhotoWallActivity" />
-        <activity android:name=".module.scan.activity.MipcaActivityCapture" />
-        <activity android:name=".module.scan.activity.ScanActivity" />
-        <activity android:name=".ui.home.activity.FoodActivity" />
-        <activity android:name=".ui.home.activity.PastCampaignActivity" />
-        <activity android:name=".ui.home.activity.CourseActivity" />
-        <activity android:name=".ui.home.activity.CourseDetailActivity" />
-        <activity android:name=".ui.home.activity.CampaignActivity" />
-        <activity android:name=".ui.home.activity.SearchActivity" />
-        <activity android:name=".ui.home.activity.CampaignDetailActivity" />
-        <activity android:name=".ui.home.activity.GoodsFilterActivity" />
-        <activity android:name=".ui.home.activity.NurtureActivity" />
-        <activity android:name=".ui.home.activity.OldCampaignDetailActivity" />
-        <activity android:name=".ui.home.activity.GoodsDetailActivity" />
-        <activity android:name=".ui.home.activity.AppointCampaignActivity" />
-        <activity android:name=".ui.mine.activity.AppointCampaignDetailActivity" />
-        <activity android:name=".ui.home.activity.AppointCourseActivity" />
-        <activity android:name=".ui.home.activity.EquipmentActivity" />
-        <activity android:name=".ui.home.activity.OldCourseDetailActivity" />
-        <activity android:name=".ui.home.activity.BrandActivity" />
-        <activity android:name=".ui.home.activity.DeliveryInfoActivity" />
-        <activity android:name=".ui.home.activity.ConfirmOrderActivity" />
-        <activity android:name=".ui.home.activity.SelfDeliveryVenuesActivity" />
-        <activity android:name=".ui.home.activity.ConfirmGoodsActivity" />
-        <activity android:name=".ui.home.activity.ImagePreviewActivity" />
-        <activity android:name=".ui.home.activity.AppointmentUserActivity" />
-        <activity android:name=".ui.home.activity.LocationActivity" />
-        <activity android:name=".ui.home.activity.OldGoodsDetailActivity" />
-        <activity android:name=".ui.discover.activity.PublishDynamicActivity" />
-        <activity android:name=".ui.discover.activity.DynamicDetailActivity" />
-        <activity android:name=".ui.discover.activity.AppointVenuesActivity" />
-        <activity android:name=".ui.discover.activity.AppointCoachActivity" />
-        <activity android:name=".ui.discover.activity.DiscoverVenuesActivity" />
-        <activity android:name=".ui.discover.activity.NewsActivity" />
-        <activity android:name=".ui.discover.activity.NewsDetailActivity" />
-        <activity android:name=".ui.video.activity.WatchOfficeActivity" />
-        <activity android:name=".ui.video.activity.VideoDetailActivity" />
-        <activity android:name=".ui.video.activity.LiveCommentActivity" />
-        <activity android:name=".ui.video.activity.LiveDetailActivity" />
-        <activity android:name=".ui.video.activity.LivingVideoActivity" />
-        <activity android:name=".ui.video.activity.VideoCommentActivity" />
-        <activity android:name=".ui.video.activity.VideoMoreActivity" />
-        <activity android:name=".ui.WebViewActivity" />
+        <activity
+            android:name=".ui.mine.activity.TabMinePersonalDataFitnessGoalsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.TabMinePersonalDataFitnessIsGoodActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.TabMinePersonalDataIndividualitySignatureActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.TabMinePersonalDataNicknameActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.TabMinePersonalDataOftenGymActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.account.UserAgreementActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.AboutMxActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.BingdingCommunityActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.PrivacyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.TabHelpActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.TabMineBingdingMobilePhoneActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.TabMineChangePasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.TabMineMessageReminderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.TabMinePersonalSettingsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.LoveCoinActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.LoveCoinWithDrawActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.PaymentDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.OrderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.AppointmentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.CouponActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.SelectCouponActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.OrderDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.FollowActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.AddAddressActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.AiDongMomentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.MessageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.AddressActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.SelectAddressActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.CartActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.CouponExchangeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.PaySuccessActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.ApplyServiceNextActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.AppointCourseDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.UserInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.UpdateAddressActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.UpdateUserInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.UpdateSignatureActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.UpdateDeliveryInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.GuideActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.UpdatePhotoWallActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.scan.activity.MipcaActivityCapture"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.scan.activity.ScanActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.activity.FoodActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.activity.PastCampaignActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.activity.CourseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.activity.CourseDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.activity.CampaignActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.activity.SearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.activity.CampaignDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.activity.GoodsFilterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.activity.NurtureActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.activity.OldCampaignDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.activity.GoodsDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.activity.AppointCampaignActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.AppointCampaignDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.activity.AppointCourseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.activity.EquipmentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.activity.OldCourseDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.activity.BrandActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.activity.DeliveryInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.activity.ConfirmOrderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.activity.SelfDeliveryVenuesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.activity.ConfirmGoodsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.activity.ImagePreviewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.activity.AppointmentUserActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.activity.LocationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.activity.OldGoodsDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.discover.activity.PublishDynamicActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.discover.activity.DynamicDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.discover.activity.AppointVenuesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.discover.activity.AppointCoachActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.discover.activity.DiscoverVenuesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.discover.activity.NewsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.discover.activity.NewsDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.video.activity.WatchOfficeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.video.activity.VideoDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.video.activity.LiveCommentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.video.activity.LiveDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.video.activity.LivingVideoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.video.activity.VideoCommentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.video.activity.VideoMoreActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.WebViewActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.video.activity.PlayerActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
@@ -183,13 +351,27 @@
             android:name=".ui.home.activity.AppointInfoActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".ui.discover.activity.VenuesDetailActivity" />
-        <activity android:name=".ui.discover.activity.DiscoverUserActivity" />
-        <activity android:name=".ui.mine.login.ChangePasswordActivity" />
-        <activity android:name=".ui.mine.login.FastLoginActivity" />
-        <activity android:name=".ui.mine.login.FindPasswordActivity" />
-        <activity android:name=".ui.mine.login.RegisterActivity" />
-        <activity android:name=".ui.mine.login.XiuGaiGeXinQianMing" />
+        <activity
+            android:name=".ui.discover.activity.VenuesDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.discover.activity.DiscoverUserActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.login.ChangePasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.login.FastLoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.login.FindPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.login.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.login.XiuGaiGeXinQianMing"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.mine.activity.EMChatActivity"
             android:launchMode="singleTask"
@@ -223,23 +405,6 @@
         <activity
             android:name=".module.photopicker.boxing_impl.record.VideoCaptureActivity"
             android:screenOrientation="portrait" />
-
-        <!-- ********************share sdk************************* -->
-        <!--<activity-->
-        <!--android:name="com.mob.tools.MobUIShell"-->
-        <!--android:configChanges="keyboardHidden|orientation|screenSize"-->
-        <!--android:screenOrientation="portrait"-->
-        <!--android:theme="@android:style/Theme.Translucent.NoTitleBar"-->
-        <!--android:windowSoftInputMode="stateHidden|adjustResize">-->
-        <!--<intent-filter>-->
-        <!--<nurtureList android:scheme="换成腾讯appid" />-->
-
-        <!--<action android:name="android.intent.action.VIEW" />-->
-
-        <!--<category android:name="android.intent.category.BROWSABLE" />-->
-        <!--<category android:name="android.intent.category.DEFAULT" />-->
-        <!--</intent-filter>-->
-        <!--</activity>-->
 
         <!-- ********************WeiXin Login Share************************* -->
         <activity
@@ -344,8 +509,6 @@
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
-
-
     </application>
 
 </manifest>

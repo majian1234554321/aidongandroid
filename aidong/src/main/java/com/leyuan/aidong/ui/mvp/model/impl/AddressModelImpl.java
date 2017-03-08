@@ -31,15 +31,17 @@ public class AddressModelImpl implements AddressModel{
     }
 
     @Override
-    public void addAddress(Subscriber<AddressData> subscriber, String name, String phone,String province,String city,String district, String address) {
-        addressService.addAddress(name,phone,province,city,district,address)
+    public void addAddress(Subscriber<AddressData> subscriber, String name, String phone,String province
+            ,String city,String district, String address,String def) {
+        addressService.addAddress(name,phone,province,city,district,address,def)
                 .compose(RxHelper.<AddressData>transform())
                 .subscribe(subscriber);
     }
 
     @Override
-    public void updateAddress(Subscriber<AddressData> subscriber, String id, String name, String phone,String province,String city,String district, String address) {
-        addressService.updateAddress(id,name,phone,province,city,district,address)
+    public void updateAddress(Subscriber<AddressData> subscriber, String id, String name, String phone,
+                              String province,String city,String district, String address,String def) {
+        addressService.updateAddress(id,name,phone,province,city,district,address,def)
                 .compose(RxHelper.<AddressData>transform())
                 .subscribe(subscriber);
     }

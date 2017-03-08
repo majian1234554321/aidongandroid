@@ -3,6 +3,7 @@ package com.leyuan.aidong.ui.discover.viewholder;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -17,7 +18,6 @@ import com.leyuan.aidong.adapter.discover.DynamicCommentAdapter;
 import com.leyuan.aidong.adapter.discover.DynamicLikeAdapter;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.ui.App;
-import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 
 
@@ -33,7 +33,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
     private TextView tvTime;
 
     private TextView tvContent;
-    private RelativeLayout likeLayout;
+    private LinearLayout likeLayout;
     private LinearLayout commentLayout;
     private RecyclerView likesRecyclerView;
     private RecyclerView commentRecyclerView;
@@ -58,7 +58,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         tvName = (TextView) itemView.findViewById(R.id.tv_name);
         tvTime = (TextView) itemView.findViewById(R.id.tv_time);
         tvContent = (TextView) itemView.findViewById(R.id.tv_content);
-        likeLayout = (RelativeLayout) itemView.findViewById(R.id.like_layout);
+        likeLayout = (LinearLayout) itemView.findViewById(R.id.like_layout);
         likesRecyclerView = (RecyclerView) itemView.findViewById(R.id.rv_likes);
         commentLayout = (LinearLayout) itemView.findViewById(R.id.ll_comment_layout);
         commentRecyclerView = (RecyclerView) itemView.findViewById(R.id.rv_comment);
@@ -82,24 +82,24 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             GlideLoader.getInstance().displayCircleImage(dynamic.publisher.avatar, ivAvatar);
             tvTime.setText(dynamic.published_at);
         }
-
         tvContent.setText(dynamic.content);
+
         if(showLikeAndCommentLayout) {
-            if (FormatUtil.parseInt(dynamic.like.counter) > 0) {
+            if (dynamic.like.counter > 0) {
                 likeLayout.setVisibility(View.VISIBLE);
                 likesRecyclerView.setLayoutManager(new LinearLayoutManager
                         (context, LinearLayoutManager.HORIZONTAL, false));
                 DynamicLikeAdapter likeAdapter = new DynamicLikeAdapter(context);
-                likeAdapter.setData(dynamic.like.item);
+                likeAdapter.setData(dynamic.like.item,dynamic.like.counter);
                 likesRecyclerView.setAdapter(likeAdapter);
             } else {
                 likeLayout.setVisibility(View.GONE);
             }
-            if (FormatUtil.parseInt(dynamic.comment.count) > 0) {
+            if (dynamic.comment.count > 0) {
                 commentLayout.setVisibility(View.VISIBLE);
                 DynamicCommentAdapter commonAdapter = new DynamicCommentAdapter(context);
                 commentRecyclerView.setAdapter(commonAdapter);
-                commonAdapter.setData(dynamic.comment.item, dynamic.comment.count);
+                commonAdapter.setData(dynamic.comment.item,dynamic.comment.count);
                 commentRecyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
                 commentLayout.setVisibility(View.GONE);
@@ -111,8 +111,10 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             line.setVisibility(View.GONE);
         }
 
-        tvLikeCount.setText(dynamic.like.counter);
-        tvCommentCount.setText(dynamic.comment.count);
+        ivLike.setBackgroundResource(isLike(dynamic)
+                ? R.drawable.icon_liked : R.drawable.btn_praise_normal);
+        tvLikeCount.setText(String.valueOf(dynamic.like.counter));
+        tvCommentCount.setText(String.valueOf(dynamic.comment.count));
         onBindDataToChildView(dynamic, position, dynamic.getDynamicType());
 
         root.setOnClickListener(new View.OnClickListener() {
@@ -133,21 +135,11 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             }
         });
 
-        boolean isLiked = false;
-        if(App.mInstance.isLogin()) {
-            for (DynamicBean.LikeUser.Item item : dynamic.like.item) {
-                if (item.publisher_id.equals(String.valueOf(App.mInstance.getUser().getId()))) {
-                    isLiked = true;
-                    break;
-                }
-            }
-        }
-        final boolean like = isLiked;
         bottomLikeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (callback != null) {
-                    callback.onLikeClick(position, dynamic.id, like);
+                    callback.onLikeClick(position, dynamic.id, isLike(dynamic));
                 }
             }
         });
@@ -177,5 +169,22 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
 
     public void showLikeAndCommentLayout(boolean show){
         this.showLikeAndCommentLayout = show;
+    }
+
+
+    private boolean isLike(DynamicBean dynamic){
+        if(!App.mInstance.isLogin()){
+            return false;
+        }
+        if(dynamic.like.item.isEmpty()){
+            return false;
+        }
+        for (DynamicBean.LikeUser.Item item : dynamic.like.item) {
+            if (!TextUtils.isEmpty(item.id) &&
+                    item.id.equals(String.valueOf(App.mInstance.getUser().getId()))) {
+                return true;
+            }
+        }
+        return false;
     }
 }
