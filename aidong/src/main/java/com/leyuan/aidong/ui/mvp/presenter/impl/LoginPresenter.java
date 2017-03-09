@@ -13,6 +13,7 @@ import com.leyuan.aidong.ui.mvp.model.LoginModelInterface;
 import com.leyuan.aidong.ui.mvp.presenter.LoginPresenterInterface;
 import com.leyuan.aidong.ui.mvp.view.LoginAutoView;
 import com.leyuan.aidong.ui.mvp.view.LoginViewInterface;
+import com.leyuan.aidong.utils.Logger;
 
 public class LoginPresenter implements LoginPresenterInterface {
 
@@ -75,13 +76,20 @@ public class LoginPresenter implements LoginPresenterInterface {
         loginModel.loginSns(new BaseSubscriber<LoginResult>(context) {
 
             @Override
-            public void onCompleted() {
+            public void onStart() {
+                super.onStart();
+                Logger.i("loginSns", "onStart");
+            }
 
+            @Override
+            public void onCompleted() {
+                Logger.i("loginSns", "onCompleted");
             }
 
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
+                Logger.i("loginSns", "onError");
                 if (loginViewInterface != null)
                     loginViewInterface.loginResult(null);
                 //                loginViewInterface.loginResult(false);
@@ -89,6 +97,7 @@ public class LoginPresenter implements LoginPresenterInterface {
 
             @Override
             public void onNext(LoginResult user) {
+                Logger.i("loginSns", "onNext");
                 App.mInstance.setUser(user.getUser());
                 if (loginViewInterface != null)
                     loginViewInterface.loginResult(user.getUser());

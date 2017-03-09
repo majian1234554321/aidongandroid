@@ -1,4 +1,4 @@
-package com.leyuan.aidong.ui.video.activity;
+package com.leyuan.aidong.ui.video.fragment;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -17,16 +17,20 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 
-import com.google.gson.Gson;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.adapter.CelebrityFragmentAdapter;
+import com.leyuan.aidong.adapter.SpecialTopicAdapter;
 import com.leyuan.aidong.entity.video.SpecialTopicInfo;
+import com.leyuan.aidong.ui.mvp.presenter.impl.VideoPresenterImpl;
+import com.leyuan.aidong.ui.mvp.view.VideoListViewLister;
+import com.leyuan.aidong.ui.video.activity.VideoDetailActivity;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.CustomLayoutManager;
 
+import java.util.ArrayList;
 
 
-public class CelebrityFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class SpecialTopicFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, VideoListViewLister {
 
     private int item_normal_height;
     private int item_max_height;
@@ -40,16 +44,17 @@ public class CelebrityFragment extends Fragment implements SwipeRefreshLayout.On
     private int current_sroll_state;
     private int first_complete_visible_position;
 
-    private Gson gson = new Gson();
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout layout_refresh;
     private LinearLayout layout_video_empty;
-    private CelebrityFragmentAdapter adapter;
-    private CustomLayoutManager mLinearLayoutManager;
+    private VideoPresenterImpl presenter;
 
+    private SpecialTopicAdapter adapter;
+    private CustomLayoutManager mLinearLayoutManager;
     public static int scrollDirection = 1; //1向上 0 向下
     private int lastVisibleItem;
     private boolean isLoading;
+    private String requestType;
 
     private int page = 1;
     private String city_id;
@@ -60,15 +65,26 @@ public class CelebrityFragment extends Fragment implements SwipeRefreshLayout.On
             if (action.equals("select_ctiy")) {
                 city_id = intent.getStringExtra("id");
                 //接受到城市切换，更新列表
-                //getDataFromInter();
+                getDataFromInter();
             }
         }
     };
 
+    public static SpecialTopicFragment newInstance(String type) {
+        Bundle args = new Bundle();
+        args.putString(Constant.VIDEO_LIST_TYPE, type);
+        SpecialTopicFragment fragment = new SpecialTopicFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
+        requestType = getArguments().getString(Constant.VIDEO_LIST_TYPE, VideoPresenterImpl.family);
+        initReceiver();
         item_max_height = (int) getResources().getDimension(R.dimen.video_item_max_height);
         item_normal_height = (int) getResources().getDimension(R.dimen.video_item_normal_height);
         item_normal_font_size = getResources().getDimension(R.dimen.item_normal_font_size);
@@ -77,24 +93,30 @@ public class CelebrityFragment extends Fragment implements SwipeRefreshLayout.On
         item_max_alpha = getResources().getFraction(R.fraction.item_max_mask_alpha, 1, 1);
         font_size_d = item_max_font_size - item_normal_font_size;
         alpha_d = item_max_alpha - item_normal_alpha;
-
-
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_special_topic, container, false);
-        layout_refresh = (SwipeRefreshLayout) rootView.findViewById(R.id.layout_refresh);
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
-        layout_video_empty = (LinearLayout) rootView.findViewById(R.id.layout_video_empty);
+        return inflater.inflate(R.layout.fragment_special_topic, container, false);
+    }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        layout_refresh = (SwipeRefreshLayout) view.findViewById(R.id.layout_refresh);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        layout_video_empty = (LinearLayout) view.findViewById(R.id.layout_video_empty);
         layout_refresh.setOnRefreshListener(this);
+    }
 
-        initReceiver();
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        presenter = new VideoPresenterImpl(getActivity());
+        presenter.setVideoListViewListener(this);
         initRecyclerView();
-      //  getDataFromInter();
-        return rootView;
+        getDataFromInter();
     }
 
     private void initReceiver() {
@@ -110,7 +132,6 @@ public class CelebrityFragment extends Fragment implements SwipeRefreshLayout.On
     }
 
     private void initRecyclerView() {
-
         mRecyclerView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -125,19 +146,19 @@ public class CelebrityFragment extends Fragment implements SwipeRefreshLayout.On
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerView.setHasFixedSize(false);
 
-        adapter = new CelebrityFragmentAdapter(getActivity(), item_listener);
+        adapter = new SpecialTopicAdapter(getActivity(), item_listener);
         mRecyclerView.setAdapter(adapter);
 
-        mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
 
-                Logger.i("old_scroll_state = " + current_sroll_state + ",   new state = " + newState);
+                //                Logger.i("old_scroll_state = " + current_sroll_state + ",   new state = " + newState);
 
                 if (current_sroll_state != newState && newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    int completelyPostion = ((CustomLayoutManager) recyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
                     int firstPostion = ((CustomLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+                    int completelyPostion = ((CustomLayoutManager) recyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
 
                     Logger.i("firstPostion = " + firstPostion + ",   completelyPostion = " + completelyPostion);
                     if (completelyPostion != firstPostion) {
@@ -150,11 +171,10 @@ public class CelebrityFragment extends Fragment implements SwipeRefreshLayout.On
                             Logger.i("== 1  v.getTop = " + v.getTop());
                             recyclerView.smoothScrollBy(0, v.getTop());
                         }
-
                     }
-                }
-                if (!isLoading && scrollDirection == 1 && lastVisibleItem + 1 >= mLinearLayoutManager.getItemCount()) {
-                    getMoreDataFromInter();
+                    if (!isLoading && scrollDirection == 1 && lastVisibleItem + 1 >= mLinearLayoutManager.getItemCount()) {
+                        getMoreDataFromInter();
+                    }
                 }
                 current_sroll_state = newState;
             }
@@ -168,41 +188,40 @@ public class CelebrityFragment extends Fragment implements SwipeRefreshLayout.On
                     scrollDirection = 0;
                 }
 
-                Logger.i("dy = " + dy);
+                Logger.i("Video,dy = " + dy);
                 first_complete_visible_position = mLinearLayoutManager.findFirstCompletelyVisibleItemPosition();
                 RecyclerView.ViewHolder firstHolder = recyclerView.findViewHolderForPosition(first_complete_visible_position);
-                if (firstHolder != null && firstHolder instanceof CelebrityFragmentAdapter.ViewHolder) {
-                    CelebrityFragmentAdapter.ViewHolder holder = (CelebrityFragmentAdapter.ViewHolder) firstHolder;
-                    if (holder.getItemViewType() == CelebrityFragmentAdapter.TYPE_ITEM) {
+                if (firstHolder != null && firstHolder instanceof SpecialTopicAdapter.ViewHolder) {
+                    SpecialTopicAdapter.ViewHolder holder = (SpecialTopicAdapter.ViewHolder) firstHolder;
+                    if (holder.getItemViewType() == SpecialTopicAdapter.TYPE_ITEM) {
 
                         int height = holder.relView.getLayoutParams().height;
                         if (height + dy <= item_max_height && height + dy >= item_normal_height) {
                             holder.relView.getLayoutParams().height = height + dy;
 
                             holder.relView.setLayoutParams(holder.relView.getLayoutParams());
-                            //                            holder.txt_type.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                            //                                    holder.txt_type.getTextSize() + dy * font_size_d / item_normal_height);
-                            //                            holder.txt_author.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                            //                                    holder.txt_type.getTextSize() + dy * font_size_d / item_normal_height);
+                            //                            Logger.i("Video" ,"get text size = " + holder.txt_type.getTextSize()+", changed = " + dy * font_size_d / item_normal_height);
+
                             float size = holder.txt_type.getTextSize() + dy * font_size_d / item_normal_height;
                             if (size > item_max_font_size) {
                                 holder.txt_type.setTextSize(TypedValue.COMPLEX_UNIT_PX, item_max_font_size);
-                                holder.txt_author.setTextSize(TypedValue.COMPLEX_UNIT_PX, item_max_font_size);
                             } else if (size < item_normal_font_size) {
                                 holder.txt_type.setTextSize(TypedValue.COMPLEX_UNIT_PX, item_normal_font_size);
-                                holder.txt_author.setTextSize(TypedValue.COMPLEX_UNIT_PX, item_normal_font_size);
                             } else {
                                 holder.txt_type.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
-                                holder.txt_author.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
                             }
-                            holder.txt_number.setAlpha(valueAlpha(height));
-                            holder.txt_time.setAlpha(valueAlpha(height));
+                            //                            holder.txt_type.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                            //                                    holder.txt_type.getTextSize() + dy * font_size_d / item_normal_height);
+
+                            holder.txt_course.setAlpha(valueAlpha(height));
+                            holder.txt_belong.setAlpha(valueAlpha(height));
                         }
                     }
                 }
                 lastVisibleItem = mLinearLayoutManager.findLastVisibleItemPosition();
             }
         });
+
         mRecyclerView.setOnTouchListener(touchListener);
     }
 
@@ -214,8 +233,9 @@ public class CelebrityFragment extends Fragment implements SwipeRefreshLayout.On
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 return true;
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                int completelyPostion = ((CustomLayoutManager) mRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
                 int firstPostion = ((CustomLayoutManager) mRecyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+                int completelyPostion = ((CustomLayoutManager) mRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+
 
                 Logger.i("firstPostion = " + firstPostion + ",   completelyPostion = " + completelyPostion);
                 if (completelyPostion != firstPostion) {
@@ -232,10 +252,11 @@ public class CelebrityFragment extends Fragment implements SwipeRefreshLayout.On
                 }
             }
             return false;
+
         }
     };
 
-    private CelebrityFragmentAdapter.OnItemClickListener item_listener = new CelebrityFragmentAdapter.OnItemClickListener() {
+    private SpecialTopicAdapter.OnItemClickListener item_listener = new SpecialTopicAdapter.OnItemClickListener() {
         @Override
         public void OnClick(int position, View itemView, SpecialTopicInfo info) {
             int first_complete_visible_position = mLinearLayoutManager.findFirstCompletelyVisibleItemPosition();
@@ -243,7 +264,7 @@ public class CelebrityFragment extends Fragment implements SwipeRefreshLayout.On
                 //                ToastTools.makeShortText("跳");
                 Intent intent = new Intent(getActivity(), VideoDetailActivity.class);
                 intent.putExtra("id", info.getId());
-                intent.putExtra("phase", info.getLatest().getPhase()-1);
+                intent.putExtra("phase", info.getLatest().getPhase() - 1);
                 getActivity().startActivity(intent);
             } else {
                 View v = mRecyclerView.getChildAt(position - mLinearLayoutManager.findFirstVisibleItemPosition());
@@ -254,7 +275,39 @@ public class CelebrityFragment extends Fragment implements SwipeRefreshLayout.On
         }
     };
 
+    private void getDataFromInter() {
+        page = 1;
+        adapter.setFirst(true);
+        presenter.getVideoList(page + "", requestType);
+    }
 
+
+    @Override
+    public void onRefresh() {
+        getDataFromInter();
+    }
+
+    @Override
+    public void onGetVideoList(ArrayList<SpecialTopicInfo> videos) {
+        layout_refresh.setRefreshing(false);
+        scrollDirection = 1;
+        adapter.freshData(videos);
+        if (videos != null && !videos.isEmpty()) {
+            mRecyclerView.setVisibility(View.VISIBLE);
+            layout_video_empty.setVisibility(View.GONE);
+        } else {
+            mRecyclerView.setVisibility(View.INVISIBLE);
+            layout_video_empty.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+    @Override
+    public void onGetMoreVideoList(ArrayList<SpecialTopicInfo> video) {
+        isLoading = false;
+        layout_refresh.setRefreshing(false);
+        adapter.addData(video);
+    }
 
     private int valueColor(int height) {
         if (height >= item_max_height) {
@@ -273,28 +326,12 @@ public class CelebrityFragment extends Fragment implements SwipeRefreshLayout.On
         }
         return height / (item_max_height - 200);
 
-
     }
 
-
-//    @Override
-//    public void onRefresh(SwipyRefreshLayoutDirection direction) {
-//        if (direction == SwipyRefreshLayoutDirection.TOP) {
-//            getDataFromInter();
-//        } else {
-//            getMoreDataFromInter();
-//        }
-//    }
-
     private void getMoreDataFromInter() {
-     /*   isLoading = true;
+        isLoading = true;
         page++;
-        RequestParams params = new RequestParams();
-        params.addBodyParameter("pageCurrent", String.valueOf(page));
-        params.addBodyParameter("list", "celebrity");
-        params.addBodyParameter("areaId", city_id);
-//        MyHttpUtils http = new MyHttpUtils();
-//        http.send(HttpRequest.HttpMethod.POST, Urls.BASE_URL_TEXT + "/getVideoList.action", params, callbackMore);*/
+        presenter.getMoreVideoList(String.valueOf(page), VideoPresenterImpl.family);
     }
 
     @Override
@@ -305,8 +342,4 @@ public class CelebrityFragment extends Fragment implements SwipeRefreshLayout.On
         }
     }
 
-    @Override
-    public void onRefresh() {
-       // getDataFromInter();
-    }
 }

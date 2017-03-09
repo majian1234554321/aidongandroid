@@ -1,5 +1,14 @@
 <resources>
 
+    <style name="AppTheme.FullScreen" parent="AppTheme.NoActionBar">
+        <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
+        <item name="android:windowBackground">@color/color_light_white</item>
+    </style>
+
+    <style name="SplashBackgroundTheme" parent="AppTheme.FullScreen">
+        <item name="android:windowBackground">@drawable/guide2</item>
+    </style>
+
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
@@ -185,7 +194,6 @@
     </style>
 
 
-
     <style name="baseImageStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -245,7 +253,6 @@
     </style>
 
 
-
     <style name="selectorDialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
         <!--边框-->
@@ -301,7 +308,7 @@
     </style>
 
     <style name="ActionSheetDialogAnimation" parent="@android:style/Animation.Dialog">
-       
+
     </style>
 
     <style name="time_dialog" parent="@android:style/Theme.Holo.Light.Dialog">
@@ -317,6 +324,7 @@
         <item name="android:backgroundDimEnabled">true</item>
         <!-- 模糊 -->
     </style>
+
     <style name="progressDialog" parent="AppTheme">
         <item name="android:backgroundDimEnabled">false</item>
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -330,7 +338,7 @@
         <item name="android:windowExitAnimation">@anim/fade_out</item>
     </style>
 
-    <style name="ToolbarTheme" parent="AppTheme.NoActionBar" >
+    <style name="ToolbarTheme" parent="AppTheme.NoActionBar">
         <item name="titleTextColor">@color/white</item>
         <item name="android:textColorSecondary">@color/white</item>
         <item name="android:textColor">@color/white</item>
@@ -342,10 +350,10 @@
         <item name="android:textSize">@dimen/text_size_medium</item>
     </style>
 
-    <style name="RootTheme" parent="android:Theme.Holo">
-    </style>
+    <!--<style name="RootTheme" parent="android:Theme.Holo">-->
+    <!--</style>-->
 
-    <style name="PlayerTheme" parent="@style/RootTheme">
+    <style name="PlayerTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowBackground">@android:color/black</item>

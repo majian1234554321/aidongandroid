@@ -1,5 +1,4 @@
-package com.leyuan.aidong.ui.mine.account;
-
+package com.leyuan.aidong.ui.mine.activity.setting;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,12 +6,15 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.utils.ActivityTool;
 
-public class UserAgreementActivity extends BaseActivity {
-	private ImageView mimageview_user_agreement_back;
+public class AboutMxActivity extends BaseActivity {
+	private ImageView mlayout_tab_about_mx_title_img;
+	private TextView textview_version;
 	private Intent intent;
 
 	@Override
@@ -23,7 +25,7 @@ public class UserAgreementActivity extends BaseActivity {
 	}
 
 	protected void setupView() {
-		setContentView(R.layout.layout_user_agreement);
+		setContentView(R.layout.layout_about_mx);
 		init();
 	}
 
@@ -32,12 +34,15 @@ public class UserAgreementActivity extends BaseActivity {
 	}
 
 	private void init() {
-		mimageview_user_agreement_back = (ImageView) findViewById(R.id.imageview_user_agreement_back);
 		intent = new Intent();
+		mlayout_tab_about_mx_title_img = (ImageView) findViewById(R.id.layout_tab_about_mx_title_img);
+		textview_version = (TextView) findViewById(R.id.textview_version);
+		String version = ActivityTool.getVersion(AboutMxActivity.this);
+		textview_version.setText(version);
 	}
 
 	private void onClick() {
-		mimageview_user_agreement_back
+		mlayout_tab_about_mx_title_img
 				.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {

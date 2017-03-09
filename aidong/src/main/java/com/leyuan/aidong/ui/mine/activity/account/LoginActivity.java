@@ -1,6 +1,9 @@
-package com.leyuan.aidong.ui.mine.account;
+package com.leyuan.aidong.ui.mine.activity.account;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -10,14 +13,13 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.module.chat.manager.EmChatLoginManager;
 import com.leyuan.aidong.module.chat.manager.EmChatRegisterManager;
-import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.module.thirdpartylogin.ThirdLoginUtils;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mine.login.FindPasswordActivity;
-import com.leyuan.aidong.ui.mine.login.RegisterActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.LoginPresenter;
 import com.leyuan.aidong.ui.mvp.view.LoginViewInterface;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DialogUtils;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.StringUtils;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.utils.UiManager;
@@ -25,21 +27,23 @@ import com.leyuan.aidong.utils.UiManager;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener, LoginViewInterface, EmChatLoginManager.OnLoginListner, EmChatRegisterManager.OnRigsterCallback {
 
+    private static final String TAG = "LoginActivity";
     private LoginPresenter loginPresenter;
     private String telephone;
     private String password;
-    private SharePopupWindow sharePopupWindow;
+
     private EmChatLoginManager chatLoginManager;
     private EmChatRegisterManager chatRegisterManager;
-
+    private LocalReceiver receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Logger.i("login " + TAG, " onCreate");
         setContentView(R.layout.activity_log_in);
         loginPresenter = new LoginPresenter(this);
         chatLoginManager = new EmChatLoginManager(this);
-        sharePopupWindow = new SharePopupWindow(this);
+
         loginPresenter.setLoginViewInterface(this);
 
         findViewById(R.id.btn_back).setOnClickListener(this);
@@ -50,6 +54,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         findViewById(R.id.button_weibo).setOnClickListener(this);
         findViewById(R.id.button_qq).setOnClickListener(this);
 
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Constant.WX_LOGIN_SUCCESS_ACTION);
+        receiver = new LocalReceiver();
+        registerReceiver(receiver, intentFilter);
     }
 
     @Override
@@ -73,8 +81,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 UiManager.activityJump(this, RegisterActivity.class);
                 break;
             case R.id.button_weixin:
-//                sharePopupWindow.showAtBottom("测试标题","测试内容","http://o8e1adk04.bkt.clouddn.com/image/2016/11/18/941b1d51-9e24-47bb-8b1a-6a172abbdce3.jpg",
-//                        "http://www.baidu.com");
+
                 loginPresenter.loginThirdParty(ThirdLoginUtils.LOGIN_WEIXIN);
                 DialogUtils.showDialog(this, "", false);
 
@@ -127,10 +134,20 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        Logger.i(TAG, "receiver = " + receiver + ", == null ? " + (receiver == null));
+    }
+
+    @Override
     public void onChatLogin(boolean result) {
         DialogUtils.dismissDialog();
         if (result) {
             ToastUtil.showConsecutiveShort("登陆成功");
+            finish();
+        } else {
+            ToastUtil.showConsecutiveShort("登陆成功 聊天服务不可用");
             finish();
         }
     }
@@ -153,20 +170,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         }
     }
 
-
     //    应用调用Andriod_SDK接口时，如果要成功接收到回调，需要在调用接口的Activity的onActivityResult方法中增加如下代码：
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         DialogUtils.dismissDialog();
         loginPresenter.onActivityResultData(requestCode, resultCode, data);
-        sharePopupWindow.onActivityResult(requestCode, resultCode, data);
     }
 
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        sharePopupWindow.onNewIntent(intent);
+        DialogUtils.dismissDialog();
+        Logger.i("share", " loginactivity onNewIntent");
     }
 
     @Override
@@ -176,6 +192,27 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         chatLoginManager.release();
         if (chatRegisterManager != null)
             chatRegisterManager.release();
+        unregisterReceiver(receiver);
+        receiver = null;
     }
 
+    public class LocalReceiver extends BroadcastReceiver {
+
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Logger.i("Login Receiver ，", "onReceive");
+            DialogUtils.dismissDialog();
+            if (intent != null) {
+                String code = intent.getStringExtra(Constant.WX_LOGIN_CODE);
+                Logger.i("login wx onReceive ", " login code  = " + code);
+                if (code != null) {
+                    DialogUtils.showDialog(LoginActivity.this, "", false);
+                    loginPresenter.loginSns("weixin", code);
+                }
+
+            }
+
+        }
+    }
 }

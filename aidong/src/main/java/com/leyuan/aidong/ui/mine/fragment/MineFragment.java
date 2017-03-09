@@ -18,7 +18,7 @@ import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.module.chat.manager.EmMessageManager;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
-import com.leyuan.aidong.ui.mine.account.LoginActivity;
+import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mine.activity.AddressActivity;
 import com.leyuan.aidong.ui.mine.activity.AiDongMomentActivity;
 import com.leyuan.aidong.ui.mine.activity.ApplyServiceActivity;
@@ -29,13 +29,12 @@ import com.leyuan.aidong.ui.mine.activity.FollowActivity;
 import com.leyuan.aidong.ui.mine.activity.LoveCoinActivity;
 import com.leyuan.aidong.ui.mine.activity.MessageActivity;
 import com.leyuan.aidong.ui.mine.activity.OrderActivity;
-import com.leyuan.aidong.ui.mine.activity.TabMinePersonalSettingsActivity;
+import com.leyuan.aidong.ui.mine.activity.setting.TabMinePersonalSettingsActivity;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.utils.UiManager;
 import com.leyuan.aidong.widget.AidongMineItem;
-
-import retrofit2.http.HEAD;
 
 
 public class MineFragment extends BaseFragment implements View.OnClickListener {
@@ -159,13 +158,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.imageView_head:
                 UserInfoActivity.start(getContext(), String.valueOf(App.mInstance.getUser().getId()));
-                //startActivity(new Intent(getContext(), UserInfoActivity.class));
-
-               /* Intent intent = new Intent();
-                intent.setClass(getActivity(), MyShowActivityNew.class);
-//                intent.setClass(getActivity(), CompleteUserInfomationActivity.class);
-                intent.putExtra(com.leyuan.aidong.utils.common.Constant.USER,App.mInstance.getUser());
-                startActivity(intent);*/
                 break;
             case R.id.relativeLayout_yuyue:
                 UiManager.activityCheckLoginJump(getActivity(), AppointmentActivity.class);
@@ -187,7 +179,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 UiManager.activityCheckLoginJump(getActivity(), AddressActivity.class);
                 break;
             case R.id.item_recommend_friend:
-                UiManager.activityJump(getActivity(), TabMinePersonalSettingsActivity.class);
+                ToastUtil.showConsecutiveShort("暂未开放");
                 break;
             case R.id.item_after_sale:
                 UiManager.activityJump(getActivity(), ApplyServiceActivity.class);

@@ -20,7 +20,7 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.discover.fragment.VenuesCoachFragment;
 import com.leyuan.aidong.ui.discover.fragment.VenuesCourseFragment;
 import com.leyuan.aidong.ui.discover.fragment.VenuesDetailFragment;
-import com.leyuan.aidong.ui.mine.account.LoginActivity;
+import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;

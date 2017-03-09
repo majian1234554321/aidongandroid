@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.module.weibo.AccessTokenKeeper;
 import com.leyuan.aidong.module.weibo.WeiBoConstants;
+import com.leyuan.aidong.utils.Logger;
 import com.sina.weibo.sdk.auth.AuthInfo;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 import com.sina.weibo.sdk.auth.WeiboAuthListener;
@@ -17,16 +18,17 @@ import java.text.SimpleDateFormat;
 
 public class WeiBoLogin {
 
-    private  SsoHandler mSsoHandler;
-    private  Oauth2AccessToken mAccessToken;
-    private  AuthInfo mAuthInfo;
+    private SsoHandler mSsoHandler;
+    private Oauth2AccessToken mAccessToken;
+    private AuthInfo mAuthInfo;
     private Activity context;
     private ThirdLoginUtils.OnThirdPartyLogin listner;
 
-    public  WeiBoLogin(Activity context, ThirdLoginUtils.OnThirdPartyLogin listner){
+    public WeiBoLogin(Activity context, ThirdLoginUtils.OnThirdPartyLogin listner) {
         this.context = context;
         this.listner = listner;
-        mAuthInfo = new AuthInfo(context, WeiBoConstants.APP_KEY, WeiBoConstants.REDIRECT_URL,null);
+
+        mAuthInfo = new AuthInfo(context, WeiBoConstants.APP_KEY, WeiBoConstants.REDIRECT_URL, null);
 
         mSsoHandler = new SsoHandler(context, mAuthInfo);
 //        mSsoHandler.authorize(new AuthListener());
@@ -37,15 +39,15 @@ public class WeiBoLogin {
 //        }
     }
 
-    public  void loginSSO(){
+    public void loginSSO() {
         mSsoHandler.authorizeClientSso(new AuthListener());
     }
 
-    public void loginWeb(){
+    public void loginWeb() {
         mSsoHandler.authorizeWeb(new AuthListener());
     }
 
-    public void loginAllInOne( ){
+    public void loginAllInOne() {
         mSsoHandler.authorize(new AuthListener());
     }
 
@@ -66,22 +68,27 @@ public class WeiBoLogin {
         }
     }
 
-    class AuthListener  implements WeiboAuthListener {
+    class AuthListener implements WeiboAuthListener {
 
         @Override
         public void onComplete(Bundle values) {
+
+            Logger.i("loginweibo", "AuthListener onComplete");
             mAccessToken = Oauth2AccessToken.parseAccessToken(values);
             String token = mAccessToken.getToken();
             String uid = mAccessToken.getUid();//调后台接口的id
-            listner.onThridLogin("weibo",uid);
+
+            Logger.i("loginweibo", "token = " + token + ", uid = " + uid);
+            listner.onThridLogin("sina", token);
             //从这里获取用户输入的 电话号码信息
-            String  phoneNum =  mAccessToken.getPhoneNum();
+            String phoneNum = mAccessToken.getPhoneNum();
             if (mAccessToken.isSessionValid()) {
                 // 显示 Token
 //                updateTokenView(false);
 
                 // 保存 Token 到 SharedPreferences
                 AccessTokenKeeper.writeAccessToken(context, mAccessToken);
+                Logger.i("loginweibo", "ccessTokenKeeper.writeAccessToken(context, mAccessToken);");
 
             } else {
                 // 以下几种情况，您会收到 Code：
@@ -90,6 +97,8 @@ public class WeiBoLogin {
                 // 3. 当您在平台上注册的包名和签名与您当前测试的应用的包名和签名不匹配时。
                 String code = values.getString("code");
 
+                Logger.i("loginweibo", "code = " + code);
+
             }
 
         }
@@ -97,11 +106,13 @@ public class WeiBoLogin {
         @Override
         public void onCancel() {
 
+            Logger.i("loginweibo", "AuthListener onCancel");
+
         }
 
         @Override
         public void onWeiboException(WeiboException e) {
-
+            Logger.i("loginweibo", "AuthListener onWeiboException " + e.getMessage());
         }
     }
 

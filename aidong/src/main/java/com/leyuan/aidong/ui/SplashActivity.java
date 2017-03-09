@@ -8,7 +8,6 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 
 import com.hyphenate.chat.EMClient;
-import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.VersionInformation;
 import com.leyuan.aidong.ui.mvp.presenter.SystemPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SplashPresenterImpl;
@@ -31,25 +30,14 @@ import com.leyuan.aidong.widget.dialog.DialogSingleButton;
 public class SplashActivity extends BaseActivity implements VersionViewListener, LoginAutoView {
 
     private static final int MESSAGE = 1;
-    private static final int DURATION = 3000;
+    private static final int DURATION = 2000;
     private static final String OS = "android";
     private boolean isFirstEnter = true;
 
     private SplashPresenterImpl splashPresenter;
     private VersionPresenterImpl versionPresenter;
+    private VersionInformation versionInfomation;
 
-    private PermissionManager.OnCheckPermissionListener permissinListener = new PermissionManager.OnCheckPermissionListener() {
-        @Override
-        public void checkOver() {
-            if (isFirstEnter) {
-                UiManager.activityJump(SplashActivity.this, GuideActivity.class);
-
-            } else {
-                UiManager.activityJump(SplashActivity.this, MainActivity.class);
-            }
-            finish();
-        }
-    };
     //todo
     private Handler handler = new Handler() {
         @Override
@@ -60,12 +48,23 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
             }
         }
     };
-    private VersionInformation versionInfomation;
+
+    private PermissionManager.OnCheckPermissionListener permissinListener = new PermissionManager.OnCheckPermissionListener() {
+        @Override
+        public void checkOver() {
+            if (isFirstEnter) {
+                UiManager.activityJump(SplashActivity.this, GuideActivity.class);
+            } else {
+                UiManager.activityJump(SplashActivity.this, MainActivity.class);
+            }
+            finish();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+//        setContentView(R.layout.activity_splash);
 
         SystemPresent systemPresent = new SystemPresentImpl(this);
         systemPresent.getSystemInfo(OS);
@@ -91,7 +90,7 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
         if (versionInfomation != null && VersionManager.shouldUpdate(versionInfomation.getVersion(), this)) {
             showUpdateDialog(versionInfomation);
         } else {
-            if (App.getInstance().isLogin()) {
+            if (App.mInstance.isLogin()) {
                 //先自动登录
                 splashPresenter.autoLogin();
             } else {
@@ -116,7 +115,7 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
                 .setBtnCancelListener(new ButtonCancelListener() {
                     @Override
                     public void onClick(BaseDialog dialog) {
-                        if (App.getInstance().isLogin()) {
+                        if (App.mInstance.isLogin()) {
                             //先自动登录
                             splashPresenter.autoLogin();
                         } else {
@@ -160,13 +159,6 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
                 }).show();
     }
 
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        handler.removeCallbacksAndMessages(null);
-    }
-
     @Override
     public void onAutoLoginResult(boolean success) {
         handler.removeCallbacksAndMessages(null);
@@ -178,4 +170,11 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         splashPresenter.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacksAndMessages(null);
+    }
+
 }

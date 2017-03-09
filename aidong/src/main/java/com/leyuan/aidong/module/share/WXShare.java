@@ -2,9 +2,11 @@ package com.leyuan.aidong.module.share;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.utils.Logger;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
@@ -15,8 +17,6 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import java.io.ByteArrayOutputStream;
-
-import static com.leyuan.aidong.ui.App.context;
 
 
 /**
@@ -33,8 +33,10 @@ public class WXShare {
 
     public final static String WX_APP_ID = "wx365ab323b9269d30";
     private IWXAPI api;
+    private Context context;
 
     public WXShare(Context context) {
+        this.context = context;
         api = WXAPIFactory.createWXAPI(context, WX_APP_ID);
         api.registerApp(WX_APP_ID);
     }
@@ -70,75 +72,13 @@ public class WXShare {
             return;
         }
 
-        shareWeb(title, desc, BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher), url, isCircleOfFriends);
-
-//        ImageRequestBuilder.newBuilderWithSource(Uri.parse(imageUrl))
-//                .setPostprocessor(new BasePostprocessor() {
-//                    @Override
-//                    public void process(Bitmap bitmap) {
-//                        super.process(bitmap);
-//                        //图片不能超过32kb,需要压缩
-//                        Logger.i("share","bitmap getWidth = " + bitmap.getWidth());
-//                        double targetwidth = Math.sqrt(32.00 * 1000);
-//                        if (bitmap.getWidth() > targetwidth || bitmap.getHeight() > targetwidth) {
-//                            // 创建操作图片用的matrix对象
-//                            Matrix matrix = new Matrix();
-//                            // 计算宽高缩放率
-//                            double x = Math.max(targetwidth / bitmap.getWidth(), targetwidth
-//                                    / bitmap.getHeight());
-//                            // 缩放图片动作
-//                            matrix.postScale((float) x, (float) x);
-//                            bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(),
-//                                    bitmap.getHeight(), matrix, true);
-//                        }
-//
-//                        shareWeb(title, desc, bitmap, url, isCircleOfFriends);
-//
-//                    }
-//                }).build();
-        /*ImageLoader.getInstance().loadImage(imageUrl, new ImageLoadingListener() {
-            @Override
-            public void onLoadingStarted(String imageUri, View view) {
-
-            }
-
-            @Override
-            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-
-            }
-
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap bitmap) {
-                //                        //图片不能超过32kb,需要压缩
-                        Logger.i("share","bitmap getWidth = " + bitmap.getWidth());
-                        double targetwidth = Math.sqrt(22.00 * 1000);
-                        if (bitmap.getWidth() > targetwidth || bitmap.getHeight() > targetwidth) {
-                            // 创建操作图片用的matrix对象
-                            Matrix matrix = new Matrix();
-                            // 计算宽高缩放率
-                            double x = Math.max(targetwidth / bitmap.getWidth(), targetwidth
-                                    / bitmap.getHeight());
-                            // 缩放图片动作
-                            matrix.postScale((float) x, (float) x);
-                            bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(),
-                                    bitmap.getHeight(), matrix, true);
-                        }
-                final Bitmap finalBitmap = bitmap;
-                ThreadManager.getMainHandler().post(new Runnable() {
-
+        Glide.with(context).load(imageUrl).asBitmap()
+                .into(new SimpleTarget<Bitmap>(50, 50) {
                     @Override
-                    public void run() {
-
-                        shareWeb(title, desc, finalBitmap, url, isCircleOfFriends);
+                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                        shareWeb(title, desc, resource, url, isCircleOfFriends);
                     }
                 });
-            }
-
-            @Override
-            public void onLoadingCancelled(String imageUri, View view) {
-
-            }
-        });*/
 
 
     }
@@ -153,8 +93,6 @@ public class WXShare {
         WXMediaMessage msg = new WXMediaMessage(webpage);
         msg.title = title;
         msg.description = desc;
-
-        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher);
         msg.thumbData = bmpToByteArray(bitmap, true);
 
 

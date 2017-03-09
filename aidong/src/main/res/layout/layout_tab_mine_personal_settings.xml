@@ -398,7 +398,7 @@
                 android:layout_marginLeft="@dimen/pref_10dp"
                 android:layout_marginRight="@dimen/pref_10dp"
                 android:layout_marginTop="@dimen/pref_25dp"
-                android:background="@drawable/btn_shape_green"
+                android:background="@drawable/shape_radius_origin"
                 android:text="@string/unlogin"
                 android:textColor="@color/color_white"
                 android:textSize="@dimen/pref_16dp" />

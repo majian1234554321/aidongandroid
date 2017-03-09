@@ -82,7 +82,7 @@ public class LiveVideoDataAdapter extends android.widget.BaseAdapter {
             @Override
             public void onClick(View v) {
                 if (onSoonLiveVideoClickListener != null) {
-                    onSoonLiveVideoClickListener.onSoonLivingVideoCLick(info.getLiveId());
+                    onSoonLiveVideoClickListener.onSoonLivingVideoCLick(info);
                 }
             }
         });

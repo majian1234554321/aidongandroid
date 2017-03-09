@@ -36,7 +36,7 @@ import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.discover.activity.PhotoBrowseActivity;
 import com.leyuan.aidong.ui.discover.activity.PublishDynamicActivity;
-import com.leyuan.aidong.ui.mine.account.LoginActivity;
+import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mine.fragment.UserDynamicFragment;
 import com.leyuan.aidong.ui.mine.fragment.UserInfoFragment;
 import com.leyuan.aidong.ui.mvp.presenter.UserInfoPresent;
@@ -66,7 +66,6 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_VIDEO;
  */
 public class UserInfoActivity extends BaseActivity implements UserInfoActivityView, View.OnClickListener,
         SmartTabLayout.TabProvider, UserInfoPhotoAdapter.OnItemClickListener {
-
     private ImageView ivBack;
     private TextView tvTitle;
     private ImageView ivEdit;

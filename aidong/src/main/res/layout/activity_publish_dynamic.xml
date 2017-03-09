@@ -96,7 +96,7 @@
                 android:layout_marginLeft="@dimen/pref_10dp"
                 android:layout_marginRight="@dimen/pref_10dp"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/btn_shape_green"
+                android:background="@drawable/shape_radius_origin"
                 android:text="@string/release"
                 android:textColor="@color/color_white"
                 android:textSize="16sp"

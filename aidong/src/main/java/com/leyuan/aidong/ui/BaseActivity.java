@@ -33,7 +33,7 @@ import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
 
-public class BaseActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks{
+public class BaseActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks {
     private static final String TAG = "BaseActivity";
 
     protected int pageSize = 25; //默认分页数据量
@@ -50,7 +50,7 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
         synchronized (mActivities) {
             mActivities.add(this);
         }
-        Logger.w("className",getClass().getSimpleName());
+        Logger.w("className", getClass().getSimpleName());
     }
 
     @Override
@@ -61,7 +61,7 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
         }
     }
 
-    public void exitApp(){
+    public void exitApp() {
         List<BaseActivity> copy;
         synchronized (mActivities) {
             copy = new LinkedList<>(mActivities);
@@ -74,54 +74,57 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
 
     /**
      * 设置SwipeRefreshLayout下拉刷新颜色
+     *
      * @param refreshLayout
      */
-    protected void setColorSchemeResources(SwipeRefreshLayout refreshLayout){
-        refreshLayout.setColorSchemeResources(R.color.black, R.color.red,R.color.orange, R.color.gray);
+    protected void setColorSchemeResources(SwipeRefreshLayout refreshLayout) {
+        refreshLayout.setColorSchemeResources(R.color.black, R.color.red, R.color.orange, R.color.gray);
     }
 
     /**
      * 列表页跳转目标详情页
+     *
      * @param type course-课程 campaign-活动 event-赛事 food-健康餐饮 nutrition-营养品 equipment-装备
-     * @param id id
+     * @param id   id
      */
-    public void toTargetDetailActivity(String type, String id){
-        if(TextUtils.isEmpty(type)) return;
-        switch (type){
+    public void toTargetDetailActivity(String type, String id) {
+        if (TextUtils.isEmpty(type)) return;
+        switch (type) {
             case "course":
-                CourseDetailActivity.start(this,id);
+                CourseDetailActivity.start(this, id);
                 break;
             case "campaign":
-                CampaignDetailActivity.start(this,id);
+                CampaignDetailActivity.start(this, id);
                 break;
             case "event":
-                Logger.e("TAG","developing");
+                Logger.e("TAG", "developing");
                 break;
             case "food":
-                GoodsDetailActivity.start(this,id, GoodsType.FOOD);
+                GoodsDetailActivity.start(this, id, GoodsType.FOOD);
                 break;
             case "nutrition":
-                GoodsDetailActivity.start(this,id, GoodsType.NUTRITION);
+                GoodsDetailActivity.start(this, id, GoodsType.NUTRITION);
                 break;
             case "equipment":
-                GoodsDetailActivity.start(this,id, GoodsType.EQUIPMENT);
+                GoodsDetailActivity.start(this, id, GoodsType.EQUIPMENT);
                 break;
             default:
-                Logger.e("TAG","can not support this type,please check it");
+                Logger.e("TAG", "can not support this type,please check it");
                 break;
         }
     }
 
     /**
      * 广告跳转目标页
+     *
      * @param bannerBean BannerBean
-     * 广告类型,#10-内嵌网页 11-外部网页 20-场馆详情页 21-营养品详情页 22-课程详情页 23-活动详情页
+     *                   广告类型,#10-内嵌网页 11-外部网页 20-场馆详情页 21-营养品详情页 22-课程详情页 23-活动详情页
      */
-    public void toTargetActivity(BannerBean bannerBean){
-        if(TextUtils.isEmpty(bannerBean.getType())) return;
-        switch (bannerBean.getType()){
+    public void toTargetActivity(BannerBean bannerBean) {
+        if (TextUtils.isEmpty(bannerBean.getType())) return;
+        switch (bannerBean.getType()) {
             case "10":
-                WebViewActivity.start(this,bannerBean.getTitle(),bannerBean.getLink());
+                WebViewActivity.start(this, bannerBean.getTitle(), bannerBean.getLink());
                 break;
             case "11":
                 Uri uri = Uri.parse(bannerBean.getLink());
@@ -129,33 +132,33 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
                 startActivity(intent);
                 break;
             case "20":
-                VenuesDetailActivity.start(this,bannerBean.getLink());
+                VenuesDetailActivity.start(this, bannerBean.getLink());
                 break;
             case "21":
-                GoodsDetailActivity.start(this,bannerBean.getLink(), GoodsType.NUTRITION);
+                GoodsDetailActivity.start(this, bannerBean.getLink(), GoodsType.NUTRITION);
                 break;
             case "22":
-                CourseDetailActivity.start(this,bannerBean.getLink());
+                CourseDetailActivity.start(this, bannerBean.getLink());
                 break;
             case "23":
-                CampaignDetailActivity.start(this,bannerBean.getLink());
+                CampaignDetailActivity.start(this, bannerBean.getLink());
                 break;
             default:
                 break;
         }
     }
 
-    protected void compatFinish(){
+    protected void compatFinish() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             finishAfterTransition();
-        } else{
+        } else {
             finish();
         }
     }
 
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    protected void fadeInAnimations(){
+    protected void fadeInAnimations() {
         Fade fade = new Fade();
         fade.setDuration(300);
         fade.setMode(Fade.MODE_IN);
@@ -163,24 +166,28 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    protected void slideFromBottomAnimations(){
+    protected void slideFromBottomAnimations() {
         Slide slide = new Slide();
         slide.setDuration(300);
         slide.setSlideEdge(Gravity.BOTTOM);
-        slide.excludeTarget(android.R.id.statusBarBackground,true);
+        slide.excludeTarget(android.R.id.statusBarBackground, true);
         getWindow().setEnterTransition(slide);
     }
 
-    /**显示一个不能取消的加载提示框**/
-    protected void showProgressDialog(){
+    /**
+     * 显示一个不能取消的加载提示框
+     **/
+    protected void showProgressDialog() {
         if (progressDialogHandler == null) {
-            progressDialogHandler = new ProgressDialogHandler(this,null,false);
+            progressDialogHandler = new ProgressDialogHandler(this, null, false);
             progressDialogHandler.obtainMessage(ProgressDialogHandler.SHOW_PROGRESS_DIALOG).sendToTarget();
         }
     }
 
-    /**隐藏一个不能取消的加载提示框**/
-    protected void dismissProgressDialog(){
+    /**
+     * 隐藏一个不能取消的加载提示框
+     **/
+    protected void dismissProgressDialog() {
         if (progressDialogHandler != null) {
             progressDialogHandler.obtainMessage(ProgressDialogHandler.DISMISS_PROGRESS_DIALOG).sendToTarget();
             progressDialogHandler = null;

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -13,22 +12,20 @@
             android:id="@+id/img_bg"
             android:layout_width="match_parent"
             android:layout_height="360dp"
-            android:scaleType="centerCrop"
-            />
+            android:scaleType="centerCrop" />
 
         <ImageView
             android:id="@+id/img_live_begin_or_end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@drawable/live_not_start"
-            />
+            android:src="@drawable/live_not_start" />
 
         <ImageView
             android:id="@+id/iv_back"
             android:layout_width="41dp"
             android:layout_height="41dp"
-            android:src="@drawable/back_icon"/>
+            android:src="@drawable/back_icon" />
     </RelativeLayout>
 
     <ImageView
@@ -36,8 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/rel_top"
-        android:scaleType="centerCrop"
-        />
+        android:scaleType="centerCrop" />
     <!--<ImageView-->
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="match_parent"-->
@@ -46,10 +42,36 @@
     <!--/>-->
 
     <RelativeLayout
+        android:id="@+id/layout_page_tag"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_alignParentBottom="true">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white" />
+
+        <TextView
+            android:id="@+id/txt_page_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/white"
+            android:textSize="11sp" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_below="@+id/rel_top"
         android:id="@+id/layout_under"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/rel_top">
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
 
         <RelativeLayout
@@ -58,13 +80,14 @@
             android:layout_height="77dp"
             android:paddingLeft="15dp"
             android:paddingTop="17dp">
+
             <com.leyuan.aidong.widget.media.TextViewPrintly
                 android:id="@+id/tv_course_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
                 android:textColor="@color/white"
-                android:textSize="17sp"/>
+                android:textSize="17sp" />
 
             <com.leyuan.aidong.widget.media.TextViewPrintly
                 android:id="@+id/tv_auth_and_time"
@@ -73,13 +96,13 @@
                 android:layout_below="@+id/tv_course_name"
                 android:layout_marginTop="12dp"
                 android:textColor="@color/white"
-                android:textSize="13sp"/>
+                android:textSize="13sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_alignParentBottom="true"
-                android:background="#77ebebeb"/>
+                android:background="#77ebebeb" />
 
         </RelativeLayout>
 
@@ -91,7 +114,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginBottom="31dp"
             android:layout_marginRight="15dp"
-            android:src="@drawable/details_share"/>
+            android:src="@drawable/details_share" />
 
         <com.leyuan.aidong.widget.media.TextViewPrintly
             android:id="@+id/tv_course_desc"
@@ -105,7 +128,7 @@
             android:ellipsize="end"
             android:maxLines="6"
             android:textColor="@color/white"
-            android:textSize="12dp"/>
+            android:textSize="12dp" />
 
         <TextView
             android:id="@+id/tv_reply_count"
@@ -117,7 +140,8 @@
             android:layout_toLeftOf="@+id/iv_share"
             android:text="6"
             android:textColor="@color/white"
-            android:textSize="11sp"/>
+            android:textSize="11sp"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/iv_reply"
@@ -128,7 +152,8 @@
             android:layout_marginRight="7dp"
             android:layout_toLeftOf="@+id/tv_reply_count"
             android:src="@drawable/details_reply"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_like_count"
@@ -140,7 +165,8 @@
             android:layout_toLeftOf="@+id/iv_reply"
             android:text="6"
             android:textColor="@color/white"
-            android:textSize="11sp"/>
+            android:textSize="11sp"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/iv_like"
@@ -151,32 +177,8 @@
             android:layout_marginRight="7dp"
             android:layout_toLeftOf="@+id/tv_like_count"
             android:src="@drawable/video_details_praise_no"
-            android:textColor="@color/white"/>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/layout_page_tag"
-        android:layout_width="0dp"
-        android:layout_height="25dp"
-        android:layout_alignParentBottom="true"
-        >
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/white"
-            />
-
-        <TextView
-            android:id="@+id/txt_page_tag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:textColor="@color/white"
-            android:textSize="11sp"/>
-
+            android:visibility="gone" />
 
     </RelativeLayout>
 </RelativeLayout>

@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.video.SpecialTopicInfo;
-import com.leyuan.aidong.ui.video.activity.DeepIntoFragment;
+import com.leyuan.aidong.ui.video.fragment.DeepIntoFragment;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.Logger;
 

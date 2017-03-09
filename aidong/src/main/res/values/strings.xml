@@ -228,4 +228,8 @@
 
     <string name="transitionName">photo</string>
     <string name="hint">提示</string>
+    <string name="share_ok">分享成功</string>
+    <string name="share_cancel">分享取消</string>
+    <string name="share_fail">分享失败</string>
+    <string name="confirm_nickname">请输入新的昵称</string>
 </resources>

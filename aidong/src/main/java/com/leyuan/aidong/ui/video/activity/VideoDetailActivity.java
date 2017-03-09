@@ -26,12 +26,11 @@ import com.leyuan.aidong.adapter.CommonViewPagerAdapter;
 import com.leyuan.aidong.entity.video.VideoDetail;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mine.account.LoginActivity;
+import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VideoPresenterImpl;
 import com.leyuan.aidong.ui.mvp.view.VideoDetailView;
 import com.leyuan.aidong.utils.FastBlur;
 import com.leyuan.aidong.utils.Logger;
-import com.leyuan.aidong.utils.Urls;
 import com.leyuan.aidong.widget.media.TextViewPrintly;
 
 import java.util.ArrayList;
@@ -298,8 +297,8 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
             Intent intent = new Intent(VideoDetailActivity.this, LoginActivity.class);
             startActivity(intent);
         } else {
-            String url = Urls.VIDEO_SHARE
-                    + "vid=" + video.getvId() + "&phase=" + video.getPhase();
+//            String url = Urls.VIDEO_SHARE
+//                    + "vid=" + video.getvId() + "&phase=" + video.getPhase();
 //            SharePopToolVideo sharePopTool = new SharePopToolVideo(this, ((ViewGroup) findViewById(android.R.id.content)).getChildAt(0),
 //                    url, mController, video.getCover(), video.getIntroduce(), video.getVideoName());
 //            sharePopTool.showChoseBox();

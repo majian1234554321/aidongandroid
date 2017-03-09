@@ -2,6 +2,7 @@ package com.leyuan.aidong.module.share;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 
 
 public class MyShareUtils {
@@ -15,10 +16,10 @@ public class MyShareUtils {
     private WeiBoShare weiBoShare;
     private WXShare wxShare;
 
-    public  MyShareUtils(Activity context){
+    public  MyShareUtils(Activity context, Bundle savedInstanceState){
         this.context = context;
         myQQShare = new MyQQShare(context);
-        weiBoShare = new WeiBoShare(context);
+        weiBoShare = new WeiBoShare(context,savedInstanceState);
         wxShare = new WXShare(context);
     }
 
@@ -51,7 +52,6 @@ public class MyShareUtils {
      * @param intent
      */
     public  void onNewIntent(Intent intent){
-        if(intent!=null)
         weiBoShare.onNewIntent(intent);
     }
 

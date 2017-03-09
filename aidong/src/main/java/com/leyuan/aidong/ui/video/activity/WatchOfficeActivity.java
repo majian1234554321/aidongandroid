@@ -10,6 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.ui.mvp.presenter.impl.VideoPresenterImpl;
+import com.leyuan.aidong.ui.video.fragment.SpecialTopicFragment;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.Logger;
 
@@ -51,9 +53,9 @@ public class WatchOfficeActivity extends FragmentActivity {
     }
 
     private void initData() {
-        mFragments.add(new SpecialTopicFragment());
-        mFragments.add(new DeepIntoFragment());
-        mFragments.add(new CelebrityFragment());
+        mFragments.add(SpecialTopicFragment.newInstance(VideoPresenterImpl.family));
+        mFragments.add(SpecialTopicFragment.newInstance(VideoPresenterImpl.celebrity));
+        mFragments.add(SpecialTopicFragment.newInstance(VideoPresenterImpl.professional));
         Logger.i("liveVideo", "video_type = " + video_type);
         changeTitleTag(video_type);
         viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {

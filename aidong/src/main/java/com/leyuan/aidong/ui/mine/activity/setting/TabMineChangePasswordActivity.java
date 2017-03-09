@@ -1,4 +1,4 @@
-package com.leyuan.aidong.ui.mine.activity;
+package com.leyuan.aidong.ui.mine.activity.setting;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

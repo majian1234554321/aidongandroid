@@ -10,6 +10,7 @@ import com.google.gson.JsonSyntaxException;
 
 public class SharePrefUtils {
     private static final String SHARE_PREFS_NAME = "dataconfig";
+    private static final java.lang.String TAG = "SharePrefUtils";
     private static SharedPreferences mSharedPreferences;
 
     public synchronized static void setUser(Context ctx, UserCoach user) {
@@ -20,6 +21,8 @@ public class SharePrefUtils {
         Gson gson = new Gson();
         String json = gson.toJson(user);
         mSharedPreferences.edit().putString("user", json).commit();
+
+        Logger.i(TAG," mSharedPreferences.edit().putString(\"user\", json).commit();");
     }
 
     public static UserCoach getUser(Context ctx) {

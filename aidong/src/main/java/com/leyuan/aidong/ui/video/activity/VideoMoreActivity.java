@@ -27,9 +27,6 @@ import com.leyuan.aidong.widget.SmartScrollView;
 
 import java.util.List;
 
-
-
-
 /**
  * 视界专题详情界面展开
  * Created by auth song on 2016/7/25
@@ -154,7 +151,6 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
 
     @Override
     public void onGoodsClick(GoodsBean bean) {
-       // GoodsDetailActivity.start(this, bean.getId(), TYPE_FOODS);
     }
 
     @Override

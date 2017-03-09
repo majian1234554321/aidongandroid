@@ -1,7 +1,7 @@
 package com.leyuan.aidong.ui;
 
-import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDexApplication;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -17,13 +17,13 @@ import com.leyuan.aidong.module.photopicker.boxing.BoxingCrop;
 import com.leyuan.aidong.module.photopicker.boxing.BoxingMediaLoader;
 import com.leyuan.aidong.module.photopicker.boxing.loader.IBoxingMediaLoader;
 import com.leyuan.aidong.utils.LogAidong;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.SharePrefUtils;
 import com.leyuan.aidong.utils.VersionManager;
-import com.squareup.leakcanary.LeakCanary;
 
 import io.realm.Realm;
 
-public class App extends Application {
+public class App extends MultiDexApplication {
 
     public static App mInstance;
     public static Context context;
@@ -45,11 +45,11 @@ public class App extends Application {
         mInstance = this;
         context = getApplicationContext();
         initConfig();
-
     }
 
     private void initConfig() {
-        LeakCanary.install(this);
+//        LeakCanary.install(this);
+
         SDKInitializer.initialize(this);
         initBaiduLoc();
         initImagePicker();
@@ -127,13 +127,13 @@ public class App extends Application {
             user = SharePrefUtils.getUser(this);
         }
         return user;
-
     }
 
     public void setUser(UserCoach user) {
         this.user = user;
         if (user != null && user.getToken() != null) {
             setToken(user.getToken());
+            Logger.i("User", "name = " + user.getName());
         }
         SharePrefUtils.setUser(context, user);
     }
@@ -150,9 +150,9 @@ public class App extends Application {
         SharePrefUtils.setToken(context, token);
     }
 
-    public static App getInstance() {
-        return mInstance;
-    }
+//    public static App getInstance() {
+//        return mInstance;
+//    }
 
     public String getVersionName() {
         if (versionName == null) {

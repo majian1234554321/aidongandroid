@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ll_root"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,33 +16,34 @@
             android:id="@+id/iv_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_back"
             android:layout_centerVertical="true"
-            android:padding="5dp"/>
+            android:padding="5dp"
+            android:src="@drawable/icon_back" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="@dimen/size_title"
+            android:layout_centerInParent="true"
             android:text="修改资料"
-            android:layout_centerInParent="true"/>
+            android:textColor="@color/white"
+            android:textSize="@dimen/size_title" />
 
         <TextView
             android:id="@+id/tv_finish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="完成"
-            android:textSize="15sp"
-            android:textColor="@color/white"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:padding="10dp"/>
+            android:padding="10dp"
+            android:text="完成"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
     </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,18 +53,18 @@
                 android:id="@+id/dv_avatar"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:layout_marginTop="20dp"
-                android:layout_gravity="center_horizontal"/>
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:textColor="@color/black"
-                android:text="点击修改"
-                android:layout_marginTop="15dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="15dp"
-                android:layout_gravity="center_horizontal"/>
+                android:layout_marginTop="15dp"
+                android:text="点击修改"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
 
             <include layout="@layout/inc_bold_line" />
 
@@ -81,8 +82,8 @@
                 android:layout_height="wrap_content"
                 app:left_text="性别"
                 app:line_color="@color/line_color"
-                app:text_height="45dp"
-                app:show_right_arrow="true"/>
+                app:show_right_arrow="true"
+                app:text_height="45dp" />
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/identify"
@@ -90,8 +91,8 @@
                 android:layout_height="wrap_content"
                 app:left_text="身份"
                 app:line_color="@color/line_color"
-                app:text_height="45dp"
-                app:show_right_arrow="true"/>
+                app:show_right_arrow="true"
+                app:text_height="45dp" />
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/signature"
@@ -99,8 +100,8 @@
                 android:layout_height="wrap_content"
                 app:left_text="个性签名"
                 app:line_color="@color/line_color"
-                app:text_height="45dp"
-                app:show_right_arrow="true"/>
+                app:show_right_arrow="true"
+                app:text_height="45dp" />
 
             <include layout="@layout/inc_bold_line" />
 
@@ -110,8 +111,8 @@
                 android:layout_height="wrap_content"
                 app:left_text="城市"
                 app:line_color="@color/line_color"
-                app:text_height="45dp"
-                app:show_right_arrow="true"/>
+                app:show_right_arrow="true"
+                app:text_height="45dp" />
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/birthday"
@@ -119,8 +120,8 @@
                 android:layout_height="wrap_content"
                 app:left_text="生日"
                 app:line_color="@color/line_color"
-                app:text_height="45dp"
-                app:show_right_arrow="true"/>
+                app:show_right_arrow="true"
+                app:text_height="45dp" />
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/zodiac"
@@ -138,8 +139,8 @@
                 android:layout_height="wrap_content"
                 app:left_text="身高"
                 app:line_color="@color/line_color"
-                app:text_height="45dp"
-                app:show_right_arrow="true"/>
+                app:show_right_arrow="true"
+                app:text_height="45dp" />
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/weight"
@@ -147,8 +148,17 @@
                 android:layout_height="wrap_content"
                 app:left_text="体重"
                 app:line_color="@color/line_color"
-                app:text_height="45dp"
-                app:show_right_arrow="true"/>
+                app:show_right_arrow="true"
+                app:text_height="45dp" />
+
+            <com.leyuan.aidong.widget.ExtendTextView
+                android:id="@+id/frequency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:left_text="运动频次"
+                app:line_color="@color/line_color"
+                app:show_right_arrow="true"
+                app:text_height="45dp" />
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/bmi"
@@ -158,14 +168,6 @@
                 app:line_color="@color/line_color"
                 app:text_height="45dp" />
 
-            <com.leyuan.aidong.widget.ExtendTextView
-                android:id="@+id/frequency"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:left_text="运动频次"
-                app:line_color="@color/line_color"
-                app:text_height="45dp"
-                app:show_right_arrow="true"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
