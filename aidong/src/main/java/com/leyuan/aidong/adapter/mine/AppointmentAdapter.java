@@ -76,8 +76,9 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                 holder.payTip.setText(context.getString(R.string.need_pay));
                 holder.date.setVisibility(View.GONE);
                 holder.timerLayout.setVisibility(View.VISIBLE);
-                holder.tvCancel.setVisibility(View.VISIBLE);
+                holder.tvCancelPay.setVisibility(View.VISIBLE);
                 holder.tvPay.setVisibility(View.VISIBLE);
+                holder.tvCancelJoin.setVisibility(View.GONE);
                 holder.tvDelete.setVisibility(View.GONE);
                 holder.tvConfirm.setVisibility(View.GONE);
                 break;
@@ -88,11 +89,12 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                         bean.getStartDate(), bean.getStartTime()));
                 holder.date.setVisibility(View.VISIBLE);
                 holder.timerLayout.setVisibility(View.GONE);
-                holder.tvCancel.setVisibility(FormatUtil.parseDouble(bean.getPayAmount()) == 0 ?
+                holder.tvCancelJoin.setVisibility(FormatUtil.parseDouble(bean.getPayAmount()) == 0 ?
                         View.VISIBLE : View.GONE);
                 holder.tvConfirm.setVisibility(View.VISIBLE);
                 holder.tvPay.setVisibility(View.GONE);
                 holder.tvDelete.setVisibility(View.GONE);
+                holder.tvCancelPay.setVisibility(View.GONE);
                 break;
             case JOINED:            //已参加
                 holder.state.setText(context.getString(R.string.appointment_joined));
@@ -103,8 +105,9 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                 holder.timerLayout.setVisibility(View.GONE);
                 holder.tvDelete.setVisibility(View.VISIBLE);
                 holder.tvPay.setVisibility(View.GONE);
-                holder.tvCancel.setVisibility(View.GONE);
+                holder.tvCancelJoin.setVisibility(View.GONE);
                 holder.tvConfirm.setVisibility(View.GONE);
+                holder.tvCancelPay.setVisibility(View.GONE);
                 break;
             case CLOSE:             //已关闭
                 holder.state.setText(context.getString(R.string.order_close));
@@ -115,8 +118,9 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                 holder.timerLayout.setVisibility(View.GONE);
                 holder.tvDelete.setVisibility(View.VISIBLE);
                 holder.tvPay.setVisibility(View.GONE);
-                holder.tvCancel.setVisibility(View.GONE);
+                holder.tvCancelJoin.setVisibility(View.GONE);
                 holder.tvConfirm.setVisibility(View.GONE);
+                holder.tvCancelPay.setVisibility(View.GONE);
                 break;
             case REFUNDING:           //退款中
                 holder.state.setText(context.getString(R.string.order_refunding));
@@ -126,8 +130,9 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                 holder.timerLayout.setVisibility(View.GONE);
                 holder.tvDelete.setVisibility(View.VISIBLE);
                 holder.tvPay.setVisibility(View.GONE);
-                holder.tvCancel.setVisibility(View.GONE);
+                holder.tvCancelJoin.setVisibility(View.GONE);
                 holder.tvConfirm.setVisibility(View.GONE);
+                holder.tvCancelPay.setVisibility(View.GONE);
                 break;
             case REFUNDED:             //已退款
                 holder.state.setText(context.getString(R.string.order_refunded));
@@ -137,8 +142,9 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                 holder.timerLayout.setVisibility(View.GONE);
                 holder.tvDelete.setVisibility(View.VISIBLE);
                 holder.tvPay.setVisibility(View.GONE);
-                holder.tvCancel.setVisibility(View.GONE);
+                holder.tvCancelJoin.setVisibility(View.GONE);
                 holder.tvConfirm.setVisibility(View.GONE);
+                holder.tvCancelPay.setVisibility(View.GONE);
                 break;
             default:
                 break;
@@ -155,7 +161,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             }
         });
 
-        holder.tvCancel.setOnClickListener(new View.OnClickListener() {
+        holder.tvCancelJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(appointmentListener != null){
@@ -203,7 +209,8 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         TextView address;
         TextView payTip;
         TextView price;
-        TextView tvCancel;
+        TextView tvCancelJoin;
+        TextView tvCancelPay;
         TextView tvConfirm;
         TextView tvDelete;
         TextView tvPay;
@@ -220,7 +227,8 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             address = (TextView) itemView.findViewById(R.id.tv_address);
             price = (TextView) itemView.findViewById(R.id.tv_price);
             payTip = (TextView) itemView.findViewById(R.id.tv_price_tip);
-            tvCancel = (TextView) itemView.findViewById(R.id.tv_cancel);
+            tvCancelJoin = (TextView) itemView.findViewById(R.id.tv_cancel_join);
+            tvCancelPay = (TextView) itemView.findViewById(R.id.tv_cancel_pay);
             tvConfirm = (TextView) itemView.findViewById(R.id.tv_confirm);
             tvDelete = (TextView) itemView.findViewById(R.id.tv_delete);
             tvPay = (TextView) itemView.findViewById(R.id.tv_pay);

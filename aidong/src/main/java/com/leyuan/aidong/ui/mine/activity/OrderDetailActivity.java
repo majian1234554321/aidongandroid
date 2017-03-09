@@ -146,7 +146,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
         tvGoodsCount = (TextView) findViewById(R.id.tv_goods_count);
         tvPayTip = (TextView) findViewById(R.id.tv_pay_tip);
         tvPrice = (TextView) findViewById(R.id.tv_price);
-        tvCancel = (TextView) findViewById(R.id.tv_cancel);
+        tvCancel = (TextView) findViewById(R.id.tv_cancel_join);
         tvPay = (TextView) findViewById(R.id.tv_pay);
         tvExpress = (TextView) findViewById(R.id.tv_express);
         tvReceiving = (TextView) findViewById(R.id.tv_confirm);

@@ -36,4 +36,11 @@ public class CouponModelImpl implements CouponModel{
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
     }
+
+    @Override
+    public void getSpecifyGoodsCoupon(Subscriber<CouponData> subscriber, String from, String... id) {
+        couponService.getSpecifyGoodsCoupon(from,id)
+                .compose(RxHelper.<CouponData>transform())
+                .subscribe(subscriber);
+    }
 }

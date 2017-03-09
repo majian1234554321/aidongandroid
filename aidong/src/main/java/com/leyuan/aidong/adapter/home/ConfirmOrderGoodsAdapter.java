@@ -55,7 +55,7 @@ public class ConfirmOrderGoodsAdapter extends RecyclerView.Adapter<ConfirmOrderG
         GlideLoader.getInstance().displayImage(bean.getCover(), holder.cover);
         holder.name.setText(bean.getName());
         holder.count.setText(String.format(context.getString(R.string.x_count),bean.getAmount()));
-        ArrayList<String> specValue = bean.getSpec_value();
+        ArrayList<String> specValue = bean.getSpecValue();
         StringBuilder skuStr = new StringBuilder();
         for (String result : specValue) {
             skuStr.append(result);

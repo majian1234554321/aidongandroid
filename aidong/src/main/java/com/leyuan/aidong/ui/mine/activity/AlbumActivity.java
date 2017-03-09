@@ -120,7 +120,7 @@ public class AlbumActivity extends BaseActivity implements AlbumRecyclerAdapter.
 
     private void initView() {
         titleLayout = (RelativeLayout) findViewById(R.id.rl_title);
-        tvCancel = (TextView) findViewById(R.id.tv_cancel);
+        tvCancel = (TextView) findViewById(R.id.tv_cancel_join);
         llFolder = (LinearLayout) findViewById(R.id.ll_folder);
         tvFolderName = (TextView) findViewById(R.id.tv_folder_name);
         ivArrow = (ImageView) findViewById(R.id.iv_arrow);
@@ -213,7 +213,7 @@ public class AlbumActivity extends BaseActivity implements AlbumRecyclerAdapter.
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_cancel:
+            case R.id.tv_cancel_join:
                 finish();
                 break;
             case R.id.tv_next:

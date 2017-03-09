@@ -116,7 +116,6 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
     private String orderId;
     private String payType;
 
-
     public static void start(Context context,String orderId) {
         Intent starter = new Intent(context, AppointCourseDetailActivity.class);
         starter.putExtra("orderId",orderId);
@@ -179,7 +178,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
         tvGoodsCount = (TextView) findViewById(R.id.tv_goods_count);
         tvPrice = (TextView) findViewById(R.id.tv_price);
         tvPayTip = (TextView) findViewById(R.id.tv_pay_tip);
-        tvCancel = (TextView) findViewById(R.id.tv_cancel);
+        tvCancel = (TextView) findViewById(R.id.tv_cancel_join);
         tvPay = (TextView) findViewById(R.id.tv_pay);
         tvExpress = (TextView) findViewById(R.id.tv_express);
         tvConfirm = (TextView) findViewById(R.id.tv_confirm);

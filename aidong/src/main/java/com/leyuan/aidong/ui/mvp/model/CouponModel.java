@@ -26,4 +26,12 @@ public interface CouponModel {
      * @param id 优惠劵id
      */
     void obtainCoupon(Subscriber<BaseBean> subscriber, String id);
+
+    /**
+     * 获取指定商品能使用的优惠券
+     * @param subscriber Subscriber
+     * @param from 商品类型(equipment|food|nutrition|course|campaign|cart)
+     * @param id 购买商品的编号数组
+     */
+    void getSpecifyGoodsCoupon(Subscriber<CouponData> subscriber,String from,String...id);
 }

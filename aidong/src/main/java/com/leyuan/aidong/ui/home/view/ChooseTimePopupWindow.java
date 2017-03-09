@@ -34,7 +34,7 @@ public class ChooseTimePopupWindow extends BasePopupWindow{
     private void init() {
         View view = View.inflate(context, R.layout.popup_chooes_time,null);
         setContentView(view);
-        tvCancel = (TextView) view.findViewById(R.id.tv_cancel);
+        tvCancel = (TextView) view.findViewById(R.id.tv_cancel_join);
         btnConfirm = (TextView) view.findViewById(R.id.btn_confirm);
         rvTime = (RecyclerView) view.findViewById(R.id.rv_time);
 

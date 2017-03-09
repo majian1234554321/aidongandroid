@@ -212,7 +212,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
             count = (TextView) itemView.findViewById(R.id.tv_goods_count);
             payTip = (TextView) itemView.findViewById(R.id.tv_pay_tip);
             price = (TextView) itemView.findViewById(R.id.tv_price);
-            tvCancel = (TextView) itemView.findViewById(R.id.tv_cancel);
+            tvCancel = (TextView) itemView.findViewById(R.id.tv_cancel_join);
             tvPay = (TextView) itemView.findViewById(R.id.tv_pay);
             tvExpress = (TextView) itemView.findViewById(R.id.tv_express);
             tvConfirm = (TextView) itemView.findViewById(R.id.tv_confirm);
