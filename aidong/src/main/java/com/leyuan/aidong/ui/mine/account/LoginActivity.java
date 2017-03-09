@@ -122,6 +122,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         if (user != null) {
             DialogUtils.showDialog(this, "", false);
             chatLoginManager.login(String.valueOf(user.getId()));
+            setResult(RESULT_OK,null);
         }
     }
 

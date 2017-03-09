@@ -21,7 +21,7 @@ import com.leyuan.aidong.entity.CourseDetailBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.account.LoginActivity;
-import com.leyuan.aidong.ui.mine.activity.AppointCourseDetailActivity;
+import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CourseDetailActivityView;
@@ -48,7 +48,6 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     private static final String STATUS_FULL = "6";          //预约人数已满
     private static final String STATUS_COURSE_END = "7";    //课程结束
     private static final String STATUS_NOT_NEED= "8";       //无需预约
-
 
     private ImageView ivBack;
     private TextView tvTitle;
@@ -151,6 +150,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             case R.id.iv_share:
                 break;
             case R.id.dv_avatar:
+                UserInfoActivity.start(this,detailBean.getCoach().getCoachId());
                 break;
             case R.id.iv_follow:
                 if(isFollow){
@@ -278,14 +278,13 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     private void bottomToTargetActivity(){
         if(STATUS_APPOINT.equals(detailBean.getStatus())){           //预约
             if(App.mInstance.isLogin()){
-                //todo 判断同一时间是否已有预约
                 AppointCourseActivity.start(this, detailBean);
             }else {
-                //todo  登录 登录完成之后重新刷接口
                 startActivity(new Intent(this, LoginActivity.class));
             }
-        }else if(STATUS_NOT_PAY.equals(detailBean.getStatus())){    //待支付
-            AppointCourseDetailActivity.start(this, detailBean.getOrderId());
+        }else{    //待支付
+            AppointCourseActivity.start(this, detailBean);
+            //AppointCourseDetailActivity.start(this, detailBean.getOrderId());
         }
     }
 }

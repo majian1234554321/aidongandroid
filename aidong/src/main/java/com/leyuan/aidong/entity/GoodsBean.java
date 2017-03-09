@@ -16,14 +16,14 @@ public class GoodsBean implements Parcelable {
     private  String cover;         //商品封面
     private  String name;          //商品名字
     private  String price;         //商品售价
-    private  String market_price; //商品市场价
+    private  String market_price;  //商品市场价
     private  String type;
 
     /******订单商品中需要用到的字段******/
     private ArrayList<String> spec_name;
     private ArrayList<String> spec_value;
     private String amount;                  //商品数量
-    private String recommend_coach_id;          //推荐码
+    private String recommend_coach_id;      //推荐码
     private DeliveryBean deliveryBean;      //商品默认取货方式
     private boolean checked = false;        //标记商品是否被选中
 

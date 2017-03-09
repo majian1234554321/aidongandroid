@@ -11,6 +11,8 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.ImageRectUtils;
+import com.leyuan.aidong.utils.ScreenUtil;
+import com.leyuan.aidong.utils.qiniu.QiNiuImageProcessUtils;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -33,7 +35,8 @@ public class OneImageViewHolder extends BaseCircleViewHolder{
 
     @Override
     public void onBindDataToChildView(@NonNull final DynamicBean data, int position, int viewType) {
-        GlideLoader.getInstance().displayImage(data.image.get(0), one);
+        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(data.image.get(0),
+                ScreenUtil.getScreenWidth(context)), one);
 
         final List<ImageView> imageViewList = new LinkedList<>();
         imageViewList.add(one);

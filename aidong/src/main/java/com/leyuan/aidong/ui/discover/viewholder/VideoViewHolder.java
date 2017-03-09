@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.ScreenUtil;
+import com.leyuan.aidong.utils.qiniu.QiNiuImageProcessUtils;
 
 /**
  * 视频
@@ -37,8 +39,10 @@ public class VideoViewHolder extends BaseCircleViewHolder{
         if(data.videos == null){
             return;
         }
+        int width =  ScreenUtil.getScreenWidth(context);
 
-        GlideLoader.getInstance().displayImage(data.videos.cover, dvVideo);
+        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(data.videos.cover,
+                width), dvVideo);
         dvVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

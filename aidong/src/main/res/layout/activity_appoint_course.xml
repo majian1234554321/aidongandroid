@@ -176,7 +176,7 @@
             <include layout="@layout/inc_bold_line" />
 
             <LinearLayout
-                android:id="@+id/ll_coupon"
+
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:orientation="horizontal"
@@ -192,6 +192,7 @@
                     android:textSize="15sp" />
 
                 <TextView
+                    android:id="@+id/tv_coupon"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"

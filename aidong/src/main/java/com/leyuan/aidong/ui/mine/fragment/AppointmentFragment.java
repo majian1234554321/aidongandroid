@@ -17,7 +17,6 @@ import com.leyuan.aidong.ui.mvp.presenter.AppointmentPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.AppointmentPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointmentFragmentView;
 import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
@@ -35,7 +34,6 @@ public class AppointmentFragment extends BaseLazyFragment implements Appointment
     public static final String JOINED = "joined";
     public static final String UN_JOIN = "unJoin";
     private String type;
-    private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
 
@@ -61,19 +59,18 @@ public class AppointmentFragment extends BaseLazyFragment implements Appointment
 
     @Override
     public void initData() {
-        present.commonLoadData(switcherLayout,type);
+        present.commonLoadData(type);
     }
 
     private void initSwipeRefreshLayout(View view) {
         refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.refreshLayout);
-        switcherLayout = new SwitcherLayout(getContext(),refreshLayout);
         setColorSchemeResources(refreshLayout);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-                present.pullToRefreshData(type);
+                present.pullToRefreshData(refreshLayout,type);
             }
         });
     }
@@ -119,14 +116,13 @@ public class AppointmentFragment extends BaseLazyFragment implements Appointment
 
     @Override
     public void showEmptyView() {
-        switcherLayout.showEmptyLayout();
+       // switcherLayout.showEmptyLayout();
     }
 
     @Override
     public void showEndFooterView() {
         RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
     }
-
 
     private class AppointCallback implements AppointmentAdapter.AppointmentListener{
 
@@ -148,6 +144,11 @@ public class AppointmentFragment extends BaseLazyFragment implements Appointment
         @Override
         public void onCancelJoin(String id) {
             present.cancelAppoint(id);
+        }
+
+        @Override
+        public void onCancelPay(String id) {
+
         }
     }
 

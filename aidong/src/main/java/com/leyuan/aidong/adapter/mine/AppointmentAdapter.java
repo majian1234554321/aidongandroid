@@ -196,6 +196,15 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                 }
             }
         });
+
+        holder.tvCancelPay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(appointmentListener != null){
+                    appointmentListener.onCancelPay(bean.getId());
+                }
+            }
+        });
     }
 
 
@@ -244,5 +253,6 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         void onDeleteOrder(String id);
         void onConfirmJoin(String id);
         void onCancelJoin(String id);
+        void onCancelPay(String id);
     }
 }

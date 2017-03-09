@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.mvp.presenter.impl;
 
 import android.content.Context;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 
 import com.leyuan.aidong.entity.AppointmentBean;
@@ -56,26 +57,8 @@ public class AppointmentPresentImpl implements AppointmentPresent {
     }
 
     @Override
-    public void commonLoadData(final SwitcherLayout switcherLayout, String type) {
-        appointmentModel.getAppointments(new CommonSubscriber<AppointmentData>(switcherLayout) {
-            @Override
-            public void onNext(AppointmentData appointmentData) {
-                if(appointmentData != null &&  appointmentData.getAppointment() != null){
-                    appointmentBeanList = appointmentData.getAppointment();
-                }
-                if(appointmentBeanList.isEmpty()){
-                    appointmentFragmentView.showEmptyView();
-                }else{
-                    switcherLayout.showContentLayout();
-                    appointmentFragmentView.onRecyclerViewRefresh(appointmentBeanList);
-                }
-            }
-        },type,Constant.PAGE_FIRST);
-    }
-
-    @Override
-    public void pullToRefreshData(String type) {
-        appointmentModel.getAppointments(new RefreshSubscriber<AppointmentData>(context) {
+    public void commonLoadData(String type) {
+        appointmentModel.getAppointments(new ProgressSubscriber<AppointmentData>(context) {
             @Override
             public void onNext(AppointmentData appointmentData) {
                 if(appointmentData != null &&  appointmentData.getAppointment() != null){
@@ -83,10 +66,45 @@ public class AppointmentPresentImpl implements AppointmentPresent {
                 }
                 if(!appointmentBeanList.isEmpty()){
                     appointmentFragmentView.onRecyclerViewRefresh(appointmentBeanList);
+                }else {
+                    appointmentFragmentView.showEmptyView();
                 }
             }
         },type, Constant.PAGE_FIRST);
     }
+
+    @Override
+    public void pullToRefreshData(final SwipeRefreshLayout refreshLayout, final String type) {
+
+        appointmentModel.getAppointments(new RefreshSubscriber<AppointmentData>(context) {
+            @Override
+            public void onStart() {
+                super.onStart();
+                refreshLayout.setRefreshing(true);
+            }
+
+            @Override
+            public void onNext(AppointmentData appointmentData) {
+                if(appointmentData != null &&  appointmentData.getAppointment() != null){
+                    appointmentBeanList = appointmentData.getAppointment();
+                }
+                if(!appointmentBeanList.isEmpty()){
+                    appointmentFragmentView.onRecyclerViewRefresh(appointmentBeanList);
+                }else {
+                    appointmentFragmentView.showEmptyView();
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                if(refreshLayout.isRefreshing()){
+                    refreshLayout.setRefreshing(false);
+                }
+            }
+        },type, Constant.PAGE_FIRST);
+    }
+
 
     @Override
     public void requestMoreData(RecyclerView recyclerView, String type, final int pageSize, int page) {

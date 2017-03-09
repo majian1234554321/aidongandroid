@@ -11,26 +11,33 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.entity.CourseDetailBean;
 import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.module.pay.SimplePayListener;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mine.activity.CouponActivity;
+import com.leyuan.aidong.ui.mine.activity.SelectCouponActivity;
 import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
+import com.leyuan.aidong.ui.mvp.view.AppointCourseActivityView;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.constant.PayType;
 import com.leyuan.aidong.widget.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.ExtendTextView;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_COUPON;
+
 /**
  * 预约课程信息
  * Created by song on 2016/9/12.
  */
 public class AppointCourseActivity extends BaseActivity implements View.OnClickListener,
-        CustomNestRadioGroup.OnCheckedChangeListener {
+        CustomNestRadioGroup.OnCheckedChangeListener,AppointCourseActivityView {
     private SimpleTitleBar titleBar;
 
     //预约人信息
@@ -44,7 +51,7 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
     private TextView tvShop;
     private ExtendTextView tvTime;
     private ExtendTextView tvAddress;
-    private LinearLayout couponLayout;
+    private TextView tvCoupon;
     private LinearLayout goldLayout;
 
     //会员身份信息
@@ -73,8 +80,7 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
 
     private CourseDetailBean bean;
     private CoursePresent coursePresent;
-
-
+    private List<CouponBean> usableCoupons = new ArrayList<>();
 
     public static void start(Context context,CourseDetailBean courseDetailBean) {
         Intent starter = new Intent(context, AppointCourseActivity.class);
@@ -86,12 +92,14 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appoint_course);
+        coursePresent = new CoursePresentImpl(this,this);
         payType = PayType.ALI;
         if (getIntent() != null) {
             bean = getIntent().getParcelableExtra("bean");
         }
         initView();
         setListener();
+        coursePresent.getSpecifyCourseCoupon(bean.getCode());
     }
 
     private void initView() {
@@ -104,7 +112,7 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
         tvShop = (TextView) findViewById(R.id.tv_shop);
         tvTime = (ExtendTextView) findViewById(R.id.tv_time);
         tvAddress = (ExtendTextView) findViewById(R.id.tv_address);
-        couponLayout = (LinearLayout) findViewById(R.id.ll_coupon);
+        tvCoupon = (TextView) findViewById(R.id.tv_coupon);
         goldLayout = (LinearLayout) findViewById(R.id.ll_gold);
         tvVip = (TextView) findViewById(R.id.tv_vip);
         tvNoVip = (TextView) findViewById(R.id.tv_no_vip);
@@ -134,7 +142,7 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
 
     private void setListener() {
         titleBar.setOnClickListener(this);
-        couponLayout.setOnClickListener(this);
+        tvCoupon.setOnClickListener(this);
         tvVip.setOnClickListener(this);
         tvNoVip.setOnClickListener(this);
         tvPay.setOnClickListener(this);
@@ -147,8 +155,11 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
             case R.id.iv_back:
                 finish();
                 break;
-            case R.id.ll_coupon:
-                startActivity(new Intent(this, CouponActivity.class));
+            case R.id.tv_coupon:
+                if(usableCoupons != null && usableCoupons.isEmpty()) {
+                    Intent intent = new Intent(this, SelectCouponActivity.class);
+                    startActivityForResult(intent, REQUEST_SELECT_COUPON);
+                }
                 break;
             case R.id.tv_vip:
                 tvNoVip.setTextColor(Color.parseColor("#000000"));
@@ -165,9 +176,6 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
                 vipTipLayout.setVisibility(View.VISIBLE);
                 break;
             case R.id.tv_pay:
-                if(coursePresent == null){
-                    coursePresent = new CoursePresentImpl(this);
-                }
                 coursePresent.buyCourse(bean.getCode(),couponId,integral,payType,
                         userName,contactMobile,payListener);
                 break;
@@ -195,6 +203,24 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
                 break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    public void setCourseCouponResult(List<CouponBean> usableCoupons) {
+        this.usableCoupons = usableCoupons;
+        if(usableCoupons == null || usableCoupons.isEmpty()){
+            tvCoupon.setText("无可用");
+            tvCoupon.setCompoundDrawables(null,null,null,null);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(data != null){
+            if(requestCode == REQUEST_SELECT_COUPON){
+
+            }
         }
     }
 }

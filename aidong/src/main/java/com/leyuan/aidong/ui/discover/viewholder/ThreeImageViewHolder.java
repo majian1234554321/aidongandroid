@@ -9,8 +9,11 @@ import android.widget.ImageView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.DynamicBean;
+import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.ImageRectUtils;
+import com.leyuan.aidong.utils.ScreenUtil;
+import com.leyuan.aidong.utils.qiniu.QiNiuImageProcessUtils;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -37,9 +40,14 @@ public class ThreeImageViewHolder extends BaseCircleViewHolder{
 
     @Override
     public void onBindDataToChildView(@NonNull final DynamicBean data, int position, int viewType) {
-        GlideLoader.getInstance().displayImage(data.image.get(0), one);
-        GlideLoader.getInstance().displayImage(data.image.get(1), two);
-        GlideLoader.getInstance().displayImage(data.image.get(2), three);
+        int bigWidth =  (ScreenUtil.getScreenWidth(context) - DensityUtil.dp2px(context,5)) * 2/3;
+        int smallWidth =  (ScreenUtil.getScreenWidth(context) - DensityUtil.dp2px(context,5))/3;
+        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(data.image.get(0),
+                bigWidth),one);
+        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(data.image.get(1),
+                smallWidth),two);
+        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(data.image.get(2),
+                smallWidth), three);
 
         final List<ImageView> imageViewList = new LinkedList<>();
         imageViewList.add(one);

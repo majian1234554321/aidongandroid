@@ -47,4 +47,11 @@ public interface CampaignPresent {
      */
     void buyCampaign(String id,String couponId,float integral,String payType,String contactName,
                      String contactMobile,PayInterface.PayListener listener);
+
+
+    /**
+     * 获取指定活动可用优惠券
+     * @param id
+     */
+    void getSpecifyCampaignCoupon(String id);
 }

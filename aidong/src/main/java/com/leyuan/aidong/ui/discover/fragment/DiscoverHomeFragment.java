@@ -32,6 +32,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
+import static com.leyuan.aidong.utils.Constant.REQUEST_PHOTO;
+import static com.leyuan.aidong.utils.Constant.REQUEST_VIDEO;
 
 
 /**
@@ -39,14 +41,12 @@ import static android.app.Activity.RESULT_OK;
  * Created by song on 2016/11/19.
  */
 public class DiscoverHomeFragment extends BaseFragment implements SmartTabLayout.TabProvider{
-    public static final int REQUEST_PHOTO = 1;
-    public static final int REQUEST_VIDEO = 2;
     private List<View> allTabView = new ArrayList<>();
     private ImageView camera;
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_discover_home,null);
+        return inflater.inflate(R.layout.fragment_discover_home,container,false);
     }
 
     @Override

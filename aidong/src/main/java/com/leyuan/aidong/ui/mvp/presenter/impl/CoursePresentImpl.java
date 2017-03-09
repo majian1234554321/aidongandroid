@@ -7,6 +7,7 @@ import android.widget.Toast;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CourseBean;
 import com.leyuan.aidong.entity.CourseDetailData;
+import com.leyuan.aidong.entity.data.CouponData;
 import com.leyuan.aidong.entity.data.CourseData;
 import com.leyuan.aidong.entity.data.PayOrderData;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
@@ -16,16 +17,21 @@ import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.aidong.module.pay.AliPay;
 import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.module.pay.WeiXinPay;
+import com.leyuan.aidong.ui.mvp.model.CouponModel;
 import com.leyuan.aidong.ui.mvp.model.CourseModel;
 import com.leyuan.aidong.ui.mvp.model.FollowModel;
+import com.leyuan.aidong.ui.mvp.model.impl.CouponModelImpl;
 import com.leyuan.aidong.ui.mvp.model.impl.CourseModelImpl;
 import com.leyuan.aidong.ui.mvp.model.impl.FollowModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
-import com.leyuan.aidong.ui.mvp.view.AppointmentInfoActivityView;
+import com.leyuan.aidong.ui.mvp.view.AppointCourseActivityView;
+import com.leyuan.aidong.ui.mvp.view.AppointmentDetailActivityView;
 import com.leyuan.aidong.ui.mvp.view.CourseActivityView;
 import com.leyuan.aidong.ui.mvp.view.CourseDetailActivityView;
 import com.leyuan.aidong.ui.mvp.view.CourserFragmentView;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.constant.CouponType;
+import com.leyuan.aidong.utils.constant.PayType;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.List;
@@ -40,12 +46,14 @@ public class CoursePresentImpl implements CoursePresent{
     private Context context;
     private CourseModel courseModel;
     private FollowModel followModel;
+    private CouponModel couponModel;
 
     private List<CourseBean> courseBeanList;
     private CourserFragmentView courserFragmentView;                //课程列表View层对象
     private CourseActivityView coursesActivityView;                 //课程列表View层对象
     private CourseDetailActivityView courseDetailActivityView;      //课程详情View层对象
-    private AppointmentInfoActivityView appointActivityView;        //预约课程View层对象
+    private AppointCourseActivityView appointCourseActivityView;    //预约课程View层对象
+    private AppointmentDetailActivityView appointmentDetailActivityView; //
 
     public CoursePresentImpl(Context context, CourseDetailActivityView view) {
         this.context = context;
@@ -55,6 +63,14 @@ public class CoursePresentImpl implements CoursePresent{
         }
         if(followModel == null){
             followModel = new FollowModelImpl();
+        }
+    }
+
+    public CoursePresentImpl(Context context, AppointmentDetailActivityView view) {
+        this.context = context;
+        this.appointmentDetailActivityView = view;
+        if (courseModel == null) {
+            courseModel = new CourseModelImpl(context);
         }
     }
 
@@ -74,10 +90,11 @@ public class CoursePresentImpl implements CoursePresent{
         }
     }
 
-    public CoursePresentImpl(Context context) {
+    public CoursePresentImpl(Context context, AppointCourseActivityView view) {
         this.context = context;
-        if (courseModel == null) {
-            courseModel = new CourseModelImpl(context);
+        this.appointCourseActivityView = view;
+        if (couponModel == null) {
+            couponModel = new CouponModelImpl();
         }
     }
 
@@ -178,7 +195,7 @@ public class CoursePresentImpl implements CoursePresent{
             @Override
             public void onNext(PayOrderData payOrderData) {
                 String payType = payOrderData.getOrder().getPayType();
-                PayInterface payInterface = "alipay".equals(payType) ? new AliPay(context,listener)
+                PayInterface payInterface = PayType.ALI.equals(payType) ? new AliPay(context,listener)
                         : new WeiXinPay(context,listener);
                 payInterface.payOrder(payOrderData.getOrder());
             }
@@ -207,5 +224,17 @@ public class CoursePresentImpl implements CoursePresent{
                 }
             }
         },id);
+    }
+
+    @Override
+    public void getSpecifyCourseCoupon(String id) {
+        couponModel.getSpecifyGoodsCoupon(new ProgressSubscriber<CouponData>(context,false) {
+            @Override
+            public void onNext(CouponData couponData) {
+                if(couponData != null) {
+                    appointCourseActivityView.setCourseCouponResult(couponData.getCoupon());//maybe null
+                }
+            }
+        }, CouponType.COURSE,id);
     }
 }
