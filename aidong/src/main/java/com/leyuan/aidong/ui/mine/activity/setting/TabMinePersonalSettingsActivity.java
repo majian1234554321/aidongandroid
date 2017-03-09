@@ -106,7 +106,6 @@ public class TabMinePersonalSettingsActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         bindMobile();
     }
 

@@ -1,7 +1,7 @@
 package com.leyuan.aidong.ui;
 
-import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDexApplication;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -23,7 +23,7 @@ import com.leyuan.aidong.utils.VersionManager;
 
 import io.realm.Realm;
 
-public class App extends Application {
+public class App extends MultiDexApplication {
 
     public static App mInstance;
     public static Context context;
@@ -45,11 +45,11 @@ public class App extends Application {
         mInstance = this;
         context = getApplicationContext();
         initConfig();
-
     }
 
     private void initConfig() {
 //        LeakCanary.install(this);
+
         SDKInitializer.initialize(this);
         initBaiduLoc();
         initImagePicker();

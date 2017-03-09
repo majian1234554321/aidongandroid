@@ -22,6 +22,7 @@ public class Constant {
     public static final String PHASE = "phase";
     public static final String WX_LOGIN_CODE = "wx_login_code";
     public static final String WX_LOGIN_SUCCESS_ACTION = "com.leyuan.login.wx";
+    public static final String VIDEO_LIST_TYPE = "video_list_type";
 
     public static SystemBean systemInfoBean;
 

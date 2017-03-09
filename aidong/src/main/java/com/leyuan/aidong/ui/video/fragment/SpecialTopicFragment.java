@@ -23,6 +23,7 @@ import com.leyuan.aidong.entity.video.SpecialTopicInfo;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VideoPresenterImpl;
 import com.leyuan.aidong.ui.mvp.view.VideoListViewLister;
 import com.leyuan.aidong.ui.video.activity.VideoDetailActivity;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.CustomLayoutManager;
 
@@ -53,6 +54,7 @@ public class SpecialTopicFragment extends Fragment implements SwipeRefreshLayout
     public static int scrollDirection = 1; //1向上 0 向下
     private int lastVisibleItem;
     private boolean isLoading;
+    private String requestType;
 
     private int page = 1;
     private String city_id;
@@ -68,10 +70,20 @@ public class SpecialTopicFragment extends Fragment implements SwipeRefreshLayout
         }
     };
 
+    public static SpecialTopicFragment newInstance(String type) {
+        Bundle args = new Bundle();
+        args.putString(Constant.VIDEO_LIST_TYPE, type);
+        SpecialTopicFragment fragment = new SpecialTopicFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+        requestType = getArguments().getString(Constant.VIDEO_LIST_TYPE, VideoPresenterImpl.family);
         initReceiver();
         item_max_height = (int) getResources().getDimension(R.dimen.video_item_max_height);
         item_normal_height = (int) getResources().getDimension(R.dimen.video_item_normal_height);
@@ -266,7 +278,7 @@ public class SpecialTopicFragment extends Fragment implements SwipeRefreshLayout
     private void getDataFromInter() {
         page = 1;
         adapter.setFirst(true);
-        presenter.getVideoList(page + "", VideoPresenterImpl.family);
+        presenter.getVideoList(page + "", requestType);
     }
 
 
