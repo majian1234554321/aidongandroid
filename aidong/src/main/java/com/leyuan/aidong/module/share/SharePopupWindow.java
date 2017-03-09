@@ -33,8 +33,7 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
     public SharePopupWindow(Activity context, Bundle savedInstanceState) {
         super(context);
         this.context = context;
-        myShareUtils = new MyShareUtils(context,savedInstanceState);
-        myShareUtils.onNewIntent(context.getIntent());
+        myShareUtils = new MyShareUtils(context, savedInstanceState);
         initView();
         initData();
     }
@@ -67,8 +66,8 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
     }
 
     public void showAtBottom(String title, String content, String imageUrl, String webUrl) {
-        this.showAtLocation(((ViewGroup)context.findViewById(android.R.id.content)).getChildAt(0), Gravity.BOTTOM, 0, 0);
-        this.title =title;
+        this.showAtLocation(((ViewGroup) context.findViewById(android.R.id.content)).getChildAt(0), Gravity.BOTTOM, 0, 0);
+        this.title = title;
         this.content = content;
         this.imageUrl = imageUrl;
         this.webUrl = webUrl;
@@ -76,24 +75,24 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.img_weichat:
-                 myShareUtils.share(MyShareUtils.SHARE_WEIXIN_CHAT,title,content,imageUrl,webUrl);
+                myShareUtils.share(MyShareUtils.SHARE_WEIXIN_CHAT, title, content, imageUrl, webUrl);
                 break;
             case R.id.img_wei_friend:
-                myShareUtils.share(MyShareUtils.SHARE_WEIXIN_FRIENDS,title,content,imageUrl,webUrl);
+                myShareUtils.share(MyShareUtils.SHARE_WEIXIN_FRIENDS, title, content, imageUrl, webUrl);
                 break;
             case R.id.img_qq:
-                myShareUtils.share(MyShareUtils.SHARE_QQ,title,content,imageUrl,webUrl);
+                myShareUtils.share(MyShareUtils.SHARE_QQ, title, content, imageUrl, webUrl);
                 break;
             case R.id.img_weibo:
-                myShareUtils.share(MyShareUtils.SHARE_WEIBO,title,content,imageUrl,webUrl);
+                myShareUtils.share(MyShareUtils.SHARE_WEIBO, title, content, imageUrl, webUrl);
                 break;
         }
     }
 
     /**
-     *call this in activity onActivityResult method
+     * call this in activity onActivityResult method
      */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         myShareUtils.onActivityResult(requestCode, resultCode, data);
@@ -101,13 +100,14 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
 
     /**
      * you must call this when activity onNewIntent
+     *
      * @param intent
      */
-    public  void onNewIntent(Intent intent){
+    public void onNewIntent(Intent intent) {
         myShareUtils.onNewIntent(intent);
     }
 
-    public void release(){
+    public void release() {
         context = null;
         myShareUtils.release();
         myShareUtils = null;

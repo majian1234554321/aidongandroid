@@ -10,18 +10,20 @@ import com.leyuan.aidong.widget.SwitcherLayout;
  */
 public interface UserInfoPresent {
 
-    void getUserInfo(SwitcherLayout switcherLayout,String id);
+    void getUserInfo(SwitcherLayout switcherLayout, String id);
 
     void commonLoadDynamic(String id);
 
-    void requestMoreDynamic(String id,RecyclerView recyclerView, int pageSize, int page);
+    void requestMoreDynamic(String id, RecyclerView recyclerView, int pageSize, int page);
 
 
-    void updateUserInfo(String avatar,String gender,String birthday,String signature,String province,String city,
-                        String area,String height,String weight,String frequency);
+    void updateUserInfo(String name, String avatar, String gender, String birthday, String signature, String province, String city,
+                        String area, String height, String weight, String frequency);
 
 
     void addFollow(String userId);
 
     void cancelFollow(String userId);
+
+    void release();
 }

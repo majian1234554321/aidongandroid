@@ -1,4 +1,4 @@
-package com.leyuan.aidong.ui.mine.activity;
+package com.leyuan.aidong.ui.mine.activity.setting;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,14 +22,14 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.utils.ToastUtil;
 
 
-public class TabMinePersonalDataFitnessIsGoodActivity extends BaseActivity {
-	private ImageView mlayout_tab_mine_personal_data_fitness_is_good_img;
-	private TextView mlayout_tab_mine_personal_data_fitness_is_good_txt;
-	private TextView mtextview_the_fitness_is_good_zishu;
-	private EditText medittext_the_fitness_is_good;
+public class TabMinePersonalDataFitnessGoalsActivity extends BaseActivity {
+	private ImageView mlayout_tab_mine_personal_data_fitness_goals_img;
+	private EditText medittext_the_fitness_goals;
+	private TextView mlayout_tab_mine_personal_data_fitness_goals_txt;
+	private TextView mtextview_the_individuality_signature_zishu;
 	private static final int MIN_COUNT = 10;
-	private RelativeLayout fitnessisgood = null;
-	private String fitnessgood;
+	private RelativeLayout personal_data_fitness_goals = null;
+	private String fitness_goals;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,9 +39,8 @@ public class TabMinePersonalDataFitnessIsGoodActivity extends BaseActivity {
 	}
 
 	protected void setupView() {
-		setContentView(R.layout.layout_tab_mine_personal_data_fitness_is_good);
+		setContentView(R.layout.layout_tab_mine_personal_data_fitness_goals);
 		init();
-
 	}
 
 	protected void initData() {
@@ -50,15 +49,16 @@ public class TabMinePersonalDataFitnessIsGoodActivity extends BaseActivity {
 	}
 
 	private void init() {
-		mlayout_tab_mine_personal_data_fitness_is_good_img = (ImageView) findViewById(R.id.layout_tab_mine_personal_data_fitness_is_good_img);
-		mlayout_tab_mine_personal_data_fitness_is_good_txt = (TextView) findViewById(R.id.layout_tab_mine_personal_data_fitness_is_good_txt);
-		medittext_the_fitness_is_good = (EditText) findViewById(R.id.edittext_the_fitness_is_good);
-		mtextview_the_fitness_is_good_zishu = (TextView) findViewById(R.id.textview_the_fitness_is_good_zishu);
-		fitnessisgood = (RelativeLayout) findViewById(R.id.fitnessisgood);
+		mlayout_tab_mine_personal_data_fitness_goals_img = (ImageView) findViewById(R.id.layout_tab_mine_personal_data_fitness_goals_img);
+		medittext_the_fitness_goals = (EditText) findViewById(R.id.edittext_the_fitness_goals);
+		mlayout_tab_mine_personal_data_fitness_goals_txt = (TextView) findViewById(R.id.layout_tab_mine_personal_data_fitness_goals_txt);
+		mtextview_the_individuality_signature_zishu = (TextView) findViewById(R.id.textview_the_individuality_signature_zishu);
+		personal_data_fitness_goals = (RelativeLayout) findViewById(R.id.personal_data_fitness_goals);
 		Intent intent = getIntent();
-		String good = intent.getStringExtra("good");
-		medittext_the_fitness_is_good.setText(good);
-		medittext_the_fitness_is_good.addTextChangedListener(new TextWatcher() {
+		String nextGoals = intent.getStringExtra("goals");
+		medittext_the_fitness_goals.setText(nextGoals);
+		medittext_the_fitness_goals.addTextChangedListener(new TextWatcher() {
+
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before,
 					int count) {
@@ -76,7 +76,7 @@ public class TabMinePersonalDataFitnessIsGoodActivity extends BaseActivity {
 				setLeftCount();
 			}
 		});
-		medittext_the_fitness_is_good.setFilters(new InputFilter[] { filter });
+		medittext_the_fitness_goals.setFilters(new InputFilter[] { filter });
 	}
 
 	private final int maxLen = 10;
@@ -98,7 +98,7 @@ public class TabMinePersonalDataFitnessIsGoodActivity extends BaseActivity {
 			}
 
 			if (count > maxLen) {
-				ToastUtil.show(getResources().getString(R.string.yourlength),TabMinePersonalDataFitnessIsGoodActivity.this);
+				ToastUtil.show(getResources().getString(R.string.yourlength),TabMinePersonalDataFitnessGoalsActivity.this);
 				return dest.subSequence(0, dindex - 1);
 			}
 
@@ -114,7 +114,7 @@ public class TabMinePersonalDataFitnessIsGoodActivity extends BaseActivity {
 
 			if (count > maxLen) {
 				sindex--;
-				ToastUtil.show(getResources().getString(R.string.yourlength),TabMinePersonalDataFitnessIsGoodActivity.this);
+				ToastUtil.show(getResources().getString(R.string.yourlength),TabMinePersonalDataFitnessGoalsActivity.this);
 			}
 
 			return src.subSequence(0, sindex);
@@ -122,7 +122,7 @@ public class TabMinePersonalDataFitnessIsGoodActivity extends BaseActivity {
 	};
 
 	private void onClick() {
-		fitnessisgood.setOnTouchListener(new OnTouchListener() {
+		personal_data_fitness_goals.setOnTouchListener(new OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -130,22 +130,23 @@ public class TabMinePersonalDataFitnessIsGoodActivity extends BaseActivity {
 						.getWindowToken(), 0);
 			}
 		});
-		mlayout_tab_mine_personal_data_fitness_is_good_img
+		mlayout_tab_mine_personal_data_fitness_goals_img
 				.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						finish();
 					}
 				});
-		mlayout_tab_mine_personal_data_fitness_is_good_txt
+		mlayout_tab_mine_personal_data_fitness_goals_txt
 				.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						fitnessgood = medittext_the_fitness_is_good.getText()
+						fitness_goals = medittext_the_fitness_goals.getText()
 								.toString();
 						Intent data = new Intent();
-						data.putExtra("fitnessgood", fitnessgood);
-						setResult(2, data);
+						data.putExtra("fitnessgoals", fitness_goals);
+						// 请求代码可以自己设置，这里设置成20
+						setResult(1, data);
 						finish();
 					}
 				});
@@ -174,7 +175,7 @@ public class TabMinePersonalDataFitnessIsGoodActivity extends BaseActivity {
 	 * 刷新剩余输入字数,最大值新浪微博是140个字，人人网是200个字
 	 */
 	private void setLeftCount() {
-		mtextview_the_fitness_is_good_zishu.setText(String
+		mtextview_the_individuality_signature_zishu.setText(String
 				.valueOf((MIN_COUNT - getInputCount())));
 	}
 
@@ -184,9 +185,7 @@ public class TabMinePersonalDataFitnessIsGoodActivity extends BaseActivity {
 	 * @return
 	 */
 	private long getInputCount() {
-		return calculateLength(medittext_the_fitness_is_good.getText()
-				.toString());
+		return calculateLength(medittext_the_fitness_goals.getText().toString());
 	}
-
 
 }

@@ -2,7 +2,6 @@ package com.leyuan.aidong.ui.mvp.model.impl;
 
 import android.content.Context;
 
-import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.data.DynamicsData;
 import com.leyuan.aidong.entity.data.UserInfoData;
 import com.leyuan.aidong.http.RetrofitHelper;
@@ -11,18 +10,16 @@ import com.leyuan.aidong.http.api.UserInfoService;
 import com.leyuan.aidong.ui.mvp.model.UserInfoModel;
 
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * 用户资料
  * Created by song on 2017/1/16.
  */
-public class UserInfoModelImpl implements UserInfoModel{
+public class UserInfoModelImpl implements UserInfoModel {
     private UserInfoService userInfoService;
 
     public UserInfoModelImpl(Context context) {
-        userInfoService =  RetrofitHelper.createApi(UserInfoService.class);
+        userInfoService = RetrofitHelper.createApi(UserInfoService.class);
     }
 
     @Override
@@ -33,7 +30,7 @@ public class UserInfoModelImpl implements UserInfoModel{
     }
 
     @Override
-    public void updateUserInfo(Subscriber<BaseBean> subscriber,
+    public void updateUserInfo(Subscriber<UserInfoData> subscriber,
                                String name,
                                String avatar,
                                String gender,
@@ -51,17 +48,18 @@ public class UserInfoModelImpl implements UserInfoModel{
                                String hip,
                                String charm_site,
                                String frequency) {
-        userInfoService.updateUserInfo(name,avatar,gender,birthday,signature,tag,sport,province,
-                city,area,height,weight,bust,waist,hip,charm_site,frequency)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        userInfoService.updateUserInfo(name, avatar, gender, birthday, signature, tag, sport, province,
+                city, area, height, weight, bust, waist, hip, charm_site, frequency)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxHelper.<UserInfoData>transform())
                 .subscribe(subscriber);
 
     }
 
     @Override
     public void getUserDynamic(Subscriber<DynamicsData> subscriber, String id, int page) {
-        userInfoService.getUserDynamic(id,page)
+        userInfoService.getUserDynamic(id, page)
                 .compose(RxHelper.<DynamicsData>transform())
                 .subscribe(subscriber);
     }

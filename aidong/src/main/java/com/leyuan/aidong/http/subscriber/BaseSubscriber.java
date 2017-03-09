@@ -6,7 +6,7 @@ import android.widget.Toast;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.http.api.exception.NotLoginException;
 import com.leyuan.aidong.ui.App;
-import com.leyuan.aidong.ui.mine.account.LoginActivity;
+import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.utils.UiManager;
 import com.leyuan.aidong.widget.dialog.BaseDialog;
 import com.leyuan.aidong.widget.dialog.ButtonOkListener;
@@ -39,20 +39,21 @@ public abstract class BaseSubscriber<T> extends Subscriber<T> {
         } else if (e instanceof ConnectException) {
             Toast.makeText(context, R.string.connect_break, Toast.LENGTH_SHORT).show();
         } else if (e instanceof NotLoginException) {
-            new DialogSingleButton(context).setContentDesc(e.getMessage())
-                    .setBtnOkListener(new ButtonOkListener() {
-                        @Override
-                        public void onClick(BaseDialog dialog) {
-                            App.getInstance().exitLogin();
-                            UiManager.activityJump(context, LoginActivity.class);
-                        }
-                    }).show();
-
-//            Toast.makeText(context, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
-
+            showLoginDialog(e);
         } else {
             Toast.makeText(context, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void showLoginDialog(Throwable e) {
+        new DialogSingleButton(context).setContentDesc(e.getMessage())
+                .setBtnOkListener(new ButtonOkListener() {
+                    @Override
+                    public void onClick(BaseDialog dialog) {
+                        App.mInstance.exitLogin();
+                        UiManager.activityJump(context, LoginActivity.class);
+                    }
+                }).show();
     }
 
 }

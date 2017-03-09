@@ -1,6 +1,5 @@
 package com.leyuan.aidong.ui.mvp.model;
 
-import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.data.DynamicsData;
 import com.leyuan.aidong.entity.data.UserInfoData;
 
@@ -14,7 +13,7 @@ public interface UserInfoModel {
 
     void getUserInfo(Subscriber<UserInfoData> subscriber, String idongId);
 
-    void updateUserInfo(Subscriber<BaseBean> subscriber,
+    void updateUserInfo(Subscriber<UserInfoData> subscriber,
                         String name,
                         String avatar,
                         String gender,

@@ -20,7 +20,6 @@ import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.model.EaseNotifier;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.util.EMLog;
-import com.leyuan.aidong.entity.ProfileBean;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.module.chat.CallReceiver;
 import com.leyuan.aidong.module.chat.MyContactListener;
@@ -223,10 +222,10 @@ public class EmConfigManager implements EmChatView {
     }
 
     @Override
-    public void onGetUserInfo(List<ProfileBean> profile) {
+    public void onGetUserInfo(List<UserCoach> profile) {
         if (profile != null && !profile.isEmpty()) {
-            ProfileBean profileBean = profile.get(0);
-            EaseUser user = new EaseUser(profileBean.getId());
+            UserCoach profileBean = profile.get(0);
+            EaseUser user = new EaseUser(profileBean.getId()+"");
             user.setAvatar(profileBean.getAvatar());
             user.setNickname(profileBean.getName());
             DemoDBManager.getInstance().saveContact(user);

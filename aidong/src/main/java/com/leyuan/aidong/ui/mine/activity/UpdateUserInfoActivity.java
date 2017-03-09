@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.ProfileBean;
 import com.leyuan.aidong.module.photopicker.boxing.Boxing;
 import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
@@ -24,13 +23,11 @@ import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingCropOption
 import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
 import com.leyuan.aidong.module.photopicker.boxing.utils.BoxingFileHelper;
 import com.leyuan.aidong.module.photopicker.boxing_impl.ui.BoxingActivity;
-import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.view.SelectAddressDialog;
 import com.leyuan.aidong.ui.mvp.presenter.UserInfoPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.UserInfoPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.UpdateUserInfoActivityView;
-import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.Utils;
@@ -107,8 +104,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
         tvWeight = (ExtendTextView) findViewById(R.id.weight);
         tvBmi = (ExtendTextView) findViewById(R.id.bmi);
         tvFrequency = (ExtendTextView) findViewById(R.id.frequency);
-
-        tvNickname.setRightContent(App.mInstance.getUser().getUsername());
+        tvNickname.setRightContent(profileBean.getName() == null ? "请输入昵称" : profileBean.getName());
         tvGender.setRightContent(profileBean.getGender());
         tvIdentify.setRightContent("健身爱好者");
         tvSignature.setRightContent(profileBean.getSignature());
@@ -130,6 +126,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
     private void setListener() {
         ivBack.setOnClickListener(this);
         tvFinish.setOnClickListener(this);
+        tvNickname.setOnClickListener(this);
         ivAvatar.setOnClickListener(this);
         tvGender.setOnClickListener(this);
         tvIdentify.setOnClickListener(this);
@@ -150,13 +147,16 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
                 break;
             case R.id.tv_finish:
                 if (TextUtils.isEmpty(avatarPath)) {
-                    uploadToServer();
+                    uploadToServer(null);
                 } else {
                     uploadToQiNiu();
                 }
                 break;
             case R.id.dv_avatar:
                 selectAvatar();
+                break;
+            case R.id.nickname:
+                showNicknameDialog();
                 break;
             case R.id.gender:
                 showGenderDialog();
@@ -187,6 +187,23 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
         }
     }
 
+    private void showNicknameDialog() {
+        new MaterialDialog.Builder(this)
+                .title(R.string.confirm_nickname)
+                .inputType(InputType.TYPE_CLASS_TEXT |
+                        InputType.TYPE_TEXT_VARIATION_PERSON_NAME |
+                        InputType.TYPE_TEXT_FLAG_CAP_WORDS)
+                .inputRange(1, 20)
+                .positiveText(R.string.sure)
+                .input(getString(R.string.confirm_nickname), tvNickname.getText(), false, new MaterialDialog.InputCallback() {
+                    @Override
+                    public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
+                        tvNickname.setRightContent(input.toString());
+                    }
+                })
+                .show();
+    }
+
     private void uploadToQiNiu() {
         UploadQiNiuManager.getInstance().uploadSingleImage(avatarPath, new IQiNiuCallback() {
             @Override
@@ -194,7 +211,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
                 if (urls != null && !urls.isEmpty()) {
                     String url = urls.get(0);
                     avatarUrl = url.substring(url.indexOf("/") + 1);
-                    uploadToServer();
+                    uploadToServer(avatarUrl);
                 }
             }
 
@@ -205,18 +222,20 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
         });
     }
 
-    private void uploadToServer() {
-        userInfoPresent.updateUserInfo(avatarUrl, tvGender.getText(), tvBirthday.getText(), tvSignature.getText(),
+    private void uploadToServer(String avatarUrl) {
+        userInfoPresent.updateUserInfo(tvNickname.getText(), avatarUrl, tvGender.getText(), tvBirthday.getText(), tvSignature.getText(),
                 province, city, area, tvHeight.getText(), tvWeight.getText(), tvFrequency.getText());
     }
 
     @Override
-    public void updateResult(BaseBean baseBean) {
-        if (baseBean.getStatus() == Constant.OK) {
+    public void updateResult(boolean success) {
+        if (success) {
             Toast.makeText(UpdateUserInfoActivity.this, "修改成功", Toast.LENGTH_LONG).show();
+            finish();
         } else {
             Toast.makeText(UpdateUserInfoActivity.this, "修改失败", Toast.LENGTH_LONG).show();
         }
+
     }
 
     private void selectAvatar() {
@@ -409,5 +428,13 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
         if (height != 0f && weight != 0f) {
             tvBmi.setRightContent(String.valueOf(Utils.calBMI(weight, height)));
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        userInfoPresent.release();
+        userInfoPresent = null;
+        profileBean = null;
     }
 }

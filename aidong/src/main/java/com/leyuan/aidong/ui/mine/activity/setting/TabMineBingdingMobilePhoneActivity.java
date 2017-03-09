@@ -1,4 +1,4 @@
-package com.leyuan.aidong.ui.mine.activity;
+package com.leyuan.aidong.ui.mine.activity.setting;
 
 import android.app.ProgressDialog;
 import android.content.Intent;

@@ -1,4 +1,4 @@
-package com.leyuan.aidong.ui.mine.activity;
+package com.leyuan.aidong.ui.mine.activity.setting;
 
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
@@ -18,7 +18,9 @@ import com.leyuan.aidong.module.chat.manager.EmChatLoginManager;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.MainActivity;
-import com.leyuan.aidong.ui.mine.account.LoginActivity;
+import com.leyuan.aidong.ui.mine.activity.BingdingCommunityActivity;
+import com.leyuan.aidong.ui.mine.activity.PrivacyActivity;
+import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.utils.DataCleanManager;
 import com.leyuan.aidong.utils.MyDbUtils;
 import com.leyuan.aidong.utils.ToastUtil;
@@ -276,6 +278,7 @@ public class TabMinePersonalSettingsActivity extends BaseActivity {
                             intent.setClass(getApplicationContext(),
                                     TabMineChangePasswordActivity.class);
                             startActivity(intent);
+
                         } else {
                             intent.setClass(getApplicationContext(),
                                     LoginActivity.class);

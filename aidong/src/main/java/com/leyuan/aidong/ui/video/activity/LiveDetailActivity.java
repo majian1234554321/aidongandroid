@@ -21,10 +21,11 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.video.LiveVideoInfo;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mine.account.LoginActivity;
+import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.FastBlur;
 import com.leyuan.aidong.utils.LiveDateFilterUtil;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.Urls;
 import com.leyuan.aidong.widget.media.TextViewPrintly;
 
@@ -231,6 +232,7 @@ public class LiveDetailActivity extends BaseActivity implements View.OnClickList
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        Logger.i("share", " share pop == null ? " + (sharePopupWindow == null));
         sharePopupWindow.onNewIntent(intent);
     }
 

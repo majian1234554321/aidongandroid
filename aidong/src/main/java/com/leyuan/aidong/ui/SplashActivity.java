@@ -90,7 +90,7 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
         if (versionInfomation != null && VersionManager.shouldUpdate(versionInfomation.getVersion(), this)) {
             showUpdateDialog(versionInfomation);
         } else {
-            if (App.getInstance().isLogin()) {
+            if (App.mInstance.isLogin()) {
                 //先自动登录
                 splashPresenter.autoLogin();
             } else {
@@ -115,7 +115,7 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
                 .setBtnCancelListener(new ButtonCancelListener() {
                     @Override
                     public void onClick(BaseDialog dialog) {
-                        if (App.getInstance().isLogin()) {
+                        if (App.mInstance.isLogin()) {
                             //先自动登录
                             splashPresenter.autoLogin();
                         } else {

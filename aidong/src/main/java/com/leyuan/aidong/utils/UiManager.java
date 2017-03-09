@@ -8,7 +8,7 @@ import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
 import com.leyuan.aidong.ui.App;
-import com.leyuan.aidong.ui.mine.account.LoginActivity;
+import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 
 public class UiManager {
 

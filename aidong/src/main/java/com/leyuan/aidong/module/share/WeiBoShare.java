@@ -120,7 +120,7 @@ public class WeiBoShare implements IWeiboHandler.Response {
         request.multiMessage = weiboMessage;
 //        mWeiboShareAPI.sendRequest(context, request);
 
-        AuthInfo authInfo = new AuthInfo(context, WeiBoConstants.APP_KEY, WeiBoConstants.REDIRECT_URL, null);
+        AuthInfo authInfo = new AuthInfo(context, WeiBoConstants.APP_KEY, WeiBoConstants.REDIRECT_URL, WeiBoConstants.SCOPE);
         Oauth2AccessToken accessToken = AccessTokenKeeper.readAccessToken(context);
         String token = "";
         if (accessToken != null) {
@@ -156,7 +156,7 @@ public class WeiBoShare implements IWeiboHandler.Response {
 
     public void share(final String title, final String content, String imageUrl, final String webUrl) {
         Glide.with(context).load(imageUrl).asBitmap()
-                .into(new SimpleTarget<Bitmap>(50, 50) {
+                .into(new SimpleTarget<Bitmap>(100, 100) {
                     @Override
                     public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                         sendMessage(title, content, resource, webUrl);

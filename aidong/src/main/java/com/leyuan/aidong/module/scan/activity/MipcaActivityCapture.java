@@ -32,7 +32,7 @@ import com.leyuan.aidong.module.scan.decoding.CaptureActivityHandler;
 import com.leyuan.aidong.module.scan.decoding.InactivityTimer;
 import com.leyuan.aidong.module.scan.view.ViewfinderView;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mine.account.LoginActivity;
+import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 
 import java.io.IOException;
 import java.util.Vector;

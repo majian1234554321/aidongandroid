@@ -1,4 +1,4 @@
-package com.leyuan.aidong.ui.mine.login;
+package com.leyuan.aidong.ui.mine.activity.account;
 
 import android.os.Bundle;
 import android.text.TextUtils;

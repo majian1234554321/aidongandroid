@@ -40,7 +40,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -58,8 +57,9 @@
         android:theme="@style/AppTheme.FullScreen">
         <activity
             android:name=".ui.SplashActivity"
-            android:theme="@style/SplashBackgroundTheme"
-            android:screenOrientation="portrait">
+
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashBackgroundTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -70,35 +70,48 @@
             android:name=".ui.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.account.LoginActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait">
-            <!-- 微博分享需要-->
-            <intent-filter>
-                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".ui.mine.activity.TabMinePersonalDataFitnessGoalsActivity"
+            android:name=".ui.mine.activity.account.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.TabMinePersonalDataFitnessIsGoodActivity"
+            android:name=".ui.mine.activity.account.RegisterActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.TabMinePersonalDataIndividualitySignatureActivity"
+            android:name=".ui.mine.activity.account.ChangePasswordActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.mine.activity.account.FastLoginActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.mine.activity.account.FindPasswordActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.mine.activity.account.UserAgreementActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.mine.activity.account.XiuGaiGeXinQianMing"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.mine.activity.setting.TabMinePersonalDataFitnessGoalsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.TabMinePersonalDataNicknameActivity"
+            android:name=".ui.mine.activity.setting.TabMinePersonalDataFitnessIsGoodActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.TabMinePersonalDataOftenGymActivity"
+            android:name=".ui.mine.activity.setting.TabMinePersonalDataIndividualitySignatureActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.account.UserAgreementActivity"
+            android:name=".ui.mine.activity.setting.TabMinePersonalDataNicknameActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.AboutMxActivity"
+            android:name=".ui.mine.activity.setting.TabMinePersonalDataOftenGymActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.setting.AboutMxActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.mine.activity.BingdingCommunityActivity"
@@ -107,19 +120,19 @@
             android:name=".ui.mine.activity.PrivacyActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.TabHelpActivity"
+            android:name=".ui.mine.activity.setting.TabHelpActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.TabMineBingdingMobilePhoneActivity"
+            android:name=".ui.mine.activity.setting.TabMineBingdingMobilePhoneActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.TabMineChangePasswordActivity"
+            android:name=".ui.mine.activity.setting.TabMineChangePasswordActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.TabMineMessageReminderActivity"
+            android:name=".ui.mine.activity.setting.TabMineMessageReminderActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.TabMinePersonalSettingsActivity"
+            android:name=".ui.mine.activity.setting.TabMinePersonalSettingsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.mine.activity.LoveCoinActivity"
@@ -312,10 +325,38 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.video.activity.LiveDetailActivity"
-            android:screenOrientation="portrait" />
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait">
+            <!-- 微博分享需要-->
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+        </activity>
+
         <activity
             android:name=".ui.video.activity.LivingVideoActivity"
-            android:screenOrientation="portrait" />
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="landscape"
+            android:theme="@style/PlayerTheme"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+
+                <data android:mimeType="video/*"/>
+                <data android:mimeType="audio/*"/>
+                <data android:scheme="http"/>
+                <data android:scheme="file"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+
+                <data android:mimeType="video/*"/>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.video.activity.VideoCommentActivity"
             android:screenOrientation="portrait" />
@@ -358,21 +399,6 @@
             android:name=".ui.discover.activity.DiscoverUserActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.login.ChangePasswordActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.mine.login.FastLoginActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.mine.login.FindPasswordActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.mine.login.RegisterActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.mine.login.XiuGaiGeXinQianMing"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.mine.activity.EMChatActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
@@ -413,6 +439,7 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
         <receiver
             android:name=".receivers.WeixinRegisterReceiver"
             android:permission="com.tencent.mm.plugin.permission.SEND">
@@ -483,6 +510,9 @@
         <meta-data
             android:name="WEIBO_CHANNEL"
             android:value="weibo" />
+        <service
+            android:name="com.sina.weibo.sdk.net.DownloadService"
+            android:exported="false" />
 
 
         <!-- 设置环信应用的AppKey -->

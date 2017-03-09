@@ -57,7 +57,8 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                     Intent intent = new Intent();
                     intent.setAction(Constant.WX_LOGIN_SUCCESS_ACTION);
                     intent.putExtra(Constant.WX_LOGIN_CODE, code_code);
-                    sendBroadcast(new Intent());
+                    intent.setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+                    sendBroadcast(intent);
 //                    Bundle bundle = new Bundle();
 //                    bundle.putString(Constant.WX_LOGIN_CODE, code_code);
 //                    UiManager.activityJump(this, bundle, LoginActivity.class, Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -70,7 +71,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 }
 
 
-//                finish();
+                finish();
                 break;
             case BaseResp.ErrCode.ERR_USER_CANCEL:
                 result = "发送取消";

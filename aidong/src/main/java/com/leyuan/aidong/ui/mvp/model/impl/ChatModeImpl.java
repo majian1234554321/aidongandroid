@@ -1,6 +1,6 @@
 package com.leyuan.aidong.ui.mvp.model.impl;
 
-import com.leyuan.aidong.entity.user.ProfileBeanResult;
+import com.leyuan.aidong.entity.user.UserListResult;
 import com.leyuan.aidong.http.RetrofitHelper;
 import com.leyuan.aidong.http.RxHelper;
 import com.leyuan.aidong.http.api.ChatService;
@@ -21,9 +21,9 @@ public class ChatModeImpl {
         this.chatService = RetrofitHelper.createApi(ChatService.class);
     }
 
-    public void getUserInfo(Observer<ProfileBeanResult> subscribe, List<String> ids) {
+    public void getUserInfo(Observer<UserListResult> subscribe, List<String> ids) {
         chatService.getUserInfo(ids)
-                .compose(RxHelper.<ProfileBeanResult>transform())
+                .compose(RxHelper.<UserListResult>transform())
                 .subscribe(subscribe);
     }
 }

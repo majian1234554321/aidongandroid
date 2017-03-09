@@ -1,7 +1,7 @@
 package com.leyuan.aidong.http.api;
 
 import com.leyuan.aidong.entity.BaseBean;
-import com.leyuan.aidong.entity.user.ProfileBeanResult;
+import com.leyuan.aidong.entity.user.UserListResult;
 
 import java.util.List;
 
@@ -18,6 +18,6 @@ public interface ChatService {
 
     @FormUrlEncoded
     @POST("chat")
-    Observable<BaseBean<ProfileBeanResult>> getUserInfo(@Field("ids[]") List<String> id);
+    Observable<BaseBean<UserListResult>> getUserInfo(@Field("ids[]") List<String> id);
 
 }

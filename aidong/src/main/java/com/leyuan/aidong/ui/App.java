@@ -17,6 +17,7 @@ import com.leyuan.aidong.module.photopicker.boxing.BoxingCrop;
 import com.leyuan.aidong.module.photopicker.boxing.BoxingMediaLoader;
 import com.leyuan.aidong.module.photopicker.boxing.loader.IBoxingMediaLoader;
 import com.leyuan.aidong.utils.LogAidong;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.SharePrefUtils;
 import com.leyuan.aidong.utils.VersionManager;
 
@@ -126,13 +127,13 @@ public class App extends Application {
             user = SharePrefUtils.getUser(this);
         }
         return user;
-
     }
 
     public void setUser(UserCoach user) {
         this.user = user;
         if (user != null && user.getToken() != null) {
             setToken(user.getToken());
+            Logger.i("User", "name = " + user.getName());
         }
         SharePrefUtils.setUser(context, user);
     }
@@ -149,9 +150,9 @@ public class App extends Application {
         SharePrefUtils.setToken(context, token);
     }
 
-    public static App getInstance() {
-        return mInstance;
-    }
+//    public static App getInstance() {
+//        return mInstance;
+//    }
 
     public String getVersionName() {
         if (versionName == null) {

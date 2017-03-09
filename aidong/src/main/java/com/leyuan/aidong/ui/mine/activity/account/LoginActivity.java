@@ -1,4 +1,4 @@
-package com.leyuan.aidong.ui.mine.account;
+package com.leyuan.aidong.ui.mine.activity.account;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -15,8 +15,6 @@ import com.leyuan.aidong.module.chat.manager.EmChatLoginManager;
 import com.leyuan.aidong.module.chat.manager.EmChatRegisterManager;
 import com.leyuan.aidong.module.thirdpartylogin.ThirdLoginUtils;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mine.login.FindPasswordActivity;
-import com.leyuan.aidong.ui.mine.login.RegisterActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.LoginPresenter;
 import com.leyuan.aidong.ui.mvp.view.LoginViewInterface;
 import com.leyuan.aidong.utils.Constant;
@@ -37,7 +35,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private EmChatLoginManager chatLoginManager;
     private EmChatRegisterManager chatRegisterManager;
     private LocalReceiver receiver;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,10 +133,20 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        Logger.i(TAG, "receiver = " + receiver + ", == null ? " + (receiver == null));
+    }
+
+    @Override
     public void onChatLogin(boolean result) {
         DialogUtils.dismissDialog();
         if (result) {
             ToastUtil.showConsecutiveShort("登陆成功");
+            finish();
+        } else {
+            ToastUtil.showConsecutiveShort("登陆成功 聊天服务不可用");
             finish();
         }
     }
@@ -162,13 +169,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         }
     }
 
-
     //    应用调用Andriod_SDK接口时，如果要成功接收到回调，需要在调用接口的Activity的onActivityResult方法中增加如下代码：
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         DialogUtils.dismissDialog();
         loginPresenter.onActivityResultData(requestCode, resultCode, data);
-
     }
 
 
@@ -177,8 +182,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         super.onNewIntent(intent);
         DialogUtils.dismissDialog();
         Logger.i("share", " loginactivity onNewIntent");
-
-
     }
 
     @Override

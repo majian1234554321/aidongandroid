@@ -26,7 +26,7 @@ import com.leyuan.aidong.adapter.CommonViewPagerAdapter;
 import com.leyuan.aidong.entity.video.VideoDetail;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mine.account.LoginActivity;
+import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VideoPresenterImpl;
 import com.leyuan.aidong.ui.mvp.view.VideoDetailView;
 import com.leyuan.aidong.utils.FastBlur;
