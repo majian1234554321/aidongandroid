@@ -33,6 +33,7 @@ import com.leyuan.aidong.adapter.home.GoodsDetailCouponAdapter;
 import com.leyuan.aidong.entity.DeliveryBean;
 import com.leyuan.aidong.entity.GoodsDetailBean;
 import com.leyuan.aidong.entity.PhotoBrowseInfo;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.discover.activity.PhotoBrowseActivity;
 import com.leyuan.aidong.ui.home.fragment.GoodsDetailFragment;
@@ -40,6 +41,7 @@ import com.leyuan.aidong.ui.home.fragment.GoodsProblemFragment;
 import com.leyuan.aidong.ui.home.fragment.GoodsServiceFragment;
 import com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow;
 import com.leyuan.aidong.ui.mine.activity.CartActivity;
+import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.CouponPresent;
 import com.leyuan.aidong.ui.mvp.presenter.GoodsDetailPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.GoodsDetailPresentImpl;
@@ -63,6 +65,10 @@ import java.util.List;
 import cn.bingoogolapple.bgabanner.BGABanner;
 
 import static com.leyuan.aidong.utils.Constant.EMPTY_STR;
+import static com.leyuan.aidong.utils.Constant.REQUEST_ADD_CART;
+import static com.leyuan.aidong.utils.Constant.REQUEST_BUY_IMMEDIATELY;
+import static com.leyuan.aidong.utils.Constant.REQUEST_CONFIRM;
+import static com.leyuan.aidong.utils.Constant.REQUEST_TO_CART;
 
 
 /**
@@ -309,7 +315,11 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
                 startActivityForResult(intent,CODE_SELECT_ADDRESS,optionsCompat.toBundle());
                 break;
             case R.id.iv_cart:
-                startActivity(new Intent(this, CartActivity.class));
+                if(App.mInstance.isLogin()) {
+                    startActivity(new Intent(this, CartActivity.class));
+                }else {
+                    startActivityForResult(new Intent(this, LoginActivity.class), REQUEST_TO_CART);
+                }
                 break;
             case R.id.tv_add_cart:
                 showSkuPopupWindow(this,detailBean,selectedSkuValues,FROM_ADD_CART);
@@ -397,7 +407,7 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(data == null){
+        if(resultCode != RESULT_OK){
             return;
         }
 
@@ -414,6 +424,23 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
                     tvDeliveryInfo.setText("自提");
                 }
             }
+        }else if(requestCode == REQUEST_CONFIRM){
+            if(skuPopupWindow != null){
+                skuPopupWindow.confirm();
+                skuPopupWindow.dismiss();
+            }
+        } else if(requestCode == REQUEST_ADD_CART){
+            if(skuPopupWindow != null){
+                skuPopupWindow.addCart();
+                skuPopupWindow.dismiss();
+            }
+        }else if(requestCode == REQUEST_BUY_IMMEDIATELY){
+            if(skuPopupWindow != null){
+                skuPopupWindow.buyImmediately();
+                skuPopupWindow.dismiss();
+            }
+        }else if(requestCode == REQUEST_TO_CART){
+            startActivity(new Intent(this, CartActivity.class));
         }
     }
 

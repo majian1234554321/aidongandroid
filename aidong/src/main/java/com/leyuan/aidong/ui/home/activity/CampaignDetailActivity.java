@@ -18,9 +18,11 @@ import com.leyuan.aidong.adapter.home.ApplicantAdapter;
 import com.leyuan.aidong.entity.CampaignDetailBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.CampaignPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CampaignPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CampaignDetailActivityView;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.zzhoujay.richtext.RichText;
@@ -41,7 +43,6 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
     private static final String STATUS_NOT_PAY = "5";              //待支付
     private static final String STATUS_FULL = "6";                 //报名人数已满
     private static final String STATUS_CAMPAIGN_END = "7";         //活动已结束
-    private String status;
 
     private ImageView ivBack;
     private SwitcherLayout switcherLayout;
@@ -122,8 +123,9 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
             }
         });
 
-        applicantView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
-        applicantAdapter = new ApplicantAdapter();
+        applicantView.setLayoutManager(new LinearLayoutManager(
+                this,LinearLayoutManager.HORIZONTAL,false));
+        applicantAdapter = new ApplicantAdapter(this);
         applicantView.setAdapter(applicantAdapter);
         applicantView.setNestedScrollingEnabled(false);
     }
@@ -166,7 +168,6 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
         pagerLayout.setVisibility(View.VISIBLE);
         bottomLayout.setVisibility(View.VISIBLE);
         this.detailBean = bean;
-        status = bean.getStatus();
         bannerLayout.setData(bean.getImage(),null);
         tvCampaignName.setText(bean.getName());
         tvLandmark.setText(bean.getLandmark());
@@ -199,11 +200,11 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
 
     //设置底部状态
     private void setBottomStatus(){
-        if(TextUtils.isEmpty(status)) {
+        if(TextUtils.isEmpty(detailBean.getStatus())) {
             return;
         }
         bottomLayout.setVisibility(View.VISIBLE);
-        switch (status){
+        switch (detailBean.getStatus()){
             case STATUS_APPLY:
                 tvPrice.setVisibility(View.VISIBLE);
                 tvState.setText(R.string.campaign_status_apply);
@@ -245,17 +246,24 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
     }
 
     private void bottomToTargetActivity(){
-        if(STATUS_APPLY.equals(status)){     //预约
+        if(STATUS_APPLY.equals(detailBean.getStatus())){     //预约
             if(App.mInstance.isLogin()){
-                //todo 判断同一时间是否已有预约
                 AppointCampaignActivity.start(this, detailBean);
             }else {
-                //todo  登录 登录完成之后重新刷接口
+                startActivityForResult(new Intent(this, LoginActivity.class), Constant.REQUEST_LOGIN);
             }
-        }else if(STATUS_NOT_PAY.equals(status)){
+        }else if(STATUS_NOT_PAY.equals(detailBean.getStatus())){
             AppointCampaignActivity.start(this, detailBean);
-        }else {
-            AppointCampaignActivity.start(this, detailBean);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            if(requestCode == Constant.REQUEST_LOGIN){
+                campaignPresent.getCampaignDetail(switcherLayout,id);
+            }
         }
     }
 }

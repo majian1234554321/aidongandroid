@@ -65,6 +65,7 @@ public class AppointmentPresentImpl implements AppointmentPresent {
                     appointmentBeanList = appointmentData.getAppointment();
                 }
                 if(!appointmentBeanList.isEmpty()){
+                    appointmentFragmentView.hideEmptyView();
                     appointmentFragmentView.onRecyclerViewRefresh(appointmentBeanList);
                 }else {
                     appointmentFragmentView.showEmptyView();
@@ -89,8 +90,12 @@ public class AppointmentPresentImpl implements AppointmentPresent {
                     appointmentBeanList = appointmentData.getAppointment();
                 }
                 if(!appointmentBeanList.isEmpty()){
+                    appointmentFragmentView.hideEmptyView();
                     appointmentFragmentView.onRecyclerViewRefresh(appointmentBeanList);
                 }else {
+                    if(refreshLayout.isRefreshing()){
+                        refreshLayout.setRefreshing(false);
+                    }
                     appointmentFragmentView.showEmptyView();
                 }
             }

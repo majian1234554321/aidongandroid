@@ -331,7 +331,7 @@
             android:layout_height="wrap_content"
             android:text="@string/rmb_price"
             android:textColor="@color/main_red"
-            android:textSize="13sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_state"

@@ -20,6 +20,7 @@ import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CourseDetailBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.mine.activity.AppointCourseDetailActivity;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
@@ -126,7 +127,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             }
         });
 
-        applicantAdapter = new ApplicantAdapter();
+        applicantAdapter = new ApplicantAdapter(this);
         rvApplicant.setAdapter(applicantAdapter);
         rvApplicant.setLayoutManager(new LinearLayoutManager
                 (this,LinearLayoutManager.HORIZONTAL,false));
@@ -197,28 +198,6 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         setBottomStatus();
     }
 
-    @Override
-    public void addFollow(BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
-            isFollow = true;
-            ivFollow.setBackgroundResource(R.drawable.icon_following);
-            Toast.makeText(this,R.string.follow_success,Toast.LENGTH_LONG).show();
-        }else {
-            Toast.makeText(this,R.string.follow_fail,Toast.LENGTH_LONG).show();
-        }
-    }
-
-    @Override
-    public void cancelFollow(BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
-            isFollow = false;
-            ivFollow.setBackgroundResource(R.drawable.icon_follow);
-            Toast.makeText(this,R.string.cancel_follow_success,Toast.LENGTH_LONG).show();
-        }else {
-            Toast.makeText(this,R.string.cancel_follow_fail,Toast.LENGTH_LONG).show();
-        }
-    }
-
     private void setBottomStatus(){
         bottomLayout.setVisibility(View.VISIBLE);
         switch (detailBean.getStatus()){
@@ -280,11 +259,43 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             if(App.mInstance.isLogin()){
                 AppointCourseActivity.start(this, detailBean);
             }else {
-                startActivity(new Intent(this, LoginActivity.class));
+                startActivityForResult(new Intent(this, LoginActivity.class), Constant.REQUEST_LOGIN);
             }
-        }else{    //待支付
-            AppointCourseActivity.start(this, detailBean);
-            //AppointCourseDetailActivity.start(this, detailBean.getOrderId());
+        }else if(STATUS_NOT_PAY.equals(detailBean.getStatus())){    //待支付
+            AppointCourseDetailActivity.start(this, detailBean.getOrderId());
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            if(requestCode == Constant.REQUEST_LOGIN){
+                coursePresent.getCourseDetail(switcherLayout,code);
+            }
+        }
+    }
+
+    @Override
+    public void addFollow(BaseBean baseBean) {
+        if(baseBean.getStatus() == Constant.OK){
+            isFollow = true;
+            ivFollow.setBackgroundResource(R.drawable.icon_following);
+            Toast.makeText(this,R.string.follow_success,Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(this,R.string.follow_fail,Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void cancelFollow(BaseBean baseBean) {
+        if(baseBean.getStatus() == Constant.OK){
+            isFollow = false;
+            ivFollow.setBackgroundResource(R.drawable.icon_follow);
+            Toast.makeText(this,R.string.cancel_follow_success,Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(this,R.string.cancel_follow_fail,Toast.LENGTH_LONG).show();
         }
     }
 }

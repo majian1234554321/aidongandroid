@@ -33,6 +33,7 @@ import com.leyuan.aidong.ui.discover.viewholder.ThreeImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.TwoImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.VideoViewHolder;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
+import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.SportCircleFragmentView;
@@ -48,6 +49,10 @@ import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
+import static com.leyuan.aidong.utils.Constant.REQUEST_LOGIN;
+import static com.leyuan.aidong.utils.Constant.REQUEST_TO_DYNAMIC;
+
 
 /**
  * 爱动圈
@@ -60,6 +65,7 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
     private CircleDynamicAdapter circleDynamicAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private List<DynamicBean> dynamicList;
+    private DynamicBean invokeDynamicBean;
 
     private int currPage = 1;
     private DynamicPresent dynamicPresent;
@@ -85,6 +91,8 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                currPage = 1;
+                RecyclerViewStateUtils.resetFooterViewState(recyclerView);
                 dynamicPresent.pullToRefreshData();
             }
         });
@@ -171,16 +179,25 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
 
         @Override
         public void onLikeClick(int position, String id, boolean isLike) {
-            if (isLike) {
-                dynamicPresent.cancelLike(id,position);
-            } else {
-                dynamicPresent.addLike(id,position);
+            if(App.mInstance.isLogin()) {
+                if (isLike) {
+                    dynamicPresent.cancelLike(id, position);
+                } else {
+                    dynamicPresent.addLike(id, position);
+                }
+            }else {
+                startActivityForResult(new Intent(getContext(), LoginActivity.class),REQUEST_LOGIN);
             }
         }
 
         @Override
         public void onCommentClick(DynamicBean dynamicBean) {
-            DynamicDetailActivity.start(getContext(),dynamicBean);
+            if(App.mInstance.isLogin()) {
+                DynamicDetailActivity.start(getContext(), dynamicBean);
+            }else {
+                invokeDynamicBean = dynamicBean;
+                startActivityForResult(new Intent(getContext(), LoginActivity.class),REQUEST_TO_DYNAMIC);
+            }
         }
 
         @Override
@@ -226,4 +243,16 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
         }
     }
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            if(requestCode == REQUEST_LOGIN){
+                dynamicPresent.pullToRefreshData();
+            }else if(requestCode == REQUEST_TO_DYNAMIC){
+                DynamicDetailActivity.start(getContext(), invokeDynamicBean);
+            }
+        }
+    }
 }

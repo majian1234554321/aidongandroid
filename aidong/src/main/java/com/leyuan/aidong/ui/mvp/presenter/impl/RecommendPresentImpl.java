@@ -55,8 +55,6 @@ public class RecommendPresentImpl implements RecommendPresent{
         }
     }
 
-
-
     @Override
     public void commendLoadRecommendData(final SwitcherLayout switcherLayout, String type) {
         recommendModel.getRecommendGoods(new CommonSubscriber<GoodsData>(switcherLayout) {

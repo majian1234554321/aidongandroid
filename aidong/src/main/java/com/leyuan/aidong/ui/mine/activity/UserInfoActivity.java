@@ -56,8 +56,8 @@ import java.util.List;
 
 import static com.leyuan.aidong.R.id.tv_message;
 import static com.leyuan.aidong.utils.Constant.REQUEST_LOGIN;
-import static com.leyuan.aidong.utils.Constant.REQUEST_PHOTO;
-import static com.leyuan.aidong.utils.Constant.REQUEST_VIDEO;
+import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_PHOTO;
+import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_VIDEO;
 
 
 /**
@@ -286,12 +286,12 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     private void takePhotos() {
         BoxingConfig multi = new BoxingConfig(BoxingConfig.Mode.MULTI_IMG);
         multi.needCamera().maxCount(6).isNeedPaging();
-        Boxing.of(multi).withIntent(this, BoxingActivity.class).start(this, REQUEST_PHOTO);
+        Boxing.of(multi).withIntent(this, BoxingActivity.class).start(this, REQUEST_SELECT_PHOTO);
     }
 
     private void takeVideo() {
         BoxingConfig videoConfig = new BoxingConfig(BoxingConfig.Mode.VIDEO).needCamera();
-        Boxing.of(videoConfig).withIntent(this, BoxingActivity.class).start(this, REQUEST_VIDEO);
+        Boxing.of(videoConfig).withIntent(this, BoxingActivity.class).start(this, REQUEST_SELECT_VIDEO);
     }
 
     @Override
@@ -301,8 +301,8 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
             if(requestCode == Constant.REQUEST_LOGIN){
                 isSelf = isSelf(userId);
                 userInfoPresent.getUserInfo(switcherLayout, userId);
-            }else if(requestCode == REQUEST_PHOTO || requestCode == REQUEST_VIDEO){
-                PublishDynamicActivity.start(this, requestCode == REQUEST_PHOTO, Boxing.getResult(data));
+            }else if(requestCode == REQUEST_SELECT_PHOTO || requestCode == REQUEST_SELECT_VIDEO){
+                PublishDynamicActivity.start(this, requestCode == REQUEST_SELECT_PHOTO, Boxing.getResult(data));
             }
         }
     }

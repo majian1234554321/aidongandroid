@@ -53,31 +53,25 @@ public class CampaignPresentImpl implements CampaignPresent {
         this.context = context;
         this.campaignActivityView = view;
         campaignBeanList = new ArrayList<>();
-        if(campaignModel == null){
-            campaignModel = new CampaignModelImpl();
-        }
     }
 
     public CampaignPresentImpl(Context context, AppointCampaignActivityView view) {
         this.context = context;
         this.appointCampaignActivityView = view;
         campaignBeanList = new ArrayList<>();
-        if(couponModel == null){
-            couponModel = new CouponModelImpl();
-        }
-    }
 
+    }
 
     public CampaignPresentImpl(Context context, CampaignDetailActivityView view) {
         this.context = context;
         this.campaignDetailView = view;
-        if(campaignModel == null){
-            campaignModel = new CampaignModelImpl();
-        }
     }
 
     @Override
     public void commonLoadData(final SwitcherLayout switcherLayout) {
+        if(campaignModel == null){
+            campaignModel = new CampaignModelImpl();
+        }
         campaignModel.getCampaigns(new CommonSubscriber<CampaignData>(switcherLayout) {
             @Override
             public void onNext(CampaignData campaignData) {
@@ -93,6 +87,9 @@ public class CampaignPresentImpl implements CampaignPresent {
 
     @Override
     public void pullToRefreshData() {
+        if(campaignModel == null){
+            campaignModel = new CampaignModelImpl();
+        }
         campaignModel.getCampaigns(new RefreshSubscriber<CampaignData>(context) {
             @Override
             public void onNext(CampaignData campaignBean) {
@@ -105,6 +102,9 @@ public class CampaignPresentImpl implements CampaignPresent {
 
     @Override
     public void requestMoreData(RecyclerView recyclerView, final int pageSize, int page) {
+        if(campaignModel == null){
+            campaignModel = new CampaignModelImpl();
+        }
         campaignModel.getCampaigns(new RequestMoreSubscriber<CampaignData>(context,recyclerView,pageSize) {
             @Override
             public void onNext(CampaignData campaignDataBean) {
@@ -126,6 +126,9 @@ public class CampaignPresentImpl implements CampaignPresent {
 
     @Override
     public void getCampaignDetail(final SwitcherLayout switcherLayout,String id) {
+        if(campaignModel == null){
+            campaignModel = new CampaignModelImpl();
+        }
         campaignModel.getCampaignDetail(new Subscriber<CampaignDetailData>() {
             @Override
             public void onStart() {
@@ -159,6 +162,9 @@ public class CampaignPresentImpl implements CampaignPresent {
     @Override
     public void buyCampaign(String id, String couponId, float integral, String payType, String contactName,
                             String contactMobile, final PayInterface.PayListener listener) {
+        if(campaignModel == null){
+            campaignModel = new CampaignModelImpl();
+        }
         campaignModel.buyCampaign(new ProgressSubscriber<PayOrderData>(context) {
             @Override
             public void onNext(PayOrderData payOrderData) {
@@ -172,6 +178,9 @@ public class CampaignPresentImpl implements CampaignPresent {
 
     @Override
     public void getSpecifyCampaignCoupon(String id) {
+        if(couponModel == null){
+            couponModel = new CouponModelImpl();
+        }
         couponModel.getSpecifyGoodsCoupon(new ProgressSubscriber<CouponData>(context,false) {
             @Override
             public void onNext(CouponData couponData) {
