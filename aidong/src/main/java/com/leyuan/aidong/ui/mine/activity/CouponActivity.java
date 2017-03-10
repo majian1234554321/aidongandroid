@@ -32,7 +32,6 @@ public class CouponActivity extends BaseActivity implements SmartTabLayout.TabPr
     private SmartTabLayout tabLayout;
     private ViewPager viewPager;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

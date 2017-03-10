@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:scaleType="centerCrop"
-        android:background="@drawable/place_holder_logo"/>
+        android:background="@drawable/place_holder_logo"
+        android:transitionName="@string/transition_home"/>
 
     <TextView
         android:id="@+id/tv_brand_desc"

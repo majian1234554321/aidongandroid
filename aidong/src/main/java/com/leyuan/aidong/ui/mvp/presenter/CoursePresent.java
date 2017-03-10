@@ -74,4 +74,10 @@ public interface CoursePresent {
      * @param id
      */
     void cancelFollow(String id);
+
+    /**
+     * 获取指定课程可用优惠券
+     * @param id
+     */
+    void getSpecifyCourseCoupon(String id);
 }

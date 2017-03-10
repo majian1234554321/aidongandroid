@@ -1,5 +1,7 @@
 package com.leyuan.aidong.entity;
 
+import static com.leyuan.aidong.R.string.start_time;
+
 /**
  * 活动实体
  * Created by song on 2016/8/18.
@@ -8,8 +10,8 @@ public class CampaignBean {
     private String id;
     private String name;
     private String cover;
-    private String start_time;
-    private String landmart;
+    private String start;
+    private String landmark;
     
     public String getId() {
         return id;
@@ -35,30 +37,21 @@ public class CampaignBean {
         this.cover = cover;
     }
 
-    public String getStart_time() {
-        return start_time;
+    public String getStart() {
+        return start;
     }
 
-    public void setStart_time(String start_time) {
-        this.start_time = start_time;
+    public void setStart(String start) {
+        this.start = start;
     }
 
-    public String getLandmart() {
-        return landmart;
+    public String getLandmark() {
+        return landmark;
     }
 
-    public void setLandmart(String landmart) {
-        this.landmart = landmart;
+    public void setLandmark(String landmark) {
+        this.landmark = landmark;
     }
 
-    @Override
-    public String toString() {
-        return "CampaignBean{" +
-                "campaign_id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", cover='" + cover + '\'' +
-                ", start_time='" + start_time + '\'' +
-                ", landmart='" + landmart + '\'' +
-                '}';
-    }
+
 }

@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.mvp.presenter;
 
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 
 import com.leyuan.aidong.widget.SwitcherLayout;
@@ -15,13 +16,13 @@ public interface AppointmentPresent {
      * @param switcherLayout SwitcherLayout
      * @param type 全部 已参加 未参加
      */
-    void commonLoadData(SwitcherLayout switcherLayout, String type);
+    void commonLoadData( String type);
 
     /**
      * 下拉刷新
      * @param type 全部 已参加 未参加
      */
-    void pullToRefreshData(String type);
+    void pullToRefreshData(SwipeRefreshLayout refreshLayout,String type);
 
     /**
      * 上拉加载更多

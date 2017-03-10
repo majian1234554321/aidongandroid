@@ -2,6 +2,7 @@ package com.leyuan.aidong.adapter.home;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CourseBean;
 import com.leyuan.aidong.ui.home.activity.CourseDetailActivity;
+import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
@@ -40,7 +42,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
 
     @Override
     public CourseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = View.inflate(context,R.layout.item_course,null);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_course,parent,false);
         return new CourseViewHolder(view);
     }
 
@@ -48,7 +50,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
     public void onBindViewHolder(CourseViewHolder holder, int position) {
         final CourseBean bean = data.get(position);
         GlideLoader.getInstance().displayImage(bean.getCover(), holder.cover);
-        holder.price.setText(String.format(context.getString(R.string.rmb_price),bean.getPrice()));
+        holder.price.setText(String.format(context.getString(R.string.rmb_price_double),
+                FormatUtil.parseDouble(bean.getPrice())));
         holder.name.setText(bean.getName());
         holder.address.setText(bean.getAddress());
         holder.time.setText(String.format(context.getString(R.string.time_with_line),bean.getClassTime(),bean.getBreakTime()));
@@ -59,7 +62,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
             @Override
             public void onClick(View v) {
                 CourseDetailActivity.start(context,bean.getCode());
-
             }
         });
     }

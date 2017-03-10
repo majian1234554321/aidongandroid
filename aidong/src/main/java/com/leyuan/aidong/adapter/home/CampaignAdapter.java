@@ -2,6 +2,7 @@ package com.leyuan.aidong.adapter.home;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -39,7 +40,7 @@ public class CampaignAdapter extends RecyclerView.Adapter<CampaignAdapter.ViewHo
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = View.inflate(parent.getContext(),R.layout.item_campaign,null);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_campaign,parent,false);
         return new ViewHolder(view);
     }
 
@@ -48,8 +49,8 @@ public class CampaignAdapter extends RecyclerView.Adapter<CampaignAdapter.ViewHo
         final CampaignBean bean = data.get(position);
         GlideLoader.getInstance().displayImage(bean.getCover(), holder.cover);
         holder.hot.setText(bean.getName());
-        holder.address.setText(bean.getLandmart());
-        holder.time.setText(bean.getStart_time());
+        holder.address.setText(bean.getLandmark());
+        holder.time.setText(bean.getStart());
 
         holder.cover.setOnClickListener(new View.OnClickListener() {
             @Override

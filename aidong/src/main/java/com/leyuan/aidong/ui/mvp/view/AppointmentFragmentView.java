@@ -29,6 +29,11 @@ public interface AppointmentFragmentView {
     void showEmptyView();
 
     /**
+     * 显示空值界面
+     */
+    void hideEmptyView();
+
+    /**
      * 显示FooterView，提示没有任何内容了
      */
     void showEndFooterView();

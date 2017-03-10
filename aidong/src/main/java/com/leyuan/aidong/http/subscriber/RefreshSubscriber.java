@@ -1,6 +1,7 @@
 package com.leyuan.aidong.http.subscriber;
 
 import android.content.Context;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.Toast;
 
 import com.leyuan.aidong.R;
@@ -19,6 +20,7 @@ import rx.Subscriber;
  */
 public abstract class RefreshSubscriber<T> extends Subscriber<T> {
     private Context context;
+    private SwipeRefreshLayout refreshLayout;
 
     public RefreshSubscriber(Context context) {
         this.context = context;

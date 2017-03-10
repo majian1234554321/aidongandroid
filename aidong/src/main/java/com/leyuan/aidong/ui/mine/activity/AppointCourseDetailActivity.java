@@ -127,7 +127,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appoint_course_detail);
         appointmentPresent = new AppointmentPresentImpl(this,this);
-        coursePresent = new CoursePresentImpl(this);
+        coursePresent = new CoursePresentImpl(this,this);
         if(getIntent() != null){
             orderId = getIntent().getStringExtra("orderId");
         }

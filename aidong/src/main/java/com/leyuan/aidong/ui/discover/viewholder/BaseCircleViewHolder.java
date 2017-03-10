@@ -26,7 +26,7 @@ import com.leyuan.aidong.utils.GlideLoader;
  * @author song
  */
 public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<DynamicBean> implements IViewHolder<DynamicBean> {
-    private Context context;
+    protected Context context;
     private LinearLayout root;
     private ImageView ivAvatar;
     private TextView tvName;

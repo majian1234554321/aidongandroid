@@ -234,7 +234,7 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
             Toast.makeText(context,R.string.tip_select_goods,Toast.LENGTH_LONG).show();
             return;
         }
-        ConfirmOrderActivity.start(context, SettlementType.CART,selectedShops,calculateTotalPrice());
+        ConfirmOrderActivity.start(context, selectedShops,calculateTotalPrice());
     }
 
     public void changeAllGoodsStatus(boolean checked){

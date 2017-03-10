@@ -12,25 +12,32 @@ import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CampaignDetailBean;
+import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.module.pay.SimplePayListener;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mine.activity.CouponActivity;
+import com.leyuan.aidong.ui.mine.activity.SelectCouponActivity;
 import com.leyuan.aidong.ui.mvp.presenter.CampaignPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CampaignPresentImpl;
+import com.leyuan.aidong.ui.mvp.view.AppointCampaignActivityView;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.constant.PayType;
 import com.leyuan.aidong.widget.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.ExtendTextView;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_COUPON;
+
 /**
  * 预约活动
  * Created by song on 2016/9/12.
  */
 public class AppointCampaignActivity extends BaseActivity implements View.OnClickListener,
-        CustomNestRadioGroup.OnCheckedChangeListener {
+        CustomNestRadioGroup.OnCheckedChangeListener ,AppointCampaignActivityView{
     private SimpleTitleBar titleBar;
 
     //预约人信息
@@ -44,7 +51,7 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
     private TextView tvShop;
     private ExtendTextView tvTime;
     private ExtendTextView tvAddress;
-    private LinearLayout couponLayout;
+    private TextView tvCoupon;
     private LinearLayout goldLayout;
 
     //会员身份信息
@@ -73,6 +80,7 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
 
     private CampaignDetailBean campaignBean;
     private CampaignPresent campaignPresent;
+    private List<CouponBean> usableCoupons = new ArrayList<>();
 
     public static void start(Context context,CampaignDetailBean campaignBean) {
         Intent starter = new Intent(context, AppointCampaignActivity.class);
@@ -84,12 +92,14 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appoint_campaign);
+        campaignPresent = new CampaignPresentImpl(this,this);
         payType = PayType.ALI;
         if (getIntent() != null) {
             campaignBean = getIntent().getParcelableExtra("bean");
         }
         initView();
         setListener();
+        campaignPresent.getSpecifyCampaignCoupon(campaignBean.getCampaignId());
     }
 
     private void initView() {
@@ -102,7 +112,7 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
         tvShop = (TextView) findViewById(R.id.tv_shop);
         tvTime = (ExtendTextView) findViewById(R.id.tv_time);
         tvAddress = (ExtendTextView) findViewById(R.id.tv_address);
-        couponLayout = (LinearLayout) findViewById(R.id.ll_coupon);
+        tvCoupon = (TextView) findViewById(R.id.tv_coupon);
         goldLayout = (LinearLayout) findViewById(R.id.ll_gold);
         tvVip = (TextView) findViewById(R.id.tv_vip);
         tvNoVip = (TextView) findViewById(R.id.tv_no_vip);
@@ -121,7 +131,7 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
         contactMobile = App.mInstance.getUser().getMobile();
         tvUserName.setText(userName);
         tvUserPhone.setText(contactMobile);
-        tvCourseName.setText( campaignBean.getName());
+        tvCourseName.setText(campaignBean.getName());
         GlideLoader.getInstance().displayImage(campaignBean.getImage().get(0), dvCover);
         tvTime.setRightContent(campaignBean.getStartTime());
         tvAddress.setRightContent(campaignBean.getAddress());
@@ -131,7 +141,7 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
 
     private void setListener() {
         titleBar.setOnClickListener(this);
-        couponLayout.setOnClickListener(this);
+        tvCoupon.setOnClickListener(this);
         tvVip.setOnClickListener(this);
         tvNoVip.setOnClickListener(this);
         tvPay.setOnClickListener(this);
@@ -144,8 +154,11 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
             case R.id.iv_back:
                 finish();
                 break;
-            case R.id.ll_coupon:
-                startActivity(new Intent(this, CouponActivity.class));
+            case R.id.tv_coupon:
+                if(usableCoupons != null && usableCoupons.isEmpty()) {
+                    Intent intent = new Intent(this, SelectCouponActivity.class);
+                    startActivityForResult(intent, REQUEST_SELECT_COUPON);
+                }
                 break;
             case R.id.tv_vip:
                 tvNoVip.setTextColor(Color.parseColor("#000000"));
@@ -162,9 +175,6 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
                 vipTipLayout.setVisibility(View.VISIBLE);
                 break;
             case R.id.tv_pay:
-                if(campaignPresent == null){
-                    campaignPresent = new CampaignPresentImpl(this);
-                }
                 campaignPresent.buyCampaign(campaignBean.getCampaignId(),couponId,integral,
                         payType,userName,contactMobile,payListener);
                 break;
@@ -191,6 +201,24 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
                 break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    public void setCampaignCouponResult(List<CouponBean> usableCoupons) {
+        this.usableCoupons = usableCoupons;
+        if(usableCoupons == null || usableCoupons.isEmpty()){
+            tvCoupon.setText("无可用");
+            tvCoupon.setCompoundDrawables(null,null,null,null);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(data != null){
+            if(requestCode == REQUEST_SELECT_COUPON){
+
+            }
         }
     }
 }

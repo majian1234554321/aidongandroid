@@ -29,6 +29,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.ConfirmOrderPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.ConfirmOrderActivityView;
 import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.FormatUtil;
+import com.leyuan.aidong.utils.constant.CouponType;
 import com.leyuan.aidong.utils.constant.DeliveryType;
 import com.leyuan.aidong.utils.constant.GoodsType;
 import com.leyuan.aidong.utils.constant.PayType;
@@ -104,6 +105,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private String pickUpId;            //自提门店id或快递地址id
     private String pickUpDate;          //自提时间
 
+    private String couponType;
     private String settlementType;
     private double totalGoodsPrice;
     private boolean needExpress = false;
@@ -116,12 +118,10 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         context.startActivity(starter);
     }
 
-    public static void start(Context context, String orderType,ArrayList<ShopBean> selectedShops,
-                             double totalGoodsPrice) {
+    public static void start(Context context,ArrayList<ShopBean> selectedShops,double totalGoodsPrice) {
         Intent starter = new Intent(context, ConfirmOrderActivity.class);
         starter.putParcelableArrayListExtra("selectedShops",selectedShops);
         starter.putExtra("totalGoodsPrice",totalGoodsPrice);
-        starter.putExtra("settlementType",orderType);
         context.startActivity(starter);
     }
 
@@ -136,7 +136,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             bottomLayout.setVisibility(View.GONE);
             present.getDefaultAddress(switcherLayout);
         }
-        present.getSpecifyGoodsCoupon(settlementType,itemIds);
+        present.getSpecifyGoodsCoupon(CouponType.CART,itemIds);
     }
 
     private void initVariable(){
@@ -162,13 +162,16 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 amount = FormatUtil.parseInt(goods.getAmount());
                 totalGoodsPrice = FormatUtil.parseDouble(goods.getPrice())* amount;
                 if(GoodsType.NUTRITION.equals(goods.getType())){
+                    couponType = CouponType.NUTRITION;
                     settlementType = SettlementType.NURTURE_IMMEDIATELY;
                 }else {
+                    couponType = CouponType.EQUIPMENT;
                     settlementType = SettlementType.EQUIPMENT_IMMEDIATELY;
                 }
             }
         }else {
-            settlementType = getIntent().getStringExtra("settlementType");
+            couponType = CouponType.CART;
+            settlementType  = SettlementType.CART;
             totalGoodsPrice = getIntent().getDoubleExtra("totalGoodsPrice", 0f);
         }
 
@@ -247,7 +250,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.title_bar:
+            case R.id.iv_back:
                 finish();
                 break;
             case R.id.ll_self_delivery:

@@ -20,8 +20,9 @@ import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CourseDetailBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mine.activity.AppointCourseDetailActivity;
+import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
+import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CourseDetailActivityView;
@@ -48,7 +49,6 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     private static final String STATUS_FULL = "6";          //预约人数已满
     private static final String STATUS_COURSE_END = "7";    //课程结束
     private static final String STATUS_NOT_NEED= "8";       //无需预约
-
 
     private ImageView ivBack;
     private TextView tvTitle;
@@ -127,7 +127,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             }
         });
 
-        applicantAdapter = new ApplicantAdapter();
+        applicantAdapter = new ApplicantAdapter(this);
         rvApplicant.setAdapter(applicantAdapter);
         rvApplicant.setLayoutManager(new LinearLayoutManager
                 (this,LinearLayoutManager.HORIZONTAL,false));
@@ -151,6 +151,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             case R.id.iv_share:
                 break;
             case R.id.dv_avatar:
+                UserInfoActivity.start(this,detailBean.getCoach().getCoachId());
                 break;
             case R.id.iv_follow:
                 if(isFollow){
@@ -195,28 +196,6 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         tvStartTime.setText(String.format(getString(R.string.appoint_time),
                 bean.getClassDate()+bean.getClassTime()));
         setBottomStatus();
-    }
-
-    @Override
-    public void addFollow(BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
-            isFollow = true;
-            ivFollow.setBackgroundResource(R.drawable.icon_following);
-            Toast.makeText(this,R.string.follow_success,Toast.LENGTH_LONG).show();
-        }else {
-            Toast.makeText(this,R.string.follow_fail,Toast.LENGTH_LONG).show();
-        }
-    }
-
-    @Override
-    public void cancelFollow(BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
-            isFollow = false;
-            ivFollow.setBackgroundResource(R.drawable.icon_follow);
-            Toast.makeText(this,R.string.cancel_follow_success,Toast.LENGTH_LONG).show();
-        }else {
-            Toast.makeText(this,R.string.cancel_follow_fail,Toast.LENGTH_LONG).show();
-        }
     }
 
     private void setBottomStatus(){
@@ -278,14 +257,45 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     private void bottomToTargetActivity(){
         if(STATUS_APPOINT.equals(detailBean.getStatus())){           //预约
             if(App.mInstance.isLogin()){
-                //todo 判断同一时间是否已有预约
                 AppointCourseActivity.start(this, detailBean);
             }else {
-                //todo  登录 登录完成之后重新刷接口
-                startActivity(new Intent(this, LoginActivity.class));
+                startActivityForResult(new Intent(this, LoginActivity.class), Constant.REQUEST_LOGIN);
             }
         }else if(STATUS_NOT_PAY.equals(detailBean.getStatus())){    //待支付
             AppointCourseDetailActivity.start(this, detailBean.getOrderId());
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            if(requestCode == Constant.REQUEST_LOGIN){
+                coursePresent.getCourseDetail(switcherLayout,code);
+            }
+        }
+    }
+
+    @Override
+    public void addFollow(BaseBean baseBean) {
+        if(baseBean.getStatus() == Constant.OK){
+            isFollow = true;
+            ivFollow.setBackgroundResource(R.drawable.icon_following);
+            Toast.makeText(this,R.string.follow_success,Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(this,R.string.follow_fail,Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void cancelFollow(BaseBean baseBean) {
+        if(baseBean.getStatus() == Constant.OK){
+            isFollow = false;
+            ivFollow.setBackgroundResource(R.drawable.icon_follow);
+            Toast.makeText(this,R.string.cancel_follow_success,Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(this,R.string.cancel_follow_fail,Toast.LENGTH_LONG).show();
         }
     }
 }

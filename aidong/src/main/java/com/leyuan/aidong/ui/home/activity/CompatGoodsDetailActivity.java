@@ -44,8 +44,7 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  * 商品详情
  * Created by song on 2016/11/28.
  */
-@Deprecated
-public class OldGoodsDetailActivity extends BaseActivity implements View.OnClickListener,GoodsDetailActivityView, BGABanner.OnItemClickListener, ObserveScrollView.ScrollViewListener, GoodsSkuPopupWindow.SelectSkuListener {
+public class CompatGoodsDetailActivity extends BaseActivity implements View.OnClickListener,GoodsDetailActivityView, BGABanner.OnItemClickListener, ObserveScrollView.ScrollViewListener, GoodsSkuPopupWindow.SelectSkuListener {
     private SwitcherLayout switcherLayout;
     private LinearLayout rootLayout;
     private RelativeLayout contentLayout;

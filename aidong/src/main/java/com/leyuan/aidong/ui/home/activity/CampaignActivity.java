@@ -15,6 +15,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.home.fragment.CampaignFragment;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
+import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
@@ -43,8 +44,12 @@ public class CampaignActivity extends BaseActivity  implements SmartTabLayout.Ta
         tabLayout = (SmartTabLayout) findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.vp_content);
         FragmentPagerItems pages = new FragmentPagerItems(this);
-        pages.add(FragmentPagerItem.of(null,CampaignFragment.newInstance(CampaignFragment.FREE).getClass()));
-        pages.add(FragmentPagerItem.of(null,CampaignFragment.newInstance(CampaignFragment.PAY).getClass()));
+        CampaignFragment pay = new CampaignFragment();
+        CampaignFragment free = new CampaignFragment();
+        pages.add(FragmentPagerItem.of(null, pay.getClass(),
+                new Bundler().putString("type",CampaignFragment.PAY).get()));
+        pages.add(FragmentPagerItem.of(null,free.getClass(),
+                new Bundler().putString("type",CampaignFragment.FREE).get()));
         final FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);
         viewPager.setAdapter(adapter);
         tabLayout.setCustomTabView(this);

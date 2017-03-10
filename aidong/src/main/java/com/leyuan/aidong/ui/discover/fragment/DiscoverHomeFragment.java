@@ -32,6 +32,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
+import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_PHOTO;
+import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_VIDEO;
 
 
 /**
@@ -39,14 +41,12 @@ import static android.app.Activity.RESULT_OK;
  * Created by song on 2016/11/19.
  */
 public class DiscoverHomeFragment extends BaseFragment implements SmartTabLayout.TabProvider{
-    public static final int REQUEST_PHOTO = 1;
-    public static final int REQUEST_VIDEO = 2;
     private List<View> allTabView = new ArrayList<>();
     private ImageView camera;
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_discover_home,null);
+        return inflater.inflate(R.layout.fragment_discover_home,container,false);
     }
 
     @Override
@@ -127,19 +127,19 @@ public class DiscoverHomeFragment extends BaseFragment implements SmartTabLayout
     private void takePhotos(){
         BoxingConfig multi = new BoxingConfig(BoxingConfig.Mode.MULTI_IMG);
         multi.needCamera().maxCount(6).isNeedPaging();
-        Boxing.of(multi).withIntent(getContext(), BoxingActivity.class).start(this, REQUEST_PHOTO);
+        Boxing.of(multi).withIntent(getContext(), BoxingActivity.class).start(this, REQUEST_SELECT_PHOTO);
     }
 
     private void takeVideo(){
         BoxingConfig videoConfig = new BoxingConfig(BoxingConfig.Mode.VIDEO).needCamera();
-        Boxing.of(videoConfig).withIntent(getContext(), BoxingActivity.class).start(this, REQUEST_VIDEO);
+        Boxing.of(videoConfig).withIntent(getContext(), BoxingActivity.class).start(this, REQUEST_SELECT_VIDEO);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK ) {
-            PublishDynamicActivity.start(getContext(),requestCode == REQUEST_PHOTO,Boxing.getResult(data));
+            PublishDynamicActivity.start(getContext(),requestCode == REQUEST_SELECT_PHOTO,Boxing.getResult(data));
         }
     }
 

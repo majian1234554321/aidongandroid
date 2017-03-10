@@ -128,7 +128,7 @@ public class BrandActivity extends BaseActivity implements BrandActivityView, Vi
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.title_bar:
+            case R.id.iv_back:
                 finish();
                 break;
             case R.id.iv_cover:

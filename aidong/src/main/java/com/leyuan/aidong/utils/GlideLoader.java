@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.BitmapRequestBuilder;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.App;
 
@@ -42,8 +43,8 @@ public class GlideLoader {
     public void displayRoundImage(String imgUrl,ImageView imageView){
         Glide.with(getContext(imageView))
                 .load(imgUrl)
-                .bitmapTransform(new RoundedCornersTransformation(getContext(imageView),20,20))
-                .centerCrop()
+                .bitmapTransform(new CenterCrop(getContext(imageView)),
+                        new RoundedCornersTransformation(getContext(imageView), 20, 0))
                 .placeholder(new ColorDrawable(0xffc6c6c6))
                 .into(imageView);
     }

@@ -54,7 +54,7 @@ public class CampaignFragment extends BaseFragment implements CampaignFragmentVi
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_campaign,null);
+        return inflater.inflate(R.layout.fragment_campaign,container,false);
     }
 
     @Override
@@ -96,7 +96,7 @@ public class CampaignFragment extends BaseFragment implements CampaignFragmentVi
         @Override
         public void onLoadNextPage(View view) {
             currPage ++;
-            if (data != null && !data.isEmpty()) {
+            if (data != null && data.size() >= pageSize) {
                 campaignPresent.requestMoreData(recyclerView,pageSize,currPage);
             }
         }

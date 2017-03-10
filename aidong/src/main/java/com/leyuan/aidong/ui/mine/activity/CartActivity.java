@@ -117,7 +117,8 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
         public void onLoadNextPage(View view) {
             currPage ++;
             if (recommendList != null && recommendList.size() >= pageSize) {
-                recommendPresent.requestMoreRecommendData(recommendView,pageSize,currPage, RecommendGoodsPosition.CART);
+                recommendPresent.requestMoreRecommendData(recommendView,pageSize,currPage,
+                        RecommendGoodsPosition.CART);
             }
         }
     };

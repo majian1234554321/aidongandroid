@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.home.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -18,7 +19,10 @@ import com.leyuan.aidong.entity.GoodsSkuBean;
 import com.leyuan.aidong.entity.GoodsSkuValueBean;
 import com.leyuan.aidong.entity.LocalGoodsSkuBean;
 import com.leyuan.aidong.entity.ShopBean;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.home.activity.ConfirmOrderActivity;
+import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
+import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.CartPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CartPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.GoodsSkuPopupWindowView;
@@ -273,31 +277,42 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
                 tvCount.setText(String.valueOf(count));
                 break;
             case R.id.tv_confirm:
-                if(isAllSkuConfirm()){
-                    if(isAddCart){
-                        addCart();
-                    }else {
-                        confirmOrder();
+                if(App.mInstance.isLogin()) {
+                    if (isAllSkuConfirm()) {
+                        dismiss();
+                        confirm();
+                    } else {
+                        tipUnSelectSku();
                     }
-                    dismiss();
                 }else {
-                    tipUnSelectSku();
+                    ((GoodsDetailActivity)context).startActivityForResult(
+                            new Intent(context, LoginActivity.class),Constant.REQUEST_CONFIRM);
                 }
                 break;
             case R.id.tv_add_cart:
-                if(isAllSkuConfirm()) {
-                    dismiss();
-                    addCart();
+                if(App.mInstance.isLogin()) {
+                    if (isAllSkuConfirm()) {
+                        dismiss();
+                        addCart();
+                    } else {
+                        tipUnSelectSku();
+                    }
                 }else {
-                    tipUnSelectSku();
+                    ((GoodsDetailActivity)context).startActivityForResult(
+                            new Intent(context, LoginActivity.class),Constant.REQUEST_ADD_CART);
                 }
                 break;
             case R.id.tv_buy:
-                if(isAllSkuConfirm()){
-                    dismiss();
-                    confirmOrder();
+                if(App.mInstance.isLogin()) {
+                    if (isAllSkuConfirm()) {
+                        dismiss();
+                        buyImmediately();
+                    } else {
+                        tipUnSelectSku();
+                    }
                 }else {
-                   tipUnSelectSku();
+                    ((GoodsDetailActivity)context).startActivityForResult(
+                            new Intent(context, LoginActivity.class),Constant.REQUEST_BUY_IMMEDIATELY);
                 }
                 break;
             default:
@@ -305,14 +320,22 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         }
     }
 
-    private void addCart() {
+    public void confirm(){
+        if (isAddCart) {
+            addCart();
+        } else {
+            buyImmediately();
+        }
+    }
+
+    public void addCart() {
         GoodsSkuBean line = getLine(selectedSkuValues);
         String countStr = tvCount.getText().toString();
         String id = detailBean.pick_up.getInfo().getId();
         cartPresent.addCart(line.code,Integer.parseInt(countStr),id,recommendId);
     }
 
-    private void confirmOrder() {
+    public void buyImmediately(){
         GoodsSkuBean line = getLine(selectedSkuValues);
         ShopBean shopBean = new ShopBean();
         List<GoodsBean> goodsBeanList = new ArrayList<>();
@@ -327,14 +350,12 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         goodsBeanList.add(goodsBean);
         shopBean.setItem(goodsBeanList);
         shopBean.setPickUp(detailBean.pick_up);
-       /* int orderType = Constant.TYPE_NURTURE.equals(goodsType) ? Constant.ORDER_BUY_NURTURE_IMMEDIATELY
-                :Constant.ORDER_BUY_EQUIPMENT_IMMEDIATELY;*/
         ConfirmOrderActivity.start(context,shopBean);
     }
 
     @Override
     public void addCartResult(BaseBean baseBean) {
-        if(baseBean.getStatus() == 1){
+        if(baseBean.getStatus() == Constant.OK){
             Toast.makeText(context,context.getString(R.string.add_cart_success),Toast.LENGTH_LONG).show();
         }else {
             Toast.makeText(context,context.getString(R.string.add_cart_failed),Toast.LENGTH_LONG).show();

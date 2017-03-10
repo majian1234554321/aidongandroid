@@ -12,8 +12,6 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.AppointmentBean;
-import com.leyuan.aidong.ui.mine.activity.AppointCampaignDetailActivity;
-import com.leyuan.aidong.ui.mine.activity.AppointCourseDetailActivity;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 
@@ -65,7 +63,8 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         GlideLoader.getInstance().displayImage(bean.getCover(), holder.cover);
         holder.name.setText(bean.getName());
         holder.address.setText(bean.getSubName());
-        holder.price.setText(String.format(context.getString(R.string.rmb_price),bean.getPrice()));
+        holder.price.setText(String.format(context.getString(R.string.rmb_price_double),
+                FormatUtil.parseDouble(bean.getPrice())));
        // holder.timer.start(Long.parseLong(bean.getLittleTime()) * 1000);
 
         //与订单状态有关
@@ -86,11 +85,11 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                 holder.state.setText(context.getString(R.string.appointment_un_joined));
                 holder.payTip.setText(context.getString(R.string.true_pay));
                 holder.date.setText(String.format(context.getString(R.string.order_train_time),
-                        bean.getStartDate(), bean.getStartTime()));
+                        bean.getStart()));
                 holder.date.setVisibility(View.VISIBLE);
                 holder.timerLayout.setVisibility(View.GONE);
-                holder.tvCancelJoin.setVisibility(FormatUtil.parseDouble(bean.getPayAmount()) == 0 ?
-                        View.VISIBLE : View.GONE);
+                holder.tvCancelJoin.setVisibility(FormatUtil.parseDouble(bean.getPayAmount()) == 0
+                        ? View.VISIBLE : View.GONE);
                 holder.tvConfirm.setVisibility(View.VISIBLE);
                 holder.tvPay.setVisibility(View.GONE);
                 holder.tvDelete.setVisibility(View.GONE);
@@ -100,7 +99,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                 holder.state.setText(context.getString(R.string.appointment_joined));
                 holder.payTip.setText(context.getString(R.string.true_pay));
                 holder.date.setText(String.format(context.getString(R.string.order_train_time),
-                        bean.getStartDate(), bean.getStartTime()));
+                        bean.getStart()));
                 holder.date.setVisibility(View.VISIBLE);
                 holder.timerLayout.setVisibility(View.GONE);
                 holder.tvDelete.setVisibility(View.VISIBLE);
@@ -113,7 +112,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                 holder.state.setText(context.getString(R.string.order_close));
                 holder.payTip.setText(context.getString(R.string.true_pay));
                 holder.date.setText(String.format(context.getString(R.string.order_train_time),
-                        bean.getStartDate(), bean.getStartTime()));
+                        bean.getStart()));
                 holder.date.setVisibility(View.VISIBLE);
                 holder.timerLayout.setVisibility(View.GONE);
                 holder.tvDelete.setVisibility(View.VISIBLE);
@@ -125,7 +124,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             case REFUNDING:           //退款中
                 holder.state.setText(context.getString(R.string.order_refunding));
                 holder.date.setText(String.format(context.getString(R.string.order_train_time),
-                        bean.getStartDate(), bean.getStartTime()));
+                        bean.getStart()));
                 holder.date.setVisibility(View.VISIBLE);
                 holder.timerLayout.setVisibility(View.GONE);
                 holder.tvDelete.setVisibility(View.VISIBLE);
@@ -137,7 +136,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             case REFUNDED:             //已退款
                 holder.state.setText(context.getString(R.string.order_refunded));
                 holder.date.setText(String.format(context.getString(R.string.order_train_time),
-                        bean.getStartDate(), bean.getStartTime()));
+                        bean.getStart()));
                 holder.date.setVisibility(View.VISIBLE);
                 holder.timerLayout.setVisibility(View.GONE);
                 holder.tvDelete.setVisibility(View.VISIBLE);
@@ -153,11 +152,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if("course".equals(bean.getAppointmentType())){
-                    AppointCourseDetailActivity.start(context,bean.getId());
-                }else {
-                    AppointCampaignDetailActivity.start(context,bean.getId());
-                }
+                appointmentListener.onPayOrder(bean.getAppointmentType(),bean.getId());
             }
         });
 
@@ -165,7 +160,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             @Override
             public void onClick(View v) {
                 if(appointmentListener != null){
-                    appointmentListener.onCancelJoin(bean.getId());
+                    appointmentListener.onCancel(bean.getId());
                 }
             }
         });
@@ -192,7 +187,16 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             @Override
             public void onClick(View v) {
                 if(appointmentListener != null){
-                    appointmentListener.onPayOrder();
+                    appointmentListener.onPayOrder(bean.getAppointmentType(),bean.getId());
+                }
+            }
+        });
+
+        holder.tvCancelPay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(appointmentListener != null){
+                    appointmentListener.onCancel(bean.getId());
                 }
             }
         });
@@ -240,9 +244,9 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     }
 
     public interface AppointmentListener {
-        void onPayOrder();
+        void onPayOrder(String type,String id);
         void onDeleteOrder(String id);
         void onConfirmJoin(String id);
-        void onCancelJoin(String id);
+        void onCancel(String id);
     }
 }
