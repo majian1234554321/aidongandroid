@@ -55,11 +55,8 @@ public class App extends MultiDexApplication {
         initImagePicker();
 
         EmConfigManager.getInstance().initializeEaseUi(this);
-//        new EmMessageManager().registerMessageListener();
         Realm.init(context);
         Stetho.initializeWithDefaults(this);
-//        WXAPIFactory.createWXAPI(this, "wx365ab323b9269d30", false).registerApp("wx365ab323b9269d30");
-//        new WXShare(this);
     }
 
 

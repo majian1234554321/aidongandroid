@@ -2,11 +2,16 @@ package com.leyuan.aidong.ui.mine.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
+import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.ui.EaseChatFragment;
+import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.mine.fragment.AiEaseChatFragment;
+import com.leyuan.aidong.widget.SimpleTitleBar;
 
 public class EMChatActivity extends BaseActivity {
 
@@ -14,6 +19,7 @@ public class EMChatActivity extends BaseActivity {
     private String mChatId;
     private EaseChatFragment chatFragment;
     private EMChatActivity activityInstance;
+    private SimpleTitleBar titleBar;
 
 
     @Override
@@ -23,26 +29,31 @@ public class EMChatActivity extends BaseActivity {
         activityInstance = this;
         mChatId = getIntent().getStringExtra(EaseConstant.EXTRA_USER_ID);
         initView();
+        initData();
 
-        // 这里直接使用EaseUI封装好的聊天界面
+    }
 
-        chatFragment = new EaseChatFragment();
-        //传入参数
+    private void initView() {
+        titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
+        titleBar.setTitle(mChatId);
+        titleBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    private void initData() {
+
+        chatFragment = new AiEaseChatFragment();
         Bundle args = new Bundle();
         args.putInt(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_SINGLE);
         args.putString(EaseConstant.EXTRA_USER_ID, mChatId);
         chatFragment.setArguments(args);
+        chatFragment.setChatFragmentListener(chatFragmentListener);
 
         getSupportFragmentManager().beginTransaction().add(R.id.ec_layout_container, chatFragment).commit();
-
-
-    }
-
-    /**
-     * 初始化界面
-     */
-    private void initView() {
-
     }
 
     @Override
@@ -57,6 +68,48 @@ public class EMChatActivity extends BaseActivity {
         }
 
     }
+
+    private EaseChatFragment.EaseChatFragmentHelper chatFragmentListener = new EaseChatFragment.EaseChatFragmentHelper() {
+        @Override
+        public void onSetMessageAttributes(EMMessage message) {
+
+        }
+
+        @Override
+        public void onEnterToChatDetails() {
+
+        }
+
+        @Override
+        public void onAvatarClick(String username) {
+            UserInfoActivity.start(EMChatActivity.this, username);
+        }
+
+        @Override
+        public void onAvatarLongClick(String username) {
+
+        }
+
+        @Override
+        public boolean onMessageBubbleClick(EMMessage message) {
+            return false;
+        }
+
+        @Override
+        public void onMessageBubbleLongClick(EMMessage message) {
+
+        }
+
+        @Override
+        public boolean onExtendMenuItemClick(int itemId, View view) {
+            return false;
+        }
+
+        @Override
+        public EaseCustomChatRowProvider onSetCustomChatRowProvider() {
+            return null;
+        }
+    };
 
     @Override
     protected void onResume() {

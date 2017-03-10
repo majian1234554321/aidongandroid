@@ -23,6 +23,7 @@ public class Constant {
     public static final String WX_LOGIN_CODE = "wx_login_code";
     public static final String WX_LOGIN_SUCCESS_ACTION = "com.leyuan.login.wx";
     public static final String VIDEO_LIST_TYPE = "video_list_type";
+    public static final String BROADCAST_ACTION_NEW_MESSAGE = "com.leyuan.chat.message";
 
     public static SystemBean systemInfoBean;
 
@@ -37,4 +38,7 @@ public class Constant {
     public static final String COPY_IMAGE = "copy_image";
     public static final String POSITION = "position";
 
+    public static class Chat {
+        public static final String SYSYTEM_ID = "admin";
+    }
 }

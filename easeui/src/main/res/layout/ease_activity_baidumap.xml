@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="#eee"
     android:orientation="vertical" >
-    
+
     <RelativeLayout
         android:id="@+id/title"
         android:layout_width="match_parent"
@@ -12,7 +12,7 @@
         android:background="@color/top_bar_normal_bg"
         android:gravity="center_vertical" >
 
-        <include 
+        <include
             layout="@layout/ease_commom_back_btn"
             />
 
@@ -23,8 +23,8 @@
             android:text="@string/location_message"
             android:textColor="#ffffff"
             android:textSize="18sp" />
-        
-        
+
+
          <Button
             android:enabled="false"
             android:id="@+id/btn_location_send"
@@ -39,11 +39,11 @@
             android:textSize="17sp" />
 
     </RelativeLayout>
-    
+
     <!--<com.baidu.mapapi.map.MapView android:id="@+id/bmapView"-->
 	    <!--android:layout_width="fill_parent" android:layout_height="fill_parent" -->
 	    <!--android:clickable="true"-->
 	    <!--android:background="#fff"-->
 	<!--/>-->
-    
+
 </LinearLayout>

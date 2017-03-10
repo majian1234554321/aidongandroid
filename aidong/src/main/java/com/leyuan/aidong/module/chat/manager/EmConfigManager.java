@@ -1,11 +1,11 @@
 package com.leyuan.aidong.module.chat.manager;
 
 import android.app.ActivityManager;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.widget.Toast;
 
 import com.hyphenate.EMConnectionListener;
@@ -29,6 +29,7 @@ import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.mine.activity.EMChatActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.ChatPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.EmChatView;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.Urls;
@@ -154,7 +155,6 @@ public class EmConfigManager implements EmChatView {
 
     private void registerMessageListener() {
         messageListener = new EMMessageListener() {
-            private BroadcastReceiver broadCastReceiver = null;
 
             @Override
             public void onMessageReceived(List<EMMessage> messages) {
@@ -162,9 +162,11 @@ public class EmConfigManager implements EmChatView {
                     EMLog.d(TAG, "onMessageReceived id : " + message.getMsgId());
                     // in background, do not refresh UI, notify it in notification bar
                     setUserDb(message.getFrom());
+                    sendNewMessageReceiver();
                     if (!easeUI.hasForegroundActivies()) {
                         getNotifier().onNewMsg(message);
                     }
+
 
                 }
             }
@@ -212,6 +214,10 @@ public class EmConfigManager implements EmChatView {
         };
 
         EMClient.getInstance().chatManager().addMessageListener(messageListener);
+    }
+
+    private void sendNewMessageReceiver() {
+        LocalBroadcastManager.getInstance(appContext).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_NEW_MESSAGE));
     }
 
     private void setUserDb(String fromId) {
