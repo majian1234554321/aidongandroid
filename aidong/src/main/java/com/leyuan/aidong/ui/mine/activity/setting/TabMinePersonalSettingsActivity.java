@@ -46,47 +46,6 @@ public class TabMinePersonalSettingsActivity extends BaseActivity {
     private TextView settings_contactus_txt;
     private String mobile = "";
 
-   /* @Override
-    public void onGetData(Object data, int requestCode, String response) {
-        switch (requestCode) {
-            case LOGINOUT:
-                MsgResult msgResult = (MsgResult) data;
-                if (msgResult.getCode() == 1) {
-
-                }
-                break;
-            case CUSTOMERSERVICEPHONE:
-                final ContactUsResult contactUsResult = (ContactUsResult) data;
-                if (contactUsResult.getCode() == 1) {
-                    if (contactUsResult.getData() != null) {
-                        settings_contactus_txt.setText(contactUsResult.getData()
-                                .getPhone());
-                        layout_tab_mine_personal_settings_contactus_rel
-                                .setOnClickListener(new OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        intent = new Intent(Intent.ACTION_DIAL, Uri
-                                                .parse("tel:"
-                                                        + contactUsResult.getData()
-                                                        .getPhone()));
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        startActivity(intent);
-                                    }
-                                });
-                    }
-                }
-                break;
-            default:
-                break;
-        }
-    }
-
-    @Override
-    public void onError(String reason, int requestCode) {
-
-    }*/
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,10 +56,6 @@ public class TabMinePersonalSettingsActivity extends BaseActivity {
     protected void setupView() {
         setContentView(R.layout.layout_tab_mine_personal_settings);
         init();
-       /* addTask(this, new IHttpTask(UrlLink.CUSTOMERSERVICEPHONE_URL,
-                        new ArrayList<BasicNameValuePair>(), ContactUsResult.class),
-                HttpConfig.GET, CUSTOMERSERVICEPHONE);*/
-
     }
 
     @Override

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/color_light_white" >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_light_white">
 
     <RelativeLayout
         android:id="@+id/layout_tab_help_title_rel"
         android:layout_width="match_parent"
         android:layout_height="@dimen/pref_50dp"
-        android:background="@color/new_background_one" >
+        android:background="@color/new_background_one">
 
         <TextView
             android:layout_width="wrap_content"
@@ -29,30 +29,43 @@
             android:src="@drawable/back" />
     </RelativeLayout>
 
-    <ImageView
+    <!--<ImageView-->
+    <!--android:id="@+id/rel_help_aboud_mx"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_below="@+id/layout_tab_help_title_rel"-->
+    <!--android:adjustViewBounds="true"-->
+    <!--android:scaleType="centerCrop"-->
+    <!--android:src="@drawable/place_holder_logo"></ImageView>-->
+
+    <RelativeLayout
         android:id="@+id/rel_help_aboud_mx"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
+        android:layout_height="300dp"
         android:layout_below="@+id/layout_tab_help_title_rel"
-        android:src="@drawable/place_holder_logo" >
-    </ImageView>
+        android:background="@color/black">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/pref_0.5dp"
-        android:layout_below="@+id/rel_help_aboud_mx"
-        android:layout_marginTop="@dimen/pref_19dp"
-        android:background="@color/color_list_distance" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/app_icon" />
+
+    </RelativeLayout>
+
+    <!--<ImageView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/pref_0.5dp"-->
+    <!--android:layout_below="@+id/rel_help_aboud_mx"-->
+    <!--android:layout_marginTop="@dimen/pref_19dp"-->
+    <!--android:background="@color/color_list_distance" />-->
 
     <RelativeLayout
         android:id="@+id/layout_tab_help_version_of_the_introduction"
         android:layout_width="match_parent"
         android:layout_height="@dimen/pref_45dp"
         android:layout_below="@+id/rel_help_aboud_mx"
-        android:layout_marginTop="@dimen/pref_20dp"
-        android:background="@color/color_white" >
+        android:background="@color/color_white">
 
         <TextView
             android:layout_width="wrap_content"
@@ -85,9 +98,9 @@
         android:id="@+id/layout_tab_help_detected_in_version"
         android:layout_width="match_parent"
         android:layout_height="@dimen/pref_45dp"
-        android:visibility="gone"
         android:layout_below="@id/layout_tab_help_version_of_the_introduction"
-        android:background="@color/color_white" >
+        android:background="@color/color_white"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
@@ -143,7 +156,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/pref_45dp"
         android:layout_below="@id/layout_tab_help_detected_in_version"
-        android:background="@color/color_white" >
+        android:background="@color/color_white">
 
         <TextView
             android:layout_width="wrap_content"
@@ -177,7 +190,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/pref_45dp"
         android:layout_below="@id/layout_tab_help_about_mx"
-        android:background="@color/color_white" >
+        android:background="@color/color_white">
 
         <TextView
             android:layout_width="wrap_content"
