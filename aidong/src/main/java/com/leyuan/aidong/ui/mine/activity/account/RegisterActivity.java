@@ -131,7 +131,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
 
     @Override
-    public void getIdentifyCode(boolean success) {
+    public void onGetIdentifyCode(boolean success) {
         DialogUtils.dismissDialog();
         if (success) {
             ToastUtil.showShort(App.context, "验证码已发送,请查看");
@@ -160,7 +160,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
 
     @Override
-    public void checkCaptchaImage(boolean success, String mobile) {
+    public void onCheckCaptchaImageResult(boolean success, String mobile) {
         if (success) {
             presenter.regitserIdentify(mobile);
         } else if (mDialogImageIdentify != null && mDialogImageIdentify.isShowing()) {

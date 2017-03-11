@@ -124,6 +124,9 @@
             android:name=".ui.mine.activity.setting.TabHelpActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.mine.activity.setting.PhoneBindingActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.mine.activity.setting.TabMineBingdingMobilePhoneActivity"
             android:screenOrientation="portrait" />
         <activity

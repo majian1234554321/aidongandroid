@@ -20,6 +20,7 @@ import com.leyuan.aidong.utils.Logger;
 
 public class DialogImageIdentify extends Dialog {
 
+    private static final java.lang.String TAG = "DialogImageIdentify";
     private ImageView imgIdentify;
     private TextView txtRefresh;
     private ImageView imgClose;
@@ -89,6 +90,7 @@ public class DialogImageIdentify extends Dialog {
 
 
     public void refreshImage(String mobile) {
+        Logger.i(TAG,"refreshImage mobile = " +mobile);
         Glide.with(context).load(Constant.CAPTCHA_IMAGE + mobile + "?time=" + System.currentTimeMillis())
                 .into(imgIdentify);
     }

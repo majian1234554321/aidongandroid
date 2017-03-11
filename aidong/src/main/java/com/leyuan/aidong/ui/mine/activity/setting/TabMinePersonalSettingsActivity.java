@@ -24,6 +24,7 @@ import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.utils.DataCleanManager;
 import com.leyuan.aidong.utils.MyDbUtils;
 import com.leyuan.aidong.utils.ToastUtil;
+import com.leyuan.aidong.utils.UiManager;
 
 import java.util.HashMap;
 
@@ -85,10 +86,11 @@ public class TabMinePersonalSettingsActivity extends BaseActivity {
                         @Override
                         public void onClick(View v) {
                             if (App.mInstance.isLogin()) {
-                                intent = new Intent(
-                                        TabMinePersonalSettingsActivity.this,
-                                        TabMineBingdingMobilePhoneActivity.class);
-                                startActivity(intent);
+//                                intent = new Intent(
+//                                        TabMinePersonalSettingsActivity.this,
+//                                        TabMineBingdingMobilePhoneActivity.class);
+//                                startActivity(intent);
+                                UiManager.activityJump(TabMinePersonalSettingsActivity.this,PhoneBindingActivity.class);
                             } else {
                                 intent.setClass(
                                         TabMinePersonalSettingsActivity.this,
