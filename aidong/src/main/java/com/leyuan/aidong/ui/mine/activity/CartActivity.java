@@ -49,7 +49,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
     private RecommendAdapter recommendAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private List<GoodsBean> recommendList = new ArrayList<>();
-    private List<GoodsBean> emptyList = new ArrayList<>();
+    private List<GoodsBean> emptyRecommendList = new ArrayList<>();
 
     private LinearLayout bottomLayout;
     private CheckBox rbSelectAll;
@@ -177,7 +177,8 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
     }
 
     @Override
-    public void onTotalPriceChanged(double totalPrice) {
+    public void onPriceAndSettlementCountChanged(double totalPrice, int count) {
+        tvSettlement.setText(String.format(getString(R.string.settlement_count),count));
         tvTotalPrice.setText(String.format(getString(R.string.rmb_price_double),totalPrice));
     }
 
@@ -192,7 +193,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
         bottomDeleteLayout.setVisibility(isEditing ? View.VISIBLE :View.GONE);
         bottomNormalLayout.setVisibility(isEditing ? View.GONE : View.VISIBLE);
         cartHeaderView.showRecommendText(!isEditing);
-        recommendAdapter.setData(isEditing ? emptyList : recommendList);
+        recommendAdapter.setData(isEditing ? emptyRecommendList : recommendList);
         wrapperAdapter.notifyDataSetChanged();
     }
 }

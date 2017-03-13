@@ -35,12 +35,12 @@
                         android:id="@+id/banner_layout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/place_holder_logo"
-                        app:banner_pageChangeDuration="1000"
+                        android:background="@color/gray_normal"
                         app:banner_pointAutoPlayAble="false"
                         app:banner_pointContainerBackground="@android:color/transparent"
-                        app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
+                        app:banner_pointDrawable="@drawable/selector_banner"
                         app:banner_pointTopBottomMargin="5dp"
+                        app:banner_indicatorGravity="right"
                         app:banner_transitionEffect="alpha" />
 
                     <TextView
@@ -51,13 +51,15 @@
                         android:layout_marginLeft="@dimen/left_margin"
                         android:background="@drawable/shape_solid_black"
                         android:drawableLeft="@drawable/icon_fire"
-                        android:drawablePadding="5dp"
+                        android:drawablePadding="6dp"
                         android:gravity="center_vertical"
-                        android:padding="5dp"
-                        android:text="11"
+                        android:paddingBottom="6dp"
+                        android:text=""
+                        android:paddingTop="6dp"
+                        android:paddingLeft="13dp"
+                        android:paddingRight="13dp"
                         android:textColor="@color/white"
                         android:textSize="14sp" />
-
                 </RelativeLayout>
 
                 <android.support.v7.widget.Toolbar
@@ -65,8 +67,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/height_top_bar"
                     app:layout_collapseMode="pin" />
-
-
             </android.support.design.widget.CollapsingToolbarLayout>
         </android.support.design.widget.AppBarLayout>
 
@@ -107,7 +107,7 @@
                     <LinearLayout
                         android:layout_width="85dp"
                         android:layout_height="58dp"
-                        android:background="@drawable/shape_solid_black"
+                        android:background="@drawable/shape_solid_red"
                         android:orientation="vertical"
                         android:padding="6dp">
 
@@ -123,22 +123,12 @@
                             android:textSize="12sp" />
 
                         <TextView
-                            android:id="@+id/tv_date"
+                            android:id="@+id/tv_start_time"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:layout_weight="1"
+                            android:layout_weight="2"
                             android:gravity="center_vertical|right"
                             android:text="2016-09-09"
-                            android:textColor="@color/white"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/tv_time"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical|right"
-                            android:text="12:34"
                             android:textColor="@color/white"
                             android:textSize="12sp" />
 
@@ -268,7 +258,6 @@
                     android:layout_marginRight="@dimen/right_margin"
                     android:paddingBottom="50dp"
                     android:text="活动详情" />
-
             </LinearLayout>
 
         </android.support.v4.widget.NestedScrollView>

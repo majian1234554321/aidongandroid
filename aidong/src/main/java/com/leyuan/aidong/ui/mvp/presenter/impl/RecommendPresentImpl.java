@@ -11,6 +11,7 @@ import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.aidong.ui.mvp.model.RecommendModel;
 import com.leyuan.aidong.ui.mvp.model.impl.RecommendModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.RecommendPresent;
+import com.leyuan.aidong.ui.mvp.view.AppointSuccessActivityView;
 import com.leyuan.aidong.ui.mvp.view.CartActivityView;
 import com.leyuan.aidong.ui.mvp.view.EquipmentActivityView;
 import com.leyuan.aidong.ui.mvp.view.NurtureActivityView;
@@ -30,33 +31,34 @@ public class RecommendPresentImpl implements RecommendPresent{
     private NurtureActivityView nurtureActivityView;
     private EquipmentActivityView equipmentActivityView;
     private CartActivityView cartActivityView;
+    private AppointSuccessActivityView successActivityView;
 
     public RecommendPresentImpl(Context context, NurtureActivityView view) {
         this.context = context;
         this.nurtureActivityView = view;
-        if(recommendModel == null){
-            recommendModel = new RecommendModelImpl();
-        }
     }
 
     public RecommendPresentImpl(Context context, EquipmentActivityView view) {
         this.context = context;
         this.equipmentActivityView = view;
-        if(recommendModel == null){
-            recommendModel = new RecommendModelImpl();
-        }
     }
 
     public RecommendPresentImpl(Context context, CartActivityView view) {
         this.context = context;
         this.cartActivityView = view;
-        if(recommendModel == null){
-            recommendModel = new RecommendModelImpl();
-        }
     }
+
+    public RecommendPresentImpl(Context context, AppointSuccessActivityView view) {
+        this.context = context;
+        this.successActivityView = view;
+    }
+
 
     @Override
     public void commendLoadRecommendData(final SwitcherLayout switcherLayout, String type) {
+        if(recommendModel == null){
+            recommendModel = new RecommendModelImpl();
+        }
         recommendModel.getRecommendGoods(new CommonSubscriber<GoodsData>(switcherLayout) {
             @Override
             public void onNext(GoodsData goodsData) {
@@ -76,6 +78,9 @@ public class RecommendPresentImpl implements RecommendPresent{
 
     @Override
     public void pullToRefreshRecommendData(String type) {
+        if(recommendModel == null){
+            recommendModel = new RecommendModelImpl();
+        }
         recommendModel.getRecommendGoods(new RefreshSubscriber<GoodsData>(context) {
             @Override
             public void onNext(GoodsData goodsData) {
@@ -94,6 +99,9 @@ public class RecommendPresentImpl implements RecommendPresent{
 
     @Override
     public void requestMoreRecommendData(RecyclerView recyclerView, final int pageSize, int page, String type) {
+        if(recommendModel == null){
+            recommendModel = new RecommendModelImpl();
+        }
         recommendModel.getRecommendGoods(new RequestMoreSubscriber<GoodsData>(context,recyclerView,pageSize) {
             @Override
             public void onNext(GoodsData goodsData) {
@@ -122,6 +130,9 @@ public class RecommendPresentImpl implements RecommendPresent{
         if(cartActivityView != null){
             cartActivityView.updateRecommendGoods(goodsList);
         }
+        if (successActivityView != null){
+            successActivityView.updateRecyclerView(goodsList);
+        }
     }
 
     private void showEndFooterView(){
@@ -145,6 +156,10 @@ public class RecommendPresentImpl implements RecommendPresent{
         }
         if(cartActivityView != null){
            // cartActivityView.showEmptyGoodsView();
+        }
+
+        if (successActivityView != null){
+            successActivityView.showEmptyView();
         }
     }
 }

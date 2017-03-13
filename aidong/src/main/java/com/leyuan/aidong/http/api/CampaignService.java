@@ -20,7 +20,7 @@ import rx.Observable;
 public interface CampaignService {
 
     @GET("market/campaigns")
-    Observable<BaseBean<CampaignData>> getCampaigns(@Query("page") int page);
+    Observable<BaseBean<CampaignData>> getCampaigns(@Query("page") int page,@Query("list") String list);
 
     @GET("market/campaigns/{id}")
     Observable<BaseBean<CampaignDetailData>> getCampaignDetail(@Path("id") String id);

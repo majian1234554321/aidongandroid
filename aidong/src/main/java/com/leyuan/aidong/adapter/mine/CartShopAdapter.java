@@ -128,5 +128,6 @@ public class CartShopAdapter extends RecyclerView.Adapter<CartShopAdapter.CartHo
         void onShopStatusChanged(int position);
         void onGoodsDeleted(String goodsId,int shopPosition,int goodsPosition);
         void onGoodsCountChanged(String goodsId,int count,int shopPosition,int goodsPosition);
+
     }
 }

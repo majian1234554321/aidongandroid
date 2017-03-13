@@ -4,8 +4,8 @@
     <dimen name="height_top_bar">46dp</dimen> <!--标题高度-->
 
     <!--屏幕左右间隙-->
-    <dimen name="left_margin">12dp</dimen>
-    <dimen name="right_margin">12dp</dimen>
+    <dimen name="left_margin">15dp</dimen>
+    <dimen name="right_margin">15dp</dimen>
 
     <!--分割线高度-->
 

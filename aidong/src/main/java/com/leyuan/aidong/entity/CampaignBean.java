@@ -1,7 +1,5 @@
 package com.leyuan.aidong.entity;
 
-import static com.leyuan.aidong.R.string.start_time;
-
 /**
  * 活动实体
  * Created by song on 2016/8/18.
@@ -12,6 +10,7 @@ public class CampaignBean {
     private String cover;
     private String start;
     private String landmark;
+    private String view_count;
     
     public String getId() {
         return id;
@@ -53,5 +52,11 @@ public class CampaignBean {
         this.landmark = landmark;
     }
 
+    public String getViewCount() {
+        return view_count;
+    }
 
+    public void setView_count(String view_count) {
+        this.view_count = view_count;
+    }
 }

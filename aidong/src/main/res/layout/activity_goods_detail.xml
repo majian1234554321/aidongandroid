@@ -40,7 +40,7 @@
                         android:layout_height="wrap_content"
                         app:expandedTitleMarginEnd="64dp"
                         app:expandedTitleMarginStart="48dp"
-                        app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                        app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
                         <cn.bingoogolapple.bgabanner.BGABanner
                             android:id="@+id/banner_layout"

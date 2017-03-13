@@ -87,8 +87,8 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
     public void onChangeShop(int position) {
         this.position = position;
         Intent intent = new Intent(this,SelfDeliveryVenuesActivity.class);
-        intent.putExtra("id",data.get(position).getGoods().getId());
-        intent.putExtra("goodsType",data.get(position).getGoods().getType());
+        intent.putExtra("id",data.get(position).getGoods().getProductId());
+        intent.putExtra("goodsType",data.get(position).getGoods().getProductType());
         startActivityForResult(intent,REQUEST_SELECT_DELIVERY);
     }
 

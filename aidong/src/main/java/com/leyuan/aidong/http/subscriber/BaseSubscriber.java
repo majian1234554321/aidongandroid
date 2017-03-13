@@ -19,16 +19,16 @@ import rx.Subscriber;
 
 
 public abstract class BaseSubscriber<T> extends Subscriber<T> {
-
     private Context context;
 
     public BaseSubscriber(Context context) {
         this.context = context;
     }
 
-    @Override
-    public void onCompleted() {
 
+    @Override
+    public void onStart() {
+        super.onStart();
     }
 
     @Override
@@ -43,6 +43,11 @@ public abstract class BaseSubscriber<T> extends Subscriber<T> {
         } else {
             Toast.makeText(context, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onCompleted() {
+
     }
 
     private void showLoginDialog(Throwable e) {

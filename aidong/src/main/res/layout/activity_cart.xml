@@ -121,7 +121,7 @@
                         android:layout_height="match_parent"
                         android:background="@color/main_red"
                         android:gravity="center"
-                        android:text="结算"
+                        android:text="结算(0)"
                         android:textColor="@color/white"
                         android:textSize="15sp" />
 

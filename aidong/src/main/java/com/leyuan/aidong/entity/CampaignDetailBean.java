@@ -28,7 +28,24 @@ public class CampaignDetailBean implements Parcelable {
     private List<UserBean> appicant;        //报名的人
 
     private String status = "";
+    private CoordinateBean coordinate;
+    private String view_count;
 
+    public String getViewCount() {
+        return view_count;
+    }
+
+    public void setView_count(String view_count) {
+        this.view_count = view_count;
+    }
+
+    public CoordinateBean getCoordinate() {
+        return coordinate;
+    }
+
+    public void setCoordinate(CoordinateBean coordinate) {
+        this.coordinate = coordinate;
+    }
 
     public String getCampaignId() {
         return id;
@@ -70,7 +87,7 @@ public class CampaignDetailBean implements Parcelable {
         this.start_time = start_time;
     }
 
-    public String getEnd_time() {
+    public String getEndTime() {
         return end_time;
     }
 
@@ -189,6 +206,7 @@ public class CampaignDetailBean implements Parcelable {
 
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -210,7 +228,10 @@ public class CampaignDetailBean implements Parcelable {
         dest.writeString(this.market_price);
         dest.writeString(this.enroll_start_time);
         dest.writeString(this.enroll_end_time);
-        dest.writeList(this.appicant);
+        dest.writeTypedList(this.appicant);
+        dest.writeString(this.status);
+        dest.writeParcelable(this.coordinate, flags);
+        dest.writeString(this.view_count);
     }
 
     public CampaignDetailBean() {
@@ -231,11 +252,13 @@ public class CampaignDetailBean implements Parcelable {
         this.market_price = in.readString();
         this.enroll_start_time = in.readString();
         this.enroll_end_time = in.readString();
-        this.appicant = new ArrayList<UserBean>();
-        in.readList(this.appicant, Applicant.class.getClassLoader());
+        this.appicant = in.createTypedArrayList(UserBean.CREATOR);
+        this.status = in.readString();
+        this.coordinate = in.readParcelable(CoordinateBean.class.getClassLoader());
+        this.view_count = in.readString();
     }
 
-    public static final Parcelable.Creator<CampaignDetailBean> CREATOR = new Parcelable.Creator<CampaignDetailBean>() {
+    public static final Creator<CampaignDetailBean> CREATOR = new Creator<CampaignDetailBean>() {
         @Override
         public CampaignDetailBean createFromParcel(Parcel source) {
             return new CampaignDetailBean(source);
