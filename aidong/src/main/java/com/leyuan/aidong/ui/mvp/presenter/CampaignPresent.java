@@ -15,12 +15,12 @@ public interface CampaignPresent {
      * 第一次正常加载数据活动列表数据
      * @param switcherLayout SwitcherLayout
      */
-    void commonLoadData(SwitcherLayout switcherLayout);
+    void commonLoadData(SwitcherLayout switcherLayout,String list);
 
     /**
      * 下拉刷新活动列表数据
      */
-    void pullToRefreshData();
+    void pullToRefreshData(String list);
 
     /**
      * 上拉加载更多活动列表数据
@@ -28,7 +28,7 @@ public interface CampaignPresent {
      * @param pageSize 每页刷新的数据量
      * @param page 页码
      */
-    void requestMoreData(RecyclerView recyclerView, int pageSize, int page);
+    void requestMoreData(RecyclerView recyclerView, int pageSize, int page,String list);
 
     /**
      * 获取活动详情信息

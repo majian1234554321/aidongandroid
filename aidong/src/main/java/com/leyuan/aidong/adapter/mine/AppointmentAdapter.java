@@ -27,10 +27,10 @@ import cn.iwgang.countdownview.CountdownView;
 public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.AppointmentHolder> {
     private static final String UN_PAID = "pending";         //待付款
     private static final String UN_JOIN= "purchased";        //待参加
-    private static final String JOINED = "signed";           //已参加
+    private static final String JOINED = "confirmed";        //已参加
     private static final String CLOSE = "canceled";          //已关闭
-    private static final String REFUNDING = "4";             //退款中
-    private static final String REFUNDED = "5";              //已退款
+    private static final String REFUNDING = "refunding";     //退款中
+    private static final String REFUNDED = "refunded";       //已退款
 
     private Context context;
     private List<AppointmentBean> data = new ArrayList<>();
@@ -88,7 +88,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                         bean.getStart()));
                 holder.date.setVisibility(View.VISIBLE);
                 holder.timerLayout.setVisibility(View.GONE);
-                holder.tvCancelJoin.setVisibility(FormatUtil.parseDouble(bean.getPayAmount()) == 0
+                holder.tvCancelJoin.setVisibility(FormatUtil.parseInt(bean.getPayAmount()) == 0
                         ? View.VISIBLE : View.GONE);
                 holder.tvConfirm.setVisibility(View.VISIBLE);
                 holder.tvPay.setVisibility(View.GONE);

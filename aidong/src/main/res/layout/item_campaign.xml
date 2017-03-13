@@ -18,12 +18,12 @@
         android:text=""
         android:textSize="14sp"
         android:textColor="@color/white"
-        android:paddingTop="2dp"
-        android:paddingBottom="2dp"
-        android:paddingLeft="3dp"
-        android:paddingRight="3dp"
+        android:paddingTop="7dp"
+        android:paddingBottom="7dp"
+        android:paddingLeft="13dp"
+        android:paddingRight="13dp"
         android:drawableLeft="@drawable/icon_fire"
-        android:drawablePadding="3dp"
+        android:drawablePadding="6dp"
         android:background="@drawable/shape_solid_black"/>
 
     <LinearLayout

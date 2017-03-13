@@ -30,7 +30,7 @@ import java.util.List;
  */
 public class CampaignFragment extends BaseFragment implements CampaignFragmentView {
     public static final String FREE = "free";
-    public static final String PAY = "pay";
+    public static final String PAY = "need_to_pay";
 
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
@@ -65,7 +65,7 @@ public class CampaignFragment extends BaseFragment implements CampaignFragmentVi
         campaignPresent = new CampaignPresentImpl(getActivity(),this);
         initSwipeRefreshLayout(view);
         initRecyclerView(view);
-        campaignPresent.commonLoadData(switcherLayout);
+        campaignPresent.commonLoadData(switcherLayout,type);
     }
 
     private void initSwipeRefreshLayout(View view){
@@ -77,7 +77,7 @@ public class CampaignFragment extends BaseFragment implements CampaignFragmentVi
             public void onRefresh() {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-                campaignPresent.pullToRefreshData();
+                campaignPresent.pullToRefreshData(type);
             }
         });
     }
@@ -97,7 +97,7 @@ public class CampaignFragment extends BaseFragment implements CampaignFragmentVi
         public void onLoadNextPage(View view) {
             currPage ++;
             if (data != null && data.size() >= pageSize) {
-                campaignPresent.requestMoreData(recyclerView,pageSize,currPage);
+                campaignPresent.requestMoreData(recyclerView,pageSize,currPage,type);
             }
         }
     };

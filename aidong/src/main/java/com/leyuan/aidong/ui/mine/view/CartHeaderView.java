@@ -21,7 +21,6 @@ import com.leyuan.aidong.ui.mvp.presenter.CartPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CartPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.ICartHeaderView;
 import com.leyuan.aidong.utils.FormatUtil;
-import com.leyuan.aidong.utils.constant.SettlementType;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
@@ -75,7 +74,7 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
     public void pullToRefreshCartData(){
         cartPresent.pullToRefreshData();
         if(callback != null ){
-            callback.onTotalPriceChanged(0f);
+            callback.onPriceAndSettlementCountChanged(0f,0);
             callback.onAllCheckedChanged(false);
         }
     }
@@ -109,7 +108,7 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
         double totalPrice = calculateTotalPrice();
         if(callback != null){
             callback.onAllCheckedChanged(isAllShopChecked);
-            callback.onTotalPriceChanged(totalPrice);
+            callback.onPriceAndSettlementCountChanged(totalPrice, getSelectedGoods().size());
         }
         shopAdapter.notifyItemChanged(position);
     }
@@ -134,7 +133,7 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
             goods.setAmount(String.valueOf(goodsCount));
             shopAdapter.notifyItemChanged(shopPosition);
             if(callback != null){
-                callback.onTotalPriceChanged(calculateTotalPrice());
+                callback.onPriceAndSettlementCountChanged(calculateTotalPrice(), getSelectedGoods().size());
             }
         }else {
             Toast.makeText(context,R.string.update_fail,Toast.LENGTH_LONG).show();
@@ -166,7 +165,7 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
                 shopAdapter.notifyItemChanged(shopPosition);
             }
             if(callback != null){
-                callback.onTotalPriceChanged(calculateTotalPrice());
+                callback.onPriceAndSettlementCountChanged(calculateTotalPrice(), getSelectedGoods().size());
                 callback.onAllCheckedChanged(isAllShopChecked());
             }
         }else {
@@ -245,7 +244,7 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
             }
         }
         if(callback != null){
-            callback.onTotalPriceChanged(calculateTotalPrice());
+            callback.onPriceAndSettlementCountChanged(calculateTotalPrice(), getSelectedGoods().size());
         }
         shopAdapter.notifyDataSetChanged();
     }
@@ -283,8 +282,8 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
 
     public interface CartHeaderCallback{
         void onCartDataLoadFinish();
-        void onAllCheckedChanged(boolean allChecked);
-        void onTotalPriceChanged(double totalPrice);
         void onAllGoodsDeleted();
+        void onAllCheckedChanged(boolean allChecked);
+        void onPriceAndSettlementCountChanged(double totalPrice, int settlementCount);
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,6 +22,7 @@ import com.leyuan.aidong.ui.mine.activity.SelectCouponActivity;
 import com.leyuan.aidong.ui.mvp.presenter.CampaignPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CampaignPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointCampaignActivityView;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.constant.PayType;
 import com.leyuan.aidong.widget.CustomNestRadioGroup;
@@ -47,8 +49,8 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
     //活动信息
     private TextView tvType;
     private ImageView dvCover;
-    private TextView tvCourseName;
-    private TextView tvShop;
+    private TextView tvCampaignName;
+    private TextView tvOrganizer;
     private ExtendTextView tvTime;
     private ExtendTextView tvAddress;
     private TextView tvCoupon;
@@ -57,6 +59,7 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
     //会员身份信息
     private TextView tvVip;
     private TextView tvNoVip;
+    private TextView tvNoVipTip;
     private LinearLayout vipTipLayout;
 
     //订单信息
@@ -73,12 +76,12 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
     private TextView tvPay;
 
     private String couponId;
-    private float integral;
+    private float integral ;
     private String payType;
     private String userName;
     private String contactMobile;
 
-    private CampaignDetailBean campaignBean;
+    private CampaignDetailBean bean;
     private CampaignPresent campaignPresent;
     private List<CouponBean> usableCoupons = new ArrayList<>();
 
@@ -95,11 +98,11 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
         campaignPresent = new CampaignPresentImpl(this,this);
         payType = PayType.ALI;
         if (getIntent() != null) {
-            campaignBean = getIntent().getParcelableExtra("bean");
+            bean = getIntent().getParcelableExtra("bean");
         }
         initView();
         setListener();
-        campaignPresent.getSpecifyCampaignCoupon(campaignBean.getCampaignId());
+        campaignPresent.getSpecifyCampaignCoupon(bean.getCampaignId());
     }
 
     private void initView() {
@@ -108,14 +111,15 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
         tvUserPhone = (TextView) findViewById(R.id.tv_input_phone);
         tvType = (TextView) findViewById(R.id.tv_type);
         dvCover = (ImageView) findViewById(R.id.dv_cover);
-        tvCourseName = (TextView) findViewById(R.id.tv_name);
-        tvShop = (TextView) findViewById(R.id.tv_shop);
+        tvCampaignName = (TextView) findViewById(R.id.tv_name);
+        tvOrganizer = (TextView) findViewById(R.id.tv_organizer);
         tvTime = (ExtendTextView) findViewById(R.id.tv_time);
         tvAddress = (ExtendTextView) findViewById(R.id.tv_address);
         tvCoupon = (TextView) findViewById(R.id.tv_coupon);
         goldLayout = (LinearLayout) findViewById(R.id.ll_gold);
         tvVip = (TextView) findViewById(R.id.tv_vip);
         tvNoVip = (TextView) findViewById(R.id.tv_no_vip);
+        tvNoVipTip = (TextView) findViewById(R.id.tv_vip_tip);
         vipTipLayout = (LinearLayout) findViewById(R.id.ll_vip_tip);
         tvTotalPrice = (ExtendTextView) findViewById(R.id.tv_total_price);
         tvCouponPrice = (ExtendTextView) findViewById(R.id.tv_coupon_price);
@@ -131,12 +135,15 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
         contactMobile = App.mInstance.getUser().getMobile();
         tvUserName.setText(userName);
         tvUserPhone.setText(contactMobile);
-        tvCourseName.setText(campaignBean.getName());
-        GlideLoader.getInstance().displayImage(campaignBean.getImage().get(0), dvCover);
-        tvTime.setRightContent(campaignBean.getStartTime());
-        tvAddress.setRightContent(campaignBean.getAddress());
-        tvTotalPrice.setRightContent(String.format(getString(R.string.rmb_price),campaignBean.getPrice()));
-        tvPrice.setText(String.format(getString(R.string.rmb_price),campaignBean.getPrice()));
+        tvCampaignName.setText(bean.getName());
+        tvOrganizer.setText(bean.getOrganizer());
+        GlideLoader.getInstance().displayImage(bean.getImage().get(0), dvCover);
+        tvTime.setRightContent(String.format(getString(R.string.campaign_during), bean.getStartTime(),
+                bean.getEndTime().substring(bean.getEndTime().lastIndexOf(Constant.EMPTY_STR))));
+        tvAddress.setRightContent(bean.getAddress());
+        tvTotalPrice.setRightContent(String.format(getString(R.string.rmb_price), bean.getPrice()));
+        tvPrice.setText(String.format(getString(R.string.rmb_price), bean.getPrice()));
+        tvNoVipTip.setText(Html.fromHtml(getString(R.string.no_vip_tip)));
     }
 
     private void setListener() {
@@ -175,7 +182,7 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
                 vipTipLayout.setVisibility(View.VISIBLE);
                 break;
             case R.id.tv_pay:
-                campaignPresent.buyCampaign(campaignBean.getCampaignId(),couponId,integral,
+                campaignPresent.buyCampaign(bean.getCampaignId(),couponId,integral,
                         payType,userName,contactMobile,payListener);
                 break;
             default:
@@ -183,10 +190,17 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
         }
     }
 
+    @Override
+    public void onFreeCampaignAppointed() {
+        AppointSuccessActivity.start(this,bean.getStartTime());
+        Toast.makeText(AppointCampaignActivity.this,"预约成功",Toast.LENGTH_LONG).show();
+    }
+
     private PayInterface.PayListener payListener = new SimplePayListener(this) {
         @Override
         public void onSuccess(String code, Object object) {
-            Toast.makeText(AppointCampaignActivity.this,"onSuccess:" + code + object.toString(),Toast.LENGTH_LONG).show();
+            AppointSuccessActivity.start(AppointCampaignActivity.this,bean.getStartTime());
+            Toast.makeText(AppointCampaignActivity.this,"支付成功",Toast.LENGTH_LONG).show();
         }
     };
 

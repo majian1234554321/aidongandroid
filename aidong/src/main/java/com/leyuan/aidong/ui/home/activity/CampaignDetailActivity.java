@@ -16,14 +16,17 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.ApplicantAdapter;
 import com.leyuan.aidong.entity.CampaignDetailBean;
+import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.mine.activity.AppointCampaignDetailActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.CampaignPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CampaignPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CampaignDetailActivityView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.zzhoujay.richtext.RichText;
 
@@ -45,6 +48,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
     private static final String STATUS_CAMPAIGN_END = "7";         //活动已结束
 
     private ImageView ivBack;
+    private ImageView ivShare;
     private SwitcherLayout switcherLayout;
     private LinearLayout contentLayout;
     private RelativeLayout pagerLayout;
@@ -52,8 +56,8 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
     private TextView tvHot;
     private TextView tvCampaignName;
     private TextView tvLandmark;
-    private TextView tvDate;
-    private TextView tvTime;
+    private TextView tvStartTime;
+
     private LinearLayout addressLayout;
     private TextView tvAddress;
     private TextView tvOrganizer;
@@ -67,7 +71,8 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
     private String id ;                         //活动详情id
     private ApplicantAdapter applicantAdapter;
     private CampaignPresent campaignPresent;
-    private CampaignDetailBean detailBean;
+    private CampaignDetailBean bean;
+    private SharePopupWindow sharePopupWindow;
 
     public static void start(Context context, String id){
         Intent intent = new Intent(context,CampaignDetailActivity.class);
@@ -80,9 +85,9 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_campaign_detail);
         campaignPresent = new CampaignPresentImpl(this,this);
-        Intent intent = getIntent();
-        if(intent != null){
-            id = intent.getStringExtra("id");
+        sharePopupWindow = new SharePopupWindow(this, savedInstanceState);
+        if(getIntent() != null){
+            id = getIntent().getStringExtra("id");
         }
         initView();
         setListener();
@@ -90,13 +95,22 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Logger.i("share", " share pop == null ? " + (sharePopupWindow == null));
+        sharePopupWindow.onNewIntent(intent);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         RichText.clear(this);
+        sharePopupWindow.release();
     }
 
     private void initView(){
         ivBack = (ImageView) findViewById(R.id.iv_back);
+        ivShare = (ImageView)findViewById(R.id.iv_share);
         pagerLayout = (RelativeLayout) findViewById(R.id.rl_pager);
         bannerLayout = (BGABanner) findViewById(R.id.banner_layout);
         tvHot = (TextView) findViewById(R.id.tv_hot);
@@ -104,8 +118,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
         switcherLayout = new SwitcherLayout(this,contentLayout);
         tvCampaignName = (TextView) findViewById(R.id.tv_campaign_name);
         tvLandmark = (TextView) findViewById(R.id.tv_landmark);
-        tvDate = (TextView) findViewById(R.id.tv_date);
-        tvTime = (TextView) findViewById(R.id.tv_time);
+        tvStartTime = (TextView) findViewById(R.id.tv_start_time);
         addressLayout = (LinearLayout) findViewById(R.id.ll_address);
         tvAddress = (TextView) findViewById(R.id.tv_address);
         tvOrganizer = (TextView) findViewById(R.id.tv_organizer);
@@ -132,10 +145,11 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
 
     private void setListener() {
         ivBack.setOnClickListener(this);
+        ivShare.setOnClickListener(this);
         switcherLayout.setOnRetryListener(retryListener);
         bottomLayout.setOnClickListener(this);
         tvCount.setOnClickListener(this);
-        tvAddress.setOnClickListener(this);
+        addressLayout.setOnClickListener(this);
     }
 
     //重试监听
@@ -149,14 +163,22 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case iv_back:          //回退
+            case iv_back:               //回退
                 finish();
                 break;
+            case R.id.iv_share:
+                sharePopupWindow.showAtBottom(bean.getName(),bean.getIntroduce(),
+                        bean.getImage().get(0), "http://www.baidu.com");
+                break;
             case R.id.tv_count:         //查看报名的人
-                AppointmentUserActivity.start(this,detailBean.getApplicant());
+                AppointmentUserActivity.start(this, bean.getApplicant());
                 break;
             case R.id.ll_apply:         //报名
                 bottomToTargetActivity();
+                break;
+            case R.id.ll_address:
+                MapActivity.start(this,"地址详情", bean.getName(), bean.getLandmark(),
+                        bean.getCoordinate().getLat(), bean.getCoordinate().getLng());
                 break;
             default:
                 break;
@@ -165,13 +187,14 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
 
     @Override
     public void setCampaignDetail(CampaignDetailBean bean) {
+        this.bean = bean;
         pagerLayout.setVisibility(View.VISIBLE);
         bottomLayout.setVisibility(View.VISIBLE);
-        this.detailBean = bean;
         bannerLayout.setData(bean.getImage(),null);
+        tvHot.setText(bean.getViewCount());
         tvCampaignName.setText(bean.getName());
         tvLandmark.setText(bean.getLandmark());
-        tvTime.setText(bean.getStartTime());
+        tvStartTime.setText(bean.getStartTime());
         tvAddress.setText(bean.getAddress());
         tvOrganizer.setText(bean.getOrganizer());
         applicantAdapter.setData(bean.getApplicant());
@@ -188,23 +211,13 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
         setBottomStatus();
     }
 
-    @Override
-    public void shareCampaign() {
-
-    }
-
-    @Override
-    public void applyCampaign() {
-
-    }
-
     //设置底部状态
     private void setBottomStatus(){
-        if(TextUtils.isEmpty(detailBean.getStatus())) {
+        if(TextUtils.isEmpty(bean.getStatus())) {
             return;
         }
         bottomLayout.setVisibility(View.VISIBLE);
-        switch (detailBean.getStatus()){
+        switch (bean.getStatus()){
             case STATUS_APPLY:
                 tvPrice.setVisibility(View.VISIBLE);
                 tvState.setText(R.string.campaign_status_apply);
@@ -246,20 +259,21 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
     }
 
     private void bottomToTargetActivity(){
-        if(STATUS_APPLY.equals(detailBean.getStatus())){     //预约
+        if(STATUS_APPLY.equals(bean.getStatus())){     //预约
             if(App.mInstance.isLogin()){
-                AppointCampaignActivity.start(this, detailBean);
+                AppointCampaignActivity.start(this, bean);
             }else {
                 startActivityForResult(new Intent(this, LoginActivity.class), Constant.REQUEST_LOGIN);
             }
-        }else if(STATUS_NOT_PAY.equals(detailBean.getStatus())){
-            AppointCampaignActivity.start(this, detailBean);
+        }else if(STATUS_NOT_PAY.equals(bean.getStatus())){
+            AppointCampaignDetailActivity.start(this, bean.getCampaignId());
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        sharePopupWindow.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK){
             if(requestCode == Constant.REQUEST_LOGIN){
                 campaignPresent.getCampaignDetail(switcherLayout,id);

@@ -28,6 +28,7 @@ import java.util.List;
  * Created by song on 2016/8/19.
  */
 public class PastCampaignActivity extends BaseActivity implements CampaignFragmentView {
+    private static final String type = "history";
     private SimpleTitleBar titleBar;
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
@@ -49,7 +50,7 @@ public class PastCampaignActivity extends BaseActivity implements CampaignFragme
         initTop();
         initSwipeRefreshLayout();
         initRecyclerView();
-        campaignActivityPresent.commonLoadData(switcherLayout);
+        campaignActivityPresent.commonLoadData(switcherLayout,type);
     }
 
     private void initTop(){
@@ -70,7 +71,8 @@ public class PastCampaignActivity extends BaseActivity implements CampaignFragme
             @Override
             public void onRefresh() {
                 currPage = 1;
-                campaignActivityPresent.pullToRefreshData();
+                RecyclerViewStateUtils.resetFooterViewState(recyclerView);
+                campaignActivityPresent.pullToRefreshData(type);
             }
         });
     }
@@ -89,8 +91,8 @@ public class PastCampaignActivity extends BaseActivity implements CampaignFragme
         @Override
         public void onLoadNextPage(View view) {
             currPage ++;
-            if (data != null && !data.isEmpty()) {
-                campaignActivityPresent.requestMoreData(recyclerView,pageSize,currPage);
+            if (data != null && data.size() >= pageSize) {
+                campaignActivityPresent.requestMoreData(recyclerView,pageSize,currPage,type);
             }
         }
     };
@@ -115,5 +117,4 @@ public class PastCampaignActivity extends BaseActivity implements CampaignFragme
     public void showEndFooterView() {
         RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
     }
-
 }

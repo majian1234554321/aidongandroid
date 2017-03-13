@@ -390,9 +390,19 @@
         <activity
             android:name=".ui.discover.activity.VenuesDetailActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.home.activity.MapActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.home.activity.AppointSuccessActivity"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.discover.activity.DiscoverUserActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.mine.activity.EMChatActivity"
             android:launchMode="singleTask"

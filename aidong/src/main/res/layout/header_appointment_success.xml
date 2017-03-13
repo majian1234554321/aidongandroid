@@ -91,6 +91,7 @@
     <include layout="@layout/inc_bold_line"/>
 
     <TextView
+        android:id="@+id/tv_recommend"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:text="推荐商品"

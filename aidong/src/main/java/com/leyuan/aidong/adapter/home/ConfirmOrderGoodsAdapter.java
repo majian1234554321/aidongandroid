@@ -64,7 +64,8 @@ public class ConfirmOrderGoodsAdapter extends RecyclerView.Adapter<ConfirmOrderG
         holder.price.setText(String.format(context.getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.getPrice())));
         if(!TextUtils.isEmpty(bean.getRecommendCode())){
-            holder.code.setText("推荐码:"+bean.getRecommendCode());
+            holder.code.setText(String.format(context.getString(R.string.recommend_code),
+                    bean.getRecommendCode()));
         }
     }
 

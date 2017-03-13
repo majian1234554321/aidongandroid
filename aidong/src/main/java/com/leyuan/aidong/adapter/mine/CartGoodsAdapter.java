@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.GoodsBean;
+import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 
@@ -70,7 +71,8 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
         holder.minus.setImageResource(FormatUtil.parseInt(bean.getAmount()) == 1 ?
                 R.drawable.icon_minus_gray : R.drawable.icon_minus);
         if(!TextUtils.isEmpty(bean.getRecommendCode())){
-            holder.code.setText("推荐码:"+bean.getRecommendCode());
+            holder.code.setText(String.format(context.getString(R.string.recommend_code),
+                    bean.getRecommendCode()));
         }
 
         holder.check.setOnClickListener(new View.OnClickListener() {
@@ -111,7 +113,7 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               //GoodsDetailActivity.start(context,bean.getId(),bean.getType());
+               GoodsDetailActivity.start(context,bean.getProductId(),bean.getProductType());
             }
         });
 
@@ -169,8 +171,8 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
     }
 
     public interface GoodsChangeListener {
-        void onGoodsStatusChanged();
-        void onGoodsDeleted(String goodsId,int goodsPosition);
-        void onGoodsCountChanged(String goodsId,int count,int goodsPosition);
+        void onGoodsStatusChanged();    //选中 未选中
+        void onGoodsDeleted(String goodsId,int goodsPosition);  //删除
+        void onGoodsCountChanged(String goodsId,int count,int goodsPosition); //改变数量
     }
 }

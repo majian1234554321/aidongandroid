@@ -16,7 +16,7 @@ public interface CampaignModel {
      * @param subscriber Subscriber
      * @param page 页码
      */
-    void getCampaigns(Subscriber<CampaignData> subscriber, int page);
+    void getCampaigns(Subscriber<CampaignData> subscriber, int page,String list);
 
     /**
      * 获取活动详情

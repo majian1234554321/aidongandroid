@@ -13,18 +13,4 @@ public interface CampaignDetailActivityView {
      */
     void setCampaignDetail(CampaignDetailBean campaignDetailBean);
 
-
-
-    /**
-     * 分享此活动
-     */
-    void shareCampaign();
-
-    /**
-     * 报名参加此活动
-     */
-    void applyCampaign();
-
-
-
 }

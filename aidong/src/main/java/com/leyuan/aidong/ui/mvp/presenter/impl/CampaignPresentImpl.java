@@ -68,7 +68,7 @@ public class CampaignPresentImpl implements CampaignPresent {
     }
 
     @Override
-    public void commonLoadData(final SwitcherLayout switcherLayout) {
+    public void commonLoadData(final SwitcherLayout switcherLayout,String list) {
         if(campaignModel == null){
             campaignModel = new CampaignModelImpl();
         }
@@ -82,11 +82,11 @@ public class CampaignPresentImpl implements CampaignPresent {
                     switcherLayout.showEmptyLayout();
                 }
             }
-        },Constant.PAGE_FIRST);
+        },Constant.PAGE_FIRST,list);
     }
 
     @Override
-    public void pullToRefreshData() {
+    public void pullToRefreshData(String list) {
         if(campaignModel == null){
             campaignModel = new CampaignModelImpl();
         }
@@ -97,11 +97,11 @@ public class CampaignPresentImpl implements CampaignPresent {
                     campaignActivityView.updateRecyclerView(campaignBean.getCampaign());
                 }
             }
-        }, Constant.PAGE_FIRST);
+        }, Constant.PAGE_FIRST,list);
     }
 
     @Override
-    public void requestMoreData(RecyclerView recyclerView, final int pageSize, int page) {
+    public void requestMoreData(RecyclerView recyclerView, final int pageSize, int page,String list) {
         if(campaignModel == null){
             campaignModel = new CampaignModelImpl();
         }
@@ -121,7 +121,7 @@ public class CampaignPresentImpl implements CampaignPresent {
                     campaignActivityView.showEndFooterView();
                 }
             }
-        },page);
+        },page,list);
     }
 
     @Override
@@ -168,10 +168,14 @@ public class CampaignPresentImpl implements CampaignPresent {
         campaignModel.buyCampaign(new ProgressSubscriber<PayOrderData>(context) {
             @Override
             public void onNext(PayOrderData payOrderData) {
-                String payType = payOrderData.getOrder().getPayType();
-                PayInterface payInterface = PayType.ALI.equals(payType) ? new AliPay(context,listener)
-                        : new WeiXinPay(context,listener);
-                payInterface.payOrder(payOrderData.getOrder());
+                if(!"purchased".equals(payOrderData.getOrder().getStatus())) {
+                    String payType = payOrderData.getOrder().getPayType();
+                    PayInterface payInterface = PayType.ALI.equals(payType) ? new AliPay(context, listener)
+                            : new WeiXinPay(context, listener);
+                    payInterface.payOrder(payOrderData.getOrder());
+                }else {
+                    appointCampaignActivityView.onFreeCampaignAppointed();
+                }
             }
         },id,couponId,integral,payType,contactName,contactMobile);
     }

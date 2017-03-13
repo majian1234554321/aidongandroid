@@ -9,20 +9,28 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.adapter.home.RecommendAdapter;
+import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.MainActivity;
-import com.leyuan.aidong.adapter.home.RecommendAdapter;
 import com.leyuan.aidong.ui.mine.activity.AppointmentActivity;
+import com.leyuan.aidong.ui.mvp.presenter.RecommendPresent;
+import com.leyuan.aidong.ui.mvp.presenter.impl.RecommendPresentImpl;
+import com.leyuan.aidong.ui.mvp.view.AppointSuccessActivityView;
+import com.leyuan.aidong.utils.constant.RecommendGoodsPosition;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderSpanSizeLookup;
 import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
 
+import java.util.List;
+
 /**
  * 预约成功界面
  * Created by song on 2016/9/12.
  */
-public class AppointSuccessActivity extends BaseActivity implements View.OnClickListener{
+public class AppointSuccessActivity extends BaseActivity implements View.OnClickListener,AppointSuccessActivityView{
+    private TextView tvRecommend;
     private TextView tvTime;
     private TextView returnHome;
     private TextView checkAppointment;
@@ -33,8 +41,9 @@ public class AppointSuccessActivity extends BaseActivity implements View.OnClick
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
 
     private String time;
+    private RecommendPresent present;
 
-    private void start(Context context,String time){
+    public static void start(Context context,String time){
         Intent intent = new Intent(context,AppointSuccessActivity.class);
         intent.putExtra("time",time);
         context.startActivity(intent);
@@ -44,17 +53,20 @@ public class AppointSuccessActivity extends BaseActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appointment_success);
+        present = new RecommendPresentImpl(this,this);
         if(getIntent() != null){
             time = getIntent().getStringExtra("time");
         }
         initView();
         setListener();
+        present.pullToRefreshRecommendData(RecommendGoodsPosition.CART);
     }
 
     private void initView() {
         View headerView = View.inflate(this,R.layout.header_appointment_success,null);
+        tvRecommend = (TextView) headerView.findViewById(R.id.tv_recommend);
         tvTime = (TextView) headerView.findViewById(R.id.tv_time);
-       // tvTime.setText(time);
+        tvTime.setText(time);
         returnHome = (TextView) headerView.findViewById(R.id.tv_home);
         checkAppointment = (TextView) headerView.findViewById(R.id.tv_appointment);
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
@@ -89,5 +101,16 @@ public class AppointSuccessActivity extends BaseActivity implements View.OnClick
             default:
                 break;
         }
+    }
+
+    @Override
+    public void updateRecyclerView(List<GoodsBean> goodsBeanList) {
+        recommendAdapter.setData(goodsBeanList);
+        wrapperAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showEmptyView() {
+        tvRecommend.setVisibility(View.GONE);
     }
 }

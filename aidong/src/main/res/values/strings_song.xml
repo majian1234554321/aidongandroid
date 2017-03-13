@@ -36,6 +36,7 @@
     <string name="detail_time">%1$s  %2$s - %3$s</string>
     <string name="rmb_price">¥ %1$s</string>
     <string name="recommend_code">推荐码:%1$s</string>
+    <string name="settlement_count">结算(%1$d)</string>
     <string name="rmb_price_double">¥ %1$.2f</string>
     <string name="rmb_price_scope">¥ %1$.2f - ¥ %2$.2f</string>
     <string name="time_with_line">%1$s—%2$s</string>
@@ -54,6 +55,9 @@
     <string name="input_content">请输入要搜索的内容</string>
     <string name="order_train_time">活动时间：%1$s </string>
     <string name="un_join_confirm">确认取消参加吗?</string>
+    <string name="campaign_during">%1$s-%2$s</string>
+    <string name="no_vip_tip"> <Data><![CDATA[如果您还不是该会所会员,需要在前台另外支付
+    <font color="#FF5000">80元</font>方可参加本次活动]]></Data></string>
 
     <string name="status_appoint">马上预约</string>
     <string name="status_appoint_end">预约已结束</string>
@@ -70,7 +74,7 @@
     <string name="campaign_status_not_start">即将开始报名</string>
     <string name="campaign_status_not_pay">待支付</string>
     <string name="campaign_status_full">报名人数已满</string>
-    <string name="campaign_appoint_end">活动已结束</string>
+    <string name="campaign_appoint_end">报名已结束</string>
 
     <string name="food_material">主要食材: %1$s</string>
     <string name="user_condition">满%1$s元可用</string>

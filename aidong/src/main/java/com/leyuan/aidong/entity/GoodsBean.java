@@ -27,6 +27,27 @@ public class GoodsBean implements Parcelable {
     private DeliveryBean deliveryBean;      //商品默认取货方式
     private boolean checked = false;        //标记商品是否被选中
 
+
+    /**购物车中商品id为product_id type为product_type id为该商品在购物车中的排列标记*/
+    private String product_id;
+    private String product_type;
+
+    public String getProductId() {
+        return product_id;
+    }
+
+    public void setProduct_id(String product_id) {
+        this.product_id = product_id;
+    }
+
+    public String getProductType() {
+        return product_type;
+    }
+
+    public void setProduct_type(String product_type) {
+        this.product_type = product_type;
+    }
+
     public String getSkuCode() {
         return sku_code;
     }
@@ -148,9 +169,6 @@ public class GoodsBean implements Parcelable {
                 '}';
     }
 
-    public GoodsBean() {
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -169,7 +187,14 @@ public class GoodsBean implements Parcelable {
         dest.writeStringList(this.spec_name);
         dest.writeStringList(this.spec_value);
         dest.writeString(this.amount);
+        dest.writeString(this.recommend_coach_id);
+        dest.writeParcelable(this.deliveryBean, flags);
         dest.writeByte(this.checked ? (byte) 1 : (byte) 0);
+        dest.writeString(this.product_id);
+        dest.writeString(this.product_type);
+    }
+
+    public GoodsBean() {
     }
 
     protected GoodsBean(Parcel in) {
@@ -184,10 +209,14 @@ public class GoodsBean implements Parcelable {
         this.spec_name = in.createStringArrayList();
         this.spec_value = in.createStringArrayList();
         this.amount = in.readString();
+        this.recommend_coach_id = in.readString();
+        this.deliveryBean = in.readParcelable(DeliveryBean.class.getClassLoader());
         this.checked = in.readByte() != 0;
+        this.product_id = in.readString();
+        this.product_type = in.readString();
     }
 
-    public static final Parcelable.Creator<GoodsBean> CREATOR = new Parcelable.Creator<GoodsBean>() {
+    public static final Creator<GoodsBean> CREATOR = new Creator<GoodsBean>() {
         @Override
         public GoodsBean createFromParcel(Parcel source) {
             return new GoodsBean(source);

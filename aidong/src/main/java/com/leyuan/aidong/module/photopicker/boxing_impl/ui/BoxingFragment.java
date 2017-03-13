@@ -64,6 +64,7 @@ import java.util.List;
  * @author ChenSL
  */
 public class BoxingFragment extends AbsBoxingViewFragment implements View.OnClickListener {
+
     public static final String TAG = "BoxingFragment";
     private static final int IMAGE_PREVIEW_REQUEST_CODE = 9086;
     private static final int IMAGE_CROP_REQUEST_CODE = 9087;
@@ -105,9 +106,9 @@ public class BoxingFragment extends AbsBoxingViewFragment implements View.OnClic
     @Override
     public void onPermissionsGranted(int requestCode, List<String> perms) {
         super.onPermissionsGranted(requestCode, perms);
-        if(requestCode == STORAGE_PERMISSION) {
+        if (requestCode == STORAGE_PERMISSION) {
             startLoadingMedia();
-        }else if(requestCode == CAMERA_AND_AUDIO_PERMISSIONS){
+        } else if (requestCode == CAMERA_AND_AUDIO_PERMISSIONS) {
             startCamera(getActivity(), this, null);
         }
     }
@@ -115,10 +116,10 @@ public class BoxingFragment extends AbsBoxingViewFragment implements View.OnClic
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms) {
         super.onPermissionsDenied(requestCode, perms);
-        if(requestCode == STORAGE_PERMISSION) {
+        if (requestCode == STORAGE_PERMISSION) {
             Toast.makeText(getContext(), R.string.storage_permission_deny, Toast.LENGTH_SHORT).show();
             showEmptyData();
-        }else if(requestCode == CAMERA_AND_AUDIO_PERMISSIONS){
+        } else if (requestCode == CAMERA_AND_AUDIO_PERMISSIONS) {
             Toast.makeText(getContext(), R.string.camera_permission_deny, Toast.LENGTH_SHORT).show();
         }
     }
@@ -308,7 +309,7 @@ public class BoxingFragment extends AbsBoxingViewFragment implements View.OnClic
     @Override
     public void onCameraActivityResult(int requestCode, int resultCode, Intent data) {
         showProgressDialog();
-        super.onCameraActivityResult(requestCode, resultCode,data);
+        super.onCameraActivityResult(requestCode, resultCode, data);
     }
 
     private void showProgressDialog() {
@@ -317,9 +318,9 @@ public class BoxingFragment extends AbsBoxingViewFragment implements View.OnClic
             mDialog.setIndeterminate(true);
             mDialog.setMessage(getString(R.string.handling));
         }
-       if (!mDialog.isShowing()) {
-           mDialog.show();
-       }
+        if (!mDialog.isShowing()) {
+            mDialog.show();
+        }
     }
 
     private void dismissProgressDialog() {
@@ -419,11 +420,11 @@ public class BoxingFragment extends AbsBoxingViewFragment implements View.OnClic
         }
 
         private void videoClick(BaseMedia media) {
-            if(((VideoMedia)media).getOriginalDuration() > 1000 * 15){
-                Toast.makeText(getContext(),"视频大于15s,暂不支持",Toast.LENGTH_LONG).show();
-            }else if(((VideoMedia)media).getOriginalDuration() < 1000 * 5){
-                Toast.makeText(getContext(),"视频少于5s,暂不支持",Toast.LENGTH_LONG).show();
-            }else {
+            if (((VideoMedia) media).getOriginalDuration() > 1000 * 15) {
+                Toast.makeText(getContext(), "视频大于15s,暂不支持", Toast.LENGTH_LONG).show();
+            } else if (((VideoMedia) media).getOriginalDuration() < 1000 * 5) {
+                Toast.makeText(getContext(), "视频少于5s,暂不支持", Toast.LENGTH_LONG).show();
+            } else {
                 ArrayList<BaseMedia> iMedias = new ArrayList<>();
                 iMedias.add(media);
                 onFinish(iMedias);
@@ -459,17 +460,17 @@ public class BoxingFragment extends AbsBoxingViewFragment implements View.OnClic
 
         @Override
         public void onClick(View v) {
-            if(mIsCamera) {
+            if (mIsCamera) {
                 return;
             }
-            if(BoxingManager.getInstance().getBoxingConfig().isVideoMode()){
+            if (BoxingManager.getInstance().getBoxingConfig().isVideoMode()) {
                 startCamera(getActivity(), BoxingFragment.this, BoxingFileHelper.DEFAULT_SUB_DIR);
-            }else {
-                if(mMediaAdapter.getSelectedMedias().size() < mMaxCount){
+            } else {
+                if (mMediaAdapter.getSelectedMedias().size() < mMaxCount) {
                     startCamera(getActivity(), BoxingFragment.this, BoxingFileHelper.DEFAULT_SUB_DIR);
-                }else {
-                    Toast.makeText(getActivity(),String.format(getString(R.string.too_many_picture)
-                            ,mMaxCount), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), String.format(getString(R.string.too_many_picture)
+                            , mMaxCount), Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -488,8 +489,8 @@ public class BoxingFragment extends AbsBoxingViewFragment implements View.OnClic
             List<BaseMedia> selectedMedias = mMediaAdapter.getSelectedMedias();
             if (isSelected) {
                 if (selectedMedias.size() >= mMaxCount) {
-                    Toast.makeText(getActivity(),String.format(getString(R.string.too_many_picture)
-                            ,mMaxCount), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), String.format(getString(R.string.too_many_picture)
+                            , mMaxCount), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (!selectedMedias.contains(photoMedia)) {
