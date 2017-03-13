@@ -23,6 +23,7 @@ import com.google.android.exoplayer.util.Util;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.CommonViewPagerAdapter;
 import com.leyuan.aidong.entity.video.VideoDetail;
+import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
@@ -30,6 +31,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.VideoPresenterImpl;
 import com.leyuan.aidong.ui.mvp.view.VideoDetailView;
 import com.leyuan.aidong.utils.FastBlur;
 import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.utils.Urls;
 import com.leyuan.aidong.widget.media.TextViewPrintly;
 
 import java.util.ArrayList;
@@ -58,6 +60,7 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
 
 
     private ArrayList<VideoDetail> videos = new ArrayList<>();
+    private SharePopupWindow sharePopupWindow;
 
     private int tag_width;
     @SuppressLint("HandlerLeak")
@@ -94,6 +97,8 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
         initView();
         initData();
         getDataFromInter();
+
+        sharePopupWindow = new SharePopupWindow(this, savedInstanceState);
     }
 
     @Override
@@ -225,22 +230,6 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mHandler.removeCallbacksAndMessages(null);
-        if (blurBitmaps != null) {
-            for (int i = 0; i < blurBitmaps.length; i++) {
-                if (blurBitmaps[i] != null) {
-                    blurBitmaps[i].recycle();
-                }
-            }
-            blurBitmaps = null;
-        }
-
-    }
-
-
-    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_back:
@@ -275,7 +264,7 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
                 if (!App.mInstance.isLogin()) {
                     startActivity(new Intent(this, LoginActivity.class));
                 } else {
-                    itemPrased =videos.get(viewPager.getCurrentItem()).getPhase();
+                    itemPrased = videos.get(viewPager.getCurrentItem()).getPhase();
                     parseVideo(itemPrased);
                 }
 
@@ -291,16 +280,9 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
     }
 
     private void share(VideoDetail video) {
-//            String url = Urls.VIDEO_SHARE
-//                    + "vid=" + video.getvId() + "&phase=" + video.getPhase();
-//            SharePopToolVideo sharePopTool = new SharePopToolVideo(this, ((ViewGroup) findViewById(android.R.id.content)).getChildAt(0),
-//                    url, mController, video.getCover(), video.getIntroduce(), video.getVideoName());
-//            sharePopTool.showChoseBox();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        String url = Urls.VIDEO_SHARE
+                + "vid=" + video.getvId() + "&phase=" + video.getPhase();
+        sharePopupWindow.showAtBottom(video.getVideoName(), video.getIntroduce(), video.getCover(), url);
     }
 
     @Override
@@ -384,4 +366,32 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
             tv_like_count.setText("" + videos.get(itemPrased).getLikesCount());
         }
     }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        sharePopupWindow.onNewIntent(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        sharePopupWindow.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mHandler.removeCallbacksAndMessages(null);
+        if (blurBitmaps != null) {
+            for (int i = 0; i < blurBitmaps.length; i++) {
+                if (blurBitmaps[i] != null) {
+                    blurBitmaps[i].recycle();
+                }
+            }
+            blurBitmaps = null;
+        }
+        sharePopupWindow.release();
+    }
+
 }
