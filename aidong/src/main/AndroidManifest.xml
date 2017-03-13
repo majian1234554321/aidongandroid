@@ -325,8 +325,7 @@
             android:name=".ui.video.activity.LiveCommentActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.video.activity.LiveDetailActivity"
-            android:configChanges="keyboardHidden|orientation"
+            android:name="com.example.aidong.wxapi.LiveDetailActivity"
             android:screenOrientation="portrait">
             <!-- 微博分享需要-->
             <intent-filter>
@@ -433,9 +432,18 @@
             android:name="com.example.aidong.wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="爱动健身"/>
+            </intent-filter>
 
+        </activity>
+        <!--android:theme="@android:style/Theme.Translucent.NoTitleBar"-->
         <receiver
             android:name=".receivers.WeixinRegisterReceiver"
             android:permission="com.tencent.mm.plugin.permission.SEND">

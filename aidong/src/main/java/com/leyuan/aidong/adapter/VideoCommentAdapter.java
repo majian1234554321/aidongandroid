@@ -49,7 +49,7 @@ public class VideoCommentAdapter extends RecyclerView.Adapter<VideoCommentAdapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         CommentBean comment = mComments.get(position);
 
-        GlideLoader.getInstance().displayImage(comment.getPublisher().getAvatar(), holder.img_avatar);
+        GlideLoader.getInstance().displayCircleImage(comment.getPublisher().getAvatar(), holder.img_avatar);
         holder.txt_user.setText("" + comment.getPublisher().getName());
         holder.txt_content.setText("" + comment.getContent());
         holder.txt_time.setText("" + comment.getPublishedAt());

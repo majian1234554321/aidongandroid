@@ -1,4 +1,4 @@
-package com.leyuan.aidong.ui.video.activity;
+package com.example.aidong.wxapi;
 
 
 import android.annotation.SuppressLint;
@@ -22,6 +22,8 @@ import com.leyuan.aidong.entity.video.LiveVideoInfo;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
+import com.leyuan.aidong.ui.video.activity.LiveCommentActivity;
+import com.leyuan.aidong.ui.video.activity.LivingVideoActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.FastBlur;
 import com.leyuan.aidong.utils.LiveDateFilterUtil;

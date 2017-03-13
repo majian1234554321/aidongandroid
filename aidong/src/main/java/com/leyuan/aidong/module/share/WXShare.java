@@ -7,7 +7,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.leyuan.aidong.R;
 import com.leyuan.aidong.utils.Logger;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
@@ -37,7 +36,7 @@ public class WXShare {
 
     public WXShare(Context context) {
         this.context = context;
-        api = WXAPIFactory.createWXAPI(context, WX_APP_ID);
+        api = WXAPIFactory.createWXAPI(context, WX_APP_ID, true);
         api.registerApp(WX_APP_ID);
     }
 
@@ -57,15 +56,15 @@ public class WXShare {
         // 发送到聊天界面 —— WXSceneSession
         // 发送到朋友圈 —— WXSceneTimeline
         // 添加到微信收藏 —— WXSceneFavorite
-        req.scene = SendMessageToWX.Req.WXSceneTimeline;
+        req.scene = SendMessageToWX.Req.WXSceneSession;
         // 调用api接口发送数据到微信
         api.sendReq(req);
     }
 
-    public void shareWeb(final String title, final String desc, String imageUrl, final String url, final boolean isCircleOfFriends) {
+    public void share(final String title, final String desc, String imageUrl, final String url, final boolean isCircleOfFriends) {
 
         if (api == null) {
-            api = WXAPIFactory.createWXAPI(context, context.getString(R.string.weixingAppID), false);
+            api = WXAPIFactory.createWXAPI(context, WX_APP_ID, false);
         }
         if (!api.isWXAppInstalled()) {
             Toast.makeText(context, "没有安装微信", Toast.LENGTH_SHORT).show();
@@ -75,7 +74,7 @@ public class WXShare {
         Glide.with(context).load(imageUrl).asBitmap()
                 .into(new SimpleTarget<Bitmap>(50, 50) {
                     @Override
-                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                    public void onResourceReady(final Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                         shareWeb(title, desc, resource, url, isCircleOfFriends);
                     }
                 });

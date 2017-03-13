@@ -16,9 +16,9 @@ public class MyShareUtils {
     private WeiBoShare weiBoShare;
     private WXShare wxShare;
 
-    public  MyShareUtils(Activity context, Bundle savedInstanceState){
+    public  MyShareUtils(Activity context, Bundle savedInstanceState,ShareCallback callback){
         this.context = context;
-        myQQShare = new MyQQShare(context);
+        myQQShare = new MyQQShare(context,callback);
         weiBoShare = new WeiBoShare(context,savedInstanceState);
         wxShare = new WXShare(context);
     }
@@ -26,10 +26,10 @@ public class MyShareUtils {
     public void share(int shareMode, String title, String content, String imageUrl, String webUrl) {
         switch (shareMode){
             case SHARE_WEIXIN_CHAT:
-                wxShare.shareWeb(title,content,imageUrl,webUrl,false);
+                wxShare.share(title,content,imageUrl,webUrl,false);
                 break;
             case SHARE_WEIXIN_FRIENDS:
-                wxShare.shareWeb(title,content,imageUrl,webUrl,true);
+                wxShare.share(title,content,imageUrl,webUrl,true);
                 break;
             case SHARE_QQ:
                 myQQShare.share(title,content,imageUrl,webUrl);

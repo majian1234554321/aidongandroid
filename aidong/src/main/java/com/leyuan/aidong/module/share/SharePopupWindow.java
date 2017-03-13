@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.utils.ToastUtil;
 
 
 /**
@@ -33,7 +34,7 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
     public SharePopupWindow(Activity context, Bundle savedInstanceState) {
         super(context);
         this.context = context;
-        myShareUtils = new MyShareUtils(context, savedInstanceState);
+        myShareUtils = new MyShareUtils(context, savedInstanceState, callback);
         initView();
         initData();
     }
@@ -64,6 +65,23 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
     private void initData() {
 
     }
+
+    private ShareCallback callback = new ShareCallback() {
+        @Override
+        public void onComplete(Object o) {
+            ToastUtil.showConsecutiveShort("分享成功");
+        }
+
+        @Override
+        public void onError() {
+            ToastUtil.showConsecutiveShort("分享失败");
+        }
+
+        @Override
+        public void onCancel() {
+            ToastUtil.showConsecutiveShort("分享成功");
+        }
+    };
 
     public void showAtBottom(String title, String content, String imageUrl, String webUrl) {
         this.showAtLocation(((ViewGroup) context.findViewById(android.R.id.content)).getChildAt(0), Gravity.BOTTOM, 0, 0);

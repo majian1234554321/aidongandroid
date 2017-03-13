@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.os.Environment;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.utils.ToastUtil;
+import com.leyuan.aidong.utils.Logger;
 import com.tencent.connect.share.QQShare;
 import com.tencent.open.utils.ThreadManager;
 import com.tencent.tauth.IUiListener;
@@ -21,10 +21,33 @@ import com.tencent.tauth.UiError;
 public class MyQQShare {
     private Tencent mTencent;
     private Activity context;
+    IUiListener qqShareListener;
 
-    public MyQQShare(Activity context) {
+    public MyQQShare(Activity context, final ShareCallback shareCallback) {
         mTencent = Tencent.createInstance(context.getString(R.string.qq_id), context.getApplicationContext());
         this.context = context;
+        qqShareListener = new IUiListener() {
+            @Override
+            public void onCancel() {
+                Logger.i("QQSHARE", "qqShareListener onCancel");
+//                ToastUtil.showConsecutiveShort("分享取消");
+                shareCallback.onCancel();
+            }
+
+            @Override
+            public void onComplete(Object response) {
+                Logger.i("QQSHARE", "qqShareListener onComplete");
+//                ToastUtil.showConsecutiveShort("分享成功");
+                shareCallback.onComplete(response);
+            }
+
+            @Override
+            public void onError(UiError e) {
+                Logger.i("QQSHARE", "qqShareListener onError");
+//                ToastUtil.showConsecutiveShort("分享失败");
+                shareCallback.onError();
+            }
+        };
     }
 
     public void share(String title, String content, Bitmap bitmap, String webUrl) {
@@ -40,7 +63,6 @@ public class MyQQShare {
 
     public void share(String title, String content, String imageUrl, String webUrl) {
         final Bundle params = new Bundle();
-        //本地地址一定要传sdcard路径，不要什么getCacheDir()或getFilesDir()
         params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, imageUrl);
         params.putString(QQShare.SHARE_TO_QQ_TITLE, title);
         params.putString(QQShare.SHARE_TO_QQ_SUMMARY, content);
@@ -62,29 +84,13 @@ public class MyQQShare {
         });
     }
 
-    IUiListener qqShareListener = new IUiListener() {
-        @Override
-        public void onCancel() {
-            ToastUtil.showConsecutiveShort("分享取消");
-        }
-
-        @Override
-        public void onComplete(Object response) {
-            ToastUtil.showConsecutiveShort("分享成功");
-        }
-
-        @Override
-        public void onError(UiError e) {
-            ToastUtil.showConsecutiveShort("分享失败");
-        }
-    };
-
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Tencent.onActivityResultData(requestCode, resultCode, data, qqShareListener);
     }
 
     public void release() {
-
+        context = null;
+        qqShareListener = null;
     }
 
     /**

@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +54,6 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
     private boolean isJustInto = true;
 
     private int screen_width;
-    private String idongId;
     private VideoPresenterImpl presenter;
 
 
@@ -101,7 +99,6 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
     @Override
     protected void onResume() {
         super.onResume();
-        idongId = String.valueOf(App.mInstance.getUser() == null ? null : App.mInstance.getUser().getId());
     }
 
     private void initView() {
@@ -258,8 +255,9 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
                 }
                 break;
             case R.id.iv_share:
-                //分享
-                if (videos != null && videos.size() > 0) {
+                if (!App.mInstance.isLogin()) {
+                    startActivity(new Intent(this, LoginActivity.class));
+                } else if (videos != null && videos.size() > 0) {
                     VideoDetail videoDetail = videos.get(viewPager.getCurrentItem());
                     share(videoDetail);
                 }
@@ -274,10 +272,10 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
                 break;
             case R.id.iv_like:
                 //赞
-                if (TextUtils.isEmpty(idongId)) {
+                if (!App.mInstance.isLogin()) {
                     startActivity(new Intent(this, LoginActivity.class));
                 } else {
-                    itemPrased = viewPager.getCurrentItem();
+                    itemPrased =videos.get(viewPager.getCurrentItem()).getPhase();
                     parseVideo(itemPrased);
                 }
 
@@ -293,16 +291,11 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
     }
 
     private void share(VideoDetail video) {
-        if (idongId == null || idongId.equals("")) {
-            Intent intent = new Intent(VideoDetailActivity.this, LoginActivity.class);
-            startActivity(intent);
-        } else {
 //            String url = Urls.VIDEO_SHARE
 //                    + "vid=" + video.getvId() + "&phase=" + video.getPhase();
 //            SharePopToolVideo sharePopTool = new SharePopToolVideo(this, ((ViewGroup) findViewById(android.R.id.content)).getChildAt(0),
 //                    url, mController, video.getCover(), video.getIntroduce(), video.getVideoName());
 //            sharePopTool.showChoseBox();
-        }
     }
 
     @Override

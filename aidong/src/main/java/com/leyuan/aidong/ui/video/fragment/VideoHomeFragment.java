@@ -21,7 +21,7 @@ import com.leyuan.aidong.entity.video.LiveVideoSoonInfo;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.mvp.presenter.impl.LivePresenterImpl;
 import com.leyuan.aidong.ui.mvp.view.LiveHomeView;
-import com.leyuan.aidong.ui.video.activity.LiveDetailActivity;
+import com.example.aidong.wxapi.LiveDetailActivity;
 import com.leyuan.aidong.ui.video.activity.LivingVideoActivity;
 import com.leyuan.aidong.ui.video.activity.VideoDetailActivity;
 import com.leyuan.aidong.ui.video.activity.WatchOfficeActivity;
