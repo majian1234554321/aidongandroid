@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Environment;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.utils.ToastUtil;
 import com.tencent.connect.share.QQShare;
 import com.tencent.open.utils.ThreadManager;
 import com.tencent.tauth.IUiListener;
@@ -19,14 +20,14 @@ import com.tencent.tauth.UiError;
 
 public class MyQQShare {
     private Tencent mTencent;
-    private  Activity context ;
+    private Activity context;
 
-    public MyQQShare(Activity context){
+    public MyQQShare(Activity context) {
         mTencent = Tencent.createInstance(context.getString(R.string.qq_id), context.getApplicationContext());
         this.context = context;
     }
 
-    public  void share(String title, String content, Bitmap bitmap, String webUrl){
+    public void share(String title, String content, Bitmap bitmap, String webUrl) {
         final Bundle params = new Bundle();
         //本地地址一定要传sdcard路径，不要什么getCacheDir()或getFilesDir()
         params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, Environment.getExternalStorageDirectory().getAbsolutePath().concat("/a.png"));
@@ -37,16 +38,17 @@ public class MyQQShare {
     }
 
 
-    public  void share(String title, String content, String imageUrl, String webUrl){
+    public void share(String title, String content, String imageUrl, String webUrl) {
         final Bundle params = new Bundle();
         //本地地址一定要传sdcard路径，不要什么getCacheDir()或getFilesDir()
         params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, imageUrl);
-        params.putString(QQShare.SHARE_TO_QQ_TITLE,title);
-        params.putString(QQShare.SHARE_TO_QQ_SUMMARY,content);
-        params.putString(QQShare.SHARE_TO_QQ_TARGET_URL,webUrl);
+        params.putString(QQShare.SHARE_TO_QQ_TITLE, title);
+        params.putString(QQShare.SHARE_TO_QQ_SUMMARY, content);
+        params.putString(QQShare.SHARE_TO_QQ_TARGET_URL, webUrl);
         params.putString(QQShare.SHARE_TO_QQ_APP_NAME, "爱动健身");
         doShareToQQ(params);
     }
+
     private void doShareToQQ(final Bundle params) {
         // QQ分享要在主线程做
         ThreadManager.getMainHandler().post(new Runnable() {
@@ -63,14 +65,17 @@ public class MyQQShare {
     IUiListener qqShareListener = new IUiListener() {
         @Override
         public void onCancel() {
+            ToastUtil.showConsecutiveShort("分享取消");
         }
 
         @Override
         public void onComplete(Object response) {
+            ToastUtil.showConsecutiveShort("分享成功");
         }
 
         @Override
         public void onError(UiError e) {
+            ToastUtil.showConsecutiveShort("分享失败");
         }
     };
 

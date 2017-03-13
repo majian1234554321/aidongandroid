@@ -162,6 +162,7 @@ public class LiveDetailActivity extends BaseActivity implements View.OnClickList
             blurBitmaps = null;
         }
         mHandler.removeCallbacksAndMessages(null);
+        sharePopupWindow.release();
     }
 
 

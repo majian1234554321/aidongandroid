@@ -80,9 +80,7 @@ public class WXShare {
                     }
                 });
 
-
     }
-
 
     public void shareWeb(String title, String desc, Bitmap bitmap, String url, boolean isCircleOfFriends) {
 
@@ -94,7 +92,6 @@ public class WXShare {
         msg.title = title;
         msg.description = desc;
         msg.thumbData = bmpToByteArray(bitmap, true);
-
 
         SendMessageToWX.Req req = new SendMessageToWX.Req();
         req.transaction = buildTransaction("webpage");

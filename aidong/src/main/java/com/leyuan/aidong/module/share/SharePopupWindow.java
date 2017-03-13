@@ -78,15 +78,19 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
         switch (v.getId()) {
             case R.id.img_weichat:
                 myShareUtils.share(MyShareUtils.SHARE_WEIXIN_CHAT, title, content, imageUrl, webUrl);
+                dismiss();
                 break;
             case R.id.img_wei_friend:
                 myShareUtils.share(MyShareUtils.SHARE_WEIXIN_FRIENDS, title, content, imageUrl, webUrl);
+                dismiss();
                 break;
             case R.id.img_qq:
                 myShareUtils.share(MyShareUtils.SHARE_QQ, title, content, imageUrl, webUrl);
+                dismiss();
                 break;
             case R.id.img_weibo:
                 myShareUtils.share(MyShareUtils.SHARE_WEIBO, title, content, imageUrl, webUrl);
+                dismiss();
                 break;
         }
     }
