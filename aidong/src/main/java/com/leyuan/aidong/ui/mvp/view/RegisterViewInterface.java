@@ -2,11 +2,11 @@ package com.leyuan.aidong.ui.mvp.view;
 
 public interface RegisterViewInterface {
 
-    void getIdentifyCode(boolean success);
+    void onGetIdentifyCode(boolean success);
 
     void register(boolean success);
 
-    void checkCaptchaImage(boolean success, String mobile);
+    void onCheckCaptchaImageResult(boolean success, String mobile);
 
     void onRequestStart();
 }

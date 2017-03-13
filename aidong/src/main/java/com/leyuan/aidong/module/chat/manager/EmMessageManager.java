@@ -157,15 +157,15 @@ public class EmMessageManager {
         return conversations;
     }
 
-    public void removeMessage(String username) {
+    public static void removeMessage(String username) {
         //删除和某个user会话，如果需要保留聊天记录，传false
         EMClient.getInstance().chatManager().deleteConversation(username, true);
     }
 
-    public void removeMessage() {
-        //删除当前会话的某条聊天记录
-//        EMConversation conversation = EMClient.getInstance().chatManager().getConversation(username);
-//        conversation.removeMessage(deleteMsg.msgId);
+    public static void removeMessage(String username, String msgId) {
+//        删除当前会话的某条聊天记录
+        EMConversation conversation = EMClient.getInstance().chatManager().getConversation(username);
+        conversation.removeMessage(msgId);
     }
 
     public void saveMessage(List<EMMessage> msgs) {

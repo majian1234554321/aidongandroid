@@ -1,4 +1,4 @@
-package com.leyuan.aidong.ui.mine.activity.account;
+package com.leyuan.aidong.ui.mine.activity.setting;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -19,20 +19,20 @@ import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.widget.CommonTitleLayout;
 import com.leyuan.aidong.widget.DialogImageIdentify;
 
-
-public class FindPasswordActivity extends BaseActivity implements View.OnClickListener, RegisterViewInterface {
+/**
+ * Created by user on 2017/3/11.
+ */
+public class PhoneBindingActivity extends BaseActivity implements View.OnClickListener, RegisterViewInterface {
     private CommonTitleLayout layoutTitle;
     private RegisterPresenterInterface presenter;
     private String mobile;
     private String code;
-    private String password;
-    private String re_password;
     private DialogImageIdentify mDialogImageIdentify;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_found_password);
+        setContentView(R.layout.activity_phone_bingding);
         presenter = new RegisterPresenter(this, this);
 
         layoutTitle = (CommonTitleLayout) findViewById(R.id.layout_title);
@@ -54,14 +54,6 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
         return (EditText) findViewById(R.id.eidt_verify_code);
     }
 
-    private EditText getEidtPassword() {
-        return (EditText) findViewById(R.id.eidt_password);
-    }
-
-    private EditText getEidtRePassword() {
-        return (EditText) findViewById(R.id.eidt_re_password);
-    }
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -76,7 +68,7 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
             case R.id.button_login:
                 if (verifyEdit()) {
                     LogAidong.i("checkIdentify token = ", "" + App.mInstance.getToken());
-                    presenter.checkIdentify(App.mInstance.getToken(), code, password);
+                    presenter.checkIdentify(App.mInstance.getToken(), code, null);
                 }
                 break;
         }
@@ -94,18 +86,6 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
             getEidtVerifyCode().setError("请输入验证码");
             return false;
         }
-
-        password = getEidtPassword().getText().toString().trim();
-        if (TextUtils.isEmpty(password)) {
-            getEidtPassword().setError("请输入密码");
-            return false;
-        }
-
-//        re_password = getEidtRePassword().getText().toString().trim();
-//        if (TextUtils.isEmpty(re_password)) {
-//            getEidtRePassword().setError("请输入密码");
-//            return false;
-//        }
 
         return true;
     }
@@ -128,7 +108,6 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void register(boolean success) {
-
         if (success) {
             ToastUtil.showShort(App.context, "修改成功");
             finish();
@@ -140,7 +119,7 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void onCheckCaptchaImageResult(boolean success, String mobile) {
         if (success) {
-            presenter.foundIdentify(mobile);
+            presenter.bindingCaptcha(mobile);
         } else if (mDialogImageIdentify != null && mDialogImageIdentify.isShowing()) {
             mDialogImageIdentify.clearContent();
             mDialogImageIdentify.refreshImage(mobile);
@@ -159,7 +138,6 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
         mDialogImageIdentify.setOnInputCompleteListener(new DialogImageIdentify.OnInputCompleteListener() {
             @Override
             public void inputIdentify(String imageIndentify) {
-//                presenter.regitserIdentify(tel,imageIndentify);
                 presenter.checkCaptchaImage(tel, imageIndentify);
             }
 

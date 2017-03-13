@@ -1,10 +1,12 @@
 package com.leyuan.aidong.ui;
 
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -12,10 +14,12 @@ import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.module.chat.manager.EmMessageManager;
+import com.leyuan.aidong.receivers.ChatMessageReceiver;
 import com.leyuan.aidong.ui.discover.fragment.DiscoverHomeFragment;
 import com.leyuan.aidong.ui.home.fragment.HomeFragment;
 import com.leyuan.aidong.ui.mine.fragment.MineFragment;
 import com.leyuan.aidong.ui.video.fragment.VideoHomeFragment;
+import com.leyuan.aidong.utils.Constant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +38,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private FragmentTransaction ft;
 
     private long mPressedTime = 0;
+    private ChatMessageReceiver chatMessageReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +63,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         tabFoundLayout.setOnClickListener(this);
         tabDiscoverLayout.setOnClickListener(this);
         tabMineLayout.setOnClickListener(this);
+
+        chatMessageReceiver = new ChatMessageReceiver(img_new_message);
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                chatMessageReceiver, new IntentFilter(Constant.BROADCAST_ACTION_NEW_MESSAGE));
     }
 
 
@@ -178,5 +187,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(chatMessageReceiver);
+    }
 }

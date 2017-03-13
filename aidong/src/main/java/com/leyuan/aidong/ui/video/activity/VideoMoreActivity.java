@@ -20,6 +20,7 @@ import com.leyuan.aidong.entity.video.VideoDetail;
 import com.leyuan.aidong.entity.video.VideoRelationResult;
 import com.leyuan.aidong.entity.video.WatchOfficeCourseBean;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VideoPresenterImpl;
 import com.leyuan.aidong.ui.mvp.view.VideoRelationView;
 import com.leyuan.aidong.widget.MyListView;
@@ -151,6 +152,7 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
 
     @Override
     public void onGoodsClick(GoodsBean bean) {
+        GoodsDetailActivity.start(this, bean.getId(), bean.getType());
     }
 
     @Override

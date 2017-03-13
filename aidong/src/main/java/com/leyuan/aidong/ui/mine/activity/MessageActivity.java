@@ -1,13 +1,10 @@
 package com.leyuan.aidong.ui.mine.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.hyphenate.chat.EMConversation;
-import com.hyphenate.easeui.EaseConstant;
-import com.hyphenate.easeui.ui.EaseConversationListFragment;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.module.chat.AiConversationListFragment;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 
@@ -17,7 +14,7 @@ import com.leyuan.aidong.widget.SimpleTitleBar;
  */
 public class MessageActivity extends BaseActivity {
     private SimpleTitleBar titleBar;
-    private EaseConversationListFragment conversationListFragment;
+    private AiConversationListFragment conversationListFragment;
 
 
     @Override
@@ -41,15 +38,15 @@ public class MessageActivity extends BaseActivity {
     }
 
     private void initData() {
-        conversationListFragment = new EaseConversationListFragment();
-        conversationListFragment.setConversationListItemClickListener(new EaseConversationListFragment.EaseConversationListItemClickListener() {
-
-            @Override
-            public void onListItemClicked(EMConversation conversation) {
-                startActivity(new Intent(MessageActivity.this, EMChatActivity.class).
-                        putExtra(EaseConstant.EXTRA_USER_ID, conversation.conversationId()));
-            }
-        });
+        conversationListFragment = new AiConversationListFragment();
+//        conversationListFragment.setConversationListItemClickListener(new EaseConversationListFragment.EaseConversationListItemClickListener() {
+//
+//            @Override
+//            public void onListItemClicked(EMConversation conversation) {
+//                startActivity(new Intent(MessageActivity.this, EMChatActivity.class).
+//                        putExtra(EaseConstant.EXTRA_USER_ID, conversation.conversationId()));
+//            }
+//        });
         getSupportFragmentManager().beginTransaction().add(R.id.layout_container, conversationListFragment).commit();
 
     }

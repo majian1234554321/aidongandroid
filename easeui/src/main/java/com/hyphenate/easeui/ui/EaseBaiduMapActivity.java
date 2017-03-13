@@ -57,8 +57,8 @@ public class EaseBaiduMapActivity extends EaseBaseActivity {
 	}
 
 	private BaiduSDKReceiver mBaiduReceiver;
-	
-	
+
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -151,7 +151,7 @@ public class EaseBaiduMapActivity extends EaseBaseActivity {
 //		if (mLocClient != null) {
 //			mLocClient.stop();
 //		}
-//		super.onPause();
+		super.onPause();
 //		lastLocation = null;
 	}
 
@@ -161,7 +161,7 @@ public class EaseBaiduMapActivity extends EaseBaseActivity {
 //		if (mLocClient != null) {
 //			mLocClient.start();
 //		}
-//		super.onResume();
+		super.onResume();
 	}
 
 	@Override
@@ -170,7 +170,7 @@ public class EaseBaiduMapActivity extends EaseBaseActivity {
 //			mLocClient.stop();
 //		mMapView.onDestroy();
 //		unregisterReceiver(mBaiduReceiver);
-//		super.onDestroy();
+		super.onDestroy();
 	}
 	private void initMapView() {
 //		mMapView.setLongClickable(true);

@@ -69,7 +69,7 @@
         <activity
             android:name=".ui.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.FullScreen"/>
+            android:theme="@style/AppTheme.FullScreen" />
         <activity
             android:name=".ui.mine.activity.account.LoginActivity"
             android:screenOrientation="portrait" />
@@ -124,6 +124,9 @@
             android:name=".ui.mine.activity.setting.TabHelpActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.mine.activity.setting.PhoneBindingActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.mine.activity.setting.TabMineBingdingMobilePhoneActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -170,6 +173,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.mine.activity.MessageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.SystemMessageActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.mine.activity.AddressActivity"
@@ -246,11 +252,11 @@
         <activity
             android:name=".ui.home.activity.NurtureActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.FullScreen"/>
+            android:theme="@style/AppTheme.FullScreen" />
         <activity
             android:name=".ui.home.activity.GoodsDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.FullScreen"/>
+            android:theme="@style/AppTheme.FullScreen" />
         <activity
             android:name=".ui.home.activity.AppointCampaignActivity"
             android:screenOrientation="portrait" />
@@ -266,7 +272,7 @@
         <activity
             android:name=".ui.home.activity.BrandActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.FullScreen"/>
+            android:theme="@style/AppTheme.FullScreen" />
         <activity
             android:name=".ui.home.activity.DeliveryInfoActivity"
             android:screenOrientation="portrait" />
@@ -319,8 +325,7 @@
             android:name=".ui.video.activity.LiveCommentActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.video.activity.LiveDetailActivity"
-            android:configChanges="keyboardHidden|orientation"
+            android:name="com.example.aidong.wxapi.LiveDetailActivity"
             android:screenOrientation="portrait">
             <!-- 微博分享需要-->
             <intent-filter>
@@ -334,22 +339,21 @@
             android:name=".ui.video.activity.LivingVideoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="landscape"
-            android:theme="@style/PlayerTheme"
-            >
+            android:theme="@style/PlayerTheme">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
 
-                <data android:mimeType="video/*"/>
-                <data android:mimeType="audio/*"/>
-                <data android:scheme="http"/>
-                <data android:scheme="file"/>
+                <data android:mimeType="video/*" />
+                <data android:mimeType="audio/*" />
+                <data android:scheme="http" />
+                <data android:scheme="file" />
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.SEND"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
 
-                <data android:mimeType="video/*"/>
+                <data android:mimeType="video/*" />
             </intent-filter>
         </activity>
         <activity
@@ -438,9 +442,18 @@
             android:name="com.example.aidong.wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="爱动健身"/>
+            </intent-filter>
 
+        </activity>
+        <!--android:theme="@android:style/Theme.Translucent.NoTitleBar"-->
         <receiver
             android:name=".receivers.WeixinRegisterReceiver"
             android:permission="com.tencent.mm.plugin.permission.SEND">
@@ -511,6 +524,10 @@
         <meta-data
             android:name="WEIBO_CHANNEL"
             android:value="weibo" />
+
+        <service
+            android:name="com.sina.weibo.sdk.net.DownloadService"
+            android:exported="false" />
         <!-- 设置环信应用的AppKey -->
         <meta-data
             android:name="EASEMOB_APPKEY"

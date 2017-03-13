@@ -22,14 +22,14 @@ android {
         multiDexEnabled true
     }
 
-    productFlavors {
-        dev {
-            minSdkVersion 21
-        }
-        prod {
-            minSdkVersion 16
-        }
-    }
+//    productFlavors {
+//        dev {
+//            minSdkVersion 21
+//        }
+//        prod {
+//            minSdkVersion 16
+//        }
+//    }
 
     dexOptions {
         javaMaxHeapSize "4g" //specify the heap size for the dex process

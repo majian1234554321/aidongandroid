@@ -31,7 +31,7 @@ public class RegisterPresenter implements RegisterPresenterInterface {
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
-                mRegisterViewInterface.getIdentifyCode(false);
+                mRegisterViewInterface.onGetIdentifyCode(false);
             }
 
             @Override
@@ -39,7 +39,7 @@ public class RegisterPresenter implements RegisterPresenterInterface {
                 LogAidong.i("onNext token = ", "" + s.getToken());
                 if (s != null)
                     App.mInstance.setToken(s.getToken());
-                mRegisterViewInterface.getIdentifyCode(true);
+                mRegisterViewInterface.onGetIdentifyCode(true);
             }
         }, mobile);
 
@@ -57,7 +57,7 @@ public class RegisterPresenter implements RegisterPresenterInterface {
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
-                mRegisterViewInterface.getIdentifyCode(false);
+                mRegisterViewInterface.onGetIdentifyCode(false);
             }
 
             @Override
@@ -65,7 +65,7 @@ public class RegisterPresenter implements RegisterPresenterInterface {
                 LogAidong.i("onNext token = ", "" + s.getToken());
                 if (s != null)
                     App.mInstance.setToken(s.getToken());
-                mRegisterViewInterface.getIdentifyCode(true);
+                mRegisterViewInterface.onGetIdentifyCode(true);
             }
         }, mobile);
 
@@ -109,10 +109,15 @@ public class RegisterPresenter implements RegisterPresenterInterface {
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
+                mRegisterViewInterface.onGetIdentifyCode(false);
             }
 
             @Override
             public void onNext(UserCoach user) {
+                LogAidong.i("onNext token = ", "" + user.getToken());
+                if (user != null)
+                    App.mInstance.setToken(user.getToken());
+                mRegisterViewInterface.onGetIdentifyCode(true);
             }
         }, mobile);
     }
@@ -129,12 +134,12 @@ public class RegisterPresenter implements RegisterPresenterInterface {
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
-                mRegisterViewInterface.checkCaptchaImage(false, mobile);
+                mRegisterViewInterface.onCheckCaptchaImageResult(false, mobile);
             }
 
             @Override
             public void onNext(UserCoach user) {
-                mRegisterViewInterface.checkCaptchaImage(true, mobile);
+                mRegisterViewInterface.onCheckCaptchaImageResult(true, mobile);
 
             }
         }, mobile, captcha);

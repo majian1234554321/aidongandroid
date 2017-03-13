@@ -2,10 +2,26 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hyphenate.easeui"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.0">
 
     <uses-sdk
         android:minSdkVersion="9"
         android:targetSdkVersion="25" />
+
+    <application>
+        <activity
+            android:name=".ui.EaseBaiduMapActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.EaseShowBigImageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.EaseShowNormalFileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.EaseShowVideoActivity"
+            android:screenOrientation="portrait" />
+
+    </application>
 
 </manifest>

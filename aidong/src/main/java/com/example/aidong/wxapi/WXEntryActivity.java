@@ -27,7 +27,8 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        api = WXAPIFactory.createWXAPI(this, APP_ID, true);
+        api = WXAPIFactory.createWXAPI(this, APP_ID, false);
+        api.registerApp(APP_ID);
         api.handleIntent(getIntent(), this);
     }
 
@@ -40,7 +41,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
     @Override
     public void onReq(BaseReq baseReq) {
-
+        Logger.i("share", "  public void onReq(BaseReq baseReq) {");
     }
 
     @Override
@@ -52,43 +53,32 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 result = "发送成功";
                 code_code = ((SendAuth.Resp) resp).code;
                 if (RETURN_MSG_TYPE_LOGIN == resp.getType()) {
-                    //此处进行数据请求，请求用户信息
-
                     Intent intent = new Intent();
                     intent.setAction(Constant.WX_LOGIN_SUCCESS_ACTION);
                     intent.putExtra(Constant.WX_LOGIN_CODE, code_code);
                     intent.setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
                     sendBroadcast(intent);
-//                    Bundle bundle = new Bundle();
-//                    bundle.putString(Constant.WX_LOGIN_CODE, code_code);
-//                    UiManager.activityJump(this, bundle, LoginActivity.class, Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//
                     Logger.i("login ", " sendBroadcast");
-
-
                 } else {
                     Toast.makeText(this, result, Toast.LENGTH_LONG).show();
                 }
-
-
-                finish();
                 break;
             case BaseResp.ErrCode.ERR_USER_CANCEL:
                 result = "发送取消";
                 Toast.makeText(this, result, Toast.LENGTH_LONG).show();
-                finish();
                 break;
             case BaseResp.ErrCode.ERR_AUTH_DENIED:
                 result = "发送被拒绝";
                 Toast.makeText(this, result, Toast.LENGTH_LONG).show();
-                finish();
                 break;
             default:
                 result = "发送返回";
                 Toast.makeText(this, result, Toast.LENGTH_LONG).show();
-                finish();
+
                 break;
         }
+
+        finish();
 //		Toast.makeText(this, result, Toast.LENGTH_LONG).show();
     }
 }

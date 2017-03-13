@@ -1,20 +1,32 @@
 package com.leyuan.aidong.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * 爱动圈评论
  * Created by song on 2017/1/14.
  */
 public class CommentBean {
+    @SerializedName("id")
     private String id;
+    @SerializedName("content")
     private String content;
+    @SerializedName("created_at")
     private String published_at;
+
+    @SerializedName("publisher")
     private Publisher publisher;
 
     public class Publisher {
         private String publisher_id;
+
+        @SerializedName("name")
         private String name;
+        @SerializedName("avatar")
         private String avatar;
+        @SerializedName("gender")
         private String gender;
+        @SerializedName("id")
         private String id;
 
         public String getId() {

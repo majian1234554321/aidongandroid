@@ -1,8 +1,10 @@
 package com.leyuan.aidong.ui.mine.fragment;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.module.chat.manager.EmMessageManager;
+import com.leyuan.aidong.receivers.ChatMessageReceiver;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
@@ -31,6 +34,7 @@ import com.leyuan.aidong.ui.mine.activity.MessageActivity;
 import com.leyuan.aidong.ui.mine.activity.OrderActivity;
 import com.leyuan.aidong.ui.mine.activity.setting.TabMinePersonalSettingsActivity;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.utils.UiManager;
@@ -49,6 +53,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private AidongMineItem item_my_coin, item_my_coupon, item_sport_timing, item_address,
             item_recommend_friend, item_after_sale, item_setting;
     private UserCoach user;
+    private ChatMessageReceiver chatMessageReceiver;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -122,7 +127,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void initData() {
-
+        chatMessageReceiver = new ChatMessageReceiver(img_new_message);
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(
+                chatMessageReceiver, new IntentFilter(Constant.BROADCAST_ACTION_NEW_MESSAGE));
     }
 
     @Override
@@ -199,5 +206,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 }
                 break;
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(chatMessageReceiver);
     }
 }
