@@ -39,10 +39,10 @@ public class EmChatLoginManager {
             super.handleMessage(msg);
             switch (msg.what) {
                 case LOGIN_SUCCESS:
-                    listner.onChatLogin(true);
+                        listner.onChatLogin(true);
                     break;
                 case LOGIN_FAILE:
-                    listner.onChatLogin(false);
+                        listner.onChatLogin(false);
                     break;
                 case NEED_REGISTER:
                     if (msg.obj != null)
@@ -75,12 +75,13 @@ public class EmChatLoginManager {
             @Override
             public void onError(int code, String message) {
                 Logger.d("EMCHAT", "登录聊天服务器失败！ error code = " + code);
-                handler.sendEmptyMessage(LOGIN_FAILE);
                 if (code == EMError.USER_NOT_FOUND) {
                     Message msg = Message.obtain();
                     msg.what = NEED_REGISTER;
                     msg.obj = userName;
                     handler.sendMessage(msg);
+                } else {
+                    handler.sendEmptyMessage(LOGIN_FAILE);
                 }
             }
         });

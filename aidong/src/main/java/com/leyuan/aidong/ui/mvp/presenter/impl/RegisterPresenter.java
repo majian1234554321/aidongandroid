@@ -10,6 +10,7 @@ import com.leyuan.aidong.ui.mvp.model.impl.RegisterModel;
 import com.leyuan.aidong.ui.mvp.presenter.RegisterPresenterInterface;
 import com.leyuan.aidong.ui.mvp.view.RegisterViewInterface;
 import com.leyuan.aidong.utils.LogAidong;
+import com.leyuan.aidong.utils.Logger;
 
 
 public class RegisterPresenter implements RegisterPresenterInterface {
@@ -17,6 +18,7 @@ public class RegisterPresenter implements RegisterPresenterInterface {
     private Context mContext;
     private RegisterModelInterface mRegisterModelInterface;
     private RegisterViewInterface mRegisterViewInterface;
+    private String token;
 
     public RegisterPresenter(Context context, RegisterViewInterface mRegisterViewInterface) {
         mContext = context;
@@ -88,12 +90,21 @@ public class RegisterPresenter implements RegisterPresenterInterface {
 
             @Override
             public void onNext(UserCoach user) {
-                if (user != null)
+                if (user != null) {
                     App.mInstance.setToken(user.getToken());
+
+                    Logger.i("login", "checkIdentify token = " + user.getToken());
+                }
+
                 mRegisterViewInterface.register(true);
 
             }
         }, token, code, password);
+    }
+
+    @Override
+    public void checkIdentifyBinding(String captcha) {
+        checkIdentify(token, captcha, null);
     }
 
     @Override
@@ -115,8 +126,9 @@ public class RegisterPresenter implements RegisterPresenterInterface {
             @Override
             public void onNext(UserCoach user) {
                 LogAidong.i("onNext token = ", "" + user.getToken());
-                if (user != null)
-                    App.mInstance.setToken(user.getToken());
+                if (user != null) {
+                    token = user.getToken();
+                }
                 mRegisterViewInterface.onGetIdentifyCode(true);
             }
         }, mobile);

@@ -80,7 +80,6 @@ public class SpecialTopicFragment extends Fragment implements SwipeRefreshLayout
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
 
         requestType = getArguments().getString(Constant.VIDEO_LIST_TYPE, VideoPresenterImpl.family);

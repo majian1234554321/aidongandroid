@@ -13,6 +13,7 @@ import com.leyuan.aidong.ui.mvp.model.LoginModelInterface;
 import com.leyuan.aidong.ui.mvp.presenter.LoginPresenterInterface;
 import com.leyuan.aidong.ui.mvp.view.LoginAutoView;
 import com.leyuan.aidong.ui.mvp.view.LoginViewInterface;
+import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.Logger;
 
 public class LoginPresenter implements LoginPresenterInterface {
@@ -24,7 +25,7 @@ public class LoginPresenter implements LoginPresenterInterface {
     //    private QQLogin qqLogin;
     private ThirdLoginUtils thirdLoginUtils;
 
-    public LoginPresenter(Activity context) {
+    public LoginPresenter(Activity context,ThirdLoginUtils.OnThirdPartyLogin thirdLoginListner) {
         this.context = context;
         loginModel = new LoginModel();
         thirdLoginUtils = new ThirdLoginUtils(context, thirdLoginListner);
@@ -133,7 +134,8 @@ public class LoginPresenter implements LoginPresenterInterface {
 
     private final ThirdLoginUtils.OnThirdPartyLogin thirdLoginListner = new ThirdLoginUtils.OnThirdPartyLogin() {
         @Override
-        public void onThridLogin(String sns, String code) {
+        public void onThridLoginStart(String sns, String code) {
+            DialogUtils.showDialog(context, "", true);
             loginSns(sns, code);
         }
     };

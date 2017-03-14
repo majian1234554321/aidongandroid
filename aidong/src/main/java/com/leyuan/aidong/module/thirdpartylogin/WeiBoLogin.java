@@ -79,7 +79,7 @@ public class WeiBoLogin {
             String uid = mAccessToken.getUid();//调后台接口的id
 
             Logger.i("loginweibo", "token = " + token + ", uid = " + uid);
-            listner.onThridLogin("sina", token);
+            listner.onThridLoginStart("sina", token);
             //从这里获取用户输入的 电话号码信息
             String phoneNum = mAccessToken.getPhoneNum();
             if (mAccessToken.isSessionValid()) {

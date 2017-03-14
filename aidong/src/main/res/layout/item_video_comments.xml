@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="11dp"
+        android:layout_marginTop="8dp"
         android:text="1小时前"
         android:textColor="#999999"
         android:textSize="12dp" />
@@ -56,9 +56,12 @@
         android:id="@+id/img_avatar"
         android:layout_width="36dp"
         android:layout_height="36dp"
-        android:layout_alignLeft="@+id/imageView"
-        android:layout_alignStart="@+id/imageView"
-        android:layout_alignTop="@+id/layout_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
         android:scaleType="centerCrop"
         android:src="@drawable/img_default" />
+
+    <!--android:layout_alignLeft="@+id/imageView"-->
+    <!--android:layout_alignStart="@+id/imageView"-->
+    <!--android:layout_alignTop="@+id/layout_content"-->
 </RelativeLayout>

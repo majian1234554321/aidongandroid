@@ -46,6 +46,6 @@ public class ThirdLoginUtils {
 
 
     public interface OnThirdPartyLogin {
-        void onThridLogin(String sns, String code);
+        void onThridLoginStart(String sns, String code);
     }
 }

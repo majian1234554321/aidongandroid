@@ -15,9 +15,9 @@ public class EmChatRegisterManager {
     private static final int REGISTER_SUCCESS = 1;
     private static final int REGISTER_FAILE = 2;
     private static final String PASSWORD = "123456";
-    private OnRigsterCallback callback;
+    private OnChatRegisterCallback callback;
 
-    public EmChatRegisterManager(OnRigsterCallback c) {
+    public EmChatRegisterManager(OnChatRegisterCallback c) {
         this.callback = c;
 //        Looper.prepare();
 //
@@ -30,10 +30,10 @@ public class EmChatRegisterManager {
             super.handleMessage(msg);
             switch (msg.what) {
                 case REGISTER_SUCCESS:
-                    callback.onRigster(true, (String) msg.obj);
+                    callback.onChatRegisterResult(true, (String) msg.obj);
                     break;
                 case REGISTER_FAILE:
-                    callback.onRigster(false, null);
+                    callback.onChatRegisterResult(false, null);
                     break;
             }
         }
@@ -74,8 +74,8 @@ public class EmChatRegisterManager {
         }).start();
     }
 
-    public interface OnRigsterCallback {
-        void onRigster(boolean success, String userName);
+    public interface OnChatRegisterCallback {
+        void onChatRegisterResult(boolean success, String userName);
     }
 
     public void release() {

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.utils.Logger;
 import com.tencent.connect.common.Constants;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
@@ -63,7 +64,10 @@ public class QQLogin {
                 String expires = jsonObject.getString(Constants.PARAM_EXPIRES_IN);
                 //OPENID,作为唯一身份标识
                 String openId = jsonObject.getString(Constants.PARAM_OPEN_ID);
-                listener.onThridLogin("qq", openId);
+
+
+                Logger.i("login", "token = " + token + ", expires = " + expires + ", openid = " + openId);
+                listener.onThridLoginStart("qq", token);
 
             } catch (JSONException e) {
                 e.printStackTrace();

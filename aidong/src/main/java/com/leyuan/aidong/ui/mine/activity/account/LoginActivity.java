@@ -25,7 +25,7 @@ import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.utils.UiManager;
 
 
-public class LoginActivity extends BaseActivity implements View.OnClickListener, LoginViewInterface, EmChatLoginManager.OnLoginListner, EmChatRegisterManager.OnRigsterCallback {
+public class LoginActivity extends BaseActivity implements View.OnClickListener, LoginViewInterface, EmChatLoginManager.OnLoginListner, EmChatRegisterManager.OnChatRegisterCallback, ThirdLoginUtils.OnThirdPartyLogin {
 
     private static final String TAG = "LoginActivity";
     private LoginPresenter loginPresenter;
@@ -41,7 +41,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         super.onCreate(savedInstanceState);
         Logger.i("login " + TAG, " onCreate");
         setContentView(R.layout.activity_log_in);
-        loginPresenter = new LoginPresenter(this);
+        loginPresenter = new LoginPresenter(this, this);
         chatLoginManager = new EmChatLoginManager(this);
 
         loginPresenter.setLoginViewInterface(this);
@@ -69,7 +69,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             case R.id.btn_login:
                 if (verify()) {
                     loginPresenter.login(telephone, password);
-                    DialogUtils.showDialog(this, "", false);
+                    DialogUtils.showDialog(this, "", true);
                 }
                 break;
             case R.id.forget_password:
@@ -83,17 +83,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             case R.id.button_weixin:
 
                 loginPresenter.loginThirdParty(ThirdLoginUtils.LOGIN_WEIXIN);
-                DialogUtils.showDialog(this, "", false);
+                DialogUtils.showDialog(this, "", true);
 
                 break;
             case R.id.button_weibo:
                 loginPresenter.loginThirdParty(ThirdLoginUtils.LOGIN_WEIBO);
-                DialogUtils.showDialog(this, "", false);
+                DialogUtils.showDialog(this, "", true);
 
                 break;
             case R.id.button_qq:
                 loginPresenter.loginThirdParty(ThirdLoginUtils.LOGIN_QQ);
-                DialogUtils.showDialog(this, "", false);
+                DialogUtils.showDialog(this, "", true);
 
                 break;
         }
@@ -162,11 +162,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     }
 
     @Override
-    public void onRigster(boolean success, String userName) {
+    public void onChatRegisterResult(boolean success, String userName) {
         DialogUtils.dismissDialog();
         if (success && userName != null) {
             DialogUtils.showDialog(this, "", false);
             chatLoginManager.login(userName);
+        } else {
+            ToastUtil.showConsecutiveShort("登陆成功 聊天服务注册失败");
+            finish();
         }
     }
 
@@ -176,7 +179,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         DialogUtils.dismissDialog();
         loginPresenter.onActivityResultData(requestCode, resultCode, data);
     }
-
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -194,6 +196,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             chatRegisterManager.release();
         unregisterReceiver(receiver);
         receiver = null;
+    }
+
+    @Override
+    public void onThridLoginStart(String sns, String code) {
+        DialogUtils.showDialog(this, "", true);
+        loginPresenter.loginSns(sns, code);
     }
 
     public class LocalReceiver extends BroadcastReceiver {

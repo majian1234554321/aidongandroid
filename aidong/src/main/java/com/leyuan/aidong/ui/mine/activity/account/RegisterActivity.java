@@ -13,7 +13,6 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.ProfileBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mine.activity.UpdateUserInfoActivity;
 import com.leyuan.aidong.ui.mvp.presenter.RegisterPresenterInterface;
 import com.leyuan.aidong.ui.mvp.presenter.impl.RegisterPresenter;
 import com.leyuan.aidong.ui.mvp.view.RegisterViewInterface;
@@ -152,7 +151,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         DialogUtils.dismissDialog();
         if (success) {
             ToastUtil.showShort(App.context, "注册成功");
-            UpdateUserInfoActivity.start(this, new ProfileBean());
+            CompleteUserInfoActivity.start(this, new ProfileBean());
             finish();
         } else {
             ToastUtil.showShort(App.context, "注册失败 请重新提交");
