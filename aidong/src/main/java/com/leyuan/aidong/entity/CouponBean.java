@@ -16,7 +16,15 @@ public class CouponBean {
     private String end_date;            //有效期－结束时间
     private String use_date;            //使用时间
     private String introduce;           //优惠劵展开描述信息
+    private String status;
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getId() {
         return id;

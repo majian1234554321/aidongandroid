@@ -76,8 +76,6 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
         isFirstEnter = SharePrefUtils.getBoolean(SplashActivity.this, "isFirstEnter", true);
         EMClient.getInstance().chatManager().loadAllConversations();
         initData();
-
-
     }
 
     private void initData() {
