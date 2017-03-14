@@ -21,7 +21,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="15dp"
         android:layout_marginTop="17dp"
-        android:src="@drawable/" />
+        android:src="@drawable/video_detail_down_arrow" />
 
     <View
         android:id="@+id/view"
