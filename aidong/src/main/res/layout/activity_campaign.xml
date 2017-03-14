@@ -38,11 +38,10 @@
             android:text="往期"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:padding="@dimen/right_margin"
+            android:padding="8dp"
             android:textColor="@color/white"
             android:textSize="16sp"/>
     </RelativeLayout>
-
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_content"

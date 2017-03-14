@@ -18,6 +18,7 @@ import com.leyuan.aidong.ui.mvp.model.impl.EquipmentModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.EquipmentPresent;
 import com.leyuan.aidong.ui.mvp.view.GoodsFilterActivityView;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.constant.PayType;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
@@ -49,8 +50,7 @@ public class EquipmentPresentImpl implements EquipmentPresent{
 
 
     @Override
-    public void commonLoadEquipmentData(final SwitcherLayout switcherLayout, String brandId,
-                                        String priceSort, String countSort, String heatSort) {
+    public void commonLoadEquipmentData(final SwitcherLayout switcherLayout, String brandId, String sort) {
         equipmentModel.getEquipments(new CommonSubscriber<EquipmentData>(switcherLayout) {
             @Override
             public void onNext(EquipmentData equipmentData) {
@@ -64,11 +64,11 @@ public class EquipmentPresentImpl implements EquipmentPresent{
                     switcherLayout.showEmptyLayout();
                 }
             }
-        },Constant.PAGE_FIRST,brandId,priceSort,countSort,heatSort);
+        },Constant.PAGE_FIRST,brandId,sort);
     }
 
     @Override
-    public void pullToRefreshEquipmentData(String brandId, String priceSort, String countSort, String heatSort) {
+    public void pullToRefreshEquipmentData(String brandId, String sort) {
         equipmentModel.getEquipments(new RefreshSubscriber<EquipmentData>(context) {
             @Override
             public void onNext(EquipmentData equipmentData) {
@@ -79,12 +79,12 @@ public class EquipmentPresentImpl implements EquipmentPresent{
                     filterActivityView.updateEquipmentRecyclerView(equipmentBeanList);
                 }
             }
-        },Constant.PAGE_FIRST,brandId,priceSort,countSort,heatSort);
+        },Constant.PAGE_FIRST,brandId,sort);
     }
 
     @Override
     public void requestMoreEquipmentData(RecyclerView recyclerView, final int pageSize, int page,
-                                         String brandId, String priceSort, String countSort, String heatSort) {
+                                         String brandId, String sort) {
         equipmentModel.getEquipments(new RequestMoreSubscriber<EquipmentData>(context,recyclerView,pageSize) {
             @Override
             public void onNext(EquipmentData equipmentData) {
@@ -99,7 +99,7 @@ public class EquipmentPresentImpl implements EquipmentPresent{
                     filterActivityView.showEndFooterView();
                 }
             }
-        },page,brandId,priceSort,countSort,heatSort);
+        },page,brandId,sort);
     }
 
     @Override
@@ -110,7 +110,7 @@ public class EquipmentPresentImpl implements EquipmentPresent{
             @Override
             public void onNext(PayOrderData payOrderData) {
                 String payType = payOrderData.getOrder().getPayType();
-                PayInterface payInterface = "alipay".equals(payType) ? new AliPay(context,listener)
+                PayInterface payInterface = PayType.ALI.equals(payType) ? new AliPay(context,listener)
                         : new WeiXinPay(context,listener);
                 payInterface.payOrder(payOrderData.getOrder());
             }

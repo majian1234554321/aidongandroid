@@ -66,7 +66,7 @@ public class GoodsFilterAdapter extends RecyclerView.Adapter<GoodsFilterAdapter.
             final NurtureBean bean = nurtureList.get(position);
             GlideLoader.getInstance().displayImage(bean.getCover(), holder.cover);
             holder.name.setText(bean.getName());
-            holder.brand.setText(bean.getMarket_price());
+            holder.brand.setText(bean.getBrandName());
             holder.price.setText(String.format(context.getString(R.string.rmb_price_double),
                     FormatUtil.parseDouble(bean.getPrice())));
 
@@ -80,8 +80,9 @@ public class GoodsFilterAdapter extends RecyclerView.Adapter<GoodsFilterAdapter.
             final EquipmentBean bean = equipmentList.get(position);
             GlideLoader.getInstance().displayImage(bean.getCover(), holder.cover);
             holder.name.setText(bean.getName());
-            holder.brand.setText(bean.getMarket_price());
-            holder.price.setText(String.format(context.getString(R.string.rmb_price),bean.getPrice()));
+            holder.brand.setText(bean.getBrandName());
+            holder.price.setText(String.format(context.getString(R.string.rmb_price_double),
+                    FormatUtil.parseDouble(bean.getPrice())));
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

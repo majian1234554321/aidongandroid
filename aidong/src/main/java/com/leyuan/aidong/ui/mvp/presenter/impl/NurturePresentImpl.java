@@ -54,8 +54,7 @@ public class NurturePresentImpl implements NurturePresent{
     }
 
     @Override
-    public void commendLoadNurtureData(final SwitcherLayout switcherLayout, String brandId,
-                                       String priceSort, String countSort, String heatSort) {
+    public void commendLoadNurtureData(final SwitcherLayout switcherLayout, String brandId, String sort) {
         nurtureModel.getNurtures(new CommonSubscriber<NurtureData>(switcherLayout) {
             @Override
             public void onNext(NurtureData nurtureDataBean) {
@@ -69,11 +68,11 @@ public class NurturePresentImpl implements NurturePresent{
                     switcherLayout.showEmptyLayout();
                 }
             }
-        },Constant.PAGE_FIRST,brandId,priceSort,countSort,heatSort);
+        },Constant.PAGE_FIRST,brandId,sort);
     }
 
     @Override
-    public void pullToRefreshNurtureData(String brandId, String priceSort, String countSort, String heatSort) {
+    public void pullToRefreshNurtureData(String brandId, String sort) {
         nurtureModel.getNurtures(new RefreshSubscriber<NurtureData>(context) {
             @Override
             public void onNext(NurtureData nurtureDataBean) {
@@ -84,12 +83,12 @@ public class NurturePresentImpl implements NurturePresent{
                     filterActivityView.updateNurtureRecyclerView(nurtureBeanList);
                 }
             }
-        }, Constant.PAGE_FIRST,brandId,priceSort,countSort,heatSort);
+        }, Constant.PAGE_FIRST,brandId,sort);
     }
 
     @Override
     public void requestMoreNurtureData(RecyclerView recyclerView, final int pageSize, int page,
-                                       String brandId, String priceSort, String countSort, String heatSort) {
+                                       String brandId, String sort) {
         nurtureModel.getNurtures(new RequestMoreSubscriber<NurtureData>(context,recyclerView,pageSize) {
             @Override
             public void onNext(NurtureData nurtureDataBean) {
@@ -104,7 +103,7 @@ public class NurturePresentImpl implements NurturePresent{
                     filterActivityView.showEndFooterView();
                 }
             }
-        },page,brandId,priceSort,countSort,heatSort);
+        },page,brandId,sort);
     }
 
     @Override

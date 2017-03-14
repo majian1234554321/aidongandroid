@@ -35,9 +35,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static com.leyuan.aidong.ui.home.activity.GoodsDetailActivity.FROM_ADD_CART;
-import static com.leyuan.aidong.ui.home.activity.GoodsDetailActivity.FROM_SKU;
-
 /**
  * 商品详情页选择商品信息弹框
  * Created by song on 2016/9/13.
@@ -45,6 +42,9 @@ import static com.leyuan.aidong.ui.home.activity.GoodsDetailActivity.FROM_SKU;
 //todo 欠缺逻辑 : 当包含该sku但是该点的所有路径库存都为0 初始化该sku点的状态
 public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClickListener,
         GoodsSkuAdapter.SelectSkuListener,GoodsSkuPopupWindowView {
+    public static final String FROM_SKU = "1";
+    public static final String FROM_BUY = "2";
+    public static final String FROM_ADD_CART = "3";
 
     private Context context;
     private ImageView dvGoodsCover;

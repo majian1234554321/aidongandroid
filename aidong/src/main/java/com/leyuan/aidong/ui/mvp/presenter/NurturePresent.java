@@ -19,13 +19,12 @@ public interface NurturePresent {
      * 第一次进入界面加载营养品列表数据
      * @param switcherLayout SwitcherLayout
      */
-    void commendLoadNurtureData(SwitcherLayout switcherLayout, String brandId,
-                                String priceSort, String countSort, String heatSort);
+    void commendLoadNurtureData(SwitcherLayout switcherLayout, String brandId, String sort);
 
     /**
      * 下拉刷新营养品列表数据
      */
-    void pullToRefreshNurtureData(String brandId,String priceSort, String countSort, String heatSort);
+    void pullToRefreshNurtureData(String brandId,String sort);
 
     /**
      * 上拉加载更多营养品列表数据
@@ -33,8 +32,7 @@ public interface NurturePresent {
      * @param pageSize 每页加载数
      * @param page 页码
      */
-    void requestMoreNurtureData(RecyclerView recyclerView, int pageSize, int page, String brandId,
-                                String priceSort, String countSort, String heatSort);
+    void requestMoreNurtureData(RecyclerView recyclerView, int pageSize, int page, String brandId, String sort);
 
     /**
      * 立即购买

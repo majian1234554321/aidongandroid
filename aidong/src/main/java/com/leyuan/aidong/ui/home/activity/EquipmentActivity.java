@@ -17,7 +17,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.RecommendPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.EquipmentActivityView;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.utils.constant.GoodsType;
-import com.leyuan.aidong.utils.constant.RecommendGoodsPosition;
+import com.leyuan.aidong.utils.constant.RecommendGoods;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
@@ -55,7 +55,7 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
         initTopLayout();
         initSwipeRefreshLayout();
         initRecommendRecyclerView();
-        present.commendLoadRecommendData(switcherLayout, RecommendGoodsPosition.EQUIPMENT);
+        present.commendLoadRecommendData(switcherLayout, RecommendGoods.EQUIPMENT);
     }
 
     private void initTopLayout(){
@@ -84,7 +84,7 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
             public void onRefresh() {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recommendView);
-                present.pullToRefreshRecommendData( RecommendGoodsPosition.EQUIPMENT);
+                present.pullToRefreshRecommendData( RecommendGoods.EQUIPMENT);
             }
         });
 
@@ -93,7 +93,7 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
             public void onClick(View v) {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recommendView);
-                present.commendLoadRecommendData(switcherLayout, RecommendGoodsPosition.EQUIPMENT);
+                present.commendLoadRecommendData(switcherLayout, RecommendGoods.EQUIPMENT);
             }
         });
     }
@@ -117,7 +117,7 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
         public void onLoadNextPage(View view) {
             currPage ++;
             if (equipmentList != null && equipmentList.size() >= pageSize) {
-                present.requestMoreRecommendData(recommendView,pageSize,currPage, RecommendGoodsPosition.EQUIPMENT);
+                present.requestMoreRecommendData(recommendView,pageSize,currPage, RecommendGoods.EQUIPMENT);
             }
         }
     };
