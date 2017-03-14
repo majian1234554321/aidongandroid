@@ -10,6 +10,15 @@ public class EquipmentBean {
     private String cover;
     private String price;
     private String market_price;
+    private String brand_name;
+
+    public String getBrandName() {
+        return brand_name;
+    }
+
+    public void setBrand_name(String brand_name) {
+        this.brand_name = brand_name;
+    }
 
     public String getId() {
         return id;

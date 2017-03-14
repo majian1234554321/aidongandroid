@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseFragment;
+import com.zzhoujay.richtext.RichText;
 
 /**
  * 商品图文详情
@@ -23,7 +24,7 @@ public class GoodsDetailFragment extends BaseFragment {
         if(bundle != null){
             content = bundle.getString("detailText");
         }
-        return inflater.inflate(R.layout.fragment_goods_detail,null);
+        return inflater.inflate(R.layout.fragment_goods_detail,container,false);
     }
 
 
@@ -31,7 +32,7 @@ public class GoodsDetailFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         TextView tvContent = (TextView) view.findViewById(R.id.tv_content);
         if(!TextUtils.isEmpty(content)){
-            tvContent.setText(content);
+            RichText.from(content).into(tvContent);
         }
     }
 }

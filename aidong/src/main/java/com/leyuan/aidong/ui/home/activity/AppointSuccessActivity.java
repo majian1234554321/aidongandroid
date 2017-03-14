@@ -17,7 +17,7 @@ import com.leyuan.aidong.ui.mine.activity.AppointmentActivity;
 import com.leyuan.aidong.ui.mvp.presenter.RecommendPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.RecommendPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointSuccessActivityView;
-import com.leyuan.aidong.utils.constant.RecommendGoodsPosition;
+import com.leyuan.aidong.utils.constant.RecommendGoods;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderSpanSizeLookup;
@@ -59,7 +59,7 @@ public class AppointSuccessActivity extends BaseActivity implements View.OnClick
         }
         initView();
         setListener();
-        present.pullToRefreshRecommendData(RecommendGoodsPosition.CART);
+        present.pullToRefreshRecommendData(RecommendGoods.CART);
     }
 
     private void initView() {

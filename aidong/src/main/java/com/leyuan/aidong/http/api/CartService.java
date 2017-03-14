@@ -35,7 +35,7 @@ public interface CartService {
     @FormUrlEncoded
     @POST("mine/cart")
     Observable<BaseBean> addCart(@Field("code") String sku_code, @Field("amount") int amount,
-                                 @Field("gym_id") String gymId,@Field("recommend_id") String recommendId);
+                                 @Field("gym_id") String gymId,@Field("recommend_coach_id") String recommendId);
 
     /**
      * 删除购物车中商品

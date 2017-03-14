@@ -26,13 +26,13 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.CampaignPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CampaignDetailActivityView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
-import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.zzhoujay.richtext.RichText;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 
 import static com.leyuan.aidong.R.id.iv_back;
+
 
 /**
  * 活动详情
@@ -97,7 +97,6 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        Logger.i("share", " share pop == null ? " + (sharePopupWindow == null));
         sharePopupWindow.onNewIntent(intent);
     }
 
@@ -109,7 +108,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
     }
 
     private void initView(){
-        ivBack = (ImageView) findViewById(R.id.iv_back);
+        ivBack = (ImageView) findViewById(iv_back);
         ivShare = (ImageView)findViewById(R.id.iv_share);
         pagerLayout = (RelativeLayout) findViewById(R.id.rl_pager);
         bannerLayout = (BGABanner) findViewById(R.id.banner_layout);
@@ -177,7 +176,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
                 bottomToTargetActivity();
                 break;
             case R.id.ll_address:
-                MapActivity.start(this,"地址详情", bean.getName(), bean.getLandmark(),
+                MapActivity.start(this,"地址详情", bean.getAddress(), bean.getLandmark(),
                         bean.getCoordinate().getLat(), bean.getCoordinate().getLng());
                 break;
             default:

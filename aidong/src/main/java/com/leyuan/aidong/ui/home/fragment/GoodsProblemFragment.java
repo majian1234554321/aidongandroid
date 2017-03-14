@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseFragment;
+import com.zzhoujay.richtext.RichText;
 
 /**
  * 商品详情常见问题
@@ -23,7 +24,7 @@ public class GoodsProblemFragment extends BaseFragment {
         if(bundle != null){
             content = bundle.getString("problemText");
         }
-        return inflater.inflate(R.layout.fragment_goods_problem,null);
+        return inflater.inflate(R.layout.fragment_goods_problem,container,false);
     }
 
 
@@ -31,7 +32,7 @@ public class GoodsProblemFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         TextView tvContent = (TextView) view.findViewById(R.id.tv_content);
         if(!TextUtils.isEmpty(content)){
-            tvContent.setText(content);
+            RichText.from(content).into(tvContent);
         }
     }
 }

@@ -33,6 +33,7 @@ import com.leyuan.aidong.adapter.home.GoodsDetailCouponAdapter;
 import com.leyuan.aidong.entity.DeliveryBean;
 import com.leyuan.aidong.entity.GoodsDetailBean;
 import com.leyuan.aidong.entity.PhotoBrowseInfo;
+import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.discover.activity.PhotoBrowseActivity;
@@ -64,6 +65,9 @@ import java.util.List;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 
+import static com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow.FROM_ADD_CART;
+import static com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow.FROM_BUY;
+import static com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow.FROM_SKU;
 import static com.leyuan.aidong.utils.Constant.EMPTY_STR;
 import static com.leyuan.aidong.utils.Constant.REQUEST_ADD_CART;
 import static com.leyuan.aidong.utils.Constant.REQUEST_BUY_IMMEDIATELY;
@@ -78,9 +82,6 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_TO_CART;
 public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnItemClickListener,
         GoodsSkuPopupWindow.SelectSkuListener,SmartTabLayout.TabProvider,View.OnClickListener,
         GoodsDetailActivityView,PopupWindow.OnDismissListener{
-    public static final String FROM_SKU = "1";
-    public static final String FROM_BUY = "2";
-    public static final String FROM_ADD_CART = "3";
     private static final int CODE_SELECT_ADDRESS = 1;
 
     private SwitcherLayout switcherLayout;
@@ -121,7 +122,8 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
     private ArrayList<String> bannerUrls = new ArrayList<>();
     private GoodsDetailCouponAdapter couponAdapter;
     private GoodsSkuPopupWindow skuPopupWindow;
-    private GoodsDetailBean detailBean;
+    private SharePopupWindow sharePopupWindow;
+    private GoodsDetailBean bean;
 
     private String id;
     private String count;
@@ -140,6 +142,7 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_detail);
+        sharePopupWindow = new SharePopupWindow(this, savedInstanceState);
         GoodsDetailPresent goodsDetailPresent = new GoodsDetailPresentImpl(this,this);
         if(getIntent() != null){
             id = getIntent().getStringExtra("id");
@@ -151,9 +154,16 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        sharePopupWindow.onNewIntent(intent);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         skuPopupWindow = null;
+        sharePopupWindow.release();
     }
 
     private void initView() {
@@ -221,10 +231,9 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
 
     @Override
     public void setGoodsDetail(GoodsDetailBean bean) {
-        detailBean = bean;
+        this.bean = bean;
         bannerLayout.setVisibility(View.VISIBLE);
         bottomLayout.setVisibility(View.VISIBLE);
-        bannerUrls.addAll(bean.image);
         bannerUrls.addAll(bean.image);
         bannerLayout.setData(bannerUrls,null);
         tvTitle.setText(String.format(getString(R.string.rmb_price_double),
@@ -244,7 +253,7 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
         }
 
         StringBuilder skuStr = new StringBuilder();
-        for (String s : detailBean.spec.name) {
+        for (String s : this.bean.spec.name) {
             skuStr.append(s).append(EMPTY_STR);
         }
         tvSku.setText(skuStr);
@@ -259,35 +268,9 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
             }
         }
 
-        final FragmentPagerItems pages = new FragmentPagerItems(this);
-        GoodsDetailFragment detail = new GoodsDetailFragment();
-        GoodsProblemFragment problem = new GoodsProblemFragment();
-        GoodsServiceFragment service = new GoodsServiceFragment();
-        pages.add(FragmentPagerItem.of(null, detail.getClass(),
-                new Bundler().putString("detailText",detailBean.introduce).get()));
-        pages.add(FragmentPagerItem.of(null,problem.getClass(),
-                new Bundler().putString("problemText",detailBean.question).get()));
-        pages.add(FragmentPagerItem.of(null,service.getClass(),
-                new Bundler().putString("serviceText", detailBean.service).get()));
-        final FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter
-                (getSupportFragmentManager(),pages);
-
-        viewPager.setAdapter(adapter);
-        viewPager.setOffscreenPageLimit(3);
-        tabLayout.setCustomTabView(this);
-        tabLayout.setViewPager(viewPager);
-        tabLayout.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
-            @Override
-            public void onPageSelected(int position) {
-                for (int i = 0; i < allTabView.size(); i++) {
-                    View tabAt = tabLayout.getTabAt(i);
-                    TextView text = (TextView) tabAt.findViewById(R.id.tv_tab_text);
-                    text.setTypeface(i == position ? Typeface.DEFAULT_BOLD :Typeface.DEFAULT);
-                    detailsLayout.setViewPagerCurrent(position);
-                }
-            }
-        });
+        initFragments();
     }
+
 
     @Override
     public void onClick(View v) {
@@ -296,18 +279,20 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
                 finish();
                 break;
             case R.id.iv_share:
+                sharePopupWindow.showAtBottom(bean.name,bean.introduce, bean.image.get(0),
+                        "http://www.baidu.com");
                 break;
             case R.id.ll_code:
                 inputRecommendCodeDialog();
                 break;
             case R.id.ll_goods_sku:
-                showSkuPopupWindow(this,detailBean,selectedSkuValues,FROM_SKU);
+                showSkuPopupWindow(this, bean,selectedSkuValues,FROM_SKU);
                 break;
             case R.id.ll_address:
                 Intent intent = new Intent(this,DeliveryInfoActivity.class);
                 intent.putExtra("id",id);
                 intent.putExtra("goodsType", goodsType);
-                intent.putExtra("deliveryBean",detailBean.pick_up);
+                intent.putExtra("deliveryBean", bean.pick_up);
                 final Pair<View, String>[] pairs = TransitionHelper.
                         createSafeTransitionParticipants(this, false);
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.
@@ -322,29 +307,26 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
                 }
                 break;
             case R.id.tv_add_cart:
-                showSkuPopupWindow(this,detailBean,selectedSkuValues,FROM_ADD_CART);
+                showSkuPopupWindow(this, bean,selectedSkuValues,FROM_ADD_CART);
                 break;
             case R.id.tv_pay:
-                showSkuPopupWindow(this,detailBean,selectedSkuValues,FROM_BUY);
+                showSkuPopupWindow(this, bean,selectedSkuValues,FROM_BUY);
                 break;
             default:
                 break;
         }
     }
 
-
-    private void showSkuPopupWindow(Context context, GoodsDetailBean detailBean,
-                                    List<String> selectedSkuValues,String from) {
-       /* rootLayout.animate().scaleY(0.95f).setInterpolator(new AccelerateInterpolator(2)).start();
-        rootLayout.animate().scaleX(0.95f).setInterpolator(new AccelerateInterpolator(2)).start();*/
+    //todo optimize
+    private void showSkuPopupWindow(Context context, GoodsDetailBean detailBean, List<String> selectedSkuValues,String from) {
+        //rootLayout.animate().scaleY(0.95f).setInterpolator(new AccelerateInterpolator(2)).start();
+        //rootLayout.animate().scaleX(0.95f).setInterpolator(new AccelerateInterpolator(2)).start();
         //contentLayout.animate().rotationX(0.8f).setInterpolator(new AccelerateInterpolator(2)).start();
-        //todo optimize
-       // if(skuPopupWindow == null){
-            skuPopupWindow = new GoodsSkuPopupWindow(context,detailBean,selectedSkuValues,
-                    count,tvRecommendCode.getText().toString(), goodsType,from);
-            skuPopupWindow.setSelectSkuListener(this);
+        //if(skuPopupWindow == null){
+        String recommendId = tvRecommendCode.getText().toString();
+        skuPopupWindow = new GoodsSkuPopupWindow(context,detailBean,selectedSkuValues, count,recommendId, goodsType,from);
+        skuPopupWindow.setSelectSkuListener(this);
         skuPopupWindow.setOnDismissListener(this);
-        //}
         skuPopupWindow.showAtLocation(rootLayout, Gravity.BOTTOM,0,0);
     }
 
@@ -393,7 +375,7 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
         if(skuValues != null) {
             selectedSkuValues = skuValues;
         }
-        if(selectedSkuValues.size() == detailBean.spec.name.size()){
+        if(selectedSkuValues.size() == bean.spec.name.size()){
             tvSelect.setText("已选择:");
         }else {
             tvSelect.setText("选择:");
@@ -407,13 +389,13 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        sharePopupWindow.onActivityResult(requestCode, resultCode, data);
         if(resultCode != RESULT_OK){
             return;
         }
-
         if(requestCode == CODE_SELECT_ADDRESS){
             DeliveryBean deliveryBean = data.getParcelableExtra("deliveryBean");
-            detailBean.pick_up = deliveryBean;
+            bean.pick_up = deliveryBean;
             if(deliveryBean!= null) {
                 if(DeliveryType.EXPRESS.equals(deliveryBean.type)){
                     tvAddressInfo.setVisibility(View.GONE);
@@ -469,6 +451,37 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
             float percentage = (float) Math.abs(verticalOffset) / (float) maxScroll;
             titleLayout.setBackgroundColor(Color.argb((int) (percentage * 255), 0, 0, 0));
         }
+    }
+
+    private void initFragments() {
+        final FragmentPagerItems pages = new FragmentPagerItems(this);
+        GoodsDetailFragment detail = new GoodsDetailFragment();
+        GoodsProblemFragment problem = new GoodsProblemFragment();
+        GoodsServiceFragment service = new GoodsServiceFragment();
+        pages.add(FragmentPagerItem.of(null, detail.getClass(),
+                new Bundler().putString("detailText", bean.introduce).get()));
+        pages.add(FragmentPagerItem.of(null,problem.getClass(),
+                new Bundler().putString("problemText", bean.question).get()));
+        pages.add(FragmentPagerItem.of(null,service.getClass(),
+                new Bundler().putString("serviceText", bean.service).get()));
+        final FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter
+                (getSupportFragmentManager(),pages);
+
+        viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(3);
+        tabLayout.setCustomTabView(this);
+        tabLayout.setViewPager(viewPager);
+        tabLayout.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+            @Override
+            public void onPageSelected(int position) {
+                for (int i = 0; i < allTabView.size(); i++) {
+                    View tabAt = tabLayout.getTabAt(i);
+                    TextView text = (TextView) tabAt.findViewById(R.id.tv_tab_text);
+                    text.setTypeface(i == position ? Typeface.DEFAULT_BOLD :Typeface.DEFAULT);
+                    detailsLayout.setViewPagerCurrent(position);
+                }
+            }
+        });
     }
 
     @Override

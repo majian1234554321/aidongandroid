@@ -30,6 +30,9 @@
                 android:layout_below="@+id/iv_image"
                 android:layout_centerHorizontal="true"
                 android:text="全部"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:singleLine="true"
                 android:textColor="@color/c3"
                 android:textSize="13sp" />
 

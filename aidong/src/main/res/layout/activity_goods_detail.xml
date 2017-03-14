@@ -45,14 +45,14 @@
                         <cn.bingoogolapple.bgabanner.BGABanner
                             android:id="@+id/banner_layout"
                             android:layout_width="match_parent"
-                            android:layout_height="350dp"
+                            android:layout_height="300dp"
                             android:background="@color/white"
-                            android:visibility="gone"
-                            app:banner_pageChangeDuration="1000"
+                            android:visibility="visible"
                             app:banner_pointAutoPlayAble="false"
                             app:banner_pointContainerBackground="@android:color/transparent"
-                            app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
-                            app:banner_pointTopBottomMargin="5dp"
+                            app:banner_pointDrawable="@drawable/selector_banner"
+                            app:banner_pointTopBottomMargin="10dp"
+                            app:banner_indicatorGravity="top|center_horizontal"
                             app:banner_transitionEffect="alpha"
                             app:layout_collapseMode="parallax"
                             android:transitionName="@string/transition_home"/>
@@ -119,13 +119,28 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
-
-
-                            <ImageView
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="2dp"
-                                android:src="@drawable/venues_divider" />
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="0.5dp"
+                                    android:background="@color/line_color"/>
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:src="@drawable/goods_line" />
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="0.5dp"
+                                    android:background="@color/line_color"/>
+                            </LinearLayout>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -137,6 +152,7 @@
                                 android:gravity="center_vertical"
                                 android:text="爱动福利券"
                                 android:textSize="16sp"
+                                android:textColor="@color/black"
                                 android:visibility="visible" />
 
                             <android.support.v7.widget.RecyclerView
@@ -227,10 +243,11 @@
                         <LinearLayout
                             android:id="@+id/ll_address"
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
+                            android:layout_height="60dp"
                             android:orientation="horizontal"
                             android:paddingLeft="@dimen/left_margin"
-                            android:paddingRight="@dimen/right_margin">
+                            android:paddingRight="@dimen/right_margin"
+                            android:background="?selectableItemBackground">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -283,7 +300,7 @@
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:layout_height="50dp"
+                            android:layout_height="55dp"
                             android:layout_gravity="center_horizontal"
                             android:drawableLeft="@drawable/icon_black_point"
                             android:drawablePadding="5dp"
@@ -295,8 +312,9 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="110dp"
-                            android:orientation="horizontal">
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="19dp">
 
                             <ImageView
                                 android:layout_width="0dp"
@@ -323,11 +341,11 @@
                                 android:src="@drawable/icon_gabalnara" />
                         </LinearLayout>
 
-                        <include layout="@layout/inc_bold_line" />
+                        <include layout="@layout/inc_bold_line"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
+                            android:layout_height="51dp"
                             android:gravity="center_horizontal">
 
                             <ImageView
@@ -396,7 +414,9 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:background="?selectableItemBackground"
-                android:padding="5dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
                 android:src="@drawable/icon_back" />
 
             <TextView
@@ -417,7 +437,9 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:background="?selectableItemBackground"
-                android:padding="5dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
                 android:src="@drawable/icon_share" />
 
         </RelativeLayout>

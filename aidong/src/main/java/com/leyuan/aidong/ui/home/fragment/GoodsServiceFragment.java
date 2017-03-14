@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseFragment;
+import com.zzhoujay.richtext.RichText;
 
 /**
  * 商品详情售后服务
@@ -23,15 +24,14 @@ public class GoodsServiceFragment extends BaseFragment {
         if(bundle != null){
             content = bundle.getString("serviceText");
         }
-        return inflater.inflate(R.layout.fragment_goods_service,null);
+        return inflater.inflate(R.layout.fragment_goods_service,container,false);
     }
-
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         TextView tvContent = (TextView) view.findViewById(R.id.tv_content);
         if(!TextUtils.isEmpty(content)){
-            tvContent.setText(content);
+            RichText.from(content).into(tvContent);
         }
     }
 }

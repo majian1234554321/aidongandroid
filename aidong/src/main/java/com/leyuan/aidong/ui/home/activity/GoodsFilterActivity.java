@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.GoodsFilterAdapter;
@@ -42,6 +41,10 @@ import java.util.List;
  * Created by song on 2016/8/18.
  */
 public class GoodsFilterActivity extends BaseActivity implements View.OnClickListener,GoodsFilterActivityView {
+    private static final String HEAT_DESC = "heat_desc";
+    private static final String ORDERS_COUNT_DESC = "orders_count_desc";
+    private static final String PRICE_ASC = "price_asc";
+    private static final String PRICE_DESC = "price_desc";
     private static final int COMMEND_LOAD_DATA = 3;
     private static final int PULL_TO_REFRESH_DATA = 4;
     private static final int REQUEST_MORE_DATA = 5;
@@ -64,11 +67,8 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
     private List<CategoryBean> categoryBeanList;
     private NurturePresent nurturePresent;
     private EquipmentPresent equipmentPresent;
-    private String brandId;     //品牌筛选
-    private String priceSort;   //价格排序
-    private String countSort;   //销量排序
-    private String heatSort;    //热度排序
-
+    private String categoryId;  //分类筛选
+    private String sort;        //排序
 
 
     public static void start(Context context, String goodsType, ArrayList<CategoryBean> categoryList,int pos) {
@@ -89,7 +89,7 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
             goodsType = getIntent().getStringExtra("goodsType");
             selectedCategoryPosition = getIntent().getIntExtra("pos",0);
             categoryBeanList = getIntent().getParcelableArrayListExtra("categoryList");
-            brandId = categoryBeanList.get(selectedCategoryPosition).getId();
+            categoryId = categoryBeanList.get(selectedCategoryPosition).getId();
         }
 
         initTopLayout();
@@ -109,34 +109,26 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
         filterView.setOnFilterClickListener(new GoodsFilterView.OnFilterClickListener() {
             @Override
             public void onCategoryItemClick(int position) {
-                brandId = categoryBeanList.get(position).getId();
+                categoryId = categoryBeanList.get(position).getId();
                 getListData(PULL_TO_REFRESH_DATA);
-                Toast.makeText(GoodsFilterActivity.this,""+position,Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onPopularityClick() {
-                heatSort = "desc";
-                countSort = null;
-                priceSort = null;
+                sort = HEAT_DESC;
                 getListData(PULL_TO_REFRESH_DATA);
             }
 
             @Override
             public void onSaleClick() {
-                countSort = "desc";
-                heatSort = null;
-                priceSort = null;
+                sort = ORDERS_COUNT_DESC;
                 getListData(PULL_TO_REFRESH_DATA);
             }
 
             @Override
             public void onPriceClick(boolean low2High) {
-                priceSort = low2High ? "asc" : "desc";
-                heatSort = null;
-                countSort = null;
+                sort = low2High ? PRICE_ASC : PRICE_DESC;
                 getListData(PULL_TO_REFRESH_DATA);
-                Toast.makeText(GoodsFilterActivity.this,""+low2High,Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -219,11 +211,9 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
         switch (operation){
             case COMMEND_LOAD_DATA:
                 if(GoodsType.NUTRITION.equals(goodsType)){
-                    nurturePresent.commendLoadNurtureData(switcherLayout,brandId,
-                            priceSort,countSort,heatSort);
+                    nurturePresent.commendLoadNurtureData(switcherLayout, categoryId, sort);
                 }else {
-                    equipmentPresent.commonLoadEquipmentData(switcherLayout,brandId,
-                            priceSort,countSort,heatSort);
+                    equipmentPresent.commonLoadEquipmentData(switcherLayout, categoryId, sort);
                 }
                 break;
             case PULL_TO_REFRESH_DATA:
@@ -231,19 +221,17 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
                 refreshLayout.setRefreshing(true);
                 RecyclerViewStateUtils.resetFooterViewState(recyclerView);
                 if(GoodsType.NUTRITION.equals(goodsType)){
-                    nurturePresent.pullToRefreshNurtureData(brandId,priceSort,countSort,heatSort);
+                    nurturePresent.pullToRefreshNurtureData(categoryId,sort);
                 }else {
-                    equipmentPresent.pullToRefreshEquipmentData(brandId,priceSort,countSort,heatSort);
+                    equipmentPresent.pullToRefreshEquipmentData(categoryId,sort);
                 }
                 break;
             case REQUEST_MORE_DATA:
                 currPage ++;
                 if(GoodsType.NUTRITION.equals(goodsType) && nurtureList.size() >= pageSize){
-                    nurturePresent.requestMoreNurtureData(recyclerView,pageSize,currPage,
-                            brandId,priceSort,countSort,heatSort);
+                    nurturePresent.requestMoreNurtureData(recyclerView,pageSize,currPage, categoryId,sort);
                 }else if(GoodsType.NUTRITION.equals(goodsType) && equipmentList.size() >= pageSize){
-                    equipmentPresent.requestMoreEquipmentData(recyclerView,pageSize,currPage,
-                            brandId,priceSort,countSort,heatSort);
+                    equipmentPresent.requestMoreEquipmentData(recyclerView,pageSize,currPage, categoryId,sort);
                 }
                 break;
             default:

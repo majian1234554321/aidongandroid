@@ -36,9 +36,8 @@ public class NurtureModelImpl implements NurtureModel {
     }
 
     @Override
-    public void getNurtures(Subscriber<NurtureData> subscriber, int page, String brandId,
-                            String priceSort, String countSort, String heatSort) {
-        nurtureService.getNurtures(page,brandId,priceSort,countSort,heatSort)
+    public void getNurtures(Subscriber<NurtureData> subscriber, int page, String brandId, String sort) {
+        nurtureService.getNurtures(page,brandId,sort)
                 .compose(RxHelper.<NurtureData>transform())
                 .subscribe(subscriber);
     }
