@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.mvp.model.impl;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 
 import com.leyuan.aidong.entity.DistrictBean;
 import com.leyuan.aidong.entity.CategoryBean;
@@ -55,7 +56,8 @@ public class CourseModelImpl implements CourseModel {
     }
 
     @Override
-    public void buyCourse(Subscriber<PayOrderData> subscriber, String id, String couponId,String integral,String payType, String contactName, String contactMobile) {
+    public void buyCourse(Subscriber<PayOrderData> subscriber, String id, @Nullable String couponId,
+                          @Nullable String integral, String payType, String contactName, String contactMobile) {
         courseService.buyCourse(id,couponId,integral,payType,contactName,contactMobile)
                 .compose(RxHelper.<PayOrderData>transform())
                 .subscribe(subscriber);

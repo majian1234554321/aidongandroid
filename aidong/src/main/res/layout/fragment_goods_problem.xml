@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/left_margin"
         android:layout_marginRight="@dimen/right_margin"
+        android:layout_marginTop="10dp"
         android:orientation="vertical">
         <TextView
             android:id="@+id/tv_content"

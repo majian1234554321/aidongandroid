@@ -3,12 +3,15 @@ package com.leyuan.aidong.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.util.Base64;
 
 import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.entity.DistrictBean;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.SystemBean;
+import com.leyuan.aidong.entity.UserBean;
+import com.leyuan.aidong.entity.data.FollowData;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -26,10 +29,52 @@ import java.util.List;
  * Created by song on 2016/11/10.
  */
 public class SystemInfoUtils {
+    public static final String KEY_SYSTEM = "system";
+    public static final String KEY_FOLLOW= "follow";
     // 0-开机广告 1-首页广告位 2-弹出广告位
     private static final String BANNER_SPLASH = "0";
     private static final String BANNER_HOME = "1";
     private static final String BOUNCED_AD = "2";
+
+
+    public static List<UserBean> getFollowList(Context context){
+        List<UserBean> followList = new ArrayList<>();
+        if(Constant.followData != null && Constant.followData.getFollow() != null){
+            followList = Constant.followData.getFollow();
+        }else {
+            Object bean = getSystemInfoBean(context,KEY_FOLLOW);
+            if(bean instanceof FollowData){
+                followList = ((FollowData) bean).getFollow();
+            }
+        }
+        return followList;
+    }
+
+    public static void removeFollow(UserBean bean){
+        if(Constant.followData == null || Constant.followData.getFollow() != null
+                || bean == null || TextUtils.isEmpty(bean.getId())){
+            return;
+        }
+        int index = -1;
+        List<UserBean> followList = Constant.followData.getFollow();
+
+        for (int i = 0; i < followList.size(); i++) {
+            if(bean.getId().equals(followList.get(i).getId())){
+                index = i;
+                break;
+            }
+        }
+        if(index != -1){
+            followList.remove(index);
+        }
+    }
+
+    public static void addFollow(UserBean bean){
+        if(bean != null){
+            Constant.followData.getFollow().add(bean);
+        }
+    }
+
 
     /**
      * 获取首页广告
@@ -40,7 +85,7 @@ public class SystemInfoUtils {
         if(Constant.systemInfoBean != null && Constant.systemInfoBean.getBanner() != null){
             bannerBeanList =  Constant.systemInfoBean.getBanner();
         }else {
-            Object bean = getSystemInfoBean(context);
+            Object bean = getSystemInfoBean(context,KEY_SYSTEM);
             if(bean instanceof SystemBean){
                 bannerBeanList = ((SystemBean) bean).getBanner();
             }
@@ -63,7 +108,7 @@ public class SystemInfoUtils {
         if(Constant.systemInfoBean != null && Constant.systemInfoBean.getBanner() != null){
             bannerBeanList =  Constant.systemInfoBean.getBanner();
         }else {
-            Object bean = getSystemInfoBean(context);
+            Object bean = getSystemInfoBean(context,KEY_SYSTEM);
             if(bean instanceof SystemBean){
                 bannerBeanList = ((SystemBean) bean).getBanner();
             }
@@ -86,7 +131,7 @@ public class SystemInfoUtils {
         if(Constant.systemInfoBean != null && Constant.systemInfoBean.getBanner() != null){
             bannerBeanList =  Constant.systemInfoBean.getBanner();
         }else {
-            Object bean = getSystemInfoBean(context);
+            Object bean = getSystemInfoBean(context,KEY_SYSTEM);
             if(bean instanceof SystemBean){
                 bannerBeanList = ((SystemBean) bean).getBanner();
             }
@@ -107,7 +152,7 @@ public class SystemInfoUtils {
         if(Constant.systemInfoBean != null && Constant.systemInfoBean.getOpen_city() != null){ //内存有直接从内存读取返回
             return Constant.systemInfoBean.getOpen_city();
         }else{          // 从本地读取
-            Object bean = getSystemInfoBean(context);
+            Object bean = getSystemInfoBean(context,KEY_SYSTEM);
             if(bean instanceof SystemBean){
                 return ((SystemBean) bean).getOpen_city();
             }
@@ -122,7 +167,7 @@ public class SystemInfoUtils {
         if(Constant.systemInfoBean != null && Constant.systemInfoBean.getCourse() != null){ //内存有直接从内存读取返回
             return Constant.systemInfoBean.getCourse();
         }else{          // 从本地读取
-            Object bean = getSystemInfoBean(context);
+            Object bean = getSystemInfoBean(context,KEY_SYSTEM);
             if(bean instanceof SystemBean){
                 return ((SystemBean) bean).getCourse();
             }
@@ -137,7 +182,7 @@ public class SystemInfoUtils {
         if(Constant.systemInfoBean != null && Constant.systemInfoBean.getNutrition() != null){ //内存有直接从内存读取返回
             return Constant.systemInfoBean.getNutrition();
         }else{          // 从本地读取
-            Object bean = getSystemInfoBean(context);
+            Object bean = getSystemInfoBean(context,KEY_SYSTEM);
             if(bean instanceof SystemBean){
                 return ((SystemBean) bean).getNutrition();
             }
@@ -152,7 +197,7 @@ public class SystemInfoUtils {
         if(Constant.systemInfoBean != null && Constant.systemInfoBean.getEquipment() != null){ //内存有直接从内存读取返回
             return Constant.systemInfoBean.getEquipment();
         }else{          // 从本地读取
-            Object bean = getSystemInfoBean(context);
+            Object bean = getSystemInfoBean(context,KEY_SYSTEM);
             if(bean instanceof SystemBean){
                 return ((SystemBean) bean).getEquipment();
             }
@@ -167,7 +212,7 @@ public class SystemInfoUtils {
         if(Constant.systemInfoBean != null && Constant.systemInfoBean.getLandmark() != null){ //内存有直接从内存读取返回
             return Constant.systemInfoBean.getLandmark();
         }else{          // 从本地读取
-            Object bean = getSystemInfoBean(context);
+            Object bean = getSystemInfoBean(context,KEY_SYSTEM);
             if(bean instanceof SystemBean){
                 return ((SystemBean) bean).getLandmark();
             }
@@ -182,7 +227,7 @@ public class SystemInfoUtils {
         if(Constant.systemInfoBean != null && Constant.systemInfoBean.getGymBrand() != null){ //内存有直接从内存读取返回
             return Constant.systemInfoBean.getGymBrand();
         }else {          // 从本地读取
-            Object bean = getSystemInfoBean(context);
+            Object bean = getSystemInfoBean(context,KEY_SYSTEM);
             if(bean instanceof SystemBean){
                 return ((SystemBean) bean).getGymBrand();
             }
@@ -195,7 +240,7 @@ public class SystemInfoUtils {
      * @param context 上下文对象
      * @param obj
      */
-    public static void putSystemInfoBean(Context context, Object obj) {
+    public static void putSystemInfoBean(Context context, Object obj,String key) {
         if (obj instanceof Serializable) {
             try {
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -203,7 +248,7 @@ public class SystemInfoUtils {
                 oos.writeObject(obj);
                 String string64 = new String(Base64.encode(baos.toByteArray(), 0));
                 SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-                editor.putString("system", string64).apply();
+                editor.putString(key, string64).apply();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -213,10 +258,10 @@ public class SystemInfoUtils {
         }
     }
 
-    public static Object getSystemInfoBean(Context context) {
+    public static Object getSystemInfoBean(Context context,String key) {
         Object obj = null;
         try {
-            String base64 =PreferenceManager.getDefaultSharedPreferences(context).getString("system", "");
+            String base64 =PreferenceManager.getDefaultSharedPreferences(context).getString(key, "");
             if (base64.equals("")) {
                 return null;
             }

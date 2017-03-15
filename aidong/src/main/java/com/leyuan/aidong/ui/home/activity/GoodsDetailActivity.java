@@ -27,12 +27,15 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.GoodsDetailCouponAdapter;
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.DeliveryBean;
 import com.leyuan.aidong.entity.GoodsDetailBean;
 import com.leyuan.aidong.entity.PhotoBrowseInfo;
+import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
@@ -43,9 +46,12 @@ import com.leyuan.aidong.ui.home.fragment.GoodsServiceFragment;
 import com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow;
 import com.leyuan.aidong.ui.mine.activity.CartActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
+import com.leyuan.aidong.ui.mvp.model.CouponModel;
+import com.leyuan.aidong.ui.mvp.model.impl.CouponModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.GoodsDetailPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.GoodsDetailPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.GoodsDetailActivityView;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.ImageRectUtils;
@@ -64,6 +70,7 @@ import java.util.List;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 
+import static com.leyuan.aidong.ui.App.context;
 import static com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow.FROM_ADD_CART;
 import static com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow.FROM_BUY;
 import static com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow.FROM_SKU;
@@ -80,7 +87,7 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_TO_CART;
  */
 public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnItemClickListener,
         GoodsSkuPopupWindow.SelectSkuListener,SmartTabLayout.TabProvider,View.OnClickListener,
-        GoodsDetailActivityView,PopupWindow.OnDismissListener{
+        GoodsDetailActivityView,PopupWindow.OnDismissListener, GoodsDetailCouponAdapter.CouponListener {
     private static final int CODE_SELECT_ADDRESS = 1;
 
     private SwitcherLayout switcherLayout;
@@ -128,6 +135,7 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
     private String count;
     private String goodsType;
     private List<String> selectedSkuValues = new ArrayList<>();
+    private GoodsDetailPresent goodsPresent;
 
     public static void start(Context context,String id,String goodsType) {
         Intent starter = new Intent(context, GoodsDetailActivity.class);
@@ -141,14 +149,14 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_detail);
         sharePopupWindow = new SharePopupWindow(this, savedInstanceState);
-        GoodsDetailPresent goodsDetailPresent = new GoodsDetailPresentImpl(this,this);
+        goodsPresent = new GoodsDetailPresentImpl(this,this);
         if(getIntent() != null){
             id = getIntent().getStringExtra("id");
             goodsType = getIntent().getStringExtra("goodsType");
         }
         initView();
         setListener();
-        goodsDetailPresent.getGoodsDetail(switcherLayout, goodsType,id);
+        goodsPresent.getGoodsDetail(switcherLayout, goodsType,id);
     }
 
     @Override
@@ -223,6 +231,7 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
         tvAddCart.setOnClickListener(this);
         tvPay.setOnClickListener(this);
         bannerLayout.setOnItemClickListener(this);
+        couponAdapter.setListener(this);
         detailsLayout.setOnSlideDetailsListener(new MyOnSlideDetailsListener());
         appBarLayout.addOnOffsetChangedListener(new MyOnOffsetChangedListener());
     }
@@ -419,6 +428,28 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
             }
         }else if(requestCode == REQUEST_TO_CART){
             startActivity(new Intent(this, CartActivity.class));
+        }else if(requestCode == Constant.REQUEST_LOGIN){
+            goodsPresent.getGoodsDetail(goodsType,id);
+        }
+    }
+
+    @Override
+    public void onCouponClick(final int position) {
+        if(App.mInstance.isLogin()) {
+            CouponModel model = new CouponModelImpl();
+            model.obtainCoupon(new ProgressSubscriber<BaseBean>(context) {
+                @Override
+                public void onNext(BaseBean baseBean) {
+                    if (baseBean.getStatus() == Constant.OK) {
+                        couponAdapter.notifyItemChanged(position);
+                        Toast.makeText(context, "领取成功", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(context, baseBean.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+            }, bean.coupon.get(position).getId());
+        }else {
+            startActivityForResult(new Intent(this,LoginActivity.class),Constant.REQUEST_LOGIN);
         }
     }
 

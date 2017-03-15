@@ -17,6 +17,7 @@ import com.zzhoujay.richtext.RichText;
  */
 public class GoodsDetailFragment extends BaseFragment {
     private String content;
+    private TextView tvContent;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -27,10 +28,9 @@ public class GoodsDetailFragment extends BaseFragment {
         return inflater.inflate(R.layout.fragment_goods_detail,container,false);
     }
 
-
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        TextView tvContent = (TextView) view.findViewById(R.id.tv_content);
+        tvContent = (TextView) view.findViewById(R.id.tv_content);
         if(!TextUtils.isEmpty(content)){
             RichText.from(content).into(tvContent);
         }

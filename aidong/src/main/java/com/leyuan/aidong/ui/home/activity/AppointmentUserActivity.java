@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.R;
@@ -23,6 +24,7 @@ import java.util.List;
 public class AppointmentUserActivity extends BaseActivity{
     private SimpleTitleBar titleBar;
     private RecyclerView rvUser;
+    private RelativeLayout emptyLayout;
     private List<UserBean> data;
 
     public static void start(Context context,List<UserBean> userList) {
@@ -40,10 +42,17 @@ public class AppointmentUserActivity extends BaseActivity{
         }
         titleBar = (SimpleTitleBar)findViewById(R.id.title_bar);
         rvUser = (RecyclerView) findViewById(R.id.rv_user);
+        emptyLayout = (RelativeLayout) findViewById(R.id.rl_empty);
         rvUser.setLayoutManager(new LinearLayoutManager(this));
         UserAdapter userAdapter = new UserAdapter(this);
         rvUser.setAdapter(userAdapter);
-        userAdapter.setData(data);
+        if(!data.isEmpty()) {
+            userAdapter.setData(data);
+            emptyLayout.setVisibility(View.GONE);
+        }else {
+            emptyLayout.setVisibility(View.VISIBLE);
+        }
+
         titleBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

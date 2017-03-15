@@ -12,11 +12,11 @@ import java.util.List;
 public class CourseDetailBean implements Parcelable {
     private String code;        //课程编号
     private String name;        //课程名称
-    private String cover;       //封面
+    private List<String> cover;       //封面
     private String class_date;       //上课日期
     private String class_time;       //上课时间
     private String break_time;       //下课时间
-    private CoachBean coach;   //课程
+    private UserBean coach;   //课程
     private VenuesBean gym;    //场馆
     private String place;            //名额
     private String applied_count;    //已报名人数
@@ -46,11 +46,11 @@ public class CourseDetailBean implements Parcelable {
         this.name = name;
     }
 
-    public String getCover() {
+    public List<String> getCover() {
         return cover;
     }
 
-    public void setCover(String cover) {
+    public void setCover(List<String> cover) {
         this.cover = cover;
     }
 
@@ -78,11 +78,11 @@ public class CourseDetailBean implements Parcelable {
         this.break_time = break_time;
     }
 
-    public CoachBean getCoach() {
+    public UserBean getCoach() {
         return coach;
     }
 
-    public void setCoach(CoachBean coach) {
+    public void setCoach(UserBean coach) {
         this.coach = coach;
     }
 
@@ -199,7 +199,7 @@ public class CourseDetailBean implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.code);
         dest.writeString(this.name);
-        dest.writeString(this.cover);
+        dest.writeStringList(this.cover);
         dest.writeString(this.class_date);
         dest.writeString(this.class_time);
         dest.writeString(this.break_time);
@@ -214,6 +214,7 @@ public class CourseDetailBean implements Parcelable {
         dest.writeString(this.classroom);
         dest.writeString(this.stock);
         dest.writeString(this.status);
+        dest.writeString(this.orderId);
     }
 
     public CourseDetailBean() {
@@ -222,7 +223,7 @@ public class CourseDetailBean implements Parcelable {
     protected CourseDetailBean(Parcel in) {
         this.code = in.readString();
         this.name = in.readString();
-        this.cover = in.readString();
+        this.cover = in.createStringArrayList();
         this.class_date = in.readString();
         this.class_time = in.readString();
         this.break_time = in.readString();
@@ -237,6 +238,7 @@ public class CourseDetailBean implements Parcelable {
         this.classroom = in.readString();
         this.stock = in.readString();
         this.status = in.readString();
+        this.orderId = in.readString();
     }
 
     public static final Creator<CourseDetailBean> CREATOR = new Creator<CourseDetailBean>() {
@@ -250,28 +252,4 @@ public class CourseDetailBean implements Parcelable {
             return new CourseDetailBean[size];
         }
     };
-
-    public String getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
-    }
-
-    public String getClass_date() {
-        return class_date;
-    }
-
-    public String getClass_time() {
-        return class_time;
-    }
-
-    public String getBreak_time() {
-        return break_time;
-    }
-
-    public String getApplied_count() {
-        return applied_count;
-    }
 }

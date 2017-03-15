@@ -89,7 +89,7 @@ public class FollowFragment extends BaseFragment implements FollowFragmentView, 
     private void initRecyclerView(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_follow);
         data = new ArrayList<>();
-        followAdapter = new FollowAdapter(getContext());
+        followAdapter = new FollowAdapter(getContext(),FOLLOW.equals(type));
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(followAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(wrapperAdapter);

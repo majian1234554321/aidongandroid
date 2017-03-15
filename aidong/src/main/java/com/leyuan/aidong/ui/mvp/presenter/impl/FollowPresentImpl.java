@@ -15,6 +15,7 @@ import com.leyuan.aidong.ui.mvp.model.impl.FollowModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.FollowPresent;
 import com.leyuan.aidong.ui.mvp.view.FollowFragmentView;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
@@ -30,10 +31,28 @@ public class FollowPresentImpl implements FollowPresent {
     private FollowFragmentView followFragmentView;
     private List<UserBean> userBeanList = new ArrayList<>();
 
+    public FollowPresentImpl(Context context) {
+        this.context = context;
+        followModel = new FollowModelImpl();
+    }
+
     public FollowPresentImpl(Context context, FollowFragmentView followFragmentView) {
         this.context = context;
         this.followFragmentView = followFragmentView;
         followModel = new FollowModelImpl();
+    }
+
+    @Override
+    public void getFollowList() {
+        followModel.getFollow(new RefreshSubscriber<FollowData>(context) {
+            @Override
+            public void onNext(FollowData followData) {
+                if(followData != null ){
+                    Constant.followData = followData;
+                    SystemInfoUtils.putSystemInfoBean(context,followData,SystemInfoUtils.KEY_FOLLOW);
+                }
+            }
+        },"followings",Constant.PAGE_FIRST);
     }
 
     @Override

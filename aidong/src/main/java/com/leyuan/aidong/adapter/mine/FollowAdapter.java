@@ -23,10 +23,11 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.UserHolder
     private Context context;
     private List<UserBean> data = new ArrayList<>();
     private FollowListener followListener;
+    private boolean isFollow;
 
-
-    public FollowAdapter(Context context) {
+    public FollowAdapter(Context context,boolean isFollow) {
         this.context = context;
+        this.isFollow = isFollow;
     }
 
     public void setData(List<UserBean> data) {
@@ -49,10 +50,10 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.UserHolder
         final UserBean bean = data.get(position);
         GlideLoader.getInstance().displayCircleImage(bean.getAvatar(), holder.avatar);
         holder.nickname.setText(bean.getName());
-        holder.distance.setText(bean.getDistance());
+        holder.distance.setText(bean.getSignature());
         holder.gender.setBackgroundResource("0".equals(bean.getGender()) ? R.drawable.icon_man
                 :R.drawable.icon_woman);
-        holder.follow.setBackgroundResource(bean.isFollow() ? R.drawable.icon_following
+        holder.follow.setBackgroundResource(isFollow ? R.drawable.icon_following
                 :R.drawable.icon_follow);
 
         holder.follow.setOnClickListener(new View.OnClickListener() {

@@ -5,6 +5,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingBottom="15dp"
+    android:paddingLeft="7.5dp"
+    android:paddingRight="7.5dp"
     android:gravity="center"
     android:clickable="true"
     android:background="?selectableItemBackground">
@@ -13,9 +15,7 @@
         android:id="@+id/dv_nurture_cover"
         android:layout_width="165dp"
         android:layout_height="165dp"
-        android:layout_gravity="center_horizontal"
         android:transitionName="@string/transition_home"/>
-
 
     <TextView
         android:id="@+id/tv_nurture_name"
@@ -23,8 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:textSize="15sp"
-        android:text=""
-        android:layout_gravity="center"
+        android:text="11111"
+        android:layout_gravity="left"
         android:ellipsize="end"
         android:singleLine="true"
         android:textColor="@color/text_black"/>
@@ -34,10 +34,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/main_red"
-        android:layout_gravity="center"
+        android:layout_gravity="left"
         android:layout_marginTop="6dp"
-        android:text=""
+        android:text="1"
         android:singleLine="true"
         android:textSize="15sp"/>
-
 </LinearLayout>

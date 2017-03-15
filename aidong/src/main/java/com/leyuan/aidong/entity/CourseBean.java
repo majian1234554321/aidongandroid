@@ -16,6 +16,15 @@ public class CourseBean {
     private String break_time;
     private String address;
     private String distance;
+    private String brand_logo;
+
+    public String getBrandLogo() {
+        return brand_logo;
+    }
+
+    public void setBrand_logo(String brand_logo) {
+        this.brand_logo = brand_logo;
+    }
 
     public String getCode() {
         return code;

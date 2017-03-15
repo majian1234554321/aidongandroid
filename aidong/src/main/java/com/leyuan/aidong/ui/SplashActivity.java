@@ -9,7 +9,9 @@ import android.support.annotation.NonNull;
 
 import com.hyphenate.chat.EMClient;
 import com.leyuan.aidong.entity.VersionInformation;
+import com.leyuan.aidong.ui.mvp.presenter.FollowPresent;
 import com.leyuan.aidong.ui.mvp.presenter.SystemPresent;
+import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SplashPresenterImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SystemPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VersionPresenterImpl;
@@ -26,7 +28,7 @@ import com.leyuan.aidong.widget.dialog.ButtonOkListener;
 import com.leyuan.aidong.widget.dialog.DialogDoubleButton;
 import com.leyuan.aidong.widget.dialog.DialogSingleButton;
 
-
+//todo fix
 public class SplashActivity extends BaseActivity implements VersionViewListener, LoginAutoView {
 
     private static final int MESSAGE = 1;
@@ -36,9 +38,10 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
 
     private SplashPresenterImpl splashPresenter;
     private VersionPresenterImpl versionPresenter;
+
     private VersionInformation versionInfomation;
 
-    //todo
+
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -68,6 +71,9 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
 
         SystemPresent systemPresent = new SystemPresentImpl(this);
         systemPresent.getSystemInfo(OS);
+
+        FollowPresent followPresent = new FollowPresentImpl(this);
+        followPresent.getFollowList();
 
         splashPresenter = new SplashPresenterImpl(this);
         splashPresenter.setLoginAutoListener(this);

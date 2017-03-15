@@ -16,7 +16,7 @@
         android:id="@+id/iv_gender"
         android:layout_width="15dp"
         android:layout_height="15dp"
-        android:background="@drawable/nan"
+        android:background="@drawable/icon_woman"
         android:layout_alignBottom="@+id/dv_user_cover"
         android:layout_alignRight="@+id/dv_user_cover"/>
 
@@ -36,8 +36,11 @@
         android:textColor="@color/black"
         android:textSize="16sp"
         android:text="nickname"
+        android:singleLine="true"
         android:layout_toRightOf="@+id/dv_user_cover"
-        android:layout_marginLeft="15dp"/>
+        android:layout_toLeftOf="@+id/iv_follow"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="5dp"/>
 
     <TextView
         android:id="@+id/tv_distance"
@@ -46,7 +49,10 @@
         android:layout_marginTop="13dp"
         android:textColor="@color/black"
         android:textSize="14sp"
-        android:text="100"
+        android:text="他还没有个性签名~"
+        android:singleLine="true"
+        android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@+id/iv_follow"
         android:layout_below="@+id/tv_nickname"
         android:layout_alignLeft="@+id/tv_nickname" />
 

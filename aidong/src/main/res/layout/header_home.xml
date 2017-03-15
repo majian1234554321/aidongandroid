@@ -10,12 +10,12 @@
         android:id="@+id/banner"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        app:banner_pageChangeDuration="500"
+        app:banner_pageChangeDuration="5000"
         app:banner_pointAutoPlayAble="true"
         app:banner_pointContainerBackground="@android:color/transparent"
-        app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
+        app:banner_pointDrawable="@drawable/selector_banner"
         app:banner_pointTopBottomMargin="5dp"
-        app:banner_transitionEffect="fade"
+        app:banner_transitionEffect="depth"
         android:background="@color/white"/>
 
     <LinearLayout
@@ -34,6 +34,7 @@
             android:clickable="true"
             android:background="?selectableItemBackground"
             android:drawableTop="@drawable/home_course"/>
+
         <TextView
             android:id="@+id/tv_nurture"
             android:layout_width="@dimen/pref_0dp"
@@ -46,6 +47,7 @@
             android:clickable="true"
             android:background="?selectableItemBackground"
             android:drawableTop="@drawable/home_nurture"/>
+
         <TextView
             android:id="@+id/tv_food"
             android:layout_width="@dimen/pref_0dp"
@@ -57,13 +59,8 @@
             android:gravity="center"
             android:clickable="true"
             android:background="?selectableItemBackground"
-            android:drawableTop="@drawable/home_food"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:orientation="horizontal">
+            android:drawableTop="@drawable/home_food"
+            android:visibility="gone"/>
         <TextView
             android:id="@+id/tv_activity"
             android:layout_width="@dimen/pref_0dp"
@@ -78,6 +75,36 @@
             android:drawableTop="@drawable/home_activity"/>
         <TextView
             android:id="@+id/tv_equipment"
+            android:layout_width="@dimen/pref_0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/home_equipment"
+            android:textSize="13sp"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:clickable="true"
+            android:background="?selectableItemBackground"
+            android:drawableTop="@drawable/home_equipment"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+        <TextView
+
+            android:layout_width="@dimen/pref_0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/home_activity"
+            android:textSize="13sp"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:clickable="true"
+            android:background="?selectableItemBackground"
+            android:drawableTop="@drawable/home_activity"/>
+        <TextView
             android:layout_width="@dimen/pref_0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -111,7 +138,7 @@
         android:paddingLeft="@dimen/left_margin"
         android:paddingRight="@dimen/right_margin"
         android:orientation="horizontal"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="wrap_content"

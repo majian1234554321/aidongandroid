@@ -43,7 +43,7 @@ public class SystemPresentImpl implements SystemPresent {
             public void onNext(SystemBean systemBean) {
                 if (systemBean != null) {
                     systemInfoBean = systemBean;
-                    SystemInfoUtils.putSystemInfoBean(context, systemBean);  //保存到本地
+                    SystemInfoUtils.putSystemInfoBean(context, systemBean,SystemInfoUtils.KEY_SYSTEM);  //保存到本地
                 }
             }
         }, os);

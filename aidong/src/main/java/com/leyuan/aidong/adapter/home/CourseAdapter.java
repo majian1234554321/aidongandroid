@@ -49,7 +49,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
     @Override
     public void onBindViewHolder(CourseViewHolder holder, int position) {
         final CourseBean bean = data.get(position);
-        GlideLoader.getInstance().displayImage(bean.getCover(), holder.cover);
+        GlideLoader.getInstance().displayImage(bean.getBrandLogo(), holder.cover);
         holder.price.setText(String.format(context.getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.getPrice())));
         holder.name.setText(bean.getName());

@@ -2,6 +2,7 @@ package com.leyuan.aidong.utils;
 
 
 import com.leyuan.aidong.entity.SystemBean;
+import com.leyuan.aidong.entity.data.FollowData;
 
 public class Constant {
     //public static final String  BASE_URL = "http://192.168.0.223:5000/";
@@ -34,6 +35,7 @@ public class Constant {
     public static final String BROADCAST_ACTION_NEW_MESSAGE = "com.leyuan.chat.message";
 
     public static SystemBean systemInfoBean;
+    public static FollowData followData;
 
     public static final byte ID_OFFICAL = 1;
     public static final byte ID_COACH = 2;

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -48,7 +49,7 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
     private TextView tvType;
     private ImageView dvCover;
     private TextView tvCourseName;
-    private TextView tvShop;
+    private TextView tvClassroom;
     private ExtendTextView tvTime;
     private ExtendTextView tvAddress;
     private TextView tvCoupon;
@@ -57,6 +58,7 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
     //会员身份信息
     private TextView tvVip;
     private TextView tvNoVip;
+    private TextView tvNoVipTip;
     private LinearLayout vipTipLayout;
 
     //订单信息
@@ -109,13 +111,14 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
         tvType = (TextView) findViewById(R.id.tv_type);
         dvCover = (ImageView) findViewById(R.id.dv_cover);
         tvCourseName = (TextView) findViewById(R.id.tv_name);
-        tvShop = (TextView) findViewById(R.id.tv_shop);
+        tvClassroom = (TextView) findViewById(R.id.tv_shop);
         tvTime = (ExtendTextView) findViewById(R.id.tv_time);
         tvAddress = (ExtendTextView) findViewById(R.id.tv_address);
         tvCoupon = (TextView) findViewById(R.id.tv_coupon);
         goldLayout = (LinearLayout) findViewById(R.id.ll_gold);
         tvVip = (TextView) findViewById(R.id.tv_vip);
         tvNoVip = (TextView) findViewById(R.id.tv_no_vip);
+        tvNoVipTip = (TextView) findViewById(R.id.tv_vip_tip);
         vipTipLayout = (LinearLayout) findViewById(R.id.ll_vip_tip);
         tvTotalPrice = (ExtendTextView) findViewById(R.id.tv_total_price);
         tvCouponPrice = (ExtendTextView) findViewById(R.id.tv_coupon_price);
@@ -131,13 +134,15 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
         contactMobile = App.mInstance.getUser().getMobile();
         tvUserName.setText(userName);
         tvUserPhone.setText(contactMobile);
-        GlideLoader.getInstance().displayImage(bean.getCover(), dvCover);
+        GlideLoader.getInstance().displayImage(bean.getCover().get(0), dvCover);
         tvCourseName.setText(bean.getName());
+        tvClassroom.setText(bean.getClassroom());
         tvTime.setRightContent(String.format(getString(R.string.detail_time),
                 bean.getClassDate(),bean.getClassTime(),bean.getBreakTime()));
         tvAddress.setRightContent(bean.getGym().getAddress());
         tvTotalPrice.setRightContent(String.format(getString(R.string.rmb_price),bean.getPrice()));
         tvPrice.setText(String.format(getString(R.string.rmb_price),bean.getPrice()));
+        tvNoVipTip.setText(Html.fromHtml(getString(R.string.no_vip_tip)));
     }
 
     private void setListener() {
@@ -156,7 +161,7 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
                 finish();
                 break;
             case R.id.tv_coupon:
-                if(usableCoupons != null && usableCoupons.isEmpty()) {
+                if(usableCoupons != null && !usableCoupons.isEmpty()) {
                     Intent intent = new Intent(this, SelectCouponActivity.class);
                     startActivityForResult(intent, REQUEST_SELECT_COUPON);
                 }
@@ -187,7 +192,7 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
     private PayInterface.PayListener payListener = new SimplePayListener(this) {
         @Override
         public void onSuccess(String code, Object object) {
-            Toast.makeText(AppointCourseActivity.this,"支付成功啦",Toast.LENGTH_LONG).show();
+            Toast.makeText(AppointCourseActivity.this,"支付成功",Toast.LENGTH_LONG).show();
             startActivity(new Intent(AppointCourseActivity.this,AppointSuccessActivity.class));
         }
     };

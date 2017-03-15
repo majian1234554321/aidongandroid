@@ -44,7 +44,7 @@ public class HomeHeaderView extends RelativeLayout{
         banner.setAdapter(new BGABanner.Adapter() {
             @Override
             public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
-                GlideLoader.getInstance().displayImage((String)model, (ImageView)view);
+                GlideLoader.getInstance().displayImage(((BannerBean)model).getImage(), (ImageView)view);
             }
         });
         banner.setOnItemClickListener(new BGABanner.OnItemClickListener() {

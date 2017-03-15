@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.mvp.presenter.impl;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
@@ -58,58 +59,49 @@ public class CoursePresentImpl implements CoursePresent{
     public CoursePresentImpl(Context context, CourseDetailActivityView view) {
         this.context = context;
         this.courseDetailActivityView = view;
-        if (courseModel == null) {
-            courseModel = new CourseModelImpl(context);
-        }
-        if(followModel == null){
-            followModel = new FollowModelImpl();
-        }
     }
 
     public CoursePresentImpl(Context context, AppointmentDetailActivityView view) {
         this.context = context;
         this.appointmentDetailActivityView = view;
-        if (courseModel == null) {
-            courseModel = new CourseModelImpl(context);
-        }
     }
 
     public CoursePresentImpl(Context context, CourserFragmentView view) {
         this.context = context;
         this.courserFragmentView = view;
-        if (courseModel == null) {
-            courseModel = new CourseModelImpl(context);
-        }
     }
 
     public CoursePresentImpl(Context context, CourseActivityView view) {
         this.context = context;
         this.coursesActivityView = view;
-        if (courseModel == null) {
-            courseModel = new CourseModelImpl(context);
-        }
     }
 
     public CoursePresentImpl(Context context, AppointCourseActivityView view) {
         this.context = context;
         this.appointCourseActivityView = view;
-        if (couponModel == null) {
-            couponModel = new CouponModelImpl();
-        }
     }
 
     @Override
     public void getCategory() {
+        if (courseModel == null) {
+            courseModel = new CourseModelImpl(context);
+        }
         coursesActivityView.setCategory(courseModel.getCategory());
     }
 
     @Override
     public void getBusinessCircle() {
+        if (courseModel == null) {
+            courseModel = new CourseModelImpl(context);
+        }
         coursesActivityView.setBusinessCircle(courseModel.getBusinessCircle());
     }
 
     @Override
     public void commendLoadData(final SwitcherLayout switcherLayout, String day, String category, String landmark) {
+        if (courseModel == null) {
+            courseModel = new CourseModelImpl(context);
+        }
         courseModel.getCourses(new CommonSubscriber<CourseData>(switcherLayout) {
             @Override
             public void onNext(CourseData courseData) {
@@ -125,6 +117,9 @@ public class CoursePresentImpl implements CoursePresent{
 
     @Override
     public void pullToRefreshData(String day, String category, String landmark) {
+        if (courseModel == null) {
+            courseModel = new CourseModelImpl(context);
+        }
         courseModel.getCourses(new RefreshSubscriber<CourseData>(context) {
             @Override
             public void onNext(CourseData courseData) {
@@ -139,6 +134,9 @@ public class CoursePresentImpl implements CoursePresent{
 
     @Override
     public void requestMoreData(RecyclerView recyclerView, final int pageSize, String day, String category, String landmark, int page) {
+        if (courseModel == null) {
+            courseModel = new CourseModelImpl(context);
+        }
         courseModel.getCourses(new RequestMoreSubscriber<CourseData>(context, recyclerView, page) {
             @Override
             public void onNext(CourseData courseData) {
@@ -158,7 +156,9 @@ public class CoursePresentImpl implements CoursePresent{
 
     @Override
     public void getCourseDetail(final SwitcherLayout switcherLayout, String id) {
-
+        if (courseModel == null) {
+            courseModel = new CourseModelImpl(context);
+        }
         courseModel.getCourseDetail(new Subscriber<CourseDetailData>() {
             @Override
             public void onStart() {
@@ -189,8 +189,11 @@ public class CoursePresentImpl implements CoursePresent{
     }
 
     @Override
-    public void buyCourse(String id, String couponId, String integral, String payType,
+    public void buyCourse(String id, @Nullable String couponId, @Nullable String integral, String payType,
                           String contactName, String contactMobile, final PayInterface.PayListener listener) {
+        if (courseModel == null) {
+            courseModel = new CourseModelImpl(context);
+        }
         courseModel.buyCourse(new ProgressSubscriber<PayOrderData>(context) {
             @Override
             public void onNext(PayOrderData payOrderData) {
@@ -204,11 +207,14 @@ public class CoursePresentImpl implements CoursePresent{
 
     @Override
     public void addFollow(String id) {
+        if(followModel == null){
+            followModel = new FollowModelImpl();
+        }
         followModel.addFollow(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
                 if(baseBean != null){
-                    courseDetailActivityView.addFollow(baseBean);
+                    courseDetailActivityView.addFollowResult(baseBean);
                 }
             }
         },id);
@@ -216,11 +222,14 @@ public class CoursePresentImpl implements CoursePresent{
 
     @Override
     public void cancelFollow(String id) {
+        if(followModel == null){
+            followModel = new FollowModelImpl();
+        }
         followModel.cancelFollow(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
                 if(baseBean != null){
-                    courseDetailActivityView.addFollow(baseBean);
+                    courseDetailActivityView.cancelFollow(baseBean);
                 }
             }
         },id);
@@ -228,6 +237,9 @@ public class CoursePresentImpl implements CoursePresent{
 
     @Override
     public void getSpecifyCourseCoupon(String id) {
+        if(couponModel == null){
+            couponModel = new CouponModelImpl();
+        }
         couponModel.getSpecifyGoodsCoupon(new ProgressSubscriber<CouponData>(context,false) {
             @Override
             public void onNext(CouponData couponData) {

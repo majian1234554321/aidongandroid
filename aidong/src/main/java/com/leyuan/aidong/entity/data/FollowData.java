@@ -2,13 +2,14 @@ package com.leyuan.aidong.entity.data;
 
 import com.leyuan.aidong.entity.UserBean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * 关注
  * Created by song on 2016/9/10.
  */
-public class FollowData {
+public class FollowData implements Serializable{
 
     private List<UserBean> user;
 

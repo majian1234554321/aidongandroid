@@ -3,11 +3,13 @@ package com.leyuan.aidong.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
+
 /**
  * 用户
  * Created by song on 2016/8/2.
  */
-public class UserBean implements Parcelable{
+public class UserBean implements Parcelable,Serializable{
     //发现-人
     private String id;          //编号
     private String name;        //名字
@@ -15,6 +17,15 @@ public class UserBean implements Parcelable{
     private String gender;      //性别
     private String distance;    //距离
     private boolean isFollow;   //是否关注
+    private String signature;
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
 
     public String getId() {
         return id;

@@ -57,7 +57,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home_page, null);
+        return inflater.inflate(R.layout.fragment_home_page, container,false);
     }
 
     @Override
@@ -67,7 +67,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
 
         initView(view);
         setListener();
-        initData();
+        //initData();
     }
 
     private void initView(View view){
@@ -96,6 +96,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
         tvLocation.setOnClickListener(this);
         ivSearch.setOnClickListener(this);
         refreshLayout.setOnRefreshListener(this);
+        switcherLayout.setOnRetryListener(retryListener);
     }
 
     private void initData(){
@@ -110,6 +111,13 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
         RecyclerViewStateUtils.resetFooterViewState(recyclerView);
         present.pullToRefreshHomeData();
     }
+
+    private View.OnClickListener retryListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            initData();
+        }
+    };
 
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
         @Override

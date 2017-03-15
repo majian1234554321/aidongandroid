@@ -8,6 +8,7 @@ import com.leyuan.aidong.entity.data.EquipmentDetailData;
 import com.leyuan.aidong.entity.data.FoodDetailData;
 import com.leyuan.aidong.entity.data.NurtureDetailData;
 import com.leyuan.aidong.entity.data.VenuesData;
+import com.leyuan.aidong.http.subscriber.BaseSubscriber;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
@@ -50,6 +51,40 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
     public GoodsDetailPresentImpl(Context context, SelfDeliveryVenuesActivityView view) {
         this.context = context;
         this.venuesActivityView = view;
+    }
+
+    @Override
+    public void getGoodsDetail(String type, String id) {
+        switch (type){
+            case GoodsType.EQUIPMENT:
+                if(equipmentModel == null){
+                    equipmentModel = new EquipmentModelImpl(context);
+                }
+                equipmentModel.getEquipmentDetail(new BaseSubscriber<EquipmentDetailData>(context) {
+                    @Override
+                    public void onNext(EquipmentDetailData equipmentDetailData) {
+                        if(equipmentDetailData != null && equipmentDetailData.getEquipment()!= null){
+                            goodsDetailView.setGoodsDetail(equipmentDetailData.getEquipment());
+                        }
+                    }
+                },id);
+                break;
+            case GoodsType.NUTRITION:
+                if(nurtureModel == null){
+                    nurtureModel = new NurtureModelImpl(context);
+                }
+                nurtureModel.getNurtureDetail(new BaseSubscriber<NurtureDetailData>(context) {
+                    @Override
+                    public void onNext(NurtureDetailData nurtureDetailData) {
+                        if(nurtureDetailData != null && nurtureDetailData.getNurture()!= null) {
+                            goodsDetailView.setGoodsDetail(nurtureDetailData.getNurture());
+                        }
+                    }
+                },id);
+                break;
+            default:
+                break;
+        }
     }
 
     @Override

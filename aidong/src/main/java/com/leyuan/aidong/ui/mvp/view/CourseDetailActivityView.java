@@ -19,7 +19,7 @@ public interface CourseDetailActivityView {
      * 添加关注
      * @param baseBean
      */
-    void addFollow(BaseBean baseBean);
+    void addFollowResult(BaseBean baseBean);
 
     /**
      * 取消关注

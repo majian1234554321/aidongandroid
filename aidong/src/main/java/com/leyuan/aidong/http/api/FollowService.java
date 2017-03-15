@@ -35,7 +35,7 @@ public interface FollowService {
      */
     @FormUrlEncoded
     @POST("mine/followings")
-    Observable<BaseBean> addFollow(@Field("idong") String id);
+    Observable<BaseBean> addFollow(@Field("following_id") String id);
 
 
     /**

@@ -8,18 +8,18 @@ import android.os.Parcelable;
  * Created by song on 2016/8/2.
  */
 public class CoachBean implements Parcelable {
-    private String id;
+    private String idong;
     private String name;
     private String avatar;
     private String gender;
     private String mobile;
 
     public String getCoachId() {
-        return id;
+        return idong;
     }
 
     public void setCoach_id(String coach_id) {
-        this.id = coach_id;
+        this.idong = coach_id;
     }
 
     public String getName() {
@@ -61,7 +61,7 @@ public class CoachBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
+        dest.writeString(this.idong);
         dest.writeString(this.name);
         dest.writeString(this.avatar);
         dest.writeString(this.gender);
@@ -72,7 +72,7 @@ public class CoachBean implements Parcelable {
     }
 
     protected CoachBean(Parcel in) {
-        this.id = in.readString();
+        this.idong = in.readString();
         this.name = in.readString();
         this.avatar = in.readString();
         this.gender = in.readString();

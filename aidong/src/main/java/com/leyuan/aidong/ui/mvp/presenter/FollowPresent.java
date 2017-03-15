@@ -9,6 +9,8 @@ import com.leyuan.aidong.widget.SwitcherLayout;
  * Created by song on 2016/8/19.
  */
 public interface FollowPresent {
+
+    void getFollowList();
     /**
      * 第一次加载数据
      * @param switcherLayout SwitcherLayout

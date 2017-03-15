@@ -9,6 +9,7 @@ import java.util.ArrayList;
  * Created by song on 2016/8/25.
  */
 public class CourseData {
+    private String date;
     private ArrayList<CourseBean> course;
 
     public ArrayList<CourseBean> getCourse() {
@@ -17,6 +18,14 @@ public class CourseData {
 
     public void setCourse(ArrayList<CourseBean> course) {
         this.course = course;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     @Override
