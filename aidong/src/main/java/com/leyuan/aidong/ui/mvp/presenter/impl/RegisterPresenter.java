@@ -19,6 +19,7 @@ public class RegisterPresenter implements RegisterPresenterInterface {
     private RegisterModelInterface mRegisterModelInterface;
     private RegisterViewInterface mRegisterViewInterface;
     private String token;
+    private String bindingMobile;
 
     public RegisterPresenter(Context context, RegisterViewInterface mRegisterViewInterface) {
         mContext = context;
@@ -104,11 +105,35 @@ public class RegisterPresenter implements RegisterPresenterInterface {
 
     @Override
     public void checkIdentifyBinding(String captcha) {
-        checkIdentify(token, captcha, null);
+        mRegisterModelInterface.checkIdentify(new BaseSubscriber<UserCoach>(mContext) {
+            @Override
+            public void onStart() {
+                super.onStart();
+                mRegisterViewInterface.onRequestStart();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                mRegisterViewInterface.register(false);
+            }
+
+            @Override
+            public void onNext(UserCoach user) {
+                if (bindingMobile != null) {
+                    UserCoach userCoach = App.mInstance.getUser();
+                    userCoach.setMobile(bindingMobile);
+                    App.mInstance.setUser(userCoach);
+                }
+                mRegisterViewInterface.register(true);
+
+            }
+        }, token, captcha, null);
     }
 
     @Override
     public void bindingCaptcha(String mobile) {
+        bindingMobile = mobile;
         mRegisterModelInterface.bindingCaptcha(new BaseSubscriber<UserCoach>(mContext) {
 
             @Override

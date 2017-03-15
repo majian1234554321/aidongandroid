@@ -9,16 +9,13 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.leyuan.aidong.R;
 import com.leyuan.aidong.module.weibo.AccessTokenKeeper;
 import com.leyuan.aidong.module.weibo.WeiBoConstants;
 import com.leyuan.aidong.utils.Logger;
-import com.leyuan.aidong.utils.ToastUtil;
 import com.sina.weibo.sdk.api.ImageObject;
 import com.sina.weibo.sdk.api.TextObject;
 import com.sina.weibo.sdk.api.WebpageObject;
 import com.sina.weibo.sdk.api.WeiboMultiMessage;
-import com.sina.weibo.sdk.api.share.BaseResponse;
 import com.sina.weibo.sdk.api.share.IWeiboHandler;
 import com.sina.weibo.sdk.api.share.IWeiboShareAPI;
 import com.sina.weibo.sdk.api.share.SendMultiMessageToWeiboRequest;
@@ -26,7 +23,6 @@ import com.sina.weibo.sdk.api.share.WeiboShareSDK;
 import com.sina.weibo.sdk.auth.AuthInfo;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 import com.sina.weibo.sdk.auth.WeiboAuthListener;
-import com.sina.weibo.sdk.constant.WBConstants;
 import com.sina.weibo.sdk.exception.WeiboException;
 import com.sina.weibo.sdk.utils.Utility;
 
@@ -34,7 +30,7 @@ import com.sina.weibo.sdk.utils.Utility;
  * Created by user on 2016/12/6.
  */
 
-public class WeiBoShare implements IWeiboHandler.Response {
+public class WeiBoShare {
 
     IWeiboShareAPI mWeiboShareAPI;
     private Activity context;
@@ -58,36 +54,36 @@ public class WeiBoShare implements IWeiboHandler.Response {
         // 需要调用 {@link IWeiboShareAPI#handleWeiboResponse} 来接收微博客户端返回的数据。
         // 执行成功，返回 true，并调用 {@link IWeiboHandler.Response#onResponse}；
         // 失败返回 false，不调用上述回调
-        if (savedInstanceState != null) {
-            mWeiboShareAPI.handleWeiboResponse(context.getIntent(), this);
-        }
+//        if (savedInstanceState != null) {
+//            mWeiboShareAPI.handleWeiboResponse(context.getIntent(), this);
+//        }
     }
 
-    public void onNewIntent(Intent intent) {
+    public void onNewIntent(Intent intent, IWeiboHandler.Response response) {
         // 从当前应用唤起微博并进行分享后，返回到当前应用时，需要在此处调用该函数
         // 来接收微博客户端返回的数据；执行成功，返回 true，并调用
         // {@link IWeiboHandler.Response#onResponse}；失败返回 false，不调用上述回调
-        boolean callWeiboRespense = mWeiboShareAPI.handleWeiboResponse(intent, this);
+        boolean callWeiboRespense = mWeiboShareAPI.handleWeiboResponse(intent, response);
         Logger.i("share", "weibo onNewIntent callWeiboRespense = " + callWeiboRespense);
     }
 
-    @Override
-    public void onResponse(BaseResponse baseResponse) {
-        if (baseResponse != null) {
-            Logger.i("share", "weibo share baseResponse.errCode = " + baseResponse.errCode);
-            switch (baseResponse.errCode) {
-                case WBConstants.ErrorCode.ERR_OK:
-                    ToastUtil.showConsecutiveShort(R.string.share_ok);
-                    break;
-                case WBConstants.ErrorCode.ERR_CANCEL:
-                    ToastUtil.showConsecutiveShort(R.string.share_cancel);
-                    break;
-                case WBConstants.ErrorCode.ERR_FAIL:
-                    ToastUtil.showConsecutiveShort(R.string.share_fail);
-                    break;
-            }
-        }
-    }
+//    @Override
+//    public void onResponse(BaseResponse baseResponse) {
+//        if (baseResponse != null) {
+//            Logger.i("share", "weibo share baseResponse.errCode = " + baseResponse.errCode);
+//            switch (baseResponse.errCode) {
+//                case WBConstants.ErrorCode.ERR_OK:
+//                    ToastUtil.showConsecutiveShort(R.string.share_ok);
+//                    break;
+//                case WBConstants.ErrorCode.ERR_CANCEL:
+//                    ToastUtil.showConsecutiveShort(R.string.share_cancel);
+//                    break;
+//                case WBConstants.ErrorCode.ERR_FAIL:
+//                    ToastUtil.showConsecutiveShort(R.string.share_fail);
+//                    break;
+//            }
+//        }
+//    }
 
 
     public void sendMessage(String title, String content, Bitmap bitmap, String webUrl) {
@@ -165,6 +161,10 @@ public class WeiBoShare implements IWeiboHandler.Response {
     }
 
     public void release() {
+        mWeiboShareAPI = null;
+    }
+
+    public void setShareListener(ShareCallback listener) {
 
     }
 }

@@ -200,7 +200,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.mine.activity.AppointCourseDetailActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.mine.activity.UserInfoActivity"
             android:screenOrientation="portrait" />
@@ -248,7 +253,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.home.activity.CampaignDetailActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.home.activity.GoodsFilterActivity"
             android:screenOrientation="portrait" />
@@ -259,7 +269,12 @@
         <activity
             android:name=".ui.home.activity.GoodsDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.FullScreen" />
+            android:theme="@style/AppTheme.FullScreen">
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.home.activity.AppointCampaignActivity"
             android:screenOrientation="portrait" />
@@ -317,13 +332,23 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.discover.activity.NewsDetailActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.video.activity.WatchOfficeActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.video.activity.VideoDetailActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.video.activity.LiveCommentActivity"
             android:screenOrientation="portrait" />
@@ -392,7 +417,13 @@
         <activity android:name=".ui.mine.activity.AlbumActivity" />
         <activity
             android:name=".ui.discover.activity.VenuesDetailActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+        </activity>
 
         <activity
             android:name=".ui.home.activity.MapActivity"
@@ -504,7 +535,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="1104718858" />
+                <data android:scheme="tencent1104718858" />
             </intent-filter>
         </activity>
         <activity

@@ -30,9 +30,11 @@ import com.leyuan.aidong.utils.LiveDateFilterUtil;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.Urls;
 import com.leyuan.aidong.widget.media.TextViewPrintly;
+import com.sina.weibo.sdk.api.share.BaseResponse;
+import com.sina.weibo.sdk.api.share.IWeiboHandler;
 
 
-public class LiveDetailActivity extends BaseActivity implements View.OnClickListener {
+public class LiveDetailActivity extends BaseActivity implements View.OnClickListener, IWeiboHandler.Response {
 
     private static final int LIVE_ENDED = 0;
     private static final int LIVE_BEGIN = 1;
@@ -228,6 +230,7 @@ public class LiveDetailActivity extends BaseActivity implements View.OnClickList
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         super.onActivityResult(requestCode, resultCode, data);
         sharePopupWindow.onActivityResult(requestCode, resultCode, data);
     }
@@ -236,7 +239,12 @@ public class LiveDetailActivity extends BaseActivity implements View.OnClickList
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         Logger.i("share", " share pop == null ? " + (sharePopupWindow == null));
-        sharePopupWindow.onNewIntent(intent);
+        sharePopupWindow.onNewIntent(intent, this);
+    }
+
+    @Override
+    public void onResponse(BaseResponse baseResponse) {
+        sharePopupWindow.onResponse(baseResponse);
     }
 
     enum LiveState {

@@ -5,7 +5,7 @@ import com.leyuan.aidong.entity.SystemBean;
 
 public class Constant {
     //public static final String  BASE_URL = "http://192.168.0.223:5000/";
-    public static final String BASE_URL = "http://192.168.0.207:3000/";
+    public static final String BASE_URL = "http://192.168.100.119:3000/";
     public static final String CAPTCHA_IMAGE = BASE_URL + "captcha_image/";
 
 
