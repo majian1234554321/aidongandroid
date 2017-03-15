@@ -75,6 +75,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.mine.activity.account.RegisterActivity"
+            android:windowSoftInputMode="stateVisible"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.mine.activity.account.CompleteUserInfoActivity"

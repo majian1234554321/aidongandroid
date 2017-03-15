@@ -53,6 +53,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 finish();
             }
         });
+
+
     }
 
     private EditText getEidtTelephone() {

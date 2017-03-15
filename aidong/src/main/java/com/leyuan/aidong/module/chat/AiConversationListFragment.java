@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
+import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.ui.EaseConversationListFragment;
 import com.hyphenate.easeui.widget.EaseConversationList;
@@ -143,6 +144,8 @@ public class AiConversationListFragment extends EaseConversationListFragment {
         EMConversation systemConversation = EMClient.getInstance().chatManager().getAllConversations().get(Constant.Chat.SYSYTEM_ID);
 //        ((EMTextMessageBody)  systemConversation.getLastMessage().getBody())
         if (systemConversation != null) {
+            EMMessage lastMessage = systemConversation.getLastMessage();
+
             list.add(0, systemConversation);
         }
         return list;

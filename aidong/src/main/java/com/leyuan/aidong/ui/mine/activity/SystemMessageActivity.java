@@ -68,6 +68,7 @@ public class SystemMessageActivity extends BaseActivity implements SwipeRefreshL
             systemConversation.markAllMessagesAsRead();
             EMMessage lastMessage = systemConversation.getLastMessage();
             List<EMMessage> messageList = systemConversation.loadMoreMsgFromDB(lastMessage.getMsgId(), 20);
+            messageList.add(lastMessage);
 
 //          List<EMMessage> messageList = systemConversation.getAllMessages();
             Logger.i(TAG, "message list size = " + messageList.size() + " last message id = " + lastMessage.getMsgId());
