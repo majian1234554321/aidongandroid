@@ -2,7 +2,6 @@ package com.leyuan.aidong.http.api;
 
 
 import com.leyuan.aidong.entity.BaseBean;
-import com.leyuan.aidong.entity.data.BannerData;
 import com.leyuan.aidong.entity.data.BrandData;
 import com.leyuan.aidong.entity.data.HomeData;
 
@@ -23,6 +22,4 @@ public interface HomeService {
     @GET("home/{id}")
     Observable<BaseBean<BrandData>> getTypeDetail(@Path("id") String id, @Query("page") int page);
 
-    @GET("banners")
-    Observable<BaseBean<BannerData>> getBanners(@Query("site") String site);
 }

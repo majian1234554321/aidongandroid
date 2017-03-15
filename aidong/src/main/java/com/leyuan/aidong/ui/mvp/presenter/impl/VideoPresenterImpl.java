@@ -18,8 +18,8 @@ import com.leyuan.aidong.ui.mvp.view.VideoRelationView;
  */
 
 public class VideoPresenterImpl {
-    public static final String family = "family";
-    public static final String professional = "professional";
+    public static final String family = "topic";
+    public static final String professional = "depth";
     public static final String celebrity = "celebrity";
     Context context;
     VideoModelImpl videoModel;

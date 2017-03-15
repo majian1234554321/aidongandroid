@@ -19,15 +19,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.hyphenate.easeui.EaseConstant;
-import com.hyphenate.easeui.domain.EaseUser;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.mine.UserInfoPhotoAdapter;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.PhotoBrowseInfo;
 import com.leyuan.aidong.entity.ProfileBean;
 import com.leyuan.aidong.entity.data.UserInfoData;
-import com.leyuan.aidong.module.chat.db.DemoDBManager;
 import com.leyuan.aidong.module.photopicker.boxing.Boxing;
 import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
 import com.leyuan.aidong.module.photopicker.boxing_impl.ui.BoxingActivity;
@@ -155,30 +152,30 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         setFragments();
     }
 
-    private void setView(){
+    private void setView() {
         GlideLoader.getInstance().displayCircleImage(userInfoData.getProfile().getAvatar(), dvAvatar);
         tvName.setText(userInfoData.getProfile().getName());
         tvSignature.setText(userInfoData.getProfile().getSignature());
-        if(isSelf){
+        if (isSelf) {
             tvTitle.setText("我的资料");
             ivFollowOrPublish.setBackgroundResource(R.drawable.icon_mine_publish);
-            if(userInfoData.getPhotoWall().isEmpty()){
+            if (userInfoData.getPhotoWall().isEmpty()) {
                 selfEmptyPhotoLayout.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 wallAdapter.setData(userInfoData.getPhotoWall());
             }
             ivEdit.setVisibility(View.VISIBLE);
             contactLayout.setVisibility(View.GONE);
             contentLayout.setPadding(0, DensityUtil.dp2px(this, 46), 0,
                     (int) getResources().getDimension(R.dimen.dp_0));
-        }else {
+        } else {
             tvTitle.setText("TA的资料");
             ivFollowOrPublish.setBackgroundResource(isFollow
-                    ?  R.drawable.icon_following : R.drawable.icon_follow);
-            if(userInfoData.getPhotoWall().isEmpty()){
+                    ? R.drawable.icon_following : R.drawable.icon_follow);
+            if (userInfoData.getPhotoWall().isEmpty()) {
                 otherEmptyPhotoLayout.setVisibility(View.VISIBLE);
                 contactLayout.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 wallAdapter.setData(userInfoData.getPhotoWall());
             }
             ivEdit.setVisibility(View.GONE);
@@ -189,7 +186,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         }
     }
 
-    private void setFragments(){
+    private void setFragments() {
         FragmentPagerItems pages = new FragmentPagerItems(this);
         UserDynamicFragment dynamicFragment = new UserDynamicFragment();
         UserInfoFragment userInfoFragment = new UserInfoFragment();
@@ -210,7 +207,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
                 finish();
                 break;
             case R.id.iv_edit:
-                if(userInfoData != null) {
+                if (userInfoData != null) {
                     showEditDialog();
                 }
                 break;
@@ -218,21 +215,15 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
                 UpdatePhotoWallActivity.start(this, userInfoData.getPhotoWall());
                 break;
             case R.id.tv_message:
-                if(App.mInstance.isLogin()) {
-//                EmFriendManager.getInstance().addFriend(userId, "meimei");
+                if (App.mInstance.isLogin()) {
                     ProfileBean profile = userInfoData.getProfile();
-                    EaseUser user = new EaseUser(profile.getId());
-                    user.setNickname(profile.getName());
-                    user.setAvatar(profile.getAvatar());
-                    DemoDBManager.getInstance().saveContact(user);
-                    startActivity(new Intent(this, EMChatActivity.class).
-                            putExtra(EaseConstant.EXTRA_USER_ID, userId));
-                }else {
-                    startActivityForResult(new Intent(this, LoginActivity.class),REQUEST_LOGIN);
+                    EMChatActivity.start(this, userId, profile.getName(), profile.getAvatar());
+                } else {
+                    startActivityForResult(new Intent(this, LoginActivity.class), REQUEST_LOGIN);
                 }
                 break;
             case R.id.iv_follow_or_publish:
-                if(App.mInstance.isLogin()) {
+                if (App.mInstance.isLogin()) {
                     if (isSelf) {
                         publishDynamic();
                     } else if (isFollow) {
@@ -240,8 +231,8 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
                     } else {
                         userInfoPresent.addFollow(userId);
                     }
-                }else {
-                    startActivityForResult(new Intent(this, LoginActivity.class),REQUEST_LOGIN);
+                } else {
+                    startActivityForResult(new Intent(this, LoginActivity.class), REQUEST_LOGIN);
                 }
                 break;
             default:
@@ -298,10 +289,10 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if(requestCode == Constant.REQUEST_LOGIN){
+            if (requestCode == Constant.REQUEST_LOGIN) {
                 isSelf = isSelf(userId);
                 userInfoPresent.getUserInfo(switcherLayout, userId);
-            }else if(requestCode == REQUEST_SELECT_PHOTO || requestCode == REQUEST_SELECT_VIDEO){
+            } else if (requestCode == REQUEST_SELECT_PHOTO || requestCode == REQUEST_SELECT_VIDEO) {
                 PublishDynamicActivity.start(this, requestCode == REQUEST_SELECT_PHOTO, Boxing.getResult(data));
             }
         }

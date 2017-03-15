@@ -13,6 +13,7 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.user.SystemMessageInfo;
+import com.leyuan.aidong.utils.DateUtils;
 
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class SysytemMessageAdapter extends RecyclerView.Adapter<SysytemMessageAd
         EMMessage message = messageList.get(position);
         String content = ((EMTextMessageBody) (message.getBody())).getMessage();
         final SystemMessageInfo info = gson.fromJson(content, SystemMessageInfo.class);
-        holder.txtTime.setText("" + message.getMsgTime());
+        holder.txtTime.setText( DateUtils.parseTime(message.getMsgTime()));
         holder.txtTitle.setText(info.getType());
         holder.txtContent.setText(info.getContent());
         holder.layoutDetail.setOnClickListener(new View.OnClickListener() {
@@ -54,7 +55,6 @@ public class SysytemMessageAdapter extends RecyclerView.Adapter<SysytemMessageAd
                 }
             }
         });
-
     }
 
     @Override

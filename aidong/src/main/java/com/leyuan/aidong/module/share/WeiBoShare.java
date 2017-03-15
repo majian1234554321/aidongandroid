@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -135,7 +134,7 @@ public class WeiBoShare {
                 Logger.i("share", "  mWeiboShareAPI onComplete");
                 Oauth2AccessToken newToken = Oauth2AccessToken.parseAccessToken(bundle);
                 AccessTokenKeeper.writeAccessToken(context, newToken);
-                Toast.makeText(context, "onAuthorizeComplete token = " + newToken.getToken(), 0).show();
+//                Toast.makeText(context, "onAuthorizeComplete token = " + newToken.getToken(), 0).show();
             }
 
             @Override

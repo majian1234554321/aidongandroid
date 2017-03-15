@@ -10,7 +10,7 @@
         android:id="@+id/rl_coupon"
         android:layout_width="137dp"
         android:layout_height="84dp"
-        android:background="@drawable/bg_goods_detail_coupon">
+        android:background="@drawable/bg_goods_coupon">
 
         <TextView
             android:id="@+id/tv_rmb"

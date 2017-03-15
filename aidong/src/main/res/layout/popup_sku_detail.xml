@@ -11,15 +11,15 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_marginTop="15dp"
+            android:layout_height="77dp"
+            android:layout_marginTop="20dp"
             android:background="@color/white">
 
             <TextView
                 android:id="@+id/tv_good_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="145dp"
+                android:layout_marginLeft="112dp"
                 android:layout_marginTop="12dp"
                 android:text="GNC健安喜浓缩葡萄籽"
                 android:textColor="@color/c3"
@@ -47,14 +47,16 @@
                 android:layout_marginTop="8dp"
                 android:text="总库存"
                 android:textColor="@color/c3"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:visibility="gone"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/tv_good_name"
                 android:layout_below="@+id/tv_stock"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tv_select"
@@ -101,8 +103,8 @@
 
         <ImageView
             android:id="@+id/dv_goods_cover"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="82dp"
+            android:layout_height="82dp"
             android:layout_marginLeft="@dimen/left_margin"
           />
     </RelativeLayout>
@@ -147,14 +149,16 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:background="@drawable/icon_minus_gray" />
+
                 <TextView
                     android:id="@+id/tv_count"
-                    android:layout_width="44dp"
+                    android:layout_width="43dp"
                     android:layout_height="32dp"
                     android:gravity="center"
                     android:text="1"
                     android:textColor="@color/black"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    android:background="@drawable/shape_stroke_black"/>
 
                 <ImageView
                     android:id="@+id/iv_add"

@@ -1,6 +1,11 @@
 package com.leyuan.aidong.module.chat;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.Pair;
 import android.view.View;
@@ -8,9 +13,10 @@ import android.widget.AdapterView;
 
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
-import com.hyphenate.easeui.EaseConstant;
+import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.ui.EaseConversationListFragment;
 import com.hyphenate.easeui.widget.EaseConversationList;
+import com.leyuan.aidong.module.chat.db.DemoDBManager;
 import com.leyuan.aidong.module.chat.manager.EmMessageManager;
 import com.leyuan.aidong.ui.mine.activity.EMChatActivity;
 import com.leyuan.aidong.ui.mine.activity.SystemMessageActivity;
@@ -33,6 +39,16 @@ import java.util.Map;
 
 public class AiConversationListFragment extends EaseConversationListFragment {
 
+    private ChatMessageReceiver chatMessageReceiver;
+    private LocalBroadcastManager broadcastManager;
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        chatMessageReceiver = new ChatMessageReceiver();
+        broadcastManager = LocalBroadcastManager.getInstance(getActivity());
+        broadcastManager.registerReceiver(chatMessageReceiver, new IntentFilter(Constant.BROADCAST_ACTION_NEW_MESSAGE));
+    }
 
     @Override
     public void setUpView() {
@@ -45,8 +61,11 @@ public class AiConversationListFragment extends EaseConversationListFragment {
                 if (TextUtils.equals(userId, Constant.Chat.SYSYTEM_ID)) {
                     UiManager.activityJump(getActivity(), SystemMessageActivity.class);
                 } else {
-                    startActivity(new Intent(getActivity(), EMChatActivity.class).
-                            putExtra(EaseConstant.EXTRA_USER_ID, userId));
+                    EaseUser user = DemoDBManager.getInstance().getContactList().get(userId);
+                    EMChatActivity.start(getActivity(), userId, user.getNickname(), user.getAvatar());
+//
+//                    startActivity(new Intent(getActivity(), EMChatActivity.class).
+//                            putExtra(EaseConstant.EXTRA_USER_ID, userId));
                 }
 
 
@@ -122,9 +141,25 @@ public class AiConversationListFragment extends EaseConversationListFragment {
         }
 
         EMConversation systemConversation = EMClient.getInstance().chatManager().getAllConversations().get(Constant.Chat.SYSYTEM_ID);
+//        ((EMTextMessageBody)  systemConversation.getLastMessage().getBody())
         if (systemConversation != null) {
             list.add(0, systemConversation);
         }
         return list;
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        broadcastManager.unregisterReceiver(chatMessageReceiver);
+    }
+
+    public class ChatMessageReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            refresh();
+        }
+    }
+
 }

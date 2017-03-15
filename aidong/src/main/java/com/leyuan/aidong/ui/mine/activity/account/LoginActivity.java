@@ -212,12 +212,24 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             Logger.i("Login Receiver ，", "onReceive");
             DialogUtils.dismissDialog();
             if (intent != null) {
-                String code = intent.getStringExtra(Constant.WX_LOGIN_CODE);
-                Logger.i("login wx onReceive ", " login code  = " + code);
-                if (code != null) {
-                    DialogUtils.showDialog(LoginActivity.this, "", false);
-                    loginPresenter.loginSns("weixin", code);
+                int state = intent.getIntExtra(Constant.STATE, 4);
+                switch (state) {
+                    case 1:
+                        String code = intent.getStringExtra(Constant.WX_LOGIN_CODE);
+                        Logger.i("login wx onReceive ", " login code  = " + code);
+                        if (code != null) {
+                            DialogUtils.showDialog(LoginActivity.this, "", false);
+                            loginPresenter.loginSns("weixin", code);
+                        }
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
                 }
+
 
             }
 

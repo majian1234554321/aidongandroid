@@ -50,15 +50,15 @@ public class TabHelpActivity extends BaseActivity {
                 finish();
             }
         });
-//        mlayout_tab_help_version_of_the_introduction
-//                .setOnClickListener(new OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        intent.setClass(TabHelpActivity.this,
-//                                VersionOfTheIntroductionActivity.class);
-//                        startActivity(intent);
-//                    }
-//                });
+        mlayout_tab_help_version_of_the_introduction
+                .setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        intent.setClass(TabHelpActivity.this,
+                                VersionIntroActivity.class);
+                        startActivity(intent);
+                    }
+                });
         mlayout_tab_help_about_mx.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

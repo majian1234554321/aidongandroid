@@ -6,6 +6,9 @@ import android.os.Message;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.EMError;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.easeui.domain.EaseUser;
+import com.leyuan.aidong.R;
+import com.leyuan.aidong.module.chat.db.DemoDBManager;
 import com.leyuan.aidong.utils.Logger;
 
 /**
@@ -39,10 +42,10 @@ public class EmChatLoginManager {
             super.handleMessage(msg);
             switch (msg.what) {
                 case LOGIN_SUCCESS:
-                        listner.onChatLogin(true);
+                    listner.onChatLogin(true);
                     break;
                 case LOGIN_FAILE:
-                        listner.onChatLogin(false);
+                    listner.onChatLogin(false);
                     break;
                 case NEED_REGISTER:
                     if (msg.obj != null)
@@ -65,6 +68,10 @@ public class EmChatLoginManager {
                 EMClient.getInstance().chatManager().loadAllConversations();
                 Logger.d("EMCHAT", "登录聊天服务器成功！");
                 handler.sendEmptyMessage(LOGIN_SUCCESS);
+                EaseUser user = new EaseUser("admin");
+                user.setAvatar("" + R.drawable.sysytem_message);
+                user.setNickname("系统消息");
+                DemoDBManager.getInstance().saveContact(user);
             }
 
             @Override

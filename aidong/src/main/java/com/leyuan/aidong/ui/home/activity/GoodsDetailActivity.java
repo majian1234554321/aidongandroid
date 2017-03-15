@@ -43,7 +43,6 @@ import com.leyuan.aidong.ui.home.fragment.GoodsServiceFragment;
 import com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow;
 import com.leyuan.aidong.ui.mine.activity.CartActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
-import com.leyuan.aidong.ui.mvp.presenter.CouponPresent;
 import com.leyuan.aidong.ui.mvp.presenter.GoodsDetailPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.GoodsDetailPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.GoodsDetailActivityView;
@@ -131,7 +130,6 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
     private String count;
     private String goodsType;
     private List<String> selectedSkuValues = new ArrayList<>();
-    private CouponPresent couponPresent;
 
     public static void start(Context context, String id, String goodsType) {
         Intent starter = new Intent(context, GoodsDetailActivity.class);
@@ -285,7 +283,7 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
                         "http://www.baidu.com");
                 break;
             case R.id.ll_code:
-                inputRecommendCodeDialog();
+                showRecommendCodeDialog();
                 break;
             case R.id.ll_goods_sku:
                 showSkuPopupWindow(this, bean, selectedSkuValues, FROM_SKU);
@@ -332,8 +330,13 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
         skuPopupWindow.showAtLocation(rootLayout, Gravity.BOTTOM, 0, 0);
     }
 
-    private void inputRecommendCodeDialog() {
-        View view = View.inflate(this, R.layout.dialog_input_code, null);
+//<<<<<<< HEAD
+//    private void inputRecommendCodeDialog() {
+//        View view = View.inflate(this, R.layout.dialog_input_code, null);
+//=======
+    private void showRecommendCodeDialog() {
+        View view = View.inflate(this,R.layout.dialog_input_code,null);
+//>>>>>>> 3109c47edbf8c09829bbdfeb77dd2c9b886e601d
         final EditText etCode = (EditText) view.findViewById(R.id.et_code);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(getString(R.string.input_recommend_code))
@@ -373,19 +376,28 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
     }
 
     @Override
-    public void onSelectSkuChanged(List<String> skuValues, String skuTip, String count) {
-        if (skuValues != null) {
-            selectedSkuValues = skuValues;
-        }
-        if (selectedSkuValues.size() == bean.spec.name.size()) {
-            tvSelect.setText("已选择:");
-        } else {
-            tvSelect.setText("选择:");
-        }
-        StringBuilder sb = new StringBuilder(skuTip);
-        sb.append("，").append(count).append("个");
-        tvSku.setText(sb);
+//<<<<<<< HEAD
+//    public void onSelectSkuChanged(List<String> skuValues, String skuTip, String count) {
+//        if (skuValues != null) {
+//            selectedSkuValues = skuValues;
+//        }
+//        if (selectedSkuValues.size() == bean.spec.name.size()) {
+//            tvSelect.setText("已选择:");
+//        } else {
+//            tvSelect.setText("选择:");
+//=======
+    public void onSelectSkuChanged(List<String> selectedSkuValues,String skuTip,String count) {
         this.count = count;
+        if(selectedSkuValues != null) {
+            this.selectedSkuValues = selectedSkuValues;
+//>>>>>>> 3109c47edbf8c09829bbdfeb77dd2c9b886e601d
+        }
+        tvSelect.setText(isAllSkuConfirm() ? "已选择:" : "选择:");
+        StringBuilder sb = new StringBuilder(skuTip);
+        if(isAllSkuConfirm()){
+            sb.append(count).append("个");
+        }
+        tvSku.setText(sb);
     }
 
 
@@ -502,5 +514,9 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
         }
         allTabView.add(tabView);
         return tabView;
+    }
+
+    private boolean isAllSkuConfirm(){
+        return this.selectedSkuValues.size() == bean.spec.name.size();
     }
 }

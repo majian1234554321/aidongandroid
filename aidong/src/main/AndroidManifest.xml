@@ -118,6 +118,9 @@
             android:name=".ui.mine.activity.setting.AboutMxActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.mine.activity.setting.VersionIntroActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.mine.activity.BingdingCommunityActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -201,10 +204,10 @@
         <activity
             android:name=".ui.mine.activity.AppointCourseDetailActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
+            <!--<intent-filter>-->
+            <!--<action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />-->
+            <!--<category android:name="android.intent.category.DEFAULT" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity
             android:name=".ui.mine.activity.UserInfoActivity"
@@ -254,10 +257,10 @@
         <activity
             android:name=".ui.home.activity.CampaignDetailActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
+            <!--<intent-filter>-->
+            <!--<action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />-->
+            <!--<category android:name="android.intent.category.DEFAULT" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity
             android:name=".ui.home.activity.GoodsFilterActivity"
@@ -270,10 +273,10 @@
             android:name=".ui.home.activity.GoodsDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullScreen">
-            <intent-filter>
-                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
+            <!--<intent-filter>-->
+            <!--<action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />-->
+            <!--<category android:name="android.intent.category.DEFAULT" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity
             android:name=".ui.home.activity.AppointCampaignActivity"
@@ -333,10 +336,10 @@
         <activity
             android:name=".ui.discover.activity.NewsDetailActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
+            <!--<intent-filter>-->
+            <!--<action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />-->
+            <!--<category android:name="android.intent.category.DEFAULT" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity
             android:name=".ui.video.activity.WatchOfficeActivity"
@@ -344,10 +347,10 @@
         <activity
             android:name=".ui.video.activity.VideoDetailActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
+            <!--<intent-filter>-->
+            <!--<action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />-->
+            <!--<category android:name="android.intent.category.DEFAULT" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity
             android:name=".ui.video.activity.LiveCommentActivity"
@@ -356,10 +359,10 @@
             android:name="com.example.aidong.wxapi.LiveDetailActivity"
             android:screenOrientation="portrait">
             <!-- 微博分享需要-->
-            <intent-filter>
-                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
+            <!--<intent-filter>-->
+            <!--<action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />-->
+            <!--<category android:name="android.intent.category.DEFAULT" />-->
+            <!--</intent-filter>-->
 
         </activity>
 
@@ -418,13 +421,21 @@
         <activity
             android:name=".ui.discover.activity.VenuesDetailActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-
+            <!--<intent-filter>-->
+            <!--<action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />-->
+            <!--<category android:name="android.intent.category.DEFAULT" />-->
+            <!--</intent-filter>-->
         </activity>
 
+        <activity
+            android:name=".ui.WeiboResponseActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <!--<intent-filter>-->
+            <!--<action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />-->
+            <!--<category android:name="android.intent.category.DEFAULT" />-->
+            <!--</intent-filter>-->
+        </activity>
         <activity
             android:name=".ui.home.activity.MapActivity"
             android:screenOrientation="portrait" />

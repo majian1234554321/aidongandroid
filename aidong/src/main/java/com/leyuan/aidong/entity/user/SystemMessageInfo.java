@@ -1,13 +1,22 @@
 package com.leyuan.aidong.entity.user;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by user on 2017/3/10.
  */
 public class SystemMessageInfo {
+
+
+    @SerializedName("tip")
     String hint;
+
     String time;
+    @SerializedName("title")
     String type;
+    @SerializedName("content")
     String content;
+    @SerializedName("link")
     String url;
 
     public String getHint() {

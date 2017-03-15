@@ -15,7 +15,7 @@ import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.ui.mvp.model.CouponModel;
 import com.leyuan.aidong.ui.mvp.model.impl.CouponModelImpl;
-import com.leyuan.aidong.ui.mvp.presenter.CouponPresent;
+import com.leyuan.aidong.utils.Constant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,6 @@ import java.util.List;
  */
 public class GoodsDetailCouponAdapter extends RecyclerView.Adapter<GoodsDetailCouponAdapter.CouponHolder>{
     private Context context;
-    private CouponPresent couponPresent;
     private List<CouponBean> data = new ArrayList<>();
 
     public GoodsDetailCouponAdapter(Context context) {
@@ -56,23 +55,33 @@ public class GoodsDetailCouponAdapter extends RecyclerView.Adapter<GoodsDetailCo
         final CouponBean bean = data.get(position);
         holder.tvPrice.setText(bean.getDiscount());
         holder.tvUserPrice.setText(String.format(context.getString(R.string.use_price),bean.getMin()));
+        if("0".equals(bean.getStatus())){   //未领
+            holder.tvGet.setText("点击领取");
+            holder.rlCoupon.setBackgroundResource(R.drawable.bg_goods_coupon);
+        }else {
+            holder.tvGet.setText("已领取");
+            holder.rlCoupon.setBackgroundResource(R.drawable.bg_goods_coupon_gray);
+        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context,"click",Toast.LENGTH_LONG).show();
-                CouponModel model = new CouponModelImpl();
-                model.obtainCoupon(new ProgressSubscriber<BaseBean>(context) {
-                    @Override
-                    public void onNext(BaseBean baseBean) {
-                        if(baseBean.getStatus() == 1){
-                            holder.itemView.setBackgroundResource(R.color.gray_normal);
-                            Toast.makeText(context,"领取成功",Toast.LENGTH_LONG).show();
-                        }else {
-                            Toast.makeText(context,"领取失败",Toast.LENGTH_LONG).show();
+                if("0".equals(bean.getStatus())){
+                    CouponModel model = new CouponModelImpl();
+                    model.obtainCoupon(new ProgressSubscriber<BaseBean>(context) {
+                        @Override
+                        public void onNext(BaseBean baseBean) {
+                            if (baseBean.getStatus() == Constant.OK) {
+                                notifyDataSetChanged();
+                                Toast.makeText(context, "领取成功", Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(context, "领取失败" + baseBean.getMessage(), Toast.LENGTH_LONG).show();
+                            }
                         }
-                    }
-                },bean.getId());
+                    }, bean.getId());
+                }else {
+                    Toast.makeText(context,"已领取过该优惠券",Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -92,6 +101,4 @@ public class GoodsDetailCouponAdapter extends RecyclerView.Adapter<GoodsDetailCo
             tvGet = (TextView) itemView.findViewById(R.id.tv_get);
         }
     }
-
-
 }

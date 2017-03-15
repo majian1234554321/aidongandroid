@@ -53,6 +53,12 @@ public class WatchOfficeActivity extends FragmentActivity {
     }
 
     private void initData() {
+        findViewById(R.id.imageView_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         mFragments.add(SpecialTopicFragment.newInstance(VideoPresenterImpl.family));
         mFragments.add(SpecialTopicFragment.newInstance(VideoPresenterImpl.celebrity));
         mFragments.add(SpecialTopicFragment.newInstance(VideoPresenterImpl.professional));

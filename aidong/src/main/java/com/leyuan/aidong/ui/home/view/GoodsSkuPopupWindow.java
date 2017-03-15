@@ -223,7 +223,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         if(isAllSkuConfirm()){
             GlideLoader.getInstance().displayImage(confirmedSkuCover, dvGoodsCover);
             tvSelect.setText(context.getString(R.string.selected));
-            tvGoodsPrice.setText(String.format(context.getString(R.string.rmb_price),String.valueOf(price)));
+            tvGoodsPrice.setText(String.format(context.getString(R.string.rmb_price_double),price));
             tvStock.setText(String.format(context.getString(R.string.int_stock_count), stock));
         }else {
             GlideLoader.getInstance().displayImage(unConfirmedSkuCover, dvGoodsCover);
@@ -251,7 +251,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         int count = Integer.parseInt(tvCount.getText().toString());
         switch (v.getId()){
             case R.id.iv_cancel:
-                if(selectSkuListener != null){
+                if(selectSkuListener != null ){
                     selectSkuListener.onSelectSkuChanged(selectedSkuValues,skuTip.toString(),
                             tvCount.getText().toString());
                 }
@@ -365,7 +365,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     @Override
     public void dismiss() {
         super.dismiss();
-        if(selectSkuListener != null){
+        if(selectSkuListener != null ){
             selectSkuListener.onSelectSkuChanged(selectedSkuValues,skuTip.toString(),tvCount.getText().toString());
         }
     }
@@ -377,7 +377,8 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         if(allSelectedNodes.size() == detailBean.spec.name.size()){
             GoodsSkuBean line = getLine(allSelectedNodes);
             if(line != null){
-                tvGoodsPrice.setText(String.format(context.getString(R.string.rmb_price),line.price));
+                tvGoodsPrice.setText(String.format(context.getString(R.string.rmb_price_double),
+                        FormatUtil.parseDouble(line.price)));
                 tvStock.setText(String.format(context.getString(R.string.stock_count),line.stock));
                 GlideLoader.getInstance().displayImage(line.cover, dvGoodsCover);
                 stock = FormatUtil.parseInt(line.stock);

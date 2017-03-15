@@ -98,7 +98,7 @@
     <string name="error_no_activecode">请输入验证码</string>
     <!-- 图片浏览 -->
     <string name="finish">完成</string>
-    <string name="sweep">扫一扫,下载美型APP</string>
+    <string name="sweep">扫一扫,下载爱动APP</string>
     <string name="bingding_community">社区绑定</string>
     <string name="sinaweibo">新浪微博</string>
     <string name="back">返回</string>
@@ -222,7 +222,7 @@
     <string name="aidong">爱动</string>
     <string name="live_video">视界</string>
     <string name="reset_password">重置密码</string>
-    <string name="qq_id" >1104718858</string>
+    <string name="qq_id">1104718858</string>
     <string name="weibosdk_demo_token_to_string_format_1">Token：%1$s \n有效期：%2$s</string>
     <string name="weibosdk_demo_token_has_existed">Token 仍在有效期内，无需再次登录。</string>
 

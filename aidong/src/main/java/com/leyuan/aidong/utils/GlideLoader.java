@@ -21,18 +21,20 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
  */
 public class GlideLoader {
     private static GlideLoader INSTANCE = new GlideLoader();
-    private GlideLoader(){
+
+    private GlideLoader() {
 
     }
+
     public static GlideLoader getInstance() {
         return INSTANCE;
     }
 
     public void displayImage(String imgUrl, ImageView imageView) {
-        displayImageWithDefaultConfig(imgUrl,imageView).into(imageView);
+        displayImageWithDefaultConfig(imgUrl, imageView).into(imageView);
     }
 
-    public void displayCircleImage(String imgUrl, ImageView imageView){
+    public void displayCircleImage(String imgUrl, ImageView imageView) {
         Glide.with(getContext(imageView))
                 .load(imgUrl)
                 .bitmapTransform(new CropCircleTransformation(getContext(imageView)))
@@ -40,7 +42,7 @@ public class GlideLoader {
                 .into(imageView);
     }
 
-    public void displayRoundImage(String imgUrl,ImageView imageView){
+    public void displayRoundImage(String imgUrl, ImageView imageView) {
         Glide.with(getContext(imageView))
                 .load(imgUrl)
                 .bitmapTransform(new CenterCrop(getContext(imageView)),
@@ -50,7 +52,7 @@ public class GlideLoader {
     }
 
 
-    public void displayCircleImage(@DrawableRes int resId, ImageView imageView){
+    public void displayCircleImage(@DrawableRes int resId, ImageView imageView) {
         Glide.with(getContext(imageView))
                 .load(resId)
                 .bitmapTransform(new CropCircleTransformation(getContext(imageView)))
@@ -58,14 +60,14 @@ public class GlideLoader {
                 .into(imageView);
     }
 
-    public void displayDrawableGifImage(@DrawableRes int resId, ImageView imageView){
+    public void displayDrawableGifImage(@DrawableRes int resId, ImageView imageView) {
         Glide.with(getContext(imageView))
                 .load(resId)
                 .asGif()
                 .into(imageView);
     }
 
-    private BitmapRequestBuilder displayImageWithDefaultConfig(String imgUrl,ImageView imageView) {
+    private BitmapRequestBuilder displayImageWithDefaultConfig(String imgUrl, ImageView imageView) {
         return Glide.with(getContext(imageView))
                 .load(imgUrl)
                 .asBitmap()

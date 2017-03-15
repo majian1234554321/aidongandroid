@@ -3,6 +3,7 @@ package com.leyuan.aidong.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.utils.GlideLoader;
 
 
 public class CommonTitleLayout extends RelativeLayout {
@@ -58,7 +60,6 @@ public class CommonTitleLayout extends RelativeLayout {
     }
 
     public void setleftIconVisible(boolean visible) {
-
         if (visible) {
             imgLeft.setVisibility(View.VISIBLE);
         } else {
@@ -67,4 +68,15 @@ public class CommonTitleLayout extends RelativeLayout {
 
     }
 
+    public void setRightIcon(@DrawableRes int resId) {
+        imgRight.setImageResource(resId);
+    }
+
+    public void setRightIcon(String avatar) {
+        GlideLoader.getInstance().displayCircleImage(avatar,imgRight);
+    }
+
+    public void setTxtTitle(String title) {
+        txtTitle.setText(title);
+    }
 }

@@ -67,7 +67,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
 
         initView(view);
         setListener();
-        initData();
+//        initData();
     }
 
     private void initView(View view){
