@@ -104,6 +104,12 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                             switcherLayout.showEmptyLayout();
                         }
                     }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        goodsDetailView.showErrorView();
+                    }
                 },id);
                 break;
 
@@ -121,6 +127,11 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                             switcherLayout.showEmptyLayout();
                         }
                     }
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        goodsDetailView.showErrorView();
+                    }
                 },id);
                 break;
 
@@ -137,6 +148,12 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                         }else{
                             switcherLayout.showEmptyLayout();
                         }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        goodsDetailView.showErrorView();
                     }
                 },id);
                 break;

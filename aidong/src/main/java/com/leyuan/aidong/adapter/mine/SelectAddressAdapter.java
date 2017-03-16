@@ -33,8 +33,10 @@ public class SelectAddressAdapter extends RecyclerView.Adapter<SelectAddressAdap
     }
 
     public void setData(List<AddressBean> data) {
-        this.data = data;
-        notifyDataSetChanged();
+        if (data != null) {
+            this.data = data;
+            notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -55,6 +57,7 @@ public class SelectAddressAdapter extends RecyclerView.Adapter<SelectAddressAdap
         holder.phone.setText(bean.getMobile());
         holder.address.setText(new StringBuilder(bean.getProvince()).append(bean.getCity())
                 .append(bean.getDistrict()).append(bean.getAddress()));
+        holder.defaultAddress.setVisibility(bean.isDefault() ? View.VISIBLE :View.GONE);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,9 +67,6 @@ public class SelectAddressAdapter extends RecyclerView.Adapter<SelectAddressAdap
                 }
             }
         });
-
-        holder.defaultAddress.setVisibility(position == 0 ? View.VISIBLE :View.GONE);
-
     }
 
 

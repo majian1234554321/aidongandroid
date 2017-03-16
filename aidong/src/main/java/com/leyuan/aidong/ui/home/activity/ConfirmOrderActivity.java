@@ -3,9 +3,12 @@ package com.leyuan.aidong.ui.home.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -61,6 +64,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     //收货或自提地址
     private RelativeLayout emptyAddressLayout;
     private RelativeLayout addressLayout;
+    private ImageView ivDefault;
     private TextView tvName;
     private TextView tvPhone;
     private TextView tvAddress;
@@ -195,6 +199,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
         emptyAddressLayout = (RelativeLayout) findViewById(R.id.rl_empty_address);
         addressLayout = (RelativeLayout) findViewById(R.id.rl_address);
+        ivDefault = (ImageView) findViewById(R.id.iv_default);
         tvName = (TextView) findViewById(R.id.tv_name);
         tvPhone = (TextView)findViewById(R.id.tv_phone);
         tvAddress = (TextView) findViewById(R.id.tv_address);
@@ -264,7 +269,9 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.tv_coupon:
                 if(usableCoupons != null && !usableCoupons.isEmpty()) {
-                    startActivityForResult(new Intent(this, SelectCouponActivity.class), REQUEST_SELECT_COUPON);
+                    startActivityForResult(new Intent(this, SelectCouponActivity.class)
+                            .putParcelableArrayListExtra("couponList", (ArrayList<? extends Parcelable>)
+                                    usableCoupons), REQUEST_SELECT_COUPON);
                 }
                 break;
             case R.id.tv_pay:
@@ -276,6 +283,10 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void payOrder(){
+        if(needExpress && TextUtils.isEmpty(pickUpId)){
+            Toast.makeText(this,"请填写收货地址",Toast.LENGTH_LONG).show();
+            return;
+        }
         switch (settlementType){
             case SettlementType.CART:
                 present.payCart(integral,coin,coupon,payType, pickUpId,
@@ -297,7 +308,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private PayInterface.PayListener payListener = new SimplePayListener(this) {
         @Override
         public void onSuccess(String code, Object object) {
-            Toast.makeText(ConfirmOrderActivity.this,"支付成功啦",Toast.LENGTH_LONG).show();
+            Toast.makeText(ConfirmOrderActivity.this,"支付成功",Toast.LENGTH_LONG).show();
             startActivity(new Intent(ConfirmOrderActivity.this,AppointSuccessActivity.class));
         }
     };
@@ -372,6 +383,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void setAddressInfo(AddressBean address){
+        ivDefault.setVisibility(address.isDefault() ? View.VISIBLE : View.GONE);
         tvName.setText(address.getName());
         tvPhone.setText(address.getMobile());
         StringBuilder sb = new StringBuilder("收货地址: ");

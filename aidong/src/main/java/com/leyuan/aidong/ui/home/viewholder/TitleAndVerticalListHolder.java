@@ -28,8 +28,9 @@ public class TitleAndVerticalListHolder extends BaseRecyclerViewHolder<HomeBean>
 
     @Override
     public void onBindData(final HomeBean bean, int position) {
-        CoverImageAdapter adapter = new CoverImageAdapter(context);
+        CoverImageAdapter adapter = new CoverImageAdapter(context,bean.getType());
         tvName.setText(bean.getTitle());
         listView.setAdapter(adapter);
+        adapter.setList(bean.getItem());
     }
 }

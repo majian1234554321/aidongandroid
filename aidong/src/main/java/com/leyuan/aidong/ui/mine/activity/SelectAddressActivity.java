@@ -24,7 +24,8 @@ import java.util.List;
  * 选择收货地址
  * Created by song on 2016/12/20.
  */
-public class SelectAddressActivity extends BaseActivity implements SelectAddressActivityView, View.OnClickListener, SelectAddressAdapter.OnItemClickListener {
+public class SelectAddressActivity extends BaseActivity implements SelectAddressActivityView, View.OnClickListener,
+        SelectAddressAdapter.OnItemClickListener {
     private SwitcherLayout switcherLayout;
     private ImageView ivBack;
     private TextView tvEdit;

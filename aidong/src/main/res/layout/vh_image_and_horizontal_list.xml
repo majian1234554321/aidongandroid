@@ -6,7 +6,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp">
+        android:layout_height="150dp"
+        android:background="?selectableItemBackground">
 
         <ImageView
             android:id="@+id/dv_cover"
@@ -30,7 +31,7 @@
         android:clipToPadding="false"
         android:paddingLeft="2.5dp"
         android:paddingRight="2.5dp"
-        android:paddingBottom="10dp"/>
+        android:background="@color/white"/>
 
     <View
         android:layout_width="match_parent"

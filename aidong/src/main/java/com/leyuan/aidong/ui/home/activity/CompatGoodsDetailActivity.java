@@ -109,6 +109,11 @@ public class CompatGoodsDetailActivity extends BaseActivity implements View.OnCl
         goodsDetailPresent.getGoodsDetail(switcherLayout,type,id);
     }
 
+    @Override
+    public void showErrorView() {
+
+    }
+
     private void initView(){
         rootLayout = (LinearLayout) findViewById(R.id.root);
         switcherLayout = new SwitcherLayout(this,rootLayout);

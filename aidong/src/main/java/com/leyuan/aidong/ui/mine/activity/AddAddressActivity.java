@@ -19,6 +19,7 @@ import com.leyuan.aidong.ui.mvp.presenter.AddressPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.AddressPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AddAddressActivityView;
 import com.leyuan.aidong.utils.KeyBoardUtil;
+import com.leyuan.aidong.utils.Utils;
 
 /**
  * 新增地址
@@ -79,7 +80,7 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
                 finish();
                 break;
             case R.id.tv_finish:
-                if (checkInfo()) {
+                if (checkInputInfo()) {
                     addressPresent.addAddress(etUsername.getText().toString() , etPhone.getText().toString(),
                             province, city, district, etDescAddress.getText().toString(),isDefault);
                 }
@@ -119,7 +120,7 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
         isDefault = isChecked ? DEFAULT : UN_DEFAULT;
     }
 
-    private boolean checkInfo() {
+    private boolean checkInputInfo() {
         if(TextUtils.isEmpty(etUsername.getText())){
             Toast.makeText(this,"请输入收件人!",Toast.LENGTH_LONG).show();
             return false;
@@ -137,10 +138,10 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
             Toast.makeText(this,"请填写详细地址!",Toast.LENGTH_LONG).show();
             return false;
         }
-       /* if(!Utils.isMobileNO(etPhone.getText().toString())) {
+        if(!Utils.isMobileNO(etPhone.getText().toString())) {
             Toast.makeText(this,"请输入正确的手机号码!",Toast.LENGTH_LONG).show();
             return false;
-        }*/
+        }
         return true;
     }
 }

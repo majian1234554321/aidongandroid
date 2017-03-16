@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +31,6 @@ import java.util.List;
  */
 public class CartHeaderView extends RelativeLayout implements ICartHeaderView,CartShopAdapter.ShopChangeListener{
     private Context context;
-    private LinearLayout root;
     private SwitcherLayout switcherLayout;
     private TextView tvRecommend;
     private RecyclerView shopView;
@@ -61,7 +59,6 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
 
     private void initView(){
         View headerView = LayoutInflater.from(context).inflate(R.layout.header_cart_view,this,true);
-        root = (LinearLayout) headerView.findViewById(R.id.root);
         shopView = (RecyclerView)headerView.findViewById(R.id.rv_cart);
         tvRecommend = (TextView) headerView.findViewById(R.id.tv_recommend);
         switcherLayout = new SwitcherLayout(context,shopView);

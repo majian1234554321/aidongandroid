@@ -207,6 +207,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         isFollow = isFollow(bean.getCoach().getId());
         ivFollow.setBackgroundResource(isFollow ? R.drawable.icon_following
                 : R.drawable.icon_follow);
+
         setBottomStatus();
     }
 

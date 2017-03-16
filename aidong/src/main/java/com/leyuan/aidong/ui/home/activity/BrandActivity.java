@@ -23,6 +23,7 @@ import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListe
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderSpanSizeLookup;
 import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
+import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +91,7 @@ public class BrandActivity extends BaseActivity implements BrandActivityView, Vi
         tvDesc.setText(introduce);
         setColorSchemeResources(refreshLayout);
         data = new ArrayList<>();
-        brandAdapter = new RecommendAdapter(this);
+        brandAdapter = new RecommendAdapter(this,type);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(brandAdapter);
         recyclerView.setAdapter(wrapperAdapter);
         GridLayoutManager manager = new GridLayoutManager(this,2);
@@ -111,6 +112,7 @@ public class BrandActivity extends BaseActivity implements BrandActivityView, Vi
     @Override
     public void onRefresh() {
         currPage = 1;
+        RecyclerViewStateUtils.resetFooterViewState(recyclerView);
         present.pullToRefreshBrandData(id);
     }
 

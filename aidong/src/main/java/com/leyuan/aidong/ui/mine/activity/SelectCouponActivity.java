@@ -8,33 +8,38 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.adapter.mine.SelectCouponAdapter;
+import com.leyuan.aidong.entity.CouponBean;
+import com.leyuan.aidong.ui.BaseActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 选择优惠券
  * Created by song on 2016/12/21.
  */
 public class SelectCouponActivity extends BaseActivity{
-    private ImageView ivBack;
-    private TextView tvNotUse;
-    private RecyclerView recyclerView;
-    private SelectCouponAdapter couponAdapter;
+    private List<CouponBean> couponBeanList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_coupon);
+        if(getIntent() != null){
+            couponBeanList = getIntent().getParcelableArrayListExtra("couponList");
+        }
         initView();
     }
 
     private void initView(){
-        ivBack = (ImageView) findViewById(R.id.iv_back);
-        tvNotUse = (TextView) findViewById(R.id.tv_not_use);
-        recyclerView = (RecyclerView) findViewById(R.id.rv_coupon);
-        couponAdapter = new SelectCouponAdapter(this);
+        ImageView ivBack = (ImageView) findViewById(R.id.iv_back);
+        TextView tvNotUse = (TextView) findViewById(R.id.tv_not_use);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_coupon);
+        SelectCouponAdapter couponAdapter = new SelectCouponAdapter(this);
         recyclerView.setAdapter(couponAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        couponAdapter.setData(couponBeanList);
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -69,6 +69,7 @@ public class CourseActivity extends BaseActivity implements CourseActivityView,S
             CourseFragment courseFragment = new CourseFragment();
             pages.add(FragmentPagerItem.of(null, courseFragment.getClass(),
                     new Bundler().putString("date", days.get(i)).get()));
+            fragments.add(courseFragment);
         }
         final FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);
         viewPager.setOffscreenPageLimit(6);
