@@ -71,7 +71,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
-import retrofit2.http.HEAD;
 
 import static com.leyuan.aidong.ui.App.context;
 import static com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow.FROM_ADD_CART;
@@ -91,7 +90,6 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_TO_CART;
 public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnItemClickListener,
         GoodsSkuPopupWindow.SelectSkuListener,SmartTabLayout.TabProvider,View.OnClickListener,
         GoodsDetailActivityView,PopupWindow.OnDismissListener, GoodsDetailCouponAdapter.CouponListener, IWeiboHandler.Response {
-
     private static final int CODE_SELECT_ADDRESS = 1;
 
     private SwitcherLayout switcherLayout;
@@ -342,13 +340,9 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
         skuPopupWindow.showAtLocation(rootLayout, Gravity.BOTTOM, 0, 0);
     }
 
-//<<<<<<< HEAD
-//    private void inputRecommendCodeDialog() {
-//        View view = View.inflate(this, R.layout.dialog_input_code, null);
-//=======
+
     private void showRecommendCodeDialog() {
         View view = View.inflate(this,R.layout.dialog_input_code,null);
-//>>>>>>> 3109c47edbf8c09829bbdfeb77dd2c9b886e601d
         final EditText etCode = (EditText) view.findViewById(R.id.et_code);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(getString(R.string.input_recommend_code))
@@ -370,6 +364,14 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
 
 
     @Override
+    public void showErrorView() {
+        switcherLayout.showExceptionLayout();
+        ivShare.setVisibility(View.GONE);
+        bannerLayout.setVisibility(View.GONE);
+        detailsLayout.setEnabled(false);
+    }
+
+    @Override
     public void onBannerItemClick(BGABanner banner, View view, Object model, int position) {
         List<ImageView> imageViewList = new ArrayList<>();
         for (int i = 0; i < bannerUrls.size(); i++) {
@@ -388,21 +390,10 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
     }
 
     @Override
-//<<<<<<< HEAD
-//    public void onSelectSkuChanged(List<String> skuValues, String skuTip, String count) {
-//        if (skuValues != null) {
-//            selectedSkuValues = skuValues;
-//        }
-//        if (selectedSkuValues.size() == bean.spec.name.size()) {
-//            tvSelect.setText("已选择:");
-//        } else {
-//            tvSelect.setText("选择:");
-//=======
     public void onSelectSkuChanged(List<String> selectedSkuValues,String skuTip,String count) {
         this.count = count;
         if(selectedSkuValues != null) {
             this.selectedSkuValues = selectedSkuValues;
-//>>>>>>> 3109c47edbf8c09829bbdfeb77dd2c9b886e601d
         }
         tvSelect.setText(isAllSkuConfirm() ? "已选择:" : "选择:");
         StringBuilder sb = new StringBuilder(skuTip);

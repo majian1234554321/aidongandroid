@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.HomeItemBean;
 import com.leyuan.aidong.ui.MainActivity;
+import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
@@ -83,7 +84,8 @@ public class BigAndLittleImageAdapter extends RecyclerView.Adapter< RecyclerView
         if(holder instanceof RecommendGoodsViewHolder){
             GlideLoader.getInstance().displayImage(bean.getCover(), ((RecommendGoodsViewHolder)holder).image);
             ((RecommendGoodsViewHolder)holder).name.setText(bean.getName());
-            ((RecommendGoodsViewHolder)holder).price.setText(String.format(context.getString(R.string.rmb_price),bean.getPrice()));
+            ((RecommendGoodsViewHolder)holder).price.setText(String.format(context.getString(R.string.rmb_price_double),
+                    FormatUtil.parseDouble(bean.getPrice())));
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

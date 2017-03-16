@@ -2,6 +2,7 @@ package com.leyuan.aidong.adapter.home;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +24,18 @@ import java.util.List;
  */
 public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.GoodsHolder>{
     private Context context;
+    private String type;
     private List<GoodsBean> data= new ArrayList<>();
 
     public RecommendAdapter(Context context) {
         this.context = context;
+    }
+
+
+    //compat
+    public RecommendAdapter(Context context,String type) {
+        this.context = context;
+        this.type = type;
     }
 
     public void setData(List<GoodsBean> data) {
@@ -56,7 +65,8 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Good
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((BaseActivity)context).toTargetDetailActivity(bean.getType(),bean.getId());
+                String t = !TextUtils.isEmpty(bean.getType())?bean.getType(): type ;
+                ((BaseActivity)context).toTargetDetailActivity(t,bean.getId());
             }
         });
     }

@@ -10,8 +10,8 @@
         android:layout_height="50dp"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:paddingLeft="@dimen/left_margin"
-        android:paddingRight="@dimen/right_margin">
+        android:layout_marginRight="10dp"
+        android:paddingLeft="@dimen/left_margin">
 
         <TextView
             android:id="@+id/tv_shop_name"
@@ -27,7 +27,10 @@
             android:layout_width="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="5dp"
             android:text="快递"
             android:textColor="@color/c3"
             android:textSize="16sp"

@@ -75,7 +75,7 @@ public class AddressPresentImpl implements AddressPresent{
                     addressList = addressListData.getAddress();
                 }
                 if(addressList.isEmpty()){
-                    switcherLayout.showEmptyLayout();
+                    addressActivityView.showEmptyView();
                 }else{
                     switcherLayout.showContentLayout();
                     if(addressActivityView !=  null) {

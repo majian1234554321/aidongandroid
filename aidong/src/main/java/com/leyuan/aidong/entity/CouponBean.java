@@ -1,10 +1,13 @@
 package com.leyuan.aidong.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * 优惠劵
  * Created by song on 2016/8/31.
  */
-public class CouponBean {
+public class CouponBean implements Parcelable {
     private String id;                  //优惠券编号
     private String type;                //优惠券类型,#0-优惠券 1-折扣券
     private String limit_category;      //优惠券限制类型,#0-通用 1-课程类 2-餐饮类 3-活动类 4-营养品类 5-装备类 6-票务类
@@ -130,4 +133,55 @@ public class CouponBean {
                 ", introduce='" + introduce + '\'' +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.type);
+        dest.writeString(this.limit_category);
+        dest.writeString(this.limit_ext_id);
+        dest.writeString(this.name);
+        dest.writeString(this.discount);
+        dest.writeString(this.min);
+        dest.writeString(this.start_date);
+        dest.writeString(this.end_date);
+        dest.writeString(this.use_date);
+        dest.writeString(this.introduce);
+        dest.writeString(this.status);
+    }
+
+    public CouponBean() {
+    }
+
+    protected CouponBean(Parcel in) {
+        this.id = in.readString();
+        this.type = in.readString();
+        this.limit_category = in.readString();
+        this.limit_ext_id = in.readString();
+        this.name = in.readString();
+        this.discount = in.readString();
+        this.min = in.readString();
+        this.start_date = in.readString();
+        this.end_date = in.readString();
+        this.use_date = in.readString();
+        this.introduce = in.readString();
+        this.status = in.readString();
+    }
+
+    public static final Parcelable.Creator<CouponBean> CREATOR = new Parcelable.Creator<CouponBean>() {
+        @Override
+        public CouponBean createFromParcel(Parcel source) {
+            return new CouponBean(source);
+        }
+
+        @Override
+        public CouponBean[] newArray(int size) {
+            return new CouponBean[size];
+        }
+    };
 }

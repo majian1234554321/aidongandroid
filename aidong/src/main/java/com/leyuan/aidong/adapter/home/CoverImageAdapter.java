@@ -17,10 +17,11 @@ import com.leyuan.aidong.utils.GlideLoader;
  */
 public class CoverImageAdapter extends BaseListAdapter<HomeItemBean> {
     private Context context;
+    private String type;
 
-    public CoverImageAdapter(Context context) {
+    public CoverImageAdapter(Context context,String type) {
         this.context = context;
-
+        this.type = type;
     }
 
     @Override
@@ -36,7 +37,7 @@ public class CoverImageAdapter extends BaseListAdapter<HomeItemBean> {
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)context).toTargetDetailActivity(bean.getType(),bean.getId());
+                ((MainActivity)context).toTargetDetailActivity(type,bean.getId());
             }
         });
     }

@@ -107,7 +107,7 @@ public class UpdateAddressActivity extends BaseActivity implements UpdateAddress
                 finish();
                 break;
             case R.id.tv_finish:
-                if(checkInfo()) {
+                if(checkInputInfo()) {
                     addressPresent.updateAddress(bean.getId(), etUsername.getText().toString(),
                             etPhone.getText().toString(), province, city, district,
                             etDescAddress.getText().toString(),isDefault);
@@ -134,7 +134,7 @@ public class UpdateAddressActivity extends BaseActivity implements UpdateAddress
         tvAddress.setText(new StringBuilder(province).append(city).append(area));
     }
 
-    private boolean checkInfo() {
+    private boolean checkInputInfo() {
         if(TextUtils.isEmpty(etUsername.getText())){
             Toast.makeText(this,"请输入收件人!",Toast.LENGTH_LONG).show();
             return false;

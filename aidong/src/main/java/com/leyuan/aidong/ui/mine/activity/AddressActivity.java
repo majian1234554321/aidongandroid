@@ -108,7 +108,9 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void showEmptyView() {
-
+        View view = View.inflate(this,R.layout.empty_address,null);
+        switcherLayout.addCustomView(view,"empty");
+        switcherLayout.showCustomLayout("empty");
     }
 
     @Override
@@ -168,7 +170,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
         if(addressList.size() > 0){
             switcherLayout.showContentLayout();
         }else {
-            switcherLayout.showEmptyLayout();
+            showEmptyView();
         }
     }
 
