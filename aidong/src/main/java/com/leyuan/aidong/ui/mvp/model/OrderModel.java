@@ -14,39 +14,48 @@ public interface OrderModel {
 
     /**
      * 获取订单列表
+     *
      * @param subscriber Subscriber
-     * @param list all: 全部 self-delivery: 自提 express-delivery: 快递
-     * @param page 页码
+     * @param list       all: 全部 self-delivery: 自提 express-delivery: 快递
+     * @param page       页码
      */
-    void getOrders(Subscriber<OrderData> subscriber,String  list,int page);
+    void getOrders(Subscriber<OrderData> subscriber, String list, int page);
 
 
     /**
      * 获取订单详情
+     *
      * @param subscriber Subscriber
-     * @param id 订单id
+     * @param id         订单id
      */
-    void getOrderDetail(Subscriber<OrderDetailData> subscriber,String id);
+    void getOrderDetail(Subscriber<OrderDetailData> subscriber, String id);
 
 
     /**
      * 取消订单
+     *
      * @param subscriber
-     * @param id 订单id
+     * @param id         订单id
      */
     void cancelOrder(Subscriber<BaseBean> subscriber, String id);
 
     /**
      * 确认订单
+     *
      * @param subscriber
-     * @param id 订单id
+     * @param id         订单id
      */
-    void confirmOrder(Subscriber<BaseBean> subscriber,String id);
+    void confirmOrder(Subscriber<BaseBean> subscriber, String id);
 
     /**
      * 删除订单
+     *
      * @param subscriber
-     * @param id 订单id
+     * @param id         订单id
      */
-    void deleteOrder(Subscriber<BaseBean> subscriber,String id);
+    void deleteOrder(Subscriber<BaseBean> subscriber, String id);
+
+    void feedbackOrder(Subscriber<BaseBean> subscriber, String id, String type, String code,
+                        String amount, String content, String[] image, String address);
+
 }

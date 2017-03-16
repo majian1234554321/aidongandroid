@@ -37,4 +37,6 @@ public interface CouponPresent {
      * @param id 优惠劵编号
      */
     void obtainCoupon(String id);
+
+    void exchangeCoupon(String id);
 }

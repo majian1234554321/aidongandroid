@@ -13,6 +13,7 @@ import com.leyuan.aidong.ui.mvp.model.impl.AddressModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.AddressPresent;
 import com.leyuan.aidong.ui.mvp.view.AddAddressActivityView;
 import com.leyuan.aidong.ui.mvp.view.AddressActivityView;
+import com.leyuan.aidong.ui.mvp.view.AddressListView;
 import com.leyuan.aidong.ui.mvp.view.SelectAddressActivityView;
 import com.leyuan.aidong.ui.mvp.view.UpdateAddressActivityView;
 import com.leyuan.aidong.widget.SwitcherLayout;
@@ -24,7 +25,7 @@ import java.util.List;
  * 地址
  * Created by song on 2016/9/21.
  */
-public class AddressPresentImpl implements AddressPresent{
+public class AddressPresentImpl implements AddressPresent {
     private Context context;
     private AddressModel addressModel;
 
@@ -32,11 +33,20 @@ public class AddressPresentImpl implements AddressPresent{
     private AddAddressActivityView addAddressActivityView;          //新建地址View层
     private UpdateAddressActivityView updateAddressActivityView;    //更新地址View层
     private SelectAddressActivityView selectAddressActivityView;    //选择收货地址View层
+    private AddressListView addressListView;
+
+    public AddressPresentImpl(Context context, AddressListView addressListView) {
+        this.context = context;
+        this.addressListView = addressListView;
+        if (addressModel == null) {
+            addressModel = new AddressModelImpl();
+        }
+    }
 
     public AddressPresentImpl(Context context, AddressActivityView view) {
         this.context = context;
         this.addressActivityView = view;
-        if(addressModel == null){
+        if (addressModel == null) {
             addressModel = new AddressModelImpl();
         }
     }
@@ -44,7 +54,7 @@ public class AddressPresentImpl implements AddressPresent{
     public AddressPresentImpl(Context context, AddAddressActivityView view) {
         this.context = context;
         this.addAddressActivityView = view;
-        if(addressModel == null){
+        if (addressModel == null) {
             addressModel = new AddressModelImpl();
         }
     }
@@ -52,7 +62,7 @@ public class AddressPresentImpl implements AddressPresent{
     public AddressPresentImpl(Context context, UpdateAddressActivityView view) {
         this.context = context;
         this.updateAddressActivityView = view;
-        if(addressModel == null){
+        if (addressModel == null) {
             addressModel = new AddressModelImpl();
         }
     }
@@ -60,7 +70,7 @@ public class AddressPresentImpl implements AddressPresent{
     public AddressPresentImpl(Context context, SelectAddressActivityView view) {
         this.context = context;
         this.selectAddressActivityView = view;
-        if(addressModel == null){
+        if (addressModel == null) {
             addressModel = new AddressModelImpl();
         }
     }
@@ -71,18 +81,18 @@ public class AddressPresentImpl implements AddressPresent{
             @Override
             public void onNext(AddressListData addressListData) {
                 List<AddressBean> addressList = new ArrayList<>();
-                if(addressListData != null && addressListData.getAddress() != null){
+                if (addressListData != null && addressListData.getAddress() != null) {
                     addressList = addressListData.getAddress();
                 }
-                if(addressList.isEmpty()){
+                if (addressList.isEmpty()) {
                     switcherLayout.showEmptyLayout();
-                }else{
+                } else {
                     switcherLayout.showContentLayout();
-                    if(addressActivityView !=  null) {
+                    if (addressActivityView != null) {
                         addressActivityView.setAddress(addressList);
                     }
 
-                    if(selectAddressActivityView !=  null) {
+                    if (selectAddressActivityView != null) {
                         selectAddressActivityView.setAddress(addressList);
                     }
                 }
@@ -99,57 +109,67 @@ public class AddressPresentImpl implements AddressPresent{
                 if (addressListData != null && addressListData.getAddress() != null) {
                     addressList = addressListData.getAddress();
                 }
-
-                if (!addressList.isEmpty()) {
+                if (addressListView != null) {
+                    addressListView.onGetAddressList(addressList);
+                }
+                if (!addressList.isEmpty() && addressActivityView != null) {
                     addressActivityView.setAddress(addressList);
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                if (addressListView != null) {
+                    addressListView.onGetAddressList(null);
                 }
             }
         });
     }
 
     @Override
-    public void addAddress(String name, String phone,String province,String city,String district,
-                           String address,String def) {
-        addressModel.addAddress(new ProgressSubscriber<AddressData>(context,false) {
+    public void addAddress(String name, String phone, String province, String city, String district,
+                           String address, String def) {
+        addressModel.addAddress(new ProgressSubscriber<AddressData>(context, false) {
             @Override
             public void onNext(AddressData addressData) {
-                if(addressData != null && addressData.getAddress() != null){
+                if (addressData != null && addressData.getAddress() != null) {
                     addAddressActivityView.setAddAddress(addressData.getAddress());
                 }
             }
-        },name,phone,province,city,district,address,def);
+        }, name, phone, province, city, district, address, def);
     }
 
     @Override
-    public void updateAddress(String id, String name, String phone,String province,
-                              String city,String district,  String address,String def) {
-        addressModel.updateAddress(new ProgressSubscriber<AddressData>(context,false) {
+    public void updateAddress(String id, String name, String phone, String province,
+                              String city, String district, String address, String def) {
+        addressModel.updateAddress(new ProgressSubscriber<AddressData>(context, false) {
             @Override
             public void onNext(AddressData addressData) {
-                if(addressData != null && addressData.getAddress() != null){
+                if (addressData != null && addressData.getAddress() != null) {
                     updateAddressActivityView.setUpdateAddress(addressData.getAddress());
                 }
             }
-        },id,name,phone,province,city,district,address,def);
+        }, id, name, phone, province, city, district, address, def);
     }
 
     @Override
-    public void setDefaultAddress(String id,final int position) {
-        addressModel.updateAddress(new ProgressSubscriber<AddressData>(context,true) {
+    public void setDefaultAddress(String id, final int position) {
+        addressModel.updateAddress(new ProgressSubscriber<AddressData>(context, true) {
             @Override
             public void onNext(AddressData addressData) {
                 addressActivityView.setAddressDefaultResult(position);
             }
-        },id,null,null,null,null,null,null,"1");
+        }, id, null, null, null, null, null, null, "1");
     }
 
     @Override
     public void deleteAddress(String id, final int position) {
-        addressModel.deleteAddress(new ProgressSubscriber<BaseBean>(context,false) {
+        addressModel.deleteAddress(new ProgressSubscriber<BaseBean>(context, false) {
             @Override
             public void onNext(BaseBean baseBean) {
-                addressActivityView.deleteAddressResult(baseBean,position);
+                addressActivityView.deleteAddressResult(baseBean, position);
             }
-        },id);
+        }, id);
     }
 }

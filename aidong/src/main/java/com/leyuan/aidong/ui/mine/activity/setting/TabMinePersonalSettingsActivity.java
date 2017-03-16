@@ -18,6 +18,7 @@ import com.leyuan.aidong.module.chat.manager.EmChatLoginManager;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.MainActivity;
+import com.leyuan.aidong.ui.WebViewActivity;
 import com.leyuan.aidong.ui.mine.activity.BingdingCommunityActivity;
 import com.leyuan.aidong.ui.mine.activity.PrivacyActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
@@ -90,7 +91,7 @@ public class TabMinePersonalSettingsActivity extends BaseActivity {
 //                                        TabMinePersonalSettingsActivity.this,
 //                                        TabMineBingdingMobilePhoneActivity.class);
 //                                startActivity(intent);
-                                UiManager.activityJump(TabMinePersonalSettingsActivity.this,PhoneBindingActivity.class);
+                                UiManager.activityJump(TabMinePersonalSettingsActivity.this, PhoneBindingActivity.class);
                             } else {
                                 intent.setClass(
                                         TabMinePersonalSettingsActivity.this,
@@ -243,14 +244,14 @@ public class TabMinePersonalSettingsActivity extends BaseActivity {
 
                     }
                 });
-       /* layout_tab_mine_feedback_rel.setOnClickListener(new OnClickListener() {
+        layout_tab_mine_feedback_rel.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent.setClass(getApplicationContext(),
-                        TabMineFeedBackActivity.class);
-                startActivity(intent);
+
+                WebViewActivity.start(TabMinePersonalSettingsActivity.this, "意见反馈",
+                        "http://192.168.100.142:4567/customer_service");
             }
-        });*/
+        });
         layout_tab_mine_help_rel.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

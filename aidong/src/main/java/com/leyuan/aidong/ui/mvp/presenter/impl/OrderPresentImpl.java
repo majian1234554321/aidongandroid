@@ -8,6 +8,7 @@ import com.leyuan.aidong.entity.OrderBean;
 import com.leyuan.aidong.entity.OrderDetailBean;
 import com.leyuan.aidong.entity.data.OrderData;
 import com.leyuan.aidong.entity.data.OrderDetailData;
+import com.leyuan.aidong.http.subscriber.BaseSubscriber;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
@@ -16,6 +17,7 @@ import com.leyuan.aidong.ui.mvp.model.OrderModel;
 import com.leyuan.aidong.ui.mvp.model.impl.OrderModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.OrderPresent;
 import com.leyuan.aidong.ui.mvp.view.OrderDetailActivityView;
+import com.leyuan.aidong.ui.mvp.view.OrderFeedbackView;
 import com.leyuan.aidong.ui.mvp.view.OrderFragmentView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.widget.SwitcherLayout;
@@ -38,11 +40,21 @@ public class OrderPresentImpl implements OrderPresent {
     //订单详情View层对象
     private OrderDetailActivityView orderDetailActivityView;
 
+    private OrderFeedbackView orderFeedbackView;
+
+    public OrderPresentImpl(Context context, OrderFeedbackView view) {
+        this.context = context;
+        this.orderFeedbackView = view;
+        if (orderModel == null) {
+            orderModel = new OrderModelImpl();
+        }
+    }
+
     public OrderPresentImpl(Context context, OrderFragmentView view) {
         this.context = context;
         this.orderFragmentView = view;
         orderBeanList = new ArrayList<>();
-        if(orderModel == null){
+        if (orderModel == null) {
             orderModel = new OrderModelImpl();
         }
     }
@@ -50,27 +62,27 @@ public class OrderPresentImpl implements OrderPresent {
     public OrderPresentImpl(Context context, OrderDetailActivityView view) {
         this.context = context;
         this.orderDetailActivityView = view;
-        if(orderModel == null){
+        if (orderModel == null) {
             orderModel = new OrderModelImpl();
         }
     }
 
     @Override
-    public void commonLoadData(final SwitcherLayout switcherLayout,String list) {
+    public void commonLoadData(final SwitcherLayout switcherLayout, String list) {
         orderModel.getOrders(new CommonSubscriber<OrderData>(switcherLayout) {
             @Override
             public void onNext(OrderData orderData) {
-                if(orderData != null && orderData.getOrder() != null){
+                if (orderData != null && orderData.getOrder() != null) {
                     orderBeanList = orderData.getOrder();
                 }
-                if(orderBeanList.isEmpty()){
+                if (orderBeanList.isEmpty()) {
                     orderFragmentView.showEmptyView();
-                }else{
+                } else {
                     switcherLayout.showContentLayout();
                     orderFragmentView.updateRecyclerView(orderBeanList);
                 }
             }
-        },list,Constant.PAGE_FIRST);
+        }, list, Constant.PAGE_FIRST);
     }
 
     @Override
@@ -78,30 +90,30 @@ public class OrderPresentImpl implements OrderPresent {
         orderModel.getOrders(new RefreshSubscriber<OrderData>(context) {
             @Override
             public void onNext(OrderData orderData) {
-                if(orderData != null && orderData.getOrder() != null){
+                if (orderData != null && orderData.getOrder() != null) {
                     orderFragmentView.updateRecyclerView(orderData.getOrder());
                 }
             }
-        },list, Constant.PAGE_FIRST);
+        }, list, Constant.PAGE_FIRST);
     }
 
     @Override
     public void requestMoreData(RecyclerView recyclerView, String list, final int pageSize, int page) {
-        orderModel.getOrders(new RequestMoreSubscriber<OrderData>(context,recyclerView,pageSize) {
+        orderModel.getOrders(new RequestMoreSubscriber<OrderData>(context, recyclerView, pageSize) {
             @Override
             public void onNext(OrderData orderData) {
-                if(orderData != null && orderData.getOrder() != null){
-                   orderBeanList = orderData.getOrder();
+                if (orderData != null && orderData.getOrder() != null) {
+                    orderBeanList = orderData.getOrder();
                 }
-                if(!orderBeanList.isEmpty()){
+                if (!orderBeanList.isEmpty()) {
                     orderFragmentView.updateRecyclerView(orderBeanList);
                 }
                 //没有更多数据了显示到底提示
-                if(orderBeanList.size() < pageSize){
+                if (orderBeanList.size() < pageSize) {
                     orderFragmentView.showEndFooterView();
                 }
             }
-        },list,page);
+        }, list, page);
     }
 
     @Override
@@ -110,17 +122,17 @@ public class OrderPresentImpl implements OrderPresent {
             @Override
             public void onNext(OrderDetailData orderDetailData) {
                 OrderDetailBean orderDetailBean = null;
-                if(orderDetailData != null && orderDetailData.getItem() != null){
+                if (orderDetailData != null && orderDetailData.getItem() != null) {
                     orderDetailBean = orderDetailData.getItem();
                 }
-                if(orderDetailBean != null){
+                if (orderDetailBean != null) {
                     switcherLayout.showContentLayout();
                     orderDetailActivityView.setOrderDetail(orderDetailBean);
-                }else {
+                } else {
                     switcherLayout.showEmptyLayout();
                 }
             }
-        },id);
+        }, id);
     }
 
     @Override
@@ -130,7 +142,7 @@ public class OrderPresentImpl implements OrderPresent {
             public void onNext(BaseBean baseBean) {
                 orderFragmentView.cancelOrderResult(baseBean);
             }
-        },id);
+        }, id);
     }
 
     @Override
@@ -140,7 +152,7 @@ public class OrderPresentImpl implements OrderPresent {
             public void onNext(BaseBean baseBean) {
                 orderFragmentView.confirmOrderResult(baseBean);
             }
-        },id);
+        }, id);
     }
 
     @Override
@@ -150,6 +162,26 @@ public class OrderPresentImpl implements OrderPresent {
             public void onNext(BaseBean baseBean) {
                 orderFragmentView.deleteOrderResult(baseBean);
             }
-        },id);
+        }, id);
+    }
+
+    @Override
+    public void feedbackOrder(String id, String type, String code, String amount, String content, String[] image, String address) {
+        orderModel.feedbackOrder(new BaseSubscriber<BaseBean>(context) {
+            @Override
+            public void onNext(BaseBean baseBean) {
+                if (orderFeedbackView != null) {
+                    orderFeedbackView.onFeedbackResult(true);
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                if (orderFeedbackView != null) {
+                    orderFeedbackView.onFeedbackResult(false);
+                }
+            }
+        }, id, type, code, amount, content, image, address);
     }
 }

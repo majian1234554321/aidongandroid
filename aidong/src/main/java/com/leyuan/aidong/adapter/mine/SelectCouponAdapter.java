@@ -88,7 +88,7 @@ public class SelectCouponAdapter extends RecyclerView.Adapter<SelectCouponAdapte
             tvCouponType = (TextView) itemView.findViewById(R.id.tv_coupon_type);
             ivArrow = (ImageView) itemView.findViewById(R.id.iv_arrow);
             tvTime = (TextView) itemView.findViewById(R.id.tv_time);
-            recyclerView = (RecyclerView)itemView.findViewById(R.id.rv_coupon_desc);
+//            recyclerView = (RecyclerView)itemView.findViewById(R.id.rv_coupon_desc);
         }
     }
 }

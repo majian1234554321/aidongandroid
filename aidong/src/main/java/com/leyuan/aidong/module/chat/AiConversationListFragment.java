@@ -22,6 +22,7 @@ import com.leyuan.aidong.module.chat.manager.EmMessageManager;
 import com.leyuan.aidong.ui.mine.activity.EMChatActivity;
 import com.leyuan.aidong.ui.mine.activity.SystemMessageActivity;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.utils.UiManager;
 import com.leyuan.aidong.widget.dialog.BaseDialog;
 import com.leyuan.aidong.widget.dialog.ButtonCancelListener;
@@ -63,10 +64,11 @@ public class AiConversationListFragment extends EaseConversationListFragment {
                     UiManager.activityJump(getActivity(), SystemMessageActivity.class);
                 } else {
                     EaseUser user = DemoDBManager.getInstance().getContactList().get(userId);
-                    EMChatActivity.start(getActivity(), userId, user.getNickname(), user.getAvatar());
-//
-//                    startActivity(new Intent(getActivity(), EMChatActivity.class).
-//                            putExtra(EaseConstant.EXTRA_USER_ID, userId));
+                    if (user != null) {
+                        EMChatActivity.start(getActivity(), userId, user.getNickname(), user.getAvatar());
+                    } else {
+                        ToastUtil.show("找不到该用户", getActivity());
+                    }
                 }
 
 

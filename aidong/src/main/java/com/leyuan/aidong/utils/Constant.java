@@ -38,6 +38,7 @@ public class Constant {
     public static final String AVATAR = "avatar";
     public static final String SUCCESS = "success";
     public static final String STATE = "state";
+    public static final int REQUEST_NEXT_ACTIVITY = 10;
 
 
     public static SystemBean systemInfoBean;
