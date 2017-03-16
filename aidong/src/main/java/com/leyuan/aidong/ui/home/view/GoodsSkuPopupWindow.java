@@ -228,8 +228,9 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         }else {
             GlideLoader.getInstance().displayImage(unConfirmedSkuCover, dvGoodsCover);
             tvSelect.setText(context.getString(R.string.please_select));
-            tvGoodsPrice.setText(maxPrice == minPrice ? String.valueOf(maxPrice):
-                    String.format(context.getString(R.string.rmb_price_scope),minPrice,maxPrice));
+            tvGoodsPrice.setText(maxPrice == minPrice
+                    ? String.format(context.getString(R.string.rmb_price_double),maxPrice)
+                    : String.format(context.getString(R.string.rmb_price_scope),minPrice,maxPrice));
             tvStock.setText(String.format(context.getString(R.string.int_stock_count), totalStock));
         }
         tvCount.setText(TextUtils.isEmpty(count) ? "1" : count);

@@ -8,6 +8,7 @@ public class Constant {
     //public static final String  BASE_URL = "http://192.168.0.223:5000/";
     public static final String BASE_URL = "http://192.168.100.119:3000/";
     public static final String CAPTCHA_IMAGE = BASE_URL + "captcha_image/";
+    public static final String URL_USER_AGREEMENT = BASE_URL + "homepage";
 
 
     public static final int OK = 1;
@@ -33,6 +34,11 @@ public class Constant {
     public static final String WX_LOGIN_SUCCESS_ACTION = "com.leyuan.login.wx";
     public static final String VIDEO_LIST_TYPE = "video_list_type";
     public static final String BROADCAST_ACTION_NEW_MESSAGE = "com.leyuan.chat.message";
+    public static final String NICK_NAME = "nickname";
+    public static final String AVATAR = "avatar";
+    public static final String SUCCESS = "success";
+    public static final String STATE = "state";
+
 
     public static SystemBean systemInfoBean;
     public static FollowData followData;

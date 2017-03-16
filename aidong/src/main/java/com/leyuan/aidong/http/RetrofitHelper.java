@@ -48,9 +48,11 @@ public class RetrofitHelper {
                             builder.addHeader("token", mInstance.getToken());
                         }
                         builder.addHeader("city", URLEncoder.encode(App.city, "UTF-8"));
-//                        builder.addHeader("device", "android");
                         builder.addHeader("lat", String.valueOf(App.lat));
                         builder.addHeader("lng", String.valueOf(App.lon));
+
+//                        builder.addHeader("device", "android");
+
 //                        builder.addHeader("version", App.getInstance().getVersionName());
 //                        builder.addHeader("deviceName", DeviceManager.getPhoneBrand());
 

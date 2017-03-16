@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -23,6 +24,9 @@ import com.google.android.exoplayer.util.Util;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.CommonViewPagerAdapter;
 import com.leyuan.aidong.entity.video.VideoDetail;
+import com.leyuan.aidong.module.share.SharePopupWindow;
+import com.leyuan.aidong.module.weibo.AccessTokenKeeper;
+import com.leyuan.aidong.module.weibo.WeiBoConstants;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
@@ -30,11 +34,27 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.VideoPresenterImpl;
 import com.leyuan.aidong.ui.mvp.view.VideoDetailView;
 import com.leyuan.aidong.utils.FastBlur;
 import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.utils.Urls;
 import com.leyuan.aidong.widget.media.TextViewPrintly;
+import com.sina.weibo.sdk.api.ImageObject;
+import com.sina.weibo.sdk.api.TextObject;
+import com.sina.weibo.sdk.api.WebpageObject;
+import com.sina.weibo.sdk.api.WeiboMultiMessage;
+import com.sina.weibo.sdk.api.share.BaseResponse;
+import com.sina.weibo.sdk.api.share.IWeiboHandler;
+import com.sina.weibo.sdk.api.share.IWeiboShareAPI;
+import com.sina.weibo.sdk.api.share.SendMultiMessageToWeiboRequest;
+import com.sina.weibo.sdk.auth.AuthInfo;
+import com.sina.weibo.sdk.auth.Oauth2AccessToken;
+import com.sina.weibo.sdk.auth.WeiboAuthListener;
+import com.sina.weibo.sdk.exception.WeiboException;
+import com.sina.weibo.sdk.utils.Utility;
 
 import java.util.ArrayList;
 
-public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPageChangeListener, View.OnClickListener, VideoDetailView {
+import static com.leyuan.aidong.ui.App.context;
+
+public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPageChangeListener, View.OnClickListener, VideoDetailView, IWeiboHandler.Response {
 
     private static final int BITMAP_BLUR_OK = 3;
     private ViewPager viewPager;
@@ -58,6 +78,7 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
 
 
     private ArrayList<VideoDetail> videos = new ArrayList<>();
+    private SharePopupWindow sharePopupWindow;
 
     private int tag_width;
     @SuppressLint("HandlerLeak")
@@ -80,6 +101,7 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
             }
         }
     };
+    private IWeiboShareAPI mWeiboShareAPI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +116,12 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
         initView();
         initData();
         getDataFromInter();
+
+
+//        mWeiboShareAPI = WeiboShareSDK.createWeiboAPI(context, WeiBoConstants.APP_KEY);
+//        mWeiboShareAPI.registerApp();
+
+        sharePopupWindow = new SharePopupWindow(this, savedInstanceState);
     }
 
     @Override
@@ -225,22 +253,6 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mHandler.removeCallbacksAndMessages(null);
-        if (blurBitmaps != null) {
-            for (int i = 0; i < blurBitmaps.length; i++) {
-                if (blurBitmaps[i] != null) {
-                    blurBitmaps[i].recycle();
-                }
-            }
-            blurBitmaps = null;
-        }
-
-    }
-
-
-    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_back:
@@ -275,7 +287,7 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
                 if (!App.mInstance.isLogin()) {
                     startActivity(new Intent(this, LoginActivity.class));
                 } else {
-                    itemPrased =videos.get(viewPager.getCurrentItem()).getPhase();
+                    itemPrased = videos.get(viewPager.getCurrentItem()).getPhase();
                     parseVideo(itemPrased);
                 }
 
@@ -290,18 +302,81 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
         presenter.likeVideo(String.valueOf(series_id), String.valueOf(currentItem));
     }
 
-    private void share(VideoDetail video) {
-//            String url = Urls.VIDEO_SHARE
-//                    + "vid=" + video.getvId() + "&phase=" + video.getPhase();
-//            SharePopToolVideo sharePopTool = new SharePopToolVideo(this, ((ViewGroup) findViewById(android.R.id.content)).getChildAt(0),
-//                    url, mController, video.getCover(), video.getIntroduce(), video.getVideoName());
-//            sharePopTool.showChoseBox();
+    private void share(final VideoDetail video) {
+        final String url = Urls.VIDEO_SHARE
+                + "vid=" + video.getvId() + "&phase=" + video.getPhase();
+
+//        Glide.with(this).load(video.getCover()).asBitmap()
+//                .into(new SimpleTarget<Bitmap>(100, 100) {
+//                    @Override
+//                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+//                        sendMessage(video.getVideoName(), video.getIntroduce(), resource, url);
+//                    }
+//                });
+
+        sharePopupWindow.showAtBottom(video.getVideoName(), video.getIntroduce(), video.getCover(), url);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    public void sendMessage(String title, String content, Bitmap bitmap, String webUrl) {
+        Logger.i("share", " sendMessage = ");
+        WeiboMultiMessage weiboMessage = new WeiboMultiMessage();
+
+        TextObject textObject = new TextObject();
+        textObject.text = title + "-" + content;
+        weiboMessage.textObject = textObject;
+
+        //图片不能超过32kb
+        Logger.i("share", " bitmap size  = " + bitmap.getByteCount());
+        ImageObject imageObject = new ImageObject();
+        imageObject.setImageObject(bitmap);
+        weiboMessage.imageObject = imageObject;
+
+        WebpageObject mediaObject = new WebpageObject();
+        mediaObject.identify = Utility.generateGUID();
+        mediaObject.title = title;
+        mediaObject.description = content;
+        mediaObject.setThumbImage(bitmap);
+        mediaObject.actionUrl = webUrl;
+        mediaObject.defaultText = "Webpage 默认文案";
+        //导入的是shareSdk的微博 需要删掉shareSdk
+        weiboMessage.mediaObject = mediaObject;
+
+        SendMultiMessageToWeiboRequest request = new SendMultiMessageToWeiboRequest();
+        // 用transaction唯一标识一个请求
+        request.transaction = String.valueOf(System.currentTimeMillis());
+        request.multiMessage = weiboMessage;
+//        mWeiboShareAPI.sendRequest(context, request);
+
+        AuthInfo authInfo = new AuthInfo(this, WeiBoConstants.APP_KEY, WeiBoConstants.REDIRECT_URL, WeiBoConstants.SCOPE);
+        Oauth2AccessToken accessToken = AccessTokenKeeper.readAccessToken(context);
+        String token = "";
+        if (accessToken != null) {
+            token = accessToken.getToken();
+        }
+        mWeiboShareAPI.sendRequest(this, request, authInfo, token, new WeiboAuthListener() {
+
+            @Override
+            public void onWeiboException(WeiboException arg0) {
+                Logger.i("share", "  mWeiboShareAPI onWeiboException");
+            }
+
+            @Override
+            public void onComplete(Bundle bundle) {
+
+                Logger.i("share", "  mWeiboShareAPI onComplete");
+                Oauth2AccessToken newToken = Oauth2AccessToken.parseAccessToken(bundle);
+                AccessTokenKeeper.writeAccessToken(context, newToken);
+                Toast.makeText(context, "onAuthorizeComplete token = " + newToken.getToken(), 0).show();
+            }
+
+            @Override
+            public void onCancel() {
+                Logger.i("share", "  mWeiboShareAPI onCancel");
+            }
+        });
+        Logger.i("share", "  mWeiboShareAPI.sendRequest(context, request);");
     }
+
 
     @Override
     public void onGetVideoDetailList(ArrayList<VideoDetail> vs) {
@@ -383,5 +458,39 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
             videos.get(itemPrased).setLikesCount(videos.get(itemPrased).getLikesCount() + 1);
             tv_like_count.setText("" + videos.get(itemPrased).getLikesCount());
         }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+//        mWeiboShareAPI.handleWeiboResponse(intent, this);
+        sharePopupWindow.onNewIntent(intent, this);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        sharePopupWindow.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mHandler.removeCallbacksAndMessages(null);
+        if (blurBitmaps != null) {
+            for (int i = 0; i < blurBitmaps.length; i++) {
+                if (blurBitmaps[i] != null) {
+                    blurBitmaps[i].recycle();
+                }
+            }
+            blurBitmaps = null;
+        }
+        sharePopupWindow.release();
+    }
+
+    @Override
+    public void onResponse(BaseResponse baseResponse) {
+        sharePopupWindow.onResponse(baseResponse);
+
     }
 }

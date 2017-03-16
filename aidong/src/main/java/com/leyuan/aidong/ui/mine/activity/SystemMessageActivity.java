@@ -13,8 +13,9 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.SysytemMessageAdapter;
 import com.leyuan.aidong.entity.user.SystemMessageInfo;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.WebViewActivity;
 import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.utils.ToastUtil;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 
 import java.util.List;
@@ -24,6 +25,7 @@ import java.util.List;
  * Created by song on 2016/11/2.
  */
 public class SystemMessageActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, SysytemMessageAdapter.OnMessageItemDetailClickListener {
+    private static final java.lang.String TAG = "SystemMessageActivity";
     private SimpleTitleBar titleBar;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView rvMessage;
@@ -52,16 +54,24 @@ public class SystemMessageActivity extends BaseActivity implements SwipeRefreshL
             }
         });
 
-        refreshLayout.setOnRefreshListener(this);
+        refreshLayout.setEnabled(false);
+//        refreshLayout.setOnRefreshListener(this);
 
         rvMessage.setLayoutManager(new LinearLayoutManager(this));
         sysytemMessageAdapter = new SysytemMessageAdapter(this);
         sysytemMessageAdapter.setOnMessageItemDetailClickListener(this);
         rvMessage.setAdapter(sysytemMessageAdapter);
 
-        EMConversation systemConversation = EMClient.getInstance().chatManager().getAllConversations().get(Constant.Chat.SYSYTEM_ID);
+        EMConversation systemConversation = EMClient.getInstance().chatManager().getConversation(Constant.Chat.SYSYTEM_ID);
+//                getAllConversations().get(Constant.Chat.SYSYTEM_ID);
         if (systemConversation != null) {
-            List<EMMessage> messageList = systemConversation.getAllMessages();
+            systemConversation.markAllMessagesAsRead();
+            EMMessage lastMessage = systemConversation.getLastMessage();
+            List<EMMessage> messageList = systemConversation.loadMoreMsgFromDB(lastMessage.getMsgId(), 20);
+            messageList.add(lastMessage);
+
+//          List<EMMessage> messageList = systemConversation.getAllMessages();
+            Logger.i(TAG, "message list size = " + messageList.size() + " last message id = " + lastMessage.getMsgId());
             sysytemMessageAdapter.refreshData(messageList);
         }
     }
@@ -73,6 +83,7 @@ public class SystemMessageActivity extends BaseActivity implements SwipeRefreshL
 
     @Override
     public void onMessageItemDetailClick(SystemMessageInfo url) {
-        ToastUtil.showConsecutiveShort(url.getContent());
+        WebViewActivity.start(this, url.getType(), url.getUrl());
+//        ToastUtil.showConsecutiveShort(url.getContent());
     }
 }

@@ -7,7 +7,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,6 +25,7 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VideoPresenterImpl;
 import com.leyuan.aidong.ui.mvp.view.VideoRelationView;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.MyListView;
 import com.leyuan.aidong.widget.SmartScrollView;
 
@@ -47,6 +50,32 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
     private int page = 1;
 
     private VideoPresenterImpl presenter;
+    private View.OnTouchListener downTouchListener = new ViewGroup.OnTouchListener() {
+        float downY;
+        float downX;
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    downY = event.getY();
+                    downX = event.getX();
+                    Logger.i("video downY = " + downY);
+                    break;
+                case MotionEvent.ACTION_UP:
+                    float upY = event.getY();
+                    float upX = event.getX();
+                    Logger.i("video upY = " + upY);
+                    if ((upY - downY) > 50 || (upY - downY > 20 && Math.abs(downX - upX) < 10)) {
+                        finish();
+                        overridePendingTransition(0, R.anim.slide_out_from_top);
+
+                    }
+                    break;
+            }
+            return true;
+        }
+    };
 
     /**
      * 提供给其他界面调用传入所需的参数
@@ -113,6 +142,8 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
             }
         });
 
+
+
         ImageView ivBack = (ImageView) findViewById(R.id.iv_down_arrow);
         ivBack.setOnClickListener(backListener);
         RecyclerView videoRecyclerView = (RecyclerView) findViewById(R.id.rv_relate_relate_video);
@@ -126,6 +157,11 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
         goodRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         goodAdapter = new WatchOfficeRelateGoodAdapter(this, this);
         goodRecyclerView.setAdapter(goodAdapter);
+
+        scrollview.setOnTouchListener( downTouchListener );
+        videoRecyclerView.setOnTouchListener(downTouchListener);
+        courseListView.setOnTouchListener(downTouchListener);
+        goodRecyclerView.setOnTouchListener(downTouchListener);
     }
 
     private void getData() {

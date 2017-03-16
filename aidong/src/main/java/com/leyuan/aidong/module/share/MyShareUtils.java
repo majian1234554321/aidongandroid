@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.sina.weibo.sdk.api.share.IWeiboHandler;
+
 
 public class MyShareUtils {
     public static final int SHARE_WEIXIN_CHAT = 1;
@@ -12,36 +14,41 @@ public class MyShareUtils {
     public static final int SHARE_WEIBO = 4;
 
     private Activity context;
-    private  MyQQShare myQQShare;
+    private MyQQShare myQQShare;
     private WeiBoShare weiBoShare;
     private WXShare wxShare;
 
-    public  MyShareUtils(Activity context, Bundle savedInstanceState,ShareCallback callback){
+    public MyShareUtils(Activity context, Bundle savedInstanceState) {
         this.context = context;
-        myQQShare = new MyQQShare(context,callback);
-        weiBoShare = new WeiBoShare(context,savedInstanceState);
+        myQQShare = new MyQQShare(context);
+        weiBoShare = new WeiBoShare(context, savedInstanceState);
         wxShare = new WXShare(context);
     }
 
     public void share(int shareMode, String title, String content, String imageUrl, String webUrl) {
-        switch (shareMode){
+        switch (shareMode) {
             case SHARE_WEIXIN_CHAT:
-                wxShare.share(title,content,imageUrl,webUrl,false);
+                wxShare.share(title, content, imageUrl, webUrl, false);
                 break;
             case SHARE_WEIXIN_FRIENDS:
-                wxShare.share(title,content,imageUrl,webUrl,true);
+                wxShare.share(title, content, imageUrl, webUrl, true);
                 break;
             case SHARE_QQ:
-                myQQShare.share(title,content,imageUrl,webUrl);
+                myQQShare.share(title, content, imageUrl, webUrl);
                 break;
             case SHARE_WEIBO:
-                weiBoShare.share(title,content,imageUrl,webUrl);
+                weiBoShare.share(title, content, imageUrl, webUrl);
                 break;
         }
     }
 
+    public void setShareListener(ShareCallback listener) {
+        myQQShare.setShareListener(listener);
+        weiBoShare.setShareListener(listener);
+    }
+
     /**
-     *call this in activity onActivityResult method
+     * call this in activity onActivityResult method
      */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         myQQShare.onActivityResult(requestCode, resultCode, data);
@@ -49,10 +56,12 @@ public class MyShareUtils {
 
     /**
      * you must call this when activity is created and newIntent
+     *
      * @param intent
+     * @param response
      */
-    public  void onNewIntent(Intent intent){
-        weiBoShare.onNewIntent(intent);
+    public void onNewIntent(Intent intent, IWeiboHandler.Response response) {
+        weiBoShare.onNewIntent(intent, response);
     }
 
     public void release() {
@@ -61,4 +70,5 @@ public class MyShareUtils {
         wxShare.release();
         weiBoShare.release();
     }
+
 }

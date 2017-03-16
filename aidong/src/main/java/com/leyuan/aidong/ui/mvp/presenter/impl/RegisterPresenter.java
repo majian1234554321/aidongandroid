@@ -10,6 +10,7 @@ import com.leyuan.aidong.ui.mvp.model.impl.RegisterModel;
 import com.leyuan.aidong.ui.mvp.presenter.RegisterPresenterInterface;
 import com.leyuan.aidong.ui.mvp.view.RegisterViewInterface;
 import com.leyuan.aidong.utils.LogAidong;
+import com.leyuan.aidong.utils.Logger;
 
 
 public class RegisterPresenter implements RegisterPresenterInterface {
@@ -17,6 +18,8 @@ public class RegisterPresenter implements RegisterPresenterInterface {
     private Context mContext;
     private RegisterModelInterface mRegisterModelInterface;
     private RegisterViewInterface mRegisterViewInterface;
+    private String token;
+    private String bindingMobile;
 
     public RegisterPresenter(Context context, RegisterViewInterface mRegisterViewInterface) {
         mContext = context;
@@ -88,8 +91,12 @@ public class RegisterPresenter implements RegisterPresenterInterface {
 
             @Override
             public void onNext(UserCoach user) {
-                if (user != null)
+                if (user != null) {
                     App.mInstance.setToken(user.getToken());
+
+                    Logger.i("login", "checkIdentify token = " + user.getToken());
+                }
+
                 mRegisterViewInterface.register(true);
 
             }
@@ -97,7 +104,36 @@ public class RegisterPresenter implements RegisterPresenterInterface {
     }
 
     @Override
+    public void checkIdentifyBinding(String captcha) {
+        mRegisterModelInterface.checkIdentify(new BaseSubscriber<UserCoach>(mContext) {
+            @Override
+            public void onStart() {
+                super.onStart();
+                mRegisterViewInterface.onRequestStart();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                mRegisterViewInterface.register(false);
+            }
+
+            @Override
+            public void onNext(UserCoach user) {
+                if (bindingMobile != null) {
+                    UserCoach userCoach = App.mInstance.getUser();
+                    userCoach.setMobile(bindingMobile);
+                    App.mInstance.setUser(userCoach);
+                }
+                mRegisterViewInterface.register(true);
+
+            }
+        }, token, captcha, null);
+    }
+
+    @Override
     public void bindingCaptcha(String mobile) {
+        bindingMobile = mobile;
         mRegisterModelInterface.bindingCaptcha(new BaseSubscriber<UserCoach>(mContext) {
 
             @Override
@@ -115,8 +151,9 @@ public class RegisterPresenter implements RegisterPresenterInterface {
             @Override
             public void onNext(UserCoach user) {
                 LogAidong.i("onNext token = ", "" + user.getToken());
-                if (user != null)
-                    App.mInstance.setToken(user.getToken());
+                if (user != null) {
+                    token = user.getToken();
+                }
                 mRegisterViewInterface.onGetIdentifyCode(true);
             }
         }, mobile);

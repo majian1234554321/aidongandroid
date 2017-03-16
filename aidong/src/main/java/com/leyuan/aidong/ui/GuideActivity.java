@@ -18,7 +18,9 @@ import cn.bingoogolapple.bgabanner.BGABannerUtil;
  * 引导页
  * Created by song on 2017/2/24.
  */
-public class GuideActivity extends BaseActivity{
+public class GuideActivity extends BaseActivity {
+
+    protected ImageView lastImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,15 +33,15 @@ public class GuideActivity extends BaseActivity{
         views.add(BGABannerUtil.getItemImageView(this, R.drawable.guide1));
         views.add(BGABannerUtil.getItemImageView(this, R.drawable.guide2));
         views.add(BGABannerUtil.getItemImageView(this, R.drawable.guide3));
-        ImageView lastImage = BGABannerUtil.getItemImageView(this, R.drawable.guide4);
+        lastImage = BGABannerUtil.getItemImageView(this, R.drawable.guide4);
         views.add(lastImage);
         banner.setData(views);
 
         lastImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharePrefUtils.putBoolean(GuideActivity.this,"isFirstEnter",false);
-                startActivity(new Intent(GuideActivity.this,MainActivity.class));
+                SharePrefUtils.putBoolean(GuideActivity.this, "isFirstEnter", false);
+                startActivity(new Intent(GuideActivity.this, MainActivity.class));
             }
         });
     }

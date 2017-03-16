@@ -7,6 +7,7 @@ import com.leyuan.aidong.entity.data.UserInfoData;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -40,6 +41,27 @@ public interface UserInfoService {
                                                       @Field("hip") String hip,
                                                       @Field("charm_site") String charm_site,
                                                       @Field("frequency") String frequency);
+
+    @FormUrlEncoded
+    @PUT("mine/profile")
+    Observable<BaseBean<UserInfoData>> updateUserInfoWithToken(@Header("token") String token,
+                                                               @Field("name") String name,
+                                                               @Field("avatar") String avatar,
+                                                               @Field("gender") String gender,
+                                                               @Field("birthday") String birthday,
+                                                               @Field("signature") String signature,
+                                                               @Field("tag_address") String tag,
+                                                               @Field("sport") String sport,
+                                                               @Field("province") String province,
+                                                               @Field("city") String city,
+                                                               @Field("area") String area,
+                                                               @Field("height") String height,
+                                                               @Field("weight") String weight,
+                                                               @Field("bust") String bust,
+                                                               @Field("waist") String waist,
+                                                               @Field("hip") String hip,
+                                                               @Field("charm_site") String charm_site,
+                                                               @Field("frequency") String frequency);
 
 
     @GET("users/{id}/dynamics")

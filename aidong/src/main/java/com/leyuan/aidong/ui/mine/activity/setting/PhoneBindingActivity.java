@@ -12,6 +12,7 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.RegisterPresenterInterface;
 import com.leyuan.aidong.ui.mvp.presenter.impl.RegisterPresenter;
 import com.leyuan.aidong.ui.mvp.view.RegisterViewInterface;
+import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.StringUtils;
 import com.leyuan.aidong.utils.TimeCountUtil;
@@ -68,7 +69,8 @@ public class PhoneBindingActivity extends BaseActivity implements View.OnClickLi
             case R.id.button_login:
                 if (verifyEdit()) {
                     LogAidong.i("checkIdentify token = ", "" + App.mInstance.getToken());
-                    presenter.checkIdentify(App.mInstance.getToken(), code, null);
+                    DialogUtils.showDialog(this, "", true);
+                    presenter.checkIdentifyBinding(code);
                 }
                 break;
         }
@@ -92,7 +94,7 @@ public class PhoneBindingActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onGetIdentifyCode(boolean success) {
-
+        DialogUtils.dismissDialog();
         if (success) {
             ToastUtil.showShort(App.context, "验证码已发送,请查看");
             if (mDialogImageIdentify != null && mDialogImageIdentify.isShowing()) {
@@ -108,6 +110,7 @@ public class PhoneBindingActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void register(boolean success) {
+        DialogUtils.dismissDialog();
         if (success) {
             ToastUtil.showShort(App.context, "修改成功");
             finish();
@@ -118,7 +121,9 @@ public class PhoneBindingActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onCheckCaptchaImageResult(boolean success, String mobile) {
+        DialogUtils.dismissDialog();
         if (success) {
+            DialogUtils.showDialog(this, "", true);
             presenter.bindingCaptcha(mobile);
         } else if (mDialogImageIdentify != null && mDialogImageIdentify.isShowing()) {
             mDialogImageIdentify.clearContent();
@@ -138,6 +143,7 @@ public class PhoneBindingActivity extends BaseActivity implements View.OnClickLi
         mDialogImageIdentify.setOnInputCompleteListener(new DialogImageIdentify.OnInputCompleteListener() {
             @Override
             public void inputIdentify(String imageIndentify) {
+                DialogUtils.showDialog(PhoneBindingActivity.this, "", true);
                 presenter.checkCaptchaImage(tel, imageIndentify);
             }
 

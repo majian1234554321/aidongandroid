@@ -1,6 +1,5 @@
 package com.leyuan.aidong.ui.mine.activity.account;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -13,10 +12,11 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.ProfileBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mine.activity.UpdateUserInfoActivity;
+import com.leyuan.aidong.ui.WebViewActivity;
 import com.leyuan.aidong.ui.mvp.presenter.RegisterPresenterInterface;
 import com.leyuan.aidong.ui.mvp.presenter.impl.RegisterPresenter;
 import com.leyuan.aidong.ui.mvp.view.RegisterViewInterface;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.StringUtils;
 import com.leyuan.aidong.utils.TimeCountUtil;
@@ -53,6 +53,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 finish();
             }
         });
+
+
     }
 
     private EditText getEidtTelephone() {
@@ -92,7 +94,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 }
                 break;
             case R.id.txt_protocol:
-                startActivity(new Intent(this, UserAgreementActivity.class));
+                WebViewActivity.start(this,"用户协议", Constant.URL_USER_AGREEMENT);
+//                startActivity(new Intent(this, UserAgreementActivity.class));
                 break;
         }
     }
@@ -152,7 +155,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         DialogUtils.dismissDialog();
         if (success) {
             ToastUtil.showShort(App.context, "注册成功");
-            UpdateUserInfoActivity.start(this, new ProfileBean());
+            CompleteUserInfoActivity.start(this, new ProfileBean());
             finish();
         } else {
             ToastUtil.showShort(App.context, "注册失败 请重新提交");

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_top_bar"
+        android:background="@color/black">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="5dp"
+            android:src="@drawable/icon_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/complete_user_info"
+            android:textColor="@color/white"
+            android:textSize="@dimen/size_title" />
+
+        <TextView
+            android:id="@+id/tv_finish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+            android:text="完成"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/dv_avatar"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
+                android:text="点击修改"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <include layout="@layout/inc_bold_line" />
+
+            <com.leyuan.aidong.widget.ExtendTextView
+                android:id="@+id/nickname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:left_text="昵称*"
+                app:line_color="@color/line_color"
+                app:text_height="45dp" />
+
+            <com.leyuan.aidong.widget.ExtendTextView
+                android:id="@+id/gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:left_text="性别*"
+                app:line_color="@color/line_color"
+                app:show_right_arrow="true"
+                app:text_height="45dp" />
+
+            <com.leyuan.aidong.widget.ExtendTextView
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:left_text="城市*"
+                app:line_color="@color/line_color"
+                app:show_right_arrow="true"
+                app:text_height="45dp" />
+            <include layout="@layout/inc_bold_line" />
+
+            <com.leyuan.aidong.widget.ExtendTextView
+                android:id="@+id/signature"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:left_text="个性签名"
+                app:line_color="@color/line_color"
+                app:show_right_arrow="true"
+                app:text_height="45dp" />
+
+
+            <com.leyuan.aidong.widget.ExtendTextView
+                android:id="@+id/identify"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:left_text="身份"
+                app:line_color="@color/line_color"
+                app:show_right_arrow="true"
+                app:text_height="45dp" />
+
+
+
+
+
+            <com.leyuan.aidong.widget.ExtendTextView
+                android:id="@+id/birthday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:left_text="生日"
+                app:line_color="@color/line_color"
+                app:show_right_arrow="true"
+                app:text_height="45dp" />
+
+            <com.leyuan.aidong.widget.ExtendTextView
+                android:id="@+id/zodiac"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:left_text="星座"
+                app:line_color="@color/line_color"
+                app:text_height="45dp" />
+
+            <include layout="@layout/inc_bold_line" />
+
+            <com.leyuan.aidong.widget.ExtendTextView
+                android:id="@+id/height"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:left_text="身高"
+                app:line_color="@color/line_color"
+                app:show_right_arrow="true"
+                app:text_height="45dp" />
+
+            <com.leyuan.aidong.widget.ExtendTextView
+                android:id="@+id/weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:left_text="体重"
+                app:line_color="@color/line_color"
+                app:show_right_arrow="true"
+                app:text_height="45dp" />
+
+            <com.leyuan.aidong.widget.ExtendTextView
+                android:id="@+id/frequency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:left_text="运动频次"
+                app:line_color="@color/line_color"
+                app:show_right_arrow="true"
+                app:text_height="45dp" />
+
+            <com.leyuan.aidong.widget.ExtendTextView
+                android:id="@+id/bmi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:left_text="BMI"
+                app:line_color="@color/line_color"
+                app:text_height="45dp" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

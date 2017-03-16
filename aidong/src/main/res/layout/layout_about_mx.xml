@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/color_search_bg1" >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_search_bg1">
 
     <RelativeLayout
         android:id="@+id/layout_about_mx_title_rel"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/pref_50dp"
-        android:background="@color/new_background_one" >
+        android:background="@color/new_background_one">
 
         <ImageView
             android:id="@+id/layout_tab_about_mx_title_img"
@@ -36,7 +36,8 @@
         android:layout_below="@+id/layout_about_mx_title_rel"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
-        android:src="@drawable/place_holder_logo" />
+        android:src="@drawable/app_icon" />
+
     <ImageView
         android:id="@+id/img_about_mx_ma"
         android:layout_width="205dp"
@@ -56,19 +57,19 @@
         android:textColor="@color/black"
         android:textSize="@dimen/pref_16dp" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/pref_45dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true" >
+    <!--<RelativeLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/pref_45dp"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:layout_alignParentLeft="true" >-->
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/place_holder_logo" />
-    </RelativeLayout>
+    <!--<ImageView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:src="@drawable/place_holder_logo" />-->
+    <!--</RelativeLayout>-->
 
     <TextView
         android:id="@+id/textview_version"

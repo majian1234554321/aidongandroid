@@ -2,12 +2,12 @@ package com.leyuan.aidong.module.share;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Environment;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.utils.ToastUtil;
+import com.tencent.connect.common.Constants;
 import com.tencent.connect.share.QQShare;
 import com.tencent.open.utils.ThreadManager;
 import com.tencent.tauth.IUiListener;
@@ -21,53 +21,44 @@ import com.tencent.tauth.UiError;
 public class MyQQShare {
     private Tencent mTencent;
     private Activity context;
-    IUiListener qqShareListener;
+    private IUiListener qqShareListener = new IUiListener() {
 
-    public MyQQShare(Activity context, final ShareCallback shareCallback) {
+        @Override
+        public void onCancel() {
+            Logger.i("QQSHARE", "qqShareListener onCancel");
+            ToastUtil.show("分享取消", context);
+//                shareCallback.onCancel();
+        }
+
+        @Override
+        public void onComplete(Object response) {
+            Logger.i("QQSHARE", "qqShareListener onComplete");
+            ToastUtil.show("分享成功", context);
+//                shareCallback.onComplete(response);
+        }
+
+        @Override
+        public void onError(UiError e) {
+            Logger.i("QQSHARE", "qqShareListener onError");
+            ToastUtil.show("分享失败", context);
+//                shareCallback.onError();
+        }
+    };
+
+    public MyQQShare(Activity context) {
         mTencent = Tencent.createInstance(context.getString(R.string.qq_id), context.getApplicationContext());
         this.context = context;
-        qqShareListener = new IUiListener() {
-            @Override
-            public void onCancel() {
-                Logger.i("QQSHARE", "qqShareListener onCancel");
-//                ToastUtil.showConsecutiveShort("分享取消");
-                shareCallback.onCancel();
-            }
-
-            @Override
-            public void onComplete(Object response) {
-                Logger.i("QQSHARE", "qqShareListener onComplete");
-//                ToastUtil.showConsecutiveShort("分享成功");
-                shareCallback.onComplete(response);
-            }
-
-            @Override
-            public void onError(UiError e) {
-                Logger.i("QQSHARE", "qqShareListener onError");
-//                ToastUtil.showConsecutiveShort("分享失败");
-                shareCallback.onError();
-            }
-        };
     }
-
-    public void share(String title, String content, Bitmap bitmap, String webUrl) {
-        final Bundle params = new Bundle();
-        //本地地址一定要传sdcard路径，不要什么getCacheDir()或getFilesDir()
-        params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, Environment.getExternalStorageDirectory().getAbsolutePath().concat("/a.png"));
-        params.putString(QQShare.SHARE_TO_QQ_APP_NAME, "爱动健身");
-        params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_IMAGE);
-        params.putInt(QQShare.SHARE_TO_QQ_EXT_INT, QQShare.SHARE_TO_QQ_FLAG_QZONE_AUTO_OPEN); //打开这句话，可以实现分享纯图到QQ空间
-        doShareToQQ(params);
-    }
-
 
     public void share(String title, String content, String imageUrl, String webUrl) {
         final Bundle params = new Bundle();
-        params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, imageUrl);
+        params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
         params.putString(QQShare.SHARE_TO_QQ_TITLE, title);
         params.putString(QQShare.SHARE_TO_QQ_SUMMARY, content);
+        params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, imageUrl);
         params.putString(QQShare.SHARE_TO_QQ_TARGET_URL, webUrl);
         params.putString(QQShare.SHARE_TO_QQ_APP_NAME, "爱动健身");
+        params.putInt(QQShare.SHARE_TO_QQ_EXT_INT, QQShare.SHARE_TO_QQ_FLAG_QZONE_ITEM_HIDE);
         doShareToQQ(params);
     }
 
@@ -85,12 +76,20 @@ public class MyQQShare {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Tencent.onActivityResultData(requestCode, resultCode, data, qqShareListener);
+        if (requestCode == Constants.REQUEST_QQ_SHARE) {
+            Tencent.onActivityResultData(requestCode, resultCode, data, qqShareListener);
+        }
     }
 
     public void release() {
+        mTencent.releaseResource();
+        mTencent = null;
         context = null;
         qqShareListener = null;
+    }
+
+    public void setShareListener(ShareCallback listener) {
+
     }
 
     /**

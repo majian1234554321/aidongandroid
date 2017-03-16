@@ -46,39 +46,51 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
     @Override
     public void onResp(BaseResp resp) {
-        Logger.i("share", "resp.errCode " + resp.errCode + " type = " + resp.getType() + ", code = " + ((SendAuth.Resp) resp).code);
-        String result = null;
-        switch (resp.errCode) {
-            case BaseResp.ErrCode.ERR_OK:
-                result = "发送成功";
-                code_code = ((SendAuth.Resp) resp).code;
-                if (RETURN_MSG_TYPE_LOGIN == resp.getType()) {
-                    Intent intent = new Intent();
-                    intent.setAction(Constant.WX_LOGIN_SUCCESS_ACTION);
+        Logger.i("share", "resp.errCode " + resp.errCode + " type = " + resp.getType());
+        if (RETURN_MSG_TYPE_LOGIN == resp.getType()) {
+            Intent intent = new Intent();
+            intent.setAction(Constant.WX_LOGIN_SUCCESS_ACTION);
+            switch (resp.errCode) {
+                case BaseResp.ErrCode.ERR_OK:
+                    code_code = ((SendAuth.Resp) resp).code;
+                    intent.putExtra(Constant.STATE, 1);
                     intent.putExtra(Constant.WX_LOGIN_CODE, code_code);
-                    intent.setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-                    sendBroadcast(intent);
-                    Logger.i("login ", " sendBroadcast");
-                } else {
+                    break;
+                case BaseResp.ErrCode.ERR_USER_CANCEL:
+                    intent.putExtra(Constant.STATE, 2);
+                    break;
+                case BaseResp.ErrCode.ERR_AUTH_DENIED:
+                    intent.putExtra(Constant.STATE, 3);
+                    break;
+                default:
+                    intent.putExtra(Constant.STATE, 4);
+            }
+            intent.setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+            sendBroadcast(intent);
+            Logger.i("login ", " sendBroadcast");
+        } else {
+            String result = null;
+            switch (resp.errCode) {
+                case BaseResp.ErrCode.ERR_OK:
+                    result = "发送成功";
                     Toast.makeText(this, result, Toast.LENGTH_LONG).show();
-                }
-                break;
-            case BaseResp.ErrCode.ERR_USER_CANCEL:
-                result = "发送取消";
-                Toast.makeText(this, result, Toast.LENGTH_LONG).show();
-                break;
-            case BaseResp.ErrCode.ERR_AUTH_DENIED:
-                result = "发送被拒绝";
-                Toast.makeText(this, result, Toast.LENGTH_LONG).show();
-                break;
-            default:
-                result = "发送返回";
-                Toast.makeText(this, result, Toast.LENGTH_LONG).show();
+                    break;
+                case BaseResp.ErrCode.ERR_USER_CANCEL:
+                    result = "发送取消";
+                    Toast.makeText(this, result, Toast.LENGTH_LONG).show();
+                    break;
+                case BaseResp.ErrCode.ERR_AUTH_DENIED:
+                    result = "发送被拒绝";
+                    Toast.makeText(this, result, Toast.LENGTH_LONG).show();
+                    break;
+                default:
+                    result = "发送返回";
+                    Toast.makeText(this, result, Toast.LENGTH_LONG).show();
 
-                break;
+                    break;
+            }
+
         }
-
         finish();
-//		Toast.makeText(this, result, Toast.LENGTH_LONG).show();
     }
 }

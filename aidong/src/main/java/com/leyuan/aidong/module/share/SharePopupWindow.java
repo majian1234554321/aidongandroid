@@ -11,7 +11,11 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastUtil;
+import com.sina.weibo.sdk.api.share.BaseResponse;
+import com.sina.weibo.sdk.api.share.IWeiboHandler;
+import com.sina.weibo.sdk.constant.WBConstants;
 
 
 /**
@@ -34,7 +38,8 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
     public SharePopupWindow(Activity context, Bundle savedInstanceState) {
         super(context);
         this.context = context;
-        myShareUtils = new MyShareUtils(context, savedInstanceState, callback);
+        myShareUtils = new MyShareUtils(context, savedInstanceState);
+
         initView();
         initData();
     }
@@ -65,30 +70,35 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
     private void initData() {
 
     }
-
-    private ShareCallback callback = new ShareCallback() {
-        @Override
-        public void onComplete(Object o) {
-            ToastUtil.showConsecutiveShort("分享成功");
-        }
-
-        @Override
-        public void onError() {
-            ToastUtil.showConsecutiveShort("分享失败");
-        }
-
-        @Override
-        public void onCancel() {
-            ToastUtil.showConsecutiveShort("分享成功");
-        }
-    };
+//
+//    private ShareCallback callback = new ShareCallback() {
+//        @Override
+//        public void onComplete(Object o) {
+//            ToastUtil.showConsecutiveShort("分享成功");
+//        }
+//
+//        @Override
+//        public void onError() {
+//            ToastUtil.showConsecutiveShort("分享失败");
+//        }
+//
+//        @Override
+//        public void onCancel() {
+//            ToastUtil.showConsecutiveShort("分享成功");
+//        }
+//    };
 
     public void showAtBottom(String title, String content, String imageUrl, String webUrl) {
+        Logger.i("share", "show image url = " + imageUrl);
         this.showAtLocation(((ViewGroup) context.findViewById(android.R.id.content)).getChildAt(0), Gravity.BOTTOM, 0, 0);
         this.title = title;
         this.content = content;
         this.imageUrl = imageUrl;
         this.webUrl = webUrl;
+    }
+
+    public void setShareListener(ShareCallback listener) {
+        myShareUtils.setShareListener(listener);
     }
 
     @Override
@@ -124,14 +134,32 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
      * you must call this when activity onNewIntent
      *
      * @param intent
+     * @param response
      */
-    public void onNewIntent(Intent intent) {
-        myShareUtils.onNewIntent(intent);
+    public void onNewIntent(Intent intent, IWeiboHandler.Response response) {
+        myShareUtils.onNewIntent(intent, response);
     }
 
     public void release() {
         context = null;
         myShareUtils.release();
         myShareUtils = null;
+    }
+
+    public void onResponse(BaseResponse baseResponse) {
+        if (baseResponse != null) {
+            Logger.i("share", "weibo share baseResponse.errCode = " + baseResponse.errCode);
+            switch (baseResponse.errCode) {
+                case WBConstants.ErrorCode.ERR_OK:
+                    ToastUtil.showConsecutiveShort(R.string.share_ok);
+                    break;
+                case WBConstants.ErrorCode.ERR_CANCEL:
+                    ToastUtil.showConsecutiveShort(R.string.share_cancel);
+                    break;
+                case WBConstants.ErrorCode.ERR_FAIL:
+                    ToastUtil.showConsecutiveShort(R.string.share_fail);
+                    break;
+            }
+        }
     }
 }

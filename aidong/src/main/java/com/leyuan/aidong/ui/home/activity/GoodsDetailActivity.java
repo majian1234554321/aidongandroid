@@ -64,11 +64,14 @@ import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
+import com.sina.weibo.sdk.api.share.BaseResponse;
+import com.sina.weibo.sdk.api.share.IWeiboHandler;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
+import retrofit2.http.HEAD;
 
 import static com.leyuan.aidong.ui.App.context;
 import static com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow.FROM_ADD_CART;
@@ -87,7 +90,8 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_TO_CART;
  */
 public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnItemClickListener,
         GoodsSkuPopupWindow.SelectSkuListener,SmartTabLayout.TabProvider,View.OnClickListener,
-        GoodsDetailActivityView,PopupWindow.OnDismissListener, GoodsDetailCouponAdapter.CouponListener {
+        GoodsDetailActivityView,PopupWindow.OnDismissListener, GoodsDetailCouponAdapter.CouponListener, IWeiboHandler.Response {
+
     private static final int CODE_SELECT_ADDRESS = 1;
 
     private SwitcherLayout switcherLayout;
@@ -137,10 +141,10 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
     private List<String> selectedSkuValues = new ArrayList<>();
     private GoodsDetailPresent goodsPresent;
 
-    public static void start(Context context,String id,String goodsType) {
+    public static void start(Context context, String id, String goodsType) {
         Intent starter = new Intent(context, GoodsDetailActivity.class);
-        starter.putExtra("id",id);
-        starter.putExtra("goodsType",goodsType);
+        starter.putExtra("id", id);
+        starter.putExtra("goodsType", goodsType);
         context.startActivity(starter);
     }
 
@@ -149,6 +153,7 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_detail);
         sharePopupWindow = new SharePopupWindow(this, savedInstanceState);
+
         goodsPresent = new GoodsDetailPresentImpl(this,this);
         if(getIntent() != null){
             id = getIntent().getStringExtra("id");
@@ -162,7 +167,7 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        sharePopupWindow.onNewIntent(intent);
+        sharePopupWindow.onNewIntent(intent, this);
     }
 
     @Override
@@ -177,7 +182,7 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
         detailsLayout = (SlideDetailsLayout) findViewById(R.id.slide_details_layout);
         appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
         contentLayout = (LinearLayout) findViewById(R.id.ll_content);
-        switcherLayout = new SwitcherLayout(this,contentLayout);
+        switcherLayout = new SwitcherLayout(this, contentLayout);
         bannerLayout = (BGABanner) findViewById(R.id.banner_layout);
         tvPrice = (TextView) findViewById(R.id.tv_price);
         tvMarketPrice = (TextView) findViewById(R.id.tv_market_price);
@@ -191,14 +196,14 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
         tvRecommendCode = (TextView) findViewById(R.id.tv_recommend_code);
         addressLayout = (LinearLayout) findViewById(R.id.ll_address);
         tvAddressInfo = (TextView) findViewById(R.id.tv_address_info);
-        tvDeliveryInfo = (TextView)findViewById(R.id.tv_delivery_info);
+        tvDeliveryInfo = (TextView) findViewById(R.id.tv_delivery_info);
         ivArrow = (ImageView) findViewById(R.id.iv_arrow);
         tvTip = (TextView) findViewById(R.id.tv_tip);
         tabLayout = (SmartTabLayout) findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.vp_content);
         titleLayout = (RelativeLayout) findViewById(R.id.rl_title);
         ivBack = (ImageView) findViewById(R.id.iv_back);
-        tvTitle = (TextView)findViewById(R.id.tv_title);
+        tvTitle = (TextView) findViewById(R.id.tv_title);
         ivShare = (ImageView) findViewById(R.id.iv_share);
         bottomLayout = (LinearLayout) findViewById(R.id.ll_bottom);
         ivCart = (ImageView) findViewById(R.id.iv_cart);
@@ -209,13 +214,13 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
         bannerLayout.setAdapter(new BGABanner.Adapter() {
             @Override
             public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
-                GlideLoader.getInstance().displayImage((String)model, (ImageView)view);
+                GlideLoader.getInstance().displayImage((String) model, (ImageView) view);
             }
         });
 
         //设置优惠券
         couponView.setLayoutManager(new LinearLayoutManager
-                (this,LinearLayoutManager.HORIZONTAL,false));
+                (this, LinearLayoutManager.HORIZONTAL, false));
         couponAdapter = new GoodsDetailCouponAdapter(this);
         couponView.setNestedScrollingEnabled(false);
         couponView.setAdapter(couponAdapter);
@@ -242,19 +247,19 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
         bannerLayout.setVisibility(View.VISIBLE);
         bottomLayout.setVisibility(View.VISIBLE);
         bannerUrls.addAll(bean.image);
-        bannerLayout.setData(bannerUrls,null);
+        bannerLayout.setData(bannerUrls, null);
         tvTitle.setText(String.format(getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.price)));
         tvPrice.setText(String.format(getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.price)));
         tvMarketPrice.setText(String.format(getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.market_price)));
-        tvMarketPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG );
+        tvMarketPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         tvGoodsName.setText(bean.name);
 
-        if(bean.coupon == null || bean.coupon.isEmpty()){
+        if (bean.coupon == null || bean.coupon.isEmpty()) {
             couponLayout.setVisibility(View.GONE);
-        }else{
+        } else {
             couponAdapter.setData(bean.coupon);
             couponLayout.setVisibility(View.VISIBLE);
         }
@@ -264,11 +269,11 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
             skuStr.append(s).append(EMPTY_STR);
         }
         tvSku.setText(skuStr);
-        if(bean.pick_up != null) {
-            if(DeliveryType.EXPRESS.equals(bean.pick_up.type)){
+        if (bean.pick_up != null) {
+            if (DeliveryType.EXPRESS.equals(bean.pick_up.type)) {
                 tvAddressInfo.setVisibility(View.GONE);
                 tvDeliveryInfo.setText("快递");
-            }else {
+            } else {
                 tvAddressInfo.setVisibility(View.VISIBLE);
                 tvAddressInfo.setText(bean.pick_up.info.getAddress());
                 tvDeliveryInfo.setText("自提");
@@ -281,43 +286,43 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_back:
                 finish();
                 break;
             case R.id.iv_share:
-                sharePopupWindow.showAtBottom(bean.name,bean.introduce, bean.image.get(0),
+                sharePopupWindow.showAtBottom(bean.name, bean.introduce, bean.image.get(0),
                         "http://www.baidu.com");
                 break;
             case R.id.ll_code:
                 showRecommendCodeDialog();
                 break;
             case R.id.ll_goods_sku:
-                showSkuPopupWindow(this, bean,selectedSkuValues,FROM_SKU);
+                showSkuPopupWindow(this, bean, selectedSkuValues, FROM_SKU);
                 break;
             case R.id.ll_address:
-                Intent intent = new Intent(this,DeliveryInfoActivity.class);
-                intent.putExtra("id",id);
+                Intent intent = new Intent(this, DeliveryInfoActivity.class);
+                intent.putExtra("id", id);
                 intent.putExtra("goodsType", goodsType);
                 intent.putExtra("deliveryBean", bean.pick_up);
                 final Pair<View, String>[] pairs = TransitionHelper.
                         createSafeTransitionParticipants(this, false);
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.
                         makeSceneTransitionAnimation(this, pairs);
-                startActivityForResult(intent,CODE_SELECT_ADDRESS,optionsCompat.toBundle());
+                startActivityForResult(intent, CODE_SELECT_ADDRESS, optionsCompat.toBundle());
                 break;
             case R.id.iv_cart:
-                if(App.mInstance.isLogin()) {
+                if (App.mInstance.isLogin()) {
                     startActivity(new Intent(this, CartActivity.class));
-                }else {
+                } else {
                     startActivityForResult(new Intent(this, LoginActivity.class), REQUEST_TO_CART);
                 }
                 break;
             case R.id.tv_add_cart:
-                showSkuPopupWindow(this, bean,selectedSkuValues,FROM_ADD_CART);
+                showSkuPopupWindow(this, bean, selectedSkuValues, FROM_ADD_CART);
                 break;
             case R.id.tv_pay:
-                showSkuPopupWindow(this, bean,selectedSkuValues,FROM_BUY);
+                showSkuPopupWindow(this, bean, selectedSkuValues, FROM_BUY);
                 break;
             default:
                 break;
@@ -325,20 +330,25 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
     }
 
     //todo optimize
-    private void showSkuPopupWindow(Context context, GoodsDetailBean detailBean, List<String> selectedSkuValues,String from) {
+    private void showSkuPopupWindow(Context context, GoodsDetailBean detailBean, List<String> selectedSkuValues, String from) {
         //rootLayout.animate().scaleY(0.95f).setInterpolator(new AccelerateInterpolator(2)).start();
         //rootLayout.animate().scaleX(0.95f).setInterpolator(new AccelerateInterpolator(2)).start();
         //contentLayout.animate().rotationX(0.8f).setInterpolator(new AccelerateInterpolator(2)).start();
         //if(skuPopupWindow == null){
         String recommendId = tvRecommendCode.getText().toString();
-        skuPopupWindow = new GoodsSkuPopupWindow(context,detailBean,selectedSkuValues, count,recommendId, goodsType,from);
+        skuPopupWindow = new GoodsSkuPopupWindow(context, detailBean, selectedSkuValues, count, recommendId, goodsType, from);
         skuPopupWindow.setSelectSkuListener(this);
         skuPopupWindow.setOnDismissListener(this);
-        skuPopupWindow.showAtLocation(rootLayout, Gravity.BOTTOM,0,0);
+        skuPopupWindow.showAtLocation(rootLayout, Gravity.BOTTOM, 0, 0);
     }
 
+//<<<<<<< HEAD
+//    private void inputRecommendCodeDialog() {
+//        View view = View.inflate(this, R.layout.dialog_input_code, null);
+//=======
     private void showRecommendCodeDialog() {
         View view = View.inflate(this,R.layout.dialog_input_code,null);
+//>>>>>>> 3109c47edbf8c09829bbdfeb77dd2c9b886e601d
         final EditText etCode = (EditText) view.findViewById(R.id.et_code);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(getString(R.string.input_recommend_code))
@@ -378,10 +388,21 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
     }
 
     @Override
+//<<<<<<< HEAD
+//    public void onSelectSkuChanged(List<String> skuValues, String skuTip, String count) {
+//        if (skuValues != null) {
+//            selectedSkuValues = skuValues;
+//        }
+//        if (selectedSkuValues.size() == bean.spec.name.size()) {
+//            tvSelect.setText("已选择:");
+//        } else {
+//            tvSelect.setText("选择:");
+//=======
     public void onSelectSkuChanged(List<String> selectedSkuValues,String skuTip,String count) {
         this.count = count;
         if(selectedSkuValues != null) {
             this.selectedSkuValues = selectedSkuValues;
+//>>>>>>> 3109c47edbf8c09829bbdfeb77dd2c9b886e601d
         }
         tvSelect.setText(isAllSkuConfirm() ? "已选择:" : "选择:");
         StringBuilder sb = new StringBuilder(skuTip);
@@ -395,38 +416,38 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         sharePopupWindow.onActivityResult(requestCode, resultCode, data);
-        if(resultCode != RESULT_OK){
+        if (resultCode != RESULT_OK) {
             return;
         }
-        if(requestCode == CODE_SELECT_ADDRESS){
+        if (requestCode == CODE_SELECT_ADDRESS) {
             DeliveryBean deliveryBean = data.getParcelableExtra("deliveryBean");
             bean.pick_up = deliveryBean;
-            if(deliveryBean!= null) {
-                if(DeliveryType.EXPRESS.equals(deliveryBean.type)){
+            if (deliveryBean != null) {
+                if (DeliveryType.EXPRESS.equals(deliveryBean.type)) {
                     tvAddressInfo.setVisibility(View.GONE);
                     tvDeliveryInfo.setText("快递");
-                }else {
+                } else {
                     tvAddressInfo.setVisibility(View.VISIBLE);
                     tvAddressInfo.setText(deliveryBean.info.getAddress());
                     tvDeliveryInfo.setText("自提");
                 }
             }
-        }else if(requestCode == REQUEST_CONFIRM){
-            if(skuPopupWindow != null){
+        } else if (requestCode == REQUEST_CONFIRM) {
+            if (skuPopupWindow != null) {
                 skuPopupWindow.confirm();
                 skuPopupWindow.dismiss();
             }
-        } else if(requestCode == REQUEST_ADD_CART){
-            if(skuPopupWindow != null){
+        } else if (requestCode == REQUEST_ADD_CART) {
+            if (skuPopupWindow != null) {
                 skuPopupWindow.addCart();
                 skuPopupWindow.dismiss();
             }
-        }else if(requestCode == REQUEST_BUY_IMMEDIATELY){
-            if(skuPopupWindow != null){
+        } else if (requestCode == REQUEST_BUY_IMMEDIATELY) {
+            if (skuPopupWindow != null) {
                 skuPopupWindow.buyImmediately();
                 skuPopupWindow.dismiss();
             }
-        }else if(requestCode == REQUEST_TO_CART){
+        } else if (requestCode == REQUEST_TO_CART) {
             startActivity(new Intent(this, CartActivity.class));
         }else if(requestCode == Constant.REQUEST_LOGIN){
             goodsPresent.getGoodsDetail(goodsType,id);
@@ -453,16 +474,21 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
         }
     }
 
-    private class MyOnSlideDetailsListener implements SlideDetailsLayout.OnSlideDetailsListener{
+    @Override
+    public void onResponse(BaseResponse baseResponse) {
+        sharePopupWindow.onResponse(baseResponse);
+    }
+
+    private class MyOnSlideDetailsListener implements SlideDetailsLayout.OnSlideDetailsListener {
         @Override
         public void onStatusChanged(SlideDetailsLayout.Status status) {
-            if(status == SlideDetailsLayout.Status.OPEN){
+            if (status == SlideDetailsLayout.Status.OPEN) {
                 tvTip.setText(getString(R.string.tip_close));
                 ivArrow.setBackgroundResource(R.drawable.icon_arrow_down);
                 tvTitle.setVisibility(View.VISIBLE);
                 tvTitle.animate().scaleX(1).scaleY(1).setInterpolator
                         (new AccelerateDecelerateInterpolator()).setDuration(200).start();
-            }else{
+            } else {
                 tvTip.setText(getString(R.string.tip_open));
                 ivArrow.setBackgroundResource(R.drawable.icon_arrow_up);
                 tvTitle.animate().scaleX(0).scaleY(0).setInterpolator
@@ -471,7 +497,7 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
         }
     }
 
-    private  class MyOnOffsetChangedListener implements AppBarLayout.OnOffsetChangedListener{
+    private class MyOnOffsetChangedListener implements AppBarLayout.OnOffsetChangedListener {
         @Override
         public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
             int maxScroll = appBarLayout.getTotalScrollRange();
@@ -487,24 +513,24 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
         GoodsServiceFragment service = new GoodsServiceFragment();
         pages.add(FragmentPagerItem.of(null, detail.getClass(),
                 new Bundler().putString("detailText", bean.introduce).get()));
-        pages.add(FragmentPagerItem.of(null,problem.getClass(),
+        pages.add(FragmentPagerItem.of(null, problem.getClass(),
                 new Bundler().putString("problemText", bean.question).get()));
-        pages.add(FragmentPagerItem.of(null,service.getClass(),
+        pages.add(FragmentPagerItem.of(null, service.getClass(),
                 new Bundler().putString("serviceText", bean.service).get()));
         final FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter
-                (getSupportFragmentManager(),pages);
+                (getSupportFragmentManager(), pages);
 
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(3);
         tabLayout.setCustomTabView(this);
         tabLayout.setViewPager(viewPager);
-        tabLayout.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+        tabLayout.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 for (int i = 0; i < allTabView.size(); i++) {
                     View tabAt = tabLayout.getTabAt(i);
                     TextView text = (TextView) tabAt.findViewById(R.id.tv_tab_text);
-                    text.setTypeface(i == position ? Typeface.DEFAULT_BOLD :Typeface.DEFAULT);
+                    text.setTypeface(i == position ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
                     detailsLayout.setViewPagerCurrent(position);
                 }
             }
@@ -517,7 +543,7 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
         TextView text = (TextView) tabView.findViewById(R.id.tv_tab_text);
         String[] campaignTab = getResources().getStringArray(R.array.goodsDetailTab);
         text.setText(campaignTab[position]);
-        if(position == 0){
+        if (position == 0) {
             text.setTypeface(Typeface.DEFAULT_BOLD);
         }
         allTabView.add(tabView);
