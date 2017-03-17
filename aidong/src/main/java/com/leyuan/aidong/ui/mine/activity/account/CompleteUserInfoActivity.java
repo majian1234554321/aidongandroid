@@ -270,8 +270,10 @@ public class CompleteUserInfoActivity extends BaseActivity implements UpdateUser
                 .appendPath(cachePath)
                 .appendPath(String.format(Locale.US, "%s.jpg", System.currentTimeMillis()))
                 .build();
+        BoxingCropOption boxingCropOption = new BoxingCropOption(destUri);
+        boxingCropOption.aspectRatio(1,1);
         BoxingConfig singleCropImgConfig = new BoxingConfig(BoxingConfig.Mode.SINGLE_IMG)
-                .withCropOption(new BoxingCropOption(destUri))
+                .withCropOption(boxingCropOption)
                 .needCamera();
         Boxing.of(singleCropImgConfig).withIntent(this, BoxingActivity.class).start(this, REQUEST_CODE);
     }

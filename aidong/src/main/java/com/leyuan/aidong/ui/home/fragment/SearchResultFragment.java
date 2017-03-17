@@ -54,15 +54,15 @@ public class SearchResultFragment extends BaseFragment implements SmartTabLayout
 
         FragmentPagerItems pages = new FragmentPagerItems(getContext());
         SearchVenuesFragment venues = new SearchVenuesFragment();
-        SearchGoodsFragment goods = new SearchGoodsFragment();
         SearchCourseFragment course = new SearchCourseFragment();
-        SearchFoodFragment food = new SearchFoodFragment();
+        SearchNurtureFragment nurture = new SearchNurtureFragment();
+        SearchEquipmentFragment equipment = new SearchEquipmentFragment();
         SearchCampaignFragment campaign = new SearchCampaignFragment();
         SearchUserFragment user = new SearchUserFragment();
         pages.add(FragmentPagerItem.of(null,venues.getClass(), new Bundler().putString("keyword", keyword).get()));
-        pages.add(FragmentPagerItem.of(null,goods.getClass(), new Bundler().putString("keyword", keyword).get()));
         pages.add(FragmentPagerItem.of(null,course.getClass(), new Bundler().putString("keyword", keyword).get()));
-        pages.add(FragmentPagerItem.of(null,food.getClass(), new Bundler().putString("keyword", keyword).get()));
+        pages.add(FragmentPagerItem.of(null,nurture.getClass(), new Bundler().putString("keyword", keyword).get()));
+        pages.add(FragmentPagerItem.of(null,equipment.getClass(),new Bundler().putString("keyword", keyword).get()));
         pages.add(FragmentPagerItem.of(null,campaign.getClass(), new Bundler().putString("keyword", keyword).get()));
         pages.add(FragmentPagerItem.of(null,user.getClass(), new Bundler().putString("keyword", keyword).get()));
 
@@ -76,7 +76,7 @@ public class SearchResultFragment extends BaseFragment implements SmartTabLayout
                 for (int i = 0; i < allTabView.size(); i++) {
                     View tabAt = tabLayout.getTabAt(i);
                     TextView text = (TextView) tabAt.findViewById(R.id.tv_tab_text);
-                    text.setTypeface(i == position ? Typeface.DEFAULT_BOLD :Typeface.DEFAULT);
+                    text.setTypeface(i == position ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
                 }
             }
         });

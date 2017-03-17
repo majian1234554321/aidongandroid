@@ -48,7 +48,7 @@ public class BoxingUCrop implements IBoxingCrop {
         // because png do not have exif and png is not Distinguishable
         crop.setCompressionFormat(Bitmap.CompressFormat.PNG);
         crop.withMaxResultSize(cropConfig.getMaxWidth(), cropConfig.getMaxHeight());
-        crop.withAspectRatio(cropConfig.getAspectRatioX(), cropConfig.getAspectRatioY());
+        crop.withAspectRatio(1, 1);
 
         UCrop.of(uri, cropConfig.getDestination())
                 .withOptions(crop)

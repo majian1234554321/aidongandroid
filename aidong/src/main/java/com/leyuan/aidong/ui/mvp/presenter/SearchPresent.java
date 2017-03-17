@@ -33,11 +33,11 @@ public interface SearchPresent {
      */
     void commonLoadCampaignData(SwitcherLayout switcherLayout, String keyword);
 
-    void commonLoadGoodsData(SwitcherLayout switcherLayout, String keyword);
-
     void commonLoadCourseData(SwitcherLayout switcherLayout, String keyword);
 
-    void commonLoadFoodData(SwitcherLayout switcherLayout, String keyword);
+    void commonLoadNurtureData(SwitcherLayout switcherLayout, String keyword);
+
+    void commonLoadEquipmentData(SwitcherLayout switcherLayout, String keyword);
 
     void commonUserData(SwitcherLayout switcherLayout, String keyword);
 
@@ -49,11 +49,11 @@ public interface SearchPresent {
      */
     void pullToRefreshCampaignData(String keyword);
 
-    void pullToRefreshGoodsData(String keyword);
-
     void pullToRefreshCourseData(String keyword);
 
-    void pullToRefreshFoodData(String keyword);
+    void pullToRefreshNurtureData(String keyword);
+
+    void pullToRefreshEquipmentData(String keyword);
 
     void pullToRefreshUserData(String keyword);
 
@@ -68,11 +68,11 @@ public interface SearchPresent {
      */
     void requestMoreCampaignData(RecyclerView recyclerView, String keyword, int pageSize, int page);
 
-    void requestMoreGoodsData(RecyclerView recyclerView, String keyword, int pageSize, int page);
-
     void requestMoreCourseData(RecyclerView recyclerView, String keyword, int pageSize, int page);
 
-    void requestMoreFoodData(RecyclerView recyclerView, String keyword, int pageSize, int page);
+    void requestMoreNurtureData(RecyclerView recyclerView, String keyword, int pageSize, int page);
+
+    void requestMoreEquipmentData(RecyclerView recyclerView, String keyword, int pageSize, int page);
 
     void requestMoreUserData(RecyclerView recyclerView, String keyword, int pageSize, int page);
 

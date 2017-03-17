@@ -8,13 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.adapter.home.FoodAdapter;
-import com.leyuan.aidong.entity.FoodBean;
+import com.leyuan.aidong.adapter.home.GoodsFilterAdapter;
+import com.leyuan.aidong.entity.NurtureBean;
+import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.mvp.presenter.SearchPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SearchPresentImpl;
-import com.leyuan.aidong.ui.mvp.view.SearchFoodFragmentView;
+import com.leyuan.aidong.ui.mvp.view.SearchNurtureFragmentView;
+import com.leyuan.aidong.utils.constant.GoodsType;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -25,41 +26,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 健康餐饮搜索结果
+ * 营养品搜索结果
  * Created by song on 2016/9/12.
  */
-public class SearchFoodFragment extends BaseFragment implements SearchFoodFragmentView {
+public class SearchNurtureFragment extends BaseFragment implements SearchNurtureFragmentView {
 
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
 
     private int currPage = 1;
-    private List<FoodBean> data;
+    private List<NurtureBean> data;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
-    private FoodAdapter foodAdapter;
+    private GoodsFilterAdapter nurtureAdapter;
 
     private SearchPresent present;
     private String keyword;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        pageSize = 20;
         present = new SearchPresentImpl(getContext(),this);
         Bundle bundle = getArguments();
         if(bundle != null){
             keyword = bundle.getString("keyword");
         }
-        return inflater.inflate(R.layout.fragment_result,null);
+        return inflater.inflate(R.layout.fragment_result,container,false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         initSwipeRefreshLayout(view);
         initRecyclerView(view);
-        foodAdapter.setData(null);
-        wrapperAdapter.notifyDataSetChanged();
-        present.commonLoadFoodData(switcherLayout,keyword);
+        present.commonLoadNurtureData(switcherLayout,keyword);
     }
 
     private void initSwipeRefreshLayout(View view) {
@@ -71,14 +69,14 @@ public class SearchFoodFragment extends BaseFragment implements SearchFoodFragme
             public void onRefresh() {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-                present.pullToRefreshFoodData(keyword);
+                present.pullToRefreshNurtureData(keyword);
             }
         });
 
         switcherLayout.setOnRetryListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                present.commonLoadFoodData(switcherLayout,keyword);
+                present.commonLoadNurtureData(switcherLayout,keyword);
             }
         });
     }
@@ -86,8 +84,8 @@ public class SearchFoodFragment extends BaseFragment implements SearchFoodFragme
     private void initRecyclerView(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_result);
         data = new ArrayList<>();
-        foodAdapter = new FoodAdapter(getContext());
-        wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(foodAdapter);
+        nurtureAdapter = new GoodsFilterAdapter(getContext(), GoodsType.NUTRITION);
+        wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(nurtureAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(wrapperAdapter);
         recyclerView.addOnScrollListener(onScrollListener);
@@ -98,22 +96,22 @@ public class SearchFoodFragment extends BaseFragment implements SearchFoodFragme
         public void onLoadNextPage(View view) {
             currPage ++;
             if (data != null && data.size() >= pageSize) {
-                present.requestMoreFoodData(recyclerView,keyword,pageSize,currPage);
+                present.requestMoreNurtureData(recyclerView,keyword,pageSize,currPage);
             }
         }
     };
 
+
     @Override
-    public void updateRecyclerView(List<FoodBean> foodBeanList) {
+    public void updateRecyclerView(List<NurtureBean> nurtureBeen) {
         if(refreshLayout.isRefreshing()){
             data.clear();
             refreshLayout.setRefreshing(false);
         }
-        data.addAll(foodBeanList);
-        foodAdapter.setData(data);
+        data.addAll(nurtureBeen);
+        nurtureAdapter.setNurtureList(data);
         wrapperAdapter.notifyDataSetChanged();
     }
-
 
     @Override
     public void showEndFooterView() {

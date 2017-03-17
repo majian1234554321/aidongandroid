@@ -229,7 +229,7 @@ public class CoursePresentImpl implements CoursePresent{
             @Override
             public void onNext(BaseBean baseBean) {
                 if(baseBean != null){
-                    courseDetailActivityView.cancelFollow(baseBean);
+                    courseDetailActivityView.cancelFollowResult(baseBean);
                 }
             }
         },id);

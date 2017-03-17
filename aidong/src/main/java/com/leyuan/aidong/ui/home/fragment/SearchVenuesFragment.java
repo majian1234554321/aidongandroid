@@ -49,7 +49,7 @@ public class SearchVenuesFragment extends BaseFragment implements SearchVenuesFr
         if(bundle != null){
             keyword = bundle.getString("keyword");
         }
-        return inflater.inflate(R.layout.fragment_result,null);
+        return inflater.inflate(R.layout.fragment_result,container,false);
     }
 
     @Override

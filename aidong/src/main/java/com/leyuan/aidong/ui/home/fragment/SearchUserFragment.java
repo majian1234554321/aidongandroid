@@ -44,13 +44,12 @@ public class SearchUserFragment extends BaseFragment implements SearchUserFragme
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        pageSize = 20;
         present = new SearchPresentImpl(getContext(),this);
         Bundle bundle = getArguments();
         if(bundle != null){
             keyword = bundle.getString("keyword");
         }
-        return inflater.inflate(R.layout.fragment_result,null);
+        return inflater.inflate(R.layout.fragment_result,container,false);
     }
 
     @Override

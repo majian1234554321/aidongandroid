@@ -22,7 +22,7 @@ import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.PhotoBrowseInfo;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.ui.App;
-import com.leyuan.aidong.ui.BaseFragment;
+import com.leyuan.aidong.ui.BasePageFragment;
 import com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity;
 import com.leyuan.aidong.ui.discover.activity.PhotoBrowseActivity;
 import com.leyuan.aidong.ui.discover.viewholder.FiveImageViewHolder;
@@ -58,7 +58,7 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_TO_DYNAMIC;
  * 爱动圈
  * Created by song on 2016/12/26.
  */
-public class CircleFragment extends BaseFragment implements SportCircleFragmentView {
+public class CircleFragment extends BasePageFragment implements SportCircleFragmentView {
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
@@ -72,15 +72,15 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_circle, container,false);
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        View view = inflater.inflate(R.layout.fragment_circle, container, false);
         dynamicPresent = new DynamicPresentImpl(getContext(), this);
         initSwipeRefreshLayout(view);
         initRecyclerView(view);
+        return view;
+    }
+
+    @Override
+    public void fetchData() {
         dynamicPresent.commonLoadData(switcherLayout);
     }
 
@@ -157,7 +157,6 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
             DynamicDetailActivity.start(getContext(),dynamicBean);
         }
 
-
         @Override
         public void onAvatarClick(String id) {
             UserInfoActivity.start(getContext(),id);
@@ -172,8 +171,8 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
         }
 
         @Override
-        public void onImageClick(List<String> photoUrls, List<Rect> viewLocalRect, int currentPhotoPosition) {
-            PhotoBrowseInfo info = PhotoBrowseInfo.create(photoUrls, viewLocalRect, currentPhotoPosition);
+        public void onImageClick(List<String> photoUrls, List<Rect> viewLocalRect, int currPosition) {
+            PhotoBrowseInfo info = PhotoBrowseInfo.create(photoUrls, viewLocalRect, currPosition);
             PhotoBrowseActivity.start((Activity) getContext(), info);
         }
 
@@ -242,7 +241,6 @@ public class CircleFragment extends BaseFragment implements SportCircleFragmentV
             Toast.makeText(getContext(),"取消赞失败:"+baseBean.getMessage(),Toast.LENGTH_LONG).show();
         }
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -75,6 +75,21 @@ public class SystemInfoUtils {
         }
     }
 
+    public static boolean isFolllow(Context context,UserBean bean){
+        boolean isFollow = false;
+        List<UserBean> followList = getFollowList(context);
+        for (UserBean userBean : followList) {
+            if(bean == null){
+                return false;
+            }
+            if(userBean.getId().equals(bean.getId())){
+                isFollow = true;
+                break;
+            }
+        }
+        return isFollow;
+    }
+
 
     /**
      * 获取首页广告

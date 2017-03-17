@@ -5,14 +5,14 @@ import android.support.v7.widget.RecyclerView;
 
 import com.leyuan.aidong.entity.CampaignBean;
 import com.leyuan.aidong.entity.CourseBean;
-import com.leyuan.aidong.entity.FoodBean;
-import com.leyuan.aidong.entity.GoodsBean;
+import com.leyuan.aidong.entity.EquipmentBean;
+import com.leyuan.aidong.entity.NurtureBean;
 import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.entity.data.CampaignData;
 import com.leyuan.aidong.entity.data.CourseData;
-import com.leyuan.aidong.entity.data.FoodData;
-import com.leyuan.aidong.entity.data.SearchGoodsData;
+import com.leyuan.aidong.entity.data.EquipmentData;
+import com.leyuan.aidong.entity.data.SearchNurtureData;
 import com.leyuan.aidong.entity.data.UserData;
 import com.leyuan.aidong.entity.data.VenuesData;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
@@ -24,8 +24,8 @@ import com.leyuan.aidong.ui.mvp.presenter.SearchPresent;
 import com.leyuan.aidong.ui.mvp.view.SearchActivityView;
 import com.leyuan.aidong.ui.mvp.view.SearchCampaignFragmentView;
 import com.leyuan.aidong.ui.mvp.view.SearchCourseFragmentView;
-import com.leyuan.aidong.ui.mvp.view.SearchFoodFragmentView;
-import com.leyuan.aidong.ui.mvp.view.SearchGoodsFragmentView;
+import com.leyuan.aidong.ui.mvp.view.SearchEquipmentFragmentView;
+import com.leyuan.aidong.ui.mvp.view.SearchNurtureFragmentView;
 import com.leyuan.aidong.ui.mvp.view.SearchUserFragmentView;
 import com.leyuan.aidong.ui.mvp.view.SearchVenuesFragmentView;
 import com.leyuan.aidong.utils.Constant;
@@ -40,24 +40,26 @@ import io.realm.Realm;
  * 搜索
  * Created by song on 2016/9/21.
  */
+//todo 优化
 public class SearchPresentImpl implements SearchPresent{
     private Context context;
     private SearchModel searchModel;
 
     private List<CampaignBean> campaignList;
-    private List<GoodsBean> goodsList;
-    private List<CourseBean> courseList;
-    private List<FoodBean> foodList;
-    private List<UserBean> userList;
-    private List<VenuesBean> venuesList;
 
-    private SearchActivityView searchActivityView;  //搜索View层对象
-    private SearchCampaignFragmentView campaignView;//搜索活动View层对象
-    private SearchGoodsFragmentView goodsView;      //搜索商品View层对象
-    private SearchCourseFragmentView courseView;    //搜索课程View层对象
-    private SearchFoodFragmentView foodView;        //搜索健康餐饮View层对象
-    private SearchUserFragmentView userView;        //搜索用户View层对象
-    private SearchVenuesFragmentView venuesView;    //搜索场馆View层对象
+    private List<CourseBean> courseList = new ArrayList<>();
+    private List<NurtureBean> nurtureList = new ArrayList<>();
+    private List<EquipmentBean> equipmentList = new ArrayList<>();
+    private List<UserBean> userList = new ArrayList<>();
+    private List<VenuesBean> venuesList = new ArrayList<>();
+
+    private SearchActivityView searchActivityView;      //搜索View层对象
+    private SearchCampaignFragmentView campaignView;    //搜索活动View层对象
+    private SearchCourseFragmentView courseView;        //搜索课程View层对象
+    private SearchNurtureFragmentView nurtureView;      //搜索营养品View层对象
+    private SearchEquipmentFragmentView equipmentView;  //搜索装备View层对象
+    private SearchUserFragmentView userView;            //搜索用户View层对象
+    private SearchVenuesFragmentView venuesView;        //搜索场馆View层对象
 
     public SearchPresentImpl(Context context, SearchActivityView view, Realm realm) {
         this.context = context;
@@ -76,9 +78,9 @@ public class SearchPresentImpl implements SearchPresent{
         }
     }
 
-    public SearchPresentImpl(Context context, SearchGoodsFragmentView view) {
+    public SearchPresentImpl(Context context, SearchEquipmentFragmentView view) {
         this.context = context;
-        this.goodsView = view;
+        this.equipmentView = view;
         campaignList = new ArrayList<>();
         if(searchModel == null){
             searchModel = new SearchModelImpl();
@@ -88,16 +90,16 @@ public class SearchPresentImpl implements SearchPresent{
     public SearchPresentImpl(Context context, SearchCourseFragmentView view) {
         this.context = context;
         this.courseView = view;
-        goodsList = new ArrayList<>();
+        nurtureList = new ArrayList<>();
         if(searchModel == null){
             searchModel = new SearchModelImpl();
         }
     }
 
-    public SearchPresentImpl(Context context, SearchFoodFragmentView view) {
+    public SearchPresentImpl(Context context, SearchNurtureFragmentView view) {
         this.context = context;
-        this.foodView = view;
-        foodList = new ArrayList<>();
+        this.nurtureView = view;
+        equipmentList = new ArrayList<>();
         if(searchModel == null){
             searchModel = new SearchModelImpl();
         }
@@ -155,18 +157,18 @@ public class SearchPresentImpl implements SearchPresent{
     }
 
     @Override
-    public void commonLoadGoodsData(final SwitcherLayout switcherLayout, String keyword) {
-        searchModel.searchGoods(new CommonSubscriber<SearchGoodsData>(switcherLayout) {
+    public void commonLoadEquipmentData(final SwitcherLayout switcherLayout, String keyword) {
+        searchModel.searchEquipment(new CommonSubscriber<EquipmentData>(switcherLayout) {
             @Override
-            public void onNext(SearchGoodsData searchGoodsData) {
-                if (searchGoodsData != null) {
-                    goodsList = searchGoodsData.getProduct();
+            public void onNext(EquipmentData equipmentData) {
+                if (equipmentData != null) {
+                    equipmentList = equipmentData.getEquipment();
                 }
-                if(goodsList.isEmpty()){
+                if(equipmentList.isEmpty()){
                     switcherLayout.showEmptyLayout();
                 }else {
                     switcherLayout.showContentLayout();
-                    goodsView.updateRecyclerView(goodsList);
+                    equipmentView.updateRecyclerView(equipmentList);
                 }
             }
         },keyword, Constant.PAGE_FIRST);
@@ -191,18 +193,19 @@ public class SearchPresentImpl implements SearchPresent{
     }
 
     @Override
-    public void commonLoadFoodData(final SwitcherLayout switcherLayout, String keyword) {
-        searchModel.searchFood(new CommonSubscriber<FoodData>(switcherLayout) {
+    public void commonLoadNurtureData(final SwitcherLayout switcherLayout, String keyword) {
+        searchModel.searchNurture(new CommonSubscriber<SearchNurtureData>(switcherLayout) {
             @Override
-            public void onNext(FoodData foodData) {
-                if(foodData != null){
-                    foodList = foodData.getFood();
+            public void onNext(SearchNurtureData searchNurtureData) {
+                if(searchNurtureData != null){
+                    nurtureList = searchNurtureData.getNutrition();
                 }
-                if(foodList.isEmpty()){
+
+                if(nurtureList.isEmpty()){
                     switcherLayout.showEmptyLayout();
                 }else {
                     switcherLayout.showContentLayout();
-                    foodView.updateRecyclerView(foodList);
+                    nurtureView.updateRecyclerView(nurtureList);
                 }
             }
         },keyword, Constant.PAGE_FIRST);
@@ -260,15 +263,15 @@ public class SearchPresentImpl implements SearchPresent{
     }
 
     @Override
-    public void pullToRefreshGoodsData(String keyword) {
-        searchModel.searchGoods(new RefreshSubscriber<SearchGoodsData>(context) {
+    public void pullToRefreshEquipmentData(String keyword) {
+        searchModel.searchEquipment(new RefreshSubscriber<EquipmentData>(context) {
             @Override
-            public void onNext(SearchGoodsData searchGoodsData) {
-                if(searchGoodsData != null){
-                    goodsList = searchGoodsData.getProduct();
+            public void onNext(EquipmentData equipmentData) {
+                if(equipmentData != null){
+                    equipmentList = equipmentData.getEquipment();
                 }
-                if(!goodsList.isEmpty()){
-                    goodsView.updateRecyclerView(goodsList);
+                if(!equipmentList.isEmpty()){
+                    equipmentView.updateRecyclerView(equipmentList);
                 }
             }
         },keyword,Constant.PAGE_FIRST);
@@ -290,15 +293,15 @@ public class SearchPresentImpl implements SearchPresent{
     }
 
     @Override
-    public void pullToRefreshFoodData(String keyword) {
-        searchModel.searchFood(new RefreshSubscriber<FoodData>(context) {
+    public void pullToRefreshNurtureData(String keyword) {
+        searchModel.searchNurture(new RefreshSubscriber<SearchNurtureData>(context) {
             @Override
-            public void onNext(FoodData foodData) {
-                if(foodData != null){
-                    foodList = foodData.getFood();
+            public void onNext(SearchNurtureData searchNurtureData) {
+                if (searchNurtureData != null) {
+                    nurtureList = searchNurtureData.getNutrition();
                 }
-                if(!foodList.isEmpty()){
-                    foodView.updateRecyclerView(foodList);
+                if (!nurtureList.isEmpty()) {
+                    nurtureView.updateRecyclerView(nurtureList);
                 }
             }
         },keyword,Constant.PAGE_FIRST);
@@ -353,18 +356,18 @@ public class SearchPresentImpl implements SearchPresent{
     }
 
     @Override
-    public void requestMoreGoodsData(RecyclerView recyclerView, String keyword, final int pageSize, int page) {
-        searchModel.searchGoods(new RequestMoreSubscriber<SearchGoodsData>(context,recyclerView,pageSize) {
+    public void requestMoreEquipmentData(RecyclerView recyclerView, String keyword, final int pageSize, int page) {
+        searchModel.searchEquipment(new RequestMoreSubscriber<EquipmentData>(context,recyclerView,pageSize) {
             @Override
-            public void onNext(SearchGoodsData searchGoodsData) {
-                if(searchGoodsData != null){
-                    goodsList = searchGoodsData.getProduct();
+            public void onNext(EquipmentData equipmentData) {
+                if(equipmentData != null){
+                    equipmentList = equipmentData.getEquipment();
                 }
-                if(!goodsList.isEmpty()){
-                    goodsView.updateRecyclerView(goodsList);
+                if(!equipmentList.isEmpty()){
+                    equipmentView.updateRecyclerView(equipmentList);
                 }
-                if(goodsList.size() < pageSize){
-                    goodsView.showEndFooterView();
+                if(nurtureList.size() < pageSize){
+                    equipmentView.showEndFooterView();
                 }
             }
         },keyword,page);
@@ -389,18 +392,18 @@ public class SearchPresentImpl implements SearchPresent{
     }
 
     @Override
-    public void requestMoreFoodData(RecyclerView recyclerView, String keyword, final int pageSize, int page) {
-        searchModel.searchFood(new RequestMoreSubscriber<FoodData>(context,recyclerView,pageSize) {
+    public void requestMoreNurtureData(RecyclerView recyclerView, String keyword, final int pageSize, int page) {
+        searchModel.searchNurture(new RequestMoreSubscriber<SearchNurtureData>(context,recyclerView,pageSize) {
             @Override
-            public void onNext(FoodData foodData) {
-                if(foodData != null){
-                    foodList = foodData.getFood();
+            public void onNext(SearchNurtureData searchNurtureData) {
+                if(searchNurtureData != null){
+                    nurtureList = searchNurtureData.getNutrition();
                 }
-                if(!foodList.isEmpty()){
-                    foodView.updateRecyclerView(foodList);
+                if(!nurtureList.isEmpty()){
+                    nurtureView.updateRecyclerView(nurtureList);
                 }
-                if(foodList.size() < pageSize){
-                    foodView.showEndFooterView();
+                if(equipmentList.size() < pageSize){
+                    nurtureView.showEndFooterView();
                 }
             }
         },keyword,page);
