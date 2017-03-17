@@ -107,7 +107,7 @@ public class CoursePresentImpl implements CoursePresent{
             public void onNext(CourseData courseData) {
                 if (courseData != null && courseData.getCourse() != null && !courseData.getCourse().isEmpty()) {
                     switcherLayout.showContentLayout();
-                    courserFragmentView.updateRecyclerView(courseData.getCourse());
+                    courserFragmentView.refreshRecyclerViewData(courseData.getCourse());
                 } else {
                     switcherLayout.showEmptyLayout();
                 }
@@ -124,7 +124,7 @@ public class CoursePresentImpl implements CoursePresent{
             @Override
             public void onNext(CourseData courseData) {
                 if (courseData != null && courseData.getCourse() != null && !courseData.getCourse().isEmpty()) {
-                    courserFragmentView.updateRecyclerView(courseData.getCourse());
+                    courserFragmentView.refreshRecyclerViewData(courseData.getCourse());
                 } else {
                     courserFragmentView.showEmptyView();
                 }
@@ -144,7 +144,7 @@ public class CoursePresentImpl implements CoursePresent{
                     courseBeanList = courseData.getCourse();
                 }
                 if (!courseBeanList.isEmpty()) {
-                    courserFragmentView.updateRecyclerView(courseBeanList);
+                    courserFragmentView.loadMoreRecyclerViewData(courseBeanList);
                 }
                 //没有更多数据了显示到底提示
                 if (courseBeanList != null && courseBeanList.size() < pageSize) {

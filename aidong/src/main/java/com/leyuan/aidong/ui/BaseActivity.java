@@ -91,7 +91,7 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
         if (TextUtils.isEmpty(type)) return;
         switch (type) {
             case "course":
-                CourseDetailActivity.start(this, id);
+                CourseDetailActivity.start(this,id);
                 break;
             case "campaign":
                 CampaignDetailActivity.start(this, id);

@@ -128,8 +128,8 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
         rightListView.setVisibility(GONE);
         if(categoryAdapter == null){
             categoryAdapter = new CategoryListAdapter(context, categoryList);
+            leftListView.setAdapter(categoryAdapter);
         }
-        leftListView.setAdapter(categoryAdapter);
         leftListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -279,5 +279,23 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
     public void setCircleList(List<DistrictBean> circleList) {
         if(circleList != null)
         this.leftCircleList = circleList;
+    }
+
+    public void selectCategory(String category){
+        if(categoryList == null || categoryList.isEmpty()){
+            return;
+        }
+
+        for (int i = 0; i < categoryList.size(); i++) {
+            if(categoryList.get(i).getName().equals(category)){
+                if(categoryAdapter == null){
+                    categoryAdapter = new CategoryListAdapter(context, categoryList);
+                    leftListView.setAdapter(categoryAdapter);
+                }
+                tvCategory.setText(category);
+                categoryAdapter.setCheckItem(i);
+                break;
+            }
+        }
     }
 }
