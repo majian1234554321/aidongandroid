@@ -1,19 +1,19 @@
 package com.leyuan.aidong.ui.mvp.view;
 
-import com.leyuan.aidong.entity.FoodBean;
+import com.leyuan.aidong.entity.EquipmentBean;
 
 import java.util.List;
 
 /**
- * 搜索场馆
+ * 搜索装备
  * Created by song on 2016/9/1.
  */
-public interface SearchFoodFragmentView {
+public interface SearchEquipmentFragmentView {
     /**
      * 更新列表
-     * @param foodBeanList FoodBean
+     * @param goodsBeanList GoodsBean
      */
-    void updateRecyclerView(List<FoodBean> foodBeanList);
+    void updateRecyclerView(List<EquipmentBean> goodsBeanList);
 
 
     /**

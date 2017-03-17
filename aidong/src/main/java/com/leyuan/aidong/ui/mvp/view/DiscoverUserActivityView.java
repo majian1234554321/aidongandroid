@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.mvp.view;
 
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.UserBean;
 
 import java.util.List;
@@ -19,4 +20,10 @@ public interface DiscoverUserActivityView {
      * 显示FooterView，提示没有任何内容了
      */
     void showEndFooterView();
+
+    void showEmptyView();
+
+    void addFollowResult(BaseBean baseBean);
+
+    void cancelFollowResult(BaseBean baseBean);
 }

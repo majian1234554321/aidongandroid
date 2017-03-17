@@ -9,12 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.GoodsBean;
+import com.leyuan.aidong.adapter.home.GoodsFilterAdapter;
+import com.leyuan.aidong.entity.EquipmentBean;
 import com.leyuan.aidong.ui.BaseFragment;
-import com.leyuan.aidong.adapter.home.SearchGoodsAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.SearchPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SearchPresentImpl;
-import com.leyuan.aidong.ui.mvp.view.SearchGoodsFragmentView;
+import com.leyuan.aidong.ui.mvp.view.SearchEquipmentFragmentView;
+import com.leyuan.aidong.utils.constant.GoodsType;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -25,38 +26,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 搜索商品结果包含营养品和装备
+ * 搜索商装备
  * Created by song on 2016/12/6.
  */
-public class SearchGoodsFragment extends BaseFragment implements SearchGoodsFragmentView{
+public class SearchEquipmentFragment extends BaseFragment implements SearchEquipmentFragmentView{
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
 
     private int currPage = 1;
-    private List<GoodsBean> data;
+    private List<EquipmentBean> data;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
-    private SearchGoodsAdapter goodsAdapter;
+    private GoodsFilterAdapter equipmentAdapter;
 
     private SearchPresent present;
     private String keyword;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        pageSize = 20;
         present = new SearchPresentImpl(getContext(),this);
         Bundle bundle = getArguments();
         if(bundle != null){
             keyword = bundle.getString("keyword");
         }
-        return inflater.inflate(R.layout.fragment_result,null);
+        return inflater.inflate(R.layout.fragment_result,container,false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         initSwipeRefreshLayout(view);
         initRecyclerView(view);
-        present.commonLoadGoodsData(switcherLayout,keyword);
+        present.commonLoadEquipmentData(switcherLayout,keyword);
     }
 
     private void initSwipeRefreshLayout(View view) {
@@ -68,14 +68,14 @@ public class SearchGoodsFragment extends BaseFragment implements SearchGoodsFrag
             public void onRefresh() {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-                present.pullToRefreshGoodsData(keyword);
+                present.pullToRefreshEquipmentData(keyword);
             }
         });
 
         switcherLayout.setOnRetryListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                present.commonLoadGoodsData(switcherLayout,keyword);
+                present.commonLoadEquipmentData(switcherLayout,keyword);
             }
         });
     }
@@ -83,8 +83,8 @@ public class SearchGoodsFragment extends BaseFragment implements SearchGoodsFrag
     private void initRecyclerView(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_result);
         data = new ArrayList<>();
-        goodsAdapter = new SearchGoodsAdapter(getContext());
-        wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(goodsAdapter);
+        equipmentAdapter = new GoodsFilterAdapter(getContext(), GoodsType.EQUIPMENT);
+        wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(equipmentAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(wrapperAdapter);
         recyclerView.addOnScrollListener(onScrollListener);
@@ -95,19 +95,19 @@ public class SearchGoodsFragment extends BaseFragment implements SearchGoodsFrag
         public void onLoadNextPage(View view) {
             currPage ++;
             if (data != null && data.size() >= pageSize) {
-                present.requestMoreGoodsData(recyclerView,keyword,pageSize,currPage);
+                present.requestMoreEquipmentData(recyclerView,keyword,pageSize,currPage);
             }
         }
     };
 
     @Override
-    public void updateRecyclerView(List<GoodsBean> goodsBeanList) {
+    public void updateRecyclerView(List<EquipmentBean> equipmentList) {
         if(refreshLayout.isRefreshing()){
             data.clear();
             refreshLayout.setRefreshing(false);
         }
-        data.addAll(goodsBeanList);
-        goodsAdapter.setData(data);
+        data.addAll(equipmentList);
+        equipmentAdapter.setEquipmentList(data);
         wrapperAdapter.notifyDataSetChanged();
     }
 

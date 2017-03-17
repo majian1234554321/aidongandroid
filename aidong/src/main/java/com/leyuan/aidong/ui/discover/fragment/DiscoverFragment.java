@@ -20,7 +20,7 @@ import com.leyuan.aidong.adapter.discover.DiscoverNewsAdapter;
 import com.leyuan.aidong.adapter.discover.DiscoverUserAdapter;
 import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.entity.data.DiscoverData;
-import com.leyuan.aidong.ui.BaseFragment;
+import com.leyuan.aidong.ui.BasePageFragment;
 import com.leyuan.aidong.ui.MainActivity;
 import com.leyuan.aidong.ui.discover.activity.DiscoverUserActivity;
 import com.leyuan.aidong.ui.discover.activity.DiscoverVenuesActivity;
@@ -40,7 +40,7 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  * 发现 -- 发现
  * Created by song on 2016/11/19.
  */
-public class DiscoverFragment extends BaseFragment implements DiscoverFragmentView, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class DiscoverFragment extends BasePageFragment implements DiscoverFragmentView, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
     private NestedScrollView scrollView;
@@ -61,17 +61,16 @@ public class DiscoverFragment extends BaseFragment implements DiscoverFragmentVi
 
     private DiscoverPresent discoverPresent;
 
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_discover, container, false);
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        View view = inflater.inflate(R.layout.fragment_discover, container, false);
         discoverPresent = new DiscoverPresentImpl(getContext(), this);
         initView(view);
         setListener();
+        return view;
+    }
+
+    @Override
+    public void fetchData() {
         discoverPresent.commonLoadDiscoverData(switcherLayout);
     }
 

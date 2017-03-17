@@ -366,7 +366,12 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 AddressBean address = data.getParcelableExtra("address");
                 updateAddressStatus(address);
             }else if(requestCode == REQUEST_SELECT_COUPON){
-
+                CouponBean couponBean = data.getParcelableExtra("coupon");
+                tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double),
+                        FormatUtil.parseDouble(couponBean.getDiscount())));
+                double deliveryPrice = needExpress ? EXPRESS_PRICE : 0;
+                tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double),
+                        totalGoodsPrice + deliveryPrice - FormatUtil.parseDouble(couponBean.getDiscount())));
             }
         }
     }

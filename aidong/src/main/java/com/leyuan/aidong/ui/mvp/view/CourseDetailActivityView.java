@@ -25,5 +25,5 @@ public interface CourseDetailActivityView {
      * 取消关注
      * @param baseBean
      */
-    void cancelFollow(BaseBean baseBean);
+    void cancelFollowResult(BaseBean baseBean);
 }

@@ -34,4 +34,16 @@ public interface DiscoverPresent {
      */
     void requestMoreUserData(RecyclerView recyclerView, double lat, double lng, String gender, String type,int size, int page);
     void requestMoreNewsData(RecyclerView recyclerView,int pageSize,int page);
+
+    /**
+     * 添加关注
+     * @param id
+     */
+    void addFollow(String id);
+
+    /**
+     * 取消关注
+     * @param id
+     */
+    void cancelFollow(String id);
 }

@@ -124,6 +124,4 @@ public class SearchActivity extends BaseActivity implements SearchActivityView{
     public void setHistory(List<SearchHistoryBean> histories) {
         historyAdapter.setData(histories);
     }
-
-
 }

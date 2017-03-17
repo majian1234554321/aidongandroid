@@ -18,7 +18,6 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.ApplicantAdapter;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CourseDetailBean;
-import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
@@ -32,8 +31,6 @@ import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.zzhoujay.richtext.RichText;
-
-import java.util.List;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 
@@ -208,7 +205,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         tvStartTime.setText(String.format(getString(R.string.appoint_time),
                 bean.getClassDate()+bean.getClassTime()));
 
-        isFollow = isFollow(bean.getCoach().getId());
+        isFollow = SystemInfoUtils.isFolllow(this,bean.getCoach());
         ivFollow.setBackgroundResource(isFollow ? R.drawable.icon_following
                 : R.drawable.icon_follow);
 
@@ -307,7 +304,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     }
 
     @Override
-    public void cancelFollow(BaseBean baseBean) {
+    public void cancelFollowResult(BaseBean baseBean) {
         if(baseBean.getStatus() == Constant.OK){
             isFollow = false;
             SystemInfoUtils.removeFollow(bean.getCoach());
@@ -316,20 +313,5 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         }else {
             Toast.makeText(this,R.string.cancel_follow_fail + baseBean.getMessage(),Toast.LENGTH_LONG).show();
         }
-    }
-
-    private boolean isFollow(String coachId) {
-        boolean isFollow = false;
-        List<UserBean> followList = SystemInfoUtils.getFollowList(this);
-        if( followList == null || followList.isEmpty() || TextUtils.isEmpty(coachId)) {
-            return false;
-        }
-        for (UserBean userBean : followList) {
-            if (coachId.equals(userBean.getId())){
-                isFollow = true;
-                break;
-            }
-        }
-        return isFollow;
     }
 }

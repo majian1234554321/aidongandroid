@@ -20,6 +20,7 @@ import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.http.subscriber.handler.ProgressDialogHandler;
 import com.leyuan.aidong.ui.discover.activity.VenuesDetailActivity;
 import com.leyuan.aidong.ui.home.activity.CampaignDetailActivity;
+import com.leyuan.aidong.ui.home.activity.CourseActivity;
 import com.leyuan.aidong.ui.home.activity.CourseDetailActivity;
 import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
 import com.leyuan.aidong.utils.Logger;
@@ -83,7 +84,6 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
 
     /**
      * 列表页跳转目标详情页
-     *
      * @param type course-课程 campaign-活动 event-赛事 food-健康餐饮 nutrition-营养品 equipment-装备
      * @param id   id
      */
@@ -118,7 +118,7 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
      * 广告跳转目标页
      *
      * @param bannerBean BannerBean
-     *                   广告类型,#10-内嵌网页 11-外部网页 20-场馆详情页 21-营养品详情页 22-课程详情页 23-活动详情页
+     *                   广告类型,#10-内嵌网页 11-外部网页 20-场馆详情页 21-营养品详情页 22-课程列表 23-活动详情页
      */
     public void toTargetActivity(BannerBean bannerBean) {
         if (TextUtils.isEmpty(bannerBean.getType())) return;
@@ -138,7 +138,7 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
                 GoodsDetailActivity.start(this, bannerBean.getLink(), GoodsType.NUTRITION);
                 break;
             case "22":
-                CourseDetailActivity.start(this, bannerBean.getLink());
+                CourseActivity.start(this,bannerBean.getLink());
                 break;
             case "23":
                 CampaignDetailActivity.start(this, bannerBean.getLink());

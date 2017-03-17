@@ -3,8 +3,8 @@ package com.leyuan.aidong.ui.mvp.model.impl;
 import com.leyuan.aidong.entity.SearchHistoryBean;
 import com.leyuan.aidong.entity.data.CampaignData;
 import com.leyuan.aidong.entity.data.CourseData;
-import com.leyuan.aidong.entity.data.FoodData;
-import com.leyuan.aidong.entity.data.SearchGoodsData;
+import com.leyuan.aidong.entity.data.EquipmentData;
+import com.leyuan.aidong.entity.data.SearchNurtureData;
 import com.leyuan.aidong.entity.data.UserData;
 import com.leyuan.aidong.entity.data.VenuesData;
 import com.leyuan.aidong.http.RetrofitHelper;
@@ -24,9 +24,9 @@ import rx.Subscriber;
  */
 public class SearchModelImpl implements SearchModel {
     private static final String SEARCH_VENUES = "gym";
-    private static final String SEARCH_GOODS = "product";
     private static final String SEARCH_COURSE = "course";
-    private static final String SEARCH_FOOD = "food";
+    private static final String SEARCH_NURTURE = "nutrition";
+    private static final String SEARCH_EQUIPMENT = "equipment";
     private static final String SEARCH_CAMPAIGN = "campaign";
     private static final String SEARCH_USER = "user";
 
@@ -51,9 +51,9 @@ public class SearchModelImpl implements SearchModel {
     }
 
     @Override
-    public void searchGoods(Subscriber<SearchGoodsData> subscriber, String keyword, int page) {
-        searchService.searchGoods(keyword, SEARCH_GOODS, page)
-                .compose(RxHelper.<SearchGoodsData>transform())
+    public void searchNurture(Subscriber<SearchNurtureData> subscriber, String keyword, int page) {
+        searchService.searchNurture(keyword, SEARCH_NURTURE, page)
+                .compose(RxHelper.<SearchNurtureData>transform())
                 .subscribe(subscriber);
     }
 
@@ -64,10 +64,11 @@ public class SearchModelImpl implements SearchModel {
                 .subscribe(subscriber);
     }
 
+
     @Override
-    public void searchFood(Subscriber<FoodData> subscriber, String keyword, int page) {
-        searchService.searchFood(keyword, SEARCH_FOOD, page)
-                .compose(RxHelper.<FoodData>transform())
+    public void searchEquipment(Subscriber<EquipmentData> subscriber, String keyword, int page) {
+        searchService.searchEquipment(keyword, SEARCH_EQUIPMENT, page)
+                .compose(RxHelper.<EquipmentData>transform())
                 .subscribe(subscriber);
     }
 

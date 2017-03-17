@@ -48,9 +48,8 @@ public class SearchCourseFragment extends BaseFragment implements SearchCourseFr
         if(bundle != null){
             keyword = bundle.getString("keyword");
         }
-        pageSize = 20;
         present = new SearchPresentImpl(getContext(),this);
-        return inflater.inflate(R.layout.fragment_result,null);
+        return inflater.inflate(R.layout.fragment_result,container,false);
     }
 
     @Override
