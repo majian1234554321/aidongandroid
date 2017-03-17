@@ -1,6 +1,7 @@
 package com.leyuan.aidong.adapter.mine;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
@@ -29,10 +30,12 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponHold
     private String type;
     private Context context;
     private List<CouponBean> data = new ArrayList<>();
+    private int unvalidColor;
 
     public CouponAdapter(Context context, String type) {
         this.context = context;
         this.type = type;
+        unvalidColor = Color.parseColor("#999999");
     }
 
     public void setData(List<CouponBean> data) {
@@ -128,14 +131,14 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponHold
             case USED:
                 holder.tvTime.setText(String.format(context.getString(R.string.coupon_used), bean.getEndDate()));
                 holder.itemView.setBackgroundResource(R.drawable.bg_coupon_fold_gray);
-                holder.tvRmbFlag.setTextColor(R.color.c9);
-                holder.tvCouponPrice.setTextColor(R.color.c9);
-                holder.tvName.setTextColor(R.color.c9);
-                holder.tvProduce.setTextColor(R.color.c9);
-                holder.tvUseMoney.setTextColor(R.color.c9);
-                holder.tvCouponType.setTextColor(R.color.c9);
-                holder.tvTime.setTextColor(R.color.c9);
-                holder.tvDesc.setTextColor(R.color.c9);
+                holder.tvRmbFlag.setTextColor(unvalidColor);
+                holder.tvCouponPrice.setTextColor(unvalidColor);
+                holder.tvName.setTextColor(unvalidColor);
+                holder.tvProduce.setTextColor(unvalidColor);
+                holder.tvUseMoney.setTextColor(unvalidColor);
+                holder.tvCouponType.setTextColor(unvalidColor);
+                holder.tvTime.setTextColor(unvalidColor);
+                holder.tvDesc.setTextColor(unvalidColor);
 
                 break;
             case EXPIRED:
@@ -146,14 +149,14 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponHold
                             bean.getStartDate(), bean.getEndDate()));
                 }
                 holder.itemView.setBackgroundResource(R.drawable.bg_coupon_fold_gray);
-                holder.tvRmbFlag.setTextColor(R.color.c9);
-                holder.tvCouponPrice.setTextColor(R.color.c9);
-                holder.tvName.setTextColor(R.color.c9);
-                holder.tvProduce.setTextColor(R.color.c9);
-                holder.tvUseMoney.setTextColor(R.color.c9);
-                holder.tvCouponType.setTextColor(R.color.c9);
-                holder.tvTime.setTextColor(R.color.c9);
-                holder.tvDesc.setTextColor(R.color.c9);
+                holder.tvRmbFlag.setTextColor(unvalidColor);
+                holder.tvCouponPrice.setTextColor(unvalidColor);
+                holder.tvName.setTextColor(unvalidColor);
+                holder.tvProduce.setTextColor(unvalidColor);
+                holder.tvUseMoney.setTextColor(unvalidColor);
+                holder.tvCouponType.setTextColor(unvalidColor);
+                holder.tvTime.setTextColor(unvalidColor);
+                holder.tvDesc.setTextColor(unvalidColor);
                 break;
             default:
                 break;

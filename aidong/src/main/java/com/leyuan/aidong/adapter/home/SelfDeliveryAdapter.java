@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.VenuesBean;
-import com.leyuan.aidong.utils.FormatUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,8 +48,9 @@ public class SelfDeliveryAdapter extends RecyclerView.Adapter<SelfDeliveryAdapte
         holder.checkBox.setChecked(bean.isChecked());
         holder.tvShopName.setText(bean.getName());
         holder.tvAddress.setText(bean.getAddress());
-        holder.tvDistance.setText(String.format(context.getResources().getString(R.string.distance_km),
-                String.valueOf(FormatUtil.parseDouble(bean.getDistance()))));
+        holder.tvDistance.setText(String.format("%.2f", (bean.getDistance() / 1000)) + "km");
+//                String.format(context.getResources().getString(R.string.distance_km),
+//                String.valueOf(FormatUtil.parseDouble(bean.getDistance()))));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

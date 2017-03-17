@@ -48,7 +48,7 @@ public class DiscoverBrandsAdapter extends RecyclerView.Adapter<DiscoverBrandsAd
         final BrandBean bean = data.get(position);
         GlideLoader.getInstance().displayImage(bean.getLogo(), holder.cover);
         holder.name.setText(bean.getName());
-        holder.distance.setText("附件有" + bean.getGyms_count() + "家场馆");
+        holder.distance.setText( bean.getGyms_count() + "家分店");
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

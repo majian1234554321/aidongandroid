@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class TabMineChangePasswordActivity extends BaseActivity  {
+public class TabMineChangePasswordActivity extends BaseActivity {
     private static final int CHANGEPASSWORD = 0;
     private Button mlayout_tab_mine_change_password_btn;
     private EditText mverification_edittext;

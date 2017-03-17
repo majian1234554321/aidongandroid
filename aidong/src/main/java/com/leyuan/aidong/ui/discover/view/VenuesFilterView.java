@@ -140,7 +140,7 @@ public class VenuesFilterView extends LinearLayout implements View.OnClickListen
                 tvBrand.setText(brandList.get(position).getName());
                 hidePopup();
                 if (onFilterClickListener != null) {
-                    onFilterClickListener.onBrandItemClick(brandList.get(position).getName());
+                    onFilterClickListener.onBrandItemClick(brandList.get(position).getId());
                 }
             }
         });

@@ -32,4 +32,8 @@ public interface DiscoverVenuesActivityView {
      * 显示FooterView，提示没有任何内容了
      */
     void showEndFooterView();
+
+    void onRefreshData(List<VenuesBean> venuesBeanList);
+
+    void onLoadMoreData(List<VenuesBean> venuesBeanList);
 }

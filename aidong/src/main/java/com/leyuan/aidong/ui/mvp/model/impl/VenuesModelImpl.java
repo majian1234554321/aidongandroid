@@ -32,7 +32,7 @@ public class VenuesModelImpl implements VenuesModel {
 
     public VenuesModelImpl(Context context) {
         this.context = context;
-        venuesService =  RetrofitHelper.createApi(VenuesService.class);
+        venuesService = RetrofitHelper.createApi(VenuesService.class);
     }
 
     @Override
@@ -46,8 +46,9 @@ public class VenuesModelImpl implements VenuesModel {
     }
 
     @Override
-    public void getVenues(Subscriber<VenuesData> subscriber, int page) {
-        venuesService.getVenues(page)
+    public void getVenues(Subscriber<VenuesData> subscriber, int page, String brand_id,
+                          String landmark) {
+        venuesService.getVenues(page, brand_id, landmark)
                 .compose(RxHelper.<VenuesData>transform())
                 .subscribe(subscriber);
     }
@@ -67,8 +68,8 @@ public class VenuesModelImpl implements VenuesModel {
     }
 
     @Override
-    public void getCourses(Subscriber<CourseData> subscriber, String id,String day) {
-        venuesService.getCourses(id,day)
+    public void getCourses(Subscriber<CourseData> subscriber, String id, String day) {
+        venuesService.getCourses(id, day)
                 .compose(RxHelper.<CourseData>transform())
                 .subscribe(subscriber);
     }
@@ -76,7 +77,7 @@ public class VenuesModelImpl implements VenuesModel {
     @Override
     public void appointVenues(Subscriber<BaseBean> subscriber, String id, String date, String period,
                               String name, String mobile) {
-        venuesService.appointVenues(id,date,period,name,mobile)
+        venuesService.appointVenues(id, date, period, name, mobile)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
@@ -85,7 +86,7 @@ public class VenuesModelImpl implements VenuesModel {
     @Override
     public void appointCoach(Subscriber<BaseBean> subscriber, String id, String coachId, String date,
                              String period, String name, String mobile) {
-        venuesService.appointCoach(id,coachId,date,period,name,mobile)
+        venuesService.appointCoach(id, coachId, date, period, name, mobile)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);

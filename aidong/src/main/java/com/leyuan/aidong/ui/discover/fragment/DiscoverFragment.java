@@ -21,6 +21,7 @@ import com.leyuan.aidong.adapter.discover.DiscoverUserAdapter;
 import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.entity.data.DiscoverData;
 import com.leyuan.aidong.ui.BaseFragment;
+import com.leyuan.aidong.ui.MainActivity;
 import com.leyuan.aidong.ui.discover.activity.DiscoverUserActivity;
 import com.leyuan.aidong.ui.discover.activity.DiscoverVenuesActivity;
 import com.leyuan.aidong.ui.discover.activity.NewsActivity;
@@ -61,14 +62,14 @@ public class DiscoverFragment extends BaseFragment implements DiscoverFragmentVi
     private DiscoverPresent discoverPresent;
 
     @Override
-    public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_discover,container,false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_discover, container, false);
     }
 
     @Override
-    public void onViewCreated(View view,Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        discoverPresent = new DiscoverPresentImpl(getContext(),this);
+        discoverPresent = new DiscoverPresentImpl(getContext(), this);
         initView(view);
         setListener();
         discoverPresent.commonLoadDiscoverData(switcherLayout);
@@ -77,7 +78,7 @@ public class DiscoverFragment extends BaseFragment implements DiscoverFragmentVi
     private void initView(View view) {
         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout);
         scrollView = (NestedScrollView) view.findViewById(R.id.scroll_view);
-        switcherLayout = new SwitcherLayout(getContext(),scrollView);
+        switcherLayout = new SwitcherLayout(getContext(), scrollView);
         banner = (BGABanner) view.findViewById(R.id.banner);
         venuesLayout = (LinearLayout) view.findViewById(R.id.ll_venues);
         userLayout = (LinearLayout) view.findViewById(R.id.ll_user);
@@ -89,8 +90,8 @@ public class DiscoverFragment extends BaseFragment implements DiscoverFragmentVi
         moreUserLayout = (RelativeLayout) view.findViewById(R.id.rl_more_user);
         moreNewsLayout = (RelativeLayout) view.findViewById(R.id.rl_more_news);
         rvVenues.setLayoutManager(new LinearLayoutManager(getContext(),
-                LinearLayoutManager.HORIZONTAL,false));
-        rvUser.setLayoutManager(new GridLayoutManager(getContext(),4));
+                LinearLayoutManager.HORIZONTAL, false));
+        rvUser.setLayoutManager(new GridLayoutManager(getContext(), 4));
         rvNews.setLayoutManager(new LinearLayoutManager(getContext()));
         rvVenues.setNestedScrollingEnabled(false);
         rvUser.setNestedScrollingEnabled(false);
@@ -104,12 +105,18 @@ public class DiscoverFragment extends BaseFragment implements DiscoverFragmentVi
         banner.setAdapter(new BGABanner.Adapter() {
             @Override
             public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
-                GlideLoader.getInstance().displayImage(((BannerBean)model).getImage(), (ImageView)view);
+                GlideLoader.getInstance().displayImage(((BannerBean) model).getImage(), (ImageView) view);
+            }
+        });
+        banner.setOnItemClickListener(new BGABanner.OnItemClickListener() {
+            @Override
+            public void onBannerItemClick(BGABanner banner, View view, Object model, int position) {
+                ((MainActivity) getActivity()).toTargetActivity((BannerBean) model);
             }
         });
     }
 
-    private void setListener(){
+    private void setListener() {
         refreshLayout.setOnRefreshListener(this);
         moreVenuesLayout.setOnClickListener(this);
         moreUserLayout.setOnClickListener(this);
@@ -123,43 +130,43 @@ public class DiscoverFragment extends BaseFragment implements DiscoverFragmentVi
 
     @Override
     public void setDiscoverData(DiscoverData discoverData) {
-        if(refreshLayout.isRefreshing()){
+        if (refreshLayout.isRefreshing()) {
             refreshLayout.setRefreshing(false);
         }
 
-        List<BannerBean> bannerList = SystemInfoUtils.getHomeBanner(getContext());
-        if(bannerList == null || bannerList.isEmpty()){
+        List<BannerBean> bannerList = SystemInfoUtils.getDiscoverBanner(getContext());
+        if (bannerList == null || bannerList.isEmpty()) {
             banner.setVisibility(View.GONE);
-        }else {
+        } else {
             banner.setVisibility(View.VISIBLE);
-            banner.setData(bannerList,null);
+            banner.setData(bannerList, null);
         }
 
-        if(discoverData.getBrand() != null && !discoverData.getBrand().isEmpty()){
+        if (discoverData.getBrand() != null && !discoverData.getBrand().isEmpty()) {
             venuesLayout.setVisibility(View.VISIBLE);
             brandsAdapter.setData(discoverData.getBrand());
-        }else {
+        } else {
             venuesLayout.setVisibility(View.GONE);
         }
 
-        if(discoverData.getUser() != null && !discoverData.getUser().isEmpty()){
+        if (discoverData.getUser() != null && !discoverData.getUser().isEmpty()) {
             userLayout.setVisibility(View.VISIBLE);
             userAdapter.setData(discoverData.getUser());
-        }else {
+        } else {
             userLayout.setVisibility(View.GONE);
         }
 
-        if(discoverData.getNews() != null && !discoverData.getNews().isEmpty()){
+        if (discoverData.getNews() != null && !discoverData.getNews().isEmpty()) {
             newsLayout.setVisibility(View.VISIBLE);
             newsAdapter.setData(discoverData.getNews());
-        }else {
+        } else {
             newsLayout.setVisibility(View.GONE);
         }
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.rl_more_venues:
                 startActivity(new Intent(getContext(), DiscoverVenuesActivity.class));
                 break;

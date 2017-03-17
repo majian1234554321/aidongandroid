@@ -33,7 +33,7 @@ import java.util.List;
  * 场馆
  * Created by song on 2016/9/21.
  */
-public class VenuesPresentImpl implements VenuesPresent{
+public class VenuesPresentImpl implements VenuesPresent {
     private Context context;
     private VenuesModel venuesModel;
 
@@ -46,11 +46,11 @@ public class VenuesPresentImpl implements VenuesPresent{
     private AppointCoachActivityView appointCoachActivityView;      //预约教练View层对象
     private SelfDeliveryVenuesActivity selfDeliveryVenuesActivity;  //自提场馆列表View层对象
 
-    public VenuesPresentImpl(Context context,DiscoverVenuesActivityView view) {
+    public VenuesPresentImpl(Context context, DiscoverVenuesActivityView view) {
         this.context = context;
         this.discoverVenuesActivityView = view;
         venuesBeanList = new ArrayList<>();
-        if(venuesModel == null){
+        if (venuesModel == null) {
             venuesModel = new VenuesModelImpl(context);
         }
     }
@@ -58,7 +58,7 @@ public class VenuesPresentImpl implements VenuesPresent{
     public VenuesPresentImpl(Context context, VenuesDetailFragmentView view) {
         this.context = context;
         this.venuesDetailFragmentView = view;
-        if(venuesModel == null){
+        if (venuesModel == null) {
             venuesModel = new VenuesModelImpl(context);
         }
     }
@@ -66,7 +66,7 @@ public class VenuesPresentImpl implements VenuesPresent{
     public VenuesPresentImpl(Context context, VenuesCourseFragmentView view) {
         this.context = context;
         this.venuesCourseFragmentView = view;
-        if(venuesModel == null){
+        if (venuesModel == null) {
             venuesModel = new VenuesModelImpl(context);
         }
     }
@@ -74,7 +74,7 @@ public class VenuesPresentImpl implements VenuesPresent{
     public VenuesPresentImpl(Context context, VenuesCoachFragmentView view) {
         this.context = context;
         this.venuesCoachFragmentView = view;
-        if(venuesModel == null){
+        if (venuesModel == null) {
             venuesModel = new VenuesModelImpl(context);
         }
     }
@@ -82,7 +82,7 @@ public class VenuesPresentImpl implements VenuesPresent{
     public VenuesPresentImpl(Context context, AppointVenuesActivityView view) {
         this.context = context;
         this.appointVenuesActivityView = view;
-        if(venuesModel == null){
+        if (venuesModel == null) {
             venuesModel = new VenuesModelImpl(context);
         }
     }
@@ -90,7 +90,7 @@ public class VenuesPresentImpl implements VenuesPresent{
     public VenuesPresentImpl(Context context, AppointCoachActivityView view) {
         this.context = context;
         this.appointCoachActivityView = view;
-        if(venuesModel == null){
+        if (venuesModel == null) {
             venuesModel = new VenuesModelImpl(context);
         }
     }
@@ -98,17 +98,17 @@ public class VenuesPresentImpl implements VenuesPresent{
     public VenuesPresentImpl(Context context, SelfDeliveryVenuesActivity view) {
         this.context = context;
         this.selfDeliveryVenuesActivity = view;
-        if(venuesModel == null){
+        if (venuesModel == null) {
             venuesModel = new VenuesModelImpl(context);
         }
     }
 
     @Override
     public void getGymBrand() {
-        if(discoverVenuesActivityView != null){
+        if (discoverVenuesActivityView != null) {
             discoverVenuesActivityView.setGymBrand(venuesModel.getGymBrand());
         }
-        if(selfDeliveryVenuesActivity != null){
+        if (selfDeliveryVenuesActivity != null) {
             selfDeliveryVenuesActivity.setGymBrand(venuesModel.getGymBrand());
         }
 
@@ -116,109 +116,125 @@ public class VenuesPresentImpl implements VenuesPresent{
 
     @Override
     public void getBusinessCircle() {
-        if(discoverVenuesActivityView != null){
+        if (discoverVenuesActivityView != null) {
             discoverVenuesActivityView.setBusinessCircle(venuesModel.getBusinessCircle());
         }
-        if(selfDeliveryVenuesActivity != null){
+        if (selfDeliveryVenuesActivity != null) {
             selfDeliveryVenuesActivity.setBusinessCircle(venuesModel.getBusinessCircle());
         }
     }
 
     @Override
-    public void commonLoadData(final SwitcherLayout switcherLayout) {
+    public void commonLoadData(final SwitcherLayout switcherLayout, String brand_id, String landmark) {
         venuesModel.getVenues(new CommonSubscriber<VenuesData>(switcherLayout) {
             @Override
             public void onNext(VenuesData venuesData) {
-                if(venuesData != null){
+                if (venuesData != null) {
                     venuesBeanList = venuesData.getGym();
                 }
-                if(!venuesBeanList.isEmpty()){
+                if (!venuesBeanList.isEmpty()) {
                     switcherLayout.showContentLayout();
-                    discoverVenuesActivityView.updateRecyclerView(venuesBeanList);
-                }else{
+                    discoverVenuesActivityView.onRefreshData(venuesBeanList);
+                } else {
                     switcherLayout.showEmptyLayout();
                 }
             }
-        },Constant.PAGE_FIRST);
+        }, Constant.PAGE_FIRST, brand_id, landmark);
     }
 
     @Override
-    public void pullToRefreshData() {
+    public void pullToRefreshData(String brand_id, String landmark) {
         venuesModel.getVenues(new RefreshSubscriber<VenuesData>(context) {
             @Override
             public void onNext(VenuesData venuesData) {
-                if(venuesData != null){
+                if (venuesData != null) {
                     venuesBeanList = venuesData.getGym();
                 }
-                if(!venuesBeanList.isEmpty()){
-                    discoverVenuesActivityView.updateRecyclerView(venuesBeanList);
+                if (!venuesBeanList.isEmpty()) {
+                    discoverVenuesActivityView.onRefreshData(venuesBeanList);
                 }
             }
-        },Constant.PAGE_FIRST);
+        }, Constant.PAGE_FIRST, brand_id, landmark);
     }
 
     @Override
-    public void requestMoreData(RecyclerView recyclerView, final int pageSize, int page) {
-        venuesModel.getVenues(new RequestMoreSubscriber<VenuesData>(context,recyclerView,pageSize) {
+    public void requestMoreData(RecyclerView recyclerView, final int pageSize, int page, String brand_id,
+                                String landmark) {
+        venuesModel.getVenues(new RequestMoreSubscriber<VenuesData>(context, recyclerView, pageSize) {
             @Override
             public void onNext(VenuesData venuesData) {
-                if(venuesData != null){
+                if (venuesData != null) {
                     venuesBeanList = venuesData.getGym();
                 }
-                if(!venuesBeanList.isEmpty()){
-                    discoverVenuesActivityView.updateRecyclerView(venuesBeanList);
+                if (!venuesBeanList.isEmpty()) {
+                    discoverVenuesActivityView.onLoadMoreData(venuesBeanList);
                 }
                 //没有更多数据了显示到底提示
-                if(venuesBeanList.size() < pageSize){
+                if (venuesBeanList.size() < pageSize) {
                     discoverVenuesActivityView.showEndFooterView();
                 }
             }
-        },page);
+        }, page, brand_id, landmark);
     }
 
     @Override
     public void getVenuesDetail(final SwitcherLayout switcherLayout, String id) {
-      venuesModel.getVenuesDetail(new CommonSubscriber<VenuesDetailData>(switcherLayout) {
+        venuesModel.getVenuesDetail(new CommonSubscriber<VenuesDetailData>(switcherLayout) {
             @Override
             public void onNext(VenuesDetailData venuesDetailData) {
-                if(venuesDetailData != null && venuesDetailData.getGym() != null){
+                if (venuesDetailData != null && venuesDetailData.getGym() != null) {
                     switcherLayout.showContentLayout();
                     venuesDetailFragmentView.setVenuesDetail(venuesDetailData.getGym());
-                }else {
+                } else {
                     switcherLayout.showEmptyLayout();
                 }
             }
-        },id);
+        }, id);
     }
 
     @Override
-    public void getCourses(final SwitcherLayout switcherLayout,String id,String day) {
+    public void getCourses(final SwitcherLayout switcherLayout, String id, String day) {
         venuesModel.getCourses(new CommonSubscriber<CourseData>(switcherLayout) {
             @Override
             public void onNext(CourseData courseData) {
-                if(courseData != null && courseData.getCourse() != null && !courseData.getCourse().isEmpty()){
+                if (courseData != null && courseData.getCourse() != null && !courseData.getCourse().isEmpty()) {
                     switcherLayout.showContentLayout();
                     venuesCourseFragmentView.setCourses(courseData.getCourse());
-                }else {
+                } else {
                     switcherLayout.showEmptyLayout();
                 }
             }
-        },id,day);
+        }, id, day);
     }
 
     @Override
-    public void getCoaches(final SwitcherLayout switcherLayout,String id) {
+    public void getCoursesFirst(final SwitcherLayout switcherLayout, String id) {
+        venuesModel.getCourses(new CommonSubscriber<CourseData>(switcherLayout) {
+            @Override
+            public void onNext(CourseData courseData) {
+                if (courseData != null && courseData.getCourse() != null && !courseData.getCourse().isEmpty()) {
+                    switcherLayout.showContentLayout();
+                } else {
+                    switcherLayout.showEmptyLayout();
+                }
+                venuesCourseFragmentView.onGetCoursesFirst(courseData);
+            }
+        }, id, null);
+    }
+
+    @Override
+    public void getCoaches(final SwitcherLayout switcherLayout, String id) {
         venuesModel.getCoaches(new CommonSubscriber<CoachData>(switcherLayout) {
             @Override
             public void onNext(CoachData coachData) {
-                if(coachData != null && coachData.getCoach() != null && !coachData.getCoach().isEmpty()){
+                if (coachData != null && coachData.getCoach() != null && !coachData.getCoach().isEmpty()) {
                     switcherLayout.showContentLayout();
                     venuesCoachFragmentView.setCoaches(coachData.getCoach());
-                }else {
+                } else {
                     switcherLayout.showEmptyLayout();
                 }
             }
-        },id);
+        }, id);
     }
 
     @Override
@@ -228,7 +244,7 @@ public class VenuesPresentImpl implements VenuesPresent{
             public void onNext(BaseBean baseBean) {
                 appointVenuesActivityView.appointVenuesResult(baseBean);
             }
-        },id,date,period,name,mobile);
+        }, id, date, period, name, mobile);
     }
 
     @Override
@@ -239,6 +255,7 @@ public class VenuesPresentImpl implements VenuesPresent{
             public void onNext(BaseBean baseBean) {
                 appointCoachActivityView.appointCoachResult(baseBean);
             }
-        },id,coachId,date,period,name,mobile);
+        }, id, coachId, date, period, name, mobile);
     }
+
 }

@@ -37,7 +37,8 @@ public interface VenuesModel {
      * @param subscriber 返回Subscriber
      * @param page 页码
      */
-     void getVenues(Subscriber<VenuesData> subscriber, int page);
+     void getVenues(Subscriber<VenuesData> subscriber, int page,String brand_id,
+                    String landmark);
 
     /**
      * 获取场馆详情

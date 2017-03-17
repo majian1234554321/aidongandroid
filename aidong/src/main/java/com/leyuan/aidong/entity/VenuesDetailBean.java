@@ -1,5 +1,7 @@
 package com.leyuan.aidong.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 
 /**
@@ -7,15 +9,37 @@ import java.util.ArrayList;
  * Created by song on 2016/8/2.
  */
 public class VenuesDetailBean {
+
+    @SerializedName("id")
     private String id;
+    @SerializedName("name")
     private String name;
+    @SerializedName("logo")
     private String logo;
+    @SerializedName("image")
     private ArrayList<String> photo;
+
+    @SerializedName("impressions")
     private String impressions;
+
+    @SerializedName("address")
     private String address;
+    @SerializedName("business_time")
     private String business_time;
+
+    @SerializedName("service")
     private ArrayList<String> service;
+    @SerializedName("tel")
     private String tel;
+
+    @SerializedName("area")
+    private String area;
+
+    private String price;
+    private double distance;
+    private double lat;
+    private double lng;
+    private int gyms_count;
 
 
     public String getId() {
@@ -88,6 +112,54 @@ public class VenuesDetailBean {
 
     public void setTel(String tel) {
         this.tel = tel;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public int getGyms_count() {
+        return gyms_count;
+    }
+
+    public void setGyms_count(int gyms_count) {
+        this.gyms_count = gyms_count;
     }
 
     @Override

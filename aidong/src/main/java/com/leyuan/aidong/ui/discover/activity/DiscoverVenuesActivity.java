@@ -34,7 +34,7 @@ import java.util.List;
  * 发现-场馆
  * Created by song on 2016/8/29.
  */
-public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenuesActivityView{
+public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenuesActivityView {
     private static final int HIDE_THRESHOLD = 80;
     private int scrolledDistance;
     private boolean filterViewVisible = true;
@@ -53,20 +53,22 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
     private ArrayList<VenuesBean> data = new ArrayList<>();
 
     private VenuesPresent venuesPresent;
+    private String brand_id;
+    private String landmark;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover_venues);
-        venuesPresent = new VenuesPresentImpl(this,this);
+        venuesPresent = new VenuesPresentImpl(this, this);
         initView();
         setListener();
         venuesPresent.getGymBrand();
         venuesPresent.getBusinessCircle();
-        venuesPresent.commonLoadData(switcherLayout);
+        venuesPresent.commonLoadData(switcherLayout, brand_id, landmark);
     }
 
-    private void initView(){
+    private void initView() {
         ivBack = (ImageView) findViewById(R.id.iv_back);
         ivSearch = (ImageView) findViewById(R.id.iv_search);
         initSwipeRefreshLayout();
@@ -74,7 +76,7 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
         initFilterView();
     }
 
-    private void setListener(){
+    private void setListener() {
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,22 +92,26 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
     }
 
     private void initSwipeRefreshLayout() {
-        refreshLayout = (SwipeRefreshLayout)findViewById(R.id.refreshLayout);
-        switcherLayout = new SwitcherLayout(this,refreshLayout);
-        refreshLayout.setProgressViewOffset(true,100,250);
+        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
+        switcherLayout = new SwitcherLayout(this, refreshLayout);
+        refreshLayout.setProgressViewOffset(true, 100, 250);
         setColorSchemeResources(refreshLayout);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                currPage = 1;
-                RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-                venuesPresent.pullToRefreshData();
+                refreshData();
             }
         });
     }
 
+    private void refreshData() {
+        currPage = 1;
+        RecyclerViewStateUtils.resetFooterViewState(recyclerView);
+        venuesPresent.pullToRefreshData(brand_id, landmark);
+    }
+
     private void initRecyclerView() {
-        recyclerView = (RecyclerView)findViewById(R.id.rv_venues);
+        recyclerView = (RecyclerView) findViewById(R.id.rv_venues);
         data = new ArrayList<>();
         venuesAdapter = new VenuesAdapter(this);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(venuesAdapter);
@@ -115,33 +121,35 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
     }
 
     private void initFilterView() {
-        filterView = (VenuesFilterView)findViewById(R.id.filter_view);
+        filterView = (VenuesFilterView) findViewById(R.id.filter_view);
         filterView.setOnFilterClickListener(new VenuesFilterView.OnFilterClickListener() {
             @Override
             public void onBrandItemClick(String brandId) {
-
+                brand_id = brandId;
+                refreshData();
             }
 
             @Override
             public void onBusinessCircleItemClick(String address) {
-
+                landmark = address;
+                refreshData();
             }
         });
     }
 
-    private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
+    private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener() {
         @Override
         public void onLoadNextPage(View view) {
-            currPage ++;
+            currPage++;
             if (data != null && data.size() >= pageSize) {
-                venuesPresent.requestMoreData(recyclerView,pageSize,currPage);
+                venuesPresent.requestMoreData(recyclerView, pageSize, currPage, brand_id, landmark);
             }
         }
 
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
-            if (scrolledDistance > HIDE_THRESHOLD  && filterViewVisible) {           //手指向上滑动
+            if (scrolledDistance > HIDE_THRESHOLD && filterViewVisible) {           //手指向上滑动
                 filterView.animate().translationY(-filterView.getHeight()).setInterpolator
                         (new AccelerateInterpolator(2)).start();
                 filterViewVisible = false;
@@ -170,7 +178,7 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
 
     @Override
     public void updateRecyclerView(List<VenuesBean> venuesBeanList) {
-        if(refreshLayout.isRefreshing()){
+        if (refreshLayout.isRefreshing()) {
             data.clear();
             refreshLayout.setRefreshing(false);
         }
@@ -183,6 +191,23 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
     @Override
     public void showEndFooterView() {
         RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
+    }
+
+    @Override
+    public void onRefreshData(List<VenuesBean> venuesBeanList) {
+        data.clear();
+        refreshLayout.setRefreshing(false);
+        data.addAll(venuesBeanList);
+        venuesAdapter.setData(data);
+        wrapperAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onLoadMoreData(List<VenuesBean> venuesBeanList) {
+        refreshLayout.setRefreshing(false);
+        data.addAll(venuesBeanList);
+        venuesAdapter.setData(data);
+        wrapperAdapter.notifyDataSetChanged();
     }
 
 }

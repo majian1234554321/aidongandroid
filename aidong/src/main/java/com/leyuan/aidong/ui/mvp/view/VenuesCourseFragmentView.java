@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.mvp.view;
 
 import com.leyuan.aidong.entity.CourseBean;
+import com.leyuan.aidong.entity.data.CourseData;
 
 import java.util.List;
 
@@ -17,4 +18,5 @@ public interface VenuesCourseFragmentView {
     void setCourses(List<CourseBean> courseBeanList);
 
 
+    void onGetCoursesFirst(CourseData courseData);
 }

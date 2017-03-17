@@ -75,8 +75,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.mine.activity.account.RegisterActivity"
-            android:windowSoftInputMode="stateVisible"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".ui.mine.activity.account.CompleteUserInfoActivity"
             android:screenOrientation="portrait" />
@@ -332,6 +332,9 @@
             android:name=".ui.discover.activity.DiscoverVenuesActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.discover.activity.VenuesSubbranchActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.discover.activity.NewsActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -576,7 +579,7 @@
         <!-- 设置环信应用的AppKey -->
         <meta-data
             android:name="EASEMOB_APPKEY"
-            android:value="leyuan-aidong#aidongtest" />
+            android:value="leyuan-aidong#aidongouternettest" />
         <!-- 声明SDK所需的service SDK核心功能-->
         <service
             android:name="com.hyphenate.chat.EMChatService"

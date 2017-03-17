@@ -12,7 +12,7 @@ public class VenuesBean implements Parcelable {
     private String name;            //场馆名字
     private String brand_logo;      //场馆封面
     private String address;         //场馆地址
-    private String distance;        //距离
+    private double distance;        //距离
     private String price;           //价格
     private CoordinateBean coordinate;
 
@@ -74,11 +74,11 @@ public class VenuesBean implements Parcelable {
         this.address = address;
     }
 
-    public String getDistance() {
+    public double getDistance() {
         return distance;
     }
 
-    public void setDistance(String distance) {
+    public void setDistance(double distance) {
         this.distance = distance;
     }
 
@@ -113,7 +113,7 @@ public class VenuesBean implements Parcelable {
         dest.writeString(this.name);
         dest.writeString(this.brand_logo);
         dest.writeString(this.address);
-        dest.writeString(this.distance);
+        dest.writeDouble(this.distance);
         dest.writeString(this.price);
         dest.writeParcelable(this.coordinate, flags);
         dest.writeByte(this.isChecked ? (byte) 1 : (byte) 0);
@@ -127,7 +127,7 @@ public class VenuesBean implements Parcelable {
         this.name = in.readString();
         this.brand_logo = in.readString();
         this.address = in.readString();
-        this.distance = in.readString();
+        this.distance = in.readDouble();
         this.price = in.readString();
         this.coordinate = in.readParcelable(CoordinateBean.class.getClassLoader());
         this.isChecked = in.readByte() != 0;

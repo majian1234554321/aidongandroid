@@ -2,6 +2,7 @@ package com.leyuan.aidong.http;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.leyuan.aidong.ui.App;
+import com.leyuan.aidong.utils.Constant;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -27,7 +28,7 @@ public class RetrofitHelper {
             synchronized (RetrofitHelper.class) {
                 if (singleton == null) {
                     Retrofit.Builder builder = new Retrofit.Builder();
-                    builder.baseUrl("http://192.168.100.119:3000/")
+                    builder.baseUrl(Constant.BASE_URL)
                             .addConverterFactory(GsonConverterFactory.create())//设置远程地址
                             .addCallAdapterFactory(RxJavaCallAdapterFactory.create());
 
