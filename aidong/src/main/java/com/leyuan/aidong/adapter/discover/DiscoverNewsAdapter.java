@@ -20,7 +20,7 @@ import java.util.List;
  * 发现界面 新闻配器
  * Created by song on 2016/12/12.
  */
-public class DiscoverNewsAdapter extends RecyclerView.Adapter<DiscoverNewsAdapter.NewsHolder>{
+public class DiscoverNewsAdapter extends RecyclerView.Adapter<DiscoverNewsAdapter.NewsHolder> {
     private Context context;
     private List<NewsBean> news = new ArrayList<>();
 
@@ -35,7 +35,7 @@ public class DiscoverNewsAdapter extends RecyclerView.Adapter<DiscoverNewsAdapte
 
     @Override
     public NewsHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_discover_news,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_discover_news, parent, false);
         return new NewsHolder(view);
     }
 
@@ -48,7 +48,7 @@ public class DiscoverNewsAdapter extends RecyclerView.Adapter<DiscoverNewsAdapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NewsDetailActivity.start(context,bean.getTitle(),bean.getDatetime(),bean.getBody());
+                NewsDetailActivity.start(context, bean.getTitle(), bean.getDatetime(), bean.getBody());
             }
         });
     }
@@ -58,7 +58,7 @@ public class DiscoverNewsAdapter extends RecyclerView.Adapter<DiscoverNewsAdapte
         return news.size();
     }
 
-    class NewsHolder extends RecyclerView.ViewHolder{
+    class NewsHolder extends RecyclerView.ViewHolder {
         ImageView cover;
         TextView title;
 

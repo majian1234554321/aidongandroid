@@ -8,6 +8,15 @@ public class BrandBean {
     private String id;
     private String logo;
     private String name;
+    String gyms_count;
+
+    public String getGyms_count() {
+        return gyms_count;
+    }
+
+    public void setGyms_count(String gyms_count) {
+        this.gyms_count = gyms_count;
+    }
 
     public String getId() {
         return id;

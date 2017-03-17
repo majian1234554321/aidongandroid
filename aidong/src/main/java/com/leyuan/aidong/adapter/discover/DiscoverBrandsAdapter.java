@@ -19,7 +19,7 @@ import java.util.List;
  * 发现界面 场馆适配器
  * Created by song on 2016/8/31.
  */
-public class DiscoverBrandsAdapter extends RecyclerView.Adapter<DiscoverBrandsAdapter.VenuesHolder>{
+public class DiscoverBrandsAdapter extends RecyclerView.Adapter<DiscoverBrandsAdapter.VenuesHolder> {
     private Context context;
     private List<BrandBean> data = new ArrayList<>();
 
@@ -39,7 +39,7 @@ public class DiscoverBrandsAdapter extends RecyclerView.Adapter<DiscoverBrandsAd
 
     @Override
     public VenuesHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = View.inflate(context, R.layout.item_discover_venues,null);
+        View view = View.inflate(context, R.layout.item_discover_venues, null);
         return new VenuesHolder(view);
     }
 
@@ -48,26 +48,26 @@ public class DiscoverBrandsAdapter extends RecyclerView.Adapter<DiscoverBrandsAd
         final BrandBean bean = data.get(position);
         GlideLoader.getInstance().displayImage(bean.getLogo(), holder.cover);
         holder.name.setText(bean.getName());
-        holder.distance.setText(bean.getId());
+        holder.distance.setText(bean.getGyms_count() + "家场馆");
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                VenuesDetailActivity.start(context,bean.getId());
+                VenuesDetailActivity.start(context, bean.getId());
             }
         });
     }
 
-    class VenuesHolder extends RecyclerView.ViewHolder{
+    class VenuesHolder extends RecyclerView.ViewHolder {
         ImageView cover;
         TextView name;
         TextView distance;
 
         public VenuesHolder(View itemView) {
             super(itemView);
-            cover = (ImageView)itemView.findViewById(R.id.dv_venues_cover);
-            name = (TextView)itemView.findViewById(R.id.tv_venues_name);
-            distance = (TextView)itemView.findViewById(R.id.tv_venues_distance);
+            cover = (ImageView) itemView.findViewById(R.id.dv_venues_cover);
+            name = (TextView) itemView.findViewById(R.id.tv_venues_name);
+            distance = (TextView) itemView.findViewById(R.id.tv_venues_distance);
         }
     }
 }
