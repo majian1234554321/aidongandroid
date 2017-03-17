@@ -46,7 +46,7 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponHold
 
     @Override
     public CouponHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_coupon,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_coupon, parent, false);
         return new CouponHolder(view);
     }
 
@@ -57,8 +57,8 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponHold
         //与优惠劵类型无关
         holder.tvName.setText(bean.getName());
         holder.tvCouponPrice.setText(bean.getDiscount());
-        holder.tvUseMoney.setText(String.format(context.getString(R.string.user_condition),bean.getMin()));
-        if(!TextUtils.isEmpty(bean.getIntroduce())){
+        holder.tvUseMoney.setText(String.format(context.getString(R.string.user_condition), bean.getMin()));
+        if (!TextUtils.isEmpty(bean.getIntroduce())) {
             holder.tvDesc.setText(Html.fromHtml(bean.getIntroduce()));
         }
 
@@ -66,44 +66,94 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponHold
         holder.tvRmbFlag.setVisibility(bean.getType().equals("0") ? View.VISIBLE : View.GONE);
         holder.tvDiscountFlag.setVisibility(bean.getType().equals("0") ? View.GONE : View.VISIBLE);
 
-        //与优惠券类型有关 品类券,通用券,专用券
-        if(bean.getLimitCategory().equals("0")){
+        if (TextUtils.equals("0", bean.getLimitExtId())) {
+            holder.tvCouponType.setText("品类劵");
+        } else if (TextUtils.equals("common", bean.getLimitCategory())) {
             holder.tvCouponType.setText("通用劵");
-            holder.tvProduce.setText("全场通用");
-        }else {
-            if(bean.getLimitExtId().equals("0")){
-                holder.tvCouponType.setText("品类劵");
-                holder.tvProduce.setText("指定品类产品可用");
-            }else {
-                holder.tvCouponType.setText("专用劵");
-                holder.tvProduce.setText("指定特殊产品可用");
-            }
+        } else {
+            holder.tvCouponType.setText("专用劵");
         }
 
+        switch (bean.getLimitCategory()) {
+            case "common":
+                holder.tvProduce.setText("全场所有商品可用");
+                break;
+            case "course":
+                holder.tvProduce.setText("指定课程类产品可用");
+                break;
+            case "food":
+                holder.tvProduce.setText("指定餐饮类产品可用");
+                break;
+            case "campaign":
+                holder.tvProduce.setText("指定活动类产品可用");
+                break;
+            case "nutrition":
+                holder.tvProduce.setText("指定营养品类产品可用");
+                break;
+            case "equipment":
+                holder.tvProduce.setText("指定装备类产品可用");
+                break;
+            case "ticket":
+                holder.tvProduce.setText("指定票务类产品可用");
+                break;
+        }
+
+
+        //与优惠券类型有关 品类券,通用券,专用券
+//        if (TextUtils.equals("0", bean.getLimitCategory())) {
+//            holder.tvCouponType.setText("通用劵");
+//            holder.tvProduce.setText("全场通用");
+//        } else {
+//            if (TextUtils.equals("0", bean.getLimitExtId())) {
+//                holder.tvCouponType.setText("品类劵");
+//                holder.tvProduce.setText("指定品类产品可用");
+//            } else {
+//                holder.tvCouponType.setText("专用劵");
+//                holder.tvProduce.setText("指定特殊产品可用");
+//            }
+//        }
+
         //与优惠劵使用状态有关 可使用,已使用,已过期
-        if(TextUtils.isEmpty(type)) return;
-        switch (type){
+        if (TextUtils.isEmpty(type)) return;
+        switch (type) {
             case VALID:
-                if(TextUtils.isEmpty(bean.getStartDate())){
-                    holder.tvTime.setText(String.format(context.getString(R.string.coupon_expired),bean.getEndDate()));
+                if (TextUtils.isEmpty(bean.getStartDate())) {
+                    holder.tvTime.setText(String.format(context.getString(R.string.coupon_expired), bean.getEndDate()));
                 } else {
                     holder.tvTime.setText(String.format(context.getString(R.string.coupon_time),
-                            bean.getStartDate(),bean.getEndDate()));
+                            bean.getStartDate(), bean.getEndDate()));
                 }
                 holder.itemView.setBackgroundResource(R.drawable.bg_coupon_fold);
                 break;
             case USED:
-                holder.tvTime.setText(String.format(context.getString(R.string.coupon_used),bean.getEndDate()));
+                holder.tvTime.setText(String.format(context.getString(R.string.coupon_used), bean.getEndDate()));
                 holder.itemView.setBackgroundResource(R.drawable.bg_coupon_fold_gray);
+                holder.tvRmbFlag.setTextColor(R.color.c9);
+                holder.tvCouponPrice.setTextColor(R.color.c9);
+                holder.tvName.setTextColor(R.color.c9);
+                holder.tvProduce.setTextColor(R.color.c9);
+                holder.tvUseMoney.setTextColor(R.color.c9);
+                holder.tvCouponType.setTextColor(R.color.c9);
+                holder.tvTime.setTextColor(R.color.c9);
+                holder.tvDesc.setTextColor(R.color.c9);
+
                 break;
             case EXPIRED:
-                if(TextUtils.isEmpty(bean.getStartDate())){
-                    holder.tvTime.setText(String.format(context.getString(R.string.coupon_expired),bean.getEndDate()));
+                if (TextUtils.isEmpty(bean.getStartDate())) {
+                    holder.tvTime.setText(String.format(context.getString(R.string.coupon_expired), bean.getEndDate()));
                 } else {
                     holder.tvTime.setText(String.format(context.getString(R.string.coupon_time),
-                            bean.getStartDate(),bean.getEndDate()));
+                            bean.getStartDate(), bean.getEndDate()));
                 }
                 holder.itemView.setBackgroundResource(R.drawable.bg_coupon_fold_gray);
+                holder.tvRmbFlag.setTextColor(R.color.c9);
+                holder.tvCouponPrice.setTextColor(R.color.c9);
+                holder.tvName.setTextColor(R.color.c9);
+                holder.tvProduce.setTextColor(R.color.c9);
+                holder.tvUseMoney.setTextColor(R.color.c9);
+                holder.tvCouponType.setTextColor(R.color.c9);
+                holder.tvTime.setTextColor(R.color.c9);
+                holder.tvDesc.setTextColor(R.color.c9);
                 break;
             default:
                 break;
@@ -112,13 +162,13 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponHold
         holder.couponTypeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(holder.tvDesc.getVisibility() == View.VISIBLE){
+                if (holder.tvDesc.getVisibility() == View.VISIBLE) {
                     holder.tvDesc.setVisibility(View.GONE);
-                    holder.ivArrow.setImageResource(R.drawable.icon_arrow_up_coupon);
-
-                }else {
-                    holder.tvDesc.setVisibility(View.VISIBLE);
                     holder.ivArrow.setImageResource(R.drawable.icon_arrow_down_coupon);
+
+                } else {
+                    holder.tvDesc.setVisibility(View.VISIBLE);
+                    holder.ivArrow.setImageResource(R.drawable.icon_arrow_up_coupon);
                 }
             }
         });

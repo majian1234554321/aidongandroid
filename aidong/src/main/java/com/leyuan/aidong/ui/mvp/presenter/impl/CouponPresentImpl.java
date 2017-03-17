@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.entity.data.CouponData;
+import com.leyuan.aidong.entity.user.CouponDataSingle;
+import com.leyuan.aidong.http.subscriber.BaseSubscriber;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
@@ -42,7 +44,7 @@ public class CouponPresentImpl implements CouponPresent {
         this.context = context;
         this.couponView = view;
         couponList = new ArrayList<>();
-        if(couponModel == null){
+        if (couponModel == null) {
             couponModel = new CouponModelImpl();
         }
     }
@@ -50,7 +52,7 @@ public class CouponPresentImpl implements CouponPresent {
     public CouponPresentImpl(Context context, CouponExchangeActivityView view) {
         this.context = context;
         this.exchangeCouponView = view;
-        if(couponModel == null){
+        if (couponModel == null) {
             couponModel = new CouponModelImpl();
         }
     }
@@ -61,17 +63,17 @@ public class CouponPresentImpl implements CouponPresent {
         couponModel.getCoupons(new CommonSubscriber<CouponData>(switcherLayout) {
             @Override
             public void onNext(CouponData couponData) {
-                if(couponData != null){
+                if (couponData != null) {
                     couponList = couponData.getCoupon();
                 }
-                if(!couponList.isEmpty()){
+                if (!couponList.isEmpty()) {
                     switcherLayout.showContentLayout();
                     couponView.updateRecyclerView(couponList);
-                }else {
+                } else {
                     switcherLayout.showEmptyLayout();
                 }
             }
-        },type, Constant.PAGE_FIRST);
+        }, type, Constant.PAGE_FIRST);
     }
 
     @Override
@@ -79,33 +81,33 @@ public class CouponPresentImpl implements CouponPresent {
         couponModel.getCoupons(new RefreshSubscriber<CouponData>(context) {
             @Override
             public void onNext(CouponData couponData) {
-                if(couponData != null){
+                if (couponData != null) {
                     couponList = couponData.getCoupon();
                 }
-                if(!couponList.isEmpty()){
+                if (!couponList.isEmpty()) {
                     couponView.updateRecyclerView(couponList);
                 }
             }
-        },type,Constant.PAGE_FIRST);
+        }, type, Constant.PAGE_FIRST);
     }
 
     @Override
-    public void requestMoreData(RecyclerView recyclerView, String type,final int pageSize, int page) {
-        couponModel.getCoupons(new RequestMoreSubscriber<CouponData>(context,recyclerView,pageSize) {
+    public void requestMoreData(RecyclerView recyclerView, String type, final int pageSize, int page) {
+        couponModel.getCoupons(new RequestMoreSubscriber<CouponData>(context, recyclerView, pageSize) {
             @Override
             public void onNext(CouponData couponData) {
-                if(couponData != null){
+                if (couponData != null) {
                     couponList = couponData.getCoupon();
                 }
-                if(!couponList.isEmpty()){
+                if (!couponList.isEmpty()) {
                     couponView.updateRecyclerView(couponList);
                 }
                 //没有更多数据了显示到底提示
-                if(couponList.size() < pageSize){
+                if (couponList.size() < pageSize) {
                     couponView.showEndFooterView();
                 }
             }
-        },type,page);
+        }, type, page);
     }
 
     @Override
@@ -113,12 +115,32 @@ public class CouponPresentImpl implements CouponPresent {
         couponModel.obtainCoupon(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
-                if(baseBean != null){
-                    if(exchangeCouponView != null) {
-                        exchangeCouponView.obtainCouponResult(baseBean);
+                if (baseBean != null) {
+                    if (exchangeCouponView != null) {
+                        exchangeCouponView.obtainCouponResult(new CouponBean());
                     }
                 }
             }
-        },id);
+        }, id);
+    }
+
+    @Override
+    public void exchangeCoupon(String id) {
+        couponModel.exchangeCoupon(new BaseSubscriber<CouponDataSingle>(context) {
+            @Override
+            public void onNext(CouponDataSingle couponDataSingle) {
+                if (couponDataSingle != null) {
+                    exchangeCouponView.obtainCouponResult(couponDataSingle.getCoupon());
+                } else {
+                    exchangeCouponView.obtainCouponResult(null);
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                exchangeCouponView.obtainCouponResult(null);
+            }
+        }, id);
     }
 }

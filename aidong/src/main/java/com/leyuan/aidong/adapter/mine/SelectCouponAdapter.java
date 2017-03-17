@@ -30,7 +30,7 @@ public class SelectCouponAdapter extends RecyclerView.Adapter<SelectCouponAdapte
     }
 
     public void setData(List<CouponBean> data) {
-        if(data != null) {
+        if (data != null) {
             this.data = data;
             notifyDataSetChanged();
         }
@@ -43,7 +43,7 @@ public class SelectCouponAdapter extends RecyclerView.Adapter<SelectCouponAdapte
 
     @Override
     public CouponHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_coupon,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_coupon, parent, false);
         return new CouponHolder(view);
     }
 
@@ -53,14 +53,14 @@ public class SelectCouponAdapter extends RecyclerView.Adapter<SelectCouponAdapte
 
         //与优惠劵类型无关
         holder.tvCouponPrice.setText(bean.getDiscount());
-        holder.tvUseMoney.setText(String.format(context.getString(R.string.user_condition),bean.getMin()));
+        holder.tvUseMoney.setText(String.format(context.getString(R.string.user_condition), bean.getMin()));
         holder.tvCouponType.setText(bean.getName());
 //        holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
-       // holder.recyclerView.setAdapter(new CouponDescAdapter(bean.getDesc()));
+        // holder.recyclerView.setAdapter(new CouponDescAdapter(bean.getDesc()));
         holder.couponTypeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  holder.recyclerView.setVisibility(isCouponDescShow ? View.INVISIBLE : View.VISIBLE);
+                //  holder.recyclerView.setVisibility(isCouponDescShow ? View.INVISIBLE : View.VISIBLE);
                 holder.ivArrow.setImageResource(isCouponDescShow ? R.drawable.icon_arrow_up_coupon :
                         R.drawable.icon_arrow_down_coupon);
                 isCouponDescShow = !isCouponDescShow;
@@ -78,7 +78,7 @@ public class SelectCouponAdapter extends RecyclerView.Adapter<SelectCouponAdapte
         TextView tvCouponType;
         ImageView ivArrow;
         TextView tvTime;
-     //   RecyclerView recyclerView;
+        //   RecyclerView recyclerView;
 
         public CouponHolder(View itemView) {
             super(itemView);
@@ -90,7 +90,6 @@ public class SelectCouponAdapter extends RecyclerView.Adapter<SelectCouponAdapte
             tvCouponType = (TextView) itemView.findViewById(R.id.tv_coupon_type);
             ivArrow = (ImageView) itemView.findViewById(R.id.iv_arrow);
             tvTime = (TextView) itemView.findViewById(R.id.tv_time);
-           // recyclerView = (RecyclerView)itemView.findViewById(R.id.rv_coupon_desc);
         }
     }
 }

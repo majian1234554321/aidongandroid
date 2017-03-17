@@ -189,7 +189,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 ToastUtil.showConsecutiveShort("暂未开放");
                 break;
             case R.id.item_after_sale:
-                UiManager.activityJump(getActivity(), ApplyServiceActivity.class);
+                ApplyServiceActivity.start(getActivity(), "123456", "93843928",
+                        "http://function.aidong.me/image/1489636182000_0_24.jpg", "营养品", 3);
+
+//                UiManager.activityJump(getActivity(), ApplyServiceActivity.class);
                 break;
             case R.id.item_setting:
                 UiManager.activityJump(getActivity(), TabMinePersonalSettingsActivity.class);

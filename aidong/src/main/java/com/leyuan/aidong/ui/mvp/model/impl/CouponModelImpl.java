@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.mvp.model.impl;
 
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.data.CouponData;
+import com.leyuan.aidong.entity.user.CouponDataSingle;
 import com.leyuan.aidong.http.RetrofitHelper;
 import com.leyuan.aidong.http.RxHelper;
 import com.leyuan.aidong.http.api.CouponService;
@@ -15,7 +16,7 @@ import rx.schedulers.Schedulers;
  * 优惠劵Model层实现类
  * Created by song on 2016/9/14.
  */
-public class CouponModelImpl implements CouponModel{
+public class CouponModelImpl implements CouponModel {
     private CouponService couponService;
 
     public CouponModelImpl() {
@@ -24,7 +25,7 @@ public class CouponModelImpl implements CouponModel{
 
     @Override
     public void getCoupons(Subscriber<CouponData> subscriber, String type, int page) {
-        couponService.getCoupons(type,page)
+        couponService.getCoupons(type, page)
                 .compose(RxHelper.<CouponData>transform())
                 .subscribe(subscriber);
     }
@@ -38,8 +39,15 @@ public class CouponModelImpl implements CouponModel{
     }
 
     @Override
+    public void exchangeCoupon(Subscriber<CouponDataSingle> subscriber, String id) {
+        couponService.exchangeCoupon(id)
+                .compose(RxHelper.<CouponDataSingle>transform())
+                .subscribe(subscriber);
+    }
+
+    @Override
     public void getSpecifyGoodsCoupon(Subscriber<CouponData> subscriber, String from, String... id) {
-        couponService.getSpecifyGoodsCoupon(from,id)
+        couponService.getSpecifyGoodsCoupon(from, id)
                 .compose(RxHelper.<CouponData>transform())
                 .subscribe(subscriber);
     }

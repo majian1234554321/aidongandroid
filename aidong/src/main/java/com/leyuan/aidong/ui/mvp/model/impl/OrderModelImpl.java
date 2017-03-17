@@ -16,7 +16,7 @@ import rx.schedulers.Schedulers;
  * 订单
  * Created by song on 2016/9/1.
  */
-public class OrderModelImpl implements OrderModel{
+public class OrderModelImpl implements OrderModel {
     private OrderService orderService;
 
     public OrderModelImpl() {
@@ -24,8 +24,8 @@ public class OrderModelImpl implements OrderModel{
     }
 
     @Override
-    public void getOrders(Subscriber<OrderData> subscriber, String list,int page) {
-        orderService.getOrders(list,page)
+    public void getOrders(Subscriber<OrderData> subscriber, String list, int page) {
+        orderService.getOrders(list, page)
                 .compose(RxHelper.<OrderData>transform())
                 .subscribe(subscriber);
     }
@@ -45,6 +45,7 @@ public class OrderModelImpl implements OrderModel{
                 .subscribe(subscriber);
     }
 
+
     @Override
     public void confirmOrder(Subscriber<BaseBean> subscriber, String id) {
         orderService.confirmOrder(id)
@@ -59,5 +60,15 @@ public class OrderModelImpl implements OrderModel{
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
+    }
+
+    @Override
+    public void feedbackOrder(Subscriber<BaseBean> subscriber, String id, String type, String code,
+                             String amount, String content, String[] image, String address) {
+        orderService.feedbackOrder(id, type, code,  amount, content, image, address)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+
     }
 }

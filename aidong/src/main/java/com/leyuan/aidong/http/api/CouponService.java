@@ -2,6 +2,7 @@ package com.leyuan.aidong.http.api;
 
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.data.CouponData;
+import com.leyuan.aidong.entity.user.CouponDataSingle;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -18,14 +19,18 @@ import rx.Observable;
 public interface CouponService {
 
     @GET("mine/coupons/{type}")
-    Observable<BaseBean<CouponData>> getCoupons(@Path("type") String type,@Query("page") int page);
+    Observable<BaseBean<CouponData>> getCoupons(@Path("type") String type, @Query("page") int page);
 
 
     @FormUrlEncoded
     @POST("mine/coupons")
     Observable<BaseBean> obtainCoupon(@Field("coupon_id") String id);
 
+    @FormUrlEncoded
+    @POST("mine/coupons/exchange")
+    Observable<BaseBean<CouponDataSingle>> exchangeCoupon(@Field("code") String id);
+
 
     @GET("mine/coupons")
-    Observable<BaseBean<CouponData>> getSpecifyGoodsCoupon(@Query("from") String from,@Query("id[]") String... id);
+    Observable<BaseBean<CouponData>> getSpecifyGoodsCoupon(@Query("from") String from, @Query("id[]") String... id);
 }

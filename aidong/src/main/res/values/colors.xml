@@ -92,4 +92,5 @@
     <color name="red_point">#FC511F</color>
     <color name="jianxi">#EBEBEB</color>
     <color name="red_origin">#FF5000</color>
+    <color name="txt_gray">#cccccc</color>
 </resources>
