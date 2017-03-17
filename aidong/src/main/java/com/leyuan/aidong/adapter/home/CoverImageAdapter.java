@@ -9,6 +9,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.baseadapter.BaseListAdapter;
 import com.leyuan.aidong.entity.HomeItemBean;
 import com.leyuan.aidong.ui.MainActivity;
+import com.leyuan.aidong.ui.home.activity.CourseActivity;
 import com.leyuan.aidong.utils.GlideLoader;
 
 /**
@@ -37,7 +38,11 @@ public class CoverImageAdapter extends BaseListAdapter<HomeItemBean> {
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)context).toTargetDetailActivity(type,bean.getId());
+                if("course".equals(type)){
+                    CourseActivity.start(context,bean.getName());       //课程跳列表而不是详情
+                }else {
+                    ((MainActivity) context).toTargetDetailActivity(type, bean.getId());
+                }
             }
         });
     }

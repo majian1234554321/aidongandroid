@@ -10,11 +10,10 @@ import java.util.List;
  */
 public interface CourserFragmentView {
 
-    /**
-     * 更新列表
-     * @param courseList
-     */
-    void updateRecyclerView(List<CourseBean> courseList);
+
+    void refreshRecyclerViewData(List<CourseBean> courseList);
+
+    void loadMoreRecyclerViewData(List<CourseBean> courseList);
 
     /**
      * 显示FooterView，提示没有任何内容了

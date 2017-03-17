@@ -162,10 +162,14 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 UserInfoActivity.start(this, bean.getCoach().getId());
                 break;
             case R.id.iv_follow:
-                if(isFollow){
-                    coursePresent.cancelFollow(bean.getCoach().getId());
+                if(App.mInstance.isLogin()) {
+                    if (isFollow) {
+                        coursePresent.cancelFollow(bean.getCoach().getId());
+                    } else {
+                        coursePresent.addFollow(bean.getCoach().getId());
+                    }
                 }else {
-                    coursePresent.addFollow(bean.getCoach().getId());
+                    startActivityForResult(new Intent(this, LoginActivity.class), Constant.REQUEST_LOGIN);
                 }
                 break;
             case R.id.tv_count:
@@ -298,7 +302,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             ivFollow.setBackgroundResource(R.drawable.icon_following);
             Toast.makeText(this,R.string.follow_success,Toast.LENGTH_LONG).show();
         }else {
-            Toast.makeText(this,R.string.follow_fail,Toast.LENGTH_LONG).show();
+            Toast.makeText(this,R.string.follow_fail + baseBean.getMessage(),Toast.LENGTH_LONG).show();
         }
     }
 
@@ -310,7 +314,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             ivFollow.setBackgroundResource(R.drawable.icon_follow);
             Toast.makeText(this,R.string.cancel_follow_success,Toast.LENGTH_LONG).show();
         }else {
-            Toast.makeText(this,R.string.cancel_follow_fail,Toast.LENGTH_LONG).show();
+            Toast.makeText(this,R.string.cancel_follow_fail + baseBean.getMessage(),Toast.LENGTH_LONG).show();
         }
     }
 

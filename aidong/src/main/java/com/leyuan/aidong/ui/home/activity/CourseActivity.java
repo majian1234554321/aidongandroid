@@ -1,10 +1,13 @@
 package com.leyuan.aidong.ui.home.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +20,8 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.DistrictBean;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.home.view.CourseFilterView;
 import com.leyuan.aidong.ui.home.fragment.CourseFragment;
+import com.leyuan.aidong.ui.home.view.CourseFilterView;
 import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CourseActivityView;
@@ -41,17 +44,25 @@ public class CourseActivity extends BaseActivity implements CourseActivityView,S
     private ImageView ivBack;
     private SmartTabLayout tabLayout;
     private CourseFilterView filterView;
-    private ViewPager viewPager;
     private List<String> days = new ArrayList<>();
-    private List<Fragment> fragments = new ArrayList<>();
+    private FragmentPagerItemAdapter adapter;
     private List<View> allTabView = new ArrayList<>();
+    private String category;
+
+    public static void start(Context context,String category) {
+        Intent starter = new Intent(context, CourseActivity.class);
+        starter.putExtra("category",category);
+        context.startActivity(starter);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course);
+        if(getIntent() != null){
+            category = getIntent().getStringExtra("category");
+        }
         CoursePresent present = new CoursePresentImpl(this,this);
-
         initView();
         setListener();
         present.getCategory();
@@ -63,15 +74,20 @@ public class CourseActivity extends BaseActivity implements CourseActivityView,S
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tabLayout = (SmartTabLayout) findViewById(R.id.tab_layout);
         filterView = (CourseFilterView) findViewById(R.id.view_filter_course);
-        viewPager = (ViewPager) findViewById(R.id.view_pager);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
         FragmentPagerItems pages = new FragmentPagerItems(this);
         for (int i = 0; i < days.size(); i++) {
             CourseFragment courseFragment = new CourseFragment();
-            pages.add(FragmentPagerItem.of(null, courseFragment.getClass(),
-                    new Bundler().putString("date", days.get(i)).get()));
-            fragments.add(courseFragment);
+            if(!TextUtils.isEmpty(category)) {
+                pages.add(FragmentPagerItem.of(null, courseFragment.getClass(),
+                        new Bundler().putString("date", days.get(i))
+                                .putString("category", category).get()));
+            }else {
+                pages.add(FragmentPagerItem.of(null, courseFragment.getClass(),
+                        new Bundler().putString("date", days.get(i)).get()));
+            }
         }
-        final FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);
+        adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);
         viewPager.setOffscreenPageLimit(6);
         viewPager.setAdapter(adapter);
         tabLayout.setCustomTabView(this);
@@ -110,6 +126,9 @@ public class CourseActivity extends BaseActivity implements CourseActivityView,S
     @Override
     public void setCategory(List<CategoryBean> categoryBeanList) {
         filterView.setCategoryList(categoryBeanList);
+        if(!TextUtils.isEmpty(category)){
+            filterView.selectCategory(category);
+        }
     }
 
     @Override
@@ -133,15 +152,19 @@ public class CourseActivity extends BaseActivity implements CourseActivityView,S
 
         @Override
         public void onCategoryItemClick(String category) {
-           for (Fragment fragment : fragments) {
-               ((CourseFragment)fragment).refreshCategory(category);
-           }
+            for (int i = 0; i < days.size(); i++) {
+                Fragment page = adapter.getPage(i);
+                ((CourseFragment)page).resetCategory(category);
+                ((CourseFragment)page).fetchData();
+            }
         }
 
         @Override
         public void onBusinessCircleItemClick(String address) {
-            for (Fragment fragment : fragments) {
-                ((CourseFragment)fragment).refreshCircle(address);
+            for (int i = 0; i < days.size(); i++) {
+                Fragment page = adapter.getPage(i);
+                ((CourseFragment)page).resetCircle(address);
+                ((CourseFragment)page).fetchData();
             }
         }
     }

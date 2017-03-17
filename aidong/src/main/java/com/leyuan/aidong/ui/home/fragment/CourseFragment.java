@@ -9,10 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.CourseBean;
-import com.leyuan.aidong.ui.BaseFragment;
-import com.leyuan.aidong.ui.home.activity.CourseActivity;
 import com.leyuan.aidong.adapter.home.CourseAdapter;
+import com.leyuan.aidong.entity.CourseBean;
+import com.leyuan.aidong.ui.BasePageFragment;
+import com.leyuan.aidong.ui.home.activity.CourseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CourserFragmentView;
@@ -20,6 +20,7 @@ import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
+import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ import java.util.List;
  * 课程列表
  * Created by song on 2016/11/1.
  */
-public class CourseFragment extends BaseFragment implements CourserFragmentView, SwipeRefreshLayout.OnRefreshListener {
+public class CourseFragment extends BasePageFragment implements CourserFragmentView, SwipeRefreshLayout.OnRefreshListener {
     private static final int HIDE_THRESHOLD = 80;
     private int scrolledDistance = 0;
     private boolean filterViewVisible = true;
@@ -50,18 +51,19 @@ public class CourseFragment extends BaseFragment implements CourserFragmentView,
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_course,container,false);
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        View view = inflater.inflate(R.layout.fragment_course, container, false);
         if(getArguments()!=null){
             date = getArguments().getString("date");
+            category = getArguments().getString("category");
         }
         coursePresent = new CoursePresentImpl(getContext(),this);
         initRefreshLayout(view);
         initRecyclerView(view);
+        return view;
+    }
+
+    @Override
+    public void fetchData() {
         coursePresent.commendLoadData(switcherLayout,date,category,landmark);
     }
 
@@ -118,12 +120,20 @@ public class CourseFragment extends BaseFragment implements CourserFragmentView,
         }
     };
 
+
     @Override
-    public void updateRecyclerView(List<CourseBean> courseList) {
+    public void refreshRecyclerViewData(List<CourseBean> courseList) {
         if(refreshLayout.isRefreshing()){
-            data.clear();
             refreshLayout.setRefreshing(false);
         }
+        data.clear();
+        data.addAll(courseList);
+        courseAdapter.setData(data);
+        wrapperAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void loadMoreRecyclerViewData(List<CourseBean> courseList) {
         data.addAll(courseList);
         courseAdapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();
@@ -131,7 +141,7 @@ public class CourseFragment extends BaseFragment implements CourserFragmentView,
 
     @Override
     public void showEndFooterView() {
-
+        RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
     }
 
     @Override
@@ -144,13 +154,13 @@ public class CourseFragment extends BaseFragment implements CourserFragmentView,
         recyclerView.scrollToPosition(0);
     }
 
-    public void refreshCategory(final String category) {
+    public void resetCategory(final String category) {
         this.category = category;
-        this.onRefresh();
     }
 
-    public void refreshCircle(String businessCircle) {
+    public void resetCircle(String businessCircle) {
         this.landmark = businessCircle;
-        this.onRefresh();
     }
+
+
 }
