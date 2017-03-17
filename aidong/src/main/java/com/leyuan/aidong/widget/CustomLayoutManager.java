@@ -53,4 +53,9 @@ public class CustomLayoutManager extends LinearLayoutManager {
     public boolean canScrollVertically() {
         return isScrollEnabled && super.canScrollVertically();
     }
+
+    @Override
+    public void scrollToPosition(int position) {
+        super.scrollToPosition(position);
+    }
 }

@@ -75,7 +75,7 @@ public class VenuesCourseFragment extends BaseFragment implements VenuesCourseFr
             int position = days.indexOf(courseData.getDate());
             Logger.i(TAG," position = "+position);
             if (position > -1) {
-                dateView.smoothScrollToPosition(position);
+                dateView.scrollToPosition(position);
                 courseAdapter.setData(courseData.getCourse());
             }
         }

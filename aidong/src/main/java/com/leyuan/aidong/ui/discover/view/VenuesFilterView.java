@@ -186,7 +186,7 @@ public class VenuesFilterView extends LinearLayout implements View.OnClickListen
             leftCircleAdapter.setSelectedBean(leftCircleList.get(leftSelectedPosition));
         }else {
             leftListView.setSelection(0);
-            leftCircleAdapter.setSelectedBean(leftCircleList.get(0));
+//            leftCircleAdapter.setSelectedBean(leftCircleList.get(0));
         }
 
         //右边列表
