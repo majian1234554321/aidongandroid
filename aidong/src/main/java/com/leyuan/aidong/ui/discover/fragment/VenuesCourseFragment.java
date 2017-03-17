@@ -18,6 +18,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.VenuesPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.VenuesCourseFragmentView;
 import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.widget.CustomLayoutManager;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.List;
@@ -51,7 +52,7 @@ public class VenuesCourseFragment extends BaseFragment implements VenuesCourseFr
             id = bundle.getString("id");
         }
         initView(view);
-        venuesPresent.getCoursesFirst(switcherLayout, id);
+        venuesPresent.getCourses(switcherLayout, id, days.get(0));
     }
 
     private void initView(View view) {
@@ -63,7 +64,7 @@ public class VenuesCourseFragment extends BaseFragment implements VenuesCourseFr
 
         dateView = (RecyclerView) view.findViewById(R.id.rv_date);
         DateAdapter dateAdapter = new DateAdapter();
-        dateView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        dateView.setLayoutManager(new CustomLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         dateView.setAdapter(dateAdapter);
         dateAdapter.setData(days);
         dateAdapter.setItemClickListener(this);
@@ -73,9 +74,9 @@ public class VenuesCourseFragment extends BaseFragment implements VenuesCourseFr
     public void onGetCoursesFirst(CourseData courseData) {
         if (courseData != null && courseData.getCourse() != null && !courseData.getCourse().isEmpty()) {
             int position = days.indexOf(courseData.getDate());
-            Logger.i(TAG," position = "+position);
+            Logger.i(TAG, " position = " + position);
             if (position > -1) {
-                dateView.scrollToPosition(position);
+                dateView.smoothScrollToPosition(position);
                 courseAdapter.setData(courseData.getCourse());
             }
         }

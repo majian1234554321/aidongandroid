@@ -17,6 +17,11 @@ public class CustomLayoutManager extends LinearLayoutManager {
         mContext = context;
     }
 
+    public CustomLayoutManager(Context context, int horizontal, boolean b) {
+        super(context, horizontal, b);
+        mContext = context;
+    }
+
     @Override
     public void smoothScrollToPosition(RecyclerView recyclerView,
                                        RecyclerView.State state, final int position) {
@@ -45,7 +50,7 @@ public class CustomLayoutManager extends LinearLayoutManager {
         startSmoothScroll(smoothScroller);
     }
 
-    public void setScrollEnabled(boolean isScrollEnabled){
+    public void setScrollEnabled(boolean isScrollEnabled) {
         this.isScrollEnabled = isScrollEnabled;
     }
 
