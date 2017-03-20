@@ -74,7 +74,6 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover_user);
-        pageSize = 20;
         userPresent = new DiscoverPresentImpl(this,this);
 
         initView();
@@ -222,10 +221,10 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
         this.position = position;
         if(App.mInstance.isLogin()){
             UserBean userBean = data.get(position);
-            if(SystemInfoUtils.isFolllow(this,userBean)){
-                userPresent.addFollow(userBean.getId());
-            }else {
+            if(SystemInfoUtils.isFollow(this,userBean)){
                 userPresent.cancelFollow(userBean.getId());
+            }else {
+                userPresent.addFollow(userBean.getId());
             }
         }else {
             startActivityForResult(new Intent(this, LoginActivity.class), Constant.REQUEST_LOGIN);
@@ -236,7 +235,7 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
     public void addFollowResult(BaseBean baseBean) {
         if(baseBean.getStatus() == Constant.OK){
             SystemInfoUtils.addFollow(data.get(position));
-            userAdapter.notifyItemChanged(position);
+            userAdapter.notifyDataSetChanged();
             Toast.makeText(this,R.string.follow_success,Toast.LENGTH_LONG).show();
         }else {
             Toast.makeText(this,R.string.follow_fail + baseBean.getMessage(),Toast.LENGTH_LONG).show();
@@ -247,7 +246,7 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
     public void cancelFollowResult(BaseBean baseBean) {
         if(baseBean.getStatus() == Constant.OK){
             SystemInfoUtils.removeFollow(data.get(position));
-            userAdapter.notifyItemChanged(position);
+            userAdapter.notifyDataSetChanged();
             Toast.makeText(this,R.string.cancel_follow_success,Toast.LENGTH_LONG).show();
         }else {
             Toast.makeText(this,R.string.cancel_follow_fail + baseBean.getMessage(),Toast.LENGTH_LONG).show();

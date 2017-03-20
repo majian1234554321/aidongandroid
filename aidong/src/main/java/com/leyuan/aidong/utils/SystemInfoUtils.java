@@ -52,7 +52,7 @@ public class SystemInfoUtils {
     }
 
     public static void removeFollow(UserBean bean) {
-        if (Constant.followData == null || Constant.followData.getFollow() != null
+        if (Constant.followData == null || Constant.followData.getFollow() == null
                 || bean == null || TextUtils.isEmpty(bean.getId())) {
             return;
         }
@@ -98,7 +98,7 @@ public class SystemInfoUtils {
         }
         return discoverBannerBeanList;
     }
-    public static boolean isFolllow(Context context,UserBean bean){
+    public static boolean isFollow(Context context, UserBean bean){
         boolean isFollow = false;
         List<UserBean> followList = getFollowList(context);
         for (UserBean userBean : followList) {

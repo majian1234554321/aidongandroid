@@ -5,8 +5,9 @@ import android.support.v4.app.FragmentManager;
 import android.view.View;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.discover.fragment.CircleFragment;
+import com.leyuan.aidong.ui.mine.fragment.UserDynamicFragment;
 
 /**
  * 爱动时刻
@@ -18,9 +19,9 @@ public class AiDongMomentActivity extends BaseActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sports_moment);
-        CircleFragment fragment = new CircleFragment();
+        String id = String.valueOf(App.mInstance.getUser().getId());
         FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction().replace(R.id.fl_container,fragment).commit();
+        fm.beginTransaction().replace(R.id.fl_container,UserDynamicFragment.newInstance(id)).commit();
 
         findViewById(R.id.title_bar).setOnClickListener(new View.OnClickListener() {
             @Override

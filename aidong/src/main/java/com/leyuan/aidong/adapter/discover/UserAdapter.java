@@ -57,7 +57,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder>{
         if(!App.mInstance.isLogin()){
             holder.follow.setBackgroundResource(R.drawable.icon_follow);
         }else {
-            holder.follow.setBackgroundResource(SystemInfoUtils.isFolllow(context,bean)
+            holder.follow.setBackgroundResource(SystemInfoUtils.isFollow(context,bean)
                     ? R.drawable.icon_following : R.drawable.icon_follow);
         }
 
