@@ -10,7 +10,9 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +29,8 @@ import com.leyuan.aidong.ui.mvp.view.AppointCoachActivityView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.StringUtils;
+import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 
 import java.util.ArrayList;
@@ -42,7 +46,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * Created by song on 2016/10/26.
  */
 public class AppointCoachActivity extends BaseActivity implements View.OnClickListener,
-        DateAdapter.ItemClickListener,AppointCoachActivityView {
+        DateAdapter.ItemClickListener, AppointCoachActivityView {
     private static final int CALL_PHONE_PERM = 1;
     private static final String MORNING = "0";
     private static final String AFTERNOON = "1";
@@ -56,8 +60,8 @@ public class AppointCoachActivity extends BaseActivity implements View.OnClickLi
     private RecyclerView rvDate;
     private TextView tvMorning;
     private TextView tvAfternoon;
-    private TextView tvUsername;
-    private TextView tvPhone;
+    private EditText etUsername;
+    private EditText etPhone;
     private TextView tvAppoint;
 
     private List<String> days = new ArrayList<>();
@@ -76,8 +80,8 @@ public class AppointCoachActivity extends BaseActivity implements View.OnClickLi
 
     public static void start(Context context, String venuesId, CoachBean coachBean) {
         Intent starter = new Intent(context, AppointCoachActivity.class);
-        starter.putExtra("venuesId",venuesId);
-        starter.putExtra("coachBean",coachBean);
+        starter.putExtra("venuesId", venuesId);
+        starter.putExtra("coachBean", coachBean);
         context.startActivity(starter);
     }
 
@@ -85,10 +89,10 @@ public class AppointCoachActivity extends BaseActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appointment_coach);
-        venuesPresent = new VenuesPresentImpl(this,this);
+        venuesPresent = new VenuesPresentImpl(this, this);
         userName = App.mInstance.getUser().getName();
         userPhone = App.mInstance.getUser().getMobile();
-        if(getIntent() != null){
+        if (getIntent() != null) {
             venuesId = getIntent().getStringExtra("venuesId");
             coachBean = getIntent().getParcelableExtra("coachBean");
         }
@@ -97,7 +101,7 @@ public class AppointCoachActivity extends BaseActivity implements View.OnClickLi
         setListener();
     }
 
-    private void initView(){
+    private void initView() {
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
         ivAvatar = (ImageView) findViewById(R.id.dv_avatar);
         ivGender = (ImageView) findViewById(R.id.iv_gender);
@@ -107,25 +111,28 @@ public class AppointCoachActivity extends BaseActivity implements View.OnClickLi
         rvDate = (RecyclerView) findViewById(R.id.rv_date);
         tvMorning = (TextView) findViewById(R.id.tv_morning);
         tvAfternoon = (TextView) findViewById(R.id.tv_afternoon);
-        tvUsername = (TextView) findViewById(R.id.et_username);
-        tvPhone = (TextView) findViewById(R.id.et_phone);
+        etUsername = (EditText) findViewById(R.id.et_username);
+        etPhone = (EditText) findViewById(R.id.et_phone);
         tvAppoint = (TextView) findViewById(R.id.tv_appointment);
         initButtonStatus();
         dateAdapter = new DateAdapter(selectedPosition);
-        rvDate.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        rvDate.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rvDate.setAdapter(dateAdapter);
         days = DateUtils.getSevenDate();
         dateAdapter.setData(days);
 
         GlideLoader.getInstance().displayCircleImage(coachBean.getAvatar(), ivAvatar);
         tvName.setText(coachBean.getName());
-        if("0".equals(coachBean.getGender())){   //男
+        if ("0".equals(coachBean.getGender())) {   //男
             ivGender.setBackgroundResource(R.drawable.icon_man);
-        }else {
+        } else {
             ivGender.setBackgroundResource(R.drawable.icon_woman);
         }
-        tvUsername.setText(userName);
-        tvPhone.setText(userPhone);
+        if (userName != null)
+            etUsername.setText(userName);
+        if (userPhone != null)
+            etPhone.setText(userPhone);
+
         appointDate = days.get(0);
     }
 
@@ -140,7 +147,7 @@ public class AppointCoachActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.iv_back:
                 finish();
                 break;
@@ -168,12 +175,30 @@ public class AppointCoachActivity extends BaseActivity implements View.OnClickLi
                 }
                 break;
             case R.id.tv_appointment:
-                venuesPresent.appointCoach(venuesId,coachBean.getCoachId(),appointDate,
-                        appointPeriod,userName,userPhone);
+                if (verifyOk()) {
+                    venuesPresent.appointCoach(venuesId, coachBean.getId(), appointDate, appointPeriod,
+                            etUsername.getText().toString().trim(), etPhone.getText().toString().trim());
+                }
+
                 break;
             default:
                 break;
         }
+    }
+
+    private boolean verifyOk() {
+        String userName = etUsername.getText().toString().trim();
+        if (TextUtils.isEmpty(userName)) {
+            ToastUtil.showShort(this, "请输入姓名");
+            return false;
+        }
+
+        String phone = etPhone.getText().toString().trim();
+        if (!StringUtils.isMatchTel(phone)) {
+            ToastUtil.showShort(this, "请输入正确手机号");
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -260,7 +285,7 @@ public class AppointCoachActivity extends BaseActivity implements View.OnClickLi
             intent.setData(data);
             try {
                 startActivity(intent);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
@@ -303,10 +328,10 @@ public class AppointCoachActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void appointCoachResult(BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
-            Toast.makeText(this,"预约成功",Toast.LENGTH_LONG).show();
-        }else {
-            Toast.makeText(this,"预约失败",Toast.LENGTH_LONG).show();
+        if (baseBean.getStatus() == Constant.OK) {
+            Toast.makeText(this, "预约成功", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "预约失败", Toast.LENGTH_LONG).show();
         }
     }
 }

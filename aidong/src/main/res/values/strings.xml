@@ -234,4 +234,6 @@
     <string name="confirm_nickname">请输入新的昵称</string>
     <string name="details">详情</string>
     <string name="complete_user_info">完善个人资料</string>
+    <string name="venues">场馆</string>
+    <string name="other_subbranch">其他分店</string>
 </resources>

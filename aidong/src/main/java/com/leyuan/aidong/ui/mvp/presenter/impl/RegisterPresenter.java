@@ -182,4 +182,9 @@ public class RegisterPresenter implements RegisterPresenterInterface {
         }, mobile, captcha);
     }
 
+    @Override
+    public String getBingdingMobile() {
+        return bindingMobile;
+    }
+
 }

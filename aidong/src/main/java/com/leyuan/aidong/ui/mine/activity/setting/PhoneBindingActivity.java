@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.mine.activity.setting;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.RegisterPresenterInterface;
 import com.leyuan.aidong.ui.mvp.presenter.impl.RegisterPresenter;
 import com.leyuan.aidong.ui.mvp.view.RegisterViewInterface;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.StringUtils;
@@ -82,6 +84,10 @@ public class PhoneBindingActivity extends BaseActivity implements View.OnClickLi
             getEidtTelephone().setError("请输入正确手机号");
             return false;
         }
+        if ( !TextUtils.equals(mobile,presenter.getBingdingMobile())) {
+            ToastUtil.show("与验证手机不一致",this);
+            return false;
+        }
 
         code = getEidtVerifyCode().getText().toString().trim();
         if (TextUtils.isEmpty(code)) {
@@ -112,10 +118,13 @@ public class PhoneBindingActivity extends BaseActivity implements View.OnClickLi
     public void register(boolean success) {
         DialogUtils.dismissDialog();
         if (success) {
-            ToastUtil.showShort(App.context, "修改成功");
+            ToastUtil.showShort(App.context, "绑定成功");
+            Intent intent = new Intent();
+            intent.putExtra(Constant.BINDING_PHONE, presenter.getBingdingMobile());
+            setResult(Constant.BINDING_PHONE_OK, intent);
             finish();
         } else {
-            ToastUtil.showShort(App.context, "修改失败 请重新提交");
+            ToastUtil.showShort(App.context, "绑定失败 请重新提交");
         }
     }
 

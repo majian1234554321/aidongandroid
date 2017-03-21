@@ -14,4 +14,5 @@ public interface RegisterPresenterInterface {
 
     void checkCaptchaImage(String mobile, String captcha);
 
+    String getBingdingMobile();
 }

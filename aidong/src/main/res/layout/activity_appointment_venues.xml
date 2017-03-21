@@ -90,7 +90,7 @@
 
     <include layout="@layout/inc_bold_line" />
 
-    <include layout="@layout/inc_appointment_user_info" />
+    <include layout="@layout/inc_appointment_user_phone_info" />
 
     <View
         android:layout_width="match_parent"

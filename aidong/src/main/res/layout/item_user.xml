@@ -55,7 +55,7 @@
         android:id="@+id/iv_follow"
         android:layout_width="70dp"
         android:layout_height="30dp"
-        android:src="@drawable/icon_follow"
+        android:background="@drawable/icon_follow"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />

@@ -46,6 +46,14 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
     private UserInfoPresent userInfoPresent;
     private String useId;
 
+    public static UserDynamicFragment newInstance(String id) {
+        Bundle args = new Bundle();
+        args.putString("userId",id);
+        UserDynamicFragment fragment = new UserDynamicFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_user_dynamic,null);
@@ -112,4 +120,6 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
     public void showEmptyLayout() {
 
     }
+
+
 }

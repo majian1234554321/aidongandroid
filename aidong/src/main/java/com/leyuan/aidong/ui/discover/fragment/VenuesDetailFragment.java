@@ -123,32 +123,15 @@ public class VenuesDetailFragment extends BaseFragment implements View.OnClickLi
             case R.id.tv_address:
                 if (venues != null) {
                     MapActivity.start(getActivity(), "场馆地址", venues.getName(), venues.getAddress(),
-                            venues.getLat() + "", venues.getLng() + "");
+                            venues.getCoordinate().getLat() + "", venues.getCoordinate().getLng() + "");
                 }
 
                 break;
             case R.id.tv_phone:
                 TelephoneManager.callImmediate(getActivity(), venues.getTel());
-//                new DialogDoubleButton(getActivity()).setContentDesc("拨打电话")
-//                        .setLeftButton("取消")
-//                        .setRightButton("拨打")
-//                        .setContentDesc("" + venues.getTel())
-//                        .setBtnCancelListener(new ButtonCancelListener() {
-//                            @Override
-//                            public void onClick(BaseDialog dialog) {
-//                                dialog.dismiss();
-//                            }
-//                        })
-//                        .setBtnOkListener(new ButtonOkListener() {
-//                            @Override
-//                            public void onClick(BaseDialog dialog) {
-//                                dialog.dismiss();
-//                            }
-//                        })
-//                        .show();
                 break;
             case tv_subbranch:
-                VenuesSubbranchActivity.start(getActivity(), id);
+                VenuesSubbranchActivity.start(getActivity(), venues.getBrother());
 
                 break;
             default:
@@ -173,7 +156,13 @@ public class VenuesDetailFragment extends BaseFragment implements View.OnClickLi
         tvAddress.setText(venues.getAddress());
         tvPhone.setText(venues.getTel());
         tvOpenTime.setText(venues.getBusiness_time());
-        tvSubbranch.setText("共" + venues.getGyms_count() + "家分店");
+        if (venues.getBrother() != null && !venues.getBrother().isEmpty()) {
+            subbranchLayout.setVisibility(View.VISIBLE);
+            tvSubbranch.setText("共" + venues.getBrother().size() + "家分店");
+        } else {
+            subbranchLayout.setVisibility(View.GONE);
+        }
+
         ivParking.setImageResource(venues.getService().contains("1") ? R.drawable.icon_parking :
                 R.drawable.icon_parking_gray);
         ivWifi.setImageResource(venues.getService().contains("2") ? R.drawable.icon_wifi :

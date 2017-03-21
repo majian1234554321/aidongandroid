@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:background="?selectableItemBackground"
                 android:paddingTop="20dp"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/iv_default"

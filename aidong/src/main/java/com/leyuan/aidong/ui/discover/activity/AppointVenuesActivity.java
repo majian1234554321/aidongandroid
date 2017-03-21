@@ -12,21 +12,26 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.adapter.discover.DateAdapter;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.adapter.discover.DateAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.VenuesPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VenuesPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointVenuesActivityView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DateUtils;
+import com.leyuan.aidong.utils.StringUtils;
+import com.leyuan.aidong.utils.TelephoneManager;
+import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 
 import java.util.ArrayList;
@@ -34,13 +39,12 @@ import java.util.Calendar;
 import java.util.List;
 
 
-
 /**
  * 预约场馆
  * 上午九点之前,下午三点之前可预约,若今天不可预约日期从明天开始
  * Created by song on 2016/10/26.
  */
-public class AppointVenuesActivity extends BaseActivity implements View.OnClickListener, DateAdapter.ItemClickListener ,AppointVenuesActivityView{
+public class AppointVenuesActivity extends BaseActivity implements View.OnClickListener, DateAdapter.ItemClickListener, AppointVenuesActivityView {
     private static final String MORNING = "0";
     private static final String AFTERNOON = "1";
 
@@ -51,8 +55,8 @@ public class AppointVenuesActivity extends BaseActivity implements View.OnClickL
     private RecyclerView rvDate;
     private TextView tvMorning;
     private TextView tvAfternoon;
-    private TextView tvUsername;
-    private TextView tvUserPhone;
+    private EditText etUsername;
+    private EditText etUserPhone;
     private TextView tvAppoint;
 
     private DateAdapter dateAdapter;
@@ -73,7 +77,7 @@ public class AppointVenuesActivity extends BaseActivity implements View.OnClickL
 
     private VenuesPresent venuesPresent;
 
-    public static void start(Context context, String venuesId,String name, String address, String phone) {
+    public static void start(Context context, String venuesId, String name, String address, String phone) {
         Intent starter = new Intent(context, AppointVenuesActivity.class);
         starter.putExtra("venuesId", venuesId);
         starter.putExtra("name", name);
@@ -86,7 +90,7 @@ public class AppointVenuesActivity extends BaseActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appointment_venues);
-        venuesPresent = new VenuesPresentImpl(this,this);
+        venuesPresent = new VenuesPresentImpl(this, this);
         userName = App.mInstance.getUser().getName();
         userPhone = App.mInstance.getUser().getMobile();
         if (getIntent() != null) {
@@ -130,8 +134,8 @@ public class AppointVenuesActivity extends BaseActivity implements View.OnClickL
         rvDate = (RecyclerView) findViewById(R.id.rv_date);
         tvMorning = (TextView) findViewById(R.id.tv_morning);
         tvAfternoon = (TextView) findViewById(R.id.tv_afternoon);
-        tvUsername = (TextView) findViewById(R.id.et_username);
-        tvUserPhone = (TextView) findViewById(R.id.et_phone);
+        etUsername = (EditText) findViewById(R.id.et_username);
+        etUserPhone = (EditText) findViewById(R.id.et_phone);
         tvAppoint = (TextView) findViewById(R.id.tv_appointment);
         initButtonStatus();
         rvDate.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -143,8 +147,10 @@ public class AppointVenuesActivity extends BaseActivity implements View.OnClickL
         tvAddress.setText(venuesAddress);
 
         appointDate = days.get(0);
-        tvUsername.setText(userName);
-        tvUserPhone.setText(userPhone);
+        if (userName != null)
+            etUsername.setText(userName);
+        if (userPhone != null)
+            etUserPhone.setText(userPhone);
     }
 
     private void setListener() {
@@ -186,11 +192,30 @@ public class AppointVenuesActivity extends BaseActivity implements View.OnClickL
                 }
                 break;
             case R.id.tv_appointment:
-                venuesPresent.appointVenues(venuesId,appointDate,appointPeriod,userName,userPhone);
+                if (verifyOk()) {
+                    venuesPresent.appointVenues(venuesId, appointDate, appointPeriod,
+                            etUserPhone.getText().toString().trim(), etUserPhone.getText().toString().trim());
+                }
+
                 break;
             default:
                 break;
         }
+    }
+
+    private boolean verifyOk() {
+        String userName = etUsername.getText().toString().trim();
+        if (TextUtils.isEmpty(userName)) {
+            ToastUtil.showShort(this, "请输入姓名");
+            return false;
+        }
+
+        String phone = etUserPhone.getText().toString().trim();
+        if (!StringUtils.isMatchTel(phone)) {
+            ToastUtil.showShort(this, "请输入正确手机号");
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -266,7 +291,8 @@ public class AppointVenuesActivity extends BaseActivity implements View.OnClickL
                 .setCancelable(true)
                 .setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-
+                        TelephoneManager.callImmediate(AppointVenuesActivity.this, venuesPhone);
+                        dialog.dismiss();
                     }
                 })
                 .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
@@ -290,10 +316,10 @@ public class AppointVenuesActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void appointVenuesResult(BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
-            Toast.makeText(this,"预约成功",Toast.LENGTH_LONG).show();
-        }else {
-            Toast.makeText(this,"预约失败",Toast.LENGTH_LONG).show();
+        if (baseBean.getStatus() == Constant.OK) {
+            Toast.makeText(this, "预约成功", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "预约失败", Toast.LENGTH_LONG).show();
         }
     }
 

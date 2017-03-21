@@ -24,18 +24,18 @@ import java.util.List;
  * 场馆详情教练列表适配器
  * Created by song on 2016/8/29.
  */
-public class VenuesCoachAdapter extends RecyclerView.Adapter<VenuesCoachAdapter.CoachHolder>{
+public class VenuesCoachAdapter extends RecyclerView.Adapter<VenuesCoachAdapter.CoachHolder> {
     private Context context;
     private String venuesId;
     private List<CoachBean> data = new ArrayList<>();
 
-    public VenuesCoachAdapter(Context context,String venuesId) {
+    public VenuesCoachAdapter(Context context, String venuesId) {
         this.context = context;
         this.venuesId = venuesId;
     }
 
     public void setData(List<CoachBean> data) {
-        if(data != null){
+        if (data != null) {
             this.data = data;
             notifyDataSetChanged();
         }
@@ -57,17 +57,17 @@ public class VenuesCoachAdapter extends RecyclerView.Adapter<VenuesCoachAdapter.
         final CoachBean bean = data.get(position);
         GlideLoader.getInstance().displayCircleImage(bean.getAvatar(), holder.cover);
         holder.name.setText(bean.getName());
-        if("0".equals(bean.getGender())){   //男
+        if ("0".equals(bean.getGender())) {   //男
             holder.gender.setBackgroundResource(R.drawable.icon_man);
-        }else {
+        } else {
             holder.gender.setBackgroundResource(R.drawable.icon_woman);
         }
         holder.appointment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(App.mInstance.isLogin()){
-                    AppointCoachActivity.start(context,venuesId,bean);
-                }else{
+                if (App.mInstance.isLogin()) {
+                    AppointCoachActivity.start(context, venuesId, bean);
+                } else {
                     UiManager.activityJump(context, LoginActivity.class);
                 }
 
@@ -77,12 +77,12 @@ public class VenuesCoachAdapter extends RecyclerView.Adapter<VenuesCoachAdapter.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserInfoActivity.start(context,bean.getCoachId());
+                UserInfoActivity.start(context, bean.getId());
             }
         });
     }
 
-    class CoachHolder extends RecyclerView.ViewHolder{
+    class CoachHolder extends RecyclerView.ViewHolder {
         ImageView cover;
         ImageView gender;
         TextView name;
@@ -92,12 +92,12 @@ public class VenuesCoachAdapter extends RecyclerView.Adapter<VenuesCoachAdapter.
 
         public CoachHolder(View itemView) {
             super(itemView);
-            cover = (ImageView)itemView.findViewById(R.id.dv_coach_cover);
-            name = (TextView)itemView.findViewById(R.id.tv_coach_name);
-            distance = (TextView)itemView.findViewById(R.id.tv_distance);
-            hot = (TextView)itemView.findViewById(R.id.tv_hot);
+            cover = (ImageView) itemView.findViewById(R.id.dv_coach_cover);
+            name = (TextView) itemView.findViewById(R.id.tv_coach_name);
+            distance = (TextView) itemView.findViewById(R.id.tv_distance);
+            hot = (TextView) itemView.findViewById(R.id.tv_hot);
             gender = (ImageView) itemView.findViewById(R.id.iv_gender);
-            appointment = (ImageView)itemView.findViewById(R.id.iv_appointment);
+            appointment = (ImageView) itemView.findViewById(R.id.iv_appointment);
         }
     }
 }
