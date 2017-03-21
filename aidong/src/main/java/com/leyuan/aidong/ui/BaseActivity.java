@@ -30,7 +30,6 @@ import com.leyuan.aidong.utils.constant.GoodsType;
 import java.util.LinkedList;
 import java.util.List;
 
-import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
 
@@ -213,9 +212,9 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
 
         // (Optional) Check whether the user denied any permissions and checked "NEVER ASK AGAIN."
         // This will display a dialog directing them to enable the permission in app settings.
-        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+      /*  if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
             new AppSettingsDialog.Builder(this).build().show();
-        }
+        }*/
     }
 
 }

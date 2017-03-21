@@ -12,6 +12,7 @@ import android.hardware.Camera.Size;
 import android.os.Build;
 import android.os.Handler;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
@@ -20,7 +21,11 @@ import android.widget.ListView;
 import java.io.File;
 import java.io.IOException;
 import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -306,5 +311,67 @@ public class Utils {
 	 */
 	public static float calBMI(float weight,float height) {
 		return weight / (height * height);
+	}
+
+	public static String getData(String time) {
+		if (TextUtils.isEmpty(time)) {
+			return "";
+		}
+		// 当前日期
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String currDate = format.format(new Date());
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		try {
+			Date date = sdf.parse(time);
+			long old = date.getTime();
+			long currTime = System.currentTimeMillis();
+			long spanTime = currTime - old;
+			// 传入日期
+			SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd");
+			String timeDate = timeFormat.format(date);
+			//当前日期的前一天
+			String beforeDate = getSpecifiedDayBefore();
+			if(spanTime < 60000) {
+				return "刚刚";
+			} else if(spanTime < 3600000) { // xx分钟前
+				return spanTime / 60000 + "分钟前";
+			} else if (currDate.equals(timeDate)) {
+				SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm");
+				return "今天 " + sdf2.format(date);
+			} else if (timeDate.equals(beforeDate)) {
+				SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm");
+				return "昨天" + sdf2.format(date);
+			} else
+				/*if ((3600000*24)*2 <spanTime) */
+			{
+				SimpleDateFormat sdf2 = new SimpleDateFormat("MM-dd HH:mm");
+				return sdf2.format(date);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return time;
+	}
+
+
+	/**
+	 * 获得当前日期的前一天
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressLint("SimpleDateFormat")
+	public static String getSpecifiedDayBefore() {
+		SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd");
+		Date beginDate = new Date();
+		Calendar date = Calendar.getInstance();
+		date.setTime(beginDate);
+		date.set(Calendar.DATE, date.get(Calendar.DATE) - 1);
+		try {
+			Date endDate = dft.parse(dft.format(date.getTime()));
+			return dft.format(endDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return dft.format(new Date());
 	}
 }

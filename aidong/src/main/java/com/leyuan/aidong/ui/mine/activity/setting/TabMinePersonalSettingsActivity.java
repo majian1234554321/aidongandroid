@@ -46,7 +46,8 @@ public class TabMinePersonalSettingsActivity extends BaseActivity {
     private static final int LOGINOUT = 0;
     private static final int CUSTOMERSERVICEPHONE = 1;
     private TextView settings_contactus_txt;
-    private String mobile = "";
+    private String mobile;
+//    private String mobile = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,49 +59,6 @@ public class TabMinePersonalSettingsActivity extends BaseActivity {
     protected void setupView() {
         setContentView(R.layout.layout_tab_mine_personal_settings);
         init();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        bindMobile();
-    }
-
-    /**
-     * 判断绑定手机号
-     */
-    private void bindMobile() {
-        if (App.mInstance.isLogin()) {
-            mobile = App.mInstance.getUser().getMobile();
-        }
-        if (!TextUtils.isEmpty(mobile)) {
-            layout_tab_mine_personal_settings_binding_mobile_phone_unbound_txt
-                    .setText(mobile);
-            layout_tab_mine_personal_settings_binding_mobile_phone_rel
-                    .setClickable(false);
-        }
-
-        if (layout_tab_mine_personal_settings_binding_mobile_phone_rel
-                .isClickable()) {
-            layout_tab_mine_personal_settings_binding_mobile_phone_rel
-                    .setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (App.mInstance.isLogin()) {
-//                                intent = new Intent(
-//                                        TabMinePersonalSettingsActivity.this,
-//                                        TabMineBingdingMobilePhoneActivity.class);
-//                                startActivity(intent);
-                                UiManager.activityJump(TabMinePersonalSettingsActivity.this, PhoneBindingActivity.class);
-                            } else {
-                                intent.setClass(
-                                        TabMinePersonalSettingsActivity.this,
-                                        LoginActivity.class);
-                                startActivity(intent);
-                            }
-                        }
-                    });
-        }
     }
 
     protected void initData() {
@@ -265,6 +223,72 @@ public class TabMinePersonalSettingsActivity extends BaseActivity {
     private void data() {
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        bindMobile();
+    }
+
+    /**
+     * 判断绑定手机号
+     */
+    private void bindMobile() {
+        if (App.getInstance().isLogin()) {
+            mobile = App.getInstance().getUser().getMobile();
+            if (!TextUtils.isEmpty(mobile)) {
+                layout_tab_mine_personal_settings_binding_mobile_phone_unbound_txt
+                        .setText(mobile);
+            }
+        }
+        layout_tab_mine_personal_settings_binding_mobile_phone_rel
+                .setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (!App.getInstance().isLogin()) {
+                            UiManager.activityJump(TabMinePersonalSettingsActivity.this, LoginActivity.class);
+                        } else if (TextUtils.isEmpty(mobile)) {
+                            UiManager.activityJump(TabMinePersonalSettingsActivity.this, PhoneBindingActivity.class);
+                        } else {
+                            UiManager.activityJump(TabMinePersonalSettingsActivity.this, PhoneUnBindingActivity.class);
+                        }
+                    }
+                });
+
+//
+//        if (App.mInstance.isLogin()) {
+//            mobile = App.mInstance.getUser().getMobile();
+//        }
+//        if (!TextUtils.isEmpty(mobile)) {
+//            layout_tab_mine_personal_settings_binding_mobile_phone_unbound_txt
+//                    .setText(mobile);
+//            layout_tab_mine_personal_settings_binding_mobile_phone_rel
+//                    .setClickable(false);
+//        }
+//
+//        if (layout_tab_mine_personal_settings_binding_mobile_phone_rel
+//                .isClickable()) {
+//            layout_tab_mine_personal_settings_binding_mobile_phone_rel
+//                    .setOnClickListener(new OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            if (App.mInstance.isLogin()) {
+////                                intent = new Intent(
+////                                        TabMinePersonalSettingsActivity.this,
+////                                        TabMineBingdingMobilePhoneActivity.class);
+////                                startActivity(intent);
+//                                UiManager.activityJump(TabMinePersonalSettingsActivity.this, PhoneBindingActivity.class);
+//                            } else {
+//                                intent.setClass(
+//                                        TabMinePersonalSettingsActivity.this,
+//                                        LoginActivity.class);
+//                                startActivity(intent);
+//                            }
+//                        }
+//                    });
+//        }
+    }
+
 
     private void loginOut() {
         try {

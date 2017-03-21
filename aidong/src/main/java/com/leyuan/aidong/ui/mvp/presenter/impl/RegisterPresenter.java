@@ -160,6 +160,34 @@ public class RegisterPresenter implements RegisterPresenterInterface {
     }
 
     @Override
+    public void unbindingCaptcha(String mobile) {
+        mRegisterModelInterface.unbindingCaptcha(new BaseSubscriber<UserCoach>(mContext) {
+
+            @Override
+            public void onStart() {
+                super.onStart();
+                mRegisterViewInterface.onRequestStart();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                mRegisterViewInterface.onGetIdentifyCode(false);
+            }
+
+            @Override
+            public void onNext(UserCoach user) {
+                LogAidong.i("onNext token = ", "" + user.getToken());
+                if (user != null) {
+                    token = user.getToken();
+                }
+                mRegisterViewInterface.onGetIdentifyCode(true);
+            }
+        }, mobile);
+    }
+
+
+    @Override
     public void checkCaptchaImage(final String mobile, String captcha) {
         mRegisterModelInterface.checkCaptchaImage(new BaseSubscriber<UserCoach>(mContext) {
             @Override

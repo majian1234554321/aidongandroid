@@ -236,4 +236,8 @@
     <string name="complete_user_info">完善个人资料</string>
     <string name="venues">场馆</string>
     <string name="other_subbranch">其他分店</string>
+    <string name="phone">手机号</string>
+    <string name="login_password">登录密码</string>
+    <string name="check_old_phone">验证原手机</string>
+    <string name="check_phone">验证手机</string>
 </resources>

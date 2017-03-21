@@ -52,13 +52,12 @@ public class DynamicBean implements Serializable{
 
         public List<Item> item = new ArrayList<>();
         public class  Item implements Serializable{
-            public String comment_id;
+            public String id;
             public String content;
             public String published_at;
             public Publisher publisher;
             public class Publisher implements Serializable{
-                public String publisher_id;
-                public String published_at;
+                public String id;
                 public String name;
                 public String avatar;
                 public String gender;

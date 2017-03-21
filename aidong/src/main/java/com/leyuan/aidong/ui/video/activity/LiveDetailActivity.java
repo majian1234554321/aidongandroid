@@ -1,4 +1,4 @@
-package com.example.aidong.wxapi;
+package com.leyuan.aidong.ui.video.activity;
 
 
 import android.annotation.SuppressLint;
@@ -22,19 +22,14 @@ import com.leyuan.aidong.entity.video.LiveVideoInfo;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
-import com.leyuan.aidong.ui.video.activity.LiveCommentActivity;
-import com.leyuan.aidong.ui.video.activity.LivingVideoActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.FastBlur;
 import com.leyuan.aidong.utils.LiveDateFilterUtil;
-import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.Urls;
 import com.leyuan.aidong.widget.media.TextViewPrintly;
-import com.sina.weibo.sdk.api.share.BaseResponse;
-import com.sina.weibo.sdk.api.share.IWeiboHandler;
 
 
-public class LiveDetailActivity extends BaseActivity implements View.OnClickListener, IWeiboHandler.Response {
+public class LiveDetailActivity extends BaseActivity implements View.OnClickListener {
 
     private static final int LIVE_ENDED = 0;
     private static final int LIVE_BEGIN = 1;
@@ -73,7 +68,7 @@ public class LiveDetailActivity extends BaseActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         info = (LiveVideoInfo) getIntent().getSerializableExtra(Constant.LIVE_INFO);
         setContentView(R.layout.activity_live_detail);
-        sharePopupWindow = new SharePopupWindow(this, savedInstanceState);
+        sharePopupWindow = new SharePopupWindow(this);
 
         initView();
         initData();
@@ -230,21 +225,8 @@ public class LiveDetailActivity extends BaseActivity implements View.OnClickList
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         super.onActivityResult(requestCode, resultCode, data);
         sharePopupWindow.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        Logger.i("share", " share pop == null ? " + (sharePopupWindow == null));
-        sharePopupWindow.onNewIntent(intent, this);
-    }
-
-    @Override
-    public void onResponse(BaseResponse baseResponse) {
-        sharePopupWindow.onResponse(baseResponse);
     }
 
     enum LiveState {

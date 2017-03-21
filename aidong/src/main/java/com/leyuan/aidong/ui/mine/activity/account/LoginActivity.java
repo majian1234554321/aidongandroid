@@ -40,7 +40,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Logger.i("login " + TAG, " onCreate");
-        setContentView(R.layout.activity_log_in);
+        setContentView(R.layout.activity_login);
         loginPresenter = new LoginPresenter(this, this);
         chatLoginManager = new EmChatLoginManager(this);
 

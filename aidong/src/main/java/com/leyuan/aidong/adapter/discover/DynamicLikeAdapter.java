@@ -79,7 +79,7 @@ public class DynamicLikeAdapter extends RecyclerView.Adapter<DynamicLikeAdapter.
                 }
             });
         }else {
-            GlideLoader.getInstance().displayCircleImage(R.drawable.camera_tag_delete_left,holder.avatar);
+            GlideLoader.getInstance().displayCircleImage(R.drawable.icon_more_user,holder.avatar);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

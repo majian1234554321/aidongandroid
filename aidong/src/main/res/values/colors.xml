@@ -69,6 +69,7 @@
     <color name="main_red">#FF5000</color>
     <color name="color_image_press">#88888888</color>
     <color name="c3">#333333</color>
+    <color name="c6">#666666</color>
     <color name="c9">#999999</color>
     <color name="text_enabled">#FFFFFFFF</color>
     <color name="text_disabled">#747474</color>
@@ -93,4 +94,5 @@
     <color name="jianxi">#EBEBEB</color>
     <color name="red_origin">#FF5000</color>
     <color name="txt_gray">#cccccc</color>
+
 </resources>

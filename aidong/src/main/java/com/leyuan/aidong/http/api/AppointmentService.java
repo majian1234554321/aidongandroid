@@ -18,7 +18,7 @@ import rx.Observable;
 public interface AppointmentService {
 
     @GET("mine/appointments")
-    Observable<BaseBean<AppointmentData>> getAppointments(@Query("type") String type, @Query("page") int page);
+    Observable<BaseBean<AppointmentData>> getAppointments(@Query("list") String type, @Query("page") int page);
 
     @GET("mine/appointments/{id}")
     Observable<BaseBean<AppointmentDetailData>> getAppointmentDetail(@Path("id") String id);

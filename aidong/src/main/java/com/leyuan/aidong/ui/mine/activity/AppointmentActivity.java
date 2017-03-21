@@ -32,7 +32,7 @@ public class AppointmentActivity extends BaseActivity implements SmartTabLayout.
     private SmartTabLayout tabLayout;
     private ViewPager viewPager;
     private FragmentPagerItemAdapter adapter;
-    private int currentItem = 0;
+    private int currentItem;
     private List<View> allTabView = new ArrayList<>();
 
     @Override

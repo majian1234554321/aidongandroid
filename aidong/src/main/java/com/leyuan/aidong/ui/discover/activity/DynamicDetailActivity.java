@@ -2,6 +2,8 @@ package com.leyuan.aidong.ui.discover.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,12 +17,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.android.exoplayer.util.Util;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter;
 import com.leyuan.aidong.adapter.discover.DynamicDetailAdapter;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CommentBean;
 import com.leyuan.aidong.entity.DynamicBean;
+import com.leyuan.aidong.entity.PhotoBrowseInfo;
+import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.discover.viewholder.FiveImageViewHolder;
@@ -30,13 +35,15 @@ import com.leyuan.aidong.ui.discover.viewholder.SixImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.ThreeImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.TwoImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.VideoViewHolder;
+import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.DynamicDetailActivityView;
+import com.leyuan.aidong.ui.video.activity.PlayerActivity;
 import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.utils.constant.DynamicType;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.KeyBoardUtil;
+import com.leyuan.aidong.utils.constant.DynamicType;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
@@ -52,7 +59,8 @@ import static android.view.inputmethod.EditorInfo.IME_ACTION_SEND;
  * 动态详情
  * Created by song on 2016/12/28.
  */
-public class DynamicDetailActivity extends BaseActivity implements DynamicDetailActivityView,View.OnClickListener, TextView.OnEditorActionListener, SwipeRefreshLayout.OnRefreshListener, DynamicDetailAdapter.OnItemClickListener {
+public class DynamicDetailActivity extends BaseActivity implements DynamicDetailActivityView,View.OnClickListener,
+        TextView.OnEditorActionListener, SwipeRefreshLayout.OnRefreshListener, DynamicDetailAdapter.OnItemClickListener {
     private ImageView ivBack;
     private TextView tvReport;
     private ImageView ivUserAvatar;
@@ -67,6 +75,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
     private DynamicBean dynamic;
     private List<CommentBean> comments = new ArrayList<>();
     private DynamicPresent dynamicPresent;
+    private CircleDynamicAdapter headerAdapter;
 
     @Override
     protected void onCreate( Bundle savedInstanceState) {
@@ -120,8 +129,9 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
                 .addType(FiveImageViewHolder.class, DynamicType.FIVE_IMAGE, R.layout.vh_dynamic_five_photos)
                 .addType(SixImageViewHolder.class, DynamicType.SIX_IMAGE, R.layout.vh_dynamic_six_photos)
                 .showLikeAndCommentLayout(false)
-                .setData(dynamicBeanList);
-        CircleDynamicAdapter headerAdapter = builder.build();
+                .setData(dynamicBeanList)
+                .setDynamicCallback(new DynamicCallback());
+        headerAdapter = builder.build();
         headerRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         headerRecyclerView.setAdapter(headerAdapter);
     }
@@ -260,4 +270,80 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
                 .positiveText(R.string.sure)
                 .show();
     }
+
+    public class DynamicCallback implements CircleDynamicAdapter.IDynamicCallback {
+
+        @Override
+        public void onBackgroundClick(DynamicBean dynamicBean) {
+
+        }
+
+        @Override
+        public void onAvatarClick(String id) {
+            UserInfoActivity.start(DynamicDetailActivity.this,id);
+        }
+
+        @Override
+        public void onVideoClick(String url) {
+            Intent intent = new Intent(DynamicDetailActivity.this, PlayerActivity.class)
+                    .setData(Uri.parse(url))
+                    .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_HLS);
+            startActivity(intent);
+        }
+
+        @Override
+        public void onImageClick(List<String> photoUrls, List<Rect> viewLocalRect, int currPosition) {
+            PhotoBrowseInfo info = PhotoBrowseInfo.create(photoUrls, viewLocalRect, currPosition);
+            PhotoBrowseActivity.start(DynamicDetailActivity.this, info);
+        }
+
+        @Override
+        public void onLikeClick(int position, String id, boolean isLike) {
+            if (isLike) {
+                dynamicPresent.cancelLike(id, position);
+            } else {
+                dynamicPresent.addLike(id, position);
+            }
+        }
+
+        @Override
+        public void onCommentClick(DynamicBean dynamicBean) {
+            KeyBoardUtil.openKeyboard(etComment,DynamicDetailActivity.this);
+        }
+
+        @Override
+        public void onShareClick() {
+
+        }
+    }
+
+    @Override
+    public void addLikeResult(BaseBean baseBean) {
+        if(baseBean.getStatus() == Constant.OK){
+            dynamic.like.counter += 1;
+            DynamicBean dynamic = new DynamicBean();
+            DynamicBean.LikeUser likeUser = dynamic.new LikeUser();
+            DynamicBean.LikeUser.Item item = likeUser.new Item();
+            UserCoach user = App.mInstance.getUser();
+            item.avatar = user.getAvatar();
+            item.id = String.valueOf(user.getId());
+
+
+            Toast.makeText(this,"点赞成功",Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(this,"点赞失败:" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void cancelLikeResult(BaseBean baseBean) {
+        if(baseBean.getStatus() == Constant.OK){
+            dynamic.like.counter -= 1;
+
+            Toast.makeText(this,"取消赞成功",Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(this,"取消赞失败:"+baseBean.getMessage(),Toast.LENGTH_LONG).show();
+        }
+    }
+
 }

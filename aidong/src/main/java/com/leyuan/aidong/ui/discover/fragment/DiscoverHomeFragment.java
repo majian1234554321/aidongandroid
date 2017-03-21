@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -32,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
+import static com.leyuan.aidong.utils.Constant.REQUEST_PUBLISH_DYNAMIC;
 import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_PHOTO;
 import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_VIDEO;
 
@@ -43,6 +45,7 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_VIDEO;
 public class DiscoverHomeFragment extends BaseFragment implements SmartTabLayout.TabProvider{
     private List<View> allTabView = new ArrayList<>();
     private ImageView camera;
+    private FragmentPagerItemAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
@@ -62,7 +65,7 @@ public class DiscoverHomeFragment extends BaseFragment implements SmartTabLayout
         FragmentPagerItems pages = new FragmentPagerItems(getContext());
         pages.add(FragmentPagerItem.of(null,DiscoverFragment.class));
         pages.add(FragmentPagerItem.of(null,CircleFragment.class));
-        final FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(getChildFragmentManager(), pages);
+        adapter = new FragmentPagerItemAdapter(getChildFragmentManager(), pages);
         viewPager.setAdapter(adapter);
         tabLayout.setViewPager(viewPager);
         tabLayout.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
@@ -138,8 +141,23 @@ public class DiscoverHomeFragment extends BaseFragment implements SmartTabLayout
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK ) {
-            PublishDynamicActivity.start(getContext(),requestCode == REQUEST_SELECT_PHOTO,Boxing.getResult(data));
+        if (resultCode == RESULT_OK) {
+            if(requestCode == REQUEST_SELECT_PHOTO){
+                Intent intent = new Intent(getContext(),PublishDynamicActivity.class);
+                intent.putExtra("isPhoto",true);
+                intent.putParcelableArrayListExtra("selectedMedia",Boxing.getResult(data));
+                startActivityForResult(intent,REQUEST_PUBLISH_DYNAMIC);
+            }else if(requestCode == REQUEST_SELECT_VIDEO){
+                Intent intent = new Intent(getContext(),PublishDynamicActivity.class);
+                intent.putExtra("isPhoto",false);
+                intent.putParcelableArrayListExtra("selectedMedia",Boxing.getResult(data));
+                startActivityForResult(intent,REQUEST_PUBLISH_DYNAMIC);
+            }else if(requestCode == REQUEST_PUBLISH_DYNAMIC){
+                Fragment page = adapter.getPage(1);
+                if(page instanceof CircleFragment){
+                    ((CircleFragment) page).refreshData();
+                }
+            }
         }
     }
 

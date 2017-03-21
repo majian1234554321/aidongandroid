@@ -3,14 +3,15 @@ package com.leyuan.aidong.module.share;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 
+import com.example.aidong.wxapi.WXEntryActivity;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.ui.WeiboResponseActivity;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.sina.weibo.sdk.api.share.BaseResponse;
@@ -35,10 +36,10 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
     private String imageUrl;
     private String webUrl;
 
-    public SharePopupWindow(Activity context, Bundle savedInstanceState) {
+    public SharePopupWindow(Activity context) {
         super(context);
         this.context = context;
-        myShareUtils = new MyShareUtils(context, savedInstanceState);
+        myShareUtils = new MyShareUtils(context);
 
         initView();
         initData();
@@ -70,23 +71,6 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
     private void initData() {
 
     }
-//
-//    private ShareCallback callback = new ShareCallback() {
-//        @Override
-//        public void onComplete(Object o) {
-//            ToastUtil.showConsecutiveShort("分享成功");
-//        }
-//
-//        @Override
-//        public void onError() {
-//            ToastUtil.showConsecutiveShort("分享失败");
-//        }
-//
-//        @Override
-//        public void onCancel() {
-//            ToastUtil.showConsecutiveShort("分享成功");
-//        }
-//    };
 
     public void showAtBottom(String title, String content, String imageUrl, String webUrl) {
         Logger.i("share", "show image url = " + imageUrl);
@@ -97,6 +81,7 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
         this.webUrl = webUrl;
     }
 
+    @Deprecated
     public void setShareListener(ShareCallback listener) {
         myShareUtils.setShareListener(listener);
     }
@@ -105,11 +90,13 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.img_weichat:
-                myShareUtils.share(MyShareUtils.SHARE_WEIXIN_CHAT, title, content, imageUrl, webUrl);
+                WXEntryActivity.start(context, title, content, imageUrl, webUrl, false);
+//                myShareUtils.share(MyShareUtils.SHARE_WEIXIN_CHAT, title, content, imageUrl, webUrl);
                 dismiss();
                 break;
             case R.id.img_wei_friend:
-                myShareUtils.share(MyShareUtils.SHARE_WEIXIN_FRIENDS, title, content, imageUrl, webUrl);
+                WXEntryActivity.start(context, title, content, imageUrl, webUrl, true);
+//                myShareUtils.share(MyShareUtils.SHARE_WEIXIN_FRIENDS, title, content, imageUrl, webUrl);
                 dismiss();
                 break;
             case R.id.img_qq:
@@ -117,7 +104,8 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
                 dismiss();
                 break;
             case R.id.img_weibo:
-                myShareUtils.share(MyShareUtils.SHARE_WEIBO, title, content, imageUrl, webUrl);
+                WeiboResponseActivity.start(context, title, content, imageUrl, webUrl);
+//                myShareUtils.share(MyShareUtils.SHARE_WEIBO, title, content, imageUrl, webUrl);
                 dismiss();
                 break;
         }
@@ -136,6 +124,7 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
      * @param intent
      * @param response
      */
+    @Deprecated
     public void onNewIntent(Intent intent, IWeiboHandler.Response response) {
         myShareUtils.onNewIntent(intent, response);
     }
@@ -146,6 +135,7 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
         myShareUtils = null;
     }
 
+    @Deprecated
     public void onResponse(BaseResponse baseResponse) {
         if (baseResponse != null) {
             Logger.i("share", "weibo share baseResponse.errCode = " + baseResponse.errCode);

@@ -64,8 +64,6 @@ import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
-import com.sina.weibo.sdk.api.share.BaseResponse;
-import com.sina.weibo.sdk.api.share.IWeiboHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +87,7 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_TO_CART;
  */
 public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnItemClickListener,
         GoodsSkuPopupWindow.SelectSkuListener,SmartTabLayout.TabProvider,View.OnClickListener,
-        GoodsDetailActivityView,PopupWindow.OnDismissListener, GoodsDetailCouponAdapter.CouponListener, IWeiboHandler.Response {
+        GoodsDetailActivityView,PopupWindow.OnDismissListener, GoodsDetailCouponAdapter.CouponListener {
     private static final int CODE_SELECT_ADDRESS = 1;
 
     private SwitcherLayout switcherLayout;
@@ -150,7 +148,7 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_detail);
-        sharePopupWindow = new SharePopupWindow(this, savedInstanceState);
+        sharePopupWindow = new SharePopupWindow(this);
 
         goodsPresent = new GoodsDetailPresentImpl(this,this);
         if(getIntent() != null){
@@ -160,12 +158,6 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
         initView();
         setListener();
         goodsPresent.getGoodsDetail(switcherLayout, goodsType,id);
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        sharePopupWindow.onNewIntent(intent, this);
     }
 
     @Override
@@ -464,12 +456,6 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
             startActivityForResult(new Intent(this,LoginActivity.class),Constant.REQUEST_LOGIN);
         }
     }
-
-    @Override
-    public void onResponse(BaseResponse baseResponse) {
-        sharePopupWindow.onResponse(baseResponse);
-    }
-
     private class MyOnSlideDetailsListener implements SlideDetailsLayout.OnSlideDetailsListener {
         @Override
         public void onStatusChanged(SlideDetailsLayout.Status status) {

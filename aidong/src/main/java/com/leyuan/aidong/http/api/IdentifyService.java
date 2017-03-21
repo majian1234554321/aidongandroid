@@ -34,22 +34,29 @@ public interface IdentifyService {
     @POST("captcha/binding")
     Observable<BaseBean<UserCoach>> bindingMobile(@Field("mobile") String mobile);
 
+    /**
+     * 手机号解除绑定
+     */
+    @FormUrlEncoded
+    @POST("captcha/unbinding")
+    Observable<BaseBean<UserCoach>> unbindingMobile(@Field("mobile") String mobile);
+
     @FormUrlEncoded
     @POST("captcha/check")
     Observable<BaseBean<UserCoach>> checkIdentify(@Field("token") String token, @Field("captcha") String captcha,
-                                             @Field("password") String password);
+                                                  @Field("password") String password);
 
     @FormUrlEncoded
     @POST("captcha_image/{mobile}")
-    Observable<BaseBean<UserCoach>> checkCaptchaImage(@Path("mobile") String mobile,@Field("captcha") String captcha);
+    Observable<BaseBean<UserCoach>> checkCaptchaImage(@Path("mobile") String mobile, @Field("captcha") String captcha);
 
     @FormUrlEncoded
     @PUT("mine/profile")
-    Observable<BaseBean<LoginResult>> completeUserInfo(@FieldMap Map<String ,String> param, @Header("token") String token);
+    Observable<BaseBean<LoginResult>> completeUserInfo(@FieldMap Map<String, String> param, @Header("token") String token);
 
     @Multipart
     @PUT("mine/profile")
-    Observable<BaseBean<LoginResult>> completeUserFileUpdate( @Header("token") String token,
-                                                        @Part List<MultipartBody.Part> parts);
+    Observable<BaseBean<LoginResult>> completeUserFileUpdate(@Header("token") String token,
+                                                             @Part List<MultipartBody.Part> parts);
 
 }

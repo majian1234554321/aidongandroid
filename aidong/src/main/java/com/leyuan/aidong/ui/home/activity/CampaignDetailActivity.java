@@ -27,8 +27,6 @@ import com.leyuan.aidong.ui.mvp.view.CampaignDetailActivityView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.widget.SwitcherLayout;
-import com.sina.weibo.sdk.api.share.BaseResponse;
-import com.sina.weibo.sdk.api.share.IWeiboHandler;
 import com.zzhoujay.richtext.RichText;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
@@ -40,7 +38,7 @@ import static com.leyuan.aidong.R.id.iv_back;
  * 活动详情
  * Created by song on 2016/8/24
  */
-public class CampaignDetailActivity extends BaseActivity implements CampaignDetailActivityView, View.OnClickListener, IWeiboHandler.Response {
+public class CampaignDetailActivity extends BaseActivity implements CampaignDetailActivityView, View.OnClickListener {
     private static final String STATUS_APPLY = "1";                //马上报名
     private static final String STATUS_NOT_START = "2";            //即将开始报名
     private static final String STATUS_APPOINT_END = "3";          //报名已结束
@@ -87,19 +85,13 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_campaign_detail);
         campaignPresent = new CampaignPresentImpl(this, this);
-        sharePopupWindow = new SharePopupWindow(this, savedInstanceState);
+        sharePopupWindow = new SharePopupWindow(this);
         if (getIntent() != null) {
             id = getIntent().getStringExtra("id");
         }
         initView();
         setListener();
         campaignPresent.getCampaignDetail(switcherLayout, id);
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        sharePopupWindow.onNewIntent(intent, this);
     }
 
     @Override
@@ -280,10 +272,5 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
                 campaignPresent.getCampaignDetail(switcherLayout, id);
             }
         }
-    }
-
-    @Override
-    public void onResponse(BaseResponse baseResponse) {
-        sharePopupWindow.onResponse(baseResponse);
     }
 }

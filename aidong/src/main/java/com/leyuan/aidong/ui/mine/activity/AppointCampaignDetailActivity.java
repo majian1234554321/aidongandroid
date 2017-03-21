@@ -49,8 +49,8 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
     private static final String UN_JOIN= "purchased";        //待参加
     private static final String JOINED = "signed";           //已参加
     private static final String CLOSE = "canceled";          //已关闭
-    private static final String REFUNDING = "4";             //退款中
-    private static final String REFUNDED = "5";              //已退款
+    private static final String REFUNDING = "refunding";     //退款中
+    private static final String REFUNDED = "refunded";       //已退款
 
     private SimpleTitleBar titleBar;
     private SwitcherLayout switcherLayout;
@@ -213,11 +213,11 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 //timer.start(Long.parseLong(bean.getPayInfo().getLimitTime()) * 1000);
                 timerLayout.setVisibility(View.VISIBLE);
                 tvOrderNo.setVisibility(View.GONE);
-                codeLayout.setVisibility(View.GONE);
                 tvCancel.setVisibility(View.VISIBLE);
                 tvPay.setVisibility(View.VISIBLE);
                 tvDelete.setVisibility(View.GONE);
                 tvConfirm.setVisibility(View.GONE);
+                codeLayout.setVisibility(View.GONE);
                 payLayout.setVisibility(View.VISIBLE);
                 break;
             case UN_JOIN:           //待参加
@@ -231,10 +231,11 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 tvPay.setVisibility(View.GONE);
                 tvDelete.setVisibility(View.GONE);
                 codeLayout.setVisibility(View.VISIBLE);
-                payLayout.setVisibility(View.GONE);
+                tvCodeNum.setText(bean.getId());
                 tvCodeNum.setTextColor(Color.parseColor("#000000"));
                 ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFF000000, bean.getId(),
                         DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
+                payLayout.setVisibility(View.GONE);
                 break;
             case JOINED:            //已参加
                 tvState.setText(context.getString(R.string.appointment_joined));
@@ -246,11 +247,12 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 tvCancel.setVisibility(View.GONE);
                 tvConfirm.setVisibility(View.GONE);
                 codeLayout.setVisibility(View.VISIBLE);
-                payLayout.setVisibility(View.GONE);
+                tvCodeNum.setText(bean.getId());
                 tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                 tvCodeNum.setTextColor(Color.parseColor("#ebebeb"));
                 ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFFebebeb, bean.getId(),
                         DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
+                payLayout.setVisibility(View.GONE);
                 break;
             case CLOSE:             //已关闭
                 tvState.setText(context.getString(R.string.order_close));
@@ -262,11 +264,12 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 tvCancel.setVisibility(View.GONE);
                 tvConfirm.setVisibility(View.GONE);
                 codeLayout.setVisibility(View.VISIBLE);
-                payLayout.setVisibility(View.GONE);
+                tvCodeNum.setText(bean.getId());
                 tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                 tvCodeNum.setTextColor(Color.parseColor("#ebebeb"));
                 ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFFebebeb, bean.getId(),
                         DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
+                payLayout.setVisibility(View.GONE);
                 break;
             case REFUNDING:           //退款中
                 tvState.setText(context.getString(R.string.order_refunding));
@@ -278,11 +281,12 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 tvCancel.setVisibility(View.GONE);
                 tvConfirm.setVisibility(View.GONE);
                 codeLayout.setVisibility(View.VISIBLE);
-                payLayout.setVisibility(View.GONE);
+                tvCodeNum.setText(bean.getId());
                 tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                 tvCodeNum.setTextColor(Color.parseColor("#ebebeb"));
                 ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFFebebeb, bean.getId(),
                         DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
+                payLayout.setVisibility(View.GONE);
                 break;
             case REFUNDED:             //已退款
                 tvState.setText(context.getString(R.string.order_refunded));
@@ -294,11 +298,12 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 tvCancel.setVisibility(View.GONE);
                 tvConfirm.setVisibility(View.GONE);
                 codeLayout.setVisibility(View.VISIBLE);
-                payLayout.setVisibility(View.GONE);
+                tvCodeNum.setText(bean.getId());
                 tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                 tvCodeNum.setTextColor(Color.parseColor("#ebebeb"));
                 ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFFebebeb, bean.getId(),
                         DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
+                payLayout.setVisibility(View.GONE);
                 break;
             default:
                 break;
