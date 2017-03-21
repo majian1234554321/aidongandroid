@@ -34,8 +34,8 @@ import java.util.List;
  */
 public class AppointmentFragment extends BaseLazyFragment implements AppointmentFragmentView{
     public static final String ALL = "all";
-    public static final String JOINED = "joined";
-    public static final String UN_JOIN = "unJoin";
+    public static final String JOINED = "signed";
+    public static final String UN_JOIN = "unsigned";
     private String type;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;

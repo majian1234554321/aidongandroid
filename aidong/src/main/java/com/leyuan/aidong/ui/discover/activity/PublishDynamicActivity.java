@@ -164,6 +164,7 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
     public void publishDynamicResult(BaseBean baseBean) {
         dismissProgressDialog();
         if(baseBean.getStatus() == Constant.OK){
+            setResult(RESULT_OK,null);
             finish();
             selectedMedia.clear();
             Toast.makeText(this,"上传成功", Toast.LENGTH_LONG).show();

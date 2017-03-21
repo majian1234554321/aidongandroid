@@ -3,8 +3,8 @@
     android:id="@+id/ll_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/selector_dynamic_bg">
 
     <include layout="@layout/inc_dynamic_header"/>
 
@@ -17,8 +17,7 @@
         <ImageView
             android:id="@+id/dv_one"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-          />
+            android:layout_height="match_parent" />
 
     </com.leyuan.aidong.widget.SquareRelativeLayout>
 

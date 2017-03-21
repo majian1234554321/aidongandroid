@@ -91,9 +91,7 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                currPage = 1;
-                RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-                dynamicPresent.pullToRefreshData();
+               refreshData();
             }
         });
         switcherLayout.setOnRetryListener(new View.OnClickListener() {
@@ -134,6 +132,13 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
         }
     };
 
+    public void refreshData(){
+        currPage = 1;
+        refreshLayout.setRefreshing(true);
+        RecyclerViewStateUtils.resetFooterViewState(recyclerView);
+        dynamicPresent.pullToRefreshData();
+    }
+
     @Override
     public void updateRecyclerView(List<DynamicBean> dynamicBeanList) {
         if (refreshLayout.isRefreshing()) {
@@ -154,7 +159,12 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
 
         @Override
         public void onBackgroundClick(DynamicBean dynamicBean) {
-            DynamicDetailActivity.start(getContext(),dynamicBean);
+            if(App.mInstance.isLogin()) {
+                DynamicDetailActivity.start(getContext(),dynamicBean);
+            }else {
+                invokeDynamicBean = dynamicBean;
+                startActivityForResult(new Intent(getContext(), LoginActivity.class),REQUEST_TO_DYNAMIC);
+            }
         }
 
         @Override

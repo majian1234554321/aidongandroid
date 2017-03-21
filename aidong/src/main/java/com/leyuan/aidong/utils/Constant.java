@@ -25,6 +25,7 @@ public class Constant {
     public static final int REQUEST_BUY_IMMEDIATELY = 6;
     public static final int REQUEST_TO_CART = 7;
     public static final int REQUEST_TO_DYNAMIC = 8;
+    public static final int REQUEST_PUBLISH_DYNAMIC = 9;
     public static final int DEFAULT_MAX_UPLOAD_IMAGE_COUNT = 6;        //上传照片数量限制
     public static final String FILE_FOLDER = "Aidong";
     public static final String EMPTY_STR = " ";

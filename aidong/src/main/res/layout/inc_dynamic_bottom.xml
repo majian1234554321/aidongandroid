@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white">
+    android:background="@drawable/selector_dynamic_bg">
 
     <!--文字内容-->
     <TextView
@@ -24,8 +24,7 @@
         android:layout_height="40dp"
         android:paddingLeft="@dimen/left_margin"
         android:paddingRight="9.5dp"
-        android:orientation="horizontal"
-        android:background="@color/white">
+        android:orientation="horizontal">
 
         <ImageView
             android:layout_width="20dp"
@@ -35,7 +34,7 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_likes"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="7.5dp" />
@@ -63,7 +62,7 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_comment"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp" />
     </LinearLayout>

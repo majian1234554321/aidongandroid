@@ -19,6 +19,7 @@ import com.leyuan.aidong.adapter.discover.DynamicLikeAdapter;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.Utils;
 
 
 /**
@@ -38,8 +39,6 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
     private RecyclerView likesRecyclerView;
     private RecyclerView commentRecyclerView;
     private ImageView ivLike;
-    private ImageView ivComment;
-    private ImageView ivShare;
     private TextView tvLikeCount;
     private TextView tvCommentCount;
     private RelativeLayout bottomLikeLayout;
@@ -63,8 +62,6 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         commentLayout = (LinearLayout) itemView.findViewById(R.id.ll_comment_layout);
         commentRecyclerView = (RecyclerView) itemView.findViewById(R.id.rv_comment);
         ivLike = (ImageView) itemView.findViewById(R.id.iv_like);
-        ivComment = (ImageView) itemView.findViewById(R.id.iv_comment);
-        ivShare = (ImageView) itemView.findViewById(R.id.iv_share);
         tvLikeCount = (TextView) itemView.findViewById(R.id.tv_like_count);
         tvCommentCount = (TextView) itemView.findViewById(R.id.tv_comment_count);
         bottomCommentLayout = (RelativeLayout) itemView.findViewById(R.id.bottom_comment_layout);
@@ -80,7 +77,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         if (dynamic.publisher != null) {
             tvName.setText(dynamic.publisher.name);
             GlideLoader.getInstance().displayCircleImage(dynamic.publisher.avatar, ivAvatar);
-            tvTime.setText(dynamic.published_at);
+            tvTime.setText(Utils.getData(dynamic.published_at));
         }
         tvContent.setText(dynamic.content);
 
