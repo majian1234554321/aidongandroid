@@ -154,7 +154,10 @@ public class AppointmentPresentImpl implements AppointmentPresent {
         appointmentModel.cancelAppointment(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
-                appointmentFragmentView.cancelAppointmentResult(baseBean);
+                if(appointmentFragmentView!= null)
+                    appointmentFragmentView.cancelAppointmentResult(baseBean);
+                if(appointmentDetailActivityView!= null)
+                    appointmentDetailActivityView.cancelAppointmentResult(baseBean);
             }
         },id);
     }
@@ -164,7 +167,10 @@ public class AppointmentPresentImpl implements AppointmentPresent {
         appointmentModel.confirmAppointment(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
-                appointmentFragmentView.confirmAppointmentResult(baseBean);
+                if(appointmentFragmentView!= null)
+                    appointmentFragmentView.confirmAppointmentResult(baseBean);
+                if(appointmentDetailActivityView!= null)
+                    appointmentDetailActivityView.confirmAppointmentResult(baseBean);
             }
         },id);
     }
@@ -174,7 +180,10 @@ public class AppointmentPresentImpl implements AppointmentPresent {
         appointmentModel.deleteAppointment(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
-                appointmentFragmentView.deleteAppointmentResult(baseBean);
+                if(appointmentFragmentView!= null)
+                    appointmentFragmentView.deleteAppointmentResult(baseBean);
+                if(appointmentDetailActivityView!= null)
+                    appointmentDetailActivityView.deleteAppointmentResult(baseBean);
             }
         },id);
     }

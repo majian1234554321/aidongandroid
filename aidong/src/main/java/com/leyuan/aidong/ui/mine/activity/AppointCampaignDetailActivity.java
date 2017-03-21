@@ -16,15 +16,18 @@ import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.AppointmentDetailBean;
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.module.pay.AliPay;
 import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.module.pay.SimplePayListener;
 import com.leyuan.aidong.module.pay.WeiXinPay;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.home.activity.AppointSuccessActivity;
+import com.leyuan.aidong.ui.home.activity.CampaignDetailActivity;
 import com.leyuan.aidong.ui.mvp.presenter.AppointmentPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.AppointmentPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointmentDetailActivityView;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
@@ -43,6 +46,7 @@ import static com.leyuan.aidong.ui.App.context;
  * 活动预约详情
  * Created by song on 2016/9/2.
  */
+//todo 活动预约详情与课程预约详情合成一个界面
 public class AppointCampaignDetailActivity extends BaseActivity implements AppointmentDetailActivityView,
         View.OnClickListener, CustomNestRadioGroup.OnCheckedChangeListener {
     private static final String UN_PAID = "pending";         //待付款
@@ -61,6 +65,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
     private TextView tvOrderNo;
     private LinearLayout timerLayout;
     private CountdownView timer;
+    private RelativeLayout campaignLayout;
     private ImageView ivCover;
     private TextView tvCampaignName;
     private TextView tvInfo;
@@ -78,10 +83,10 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
     //订单信息
     private ExtendTextView tvTotalPrice;
     private ExtendTextView tvExpressPrice;
-    private ExtendTextView couponPrice;
+    private ExtendTextView tvCouponPrice;
     private ExtendTextView campaignPrivilege;
-    private ExtendTextView tvAibi;
-    private ExtendTextView tvAidou;
+    private ExtendTextView tvAiBi;
+    private ExtendTextView tvAiDou;
     private ExtendTextView tvStartTime;
     private ExtendTextView tvPayTime;
     private ExtendTextView tvPayType;
@@ -93,21 +98,20 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
     private RadioButton rbWeiXinPay;
 
     //底部预约操作状态及价格信息
-    private TextView tvGoodsCount;
     private TextView tvPrice;
     private TextView tvPayTip;
-    private TextView tvCancel;
     private TextView tvPay;
-    private TextView tvExpress;
-    private TextView tvConfirm;
+    private TextView tvCancelPay;
+    private TextView tvCancelJoin;
+    private TextView tvConfirmJoin;
     private TextView tvDelete;
-    private TextView tvAgainBuy;
+
 
     //Present层对象
-    private AppointmentPresent appointmentPresent;
+    private AppointmentPresent present;
     private String orderId;
     private String payType;
-    private AppointmentDetailBean detailBean;
+    private AppointmentDetailBean bean;
 
     public static void start(Context context,String orderId) {
         Intent starter = new Intent(context, AppointCampaignDetailActivity.class);
@@ -119,14 +123,14 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appoint_campaign_detail);
-        appointmentPresent = new AppointmentPresentImpl(this,this);
+        present = new AppointmentPresentImpl(this,this);
         if(getIntent() != null){
             orderId = getIntent().getStringExtra("orderId");
         }
 
         initView();
         setListener();
-        appointmentPresent.getAppointmentDetail(switcherLayout,orderId);
+        present.getAppointmentDetail(switcherLayout,orderId);
     }
 
     private void initView() {
@@ -138,6 +142,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         tvOrderNo = (TextView) findViewById(R.id.tv_order_num);
         timerLayout = (LinearLayout) findViewById(R.id.ll_timer);
         timer = (CountdownView) findViewById(R.id.timer);
+        campaignLayout = (RelativeLayout) findViewById(R.id.rl_detail);
         ivCover = (ImageView) findViewById(R.id.dv_goods_cover);
         tvCampaignName = (TextView) findViewById(R.id.tv_name);
         tvInfo = (TextView) findViewById(R.id.tv_info);
@@ -153,10 +158,10 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
 
         tvTotalPrice = (ExtendTextView) findViewById(R.id.tv_total_price);
         tvExpressPrice = (ExtendTextView) findViewById(R.id.tv_express_price);
-        couponPrice = (ExtendTextView) findViewById(R.id.coupon_price);
+        tvCouponPrice = (ExtendTextView) findViewById(R.id.coupon_price);
         campaignPrivilege = (ExtendTextView) findViewById(R.id.campaign_privilege);
-        tvAibi = (ExtendTextView) findViewById(R.id.tv_aibi);
-        tvAidou = (ExtendTextView) findViewById(R.id.tv_aidou);
+        tvAiBi = (ExtendTextView) findViewById(R.id.tv_aibi);
+        tvAiDou = (ExtendTextView) findViewById(R.id.tv_aidou);
         tvStartTime = (ExtendTextView) findViewById(R.id.tv_start_time);
         tvPayTime = (ExtendTextView) findViewById(R.id.tv_pay_time);
         tvPayType = (ExtendTextView) findViewById(R.id.tv_pay_type);
@@ -166,26 +171,29 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         rbALiPay = (RadioButton) findViewById(R.id.cb_alipay);
         rbWeiXinPay = (RadioButton) findViewById(R.id.cb_weixin);
 
-        tvGoodsCount = (TextView) findViewById(R.id.tv_goods_count);
         tvPrice = (TextView) findViewById(R.id.tv_price);
         tvPayTip = (TextView) findViewById(R.id.tv_pay_tip);
-        tvCancel = (TextView) findViewById(R.id.tv_cancel_join);
         tvPay = (TextView) findViewById(R.id.tv_pay);
-        tvExpress = (TextView) findViewById(R.id.tv_express);
-        tvConfirm = (TextView) findViewById(R.id.tv_confirm);
+        tvCancelPay = (TextView) findViewById(R.id.tv_cancel_pay);
+        tvCancelJoin = (TextView) findViewById(R.id.tv_cancel_join);
+        tvConfirmJoin = (TextView) findViewById(R.id.tv_confirm);
         tvDelete = (TextView) findViewById(R.id.tv_delete);
-        tvAgainBuy = (TextView) findViewById(R.id.tv_again_buy);
     }
 
     private void setListener(){
         titleBar.setOnClickListener(this);
         payGroup.setOnCheckedChangeListener(this);
         tvPay.setOnClickListener(this);
+        tvCancelPay.setOnClickListener(this);
+        tvCancelJoin.setOnClickListener(this);
+        tvConfirmJoin.setOnClickListener(this);
+        tvDelete.setOnClickListener(this);
+        campaignLayout.setOnClickListener(this);
     }
 
     @Override
     public void setAppointmentDetail(AppointmentDetailBean bean) {
-        detailBean = bean;
+        this.bean = bean;
         payType = bean.getPay().getPayType();
         if(PayType.ALI.equals(payType)){
             rbALiPay.setChecked(true);
@@ -199,13 +207,22 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         tvInfo.setText(bean.getSubName());
         tvUserName.setRightContent(bean.getAppoint().getName());
         tvPhone.setRightContent(bean.getAppoint().getMobile());
-        tvCampaignOrganization.setRightContent("组织者");
+        tvCampaignOrganization.setRightContent(bean.getAppoint().getOrganizer());
         tvCampaignTime.setRightContent(bean.getAppoint().getClassTime());
         tvCampaignAddress.setRightContent(bean.getAppoint().getAddress());
+        tvPrice.setText(String.format(getString(R.string.rmb_price_double),
+                FormatUtil.parseDouble(bean.getPay().getTotal())));
+        tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double),
+                FormatUtil.parseDouble(bean.getPay().getCoupon())));
+        tvAiBi.setRightContent(String.format(getString(R.string.rmb_minus_price_double),
+                FormatUtil.parseDouble(bean.getPay().getCoin())));
+        tvAiDou.setRightContent(String.format(getString(R.string.rmb_minus_price_double),
+                FormatUtil.parseDouble(bean.getPay().getIntegral())));
         tvTotalPrice.setRightContent(String.format(getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.getPay().getTotal())));
         tvStartTime.setRightContent(bean.getPay().getCreatedAt());
 
+        //todo 通过组合控件来实现底部按钮
         //与订单状态有关: 预约状态信息 课程预约信息/活动预约信息 支付方式信息 底部预约操作状态及价格信息
         switch (bean.getPay().getStatus()) {
             case UN_PAID:           //待付款
@@ -213,10 +230,11 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 //timer.start(Long.parseLong(bean.getPayInfo().getLimitTime()) * 1000);
                 timerLayout.setVisibility(View.VISIBLE);
                 tvOrderNo.setVisibility(View.GONE);
-                tvCancel.setVisibility(View.VISIBLE);
+                tvCancelPay.setVisibility(View.VISIBLE);
                 tvPay.setVisibility(View.VISIBLE);
                 tvDelete.setVisibility(View.GONE);
-                tvConfirm.setVisibility(View.GONE);
+                tvConfirmJoin.setVisibility(View.GONE);
+                tvCancelJoin.setVisibility(View.GONE);
                 codeLayout.setVisibility(View.GONE);
                 payLayout.setVisibility(View.VISIBLE);
                 break;
@@ -225,10 +243,11 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 tvOrderNo.setText(String.format(getString(R.string.order_no), bean.getId()));
                 tvOrderNo.setVisibility(View.VISIBLE);
                 timerLayout.setVisibility(View.GONE);
-                tvCancel.setVisibility(FormatUtil.parseDouble(bean.getPay().getPayAmount()) == 0 ?
-                        View.VISIBLE : View.GONE);
-                tvConfirm.setVisibility(View.VISIBLE);
+                tvCancelJoin.setVisibility(FormatUtil.parseDouble(bean.getPay().getTotal()) == 0f
+                        ? View.VISIBLE : View.GONE);
+                tvConfirmJoin.setVisibility(View.VISIBLE);
                 tvPay.setVisibility(View.GONE);
+                tvCancelPay.setVisibility(View.GONE);
                 tvDelete.setVisibility(View.GONE);
                 codeLayout.setVisibility(View.VISIBLE);
                 tvCodeNum.setText(bean.getId());
@@ -244,8 +263,9 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 timerLayout.setVisibility(View.GONE);
                 tvDelete.setVisibility(View.VISIBLE);
                 tvPay.setVisibility(View.GONE);
-                tvCancel.setVisibility(View.GONE);
-                tvConfirm.setVisibility(View.GONE);
+                tvCancelPay.setVisibility(View.GONE);
+                tvCancelJoin.setVisibility(View.GONE);
+                tvConfirmJoin.setVisibility(View.GONE);
                 codeLayout.setVisibility(View.VISIBLE);
                 tvCodeNum.setText(bean.getId());
                 tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
@@ -261,14 +281,10 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 timerLayout.setVisibility(View.GONE);
                 tvDelete.setVisibility(View.VISIBLE);
                 tvPay.setVisibility(View.GONE);
-                tvCancel.setVisibility(View.GONE);
-                tvConfirm.setVisibility(View.GONE);
-                codeLayout.setVisibility(View.VISIBLE);
-                tvCodeNum.setText(bean.getId());
-                tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-                tvCodeNum.setTextColor(Color.parseColor("#ebebeb"));
-                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFFebebeb, bean.getId(),
-                        DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
+                tvCancelPay.setVisibility(View.GONE);
+                tvCancelJoin.setVisibility(View.GONE);
+                tvConfirmJoin.setVisibility(View.GONE);
+                codeLayout.setVisibility(View.GONE);
                 payLayout.setVisibility(View.GONE);
                 break;
             case REFUNDING:           //退款中
@@ -278,8 +294,9 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 timerLayout.setVisibility(View.GONE);
                 tvDelete.setVisibility(View.VISIBLE);
                 tvPay.setVisibility(View.GONE);
-                tvCancel.setVisibility(View.GONE);
-                tvConfirm.setVisibility(View.GONE);
+                tvCancelPay.setVisibility(View.GONE);
+                tvCancelJoin.setVisibility(View.GONE);
+                tvConfirmJoin.setVisibility(View.GONE);
                 codeLayout.setVisibility(View.VISIBLE);
                 tvCodeNum.setText(bean.getId());
                 tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
@@ -295,8 +312,9 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 timerLayout.setVisibility(View.GONE);
                 tvDelete.setVisibility(View.VISIBLE);
                 tvPay.setVisibility(View.GONE);
-                tvCancel.setVisibility(View.GONE);
-                tvConfirm.setVisibility(View.GONE);
+                tvCancelPay.setVisibility(View.GONE);
+                tvCancelJoin.setVisibility(View.GONE);
+                tvConfirmJoin.setVisibility(View.GONE);
                 codeLayout.setVisibility(View.VISIBLE);
                 tvCodeNum.setText(bean.getId());
                 tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
@@ -317,9 +335,24 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 finish();
                 break;
             case R.id.tv_pay:
-                PayInterface payInterface = payType.equals(detailBean.getPay().getPayType()) ?
+                PayInterface payInterface = payType.equals(bean.getPay().getPayType()) ?
                         new AliPay(this,payListener) : new WeiXinPay(this,payListener);
-                payInterface.payOrder(detailBean.getPay());
+                payInterface.payOrder(bean.getPay());
+                break;
+            case R.id.tv_cancel_pay:
+                present.cancelAppoint(bean.getId());
+                break;
+            case R.id.tv_cancel_join:
+                present.cancelAppoint(bean.getId());
+                break;
+            case R.id.tv_confirm:
+                present.confirmAppoint(bean.getId());
+                break;
+            case R.id.tv_delete:
+                present.deleteAppoint(bean.getId());
+                break;
+            case R.id.rl_detail:
+                CampaignDetailActivity.start(this,bean.getLinkId());
                 break;
             default:
                 break;
@@ -345,6 +378,36 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    public void cancelAppointmentResult(BaseBean baseBean) {
+        if(baseBean.getStatus() == Constant.OK){
+            present.getAppointmentDetail(switcherLayout,orderId);
+            Toast.makeText(this,"取消成功",Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(this,"取消失败" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void confirmAppointmentResult(BaseBean baseBean) {
+        if(baseBean.getStatus() == Constant.OK){
+            present.getAppointmentDetail(switcherLayout,orderId);
+            Toast.makeText(this,"确认成功",Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(this,"确认失败" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void deleteAppointmentResult(BaseBean baseBean) {
+        if(baseBean.getStatus() == Constant.OK){
+            finish();
+            Toast.makeText(this,"删除成功",Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(this,"删除失败" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
         }
     }
 }

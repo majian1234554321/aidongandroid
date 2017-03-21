@@ -74,7 +74,8 @@
                 android:layout_height="wrap_content"
                 app:left_text="昵称"
                 app:line_color="@color/line_color"
-                app:text_height="45dp" />
+                app:text_height="45dp"
+                app:show_right_arrow="true"/>
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/gender"
@@ -91,7 +92,7 @@
                 android:layout_height="wrap_content"
                 app:left_text="身份"
                 app:line_color="@color/line_color"
-                app:show_right_arrow="true"
+                app:show_right_arrow="false"
                 app:text_height="45dp" />
 
             <com.leyuan.aidong.widget.ExtendTextView
@@ -100,8 +101,8 @@
                 android:layout_height="wrap_content"
                 app:left_text="个性签名"
                 app:line_color="@color/line_color"
-                app:show_right_arrow="true"
-                app:text_height="45dp" />
+                app:text_height="45dp"
+                app:show_right_arrow="true"/>
 
             <include layout="@layout/inc_bold_line" />
 

@@ -48,7 +48,7 @@ public class UserInfoPhotoAdapter extends RecyclerView.Adapter<UserInfoPhotoAdap
     @Override
     public int getItemCount() {
         if(isSelf){
-            if(!data.isEmpty() && data.size() < MAX_UPLOAD_IMAGE_COUNT){
+            if(!data.isEmpty() && data.size() <= MAX_UPLOAD_IMAGE_COUNT){
                 return data.size();
             }else {
                 return 0;

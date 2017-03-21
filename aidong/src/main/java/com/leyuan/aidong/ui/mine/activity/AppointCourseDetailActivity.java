@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.AppointmentDetailBean;
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.module.pay.AliPay;
 import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.module.pay.SimplePayListener;
@@ -47,6 +48,7 @@ import static com.leyuan.aidong.ui.App.context;
  * 课程预约详情
  * Created by song on 2016/9/2.
  */
+//todo 与活动预约详情界面合成一个界面
 public class AppointCourseDetailActivity extends BaseActivity implements AppointmentDetailActivityView,
         View.OnClickListener, CustomNestRadioGroup.OnCheckedChangeListener {
     private static final String UN_PAID = "pending";         //待付款
@@ -222,9 +224,12 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
                 FormatUtil.parseDouble(bean.getPay().getTotal())));
         tvStartTime.setRightContent(bean.getPay().getCreatedAt());
 
+
+        //todo 通过组合控件控制底部的按钮状态
         //与订单状态有关: 预约状态信息 课程预约信息/活动预约信息 支付方式信息 底部预约操作状态及价格信息
         switch (bean.getPay().getStatus()) {
             case UN_PAID:           //待付款
+
                 tvState.setText(context.getString(R.string.un_paid));
                 //timer.start(Long.parseLong(bean.getPayInfo().getLimitTime()) * 1000);
                 timerLayout.setVisibility(View.VISIBLE);
@@ -361,5 +366,20 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
             default:
                 break;
         }
+    }
+
+    @Override
+    public void cancelAppointmentResult(BaseBean baseBean) {
+
+    }
+
+    @Override
+    public void confirmAppointmentResult(BaseBean baseBean) {
+
+    }
+
+    @Override
+    public void deleteAppointmentResult(BaseBean baseBean) {
+
     }
 }

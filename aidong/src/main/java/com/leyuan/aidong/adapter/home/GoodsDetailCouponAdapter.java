@@ -31,8 +31,8 @@ public class GoodsDetailCouponAdapter extends RecyclerView.Adapter<GoodsDetailCo
     public void setData(List<CouponBean> data) {
         if(data != null){
             this.data = data;
+            notifyDataSetChanged();
         }
-        notifyDataSetChanged();
     }
 
     @Override
@@ -66,18 +66,6 @@ public class GoodsDetailCouponAdapter extends RecyclerView.Adapter<GoodsDetailCo
                     if(listener != null){
                         listener.onCouponClick(position);
                     }
-                 /*   CouponModel model = new CouponModelImpl();
-                    model.obtainCoupon(new ProgressSubscriber<BaseBean>(context) {
-                        @Override
-                        public void onNext(BaseBean baseBean) {
-                            if (baseBean.getStatus() == Constant.OK) {
-                                notifyDataSetChanged();
-                                Toast.makeText(context, "领取成功", Toast.LENGTH_LONG).show();
-                            } else {
-                                Toast.makeText(context, "领取失败" + baseBean.getMessage(), Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    }, bean.getId());*/
                 }else {
                     Toast.makeText(context,"已领取过该优惠券",Toast.LENGTH_LONG).show();
                 }

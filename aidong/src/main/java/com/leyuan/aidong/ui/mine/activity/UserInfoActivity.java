@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
@@ -49,6 +50,7 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.leyuan.aidong.R.id.tv_message;
@@ -63,6 +65,9 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_VIDEO;
  */
 public class UserInfoActivity extends BaseActivity implements UserInfoActivityView, View.OnClickListener,
         SmartTabLayout.TabProvider, UserInfoPhotoAdapter.OnItemClickListener {
+    public static final int REQUEST_UPDATE_PHOTO = 1024;
+    public static final int REQUEST_UPDATE_INFO = 2048;
+
     private ImageView ivBack;
     private TextView tvTitle;
     private ImageView ivEdit;
@@ -159,10 +164,10 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         if (isSelf) {
             tvTitle.setText("我的资料");
             ivFollowOrPublish.setBackgroundResource(R.drawable.icon_mine_publish);
-            if (userInfoData.getPhotoWall().isEmpty()) {
-                selfEmptyPhotoLayout.setVisibility(View.VISIBLE);
-            } else {
+            if (!userInfoData.getPhotoWall().isEmpty()) {
                 wallAdapter.setData(userInfoData.getPhotoWall());
+            } else {
+                selfEmptyPhotoLayout.setVisibility(View.VISIBLE);
             }
             ivEdit.setVisibility(View.VISIBLE);
             contactLayout.setVisibility(View.GONE);
@@ -172,11 +177,11 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
             tvTitle.setText("TA的资料");
             ivFollowOrPublish.setBackgroundResource(isFollow
                     ? R.drawable.icon_following : R.drawable.icon_follow);
-            if (userInfoData.getPhotoWall().isEmpty()) {
+            if (!userInfoData.getPhotoWall().isEmpty()) {
+                wallAdapter.setData(userInfoData.getPhotoWall());
+            } else {
                 otherEmptyPhotoLayout.setVisibility(View.VISIBLE);
                 contactLayout.setVisibility(View.VISIBLE);
-            } else {
-                wallAdapter.setData(userInfoData.getPhotoWall());
             }
             ivEdit.setVisibility(View.GONE);
             contactLayout.setVisibility(View.VISIBLE);
@@ -247,9 +252,16 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
                     @Override
                     public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
                         if (position == 0) {
-                            UpdateUserInfoActivity.start(UserInfoActivity.this, userInfoData.getProfile());
+                            Intent intent = new Intent(UserInfoActivity.this,UpdateUserInfoActivity.class);
+                            intent.putExtra("profileBean", userInfoData.getProfile());
+                            startActivityForResult(intent,REQUEST_UPDATE_PHOTO);
+                           // UpdateUserInfoActivity.start(UserInfoActivity.this, userInfoData.getProfile());
                         } else {
-                            UpdatePhotoWallActivity.start(UserInfoActivity.this, userInfoData.getPhotoWall());
+                            Intent intent = new Intent(UserInfoActivity.this,UpdatePhotoWallActivity.class);
+                            intent.putParcelableArrayListExtra("photos",
+                                    (ArrayList<? extends Parcelable>) userInfoData.getPhotoWall());
+                            startActivityForResult(intent,REQUEST_UPDATE_INFO);
+                           // UpdatePhotoWallActivity.start(UserInfoActivity.this, userInfoData.getPhotoWall());
                         }
                     }
                 })
@@ -294,6 +306,8 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
                 userInfoPresent.getUserInfo(switcherLayout, userId);
             } else if (requestCode == REQUEST_SELECT_PHOTO || requestCode == REQUEST_SELECT_VIDEO) {
                 PublishDynamicActivity.start(this, requestCode == REQUEST_SELECT_PHOTO, Boxing.getResult(data));
+            }else if(requestCode == REQUEST_UPDATE_PHOTO || requestCode == REQUEST_UPDATE_INFO){
+                 userInfoPresent.getUserInfo(userId);
             }
         }
     }
@@ -342,4 +356,5 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         text.setText(campaignTab[position]);
         return tabView;
     }
+
 }

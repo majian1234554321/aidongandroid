@@ -72,7 +72,6 @@ import java.util.List;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 
-import static com.leyuan.aidong.ui.App.context;
 import static com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow.FROM_ADD_CART;
 import static com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow.FROM_BUY;
 import static com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow.FROM_SKU;
@@ -449,14 +448,15 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
     public void onCouponClick(final int position) {
         if(App.mInstance.isLogin()) {
             CouponModel model = new CouponModelImpl();
-            model.obtainCoupon(new ProgressSubscriber<BaseBean>(context) {
+            model.obtainCoupon(new ProgressSubscriber<BaseBean>(this) {
                 @Override
                 public void onNext(BaseBean baseBean) {
                     if (baseBean.getStatus() == Constant.OK) {
-                        couponAdapter.notifyItemChanged(position);
-                        Toast.makeText(context, "领取成功", Toast.LENGTH_LONG).show();
+                        bean.coupon.get(position).setStatus("1");
+                        couponAdapter.notifyDataSetChanged();
+                        Toast.makeText(GoodsDetailActivity.this, "领取成功", Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(context, baseBean.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(GoodsDetailActivity.this, baseBean.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }
             }, bean.coupon.get(position).getId());

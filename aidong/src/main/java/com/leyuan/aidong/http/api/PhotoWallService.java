@@ -16,10 +16,10 @@ import rx.Observable;
 public interface PhotoWallService {
 
     @FormUrlEncoded
-    @POST("mine/photowall")
+    @POST("mine/photos")
     Observable<BaseBean> addPhotos(@Field("photo[]") String... photo);
 
-    @DELETE("mine/photowall/{id}")
+    @DELETE("mine/photos/{id}")
     Observable<BaseBean> deletePhotos(@Path("id") String id);
 
 }

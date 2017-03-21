@@ -1,15 +1,18 @@
 package com.leyuan.aidong.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * 预约详情
  * Created by song on 2016/9/1.
  */
 public class AppointmentDetailBean {
-    private String id;             //订单号
-    private String appointment_type;           //订单类型 course-课程 campaign-活动
+    private String id;              //订单号
     private String link_id;             //关联课程或者活动编号
+    private String appointment_type;    //订单类型 course-课程 campaign-活动
     private String name;             //产品名称
     private String sub_name;             //副标题
+    @SerializedName("address")
     private String cover;             //产品封面
     private AppointInfo appointment;    //预约信息
     private PayOrderBean pay;            //支付信息
@@ -23,6 +26,7 @@ public class AppointmentDetailBean {
         private String class_time;      //上课教室
         private String classroom;       //上课时间
         private String address;         //上课地址
+        private String organizer;
 
         public String getName() {
             return name;
@@ -70,6 +74,14 @@ public class AppointmentDetailBean {
 
         public void setAddress(String address) {
             this.address = address;
+        }
+
+        public String getOrganizer() {
+            return organizer;
+        }
+
+        public void setOrganizer(String organizer) {
+            this.organizer = organizer;
         }
     }
 

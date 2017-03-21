@@ -59,7 +59,7 @@ public class VenuesDetailFragment extends BaseFragment implements View.OnClickLi
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_venues_detail, null);
+        return inflater.inflate(R.layout.fragment_venues_detail, container,false);
     }
 
     @Override

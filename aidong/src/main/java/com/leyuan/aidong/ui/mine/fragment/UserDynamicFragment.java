@@ -1,16 +1,28 @@
 package com.leyuan.aidong.ui.mine.fragment;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.google.android.exoplayer.util.Util;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter;
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.DynamicBean;
+import com.leyuan.aidong.entity.PhotoBrowseInfo;
+import com.leyuan.aidong.entity.model.UserCoach;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
+import com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity;
+import com.leyuan.aidong.ui.discover.activity.PhotoBrowseActivity;
 import com.leyuan.aidong.ui.discover.viewholder.FiveImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.FourImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.OneImageViewHolder;
@@ -21,6 +33,8 @@ import com.leyuan.aidong.ui.discover.viewholder.VideoViewHolder;
 import com.leyuan.aidong.ui.mvp.presenter.UserInfoPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.UserInfoPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.UserDynamicFragmentView;
+import com.leyuan.aidong.ui.video.activity.PlayerActivity;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.constant.DynamicType;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -40,11 +54,11 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
     private RecyclerView recyclerView;
     private CircleDynamicAdapter circleDynamicAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
-    private List<DynamicBean> dynamicList;
+    private List<DynamicBean> dynamicList = new ArrayList<>();
 
     private int currPage = 1;
-    private UserInfoPresent userInfoPresent;
     private String useId;
+    private UserInfoPresent userInfoPresent;
 
     public static UserDynamicFragment newInstance(String id) {
         Bundle args = new Bundle();
@@ -84,7 +98,8 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
                 .addType(FourImageViewHolder.class, DynamicType.FOUR_IMAGE, R.layout.vh_dynamic_four_photos)
                 .addType(FiveImageViewHolder.class, DynamicType.FIVE_IMAGE, R.layout.vh_dynamic_five_photos)
                 .addType(SixImageViewHolder.class, DynamicType.SIX_IMAGE, R.layout.vh_dynamic_six_photos)
-                .showLikeAndCommentLayout(true);
+                .showLikeAndCommentLayout(true)
+                .setDynamicCallback(new DynamicCallback());
         circleDynamicAdapter = builder.build();
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(circleDynamicAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -121,5 +136,86 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
 
     }
 
+    private class DynamicCallback implements CircleDynamicAdapter.IDynamicCallback {
 
+        @Override
+        public void onBackgroundClick(DynamicBean dynamicBean) {
+            DynamicDetailActivity.start(getContext(),dynamicBean);
+        }
+
+        @Override
+        public void onAvatarClick(String id) {
+        }
+
+        @Override
+        public void onVideoClick(String url) {
+            Intent intent = new Intent(getContext(), PlayerActivity.class)
+                    .setData(Uri.parse(url))
+                    .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_HLS);
+            startActivity(intent);
+        }
+
+        @Override
+        public void onImageClick(List<String> photoUrls, List<Rect> viewLocalRect, int currPosition) {
+            PhotoBrowseInfo info = PhotoBrowseInfo.create(photoUrls, viewLocalRect, currPosition);
+            PhotoBrowseActivity.start((Activity) getContext(), info);
+        }
+
+        @Override
+        public void onLikeClick(int position, String id, boolean isLike) {
+            if (isLike) {
+                userInfoPresent.cancelLike(id, position);
+            } else {
+                userInfoPresent.addLike(id, position);
+            }
+        }
+
+        @Override
+        public void onCommentClick(DynamicBean dynamicBean) {
+            DynamicDetailActivity.start(getContext(), dynamicBean);
+
+        }
+
+        @Override
+        public void onShareClick() {
+
+        }
+    }
+
+    @Override
+    public void addLikeResult(int position, BaseBean baseBean) {
+        if(baseBean.getStatus() == Constant.OK){
+            dynamicList.get(position).like.counter += 1;
+            DynamicBean dynamic = new DynamicBean();
+            DynamicBean.LikeUser likeUser = dynamic.new LikeUser();
+            DynamicBean.LikeUser.Item item = likeUser.new Item();
+            UserCoach user = App.mInstance.getUser();
+            item.avatar = user.getAvatar();
+            item.id = String.valueOf(user.getId());
+            dynamicList.get(position).like.item.add(item);
+            circleDynamicAdapter.notifyItemChanged(position);
+            Toast.makeText(getContext(),"点赞成功",Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(getContext(),"点赞失败:" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void canLikeResult(int position, BaseBean baseBean) {
+        if(baseBean.getStatus() == Constant.OK){
+            dynamicList.get(position).like.counter -= 1;
+            List<DynamicBean.LikeUser.Item> item = dynamicList.get(position).like.item;
+            int myPosition = 0;
+            for (int i = 0; i < item.size(); i++) {
+                if(item.get(i).id.equals(String.valueOf(App.mInstance.getUser().getId()))){
+                    myPosition = i;
+                }
+            }
+            item.remove(myPosition);
+            circleDynamicAdapter.notifyItemChanged(position);
+            Toast.makeText(getContext(),"取消赞成功",Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(getContext(),"取消赞失败:"+baseBean.getMessage(),Toast.LENGTH_LONG).show();
+        }
+    }
 }
