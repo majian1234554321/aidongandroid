@@ -254,39 +254,6 @@ public class TabMinePersonalSettingsActivity extends BaseActivity {
                         }
                     }
                 });
-
-//
-//        if (App.mInstance.isLogin()) {
-//            mobile = App.mInstance.getUser().getMobile();
-//        }
-//        if (!TextUtils.isEmpty(mobile)) {
-//            layout_tab_mine_personal_settings_binding_mobile_phone_unbound_txt
-//                    .setText(mobile);
-//            layout_tab_mine_personal_settings_binding_mobile_phone_rel
-//                    .setClickable(false);
-//        }
-//
-//        if (layout_tab_mine_personal_settings_binding_mobile_phone_rel
-//                .isClickable()) {
-//            layout_tab_mine_personal_settings_binding_mobile_phone_rel
-//                    .setOnClickListener(new OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            if (App.mInstance.isLogin()) {
-////                                intent = new Intent(
-////                                        TabMinePersonalSettingsActivity.this,
-////                                        TabMineBingdingMobilePhoneActivity.class);
-////                                startActivity(intent);
-//                                UiManager.activityJump(TabMinePersonalSettingsActivity.this, PhoneBindingActivity.class);
-//                            } else {
-//                                intent.setClass(
-//                                        TabMinePersonalSettingsActivity.this,
-//                                        LoginActivity.class);
-//                                startActivity(intent);
-//                            }
-//                        }
-//                    });
-//        }
     }
 
 
