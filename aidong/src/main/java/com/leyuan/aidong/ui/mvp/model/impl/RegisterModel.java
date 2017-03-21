@@ -46,6 +46,14 @@ public class RegisterModel implements RegisterModelInterface {
                 .subscribe(subscriber);
     }
 
+
+    @Override
+    public void unbindingCaptcha(Subscriber<UserCoach> subscriber, String mobile) {
+        mIdentifyService.unbindingMobile(mobile)
+                .compose(RxHelper.<UserCoach>transform())
+                .subscribe(subscriber);
+    }
+
     @Override
     public void checkIdentify(Subscriber<UserCoach> subscriber, String token, String captcha, String password) {
 
@@ -57,7 +65,7 @@ public class RegisterModel implements RegisterModelInterface {
 
     @Override
     public void checkCaptchaImage(Subscriber<UserCoach> subscriber, String mobile, String captcha) {
-        mIdentifyService.checkCaptchaImage(mobile,captcha)
+        mIdentifyService.checkCaptchaImage(mobile, captcha)
                 .compose(RxHelper.<UserCoach>transform())
                 .subscribe(subscriber);
 
@@ -65,30 +73,30 @@ public class RegisterModel implements RegisterModelInterface {
 
     public void completeUserInfo(Subscriber<LoginResult> subscriber, Map<String, String> params, String filePath) {
         MultipartBody.Part body = null;
-            if(filePath !=null){
-                File file = new File(filePath);
-                RequestBody requestFile = RequestBody.create(MediaType.parse("application/octet-stream"), file);
-                body = MultipartBody.Part.createFormData("avatar", file.getName(), requestFile);
-            }
+        if (filePath != null) {
+            File file = new File(filePath);
+            RequestBody requestFile = RequestBody.create(MediaType.parse("application/octet-stream"), file);
+            body = MultipartBody.Part.createFormData("avatar", file.getName(), requestFile);
+        }
 
-        String token = App.mInstance.isLogin()?null:App.mInstance.getToken();
+        String token = App.mInstance.isLogin() ? null : App.mInstance.getToken();
 //        if(App.mInstance.isLogin()){
 //            mIdentifyService.completeUserInfo(params, null)
 //                    .compose(RxHelper.<UserCoach>transform())
 //                    .subscribe(subscriber);
 //        }else{
-            mIdentifyService.completeUserInfo(params, token)
-                    .compose(RxHelper.<LoginResult>transform())
-                    .subscribe(subscriber);
+        mIdentifyService.completeUserInfo(params, token)
+                .compose(RxHelper.<LoginResult>transform())
+                .subscribe(subscriber);
 //        }
 
     }
 
-    public void userAvatarUpload(Subscriber<LoginResult> subscriber,String filePath) {
-        String path[] ={filePath};
-        List<MultipartBody.Part> partList = RetrofitFileUpdateUtils.files2Parts("avatar",path,MediaType.parse("image/*"));
-        String token = App.mInstance.isLogin()?null:App.mInstance.getToken();
-        mIdentifyService.completeUserFileUpdate(token,partList)
+    public void userAvatarUpload(Subscriber<LoginResult> subscriber, String filePath) {
+        String path[] = {filePath};
+        List<MultipartBody.Part> partList = RetrofitFileUpdateUtils.files2Parts("avatar", path, MediaType.parse("image/*"));
+        String token = App.mInstance.isLogin() ? null : App.mInstance.getToken();
+        mIdentifyService.completeUserFileUpdate(token, partList)
                 .compose(RxHelper.<LoginResult>transform())
                 .subscribe(subscriber);
 //        }

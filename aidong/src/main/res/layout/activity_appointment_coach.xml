@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <com.leyuan.aidong.widget.SimpleTitleBar
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
-        app:stb_title="预约私教"/>
+        app:stb_title="预约私教" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,71 +22,72 @@
         <ImageView
             android:id="@+id/dv_avatar"
             android:layout_width="70dp"
-            android:layout_height="70dp"/>
+            android:layout_height="70dp" />
 
         <ImageView
             android:id="@+id/iv_gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/dv_avatar"
-            android:layout_alignRight="@+id/dv_avatar"/>
+            android:layout_alignRight="@+id/dv_avatar" />
 
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="name"
-            android:textSize="16sp"
-            android:textColor="@color/black"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="12dp"
-            android:layout_toRightOf="@+id/dv_avatar"/>
+            android:layout_toRightOf="@+id/dv_avatar"
+            android:text="name"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
 
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_coach"
             android:layout_alignTop="@+id/tv_name"
+            android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/tv_name"
-            android:layout_marginLeft="10dp"/>
+            android:src="@drawable/icon_coach" />
 
         <TextView
             android:id="@+id/tv_distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="10m"
-            android:textSize="16sp"
-            android:textColor="@color/black"
-            android:layout_marginLeft="20dp"
             android:layout_below="@+id/tv_name"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="15dp"
-            android:layout_toRightOf="@+id/dv_avatar"/>
+            android:layout_toRightOf="@+id/dv_avatar"
+            android:text="10m"
+            android:visibility="gone"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/iv_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_phone_red"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:src="@drawable/icon_phone_red" />
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/line_color"/>
+        android:background="@color/line_color" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="55dp"
+        android:background="@color/white"
         android:orientation="horizontal"
         android:paddingBottom="10dp"
         android:paddingLeft="@dimen/left_margin"
         android:paddingRight="@dimen/right_margin"
-        android:paddingTop="10dp"
-        android:background="@color/white">
+        android:paddingTop="10dp">
 
         <TextView
             android:id="@+id/tv_morning"
@@ -114,21 +115,21 @@
 
     <include layout="@layout/inc_bold_line" />
 
-    <include layout="@layout/inc_appointment_user_info"/>
+    <include layout="@layout/inc_appointment_user_phone_info" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/line_color"/>
+        android:background="@color/line_color" />
 
     <TextView
         android:id="@+id/tv_appointment"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="预约私教"
-        android:textSize="15sp"
-        android:gravity="center"
         android:background="@color/main_red"
-        android:textColor="@color/white"/>
+        android:gravity="center"
+        android:text="预约私教"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
 </LinearLayout>

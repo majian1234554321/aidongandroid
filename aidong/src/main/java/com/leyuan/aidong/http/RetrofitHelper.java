@@ -16,8 +16,6 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.leyuan.aidong.ui.App.mInstance;
-
 
 public class RetrofitHelper {
     private static final int DEFAULT_TIMEOUT = 30;
@@ -39,16 +37,16 @@ public class RetrofitHelper {
         return singleton.create(clazz);
     }
 
-    public static OkHttpClient createClient() {
+    private static OkHttpClient createClient() {
         return new OkHttpClient.Builder()
                 .addInterceptor(new Interceptor() {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
                         Request.Builder builder = chain.request().newBuilder();
-                        if (mInstance.isLogin() && mInstance.getToken() != null) {
-                            builder.addHeader("token", mInstance.getToken());
+                        if (App.getInstance().isLogin() && App.getInstance().getToken() != null) {
+                            builder.addHeader("token", App.getInstance().getToken());
                         }
-                        builder.addHeader("city", URLEncoder.encode(App.city, "UTF-8"));
+                        builder.addHeader("city", URLEncoder.encode(App.getInstance().getSelectedCity(), "UTF-8"));
                         builder.addHeader("lat", String.valueOf(App.lat));
                         builder.addHeader("lng", String.valueOf(App.lon));
 

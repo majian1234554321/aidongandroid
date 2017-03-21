@@ -3,9 +3,9 @@ package com.leyuan.aidong.module.thirdpartylogin;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.tencent.mm.sdk.modelmsg.SendAuth;
-import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 /**
  * Created by huyushuai on 2016/12/2.

@@ -19,13 +19,14 @@ import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.StringUtils;
 import com.leyuan.aidong.utils.TimeCountUtil;
 import com.leyuan.aidong.utils.ToastUtil;
+import com.leyuan.aidong.utils.UiManager;
 import com.leyuan.aidong.widget.CommonTitleLayout;
 import com.leyuan.aidong.widget.DialogImageIdentify;
 
 /**
- * Created by user on 2017/3/11.
+ * Created by user on 2017/3/21.
  */
-public class PhoneBindingActivity extends BaseActivity implements View.OnClickListener, RegisterViewInterface {
+public class PhoneUnBindingActivity extends BaseActivity implements View.OnClickListener, RegisterViewInterface {
     private CommonTitleLayout layoutTitle;
     private RegisterPresenterInterface presenter;
     private String mobile;
@@ -35,7 +36,7 @@ public class PhoneBindingActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_phone_bingding);
+        setContentView(R.layout.activity_phone_unbingding);
         presenter = new RegisterPresenter(this, this);
 
         layoutTitle = (CommonTitleLayout) findViewById(R.id.layout_title);
@@ -44,10 +45,14 @@ public class PhoneBindingActivity extends BaseActivity implements View.OnClickLi
         layoutTitle.setLeftIconListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setResult(RESULT_CANCELED, new Intent());
                 finish();
             }
         });
+        if (App.getInstance().isLogin()) {
+            mobile = App.getInstance().getUser().getMobile();
+            getEidtTelephone().setText(mobile);
+        }
+
     }
 
     private EditText getEidtTelephone() {
@@ -80,15 +85,6 @@ public class PhoneBindingActivity extends BaseActivity implements View.OnClickLi
     }
 
     private boolean verifyEdit() {
-        mobile = getEidtTelephone().getText().toString().trim();
-        if (!StringUtils.isMatchTel(mobile)) {
-            getEidtTelephone().setError("请输入正确手机号");
-            return false;
-        }
-        if (!TextUtils.equals(mobile, presenter.getBingdingMobile())) {
-            ToastUtil.show("与验证手机不一致", this);
-            return false;
-        }
 
         code = getEidtVerifyCode().getText().toString().trim();
         if (TextUtils.isEmpty(code)) {
@@ -119,13 +115,10 @@ public class PhoneBindingActivity extends BaseActivity implements View.OnClickLi
     public void register(boolean success) {
         DialogUtils.dismissDialog();
         if (success) {
-            ToastUtil.showShort(App.context, "绑定成功");
-            Intent intent = new Intent();
-            intent.putExtra(Constant.BINDING_PHONE, presenter.getBingdingMobile());
-            setResult(RESULT_OK, intent);
-            finish();
+            ToastUtil.showShort(App.context, "验证成功");
+            UiManager.activityJumpForResult(this, new Bundle(), PhoneBindingActivity.class, Constant.REQUEST_PHONE_BINGDING);
         } else {
-            ToastUtil.showShort(App.context, "绑定失败 请重新提交");
+            ToastUtil.showShort(App.context, "验证失败 请核对手机号");
         }
     }
 
@@ -134,7 +127,7 @@ public class PhoneBindingActivity extends BaseActivity implements View.OnClickLi
         DialogUtils.dismissDialog();
         if (success) {
             DialogUtils.showDialog(this, "", true);
-            presenter.bindingCaptcha(mobile);
+            presenter.unbindingCaptcha(mobile);
         } else if (mDialogImageIdentify != null && mDialogImageIdentify.isShowing()) {
             mDialogImageIdentify.clearContent();
             mDialogImageIdentify.refreshImage(mobile);
@@ -153,7 +146,7 @@ public class PhoneBindingActivity extends BaseActivity implements View.OnClickLi
         mDialogImageIdentify.setOnInputCompleteListener(new DialogImageIdentify.OnInputCompleteListener() {
             @Override
             public void inputIdentify(String imageIndentify) {
-                DialogUtils.showDialog(PhoneBindingActivity.this, "", true);
+                DialogUtils.showDialog(PhoneUnBindingActivity.this, "", true);
                 presenter.checkCaptchaImage(tel, imageIndentify);
             }
 
@@ -169,9 +162,11 @@ public class PhoneBindingActivity extends BaseActivity implements View.OnClickLi
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        setResult(RESULT_CANCELED, new Intent());
-        finish();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constant.REQUEST_PHONE_BINGDING) {
+            setResult(resultCode, data);
+            finish();
+        }
     }
 }

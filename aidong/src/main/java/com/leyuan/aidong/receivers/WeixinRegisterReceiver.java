@@ -5,8 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.leyuan.aidong.utils.Logger;
-import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 
 public class WeixinRegisterReceiver extends BroadcastReceiver {

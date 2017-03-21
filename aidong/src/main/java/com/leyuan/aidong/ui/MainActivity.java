@@ -20,6 +20,7 @@ import com.leyuan.aidong.ui.home.fragment.HomeFragment;
 import com.leyuan.aidong.ui.mine.fragment.MineFragment;
 import com.leyuan.aidong.ui.video.fragment.VideoHomeFragment;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.LocatinCityManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,8 +44,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        LocatinCityManager.checkLocationCity(this);
         setContentView(R.layout.activity_main);
-      
+
         initView();
         initData();
     }

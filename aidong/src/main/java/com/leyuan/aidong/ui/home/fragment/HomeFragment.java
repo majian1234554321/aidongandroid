@@ -16,6 +16,7 @@ import com.leyuan.aidong.adapter.home.HomeAdapter;
 import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.HomeBean;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.home.activity.LocationActivity;
 import com.leyuan.aidong.ui.home.activity.SearchActivity;
@@ -39,9 +40,10 @@ import java.util.List;
 
 /**
  * 首页
+ *
  * @author song
  */
-public class HomeFragment extends BaseFragment implements HomeFragmentView,View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class HomeFragment extends BaseFragment implements HomeFragmentView, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
     private TextView tvLocation;
     private ImageView ivSearch;
     private HomeHeaderView headerView;
@@ -56,25 +58,25 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
     private HomePresent present;
 
     @Override
-    public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home_page, container,false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_home_page, container, false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        present = new HomePresentImpl(getContext(),this);
+        present = new HomePresentImpl(getContext(), this);
 
         initView(view);
         setListener();
         initData();
     }
 
-    private void initView(View view){
-        tvLocation = (TextView)view.findViewById(R.id.tv_location);
+    private void initView(View view) {
+        tvLocation = (TextView) view.findViewById(R.id.tv_location);
         ivSearch = (ImageView) view.findViewById(R.id.iv_search);
-        refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.sr_refresh);
-        switcherLayout = new SwitcherLayout(getContext(),refreshLayout);
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.sr_refresh);
+        switcherLayout = new SwitcherLayout(getContext(), refreshLayout);
         setColorSchemeResources(refreshLayout);
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_home);
         data = new ArrayList<>();
@@ -92,14 +94,14 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
         RecyclerViewUtils.setHeaderView(recyclerView, headerView);
     }
 
-    private void setListener(){
+    private void setListener() {
         tvLocation.setOnClickListener(this);
         ivSearch.setOnClickListener(this);
         refreshLayout.setOnRefreshListener(this);
         switcherLayout.setOnRetryListener(retryListener);
     }
 
-    private void initData(){
+    private void initData() {
         present.getPopupBanner();
         present.getBanners();
         present.commonLoadData(switcherLayout);
@@ -112,6 +114,12 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
         present.pullToRefreshHomeData();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        tvLocation.setText(App.getInstance().getSelectedCity());
+    }
+
     private View.OnClickListener retryListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -119,37 +127,37 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
         }
     };
 
-    private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
+    private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener() {
         @Override
         public void onLoadNextPage(View view) {
-            currPage ++;
+            currPage++;
             if (data != null && data.size() >= pageSize) {
-                present.requestMoreHomeData(recyclerView,pageSize,currPage);
+                present.requestMoreHomeData(recyclerView, pageSize, currPage);
             }
         }
     };
 
     @Override
     public void updateBanner(List<BannerBean> bannerBeanList) {
-        if(bannerBeanList != null && !bannerBeanList.isEmpty()){
+        if (bannerBeanList != null && !bannerBeanList.isEmpty()) {
             headerView.getBannerView().setVisibility(View.VISIBLE);
             headerView.getBannerView().setAutoPlayAble(bannerBeanList.size() > 1);
-            headerView.getBannerView().setData(bannerBeanList,null);
-        }else{
+            headerView.getBannerView().setData(bannerBeanList, null);
+        } else {
             headerView.getBannerView().setVisibility(View.GONE);
         }
     }
 
     @Override
     public void updatePopupBanner(List<BannerBean> banner) {
-        if(banner != null && !banner.isEmpty()){
-           new HomeBannerDialog(getContext(),banner).show();
+        if (banner != null && !banner.isEmpty()) {
+            new HomeBannerDialog(getContext(), banner).show();
         }
     }
 
     @Override
     public void updateRecyclerView(List<HomeBean> homeBeanList) {
-        if(refreshLayout.isRefreshing()){
+        if (refreshLayout.isRefreshing()) {
             data.clear();
             refreshLayout.setRefreshing(false);
         }
@@ -160,7 +168,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView,View.
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_search:
                 startActivity(new Intent(getContext(), SearchActivity.class));
                 break;

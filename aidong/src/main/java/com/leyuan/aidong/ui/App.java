@@ -20,12 +20,14 @@ import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.SharePrefUtils;
 import com.leyuan.aidong.utils.VersionManager;
-import com.squareup.leakcanary.LeakCanary;
 
 import io.realm.Realm;
 
+import static com.leyuan.aidong.utils.Constant.DEFAULT_CITY;
+
 public class App extends MultiDexApplication {
 
+    @Deprecated
     public static App mInstance;
     public static Context context;
     private UserCoach user;
@@ -33,7 +35,8 @@ public class App extends MultiDexApplication {
 
     public static double lat;
     public static double lon;
-    public static String city = "上海";
+    public String citySelected;
+    public String cityLocation;
     public static String addressStr;
     private String versionName;
 
@@ -49,7 +52,7 @@ public class App extends MultiDexApplication {
     }
 
     private void initConfig() {
-        LeakCanary.install(this);
+//        LeakCanary.install(this);
 
         SDKInitializer.initialize(this);
         initBaiduLoc();
@@ -100,14 +103,17 @@ public class App extends MultiDexApplication {
 
             App.lat = location.getLatitude();
             App.lon = location.getLongitude();
-            if (location.getCity() != null)
-                city = location.getCity().replace("市", "");
+            if (location.getCity() != null) {
+                cityLocation = location.getCity().replace("市", "");
+            }
+
             if (location.getAddrStr() != null)
                 addressStr = location.getAddrStr();
-            if (city != null) {
+            if (cityLocation != null) {
+                setLocationCity(cityLocation);
                 mLocationClient.stop();
             }
-            LogAidong.i("lat = " + lat + ",   lon = " + lon);
+            LogAidong.i("lat = " + lat + ",   lon = " + lon + ", cityLocation = " + cityLocation);
 
         }
     }
@@ -148,9 +154,9 @@ public class App extends MultiDexApplication {
         SharePrefUtils.setToken(context, token);
     }
 
-//    public static App getInstance() {
-//        return mInstance;
-//    }
+    public static App getInstance() {
+        return mInstance;
+    }
 
     public String getVersionName() {
         if (versionName == null) {
@@ -158,5 +164,42 @@ public class App extends MultiDexApplication {
         }
         return versionName;
     }
+
+    public void StopLocation() {
+        mLocationClient.stop();
+
+    }
+
+    public void startLocation() {
+        mLocationClient.start();
+    }
+
+
+    public void setSelectedCity(String city) {
+        this.citySelected = city;
+        SharePrefUtils.putString(this, "citySelected", city);
+    }
+
+
+    public String getSelectedCity() {
+        if (citySelected == null) {
+            citySelected = SharePrefUtils.getString(this, "citySelected", DEFAULT_CITY);
+        }
+        return citySelected;
+    }
+
+    public void setLocationCity(String city) {
+        this.cityLocation = city;
+        SharePrefUtils.putString(this, "cityLocation", city);
+    }
+
+
+    public String getLocationCity() {
+        if (cityLocation == null) {
+            cityLocation = SharePrefUtils.getString(this, "cityLocation", null);
+        }
+        return cityLocation;
+    }
+
 
 }

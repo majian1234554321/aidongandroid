@@ -1,6 +1,7 @@
 package com.leyuan.aidong.entity;
 
 import com.google.gson.annotations.SerializedName;
+import com.leyuan.aidong.entity.model.Coordinate;
 
 import java.util.ArrayList;
 
@@ -34,12 +35,22 @@ public class VenuesDetailBean {
 
     @SerializedName("area")
     private String area;
-
+    @SerializedName("price")
     private String price;
+    @SerializedName("distance")
     private double distance;
-    private double lat;
-    private double lng;
+    @SerializedName("coordinate")
+    private Coordinate coordinate;
     private int gyms_count;
+
+    @SerializedName("introduce")
+    private String introduce;
+
+    @SerializedName("landmark")
+    private String landmark;
+
+    @SerializedName("brother")
+    private ArrayList<VenuesBean> brother;
 
 
     public String getId() {
@@ -138,20 +149,36 @@ public class VenuesDetailBean {
         this.distance = distance;
     }
 
-    public double getLng() {
-        return lng;
+    public Coordinate getCoordinate() {
+        return coordinate;
     }
 
-    public void setLng(double lng) {
-        this.lng = lng;
+    public void setCoordinate(Coordinate coordinate) {
+        this.coordinate = coordinate;
     }
 
-    public double getLat() {
-        return lat;
+    public String getIntroduce() {
+        return introduce;
     }
 
-    public void setLat(double lat) {
-        this.lat = lat;
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce;
+    }
+
+    public String getLandmark() {
+        return landmark;
+    }
+
+    public void setLandmark(String landmark) {
+        this.landmark = landmark;
+    }
+
+    public ArrayList<VenuesBean> getBrother() {
+        return brother;
+    }
+
+    public void setBrother(ArrayList<VenuesBean> brother) {
+        this.brother = brother;
     }
 
     public int getGyms_count() {
