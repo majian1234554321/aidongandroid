@@ -35,8 +35,8 @@ public class DotView extends View {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        mDotNormal = context.getResources().getDrawable(R.drawable.ic_viewpager_dot_indicator_normal);
-        mDotSelected = context.getResources().getDrawable(R.drawable.ic_viewpager_dot_indicator_selected);
+        mDotNormal = context.getResources().getDrawable(R.drawable.ic_viewpager_dot_indicator_selected );
+        mDotSelected = context.getResources().getDrawable(R.drawable.ic_viewpager_dot_indicator_normal);
     }
 
     @Override

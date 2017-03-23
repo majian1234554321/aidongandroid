@@ -21,6 +21,7 @@ import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.PhotoBrowseInfo;
 import com.leyuan.aidong.entity.model.UserCoach;
+import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BasePageFragment;
 import com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity;
@@ -70,6 +71,8 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
     private int currPage = 1;
     private DynamicPresent dynamicPresent;
 
+    private SharePopupWindow sharePopupWindow;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_circle, container, false);
@@ -77,6 +80,12 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
         initSwipeRefreshLayout(view);
         initRecyclerView(view);
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        sharePopupWindow = new SharePopupWindow(getActivity());
     }
 
     @Override
@@ -91,7 +100,7 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-               refreshData();
+                refreshData();
             }
         });
         switcherLayout.setOnRetryListener(new View.OnClickListener() {
@@ -132,7 +141,7 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
         }
     };
 
-    public void refreshData(){
+    public void refreshData() {
         currPage = 1;
         refreshLayout.setRefreshing(true);
         RecyclerViewStateUtils.resetFooterViewState(recyclerView);
@@ -155,21 +164,21 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
         RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
     }
 
-    private class DynamicCallback implements IDynamicCallback{
+    private class DynamicCallback implements IDynamicCallback {
 
         @Override
         public void onBackgroundClick(DynamicBean dynamicBean) {
-            if(App.mInstance.isLogin()) {
-                DynamicDetailActivity.start(getContext(),dynamicBean);
-            }else {
+            if (App.mInstance.isLogin()) {
+                DynamicDetailActivity.start(getContext(), dynamicBean);
+            } else {
                 invokeDynamicBean = dynamicBean;
-                startActivityForResult(new Intent(getContext(), LoginActivity.class),REQUEST_TO_DYNAMIC);
+                startActivityForResult(new Intent(getContext(), LoginActivity.class), REQUEST_TO_DYNAMIC);
             }
         }
 
         @Override
         public void onAvatarClick(String id) {
-            UserInfoActivity.start(getContext(),id);
+            UserInfoActivity.start(getContext(), id);
         }
 
         @Override
@@ -188,36 +197,42 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
 
         @Override
         public void onLikeClick(int position, String id, boolean isLike) {
-            if(App.mInstance.isLogin()) {
+            if (App.mInstance.isLogin()) {
                 if (isLike) {
                     dynamicPresent.cancelLike(id, position);
                 } else {
                     dynamicPresent.addLike(id, position);
                 }
-            }else {
-                startActivityForResult(new Intent(getContext(), LoginActivity.class),REQUEST_LOGIN);
+            } else {
+                startActivityForResult(new Intent(getContext(), LoginActivity.class), REQUEST_LOGIN);
             }
         }
 
         @Override
         public void onCommentClick(DynamicBean dynamicBean) {
-            if(App.mInstance.isLogin()) {
+            if (App.mInstance.isLogin()) {
                 DynamicDetailActivity.start(getContext(), dynamicBean);
-            }else {
+            } else {
                 invokeDynamicBean = dynamicBean;
-                startActivityForResult(new Intent(getContext(), LoginActivity.class),REQUEST_TO_DYNAMIC);
+                startActivityForResult(new Intent(getContext(), LoginActivity.class), REQUEST_TO_DYNAMIC);
             }
         }
 
         @Override
-        public void onShareClick() {
-
+        public void onShareClick(DynamicBean dynamic) {
+            String cover;
+            if (dynamic.image != null && !dynamic.image.isEmpty()) {
+                cover = dynamic.image.get(0);
+            } else {
+                cover = dynamic.videos.cover;
+            }
+            sharePopupWindow.showAtBottom(dynamic.publisher.name + "的动态", dynamic.content, cover,Constant.URL_SHARE_DYNAMIC);
         }
     }
 
     @Override
     public void addLikeResult(int position, BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
+        if (baseBean.getStatus() == Constant.OK) {
             dynamicList.get(position).like.counter += 1;
             DynamicBean dynamic = new DynamicBean();
             DynamicBean.LikeUser likeUser = dynamic.new LikeUser();
@@ -227,40 +242,47 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
             item.id = String.valueOf(user.getId());
             dynamicList.get(position).like.item.add(item);
             circleDynamicAdapter.notifyItemChanged(position);
-            Toast.makeText(getContext(),"点赞成功",Toast.LENGTH_LONG).show();
-        }else{
-            Toast.makeText(getContext(),"点赞失败:" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "点赞成功", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getContext(), "点赞失败:" + baseBean.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
     @Override
     public void cancelLikeResult(int position, BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
+        if (baseBean.getStatus() == Constant.OK) {
             dynamicList.get(position).like.counter -= 1;
             List<DynamicBean.LikeUser.Item> item = dynamicList.get(position).like.item;
             int myPosition = 0;
             for (int i = 0; i < item.size(); i++) {
-                if(item.get(i).id.equals(String.valueOf(App.mInstance.getUser().getId()))){
+                if (item.get(i).id.equals(String.valueOf(App.mInstance.getUser().getId()))) {
                     myPosition = i;
                 }
             }
             item.remove(myPosition);
             circleDynamicAdapter.notifyItemChanged(position);
-            Toast.makeText(getContext(),"取消赞成功",Toast.LENGTH_LONG).show();
-        }else {
-            Toast.makeText(getContext(),"取消赞失败:"+baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "取消赞成功", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getContext(), "取消赞失败:" + baseBean.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK){
-            if(requestCode == REQUEST_LOGIN){
+        sharePopupWindow.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_LOGIN) {
                 dynamicPresent.pullToRefreshData();
-            }else if(requestCode == REQUEST_TO_DYNAMIC){
+            } else if (requestCode == REQUEST_TO_DYNAMIC) {
                 DynamicDetailActivity.start(getContext(), invokeDynamicBean);
             }
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        sharePopupWindow.release();
     }
 }

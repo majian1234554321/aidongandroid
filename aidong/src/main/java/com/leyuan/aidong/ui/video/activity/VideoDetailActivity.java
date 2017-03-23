@@ -33,12 +33,10 @@ import com.leyuan.aidong.utils.FastBlur;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.Urls;
 import com.leyuan.aidong.widget.media.TextViewPrintly;
-import com.sina.weibo.sdk.api.share.BaseResponse;
-import com.sina.weibo.sdk.api.share.IWeiboHandler;
 
 import java.util.ArrayList;
 
-public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPageChangeListener, View.OnClickListener, VideoDetailView, IWeiboHandler.Response {
+public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPageChangeListener, View.OnClickListener, VideoDetailView{
 
     private static final int BITMAP_BLUR_OK = 3;
     private ViewPager viewPager;
@@ -390,9 +388,4 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
         sharePopupWindow.release();
     }
 
-    @Override
-    public void onResponse(BaseResponse baseResponse) {
-        sharePopupWindow.onResponse(baseResponse);
-
-    }
 }

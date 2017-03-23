@@ -313,7 +313,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
         }
 
         @Override
-        public void onShareClick() {
+        public void onShareClick(DynamicBean dynamic) {
 
         }
     }

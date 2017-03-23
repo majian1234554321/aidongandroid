@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.PhotoBrowseInfo;
 import com.leyuan.aidong.entity.model.UserCoach;
+import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity;
@@ -50,7 +52,7 @@ import static com.leyuan.aidong.R.id.rv_dynamic;
  * 用户资料--动态
  * Created by song on 2017/1/16.
  */
-public class UserDynamicFragment extends BaseFragment implements UserDynamicFragmentView{
+public class UserDynamicFragment extends BaseFragment implements UserDynamicFragmentView {
     private RecyclerView recyclerView;
     private CircleDynamicAdapter circleDynamicAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
@@ -60,33 +62,40 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
     private String useId;
     private UserInfoPresent userInfoPresent;
 
+    private SharePopupWindow sharePopupWindow;
+
     public static UserDynamicFragment newInstance(String id) {
         Bundle args = new Bundle();
-        args.putString("userId",id);
+        args.putString("userId", id);
         UserDynamicFragment fragment = new UserDynamicFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_user_dynamic,null);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_user_dynamic, null);
     }
 
     @Override
-    public void onViewCreated(View view,Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Bundle bundle = getArguments();
-        if(bundle != null){
+        if (bundle != null) {
             useId = bundle.getString("userId");
         }
-        userInfoPresent = new UserInfoPresentImpl(getContext(),this);
+        userInfoPresent = new UserInfoPresentImpl(getContext(), this);
         initRecyclerView(view);
         userInfoPresent.commonLoadDynamic(useId);
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        sharePopupWindow = new SharePopupWindow(getActivity());
+    }
 
-    private void initRecyclerView(View view){
+    private void initRecyclerView(View view) {
         recyclerView = (RecyclerView) view.findViewById(rv_dynamic);
         dynamicList = new ArrayList<>();
         dynamicList = new ArrayList<>();
@@ -108,12 +117,12 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
     }
 
 
-    private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
+    private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener() {
         @Override
         public void onLoadNextPage(View view) {
-            currPage ++;
+            currPage++;
             if (dynamicList != null && dynamicList.size() >= pageSize) {
-                userInfoPresent.requestMoreDynamic(useId,recyclerView,pageSize,currPage);
+                userInfoPresent.requestMoreDynamic(useId, recyclerView, pageSize, currPage);
             }
         }
     };
@@ -140,7 +149,7 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
 
         @Override
         public void onBackgroundClick(DynamicBean dynamicBean) {
-            DynamicDetailActivity.start(getContext(),dynamicBean);
+            DynamicDetailActivity.start(getContext(), dynamicBean);
         }
 
         @Override
@@ -177,14 +186,20 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
         }
 
         @Override
-        public void onShareClick() {
-
+        public void onShareClick(DynamicBean dynamic) {
+            String cover;
+            if (dynamic.image != null && !dynamic.image.isEmpty()) {
+                cover = dynamic.image.get(0);
+            } else {
+                cover = dynamic.videos.cover;
+            }
+            sharePopupWindow.showAtBottom(dynamic.publisher.name + "的动态", dynamic.content, cover, Constant.URL_SHARE_DYNAMIC);
         }
     }
 
     @Override
     public void addLikeResult(int position, BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
+        if (baseBean.getStatus() == Constant.OK) {
             dynamicList.get(position).like.counter += 1;
             DynamicBean dynamic = new DynamicBean();
             DynamicBean.LikeUser likeUser = dynamic.new LikeUser();
@@ -194,28 +209,40 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
             item.id = String.valueOf(user.getId());
             dynamicList.get(position).like.item.add(item);
             circleDynamicAdapter.notifyItemChanged(position);
-            Toast.makeText(getContext(),"点赞成功",Toast.LENGTH_LONG).show();
-        }else{
-            Toast.makeText(getContext(),"点赞失败:" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "点赞成功", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getContext(), "点赞失败:" + baseBean.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
     @Override
     public void canLikeResult(int position, BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
+        if (baseBean.getStatus() == Constant.OK) {
             dynamicList.get(position).like.counter -= 1;
             List<DynamicBean.LikeUser.Item> item = dynamicList.get(position).like.item;
             int myPosition = 0;
             for (int i = 0; i < item.size(); i++) {
-                if(item.get(i).id.equals(String.valueOf(App.mInstance.getUser().getId()))){
+                if (item.get(i).id.equals(String.valueOf(App.mInstance.getUser().getId()))) {
                     myPosition = i;
                 }
             }
             item.remove(myPosition);
             circleDynamicAdapter.notifyItemChanged(position);
-            Toast.makeText(getContext(),"取消赞成功",Toast.LENGTH_LONG).show();
-        }else {
-            Toast.makeText(getContext(),"取消赞失败:"+baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "取消赞成功", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getContext(), "取消赞失败:" + baseBean.getMessage(), Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        sharePopupWindow.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        sharePopupWindow.release();
     }
 }

@@ -155,7 +155,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             @Override
             public void onClick(View v) {
                 if (callback != null) {
-                    callback.onShareClick();
+                    callback.onShareClick(dynamic);
                 }
             }
         });

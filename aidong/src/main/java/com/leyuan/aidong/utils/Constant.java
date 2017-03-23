@@ -10,7 +10,7 @@ public class Constant {
     public static final String BASE_URL = "http://app.51aidong.com/";
     public static final String CAPTCHA_IMAGE = BASE_URL + "captcha_image/";
     public static final String URL_USER_AGREEMENT = BASE_URL + "homepage";
-
+    public static final String URL_SHARE_DYNAMIC = "http://www.ostagram.ru";
 
     public static final int OK = 1;
     public static final int NOT_LOGIN = 101;
@@ -46,6 +46,7 @@ public class Constant {
     public static final String DEFAULT_CITY = "上海";
     public static final String BROADCAST_ACTION_SELECTED_CITY = "com.leyuan.chat.selected_city";
     public static final int REQUEST_PHONE_BINGDING = 22;
+
 
 
     public static SystemBean systemInfoBean;
