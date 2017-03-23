@@ -3,6 +3,7 @@ package com.leyuan.aidong.ui.mvp.model;
 import com.leyuan.aidong.entity.DistrictBean;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.CourseDetailData;
+import com.leyuan.aidong.entity.data.AppointmentDetailData;
 import com.leyuan.aidong.entity.data.CourseData;
 import com.leyuan.aidong.entity.data.PayOrderData;
 
@@ -56,4 +57,11 @@ public interface CourseModel {
      */
     void buyCourse(Subscriber<PayOrderData> subscriber,String id,String couponId,String integral,
                    String payType,String contactName,String contactMobile);
+
+    /**
+     * 获取课程预约详情
+     * @param subscriber Subscriber
+     * @param id 课程code
+     */
+    void getCourseAppointDetail(Subscriber<AppointmentDetailData> subscriber, String id);
 }

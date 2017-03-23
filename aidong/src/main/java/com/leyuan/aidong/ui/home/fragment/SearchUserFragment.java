@@ -8,10 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.UserAdapter;
 import com.leyuan.aidong.entity.UserBean;
+import com.leyuan.aidong.ui.BasePageFragment;
 import com.leyuan.aidong.ui.mvp.presenter.SearchPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SearchPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.SearchUserFragmentView;
@@ -28,7 +28,7 @@ import java.util.List;
  * 用户搜索结果
  * Created by song on 2016/9/12.
  */
-public class SearchUserFragment extends BaseFragment implements SearchUserFragmentView {
+public class SearchUserFragment extends BasePageFragment implements SearchUserFragmentView {
 
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
@@ -41,6 +41,7 @@ public class SearchUserFragment extends BaseFragment implements SearchUserFragme
 
     private SearchPresent present;
     private String keyword;
+    private boolean needLoad;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
@@ -48,14 +49,17 @@ public class SearchUserFragment extends BaseFragment implements SearchUserFragme
         Bundle bundle = getArguments();
         if(bundle != null){
             keyword = bundle.getString("keyword");
+            needLoad = bundle.getBoolean("needLoad");
         }
-        return inflater.inflate(R.layout.fragment_result,container,false);
+        View view = inflater.inflate(R.layout.fragment_result, container, false);
+        initSwipeRefreshLayout(view);
+        initRecyclerView(view);
+        return view;
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        initSwipeRefreshLayout(view);
-        initRecyclerView(view);
+    public void fetchData() {
+        if(needLoad)
         present.commonUserData(switcherLayout,keyword);
     }
 
@@ -114,5 +118,11 @@ public class SearchUserFragment extends BaseFragment implements SearchUserFragme
     @Override
     public void showEndFooterView() {
         RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
+    }
+
+    public void refreshData(String keyword){
+        data.clear();
+        this.keyword = keyword;
+        present.commonUserData(switcherLayout,keyword);
     }
 }

@@ -121,6 +121,8 @@ public class AppointmentFragment extends BaseLazyFragment implements Appointment
 
     @Override
     public void showEmptyView() {
+        data.clear();
+        wrapperAdapter.notifyDataSetChanged();
         emptyLayout.setVisibility(View.VISIBLE);
     }
 

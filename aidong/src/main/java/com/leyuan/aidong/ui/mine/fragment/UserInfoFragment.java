@@ -80,6 +80,7 @@ public class UserInfoFragment extends BaseFragment{
             }
         }catch (Exception e){
             e.printStackTrace();
+            zodiac.setRightContent("");
         }
         height.setRightContent(profileBean.getHeight());
         weight.setRightContent(profileBean.getWeight());

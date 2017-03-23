@@ -8,10 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.CampaignAdapter;
 import com.leyuan.aidong.entity.CampaignBean;
+import com.leyuan.aidong.ui.BasePageFragment;
 import com.leyuan.aidong.ui.mvp.presenter.SearchPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SearchPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.SearchCampaignFragmentView;
@@ -28,7 +28,7 @@ import java.util.List;
  * 活动搜索结果
  * Created by song on 2016/9/12.
  */
-public class SearchCampaignFragment extends BaseFragment implements SearchCampaignFragmentView {
+public class SearchCampaignFragment extends BasePageFragment implements SearchCampaignFragmentView {
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
@@ -40,21 +40,25 @@ public class SearchCampaignFragment extends BaseFragment implements SearchCampai
 
     private SearchPresent present;
     private String keyword;
+    private boolean needLoad;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         Bundle bundle = getArguments();
         if(bundle != null){
             keyword = bundle.getString("keyword");
+            needLoad = bundle.getBoolean("needLoad");
         }
         present = new SearchPresentImpl(getContext(),this);
-        return inflater.inflate(R.layout.fragment_result,container,false);
+        View view = inflater.inflate(R.layout.fragment_result, container, false);
+        initSwipeRefreshLayout(view);
+        initRecyclerView(view);
+        return view;
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        initSwipeRefreshLayout(view);
-        initRecyclerView(view);
+    public void fetchData() {
+        if(needLoad)
         present.commonLoadCampaignData(switcherLayout,keyword);
     }
 
@@ -113,5 +117,11 @@ public class SearchCampaignFragment extends BaseFragment implements SearchCampai
     @Override
     public void showEndFooterView() {
         RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
+    }
+
+    public void refreshData(String keyword){
+        data.clear();
+        this.keyword = keyword;
+        present.commonLoadCampaignData(switcherLayout,keyword);
     }
 }

@@ -41,7 +41,10 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     }
 
     public void setData(List<AppointmentBean> data) {
-        this.data = data;
+        if(data != null) {
+            this.data = data;
+            notifyDataSetChanged();
+        }
     }
 
     @Override

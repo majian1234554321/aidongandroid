@@ -109,5 +109,6 @@
         android:layout_alignParentBottom="true"
         android:padding="15dp"
         android:layout_marginBottom="55dp"
-        android:layout_marginLeft="50dp"/>
+        android:layout_marginLeft="50dp"
+        android:visibility="gone"/>
 </RelativeLayout>

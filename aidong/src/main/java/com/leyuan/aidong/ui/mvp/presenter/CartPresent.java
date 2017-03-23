@@ -39,6 +39,8 @@ public interface CartPresent {
      */
     void updateGoodsCount(String id, int mount, int shopPosition, int goodsPosition);
 
+    void updateGoodsDeliveryInfo(String id,String gymId);
+
     /**
      * 添加商品到购物车
      * @param skuCode 商品sku码

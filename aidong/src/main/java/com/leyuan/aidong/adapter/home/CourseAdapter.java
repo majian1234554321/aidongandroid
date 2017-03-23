@@ -49,7 +49,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
     @Override
     public void onBindViewHolder(CourseViewHolder holder, int position) {
         final CourseBean bean = data.get(position);
-        GlideLoader.getInstance().displayImage(bean.getBrandLogo(), holder.cover);
+        GlideLoader.getInstance().displayImage(bean.getCover(), holder.cover);
+        GlideLoader.getInstance().displayImage(bean.getBrandLogo(), holder.brand);
         holder.price.setText(String.format(context.getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.getPrice())));
         holder.name.setText(bean.getName());
@@ -68,6 +69,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
 
     class CourseViewHolder extends RecyclerView.ViewHolder {
         ImageView cover;
+        ImageView brand;
         TextView price;
         TextView name;
         TextView address;
@@ -79,6 +81,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
             super(itemView);
 
             cover = (ImageView)itemView.findViewById(R.id.dv_course_cover);
+            brand = (ImageView) itemView.findViewById(R.id.iv_brand);
             price = (TextView)itemView.findViewById(R.id.tv_course_price);
             name = (TextView)itemView.findViewById(R.id.tv_course_name);
             address = (TextView)itemView.findViewById(R.id.tv_course_address);

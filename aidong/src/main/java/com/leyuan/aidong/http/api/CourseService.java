@@ -2,6 +2,7 @@ package com.leyuan.aidong.http.api;
 
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CourseDetailData;
+import com.leyuan.aidong.entity.data.AppointmentDetailData;
 import com.leyuan.aidong.entity.data.CourseData;
 import com.leyuan.aidong.entity.data.PayOrderData;
 
@@ -36,4 +37,7 @@ public interface CourseService {
                                                  @Field("pay_type") String payType,
                                                  @Field("contact_name") String contactName,
                                                  @Field("contact_mobile") String contactMobile);
+
+    @GET("market/courses/{id}/appointment")
+    Observable<BaseBean<AppointmentDetailData>> getCourseAppointDetail(@Path("id") String id);
 }

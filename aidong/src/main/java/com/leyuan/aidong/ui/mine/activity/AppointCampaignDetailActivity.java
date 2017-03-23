@@ -98,6 +98,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
     private RadioButton rbWeiXinPay;
 
     //底部预约操作状态及价格信息
+    private LinearLayout bottomLayout;
     private TextView tvPrice;
     private TextView tvPayTip;
     private TextView tvPay;
@@ -106,16 +107,25 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
     private TextView tvConfirmJoin;
     private TextView tvDelete;
 
-
     //Present层对象
     private AppointmentPresent present;
     private String orderId;
     private String payType;
     private AppointmentDetailBean bean;
 
+    private String campaignId;
+    private boolean fromDetail = false;
+
     public static void start(Context context,String orderId) {
         Intent starter = new Intent(context, AppointCampaignDetailActivity.class);
         starter.putExtra("orderId",orderId);
+        context.startActivity(starter);
+    }
+
+    public static void start(Context context,String campaignId,boolean fromDetail) {
+        Intent starter = new Intent(context, AppointCampaignDetailActivity.class);
+        starter.putExtra("campaignId",campaignId);
+        starter.putExtra("fromDetail",fromDetail);
         context.startActivity(starter);
     }
 
@@ -125,12 +135,21 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         setContentView(R.layout.activity_appoint_campaign_detail);
         present = new AppointmentPresentImpl(this,this);
         if(getIntent() != null){
-            orderId = getIntent().getStringExtra("orderId");
+            fromDetail = getIntent().getBooleanExtra("fromDetail",false);
+            if(fromDetail){
+                campaignId = getIntent().getStringExtra("campaignId");
+            }else {
+                orderId = getIntent().getStringExtra("orderId");
+            }
         }
 
         initView();
         setListener();
-        present.getAppointmentDetail(switcherLayout,orderId);
+        if(fromDetail){
+            present.getCampaignAppointDetail(switcherLayout,campaignId);
+        }else {
+            present.getAppointmentDetail(switcherLayout,orderId);
+        }
     }
 
     private void initView() {
@@ -171,6 +190,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         rbALiPay = (RadioButton) findViewById(R.id.cb_alipay);
         rbWeiXinPay = (RadioButton) findViewById(R.id.cb_weixin);
 
+        bottomLayout = (LinearLayout) findViewById(R.id.ll_bottom);
         tvPrice = (TextView) findViewById(R.id.tv_price);
         tvPayTip = (TextView) findViewById(R.id.tv_pay_tip);
         tvPay = (TextView) findViewById(R.id.tv_pay);
@@ -194,6 +214,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
     @Override
     public void setAppointmentDetail(AppointmentDetailBean bean) {
         this.bean = bean;
+        bottomLayout.setVisibility(View.VISIBLE);
         payType = bean.getPay().getPayType();
         if(PayType.ALI.equals(payType)){
             rbALiPay.setChecked(true);

@@ -1,7 +1,5 @@
 package com.leyuan.aidong.entity;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 /**
@@ -26,93 +24,23 @@ public class PayOrderBean {
     private String created_at;
 
     public static class PayOptionBean {
-        private String pay_string;  //支付宝使用
+        private ALiPayBean alipay;
+        private WeiXinPayBean wx;
 
-        private String appid;       //微信
-        private String partnerid;
-        private String prepayid;
-        @SerializedName("package")
-        private String _package;
-        private String noncestr;
-        private String timestamp;
-        private String sign;
-
-        public String getPay_string() {
-            return pay_string;
+        public WeiXinPayBean getWx() {
+            return wx;
         }
 
-        public void setPay_string(String pay_string) {
-            this.pay_string = pay_string;
+        public void setWx(WeiXinPayBean wx) {
+            this.wx = wx;
         }
 
-        public String getAppid() {
-            return appid;
+        public ALiPayBean getAlipay() {
+            return alipay;
         }
 
-        public void setAppid(String appid) {
-            this.appid = appid;
-        }
-
-        public String getPartnerid() {
-            return partnerid;
-        }
-
-        public void setPartnerid(String partnerid) {
-            this.partnerid = partnerid;
-        }
-
-        public String getPrepayid() {
-            return prepayid;
-        }
-
-        public void setPrepayid(String prepayid) {
-            this.prepayid = prepayid;
-        }
-
-        public String get_package() {
-            return _package;
-        }
-
-        public void set_package(String _package) {
-            this._package = _package;
-        }
-
-        public String getNoncestr() {
-            return noncestr;
-        }
-
-        public void setNoncestr(String noncestr) {
-            this.noncestr = noncestr;
-        }
-
-        public String getTimestamp() {
-            return timestamp;
-        }
-
-        public void setTimestamp(String timestamp) {
-            this.timestamp = timestamp;
-        }
-
-        public String getSign() {
-            return sign;
-        }
-
-        public void setSign(String sign) {
-            this.sign = sign;
-        }
-
-        @Override
-        public String toString() {
-            return "PayOptionBean{" +
-                    "pay_string='" + pay_string + '\'' +
-                    ", appid='" + appid + '\'' +
-                    ", partnerid='" + partnerid + '\'' +
-                    ", prepayid='" + prepayid + '\'' +
-                    ", _package='" + _package + '\'' +
-                    ", noncestr='" + noncestr + '\'' +
-                    ", timestamp='" + timestamp + '\'' +
-                    ", sign='" + sign + '\'' +
-                    '}';
+        public void setAlipay(ALiPayBean alipay) {
+            this.alipay = alipay;
         }
     }
 

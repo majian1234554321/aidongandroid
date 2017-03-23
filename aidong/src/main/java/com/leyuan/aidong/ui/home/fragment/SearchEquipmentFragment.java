@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.GoodsFilterAdapter;
 import com.leyuan.aidong.entity.EquipmentBean;
-import com.leyuan.aidong.ui.BaseFragment;
+import com.leyuan.aidong.ui.BasePageFragment;
 import com.leyuan.aidong.ui.mvp.presenter.SearchPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SearchPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.SearchEquipmentFragmentView;
@@ -29,7 +29,7 @@ import java.util.List;
  * 搜索商装备
  * Created by song on 2016/12/6.
  */
-public class SearchEquipmentFragment extends BaseFragment implements SearchEquipmentFragmentView{
+public class SearchEquipmentFragment extends BasePageFragment implements SearchEquipmentFragmentView{
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
@@ -41,6 +41,7 @@ public class SearchEquipmentFragment extends BaseFragment implements SearchEquip
 
     private SearchPresent present;
     private String keyword;
+    private boolean needLoad;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,14 +49,17 @@ public class SearchEquipmentFragment extends BaseFragment implements SearchEquip
         Bundle bundle = getArguments();
         if(bundle != null){
             keyword = bundle.getString("keyword");
+            needLoad = bundle.getBoolean("needLoad");
         }
-        return inflater.inflate(R.layout.fragment_result,container,false);
+        View view = inflater.inflate(R.layout.fragment_result, container, false);
+        initSwipeRefreshLayout(view);
+        initRecyclerView(view);
+        return view;
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        initSwipeRefreshLayout(view);
-        initRecyclerView(view);
+    public void fetchData() {
+        if(needLoad)
         present.commonLoadEquipmentData(switcherLayout,keyword);
     }
 
@@ -116,4 +120,9 @@ public class SearchEquipmentFragment extends BaseFragment implements SearchEquip
         RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
     }
 
+    public void refreshData(String keyword){
+        data.clear();
+        this.keyword = keyword;
+        present.commonLoadEquipmentData(switcherLayout,keyword);
+    }
 }

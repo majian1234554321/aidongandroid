@@ -259,7 +259,8 @@
         android:layout_below="@+id/scroll_view"
         android:background="@color/white"
         android:orientation="vertical"
-        android:paddingBottom="10dp">
+        android:paddingBottom="10dp"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -8,10 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.CourseAdapter;
 import com.leyuan.aidong.entity.CourseBean;
+import com.leyuan.aidong.ui.BasePageFragment;
 import com.leyuan.aidong.ui.mvp.presenter.SearchPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SearchPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.SearchCourseFragmentView;
@@ -28,7 +28,7 @@ import java.util.List;
  * 课程搜索结果
  * Created by song on 2016/9/12.
  */
-public class SearchCourseFragment extends BaseFragment implements SearchCourseFragmentView {
+public class SearchCourseFragment extends BasePageFragment implements SearchCourseFragmentView {
 
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
@@ -41,23 +41,26 @@ public class SearchCourseFragment extends BaseFragment implements SearchCourseFr
 
     private SearchPresent present;
     private String  keyword;
+    private boolean needLoad = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         Bundle bundle = getArguments();
         if(bundle != null){
             keyword = bundle.getString("keyword");
+            needLoad = bundle.getBoolean("needLoad");
         }
         present = new SearchPresentImpl(getContext(),this);
-        return inflater.inflate(R.layout.fragment_result,container,false);
+        View view = inflater.inflate(R.layout.fragment_result, container, false);
+        initSwipeRefreshLayout(view);
+        initRecyclerView(view);
+
+        return view;
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        initSwipeRefreshLayout(view);
-        initRecyclerView(view);
-        courseAdapter.setData(null);
-        wrapperAdapter.notifyDataSetChanged();
+    public void fetchData() {
+        if(needLoad)
         present.commonLoadCourseData(switcherLayout,keyword);
     }
 
@@ -116,5 +119,11 @@ public class SearchCourseFragment extends BaseFragment implements SearchCourseFr
     @Override
     public void showEndFooterView() {
         RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
+    }
+
+    public void refreshData(String keyword){
+        data.clear();
+        this.keyword =keyword;
+        present.commonLoadCourseData(switcherLayout,keyword);
     }
 }

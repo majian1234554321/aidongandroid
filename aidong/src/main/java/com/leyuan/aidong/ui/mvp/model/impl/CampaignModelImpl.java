@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.mvp.model.impl;
 
+import com.leyuan.aidong.entity.data.AppointmentDetailData;
 import com.leyuan.aidong.entity.data.CampaignData;
 import com.leyuan.aidong.entity.data.CampaignDetailData;
 import com.leyuan.aidong.entity.data.PayOrderData;
@@ -41,6 +42,13 @@ public class CampaignModelImpl implements CampaignModel{
                             float integral, String payType, String contactName, String contactMobile) {
         campaignService.buyCampaign(id,couponId,integral,payType,contactName,contactMobile)
                 .compose(RxHelper.<PayOrderData>transform())
+                .subscribe(subscriber);
+    }
+
+    @Override
+    public void getCampaignAppointDetail(Subscriber<AppointmentDetailData> subscriber, String id) {
+        campaignService.getCampaignAppointDetail(id)
+                .compose(RxHelper.<AppointmentDetailData>transform())
                 .subscribe(subscriber);
     }
 }

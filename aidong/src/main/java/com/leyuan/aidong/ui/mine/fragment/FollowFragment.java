@@ -7,15 +7,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.mine.FollowAdapter;
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mvp.presenter.FollowPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.FollowFragmentView;
+import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -42,7 +46,7 @@ public class FollowFragment extends BaseFragment implements FollowFragmentView, 
     private List<UserBean> data;
     private FollowAdapter followAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
-
+    private int position;
     private FollowPresent present;
 
     @Override
@@ -124,17 +128,42 @@ public class FollowFragment extends BaseFragment implements FollowFragmentView, 
     }
 
     @Override
-    public void onAddFollow(String id) {
-        present.addFollow(id);
+    public void onAddFollow(String id,int position) {
+        this.position = position;
+       // present.addFollow(id);
     }
 
     @Override
-    public void onCancelFollow(String id) {
-        present.cancelFollow(id);
+    public void onCancelFollow(String id,int position) {
+        this.position = position;
+       // present.cancelFollow(id);
     }
 
     @Override
     public void onItemClick(String id) {
         UserInfoActivity.start(getContext(),id);
     }
+
+    @Override
+    public void addFollowResult(BaseBean baseBean) {
+        if(baseBean.getStatus() == Constant.OK){
+            SystemInfoUtils.addFollow(data.get(position));
+            followAdapter.notifyDataSetChanged();
+            Toast.makeText(getContext(),R.string.follow_success,Toast.LENGTH_LONG).show();
+        }else {
+            Toast.makeText(getContext(),R.string.follow_fail + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void cancelFollowResult(BaseBean baseBean) {
+        if (baseBean.getStatus() == Constant.OK) {
+            SystemInfoUtils.removeFollow(data.get(position));
+            followAdapter.notifyDataSetChanged();
+            Toast.makeText(getContext(), R.string.cancel_follow_success, Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getContext(), R.string.cancel_follow_fail + baseBean.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
 }

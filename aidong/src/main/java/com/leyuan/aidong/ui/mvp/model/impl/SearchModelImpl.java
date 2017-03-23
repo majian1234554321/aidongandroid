@@ -44,6 +44,13 @@ public class SearchModelImpl implements SearchModel {
     }
 
     @Override
+    public void searchData(Subscriber<Object> subscriber,String keyword) {
+        searchService.searchData(keyword)
+                .compose(RxHelper.transform())
+                .subscribe(subscriber);
+    }
+
+    @Override
     public void searchVenues(Subscriber<VenuesData> subscriber, String keyword, int page) {
         searchService.searchVenues(keyword, SEARCH_VENUES, page)
                 .compose(RxHelper.<VenuesData>transform())

@@ -13,7 +13,6 @@ public interface AppointmentPresent {
 
     /**
      * 第一次加载
-     * @param switcherLayout SwitcherLayout
      * @param type 全部 已参加 未参加
      */
     void commonLoadData( String type);
@@ -57,4 +56,16 @@ public interface AppointmentPresent {
      * @param id
      */
     void deleteAppoint(String id);
+
+    /**
+     * 获取课程预约详情
+     * @param id 课程id
+     */
+    void getCourseAppointDetail(SwitcherLayout switcherLayout,String id);
+
+    /**
+     * 获取活动预约详情
+     * @param id 活动id
+     */
+    void getCampaignAppointDetail(SwitcherLayout switcherLayout,String id);
 }

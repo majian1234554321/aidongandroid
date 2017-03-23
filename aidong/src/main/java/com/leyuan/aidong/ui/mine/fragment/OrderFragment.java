@@ -59,13 +59,12 @@ public class OrderFragment extends BaseFragment implements OrderFragmentView{
 
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState){
-        pageSize = 20;
         present = new OrderPresentImpl(getContext(),this);
         Bundle bundle = getArguments();
         if(bundle != null){
             type = bundle.getString("type");
         }
-        return inflater.inflate(R.layout.fragment_order,null);
+        return inflater.inflate(R.layout.fragment_order,container,false);
     }
 
     @Override

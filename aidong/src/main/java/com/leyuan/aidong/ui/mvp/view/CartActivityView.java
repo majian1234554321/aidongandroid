@@ -15,4 +15,6 @@ public interface CartActivityView {
     void updateRecommendGoods(List<GoodsBean> goodsBeanList);
 
     void showEndFooterView();
+
+    void showEmptyRecommendView();
 }

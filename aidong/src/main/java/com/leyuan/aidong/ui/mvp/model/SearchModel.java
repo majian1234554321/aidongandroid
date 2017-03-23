@@ -18,6 +18,8 @@ import rx.Subscriber;
  */
 public interface SearchModel {
 
+    void searchData(Subscriber<Object> subscriber,String keyword);
+
     /**
      * 搜索场馆
      * @param subscriber Subscriber

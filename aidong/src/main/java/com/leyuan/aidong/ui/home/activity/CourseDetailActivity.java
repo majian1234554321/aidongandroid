@@ -20,6 +20,7 @@ import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CourseDetailBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.mine.activity.AppointCourseDetailActivity;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
@@ -276,7 +277,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 startActivityForResult(new Intent(this, LoginActivity.class), Constant.REQUEST_LOGIN);
             }
         }else if(STATUS_NOT_PAY.equals(bean.getStatus())){    //待支付
-          //  AppointCourseDetailActivity.start(this, bean.getOrderId());
+            AppointCourseDetailActivity.start(this, bean.getCode(),true);
         }
     }
 

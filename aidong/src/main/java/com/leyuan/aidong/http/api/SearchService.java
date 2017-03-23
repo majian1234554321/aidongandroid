@@ -21,6 +21,10 @@ public interface SearchService {
 
     @FormUrlEncoded
     @POST("search")
+    Observable<BaseBean<Object>> searchData(@Field("keyword") String keyword);
+
+    @FormUrlEncoded
+    @POST("search")
     Observable<BaseBean<VenuesData>> searchVenues(@Field("keyword") String keyword,
                                                   @Field("cat") String category,
                                                   @Field("page") int page);

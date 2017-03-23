@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.mvp.model;
 
+import com.leyuan.aidong.entity.data.AppointmentDetailData;
 import com.leyuan.aidong.entity.data.CampaignData;
 import com.leyuan.aidong.entity.data.CampaignDetailData;
 import com.leyuan.aidong.entity.data.PayOrderData;
@@ -37,5 +38,13 @@ public interface CampaignModel {
      */
     void buyCampaign(Subscriber<PayOrderData> subscriber,String id,String couponId,float integral,
                      String payType,String contactName,String contactMobile);
+
+
+    /**
+     * 获取活动预约详情
+     * @param subscriber Subscriber
+     * @param id 课程code
+     */
+    void getCampaignAppointDetail(Subscriber<AppointmentDetailData> subscriber, String id);
 
 }

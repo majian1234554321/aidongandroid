@@ -40,6 +40,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import static com.leyuan.aidong.R.id.birthday;
 import static com.leyuan.aidong.R.id.zodiac;
 
 /**
@@ -106,7 +107,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
         tvIdentify = (ExtendTextView) findViewById(R.id.identify);
         tvSignature = (ExtendTextView) findViewById(R.id.signature);
         tvAddress = (ExtendTextView) findViewById(R.id.address);
-        tvBirthday = (ExtendTextView) findViewById(R.id.birthday);
+        tvBirthday = (ExtendTextView) findViewById(birthday);
         tvZodiac = (ExtendTextView) findViewById(zodiac);
         tvHeight = (ExtendTextView) findViewById(R.id.height);
         tvWeight = (ExtendTextView) findViewById(R.id.weight);
@@ -118,10 +119,19 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
         tvSignature.setRightContent(profileBean.getSignature());
         tvAddress.setRightContent(profileBean.getProvince() + profileBean.getCity() + profileBean.getArea());
         tvBirthday.setRightContent(profileBean.getBirthday());
-        String birthday = profileBean.getBirthday();
-        String mothers = birthday.substring(birthday.indexOf("年") + 1,birthday.indexOf("月"));
-        String days = birthday.substring(birthday.indexOf("月") + 1,birthday.indexOf("日"));
-        tvZodiac.setRightContent(Utils.getConstellation(FormatUtil.parseInt(mothers), FormatUtil.parseInt(days)));
+        try {
+            String birthday = profileBean.getBirthday();
+            if(!TextUtils.isEmpty(birthday)) {
+                String mothers = birthday.substring(birthday.indexOf("年") + 1, birthday.indexOf("月"));
+                String days = birthday.substring(birthday.indexOf("月") + 1, birthday.indexOf("日"));
+                tvZodiac.setRightContent(Utils.getConstellation(FormatUtil.parseInt(mothers), FormatUtil.parseInt(days)));
+            }else {
+                tvZodiac.setRightContent("");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            tvZodiac.setRightContent("");
+        }
         tvHeight.setRightContent(profileBean.getHeight());
         tvWeight.setRightContent(profileBean.getWeight());
         tvBmi.setRightContent(profileBean.getBmi());
@@ -175,7 +185,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
             case R.id.address:
                 showAddressDialog();
                 break;
-            case R.id.birthday:
+            case birthday:
                 showBirthdayDialog();
                 break;
             case R.id.height:

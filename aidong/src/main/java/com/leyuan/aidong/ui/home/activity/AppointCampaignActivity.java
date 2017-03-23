@@ -163,7 +163,7 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
                 finish();
                 break;
             case R.id.tv_coupon:
-                if(usableCoupons != null && usableCoupons.isEmpty()) {
+                if(usableCoupons != null && !usableCoupons.isEmpty()) {
                     Intent intent = new Intent(this, SelectCouponActivity.class);
                     startActivityForResult(intent, REQUEST_SELECT_COUPON);
                 }
