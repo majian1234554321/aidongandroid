@@ -155,7 +155,7 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
             holder.likeLayout.setVisibility(View.VISIBLE);
             holder.likesRecyclerView.setLayoutManager(new LinearLayoutManager
                     (context, LinearLayoutManager.HORIZONTAL, false));
-            DynamicLikeAdapter likeAdapter = new DynamicLikeAdapter(context);
+            DynamicLikeAdapter likeAdapter = new DynamicLikeAdapter(context,dynamic.id);
             likeAdapter.setData(dynamic.like.item,dynamic.like.counter);
             holder.likesRecyclerView.setAdapter(likeAdapter);
         } else {

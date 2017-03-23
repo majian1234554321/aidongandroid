@@ -18,6 +18,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.ApplicantAdapter;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CourseDetailBean;
+import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
@@ -38,7 +39,7 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  * 课程详情
  * Created by song on 2016/11/15.
  */
-public class CourseDetailActivity extends BaseActivity implements View.OnClickListener,CourseDetailActivityView{
+public class CourseDetailActivity extends BaseActivity implements View.OnClickListener, CourseDetailActivityView {
     private static final String STATUS_APPOINT = "1";       //马上预约
     private static final String STATUS_NOT_START = "2";     //即将开始预约
     private static final String STATUS_APPOINT_END = "3";   //预约已结束
@@ -46,7 +47,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     private static final String STATUS_NOT_PAY = "5";       //待支付
     private static final String STATUS_FULL = "6";          //预约人数已满
     private static final String STATUS_COURSE_END = "7";    //课程结束
-    private static final String STATUS_NOT_NEED= "8";       //无需预约
+    private static final String STATUS_NOT_NEED = "8";       //无需预约
 
     private ImageView ivBack;
     private TextView tvTitle;
@@ -76,33 +77,35 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     private CourseDetailBean bean;
     private CoursePresent coursePresent;
     private ApplicantAdapter applicantAdapter;
+    private SharePopupWindow sharePopupWindow;
 
-    public static void start(Context context,String code) {
+    public static void start(Context context, String code) {
         Intent starter = new Intent(context, CourseDetailActivity.class);
-        starter.putExtra("code",code);
+        starter.putExtra("code", code);
         context.startActivity(starter);
     }
 
     @Override
-    protected void onCreate( Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_detail);
-        coursePresent = new CoursePresentImpl(this,this);
-        if(getIntent() != null){
+        coursePresent = new CoursePresentImpl(this, this);
+        if (getIntent() != null) {
             code = getIntent().getStringExtra("code");
         }
 
         initView();
         setListener();
-        coursePresent.getCourseDetail(switcherLayout,code);
+        coursePresent.getCourseDetail(switcherLayout, code);
+        sharePopupWindow = new SharePopupWindow(this);
     }
 
-    private void initView(){
+    private void initView() {
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tvTitle = (TextView) findViewById(R.id.tv_title);
         ivShare = (ImageView) findViewById(R.id.iv_share);
         scrollView = (ScrollView) findViewById(R.id.scroll_view);
-        switcherLayout = new SwitcherLayout(this,scrollView);
+        switcherLayout = new SwitcherLayout(this, scrollView);
         tvStartTime = (TextView) findViewById(R.id.tv_start_time);
         banner = (BGABanner) findViewById(R.id.banner);
         tvBannerPrice = (TextView) findViewById(R.id.tv_hot);
@@ -123,17 +126,17 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         banner.setAdapter(new BGABanner.Adapter() {
             @Override
             public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
-                GlideLoader.getInstance().displayImage((String) model, (ImageView)view);
+                GlideLoader.getInstance().displayImage((String) model, (ImageView) view);
             }
         });
 
         applicantAdapter = new ApplicantAdapter(this);
         rvApplicant.setAdapter(applicantAdapter);
         rvApplicant.setLayoutManager(new LinearLayoutManager
-                (this,LinearLayoutManager.HORIZONTAL,false));
+                (this, LinearLayoutManager.HORIZONTAL, false));
     }
 
-    private void setListener(){
+    private void setListener() {
         ivBack.setOnClickListener(this);
         ivShare.setOnClickListener(this);
         ivAvatar.setOnClickListener(this);
@@ -145,27 +148,29 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_back:
                 finish();
                 break;
             case R.id.iv_share:
+                sharePopupWindow.showAtBottom(bean.getName(), bean.getIntroduce(), bean.getCover().get(0),
+                        "http://www.baidu.com");
                 break;
             case R.id.ll_address:
-                MapActivity.start(this,"地址详情",bean.getGym().getName(),bean.getAddress(),
-                        bean.getGym().getCoordinate().getLat(),bean.getGym().getCoordinate().getLng());
+                MapActivity.start(this, "地址详情", bean.getGym().getName(), bean.getAddress(),
+                        bean.getGym().getCoordinate().getLat(), bean.getGym().getCoordinate().getLng());
                 break;
             case R.id.dv_avatar:
                 UserInfoActivity.start(this, bean.getCoach().getId());
                 break;
             case R.id.iv_follow:
-                if(App.mInstance.isLogin()) {
+                if (App.mInstance.isLogin()) {
                     if (isFollow) {
                         coursePresent.cancelFollow(bean.getCoach().getId());
                     } else {
                         coursePresent.addFollow(bean.getCoach().getId());
                     }
-                }else {
+                } else {
                     startActivityForResult(new Intent(this, LoginActivity.class), Constant.REQUEST_LOGIN);
                 }
                 break;
@@ -185,36 +190,36 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         ivShare.setVisibility(View.VISIBLE);
         this.bean = bean;
         tvTitle.setText(bean.getName());
-        banner.setData(bean.getCover(),null);
+        banner.setData(bean.getCover(), null);
         tvBannerPrice.setText(String.format(getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.getPrice())));
         GlideLoader.getInstance().displayCircleImage(bean.getCoach().getAvatar(), ivAvatar);
         tvCoachName.setText(bean.getCoach().getName());
         tvTime.setText(String.format(getString(R.string.detail_time),
-                bean.getClassDate(),bean.getClassTime(),bean.getBreakTime()));
+                bean.getClassDate(), bean.getClassTime(), bean.getBreakTime()));
         tvAddress.setText(bean.getGym().getAddress());
         tvVenues.setText(bean.getGym().getName());
         tvRoom.setText(bean.getClassroom());
         tvCount.setText(String.format(getString(R.string.course_applicant_count),
-                bean.getAppliedCount(),bean.getPlace()));
+                bean.getAppliedCount(), bean.getPlace()));
         applicantAdapter.setData(bean.getApplied());
-        if(!TextUtils.isEmpty(bean.getIntroduce())) {
+        if (!TextUtils.isEmpty(bean.getIntroduce())) {
             RichText.from(bean.getIntroduce()).into(tvDesc);
         }
-        tvBottomPrice.setText(String.format(getString(R.string.rmb_price),bean.getPrice()));
+        tvBottomPrice.setText(String.format(getString(R.string.rmb_price), bean.getPrice()));
         tvStartTime.setText(String.format(getString(R.string.appoint_time),
-                bean.getClassDate()+bean.getClassTime()));
+                bean.getClassDate() + bean.getClassTime()));
 
-        isFollow = SystemInfoUtils.isFollow(this,bean.getCoach());
+        isFollow = SystemInfoUtils.isFollow(this, bean.getCoach());
         ivFollow.setBackgroundResource(isFollow ? R.drawable.icon_following
                 : R.drawable.icon_follow);
 
         setBottomStatus();
     }
 
-    private void setBottomStatus(){
+    private void setBottomStatus() {
         bottomLayout.setVisibility(View.VISIBLE);
-        switch (bean.getStatus()){
+        switch (bean.getStatus()) {
             case STATUS_APPOINT:   //跳预约
                 tvStartTime.setVisibility(View.GONE);
                 tvBottomPrice.setVisibility(View.VISIBLE);
@@ -268,15 +273,15 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
-    private void bottomToTargetActivity(){
-        if(STATUS_APPOINT.equals(bean.getStatus())){           //预约
-            if(App.mInstance.isLogin()){
+    private void bottomToTargetActivity() {
+        if (STATUS_APPOINT.equals(bean.getStatus())) {           //预约
+            if (App.mInstance.isLogin()) {
                 AppointCourseActivity.start(this, bean);
-            }else {
+            } else {
                 startActivityForResult(new Intent(this, LoginActivity.class), Constant.REQUEST_LOGIN);
             }
-        }else if(STATUS_NOT_PAY.equals(bean.getStatus())){    //待支付
-          //  AppointCourseDetailActivity.start(this, bean.getOrderId());
+        } else if (STATUS_NOT_PAY.equals(bean.getStatus())) {    //待支付
+            //  AppointCourseDetailActivity.start(this, bean.getOrderId());
         }
     }
 
@@ -284,34 +289,41 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK){
-            if(requestCode == Constant.REQUEST_LOGIN){
-                coursePresent.getCourseDetail(switcherLayout,code);
+        sharePopupWindow.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == Constant.REQUEST_LOGIN) {
+                coursePresent.getCourseDetail(switcherLayout, code);
             }
         }
     }
 
     @Override
     public void addFollowResult(BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
+        if (baseBean.getStatus() == Constant.OK) {
             isFollow = true;
             SystemInfoUtils.addFollow(bean.getCoach());
             ivFollow.setBackgroundResource(R.drawable.icon_following);
-            Toast.makeText(this,R.string.follow_success,Toast.LENGTH_LONG).show();
-        }else {
-            Toast.makeText(this,R.string.follow_fail + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.follow_success, Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, R.string.follow_fail + baseBean.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
     @Override
     public void cancelFollowResult(BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
+        if (baseBean.getStatus() == Constant.OK) {
             isFollow = false;
             SystemInfoUtils.removeFollow(bean.getCoach());
             ivFollow.setBackgroundResource(R.drawable.icon_follow);
-            Toast.makeText(this,R.string.cancel_follow_success,Toast.LENGTH_LONG).show();
-        }else {
-            Toast.makeText(this,R.string.cancel_follow_fail + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.cancel_follow_success, Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, R.string.cancel_follow_fail + baseBean.getMessage(), Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        sharePopupWindow.release();
     }
 }

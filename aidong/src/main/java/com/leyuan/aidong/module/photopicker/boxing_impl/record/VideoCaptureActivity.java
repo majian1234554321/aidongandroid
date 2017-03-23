@@ -36,6 +36,10 @@ import com.leyuan.aidong.module.photopicker.boxing_impl.record.recorder.VideoRec
 import com.leyuan.aidong.module.photopicker.boxing_impl.record.recorder.VideoRecorderInterface;
 import com.leyuan.aidong.module.photopicker.boxing_impl.record.view.RecordingButtonInterface;
 import com.leyuan.aidong.module.photopicker.boxing_impl.record.view.VideoCaptureView;
+import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.widget.dialog.BaseDialog;
+import com.leyuan.aidong.widget.dialog.ButtonOkListener;
+import com.leyuan.aidong.widget.dialog.DialogSingleButton;
 
 public class VideoCaptureActivity extends Activity implements RecordingButtonInterface, VideoRecorderInterface {
 
@@ -125,14 +129,32 @@ public class VideoCaptureActivity extends Activity implements RecordingButtonInt
     }
 
     @Override
+    public void onRecordTooShort() {
+        new DialogSingleButton(this)
+                .setCommonTilte("提示")
+                .setContentDesc("录制时间太短 请重新录制")
+                .setBtnOkListener(new ButtonOkListener() {
+                    @Override
+                    public void onClick(BaseDialog dialog) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+        mVideoCaptureView.updateUINotRecordingReset();
+        mVideoRecorder.restartRecording();
+
+
+    }
+
+    @Override
     public void onAcceptButtonClicked() {
         finishCompleted();
     }
 
     @Override
     public void onBack() {
-        onRecordButtonClicked();
-        finish();
+        Logger.i("video", "on back is pressed");
+        finishCancelled();
     }
 
     @Override

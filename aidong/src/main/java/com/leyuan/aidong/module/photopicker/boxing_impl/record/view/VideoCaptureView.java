@@ -34,6 +34,7 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.module.photopicker.boxing_impl.record.preview.CapturePreview;
 import com.leyuan.aidong.utils.DensityUtil;
+import com.leyuan.aidong.utils.Logger;
 
 
 public class VideoCaptureView extends FrameLayout implements OnClickListener, RecordButton.RecordButtonListener {
@@ -87,13 +88,14 @@ public class VideoCaptureView extends FrameLayout implements OnClickListener, Re
         mChangeCameraIv.setOnClickListener(this);
         recordButton.setRecordListener(this);
 
+
         mThumbnailIv = (ImageView) videoCapture.findViewById(R.id.videocapture_preview_iv);
         mSurfaceView = (SurfaceView) videoCapture.findViewById(R.id.videocapture_preview_sv);
 
         mTimerTv = (TextView) videoCapture.findViewById(R.id.videocapture_timer_tv);
         tvTip = (TextView) videoCapture.findViewById(R.id.tv_tip);
         ivBack = (ImageView) videoCapture.findViewById(R.id.iv_back);
-
+        ivBack.setOnClickListener(this);
 
     }
 
@@ -131,10 +133,22 @@ public class VideoCaptureView extends FrameLayout implements OnClickListener, Re
     }
 
 
+    public void updateUINotRecordingReset() {
+        customHandler.removeCallbacks(updateTimerThread);
+        updateUINotRecording();
+        mTimerTv.setText("");
+        ivBack.setVisibility(View.VISIBLE);
+        tvTip.setVisibility(View.VISIBLE);
+        mChangeCameraIv.setVisibility(VISIBLE);
+        recordButton.setProgress(0);
+
+    }
 
     private Runnable updateTimerThread = new Runnable() {
         public void run() {
-             timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
+
+            Logger.i("video", "timeInMilliseconds = " + timeInMilliseconds);
+            timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
             int seconds = (int) (timeInMilliseconds / 1000);
             int minutes = seconds / 60;
             seconds = seconds % 60;
@@ -197,7 +211,7 @@ public class VideoCaptureView extends FrameLayout implements OnClickListener, Re
             mChangeCameraIv.setImageResource(isFrontCameraEnabled ?
                     R.drawable.ic_change_camera : R.drawable.ic_change_camera);
             mRecordingInterface.onSwitchCamera(isFrontCameraEnabled);
-        }else if(v.getId() == ivBack.getId()){
+        } else if (v.getId() == ivBack.getId()) {
             mRecordingInterface.onBack();
         }
     }
@@ -207,7 +221,7 @@ public class VideoCaptureView extends FrameLayout implements OnClickListener, Re
     }
 
     private void updateRecordingTime(int seconds, int minutes) {
-        recordButton.setProgress(timeInMilliseconds/100);
+        recordButton.setProgress(timeInMilliseconds / 100);
         mTimerTv.setText(String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
     }
 
@@ -224,11 +238,18 @@ public class VideoCaptureView extends FrameLayout implements OnClickListener, Re
 
     @Override
     public void onReleaseRecordButton() {
-        mRecordingInterface.onRecordButtonClicked();
+
+        if (timeInMilliseconds < 5000) {
+            mRecordingInterface.onRecordTooShort();
+        } else {
+            mRecordingInterface.onRecordButtonClicked();
+        }
+
     }
 
     @Override
     public void onProgressMax() {
         mRecordingInterface.onRecordButtonClicked();
     }
+
 }

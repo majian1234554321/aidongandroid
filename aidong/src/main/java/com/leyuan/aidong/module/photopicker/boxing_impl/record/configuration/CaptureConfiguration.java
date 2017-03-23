@@ -29,7 +29,7 @@ public class CaptureConfiguration implements Parcelable {
 
     public static final int NO_DURATION_LIMIT = -1;
     public static final int NO_FILESIZE_LIMIT = -1;
-    public static final int DEFAULT_DURATION = 10;
+    public static final int DEFAULT_DURATION = 15;
 
     private int mVideoWidth = PredefinedCaptureConfigurations.WIDTH_720P;
     private int mVideoHeight = PredefinedCaptureConfigurations.HEIGHT_720P;

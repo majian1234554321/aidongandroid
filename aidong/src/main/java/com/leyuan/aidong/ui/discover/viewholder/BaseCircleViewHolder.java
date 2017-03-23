@@ -24,6 +24,7 @@ import com.leyuan.aidong.utils.Utils;
 
 /**
  * 爱动圈动态
+ *
  * @author song
  */
 public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<DynamicBean> implements IViewHolder<DynamicBean> {
@@ -81,13 +82,13 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         }
         tvContent.setText(dynamic.content);
 
-        if(showLikeAndCommentLayout) {
+        if (showLikeAndCommentLayout) {
             if (dynamic.like.counter > 0) {
                 likeLayout.setVisibility(View.VISIBLE);
                 likesRecyclerView.setLayoutManager(new LinearLayoutManager
                         (context, LinearLayoutManager.HORIZONTAL, false));
-                DynamicLikeAdapter likeAdapter = new DynamicLikeAdapter(context);
-                likeAdapter.setData(dynamic.like.item,dynamic.like.counter);
+                DynamicLikeAdapter likeAdapter = new DynamicLikeAdapter(context, dynamic.id);
+                likeAdapter.setData(dynamic.like.item, dynamic.like.counter);
                 likesRecyclerView.setAdapter(likeAdapter);
             } else {
                 likeLayout.setVisibility(View.GONE);
@@ -96,13 +97,13 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
                 commentLayout.setVisibility(View.VISIBLE);
                 DynamicCommentAdapter commonAdapter = new DynamicCommentAdapter(context);
                 commentRecyclerView.setAdapter(commonAdapter);
-                commonAdapter.setData(dynamic.comment.item,dynamic.comment.count);
+                commonAdapter.setData(dynamic.comment.item, dynamic.comment.count);
                 commentRecyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
                 commentLayout.setVisibility(View.GONE);
             }
             line.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             likeLayout.setVisibility(View.GONE);
             commentLayout.setVisibility(View.GONE);
             line.setVisibility(View.GONE);
@@ -164,16 +165,16 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         this.callback = callback;
     }
 
-    public void showLikeAndCommentLayout(boolean show){
+    public void showLikeAndCommentLayout(boolean show) {
         this.showLikeAndCommentLayout = show;
     }
 
 
-    private boolean isLike(DynamicBean dynamic){
-        if(!App.mInstance.isLogin()){
+    private boolean isLike(DynamicBean dynamic) {
+        if (!App.mInstance.isLogin()) {
             return false;
         }
-        if(dynamic.like.item.isEmpty()){
+        if (dynamic.like.item.isEmpty()) {
             return false;
         }
         for (DynamicBean.LikeUser.Item item : dynamic.like.item) {

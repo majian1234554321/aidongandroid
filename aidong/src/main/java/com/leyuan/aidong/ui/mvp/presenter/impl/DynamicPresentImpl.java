@@ -8,6 +8,7 @@ import com.leyuan.aidong.entity.CommentBean;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.data.CommentData;
 import com.leyuan.aidong.entity.data.DynamicsData;
+import com.leyuan.aidong.entity.data.LikeData;
 import com.leyuan.aidong.http.subscriber.BaseSubscriber;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
@@ -17,6 +18,7 @@ import com.leyuan.aidong.ui.mvp.model.DynamicModel;
 import com.leyuan.aidong.ui.mvp.model.impl.DynamicModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
 import com.leyuan.aidong.ui.mvp.view.DynamicDetailActivityView;
+import com.leyuan.aidong.ui.mvp.view.DynamicParseUserView;
 import com.leyuan.aidong.ui.mvp.view.PublishDynamicActivityView;
 import com.leyuan.aidong.ui.mvp.view.SportCircleFragmentView;
 import com.leyuan.aidong.utils.Constant;
@@ -29,7 +31,8 @@ import java.util.List;
  * 爱动圈
  * Created by song on 2016/12/26.
  */
-public class DynamicPresentImpl implements DynamicPresent{
+public class DynamicPresentImpl implements DynamicPresent {
+    private DynamicParseUserView dynamicParseUserView;
     private Context context;
     private DynamicModel dynamicModel;
     private SportCircleFragmentView sportCircleFragmentView;
@@ -41,7 +44,7 @@ public class DynamicPresentImpl implements DynamicPresent{
     public DynamicPresentImpl(Context context, SportCircleFragmentView view) {
         this.context = context;
         this.sportCircleFragmentView = view;
-        if(dynamicModel == null){
+        if (dynamicModel == null) {
             dynamicModel = new DynamicModelImpl();
         }
     }
@@ -49,7 +52,7 @@ public class DynamicPresentImpl implements DynamicPresent{
     public DynamicPresentImpl(Context context, PublishDynamicActivityView view) {
         this.context = context;
         this.publishDynamicActivityView = view;
-        if(dynamicModel == null){
+        if (dynamicModel == null) {
             dynamicModel = new DynamicModelImpl();
         }
     }
@@ -57,7 +60,15 @@ public class DynamicPresentImpl implements DynamicPresent{
     public DynamicPresentImpl(Context context, DynamicDetailActivityView view) {
         this.context = context;
         this.dynamicDetailActivityView = view;
-        if(dynamicModel == null){
+        if (dynamicModel == null) {
+            dynamicModel = new DynamicModelImpl();
+        }
+    }
+
+    public DynamicPresentImpl(Context context, DynamicParseUserView view) {
+        this.context = context;
+        this.dynamicParseUserView = view;
+        if (dynamicModel == null) {
             dynamicModel = new DynamicModelImpl();
         }
     }
@@ -67,7 +78,7 @@ public class DynamicPresentImpl implements DynamicPresent{
         dynamicModel.getDynamics(new CommonSubscriber<DynamicsData>(switcherLayout) {
             @Override
             public void onNext(DynamicsData dynamicsData) {
-                if(dynamicsData != null){
+                if (dynamicsData != null) {
                     dynamicBeanList = dynamicsData.getDynamic();
                 }
                 if (dynamicBeanList != null && !dynamicBeanList.isEmpty()) {
@@ -77,7 +88,7 @@ public class DynamicPresentImpl implements DynamicPresent{
                     switcherLayout.showEmptyLayout();
                 }
             }
-        },Constant.PAGE_FIRST);
+        }, Constant.PAGE_FIRST);
     }
 
     @Override
@@ -85,22 +96,22 @@ public class DynamicPresentImpl implements DynamicPresent{
         dynamicModel.getDynamics(new RefreshSubscriber<DynamicsData>(context) {
             @Override
             public void onNext(DynamicsData dynamicsData) {
-                if(dynamicsData != null){
+                if (dynamicsData != null) {
                     dynamicBeanList = dynamicsData.getDynamic();
                 }
                 if (dynamicBeanList != null && !dynamicBeanList.isEmpty()) {
                     sportCircleFragmentView.updateRecyclerView(dynamicBeanList);
                 }
             }
-        },Constant.PAGE_FIRST);
+        }, Constant.PAGE_FIRST);
     }
 
     @Override
     public void requestMoreData(RecyclerView recyclerView, final int size, int page) {
-        dynamicModel.getDynamics(new RequestMoreSubscriber<DynamicsData>(context,recyclerView,size) {
+        dynamicModel.getDynamics(new RequestMoreSubscriber<DynamicsData>(context, recyclerView, size) {
             @Override
             public void onNext(DynamicsData dynamicsData) {
-                if(dynamicsData != null){
+                if (dynamicsData != null) {
                     dynamicBeanList = dynamicsData.getDynamic();
                 }
                 if (dynamicBeanList != null && !dynamicBeanList.isEmpty()) {
@@ -111,34 +122,34 @@ public class DynamicPresentImpl implements DynamicPresent{
                     sportCircleFragmentView.showEndFooterView();
                 }
             }
-        },page);
+        }, page);
     }
 
     @Override
-    public void postDynamic(boolean isPhoto,String content,String... media) {
-        if(isPhoto){
-            postImageDynamic(content,media);
-        }else {
-            postVideoDynamic(content,media[0]);
+    public void postDynamic(boolean isPhoto, String content, String... media) {
+        if (isPhoto) {
+            postImageDynamic(content, media);
+        } else {
+            postVideoDynamic(content, media[0]);
         }
     }
 
     private void postImageDynamic(String content, String... image) {
-        dynamicModel.postDynamic(new ProgressSubscriber<BaseBean>(context,false) {
+        dynamicModel.postDynamic(new ProgressSubscriber<BaseBean>(context, false) {
             @Override
             public void onNext(BaseBean baseBean) {
                 publishDynamicActivityView.publishDynamicResult(baseBean);
             }
-        },content,null,image);
+        }, content, null, image);
     }
 
     private void postVideoDynamic(String content, String video) {
-        dynamicModel.postDynamic(new ProgressSubscriber<BaseBean>(context,false) {
+        dynamicModel.postDynamic(new ProgressSubscriber<BaseBean>(context, false) {
             @Override
             public void onNext(BaseBean baseBean) {
                 publishDynamicActivityView.publishDynamicResult(baseBean);
             }
-        },content,video,new String[]{});
+        }, content, video, new String[]{});
     }
 
     @Override
@@ -148,7 +159,7 @@ public class DynamicPresentImpl implements DynamicPresent{
             public void onNext(BaseBean baseBean) {
                 dynamicDetailActivityView.addCommentsResult(baseBean);
             }
-        },id,content);
+        }, id, content);
     }
 
     @Override
@@ -156,33 +167,33 @@ public class DynamicPresentImpl implements DynamicPresent{
         dynamicModel.getComments(new BaseSubscriber<CommentData>(context) {
             @Override
             public void onNext(CommentData commentData) {
-                if(commentData != null && commentData.getComment() != null
-                        && !commentData.getComment().isEmpty()){
+                if (commentData != null && commentData.getComment() != null
+                        && !commentData.getComment().isEmpty()) {
                     dynamicDetailActivityView.updateComments(commentData.getComment());
-                }else {
+                } else {
                     dynamicDetailActivityView.showEmptyCommentView();
                 }
             }
-        },id,Constant.PAGE_FIRST);
+        }, id, Constant.PAGE_FIRST);
     }
 
     @Override
-    public void requestMoreComments(RecyclerView recyclerView,String id, int page,final int pageSize) {
-        dynamicModel.getComments(new RequestMoreSubscriber<CommentData>(context,recyclerView,pageSize) {
+    public void requestMoreComments(RecyclerView recyclerView, String id, int page, final int pageSize) {
+        dynamicModel.getComments(new RequestMoreSubscriber<CommentData>(context, recyclerView, pageSize) {
             @Override
             public void onNext(CommentData commentData) {
-                if(commentData != null && commentData.getComment() != null){
-                    commentBeanList =  commentData.getComment();
+                if (commentData != null && commentData.getComment() != null) {
+                    commentBeanList = commentData.getComment();
                 }
-                if(!commentBeanList.isEmpty()){
+                if (!commentBeanList.isEmpty()) {
                     dynamicDetailActivityView.updateComments(commentBeanList);
                 }
                 //没有更多数据了显示到底提示
-                if( commentBeanList.size() < pageSize){
+                if (commentBeanList.size() < pageSize) {
                     dynamicDetailActivityView.showEndFooterView();
                 }
             }
-        },id,page);
+        }, id, page);
     }
 
     @Override
@@ -190,27 +201,34 @@ public class DynamicPresentImpl implements DynamicPresent{
         dynamicModel.addLike(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
-                if(sportCircleFragmentView != null){
-                    sportCircleFragmentView.addLikeResult(position,baseBean);
+                if (sportCircleFragmentView != null) {
+                    sportCircleFragmentView.addLikeResult(position, baseBean);
                 }
             }
-        },id);
+        }, id);
     }
 
     @Override
-    public void cancelLike(String id,final int position) {
+    public void cancelLike(String id, final int position) {
         dynamicModel.cancelLike(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
-                if(sportCircleFragmentView != null){
-                    sportCircleFragmentView.cancelLikeResult(position,baseBean);
+                if (sportCircleFragmentView != null) {
+                    sportCircleFragmentView.cancelLikeResult(position, baseBean);
                 }
             }
-        },id);
+        }, id);
     }
 
     @Override
-    public void getLikes(String id, int page) {
-
+    public void getLikes(String dynamicId, final int page) {
+        dynamicModel.getLikes(new ProgressSubscriber<LikeData>(context) {
+            @Override
+            public void onNext(LikeData likeData) {
+                if (dynamicParseUserView != null) {
+                    dynamicParseUserView.onGetUserData(likeData.getPublisher(), page);
+                }
+            }
+        }, dynamicId, page);
     }
 }

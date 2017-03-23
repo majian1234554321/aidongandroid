@@ -83,6 +83,19 @@ public class VideoRecorder implements OnInfoListener, CapturePreviewInterface {
         }
     }
 
+    public void restartRecording() {
+        if (!isRecording()) return;
+        try {
+            getMediaRecorder().stop();
+            CLog.d(CLog.RECORDER, "Successfully stopped recording - outputfile: " + mVideoFile.getFullPath());
+        } catch (final RuntimeException e) {
+            e.printStackTrace();
+            CLog.d(CLog.RECORDER, "Failed to stop recording");
+        }
+
+        mRecording = false;
+    }
+
     protected void startRecording() {
         mRecording = false;
 

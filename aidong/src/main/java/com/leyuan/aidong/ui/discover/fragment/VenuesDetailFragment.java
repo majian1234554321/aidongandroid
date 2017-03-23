@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.VenuesDetailBean;
+import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.discover.activity.VenuesDetailActivity;
 import com.leyuan.aidong.ui.discover.activity.VenuesSubbranchActivity;
@@ -57,6 +58,8 @@ public class VenuesDetailFragment extends BaseFragment implements View.OnClickLi
     private String id;
     private VenuesDetailBean venues;
 
+    private SharePopupWindow sharePopupWindow;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_venues_detail, null);
@@ -73,6 +76,7 @@ public class VenuesDetailFragment extends BaseFragment implements View.OnClickLi
         initView(view);
         setListener();
         venuesPresent.getVenuesDetail(switcherLayout, id);
+        sharePopupWindow = new SharePopupWindow(getActivity());
     }
 
     private void initView(View view) {
@@ -112,6 +116,8 @@ public class VenuesDetailFragment extends BaseFragment implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fb_share:
+                sharePopupWindow.showAtBottom(venues.getName(), venues.getIntroduce(),
+                        venues.getPhoto().get(0), "http://www.baidu.com");
                 break;
             case R.id.tv_food:
                 break;
@@ -183,4 +189,15 @@ public class VenuesDetailFragment extends BaseFragment implements View.OnClickLi
         bannerLayout.setData(venues.getPhoto(), null);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        sharePopupWindow.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        sharePopupWindow.release();
+    }
 }

@@ -308,6 +308,9 @@
             android:name=".ui.discover.activity.DynamicDetailActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.discover.activity.DynamicParseUserActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.discover.activity.AppointVenuesActivity"
             android:screenOrientation="portrait" />
         <activity

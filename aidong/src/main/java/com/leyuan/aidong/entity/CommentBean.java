@@ -18,6 +18,7 @@ public class CommentBean {
     private Publisher publisher;
 
     public class Publisher {
+        @SerializedName("publisher_id")
         private String publisher_id;
 
         @SerializedName("name")

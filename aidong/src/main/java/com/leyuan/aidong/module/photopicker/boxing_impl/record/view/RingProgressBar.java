@@ -17,7 +17,7 @@ import com.leyuan.aidong.utils.DensityUtil;
  * Created by song on 2017/3/2.
  */
 public class RingProgressBar extends View {
-    private double max = 100;
+    private double max = 150;
     private double progress = 0;
     private double angle;
     private Paint paint;

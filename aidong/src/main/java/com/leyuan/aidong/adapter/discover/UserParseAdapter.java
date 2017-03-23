@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.CommentBean;
 import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
@@ -22,23 +23,19 @@ import java.util.List;
  * 爱动同道适配器
  * Created by song on 2016/8/29.
  */
-public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
+public class UserParseAdapter extends RecyclerView.Adapter<UserParseAdapter.UserHolder> {
     private Context context;
-    private List<UserBean> data = new ArrayList<>();
+    private List<CommentBean> data;
     private FollowListener followListener;
 
-    public UserAdapter(Context context) {
+    public UserParseAdapter(Context context) {
         this.context = context;
-    }
-
-    public void setData(List<UserBean> data) {
-        if (data != null) {
-            this.data = data;
-        }
     }
 
     @Override
     public int getItemCount() {
+        if (data == null)
+            return 0;
         return data.size();
     }
 
@@ -50,14 +47,17 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
 
     @Override
     public void onBindViewHolder(UserHolder holder, final int position) {
-        final UserBean bean = data.get(position);
+        final CommentBean.Publisher bean = data.get(position).getPublisher();
+
         GlideLoader.getInstance().displayCircleImage(bean.getAvatar(), holder.cover);
         holder.nickname.setText(bean.getName());
-        holder.distance.setText(bean.getDistance());
+        holder.distance.setText("");
         if (!App.mInstance.isLogin()) {
             holder.follow.setBackgroundResource(R.drawable.icon_follow);
         } else {
-            holder.follow.setBackgroundResource(SystemInfoUtils.isFollow(context, bean)
+            UserBean userBean = new UserBean();
+            userBean.setId(bean.getPublisher_id());
+            holder.follow.setBackgroundResource(SystemInfoUtils.isFollow(context, userBean)
                     ? R.drawable.icon_following : R.drawable.icon_follow);
         }
 
@@ -79,16 +79,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserInfoActivity.start(context, bean.getId());
+                UserInfoActivity.start(context, bean.getPublisher_id());
             }
         });
     }
 
-    public void addMoreData(List<UserBean> data) {
-        if (data != null) {
-            this.data.addAll(data);
-            notifyDataSetChanged();
-        }
+    public void refreshData(ArrayList<CommentBean> data) {
+
     }
 
     class UserHolder extends RecyclerView.ViewHolder {
