@@ -36,9 +36,9 @@
                         android:background="@drawable/place_holder_logo"
                         app:banner_pointAutoPlayAble="false"
                         app:banner_pointContainerBackground="@android:color/transparent"
-                        app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
+                        app:banner_pointDrawable="@drawable/selector_banner"
                         app:banner_pointTopBottomMargin="5dp"
-                        app:banner_transitionEffect="fade"
+                        app:banner_transitionEffect="defaultEffect"
                         android:elevation="5dp" />
 
                     <android.support.v7.widget.Toolbar

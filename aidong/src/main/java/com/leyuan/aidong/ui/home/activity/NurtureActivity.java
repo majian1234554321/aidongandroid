@@ -35,6 +35,7 @@ import java.util.List;
  * 营养品界面
  * @author song
  */
+//todo 营养品界面和装备界面合成一个界面
 public class NurtureActivity extends BaseActivity implements NurtureActivityView{
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;

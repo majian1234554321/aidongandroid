@@ -7,15 +7,21 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.mine.UpdateDeliveryInfoAdapter;
+import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.DeliveryBean;
 import com.leyuan.aidong.entity.ShopBean;
 import com.leyuan.aidong.entity.UpdateDeliveryBean;
 import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.home.activity.SelfDeliveryVenuesActivity;
+import com.leyuan.aidong.ui.mvp.presenter.CartPresent;
+import com.leyuan.aidong.ui.mvp.presenter.impl.CartPresentImpl;
+import com.leyuan.aidong.ui.mvp.view.UpdateDeliveryInfoActivityView;
+import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.constant.DeliveryType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,13 +31,14 @@ import java.util.List;
  * Created by song on 2017/2/8.
  */
 public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnClickListener,
-        UpdateDeliveryInfoAdapter.SelfDeliveryShopListener {
+        UpdateDeliveryInfoAdapter.SelfDeliveryShopListener ,UpdateDeliveryInfoActivityView{
     private static final int REQUEST_SELECT_DELIVERY = 1;
     private ImageView ivBack;
-    private TextView tvFinish;
     private UpdateDeliveryInfoAdapter deliveryInfoAdapter;
     private List<UpdateDeliveryBean> data = new ArrayList<>();
     private int position;
+    private VenuesBean venuesBean;
+    private CartPresent cartPresent;
 
     public static void start(Context context, ShopBean shopBean) {
         Intent starter = new Intent(context, UpdateDeliveryInfoActivity.class);
@@ -42,12 +49,14 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_delivery_info);
+        cartPresent = new CartPresentImpl(this,this);
         if(getIntent() != null){
             ShopBean shopBean = getIntent().getParcelableExtra("shopBean");
             for (int i = 0; i < shopBean.getItem().size(); i++) {
                 UpdateDeliveryBean bean = new UpdateDeliveryBean();
                 bean.setGoods(shopBean.getItem().get(i));
-                bean.setDeliveryInfo(shopBean.getPickUp());
+                DeliveryBean deliveryBean = shopBean.getPickUp();
+                bean.setDeliveryInfo(deliveryBean);
                 data.add(bean);
             }
         }
@@ -58,7 +67,6 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
 
     private void initView(){
         ivBack = (ImageView) findViewById(R.id.iv_back);
-        tvFinish = (TextView) findViewById(R.id.tv_finish);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         deliveryInfoAdapter = new UpdateDeliveryInfoAdapter(this);
         recyclerView.setAdapter(deliveryInfoAdapter);
@@ -68,7 +76,6 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
 
     private void setListener(){
         ivBack.setOnClickListener(this);
-        tvFinish.setOnClickListener(this);
         deliveryInfoAdapter.setListener(this);
     }
 
@@ -78,13 +85,17 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
             case R.id.iv_back:
                 finish();
                 break;
-            case R.id.tv_finish:
-                break;
         }
     }
 
     @Override
-    public void onChangeShop(int position) {
+    public void onExpressClick(int position) {
+        this.position = position;
+        cartPresent.updateGoodsDeliveryInfo(data.get(position).getGoods().getId(),DeliveryType.EXPRESS);
+    }
+
+    @Override
+    public void onSelfDeliveryClick(int position) {
         this.position = position;
         Intent intent = new Intent(this,SelfDeliveryVenuesActivity.class);
         intent.putExtra("id",data.get(position).getGoods().getProductId());
@@ -97,10 +108,26 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
         super.onActivityResult(requestCode, resultCode, intent);
         if(intent != null){
             if(requestCode == REQUEST_SELECT_DELIVERY){
-                VenuesBean venuesBean = intent.getParcelableExtra("venues");
-                data.get(position).getDeliveryInfo().setInfo(venuesBean);
-                deliveryInfoAdapter.notifyDataSetChanged();
+                venuesBean = intent.getParcelableExtra("venues");
+                String goodsId = data.get(position).getGoods().getId();
+                String gymId = venuesBean.getId();
+                cartPresent.updateGoodsDeliveryInfo(goodsId,gymId);
             }
+        }
+    }
+
+    public void setSelfDeliveryResult(BaseBean baseBean){
+        if(baseBean.getStatus() == Constant.OK){
+            data.get(position).getDeliveryInfo().setType(DeliveryType.SELF);
+            data.get(position).getDeliveryInfo().setInfo(venuesBean);
+            deliveryInfoAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void setExpressResult(BaseBean baseBean) {
+        if(baseBean.getStatus() == Constant.OK){
+
         }
     }
 }

@@ -259,7 +259,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
                 startActivityForResult(new Intent(this, LoginActivity.class), Constant.REQUEST_LOGIN);
             }
         } else if (STATUS_NOT_PAY.equals(bean.getStatus())) {
-            AppointCampaignDetailActivity.start(this, bean.getCampaignId());
+            AppointCampaignDetailActivity.start(this, bean.getCampaignId(),true);
         }
     }
 

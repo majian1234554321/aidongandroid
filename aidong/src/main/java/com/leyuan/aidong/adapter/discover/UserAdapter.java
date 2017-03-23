@@ -91,6 +91,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
         }
     }
 
+
     class UserHolder extends RecyclerView.ViewHolder {
         ImageView cover;
         ImageView gender;

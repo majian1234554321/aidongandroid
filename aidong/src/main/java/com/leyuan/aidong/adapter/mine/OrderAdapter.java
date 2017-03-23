@@ -200,7 +200,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
         TextView tvCancel;              //取消订单
         TextView tvPay;                 //立即支付
         TextView tvExpress;             //查看物流
-        TextView tvConfirm;           //确认收货
+        TextView tvConfirm;             //确认收货
         TextView tvDelete;              //删除订单
         TextView tvBuyAgain;            //再次购买
 

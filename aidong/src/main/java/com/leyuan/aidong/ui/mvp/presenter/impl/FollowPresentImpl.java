@@ -13,6 +13,7 @@ import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.aidong.ui.mvp.model.FollowModel;
 import com.leyuan.aidong.ui.mvp.model.impl.FollowModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.FollowPresent;
+import com.leyuan.aidong.ui.mvp.view.AppointmentUserActivityView;
 import com.leyuan.aidong.ui.mvp.view.FollowFragmentView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.SystemInfoUtils;
@@ -30,9 +31,16 @@ public class FollowPresentImpl implements FollowPresent {
     private FollowModel followModel;
     private FollowFragmentView followFragmentView;
     private List<UserBean> userBeanList = new ArrayList<>();
+    private AppointmentUserActivityView appointmentUserActivityView;
 
     public FollowPresentImpl(Context context) {
         this.context = context;
+        followModel = new FollowModelImpl();
+    }
+
+    public FollowPresentImpl(Context context, AppointmentUserActivityView view) {
+        this.context = context;
+        this.appointmentUserActivityView = view;
         followModel = new FollowModelImpl();
     }
 
@@ -65,6 +73,8 @@ public class FollowPresentImpl implements FollowPresent {
                 }
                 if(!userBeanList.isEmpty()){
                     followFragmentView.updateRecyclerView(userBeanList);
+                    Constant.followData = followData;
+                    SystemInfoUtils.putSystemInfoBean(context,followData,SystemInfoUtils.KEY_FOLLOW);
                     switcherLayout.showContentLayout();
                 }else {
                     switcherLayout.showEmptyLayout();
@@ -79,6 +89,8 @@ public class FollowPresentImpl implements FollowPresent {
             @Override
             public void onNext(FollowData followData) {
                 if(followData != null && !followData.getFollow().isEmpty()){
+                    Constant.followData = followData;
+                    SystemInfoUtils.putSystemInfoBean(context,followData,SystemInfoUtils.KEY_FOLLOW);
                     followFragmentView.updateRecyclerView(followData.getFollow());
                 }
             }
@@ -109,7 +121,12 @@ public class FollowPresentImpl implements FollowPresent {
         followModel.addFollow(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
-                //no matter success or fail
+               if(appointmentUserActivityView != null){
+                   appointmentUserActivityView.addFollowResult(baseBean);
+               }
+                if(followFragmentView != null){
+                    followFragmentView.addFollowResult(baseBean);
+                }
             }
         },id);
     }
@@ -119,7 +136,12 @@ public class FollowPresentImpl implements FollowPresent {
         followModel.cancelFollow(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
-                //no matter success or fail
+                if(appointmentUserActivityView != null){
+                    appointmentUserActivityView.cancelFollowResult(baseBean);
+                }
+                if(followFragmentView != null){
+                    followFragmentView.cancelFollowResult(baseBean);
+                }
             }
         },id);
     }

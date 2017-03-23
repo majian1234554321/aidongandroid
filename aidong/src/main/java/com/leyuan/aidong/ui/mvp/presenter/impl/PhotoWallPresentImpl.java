@@ -39,7 +39,7 @@ public class PhotoWallPresentImpl implements PhotoWallPresent{
         photoWallModel.deletePhotos(new ProgressSubscriber<BaseBean>(context,true) {
             @Override
             public void onNext(BaseBean baseBean) {
-                photoWallActivityView.deletePhotoResult(baseBean,position);
+                photoWallActivityView.deleteNetPhotoResult(baseBean,position);
             }
         },id);
     }

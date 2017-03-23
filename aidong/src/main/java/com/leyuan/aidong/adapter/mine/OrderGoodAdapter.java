@@ -25,7 +25,9 @@ public class OrderGoodAdapter extends RecyclerView.Adapter<OrderGoodAdapter.Good
 
     public OrderGoodAdapter(Context context, List<GoodsBean> data) {
         this.context = context;
-        this.data = data;
+        if(data != null) {
+            this.data = data;
+        }
     }
 
     @Override

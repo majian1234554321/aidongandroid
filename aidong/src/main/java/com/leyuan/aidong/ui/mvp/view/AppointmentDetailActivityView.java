@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.mvp.view;
 
 import com.leyuan.aidong.entity.AppointmentDetailBean;
+import com.leyuan.aidong.entity.BaseBean;
 
 /**
  * 预约详情
@@ -14,4 +15,18 @@ public interface AppointmentDetailActivityView {
      */
     void setAppointmentDetail(AppointmentDetailBean appointmentDetailBean);
 
+    void cancelAppointmentResult(BaseBean baseBean);
+
+
+    /**
+     * 确认订单
+     * @param baseBean
+     */
+    void confirmAppointmentResult(BaseBean baseBean);
+
+    /**
+     * 删除订单
+     * @param baseBean
+     */
+    void deleteAppointmentResult(BaseBean baseBean);
 }

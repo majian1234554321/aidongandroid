@@ -12,4 +12,6 @@ public interface SearchActivityView {
 
     void setHistory(List<SearchHistoryBean> historyList);
 
+    void setSearchResult(Object o);
+
 }

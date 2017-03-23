@@ -12,8 +12,10 @@ import com.leyuan.aidong.http.subscriber.CommonSubscriber;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.aidong.ui.App;
+import com.leyuan.aidong.ui.mvp.model.DynamicModel;
 import com.leyuan.aidong.ui.mvp.model.FollowModel;
 import com.leyuan.aidong.ui.mvp.model.UserInfoModel;
+import com.leyuan.aidong.ui.mvp.model.impl.DynamicModelImpl;
 import com.leyuan.aidong.ui.mvp.model.impl.FollowModelImpl;
 import com.leyuan.aidong.ui.mvp.model.impl.UserInfoModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.UserInfoPresent;
@@ -32,6 +34,7 @@ public class UserInfoPresentImpl implements UserInfoPresent {
     private Context context;
     private UserInfoModel userInfoModel;
     private FollowModel followModel;
+    private DynamicModel dynamicModel;
     private UserInfoActivityView userInfoActivityView;
     private UpdateUserInfoActivityView updateUserInfoActivityView;
     private UserDynamicFragmentView dynamicFragmentView;
@@ -59,6 +62,18 @@ public class UserInfoPresentImpl implements UserInfoPresent {
         if (userInfoModel == null) {
             this.userInfoModel = new UserInfoModelImpl(context);
         }
+    }
+
+    @Override
+    public void getUserInfo(String id) {
+        userInfoModel.getUserInfo(new BaseSubscriber<UserInfoData>(context) {
+            @Override
+            public void onNext(UserInfoData userInfoData) {
+                if (userInfoData != null && userInfoData.getProfile() != null) {
+                    userInfoActivityView.updateUserInfo(userInfoData);
+                }
+            }
+        },id);
     }
 
     @Override
@@ -161,6 +176,38 @@ public class UserInfoPresentImpl implements UserInfoPresent {
                 userInfoActivityView.cancelFollowResult(baseBean);
             }
         }, userId);
+    }
+
+
+
+    @Override
+    public void addLike(String id, final int position) {
+        if(dynamicModel == null){
+            dynamicModel = new DynamicModelImpl();
+        }
+        dynamicModel.addLike(new ProgressSubscriber<BaseBean>(context) {
+            @Override
+            public void onNext(BaseBean baseBean) {
+                if(dynamicFragmentView != null){
+                    dynamicFragmentView.addLikeResult(position,baseBean);
+                }
+            }
+        },id);
+    }
+
+    @Override
+    public void cancelLike(String id,final int position) {
+        if(dynamicModel == null){
+            dynamicModel = new DynamicModelImpl();
+        }
+        dynamicModel.cancelLike(new ProgressSubscriber<BaseBean>(context) {
+            @Override
+            public void onNext(BaseBean baseBean) {
+                if(dynamicFragmentView != null){
+                    dynamicFragmentView.canLikeResult(position,baseBean);
+                }
+            }
+        },id);
     }
 
     @Override

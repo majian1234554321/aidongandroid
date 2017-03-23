@@ -37,7 +37,6 @@ import java.util.List;
  */
 public class UpdatePhotoWallActivity extends BaseActivity implements View.OnClickListener,
         PhotoWallAdapter.OnItemClickListener, UpdatePhotoWallActivityView {
-
     private static final int REQUEST_CODE = 1024;
 
     private ImageView ivBack;
@@ -48,6 +47,8 @@ public class UpdatePhotoWallActivity extends BaseActivity implements View.OnClic
     private ArrayList<ImageBean> selectedNetImages = new ArrayList<>();
     private ArrayList<BaseMedia> selectedLocalImages = new ArrayList<>();
     private PhotoWallPresent photoWallPresent;
+
+    private boolean isNetPhotoChanged = false;
 
     public static void start(Context context, List<ImageBean> photos) {
         Intent starter = new Intent(context, UpdatePhotoWallActivity.class);
@@ -89,10 +90,13 @@ public class UpdatePhotoWallActivity extends BaseActivity implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.iv_back:
+                if(isNetPhotoChanged){
+                    setResult(RESULT_OK,null);
+                }
                 finish();
                 break;
             case R.id.tv_finish:
-                if(selectedNetImages.isEmpty()){
+                if(selectedLocalImages.isEmpty()){
                     Toast.makeText(UpdatePhotoWallActivity.this,"请先选择要上传的本地图片",Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -145,6 +149,7 @@ public class UpdatePhotoWallActivity extends BaseActivity implements View.OnClic
         photoWallAdapter.notifyItemRemoved(position);
         photoWallAdapter.notifyItemRangeChanged(position,allSelectedImages.size());
         selectedLocalImages.remove(position - selectedNetImages.size());
+        tvFinish.setVisibility(selectedLocalImages.isEmpty()?View.GONE:View.VISIBLE);
     }
 
     @Override
@@ -167,17 +172,19 @@ public class UpdatePhotoWallActivity extends BaseActivity implements View.OnClic
                     allSelectedImages.add(imageBean);
                 }
                 photoWallAdapter.setData(allSelectedImages);
+                tvFinish.setVisibility(selectedLocalImages.isEmpty()?View.GONE:View.VISIBLE);
             }
         }
     }
 
     @Override
-    public void deletePhotoResult(BaseBean baseBean,int position) {
+    public void deleteNetPhotoResult(BaseBean baseBean, int position) {
         if(baseBean.getStatus() == Constant.OK){
             selectedNetImages.remove(position);
             allSelectedImages.remove(position);
             photoWallAdapter.notifyItemRemoved(position);
             photoWallAdapter.notifyItemRangeChanged(position,allSelectedImages.size());
+            isNetPhotoChanged = true;
             Toast.makeText(this,"删除成功",Toast.LENGTH_LONG).show();
         }else {
             Toast.makeText(this,"删除失败"+baseBean.getMessage(),Toast.LENGTH_LONG).show();
@@ -188,9 +195,19 @@ public class UpdatePhotoWallActivity extends BaseActivity implements View.OnClic
     public void addPhotosResult(BaseBean baseBean) {
         dismissProgressDialog();
         if(baseBean.getStatus() == Constant.OK){
+            setResult(RESULT_OK,null);
+            finish();
             Toast.makeText(this,"添加成功",Toast.LENGTH_LONG).show();
         }else {
             Toast.makeText(this,baseBean.getMessage(),Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(isNetPhotoChanged){
+            setResult(RESULT_OK,null);
+        }
+        finish();
     }
 }

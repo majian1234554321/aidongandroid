@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.mvp.view;
 
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.UserBean;
 
 import java.util.List;
@@ -20,5 +21,8 @@ public interface FollowFragmentView {
      */
     void showEndFooterView();
 
+    void addFollowResult(BaseBean baseBean);
+
+    void cancelFollowResult(BaseBean baseBean);
 
 }

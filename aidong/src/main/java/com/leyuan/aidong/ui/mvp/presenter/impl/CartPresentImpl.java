@@ -16,6 +16,8 @@ import com.leyuan.aidong.ui.mvp.model.CartModel;
 import com.leyuan.aidong.ui.mvp.model.impl.CartModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.CartPresent;
 import com.leyuan.aidong.ui.mvp.view.GoodsSkuPopupWindowView;
+import com.leyuan.aidong.ui.mvp.view.UpdateDeliveryInfoActivityView;
+import com.leyuan.aidong.utils.constant.DeliveryType;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
 /**
@@ -28,6 +30,7 @@ public class CartPresentImpl implements CartPresent{
     private CartModel cartModel;
     private CartHeaderView cartHeaderView;
     private GoodsSkuPopupWindowView skuPopupWindowView;
+    private UpdateDeliveryInfoActivityView updateDeliveryInfoActivityView;
 
     public CartPresentImpl(Context context) {
         this.context = context;
@@ -39,6 +42,14 @@ public class CartPresentImpl implements CartPresent{
     public CartPresentImpl(Context context, CartHeaderView cartHeaderView) {
         this.context = context;
         this.cartHeaderView = cartHeaderView;
+        if(cartModel == null){
+            cartModel = new CartModelImpl();
+        }
+    }
+
+    public CartPresentImpl(Context context, UpdateDeliveryInfoActivityView view) {
+        this.context = context;
+        this.updateDeliveryInfoActivityView = view;
         if(cartModel == null){
             cartModel = new CartModelImpl();
         }
@@ -103,12 +114,27 @@ public class CartPresentImpl implements CartPresent{
 
     @Override
     public void updateGoodsCount(String id, int mount, final int shopPosition, final int goodsPosition) {
-        cartModel.updateCart(new ProgressSubscriber<BaseBean>(context) {
+        cartModel.updateDeliveryInfo(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
                 cartHeaderView.updateGoodsCountResult(baseBean,shopPosition,goodsPosition);  //未作校验 上层自行判断
             }
         },id,mount);
+    }
+
+    @Override
+    public void updateGoodsDeliveryInfo(String id, final String gymId) {
+        cartModel.updateDeliveryInfo(new ProgressSubscriber<BaseBean>(context) {
+            @Override
+            public void onNext(BaseBean baseBean) {
+                if(DeliveryType.EXPRESS.equals(gymId)){
+                    updateDeliveryInfoActivityView.setExpressResult(baseBean);
+                }else {
+                    updateDeliveryInfoActivityView.setSelfDeliveryResult(baseBean);
+                }
+
+            }
+        },id,gymId);
     }
 
     @Override

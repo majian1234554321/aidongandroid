@@ -40,11 +40,15 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import static com.leyuan.aidong.R.id.birthday;
+import static com.leyuan.aidong.R.id.zodiac;
+
 /**
  * 修改用户资料
  * Created by song on 2017/2/6.
  */
-public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserInfoActivityView, View.OnClickListener, SelectAddressDialog.OnConfirmAddressListener {
+public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserInfoActivityView,
+        View.OnClickListener, SelectAddressDialog.OnConfirmAddressListener {
     private static final int REQUEST_CODE = 1024;
     private ImageView ivBack;
     private TextView tvFinish;
@@ -68,6 +72,11 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
     private String province;
     private String city;
     private String area;
+    private String gender;
+    private String height;
+    private String weight;
+    private String frequency;
+    private String bmi;
 
     private UserInfoPresent userInfoPresent;
 
@@ -98,29 +107,39 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
         tvIdentify = (ExtendTextView) findViewById(R.id.identify);
         tvSignature = (ExtendTextView) findViewById(R.id.signature);
         tvAddress = (ExtendTextView) findViewById(R.id.address);
-        tvBirthday = (ExtendTextView) findViewById(R.id.birthday);
-        tvZodiac = (ExtendTextView) findViewById(R.id.zodiac);
+        tvBirthday = (ExtendTextView) findViewById(birthday);
+        tvZodiac = (ExtendTextView) findViewById(zodiac);
         tvHeight = (ExtendTextView) findViewById(R.id.height);
         tvWeight = (ExtendTextView) findViewById(R.id.weight);
         tvBmi = (ExtendTextView) findViewById(R.id.bmi);
         tvFrequency = (ExtendTextView) findViewById(R.id.frequency);
         tvNickname.setRightContent(profileBean.getName() == null ? "请输入昵称" : profileBean.getName());
-        tvGender.setRightContent(profileBean.getGender());
-        tvIdentify.setRightContent("健身爱好者");
+        tvGender.setRightContent("0".equals(profileBean.getGender()) ? "男" : "女");
+        tvIdentify.setRightContent("coach".equals(profileBean.getUser_type()) ? "教练" : "健身爱好者");
         tvSignature.setRightContent(profileBean.getSignature());
         tvAddress.setRightContent(profileBean.getProvince() + profileBean.getCity() + profileBean.getArea());
         tvBirthday.setRightContent(profileBean.getBirthday());
-        tvZodiac.setRightContent(profileBean.getZodiac());
+        try {
+            String birthday = profileBean.getBirthday();
+            if(!TextUtils.isEmpty(birthday)) {
+                String mothers = birthday.substring(birthday.indexOf("年") + 1, birthday.indexOf("月"));
+                String days = birthday.substring(birthday.indexOf("月") + 1, birthday.indexOf("日"));
+                tvZodiac.setRightContent(Utils.getConstellation(FormatUtil.parseInt(mothers), FormatUtil.parseInt(days)));
+            }else {
+                tvZodiac.setRightContent("");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            tvZodiac.setRightContent("");
+        }
         tvHeight.setRightContent(profileBean.getHeight());
         tvWeight.setRightContent(profileBean.getWeight());
         tvBmi.setRightContent(profileBean.getBmi());
         tvFrequency.setRightContent(profileBean.getFrequency());
         avatarUrl = profileBean.getAvatar();
         GlideLoader.getInstance().displayCircleImage(avatarUrl, ivAvatar);
-
-        weight = FormatUtil.parseFloat(profileBean.getWeight());
-        height = FormatUtil.parseFloat(profileBean.getHeight());
-        setBMI();
+        weight = profileBean.getWeight();
+        height = profileBean.getHeight();
     }
 
     private void setListener() {
@@ -129,7 +148,6 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
         tvNickname.setOnClickListener(this);
         ivAvatar.setOnClickListener(this);
         tvGender.setOnClickListener(this);
-        tvIdentify.setOnClickListener(this);
         tvSignature.setOnClickListener(this);
         tvAddress.setOnClickListener(this);
         tvBirthday.setOnClickListener(this);
@@ -146,10 +164,10 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
                 finish();
                 break;
             case R.id.tv_finish:
-                if (TextUtils.isEmpty(avatarPath)) {
-                    uploadToServer(null);
-                } else {
+                if (!TextUtils.isEmpty(avatarPath)) {
                     uploadToQiNiu();
+                } else {
+                    uploadToServer(null);
                 }
                 break;
             case R.id.dv_avatar:
@@ -161,16 +179,13 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
             case R.id.gender:
                 showGenderDialog();
                 break;
-            case R.id.identify:
-                showIdentifyDialog();
-                break;
             case R.id.signature:
                 showSignatureDialog();
                 break;
             case R.id.address:
                 showAddressDialog();
                 break;
-            case R.id.birthday:
+            case birthday:
                 showBirthdayDialog();
                 break;
             case R.id.height:
@@ -223,14 +238,15 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
     }
 
     private void uploadToServer(String avatarUrl) {
-        userInfoPresent.updateUserInfo(tvNickname.getText(), avatarUrl, tvGender.getText(), tvBirthday.getText(), tvSignature.getText(),
-                province, city, area, tvHeight.getText(), tvWeight.getText(), tvFrequency.getText());
+        userInfoPresent.updateUserInfo(tvNickname.getText(), avatarUrl, gender, tvBirthday.getText(),
+                tvSignature.getText(), province, city, area, height, weight, frequency);
     }
 
     @Override
     public void updateResult(boolean success) {
         if (success) {
             Toast.makeText(UpdateUserInfoActivity.this, "修改成功", Toast.LENGTH_LONG).show();
+            setResult(RESULT_OK,null);
             finish();
         } else {
             Toast.makeText(UpdateUserInfoActivity.this, "修改失败", Toast.LENGTH_LONG).show();
@@ -263,21 +279,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
                         tvGender.setRightContent(text.toString());
-                        return false;
-                    }
-                })
-                .positiveText(R.string.sure)
-                .show();
-    }
-
-    private void showIdentifyDialog() {
-        new MaterialDialog.Builder(this)
-                .title(R.string.confirm_gender)
-                .items(R.array.identify)
-                .itemsCallbackSingleChoice(0, new MaterialDialog.ListCallbackSingleChoice() {
-                    @Override
-                    public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
-                        tvIdentify.setRightContent(text.toString());
+                        gender = (which == 0) ? "0" : "1";
                         return false;
                     }
                 })
@@ -345,7 +347,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
                     public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
-                        height = FormatUtil.parseFloat(text.toString()) / 100;
+                        height = text.toString();
                         tvHeight.setRightContent(text + "cm");
                         setBMI();
                     }
@@ -360,7 +362,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
                     public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
-                        weight = FormatUtil.parseFloat(text.toString());
+                        weight = text.toString();
                         tvWeight.setRightContent(text + "kg");
                         setBMI();
                     }
@@ -375,6 +377,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
                 .itemsCallback(new MaterialDialog.ListCallback() {
                     @Override
                     public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                        frequency = text.toString().substring(0,text.toString().lastIndexOf("次"));
                         tvFrequency.setRightContent(text.toString());
                     }
                 })
@@ -421,12 +424,10 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
         return weight;
     }
 
-    private float height;
-    private float weight;
-
     private void setBMI() {
-        if (height != 0f && weight != 0f) {
-            tvBmi.setRightContent(String.valueOf(Utils.calBMI(weight, height)));
+        if (FormatUtil.parseFloat(height) != 0f && FormatUtil.parseFloat(weight) != 0f) {
+            tvBmi.setRightContent(String.valueOf(Utils.calBMI(FormatUtil.parseFloat(weight),
+                    FormatUtil.parseFloat(height))));
         }
     }
 

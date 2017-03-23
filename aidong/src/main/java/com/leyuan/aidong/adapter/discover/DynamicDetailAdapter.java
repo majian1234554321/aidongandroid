@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CommentBean;
+import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
@@ -39,11 +40,18 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<DynamicDetailAdap
 
     @Override
     public void onBindViewHolder(CommentHolder holder, final int position) {
-        CommentBean bean = data.get(position);
+        final CommentBean bean = data.get(position);
         GlideLoader.getInstance().displayCircleImage(bean.getPublisher().getAvatar(), holder.avatar);
         holder.name.setText(bean.getPublisher().getName());
         holder.content.setText(bean.getContent());
         holder.time.setText(bean.getPublishedAt());
+
+        holder.avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserInfoActivity.start(context,bean.getPublisher().getId());
+            }
+        });
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

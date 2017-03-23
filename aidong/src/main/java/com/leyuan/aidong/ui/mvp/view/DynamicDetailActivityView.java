@@ -14,6 +14,6 @@ public interface DynamicDetailActivityView {
     void updateComments(List<CommentBean> comments);
     void showEmptyCommentView();
     void showEndFooterView();
-    void addLikeResult(BaseBean baseBean);
-    void cancelLikeResult(BaseBean baseBean);
+    void addLikeResult(int position,BaseBean baseBean);
+    void cancelLikeResult(int position,BaseBean baseBean);
 }

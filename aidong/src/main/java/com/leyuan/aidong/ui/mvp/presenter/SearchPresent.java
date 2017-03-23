@@ -43,6 +43,8 @@ public interface SearchPresent {
 
     void commonLoadVenuesData(SwitcherLayout switcherLayout, String keyword);
 
+    void commonLoadData(SwitcherLayout switcherLayout, String keyword);
+
     /**
      * 下拉刷新
      * @param keyword 关键字

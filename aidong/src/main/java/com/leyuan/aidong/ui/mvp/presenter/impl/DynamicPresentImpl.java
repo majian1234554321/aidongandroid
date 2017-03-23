@@ -204,6 +204,9 @@ public class DynamicPresentImpl implements DynamicPresent {
                 if (sportCircleFragmentView != null) {
                     sportCircleFragmentView.addLikeResult(position, baseBean);
                 }
+                if(dynamicDetailActivityView != null){
+                    dynamicDetailActivityView.addLikeResult(position,baseBean);
+                }
             }
         }, id);
     }
@@ -215,6 +218,9 @@ public class DynamicPresentImpl implements DynamicPresent {
             public void onNext(BaseBean baseBean) {
                 if (sportCircleFragmentView != null) {
                     sportCircleFragmentView.cancelLikeResult(position, baseBean);
+                }
+                if(dynamicDetailActivityView != null){
+                    dynamicDetailActivityView.cancelLikeResult(position,baseBean);
                 }
             }
         }, id);

@@ -56,6 +56,16 @@ public interface CartService {
     Observable<BaseBean> updateCart(@Path("id") String id,@Field("amount") int amount);
 
     /**
+     * 修改商品发货信息
+     * @param id 商品id
+     * @param gym_id 自体门店地址 快递的话为0
+     * @return
+     */
+    @FormUrlEncoded
+    @PUT("mine/cart/{id}")
+    Observable<BaseBean> updateDeliveryInfo(@Path("id") String id,@Field("gym_id") String gym_id);
+
+    /**
      * 购物车结算
      * @param id
      * @param integral

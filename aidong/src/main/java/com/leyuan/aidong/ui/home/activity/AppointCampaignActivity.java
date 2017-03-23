@@ -38,6 +38,7 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_COUPON;
  * 预约活动
  * Created by song on 2016/9/12.
  */
+//todo 与课程预约界面合成一个界面
 public class AppointCampaignActivity extends BaseActivity implements View.OnClickListener,
         CustomNestRadioGroup.OnCheckedChangeListener ,AppointCampaignActivityView{
     private SimpleTitleBar titleBar;
@@ -162,7 +163,7 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
                 finish();
                 break;
             case R.id.tv_coupon:
-                if(usableCoupons != null && usableCoupons.isEmpty()) {
+                if(usableCoupons != null && !usableCoupons.isEmpty()) {
                     Intent intent = new Intent(this, SelectCouponActivity.class);
                     startActivityForResult(intent, REQUEST_SELECT_COUPON);
                 }

@@ -9,6 +9,7 @@ import com.leyuan.aidong.widget.SwitcherLayout;
  * Created by song on 2017/1/16.
  */
 public interface UserInfoPresent {
+    void getUserInfo(String id);
 
     void getUserInfo(SwitcherLayout switcherLayout, String id);
 
@@ -22,8 +23,10 @@ public interface UserInfoPresent {
 
 
     void addFollow(String userId);
+    void addLike(String userId,int position);
 
     void cancelFollow(String userId);
+    void cancelLike(String userId,int position);
 
     void release();
 }

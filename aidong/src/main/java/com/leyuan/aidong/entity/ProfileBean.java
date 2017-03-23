@@ -26,6 +26,24 @@ public class ProfileBean implements Parcelable {
     private String waist;
     private String hip;
     private String frequency;
+    private String user_type;
+    private String popularity;
+
+    public String getUser_type() {
+        return user_type;
+    }
+
+    public void setUser_type(String user_type) {
+        this.user_type = user_type;
+    }
+
+    public String getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(String popularity) {
+        this.popularity = popularity;
+    }
 
     public String getName() {
         return name;
@@ -197,6 +215,8 @@ public class ProfileBean implements Parcelable {
         dest.writeString(this.waist);
         dest.writeString(this.hip);
         dest.writeString(this.frequency);
+        dest.writeString(this.user_type);
+        dest.writeString(this.popularity);
     }
 
     public ProfileBean() {
@@ -221,6 +241,8 @@ public class ProfileBean implements Parcelable {
         this.waist = in.readString();
         this.hip = in.readString();
         this.frequency = in.readString();
+        this.user_type = in.readString();
+        this.popularity = in.readString();
     }
 
     public static final Creator<ProfileBean> CREATOR = new Creator<ProfileBean>() {

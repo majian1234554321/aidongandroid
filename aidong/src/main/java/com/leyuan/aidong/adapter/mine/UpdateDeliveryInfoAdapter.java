@@ -76,13 +76,6 @@ public class UpdateDeliveryInfoAdapter extends RecyclerView.Adapter<UpdateDelive
             selectSelfDelivery(holder);
         }
 
-        holder.tvExpress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            selectExpress(holder);
-            }
-        });
-
         holder.tvSelfDelivery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,7 +87,17 @@ public class UpdateDeliveryInfoAdapter extends RecyclerView.Adapter<UpdateDelive
             @Override
             public void onClick(View v) {
                 if(listener != null){
-                    listener.onChangeShop(position);
+                    listener.onSelfDeliveryClick(position);
+                }
+            }
+        });
+
+        holder.tvExpress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectExpress(holder);
+                if(listener != null){
+                    listener.onExpressClick(position);
                 }
             }
         });
@@ -154,6 +157,7 @@ public class UpdateDeliveryInfoAdapter extends RecyclerView.Adapter<UpdateDelive
     }
 
     public interface SelfDeliveryShopListener{
-        void onChangeShop(int position);
+        void onSelfDeliveryClick(int position);
+        void onExpressClick(int position);
     }
 }

@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import com.leyuan.aidong.entity.DistrictBean;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.CourseDetailData;
+import com.leyuan.aidong.entity.data.AppointmentDetailData;
 import com.leyuan.aidong.entity.data.CourseData;
 import com.leyuan.aidong.entity.data.PayOrderData;
 import com.leyuan.aidong.http.RetrofitHelper;
@@ -60,6 +61,13 @@ public class CourseModelImpl implements CourseModel {
                           @Nullable String integral, String payType, String contactName, String contactMobile) {
         courseService.buyCourse(id,couponId,integral,payType,contactName,contactMobile)
                 .compose(RxHelper.<PayOrderData>transform())
+                .subscribe(subscriber);
+    }
+
+    @Override
+    public void getCourseAppointDetail(Subscriber<AppointmentDetailData> subscriber, String id) {
+        courseService.getCourseAppointDetail(id)
+                .compose(RxHelper.<AppointmentDetailData>transform())
                 .subscribe(subscriber);
     }
 }

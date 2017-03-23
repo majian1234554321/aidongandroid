@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.mvp.view;
 
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.DynamicBean;
 
 import java.util.List;
@@ -15,4 +16,8 @@ public interface UserDynamicFragmentView {
     void showEndFooterView();
 
     void showEmptyLayout();
+
+    void addLikeResult(int position,BaseBean baseBean);
+
+    void canLikeResult(int position,BaseBean baseBean);
 }

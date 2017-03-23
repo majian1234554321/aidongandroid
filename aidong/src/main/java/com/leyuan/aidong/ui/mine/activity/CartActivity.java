@@ -155,6 +155,11 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
     }
 
     @Override
+    public void showEmptyRecommendView() {
+        cartHeaderView.showRecommendText(false);
+    }
+
+    @Override
     public void showEndFooterView() {
         RecyclerViewStateUtils.setFooterViewState(recommendView, LoadingFooter.State.TheEnd);
     }

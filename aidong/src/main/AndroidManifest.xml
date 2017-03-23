@@ -249,10 +249,11 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.home.activity.SearchActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/SearchTheme"/>
         <activity
             android:name=".ui.home.activity.CampaignDetailActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.home.activity.GoodsFilterActivity"
             android:screenOrientation="portrait" />
@@ -263,7 +264,7 @@
         <activity
             android:name=".ui.home.activity.GoodsDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.FullScreen"></activity>
+            android:theme="@style/AppTheme.FullScreen"/>
         <activity
             android:name=".ui.home.activity.AppointCampaignActivity"
             android:screenOrientation="portrait" />

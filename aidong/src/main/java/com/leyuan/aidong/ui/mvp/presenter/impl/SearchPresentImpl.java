@@ -139,6 +139,17 @@ public class SearchPresentImpl implements SearchPresent{
     }
 
     @Override
+    public void commonLoadData(SwitcherLayout switcherLayout, String keyword) {
+        searchModel.searchData(new CommonSubscriber<Object>(switcherLayout) {
+            @Override
+            public void onNext(Object o) {
+                searchActivityView.setSearchResult(o);
+            }
+        },keyword);
+
+    }
+
+    @Override
     public void commonLoadCampaignData(final SwitcherLayout switcherLayout, String keyword) {
         searchModel.searchCampaign(new CommonSubscriber<CampaignData>(switcherLayout) {
             @Override

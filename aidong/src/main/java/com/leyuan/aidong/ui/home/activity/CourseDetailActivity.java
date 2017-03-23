@@ -21,6 +21,7 @@ import com.leyuan.aidong.entity.CourseDetailBean;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.mine.activity.AppointCourseDetailActivity;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
@@ -34,6 +35,7 @@ import com.leyuan.aidong.widget.SwitcherLayout;
 import com.zzhoujay.richtext.RichText;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
+import retrofit2.http.HEAD;
 
 /**
  * 课程详情
@@ -280,8 +282,8 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             } else {
                 startActivityForResult(new Intent(this, LoginActivity.class), Constant.REQUEST_LOGIN);
             }
-        } else if (STATUS_NOT_PAY.equals(bean.getStatus())) {    //待支付
-            //  AppointCourseDetailActivity.start(this, bean.getOrderId());
+        }else if(STATUS_NOT_PAY.equals(bean.getStatus())){    //待支付
+            AppointCourseDetailActivity.start(this, bean.getCode(),true);
         }
     }
 

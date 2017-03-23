@@ -1,6 +1,7 @@
 package com.leyuan.aidong.http.api;
 
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.data.AppointmentDetailData;
 import com.leyuan.aidong.entity.data.CampaignData;
 import com.leyuan.aidong.entity.data.CampaignDetailData;
 import com.leyuan.aidong.entity.data.PayOrderData;
@@ -34,4 +35,6 @@ public interface CampaignService {
                                                    @Field("contact_name") String contactName,
                                                    @Field("contact_mobile") String contactMobile);
 
+    @GET("market/campaigns/{id}/appointment")
+    Observable<BaseBean<AppointmentDetailData>> getCampaignAppointDetail(@Path("id") String id);
 }

@@ -173,6 +173,7 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
         getWindow().setEnterTransition(slide);
     }
 
+
     /**
      * 显示一个不能取消的加载提示框
      **/

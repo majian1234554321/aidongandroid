@@ -76,6 +76,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
     private List<CommentBean> comments = new ArrayList<>();
     private DynamicPresent dynamicPresent;
     private CircleDynamicAdapter headerAdapter;
+    private List<DynamicBean> dynamicList = new ArrayList<>();
 
     @Override
     protected void onCreate( Bundle savedInstanceState) {
@@ -117,8 +118,8 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
 
     private void initHeaderView(){
         header = View.inflate(this,R.layout.header_dynamic_detail_new,null);
-        List<DynamicBean> dynamicBeanList = new ArrayList<>();
-        dynamicBeanList.add(dynamic);
+
+        dynamicList.add(dynamic);
         RecyclerView headerRecyclerView = (RecyclerView) header.findViewById(R.id.rv_header);
         CircleDynamicAdapter.Builder<DynamicBean> builder = new CircleDynamicAdapter.Builder<>(this);
         builder.addType(VideoViewHolder.class, DynamicType.VIDEO, R.layout.vh_dynamic_video)
@@ -129,7 +130,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
                 .addType(FiveImageViewHolder.class, DynamicType.FIVE_IMAGE, R.layout.vh_dynamic_five_photos)
                 .addType(SixImageViewHolder.class, DynamicType.SIX_IMAGE, R.layout.vh_dynamic_six_photos)
                 .showLikeAndCommentLayout(false)
-                .setData(dynamicBeanList)
+                .setData(dynamicList)
                 .setDynamicCallback(new DynamicCallback());
         headerAdapter = builder.build();
         headerRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -199,7 +200,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if(actionId == IME_ACTION_SEND ){
             if(TextUtils.isEmpty(etComment.getText())){
-                Toast.makeText(this,"please input comment",Toast.LENGTH_LONG).show();
+                Toast.makeText(this,"请输入评论内容",Toast.LENGTH_LONG).show();
                 return false;
             }
             dynamicPresent.addComment(dynamic.id,etComment.getText().toString());
@@ -318,17 +319,17 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
     }
 
     @Override
-    public void addLikeResult(BaseBean baseBean) {
+    public void addLikeResult(int position, BaseBean baseBean) {
         if(baseBean.getStatus() == Constant.OK){
-            dynamic.like.counter += 1;
+            dynamicList.get(position).like.counter += 1;
             DynamicBean dynamic = new DynamicBean();
             DynamicBean.LikeUser likeUser = dynamic.new LikeUser();
             DynamicBean.LikeUser.Item item = likeUser.new Item();
             UserCoach user = App.mInstance.getUser();
             item.avatar = user.getAvatar();
             item.id = String.valueOf(user.getId());
-
-
+            dynamicList.get(position).like.item.add(item);
+            headerAdapter.notifyItemChanged(position);
             Toast.makeText(this,"点赞成功",Toast.LENGTH_LONG).show();
         }else{
             Toast.makeText(this,"点赞失败:" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
@@ -336,14 +337,21 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
     }
 
     @Override
-    public void cancelLikeResult(BaseBean baseBean) {
+    public void cancelLikeResult(int position, BaseBean baseBean) {
         if(baseBean.getStatus() == Constant.OK){
-            dynamic.like.counter -= 1;
-
+            dynamicList.get(position).like.counter -= 1;
+            List<DynamicBean.LikeUser.Item> item = dynamicList.get(position).like.item;
+            int myPosition = 0;
+            for (int i = 0; i < item.size(); i++) {
+                if(item.get(i).id.equals(String.valueOf(App.mInstance.getUser().getId()))){
+                    myPosition = i;
+                }
+            }
+            item.remove(myPosition);
+            headerAdapter.notifyItemChanged(position);
             Toast.makeText(this,"取消赞成功",Toast.LENGTH_LONG).show();
         }else {
             Toast.makeText(this,"取消赞失败:"+baseBean.getMessage(),Toast.LENGTH_LONG).show();
         }
     }
-
 }
