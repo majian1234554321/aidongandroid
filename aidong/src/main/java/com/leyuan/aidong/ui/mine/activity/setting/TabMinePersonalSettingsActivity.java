@@ -1,6 +1,6 @@
 package com.leyuan.aidong.ui.mine.activity.setting;
 
-import android.app.AlertDialog.Builder;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,13 +21,13 @@ import com.leyuan.aidong.ui.MainActivity;
 import com.leyuan.aidong.ui.WebViewActivity;
 import com.leyuan.aidong.ui.mine.activity.BingdingCommunityActivity;
 import com.leyuan.aidong.ui.mine.activity.PrivacyActivity;
+import com.leyuan.aidong.ui.mine.activity.account.ChangePasswordActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.utils.DataCleanManager;
 import com.leyuan.aidong.utils.MyDbUtils;
+import com.leyuan.aidong.utils.TelephoneManager;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.utils.UiManager;
-
-import java.util.HashMap;
 
 public class TabMinePersonalSettingsActivity extends BaseActivity {
     private ImageView layout_tab_mine_personal_settings_title_img_back;
@@ -62,7 +62,7 @@ public class TabMinePersonalSettingsActivity extends BaseActivity {
     }
 
     protected void initData() {
-        onClick();
+        setClickListener();
         data();
     }
 
@@ -83,7 +83,7 @@ public class TabMinePersonalSettingsActivity extends BaseActivity {
         intent = new Intent();
     }
 
-    private void onClick() {
+    private void setClickListener() {
         layout_tab_mine_personal_settings_message_reminder_rel
                 .setOnClickListener(new OnClickListener() {
                     @Override
@@ -125,41 +125,7 @@ public class TabMinePersonalSettingsActivity extends BaseActivity {
 
                     }
                 });
-        if (App.mInstance.isLogin()) {
-            button_personal_settings_unlogin
-                    .setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Builder builder = new Builder(
-                                    TabMinePersonalSettingsActivity.this);
-                            builder.setMessage("退出后你将无法收到他人消息,别人也将无法找到你,确定继续？");
-                            builder.setTitle("退出登录");
-                            builder.setPositiveButton("确定",
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(
-                                                DialogInterface dialo0g,
-                                                int which) {
-                                            loginOut();
-                                            intent.setClass(
-                                                    TabMinePersonalSettingsActivity.this,
-                                                    MainActivity.class);
-                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                            startActivity(intent);
-                                        }
 
-                                    });
-                            builder.setNegativeButton("取消", null);
-                            builder.show();
-                        }
-                    });
-        } else {
-            button_personal_settings_unlogin.setClickable(false);
-            button_personal_settings_unlogin.setEnabled(false);
-            button_personal_settings_unlogin.setBackgroundColor(getResources()
-                    .getColor(R.color.color_light_white));
-
-        }
 
         layout_tab_mine_personal_settings_Privacy_rel
                 .setOnClickListener(new OnClickListener() {
@@ -189,17 +155,15 @@ public class TabMinePersonalSettingsActivity extends BaseActivity {
                 .setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (App.mInstance.isLogin()) {
+                        if (App.getInstance().isLogin()) {
                             intent.setClass(getApplicationContext(),
-                                    TabMineChangePasswordActivity.class);
+                                    ChangePasswordActivity.class);
                             startActivity(intent);
-
                         } else {
                             intent.setClass(getApplicationContext(),
                                     LoginActivity.class);
                             startActivity(intent);
                         }
-
                     }
                 });
         layout_tab_mine_feedback_rel.setOnClickListener(new OnClickListener() {
@@ -218,6 +182,17 @@ public class TabMinePersonalSettingsActivity extends BaseActivity {
             }
         });
 
+        layout_tab_mine_personal_settings_contactus_rel.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String tel = settings_contactus_txt.getText().toString().trim();
+                if (!TextUtils.isEmpty(tel)) {
+                    TelephoneManager.callImmediate(TabMinePersonalSettingsActivity.this, tel);
+                } else {
+                    ToastUtil.showShort(TabMinePersonalSettingsActivity.this, "电话错误");
+                }
+            }
+        });
     }
 
     private void data() {
@@ -240,6 +215,41 @@ public class TabMinePersonalSettingsActivity extends BaseActivity {
                 layout_tab_mine_personal_settings_binding_mobile_phone_unbound_txt
                         .setText(mobile);
             }
+            button_personal_settings_unlogin.setEnabled(true);
+            button_personal_settings_unlogin
+                    .setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(
+                                    TabMinePersonalSettingsActivity.this);
+                            builder.setMessage("退出后你将无法收到他人消息,别人也将无法找到你,确定继续？");
+                            builder.setTitle("退出登录");
+                            builder.setPositiveButton("确定",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(
+                                                DialogInterface dialo0g,
+                                                int which) {
+                                            loginOut();
+                                            intent.setClass(
+                                                    TabMinePersonalSettingsActivity.this,
+                                                    MainActivity.class);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                            startActivity(intent);
+                                        }
+                                    });
+                            builder.setNegativeButton("取消", null);
+                            builder.show();
+                        }
+                    });
+            button_personal_settings_unlogin.setBackgroundResource(R.drawable.shape_radius_origin);
+        } else {
+            layout_tab_mine_personal_settings_binding_mobile_phone_unbound_txt
+                    .setText("未绑定");
+            button_personal_settings_unlogin.setClickable(false);
+            button_personal_settings_unlogin.setEnabled(false);
+            button_personal_settings_unlogin.setBackgroundColor(getResources()
+                    .getColor(R.color.color_light_white));
         }
         layout_tab_mine_personal_settings_binding_mobile_phone_rel
                 .setOnClickListener(new OnClickListener() {
@@ -260,19 +270,8 @@ public class TabMinePersonalSettingsActivity extends BaseActivity {
     private void loginOut() {
         try {
             MyDbUtils.clearZanmap();
-            App.mInstance.exitLogin();
+            App.getInstance().exitLogin();
             EmChatLoginManager.loginOut();
-
-
-//            BaseApp.mInstance.getParamsHelper().setPreInt("islogin", 0);
-//            BaseApp.mInstance.logout(null);
-            HashMap<String, String> map = new HashMap<String, String>();
-            map.put("token", App.mInstance.getUser().getToken());
-         /*   addTask(this, new IHttpTask(UrlLink.LOGOUT_URL, map,
-                            new ArrayList<BasicNameValuePair>(), MsgResult.class),
-                    HttpConfig.DELETE, LOGINOUT);
-
-*/
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -280,7 +279,6 @@ public class TabMinePersonalSettingsActivity extends BaseActivity {
 
     private void clean() {
         DataCleanManager.clearAllCache(getApplicationContext());
-
     }
 
     @Override

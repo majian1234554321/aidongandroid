@@ -5,5 +5,5 @@ import com.leyuan.aidong.entity.model.UserCoach;
 
 public interface ChangePasswordViewInterface {
 
-    void onChangePasswordResult(UserCoach user);
+    void onChangePasswordResult(boolean success);
 }

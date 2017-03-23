@@ -21,11 +21,6 @@ import android.widget.RelativeLayout;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
 
-import org.apache.http.message.BasicNameValuePair;
-
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class TabMineChangePasswordActivity extends BaseActivity {
     private static final int CHANGEPASSWORD = 0;
@@ -47,28 +42,6 @@ public class TabMineChangePasswordActivity extends BaseActivity {
         setContentView(R.layout.layout_tab_mine_change_password);
         layout_tab_mine_change_password_img_back = (ImageView) findViewById(R.id.layout_tab_mine_change_password_img_back);
     }
-
-   /* @Override
-    public void onGetData(Object data, int requestCode, String response) {
-        switch (requestCode) {
-            case CHANGEPASSWORD:
-                MsgResult res = (MsgResult) data;
-                if (res.getCode() == 1) {
-                    ToastUtil.show(getResources()
-                            .getString(R.string.upadtepassword), this);
-                    finish();
-                }
-                break;
-
-            default:
-                break;
-        }
-    }
-
-    @Override
-    public void onError(String reason, int requestCode) {
-
-    }*/
 
     protected void initData() {
         layout_tab_mine_change_password_img_back
@@ -175,26 +148,17 @@ public class TabMineChangePasswordActivity extends BaseActivity {
                         return false;
                     }
                 });
-        /*mlayout_tab_mine_change_password_btn
+        mlayout_tab_mine_change_password_btn
                 .setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (chagePassword(mverification_edittext,
                                 minput_new_edittext, mrepeat_new_edittext)) {
-                            addTask(TabMineChangePasswordActivity.this,
-                                    new IHttpTask(UrlLink.CHANGEPASSWORD,
-                                            paramsinit(mverification_edittext
-                                                            .getText().toString(),
-                                                    minput_new_edittext
-                                                            .getText()
-                                                            .toString()),
-                                            MsgResult.class), HttpConfig.PUT,
-                                    CHANGEPASSWORD);
-                            finish();
+
                         }
 
                     }
-                });*/
+                });
     }
 
     private boolean chagePassword(EditText mverification_edittext,
@@ -237,15 +201,6 @@ public class TabMineChangePasswordActivity extends BaseActivity {
             return false;
         }
         return true;
-    }
-
-    public List<BasicNameValuePair> paramsinit(String password,
-                                               String new_password) {
-        List<BasicNameValuePair> paramsaaa = new ArrayList<BasicNameValuePair>();
-        paramsaaa.add(new BasicNameValuePair("password", password));
-        paramsaaa
-                .add(new BasicNameValuePair("new_password", "" + new_password));
-        return paramsaaa;
     }
 
     @Override

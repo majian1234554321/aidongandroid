@@ -10,8 +10,8 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.widget.SwitchButton;
 
 
@@ -20,10 +20,10 @@ public class TabMineMessageReminderActivity extends BaseActivity {
     private RelativeLayout mlayout_tab_mine_message_reminder_do_not_disturb_period_rel;
     private SwitchButton mswitch1, mswitch2, mswitch3;
     private Intent intent;
-    //	private SharedPreferences mSharedPreferences;
-    //	EMChatOptions chatOptions;
-    //
-    //	ChatHXSDKModel model;
+//    	private SharedPreferences mSharedPreferences;
+//    	EMChatOptions chatOptions;
+//
+//    	ChatHXSDKModel model;
 
 
     @Override

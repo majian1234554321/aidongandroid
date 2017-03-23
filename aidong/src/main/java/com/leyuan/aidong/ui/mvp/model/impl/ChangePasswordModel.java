@@ -1,13 +1,14 @@
 package com.leyuan.aidong.ui.mvp.model.impl;
 
 
-import com.leyuan.aidong.entity.model.result.LoginResult;
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.http.RetrofitHelper;
-import com.leyuan.aidong.http.RxHelper;
 import com.leyuan.aidong.http.api.ChangePasswordService;
 import com.leyuan.aidong.ui.mvp.model.ChangePasswordInterface;
 
 import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class ChangePasswordModel implements ChangePasswordInterface {
 
@@ -19,9 +20,10 @@ public class ChangePasswordModel implements ChangePasswordInterface {
 
 
     @Override
-    public void changePassword(Subscriber<LoginResult> subscriber, String password, String new_password, String re_passsword) {
+    public void changePassword(Subscriber<BaseBean> subscriber, String password, String new_password, String re_passsword) {
         mService.changePassword(password, new_password, re_passsword)
-                .compose(RxHelper.<LoginResult>transform())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
     }
 }

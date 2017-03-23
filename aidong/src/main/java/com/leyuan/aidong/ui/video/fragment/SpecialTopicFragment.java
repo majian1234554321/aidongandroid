@@ -63,12 +63,12 @@ public class SpecialTopicFragment extends Fragment implements SwipeRefreshLayout
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (action.equals("select_ctiy")) {
-                city_id = intent.getStringExtra("id");
                 //接受到城市切换，更新列表
                 getDataFromInter();
             }
         }
     };
+    private java.lang.String TAG = "SpecialTopicFragment " + requestType;
 
     public static SpecialTopicFragment newInstance(String type) {
         Bundle args = new Bundle();
@@ -119,11 +119,6 @@ public class SpecialTopicFragment extends Fragment implements SwipeRefreshLayout
     }
 
     private void initReceiver() {
-//        city_id = SharedPreferencesUtils
-//                .getInstance(getActivity()).get("select_ctiy_id");
-        if (null == city_id || city_id.equals("")) {
-            city_id = "1211000000";
-        }
 
         IntentFilter filter = new IntentFilter();
         filter.addAction("select_ctiy");
@@ -135,7 +130,7 @@ public class SpecialTopicFragment extends Fragment implements SwipeRefreshLayout
             @Override
             public void onGlobalLayout() {
                 mRecyclerView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                Logger.i("mRecyclerView h = " + mRecyclerView.getHeight() + ",  item_max_height" + item_max_height);
+                Logger.i(TAG,"mRecyclerView h = " + mRecyclerView.getHeight() + ",  item_max_height" + item_max_height);
                 adapter.setRootViewHeight(mRecyclerView.getHeight() - item_max_height);
 
             }
@@ -153,21 +148,21 @@ public class SpecialTopicFragment extends Fragment implements SwipeRefreshLayout
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
 
-                //                Logger.i("old_scroll_state = " + current_sroll_state + ",   new state = " + newState);
+                                Logger.i(TAG,"old_scroll_state = " + current_sroll_state + ",   new state = " + newState);
 
                 if (current_sroll_state != newState && newState == RecyclerView.SCROLL_STATE_IDLE) {
                     int firstPostion = ((CustomLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
                     int completelyPostion = ((CustomLayoutManager) recyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
 
-                    Logger.i("firstPostion = " + firstPostion + ",   completelyPostion = " + completelyPostion);
+                    Logger.i(TAG,"onScrollStateChanged   firstPostion = " + firstPostion + ",   completelyPostion = " + completelyPostion);
                     if (completelyPostion != firstPostion) {
                         if (scrollDirection == 0) {
                             View v = recyclerView.getChildAt(0);
-                            Logger.i(" == 0  v.getTop = " + v.getTop());
+                            Logger.i(TAG,"onScrollStateChanged scrollDirection == 0  v.getTop = " + v.getTop());
                             recyclerView.smoothScrollBy(0, v.getTop());
                         } else {
                             View v = recyclerView.getChildAt(1);
-                            Logger.i("== 1  v.getTop = " + v.getTop());
+                            Logger.i(TAG,"onScrollStateChanged scrollDirection == 1  v.getTop = " + v.getTop());
                             recyclerView.smoothScrollBy(0, v.getTop());
                         }
                     }
@@ -187,7 +182,7 @@ public class SpecialTopicFragment extends Fragment implements SwipeRefreshLayout
                     scrollDirection = 0;
                 }
 
-                Logger.i("Video,dy = " + dy);
+//                Logger.i(TAG,"Video,dy = " + dy);
                 first_complete_visible_position = mLinearLayoutManager.findFirstCompletelyVisibleItemPosition();
                 RecyclerView.ViewHolder firstHolder = recyclerView.findViewHolderForPosition(first_complete_visible_position);
                 if (firstHolder != null && firstHolder instanceof SpecialTopicAdapter.ViewHolder) {
@@ -199,7 +194,7 @@ public class SpecialTopicFragment extends Fragment implements SwipeRefreshLayout
                             holder.relView.getLayoutParams().height = height + dy;
 
                             holder.relView.setLayoutParams(holder.relView.getLayoutParams());
-                            //                            Logger.i("Video" ,"get text size = " + holder.txt_type.getTextSize()+", changed = " + dy * font_size_d / item_normal_height);
+//                     Logger.i(TAG,"get text size = " + holder.txt_type.getTextSize()+", changed = " + dy * font_size_d / item_normal_height);
 
                             float size = holder.txt_type.getTextSize() + dy * font_size_d / item_normal_height;
                             if (size > item_max_font_size) {
@@ -236,15 +231,15 @@ public class SpecialTopicFragment extends Fragment implements SwipeRefreshLayout
                 int completelyPostion = ((CustomLayoutManager) mRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
 
 
-                Logger.i("firstPostion = " + firstPostion + ",   completelyPostion = " + completelyPostion);
+                Logger.i(TAG,"onTouch firstPostion = " + firstPostion + ",   completelyPostion = " + completelyPostion);
                 if (completelyPostion != firstPostion) {
                     if (scrollDirection == 0) {
                         View view = mRecyclerView.getChildAt(0);
-                        Logger.i(" == 0  v.getTop = " + view.getTop());
+                        Logger.i(TAG,"onTouch scrollDirection== 0  v.getTop = " + view.getTop());
                         mRecyclerView.smoothScrollBy(0, view.getTop());
                     } else {
                         View view = mRecyclerView.getChildAt(1);
-                        Logger.i("== 1  v.getTop = " + view.getTop());
+                        Logger.i(TAG,"onTouch scrollDirection== 1  v.getTop = " + view.getTop());
                         mRecyclerView.smoothScrollBy(0, view.getTop());
                     }
                     return true;
@@ -267,10 +262,10 @@ public class SpecialTopicFragment extends Fragment implements SwipeRefreshLayout
                 getActivity().startActivity(intent);
             } else {
                 View v = mRecyclerView.getChildAt(position - mLinearLayoutManager.findFirstVisibleItemPosition());
-                Logger.i("top = " + v.getTop());
+                Logger.i(TAG,"top = " + v.getTop());
                 mRecyclerView.smoothScrollBy(0, v.getTop());
             }
-            Logger.i("onclick --- position = " + position);
+            Logger.i(TAG,"onclick --- position = " + position);
         }
     };
 
