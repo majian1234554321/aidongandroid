@@ -12,6 +12,13 @@ public interface OrderPresent {
 
     /**
      * 第一次加载订单列表数据
+     * @param list           list all: 全部 self-delivery: 自提 express-delivery: 快递
+     */
+    void commonLoadData(String list);
+
+
+    /**
+     * 第一次加载订单列表数据
      *
      * @param switcherLayout SwitcherLayout
      * @param list           list all: 全部 self-delivery: 自提 express-delivery: 快递
@@ -41,7 +48,7 @@ public interface OrderPresent {
      * @param id             订单id
      * @param switcherLayout SwitcherLayout
      */
-    void getOrderDetail(String id, SwitcherLayout switcherLayout);
+    void getOrderDetail(SwitcherLayout switcherLayout,String id);
 
 
     /**

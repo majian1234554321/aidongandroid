@@ -7,20 +7,13 @@ import com.leyuan.aidong.entity.OrderDetailBean;
  * Created by song on 2016/9/1.
  */
 public class OrderDetailData {
-    private OrderDetailBean item;
+    private OrderDetailBean order;
 
-    public OrderDetailBean getItem() {
-        return item;
+    public OrderDetailBean getOrder() {
+        return order;
     }
 
-    public void setItem(OrderDetailBean item) {
-        this.item = item;
-    }
-
-    @Override
-    public String toString() {
-        return "OrderDetailData{" +
-                "item=" + item +
-                '}';
+    public void setOrder(OrderDetailBean order) {
+        this.order = order;
     }
 }

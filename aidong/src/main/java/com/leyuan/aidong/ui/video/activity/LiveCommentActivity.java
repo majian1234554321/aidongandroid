@@ -34,11 +34,11 @@ public class LiveCommentActivity extends BaseActivity {
         setContentView(R.layout.activity_video_comment);
 
         initView();
-        initData();
+        fetchData();
         getData();
     }
 
-    private void initData() {
+    private void fetchData() {
         if (videoName != null) {
             ((TextView) findViewById(R.id.tv_course_name)).setText(videoName);
         }

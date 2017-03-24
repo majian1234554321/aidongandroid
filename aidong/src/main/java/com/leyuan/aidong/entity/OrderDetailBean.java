@@ -1,21 +1,30 @@
 package com.leyuan.aidong.entity;
 
+import java.util.List;
+
 /**
  * 订单详情
  * Created by song on 2016/9/1.
  */
 public class OrderDetailBean {
     private String id;              //订单号
-    private String total;           //应付款
-    private String coupon;          //优惠券优惠金额
-    private String integral;        //积分优惠金额
-    private String promotion;       //活动优惠
-    private String freight;         //运费
-    private String pay_type;        //支付方式
-    private String pay_amount;      //实付款
-    private String status;          //订单状态 0-未支付 1-已支付 2-已发货 3-已确认收货 4-已评论
-    private GoodsBean item;         //商品
+    private String status;
+    private String coin;
+    private String coupon;
+    private String integral;
+    private String pay_amount;
+    private String total;
+    private String created_at;
+    private PayOrderBean pay_option;
+    private List<ParcelBean> parcel;
 
+    public String getCreatedAt() {
+        return created_at;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
+    }
 
     public String getId() {
         return id;
@@ -25,12 +34,20 @@ public class OrderDetailBean {
         this.id = id;
     }
 
-    public String getTotal() {
-        return total;
+    public String getStatus() {
+        return status;
     }
 
-    public void setTotal(String total) {
-        this.total = total;
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getCoin() {
+        return coin;
+    }
+
+    public void setCoin(String coin) {
+        this.coin = coin;
     }
 
     public String getCoupon() {
@@ -49,31 +66,7 @@ public class OrderDetailBean {
         this.integral = integral;
     }
 
-    public String getPromotion() {
-        return promotion;
-    }
-
-    public void setPromotion(String promotion) {
-        this.promotion = promotion;
-    }
-
-    public String getFreight() {
-        return freight;
-    }
-
-    public void setFreight(String freight) {
-        this.freight = freight;
-    }
-
-    public String getPay_type() {
-        return pay_type;
-    }
-
-    public void setPay_type(String pay_type) {
-        this.pay_type = pay_type;
-    }
-
-    public String getPay_amount() {
+    public String getPayAmount() {
         return pay_amount;
     }
 
@@ -81,19 +74,27 @@ public class OrderDetailBean {
         this.pay_amount = pay_amount;
     }
 
-    public String getStatus() {
-        return status;
+    public String getTotal() {
+        return total;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setTotal(String total) {
+        this.total = total;
     }
 
-    public GoodsBean getItem() {
-        return item;
+    public PayOrderBean getPay_option() {
+        return pay_option;
     }
 
-    public void setItem(GoodsBean item) {
-        this.item = item;
+    public void setPay_option(PayOrderBean pay_option) {
+        this.pay_option = pay_option;
+    }
+
+    public List<ParcelBean> getParcel() {
+        return parcel;
+    }
+
+    public void setParcel(List<ParcelBean> parcel) {
+        this.parcel = parcel;
     }
 }

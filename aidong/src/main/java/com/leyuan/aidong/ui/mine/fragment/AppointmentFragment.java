@@ -62,7 +62,7 @@ public class AppointmentFragment extends BaseLazyFragment implements Appointment
     }
 
     @Override
-    public void initData() {
+    public void fetchData() {
         present.commonLoadData(type);
     }
 

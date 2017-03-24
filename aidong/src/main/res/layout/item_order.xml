@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="vertical">
+
     <include layout="@layout/inc_bold_line" />
 
     <TextView
@@ -17,13 +19,48 @@
         android:textSize="15sp" />
 
     <TextView
-        android:id="@+id/tv_id_or_time"
+        android:id="@+id/tv_order_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="订单号:201630"
+        android:text="订单号"
+        android:layout_marginTop="10dp"
         android:textColor="@color/c9"
         android:textSize="13sp" />
+
+    <LinearLayout
+        android:id="@+id/ll_timer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="支付时间:"
+            android:textSize="14sp"
+            android:textColor="@color/main_red"/>
+
+        <cn.iwgang.countdownview.CountdownView
+            android:id="@+id/timer"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:isHideTimeBackground="true"
+            app:isShowDay="false"
+            app:isShowHour="true"
+            app:isShowMinute="true"
+            app:isShowSecond="true"
+            app:timeTextSize="14sp"
+            app:isTimeTextBold="false"
+            android:layout_gravity="center"
+            app:isShowMillisecond="false"
+            app:timeTextColor="@color/main_red"
+            app:suffixTextColor="@color/main_red"/>
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"

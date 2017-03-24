@@ -2,6 +2,7 @@ package com.leyuan.aidong.adapter.mine;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -87,7 +88,9 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
             holder.dv_sold_out.setImageResource(bean.isOnline() ? R.drawable.shop_sold_out : R.drawable.shop_out_of_stock);
             holder.minus.setImageResource(R.drawable.icon_minus_gray);
             holder.minus.setClickable(false);
+            holder.count.setTextColor(Color.parseColor("#999999"));
             holder.count.setText("1");
+
             holder.count.setBackgroundResource(R.drawable.shape_stroke_gray);
             holder.add.setImageResource(R.drawable.icon_add_gray);
             holder.add.setClickable(false);

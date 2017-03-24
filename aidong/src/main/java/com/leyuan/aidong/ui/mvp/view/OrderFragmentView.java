@@ -10,11 +10,18 @@ import java.util.List;
  * Created by song on 2016/9/1.
  */
 public interface OrderFragmentView {
+
     /**
-     * 更新列表
-     * @param orderBeanList OrderBean
+     * 刷新回调
+     * @param orderBeanList
      */
-    void updateRecyclerView(List<OrderBean> orderBeanList);
+    void onRecyclerViewRefresh(List<OrderBean> orderBeanList);
+
+    /**
+     * 加载更多回调
+     * @param orderBeanList
+     */
+    void onRecyclerViewLoadMore(List<OrderBean> orderBeanList);
 
     /**
      * 显示空值界面布局

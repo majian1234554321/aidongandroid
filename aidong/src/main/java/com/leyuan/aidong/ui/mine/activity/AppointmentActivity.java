@@ -85,7 +85,7 @@ public class AppointmentActivity extends BaseActivity implements SmartTabLayout.
         super.onResume();
         Fragment page = adapter.getPage(currentItem);
         if(page != null && page instanceof AppointmentFragment){
-            ((AppointmentFragment) page).initData();
+            ((AppointmentFragment) page).fetchData();
         }
     }
 

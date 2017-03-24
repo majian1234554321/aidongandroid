@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="52dp"
+        android:layout_marginLeft="@dimen/left_margin"
+        android:gravity="center_vertical"
+        android:text="自提信息"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+    <include layout="@layout/inc_line_black" />
+
+    <RelativeLayout
+        android:id="@+id/rl_qr_code"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_qr_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:text="88777"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/black"
+            android:textSize="30sp" />
+
+        <ImageView
+            android:id="@+id/iv_qr"
+            android:layout_width="294dp"
+            android:layout_height="73dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="25dp"
+            android:background="@color/line_color"
+            android:layout_below="@+id/tv_qr_num"
+            android:layout_centerHorizontal="true" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_line"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+
+    <!--自提时间-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <com.leyuan.aidong.widget.ExtendTextView
+            android:id="@+id/tv_delivery_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:left_text="自提时间"
+            app:line_color="@color/line_color"
+            app:text_height="45dp"
+            app:show_right_arrow="false"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_self_delivery_goods"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</LinearLayout>
