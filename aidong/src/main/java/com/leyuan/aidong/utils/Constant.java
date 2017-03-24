@@ -26,6 +26,11 @@ public class Constant {
     public static final int REQUEST_TO_CART = 7;
     public static final int REQUEST_TO_DYNAMIC = 8;
     public static final int REQUEST_PUBLISH_DYNAMIC = 9;
+    public static final int REQUEST_NEXT_ACTIVITY = 10;
+    public static final int REQUEST_PHONE_BINGDING = 22;
+    public static final int REQUEST_ADD_ADDRESS = 100;
+    public static final int REQUEST_SELECT_ADDRESS =101 ;
+
     public static final int DEFAULT_MAX_UPLOAD_IMAGE_COUNT = 6;        //上传照片数量限制
     public static final String FILE_FOLDER = "Aidong";
     public static final String EMPTY_STR = " ";
@@ -40,14 +45,12 @@ public class Constant {
     public static final String AVATAR = "avatar";
     public static final String SUCCESS = "success";
     public static final String STATE = "state";
-    public static final int REQUEST_NEXT_ACTIVITY = 10;
+
     public static final int BINDING_PHONE_OK = 21;
     public static final String BINDING_PHONE = "binding_phone";
     public static final String DEFAULT_CITY = "上海";
     public static final String BROADCAST_ACTION_SELECTED_CITY = "com.leyuan.chat.selected_city";
-    public static final int REQUEST_PHONE_BINGDING = 22;
-
-
+    public static final Double EXPRESS_PRICE = 15d;
     public static SystemBean systemInfoBean;
     public static FollowData followData;
 

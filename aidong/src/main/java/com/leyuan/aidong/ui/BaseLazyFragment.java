@@ -53,7 +53,7 @@ public abstract class BaseLazyFragment extends BaseFragment {
         if (!isPrepared || !isVisible) {
             return;
         }
-        initData();
+        fetchData();
     }
 
     protected void onInvisible() {
@@ -62,5 +62,5 @@ public abstract class BaseLazyFragment extends BaseFragment {
 
     public abstract View initView();
 
-    public abstract void initData();
+    public abstract void fetchData();
 }

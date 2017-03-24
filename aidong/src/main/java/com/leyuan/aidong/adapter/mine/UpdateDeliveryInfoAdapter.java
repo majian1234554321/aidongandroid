@@ -67,13 +67,16 @@ public class UpdateDeliveryInfoAdapter extends RecyclerView.Adapter<UpdateDelive
             holder.tvRecommendCode.setText(String.format(context.getString(R.string.recommend_code),
                     bean.getGoods().getRecommendCode()));
         }
-        holder.tvShop.setText(bean.getDeliveryInfo().getInfo().getName());
-        holder.tvShopAddress.setText(bean.getDeliveryInfo().getInfo().getAddress());
 
         if(DeliveryType.EXPRESS.equals(bean.getDeliveryInfo().getType())){
             selectExpress(holder);
+            holder.tvShop.setText("请选择");
+            holder.tvShopAddress.setVisibility(View.GONE);
         }else {
             selectSelfDelivery(holder);
+            holder.tvShop.setText(bean.getDeliveryInfo().getInfo().getName());
+            holder.tvShopAddress.setText(bean.getDeliveryInfo().getInfo().getAddress());
+            holder.tvShopAddress.setVisibility(View.VISIBLE);
         }
 
         holder.tvSelfDelivery.setOnClickListener(new View.OnClickListener() {
@@ -117,6 +120,7 @@ public class UpdateDeliveryInfoAdapter extends RecyclerView.Adapter<UpdateDelive
         holder.tvExpress.setBackgroundResource(R.drawable.shape_solid_corner_white);
         holder.tvSelfDelivery.setBackgroundResource(R.drawable.shape_solid_corner_black);
         holder.llSelfDelivery.setVisibility(View.VISIBLE);
+
     }
 
     class DeliveryInfoHolder extends RecyclerView.ViewHolder {

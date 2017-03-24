@@ -6,14 +6,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.adapter.mine.OrderAdapter;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.OrderBean;
-import com.leyuan.aidong.ui.BaseFragment;
-import com.leyuan.aidong.adapter.mine.OrderAdapter;
+import com.leyuan.aidong.ui.BaseLazyFragment;
+import com.leyuan.aidong.ui.mine.activity.OrderDetailActivity;
 import com.leyuan.aidong.ui.mvp.presenter.OrderPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.OrderPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.OrderFragmentView;
@@ -31,7 +31,7 @@ import java.util.List;
  * 订单
  * Created by song on 2016/8/31.
  */
-public class OrderFragment extends BaseFragment implements OrderFragmentView{
+public class OrderFragment extends BaseLazyFragment implements OrderFragmentView{
     public static final String ALL = "all";
     public static final String UN_PAID = "unpaid";
     public static final String SELF_DELIVERY = "self-delivery";
@@ -58,20 +58,21 @@ public class OrderFragment extends BaseFragment implements OrderFragmentView{
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState){
+    public View initView() {
         present = new OrderPresentImpl(getContext(),this);
         Bundle bundle = getArguments();
         if(bundle != null){
             type = bundle.getString("type");
         }
-        return inflater.inflate(R.layout.fragment_order,container,false);
-    }
-
-    @Override
-    public void onViewCreated(View view,  Bundle savedInstanceState) {
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_order,null);
         initSwipeRefreshLayout(view);
         initSwitcherLayout();
         initRecyclerView(view);
+        return view;
+    }
+
+    @Override
+    public void fetchData() {
         present.commonLoadData(switcherLayout,type);
     }
 
@@ -122,11 +123,19 @@ public class OrderFragment extends BaseFragment implements OrderFragmentView{
     };
 
     @Override
-    public void updateRecyclerView(List<OrderBean> orderBeanList) {
+    public void onRecyclerViewRefresh(List<OrderBean> orderBeanList) {
+        switcherLayout.showContentLayout();
+        data.clear();
         if(refreshLayout.isRefreshing()){
-            data.clear();
             refreshLayout.setRefreshing(false);
         }
+        data.addAll(orderBeanList);
+        orderAdapter.setData(data);
+        wrapperAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onRecyclerViewLoadMore(List<OrderBean> orderBeanList) {
         data.addAll(orderBeanList);
         orderAdapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();
@@ -146,8 +155,8 @@ public class OrderFragment extends BaseFragment implements OrderFragmentView{
     private class OrderCallback implements OrderAdapter.OrderListener{
 
         @Override
-        public void onPayOrder() {
-
+        public void onPayOrder(String id) {
+            OrderDetailActivity.start(getContext(),id);
         }
 
         @Override
@@ -165,10 +174,6 @@ public class OrderFragment extends BaseFragment implements OrderFragmentView{
             present.cancelOrder(id);
         }
 
-        @Override
-        public void onCheckExpressInfo(String id) {
-
-        }
 
         @Override
         public void onBuyAgain() {
@@ -180,6 +185,7 @@ public class OrderFragment extends BaseFragment implements OrderFragmentView{
     @Override
     public void cancelOrderResult(BaseBean baseBean) {
         if(baseBean.getStatus() == Constant.OK){
+            present.commonLoadData(type);
             Toast.makeText(getContext(),"取消成功",Toast.LENGTH_LONG).show();
         }else {
             Toast.makeText(getContext(),"取消失败" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
@@ -189,6 +195,7 @@ public class OrderFragment extends BaseFragment implements OrderFragmentView{
     @Override
     public void confirmOrderResult(BaseBean baseBean) {
         if(baseBean.getStatus() == Constant.OK){
+            present.commonLoadData(type);
             Toast.makeText(getContext(),"确认成功",Toast.LENGTH_LONG).show();
         }else {
             Toast.makeText(getContext(),"确认失败" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
@@ -198,6 +205,7 @@ public class OrderFragment extends BaseFragment implements OrderFragmentView{
     @Override
     public void deleteOrderResult(BaseBean baseBean) {
         if(baseBean.getStatus() == Constant.OK){
+            present.commonLoadData(type);
             Toast.makeText(getContext(),"删除成功",Toast.LENGTH_LONG).show();
         }else {
             Toast.makeText(getContext(),"删除失败" + baseBean.getMessage(),Toast.LENGTH_LONG).show();

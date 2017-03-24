@@ -166,7 +166,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         tvCampaignName = (TextView) findViewById(R.id.tv_name);
         tvInfo = (TextView) findViewById(R.id.tv_info);
         codeLayout = (RelativeLayout) findViewById(R.id.rl_qr_code);
-        tvCodeNum = (TextView) findViewById(R.id.tv_num);
+        tvCodeNum = (TextView) findViewById(R.id.tv_qr_num);
         ivCode = (ImageView) findViewById(R.id.dv_qr);
 
         tvUserName = (ExtendTextView) findViewById(R.id.tv_campaign_user);
@@ -261,7 +261,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 break;
             case UN_JOIN:           //待参加
                 tvState.setText(context.getString(R.string.appointment_un_joined));
-                tvOrderNo.setText(String.format(getString(R.string.order_no), bean.getId()));
+                tvOrderNo.setText(String.format(getString(R.string.appoint_no), bean.getId()));
                 tvOrderNo.setVisibility(View.VISIBLE);
                 timerLayout.setVisibility(View.GONE);
                 tvCancelJoin.setVisibility(FormatUtil.parseDouble(bean.getPay().getTotal()) == 0f
@@ -279,7 +279,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 break;
             case JOINED:            //已参加
                 tvState.setText(context.getString(R.string.appointment_joined));
-                tvOrderNo.setText(String.format(getString(R.string.order_no), bean.getId()));
+                tvOrderNo.setText(String.format(getString(R.string.appoint_no), bean.getId()));
                 tvOrderNo.setVisibility(View.VISIBLE);
                 timerLayout.setVisibility(View.GONE);
                 tvDelete.setVisibility(View.VISIBLE);
@@ -297,7 +297,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 break;
             case CLOSE:             //已关闭
                 tvState.setText(context.getString(R.string.order_close));
-                tvOrderNo.setText(String.format(getString(R.string.order_no), bean.getId()));
+                tvOrderNo.setText(String.format(getString(R.string.appoint_no), bean.getId()));
                 tvOrderNo.setVisibility(View.VISIBLE);
                 timerLayout.setVisibility(View.GONE);
                 tvDelete.setVisibility(View.VISIBLE);
@@ -310,7 +310,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 break;
             case REFUNDING:           //退款中
                 tvState.setText(context.getString(R.string.order_refunding));
-                tvOrderNo.setText(String.format(getString(R.string.order_no), bean.getId()));
+                tvOrderNo.setText(String.format(getString(R.string.appoint_no), bean.getId()));
                 tvOrderNo.setVisibility(View.VISIBLE);
                 timerLayout.setVisibility(View.GONE);
                 tvDelete.setVisibility(View.VISIBLE);
@@ -328,7 +328,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 break;
             case REFUNDED:             //已退款
                 tvState.setText(context.getString(R.string.order_refunded));
-                tvOrderNo.setText(String.format(getString(R.string.order_no), bean.getId()));
+                tvOrderNo.setText(String.format(getString(R.string.appoint_no), bean.getId()));
                 tvOrderNo.setVisibility(View.VISIBLE);
                 timerLayout.setVisibility(View.GONE);
                 tvDelete.setVisibility(View.VISIBLE);

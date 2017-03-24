@@ -45,6 +45,11 @@ import com.leyuan.aidong.widget.SwitcherLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.leyuan.aidong.utils.Constant.EXPRESS_PRICE;
+import static com.leyuan.aidong.utils.Constant.REQUEST_ADD_ADDRESS;
+import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_ADDRESS;
+import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_COUPON;
+
 
 /**
  * 确认订单
@@ -52,11 +57,6 @@ import java.util.List;
  */
 public class ConfirmOrderActivity extends BaseActivity implements View.OnClickListener,
         CustomNestRadioGroup.OnCheckedChangeListener ,ConfirmOrderActivityView{
-    private static final Double EXPRESS_PRICE = 15d;
-    private static final int REQUEST_ADD_ADDRESS = 1;
-    private static final int REQUEST_SELECT_ADDRESS = 2;
-    private static final int REQUEST_SELECT_COUPON = 3;
-
     private SimpleTitleBar titleBar;
     private LinearLayout contentLayout;
     private SwitcherLayout switcherLayout;
@@ -367,6 +367,8 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 updateAddressStatus(address);
             }else if(requestCode == REQUEST_SELECT_COUPON){
                 CouponBean couponBean = data.getParcelableExtra("coupon");
+                tvCoupon.setText(String.format(getString(R.string.rmb_minus_price_double),
+                        FormatUtil.parseDouble(couponBean.getDiscount())));
                 tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double),
                         FormatUtil.parseDouble(couponBean.getDiscount())));
                 double deliveryPrice = needExpress ? EXPRESS_PRICE : 0;

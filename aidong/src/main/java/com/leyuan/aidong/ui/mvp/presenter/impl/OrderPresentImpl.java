@@ -68,6 +68,24 @@ public class OrderPresentImpl implements OrderPresent {
     }
 
     @Override
+    public void commonLoadData(final String list) {
+        orderModel.getOrders(new BaseSubscriber<OrderData>(context) {
+            @Override
+            public void onNext(OrderData orderData) {
+                if (orderData != null && orderData.getOrder() != null) {
+                    orderBeanList = orderData.getOrder();
+                }
+
+                if (orderBeanList.isEmpty()) {
+                    orderFragmentView.showEmptyView();
+                } else {
+                    orderFragmentView.onRecyclerViewRefresh(orderBeanList);
+                }
+            }
+        }, list, Constant.PAGE_FIRST);
+    }
+
+    @Override
     public void commonLoadData(final SwitcherLayout switcherLayout, String list) {
         orderModel.getOrders(new CommonSubscriber<OrderData>(switcherLayout) {
             @Override
@@ -79,7 +97,7 @@ public class OrderPresentImpl implements OrderPresent {
                     orderFragmentView.showEmptyView();
                 } else {
                     switcherLayout.showContentLayout();
-                    orderFragmentView.updateRecyclerView(orderBeanList);
+                    orderFragmentView.onRecyclerViewRefresh(orderBeanList);
                 }
             }
         }, list, Constant.PAGE_FIRST);
@@ -91,7 +109,7 @@ public class OrderPresentImpl implements OrderPresent {
             @Override
             public void onNext(OrderData orderData) {
                 if (orderData != null && orderData.getOrder() != null) {
-                    orderFragmentView.updateRecyclerView(orderData.getOrder());
+                    orderFragmentView.onRecyclerViewRefresh(orderData.getOrder());
                 }
             }
         }, list, Constant.PAGE_FIRST);
@@ -106,7 +124,7 @@ public class OrderPresentImpl implements OrderPresent {
                     orderBeanList = orderData.getOrder();
                 }
                 if (!orderBeanList.isEmpty()) {
-                    orderFragmentView.updateRecyclerView(orderBeanList);
+                    orderFragmentView.onRecyclerViewLoadMore(orderBeanList);
                 }
                 //没有更多数据了显示到底提示
                 if (orderBeanList.size() < pageSize) {
@@ -117,13 +135,13 @@ public class OrderPresentImpl implements OrderPresent {
     }
 
     @Override
-    public void getOrderDetail(String id, final SwitcherLayout switcherLayout) {
+    public void getOrderDetail(final SwitcherLayout switcherLayout,String id) {
         orderModel.getOrderDetail(new CommonSubscriber<OrderDetailData>(switcherLayout) {
             @Override
             public void onNext(OrderDetailData orderDetailData) {
                 OrderDetailBean orderDetailBean = null;
-                if (orderDetailData != null && orderDetailData.getItem() != null) {
-                    orderDetailBean = orderDetailData.getItem();
+                if (orderDetailData != null && orderDetailData.getOrder() != null) {
+                    orderDetailBean = orderDetailData.getOrder();
                 }
                 if (orderDetailBean != null) {
                     switcherLayout.showContentLayout();

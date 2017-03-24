@@ -1,7 +1,6 @@
 package com.leyuan.aidong.adapter.mine;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.LayoutParams;
@@ -13,26 +12,26 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.mine.activity.OrderDetailActivity;
+import com.leyuan.aidong.adapter.home.ConfirmOrderGoodsAdapter;
+import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.entity.OrderBean;
-import com.leyuan.aidong.utils.DensityUtil;
+import com.leyuan.aidong.entity.ParcelBean;
+import com.leyuan.aidong.utils.FormatUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.iwgang.countdownview.CountdownView;
 
 /**
  * 订单适配器
  * Created by song on 2016/9/1.
  */
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder> {
-    private static final String UN_PAID = "0";          //待付款
-    private static final String UN_DELIVERY = "1";      //待发货
-    private static final String DELIVERED = "2";        //已发货
-    private static final String FINISH = "3";           //已完成
-    private static final String CLOSE = "4";            //已关闭
-    private static final String UN_SELF_DELIVERY = "5"; //待自提
-    private static final String SELF_DELIVERED = "6";   //已自提
-
+    private static final String UN_PAID = "pending";            //待付款
+    private static final String PAID = "purchased";             //已支付
+    private static final String FINISHED = "confirmed";         //已完成
+    private static final String CLOSED = "canceled";            //已关闭
 
     private Context context;
     private List<OrderBean> data = new ArrayList<>();
@@ -62,66 +61,70 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
         final OrderBean bean = data.get(position);
 
         //与订单状态无关
-        holder.recyclerView.setAdapter(new OrderGoodAdapter(context, bean.getItem()));
-        holder.count.setText(String.format(context.getString(R.string.goods_count),bean.getTotal()));
-        holder.price.setText(String.format(context.getString(R.string.rmb_price),bean.getPay_amount()));
+        int count = 0;
+        ArrayList<GoodsBean> goodsList = new ArrayList<>();
+        ArrayList<ParcelBean> parcel = bean.getParcel();
+        if(parcel != null && !parcel.isEmpty()){
+            for (ParcelBean parcelBean : parcel) {
+                goodsList.addAll(parcelBean.getItem());
+                for (GoodsBean goodsBean : parcelBean.getItem()) {
+                    count += FormatUtil.parseInt(goodsBean.getAmount());
+                }
+            }
+        }
+        ConfirmOrderGoodsAdapter goodAdapter = new ConfirmOrderGoodsAdapter(context);
+        holder.recyclerView.setAdapter(goodAdapter);
+        goodAdapter.setData(goodsList);
+        holder.count.setText(String.format(context.getString(R.string.goods_count),count));
+        holder.price.setText(String.format(context.getString(R.string.rmb_price_double),
+                FormatUtil.parseDouble(bean.getPayAmount())));
+        holder.tvOrderId.setText(String.format(context.getString(R.string.order_no),bean.getId()));
 
         //与订单状态有关
         if (TextUtils.isEmpty(bean.getStatus())) return;
         switch (bean.getStatus()) {
             case UN_PAID:           //待付款
                 holder.state.setText(context.getString(R.string.un_paid));
-                holder.timeOrId.setText(bean.getStatus());
+                holder.tvOrderId.setVisibility(View.GONE);
+                holder.timerLayout.setVisibility(View.VISIBLE);
                 holder.payTip.setText(context.getString(R.string.need_pay));
                 holder.tvCancel.setVisibility(View.VISIBLE);
                 holder.tvPay.setVisibility(View.VISIBLE);
+                holder.tvConfirm.setVisibility(View.GONE);
+                holder.tvDelete.setVisibility(View.GONE);
+                holder.tvReBuy.setVisibility(View.GONE);
                 break;
-            case UN_DELIVERY:       //待发货
-                holder.state.setText(context.getString(R.string.un_delivery));
-                holder.timeOrId.setText(bean.getId());
-                holder.payTip.setText(context.getString(R.string.true_pay));
-                holder.tvCancel.setVisibility(View.VISIBLE);
-                break;
-            case DELIVERED:         //已发货
-                holder.state.setText(context.getString(R.string.delivered));
-                holder.timeOrId.setText(bean.getId());
-                holder.payTip.setText(context.getString(R.string.true_pay));
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams
-                        (DensityUtil.dp2px(context,168), LinearLayout.LayoutParams.WRAP_CONTENT);
-                params.leftMargin = DensityUtil.dp2px(context,10);
-                holder.tvConfirm.setLayoutParams(params);
-                holder.tvExpress.setVisibility(View.VISIBLE);
+            case PAID:              //已付款
+                holder.state.setText(context.getString(R.string.paid));
+                holder.tvOrderId.setVisibility(View.VISIBLE);
+                holder.timerLayout.setVisibility(View.GONE);
                 holder.tvConfirm.setVisibility(View.VISIBLE);
+                holder.tvReBuy.setVisibility(View.VISIBLE);
+                holder.tvCancel.setVisibility(View.GONE);
+                holder.tvPay.setVisibility(View.GONE);
+                holder.tvDelete.setVisibility(View.GONE);
                 break;
-            case FINISH:            //已完成
+            case FINISHED:            //已完成
                 holder.state.setText(context.getString(R.string.order_finish));
-                holder.timeOrId.setText(bean.getId());
+                holder.tvOrderId.setVisibility(View.VISIBLE);
+                holder.timerLayout.setVisibility(View.GONE);
                 holder.payTip.setText(context.getString(R.string.true_pay));
                 holder.tvDelete.setVisibility(View.VISIBLE);
-                holder.tvBuyAgain.setVisibility(View.VISIBLE);
+                holder.tvReBuy.setVisibility(View.VISIBLE);
+                holder.tvConfirm.setVisibility(View.GONE);
+                holder.tvCancel.setVisibility(View.GONE);
+                holder.tvPay.setVisibility(View.GONE);
                 break;
-            case CLOSE:             //已关闭
+            case CLOSED:              //已关闭
                 holder.state.setText(context.getString(R.string.order_close));
+                holder.tvOrderId.setVisibility(View.VISIBLE);
+                holder.timerLayout.setVisibility(View.GONE);
                 holder.payTip.setText(context.getString(R.string.true_pay));
                 holder.tvDelete.setVisibility(View.VISIBLE);
-                holder.tvBuyAgain.setVisibility(View.VISIBLE);
-                break;
-            case UN_SELF_DELIVERY:  //待自提
-                holder.state.setText(context.getString(R.string.un_self_delivery));
-                holder.timeOrId.setText(bean.getId());
-                holder.payTip.setText(context.getString(R.string.true_pay));
-                holder.tvCancel.setVisibility(View.VISIBLE);
-                break;
-            case SELF_DELIVERED:    //已自提
-                holder.state.setText(context.getString(R.string.self_delivered));
-                holder.timeOrId.setText(bean.getId());
-                holder.payTip.setText(context.getString(R.string.true_pay));
-                LinearLayout.LayoutParams param = new LinearLayout.LayoutParams
-                        (DensityUtil.dp2px(context,168), LinearLayout.LayoutParams.WRAP_CONTENT);
-                param.leftMargin = 0;
-                holder.tvConfirm.setLayoutParams(param);
-                holder.tvConfirm.setVisibility(View.VISIBLE);
-                holder.tvBuyAgain.setVisibility(View.VISIBLE);
+                holder.tvReBuy.setVisibility(View.VISIBLE);
+                holder.tvConfirm.setVisibility(View.GONE);
+                holder.tvCancel.setVisibility(View.GONE);
+                holder.tvPay.setVisibility(View.GONE);
                 break;
             default:
                 break;
@@ -130,8 +133,9 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, OrderDetailActivity.class);
-                context.startActivity(intent);
+                if(orderListener != null){
+                    orderListener.onPayOrder(bean.getId());
+                }
             }
         });
 
@@ -139,7 +143,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
             @Override
             public void onClick(View v) {
                 if(orderListener != null){
-                    orderListener.onPayOrder();
+                    orderListener.onPayOrder(bean.getId());
                 }
             }
         });
@@ -153,15 +157,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
             }
         });
 
-        holder.tvExpress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(orderListener != null){
-                    orderListener.onCheckExpressInfo(bean.getId());
-                }
-            }
-        });
-
         holder.tvConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,7 +166,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
             }
         });
 
-        holder.tvBuyAgain.setOnClickListener(new View.OnClickListener() {
+        holder.tvReBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(orderListener != null){
@@ -192,32 +187,34 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
 
     class OrderHolder extends RecyclerView.ViewHolder {
         TextView state;                 //订单状态
-        TextView timeOrId;              //实际支付时间或者订单号
+        TextView tvOrderId;             //订单号
+        LinearLayout timerLayout;       //剩余支付时间
+        CountdownView countdownView;    //剩余支付时间
         RecyclerView recyclerView;      //商品
         TextView count;                 //商品数量
         TextView payTip;                //实付款或者需付款
         TextView price;                 //商品价格
         TextView tvCancel;              //取消订单
         TextView tvPay;                 //立即支付
-        TextView tvExpress;             //查看物流
         TextView tvConfirm;             //确认收货
         TextView tvDelete;              //删除订单
-        TextView tvBuyAgain;            //再次购买
+        TextView tvReBuy;               //再次购买
 
         public OrderHolder(View itemView) {
             super(itemView);
             state = (TextView) itemView.findViewById(R.id.tv_state);
-            timeOrId = (TextView) itemView.findViewById(R.id.tv_id_or_time);
+            tvOrderId = (TextView) itemView.findViewById(R.id.tv_order_id);
+            timerLayout = (LinearLayout) itemView.findViewById(R.id.ll_timer);
+            countdownView = (CountdownView) itemView.findViewById(R.id.timer);
             recyclerView = (RecyclerView) itemView.findViewById(R.id.rv_good);
             count = (TextView) itemView.findViewById(R.id.tv_goods_count);
             payTip = (TextView) itemView.findViewById(R.id.tv_pay_tip);
             price = (TextView) itemView.findViewById(R.id.tv_price);
             tvCancel = (TextView) itemView.findViewById(R.id.tv_cancel_join);
             tvPay = (TextView) itemView.findViewById(R.id.tv_pay);
-            tvExpress = (TextView) itemView.findViewById(R.id.tv_express);
             tvConfirm = (TextView) itemView.findViewById(R.id.tv_confirm);
             tvDelete = (TextView) itemView.findViewById(R.id.tv_delete);
-            tvBuyAgain = (TextView) itemView.findViewById(R.id.tv_again_buy);
+            tvReBuy = (TextView) itemView.findViewById(R.id.tv_rebuy);
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             itemView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         }
@@ -228,11 +225,10 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
     }
 
     public interface OrderListener{
-        void onPayOrder();
+        void onPayOrder(String id);
         void onCancelOrder(String id);
         void onDeleteOrder(String id);
         void onConfirmOrder(String id);
-        void onCheckExpressInfo(String id);
         void onBuyAgain();
     }
 }

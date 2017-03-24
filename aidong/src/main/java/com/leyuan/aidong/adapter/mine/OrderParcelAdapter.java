@@ -1,0 +1,73 @@
+package com.leyuan.aidong.adapter.mine;
+
+import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.leyuan.aidong.R;
+import com.leyuan.aidong.adapter.home.ConfirmOrderGoodsAdapter;
+import com.leyuan.aidong.entity.ParcelBean;
+import com.leyuan.aidong.utils.constant.DeliveryType;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 订单列表中包裹适配器
+ * Created by song on 2016/9/8.
+ */
+public class OrderParcelAdapter extends RecyclerView.Adapter<OrderParcelAdapter.CartHolder> {
+    private Context context;
+    private List<ParcelBean> data = new ArrayList<>();
+
+    public OrderParcelAdapter(Context context) {
+        this.context = context;
+    }
+
+    public void setData(List<ParcelBean> data) {
+        if(data != null){
+            this.data = data;
+            notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        return data.size();
+    }
+
+    @Override
+    public CartHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_order_parcel,parent,false);
+        return new CartHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(final CartHolder holder, final int position) {
+        final ParcelBean bean = data.get(position);
+        holder.tvShopName.setText(bean.getAddress());
+        String type = DeliveryType.EXPRESS.equals(bean.getPickUpWay()) ? "快递" : "自提";
+        holder.tvDeliveryType.setText(type);
+        holder.rvShop.setLayoutManager(new LinearLayoutManager(context));
+        final ConfirmOrderGoodsAdapter goodsAdapter = new ConfirmOrderGoodsAdapter(context);
+        holder.rvShop.setAdapter(goodsAdapter);
+        goodsAdapter.setData(bean.getItem());
+    }
+
+    class CartHolder extends RecyclerView.ViewHolder {
+        TextView tvShopName;
+        TextView tvDeliveryType;
+        RecyclerView rvShop;
+
+        public CartHolder(View itemView) {
+            super(itemView);
+            tvShopName = (TextView) itemView.findViewById(R.id.tv_shop_name);
+            tvDeliveryType = (TextView) itemView.findViewById(R.id.tv_delivery_type);
+            rvShop = (RecyclerView) itemView.findViewById(R.id.rv_shop);
+        }
+    }
+}

@@ -118,8 +118,11 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
 
     public void setSelfDeliveryResult(BaseBean baseBean){
         if(baseBean.getStatus() == Constant.OK){
-            data.get(position).getDeliveryInfo().setType(DeliveryType.SELF);
-            data.get(position).getDeliveryInfo().setInfo(venuesBean);
+            UpdateDeliveryBean bean = data.get(position);
+            DeliveryBean deliveryBean = new DeliveryBean();
+            deliveryBean.setInfo(venuesBean);
+            deliveryBean.setType(DeliveryType.SELF);
+            bean.setDeliveryInfo(deliveryBean);
             deliveryInfoAdapter.notifyDataSetChanged();
         }
     }
@@ -127,7 +130,11 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
     @Override
     public void setExpressResult(BaseBean baseBean) {
         if(baseBean.getStatus() == Constant.OK){
-
+            UpdateDeliveryBean bean = data.get(position);
+            DeliveryBean deliveryBean = new DeliveryBean();
+            deliveryBean.setType(DeliveryType.EXPRESS);
+            bean.setDeliveryInfo(deliveryBean);
+            deliveryInfoAdapter.notifyDataSetChanged();
         }
     }
 }
