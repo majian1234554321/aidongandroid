@@ -38,7 +38,7 @@
                 android:layout_height="50dp"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/left_margin"
-                android:paddingRight="@dimen/right_margin">
+               >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -48,16 +48,16 @@
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/tv_input_name"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:paddingRight="@dimen/right_margin"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:background="@null"
                     android:gravity="right|center_vertical"
                     android:hint="请输入真实姓名"
-                    android:text=""
                     android:singleLine="true"
                     android:textColor="@color/black"
                     android:textColorHint="@color/c9"
@@ -90,7 +90,7 @@
                     android:layout_gravity="center_vertical"
                     android:background="@null"
                     android:gravity="right|center_vertical"
-                    android:hint="请输入手机号码"
+                    android:hint="请先绑定手机"
                     android:inputType="phone"
                     android:text=""
                     android:drawablePadding="5dp"

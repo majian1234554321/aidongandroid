@@ -40,4 +40,6 @@ public interface UserInfoModel {
 
     void updatePassword(Subscriber<BaseBean> subscriber, String oldPassword,
                         String new_password, String confirm_password);
+
+    void hideSelf(Subscriber<BaseBean> subscriber, String isHide);
 }

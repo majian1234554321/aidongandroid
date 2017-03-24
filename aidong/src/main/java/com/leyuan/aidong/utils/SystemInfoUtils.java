@@ -99,6 +99,7 @@ public class SystemInfoUtils {
         return discoverBannerBeanList;
     }
 
+
     public static boolean isFollow(Context context, String uid){
         boolean isFollow = false;
         List<UserBean> followList = getFollowList(context);
@@ -111,14 +112,16 @@ public class SystemInfoUtils {
         return isFollow;
     }
 
-    public static boolean isFollow(Context context, UserBean bean){
+
+    public static boolean isFollow(Context context, UserBean bean) {
+
         boolean isFollow = false;
         List<UserBean> followList = getFollowList(context);
         for (UserBean userBean : followList) {
-            if(bean == null){
+            if (bean == null) {
                 return false;
             }
-            if(userBean.getId().equals(bean.getId())){
+            if (userBean.getId().equals(bean.getId())) {
                 isFollow = true;
                 break;
             }
@@ -208,6 +211,38 @@ public class SystemInfoUtils {
                 return ((SystemBean) bean).getOpen_city();
             }
             return null;
+        }
+    }
+
+    /**
+     * 获取预约倒计时
+     */
+    public static int getAppointmentCountdown(Context context) {
+        if (Constant.systemInfoBean != null && Constant.systemInfoBean.getAppointment_countdown() != 0) { //内存有直接从内存读取返回
+            return Constant.systemInfoBean.getAppointment_countdown();
+        } else {          // 从本地读取
+            Object bean = getSystemInfoBean(context, KEY_SYSTEM);
+            if (bean instanceof SystemBean) {
+                Constant.systemInfoBean = ((SystemBean) bean);
+                return Constant.systemInfoBean.getAppointment_countdown();
+            }
+            return 120;
+        }
+    }
+
+    /**
+     * 获取订单倒计时
+     */
+    public static int getOrderCountdown(Context context) {
+        if (Constant.systemInfoBean != null && Constant.systemInfoBean.getOrder_countdown() != 0) { //内存有直接从内存读取返回
+            return Constant.systemInfoBean.getOrder_countdown();
+        } else {          // 从本地读取
+            Object bean = getSystemInfoBean(context, KEY_SYSTEM);
+            if (bean instanceof SystemBean) {
+                Constant.systemInfoBean = ((SystemBean) bean);
+                return Constant.systemInfoBean.getOrder_countdown();
+            }
+            return 30;
         }
     }
 

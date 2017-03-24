@@ -11,16 +11,18 @@ import com.leyuan.aidong.R;
 
 public class DialogUtils {
 
-    private static  Dialog dialog;
+    private static Dialog dialog;
 
-    /** you must call releaseDialog when view destroyed */
-    public static  void showDialog(Context context, String message, boolean cancelable){
-
-        if(dialog == null){
-            dialog = wattingDialog(context,message,cancelable);
-        }
+    /**
+     * you must call releaseDialog when view destroyed
+     */
+    public static void showDialog(Context context, String message, boolean cancelable) {
+//        if(dialog == null){
+        dialog = wattingDialog(context, message, cancelable);
+//        }
         dialog.show();
     }
+
     private static Dialog wattingDialog(Context context, String message, boolean cancelable) {
         LayoutInflater factory = LayoutInflater.from(context);
         View view = factory.inflate(R.layout.progress_dialog, null);
@@ -38,14 +40,15 @@ public class DialogUtils {
         return m_pDialog;
     }
 
-    public  static void dismissDialog( ){
-        if(dialog != null && dialog.isShowing()) {
+    public static void dismissDialog() {
+        if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
         }
     }
-    public static void releaseDialog(){
-        if(dialog != null){
-            if(dialog.isShowing())
+
+    public static void releaseDialog() {
+        if (dialog != null) {
+            if (dialog.isShowing())
                 dialog.dismiss();
             dialog = null;
         }

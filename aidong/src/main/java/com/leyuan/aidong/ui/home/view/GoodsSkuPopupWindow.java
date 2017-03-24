@@ -41,7 +41,7 @@ import java.util.List;
  */
 //todo 欠缺逻辑 : 当包含该sku但是该点的所有路径库存都为0 初始化该sku点的状态
 public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClickListener,
-        GoodsSkuAdapter.SelectSkuListener,GoodsSkuPopupWindowView {
+        GoodsSkuAdapter.SelectSkuListener, GoodsSkuPopupWindowView {
     public static final String FROM_SKU = "1";
     public static final String FROM_BUY = "2";
     public static final String FROM_ADD_CART = "3";
@@ -85,8 +85,8 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     private CartPresent cartPresent;
 
     public GoodsSkuPopupWindow(Context context, GoodsDetailBean detailBean,
-                               List<String> selectedSkuValues,String count,
-                               String recommendId,String goodsType,String from) {
+                               List<String> selectedSkuValues, String count,
+                               String recommendId, String goodsType, String from) {
         super(context);
         this.context = context;
         this.detailBean = detailBean;
@@ -95,29 +95,29 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         this.count = count;
         this.goodsType = goodsType;
 
-        if(from.equals(FROM_SKU)){
+        if (from.equals(FROM_SKU)) {
             showConfirmStatus = false;
-        }else if(from.equals(FROM_ADD_CART)){
+        } else if (from.equals(FROM_ADD_CART)) {
             showConfirmStatus = true;
             isAddCart = true;
-        }else {
+        } else {
             showConfirmStatus = true;
             isAddCart = false;
         }
-        cartPresent = new CartPresentImpl(context,this);
+        cartPresent = new CartPresentImpl(context, this);
         init();
     }
 
 
     private void init() {
-        View view = View.inflate(context, R.layout.popup_sku_detail,null);
+        View view = View.inflate(context, R.layout.popup_sku_detail, null);
         setContentView(view);
         initData();
         initView(view);
         setListener();
     }
 
-    private void initData(){
+    private void initData() {
         localSkuBeanList = new ArrayList<>();
         for (int i = 0; i < detailBean.spec.name.size(); i++) {
             LocalGoodsSkuBean localGoodsSkuBean = new LocalGoodsSkuBean();
@@ -125,7 +125,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
             localGoodsSkuBean.setSkuName(name);
             List<String> temp = new ArrayList<>();
             for (GoodsSkuBean item : detailBean.spec.item) {
-                if(item != null && item.value != null){
+                if (item != null && item.value != null) {
                     temp.add(item.value.get(i));
                 }
             }
@@ -145,9 +145,9 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
                 valueBean.setValue(value);
 
                 //初始化选中的sku值和确定了sku值的sku名
-                if(!selectedSkuValues.isEmpty()){
+                if (!selectedSkuValues.isEmpty()) {
                     for (String selectedSkuValue : selectedSkuValues) {
-                        if(selectedSkuValue.equals(value)){
+                        if (selectedSkuValue.equals(value)) {
                             valueBean.setSelected(true);
                             localGoodsSkuBean.setSelected(true);
                         }
@@ -161,7 +161,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         }
 
         //初始化其他信息:图片,价格,库存,sku提示
-        if(isAllSkuConfirm()){      //已确定sku
+        if (isAllSkuConfirm()) {      //已确定sku
             skuTip = new StringBuilder();
             List<String> selectedValues = new ArrayList<>();
             for (String selectedSkuValue : selectedSkuValues) {
@@ -170,27 +170,29 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
             }
             GoodsSkuBean line = getLine(selectedValues);
             price = FormatUtil.parseDouble(line.price);
-            stock = FormatUtil.parseInt(line.stock);
+            stock = line.getStock();
+//                    FormatUtil.parseInt(line.stock);
             confirmedSkuCover = line.cover;
-        }else {                                                 //未选中sku
+        } else {                                                 //未选中sku
             skuTip = new StringBuilder();
             for (LocalGoodsSkuBean localGoodsSkuBean : localSkuBeanList) {
-                if(!localGoodsSkuBean.isSelected()){
+                if (!localGoodsSkuBean.isSelected()) {
                     skuTip.append(localGoodsSkuBean.getSkuName()).append(Constant.EMPTY_STR);
                 }
             }
         }
         for (GoodsSkuBean goodsSkuBean : detailBean.spec.item) {
-            if(goodsSkuBean.price != null ){
+            if (goodsSkuBean.price != null) {
                 double price = FormatUtil.parseDouble(goodsSkuBean.price);
-                if(price > maxPrice){
+                if (price > maxPrice) {
                     maxPrice = price;
                 }
-                if(price < minPrice){
+                if (price < minPrice) {
                     minPrice = price;
                 }
             }
-            totalStock += FormatUtil.parseInt(goodsSkuBean.stock);
+            totalStock += goodsSkuBean.getStock();
+//                    FormatUtil.parseInt(goodsSkuBean.stock);
         }
         unConfirmedSkuCover = detailBean.image.get(0);
     }
@@ -211,8 +213,8 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         tvBuy = (TextView) view.findViewById(R.id.tv_buy);
         skuRecyclerView = (RecyclerView) view.findViewById(R.id.rv_sku);
         skuRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-        goodsSkuAdapter = new GoodsSkuAdapter(context,localSkuBeanList,
-                detailBean.spec.item,selectedSkuValues);
+        goodsSkuAdapter = new GoodsSkuAdapter(context, localSkuBeanList,
+                detailBean.spec.item, selectedSkuValues);
         skuRecyclerView.setAdapter(goodsSkuAdapter);
 
         tvConfirm.setVisibility(showConfirmStatus ? View.VISIBLE : View.GONE);
@@ -220,17 +222,17 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         tvBuy.setVisibility(showConfirmStatus ? View.GONE : View.VISIBLE);
         tvGoodName.setText(detailBean.name);
         tvSkuTip.setText(skuTip.toString());
-        if(isAllSkuConfirm()){
+        if (isAllSkuConfirm()) {
             GlideLoader.getInstance().displayImage(confirmedSkuCover, dvGoodsCover);
             tvSelect.setText(context.getString(R.string.selected));
-            tvGoodsPrice.setText(String.format(context.getString(R.string.rmb_price_double),price));
+            tvGoodsPrice.setText(String.format(context.getString(R.string.rmb_price_double), price));
             tvStock.setText(String.format(context.getString(R.string.int_stock_count), stock));
-        }else {
+        } else {
             GlideLoader.getInstance().displayImage(unConfirmedSkuCover, dvGoodsCover);
             tvSelect.setText(context.getString(R.string.please_select));
             tvGoodsPrice.setText(maxPrice == minPrice
-                    ? String.format(context.getString(R.string.rmb_price_double),maxPrice)
-                    : String.format(context.getString(R.string.rmb_price_scope),minPrice,maxPrice));
+                    ? String.format(context.getString(R.string.rmb_price_double), maxPrice)
+                    : String.format(context.getString(R.string.rmb_price_scope), minPrice, maxPrice));
             tvStock.setText(String.format(context.getString(R.string.int_stock_count), totalStock));
         }
         tvCount.setText(TextUtils.isEmpty(count) ? "1" : count);
@@ -250,70 +252,70 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     @Override
     public void onClick(View v) {
         int count = Integer.parseInt(tvCount.getText().toString());
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_cancel:
-                if(selectSkuListener != null ){
-                    selectSkuListener.onSelectSkuChanged(selectedSkuValues,skuTip.toString(),
+                if (selectSkuListener != null) {
+                    selectSkuListener.onSelectSkuChanged(selectedSkuValues, skuTip.toString(),
                             tvCount.getText().toString());
                 }
                 dismiss();
                 break;
             case R.id.iv_minus:
-                count --;
-                if(count <= 1){
+                count--;
+                if (count <= 1) {
                     count = 1;
                     ivMinus.setBackgroundResource(R.drawable.icon_minus_gray);
                 }
                 tvCount.setText(String.valueOf(count));
                 break;
             case R.id.iv_add:
-                count ++;
-                if(count > stock){
+                count++;
+                if (count > stock) {
                     count = stock;
-                    Toast.makeText(context,context.getString(R.string.stock_out),Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, context.getString(R.string.stock_out), Toast.LENGTH_LONG).show();
                 }
-                if(count > 1){
+                if (count > 1) {
                     ivMinus.setBackgroundResource(R.drawable.icon_minus);
                 }
                 tvCount.setText(String.valueOf(count));
                 break;
             case R.id.tv_confirm:
-                if(App.mInstance.isLogin()) {
+                if (App.mInstance.isLogin()) {
                     if (isAllSkuConfirm()) {
                         dismiss();
                         confirm();
                     } else {
                         tipUnSelectSku();
                     }
-                }else {
-                    ((GoodsDetailActivity)context).startActivityForResult(
-                            new Intent(context, LoginActivity.class),Constant.REQUEST_CONFIRM);
+                } else {
+                    ((GoodsDetailActivity) context).startActivityForResult(
+                            new Intent(context, LoginActivity.class), Constant.REQUEST_CONFIRM);
                 }
                 break;
             case R.id.tv_add_cart:
-                if(App.mInstance.isLogin()) {
+                if (App.mInstance.isLogin()) {
                     if (isAllSkuConfirm()) {
                         dismiss();
                         addCart();
                     } else {
                         tipUnSelectSku();
                     }
-                }else {
-                    ((GoodsDetailActivity)context).startActivityForResult(
-                            new Intent(context, LoginActivity.class),Constant.REQUEST_ADD_CART);
+                } else {
+                    ((GoodsDetailActivity) context).startActivityForResult(
+                            new Intent(context, LoginActivity.class), Constant.REQUEST_ADD_CART);
                 }
                 break;
             case R.id.tv_buy:
-                if(App.mInstance.isLogin()) {
+                if (App.mInstance.isLogin()) {
                     if (isAllSkuConfirm()) {
                         dismiss();
                         buyImmediately();
                     } else {
                         tipUnSelectSku();
                     }
-                }else {
-                    ((GoodsDetailActivity)context).startActivityForResult(
-                            new Intent(context, LoginActivity.class),Constant.REQUEST_BUY_IMMEDIATELY);
+                } else {
+                    ((GoodsDetailActivity) context).startActivityForResult(
+                            new Intent(context, LoginActivity.class), Constant.REQUEST_BUY_IMMEDIATELY);
                 }
                 break;
             default:
@@ -321,7 +323,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         }
     }
 
-    public void confirm(){
+    public void confirm() {
         if (isAddCart) {
             addCart();
         } else {
@@ -333,10 +335,10 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         GoodsSkuBean line = getLine(selectedSkuValues);
         String countStr = tvCount.getText().toString();
         String id = detailBean.pick_up.getInfo().getId();
-        cartPresent.addCart(line.code,Integer.parseInt(countStr),id,recommendId);
+        cartPresent.addCart(line.code, Integer.parseInt(countStr), id, recommendId);
     }
 
-    public void buyImmediately(){
+    public void buyImmediately() {
         GoodsSkuBean line = getLine(selectedSkuValues);
         ShopBean shopBean = new ShopBean();
         List<GoodsBean> goodsBeanList = new ArrayList<>();
@@ -351,23 +353,23 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         goodsBeanList.add(goodsBean);
         shopBean.setItem(goodsBeanList);
         shopBean.setPickUp(detailBean.pick_up);
-        ConfirmOrderActivity.start(context,shopBean);
+        ConfirmOrderActivity.start(context, shopBean);
     }
 
     @Override
     public void addCartResult(BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
-            Toast.makeText(context,context.getString(R.string.add_cart_success),Toast.LENGTH_LONG).show();
-        }else {
-            Toast.makeText(context,context.getString(R.string.add_cart_failed),Toast.LENGTH_LONG).show();
+        if (baseBean.getStatus() == Constant.OK) {
+            Toast.makeText(context, context.getString(R.string.add_cart_success), Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(context, context.getString(R.string.add_cart_failed), Toast.LENGTH_LONG).show();
         }
     }
 
     @Override
     public void dismiss() {
         super.dismiss();
-        if(selectSkuListener != null ){
-            selectSkuListener.onSelectSkuChanged(selectedSkuValues,skuTip.toString(),tvCount.getText().toString());
+        if (selectSkuListener != null) {
+            selectSkuListener.onSelectSkuChanged(selectedSkuValues, skuTip.toString(), tvCount.getText().toString());
         }
     }
 
@@ -375,16 +377,17 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     public void onSelectSkuChanged(List<String> allSelectedNodes) {
         this.selectedSkuValues = allSelectedNodes;
         skuTip = new StringBuilder();        //todo optimize
-        if(allSelectedNodes.size() == detailBean.spec.name.size()){
+        if (allSelectedNodes.size() == detailBean.spec.name.size()) {
             GoodsSkuBean line = getLine(allSelectedNodes);
-            if(line != null){
+            if (line != null) {
                 tvGoodsPrice.setText(String.format(context.getString(R.string.rmb_price_double),
                         FormatUtil.parseDouble(line.price)));
-                tvStock.setText(String.format(context.getString(R.string.stock_count),line.stock));
+                tvStock.setText(String.format(context.getString(R.string.stock_count), line.getStock() + ""));
                 GlideLoader.getInstance().displayImage(line.cover, dvGoodsCover);
-                stock = FormatUtil.parseInt(line.stock);
-                if(Integer.parseInt(tvCount.getText().toString()) > stock){
-                    tvCount.setText(line.stock);
+                stock = line.getStock();
+//                        FormatUtil.parseInt(line.stock);
+                if (Integer.parseInt(tvCount.getText().toString()) > stock) {
+                    tvCount.setText(line.getStock() + "");
                 }
                 ivMinus.setBackgroundResource(Integer.parseInt(tvCount.getText().toString()) > 1 ?
                         R.drawable.icon_minus : R.drawable.icon_minus_gray);
@@ -394,10 +397,10 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
             }
             tvSelect.setText(context.getString(R.string.selected));
             tvSkuTip.setText(skuTip.toString());
-        }else {
+        } else {
             GlideLoader.getInstance().displayImage(unConfirmedSkuCover, dvGoodsCover);
-            tvGoodsPrice.setText(maxPrice==minPrice?String.valueOf(maxPrice):
-                    String.format(context.getString(R.string.rmb_price_scope),minPrice,maxPrice));
+            tvGoodsPrice.setText(maxPrice == minPrice ? String.valueOf(maxPrice) :
+                    String.format(context.getString(R.string.rmb_price_scope), minPrice, maxPrice));
             tvStock.setText(String.format(context.getString(R.string.int_stock_count), totalStock));
             List<LocalGoodsSkuBean> unSelectedSkuBeanList = onGetUnSelectSku();
             for (LocalGoodsSkuBean localGoodsSkuBean : unSelectedSkuBeanList) {
@@ -413,7 +416,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     public List<LocalGoodsSkuBean> onGetSelectSku() {
         List<LocalGoodsSkuBean> localSelectedSkuList = new ArrayList<>();
         for (LocalGoodsSkuBean localGoodsSkuBean : localSkuBeanList) {
-            if(localGoodsSkuBean.isSelected()) {
+            if (localGoodsSkuBean.isSelected()) {
                 localSelectedSkuList.add(localGoodsSkuBean);
             }
         }
@@ -425,7 +428,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     public List<LocalGoodsSkuBean> onGetUnSelectSku() {
         List<LocalGoodsSkuBean> localUnselectedSkuList = new ArrayList<>();
         for (LocalGoodsSkuBean localGoodsSkuBean : localSkuBeanList) {
-            if(!localGoodsSkuBean.isSelected()) {
+            if (!localGoodsSkuBean.isSelected()) {
                 localUnselectedSkuList.add(localGoodsSkuBean);
             }
         }
@@ -433,10 +436,10 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     }
 
     //获取包含全部属性节点的唯一路线
-    private GoodsSkuBean getLine(List<String> selectedValues){
+    private GoodsSkuBean getLine(List<String> selectedValues) {
         GoodsSkuBean usefulGoodsSkuBean = null;
         for (GoodsSkuBean goodsSkuBean : detailBean.spec.item) {
-            if(goodsSkuBean.value.containsAll(selectedValues)){
+            if (goodsSkuBean.value.containsAll(selectedValues)) {
                 usefulGoodsSkuBean = goodsSkuBean;
                 break;      //数据正常得情况下只可能有一条线路包含所有节点，不考虑数据录入异常情况
             }
@@ -445,17 +448,17 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     }
 
     //提示sku没有全部选择
-    private void tipUnSelectSku(){
+    private void tipUnSelectSku() {
         StringBuilder result = new StringBuilder();
         result.append(context.getString(R.string.please_choose));
         List<LocalGoodsSkuBean> unSelectedSkuBeanList = onGetUnSelectSku();
         for (LocalGoodsSkuBean localGoodsSkuBean : unSelectedSkuBeanList) {
             result.append(localGoodsSkuBean.getSkuName()).append(Constant.EMPTY_STR);
         }
-        Toast.makeText(context,result,Toast.LENGTH_LONG).show();
+        Toast.makeText(context, result, Toast.LENGTH_LONG).show();
     }
 
-    private boolean isAllSkuConfirm(){
+    private boolean isAllSkuConfirm() {
         return selectedSkuValues.size() == detailBean.spec.name.size();
     }
 
@@ -464,6 +467,6 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     }
 
     public interface SelectSkuListener {
-        void onSelectSkuChanged(List<String> selectedSkuValues,String skuTip,String count);
+        void onSelectSkuChanged(List<String> selectedSkuValues, String skuTip, String count);
     }
 }

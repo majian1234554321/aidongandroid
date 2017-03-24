@@ -12,6 +12,8 @@ public class Constant {
     public static final String URL_USER_AGREEMENT = BASE_URL + "homepage";
     public static final String URL_SHARE_DYNAMIC = "http://www.ostagram.ru";
 
+    public static final String URL_AFTER_SALES_SERVICE = "http://www.ostagram.ru";
+
     public static final int OK = 1;
     public static final int NOT_LOGIN = 101;
     public static final int PAGE_FIRST = 1;

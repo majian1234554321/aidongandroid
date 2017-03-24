@@ -267,12 +267,14 @@
             android:theme="@style/AppTheme.FullScreen"/>
         <activity
             android:name=".ui.home.activity.AppointCampaignActivity"
+            android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.mine.activity.AppointCampaignDetailActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.home.activity.AppointCourseActivity"
+            android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.home.activity.EquipmentActivity"
