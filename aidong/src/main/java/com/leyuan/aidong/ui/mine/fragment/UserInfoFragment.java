@@ -64,7 +64,7 @@ public class UserInfoFragment extends BaseFragment{
 
     private void setView(){
         id.setRightContent(profileBean.getId());
-        identify.setRightContent("coach".equals(profileBean.getUser_type()) ? "教练" : "健身爱好者");
+        identify.setRightContent("coach".equals(profileBean.getUserType()) ? "教练" : "健身爱好者");
         hot.setRightContent(profileBean.getPopularity());
         signature.setRightContent(profileBean.getSignature());
         address.setRightContent(profileBean.getProvince() + profileBean.getCity() + profileBean.getArea());

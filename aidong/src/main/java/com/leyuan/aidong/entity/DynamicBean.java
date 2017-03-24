@@ -32,7 +32,7 @@ public class DynamicBean implements Serializable{
         public String name;
         public String avatar;
         public String gender;
-
+        public String user_type;        //用户身份 空为普通用户否则教练
     }
 
     public class LikeUser implements Serializable{

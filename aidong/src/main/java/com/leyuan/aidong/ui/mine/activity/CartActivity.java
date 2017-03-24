@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.mine.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.RecommendAdapter;
 import com.leyuan.aidong.entity.GoodsBean;
+import com.leyuan.aidong.entity.ShopBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.view.CartHeaderView;
 import com.leyuan.aidong.ui.mvp.presenter.RecommendPresent;
@@ -29,7 +31,7 @@ import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import static com.leyuan.aidong.utils.Constant.REQUEST_SETTLEMENT_CART;
 
 
 /**
@@ -200,5 +202,16 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
         cartHeaderView.showRecommendText(!isEditing);
         recommendAdapter.setData(isEditing ? emptyRecommendList : recommendList);
         wrapperAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            if(requestCode == REQUEST_SETTLEMENT_CART){
+                List<ShopBean> shopBeanList = data.getParcelableArrayListExtra("shopBeanList");
+                cartHeaderView.updateCartLocal(shopBeanList);
+            }
+        }
     }
 }

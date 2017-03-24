@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.mine.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -16,6 +17,7 @@ import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.entity.ShopBean;
 import com.leyuan.aidong.ui.home.activity.ConfirmOrderActivity;
+import com.leyuan.aidong.ui.mine.activity.CartActivity;
 import com.leyuan.aidong.ui.mvp.presenter.CartPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CartPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.ICartHeaderView;
@@ -24,6 +26,8 @@ import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.leyuan.aidong.utils.Constant.REQUEST_SETTLEMENT_CART;
 
 /**
  * the header of cart view
@@ -175,6 +179,12 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
         pullToRefreshCartData();
     }
 
+    public void updateCartLocal(List<ShopBean> list){
+        shopBeanList.clear();
+        shopBeanList.addAll(list);
+        shopAdapter.setData(shopBeanList);
+    }
+
     private boolean isAllShopChecked(){
         if(shopBeanList == null || shopBeanList.isEmpty()){
             return false;
@@ -230,7 +240,11 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
             Toast.makeText(context,R.string.tip_select_goods,Toast.LENGTH_LONG).show();
             return;
         }
-        ConfirmOrderActivity.start(context, selectedShops,calculateTotalPrice());
+       // ConfirmOrderActivity.start(context, selectedShops,calculateTotalPrice());
+        Intent intent = new Intent(context,ConfirmOrderActivity.class);
+        intent.putParcelableArrayListExtra("selectedShops",selectedShops);
+        intent.putExtra("totalGoodsPrice",calculateTotalPrice());
+        ((CartActivity)context).startActivityForResult(intent,REQUEST_SETTLEMENT_CART);
     }
 
     public void changeAllGoodsStatus(boolean checked){

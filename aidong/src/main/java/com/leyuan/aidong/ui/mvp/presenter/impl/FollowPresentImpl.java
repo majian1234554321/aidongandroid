@@ -29,7 +29,7 @@ import java.util.List;
 public class FollowPresentImpl implements FollowPresent {
     private Context context;
     private FollowModel followModel;
-    private FollowFragmentView followFragmentView;
+    private FollowFragmentView followFragment;
     private List<UserBean> userBeanList = new ArrayList<>();
     private AppointmentUserActivityView appointmentUserActivityView;
 
@@ -44,11 +44,12 @@ public class FollowPresentImpl implements FollowPresent {
         followModel = new FollowModelImpl();
     }
 
-    public FollowPresentImpl(Context context, FollowFragmentView followFragmentView) {
+    public FollowPresentImpl(Context context, FollowFragmentView followFragment) {
         this.context = context;
-        this.followFragmentView = followFragmentView;
+        this.followFragment = followFragment;
         followModel = new FollowModelImpl();
     }
+
 
     @Override
     public void getFollowList() {
@@ -64,7 +65,7 @@ public class FollowPresentImpl implements FollowPresent {
     }
 
     @Override
-    public void commonLoadData(final SwitcherLayout switcherLayout, String type) {
+    public void commonLoadData(final SwitcherLayout switcherLayout, final String type) {
         followModel.getFollow(new CommonSubscriber<FollowData>(switcherLayout) {
             @Override
             public void onNext(FollowData followData) {
@@ -72,10 +73,12 @@ public class FollowPresentImpl implements FollowPresent {
                     userBeanList = followData.getFollow();
                 }
                 if(!userBeanList.isEmpty()){
-                    followFragmentView.updateRecyclerView(userBeanList);
-                    Constant.followData = followData;
-                    SystemInfoUtils.putSystemInfoBean(context,followData,SystemInfoUtils.KEY_FOLLOW);
+                    if("followings".equals(type)) {
+                        Constant.followData = followData;
+                        SystemInfoUtils.putSystemInfoBean(context, followData, SystemInfoUtils.KEY_FOLLOW);
+                    }
                     switcherLayout.showContentLayout();
+                    followFragment.onRefreshData(userBeanList);
                 }else {
                     switcherLayout.showEmptyLayout();
                 }
@@ -84,14 +87,16 @@ public class FollowPresentImpl implements FollowPresent {
     }
 
     @Override
-    public void pullToRefreshData(String type) {
+    public void pullToRefreshData(final String type) {
         followModel.getFollow(new RefreshSubscriber<FollowData>(context) {
             @Override
             public void onNext(FollowData followData) {
                 if(followData != null && !followData.getFollow().isEmpty()){
-                    Constant.followData = followData;
-                    SystemInfoUtils.putSystemInfoBean(context,followData,SystemInfoUtils.KEY_FOLLOW);
-                    followFragmentView.updateRecyclerView(followData.getFollow());
+                    if("followings".equals(type)) {
+                        Constant.followData = followData;
+                        SystemInfoUtils.putSystemInfoBean(context, followData, SystemInfoUtils.KEY_FOLLOW);
+                    }
+                    followFragment.onRefreshData(followData.getFollow());
                 }
             }
         },type,Constant.PAGE_FIRST);
@@ -106,11 +111,12 @@ public class FollowPresentImpl implements FollowPresent {
                     userBeanList = followData.getFollow();
                 }
                 if(!userBeanList.isEmpty()){
-                    followFragmentView.updateRecyclerView(userBeanList);
+                    followFragment.onLoadMoreData(userBeanList);
                 }
                 //没有更多数据了显示到底提示
                 if( userBeanList.size() < pageSize){
-                    followFragmentView.showEndFooterView();
+                    followFragment.showEndFooterView();
+
                 }
             }
         },type,page);
@@ -124,9 +130,7 @@ public class FollowPresentImpl implements FollowPresent {
                if(appointmentUserActivityView != null){
                    appointmentUserActivityView.addFollowResult(baseBean);
                }
-                if(followFragmentView != null){
-                    followFragmentView.addFollowResult(baseBean);
-                }
+                followFragment.addFollowResult(baseBean);
             }
         },id);
     }
@@ -139,9 +143,7 @@ public class FollowPresentImpl implements FollowPresent {
                 if(appointmentUserActivityView != null){
                     appointmentUserActivityView.cancelFollowResult(baseBean);
                 }
-                if(followFragmentView != null){
-                    followFragmentView.cancelFollowResult(baseBean);
-                }
+                followFragment.cancelFollowResult(baseBean);
             }
         },id);
     }

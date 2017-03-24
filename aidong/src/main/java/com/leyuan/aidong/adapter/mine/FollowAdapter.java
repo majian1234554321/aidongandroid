@@ -24,11 +24,9 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.UserHolder
     private Context context;
     private List<UserBean> data = new ArrayList<>();
     private FollowListener followListener;
-    private boolean isFollow;
 
-    public FollowAdapter(Context context,boolean isFollow) {
+    public FollowAdapter(Context context) {
         this.context = context;
-        this.isFollow = isFollow;
     }
 
     public void setData(List<UserBean> data) {
@@ -54,7 +52,7 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.UserHolder
         holder.distance.setText(bean.getSignature());
         holder.gender.setBackgroundResource("0".equals(bean.getGender()) ? R.drawable.icon_man
                 :R.drawable.icon_woman);
-        holder.follow.setBackgroundResource(SystemInfoUtils.isFollow(context,bean)
+        holder.follow.setBackgroundResource(SystemInfoUtils.isFollow(context, bean)
                 ? R.drawable.icon_following : R.drawable.icon_follow);
 
         holder.follow.setOnClickListener(new View.OnClickListener() {
@@ -107,5 +105,22 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.UserHolder
         void onAddFollow(String id,int position);
         void onCancelFollow(String id,int position);
         void onItemClick(String id);
+    }
+
+    public static class SimpleFollowListener implements FollowListener{
+        @Override
+        public void onAddFollow(String id, int position) {
+
+        }
+
+        @Override
+        public void onCancelFollow(String id, int position) {
+
+        }
+
+        @Override
+        public void onItemClick(String id) {
+
+        }
     }
 }

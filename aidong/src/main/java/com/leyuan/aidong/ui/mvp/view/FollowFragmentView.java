@@ -10,12 +10,11 @@ import java.util.List;
  * Created by song on 2016/8/19.
  */
 public interface FollowFragmentView {
-    /**
-     * 更新列表
-     * @param userBeanList
-     */
-    void updateRecyclerView(List<UserBean> userBeanList);
 
+
+    void onRefreshData(List<UserBean> userBeanList);
+
+    void onLoadMoreData(List<UserBean> userBeanList);
     /**
      * 显示FooterView，提示没有任何内容了
      */

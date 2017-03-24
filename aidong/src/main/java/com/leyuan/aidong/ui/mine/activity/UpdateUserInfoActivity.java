@@ -115,7 +115,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
         tvFrequency = (ExtendTextView) findViewById(R.id.frequency);
         tvNickname.setRightContent(profileBean.getName() == null ? "请输入昵称" : profileBean.getName());
         tvGender.setRightContent("0".equals(profileBean.getGender()) ? "男" : "女");
-        tvIdentify.setRightContent("coach".equals(profileBean.getUser_type()) ? "教练" : "健身爱好者");
+        tvIdentify.setRightContent("coach".equals(profileBean.getUserType()) ? "教练" : "健身爱好者");
         tvSignature.setRightContent(profileBean.getSignature());
         tvAddress.setRightContent(profileBean.getProvince() + profileBean.getCity() + profileBean.getArea());
         tvBirthday.setRightContent(profileBean.getBirthday());

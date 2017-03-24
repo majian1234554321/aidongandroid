@@ -70,7 +70,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:left_text="支付时间:"
-        app:line_color="@color/transparent"/>
+        app:line_color="@color/transparent"
+        android:visibility="gone"/>
 
     <com.leyuan.aidong.widget.ExtendTextView
         android:id="@+id/tv_pay_type"

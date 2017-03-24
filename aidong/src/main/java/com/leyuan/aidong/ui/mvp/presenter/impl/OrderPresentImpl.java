@@ -134,6 +134,23 @@ public class OrderPresentImpl implements OrderPresent {
         }, list, page);
     }
 
+
+    @Override
+    public void getOrderDetail(String id) {
+        orderModel.getOrderDetail(new BaseSubscriber<OrderDetailData>(context) {
+            @Override
+            public void onNext(OrderDetailData orderDetailData) {
+                OrderDetailBean orderDetailBean = null;
+                if (orderDetailData != null && orderDetailData.getOrder() != null) {
+                    orderDetailBean = orderDetailData.getOrder();
+                }
+                if (orderDetailBean != null) {
+                    orderDetailActivityView.setOrderDetail(orderDetailBean);
+                }
+            }
+        },id);
+    }
+
     @Override
     public void getOrderDetail(final SwitcherLayout switcherLayout,String id) {
         orderModel.getOrderDetail(new CommonSubscriber<OrderDetailData>(switcherLayout) {
@@ -158,7 +175,12 @@ public class OrderPresentImpl implements OrderPresent {
         orderModel.cancelOrder(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
-                orderFragmentView.cancelOrderResult(baseBean);
+                if(orderFragmentView != null) {
+                    orderFragmentView.cancelOrderResult(baseBean);
+                }
+                if(orderDetailActivityView != null) {
+                    orderDetailActivityView.cancelOrderResult(baseBean);
+                }
             }
         }, id);
     }
@@ -168,7 +190,12 @@ public class OrderPresentImpl implements OrderPresent {
         orderModel.confirmOrder(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
-                orderFragmentView.confirmOrderResult(baseBean);
+                if(orderFragmentView != null) {
+                    orderFragmentView.confirmOrderResult(baseBean);
+                }
+                if(orderDetailActivityView != null) {
+                    orderDetailActivityView.confirmOrderResult(baseBean);
+                }
             }
         }, id);
     }
@@ -178,7 +205,12 @@ public class OrderPresentImpl implements OrderPresent {
         orderModel.deleteOrder(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
-                orderFragmentView.deleteOrderResult(baseBean);
+                if(orderFragmentView != null) {
+                    orderFragmentView.deleteOrderResult(baseBean);
+                }
+                if(orderDetailActivityView != null) {
+                    orderDetailActivityView.deleteOrderResult(baseBean);
+                }
             }
         }, id);
     }

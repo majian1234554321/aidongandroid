@@ -6,8 +6,10 @@ import com.leyuan.aidong.entity.AddressBean;
 import com.leyuan.aidong.entity.data.AddressListData;
 import com.leyuan.aidong.entity.data.CouponData;
 import com.leyuan.aidong.entity.data.PayOrderData;
+import com.leyuan.aidong.entity.data.ShopData;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
+import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.module.pay.AliPay;
 import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.module.pay.WeiXinPay;
@@ -136,5 +138,21 @@ public class ConfirmOrderPresentImpl implements ConfirmOrderPresent{
                 payInterface.payOrder(payOrderData.getOrder());
             }
         },integral,coin,coupon,payType,pickUpId,pickUpDate,id);
+    }
+
+    @Override
+    public void refreshCartData() {
+        if(cartModel == null) {
+            cartModel = new CartModelImpl();
+        }
+
+        cartModel.getCart(new RefreshSubscriber<ShopData>(context) {
+            @Override
+            public void onNext(ShopData shopData) {
+                if(shopData != null && shopData.getCart() != null  && !shopData.getCart().isEmpty()){
+                    orderActivityView.setRefreshCartDataResult(shopData.getCart());
+                }
+            }
+        });
     }
 }

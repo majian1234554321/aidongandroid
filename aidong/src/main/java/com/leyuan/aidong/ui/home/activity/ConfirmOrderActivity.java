@@ -25,8 +25,10 @@ import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.module.pay.SimplePayListener;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.activity.AddAddressActivity;
+import com.leyuan.aidong.ui.mine.activity.CartActivity;
 import com.leyuan.aidong.ui.mine.activity.SelectAddressActivity;
 import com.leyuan.aidong.ui.mine.activity.SelectCouponActivity;
+import com.leyuan.aidong.ui.mine.activity.UpdateDeliveryInfoActivity;
 import com.leyuan.aidong.ui.mvp.presenter.ConfirmOrderPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.ConfirmOrderPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.ConfirmOrderActivityView;
@@ -49,6 +51,7 @@ import static com.leyuan.aidong.utils.Constant.EXPRESS_PRICE;
 import static com.leyuan.aidong.utils.Constant.REQUEST_ADD_ADDRESS;
 import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_ADDRESS;
 import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_COUPON;
+import static com.leyuan.aidong.utils.Constant.REQUEST_UPDATE_DELIVERY;
 
 
 /**
@@ -56,7 +59,7 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_COUPON;
  * Created by song on 2016/9/23.
  */
 public class ConfirmOrderActivity extends BaseActivity implements View.OnClickListener,
-        CustomNestRadioGroup.OnCheckedChangeListener ,ConfirmOrderActivityView{
+        CustomNestRadioGroup.OnCheckedChangeListener ,ConfirmOrderActivityView, ConfirmOrderShopAdapter.DeliveryTypeListener {
     private SimpleTitleBar titleBar;
     private LinearLayout contentLayout;
     private SwitcherLayout switcherLayout;
@@ -116,6 +119,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
     private ConfirmOrderPresent present;
 
+
     public static void start(Context context, ShopBean shop) {
         Intent starter = new Intent(context, ConfirmOrderActivity.class);
         starter.putExtra("shop",shop);
@@ -140,7 +144,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             bottomLayout.setVisibility(View.GONE);
             present.getDefaultAddress(switcherLayout);
         }
-        present.getSpecifyGoodsCoupon(CouponType.CART,itemIds);
+        present.getSpecifyGoodsCoupon(couponType,itemIds);
     }
 
     private void initVariable(){
@@ -250,6 +254,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         tvPay.setOnClickListener(this);
         radioGroup.setOnCheckedChangeListener(this);
         selfDeliveryLayout.setOnClickListener(this);
+        shopAdapter.setListener(this);
     }
 
     @Override
@@ -280,6 +285,13 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onDeliveryTypeClick(int position) {
+        Intent intent = new Intent(this, UpdateDeliveryInfoActivity.class);
+        intent.putExtra("shopBean",shopBeanList.get(position));
+        startActivityForResult(intent,REQUEST_UPDATE_DELIVERY);
     }
 
     private void payOrder(){
@@ -357,8 +369,21 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     }
 
     @Override
+    public void setRefreshCartDataResult(List<ShopBean> updatedList) {
+        if(updatedList != null) {
+            shopBeanList = updatedList;
+            shopAdapter.setData(shopBeanList);
+
+            Intent intent = new Intent(this, CartActivity.class);
+            intent.putParcelableArrayListExtra("shopBeanList",
+                    (ArrayList<? extends Parcelable>) shopBeanList);
+            setResult(RESULT_OK,intent);
+        }
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(data != null){
+        if(resultCode == RESULT_OK){
             if(requestCode == REQUEST_SELECT_ADDRESS){
                 AddressBean address = data.getParcelableExtra("address");
                 setAddressInfo(address);
@@ -374,6 +399,8 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 double deliveryPrice = needExpress ? EXPRESS_PRICE : 0;
                 tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double),
                         totalGoodsPrice + deliveryPrice - FormatUtil.parseDouble(couponBean.getDiscount())));
+            }else if(requestCode == REQUEST_UPDATE_DELIVERY){
+                present.refreshCartData();
             }
         }
     }
@@ -399,4 +426,5 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         tvAddress.setText(sb);
         pickUpId = address.getId();
     }
+
 }

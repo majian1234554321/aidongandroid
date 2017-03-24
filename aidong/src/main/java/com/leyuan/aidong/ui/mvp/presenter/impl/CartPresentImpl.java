@@ -25,19 +25,11 @@ import com.leyuan.aidong.widget.SwitcherLayout;
  * Created by song on 2016/9/8.
  */
 public class CartPresentImpl implements CartPresent{
-    private static final String TYPE = "cart";
     private Context context;
     private CartModel cartModel;
     private CartHeaderView cartHeaderView;
     private GoodsSkuPopupWindowView skuPopupWindowView;
     private UpdateDeliveryInfoActivityView updateDeliveryInfoActivityView;
-
-    public CartPresentImpl(Context context) {
-        this.context = context;
-        if(cartModel == null){
-            cartModel = new CartModelImpl();
-        }
-    }
 
     public CartPresentImpl(Context context, CartHeaderView cartHeaderView) {
         this.context = context;

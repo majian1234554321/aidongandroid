@@ -17,6 +17,15 @@ public class OrderDetailBean {
     private String created_at;
     private PayOrderBean pay_option;
     private List<ParcelBean> parcel;
+    private String pay_type;
+
+    public String getPay_type() {
+        return pay_type;
+    }
+
+    public void setPay_type(String pay_type) {
+        this.pay_type = pay_type;
+    }
 
     public String getCreatedAt() {
         return created_at;
