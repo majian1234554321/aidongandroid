@@ -54,8 +54,11 @@ public class SplashPresenterImpl {
     public void checkPermission(PermissionManager.OnCheckPermissionListener permissionListener) {
         //        PermissionsUtil.checkAndRequestPermissions(this, null);
         Map<String, String> map = new HashMap<>();
-        map.put(Manifest.permission.ACCESS_FINE_LOCATION, "请打开定位服务，以免造成上课无法正常签到");
+        map.put(Manifest.permission.ACCESS_FINE_LOCATION, "请打开定位服务，以正常使用应用");
         map.put(Manifest.permission.CALL_PHONE, "请打开电话服务，以正常使用应用");
+        map.put(Manifest.permission.CAMERA, "请打开相机权限,以正常使用应用");
+        map.put(Manifest.permission.RECORD_AUDIO, "请打开录音权限,以正常使用应用");
+        map.put(Manifest.permission.READ_EXTERNAL_STORAGE, "请打开读取权限,以正常使用应用");
 
         permissionManager = new PermissionManager(map, context, permissionListener);
         permissionManager.checkPermissionList();

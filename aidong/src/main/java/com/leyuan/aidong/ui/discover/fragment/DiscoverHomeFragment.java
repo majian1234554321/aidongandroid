@@ -91,13 +91,12 @@ public class DiscoverHomeFragment extends BaseFragment implements SmartTabLayout
         View tabView = LayoutInflater.from(getContext()).inflate(R.layout.tab_text_with_notification, container, false);
         TextView text = (TextView) tabView.findViewById(R.id.tv_tab_text);
         TextView tip = (TextView) tabView.findViewById(R.id.tv_tab_tip);
+        tip.setVisibility(View.GONE);
         if(position == 0){
             text.setText(R.string.tab_discover);
             text.setTypeface(Typeface.DEFAULT_BOLD);
-            tip.setVisibility(View.GONE);
         }else {
             text.setText(R.string.tab_sport_circle);
-            tip.setVisibility(View.VISIBLE);
         }
         allTabView.add(tabView);
         return tabView;

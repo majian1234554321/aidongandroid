@@ -430,6 +430,15 @@
             android:src="@drawable/mine_shopping_basket" />
 
         <ImageView
+            android:id="@+id/img_new_shop"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="37dp"
+            android:src="@drawable/shape_circle_red"
+            android:visibility="gone" />
+
+        <ImageView
             android:id="@+id/img_new_message"
             android:layout_width="8dp"
             android:layout_height="8dp"

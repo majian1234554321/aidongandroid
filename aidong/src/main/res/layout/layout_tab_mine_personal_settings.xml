@@ -91,6 +91,7 @@
                 android:background="@color/e_five" />
 
             <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/layout_tab_mine_personal_settings_binding_third_party_community_rel"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/pref_45dp"
@@ -123,32 +124,6 @@
                 android:layout_marginLeft="@dimen/pref_15dp"
                 android:layout_marginTop="@dimen/pref__1dp"
                 android:background="@color/e_five" />
-
-            <RelativeLayout
-                android:id="@+id/layout_tab_mine_personal_settings_message_reminder_rel"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/pref_45dp"
-                android:layout_below="@+id/layout_tab_mine_personal_settings_binding_third_party_community_rel"
-                android:background="@color/color_white" >
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/pref_15dp"
-                    android:src="@drawable/jiantou_two" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/pref_15dp"
-                    android:text="@string/message_reminder"
-                    android:textColor="@color/color_black"
-                    android:textSize="@dimen/pref_16dp" />
-            </RelativeLayout>
 
             <ImageView
                 android:layout_width="match_parent"
@@ -342,15 +317,74 @@
                 android:layout_height="@dimen/pref_0.5dp"
                 android:layout_below="@+id/layout_tab_mine_feedback_rel"
                 android:layout_marginTop="@dimen/pref_19dp"
+                android:background="@color/color_list_distance"
+                android:id="@+id/imageView2" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_0.5dp"
+                android:layout_below="@+id/layout_tab_mine_personal_settings_contactus_rel"
                 android:background="@color/color_list_distance" />
+
+            <Button
+                android:id="@+id/button_personal_settings_unlogin"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_50dp"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/layout_tab_mine_personal_settings_contactus_rel"
+                android:layout_marginLeft="@dimen/pref_10dp"
+                android:layout_marginRight="@dimen/pref_10dp"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/shape_radius_origin"
+                android:text="@string/unlogin"
+                android:textColor="@color/color_white"
+                android:textSize="@dimen/pref_16dp" />
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/pref_15dp"
+                android:layout_below="@id/button_personal_settings_unlogin"
+                android:layout_marginLeft="@dimen/pref_12dp"
+                android:layout_marginRight="@dimen/pref_12dp" >
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layout_tab_mine_personal_settings_message_reminder_rel"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_45dp"
+                android:background="@color/color_white"
+                android:visibility="gone"
+                android:layout_below="@+id/layout_tab_mine_personal_settings_binding_mobile_phone_rel"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/pref_15dp"
+                    android:src="@drawable/jiantou_two" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/pref_15dp"
+                    android:text="@string/message_reminder"
+                    android:textColor="@color/color_black"
+                    android:textSize="@dimen/pref_16dp" />
+            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/layout_tab_mine_personal_settings_contactus_rel"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/pref_45dp"
-                android:layout_below="@id/layout_tab_mine_feedback_rel"
-                android:layout_marginTop="@dimen/pref_20dp"
-                android:background="@color/color_white" >
+                android:background="@color/color_white"
+                android:layout_alignTop="@+id/imageView2"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true">
 
                 <ImageView
                     android:id="@+id/layout_tab_mine_personal_settings_contactus_go"
@@ -378,37 +412,9 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/pref_5dp"
                     android:layout_toLeftOf="@+id/layout_tab_mine_personal_settings_contactus_go"
-                    android:text=""
+                    android:text="021-54730961"
                     android:textColor="@color/actionsheet_gray"
                     android:textSize="@dimen/pref_16dp" />
-            </RelativeLayout>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/pref_0.5dp"
-                android:layout_below="@+id/layout_tab_mine_personal_settings_contactus_rel"
-                android:background="@color/color_list_distance" />
-
-            <Button
-                android:id="@+id/button_personal_settings_unlogin"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/pref_50dp"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/layout_tab_mine_personal_settings_contactus_rel"
-                android:layout_marginLeft="@dimen/pref_10dp"
-                android:layout_marginRight="@dimen/pref_10dp"
-                android:layout_marginTop="@dimen/pref_25dp"
-                android:background="@drawable/shape_radius_origin"
-                android:text="@string/unlogin"
-                android:textColor="@color/color_white"
-                android:textSize="@dimen/pref_16dp" />
-
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/pref_15dp"
-                android:layout_below="@id/button_personal_settings_unlogin"
-                android:layout_marginLeft="@dimen/pref_12dp"
-                android:layout_marginRight="@dimen/pref_12dp" >
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>

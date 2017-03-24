@@ -3,6 +3,7 @@ package com.leyuan.aidong.http.api;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.data.DynamicsData;
 import com.leyuan.aidong.entity.data.UserInfoData;
+import com.leyuan.aidong.entity.user.MineInfoBean;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -18,6 +19,15 @@ import rx.Observable;
  * Created by song on 2017/1/16.
  */
 public interface UserInfoService {
+    @GET("mine")
+    Observable<BaseBean<MineInfoBean>> getMineInfo();
+
+    @FormUrlEncoded
+    @PUT("mine/reset_password")
+    Observable<BaseBean> updatePassword(@Field("password") String oldPassword,
+                                        @Field("new_password") String new_password,
+                                        @Field("confirm_password") String confirm_password);
+
 
     @GET("users/{idongId}/profile")
     Observable<BaseBean<UserInfoData>> getUserInfo(@Path("idongId") String idongId);

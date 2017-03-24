@@ -1,7 +1,9 @@
 package com.leyuan.aidong.ui.mvp.model;
 
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.data.DynamicsData;
 import com.leyuan.aidong.entity.data.UserInfoData;
+import com.leyuan.aidong.entity.user.MineInfoBean;
 
 import rx.Subscriber;
 
@@ -33,4 +35,9 @@ public interface UserInfoModel {
                         String frequency);
 
     void getUserDynamic(Subscriber<DynamicsData> subscriber,String id, int page);
+
+    void getMineInfo(Subscriber<MineInfoBean> subscriber);
+
+    void updatePassword(Subscriber<BaseBean> subscriber, String oldPassword,
+                        String new_password, String confirm_password);
 }

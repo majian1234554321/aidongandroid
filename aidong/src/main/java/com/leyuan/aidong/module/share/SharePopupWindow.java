@@ -125,7 +125,7 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
      * @param response
      */
     @Deprecated
-    public void onNewIntent(Intent intent, IWeiboHandler.Response response) {
+    private void onNewIntent(Intent intent, IWeiboHandler.Response response) {
         myShareUtils.onNewIntent(intent, response);
     }
 
@@ -136,7 +136,7 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
     }
 
     @Deprecated
-    public void onResponse(BaseResponse baseResponse) {
+    private void onResponse(BaseResponse baseResponse) {
         if (baseResponse != null) {
             Logger.i("share", "weibo share baseResponse.errCode = " + baseResponse.errCode);
             switch (baseResponse.errCode) {

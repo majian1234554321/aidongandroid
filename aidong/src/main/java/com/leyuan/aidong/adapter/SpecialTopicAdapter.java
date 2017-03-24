@@ -11,10 +11,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.video.SpecialTopicInfo;
 import com.leyuan.aidong.ui.video.fragment.SpecialTopicFragment;
-import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.Logger;
 
 import java.util.ArrayList;
@@ -51,7 +51,6 @@ public class SpecialTopicAdapter extends RecyclerView.Adapter<SpecialTopicAdapte
         item_max_alpha = context.getResources().getFraction(R.fraction.item_max_mask_alpha, 1, 1);
 
 
-
     }
 
     @Override
@@ -73,8 +72,8 @@ public class SpecialTopicAdapter extends RecyclerView.Adapter<SpecialTopicAdapte
     }
 
     public void addData(ArrayList<SpecialTopicInfo> infos) {
-        if (infos != null) {
-            indexs.add(mInfos.size()-1);
+        if (infos != null && !infos.isEmpty()) {
+            indexs.add(mInfos.size() - 1);
             this.mInfos.addAll(infos);
             this.notifyDataSetChanged();
         }
@@ -109,7 +108,7 @@ public class SpecialTopicAdapter extends RecyclerView.Adapter<SpecialTopicAdapte
                 //                if (i == 0 || SpecialTopicFragment.scrollDirection == 0) {
                 //                    isFirst = false;
                 if (indexs.contains(i) || SpecialTopicFragment.scrollDirection == 0) {
-                    Logger.i("indexs.contains i = " + i);
+                    Logger.i("SpecialTopicFragment", "indexs.contains i = " + i);
                     holder.relView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, item_max_height));
                     //                    holder.mark.setAlpha(item_max_alpha);
                     holder.txt_type.setTextSize(TypedValue.COMPLEX_UNIT_PX, item_max_font_size);
@@ -135,12 +134,13 @@ public class SpecialTopicAdapter extends RecyclerView.Adapter<SpecialTopicAdapte
                     //                    holder.txt_course.setTextColor(0x00ffffff);
                 }
                 final SpecialTopicInfo info = mInfos.get(i);
-                GlideLoader.getInstance().displayImage(info.getLatest().getCover(), holder.imgView);
+                Glide.with(mContext).load(info.getLatest().getCover())
+                        .placeholder(R.drawable.icon_found).into(holder.imgView);
                 holder.txt_belong.setText("" + info.getLatest().getAuthor());
                 holder.txt_type.setText("" + info.getName());
-                if(info.getFinished()){
+                if (info.getFinished()) {
                     holder.txt_course.setText("/共" + info.getLatest().getPhase() + "集/");
-                }else{
+                } else {
                     holder.txt_course.setText("更新 / 第" + info.getLatest().getPhase() + "集 /");
                 }
 

@@ -17,11 +17,11 @@ import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.model.UserCoach;
+import com.leyuan.aidong.entity.user.MineInfoBean;
 import com.leyuan.aidong.module.chat.manager.EmMessageManager;
 import com.leyuan.aidong.receivers.ChatMessageReceiver;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
-import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mine.activity.AddressActivity;
 import com.leyuan.aidong.ui.mine.activity.AiDongMomentActivity;
 import com.leyuan.aidong.ui.mine.activity.ApplyServiceActivity;
@@ -32,8 +32,11 @@ import com.leyuan.aidong.ui.mine.activity.FollowActivity;
 import com.leyuan.aidong.ui.mine.activity.LoveCoinActivity;
 import com.leyuan.aidong.ui.mine.activity.MessageActivity;
 import com.leyuan.aidong.ui.mine.activity.OrderActivity;
-import com.leyuan.aidong.ui.mine.activity.setting.TabMinePersonalSettingsActivity;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
+import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
+import com.leyuan.aidong.ui.mine.activity.setting.TabMinePersonalSettingsActivity;
+import com.leyuan.aidong.ui.mvp.presenter.impl.MineInfoPresenterImpl;
+import com.leyuan.aidong.ui.mvp.view.MineInfoView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.ToastUtil;
@@ -41,19 +44,20 @@ import com.leyuan.aidong.utils.UiManager;
 import com.leyuan.aidong.widget.AidongMineItem;
 
 
-public class MineFragment extends BaseFragment implements View.OnClickListener {
+public class MineFragment extends BaseFragment implements View.OnClickListener, MineInfoView {
 
     private View rootView;
     private LinearLayout layout_no_login, linearLayout_guanzhu, linearLayout_beiguanzhu, layout_hot;
     private ImageButton button_login, btn_shop_car, btn_message;
     private RelativeLayout relativeLayout_my_logo, relativeLayout_yuyue, relativeLayout_dingdang;
-    private ImageView imageView_head, img_new_message;
+    private ImageView imageView_head, img_new_message, img_new_shop;
     private ImageView imageView_xinbie;
     private TextView textView_name, textView_guanzhushu, textView_beiguanzhushu, textView_popularity, textView_yysl, textView_yyjrw, textView_dd, textView_ddjrw;
     private AidongMineItem item_my_coin, item_my_coupon, item_sport_timing, item_address,
             item_recommend_friend, item_after_sale, item_setting;
     private UserCoach user;
     private ChatMessageReceiver chatMessageReceiver;
+    private MineInfoPresenterImpl presenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,6 +74,12 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         return rootView;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        presenter = new MineInfoPresenterImpl(getActivity(), this);
+    }
+
     private void initView() {
         layout_no_login = (LinearLayout) rootView.findViewById(R.id.layout_no_login);
         linearLayout_guanzhu = (LinearLayout) rootView.findViewById(R.id.linearLayout_guanzhu);
@@ -80,7 +90,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         btn_shop_car = (ImageButton) rootView.findViewById(R.id.btn_shop_car);
         btn_message = (ImageButton) rootView.findViewById(R.id.btn_message);
         img_new_message = (ImageView) rootView.findViewById(R.id.img_new_message);
-
+        img_new_shop = (ImageView) rootView.findViewById(R.id.img_new_shop);
         relativeLayout_my_logo = (RelativeLayout) rootView.findViewById(R.id.relativeLayout_my_logo);
         relativeLayout_yuyue = (RelativeLayout) rootView.findViewById(R.id.relativeLayout_yuyue);
         relativeLayout_dingdang = (RelativeLayout) rootView.findViewById(R.id.relativeLayout_dingdang);
@@ -136,17 +146,18 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         img_new_message.setVisibility(EmMessageManager.isHaveUnreadMessage() ? View.VISIBLE : View.GONE);
+
         if (App.mInstance.isLogin()) {
             relativeLayout_my_logo.setVisibility(View.VISIBLE);
             layout_no_login.setVisibility(View.GONE);
             user = App.mInstance.getUser();
             textView_name.setText(user.getName());
-//            +"- " +user.getMobile()+"https://www.zhihu.com/question/31660075"
-            //imageView_head.setImageURI(Uri.parse(user.getAvatar()));
+            presenter.getMineInfo();
             GlideLoader.getInstance().displayCircleImage(user.getAvatar(), imageView_head);
         } else {
             relativeLayout_my_logo.setVisibility(View.GONE);
             layout_no_login.setVisibility(View.VISIBLE);
+            img_new_shop.setVisibility(View.GONE);
         }
     }
 
@@ -215,5 +226,17 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public void onDestroy() {
         super.onDestroy();
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(chatMessageReceiver);
+    }
+
+    @Override
+    public void onGetMineInfo(MineInfoBean mineInfoBean) {
+        img_new_shop.setVisibility(mineInfoBean.getCart_items_count() > 0 ? View.VISIBLE : View.GONE);
+        textView_guanzhushu.setText(mineInfoBean.getFollowings_count() + "");
+        textView_beiguanzhushu.setText(mineInfoBean.getFollowers_count() + "");
+        textView_yysl.setText(mineInfoBean.getAppointed_count() + "");
+        textView_yyjrw.setText(mineInfoBean.getAppointing_count() + "");
+        textView_dd.setText(mineInfoBean.getPaid_orders_count() + "");
+        textView_ddjrw.setText(mineInfoBean.getUnpay_orders_count() + "");
+        textView_popularity.setText(mineInfoBean.getView_count());
     }
 }

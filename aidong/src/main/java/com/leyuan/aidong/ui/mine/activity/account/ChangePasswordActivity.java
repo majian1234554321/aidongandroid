@@ -6,11 +6,11 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.ChangePasswordPresenter;
 import com.leyuan.aidong.ui.mvp.view.ChangePasswordViewInterface;
 import com.leyuan.aidong.utils.ToastUtil;
+import com.leyuan.aidong.utils.UiManager;
 import com.leyuan.aidong.widget.CommonTitleLayout;
 
 
@@ -83,11 +83,11 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
     }
 
     @Override
-    public void onChangePasswordResult(UserCoach user) {
-        if (user != null) {
-            ToastUtil.showShort(this, "密码修改成功");
-        } else {
-            ToastUtil.showShort(this, "修改失败 请重新提交");
+    public void onChangePasswordResult(boolean success) {
+        if (success) {
+            ToastUtil.showShort(this, "密码修改成功 请重新登录");
+            UiManager.activityJump(this, LoginActivity.class);
+            finish();
         }
     }
 }
