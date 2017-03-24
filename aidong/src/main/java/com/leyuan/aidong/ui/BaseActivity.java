@@ -23,6 +23,7 @@ import com.leyuan.aidong.ui.home.activity.CampaignDetailActivity;
 import com.leyuan.aidong.ui.home.activity.CourseActivity;
 import com.leyuan.aidong.ui.home.activity.CourseDetailActivity;
 import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
+import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ScreenUtil;
 import com.leyuan.aidong.utils.constant.GoodsType;
@@ -59,6 +60,7 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
         synchronized (mActivities) {
             mActivities.remove(this);
         }
+        DialogUtils.releaseDialog();
     }
 
     public void exitApp() {

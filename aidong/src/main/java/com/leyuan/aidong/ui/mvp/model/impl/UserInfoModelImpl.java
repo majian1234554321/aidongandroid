@@ -96,4 +96,12 @@ public class UserInfoModelImpl implements UserInfoModel {
                 .subscribe(subscriber);
     }
 
+    @Override
+    public void hideSelf(Subscriber<BaseBean> subscriber, String isHide) {
+        userInfoService.hideSelf(isHide)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
 }

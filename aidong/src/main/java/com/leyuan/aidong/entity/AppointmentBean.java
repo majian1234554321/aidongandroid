@@ -17,6 +17,7 @@ public class AppointmentBean {
     private String status;                  //订单状态
     private String little_time;             //订单剩余支付时间
     private String payAmount;
+    private String created_at;
 
     public String getId() {
         return id;
@@ -99,6 +100,7 @@ public class AppointmentBean {
     }
 
     public String getLittleTime() {
+
         return little_time;
     }
 
@@ -113,5 +115,13 @@ public class AppointmentBean {
 
     public void setPayAmount(String payAmount) {
         this.payAmount = payAmount;
+    }
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
 }

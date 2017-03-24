@@ -12,8 +12,10 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.AppointmentBean;
+import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.SystemInfoUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +28,12 @@ import cn.iwgang.countdownview.CountdownView;
  */
 public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.AppointmentHolder> {
     private static final String UN_PAID = "pending";         //待付款
-    private static final String UN_JOIN= "purchased";        //待参加
+    private static final String UN_JOIN = "purchased";        //待参加
     private static final String JOINED = "confirmed";        //已参加
     private static final String CLOSE = "canceled";          //已关闭
     private static final String REFUNDING = "refunding";     //退款中
     private static final String REFUNDED = "refunded";       //已退款
+    private long APPOINT_COUNTDOWN_MILL;
 
     private Context context;
     private List<AppointmentBean> data = new ArrayList<>();
@@ -38,10 +41,11 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
     public AppointmentAdapter(Context context) {
         this.context = context;
+        APPOINT_COUNTDOWN_MILL = SystemInfoUtils.getAppointmentCountdown(context) * 60 * 1000;
     }
 
     public void setData(List<AppointmentBean> data) {
-        if(data != null) {
+        if (data != null) {
             this.data = data;
             notifyDataSetChanged();
         }
@@ -54,7 +58,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
     @Override
     public AppointmentHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_appointment,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_appointment, parent, false);
         return new AppointmentHolder(view);
     }
 
@@ -68,7 +72,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         holder.address.setText(bean.getSubName());
         holder.price.setText(String.format(context.getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.getPrice())));
-       // holder.timer.start(Long.parseLong(bean.getLittleTime()) * 1000);
+        holder.timer.start(DateUtils.getCountdown(bean.getCreated_at(), APPOINT_COUNTDOWN_MILL));
 
         //与订单状态有关
         if (TextUtils.isEmpty(bean.getStatus())) return;
@@ -155,14 +159,14 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                appointmentListener.onPayOrder(bean.getAppointmentType(),bean.getId());
+                appointmentListener.onPayOrder(bean.getAppointmentType(), bean.getId());
             }
         });
 
         holder.tvCancelJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(appointmentListener != null){
+                if (appointmentListener != null) {
                     appointmentListener.onCancel(bean.getId());
                 }
             }
@@ -171,7 +175,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         holder.tvDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(appointmentListener != null){
+                if (appointmentListener != null) {
                     appointmentListener.onDeleteOrder(bean.getId());
                 }
             }
@@ -180,7 +184,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         holder.tvConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(appointmentListener != null){
+                if (appointmentListener != null) {
                     appointmentListener.onConfirmJoin(bean.getId());
                 }
             }
@@ -189,8 +193,8 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         holder.tvPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(appointmentListener != null){
-                    appointmentListener.onPayOrder(bean.getAppointmentType(),bean.getId());
+                if (appointmentListener != null) {
+                    appointmentListener.onPayOrder(bean.getAppointmentType(), bean.getId());
                 }
             }
         });
@@ -198,7 +202,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         holder.tvCancelPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(appointmentListener != null){
+                if (appointmentListener != null) {
                     appointmentListener.onCancel(bean.getId());
                 }
             }
@@ -228,7 +232,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             state = (TextView) itemView.findViewById(R.id.tv_state);
             date = (TextView) itemView.findViewById(R.id.tv_date);
             timerLayout = (LinearLayout) itemView.findViewById(R.id.ll_timer);
-            timer = (CountdownView)itemView.findViewById(R.id.timer);
+            timer = (CountdownView) itemView.findViewById(R.id.timer);
             cover = (ImageView) itemView.findViewById(R.id.dv_goods_cover);
             name = (TextView) itemView.findViewById(R.id.tv_name);
             address = (TextView) itemView.findViewById(R.id.tv_address);
@@ -247,9 +251,12 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     }
 
     public interface AppointmentListener {
-        void onPayOrder(String type,String id);
+        void onPayOrder(String type, String id);
+
         void onDeleteOrder(String id);
+
         void onConfirmJoin(String id);
+
         void onCancel(String id);
     }
 }

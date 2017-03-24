@@ -243,4 +243,21 @@ public class DateUtils {
         }
         return time;
     }
+
+
+    public static long getCountdown(String date, String parseType, long totalMilliseconds) {
+        long countdown = 0;
+        Date d = parseDate(date, parseType);
+        if (d != null)
+            countdown = totalMilliseconds - (System.currentTimeMillis() - d.getTime());
+//        Logger.i("countdown", "countdown = " + countdown + ", totalMilliseconds = " + totalMilliseconds
+//                + ", date = " + date + ", d.getTime() = " + d.getTime() + ", currentTimeMillis = " + System.currentTimeMillis());
+        if (countdown < 0)
+            countdown = 0;
+        return countdown;
+    }
+
+    public static long getCountdown(String date, long totalMilliseconds) {
+        return getCountdown(date, yyyyMMddHHmmss, totalMilliseconds);
+    }
 }
