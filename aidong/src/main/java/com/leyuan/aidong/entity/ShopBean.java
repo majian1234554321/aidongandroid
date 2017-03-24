@@ -9,7 +9,7 @@ import java.util.List;
  * 购物车中商家实体
  * Created by song on 2016/9/23.
  */
-public class ShopBean implements Parcelable{
+public class ShopBean implements Parcelable {
     private List<GoodsBean> item;
     private DeliveryBean pick_up;
 
@@ -71,4 +71,16 @@ public class ShopBean implements Parcelable{
             return new ShopBean[size];
         }
     };
+
+    public boolean allItemIsSoldOut() {
+        if (item == null)
+            return true;
+
+        for (GoodsBean bean : item) {
+            if (bean.isOnline() && bean.getStock() != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

@@ -10,16 +10,21 @@ import java.util.ArrayList;
  * Created by song on 2016/7/14.
  */
 public class GoodsBean implements Parcelable {
-    private  String sku_code;      //商品编码
-    private  String id;
-    private  String code;
-    private  String cover;         //商品封面
-    private  String name;          //商品名字
-    private  String price;         //商品售价
-    private  String market_price;  //商品市场价
-    private  String type;
+    private static final int OUT_OF_STOCK = 1;
+    private static final int SOLD_OUT = 2;
+    private static final int ON_SALE = 3;
+    private String sku_code;      //商品编码
+    private String id;
+    private String code;
+    private String cover;         //商品封面
+    private String name;          //商品名字
+    private String price;         //商品售价
+    private String market_price;  //商品市场价
+    private String type;
 
-    /******订单商品中需要用到的字段******/
+    /******
+     * 订单商品中需要用到的字段
+     ******/
     private ArrayList<String> spec_name;
     private ArrayList<String> spec_value;
     private String amount;                  //商品数量
@@ -28,9 +33,23 @@ public class GoodsBean implements Parcelable {
     private boolean checked = false;        //标记商品是否被选中
 
 
-    /**购物车中商品id为product_id type为product_type id为该商品在购物车中的排列标记*/
+    /**
+     * 购物车中商品id为product_id type为product_type id为该商品在购物车中的排列标记
+     */
     private String product_id;
     private String product_type;
+    private boolean online;
+    private int stock;
+
+    public int getSoldState(){
+        if(!online){
+            return OUT_OF_STOCK;
+        }else if(stock <= 0){
+            return SOLD_OUT;
+        }else {
+            return ON_SALE;
+        }
+    }
 
     public String getProductId() {
         return product_id;
@@ -46,6 +65,30 @@ public class GoodsBean implements Parcelable {
 
     public void setProduct_type(String product_type) {
         this.product_type = product_type;
+    }
+
+    public String getSku_code() {
+        return sku_code;
+    }
+
+    public void setSku_code(String sku_code) {
+        this.sku_code = sku_code;
+    }
+
+    public boolean isOnline() {
+        return online;
+    }
+
+    public void setOnline(boolean online) {
+        this.online = online;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
     public String getSkuCode() {
@@ -192,6 +235,8 @@ public class GoodsBean implements Parcelable {
         dest.writeByte(this.checked ? (byte) 1 : (byte) 0);
         dest.writeString(this.product_id);
         dest.writeString(this.product_type);
+        dest.writeByte(this.online ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.stock);
     }
 
     public GoodsBean() {
@@ -214,6 +259,8 @@ public class GoodsBean implements Parcelable {
         this.checked = in.readByte() != 0;
         this.product_id = in.readString();
         this.product_type = in.readString();
+        this.online = in.readByte() != 0;
+        this.stock = in.readInt();
     }
 
     public static final Creator<GoodsBean> CREATOR = new Creator<GoodsBean>() {

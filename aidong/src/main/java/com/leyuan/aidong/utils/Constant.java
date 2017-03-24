@@ -12,6 +12,8 @@ public class Constant {
     public static final String URL_USER_AGREEMENT = BASE_URL + "homepage";
     public static final String URL_SHARE_DYNAMIC = "http://www.ostagram.ru";
 
+    public static final String URL_AFTER_SALES_SERVICE = "http://www.ostagram.ru";
+
     public static final int OK = 1;
     public static final int NOT_LOGIN = 101;
     public static final int PAGE_FIRST = 1;
@@ -44,9 +46,8 @@ public class Constant {
     public static final int BINDING_PHONE_OK = 21;
     public static final String BINDING_PHONE = "binding_phone";
     public static final String DEFAULT_CITY = "上海";
-    public static final String BROADCAST_ACTION_SELECTED_CITY = "com.leyuan.chat.selected_city";
+    public static final String BROADCAST_ACTION_SELECTED_CITY = "com.leyuan.aidong.selected_city";
     public static final int REQUEST_PHONE_BINGDING = 22;
-
 
 
     public static SystemBean systemInfoBean;

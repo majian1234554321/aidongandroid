@@ -3,6 +3,7 @@ package com.leyuan.aidong.adapter.home;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -57,10 +58,11 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (!TextUtils.equals(App.getInstance().getSelectedCity(), str)) {
                     App.getInstance().setSelectedCity(str);
                     ToastUtil.showConsecutiveShort("已切换到" + str);
-                    context.sendBroadcast(new Intent(Constant.BROADCAST_ACTION_SELECTED_CITY));
+                    LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_SELECTED_CITY));
                 }
                 ((Activity) context).finish();
             }

@@ -37,8 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/left_margin"
-                android:paddingRight="@dimen/right_margin">
+                android:paddingLeft="@dimen/left_margin">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -48,7 +47,7 @@
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/tv_input_name"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -57,7 +56,7 @@
                     android:background="@null"
                     android:gravity="right|center_vertical"
                     android:hint="请输入真实姓名"
-                    android:text=""
+                    android:paddingRight="@dimen/right_margin"
                     android:singleLine="true"
                     android:textColor="@color/black"
                     android:textColorHint="@color/c9"
@@ -76,9 +75,9 @@
 
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
                     android:text="手机号:"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
@@ -89,13 +88,13 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
                     android:background="@null"
-                    android:gravity="right|center_vertical"
-                    android:hint="绑定手机号码"
-                    android:inputType="phone"
-                    android:text=""
-                    android:singleLine="true"
                     android:drawablePadding="5dp"
                     android:drawableRight="@drawable/icon_right_arrow"
+                    android:gravity="right|center_vertical"
+                    android:hint="请先绑定手机"
+                    android:inputType="phone"
+                    android:singleLine="true"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textColorHint="@color/c9"
                     android:textSize="15sp" />
@@ -135,10 +134,10 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="20dp"
                     android:layout_toRightOf="@+id/dv_cover"
+                    android:singleLine="true"
                     android:text="课程名"
                     android:textColor="@color/c3"
-                    android:textSize="15sp"
-                    android:singleLine="true"/>
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/tv_shop"
@@ -161,7 +160,7 @@
                 android:layout_height="50dp"
                 android:gravity="center_vertical"
                 app:left_text="课程时间:"
-                app:line_color="@color/transparent"/>
+                app:line_color="@color/transparent" />
 
             <include layout="@layout/inc_line_with_margin" />
 
@@ -171,7 +170,7 @@
                 android:layout_height="50dp"
                 android:gravity="center_vertical"
                 app:left_text="上课地址:"
-                app:line_color="@color/transparent"/>
+                app:line_color="@color/transparent" />
 
             <include layout="@layout/inc_bold_line" />
 
@@ -236,10 +235,10 @@
                     android:textSize="15sp" />
 
                 <Switch
-                    android:text="@null"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"/>
+                    android:layout_gravity="center_vertical"
+                    android:text="@null" />
             </LinearLayout>
 
             <include layout="@layout/inc_bold_line" />
@@ -265,43 +264,44 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="课程总额:"
-                app:line_color="@color/transparent"/>
+                app:line_color="@color/transparent" />
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_coupon_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="优惠劵:"
-                app:line_color="@color/transparent"/>
+                app:line_color="@color/transparent" />
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_discount_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="课程优惠:"
-                app:line_color="@color/transparent"/>
+                app:line_color="@color/transparent" />
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_aibi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="爱币:"
-                app:line_color="@color/transparent"/>
+                app:line_color="@color/transparent" />
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_aidou"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="爱豆:"
-                app:line_color="@color/transparent"/>
+                app:line_color="@color/transparent" />
 
             <!--支付方式-->
 
-            <include layout="@layout/inc_pay_info"/>
+            <include layout="@layout/inc_pay_info" />
 
             <include layout="@layout/inc_bold_line" />
         </LinearLayout>
     </ScrollView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
