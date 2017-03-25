@@ -201,5 +201,4 @@ public class App extends MultiDexApplication {
         return cityLocation;
     }
 
-
 }

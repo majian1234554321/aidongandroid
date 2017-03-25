@@ -2,10 +2,15 @@ package com.leyuan.aidong.ui.video.fragment;
 
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -53,6 +58,20 @@ public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.
             }
         }
     };
+
+    BroadcastReceiver selectCityReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+//            onRefresh();
+        }
+    };
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        IntentFilter filter = new IntentFilter(Constant.BROADCAST_ACTION_SELECTED_CITY);
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(selectCityReceiver, filter);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -141,6 +160,7 @@ public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.
     public void onDestroy() {
         super.onDestroy();
         mHandler.removeCallbacksAndMessages(null);
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(selectCityReceiver);
     }
 
     @Override

@@ -1,7 +1,12 @@
 package com.leyuan.aidong.ui.discover.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -28,6 +33,7 @@ import com.leyuan.aidong.ui.discover.activity.NewsActivity;
 import com.leyuan.aidong.ui.mvp.presenter.DiscoverPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DiscoverPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.DiscoverFragmentView;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.widget.SwitcherLayout;
@@ -60,6 +66,20 @@ public class DiscoverFragment extends BasePageFragment implements DiscoverFragme
     private DiscoverNewsAdapter newsAdapter;
 
     private DiscoverPresent discoverPresent;
+
+    BroadcastReceiver selectCityReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            onRefresh();
+        }
+    };
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        IntentFilter filter = new IntentFilter(Constant.BROADCAST_ACTION_SELECTED_CITY);
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(selectCityReceiver, filter);
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_discover, container, false);
@@ -178,5 +198,12 @@ public class DiscoverFragment extends BasePageFragment implements DiscoverFragme
             default:
                 break;
         }
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(selectCityReceiver);
     }
 }

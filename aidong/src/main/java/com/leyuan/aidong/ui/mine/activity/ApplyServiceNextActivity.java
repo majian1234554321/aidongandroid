@@ -19,6 +19,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.OrderPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AddressListView;
 import com.leyuan.aidong.ui.mvp.view.OrderFeedbackView;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.utils.qiniu.IQiNiuCallback;
 import com.leyuan.aidong.utils.qiniu.UploadQiNiuManager;
@@ -121,8 +122,10 @@ public class ApplyServiceNextActivity extends BaseActivity implements View.OnCli
                 if (addressInfo == null) {
                     ToastUtil.show("请选择联系信息", this);
                 } else if (selectedMedia != null) {
+                    DialogUtils.showDialog(this, "", false);
                     applyToQiNiu(selectedMedia);
                 } else {
+                    DialogUtils.showDialog(this, "", false);
                     applyToService(null);
 
                 }
@@ -140,18 +143,19 @@ public class ApplyServiceNextActivity extends BaseActivity implements View.OnCli
         UploadQiNiuManager.getInstance().uploadImages(selectedMedia, new IQiNiuCallback() {
             @Override
             public void onSuccess(List<String> urls) {
-                applyToService((String[]) (urls.toArray()));
+                applyToService((urls.toArray(new String[0])));
             }
 
             @Override
             public void onFail() {
+                DialogUtils.dismissDialog();
                 Toast.makeText(ApplyServiceNextActivity.this, "上传失败", Toast.LENGTH_LONG).show();
             }
         });
     }
 
     private void applyToService(String[] images) {
-        orderPresent.feedbackOrder(orderId, type + "", (String[]) (items.toArray()), content, images, addressInfo);
+        orderPresent.feedbackOrder(orderId, type + "", (items.toArray(new String[0])), content, images, addressInfo);
     }
 
     @Override
@@ -185,6 +189,7 @@ public class ApplyServiceNextActivity extends BaseActivity implements View.OnCli
 
     @Override
     public void onFeedbackResult(boolean success) {
+        DialogUtils.dismissDialog();
         if (success) {
             ToastUtil.show("申请成功,稍后会有工作人员联系您", this);
             setResult(RESULT_OK, new Intent());
@@ -203,6 +208,12 @@ public class ApplyServiceNextActivity extends BaseActivity implements View.OnCli
             infoLayout.setVisibility(View.GONE);
             tv_new_address.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        DialogUtils.releaseDialog();
     }
 }
 

@@ -6,6 +6,10 @@ import android.content.DialogInterface;
 import android.text.TextUtils;
 
 import com.leyuan.aidong.ui.App;
+import com.leyuan.aidong.widget.dialog.BaseDialog;
+import com.leyuan.aidong.widget.dialog.ButtonCancelListener;
+import com.leyuan.aidong.widget.dialog.ButtonOkListener;
+import com.leyuan.aidong.widget.dialog.DialogDoubleButton;
 
 /**
  * Created by user on 2017/3/20.
@@ -14,26 +18,47 @@ public class LocatinCityManager {
 
     public static void checkLocationCity(Context context) {
         String localCity = App.getInstance().getLocationCity();
-        String openCity = null;
+        boolean localCityIsOpen = false;
         if (localCity == null) {
             return;
         }
         if (SystemInfoUtils.getOpenCity(context).contains(localCity)) {
-            openCity = localCity;
+            localCityIsOpen = true;
         }
-        boolean isFirstCheckLocation = SharePrefUtils.getBoolean(context, "isFirstCheckLocation", true);
+        boolean isFirstCheckLocation = SharePrefUtils.getString(context, "cityLocationLast", null) == null;
         if (isFirstCheckLocation) {
-            if (TextUtils.isEmpty(openCity)) {
-                showNoOpenDialog(context);
+            if (localCityIsOpen) {
+                App.getInstance().setSelectedCity(localCity);
             } else {
-                App.getInstance().setSelectedCity(openCity);
+                showNoOpenDialog(context);
             }
-            SharePrefUtils.putBoolean(context, "isFirstCheckLocation", false);
+        } else if (localCityIsOpen && !TextUtils.equals(localCity, SharePrefUtils.getString(context, "cityLocationLast", null))) {
+            showSelectCityDialog(context, localCity);
         }
-//        else if (openCity != null && !TextUtils.equals(openCity, App.getInstance().getSelectedCity())
-//                && !TextUtils.equals(localCity, ))
+        SharePrefUtils.putString(context, "cityLocationLast", localCity);
+    }
+
+    private static void showSelectCityDialog(Context context, final String cityName) {
+        new DialogDoubleButton(context)
+                .setContentDesc("您当前定位城市为" + cityName + ",是否切换至" + cityName)
+                .setBtnOkListener(new ButtonOkListener() {
+                    @Override
+                    public void onClick(BaseDialog dialog) {
+                        App.getInstance().setSelectedCity(cityName);
+                        dialog.dismiss();
+                    }
+                })
+                .setBtnCancelListener(new ButtonCancelListener() {
+                    @Override
+                    public void onClick(BaseDialog dialog) {
+                        dialog.dismiss();
+                    }
+                })
+
+                .show();
 
     }
+
 
     private static void showNoOpenDialog(Context context) {
         new AlertDialog.Builder(context)

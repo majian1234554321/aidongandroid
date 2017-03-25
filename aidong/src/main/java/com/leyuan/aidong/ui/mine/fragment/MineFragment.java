@@ -200,8 +200,13 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
                 ToastUtil.showConsecutiveShort("暂未开放");
                 break;
             case R.id.item_after_sale:
-//                ApplyServiceActivity.start(getActivity(), "123456", "93843928",
-//                        "http://function.aidong.me/image/1489636182000_0_24.jpg", "营养品", 3);
+//                GoodsBean goodsBean = new GoodsBean();
+//                goodsBean.setName("gnc inc");
+//                goodsBean.setAmount("7");
+//                goodsBean.setId("46");
+//                ArrayList<GoodsBean> arrayList = new ArrayList<>();
+//                arrayList.add(goodsBean);
+//                ApplyServiceActivity.start(getActivity(), "20170325000068", arrayList);
                 WebViewActivity.start(getActivity(), "售后服务", Constant.URL_AFTER_SALES_SERVICE);
                 break;
             case R.id.item_setting:
