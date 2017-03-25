@@ -16,7 +16,9 @@ import com.leyuan.aidong.adapter.home.ConfirmOrderGoodsAdapter;
 import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.entity.OrderBean;
 import com.leyuan.aidong.entity.ParcelBean;
+import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.FormatUtil;
+import com.leyuan.aidong.utils.SystemInfoUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
     private static final String PAID = "purchased";             //已支付
     private static final String FINISHED = "confirmed";         //已完成
     private static final String CLOSED = "canceled";            //已关闭
+    private long ORDER_COUNTDOWN_MILL;
 
     private Context context;
     private List<OrderBean> data = new ArrayList<>();
@@ -39,6 +42,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
 
     public OrderAdapter(Context context) {
         this.context = context;
+        ORDER_COUNTDOWN_MILL = SystemInfoUtils.getAppointmentCountdown(context) * 60 * 1000;
     }
 
     public void setData(List<OrderBean> data) {
@@ -79,6 +83,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
         holder.price.setText(String.format(context.getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.getPayAmount())));
         holder.tvOrderId.setText(String.format(context.getString(R.string.order_no),bean.getId()));
+        holder.timer.start(DateUtils.getCountdown(bean.getCreated_at(), ORDER_COUNTDOWN_MILL));
 
         //与订单状态有关
         if (TextUtils.isEmpty(bean.getStatus())) return;
@@ -189,7 +194,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
         TextView state;                 //订单状态
         TextView tvOrderId;             //订单号
         LinearLayout timerLayout;       //剩余支付时间
-        CountdownView countdownView;    //剩余支付时间
+        CountdownView timer;    //剩余支付时间
         RecyclerView recyclerView;      //商品
         TextView count;                 //商品数量
         TextView payTip;                //实付款或者需付款
@@ -205,7 +210,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
             state = (TextView) itemView.findViewById(R.id.tv_state);
             tvOrderId = (TextView) itemView.findViewById(R.id.tv_order_id);
             timerLayout = (LinearLayout) itemView.findViewById(R.id.ll_timer);
-            countdownView = (CountdownView) itemView.findViewById(R.id.timer);
+            timer = (CountdownView) itemView.findViewById(R.id.timer);
             recyclerView = (RecyclerView) itemView.findViewById(R.id.rv_good);
             count = (TextView) itemView.findViewById(R.id.tv_goods_count);
             payTip = (TextView) itemView.findViewById(R.id.tv_pay_tip);

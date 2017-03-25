@@ -11,7 +11,8 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.GoodsBean;
-import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.MainActivity;
+import com.leyuan.aidong.ui.home.activity.CourseActivity;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 
@@ -66,7 +67,11 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Good
             @Override
             public void onClick(View v) {
                 String t = !TextUtils.isEmpty(bean.getType())?bean.getType(): type ;
-                ((BaseActivity)context).toTargetDetailActivity(t,bean.getId());
+                if("course".equals(t)){
+                    CourseActivity.start(context,bean.getName());       //课程跳列表而不是详情
+                }else {
+                    ((MainActivity)context).toTargetDetailActivity(t,bean.getId());
+                }
             }
         });
     }

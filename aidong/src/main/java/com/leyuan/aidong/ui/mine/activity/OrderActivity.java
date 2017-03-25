@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.mine.activity;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -31,6 +32,8 @@ public class OrderActivity extends BaseActivity implements SmartTabLayout.TabPro
     private SmartTabLayout tabLayout;
     private ViewPager viewPager;
     private List<View> allTabView = new ArrayList<>();
+    private int currentItem;
+    private FragmentPagerItemAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,22 +54,25 @@ public class OrderActivity extends BaseActivity implements SmartTabLayout.TabPro
         pages.add(FragmentPagerItem.of(null, unpaid.getClass(),
                 new Bundler().putString("type",OrderFragment.UN_PAID).get()));
         pages.add(FragmentPagerItem.of(null, selfPickUp.getClass(),
-                new Bundler().putString("type",OrderFragment.SELF_DELIVERY).get()));
+                new Bundler().putString("type",OrderFragment.PAID).get()));
         pages.add(FragmentPagerItem.of(null, express.getClass(),
-                new Bundler().putString("type",OrderFragment.EXPRESS_DELIVERY).get()));
-        final FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(),pages);
+                new Bundler().putString("type",OrderFragment.FINISH).get()));
+        adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(),pages);
 
         viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(currentItem);
         tabLayout.setCustomTabView(this);
         tabLayout.setViewPager(viewPager);
         tabLayout.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
             @Override
             public void onPageSelected(int position) {
+                currentItem = position;
                 for (int i = 0; i < allTabView.size(); i++) {
                     View tabAt = tabLayout.getTabAt(i);
                     TextView text = (TextView) tabAt.findViewById(R.id.tv_tab_text);
                     text.setTypeface(i == position ? Typeface.DEFAULT_BOLD :Typeface.DEFAULT);
                 }
+
             }
         });
 
@@ -76,6 +82,15 @@ public class OrderActivity extends BaseActivity implements SmartTabLayout.TabPro
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Fragment page = adapter.getPage(currentItem);
+        if(page != null && page instanceof OrderFragment){
+            ((OrderFragment) page).fetchData();
+        }
     }
 
     @Override

@@ -52,6 +52,7 @@ public class SearchActivity extends BaseActivity implements SearchActivityView{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fadeInAnimations();
+        fadeOutAnimations();
         setStatusBar();
         setContentView(R.layout.activity_search);
         realm = Realm.getDefaultInstance();

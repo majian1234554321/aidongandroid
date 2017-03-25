@@ -5,7 +5,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.alipay.sdk.app.PayTask;
-import com.leyuan.aidong.entity.PayOrderBean;
+import com.leyuan.aidong.entity.PayOptionBean;
 import com.leyuan.aidong.entity.model.PayResult;
 
 /**
@@ -20,7 +20,6 @@ public class AliPay implements PayInterface {
     // 商户收款账号
     //public static final String SELLER = "2908831266@qq.com";
 
-    public PayOrderBean bean;
 
     private Context context;
 
@@ -32,10 +31,9 @@ public class AliPay implements PayInterface {
     }
 
     @Override
-    public void payOrder(Object object) {
-        bean = (PayOrderBean) object;
+    public void payOrder(PayOptionBean bean) {
         if (null != bean) {
-            final String orderInfo = bean.getpayOption().getAlipay().getPayString();
+            final String orderInfo = bean.getAlipay().getPayString();
             Runnable payRunnable = new Runnable() {
 
                 @Override

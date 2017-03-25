@@ -28,10 +28,12 @@ import com.leyuan.aidong.ui.mvp.presenter.AppointmentPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.AppointmentPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointmentDetailActivityView;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.QRCodeUtil;
+import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.utils.constant.PayType;
 import com.leyuan.aidong.widget.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.ExtendTextView;
@@ -55,6 +57,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
     private static final String CLOSE = "canceled";          //已关闭
     private static final String REFUNDING = "refunding";     //退款中
     private static final String REFUNDED = "refunded";       //已退款
+    private long APPOINT_COUNTDOWN_MILL;
 
     private SimpleTitleBar titleBar;
     private SwitcherLayout switcherLayout;
@@ -133,6 +136,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appoint_campaign_detail);
+        APPOINT_COUNTDOWN_MILL = SystemInfoUtils.getAppointmentCountdown(this) * 60 * 1000;
         present = new AppointmentPresentImpl(this,this);
         if(getIntent() != null){
             fromDetail = getIntent().getBooleanExtra("fromDetail",false);
@@ -242,6 +246,8 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         tvTotalPrice.setRightContent(String.format(getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.getPay().getTotal())));
         tvStartTime.setRightContent(bean.getPay().getCreatedAt());
+        timer.start(DateUtils.getCountdown(bean.getPay().getCreatedAt(), APPOINT_COUNTDOWN_MILL));
+        tvPayType.setRightContent(PayType.ALI.equals(bean.getPay().getPayType())? "支付宝" : "微信");
 
         //todo 通过组合控件来实现底部按钮
         //与订单状态有关: 预约状态信息 课程预约信息/活动预约信息 支付方式信息 底部预约操作状态及价格信息
@@ -258,6 +264,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 tvCancelJoin.setVisibility(View.GONE);
                 codeLayout.setVisibility(View.GONE);
                 payLayout.setVisibility(View.VISIBLE);
+                tvPayType.setVisibility(View.GONE);
                 break;
             case UN_JOIN:           //待参加
                 tvState.setText(context.getString(R.string.appointment_un_joined));
@@ -276,6 +283,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFF000000, bean.getId(),
                         DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
                 payLayout.setVisibility(View.GONE);
+                tvPayType.setVisibility(View.VISIBLE);
                 break;
             case JOINED:            //已参加
                 tvState.setText(context.getString(R.string.appointment_joined));
@@ -294,6 +302,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFFebebeb, bean.getId(),
                         DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
                 payLayout.setVisibility(View.GONE);
+                tvPayType.setVisibility(View.VISIBLE);
                 break;
             case CLOSE:             //已关闭
                 tvState.setText(context.getString(R.string.order_close));
@@ -307,6 +316,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 tvConfirmJoin.setVisibility(View.GONE);
                 codeLayout.setVisibility(View.GONE);
                 payLayout.setVisibility(View.GONE);
+                tvPayType.setVisibility(View.GONE);
                 break;
             case REFUNDING:           //退款中
                 tvState.setText(context.getString(R.string.order_refunding));
@@ -325,6 +335,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFFebebeb, bean.getId(),
                         DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
                 payLayout.setVisibility(View.GONE);
+                tvPayType.setVisibility(View.VISIBLE);
                 break;
             case REFUNDED:             //已退款
                 tvState.setText(context.getString(R.string.order_refunded));
@@ -343,6 +354,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFFebebeb, bean.getId(),
                         DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
                 payLayout.setVisibility(View.GONE);
+                tvPayType.setVisibility(View.VISIBLE);
                 break;
             default:
                 break;
@@ -356,9 +368,9 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 finish();
                 break;
             case R.id.tv_pay:
-                PayInterface payInterface = payType.equals(bean.getPay().getPayType()) ?
-                        new AliPay(this,payListener) : new WeiXinPay(this,payListener);
-                payInterface.payOrder(bean.getPay());
+                PayInterface payInterface = PayType.ALI.equals(payType)
+                        ? new AliPay(this,payListener) : new WeiXinPay(this,payListener);
+                payInterface.payOrder(bean.getPay().getpayOption());
                 break;
             case R.id.tv_cancel_pay:
                 present.cancelAppoint(bean.getId());

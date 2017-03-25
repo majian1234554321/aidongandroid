@@ -23,27 +23,6 @@ public class PayOrderBean {
     private String coupon;
     private String created_at;
 
-    public static class PayOptionBean {
-        private ALiPayBean alipay;
-        private WeiXinPayBean wx;
-
-        public WeiXinPayBean getWx() {
-            return wx;
-        }
-
-        public void setWx(WeiXinPayBean wx) {
-            this.wx = wx;
-        }
-
-        public ALiPayBean getAlipay() {
-            return alipay;
-        }
-
-        public void setAlipay(ALiPayBean alipay) {
-            this.alipay = alipay;
-        }
-    }
-
     public String getNo() {
         return no;
     }

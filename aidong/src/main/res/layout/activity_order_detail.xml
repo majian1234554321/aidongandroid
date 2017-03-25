@@ -45,6 +45,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
                     android:text="订单号"
+                    android:layout_marginBottom="10dp"
                     android:textColor="@color/c9"
                     android:textSize="13sp" />
 

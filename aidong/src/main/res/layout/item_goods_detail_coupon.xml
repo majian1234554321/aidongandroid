@@ -3,8 +3,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:foreground="?selectableItemBackground"
-    android:paddingLeft="7.5dp"
-    android:paddingRight="7.5dp">
+    android:layout_marginLeft="7.5dp"
+    android:layout_marginRight="7.5dp">
 
     <RelativeLayout
         android:id="@+id/rl_coupon"
@@ -42,6 +42,7 @@
             android:layout_marginTop="12dp"
             android:layout_toRightOf="@+id/tv_price"
             android:text="满300使用"
+            android:maxLines="2"
             android:textColor="@color/white"
             android:textSize="14sp" />
 

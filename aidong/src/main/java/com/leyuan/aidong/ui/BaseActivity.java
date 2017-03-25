@@ -166,6 +166,15 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
         getWindow().setEnterTransition(fade);
     }
 
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    protected void fadeOutAnimations() {
+        Fade fade = new Fade();
+        fade.setDuration(300);
+        fade.setMode(Fade.MODE_OUT);
+        getWindow().setExitTransition(fade);
+    }
+
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     protected void slideFromBottomAnimations() {
         Slide slide = new Slide();

@@ -13,6 +13,15 @@ public class OrderBean {
     private String pay_amount;              //实付款
     private String status;                  //订单状态 0-未支付 1-已支付 2-已发货 3-已确认收货 4-已评论
     private ArrayList<ParcelBean> parcel;   //商品实体
+    private String created_at;
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
+    }
 
     public String getId() {
         return id;

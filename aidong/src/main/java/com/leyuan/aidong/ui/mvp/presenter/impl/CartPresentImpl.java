@@ -148,7 +148,7 @@ public class CartPresentImpl implements CartPresent{
                 String payType = payOrderData.getOrder().getPayType();
                 PayInterface payInterface = "alipay".equals(payType) ? new AliPay(context,listener)
                         : new WeiXinPay(context,listener);
-                payInterface.payOrder(payOrderData.getOrder());
+                payInterface.payOrder(payOrderData.getOrder().getpayOption());
             }
         },integral,coin,coupon,payType,pickUpId,pickUpDate,id);
     }

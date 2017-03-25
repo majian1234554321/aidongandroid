@@ -95,7 +95,6 @@
             android:paddingTop="10dp"
             android:gravity="center"
             android:visibility="gone"
-            android:layout_marginLeft="10dp"
             android:background="@drawable/shape_stroke_red"
             android:textColor="@color/main_red"/>
         <TextView
