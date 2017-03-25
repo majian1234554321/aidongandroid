@@ -63,9 +63,9 @@ public class OrderModelImpl implements OrderModel {
     }
 
     @Override
-    public void feedbackOrder(Subscriber<BaseBean> subscriber, String id, String type, String code,
-                             String amount, String content, String[] image, String address) {
-        orderService.feedbackOrder(id, type, code,  amount, content, image, address)
+    public void feedbackOrder(Subscriber<BaseBean> subscriber, String id, String type, String[] items,
+                              String content, String[] image, String address) {
+        orderService.feedbackOrder(id, type, items, content, image, address)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);

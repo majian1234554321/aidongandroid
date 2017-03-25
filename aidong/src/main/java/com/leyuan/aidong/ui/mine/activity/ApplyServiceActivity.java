@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -13,7 +14,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.adapter.ApplyServiceShopAdapter;
 import com.leyuan.aidong.adapter.discover.PublishDynamicAdapter;
+import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.module.photopicker.boxing.Boxing;
 import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
 import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
@@ -21,7 +24,6 @@ import com.leyuan.aidong.module.photopicker.boxing_impl.ui.BoxingActivity;
 import com.leyuan.aidong.module.photopicker.boxing_impl.view.SpacesItemDecoration;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.ToastUtil;
 
 import java.util.ArrayList;
@@ -37,36 +39,30 @@ public class ApplyServiceActivity extends BaseActivity implements View.OnClickLi
 
     private ImageView ivBack;
     private TextView tvNext;
-    private ImageView dvCover;
-    private TextView tvName;
-    private ImageView ivMinus;
-    private TextView tvCount;
-    private ImageView ivAdd;
+    //    private ImageView dvCover;
+//    private TextView tvName;
+//    private ImageView ivMinus;
+//    private TextView tvCount;
+//    private ImageView ivAdd;
     private TextView tvReturn;
     private TextView tvExchange;
     private EditText etProblem;
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerView, shop_list;
 
     private String orderId;
-    private String sku;
-    private String cover;
-    private String name;
-    private int amount;
     private int type;
 
     private PublishDynamicAdapter mediaAdapter;
     private ArrayList<BaseMedia> selectedMedia;
     private boolean isPhoto = true;
     private int count = 1;
+    private ApplyServiceShopAdapter shopAdapter;
+    private ArrayList<GoodsBean> goodsBeen;
 
-    public static void start(Context context, String orderId, String sku, String cover, String name,
-                             int amount) {
+    public static void start(Context context, String orderId, ArrayList<GoodsBean> goodsBeen) {
         Intent starter = new Intent(context, ApplyServiceActivity.class);
         starter.putExtra("orderId", orderId);
-        starter.putExtra("sku", sku);
-        starter.putExtra("cover", cover);
-        starter.putExtra("name", name);
-        starter.putExtra("amount", amount);
+        starter.putParcelableArrayListExtra("items", goodsBeen);
         context.startActivity(starter);
     }
 
@@ -76,11 +72,7 @@ public class ApplyServiceActivity extends BaseActivity implements View.OnClickLi
         setContentView(R.layout.activity_apply_service);
 
         orderId = getIntent().getStringExtra("orderId");
-        sku = getIntent().getStringExtra("sku");
-        cover = getIntent().getStringExtra("cover");
-        name = getIntent().getStringExtra("name");
-        amount = getIntent().getIntExtra("amount", 1);
-
+        goodsBeen = getIntent().getParcelableArrayListExtra("items");
         initView();
         initData();
         setListener();
@@ -89,22 +81,18 @@ public class ApplyServiceActivity extends BaseActivity implements View.OnClickLi
     private void initView() {
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tvNext = (TextView) findViewById(R.id.tv_next);
-        dvCover = (ImageView) findViewById(R.id.dv_cover);
-        tvName = (TextView) findViewById(R.id.tv_name);
-        ivMinus = (ImageView) this.findViewById(R.id.iv_minus);
-        tvCount = (TextView) this.findViewById(R.id.tv_count);
-        ivAdd = (ImageView) this.findViewById(R.id.iv_add);
         tvReturn = (TextView) findViewById(R.id.tv_return);
         tvExchange = (TextView) findViewById(R.id.tv_exchange);
         etProblem = (EditText) findViewById(R.id.et_problem);
         recyclerView = (RecyclerView) findViewById(R.id.rv_photo);
-
+        shop_list = (RecyclerView) findViewById(R.id.shop_list);
     }
 
     private void initData() {
-        GlideLoader.getInstance().displayImage(cover, dvCover);
-        tvName.setText(name);
-        tvCount.setText("1");
+        shop_list.setLayoutManager(new LinearLayoutManager(this));
+        shopAdapter = new ApplyServiceShopAdapter(this, goodsBeen);
+        shop_list.setAdapter(shopAdapter);
+
 
         selectedMedia = new ArrayList<>();
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
@@ -114,12 +102,11 @@ public class ApplyServiceActivity extends BaseActivity implements View.OnClickLi
         mediaAdapter = new PublishDynamicAdapter();
         recyclerView.setAdapter(mediaAdapter);
 
+
     }
 
     private void setListener() {
         ivBack.setOnClickListener(this);
-        ivMinus.setOnClickListener(this);
-        ivAdd.setOnClickListener(this);
         tvNext.setOnClickListener(this);
         tvReturn.setOnClickListener(this);
         tvExchange.setOnClickListener(this);
@@ -128,7 +115,7 @@ public class ApplyServiceActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        count = Integer.parseInt(tvCount.getText().toString());
+
         switch (v.getId()) {
             case R.id.iv_back:
                 finish();
@@ -138,31 +125,30 @@ public class ApplyServiceActivity extends BaseActivity implements View.OnClickLi
                 String content = etProblem.getText().toString().trim();
                 if (TextUtils.isEmpty(content)) {
                     ToastUtil.show("请输入原因", this);
-                } else {
-                    ApplyServiceNextActivity.startForResult(this, orderId, sku, type, count, content, selectedMedia);
+                    return;
                 }
+                ArrayList<String> items = new ArrayList<>();
+                for (GoodsBean bean : goodsBeen) {
+                    if (bean.getItem() != null) {
+                        items.add(bean.getItem());
+                    }
+                }
+
+                if (items.isEmpty()) {
+                    ToastUtil.show("请至少选择一件商品", this);
+                    return;
+                }
+
+                ApplyServiceNextActivity.startForResult(this, orderId, type, items, content, selectedMedia);
 
                 break;
 
             case R.id.iv_minus:
-                count--;
-                if (count <= 1) {
-                    count = 1;
-                    ivMinus.setBackgroundResource(R.drawable.icon_minus_gray);
-                }
-                tvCount.setText(String.valueOf(count));
+
 
                 break;
             case R.id.iv_add:
-                count++;
-                if (count > amount) {
-                    count = amount;
-                    ToastUtil.show("超出最大数量", this);
-                }
-                if (count > 1) {
-                    ivMinus.setBackgroundResource(R.drawable.icon_minus);
-                }
-                tvCount.setText(String.valueOf(count));
+
                 break;
             case R.id.tv_return:
                 type = 1;

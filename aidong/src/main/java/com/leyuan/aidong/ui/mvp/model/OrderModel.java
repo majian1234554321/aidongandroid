@@ -55,7 +55,6 @@ public interface OrderModel {
      */
     void deleteOrder(Subscriber<BaseBean> subscriber, String id);
 
-    void feedbackOrder(Subscriber<BaseBean> subscriber, String id, String type, String code,
-                        String amount, String content, String[] image, String address);
-
+    void feedbackOrder(Subscriber<BaseBean> subscriber, String id, String type, String[] items,
+                       String content, String[] image, String address);
 }

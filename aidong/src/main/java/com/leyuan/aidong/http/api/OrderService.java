@@ -30,9 +30,12 @@ public interface OrderService {
 
     @FormUrlEncoded
     @POST("mine/orders/{id}/feedback")
-    Observable<BaseBean> feedbackOrder(@Path("id") String id, @Field("type") String type
-            , @Field("code") String sku, @Field("amount") String amount
-            , @Field("content") String content, @Field("image[]") String[] image, @Field("address") String address);
+    Observable<BaseBean> feedbackOrder(@Path("id") String id,
+                                       @Field("type") String type,
+                                       @Field("item[]") String[] item,
+                                       @Field("content") String content,
+                                       @Field("image[]") String[] image,
+                                       @Field("address") String address);
 
     @POST("mine/orders/{id}/confirm")
     Observable<BaseBean> confirmOrder(@Path("id") String id);

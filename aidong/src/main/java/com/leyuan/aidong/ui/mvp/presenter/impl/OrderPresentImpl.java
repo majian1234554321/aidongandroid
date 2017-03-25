@@ -184,7 +184,7 @@ public class OrderPresentImpl implements OrderPresent {
     }
 
     @Override
-    public void feedbackOrder(String id, String type, String code, String amount, String content, String[] image, String address) {
+    public void feedbackOrder(String id, String type, String[] items, String content, String[] image, String address) {
         orderModel.feedbackOrder(new BaseSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
@@ -200,6 +200,6 @@ public class OrderPresentImpl implements OrderPresent {
                     orderFeedbackView.onFeedbackResult(false);
                 }
             }
-        }, id, type, code, amount, content, image, address);
+        }, id, type, items, content, image, address);
     }
 }

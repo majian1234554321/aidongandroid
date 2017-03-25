@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.AddressBean;
@@ -19,6 +20,8 @@ import com.leyuan.aidong.ui.mvp.view.AddressListView;
 import com.leyuan.aidong.ui.mvp.view.OrderFeedbackView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.ToastUtil;
+import com.leyuan.aidong.utils.qiniu.IQiNiuCallback;
+import com.leyuan.aidong.utils.qiniu.UploadQiNiuManager;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 
 import java.util.ArrayList;
@@ -35,10 +38,11 @@ public class ApplyServiceNextActivity extends BaseActivity implements View.OnCli
     private TextView tvApply, tv_name, tv_address, tv_phone;
 
     private String orderId;
-    private String sku;
-    private int count;
     private int type;
     private String content;
+    ArrayList<String> items;
+    ArrayList<BaseMedia> selectedMedia;
+
 
     private AddressPresent addressPresent;
     private String addressInfo;
@@ -48,26 +52,24 @@ public class ApplyServiceNextActivity extends BaseActivity implements View.OnCli
 
     private OrderPresentImpl orderPresent;
 
-    public static void start(Context context, String orderId, String sku, int type, int count,
+    public static void start(Context context, String orderId, int type, ArrayList<String> items,
                              String content, ArrayList<BaseMedia> selectedMedia) {
         Intent starter = new Intent(context, ApplyServiceNextActivity.class);
         starter.putExtra("orderId", orderId);
-        starter.putExtra("sku", sku);
         starter.putExtra("type", type);
-        starter.putExtra("count", count);
         starter.putExtra("content", content);
+        starter.putStringArrayListExtra("items", items);
         starter.putParcelableArrayListExtra("selectedMedia", selectedMedia);
         context.startActivity(starter);
     }
 
-    public static void startForResult(Activity context, String orderId, String sku, int type, int count,
+    public static void startForResult(Activity context, String orderId, int type, ArrayList<String> items,
                                       String content, ArrayList<BaseMedia> selectedMedia) {
         Intent starter = new Intent(context, ApplyServiceNextActivity.class);
         starter.putExtra("orderId", orderId);
-        starter.putExtra("sku", sku);
         starter.putExtra("type", type);
-        starter.putExtra("count", count);
         starter.putExtra("content", content);
+        starter.putStringArrayListExtra("items", items);
         starter.putParcelableArrayListExtra("selectedMedia", selectedMedia);
         context.startActivityForResult(starter, Constant.REQUEST_NEXT_ACTIVITY);
     }
@@ -78,10 +80,11 @@ public class ApplyServiceNextActivity extends BaseActivity implements View.OnCli
         setContentView(R.layout.activity_apply_service_next);
 
         orderId = getIntent().getStringExtra("orderId");
-        sku = getIntent().getStringExtra("sku");
         type = getIntent().getIntExtra("type", 1);
-        count = getIntent().getIntExtra("count", 1);
         content = getIntent().getStringExtra("content");
+        items = getIntent().getStringArrayListExtra("items");
+        selectedMedia = getIntent().getParcelableArrayListExtra("selectedMedia");
+
 
         orderPresent = new OrderPresentImpl(this, this);
 
@@ -117,8 +120,11 @@ public class ApplyServiceNextActivity extends BaseActivity implements View.OnCli
             case R.id.tv_apply:
                 if (addressInfo == null) {
                     ToastUtil.show("请选择联系信息", this);
+                } else if (selectedMedia != null) {
+                    applyToQiNiu(selectedMedia);
                 } else {
-                    orderPresent.feedbackOrder(orderId, type + "", sku, count + "", content, null, addressInfo);
+                    applyToService(null);
+
                 }
 
                 break;
@@ -128,6 +134,24 @@ public class ApplyServiceNextActivity extends BaseActivity implements View.OnCli
             default:
                 break;
         }
+    }
+
+    private void applyToQiNiu(ArrayList<BaseMedia> selectedMedia) {
+        UploadQiNiuManager.getInstance().uploadImages(selectedMedia, new IQiNiuCallback() {
+            @Override
+            public void onSuccess(List<String> urls) {
+                applyToService((String[]) (urls.toArray()));
+            }
+
+            @Override
+            public void onFail() {
+                Toast.makeText(ApplyServiceNextActivity.this, "上传失败", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void applyToService(String[] images) {
+        orderPresent.feedbackOrder(orderId, type + "", (String[]) (items.toArray()), content, images, addressInfo);
     }
 
     @Override

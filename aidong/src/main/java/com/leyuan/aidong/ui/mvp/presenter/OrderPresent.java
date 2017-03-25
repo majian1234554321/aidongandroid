@@ -76,7 +76,8 @@ public interface OrderPresent {
     /**
      * 订单退换货
      */
-    void feedbackOrder(String id, String type, String code,
-                       String amount, String content, String[] image, String address);
+    void feedbackOrder(String id, String type, String[] items, String content, String[] image, String address);
+
+
 
 }
