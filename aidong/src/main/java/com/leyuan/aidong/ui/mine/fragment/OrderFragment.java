@@ -33,9 +33,9 @@ import java.util.List;
  */
 public class OrderFragment extends BaseLazyFragment implements OrderFragmentView{
     public static final String ALL = "all";
-    public static final String UN_PAID = "unpaid";
-    public static final String SELF_DELIVERY = "self-delivery";
-    public static final String EXPRESS_DELIVERY = "express-delivery";
+    public static final String UN_PAID = "pending";
+    public static final String PAID = "purchased";
+    public static final String FINISH = "confirmed";
     private String type;
 
     private SwitcherLayout switcherLayout;

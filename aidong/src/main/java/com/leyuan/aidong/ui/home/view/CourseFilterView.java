@@ -128,8 +128,8 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
         rightListView.setVisibility(GONE);
         if(categoryAdapter == null){
             categoryAdapter = new CategoryListAdapter(context, categoryList);
-            leftListView.setAdapter(categoryAdapter);
         }
+        leftListView.setAdapter(categoryAdapter);
         leftListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

@@ -15,11 +15,11 @@ public class OrderDetailBean {
     private String pay_amount;
     private String total;
     private String created_at;
-    private PayOrderBean pay_option;
+    private PayOptionBean pay_option;
     private List<ParcelBean> parcel;
     private String pay_type;
 
-    public String getPay_type() {
+    public String getPayType() {
         return pay_type;
     }
 
@@ -91,11 +91,11 @@ public class OrderDetailBean {
         this.total = total;
     }
 
-    public PayOrderBean getPay_option() {
+    public PayOptionBean getPay_option() {
         return pay_option;
     }
 
-    public void setPay_option(PayOrderBean pay_option) {
+    public void setPay_option(PayOptionBean pay_option) {
         this.pay_option = pay_option;
     }
 

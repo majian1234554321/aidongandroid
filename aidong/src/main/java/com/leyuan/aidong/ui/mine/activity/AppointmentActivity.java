@@ -63,12 +63,12 @@ public class AppointmentActivity extends BaseActivity implements SmartTabLayout.
         tabLayout.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
             @Override
             public void onPageSelected(int position) {
+                currentItem = position;
                 for (int i = 0; i < allTabView.size(); i++) {
                     View tabAt = tabLayout.getTabAt(i);
                     TextView text = (TextView) tabAt.findViewById(R.id.tv_tab_text);
                     text.setTypeface(i == position ? Typeface.DEFAULT_BOLD :Typeface.DEFAULT);
                 }
-                currentItem = position;
             }
         });
 

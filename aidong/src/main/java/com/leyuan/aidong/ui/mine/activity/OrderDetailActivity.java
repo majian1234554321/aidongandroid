@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,16 +18,22 @@ import android.widget.Toast;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.mine.OrderParcelAdapter;
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.entity.OrderDetailBean;
 import com.leyuan.aidong.entity.ParcelBean;
+import com.leyuan.aidong.module.pay.AliPay;
+import com.leyuan.aidong.module.pay.PayInterface;
+import com.leyuan.aidong.module.pay.WeiXinPay;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.OrderPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.OrderPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.OrderDetailActivityView;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.QRCodeUtil;
+import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.utils.constant.DeliveryType;
 import com.leyuan.aidong.utils.constant.PayType;
 import com.leyuan.aidong.widget.CustomNestRadioGroup;
@@ -39,7 +46,7 @@ import java.util.List;
 
 import cn.iwgang.countdownview.CountdownView;
 
-import static com.leyuan.aidong.ui.App.context;
+import static com.leyuan.aidong.module.pay.WeiXinPay.payListener;
 import static com.leyuan.aidong.utils.Constant.EXPRESS_PRICE;
 
 /**
@@ -52,6 +59,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
     private static final String PAID = "purchased";           //已支付
     private static final String FINISH = "confirmed";         //已确认
     private static final String CLOSE = "canceled";           //已关闭
+    private long ORDER_COUNTDOWN_MILL;
 
     private SimpleTitleBar titleBar;
     private SwitcherLayout switcherLayout;
@@ -92,6 +100,8 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
 
     //支付信息
     private LinearLayout llPay;
+    private RadioButton rbALiPay;
+    private RadioButton rbWeiXinPay;
     private CustomNestRadioGroup payGroup;
 
     //底部状态按钮信息
@@ -108,11 +118,13 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
 
     private List<ParcelBean> expressList = new ArrayList<>();
     private List<ParcelBean> selfDeliveryList = new ArrayList<>();
+    private ArrayList<GoodsBean> goodsList = new ArrayList<>();
     private OrderParcelAdapter expressAdapter;
     private OrderParcelAdapter selfDeliveryAdapter;
     private String orderId;
     private OrderPresent orderPresent;
     private String payType;
+    private OrderDetailBean bean;
 
     public static void start(Context context,String id) {
         Intent starter = new Intent(context, OrderDetailActivity.class);
@@ -124,6 +136,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_detail);
+        ORDER_COUNTDOWN_MILL = SystemInfoUtils.getOrderCountdown(this) * 60 * 1000;
         orderPresent = new OrderPresentImpl(this,this);
         if(getIntent() != null){
             orderId = getIntent().getStringExtra("orderId");
@@ -167,6 +180,8 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
         tvPayType = (ExtendTextView) findViewById(R.id.tv_pay_type);
         llPay = (LinearLayout) findViewById(R.id.ll_pay);
         payGroup = (CustomNestRadioGroup) findViewById(R.id.radio_group);
+        rbALiPay = (RadioButton) findViewById(R.id.cb_alipay);
+        rbWeiXinPay = (RadioButton) findViewById(R.id.cb_weixin);
 
         bottomLayout = (LinearLayout) findViewById(R.id.ll_bottom);
         tvGoodsCount = (TextView) findViewById(R.id.tv_goods_count);
@@ -200,20 +215,31 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
 
     @Override
     public void setOrderDetail(OrderDetailBean bean) {
+        this.bean = bean;
         int goodsCount = 0;
         bottomLayout.setVisibility(View.VISIBLE);
+
+        payType = bean.getPayType();
+        if(PayType.ALI.equals(payType)){
+            rbALiPay.setChecked(true);
+        }else {
+            rbWeiXinPay.setChecked(true);
+        }
 
         tvOrderNo.setText(String.format(getString(R.string.order_no),bean.getId()));
         tvOrderNo.setVisibility(UN_PAID.equals(bean.getStatus()) ? View.GONE : View.VISIBLE);
         timeLayout.setVisibility(UN_PAID.equals(bean.getStatus()) ? View.VISIBLE : View.GONE);
+        timer.start(DateUtils.getCountdown(bean.getCreatedAt(), ORDER_COUNTDOWN_MILL));
 
         for (ParcelBean parcelBean : bean.getParcel()) {
             if(DeliveryType.EXPRESS.equals(parcelBean.getPickUpWay())){
                 expressList.add(parcelBean);
-                goodsCount += parcelBean.getItem().size();
             }else {
                 selfDeliveryList.add(parcelBean);
-                goodsCount += parcelBean.getItem().size();
+            }
+            for (GoodsBean goodsBean : parcelBean.getItem()) {
+                goodsCount += FormatUtil.parseInt(goodsBean.getAmount());
+                goodsList.add(goodsBean);
             }
         }
 
@@ -268,36 +294,26 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
                 FormatUtil.parseDouble(bean.getIntegral())));
         tvStartTime.setRightContent(bean.getCreatedAt());
         tvPayType.setVisibility(UN_PAID.equals(bean.getStatus()) ? View.GONE : View.VISIBLE);
-        tvPayType.setRightContent(PayType.ALI.equals(bean.getPay_type())? "支付宝" : "微信");
+        tvPayType.setRightContent(PayType.ALI.equals(bean.getPayType())? "支付宝" : "微信");
         tvPrice.setText(String.format(getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.getPayAmount())));
 
         llPay.setVisibility(UN_PAID.equals(bean.getStatus()) ? View.VISIBLE : View.GONE);
         tvGoodsCount.setText(getString(R.string.goods_count,goodsCount));
 
-        switch (bean.getStatus()){
-            case UN_PAID:
-                tvState.setText(context.getString(R.string.un_paid));
-                tvCancel.setVisibility(View.VISIBLE);
-                tvPay.setVisibility(View.VISIBLE);
-                break;
-            case PAID:
-                tvState.setText(context.getString(R.string.paid));
-                break;
-            case FINISH:
-                tvState.setText(context.getString(R.string.order_finish));
-                tvAfterSell.setVisibility(View.VISIBLE);
-                tvReBuy.setVisibility(View.VISIBLE);
-                break;
-            case CLOSE:
-                tvState.setText(context.getString(R.string.order_close));
-                tvReBuy.setVisibility(View.VISIBLE);
-                break;
-            default:
-                break;
-        }
-    }
+        tvCancel.setVisibility(UN_PAID.equals(bean.getStatus()) ? View.VISIBLE : View.GONE);
+        tvPay.setVisibility(UN_PAID.equals(bean.getStatus()) ? View.VISIBLE : View.GONE);
+        tvAfterSell.setVisibility(PAID.equals(bean.getStatus()) || FINISH.equals(bean.getStatus())
+                ?View.VISIBLE:View.GONE);
+        tvConfirm.setVisibility(PAID.equals(bean.getStatus()) ? View.VISIBLE : View.GONE);
+        tvReBuy.setVisibility(FINISH.equals(bean.getStatus()) || CLOSE.equals(bean.getStatus())
+            ? View.VISIBLE : View.GONE);
 
+        tvState.setText(bean.getStatus().equals(UN_PAID) ? getString(R.string.un_paid)
+                :bean.getStatus().equals(PAID) ? getString(R.string.paid)
+                :bean.getStatus().equals(FINISH) ? getString(R.string.order_finish)
+                :getString(R.string.order_close));
+    }
 
     @Override
     public void onClick(View v) {
@@ -309,10 +325,12 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
                 orderPresent.cancelOrder(orderId);
                 break;
             case R.id.tv_pay:
-
+                PayInterface payInterface = PayType.ALI.equals(payType) ?
+                        new AliPay(this,payListener) : new WeiXinPay(this,payListener);
+                payInterface.payOrder(bean.getPay_option());
                 break;
             case R.id.tv_after_sell:
-
+                ApplyServiceActivity.start(this,orderId,goodsList);
                 break;
             case R.id.tv_confirm:
                 orderPresent.confirmOrder(orderId);
