@@ -15,13 +15,13 @@ import java.util.List;
  * 时间选择RecyclerView适配器
  * Created by song on 2016/8/30.
  */
-public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateHolder>{
+public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateHolder> {
     private List<String> data = new ArrayList<>();
     private int selectedPosition = 0;
     private ItemClickListener itemClickListener;
 
     public void setData(List<String> data) {
-        if(data != null){
+        if (data != null) {
             this.data = data;
             notifyDataSetChanged();
         }
@@ -34,6 +34,11 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateHolder>{
         this.selectedPosition = selectedPosition;
     }
 
+    public void setSelectedPosition(int selectedPosition) {
+        this.selectedPosition = selectedPosition;
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return data.size();
@@ -41,7 +46,7 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateHolder>{
 
     @Override
     public DateHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = View.inflate(parent.getContext(),R.layout.item_date,null);
+        View view = View.inflate(parent.getContext(), R.layout.item_date, null);
         return new DateHolder(view);
     }
 
@@ -55,7 +60,7 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateHolder>{
             @Override
             public void onClick(View v) {
                 selectedPosition = position;
-                if(itemClickListener != null){
+                if (itemClickListener != null) {
                     itemClickListener.onItemClick(position);
                 }
                 notifyDataSetChanged();
@@ -63,12 +68,12 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateHolder>{
         });
     }
 
-    class DateHolder extends RecyclerView.ViewHolder{
+    class DateHolder extends RecyclerView.ViewHolder {
         TextView date;
 
         public DateHolder(View itemView) {
             super(itemView);
-            date = (TextView)itemView.findViewById(R.id.tv_date);
+            date = (TextView) itemView.findViewById(R.id.tv_date);
         }
     }
 
@@ -76,7 +81,7 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.DateHolder>{
         this.itemClickListener = itemClickListener;
     }
 
-    public interface ItemClickListener{
+    public interface ItemClickListener {
         void onItemClick(int position);
     }
 

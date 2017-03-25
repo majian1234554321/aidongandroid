@@ -36,6 +36,7 @@ public class VenuesCourseFragment extends BaseFragment implements VenuesCourseFr
     private List<String> days;
     private VenuesPresent venuesPresent;
     private RecyclerView dateView;
+    private DateAdapter dateAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,7 +53,8 @@ public class VenuesCourseFragment extends BaseFragment implements VenuesCourseFr
             id = bundle.getString("id");
         }
         initView(view);
-        venuesPresent.getCourses(switcherLayout, id, days.get(0));
+//        venuesPresent.getCourses(switcherLayout, id, days.get(0));
+        venuesPresent.getCoursesFirst(switcherLayout, id);
     }
 
     private void initView(View view) {
@@ -63,7 +65,7 @@ public class VenuesCourseFragment extends BaseFragment implements VenuesCourseFr
         recyclerView.setAdapter(courseAdapter);
 
         dateView = (RecyclerView) view.findViewById(R.id.rv_date);
-        DateAdapter dateAdapter = new DateAdapter();
+        dateAdapter = new DateAdapter();
         dateView.setLayoutManager(new CustomLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         dateView.setAdapter(dateAdapter);
         dateAdapter.setData(days);
@@ -75,9 +77,12 @@ public class VenuesCourseFragment extends BaseFragment implements VenuesCourseFr
         if (courseData != null && courseData.getCourse() != null && !courseData.getCourse().isEmpty()) {
             int position = days.indexOf(courseData.getDate());
             Logger.i(TAG, " position = " + position);
+            position = 3;
             if (position > -1) {
-                dateView.smoothScrollToPosition(position);
+                dateAdapter.setSelectedPosition(position);
                 courseAdapter.setData(courseData.getCourse());
+                dateView.scrollBy(dateView.getChildAt(position).getLeft(), 0);
+
             }
         }
     }
