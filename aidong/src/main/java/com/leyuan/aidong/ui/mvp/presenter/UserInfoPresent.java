@@ -29,4 +29,5 @@ public interface UserInfoPresent {
     void cancelLike(String userId,int position);
 
     void release();
+
 }

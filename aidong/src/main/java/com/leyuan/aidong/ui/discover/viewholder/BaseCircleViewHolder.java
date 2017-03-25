@@ -33,6 +33,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
     private ImageView ivAvatar;
     private TextView tvName;
     private TextView tvTime;
+    private ImageView ivCoachFlag;
 
     private TextView tvContent;
     private LinearLayout likeLayout;
@@ -55,6 +56,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         this.context = context;
         root = (LinearLayout) itemView.findViewById(R.id.ll_root);
         ivAvatar = (ImageView) itemView.findViewById(R.id.dv_avatar);
+        ivCoachFlag = (ImageView) itemView.findViewById(R.id.iv_coach_flag);
         tvName = (TextView) itemView.findViewById(R.id.tv_name);
         tvTime = (TextView) itemView.findViewById(R.id.tv_time);
         tvContent = (TextView) itemView.findViewById(R.id.tv_content);
@@ -79,6 +81,8 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             tvName.setText(dynamic.publisher.name);
             GlideLoader.getInstance().displayCircleImage(dynamic.publisher.avatar, ivAvatar);
             tvTime.setText(Utils.getData(dynamic.published_at));
+            ivCoachFlag.setVisibility("Coach".equals(dynamic.publisher.user_type)
+                    ? View.VISIBLE : View.GONE);
         }
         tvContent.setText(dynamic.content);
 

@@ -99,7 +99,22 @@ public class SystemInfoUtils {
         return discoverBannerBeanList;
     }
 
+
+    public static boolean isFollow(Context context, String uid){
+        boolean isFollow = false;
+        List<UserBean> followList = getFollowList(context);
+        for (UserBean userBean : followList) {
+            if(userBean.getId().equals(uid)){
+                isFollow = true;
+                break;
+            }
+        }
+        return isFollow;
+    }
+
+
     public static boolean isFollow(Context context, UserBean bean) {
+
         boolean isFollow = false;
         List<UserBean> followList = getFollowList(context);
         for (UserBean userBean : followList) {

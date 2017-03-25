@@ -29,7 +29,7 @@ public class ProfileBean implements Parcelable {
     private String user_type;
     private String popularity;
 
-    public String getUser_type() {
+    public String getUserType() {
         return user_type;
     }
 

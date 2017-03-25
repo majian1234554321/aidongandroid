@@ -27,7 +27,7 @@ import java.util.List;
  * Created by song on 2016/8/31.
  */
 public class OrderActivity extends BaseActivity implements SmartTabLayout.TabProvider{
-   private SimpleTitleBar titleBar;
+    private SimpleTitleBar titleBar;
     private SmartTabLayout tabLayout;
     private ViewPager viewPager;
     private List<View> allTabView = new ArrayList<>();

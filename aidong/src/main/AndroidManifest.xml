@@ -204,7 +204,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.mine.activity.AppointCourseDetailActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.mine.activity.UserInfoActivity"
             android:screenOrientation="portrait" />

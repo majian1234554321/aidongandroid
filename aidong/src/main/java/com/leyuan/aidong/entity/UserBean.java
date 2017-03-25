@@ -19,6 +19,10 @@ public class UserBean implements Parcelable,Serializable{
     private boolean isFollow;   //是否关注
     private String signature;
 
+    public UserBean(String id) {
+        this.id = id;
+    }
+
     public String getSignature() {
         return signature;
     }

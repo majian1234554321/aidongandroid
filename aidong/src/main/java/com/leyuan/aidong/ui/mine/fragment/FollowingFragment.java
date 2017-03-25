@@ -1,19 +1,17 @@
 package com.leyuan.aidong.ui.mine.fragment;
 
-import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.mine.FollowAdapter;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.UserBean;
-import com.leyuan.aidong.ui.BaseFragment;
+import com.leyuan.aidong.ui.BaseLazyFragment;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mvp.presenter.FollowPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
@@ -33,10 +31,8 @@ import java.util.List;
  * 关注
  * Created by song on 2016/9/10.
  */
-public class FollowFragment extends BaseFragment implements FollowFragmentView, FollowAdapter.FollowListener {
-    public static final String FOLLOW = "followings";
-    public static final String FANS = "followers";
-    private String type;
+public class FollowingFragment extends BaseLazyFragment implements FollowFragmentView {
+    public static final String FOLLOWING = "followings";
 
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
@@ -50,22 +46,20 @@ public class FollowFragment extends BaseFragment implements FollowFragmentView, 
     private FollowPresent present;
 
     @Override
-    public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
+    public View initView() {
         present = new FollowPresentImpl(getContext(),this);
-        Bundle bundle = getArguments();
-        if(bundle != null){
-            type = bundle.getString("type");
-        }
-        return inflater.inflate(R.layout.fragment_follow,container,false);
-    }
-
-    @Override
-    public void onViewCreated(View view,Bundle savedInstanceState) {
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_follow,null);
         initSwipeRefreshLayout(view);
         initSwitcherLayout();
         initRecyclerView(view);
-        present.commonLoadData(switcherLayout,type);
+        return view;
     }
+
+    @Override
+    public void fetchData() {
+        present.commonLoadData(switcherLayout,FOLLOWING);
+    }
+
 
     private void initSwipeRefreshLayout(View view) {
         refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.refreshLayout);
@@ -75,7 +69,7 @@ public class FollowFragment extends BaseFragment implements FollowFragmentView, 
             public void onRefresh() {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-                present.pullToRefreshData(type);
+                present.pullToRefreshData(FOLLOWING);
             }
         });
     }
@@ -85,7 +79,7 @@ public class FollowFragment extends BaseFragment implements FollowFragmentView, 
         switcherLayout.setOnRetryListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                present.commonLoadData(switcherLayout,type);
+                present.commonLoadData(switcherLayout,FOLLOWING);
             }
         });
     }
@@ -93,12 +87,12 @@ public class FollowFragment extends BaseFragment implements FollowFragmentView, 
     private void initRecyclerView(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_follow);
         data = new ArrayList<>();
-        followAdapter = new FollowAdapter(getContext(),FOLLOW.equals(type));
+        followAdapter = new FollowAdapter(getContext());
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(followAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(wrapperAdapter);
         recyclerView.addOnScrollListener(onScrollListener);
-        followAdapter.setFollowListener(this);
+        followAdapter.setFollowListener(new FollowCallback());
     }
 
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
@@ -106,17 +100,24 @@ public class FollowFragment extends BaseFragment implements FollowFragmentView, 
         public void onLoadNextPage(View view) {
             currPage ++;
             if (data != null && data.size() >= pageSize) {
-                present.requestMoreData(recyclerView,pageSize,type,currPage);
+                present.requestMoreData(recyclerView,pageSize,FOLLOWING,currPage);
             }
         }
     };
 
     @Override
-    public void updateRecyclerView(List<UserBean> userBeanList) {
+    public void onRefreshData(List<UserBean> userBeanList) {
+        data.clear();
         if(refreshLayout.isRefreshing()){
-            data.clear();
             refreshLayout.setRefreshing(false);
         }
+        data.addAll(userBeanList);
+        followAdapter.setData(data);
+        wrapperAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onLoadMoreData(List<UserBean> userBeanList) {
         data.addAll(userBeanList);
         followAdapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();
@@ -128,42 +129,38 @@ public class FollowFragment extends BaseFragment implements FollowFragmentView, 
     }
 
     @Override
-    public void onAddFollow(String id,int position) {
-        this.position = position;
-       // present.addFollow(id);
-    }
-
-    @Override
-    public void onCancelFollow(String id,int position) {
-        this.position = position;
-       // present.cancelFollow(id);
-    }
-
-    @Override
-    public void onItemClick(String id) {
-        UserInfoActivity.start(getContext(),id);
-    }
-
-    @Override
     public void addFollowResult(BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
-            SystemInfoUtils.addFollow(data.get(position));
-            followAdapter.notifyDataSetChanged();
-            Toast.makeText(getContext(),R.string.follow_success,Toast.LENGTH_LONG).show();
-        }else {
-            Toast.makeText(getContext(),R.string.follow_fail + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+
+    }
+
+
+    private class FollowCallback extends FollowAdapter.SimpleFollowListener{
+        @Override
+        public void onCancelFollow(String id, int position) {
+            FollowingFragment.this.position = position;
+            present.cancelFollow(id);
+        }
+
+        @Override
+        public void onItemClick(String id) {
+            UserInfoActivity.start(getContext(),id);
         }
     }
 
     @Override
     public void cancelFollowResult(BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
-            SystemInfoUtils.removeFollow(data.get(position));
-            followAdapter.notifyDataSetChanged();
+            UserBean userBean = data.get(position);
+            data.remove(userBean);
+            SystemInfoUtils.removeFollow(userBean);
+            if(data.isEmpty()){
+                switcherLayout.showContentLayout();
+            }else {
+                followAdapter.notifyDataSetChanged();
+            }
             Toast.makeText(getContext(), R.string.cancel_follow_success, Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(getContext(), R.string.cancel_follow_fail + baseBean.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
-
 }

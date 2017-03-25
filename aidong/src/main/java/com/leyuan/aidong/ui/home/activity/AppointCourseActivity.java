@@ -26,6 +26,7 @@ import com.leyuan.aidong.ui.mine.activity.setting.PhoneUnBindingActivity;
 import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointCourseActivityView;
+import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.utils.UiManager;
@@ -253,9 +254,16 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (data != null) {
-            if (requestCode == REQUEST_SELECT_COUPON) {
 
+        if(data != null) {
+            if (requestCode == REQUEST_SELECT_COUPON) {
+                CouponBean couponBean = data.getParcelableExtra("coupon");
+                tvCoupon.setText(String.format(getString(R.string.rmb_minus_price_double),
+                        FormatUtil.parseDouble(couponBean.getDiscount())));
+                tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double),
+                        FormatUtil.parseDouble(couponBean.getDiscount())));
+                tvPrice.setText(String.format(getString(R.string.rmb_price_double),
+                        FormatUtil.parseDouble(bean.getPrice()) - FormatUtil.parseDouble(couponBean.getDiscount())));
             }
         }
     }

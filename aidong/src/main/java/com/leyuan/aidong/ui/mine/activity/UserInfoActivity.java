@@ -25,6 +25,7 @@ import com.leyuan.aidong.adapter.mine.UserInfoPhotoAdapter;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.PhotoBrowseInfo;
 import com.leyuan.aidong.entity.ProfileBean;
+import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.entity.data.UserInfoData;
 import com.leyuan.aidong.module.photopicker.boxing.Boxing;
 import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
@@ -43,6 +44,7 @@ import com.leyuan.aidong.ui.mvp.view.UserInfoActivityView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
@@ -84,12 +86,11 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     private SmartTabLayout tabLayout;
     private ViewPager viewPager;
     private LinearLayout contactLayout;
-    private TextView tvAppoint;
+    private TextView tvCall;
     private TextView tvMessage;
 
     private String userId;
-    private boolean isCoach = false;
-    private boolean isFollow = false;
+
     private boolean isSelf = false;
     private UserInfoData userInfoData;
     private UserInfoPhotoAdapter wallAdapter;
@@ -133,7 +134,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         tabLayout = (SmartTabLayout) findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.vp_content);
         contactLayout = (LinearLayout) findViewById(R.id.ll_contact);
-        tvAppoint = (TextView) findViewById(R.id.tv_coach);
+        tvCall = (TextView) findViewById(R.id.tv_call);
         wallAdapter = new UserInfoPhotoAdapter(this, isSelf);
         rvPhoto.setAdapter(wallAdapter);
         rvPhoto.setLayoutManager(new GridLayoutManager(this, 4));
@@ -175,7 +176,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
                     (int) getResources().getDimension(R.dimen.dp_0));
         } else {
             tvTitle.setText("TA的资料");
-            ivFollowOrPublish.setBackgroundResource(isFollow
+            ivFollowOrPublish.setBackgroundResource(SystemInfoUtils.isFollow(this,userId)
                     ? R.drawable.icon_following : R.drawable.icon_follow);
             if (!userInfoData.getPhotoWall().isEmpty()) {
                 wallAdapter.setData(userInfoData.getPhotoWall());
@@ -185,7 +186,8 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
             }
             ivEdit.setVisibility(View.GONE);
             contactLayout.setVisibility(View.VISIBLE);
-            tvAppoint.setVisibility(isCoach ? View.VISIBLE : View.GONE);
+            tvCall.setVisibility("Coach".equals(userInfoData.getProfile().getUserType())
+                    ? View.VISIBLE : View.GONE);
             contentLayout.setPadding(0, DensityUtil.dp2px(this, 46), 0,
                     (int) getResources().getDimension(R.dimen.pref_50dp));
         }
@@ -231,7 +233,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
                 if (App.mInstance.isLogin()) {
                     if (isSelf) {
                         publishDynamic();
-                    } else if (isFollow) {
+                    } else if (SystemInfoUtils.isFollow(this,userId)) {
                         userInfoPresent.cancelFollow(userId);
                     } else {
                         userInfoPresent.addFollow(userId);
@@ -239,6 +241,9 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
                 } else {
                     startActivityForResult(new Intent(this, LoginActivity.class), REQUEST_LOGIN);
                 }
+                break;
+            case R.id.tv_call:
+
                 break;
             default:
                 break;
@@ -326,7 +331,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     @Override
     public void addFollowResult(BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
-            isFollow = true;
+            SystemInfoUtils.addFollow(new UserBean(userId));
             ivFollowOrPublish.setBackgroundResource(R.drawable.icon_following);
         } else {
             Toast.makeText(this, "关注失败", Toast.LENGTH_LONG).show();
@@ -336,7 +341,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     @Override
     public void cancelFollowResult(BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
-            isFollow = false;
+            SystemInfoUtils.removeFollow(new UserBean(userId));
             ivFollowOrPublish.setBackgroundResource(R.drawable.icon_follow);
         } else {
             Toast.makeText(this, "取消关注失败", Toast.LENGTH_LONG).show();

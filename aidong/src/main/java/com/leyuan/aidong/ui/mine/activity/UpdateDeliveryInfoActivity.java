@@ -39,6 +39,7 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
     private int position;
     private VenuesBean venuesBean;
     private CartPresent cartPresent;
+    private boolean updated = false;
 
     public static void start(Context context, ShopBean shopBean) {
         Intent starter = new Intent(context, UpdateDeliveryInfoActivity.class);
@@ -83,7 +84,7 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.iv_back:
-                finish();
+                finishWithSendResult();
                 break;
         }
     }
@@ -124,6 +125,7 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
             deliveryBean.setType(DeliveryType.SELF);
             bean.setDeliveryInfo(deliveryBean);
             deliveryInfoAdapter.notifyDataSetChanged();
+            updated = true;
         }
     }
 
@@ -135,6 +137,19 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
             deliveryBean.setType(DeliveryType.EXPRESS);
             bean.setDeliveryInfo(deliveryBean);
             deliveryInfoAdapter.notifyDataSetChanged();
+            updated = true;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        finishWithSendResult();
+    }
+
+    private void finishWithSendResult(){
+        if(updated){
+            setResult(RESULT_OK,null);
+        }
+        finish();
     }
 }

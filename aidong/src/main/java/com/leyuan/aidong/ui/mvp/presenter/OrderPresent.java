@@ -46,6 +46,13 @@ public interface OrderPresent {
      * 获取订单
      *
      * @param id             订单id
+     */
+    void getOrderDetail(String id);
+
+    /**
+     * 获取订单
+     *
+     * @param id             订单id
      * @param switcherLayout SwitcherLayout
      */
     void getOrderDetail(SwitcherLayout switcherLayout,String id);

@@ -72,4 +72,7 @@ public interface ConfirmOrderPresent {
     void payCart( String integral, String coin, String coupon, String payType, String pickUpId,
                   String pickUpDate,PayInterface.PayListener payListener,String... id);
 
+
+    void refreshCartData();
+
 }

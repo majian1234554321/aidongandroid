@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.ShopBean;
-import com.leyuan.aidong.ui.mine.activity.UpdateDeliveryInfoActivity;
 import com.leyuan.aidong.utils.constant.DeliveryType;
 
 import java.util.ArrayList;
@@ -23,6 +22,8 @@ import java.util.List;
 public class ConfirmOrderShopAdapter extends RecyclerView.Adapter<ConfirmOrderShopAdapter.CartHolder> {
     private Context context;
     private List<ShopBean> data = new ArrayList<>();
+    private DeliveryTypeListener listener;
+
 
     public ConfirmOrderShopAdapter(Context context) {
         this.context = context;
@@ -60,7 +61,9 @@ public class ConfirmOrderShopAdapter extends RecyclerView.Adapter<ConfirmOrderSh
         holder.tvDeliveryType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UpdateDeliveryInfoActivity.start(context,bean);
+                if(listener != null){
+                    listener.onDeliveryTypeClick(position);
+                }
             }
         });
     }
@@ -76,5 +79,13 @@ public class ConfirmOrderShopAdapter extends RecyclerView.Adapter<ConfirmOrderSh
             tvDeliveryType = (TextView) itemView.findViewById(R.id.tv_delivery_type);
             rvShop = (RecyclerView) itemView.findViewById(R.id.rv_shop);
         }
+    }
+
+    public void setListener(DeliveryTypeListener listener) {
+        this.listener = listener;
+    }
+
+    public interface DeliveryTypeListener{
+        void onDeliveryTypeClick(int position);
     }
 }

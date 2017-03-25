@@ -57,11 +57,11 @@
             android:gravity="center" />
 
         <TextView
-            android:id="@+id/tv_coach"
+            android:id="@+id/tv_call"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="预约"
+            android:text="打电话"
             android:textSize="15sp"
             android:textColor="@color/white"
             android:background="@color/main_red"
