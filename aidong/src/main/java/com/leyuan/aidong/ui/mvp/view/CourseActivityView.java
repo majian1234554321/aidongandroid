@@ -20,4 +20,6 @@ public interface CourseActivityView {
      * 设置热门商圈
      */
     void setBusinessCircle(List<DistrictBean> circleBeanList);
+
+    void setScrollPosition(String date);
 }
