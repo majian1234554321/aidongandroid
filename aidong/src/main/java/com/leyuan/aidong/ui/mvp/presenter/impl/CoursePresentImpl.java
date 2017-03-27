@@ -124,16 +124,9 @@ public class CoursePresentImpl implements CoursePresent{
             @Override
             public void onNext(CourseData courseData) {
                 if (courseData != null && courseData.getCourse() != null && !courseData.getCourse().isEmpty()) {
-                    if(courserFragmentView != null) {
-                        courserFragmentView.refreshRecyclerViewData(courseData.getCourse());
-                    }
-                    if(coursesActivityView != null) {
-                        coursesActivityView.setScrollPosition(courseData.getDate());
-                    }
+                    courserFragmentView.refreshRecyclerViewData(courseData.getCourse());
                 } else {
-                    if(courserFragmentView != null) {
-                        courserFragmentView.showEmptyView();
-                    }
+                    courserFragmentView.showEmptyView();
                 }
             }
         }, day, category, landmark, Constant.PAGE_FIRST);
@@ -255,5 +248,23 @@ public class CoursePresentImpl implements CoursePresent{
                 }
             }
         }, CouponType.COURSE,id);
+    }
+
+    @Override
+    public void getScrollDate(String day, String category) {
+        if (courseModel == null) {
+            courseModel = new CourseModelImpl(context);
+        }
+        courseModel.getCourses(new RefreshSubscriber<CourseData>(context) {
+            @Override
+            public void onNext(CourseData courseData) {
+                if (courseData != null && courseData.getCourse() != null && !courseData.getCourse().isEmpty()) {
+
+                    if(coursesActivityView != null) {
+                        coursesActivityView.setScrollPosition(courseData.getDate());
+                    }
+                }
+            }
+        }, day, category, null, Constant.PAGE_FIRST);
     }
 }
