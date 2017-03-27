@@ -248,6 +248,10 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
         ObjectAnimator.ofFloat(contentLayout, "translationY", 0, -panelHeight).setDuration(200).start();
     }
 
+    public boolean isPopupShowing(){
+        return isPopupShowing;
+    }
+
     // 复位分类的显示状态
     public void resetCategoryStatus() {
         tvCategory.setTextColor(context.getResources().getColor(R.color.black));

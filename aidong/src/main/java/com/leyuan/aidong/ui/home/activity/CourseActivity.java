@@ -68,7 +68,7 @@ public class CourseActivity extends BaseActivity implements CourseActivityView,S
         setListener();
         present.getCategory();
         present.getBusinessCircle();
-        present.pullToRefreshData(days.get(0),category,null);
+        present.getScrollDate(days.get(0),category);
     }
 
     private void initView() {
@@ -107,6 +107,15 @@ public class CourseActivity extends BaseActivity implements CourseActivityView,S
                     page.scrollToTop();
                     filterView.animate().translationY(0).setInterpolator
                             (new DecelerateInterpolator(2)).start();
+                }
+            }
+        });
+
+        tabLayout.setOnTabClickListener(new SmartTabLayout.OnTabClickListener() {
+            @Override
+            public void onTabClicked(int position) {
+                if(filterView.isPopupShowing()) {
+                    filterView.hidePopup();
                 }
             }
         });

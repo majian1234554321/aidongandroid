@@ -80,4 +80,6 @@ public interface CoursePresent {
      * @param id
      */
     void getSpecifyCourseCoupon(String id);
+
+    void getScrollDate(String day,String category);
 }
