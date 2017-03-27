@@ -36,8 +36,8 @@ public class WatchOfficeRelateCourseAdapter extends MyBaseAdapter<WatchOfficeCou
             @Override
             public void onClick(View v) {
 
-                CourseActivity.start(context,bean.getDictName());
-//                Intent intent = new Intent(context, CourseActivity.class);
+
+                ntext, CourseActivity.class);
 //                intent.putExtra("code", bean.getConID());
 //                intent.putExtra("name", bean.getDictName());
 //                context.startActivity(intent);
