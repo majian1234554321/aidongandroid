@@ -1,7 +1,6 @@
 package com.leyuan.aidong.adapter.video;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -36,10 +35,12 @@ public class WatchOfficeRelateCourseAdapter extends MyBaseAdapter<WatchOfficeCou
         cover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, CourseActivity.class);
-                intent.putExtra("code", bean.getConID());
-                intent.putExtra("name", bean.getDictName());
-                context.startActivity(intent);
+
+                CourseActivity.start(context,bean.getDictName());
+//                Intent intent = new Intent(context, CourseActivity.class);
+//                intent.putExtra("code", bean.getConID());
+//                intent.putExtra("name", bean.getDictName());
+//                context.startActivity(intent);
             }
         });
     }

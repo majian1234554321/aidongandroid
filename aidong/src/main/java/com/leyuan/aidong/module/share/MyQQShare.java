@@ -26,19 +26,19 @@ public class MyQQShare {
         @Override
         public void onCancel() {
             Logger.i("QQSHARE", "qqShareListener onCancel");
-            ToastGlobal.showShort("分享取消");
+            ToastGlobal.showShortConsecutive("分享取消");
         }
 
         @Override
         public void onComplete(Object response) {
             Logger.i("QQSHARE", "qqShareListener onComplete");
-            ToastGlobal.showShort("分享成功");
+            ToastGlobal.showShortConsecutive("分享成功");
         }
 
         @Override
         public void onError(UiError e) {
             Logger.i("QQSHARE", "qqShareListener onError");
-            ToastGlobal.showShort("分享失败");
+            ToastGlobal.showShortConsecutive("分享失败");
         }
     };
 

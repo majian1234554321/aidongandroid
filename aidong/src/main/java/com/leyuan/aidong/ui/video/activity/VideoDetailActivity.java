@@ -151,7 +151,7 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
                             if (videos != null && videos.size() > 0) {
                                 VideoDetail detail = videos.get(position);
                                 VideoMoreActivity.newInstance(VideoDetailActivity.this, detail.getVideoName()
-                                        , String.valueOf(series_id), position);
+                                        , String.valueOf(series_id), position,videos);
                             }
 
                         }
@@ -240,7 +240,7 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
                 if (videos != null && videos.size() > 0) {
                     VideoDetail detail = videos.get(position);
                     VideoMoreActivity.newInstance(VideoDetailActivity.this, detail.getVideoName(),
-                            String.valueOf(series_id), position);
+                            String.valueOf(series_id), position,videos);
                 }
                 break;
             case R.id.iv_share:

@@ -29,6 +29,7 @@ import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.MyListView;
 import com.leyuan.aidong.widget.SmartScrollView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,6 +46,7 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
     private String videoId;
     private String phase;
     private int position;
+    private ArrayList<VideoDetail> videos;
 
     private String series_id;
     private int page = 1;
@@ -95,11 +97,12 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
         context.overridePendingTransition(R.anim.slide_in_bottom, 0);
     }
 
-    public static void newInstance(Activity context, String videoName, String series_id, int position) {
+    public static void newInstance(Activity context, String videoName, String series_id, int position, ArrayList<VideoDetail> videos) {
         Intent intent = new Intent(context, VideoMoreActivity.class);
         intent.putExtra("videoName", videoName);
         intent.putExtra("series_id", series_id);
         intent.putExtra("position", position);
+        intent.putParcelableArrayListExtra("videos", videos);
         context.startActivity(intent);
         context.overridePendingTransition(R.anim.slide_in_bottom, 0);
     }
@@ -114,7 +117,10 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
             series_id = intent.getStringExtra("series_id");
             phase = intent.getStringExtra("phase");
             position = intent.getIntExtra("position", 0);
-
+            videos = intent.getParcelableArrayListExtra("videos");
+            if (videos != null && videos.size() > position) {
+                videos.remove(position);
+            }
         }
 
         presenter = new VideoPresenterImpl(this);
@@ -143,7 +149,6 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
         });
 
 
-
         ImageView ivBack = (ImageView) findViewById(R.id.iv_down_arrow);
         ivBack.setOnClickListener(backListener);
         RecyclerView videoRecyclerView = (RecyclerView) findViewById(R.id.rv_relate_relate_video);
@@ -158,7 +163,7 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
         goodAdapter = new WatchOfficeRelateGoodAdapter(this, this);
         goodRecyclerView.setAdapter(goodAdapter);
 
-        scrollview.setOnTouchListener( downTouchListener );
+        scrollview.setOnTouchListener(downTouchListener);
         videoRecyclerView.setOnTouchListener(downTouchListener);
         courseListView.setOnTouchListener(downTouchListener);
         goodRecyclerView.setOnTouchListener(downTouchListener);

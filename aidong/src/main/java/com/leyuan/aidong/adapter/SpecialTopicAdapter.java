@@ -134,8 +134,9 @@ public class SpecialTopicAdapter extends RecyclerView.Adapter<SpecialTopicAdapte
                     //                    holder.txt_course.setTextColor(0x00ffffff);
                 }
                 final SpecialTopicInfo info = mInfos.get(i);
+
                 Glide.with(mContext).load(info.getLatest().getCover())
-                        .placeholder(R.drawable.icon_found).into(holder.imgView);
+                        .placeholder(R.drawable.icon_found).override(720,720).into(holder.imgView);
                 holder.txt_belong.setText("" + info.getLatest().getAuthor());
                 holder.txt_type.setText("" + info.getName());
                 if (info.getFinished()) {

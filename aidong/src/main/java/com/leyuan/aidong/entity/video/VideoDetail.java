@@ -1,8 +1,11 @@
 package com.leyuan.aidong.entity.video;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class VideoDetail {
+public class VideoDetail implements Parcelable{
     @SerializedName("id")
     private int vId;
 
@@ -37,6 +40,33 @@ public class VideoDetail {
     private String updated_at;
     private int contentId;
 
+    protected VideoDetail(Parcel in) {
+        vId = in.readInt();
+        cover = in.readString();
+        video = in.readString();
+        phase = in.readInt();
+        videoName = in.readString();
+        author = in.readString();
+        during = in.readString();
+        introduce = in.readString();
+        likesCount = in.readInt();
+        commentsCount = in.readString();
+        updated_at = in.readString();
+        contentId = in.readInt();
+    }
+
+    public static final Creator<VideoDetail> CREATOR = new Creator<VideoDetail>() {
+        @Override
+        public VideoDetail createFromParcel(Parcel in) {
+            return new VideoDetail(in);
+        }
+
+        @Override
+        public VideoDetail[] newArray(int size) {
+            return new VideoDetail[size];
+        }
+    };
+
     public String getUpdated_at() {
         return updated_at;
     }
@@ -44,20 +74,6 @@ public class VideoDetail {
     public void setUpdated_at(String updated_at) {
         this.updated_at = updated_at;
     }
-
-    //    public VideoDetail(int vId, String cover, String video, int phase, String videoName,
-//                       String author, String during, String introduce, String likesCount, String commentsCount) {
-//        this.vId = vId;
-//        this.cover = cover;
-//        this.video = video;
-//        this.phase = phase;
-//        this.videoName = videoName;
-//        this.author = author;
-//        this.during = during;
-//        this.introduce = introduce;
-//        this.likesCount = likesCount;
-//        this.commentsCount = commentsCount;
-//    }
 
     public int getvId() {
         return vId;
@@ -145,5 +161,26 @@ public class VideoDetail {
 
     public void setContentId(int contentId) {
         this.contentId = contentId;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(vId);
+        dest.writeString(cover);
+        dest.writeString(video);
+        dest.writeInt(phase);
+        dest.writeString(videoName);
+        dest.writeString(author);
+        dest.writeString(during);
+        dest.writeString(introduce);
+        dest.writeInt(likesCount);
+        dest.writeString(commentsCount);
+        dest.writeString(updated_at);
+        dest.writeInt(contentId);
     }
 }
