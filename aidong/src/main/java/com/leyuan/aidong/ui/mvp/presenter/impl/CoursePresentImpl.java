@@ -124,9 +124,16 @@ public class CoursePresentImpl implements CoursePresent{
             @Override
             public void onNext(CourseData courseData) {
                 if (courseData != null && courseData.getCourse() != null && !courseData.getCourse().isEmpty()) {
-                    courserFragmentView.refreshRecyclerViewData(courseData.getCourse());
+                    if(courserFragmentView != null) {
+                        courserFragmentView.refreshRecyclerViewData(courseData.getCourse());
+                    }
+                    if(coursesActivityView != null) {
+                        coursesActivityView.setScrollPosition(courseData.getDate());
+                    }
                 } else {
-                    courserFragmentView.showEmptyView();
+                    if(courserFragmentView != null) {
+                        courserFragmentView.showEmptyView();
+                    }
                 }
             }
         }, day, category, landmark, Constant.PAGE_FIRST);

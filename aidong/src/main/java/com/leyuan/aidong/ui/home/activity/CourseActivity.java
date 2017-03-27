@@ -48,6 +48,7 @@ public class CourseActivity extends BaseActivity implements CourseActivityView,S
     private FragmentPagerItemAdapter adapter;
     private List<View> allTabView = new ArrayList<>();
     private String category;
+    private ViewPager viewPager;
 
     public static void start(Context context,String category) {
         Intent starter = new Intent(context, CourseActivity.class);
@@ -67,6 +68,7 @@ public class CourseActivity extends BaseActivity implements CourseActivityView,S
         setListener();
         present.getCategory();
         present.getBusinessCircle();
+        present.pullToRefreshData(days.get(0),category,null);
     }
 
     private void initView() {
@@ -74,7 +76,7 @@ public class CourseActivity extends BaseActivity implements CourseActivityView,S
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tabLayout = (SmartTabLayout) findViewById(R.id.tab_layout);
         filterView = (CourseFilterView) findViewById(R.id.view_filter_course);
-        ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
+        viewPager = (ViewPager) findViewById(R.id.view_pager);
         FragmentPagerItems pages = new FragmentPagerItems(this);
         for (int i = 0; i < days.size(); i++) {
             CourseFragment courseFragment = new CourseFragment();
@@ -177,5 +179,19 @@ public class CourseActivity extends BaseActivity implements CourseActivityView,S
     public void animatedHide(){
         filterView.animate().translationY(-filterView.getHeight()).setInterpolator
                 (new AccelerateInterpolator(2)).start();
+    }
+
+    @Override
+    public void setScrollPosition(String date) {
+        int index = 0;
+        for (int i = 0; i < days.size(); i++) {
+            if(days.get(i).equals(date)){
+                index = i;
+                break;
+            }
+        }
+        if(index != 0) {
+            viewPager.setCurrentItem(index);
+        }
     }
 }
