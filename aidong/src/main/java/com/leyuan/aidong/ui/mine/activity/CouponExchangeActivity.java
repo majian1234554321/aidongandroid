@@ -16,7 +16,7 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CouponPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CouponExchangeActivityView;
 import com.leyuan.aidong.utils.DialogUtils;
-import com.leyuan.aidong.utils.ToastUtil;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 
 /**
@@ -63,7 +63,7 @@ public class CouponExchangeActivity extends BaseActivity implements CouponExchan
             public void onClick(View v) {
                 String exchangeCode = etInput.getText().toString();
                 if (TextUtils.isEmpty(exchangeCode)) {
-                    ToastUtil.show("请输入兑换码", CouponExchangeActivity.this);
+                    ToastGlobal.showShort("请输入兑换码");
                 } else {
 //                    DialogUtils.showDialog(CouponExchangeActivity.this, "", true);
                     couponPresent.exchangeCoupon(exchangeCode);

@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.utils.Logger;
-import com.leyuan.aidong.utils.ToastUtil;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.tencent.connect.common.Constants;
 import com.tencent.connect.share.QQShare;
 import com.tencent.open.utils.ThreadManager;
@@ -26,22 +26,19 @@ public class MyQQShare {
         @Override
         public void onCancel() {
             Logger.i("QQSHARE", "qqShareListener onCancel");
-            ToastUtil.show("分享取消", context);
-//                shareCallback.onCancel();
+            ToastGlobal.showShort("分享取消");
         }
 
         @Override
         public void onComplete(Object response) {
             Logger.i("QQSHARE", "qqShareListener onComplete");
-            ToastUtil.show("分享成功", context);
-//                shareCallback.onComplete(response);
+            ToastGlobal.showShort("分享成功");
         }
 
         @Override
         public void onError(UiError e) {
             Logger.i("QQSHARE", "qqShareListener onError");
-            ToastUtil.show("分享失败", context);
-//                shareCallback.onError();
+            ToastGlobal.showShort("分享失败");
         }
     };
 

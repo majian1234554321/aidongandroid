@@ -325,7 +325,7 @@ public class SpecialTopicFragment extends Fragment implements SwipeRefreshLayout
     private void getMoreDataFromInter() {
         isLoading = true;
         page++;
-        presenter.getMoreVideoList(String.valueOf(page), VideoPresenterImpl.family);
+        presenter.getMoreVideoList(String.valueOf(page),requestType);
     }
 
     @Override

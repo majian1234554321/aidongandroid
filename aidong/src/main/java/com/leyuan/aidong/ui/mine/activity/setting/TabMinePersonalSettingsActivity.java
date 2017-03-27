@@ -26,6 +26,7 @@ import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.utils.DataCleanManager;
 import com.leyuan.aidong.utils.MyDbUtils;
 import com.leyuan.aidong.utils.TelephoneManager;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.utils.UiManager;
 
@@ -104,8 +105,7 @@ public class TabMinePersonalSettingsActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         clean();
-                        ToastUtil.show(getResources().getString(
-                                R.string.cacheclear), TabMinePersonalSettingsActivity.this);
+                        ToastGlobal.showShort(R.string.cacheclear);
                     }
                 });
         layout_tab_mine_personal_settings_binding_third_party_community_rel

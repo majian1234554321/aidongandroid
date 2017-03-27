@@ -18,6 +18,7 @@ import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.StringUtils;
 import com.leyuan.aidong.utils.TimeCountUtil;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.widget.CommonTitleLayout;
 import com.leyuan.aidong.widget.DialogImageIdentify;
@@ -86,7 +87,7 @@ public class PhoneBindingActivity extends BaseActivity implements View.OnClickLi
             return false;
         }
         if (!TextUtils.equals(mobile, presenter.getBingdingMobile())) {
-            ToastUtil.show("与验证手机不一致", this);
+            ToastGlobal.showShort("与验证手机不一致");
             return false;
         }
 

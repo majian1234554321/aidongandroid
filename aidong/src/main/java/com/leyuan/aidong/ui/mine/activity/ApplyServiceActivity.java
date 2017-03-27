@@ -24,7 +24,7 @@ import com.leyuan.aidong.module.photopicker.boxing_impl.ui.BoxingActivity;
 import com.leyuan.aidong.module.photopicker.boxing_impl.view.SpacesItemDecoration;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.utils.ToastUtil;
+import com.leyuan.aidong.utils.ToastGlobal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -124,7 +124,8 @@ public class ApplyServiceActivity extends BaseActivity implements View.OnClickLi
 
                 String content = etProblem.getText().toString().trim();
                 if (TextUtils.isEmpty(content)) {
-                    ToastUtil.show("请输入原因", this);
+//                    ToastUtil.show("请输入原因", this);
+                    ToastGlobal.showShort("请输入原因");
                     return;
                 }
                 ArrayList<String> items = new ArrayList<>();
@@ -135,7 +136,8 @@ public class ApplyServiceActivity extends BaseActivity implements View.OnClickLi
                 }
 
                 if (items.isEmpty()) {
-                    ToastUtil.show("请至少选择一件商品", this);
+//                    ToastUtil.show("请至少选择一件商品", this);
+                    ToastGlobal.showShort("请至少选择一件商品");
                     return;
                 }
 

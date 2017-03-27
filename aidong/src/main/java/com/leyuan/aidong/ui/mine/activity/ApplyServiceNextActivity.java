@@ -20,7 +20,7 @@ import com.leyuan.aidong.ui.mvp.view.AddressListView;
 import com.leyuan.aidong.ui.mvp.view.OrderFeedbackView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DialogUtils;
-import com.leyuan.aidong.utils.ToastUtil;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.qiniu.IQiNiuCallback;
 import com.leyuan.aidong.utils.qiniu.UploadQiNiuManager;
 import com.leyuan.aidong.widget.SimpleTitleBar;
@@ -120,7 +120,7 @@ public class ApplyServiceNextActivity extends BaseActivity implements View.OnCli
                 break;
             case R.id.tv_apply:
                 if (addressInfo == null) {
-                    ToastUtil.show("请选择联系信息", this);
+                    ToastGlobal.showShort("请选择联系信息");
                 } else if (selectedMedia != null) {
                     DialogUtils.showDialog(this, "", false);
                     applyToQiNiu(selectedMedia);
@@ -191,7 +191,7 @@ public class ApplyServiceNextActivity extends BaseActivity implements View.OnCli
     public void onFeedbackResult(boolean success) {
         DialogUtils.dismissDialog();
         if (success) {
-            ToastUtil.show("申请成功,稍后会有工作人员联系您", this);
+            ToastGlobal.showShort("申请成功,稍后会有工作人员联系您");
             setResult(RESULT_OK, new Intent());
             finish();
         }

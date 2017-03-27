@@ -100,21 +100,21 @@
             android:name=".ui.mine.activity.account.XiuGaiGeXinQianMing"
             android:screenOrientation="portrait" />
 
-        <activity
-            android:name=".ui.mine.activity.setting.TabMinePersonalDataFitnessGoalsActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.mine.activity.setting.TabMinePersonalDataFitnessIsGoodActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.mine.activity.setting.TabMinePersonalDataIndividualitySignatureActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.mine.activity.setting.TabMinePersonalDataNicknameActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.mine.activity.setting.TabMinePersonalDataOftenGymActivity"
-            android:screenOrientation="portrait" />
+        <!--<activity-->
+            <!--android:name=".ui.mine.activity.setting.TabMinePersonalDataFitnessGoalsActivity"-->
+            <!--android:screenOrientation="portrait" />-->
+        <!--<activity-->
+            <!--android:name=".ui.mine.activity.setting.TabMinePersonalDataFitnessIsGoodActivity"-->
+            <!--android:screenOrientation="portrait" />-->
+        <!--<activity-->
+            <!--android:name=".ui.mine.activity.setting.TabMinePersonalDataIndividualitySignatureActivity"-->
+            <!--android:screenOrientation="portrait" />-->
+        <!--<activity-->
+            <!--android:name=".ui.mine.activity.setting.TabMinePersonalDataNicknameActivity"-->
+            <!--android:screenOrientation="portrait" />-->
+        <!--<activity-->
+            <!--android:name=".ui.mine.activity.setting.TabMinePersonalDataOftenGymActivity"-->
+            <!--android:screenOrientation="portrait" />-->
         <activity
             android:name=".ui.mine.activity.setting.AboutMxActivity"
             android:screenOrientation="portrait" />

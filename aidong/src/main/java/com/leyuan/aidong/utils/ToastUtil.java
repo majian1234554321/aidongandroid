@@ -8,6 +8,8 @@ import com.leyuan.aidong.ui.App;
 /**
  * Toast统一管理类
  */
+
+@Deprecated
 public class ToastUtil {
 
     private ToastUtil() {
@@ -101,15 +103,6 @@ public class ToastUtil {
             toast = Toast.makeText(App.context, "", Toast.LENGTH_SHORT);
         }
         toast.setText(message);
-        toast.show();
-    }
-
-
-    public static void show(String txt, Context context) {
-        if (toast == null) {
-            toast = Toast.makeText(context, "", Toast.LENGTH_SHORT);
-        }
-        toast.setText(txt);
         toast.show();
     }
 

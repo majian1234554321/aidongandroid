@@ -60,8 +60,8 @@ public class WatchOfficeActivity extends FragmentActivity {
             }
         });
         mFragments.add(SpecialTopicFragment.newInstance(VideoPresenterImpl.family));
-        mFragments.add(SpecialTopicFragment.newInstance(VideoPresenterImpl.celebrity));
         mFragments.add(SpecialTopicFragment.newInstance(VideoPresenterImpl.professional));
+        mFragments.add(SpecialTopicFragment.newInstance(VideoPresenterImpl.celebrity));
         Logger.i("liveVideo", "video_type = " + video_type);
         changeTitleTag(video_type);
         viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {

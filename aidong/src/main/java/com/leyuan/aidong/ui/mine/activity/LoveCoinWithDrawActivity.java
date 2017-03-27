@@ -4,19 +4,15 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.model.result.BaseResult;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.utils.ToastUtil;
+import com.leyuan.aidong.utils.ToastGlobal;
 
 
 public class LoveCoinWithDrawActivity extends BaseActivity implements View.OnClickListener {
@@ -138,7 +134,7 @@ public class LoveCoinWithDrawActivity extends BaseActivity implements View.OnCli
         try {
             int inputMoney = Integer.parseInt(money);
             if (inputMoney > valueLoveCoin) {
-                ToastUtil.show("可提现余额不足，请重新输入",this);
+                ToastGlobal.showShort("可提现余额不足，请重新输入");
                 return false;
             }
         } catch (NumberFormatException e) {

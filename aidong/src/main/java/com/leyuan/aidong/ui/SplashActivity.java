@@ -19,7 +19,7 @@ import com.leyuan.aidong.ui.mvp.view.LoginAutoView;
 import com.leyuan.aidong.ui.mvp.view.VersionViewListener;
 import com.leyuan.aidong.utils.PermissionManager;
 import com.leyuan.aidong.utils.SharePrefUtils;
-import com.leyuan.aidong.utils.ToastUtil;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.UiManager;
 import com.leyuan.aidong.utils.VersionManager;
 import com.leyuan.aidong.widget.dialog.BaseDialog;
@@ -72,8 +72,10 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
         SystemPresent systemPresent = new SystemPresentImpl(this);
         systemPresent.getSystemInfo(OS);
 
-        FollowPresent followPresent = new FollowPresentImpl(this);
-        followPresent.getFollowList();
+        if(App.getInstance().isLogin()){
+            FollowPresent followPresent = new FollowPresentImpl(this);
+            followPresent.getFollowList();
+        }
 
         splashPresenter = new SplashPresenterImpl(this);
         splashPresenter.setLoginAutoListener(this);
@@ -149,7 +151,7 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
             startActivity(Intent.createChooser(intent, "请选择浏览器"));
         } catch (Exception e) {
             e.printStackTrace();
-            ToastUtil.show("下载地址解析失败", this);
+            ToastGlobal.showShort("下载地址解析失败");
         }
     }
 

@@ -32,14 +32,14 @@
         android:id="@+id/img_blur"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/rel_top"
+        android:layout_below="@id/rel_top"
         android:scaleType="centerCrop" />
-    <!--<ImageView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_below="@+id/viewPager"-->
-    <!--android:background="#22000000"-->
-    <!--/>-->
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rel_top"
+        android:background="#22000000" />
 
     <RelativeLayout
         android:id="@+id/layout_page_tag"
@@ -65,13 +65,13 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_below="@+id/rel_top"
         android:id="@+id/layout_under"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/rel_top">
 
 
         <RelativeLayout

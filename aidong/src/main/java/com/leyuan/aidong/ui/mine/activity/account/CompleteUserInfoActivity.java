@@ -30,7 +30,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.UserInfoPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.UpdateUserInfoActivityView;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
-import com.leyuan.aidong.utils.ToastUtil;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.Utils;
 import com.leyuan.aidong.utils.qiniu.IQiNiuCallback;
 import com.leyuan.aidong.utils.qiniu.UploadQiNiuManager;
@@ -193,15 +193,15 @@ public class CompleteUserInfoActivity extends BaseActivity implements UpdateUser
 
     private boolean verify() {
         if (TextUtils.isEmpty(tvNickname.getText().trim())) {
-            ToastUtil.show("请输入昵称", this);
+            ToastGlobal.showShort("请输入昵称");
             return false;
         }
         if (TextUtils.isEmpty(tvGender.getText().trim())) {
-            ToastUtil.show("请选择性别", this);
+            ToastGlobal.showShort("请选择性别");
             return false;
         }
         if (TextUtils.isEmpty(city)) {
-            ToastUtil.show("请选择城市", this);
+            ToastGlobal.showShort("请选择城市");
             return false;
         }
 

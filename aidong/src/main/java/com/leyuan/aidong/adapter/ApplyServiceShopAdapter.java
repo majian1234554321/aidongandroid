@@ -12,7 +12,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
-import com.leyuan.aidong.utils.ToastUtil;
+import com.leyuan.aidong.utils.ToastGlobal;
 
 import java.util.ArrayList;
 
@@ -67,7 +67,7 @@ public class ApplyServiceShopAdapter extends RecyclerView.Adapter<ApplyServiceSh
                 count++;
                 if (count > amount) {
                     count = amount;
-                    ToastUtil.show("超出最大数量", context);
+                    ToastGlobal.showShort("超出最大数量");
                 }
                 if (count > 1) {
                     holder.ivMinus.setBackgroundResource(R.drawable.icon_minus);
