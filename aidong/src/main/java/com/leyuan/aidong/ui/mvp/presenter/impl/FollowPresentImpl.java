@@ -130,7 +130,9 @@ public class FollowPresentImpl implements FollowPresent {
                if(appointmentUserActivityView != null){
                    appointmentUserActivityView.addFollowResult(baseBean);
                }
-                followFragment.addFollowResult(baseBean);
+                if(followFragment != null) {
+                    followFragment.addFollowResult(baseBean);
+                }
             }
         },id);
     }
@@ -143,7 +145,9 @@ public class FollowPresentImpl implements FollowPresent {
                 if(appointmentUserActivityView != null){
                     appointmentUserActivityView.cancelFollowResult(baseBean);
                 }
-                followFragment.cancelFollowResult(baseBean);
+                if(followFragment != null) {
+                    followFragment.cancelFollowResult(baseBean);
+                }
             }
         },id);
     }

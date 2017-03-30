@@ -35,6 +35,7 @@ import com.leyuan.aidong.utils.qiniu.IQiNiuCallback;
 import com.leyuan.aidong.utils.qiniu.UploadQiNiuManager;
 import com.leyuan.aidong.widget.ExtendTextView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -79,6 +80,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
     private String bmi;
 
     private UserInfoPresent userInfoPresent;
+    private DecimalFormat df;
 
     public static void start(Context context, ProfileBean profileBean) {
         Intent starter = new Intent(context, UpdateUserInfoActivity.class);
@@ -91,6 +93,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_user_info);
         userInfoPresent = new UserInfoPresentImpl(this, this);
+        df = new java.text.DecimalFormat("#.00");
         if (getIntent() != null) {
             profileBean = getIntent().getParcelableExtra("profileBean");
         }
@@ -138,7 +141,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
         tvWeight.setRightContent(profileBean.getWeight()+"kg");
         weight = profileBean.getWeight();
         height = profileBean.getHeight();
-        tvBmi.setRightContent(String.valueOf(getBMI()));
+        tvBmi.setRightContent(df.format(getBMI()));
         tvFrequency.setRightContent(profileBean.getFrequency());
     }
 
@@ -426,7 +429,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
 
     private void setBMI() {
         if (FormatUtil.parseFloat(height) != 0f && FormatUtil.parseFloat(weight) != 0f) {
-            tvBmi.setRightContent(String.valueOf(Utils.calBMI(FormatUtil.parseFloat(weight),
+            tvBmi.setRightContent(df.format(Utils.calBMI(FormatUtil.parseFloat(weight),
                     FormatUtil.parseFloat(height)/100)));
         }
     }

@@ -168,6 +168,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
             ivFollowOrPublish.setBackgroundResource(R.drawable.icon_mine_publish);
             if (!userInfoData.getPhotoWall().isEmpty()) {
                 wallAdapter.setData(userInfoData.getPhotoWall());
+                selfEmptyPhotoLayout.setVisibility(View.GONE);
             } else {
                 selfEmptyPhotoLayout.setVisibility(View.VISIBLE);
             }
@@ -313,7 +314,9 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
             } else if (requestCode == REQUEST_SELECT_PHOTO || requestCode == REQUEST_SELECT_VIDEO) {
                 PublishDynamicActivity.start(this, requestCode == REQUEST_SELECT_PHOTO, Boxing.getResult(data));
             }else if(requestCode == REQUEST_UPDATE_PHOTO || requestCode == REQUEST_UPDATE_INFO){
-                 userInfoPresent.getUserInfo(userId);
+                userInfoData.getPhotoWall().clear();
+                wallAdapter.notifyDataSetChanged();
+                userInfoPresent.getUserInfo(userId);
             }
         }
     }

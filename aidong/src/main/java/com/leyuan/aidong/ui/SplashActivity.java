@@ -72,11 +72,6 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
         SystemPresent systemPresent = new SystemPresentImpl(this);
         systemPresent.getSystemInfo(OS);
 
-        if(App.getInstance().isLogin()){
-            FollowPresent followPresent = new FollowPresentImpl(this);
-            followPresent.getFollowList();
-        }
-
         splashPresenter = new SplashPresenterImpl(this);
         splashPresenter.setLoginAutoListener(this);
         versionPresenter = new VersionPresenterImpl(this, this);
@@ -170,6 +165,10 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
     public void onAutoLoginResult(boolean success) {
         handler.removeCallbacksAndMessages(null);
         handler.sendEmptyMessageDelayed(MESSAGE, DURATION);
+        if(App.getInstance().isLogin()){
+            FollowPresent followPresent = new FollowPresentImpl(this);
+            followPresent.getFollowList();
+        }
     }
 
     @Override
