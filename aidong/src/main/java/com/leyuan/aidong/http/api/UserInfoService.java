@@ -37,6 +37,10 @@ public interface UserInfoService {
     @GET("users/{idongId}/profile")
     Observable<BaseBean<UserInfoData>> getUserInfo(@Path("idongId") String idongId);
 
+
+    @GET("mine/profile")
+    Observable<BaseBean<UserInfoData>> getMyselfUserInfo();
+
     @FormUrlEncoded
     @PUT("mine/profile")
     Observable<BaseBean<UserInfoData>> updateUserInfo(@Field("name") String name,

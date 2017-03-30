@@ -38,6 +38,9 @@ public interface UserInfoModel {
 
     void getMineInfo(Subscriber<MineInfoBean> subscriber);
 
+    void getMyselfUserInfo(Subscriber<UserInfoData> getMyselfUserInfo);
+
+
     void updatePassword(Subscriber<BaseBean> subscriber, String oldPassword,
                         String new_password, String confirm_password);
 

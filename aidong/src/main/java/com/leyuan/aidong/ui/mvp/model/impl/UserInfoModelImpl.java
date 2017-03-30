@@ -35,6 +35,14 @@ public class UserInfoModelImpl implements UserInfoModel {
                 .subscribe(subscriber);
     }
 
+
+    @Override
+    public void getMyselfUserInfo(Subscriber<UserInfoData> subscriber) {
+        userInfoService.getMyselfUserInfo()
+                .compose(RxHelper.<UserInfoData>transform())
+                .subscribe(subscriber);
+    }
+
     @Override
     public void updateUserInfo(Subscriber<UserInfoData> subscriber,
                                String name,
@@ -86,6 +94,8 @@ public class UserInfoModelImpl implements UserInfoModel {
                 .compose(RxHelper.<MineInfoBean>transform())
                 .subscribe(subscriber);
     }
+
+
 
     @Override
     public void updatePassword(Subscriber<BaseBean> subscriber, String oldPassword,

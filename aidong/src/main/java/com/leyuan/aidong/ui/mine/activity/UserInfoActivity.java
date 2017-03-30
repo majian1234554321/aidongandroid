@@ -161,7 +161,8 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     private void setView() {
         GlideLoader.getInstance().displayCircleImage(userInfoData.getProfile().getAvatar(), dvAvatar);
         tvName.setText(userInfoData.getProfile().getName());
-        tvSignature.setText(userInfoData.getProfile().getSignature());
+        tvSignature.setText(TextUtils.isEmpty(userInfoData.getProfile().getSignature())
+            ? "这个人很懒，什么都没有留下" : userInfoData.getProfile().getSignature());
         if (isSelf) {
             tvTitle.setText("我的资料");
             ivFollowOrPublish.setBackgroundResource(R.drawable.icon_mine_publish);
