@@ -113,6 +113,8 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
         tvWeight = (ExtendTextView) findViewById(R.id.weight);
         tvBmi = (ExtendTextView) findViewById(R.id.bmi);
         tvFrequency = (ExtendTextView) findViewById(R.id.frequency);
+        avatarUrl = profileBean.getAvatar();
+        GlideLoader.getInstance().displayCircleImage(avatarUrl, ivAvatar);
         tvNickname.setRightContent(profileBean.getName() == null ? "请输入昵称" : profileBean.getName());
         tvGender.setRightContent("0".equals(profileBean.getGender()) ? "男" : "女");
         tvIdentify.setRightContent("coach".equals(profileBean.getUserType()) ? "教练" : "健身爱好者");
@@ -132,14 +134,12 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
             e.printStackTrace();
             tvZodiac.setRightContent("");
         }
-        tvHeight.setRightContent(profileBean.getHeight());
-        tvWeight.setRightContent(profileBean.getWeight());
-        tvBmi.setRightContent(profileBean.getBmi());
-        tvFrequency.setRightContent(profileBean.getFrequency());
-        avatarUrl = profileBean.getAvatar();
-        GlideLoader.getInstance().displayCircleImage(avatarUrl, ivAvatar);
+        tvHeight.setRightContent(profileBean.getHeight()+"cm");
+        tvWeight.setRightContent(profileBean.getWeight()+"kg");
         weight = profileBean.getWeight();
         height = profileBean.getHeight();
+        tvBmi.setRightContent(String.valueOf(getBMI()));
+        tvFrequency.setRightContent(profileBean.getFrequency());
     }
 
     private void setListener() {
@@ -427,7 +427,15 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
     private void setBMI() {
         if (FormatUtil.parseFloat(height) != 0f && FormatUtil.parseFloat(weight) != 0f) {
             tvBmi.setRightContent(String.valueOf(Utils.calBMI(FormatUtil.parseFloat(weight),
-                    FormatUtil.parseFloat(height))));
+                    FormatUtil.parseFloat(height)/100)));
+        }
+    }
+
+    private float getBMI(){
+        if(FormatUtil.parseFloat(height) != 0f && FormatUtil.parseFloat(weight) != 0f) {
+            return Utils.calBMI(FormatUtil.parseFloat(weight), FormatUtil.parseFloat(height)/100);
+        }else {
+            return 0f;
         }
     }
 

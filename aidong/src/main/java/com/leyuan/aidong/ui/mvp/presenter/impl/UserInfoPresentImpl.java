@@ -66,29 +66,54 @@ public class UserInfoPresentImpl implements UserInfoPresent {
 
     @Override
     public void getUserInfo(String id) {
-        userInfoModel.getUserInfo(new BaseSubscriber<UserInfoData>(context) {
-            @Override
-            public void onNext(UserInfoData userInfoData) {
-                if (userInfoData != null && userInfoData.getProfile() != null) {
-                    userInfoActivityView.updateUserInfo(userInfoData);
+        if(!id.equals(String.valueOf(App.mInstance.getUser().getId()))) {
+            userInfoModel.getUserInfo(new BaseSubscriber<UserInfoData>(context) {
+                @Override
+                public void onNext(UserInfoData userInfoData) {
+                    if (userInfoData != null && userInfoData.getProfile() != null) {
+                        userInfoActivityView.updateUserInfo(userInfoData);
+                    }
                 }
-            }
-        },id);
+            }, id);
+        }else {
+            userInfoModel.getMyselfUserInfo(new BaseSubscriber<UserInfoData>(context) {
+                @Override
+                public void onNext(UserInfoData userInfoData) {
+                    if (userInfoData != null && userInfoData.getProfile() != null) {
+                        userInfoActivityView.updateUserInfo(userInfoData);
+                    }
+                }
+            });
+        }
     }
 
     @Override
     public void getUserInfo(final SwitcherLayout switcherLayout, String id) {
-        userInfoModel.getUserInfo(new CommonSubscriber<UserInfoData>(switcherLayout) {
-            @Override
-            public void onNext(UserInfoData userInfoData) {
-                if (userInfoData != null && userInfoData.getProfile() != null) {
-                    switcherLayout.showContentLayout();
-                    userInfoActivityView.updateUserInfo(userInfoData);
-                } else {
-                    switcherLayout.showEmptyLayout();
+        if(!id.equals(String.valueOf(App.mInstance.getUser().getId()))) {
+            userInfoModel.getUserInfo(new CommonSubscriber<UserInfoData>(switcherLayout) {
+                @Override
+                public void onNext(UserInfoData userInfoData) {
+                    if (userInfoData != null && userInfoData.getProfile() != null) {
+                        switcherLayout.showContentLayout();
+                        userInfoActivityView.updateUserInfo(userInfoData);
+                    } else {
+                        switcherLayout.showEmptyLayout();
+                    }
                 }
-            }
-        }, id);
+            }, id);
+        }else {
+            userInfoModel.getMyselfUserInfo(new CommonSubscriber<UserInfoData>(switcherLayout) {
+                @Override
+                public void onNext(UserInfoData userInfoData) {
+                    if (userInfoData != null && userInfoData.getProfile() != null) {
+                        switcherLayout.showContentLayout();
+                        userInfoActivityView.updateUserInfo(userInfoData);
+                    }else {
+                        switcherLayout.showEmptyLayout();
+                    }
+                }
+            });
+        }
     }
 
     @Override

@@ -62,7 +62,7 @@ public class SelectCouponActivity extends BaseActivity implements SelectCouponAd
                 CouponBean temp = new CouponBean();
                 temp.setDiscount("0");
                 intent.putExtra("coupon",temp);
-                setResult(0,intent);
+                setResult(RESULT_OK,intent);
                 finish();
             }
         });
