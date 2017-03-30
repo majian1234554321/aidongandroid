@@ -55,15 +55,15 @@ public class UserInfoModelImpl implements UserInfoModel {
                                String charm_site,
                                String frequency) {
 
-        if (App.mInstance.isLogin()) {
+        if (App.getInstance().isLogin()) {
             userInfoService.updateUserInfo(name, avatar, gender, birthday, signature, tag, sport, province,
                     city, area, height, weight, bust, waist, hip, charm_site, frequency)
                     .compose(RxHelper.<UserInfoData>transform())
                     .subscribe(subscriber);
         } else {
 
-            Logger.i("login", "updateUserInfoWithToken token = " + App.mInstance.getToken());
-            userInfoService.updateUserInfoWithToken(App.mInstance.getToken(),
+            Logger.i("login", "updateUserInfoWithToken token = " + App.getInstance().getToken());
+            userInfoService.updateUserInfoWithToken(App.getInstance().getToken(),
                     name, avatar, gender, birthday, signature, tag, sport, province,
                     city, area, height, weight, bust, waist, hip, charm_site, frequency)
                     .compose(RxHelper.<UserInfoData>transform())

@@ -15,6 +15,7 @@ import com.leyuan.aidong.ui.mvp.view.RegisterViewInterface;
 import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.StringUtils;
 import com.leyuan.aidong.utils.TimeCountUtil;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.widget.CommonTitleLayout;
 import com.leyuan.aidong.widget.DialogImageIdentify;
@@ -130,10 +131,8 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
     public void register(boolean success) {
 
         if (success) {
-            ToastUtil.showShort(App.context, "修改成功");
+            ToastGlobal.showShort("修改成功");
             finish();
-        } else {
-            ToastUtil.showShort(App.context, "修改失败 请重新提交");
         }
     }
 

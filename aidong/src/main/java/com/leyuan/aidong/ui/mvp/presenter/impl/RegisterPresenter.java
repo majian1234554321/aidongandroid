@@ -3,6 +3,7 @@ package com.leyuan.aidong.ui.mvp.presenter.impl;
 import android.content.Context;
 
 import com.leyuan.aidong.entity.model.UserCoach;
+import com.leyuan.aidong.entity.user.CheckIdentifyResult;
 import com.leyuan.aidong.http.subscriber.BaseSubscriber;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.mvp.model.RegisterModelInterface;
@@ -76,7 +77,7 @@ public class RegisterPresenter implements RegisterPresenterInterface {
 
     @Override
     public void checkIdentify(String token, String code, String password) {
-        mRegisterModelInterface.checkIdentify(new BaseSubscriber<UserCoach>(mContext) {
+        mRegisterModelInterface.checkIdentify(new BaseSubscriber<CheckIdentifyResult>(mContext) {
             @Override
             public void onStart() {
                 super.onStart();
@@ -90,9 +91,9 @@ public class RegisterPresenter implements RegisterPresenterInterface {
             }
 
             @Override
-            public void onNext(UserCoach user) {
+            public void onNext(CheckIdentifyResult user) {
                 if (user != null) {
-                    App.mInstance.setToken(user.getToken());
+                    App.getInstance().setToken(user.getToken());
 
                     Logger.i("login", "checkIdentify token = " + user.getToken());
                 }
@@ -105,7 +106,7 @@ public class RegisterPresenter implements RegisterPresenterInterface {
 
     @Override
     public void checkIdentifyBinding(String captcha) {
-        mRegisterModelInterface.checkIdentify(new BaseSubscriber<UserCoach>(mContext) {
+        mRegisterModelInterface.checkIdentify(new BaseSubscriber<CheckIdentifyResult>(mContext) {
             @Override
             public void onStart() {
                 super.onStart();
@@ -119,7 +120,7 @@ public class RegisterPresenter implements RegisterPresenterInterface {
             }
 
             @Override
-            public void onNext(UserCoach user) {
+            public void onNext(CheckIdentifyResult user) {
                 if (bindingMobile != null) {
                     UserCoach userCoach = App.mInstance.getUser();
                     userCoach.setMobile(bindingMobile);

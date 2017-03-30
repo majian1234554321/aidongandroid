@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.mvp.model.impl;
 
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.entity.model.result.LoginResult;
+import com.leyuan.aidong.entity.user.CheckIdentifyResult;
 import com.leyuan.aidong.http.RetrofitHelper;
 import com.leyuan.aidong.http.RxHelper;
 import com.leyuan.aidong.http.api.IdentifyService;
@@ -55,10 +56,10 @@ public class RegisterModel implements RegisterModelInterface {
     }
 
     @Override
-    public void checkIdentify(Subscriber<UserCoach> subscriber, String token, String captcha, String password) {
+    public void checkIdentify(Subscriber<CheckIdentifyResult> subscriber, String token, String captcha, String password) {
 
         mIdentifyService.checkIdentify(token, captcha, password)
-                .compose(RxHelper.<UserCoach>transform())
+                .compose(RxHelper.<CheckIdentifyResult>transform())
                 .subscribe(subscriber);
 
     }

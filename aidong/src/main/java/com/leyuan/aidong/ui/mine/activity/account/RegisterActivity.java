@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.mine.activity.account;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +21,7 @@ import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.StringUtils;
 import com.leyuan.aidong.utils.TimeCountUtil;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.widget.CommonTitleLayout;
 import com.leyuan.aidong.widget.DialogImageIdentify;
@@ -44,7 +46,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         presenter = new RegisterPresenter(this, this);
         layoutTitle = (CommonTitleLayout) findViewById(R.id.layout_title);
         findViewById(R.id.btn_identify).setOnClickListener(this);
+
         txtProtocol = (TextView) findViewById(R.id.txt_protocol);
+        txtProtocol.setText(Html.fromHtml("我已阅读<font color=\"#000000\">《爱动健身》</font>服务协议"));
         findViewById(R.id.button_register).setOnClickListener(this);
         txtProtocol.setOnClickListener(this);
         layoutTitle.setLeftIconListener(new View.OnClickListener() {
@@ -94,7 +98,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 }
                 break;
             case R.id.txt_protocol:
-                WebViewActivity.start(this,"用户协议", Constant.URL_USER_AGREEMENT);
+                WebViewActivity.start(this, "用户协议", Constant.URL_USER_AGREEMENT);
 //                startActivity(new Intent(this, UserAgreementActivity.class));
                 break;
         }
@@ -116,6 +120,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         password = getEidtPassword().getText().toString().trim();
         if (TextUtils.isEmpty(password)) {
             getEidtPassword().setError("请输入密码");
+            return false;
+        }
+
+        if (password.length() < 6 || password.length() > 14) {
+            ToastGlobal.showShort("密码长度不正确");
             return false;
         }
 //
@@ -154,11 +163,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     public void register(boolean success) {
         DialogUtils.dismissDialog();
         if (success) {
-            ToastUtil.showShort(App.context, "注册成功");
+            ToastGlobal.showShort("注册成功");
             CompleteUserInfoActivity.start(this, new ProfileBean());
             finish();
-        } else {
-            ToastUtil.showShort(App.context, "注册失败 请重新提交");
         }
     }
 

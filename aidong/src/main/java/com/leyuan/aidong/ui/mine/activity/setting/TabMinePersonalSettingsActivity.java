@@ -27,7 +27,6 @@ import com.leyuan.aidong.utils.DataCleanManager;
 import com.leyuan.aidong.utils.MyDbUtils;
 import com.leyuan.aidong.utils.TelephoneManager;
 import com.leyuan.aidong.utils.ToastGlobal;
-import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.utils.UiManager;
 
 public class TabMinePersonalSettingsActivity extends BaseActivity {
@@ -189,10 +188,39 @@ public class TabMinePersonalSettingsActivity extends BaseActivity {
                 if (!TextUtils.isEmpty(tel)) {
                     TelephoneManager.callImmediate(TabMinePersonalSettingsActivity.this, tel);
                 } else {
-                    ToastUtil.showShort(TabMinePersonalSettingsActivity.this, "电话错误");
+                    ToastGlobal.showShort("电话错误");
                 }
             }
         });
+
+        button_personal_settings_unlogin.setEnabled(true);
+        button_personal_settings_unlogin
+                .setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(
+                                TabMinePersonalSettingsActivity.this);
+                        builder.setMessage("退出后你将无法收到他人消息,别人也将无法找到你,确定继续？");
+                        builder.setTitle("退出登录");
+                        builder.setPositiveButton("确定",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(
+                                            DialogInterface dialo0g,
+                                            int which) {
+                                        loginOut();
+                                        intent.setClass(
+                                                TabMinePersonalSettingsActivity.this,
+                                                MainActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(intent);
+                                    }
+                                });
+                        builder.setNegativeButton("取消", null);
+                        builder.show();
+                    }
+                });
+        button_personal_settings_unlogin.setBackgroundResource(R.drawable.shape_radius_origin);
     }
 
     private void data() {
@@ -215,41 +243,12 @@ public class TabMinePersonalSettingsActivity extends BaseActivity {
                 layout_tab_mine_personal_settings_binding_mobile_phone_unbound_txt
                         .setText(mobile);
             }
-            button_personal_settings_unlogin.setEnabled(true);
-            button_personal_settings_unlogin
-                    .setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(
-                                    TabMinePersonalSettingsActivity.this);
-                            builder.setMessage("退出后你将无法收到他人消息,别人也将无法找到你,确定继续？");
-                            builder.setTitle("退出登录");
-                            builder.setPositiveButton("确定",
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(
-                                                DialogInterface dialo0g,
-                                                int which) {
-                                            loginOut();
-                                            intent.setClass(
-                                                    TabMinePersonalSettingsActivity.this,
-                                                    MainActivity.class);
-                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                            startActivity(intent);
-                                        }
-                                    });
-                            builder.setNegativeButton("取消", null);
-                            builder.show();
-                        }
-                    });
-            button_personal_settings_unlogin.setBackgroundResource(R.drawable.shape_radius_origin);
+            button_personal_settings_unlogin.setVisibility(View.VISIBLE);
+
         } else {
             layout_tab_mine_personal_settings_binding_mobile_phone_unbound_txt
                     .setText("未绑定");
-            button_personal_settings_unlogin.setClickable(false);
-            button_personal_settings_unlogin.setEnabled(false);
-            button_personal_settings_unlogin.setBackgroundColor(getResources()
-                    .getColor(R.color.color_light_white));
+            button_personal_settings_unlogin.setVisibility(View.GONE);
         }
         layout_tab_mine_personal_settings_binding_mobile_phone_rel
                 .setOnClickListener(new OnClickListener() {

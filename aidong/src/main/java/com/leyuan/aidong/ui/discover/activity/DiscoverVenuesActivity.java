@@ -1,7 +1,9 @@
 package com.leyuan.aidong.ui.discover.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -56,11 +58,20 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
     private String brand_id;
     private String landmark;
 
+
+    public static void start(Context context, @Nullable String brand_id) {
+        Intent intent = new Intent(context, DiscoverVenuesActivity.class);
+        intent.putExtra("brand_id", brand_id);
+        context.startActivity(intent);
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover_venues);
         venuesPresent = new VenuesPresentImpl(this, this);
+        brand_id = getIntent().getStringExtra("brand_id");
         initView();
         setListener();
         venuesPresent.getGymBrand();
@@ -169,6 +180,9 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
     @Override
     public void setGymBrand(List<CategoryBean> gymBrandBeanList) {
         filterView.setBrandList(gymBrandBeanList);
+        if(brand_id !=null){
+            filterView.selectCategory(brand_id);
+        }
     }
 
     @Override

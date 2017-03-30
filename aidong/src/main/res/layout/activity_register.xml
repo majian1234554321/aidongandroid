@@ -133,8 +133,8 @@
         <CheckBox
             android:id="@+id/checkbox_protocol"
             style="@style/common_checkBox_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:checked="true"
             android:padding="5dp"/>
 

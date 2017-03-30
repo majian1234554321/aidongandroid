@@ -4,6 +4,7 @@ package com.leyuan.aidong.http.api;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.entity.model.result.LoginResult;
+import com.leyuan.aidong.entity.user.CheckIdentifyResult;
 
 import java.util.List;
 import java.util.Map;
@@ -43,8 +44,9 @@ public interface IdentifyService {
 
     @FormUrlEncoded
     @POST("captcha/check")
-    Observable<BaseBean<UserCoach>> checkIdentify(@Field("token") String token, @Field("captcha") String captcha,
-                                                  @Field("password") String password);
+    Observable<BaseBean<CheckIdentifyResult>> checkIdentify(@Field("token") String token, @Field("captcha") String captcha,
+                                                            @Field("password") String password);
+
 
     @FormUrlEncoded
     @POST("captcha_image/{mobile}")

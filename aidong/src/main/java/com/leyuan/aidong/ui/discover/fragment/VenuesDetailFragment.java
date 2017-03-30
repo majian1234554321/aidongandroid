@@ -164,7 +164,7 @@ public class VenuesDetailFragment extends BaseFragment implements View.OnClickLi
         tvOpenTime.setText(venues.getBusiness_time());
         if (venues.getBrother() != null && !venues.getBrother().isEmpty()) {
             subbranchLayout.setVisibility(View.VISIBLE);
-            tvSubbranch.setText("共" + venues.getBrother().size() + "家分店");
+            tvSubbranch.setText("其他" + venues.getBrother().size() + "家分店");
         } else {
             subbranchLayout.setVisibility(View.GONE);
         }

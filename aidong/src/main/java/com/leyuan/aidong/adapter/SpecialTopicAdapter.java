@@ -1,6 +1,7 @@
 package com.leyuan.aidong.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -66,15 +67,25 @@ public class SpecialTopicAdapter extends RecyclerView.Adapter<SpecialTopicAdapte
         this.mInfos.clear();
         indexs.clear();
         indexs.add(0);
-        if (infos != null)
-            this.mInfos.addAll(infos);
+        if (infos != null && !infos.isEmpty()) {
+            for (SpecialTopicInfo info : infos) {
+                if (info.getLatest() != null) {
+                    mInfos.add(info);
+                }
+            }
+        }
+
         this.notifyDataSetChanged();
     }
 
     public void addData(ArrayList<SpecialTopicInfo> infos) {
         if (infos != null && !infos.isEmpty()) {
             indexs.add(mInfos.size() - 1);
-            this.mInfos.addAll(infos);
+            for (SpecialTopicInfo info : infos) {
+                if (info.getLatest() != null) {
+                    mInfos.add(info);
+                }
+            }
             this.notifyDataSetChanged();
         }
 
@@ -135,8 +146,12 @@ public class SpecialTopicAdapter extends RecyclerView.Adapter<SpecialTopicAdapte
                 }
                 final SpecialTopicInfo info = mInfos.get(i);
 
+//                if (info.getLatest() == null) {
+//                    info.setLatest(new SpecialTopicInfo().new Latest());
+//                }
+
                 Glide.with(mContext).load(info.getLatest().getCover())
-                        .placeholder(R.drawable.icon_found).override(720,720).into(holder.imgView);
+                        .placeholder(new ColorDrawable(0x22000000)).override(720, 720).into(holder.imgView);
                 holder.txt_belong.setText("" + info.getLatest().getAuthor());
                 holder.txt_type.setText("" + info.getName());
                 if (info.getFinished()) {

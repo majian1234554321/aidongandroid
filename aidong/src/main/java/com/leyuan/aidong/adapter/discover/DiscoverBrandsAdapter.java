@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.BrandBean;
-import com.leyuan.aidong.ui.discover.activity.VenuesDetailActivity;
+import com.leyuan.aidong.ui.discover.activity.DiscoverVenuesActivity;
 import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
@@ -53,7 +53,8 @@ public class DiscoverBrandsAdapter extends RecyclerView.Adapter<DiscoverBrandsAd
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                VenuesDetailActivity.start(context, bean.getId());
+                DiscoverVenuesActivity.start(context,bean.getId());
+//                VenuesDetailActivity.start(context, bean.getId());
             }
         });
     }
