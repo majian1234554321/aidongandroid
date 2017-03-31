@@ -38,7 +38,6 @@ import com.leyuan.aidong.widget.SimpleTitleBar;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.leyuan.aidong.module.pay.WeiXinPay.payListener;
 import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_COUPON;
 
 /**
@@ -141,7 +140,7 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
 
         GlideLoader.getInstance().displayImage(bean.getCover().get(0), dvCover);
         tvCourseName.setText(bean.getName());
-        tvClassroom.setText(bean.getClassroom());
+        tvClassroom.setText(bean.getClassroom()+"-"+bean.getCoach().getName());
         tvTime.setRightContent(String.format(getString(R.string.detail_time),
                 bean.getClassDate(), bean.getClassTime(), bean.getBreakTime()));
         tvAddress.setRightContent(bean.getGym().getAddress());
@@ -228,6 +227,12 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
             startActivity(new Intent(AppointCourseActivity.this, AppointSuccessActivity.class));
         }
     };
+
+    @Override
+    public void onFreeCourseAppointed() {
+        AppointSuccessActivity.start(this, bean.getClassDate() + bean.getClassTime());
+        Toast.makeText(AppointCourseActivity.this, "预约成功", Toast.LENGTH_LONG).show();
+    }
 
     @Override
     public void onCheckedChanged(CustomNestRadioGroup group, int checkedId) {

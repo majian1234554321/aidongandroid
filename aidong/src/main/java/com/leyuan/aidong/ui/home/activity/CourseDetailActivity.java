@@ -207,7 +207,8 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         if (!TextUtils.isEmpty(bean.getIntroduce())) {
             RichText.from(bean.getIntroduce()).into(tvDesc);
         }
-        tvBottomPrice.setText(String.format(getString(R.string.rmb_price), bean.getPrice()));
+        tvBottomPrice.setText(FormatUtil.parseDouble(bean.getPrice()) == 0f
+                ? "免费" : String.format(getString(R.string.rmb_price), bean.getPrice()));
         tvStartTime.setText(String.format(getString(R.string.appoint_time),
                 bean.getEntryStartTime()));
 
@@ -240,9 +241,9 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 break;
             case STATUS_APPOINTED:
                 tvStartTime.setVisibility(View.GONE);
-                tvBottomPrice.setVisibility(View.GONE);
+                tvBottomPrice.setVisibility(View.VISIBLE);
                 tvState.setText(R.string.status_appointed);
-                bottomLayout.setBackgroundColor(Color.parseColor("#666667"));
+                bottomLayout.setBackgroundColor(Color.parseColor("#000000"));
                 break;
             case STATUS_FULL:
                 tvStartTime.setVisibility(View.GONE);
@@ -274,13 +275,15 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void bottomToTargetActivity() {
-        if (STATUS_APPOINT.equals(bean.getStatus())) {           //预约
+        if (STATUS_APPOINT.equals(bean.getStatus())) {        //预约
             if (App.mInstance.isLogin()) {
                 AppointCourseActivity.start(this, bean);
             } else {
                 startActivityForResult(new Intent(this, LoginActivity.class), Constant.REQUEST_LOGIN);
             }
         }else if(STATUS_NOT_PAY.equals(bean.getStatus())){    //待支付
+            AppointCourseDetailActivity.start(this, bean.getCode(),true);
+        }else if(STATUS_APPOINTED.equals(bean.getStatus())){  //已预约
             AppointCourseDetailActivity.start(this, bean.getCode(),true);
         }
     }
