@@ -15,6 +15,7 @@ import com.leyuan.aidong.module.chat.manager.EmChatLoginManager;
 import com.leyuan.aidong.module.chat.manager.EmChatRegisterManager;
 import com.leyuan.aidong.module.thirdpartylogin.ThirdLoginUtils;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.LoginPresenter;
 import com.leyuan.aidong.ui.mvp.view.LoginViewInterface;
 import com.leyuan.aidong.utils.Constant;
@@ -130,6 +131,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             DialogUtils.showDialog(this, "", false);
             chatLoginManager.login(String.valueOf(user.getId()));
             setResult(RESULT_OK, null);
+            new FollowPresentImpl(this).getFollowList(); //登录成功后需要获取关注列表
         }
     }
 

@@ -161,6 +161,7 @@
                 app:show_right_arrow="true"
                 app:text_height="45dp" />
 
+
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/bmi"
                 android:layout_width="match_parent"

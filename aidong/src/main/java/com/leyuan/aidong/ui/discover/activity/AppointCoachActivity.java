@@ -32,6 +32,9 @@ import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.StringUtils;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.widget.SimpleTitleBar;
+import com.leyuan.aidong.widget.dialog.BaseDialog;
+import com.leyuan.aidong.widget.dialog.ButtonOkListener;
+import com.leyuan.aidong.widget.dialog.DialogSingleButton;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -329,7 +332,14 @@ public class AppointCoachActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void appointCoachResult(BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
-            Toast.makeText(this, "预约成功", Toast.LENGTH_LONG).show();
+            new DialogSingleButton(this).setContentDesc("预约成功")
+                    .setBtnOkListener(new ButtonOkListener() {
+                        @Override
+                        public void onClick(BaseDialog dialog) {
+                            dialog.dismiss();
+                            finish();
+                        }
+                    }).show();
         } else {
             Toast.makeText(this, "预约失败", Toast.LENGTH_LONG).show();
         }

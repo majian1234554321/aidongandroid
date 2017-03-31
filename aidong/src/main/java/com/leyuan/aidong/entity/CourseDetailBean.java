@@ -28,7 +28,16 @@ public class CourseDetailBean implements Parcelable {
     private String stock;
     private String status;    //# 0-预约已结束 1-已预约 2-预约人数已满 3-即将开始预约 4-“金额”待支付（已预约) 5-无需预约 6-可预约
 
+    private String entry_start_time;
     private String orderId;
+
+    public String getEntryStartTime() {
+        return entry_start_time;
+    }
+
+    public void setEntry_start_time(String entry_start_time) {
+        this.entry_start_time = entry_start_time;
+    }
 
     public String getCode() {
         return code;
@@ -190,6 +199,9 @@ public class CourseDetailBean implements Parcelable {
     }
 
 
+    public CourseDetailBean() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -214,10 +226,8 @@ public class CourseDetailBean implements Parcelable {
         dest.writeString(this.classroom);
         dest.writeString(this.stock);
         dest.writeString(this.status);
+        dest.writeString(this.entry_start_time);
         dest.writeString(this.orderId);
-    }
-
-    public CourseDetailBean() {
     }
 
     protected CourseDetailBean(Parcel in) {
@@ -227,7 +237,7 @@ public class CourseDetailBean implements Parcelable {
         this.class_date = in.readString();
         this.class_time = in.readString();
         this.break_time = in.readString();
-        this.coach = in.readParcelable(CoachBean.class.getClassLoader());
+        this.coach = in.readParcelable(UserBean.class.getClassLoader());
         this.gym = in.readParcelable(VenuesBean.class.getClassLoader());
         this.place = in.readString();
         this.applied_count = in.readString();
@@ -238,6 +248,7 @@ public class CourseDetailBean implements Parcelable {
         this.classroom = in.readString();
         this.stock = in.readString();
         this.status = in.readString();
+        this.entry_start_time = in.readString();
         this.orderId = in.readString();
     }
 

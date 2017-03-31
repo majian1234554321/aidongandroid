@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white">
+    android:foreground="?selectableItemBackground">
 
     <View
         android:id="@+id/line"
@@ -41,7 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/dv_course_cover"
-        android:background="?selectableItemBackground"
+        android:background="@color/white"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:paddingBottom="18dp">

@@ -35,7 +35,6 @@ import com.leyuan.aidong.widget.SwitcherLayout;
 import com.zzhoujay.richtext.RichText;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
-import retrofit2.http.HEAD;
 
 /**
  * 课程详情
@@ -210,12 +209,11 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         }
         tvBottomPrice.setText(String.format(getString(R.string.rmb_price), bean.getPrice()));
         tvStartTime.setText(String.format(getString(R.string.appoint_time),
-                bean.getClassDate() + bean.getClassTime()));
+                bean.getEntryStartTime()));
 
         isFollow = SystemInfoUtils.isFollow(this, bean.getCoach());
         ivFollow.setBackgroundResource(isFollow ? R.drawable.icon_following
                 : R.drawable.icon_follow);
-
         setBottomStatus();
     }
 
