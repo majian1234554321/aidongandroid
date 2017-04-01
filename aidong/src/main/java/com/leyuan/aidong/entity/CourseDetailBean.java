@@ -23,6 +23,7 @@ public class CourseDetailBean implements Parcelable {
     private List<UserBean> applied;  //报名的人
     private String introduce;        //课程介绍
     private String price;
+    private String market_price;
     private String address;
     private String classroom;
     private String stock;
@@ -30,6 +31,14 @@ public class CourseDetailBean implements Parcelable {
 
     private String entry_start_time;
     private String orderId;
+
+    public String getMarket_price() {
+        return market_price;
+    }
+
+    public void setMarket_price(String market_price) {
+        this.market_price = market_price;
+    }
 
     public String getEntryStartTime() {
         return entry_start_time;
@@ -222,6 +231,7 @@ public class CourseDetailBean implements Parcelable {
         dest.writeTypedList(this.applied);
         dest.writeString(this.introduce);
         dest.writeString(this.price);
+        dest.writeString(this.market_price);
         dest.writeString(this.address);
         dest.writeString(this.classroom);
         dest.writeString(this.stock);
@@ -244,6 +254,7 @@ public class CourseDetailBean implements Parcelable {
         this.applied = in.createTypedArrayList(UserBean.CREATOR);
         this.introduce = in.readString();
         this.price = in.readString();
+        this.market_price = in.readString();
         this.address = in.readString();
         this.classroom = in.readString();
         this.stock = in.readString();

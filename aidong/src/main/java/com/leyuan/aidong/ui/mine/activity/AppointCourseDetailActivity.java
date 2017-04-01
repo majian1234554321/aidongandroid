@@ -160,7 +160,6 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
         scrollView = (ScrollView) findViewById(R.id.scroll_view);
         switcherLayout = new SwitcherLayout(this,scrollView);
-
         tvState = (TextView) findViewById(R.id.tv_state);
         tvOrderNo = (TextView) findViewById(R.id.tv_order_num);
         timerLayout = (LinearLayout) findViewById(R.id.ll_timer);
@@ -172,14 +171,12 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
         codeLayout = (RelativeLayout) findViewById(R.id.rl_qr_code);
         tvCodeNum = (TextView) findViewById(R.id.tv_qr_num);
         ivCode = (ImageView) findViewById(R.id.dv_qr);
-
         tvUserName = (ExtendTextView) findViewById(R.id.tv_course_user);
         tvPhone = (ExtendTextView) findViewById(R.id.tv_course_phone);
         tvVenues = (ExtendTextView) findViewById(R.id.tv_venues);
         tvCourseRoom = (ExtendTextView) findViewById(R.id.tv_course_room);
         tvCourseTime = (ExtendTextView) findViewById(R.id.tv_time);
         tvCourseAddress = (ExtendTextView) findViewById(R.id.tv_address);
-
         tvTotalPrice = (ExtendTextView) findViewById(R.id.tv_total_price);
         couponPrice = (ExtendTextView) findViewById(R.id.coupon_price);
         coursePrivilege = (ExtendTextView) findViewById(R.id.course_privilege);
@@ -187,12 +184,10 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
         tvAiDou = (ExtendTextView) findViewById(R.id.tv_aidou);
         tvStartTime = (ExtendTextView) findViewById(R.id.tv_start_time);
         tvPayType = (ExtendTextView) findViewById(R.id.tv_pay_type);
-
         payLayout = (LinearLayout) findViewById(R.id.ll_pay);
         payGroup = (CustomNestRadioGroup) findViewById(R.id.radio_group);
         rbAliPay = (RadioButton) findViewById(R.id.cb_alipay);
         rbWeiXinPay = (RadioButton) findViewById(R.id.cb_weixin);
-
         bottomLayout = (LinearLayout) findViewById(R.id.ll_bottom);
         tvPrice = (TextView) findViewById(R.id.tv_price);
         tvPayTip = (TextView) findViewById(R.id.tv_pay_tip);
@@ -237,7 +232,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
         tvCourseTime.setRightContent(bean.getAppoint().getClassTime());
         tvCourseAddress.setRightContent(bean.getAppoint().getAddress());
         tvPrice.setText(String.format(getString(R.string.rmb_price_double),
-                FormatUtil.parseDouble(bean.getPay().getTotal())));
+                FormatUtil.parseDouble(bean.getPay().getPayAmount())));
         couponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double),
                 FormatUtil.parseDouble(bean.getPay().getCoupon())));
         tvAiBi.setRightContent(String.format(getString(R.string.rmb_minus_price_double),
@@ -245,7 +240,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
         tvAiDou.setRightContent(String.format(getString(R.string.rmb_minus_price_double),
                 FormatUtil.parseDouble(bean.getPay().getIntegral())));
         tvTotalPrice.setRightContent(String.format(getString(R.string.rmb_price_double),
-                FormatUtil.parseDouble(bean.getPay().getTotal())));
+                FormatUtil.parseDouble(bean.getPay().getPayAmount())));
         tvStartTime.setRightContent(bean.getPay().getCreatedAt());
         timer.start(DateUtils.getCountdown(bean.getPay().getCreatedAt(), APPOINT_COUNTDOWN_MILL));
         tvPayType.setRightContent(PayType.ALI.equals(bean.getPay().getPayType())? "支付宝" : "微信");

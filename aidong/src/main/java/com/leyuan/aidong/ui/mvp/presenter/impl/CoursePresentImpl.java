@@ -197,10 +197,14 @@ public class CoursePresentImpl implements CoursePresent{
         courseModel.buyCourse(new ProgressSubscriber<PayOrderData>(context) {
             @Override
             public void onNext(PayOrderData payOrderData) {
-                String payType = payOrderData.getOrder().getPayType();
-                PayInterface payInterface = PayType.ALI.equals(payType) ? new AliPay(context,listener)
-                        : new WeiXinPay(context,listener);
-                payInterface.payOrder(payOrderData.getOrder().getpayOption());
+                if(!"purchased".equals(payOrderData.getOrder().getStatus())) {
+                    String payType = payOrderData.getOrder().getPayType();
+                    PayInterface payInterface = PayType.ALI.equals(payType) ? new AliPay(context, listener)
+                            : new WeiXinPay(context, listener);
+                    payInterface.payOrder(payOrderData.getOrder().getpayOption());
+                }else {
+                    appointCourseActivityView.onFreeCourseAppointed();
+                }
             }
         }, id, couponId, integral, payType, contactName, contactMobile);
     }

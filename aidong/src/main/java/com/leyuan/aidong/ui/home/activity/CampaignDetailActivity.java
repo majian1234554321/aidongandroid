@@ -25,6 +25,7 @@ import com.leyuan.aidong.ui.mvp.presenter.CampaignPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CampaignPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CampaignDetailActivityView;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.zzhoujay.richtext.RichText;
@@ -200,7 +201,8 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
             tvCount.setText(String.format(getString(R.string.applicant_count)
                     , bean.getApplicant().size(), bean.getPlace()));
         }
-        tvPrice.setText(String.format(getString(R.string.rmb_price), bean.getPrice()));
+        tvPrice.setText(FormatUtil.parseDouble(bean.getPrice()) == 0f
+                ? "免费" : String.format(getString(R.string.rmb_price), bean.getPrice()));
         setBottomStatus();
     }
 
@@ -229,7 +231,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
             case STATUS_APPLIED:
                 tvPrice.setVisibility(View.GONE);
                 tvState.setText(R.string.campaign_status_applied);
-                bottomLayout.setBackgroundColor(Color.parseColor("#666667"));
+                bottomLayout.setBackgroundColor(Color.parseColor("#000000"));
                 break;
             case STATUS_NOT_START:
                 tvPrice.setVisibility(View.GONE);
@@ -259,6 +261,8 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
                 startActivityForResult(new Intent(this, LoginActivity.class), Constant.REQUEST_LOGIN);
             }
         } else if (STATUS_NOT_PAY.equals(bean.getStatus())) {
+            AppointCampaignDetailActivity.start(this, bean.getCampaignId(),true);
+        }else if(STATUS_APPLIED.equals(bean.getStatus())){
             AppointCampaignDetailActivity.start(this, bean.getCampaignId(),true);
         }
     }
