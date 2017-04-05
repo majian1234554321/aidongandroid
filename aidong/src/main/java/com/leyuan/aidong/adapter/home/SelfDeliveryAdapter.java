@@ -2,6 +2,7 @@ package com.leyuan.aidong.adapter.home;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -21,6 +22,7 @@ public class SelfDeliveryAdapter extends RecyclerView.Adapter<SelfDeliveryAdapte
     private Context context;
     private List<VenuesBean> data = new ArrayList<>();
 
+
     public SelfDeliveryAdapter(Context context) {
         this.context = context;
     }
@@ -38,7 +40,7 @@ public class SelfDeliveryAdapter extends RecyclerView.Adapter<SelfDeliveryAdapte
 
     @Override
     public VenuesHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = View.inflate(context, R.layout.item_self_delivery, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_self_delivery, parent,false);
         return new VenuesHolder(view);
     }
 
@@ -58,9 +60,11 @@ public class SelfDeliveryAdapter extends RecyclerView.Adapter<SelfDeliveryAdapte
                     bean.setChecked(false);
                 }else {
                     for (int i = 0; i < data.size(); i++) {
-                        data.get(i).setChecked(i==position);
+                        data.get(i).setChecked(i == position);
                     }
                 }
+
+
                 notifyDataSetChanged();
             }
         });
@@ -80,4 +84,6 @@ public class SelfDeliveryAdapter extends RecyclerView.Adapter<SelfDeliveryAdapte
             tvDistance = (TextView) itemView.findViewById(R.id.tv_distance);
         }
     }
+
+
 }

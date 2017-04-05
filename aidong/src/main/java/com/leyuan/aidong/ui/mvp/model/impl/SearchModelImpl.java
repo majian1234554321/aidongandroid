@@ -100,7 +100,20 @@ public class SearchModelImpl implements SearchModel {
 
     @Override
     public void insertSearchHistory(String keyword){
+        boolean contain = false;
         realm.beginTransaction();
+        RealmResults<SearchHistoryBean> all = realm.where(SearchHistoryBean.class).findAll();
+        for (SearchHistoryBean searchHistoryBean : all) {
+            if(searchHistoryBean.getKeyword().equals(keyword)){
+                contain = true;
+                break;
+            }
+        }
+        if (contain) {
+            SearchHistoryBean result = realm.where(SearchHistoryBean.class).equalTo("keyword",keyword).findFirst();
+            result.deleteFromRealm();
+        }
+
         SearchHistoryBean history = realm.createObject(SearchHistoryBean.class);
         history.setKeyword(keyword);
         realm.commitTransaction();
