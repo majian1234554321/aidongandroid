@@ -214,7 +214,7 @@ public class CompleteUserInfoActivity extends BaseActivity implements UpdateUser
                 .inputType(InputType.TYPE_CLASS_TEXT |
                         InputType.TYPE_TEXT_VARIATION_PERSON_NAME |
                         InputType.TYPE_TEXT_FLAG_CAP_WORDS)
-                .inputRange(1, 20)
+                .inputRange(1, 12)
                 .positiveText(R.string.sure)
                 .input(getString(R.string.confirm_nickname), tvNickname.getText(), false, new MaterialDialog.InputCallback() {
                     @Override
