@@ -409,6 +409,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ui.ShareActivityQQ"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.home.activity.MapActivity"
             android:screenOrientation="portrait" />

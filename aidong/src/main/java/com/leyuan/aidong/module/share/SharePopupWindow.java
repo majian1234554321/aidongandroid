@@ -11,6 +11,7 @@ import android.widget.PopupWindow;
 
 import com.example.aidong.wxapi.WXEntryActivity;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.ui.ShareActivityQQ;
 import com.leyuan.aidong.ui.WeiboResponseActivity;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastUtil;
@@ -49,7 +50,7 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
         View contentView = View.inflate(context, R.layout.popup_window_share, null);
         this.setContentView(contentView);
         this.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-        this.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        this.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
         this.setTouchable(true);
         this.setFocusable(true);
         this.setOutsideTouchable(true);
@@ -91,21 +92,19 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
         switch (v.getId()) {
             case R.id.img_weichat:
                 WXEntryActivity.start(context, title, content, imageUrl, webUrl, false);
-//                myShareUtils.share(MyShareUtils.SHARE_WEIXIN_CHAT, title, content, imageUrl, webUrl);
                 dismiss();
                 break;
             case R.id.img_wei_friend:
                 WXEntryActivity.start(context, title, content, imageUrl, webUrl, true);
-//                myShareUtils.share(MyShareUtils.SHARE_WEIXIN_FRIENDS, title, content, imageUrl, webUrl);
                 dismiss();
                 break;
             case R.id.img_qq:
-                myShareUtils.share(MyShareUtils.SHARE_QQ, title, content, imageUrl, webUrl);
+//                myShareUtils.share(MyShareUtils.SHARE_QQ, title, content, imageUrl, webUrl);
+                ShareActivityQQ.start(context, title, content, imageUrl, webUrl);
                 dismiss();
                 break;
             case R.id.img_weibo:
                 WeiboResponseActivity.start(context, title, content, imageUrl, webUrl);
-//                myShareUtils.share(MyShareUtils.SHARE_WEIBO, title, content, imageUrl, webUrl);
                 dismiss();
                 break;
         }
@@ -114,6 +113,7 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
     /**
      * call this in activity onActivityResult method
      */
+    @Deprecated
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         myShareUtils.onActivityResult(requestCode, resultCode, data);
     }
@@ -129,6 +129,7 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
         myShareUtils.onNewIntent(intent, response);
     }
 
+    @Deprecated
     public void release() {
         context = null;
         myShareUtils.release();

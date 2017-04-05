@@ -207,6 +207,15 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                 }
             }
         });
+
+        holder.timer.setOnCountdownEndListener(new CountdownView.OnCountdownEndListener() {
+            @Override
+            public void onEnd(CountdownView cv) {
+                if(appointmentListener != null){
+                    appointmentListener.onRefreshAppointStatus();
+                }
+            }
+        });
     }
 
 
@@ -258,5 +267,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         void onConfirmJoin(String id);
 
         void onCancel(String id);
+
+        void onRefreshAppointStatus();
     }
 }

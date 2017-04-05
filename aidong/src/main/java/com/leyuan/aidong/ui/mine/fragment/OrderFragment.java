@@ -179,6 +179,11 @@ public class OrderFragment extends BaseLazyFragment implements OrderFragmentView
         public void onBuyAgain() {
 
         }
+
+        @Override
+        public void onRefreshOrderStatus() {
+            present.commonLoadData(type);
+        }
     }
 
 

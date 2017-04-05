@@ -188,6 +188,15 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
                 }
             }
         });
+
+        holder.timer.setOnCountdownEndListener(new CountdownView.OnCountdownEndListener() {
+            @Override
+            public void onEnd(CountdownView cv) {
+                if(orderListener != null){
+                    orderListener.onRefreshOrderStatus();
+                }
+            }
+        });
     }
 
     class OrderHolder extends RecyclerView.ViewHolder {
@@ -235,5 +244,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
         void onDeleteOrder(String id);
         void onConfirmOrder(String id);
         void onBuyAgain();
+        void onRefreshOrderStatus();
     }
 }
