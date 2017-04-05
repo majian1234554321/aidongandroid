@@ -162,6 +162,10 @@ public class AppointmentFragment extends BaseLazyFragment implements Appointment
             present.cancelAppoint(id);
         }
 
+        @Override
+        public void onRefreshAppointStatus() {
+            present.commonLoadData(type);
+        }
     }
 
     @Override

@@ -50,7 +50,7 @@ import static com.leyuan.aidong.ui.App.context;
  */
 //todo 活动预约详情与课程预约详情合成一个界面
 public class AppointCampaignDetailActivity extends BaseActivity implements AppointmentDetailActivityView,
-        View.OnClickListener, CustomNestRadioGroup.OnCheckedChangeListener {
+        View.OnClickListener, CustomNestRadioGroup.OnCheckedChangeListener, CountdownView.OnCountdownEndListener {
     private static final String UN_PAID = "pending";         //待付款
     private static final String UN_JOIN= "purchased";        //待参加
     private static final String JOINED = "confirmed";        //已参加
@@ -213,6 +213,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         tvConfirmJoin.setOnClickListener(this);
         tvDelete.setOnClickListener(this);
         campaignLayout.setOnClickListener(this);
+        timer.setOnCountdownEndListener(this);
     }
 
     @Override
@@ -442,5 +443,10 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         }else {
             Toast.makeText(this,"删除失败" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void onEnd(CountdownView cv) {
+        present.getAppointmentDetail(switcherLayout,orderId);
     }
 }

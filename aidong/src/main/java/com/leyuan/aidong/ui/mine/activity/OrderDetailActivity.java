@@ -54,7 +54,7 @@ import static com.leyuan.aidong.utils.Constant.EXPRESS_PRICE;
  * Created by song on 2016/9/1.
  */
 public class OrderDetailActivity extends BaseActivity implements OrderDetailActivityView, View.OnClickListener,
-        CustomNestRadioGroup.OnCheckedChangeListener {
+        CustomNestRadioGroup.OnCheckedChangeListener, CountdownView.OnCountdownEndListener {
     private static final String UN_PAID = "pending";          //待付款
     private static final String PAID = "purchased";           //已支付
     private static final String FINISH = "confirmed";         //已确认
@@ -211,6 +211,8 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
         tvDelete.setOnClickListener(this);
         tvReBuy.setOnClickListener(this);
         payGroup.setOnCheckedChangeListener(this);
+        timer.setOnCountdownEndListener(this);
+
     }
 
     @Override
@@ -388,5 +390,10 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onEnd(CountdownView cv) {
+        orderPresent.getOrderDetail(orderId);
     }
 }

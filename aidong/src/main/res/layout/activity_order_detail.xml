@@ -335,4 +335,5 @@
                 android:textColor="@color/main_red"/>
         </LinearLayout>
     </LinearLayout>
+
 </LinearLayout>

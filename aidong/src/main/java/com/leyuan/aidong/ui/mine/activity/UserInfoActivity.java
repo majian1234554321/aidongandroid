@@ -221,7 +221,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
                 }
                 break;
             case R.id.tv_add_image:
-                UpdatePhotoWallActivity.start(this, userInfoData.getPhotoWall());
+                toUpdatePhotoWallActivity();
                 break;
             case R.id.tv_message:
                 if (App.mInstance.isLogin()) {
@@ -264,10 +264,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
                             startActivityForResult(intent,REQUEST_UPDATE_PHOTO);
                            // UpdateUserInfoActivity.start(UserInfoActivity.this, userInfoData.getProfile());
                         } else {
-                            Intent intent = new Intent(UserInfoActivity.this,UpdatePhotoWallActivity.class);
-                            intent.putParcelableArrayListExtra("photos",
-                                    (ArrayList<? extends Parcelable>) userInfoData.getPhotoWall());
-                            startActivityForResult(intent,REQUEST_UPDATE_INFO);
+                            toUpdatePhotoWallActivity();
                            // UpdatePhotoWallActivity.start(UserInfoActivity.this, userInfoData.getPhotoWall());
                         }
                     }
@@ -275,6 +272,13 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
                 .show();
     }
 
+
+    private void toUpdatePhotoWallActivity(){
+        Intent intent = new Intent(UserInfoActivity.this,UpdatePhotoWallActivity.class);
+        intent.putParcelableArrayListExtra("photos",
+                (ArrayList<? extends Parcelable>) userInfoData.getPhotoWall());
+        startActivityForResult(intent,REQUEST_UPDATE_INFO);
+    }
 
     //todo
     private void publishDynamic() {

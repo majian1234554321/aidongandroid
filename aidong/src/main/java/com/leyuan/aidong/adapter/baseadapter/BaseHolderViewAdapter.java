@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.utils.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,7 @@ public abstract class BaseHolderViewAdapter<T> extends RecyclerView.Adapter<Base
 
     @Override
     public BaseRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Logger.w("onCreateViewHolder","viewType" + viewType);
         BaseRecyclerViewHolder holder;
         if (getLayoutResId(viewType) != 0) {
             View rootView = mInflater.inflate(getLayoutResId(viewType), parent, false);
@@ -50,6 +52,7 @@ public abstract class BaseHolderViewAdapter<T> extends RecyclerView.Adapter<Base
 
     @Override
     public void onBindViewHolder(BaseRecyclerViewHolder holder, int position) {
+        Logger.w("onBindViewHolder","position" + position +holder.toString());
         T data = this.data.get(position);
         holder.itemView.setTag(R.id.recycler_view_tag, data);
         holder.onBindData(data,position);
