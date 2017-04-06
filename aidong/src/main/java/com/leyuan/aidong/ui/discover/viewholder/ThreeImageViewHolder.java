@@ -13,6 +13,7 @@ import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.ImageRectUtils;
 import com.leyuan.aidong.utils.ScreenUtil;
+import com.leyuan.aidong.utils.constant.DynamicType;
 import com.leyuan.aidong.utils.qiniu.QiNiuImageProcessUtils;
 
 import java.util.LinkedList;
@@ -39,7 +40,7 @@ public class ThreeImageViewHolder extends BaseCircleViewHolder{
     }
 
     @Override
-    public void onBindDataToChildView(@NonNull final DynamicBean data, int position, int viewType) {
+    public void onBindDataToChildView(@NonNull final DynamicBean data, int position,@DynamicType int viewType) {
         int bigWidth =  (ScreenUtil.getScreenWidth(context) - DensityUtil.dp2px(context,5)) * 2/3;
         int smallWidth =  (ScreenUtil.getScreenWidth(context) - DensityUtil.dp2px(context,5))/3;
         GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(data.image.get(0),

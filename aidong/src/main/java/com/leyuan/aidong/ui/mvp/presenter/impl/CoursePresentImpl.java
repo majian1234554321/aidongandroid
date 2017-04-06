@@ -15,9 +15,8 @@ import com.leyuan.aidong.http.subscriber.CommonSubscriber;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
-import com.leyuan.aidong.module.pay.AliPay;
 import com.leyuan.aidong.module.pay.PayInterface;
-import com.leyuan.aidong.module.pay.WeiXinPay;
+import com.leyuan.aidong.module.pay.PayUtils;
 import com.leyuan.aidong.ui.mvp.model.CouponModel;
 import com.leyuan.aidong.ui.mvp.model.CourseModel;
 import com.leyuan.aidong.ui.mvp.model.FollowModel;
@@ -32,7 +31,6 @@ import com.leyuan.aidong.ui.mvp.view.CourseDetailActivityView;
 import com.leyuan.aidong.ui.mvp.view.CourserFragmentView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.constant.CouponType;
-import com.leyuan.aidong.utils.constant.PayType;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.List;
@@ -198,10 +196,7 @@ public class CoursePresentImpl implements CoursePresent{
             @Override
             public void onNext(PayOrderData payOrderData) {
                 if(!"purchased".equals(payOrderData.getOrder().getStatus())) {
-                    String payType = payOrderData.getOrder().getPayType();
-                    PayInterface payInterface = PayType.ALI.equals(payType) ? new AliPay(context, listener)
-                            : new WeiXinPay(context, listener);
-                    payInterface.payOrder(payOrderData.getOrder().getpayOption());
+                    PayUtils.pay(context,payOrderData.getOrder(),listener);
                 }else {
                     appointCourseActivityView.onFreeCourseAppointed();
                 }

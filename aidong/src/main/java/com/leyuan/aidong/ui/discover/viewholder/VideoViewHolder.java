@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.constant.DynamicType;
 
 /**
  * 视频
@@ -27,7 +28,7 @@ public class VideoViewHolder extends BaseCircleViewHolder{
     }
 
     @Override
-    public void onBindDataToChildView(@NonNull final DynamicBean data, int position, int viewType) {
+    public void onBindDataToChildView(@NonNull final DynamicBean data, int position, @DynamicType int viewType) {
         if(data.videos == null){
             return;
         }

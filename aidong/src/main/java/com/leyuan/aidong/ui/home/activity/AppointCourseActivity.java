@@ -38,6 +38,8 @@ import com.leyuan.aidong.widget.SimpleTitleBar;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.leyuan.aidong.utils.Constant.PAY_ALI;
+import static com.leyuan.aidong.utils.Constant.PAY_WEIXIN;
 import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_COUPON;
 
 /**
@@ -84,7 +86,7 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
 
     private String couponId;
     private String integral;
-    private String payType;
+    private @PayType String payType;
     private String userName;
     private String contactMobile;
 
@@ -103,7 +105,7 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appoint_course);
         coursePresent = new CoursePresentImpl(this, this);
-        payType = PayType.ALI;
+        payType = PAY_ALI;
         if (getIntent() != null) {
             bean = getIntent().getParcelableExtra("bean");
         }
@@ -238,10 +240,10 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
     public void onCheckedChanged(CustomNestRadioGroup group, int checkedId) {
         switch (checkedId) {
             case R.id.cb_alipay:
-                payType = PayType.ALI;
+                payType = PAY_ALI;
                 break;
             case R.id.cb_weixin:
-                payType = PayType.WEIXIN;
+                payType = PAY_WEIXIN;
                 break;
             default:
                 break;

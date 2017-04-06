@@ -15,7 +15,6 @@ import com.leyuan.aidong.ui.BasePageFragment;
 import com.leyuan.aidong.ui.mvp.presenter.SearchPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SearchPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.SearchEquipmentFragmentView;
-import com.leyuan.aidong.utils.constant.GoodsType;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -24,6 +23,8 @@ import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.leyuan.aidong.utils.Constant.GOODS_EQUIPMENT;
 
 /**
  * 搜索商装备
@@ -87,7 +88,7 @@ public class SearchEquipmentFragment extends BasePageFragment implements SearchE
     private void initRecyclerView(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_result);
         data = new ArrayList<>();
-        equipmentAdapter = new GoodsFilterAdapter(getContext(), GoodsType.EQUIPMENT);
+        equipmentAdapter = new GoodsFilterAdapter(getContext(), GOODS_EQUIPMENT);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(equipmentAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(wrapperAdapter);

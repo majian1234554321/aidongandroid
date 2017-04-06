@@ -35,7 +35,6 @@ import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.QRCodeUtil;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.utils.constant.DeliveryType;
-import com.leyuan.aidong.utils.constant.PayType;
 import com.leyuan.aidong.widget.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.ExtendTextView;
 import com.leyuan.aidong.widget.SimpleTitleBar;
@@ -48,6 +47,8 @@ import cn.iwgang.countdownview.CountdownView;
 
 import static com.leyuan.aidong.module.pay.WeiXinPay.payListener;
 import static com.leyuan.aidong.utils.Constant.EXPRESS_PRICE;
+import static com.leyuan.aidong.utils.Constant.PAY_ALI;
+import static com.leyuan.aidong.utils.Constant.PAY_WEIXIN;
 
 /**
  * 订单详情
@@ -222,7 +223,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
         bottomLayout.setVisibility(View.VISIBLE);
 
         payType = bean.getPayType();
-        if(PayType.ALI.equals(payType)){
+        if(PAY_ALI.equals(payType)){
             rbALiPay.setChecked(true);
         }else {
             rbWeiXinPay.setChecked(true);
@@ -296,7 +297,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
                 FormatUtil.parseDouble(bean.getIntegral())));
         tvStartTime.setRightContent(bean.getCreatedAt());
         tvPayType.setVisibility(UN_PAID.equals(bean.getStatus()) ? View.GONE : View.VISIBLE);
-        tvPayType.setRightContent(PayType.ALI.equals(bean.getPayType())? "支付宝" : "微信");
+        tvPayType.setRightContent(PAY_ALI.equals(bean.getPayType())? "支付宝" : "微信");
         tvPrice.setText(String.format(getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.getPayAmount())));
 
@@ -327,7 +328,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
                 orderPresent.cancelOrder(orderId);
                 break;
             case R.id.tv_pay:
-                PayInterface payInterface = PayType.ALI.equals(payType) ?
+                PayInterface payInterface = PAY_ALI.equals(payType) ?
                         new AliPay(this,payListener) : new WeiXinPay(this,payListener);
                 payInterface.payOrder(bean.getPay_option());
                 break;
@@ -382,10 +383,10 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
     public void onCheckedChanged(CustomNestRadioGroup group, int checkedId) {
         switch (checkedId){
             case R.id.cb_alipay:
-                payType = PayType.ALI;
+                payType = PAY_ALI;
                 break;
             case R.id.cb_weixin:
-                payType = PayType.WEIXIN;
+                payType = PAY_WEIXIN;
                 break;
             default:
                 break;

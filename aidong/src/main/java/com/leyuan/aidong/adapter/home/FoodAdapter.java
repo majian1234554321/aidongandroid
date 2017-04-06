@@ -10,8 +10,8 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.FoodBean;
 import com.leyuan.aidong.ui.home.activity.CompatGoodsDetailActivity;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
-import com.leyuan.aidong.utils.constant.GoodsType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,7 +95,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CompatGoodsDetailActivity.start(context, bean.getFoodId(), GoodsType.FOOD);
+                CompatGoodsDetailActivity.start(context, bean.getFoodId(), Constant.GOODS_FOODS);
             }
         });
     }

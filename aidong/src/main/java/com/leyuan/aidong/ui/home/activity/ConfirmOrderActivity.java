@@ -32,11 +32,11 @@ import com.leyuan.aidong.ui.mine.activity.UpdateDeliveryInfoActivity;
 import com.leyuan.aidong.ui.mvp.presenter.ConfirmOrderPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.ConfirmOrderPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.ConfirmOrderActivityView;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.constant.CouponType;
 import com.leyuan.aidong.utils.constant.DeliveryType;
-import com.leyuan.aidong.utils.constant.GoodsType;
 import com.leyuan.aidong.utils.constant.PayType;
 import com.leyuan.aidong.utils.constant.SettlementType;
 import com.leyuan.aidong.widget.CustomNestRadioGroup;
@@ -48,6 +48,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.leyuan.aidong.utils.Constant.EXPRESS_PRICE;
+import static com.leyuan.aidong.utils.Constant.PAY_ALI;
+import static com.leyuan.aidong.utils.Constant.PAY_WEIXIN;
 import static com.leyuan.aidong.utils.Constant.REQUEST_ADD_ADDRESS;
 import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_ADDRESS;
 import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_COUPON;
@@ -107,7 +109,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private String integral;
     private String coin;
     private String coupon;
-    private String payType;
+    private @PayType String payType;
     private String pickUpWay;           //取货方式(0-快递 1-自提)
     private String pickUpId;            //自提门店id或快递地址id
     private String pickUpDate;          //自提时间
@@ -148,7 +150,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initVariable(){
-        payType = PayType.ALI;
+        payType = PAY_ALI;
         days = DateUtils.getSevenDate();
         pickUpDate = days.get(0);
         if(getIntent() == null) {
@@ -169,7 +171,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 skuCode = goods.getSkuCode();
                 amount = FormatUtil.parseInt(goods.getAmount());
                 totalGoodsPrice = FormatUtil.parseDouble(goods.getPrice())* amount;
-                if(GoodsType.NUTRITION.equals(goods.getType())){
+                if(Constant.GOODS_NUTRITION.equals(goods.getType())){
                     couponType = CouponType.NUTRITION;
                     settlementType = SettlementType.NURTURE_IMMEDIATELY;
                 }else {
@@ -343,10 +345,10 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     public void onCheckedChanged(CustomNestRadioGroup group, int checkedId) {
         switch (checkedId){
             case R.id.cb_alipay:
-                payType = PayType.ALI;
+                payType = PAY_ALI;
                 break;
             case R.id.cb_weixin:
-                payType = PayType.WEIXIN;
+                payType = PAY_WEIXIN;
                 break;
             default:
                 break;

@@ -31,6 +31,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.GoodsDetailPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.GoodsDetailActivityView;
 import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.constant.GoodsType;
 import com.leyuan.aidong.widget.ObserveScrollView;
 import com.leyuan.aidong.widget.SlideDetailsLayout;
 import com.leyuan.aidong.widget.SwitcherLayout;
@@ -87,7 +88,7 @@ public class CompatGoodsDetailActivity extends BaseActivity implements View.OnCl
     private boolean isConfirmSku = false;
     private String selectedSkuValues;
 
-    public static void start(Context context, String id, String type) {
+    public static void start(Context context, String id, @GoodsType  String type) {
         Intent starter = new Intent(context, GoodsDetailActivity.class);
         starter.putExtra("id",id);
         starter.putExtra("type",type);

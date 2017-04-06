@@ -11,6 +11,7 @@ import com.leyuan.aidong.adapter.baseadapter.BaseHolderViewAdapter;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.ui.discover.viewholder.BaseCircleViewHolder;
 import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.utils.constant.DynamicType;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -66,7 +67,8 @@ public class CircleDynamicAdapter extends BaseHolderViewAdapter<DynamicBean> {
             viewHolderKeyArray = new SparseArray<>();
         }
 
-        public Builder<T> addType(Class<? extends BaseCircleViewHolder> viewHolderClass, int viewType, int layoutResId) {
+        public Builder<T> addType(Class<? extends BaseCircleViewHolder> viewHolderClass,
+                                  @DynamicType int viewType, int layoutResId) {
             final ViewHolderInfo info = new ViewHolderInfo();
             info.holderClass = viewHolderClass;
             info.layoutResID = layoutResId;

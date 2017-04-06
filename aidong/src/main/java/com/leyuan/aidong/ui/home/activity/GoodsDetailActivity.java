@@ -57,6 +57,7 @@ import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.ImageRectUtils;
 import com.leyuan.aidong.utils.TransitionHelper;
 import com.leyuan.aidong.utils.constant.DeliveryType;
+import com.leyuan.aidong.utils.constant.GoodsType;
 import com.leyuan.aidong.widget.SlideDetailsLayout;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
@@ -136,7 +137,7 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
     private List<String> selectedSkuValues = new ArrayList<>();
     private GoodsDetailPresent goodsPresent;
 
-    public static void start(Context context, String id, String goodsType) {
+    public static void start(Context context, String id, @GoodsType String goodsType) {
         Intent starter = new Intent(context, GoodsDetailActivity.class);
         starter.putExtra("id", id);
         starter.putExtra("goodsType", goodsType);

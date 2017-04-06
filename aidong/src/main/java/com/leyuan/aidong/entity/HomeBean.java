@@ -1,6 +1,6 @@
 package com.leyuan.aidong.entity;
 
-import com.leyuan.aidong.utils.constant.HomeItemType;
+import com.leyuan.aidong.utils.Constant;
 
 import java.util.List;
 
@@ -76,9 +76,9 @@ public class HomeBean {
 
     public int getItemType(){
         if("list".equals(style)){
-            return HomeItemType.IMAGE_AND_HORIZONTAL_LIST;
+            return Constant.HOME_IMAGE_AND_HORIZONTAL_LIST;
         }else if("cover".equals(style)){
-            return HomeItemType.TITLE_AND_VERTICAL_LIST;
+            return Constant.HOME_TITLE_AND_VERTICAL_LIST;
         }else {
             return -1;
         }

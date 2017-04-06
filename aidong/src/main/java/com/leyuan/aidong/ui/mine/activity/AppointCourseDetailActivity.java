@@ -17,10 +17,9 @@ import android.widget.Toast;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.AppointmentDetailBean;
 import com.leyuan.aidong.entity.BaseBean;
-import com.leyuan.aidong.module.pay.AliPay;
 import com.leyuan.aidong.module.pay.PayInterface;
+import com.leyuan.aidong.module.pay.PayUtils;
 import com.leyuan.aidong.module.pay.SimplePayListener;
-import com.leyuan.aidong.module.pay.WeiXinPay;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.home.activity.AppointSuccessActivity;
 import com.leyuan.aidong.ui.home.activity.CourseDetailActivity;
@@ -43,6 +42,8 @@ import com.leyuan.aidong.widget.SwitcherLayout;
 import cn.iwgang.countdownview.CountdownView;
 
 import static com.leyuan.aidong.ui.App.context;
+import static com.leyuan.aidong.utils.Constant.PAY_ALI;
+import static com.leyuan.aidong.utils.Constant.PAY_WEIXIN;
 
 
 /**
@@ -114,7 +115,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
     private AppointmentPresent present;
     private AppointmentDetailBean bean;
     private String orderId;
-    private String payType;
+    private @PayType String payType;
 
     private String code;
     private boolean fromDetail = false;
@@ -215,7 +216,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
         this.bean = bean;
         bottomLayout.setVisibility(View.VISIBLE);
         payType = bean.getPay().getPayType();
-        if(PayType.ALI.equals(payType)){
+        if(PAY_ALI.equals(payType)){
             rbAliPay.setChecked(true);
         }else {
             rbWeiXinPay.setChecked(true);
@@ -244,7 +245,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
                 FormatUtil.parseDouble(bean.getPay().getPayAmount())));
         tvStartTime.setRightContent(bean.getPay().getCreatedAt());
         timer.start(DateUtils.getCountdown(bean.getPay().getCreatedAt(), APPOINT_COUNTDOWN_MILL));
-        tvPayType.setRightContent(PayType.ALI.equals(bean.getPay().getPayType())? "支付宝" : "微信");
+        tvPayType.setRightContent(PAY_ALI.equals(bean.getPay().getPayType())? "支付宝" : "微信");
 
         //todo 通过组合控件控制底部的按钮状态
         switch (bean.getPay().getStatus()) {
@@ -364,9 +365,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
                 finish();
                 break;
             case R.id.tv_pay:
-                PayInterface payInterface = payType.equals(bean.getPay().getPayType()) ?
-                        new AliPay(this, payListener) : new WeiXinPay(this, payListener);
-                payInterface.payOrder(bean.getPay().getpayOption());
+                PayUtils.pay(context,bean.getPay(),payListener);
                 break;
             case R.id.tv_cancel_pay:
                 present.cancelAppoint(bean.getId());
@@ -400,10 +399,10 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
     public void onCheckedChanged(CustomNestRadioGroup group, int checkedId) {
         switch (checkedId){
             case R.id.cb_alipay:
-                payType = PayType.ALI;
+                payType = PAY_ALI;
                 break;
             case R.id.cb_weixin:
-                payType = PayType.WEIXIN;
+                payType = PAY_WEIXIN;
                 break;
             default:
                 break;

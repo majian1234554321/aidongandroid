@@ -15,8 +15,8 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.RecommendPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.RecommendPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.NurtureActivityView;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.SystemInfoUtils;
-import com.leyuan.aidong.utils.constant.GoodsType;
 import com.leyuan.aidong.utils.constant.RecommendGoods;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.leyuan.aidong.widget.SwitcherLayout;
@@ -61,7 +61,7 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
     private void initTopLayout(){
         SimpleTitleBar titleBar = (SimpleTitleBar)findViewById(R.id.title_bar);
         RecyclerView categoryView = (RecyclerView)findViewById(R.id.rv_category);
-        CategoryAdapter categoryAdapter = new CategoryAdapter(this,GoodsType.NUTRITION);
+        CategoryAdapter categoryAdapter = new CategoryAdapter(this, Constant.GOODS_NUTRITION);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.HORIZONTAL,false);
         categoryView.setLayoutManager(layoutManager);

@@ -25,7 +25,6 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.EquipmentPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.NurturePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.GoodsFilterActivityView;
 import com.leyuan.aidong.utils.TransitionHelper;
-import com.leyuan.aidong.utils.constant.GoodsType;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -34,6 +33,8 @@ import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.leyuan.aidong.utils.Constant.GOODS_NUTRITION;
 
 
 /**
@@ -210,7 +211,7 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
     private void getListData(int operation){
         switch (operation){
             case COMMEND_LOAD_DATA:
-                if(GoodsType.NUTRITION.equals(goodsType)){
+                if(GOODS_NUTRITION.equals(goodsType)){
                     nurturePresent.commendLoadNurtureData(switcherLayout, categoryId, sort);
                 }else {
                     equipmentPresent.commonLoadEquipmentData(switcherLayout, categoryId, sort);
@@ -220,7 +221,7 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
                 currPage = 1;
                 refreshLayout.setRefreshing(true);
                 RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-                if(GoodsType.NUTRITION.equals(goodsType)){
+                if(GOODS_NUTRITION.equals(goodsType)){
                     nurturePresent.pullToRefreshNurtureData(categoryId,sort);
                 }else {
                     equipmentPresent.pullToRefreshEquipmentData(categoryId,sort);
@@ -228,9 +229,9 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
                 break;
             case REQUEST_MORE_DATA:
                 currPage ++;
-                if(GoodsType.NUTRITION.equals(goodsType) && nurtureList.size() >= pageSize){
+                if(GOODS_NUTRITION.equals(goodsType) && nurtureList.size() >= pageSize){
                     nurturePresent.requestMoreNurtureData(recyclerView,pageSize,currPage, categoryId,sort);
-                }else if(GoodsType.NUTRITION.equals(goodsType) && equipmentList.size() >= pageSize){
+                }else if(GOODS_NUTRITION.equals(goodsType) && equipmentList.size() >= pageSize){
                     equipmentPresent.requestMoreEquipmentData(recyclerView,pageSize,currPage, categoryId,sort);
                 }
                 break;

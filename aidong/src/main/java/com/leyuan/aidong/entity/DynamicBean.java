@@ -6,6 +6,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.leyuan.aidong.utils.Constant.DYNAMIC_FIVE_IMAGE;
+import static com.leyuan.aidong.utils.Constant.DYNAMIC_FOUR_IMAGE;
+import static com.leyuan.aidong.utils.Constant.DYNAMIC_NONE;
+import static com.leyuan.aidong.utils.Constant.DYNAMIC_ONE_IMAGE;
+import static com.leyuan.aidong.utils.Constant.DYNAMIC_SIX_IMAGE;
+import static com.leyuan.aidong.utils.Constant.DYNAMIC_THREE_IMAGE;
+import static com.leyuan.aidong.utils.Constant.DYNAMIC_TWO_IMAGE;
+import static com.leyuan.aidong.utils.Constant.DYNAMIC_VIDEO;
+
 /**
  * 爱动圈动态
  * Created by song on 2016/12/26.
@@ -66,25 +75,26 @@ public class DynamicBean implements Serializable{
         }
     }
 
-    public int getDynamicType(){
+    @DynamicType
+    public  int getDynamicType(){
         if(image != null && !image.isEmpty()){
             if(image.size() == 1){
-                return DynamicType.ONE_IMAGE;
+                return DYNAMIC_ONE_IMAGE;
             }else if(image.size() == 2){
-                return DynamicType.TWO_IMAGE;
+                return DYNAMIC_TWO_IMAGE;
             }else if(image.size() == 3){
-                return DynamicType.THREE_IMAGE;
+                return DYNAMIC_THREE_IMAGE;
             }else if(image.size() == 4){
-                return DynamicType.FOUR_IMAGE;
+                return DYNAMIC_FOUR_IMAGE;
             }else if(image.size() == 5){
-                return DynamicType.FIVE_IMAGE;
+                return DYNAMIC_FIVE_IMAGE;
             }else if(image.size() == 6){
-                return DynamicType.SIX_IMAGE;
+                return DYNAMIC_SIX_IMAGE;
             }else {
-                return -1;
+                return DYNAMIC_NONE;
             }
         }else {
-            return DynamicType.VIDEO;
+            return DYNAMIC_VIDEO;
         }
     }
 }

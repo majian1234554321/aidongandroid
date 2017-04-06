@@ -10,9 +10,9 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
-import com.leyuan.aidong.utils.constant.GoodsType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +67,7 @@ public class NurtureAdapter extends RecyclerView.Adapter<NurtureAdapter.NurtureV
                 ActivityOptions transitionActivityOptions =
                         ActivityOptions.makeSceneTransitionAnimation((NurtureActivity) context, sharedView, transitionName);
                 context.startActivity(i, transitionActivityOptions.toBundle());*/
-                GoodsDetailActivity.start(context,bean.getId(), GoodsType.NUTRITION);
+                GoodsDetailActivity.start(context,bean.getId(), Constant.GOODS_NUTRITION);
             }
         });
     }

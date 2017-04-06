@@ -29,6 +29,10 @@ import com.leyuan.aidong.widget.SwitcherLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.leyuan.aidong.utils.Constant.GOODS_EQUIPMENT;
+import static com.leyuan.aidong.utils.Constant.GOODS_FOODS;
+import static com.leyuan.aidong.utils.Constant.GOODS_NUTRITION;
+
 /**
  * 商品 包含装备、健康餐饮、营养品
  * Created by song on 2016/9/22.
@@ -54,9 +58,9 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
     }
 
     @Override
-    public void getGoodsDetail(String type, String id) {
+    public void getGoodsDetail(@GoodsType String type, String id) {
         switch (type){
-            case GoodsType.EQUIPMENT:
+            case GOODS_EQUIPMENT:
                 if(equipmentModel == null){
                     equipmentModel = new EquipmentModelImpl(context);
                 }
@@ -69,7 +73,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                     }
                 },id);
                 break;
-            case GoodsType.NUTRITION:
+            case GOODS_NUTRITION:
                 if(nurtureModel == null){
                     nurtureModel = new NurtureModelImpl(context);
                 }
@@ -88,9 +92,9 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
     }
 
     @Override
-    public void getGoodsDetail(final SwitcherLayout switcherLayout, String type, String id) {
+    public void getGoodsDetail(final SwitcherLayout switcherLayout, @GoodsType String type, String id) {
         switch (type){
-            case GoodsType.FOOD:
+            case GOODS_FOODS:
                 if(foodModel == null){
                     foodModel = new FoodModelImpl();
                 }
@@ -113,7 +117,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                 },id);
                 break;
 
-            case GoodsType.EQUIPMENT:
+            case GOODS_EQUIPMENT:
                 if(equipmentModel == null){
                     equipmentModel = new EquipmentModelImpl(context);
                 }
@@ -135,7 +139,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                 },id);
                 break;
 
-            case GoodsType.NUTRITION:
+            case GOODS_NUTRITION:
                 if(nurtureModel == null){
                     nurtureModel = new NurtureModelImpl(context);
                 }
@@ -164,9 +168,9 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
     }
 
     @Override
-    public void commonLoadVenues(final SwitcherLayout switcherLayout, String type, String sku) {
+    public void commonLoadVenues(final SwitcherLayout switcherLayout, @GoodsType String type, String sku) {
         switch (type){
-            case GoodsType.EQUIPMENT:
+            case GOODS_EQUIPMENT:
                 if(equipmentModel == null){
                     equipmentModel = new EquipmentModelImpl(context);
                 }
@@ -185,7 +189,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                     }
                 },sku, Constant.PAGE_FIRST);
                 break;
-            case GoodsType.NUTRITION:
+            case GOODS_NUTRITION:
                 if(nurtureModel == null){
                     nurtureModel = new NurtureModelImpl(context);
                 }
@@ -205,7 +209,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                 },sku, Constant.PAGE_FIRST);
 
                 break;
-            case GoodsType.FOOD:
+            case GOODS_FOODS:
                 if(foodModel == null){
                     foodModel = new FoodModelImpl();
                 }
@@ -231,9 +235,9 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
     }
 
     @Override
-    public void pullToRefreshVenues(String type, String sku) {
+    public void pullToRefreshVenues(@GoodsType String type, String sku) {
         switch (type){
-            case GoodsType.EQUIPMENT:
+            case GOODS_EQUIPMENT:
                 if(equipmentModel == null){
                     equipmentModel = new EquipmentModelImpl(context);
                 }
@@ -250,7 +254,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                 },sku,Constant.PAGE_FIRST);
 
                 break;
-            case GoodsType.NUTRITION:
+            case GOODS_NUTRITION:
                 if(nurtureModel == null){
                     nurtureModel = new NurtureModelImpl(context);
                 }
@@ -266,7 +270,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                     }
                 },sku,Constant.PAGE_FIRST);
                 break;
-            case GoodsType.FOOD:
+            case GOODS_FOODS:
                 if(foodModel == null){
                     foodModel = new FoodModelImpl();
                 }
@@ -289,9 +293,9 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
     }
 
     @Override
-    public void requestMoreVenues(RecyclerView recyclerView, final int pageSize, String type, String sku, int page) {
+    public void requestMoreVenues(RecyclerView recyclerView, final int pageSize, @GoodsType String type, String sku, int page) {
         switch (type) {
-            case GoodsType.EQUIPMENT:
+            case GOODS_EQUIPMENT:
                 if (equipmentModel == null) {
                     equipmentModel = new EquipmentModelImpl(context);
                 }
@@ -311,7 +315,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                     }
                 }, sku, page);
                 break;
-            case GoodsType.NUTRITION:
+            case GOODS_NUTRITION:
                 if (nurtureModel == null) {
                     nurtureModel = new NurtureModelImpl(context);
                 }
@@ -331,7 +335,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                     }
                 }, sku, page);
                 break;
-            case GoodsType.FOOD:
+            case GOODS_FOODS:
                 if (foodModel == null) {
                     foodModel = new FoodModelImpl();
                 }

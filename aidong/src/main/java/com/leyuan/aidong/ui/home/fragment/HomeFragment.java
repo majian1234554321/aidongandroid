@@ -33,7 +33,6 @@ import com.leyuan.aidong.ui.mvp.presenter.HomePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.HomePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.HomeFragmentView;
 import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.utils.constant.HomeItemType;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -43,6 +42,9 @@ import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.leyuan.aidong.utils.Constant.HOME_IMAGE_AND_HORIZONTAL_LIST;
+import static com.leyuan.aidong.utils.Constant.HOME_TITLE_AND_VERTICAL_LIST;
 
 /**
  * 首页
@@ -102,9 +104,9 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView, View
         data = new ArrayList<>();
         HomeAdapter.Builder<DynamicBean> builder = new HomeAdapter.Builder<>(getContext());
         builder.addType(ImageAndHorizontalListHolder.class,
-                HomeItemType.IMAGE_AND_HORIZONTAL_LIST, R.layout.vh_image_and_horizontal_list)
+                HOME_IMAGE_AND_HORIZONTAL_LIST, R.layout.vh_image_and_horizontal_list)
                 .addType(TitleAndVerticalListHolder.class,
-                        HomeItemType.TITLE_AND_VERTICAL_LIST, R.layout.vh_title_and_vertical_list);
+                        HOME_TITLE_AND_VERTICAL_LIST, R.layout.vh_title_and_vertical_list);
         homeAdapter = builder.build();
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(homeAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
