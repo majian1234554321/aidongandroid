@@ -223,7 +223,7 @@ public class SystemInfoUtils {
         } else {          // 从本地读取
             Object bean = getSystemInfoBean(context, KEY_SYSTEM);
             if (bean instanceof SystemBean) {
-                Constant.systemInfoBean = ((SystemBean) bean);
+                Constant.systemInfoBean = ((SystemBean) bean);//缓存到内存
                 return Constant.systemInfoBean.getAppointment_countdown();
             }
             return 120;
@@ -239,7 +239,7 @@ public class SystemInfoUtils {
         } else {          // 从本地读取
             Object bean = getSystemInfoBean(context, KEY_SYSTEM);
             if (bean instanceof SystemBean) {
-                Constant.systemInfoBean = ((SystemBean) bean);
+                Constant.systemInfoBean = ((SystemBean) bean);//缓存到内存
                 return Constant.systemInfoBean.getOrder_countdown();
             }
             return 30;

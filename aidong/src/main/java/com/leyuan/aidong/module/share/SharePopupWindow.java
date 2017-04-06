@@ -31,7 +31,7 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
     private ImageView imgWeiFriend;
     private ImageView imgQq;
     private ImageView imgWeibo;
-    private MyShareUtils myShareUtils;
+//    private MyShareUtils myShareUtils;
     private String title;
     private String content;
     private String imageUrl;
@@ -40,7 +40,7 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
     public SharePopupWindow(Activity context) {
         super(context);
         this.context = context;
-        myShareUtils = new MyShareUtils(context);
+//        myShareUtils = new MyShareUtils(context);
 
         initView();
         initData();
@@ -84,7 +84,7 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
 
     @Deprecated
     public void setShareListener(ShareCallback listener) {
-        myShareUtils.setShareListener(listener);
+//        myShareUtils.setShareListener(listener);
     }
 
     @Override
@@ -115,7 +115,7 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
      */
     @Deprecated
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        myShareUtils.onActivityResult(requestCode, resultCode, data);
+//        myShareUtils.onActivityResult(requestCode, resultCode, data);
     }
 
     /**
@@ -126,14 +126,14 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
      */
     @Deprecated
     private void onNewIntent(Intent intent, IWeiboHandler.Response response) {
-        myShareUtils.onNewIntent(intent, response);
+//        myShareUtils.onNewIntent(intent, response);
     }
 
     @Deprecated
     public void release() {
         context = null;
-        myShareUtils.release();
-        myShareUtils = null;
+//        myShareUtils.release();
+//        myShareUtils = null;
     }
 
     @Deprecated

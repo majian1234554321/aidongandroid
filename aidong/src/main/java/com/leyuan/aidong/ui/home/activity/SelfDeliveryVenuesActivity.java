@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.SelfDeliveryAdapter;
 import com.leyuan.aidong.entity.CategoryBean;
+import com.leyuan.aidong.entity.DeliveryBean;
 import com.leyuan.aidong.entity.DistrictBean;
 import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.ui.BaseActivity;
@@ -59,7 +60,7 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
     private String id;
     private String brandId;
     private String businessCircle;
-
+    private DeliveryBean deliveryBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +72,7 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
         if(getIntent() != null){
             goodsType = getIntent().getStringExtra("goodsType");
             id = getIntent().getStringExtra("id");
+            deliveryBean = getIntent().getParcelableExtra("deliveryBean");
         }
 
         initView();

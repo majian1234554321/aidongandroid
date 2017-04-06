@@ -45,10 +45,10 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public int getItemViewType(int position) {
-        if(position < data.size()){
-            return SEARCH_HISTORY;
-        }else {
+        if(position == 0){
             return DELETE_SEARCH_HISTORY;
+        }else {
+            return SEARCH_HISTORY;
         }
     }
 
@@ -67,9 +67,18 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if(position < data.size()) {
+        if(position  ==  0) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(itemClickListener != null){
+                        itemClickListener.onDeleteHistory();
+                    }
+                }
+            });
+        }else {
             if(holder instanceof HistoryHolder ) {
-                final SearchHistoryBean bean = data.get(position);
+                final SearchHistoryBean bean = data.get(position - 1);
                 ((HistoryHolder) holder).keyword.setText(bean.getKeyword());
                 ((HistoryHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -80,15 +89,7 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter<RecyclerView.View
                     }
                 });
             }
-        }else {
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(itemClickListener != null){
-                        itemClickListener.onDeleteHistory();
-                    }
-                }
-            });
+
         }
     }
 

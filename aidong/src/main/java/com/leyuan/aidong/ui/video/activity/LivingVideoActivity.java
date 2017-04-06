@@ -9,12 +9,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.video.LiveVideoInfo;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.LiveDateFilterUtil;
 import com.leyuan.aidong.utils.Logger;
-import com.leyuan.aidong.utils.Urls;
 import com.leyuan.aidong.widget.media.IjkVideoView;
 
 import tv.danmaku.ijk.media.player.IMediaPlayer;
@@ -152,7 +152,7 @@ public class LivingVideoActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.img_share:
                 if (mLiveVideoInfo != null) {
-                    String url = Urls.LIVE_SHARE + mLiveVideoInfo.getLiveId();
+                    String url = ConstantUrl.LIVE_SHARE + mLiveVideoInfo.getLiveId();
 //                    SharePopToolVideo sharePopTool = new SharePopToolVideo(LivingVideoActivity.this, ((ViewGroup) findViewById(android.R.id.content)).getChildAt(0),
 //                            url, mController, mLiveVideoInfo.getLiveCover(), mLiveVideoInfo.getLiveContent(), mLiveVideoInfo.getLiveName());
 //                    sharePopTool.showChoseBox();

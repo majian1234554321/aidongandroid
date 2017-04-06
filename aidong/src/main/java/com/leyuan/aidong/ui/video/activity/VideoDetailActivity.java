@@ -22,6 +22,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.google.android.exoplayer.util.Util;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.CommonViewPagerAdapter;
+import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.video.VideoDetail;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.App;
@@ -31,7 +32,6 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.VideoPresenterImpl;
 import com.leyuan.aidong.ui.mvp.view.VideoDetailView;
 import com.leyuan.aidong.utils.FastBlur;
 import com.leyuan.aidong.utils.Logger;
-import com.leyuan.aidong.utils.Urls;
 import com.leyuan.aidong.widget.media.TextViewPrintly;
 
 import java.util.ArrayList;
@@ -280,7 +280,7 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
     }
 
     private void share(final VideoDetail video) {
-        final String url = Urls.VIDEO_SHARE
+        final String url = ConstantUrl.VIDEO_SHARE
                 + "vid=" + video.getvId() + "&phase=" + video.getPhase();
         sharePopupWindow.showAtBottom(video.getVideoName(), video.getIntroduce(), video.getCover(), url);
     }

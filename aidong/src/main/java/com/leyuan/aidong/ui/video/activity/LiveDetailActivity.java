@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.video.LiveVideoInfo;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.BaseActivity;
@@ -25,7 +26,6 @@ import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.FastBlur;
 import com.leyuan.aidong.utils.LiveDateFilterUtil;
-import com.leyuan.aidong.utils.Urls;
 import com.leyuan.aidong.widget.media.TextViewPrintly;
 
 
@@ -174,7 +174,7 @@ public class LiveDetailActivity extends BaseActivity implements View.OnClickList
             case R.id.iv_share:
                 //分享
                 if (info != null) {
-                    String url = Urls.LIVE_SHARE + info.getLiveId();
+                    String url = ConstantUrl.LIVE_SHARE + info.getLiveId();
                     sharePopupWindow.showAtBottom(info.getLiveName(), info.getLiveContent(), info.getLiveCover(), url);
                 }
 

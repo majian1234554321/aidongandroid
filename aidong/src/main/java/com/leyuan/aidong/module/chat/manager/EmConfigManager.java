@@ -32,7 +32,7 @@ import com.leyuan.aidong.ui.mvp.view.EmChatView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.Logger;
-import com.leyuan.aidong.utils.Urls;
+import com.leyuan.aidong.config.UrlConfig;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -76,7 +76,7 @@ public class EmConfigManager implements EmChatView {
         if (EaseUI.getInstance().init(context, options)) {
             LogAidong.i("emChat", "EaseUI.getInstance().init success");
 
-            EMClient.getInstance().setDebugMode(Urls.debug);
+            EMClient.getInstance().setDebugMode(UrlConfig.debug);
             appContext = context;
             easeUI = EaseUI.getInstance();
             present = new ChatPresentImpl(context, this);

@@ -76,7 +76,10 @@ public class SearchActivity extends BaseActivity implements SearchActivityView{
         frameLayout = (FrameLayout) findViewById(R.id.fl_container);
         recyclerView = (RecyclerView) findViewById(R.id.rv_search_history);
         switcherLayout = new SwitcherLayout(this,recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setStackFromEnd(true);    //列表再底部开始展示，反转后由上面开始展示
+        layoutManager.setReverseLayout(true);   //列表翻转
+        recyclerView.setLayoutManager(layoutManager);
         historyAdapter = new SearchHistoryAdapter(this);
         recyclerView.setAdapter(historyAdapter);
     }

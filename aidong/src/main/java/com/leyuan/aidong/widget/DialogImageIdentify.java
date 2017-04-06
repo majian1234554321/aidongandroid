@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.utils.Logger;
 
 
@@ -91,7 +91,7 @@ public class DialogImageIdentify extends Dialog {
 
     public void refreshImage(String mobile) {
         Logger.i(TAG,"refreshImage mobile = " +mobile);
-        Glide.with(context).load(Constant.CAPTCHA_IMAGE + mobile + "?time=" + System.currentTimeMillis())
+        Glide.with(context).load(ConstantUrl.CAPTCHA_IMAGE + mobile + "?time=" + System.currentTimeMillis())
                 .into(imgIdentify);
     }
 

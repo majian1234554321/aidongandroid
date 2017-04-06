@@ -1,80 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="@string/share"
-        android:gravity="center"
-        android:textColor="@color/black"
-       />
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4f000000">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/pref_100dp"
-        android:orientation="horizontal"
-        android:weightSum="4"
-        >
-       <FrameLayout
-           android:layout_width="@dimen/pref_0dp"
-           android:layout_height="match_parent"
-           android:layout_weight="1"
-           >
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:orientation="vertical">
 
-           <ImageView
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="@string/share"
+            android:textColor="@color/black" />
 
-               android:layout_width="70dp"
-               android:layout_height="70dp"
-               android:layout_gravity="center"
-               android:src="@drawable/share_weichat"
-               android:id="@+id/img_weichat" />
-       </FrameLayout>
-        <FrameLayout
-            android:layout_width="@dimen/pref_0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/pref_100dp"
+            android:orientation="horizontal"
+            android:weightSum="4">
 
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_gravity="center"
-                android:src="@drawable/share_wei_friend"
-                android:id="@+id/img_wei_friend" />
-        </FrameLayout>
-        <FrameLayout
-            android:layout_width="@dimen/pref_0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            >
+            <FrameLayout
+                android:layout_width="@dimen/pref_0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_gravity="center"
-                android:src="@drawable/share_qq"
-                android:id="@+id/img_qq" />
-        </FrameLayout>
-        <FrameLayout
-            android:layout_width="@dimen/pref_0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            >
+                <ImageView
 
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_gravity="center"
-                android:src="@drawable/share_weibo"
-                android:id="@+id/img_weibo" />
-        </FrameLayout>
+                    android:id="@+id/img_weichat"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/share_weichat" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="@dimen/pref_0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/img_wei_friend"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/share_wei_friend" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="@dimen/pref_0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/img_qq"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/share_qq" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="@dimen/pref_0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/img_weibo"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/share_weibo" />
+            </FrameLayout>
+
+
+        </LinearLayout>
 
 
     </LinearLayout>
-
-
-</LinearLayout>
+</RelativeLayout>

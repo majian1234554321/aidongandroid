@@ -22,6 +22,7 @@ import com.google.android.exoplayer.util.Util;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter;
 import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter.IDynamicCallback;
+import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.PhotoBrowseInfo;
@@ -245,7 +246,7 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
             } else {
                 cover = dynamic.videos.cover;
             }
-            sharePopupWindow.showAtBottom(dynamic.publisher.name + "的动态", dynamic.content, cover,Constant.URL_SHARE_DYNAMIC);
+            sharePopupWindow.showAtBottom(dynamic.publisher.name + "的动态", dynamic.content, cover, ConstantUrl.URL_SHARE_DYNAMIC);
         }
     }
 

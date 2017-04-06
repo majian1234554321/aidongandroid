@@ -110,6 +110,7 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
                 Intent intent = new Intent(this,SelfDeliveryVenuesActivity.class);
                 intent.putExtra("goodsType",goodsType);
                 intent.putExtra("id",id);
+                intent.putExtra("deliveryBean",deliveryBean);
                 final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(this, false);
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, pairs);
                 startActivityForResult(intent, CODE_SELECT_VENUES,optionsCompat.toBundle());

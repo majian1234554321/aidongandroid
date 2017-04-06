@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.entity.user.MineInfoBean;
 import com.leyuan.aidong.module.chat.manager.EmMessageManager;
@@ -207,7 +208,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
 //                ArrayList<GoodsBean> arrayList = new ArrayList<>();
 //                arrayList.add(goodsBean);
 //                ApplyServiceActivity.start(getActivity(), "20170325000068", arrayList);
-                WebViewActivity.start(getActivity(), "售后服务", Constant.URL_AFTER_SALES_SERVICE);
+                WebViewActivity.start(getActivity(), "售后服务", ConstantUrl.URL_AFTER_SALES_SERVICE);
                 break;
             case R.id.item_setting:
                 UiManager.activityJump(getActivity(), TabMinePersonalSettingsActivity.class);

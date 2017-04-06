@@ -53,7 +53,6 @@ public class RxHelper {
      * 创建成功的数据
      *
      * @param data
-     * @param <T>
      * @return
      */
     private static <T> Observable<T> createDataObservable(final T data) {
