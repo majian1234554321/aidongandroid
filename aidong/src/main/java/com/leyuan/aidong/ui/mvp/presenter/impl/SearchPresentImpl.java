@@ -161,7 +161,7 @@ public class SearchPresentImpl implements SearchPresent{
                     switcherLayout.showEmptyLayout();
                 }else {
                     switcherLayout.showContentLayout();
-                    campaignView.updateRecyclerView(campaignList);
+                    campaignView.onRecyclerViewRefresh(campaignList);
                 }
             }
         },keyword, Constant.PAGE_FIRST);
@@ -179,7 +179,7 @@ public class SearchPresentImpl implements SearchPresent{
                     switcherLayout.showEmptyLayout();
                 }else {
                     switcherLayout.showContentLayout();
-                    equipmentView.updateRecyclerView(equipmentList);
+                    equipmentView.onRecyclerViewRefresh(equipmentList);
                 }
             }
         },keyword, Constant.PAGE_FIRST);
@@ -197,7 +197,7 @@ public class SearchPresentImpl implements SearchPresent{
                     switcherLayout.showEmptyLayout();
                 }else {
                     switcherLayout.showContentLayout();
-                    courseView.updateRecyclerView(courseList);
+                    courseView.onRecyclerViewRefresh(courseList);
                 }
             }
         },keyword, Constant.PAGE_FIRST);
@@ -216,7 +216,7 @@ public class SearchPresentImpl implements SearchPresent{
                     switcherLayout.showEmptyLayout();
                 }else {
                     switcherLayout.showContentLayout();
-                    nurtureView.updateRecyclerView(nurtureList);
+                    nurtureView.onRecyclerViewRefresh(nurtureList);
                 }
             }
         },keyword, Constant.PAGE_FIRST);
@@ -234,7 +234,7 @@ public class SearchPresentImpl implements SearchPresent{
                     switcherLayout.showEmptyLayout();
                 }else {
                     switcherLayout.showContentLayout();
-                    userView.updateRecyclerView(userList);
+                    userView.onRecyclerViewRefresh(userList);
                 }
             }
         },keyword, Constant.PAGE_FIRST);
@@ -252,7 +252,7 @@ public class SearchPresentImpl implements SearchPresent{
                     switcherLayout.showEmptyLayout();
                 }else {
                     switcherLayout.showContentLayout();
-                    venuesView.updateRecyclerView(venuesList);
+                    venuesView.onRecyclerViewRefresh(venuesList);
                 }
             }
         },keyword, Constant.PAGE_FIRST);
@@ -267,7 +267,7 @@ public class SearchPresentImpl implements SearchPresent{
                     campaignList = campaignData.getCampaign();
                 }
                 if(!campaignList.isEmpty()){
-                    campaignView.updateRecyclerView(campaignList);
+                    campaignView.onRecyclerViewRefresh(campaignList);
                 }
             }
         },keyword,Constant.PAGE_FIRST);
@@ -282,7 +282,7 @@ public class SearchPresentImpl implements SearchPresent{
                     equipmentList = equipmentData.getEquipment();
                 }
                 if(!equipmentList.isEmpty()){
-                    equipmentView.updateRecyclerView(equipmentList);
+                    equipmentView.onRecyclerViewRefresh(equipmentList);
                 }
             }
         },keyword,Constant.PAGE_FIRST);
@@ -297,7 +297,7 @@ public class SearchPresentImpl implements SearchPresent{
                     courseList = courseData.getCourse();
                 }
                 if(!courseList.isEmpty()){
-                    courseView.updateRecyclerView(courseList);
+                    courseView.onRecyclerViewRefresh(courseList);
                 }
             }
         },keyword,Constant.PAGE_FIRST);
@@ -312,7 +312,7 @@ public class SearchPresentImpl implements SearchPresent{
                     nurtureList = searchNurtureData.getNutrition();
                 }
                 if (!nurtureList.isEmpty()) {
-                    nurtureView.updateRecyclerView(nurtureList);
+                    nurtureView.onRecyclerViewRefresh(nurtureList);
                 }
             }
         },keyword,Constant.PAGE_FIRST);
@@ -327,7 +327,7 @@ public class SearchPresentImpl implements SearchPresent{
                     userList = userData.getUser();
                 }
                 if(!userList.isEmpty()){
-                    userView.updateRecyclerView(userList);
+                    userView.onRecyclerViewRefresh(userList);
                 }
             }
         },keyword,Constant.PAGE_FIRST);
@@ -342,7 +342,7 @@ public class SearchPresentImpl implements SearchPresent{
                     venuesList = venuesData.getGym();
                 }
                 if(!venuesList.isEmpty()){
-                    venuesView.updateRecyclerView(venuesList);
+                    venuesView.onRecyclerViewRefresh(venuesList);
                 }
             }
         },keyword,Constant.PAGE_FIRST);
@@ -357,7 +357,7 @@ public class SearchPresentImpl implements SearchPresent{
                     campaignList = campaignData.getCampaign();
                 }
                 if(!campaignList.isEmpty()){
-                    campaignView.updateRecyclerView(campaignList);
+                    campaignView.onRecyclerViewLoadMore(campaignList);
                 }
                 if(campaignList.size() < pageSize){
                     campaignView.showEndFooterView();
@@ -375,7 +375,7 @@ public class SearchPresentImpl implements SearchPresent{
                     equipmentList = equipmentData.getEquipment();
                 }
                 if(!equipmentList.isEmpty()){
-                    equipmentView.updateRecyclerView(equipmentList);
+                    equipmentView.onRecyclerViewLoadMore(equipmentList);
                 }
                 if(nurtureList.size() < pageSize){
                     equipmentView.showEndFooterView();
@@ -393,7 +393,7 @@ public class SearchPresentImpl implements SearchPresent{
                     courseList = courseData.getCourse();
                 }
                 if(!courseList.isEmpty()){
-                    courseView.updateRecyclerView(courseList);
+                    courseView.onRecyclerViewLoadMore(courseList);
                 }
                 if(courseList.size() < pageSize){
                     courseView.showEndFooterView();
@@ -411,7 +411,7 @@ public class SearchPresentImpl implements SearchPresent{
                     nurtureList = searchNurtureData.getNutrition();
                 }
                 if(!nurtureList.isEmpty()){
-                    nurtureView.updateRecyclerView(nurtureList);
+                    nurtureView.onRecyclerViewLoadMore(nurtureList);
                 }
                 if(equipmentList.size() < pageSize){
                     nurtureView.showEndFooterView();
@@ -429,7 +429,7 @@ public class SearchPresentImpl implements SearchPresent{
                     userList = userData.getUser();
                 }
                 if(!userList.isEmpty()){
-                    userView.updateRecyclerView(userList);
+                    userView.onRecyclerViewLoadMore(userList);
                 }
                 if(userList.size() < pageSize){
                     userView.showEndFooterView();
@@ -447,7 +447,7 @@ public class SearchPresentImpl implements SearchPresent{
                     venuesList = venuesData.getGym();
                 }
                 if(!venuesList.isEmpty()){
-                    venuesView.updateRecyclerView(venuesList);
+                    venuesView.onRecyclerViewLoadMore(venuesList);
                 }
                 if(venuesList.size() < pageSize){
                     venuesView.showEndFooterView();

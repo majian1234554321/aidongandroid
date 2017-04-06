@@ -232,6 +232,36 @@ public class DateUtils {
         return dates;
     }
 
+
+    public static List<String> getCourseSevenDate() {
+        List<String> dates = new ArrayList<String>();
+        Date date = new Date();//取时间
+        final Calendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        for (int i = 0; i < 7; i++) {
+            calendar.add(calendar.DATE, i == 0 ? 0 : +1);//把日期往前减少一天，若想把日期向后推一天则将负数改为正数
+            date = calendar.getTime();
+            String weekOfDate = getWeekOfDate(date);
+            SimpleDateFormat formatter = new SimpleDateFormat("MM月dd");
+            String dateString = formatter.format(date);
+            dates.add(dateString+weekOfDate);
+        }
+        return dates;
+    }
+
+    /**
+     * 根据日期获得星期
+     * @param date
+     * @return
+     */
+    public static String getWeekOfDate(Date date) {
+        String[] weekDaysCode = { "(周日)", "(周一)", "(周二)", "(周三)", "(周四)", "(周五)", "(周六)" };
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int intWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+        return weekDaysCode[intWeek];
+    }
+
     public static String parseTime(long msgTime) {
         String time;
         Date date = new Date(msgTime);

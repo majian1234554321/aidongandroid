@@ -106,11 +106,18 @@ public class SearchCourseFragment extends BasePageFragment implements SearchCour
     };
 
     @Override
-    public void updateRecyclerView(List<CourseBean> courseBeanList) {
+    public void onRecyclerViewRefresh(List<CourseBean> courseBeanList) {
+        data.clear();
         if(refreshLayout.isRefreshing()){
-            data.clear();
             refreshLayout.setRefreshing(false);
         }
+        data.addAll(courseBeanList);
+        courseAdapter.setData(data);
+        wrapperAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onRecyclerViewLoadMore(List<CourseBean> courseBeanList) {
         data.addAll(courseBeanList);
         courseAdapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();

@@ -9,14 +9,13 @@ import java.util.List;
  * Created by song on 2016/9/1.
  */
 public interface SearchVenuesFragmentView {
-    /**
-     * 更新列表
-     * @param venuesBeanList VenuesBean集合
-     */
-    void updateRecyclerView(List<VenuesBean> venuesBeanList);
 
     /**
      * 显示FooterView，提示没有任何内容了
      */
     void showEndFooterView();
+
+    void onRecyclerViewRefresh(List<VenuesBean> venuesBeanList);
+
+    void onRecyclerViewLoadMore(List<VenuesBean> venuesBeanList);
 }

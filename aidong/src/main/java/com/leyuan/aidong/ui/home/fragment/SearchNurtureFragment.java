@@ -105,13 +105,19 @@ public class SearchNurtureFragment extends BasePageFragment implements SearchNur
         }
     };
 
-
     @Override
-    public void updateRecyclerView(List<NurtureBean> nurtureBeen) {
+    public void onRecyclerViewRefresh(List<NurtureBean> nurtureBeen) {
+        data.clear();
         if(refreshLayout.isRefreshing()){
-            data.clear();
             refreshLayout.setRefreshing(false);
         }
+        data.addAll(nurtureBeen);
+        nurtureAdapter.setNurtureList(data);
+        wrapperAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onRecyclerViewLoadMore(List<NurtureBean> nurtureBeen) {
         data.addAll(nurtureBeen);
         nurtureAdapter.setNurtureList(data);
         wrapperAdapter.notifyDataSetChanged();

@@ -34,7 +34,6 @@ import io.realm.Realm;
 /**
  * 搜索
  * Created by song on 2016/9/12.
- * //todo  搜索模块需要重构......
  */
 public class SearchActivity extends BaseActivity implements SearchActivityView{
     private ImageView ivBack;
@@ -136,7 +135,6 @@ public class SearchActivity extends BaseActivity implements SearchActivityView{
 
     @Override
     public void setSearchResult(Object o) {
-        //todo json转换
         String key = o.toString().substring(0, o.toString().indexOf("="));
         int index;
         if(key.contains("gym")){
@@ -170,7 +168,7 @@ public class SearchActivity extends BaseActivity implements SearchActivityView{
         return etSearch.getText().toString();
     }
 
-    public void closeKeybord(){
+    public void closeKeyboard(){
         KeyBoardUtil.closeKeyboard(etSearch,SearchActivity.this);
     }
 }

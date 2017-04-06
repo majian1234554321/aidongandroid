@@ -105,15 +105,23 @@ public class SearchEquipmentFragment extends BasePageFragment implements SearchE
     };
 
     @Override
-    public void updateRecyclerView(List<EquipmentBean> equipmentList) {
+    public void onRecyclerViewRefresh(List<EquipmentBean> equipmentList) {
+        data.clear();
         if(refreshLayout.isRefreshing()){
-            data.clear();
             refreshLayout.setRefreshing(false);
         }
         data.addAll(equipmentList);
         equipmentAdapter.setEquipmentList(data);
         wrapperAdapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void onRecyclerViewLoadMore(List<EquipmentBean> equipmentList) {
+        data.addAll(equipmentList);
+        equipmentAdapter.setEquipmentList(data);
+        wrapperAdapter.notifyDataSetChanged();
+    }
+
 
     @Override
     public void showEndFooterView() {

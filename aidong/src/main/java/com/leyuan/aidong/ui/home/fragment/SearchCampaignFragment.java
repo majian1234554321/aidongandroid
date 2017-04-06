@@ -104,11 +104,18 @@ public class SearchCampaignFragment extends BasePageFragment implements SearchCa
     };
 
     @Override
-    public void updateRecyclerView(List<CampaignBean> campaignBeanList) {
+    public void onRecyclerViewRefresh(List<CampaignBean> campaignBeanList) {
+        data.clear();
         if(refreshLayout.isRefreshing()){
-            data.clear();
             refreshLayout.setRefreshing(false);
         }
+        data.addAll(campaignBeanList);
+        campaignAdapter.setData(data);
+        wrapperAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onRecyclerViewLoadMore(List<CampaignBean> campaignBeanList) {
         data.addAll(campaignBeanList);
         campaignAdapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();

@@ -86,7 +86,7 @@ public class SearchResultFragment extends BaseFragment implements SmartTabLayout
             @Override
             public void onPageSelected(int position) {
                 index = position;
-                ((SearchActivity)getActivity()).closeKeybord();
+                ((SearchActivity)getActivity()).closeKeyboard();
                 String keyword = ((SearchActivity)getActivity()).updateKeyword();
                 refreshSelectedData(keyword);
                 for (int i = 0; i < allTabView.size(); i++) {

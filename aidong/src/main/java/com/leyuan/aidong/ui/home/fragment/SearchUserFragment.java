@@ -105,11 +105,18 @@ public class SearchUserFragment extends BasePageFragment implements SearchUserFr
     };
 
     @Override
-    public void updateRecyclerView(List<UserBean> userBeanList) {
+    public void onRecyclerViewRefresh(List<UserBean> userBeanList) {
+        data.clear();
         if(refreshLayout.isRefreshing()){
-            data.clear();
             refreshLayout.setRefreshing(false);
         }
+        data.addAll(userBeanList);
+        userAdapter.setData(data);
+        wrapperAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onRecyclerViewLoadMore(List<UserBean> userBeanList) {
         data.addAll(userBeanList);
         userAdapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();

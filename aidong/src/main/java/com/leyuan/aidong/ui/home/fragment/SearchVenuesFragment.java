@@ -106,11 +106,18 @@ public class SearchVenuesFragment extends BasePageFragment implements SearchVenu
     };
 
     @Override
-    public void updateRecyclerView(List<VenuesBean> venuesBeanList) {
+    public void onRecyclerViewRefresh(List<VenuesBean> venuesBeanList) {
+        data.clear();
         if(refreshLayout.isRefreshing()){
-            data.clear();
             refreshLayout.setRefreshing(false);
         }
+        data.addAll(venuesBeanList);
+        venuesAdapter.setData(data);
+        wrapperAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onRecyclerViewLoadMore(List<VenuesBean> venuesBeanList) {
         data.addAll(venuesBeanList);
         venuesAdapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();

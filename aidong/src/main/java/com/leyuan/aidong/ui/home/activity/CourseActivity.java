@@ -100,7 +100,7 @@ public class CourseActivity extends BaseActivity implements CourseActivityView,S
                 for (int i = 0; i < allTabView.size(); i++) {
                     View tabAt = tabLayout.getTabAt(i);
                     TextView text = (TextView) tabAt.findViewById(R.id.tv_tab_text);
-                    text.setTypeface(i == position ? Typeface.DEFAULT_BOLD :Typeface.DEFAULT);
+                    text.setTypeface(i == position ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
 
                     //reset fragment
                     CourseFragment page = (CourseFragment) adapter.getPage(position);
@@ -151,7 +151,7 @@ public class CourseActivity extends BaseActivity implements CourseActivityView,S
     public View createTabView(ViewGroup container, int position, PagerAdapter adapter) {
         View tabView = LayoutInflater.from(this).inflate(R.layout.tab_course_text, container, false);
         TextView text = (TextView) tabView.findViewById(R.id.tv_tab_text);
-        text.setText(days.get(position));
+        text.setText(DateUtils.getCourseSevenDate().get(position));
         if(position == 0){
             text.setTypeface(Typeface.DEFAULT_BOLD);
         }
