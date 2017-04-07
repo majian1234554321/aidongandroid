@@ -25,7 +25,6 @@ import com.leyuan.aidong.ui.mvp.view.CampaignDetailActivityView;
 import com.leyuan.aidong.ui.mvp.view.CampaignFragmentView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.Logger;
-import com.leyuan.aidong.utils.constant.CouponType;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
@@ -222,6 +221,6 @@ public class CampaignPresentImpl implements CampaignPresent {
                     appointCampaignActivityView.setCampaignCouponResult(couponData.getCoupon());//maybe null
                 }
             }
-        }, CouponType.COURSE,id);
+        }, Constant.COUPON_CAMPAIGN,id);
     }
 }

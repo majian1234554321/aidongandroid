@@ -1,6 +1,5 @@
 package com.leyuan.aidong.ui;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -160,33 +159,29 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
         }
     }
 
+    protected void setFadeAnimation(){
+        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+            Fade in = new Fade();
+            in.setDuration(300);
+            in.setMode(Fade.MODE_OUT);
+            getWindow().setExitTransition(in);
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    protected void fadeInAnimations() {
-        Fade fade = new Fade();
-        fade.setDuration(300);
-        fade.setMode(Fade.MODE_IN);
-        getWindow().setEnterTransition(fade);
+            Fade out = new Fade();
+            out.setDuration(300);
+            out.setMode(Fade.MODE_OUT);
+            getWindow().setExitTransition(out);
+        }
     }
 
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    protected void fadeOutAnimations() {
-        Fade fade = new Fade();
-        fade.setDuration(300);
-        fade.setMode(Fade.MODE_OUT);
-        getWindow().setExitTransition(fade);
+    protected void setSlideAnimation(){
+        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+            Slide slide = new Slide();
+            slide.setDuration(300);
+            slide.setSlideEdge(Gravity.BOTTOM);
+            slide.excludeTarget(android.R.id.statusBarBackground, true);
+            getWindow().setEnterTransition(slide);
+        }
     }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    protected void slideFromBottomAnimations() {
-        Slide slide = new Slide();
-        slide.setDuration(300);
-        slide.setSlideEdge(Gravity.BOTTOM);
-        slide.excludeTarget(android.R.id.statusBarBackground, true);
-        getWindow().setEnterTransition(slide);
-    }
-
 
     /**
      * 显示一个不能取消的加载提示框

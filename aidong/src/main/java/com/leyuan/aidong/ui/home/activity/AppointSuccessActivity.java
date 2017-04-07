@@ -17,13 +17,14 @@ import com.leyuan.aidong.ui.mine.activity.AppointmentActivity;
 import com.leyuan.aidong.ui.mvp.presenter.RecommendPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.RecommendPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointSuccessActivityView;
-import com.leyuan.aidong.utils.constant.RecommendGoods;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderSpanSizeLookup;
 import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
 
 import java.util.List;
+
+import static com.leyuan.aidong.utils.Constant.RECOMMEND_CART;
 
 /**
  * 预约成功界面
@@ -59,7 +60,7 @@ public class AppointSuccessActivity extends BaseActivity implements View.OnClick
         }
         initView();
         setListener();
-        present.pullToRefreshRecommendData(RecommendGoods.CART);
+        present.pullToRefreshRecommendData(RECOMMEND_CART);
     }
 
     private void initView() {

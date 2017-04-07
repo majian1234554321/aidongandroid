@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.mvp.presenter;
 
 import com.leyuan.aidong.module.pay.PayInterface;
+import com.leyuan.aidong.utils.constant.DeliveryType;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
 /**
@@ -39,7 +40,7 @@ public interface CartPresent {
      */
     void updateGoodsCount(String id, int mount, int shopPosition, int goodsPosition);
 
-    void updateGoodsDeliveryInfo(String id,String gymId);
+    void updateGoodsDeliveryInfo(String id, String gymId);
 
     /**
      * 添加商品到购物车

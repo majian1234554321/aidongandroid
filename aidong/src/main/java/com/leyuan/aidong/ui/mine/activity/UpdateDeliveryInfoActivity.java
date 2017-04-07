@@ -21,10 +21,12 @@ import com.leyuan.aidong.ui.mvp.presenter.CartPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CartPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.UpdateDeliveryInfoActivityView;
 import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.utils.constant.DeliveryType;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
+import static com.leyuan.aidong.utils.Constant.DELIVERY_SELF;
 
 /**
  * 确认订单界面修改配送信息
@@ -92,7 +94,7 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
     @Override
     public void onExpressClick(int position) {
         this.position = position;
-        cartPresent.updateGoodsDeliveryInfo(data.get(position).getGoods().getId(),DeliveryType.EXPRESS);
+        cartPresent.updateGoodsDeliveryInfo(data.get(position).getGoods().getId(),DELIVERY_EXPRESS);
     }
 
     @Override
@@ -122,7 +124,7 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
             UpdateDeliveryBean bean = data.get(position);
             DeliveryBean deliveryBean = new DeliveryBean();
             deliveryBean.setInfo(venuesBean);
-            deliveryBean.setType(DeliveryType.SELF);
+            deliveryBean.setType(DELIVERY_SELF);
             bean.setDeliveryInfo(deliveryBean);
             deliveryInfoAdapter.notifyDataSetChanged();
             updated = true;
@@ -134,7 +136,7 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
         if(baseBean.getStatus() == Constant.OK){
             UpdateDeliveryBean bean = data.get(position);
             DeliveryBean deliveryBean = new DeliveryBean();
-            deliveryBean.setType(DeliveryType.EXPRESS);
+            deliveryBean.setType(DELIVERY_EXPRESS);
             bean.setDeliveryInfo(deliveryBean);
             deliveryInfoAdapter.notifyDataSetChanged();
             updated = true;

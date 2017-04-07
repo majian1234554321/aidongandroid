@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/selector_dynamic_bg">
+    android:background="@color/white">
 
     <include layout="@layout/inc_dynamic_header"/>
 

@@ -15,10 +15,11 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.UpdateDeliveryBean;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
-import com.leyuan.aidong.utils.constant.DeliveryType;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
 
 /**
  * 修改配送信息适配器
@@ -68,7 +69,7 @@ public class UpdateDeliveryInfoAdapter extends RecyclerView.Adapter<UpdateDelive
                     bean.getGoods().getRecommendCode()));
         }
 
-        if(DeliveryType.EXPRESS.equals(bean.getDeliveryInfo().getType())){
+        if(DELIVERY_EXPRESS.equals(bean.getDeliveryInfo().getType())){
             selectExpress(holder);
             holder.tvShop.setText("请选择");
             holder.tvShopAddress.setVisibility(View.GONE);

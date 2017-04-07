@@ -30,7 +30,6 @@ import com.leyuan.aidong.ui.mvp.view.CourseActivityView;
 import com.leyuan.aidong.ui.mvp.view.CourseDetailActivityView;
 import com.leyuan.aidong.ui.mvp.view.CourserFragmentView;
 import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.utils.constant.CouponType;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.List;
@@ -246,7 +245,7 @@ public class CoursePresentImpl implements CoursePresent{
                     appointCourseActivityView.setCourseCouponResult(couponData.getCoupon());//maybe null
                 }
             }
-        }, CouponType.COURSE,id);
+        }, Constant.COUPON_COURSE,id);
     }
 
     @Override

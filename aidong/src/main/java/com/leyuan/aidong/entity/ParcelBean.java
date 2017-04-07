@@ -1,5 +1,7 @@
 package com.leyuan.aidong.entity;
 
+import com.leyuan.aidong.utils.constant.DeliveryType;
+
 import java.util.List;
 
 /**
@@ -51,6 +53,7 @@ public class ParcelBean {
         this.remark = remark;
     }
 
+    @DeliveryType
     public String getPickUpWay() {
         return pick_up_way;
     }

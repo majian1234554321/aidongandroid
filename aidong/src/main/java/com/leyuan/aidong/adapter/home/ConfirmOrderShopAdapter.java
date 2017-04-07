@@ -10,10 +10,11 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.ShopBean;
-import com.leyuan.aidong.utils.constant.DeliveryType;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
 
 /**
  * 确认订单中商家适配器
@@ -51,7 +52,7 @@ public class ConfirmOrderShopAdapter extends RecyclerView.Adapter<ConfirmOrderSh
     public void onBindViewHolder(final CartHolder holder, final int position) {
         final ShopBean bean = data.get(position);
         holder.tvShopName.setText(bean.getPickUp().getInfo().getName());
-        String type = DeliveryType.EXPRESS.equals(bean.getPickUp().getType()) ? "快递" : "自提";
+        String type = DELIVERY_EXPRESS.equals(bean.getPickUp().getType()) ? "快递" : "自提";
         holder.tvDeliveryType.setText(type);
         holder.rvShop.setLayoutManager(new LinearLayoutManager(context));
         final ConfirmOrderGoodsAdapter goodsAdapter = new ConfirmOrderGoodsAdapter(context);

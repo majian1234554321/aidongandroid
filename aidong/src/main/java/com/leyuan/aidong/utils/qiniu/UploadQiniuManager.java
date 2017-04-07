@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.utils.FileUtil;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
@@ -123,8 +124,8 @@ public class UploadQiNiuManager {
     }
 
     private String generateExpectKey(String path,boolean isImage) {
-        return (isImage ? "image/" : "video/") + System.currentTimeMillis() +
-                path.substring(path.lastIndexOf("."));
+        return (isImage ? "image/" : "video/") + App.mInstance.getUser().getId() +
+                System.currentTimeMillis() + path.substring(path.lastIndexOf("."));
     }
 
     private byte[] compressFile(String path) {

@@ -28,8 +28,8 @@ public class ThreeImageViewHolder extends BaseCircleViewHolder{
     private ImageView two;
     private ImageView three;
 
-    public ThreeImageViewHolder(Context context, ViewGroup viewGroup, int layoutResId) {
-        super(context, viewGroup, layoutResId);
+    public ThreeImageViewHolder(Context context, ViewGroup parent, int layoutResId) {
+        super(context, parent, layoutResId);
     }
 
     @Override

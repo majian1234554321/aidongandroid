@@ -14,6 +14,7 @@ import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.constant.DynamicType;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,11 +28,20 @@ public class CircleDynamicAdapter extends BaseHolderViewAdapter<DynamicBean> {
     private IDynamicCallback callback;
     private boolean showLikeAndCommentLayout;
 
+    private CircleDynamicAdapter(Context context,List<DynamicBean> data){
+        super(context,data);
+    }
+
     private CircleDynamicAdapter(Builder builder) {
-        super(builder.context, builder.data);
-        this.viewHolderKeyArray = builder.viewHolderKeyArray;
+        this(builder.context, builder.data);
         this.callback = builder.callback;
+        this.viewHolderKeyArray = builder.viewHolderKeyArray;
         this.showLikeAndCommentLayout = builder.showLikeAndCommentLayout;
+    }
+
+    @Override
+    protected int getLayoutResId(int viewType) {
+        return 0;
     }
 
     @Override
@@ -101,21 +111,47 @@ public class CircleDynamicAdapter extends BaseHolderViewAdapter<DynamicBean> {
         private int layoutResID;
     }
 
-    private BaseCircleViewHolder createCircleViewHolder(Context context, ViewGroup viewGroup, ViewHolderInfo viewHolderInfo) {
+    private BaseCircleViewHolder createCircleViewHolder(Context context, ViewGroup parent, ViewHolderInfo viewHolderInfo) {
         if (viewHolderInfo == null) {
             throw new NullPointerException("not find this viewHolder");
         }
         Class<? extends BaseCircleViewHolder> className = viewHolderInfo.holderClass;
         Logger.i("class  >>>  " + className);
-        Constructor constructor;
+     /*   if (className.toString().contains("OneImageViewHolder")) {
+            return new OneImageViewHolder(context, parent, viewHolderInfo.layoutResID);
+        } else if (className.toString().contains("TwoImageViewHolder")) {
+            return new TwoImageViewHolder(context, parent, viewHolderInfo.layoutResID);
+        } else if (className.toString().contains("ThreeImageViewHolder")) {
+            return new ThreeImageViewHolder(context, parent, viewHolderInfo.layoutResID);
+        } else if (className.toString().contains("FourImageViewHolder")) {
+            return new FourImageViewHolder(context, parent, viewHolderInfo.layoutResID);
+        } else if (className.toString().contains("FiveImageViewHolder")) {
+            return new FiveImageViewHolder(context, parent, viewHolderInfo.layoutResID);
+        } else if (className.toString().contains("SixImageViewHolder")) {
+            return new SixImageViewHolder(context, parent, viewHolderInfo.layoutResID);
+        } else {
+            return new VideoViewHolder(context, parent, viewHolderInfo.layoutResID);
+        }*/
+
+        Constructor constructor = null;
         try {
             constructor = className.getConstructor(Context.class, ViewGroup.class, int.class);
-            return (BaseCircleViewHolder) constructor.newInstance(context, viewGroup, viewHolderInfo.layoutResID);
-        } catch (Exception e) {
+            return (BaseCircleViewHolder) constructor.newInstance(context, parent, viewHolderInfo.layoutResID);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
             e.printStackTrace();
         }
         return null;
     }
+
+
 
     public interface IDynamicCallback {
         void onBackgroundClick(DynamicBean dynamicBean);

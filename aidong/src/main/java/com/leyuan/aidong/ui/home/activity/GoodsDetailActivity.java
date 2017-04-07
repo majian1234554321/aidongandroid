@@ -56,7 +56,6 @@ import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.ImageRectUtils;
 import com.leyuan.aidong.utils.TransitionHelper;
-import com.leyuan.aidong.utils.constant.DeliveryType;
 import com.leyuan.aidong.utils.constant.GoodsType;
 import com.leyuan.aidong.widget.SlideDetailsLayout;
 import com.leyuan.aidong.widget.SwitcherLayout;
@@ -74,6 +73,7 @@ import cn.bingoogolapple.bgabanner.BGABanner;
 import static com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow.FROM_ADD_CART;
 import static com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow.FROM_BUY;
 import static com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow.FROM_SKU;
+import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
 import static com.leyuan.aidong.utils.Constant.EMPTY_STR;
 import static com.leyuan.aidong.utils.Constant.REQUEST_ADD_CART;
 import static com.leyuan.aidong.utils.Constant.REQUEST_BUY_IMMEDIATELY;
@@ -260,7 +260,7 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
         }
         tvSku.setText(skuStr);
         if (bean.pick_up != null) {
-            if (DeliveryType.EXPRESS.equals(bean.pick_up.type)) {
+            if (DELIVERY_EXPRESS.equals(bean.pick_up.type)) {
                 tvAddressInfo.setVisibility(View.GONE);
                 tvDeliveryInfo.setText("快递");
             } else {
@@ -406,7 +406,7 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
             DeliveryBean deliveryBean = data.getParcelableExtra("deliveryBean");
             bean.pick_up = deliveryBean;
             if (deliveryBean != null) {
-                if (DeliveryType.EXPRESS.equals(deliveryBean.type)) {
+                if (DELIVERY_EXPRESS.equals(deliveryBean.type)) {
                     tvAddressInfo.setVisibility(View.GONE);
                     tvDeliveryInfo.setText("快递");
                 } else {

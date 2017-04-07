@@ -27,7 +27,7 @@ import com.leyuan.aidong.utils.Utils;
  *
  * @author song
  */
-public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<DynamicBean> implements IViewHolder<DynamicBean> {
+public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<DynamicBean> implements IChildViewHolder<DynamicBean> {
     protected Context context;
     private LinearLayout root;
     private ImageView ivAvatar;
@@ -51,8 +51,9 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
     protected IDynamicCallback callback;
     private boolean showLikeAndCommentLayout = true;
 
-    public BaseCircleViewHolder(Context context, ViewGroup viewGroup, int layoutResId) {
-        super(context, viewGroup, layoutResId);
+    public BaseCircleViewHolder(Context context, ViewGroup parent, int layoutResId) {
+        super(context, parent, layoutResId);
+        onFindChildView(itemView);
         this.context = context;
         root = (LinearLayout) itemView.findViewById(R.id.ll_root);
         ivAvatar = (ImageView) itemView.findViewById(R.id.dv_avatar);
@@ -71,7 +72,6 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         bottomLikeLayout = (RelativeLayout) itemView.findViewById(R.id.bottom_like_layout);
         bottomShareLayout = (RelativeLayout) itemView.findViewById(R.id.bottom_share_layout);
         line = itemView.findViewById(R.id.view_line);
-        onFindChildView(itemView);
     }
 
 

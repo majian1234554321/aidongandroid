@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.leyuan.aidong.utils.constant.DynamicType;
 
-public interface IViewHolder<T> {
+public interface IChildViewHolder<T> {
 
     void onFindChildView(@NonNull View rootView);
 
