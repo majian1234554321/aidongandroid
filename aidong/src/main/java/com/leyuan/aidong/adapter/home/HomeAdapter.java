@@ -10,6 +10,7 @@ import com.leyuan.aidong.adapter.baseadapter.BaseHolderViewAdapter;
 import com.leyuan.aidong.adapter.baseadapter.BaseRecyclerViewHolder;
 import com.leyuan.aidong.entity.HomeBean;
 import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.utils.constant.HomeItemType;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ public class HomeAdapter extends BaseHolderViewAdapter<HomeBean> {
         }
 
         public HomeAdapter.Builder<T> addType(Class<? extends BaseRecyclerViewHolder> viewHolderClass,
-                                              int viewType, int layoutResId) {
+                                              @HomeItemType int viewType, int layoutResId) {
             final ViewHolderInfo info = new HomeAdapter.ViewHolderInfo();
             info.holderClass = viewHolderClass;
             info.layoutResID = layoutResId;

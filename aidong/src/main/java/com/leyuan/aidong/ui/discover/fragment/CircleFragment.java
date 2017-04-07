@@ -46,7 +46,6 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.SportCircleFragmentView;
 import com.leyuan.aidong.ui.video.activity.PlayerActivity;
 import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.utils.constant.DynamicType;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -57,6 +56,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
+import static com.leyuan.aidong.utils.Constant.DYNAMIC_FIVE_IMAGE;
+import static com.leyuan.aidong.utils.Constant.DYNAMIC_FOUR_IMAGE;
+import static com.leyuan.aidong.utils.Constant.DYNAMIC_ONE_IMAGE;
+import static com.leyuan.aidong.utils.Constant.DYNAMIC_SIX_IMAGE;
+import static com.leyuan.aidong.utils.Constant.DYNAMIC_THREE_IMAGE;
+import static com.leyuan.aidong.utils.Constant.DYNAMIC_TWO_IMAGE;
+import static com.leyuan.aidong.utils.Constant.DYNAMIC_VIDEO;
 import static com.leyuan.aidong.utils.Constant.REQUEST_LOGIN;
 import static com.leyuan.aidong.utils.Constant.REQUEST_TO_DYNAMIC;
 
@@ -135,13 +141,13 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_dynamic_list);
         dynamicList = new ArrayList<>();
         CircleDynamicAdapter.Builder<DynamicBean> builder = new CircleDynamicAdapter.Builder<>(getContext());
-        builder.addType(VideoViewHolder.class, DynamicType.VIDEO, R.layout.vh_dynamic_video)
-                .addType(OneImageViewHolder.class, DynamicType.ONE_IMAGE, R.layout.vh_dynamic_one_photo)
-                .addType(TwoImageViewHolder.class, DynamicType.TWO_IMAGE, R.layout.vh_dynamic_two_photos)
-                .addType(ThreeImageViewHolder.class, DynamicType.THREE_IMAGE, R.layout.vh_dynamic_three_photos)
-                .addType(FourImageViewHolder.class, DynamicType.FOUR_IMAGE, R.layout.vh_dynamic_four_photos)
-                .addType(FiveImageViewHolder.class, DynamicType.FIVE_IMAGE, R.layout.vh_dynamic_five_photos)
-                .addType(SixImageViewHolder.class, DynamicType.SIX_IMAGE, R.layout.vh_dynamic_six_photos)
+        builder.addType(VideoViewHolder.class,DYNAMIC_VIDEO, R.layout.vh_dynamic_video)
+                .addType(OneImageViewHolder.class, DYNAMIC_ONE_IMAGE, R.layout.vh_dynamic_one_photo)
+                .addType(TwoImageViewHolder.class,DYNAMIC_TWO_IMAGE, R.layout.vh_dynamic_two_photos)
+                .addType(ThreeImageViewHolder.class,DYNAMIC_THREE_IMAGE, R.layout.vh_dynamic_three_photos)
+                .addType(FourImageViewHolder.class,DYNAMIC_FOUR_IMAGE, R.layout.vh_dynamic_four_photos)
+                .addType(FiveImageViewHolder.class,DYNAMIC_FIVE_IMAGE, R.layout.vh_dynamic_five_photos)
+                .addType(SixImageViewHolder.class, DYNAMIC_SIX_IMAGE, R.layout.vh_dynamic_six_photos)
                 .showLikeAndCommentLayout(true)
                 .setDynamicCallback(new DynamicCallback());
         circleDynamicAdapter = builder.build();

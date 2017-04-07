@@ -1,5 +1,7 @@
 package com.leyuan.aidong.entity;
 
+import com.leyuan.aidong.utils.constant.PayType;
+
 import java.util.List;
 
 /**
@@ -39,6 +41,7 @@ public class PayOrderBean {
         this.total = total;
     }
 
+    @PayType
     public String getPayType() {
         return pay_type;
     }

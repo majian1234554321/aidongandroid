@@ -21,12 +21,14 @@ import com.leyuan.aidong.ui.mvp.view.DynamicParseUserView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.widget.SimpleTitleBar;
+import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
+import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 
 import java.util.List;
 
 /**
- * 活动与课程已报名的人
- * Created by song on 2016/9/23.
+ * 动态里面点赞的人列表
+ * Created by song on 2017/3/23.
  */
 public class DynamicParseUserActivity extends BaseActivity implements DynamicParseUserView, UserAdapter.FollowListener {
     private SimpleTitleBar titleBar;
@@ -39,7 +41,7 @@ public class DynamicParseUserActivity extends BaseActivity implements DynamicPar
     private int page = 1;
     private UserAdapter userAdapter;
     private int position;
-
+    private HeaderAndFooterRecyclerViewAdapter wrapAdapter;
 
     public static void start(Context context, String dynamicId) {
         Intent starter = new Intent(context, DynamicParseUserActivity.class);
@@ -61,7 +63,10 @@ public class DynamicParseUserActivity extends BaseActivity implements DynamicPar
         userAdapter = new UserAdapter(this);
         userAdapter.setFollowListener(this);
 
-        rvUser.setAdapter(userAdapter);
+         wrapAdapter = new HeaderAndFooterRecyclerViewAdapter(userAdapter);
+
+        rvUser.setAdapter(wrapAdapter);
+        rvUser.addOnScrollListener(onScrollListener);
         dynamicPresent = new DynamicParsePresent(this, this);
         dynamicPresent.getLikes(dynamicId, page);
 
@@ -73,6 +78,15 @@ public class DynamicParseUserActivity extends BaseActivity implements DynamicPar
         });
     }
 
+    private RecyclerView.OnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
+        @Override
+        public void onLoadNextPage(View view) {
+            super.onLoadNextPage(view);
+            page ++;
+            dynamicPresent.getLikes(dynamicId, page);
+        }
+    };
+
     @Override
     public void onGetUserData(List<UserBean> data, int page) {
 
@@ -80,6 +94,7 @@ public class DynamicParseUserActivity extends BaseActivity implements DynamicPar
             this.data = data;
             if (data != null && !data.isEmpty()) {
                 userAdapter.setData(data);
+                wrapAdapter.notifyDataSetChanged();
                 emptyLayout.setVisibility(View.GONE);
             } else {
                 emptyLayout.setVisibility(View.VISIBLE);
@@ -88,6 +103,7 @@ public class DynamicParseUserActivity extends BaseActivity implements DynamicPar
             this.data.addAll(data);
             if (data != null && !data.isEmpty()) {
                 userAdapter.addMoreData(data);
+                wrapAdapter.notifyDataSetChanged();
             }
         }
     }

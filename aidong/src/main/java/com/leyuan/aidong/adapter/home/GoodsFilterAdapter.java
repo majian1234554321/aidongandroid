@@ -19,6 +19,9 @@ import com.leyuan.aidong.utils.constant.GoodsType;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.leyuan.aidong.utils.Constant.GOODS_EQUIPMENT;
+import static com.leyuan.aidong.utils.Constant.GOODS_NUTRITION;
+
 /**
  * 营养品筛选界面适配器
  * Created by song on 2016/8/17.
@@ -29,7 +32,7 @@ public class GoodsFilterAdapter extends RecyclerView.Adapter<GoodsFilterAdapter.
     private List<NurtureBean> nurtureList = new ArrayList<>();
     private List<EquipmentBean> equipmentList = new ArrayList<>();
 
-    public GoodsFilterAdapter(Context context,String type) {
+    public GoodsFilterAdapter(Context context,@GoodsType String type) {
         this.context = context;
         this.type = type;
     }
@@ -47,7 +50,7 @@ public class GoodsFilterAdapter extends RecyclerView.Adapter<GoodsFilterAdapter.
 
     @Override
     public int getItemCount() {
-        if(type.equals(GoodsType.EQUIPMENT)){
+        if(type.equals(GOODS_EQUIPMENT)){
             return equipmentList.size();
         }else {
             return nurtureList.size();
@@ -62,7 +65,7 @@ public class GoodsFilterAdapter extends RecyclerView.Adapter<GoodsFilterAdapter.
 
     @Override
     public void onBindViewHolder(FilterViewHolder holder, int position) {
-        if(GoodsType.NUTRITION.equals(type)){
+        if(GOODS_NUTRITION.equals(type)){
             final NurtureBean bean = nurtureList.get(position);
             GlideLoader.getInstance().displayImage(bean.getCover(), holder.cover);
             holder.name.setText(bean.getName());
@@ -73,7 +76,7 @@ public class GoodsFilterAdapter extends RecyclerView.Adapter<GoodsFilterAdapter.
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    GoodsDetailActivity.start(context,bean.getId(), GoodsType.NUTRITION);
+                    GoodsDetailActivity.start(context,bean.getId(), GOODS_NUTRITION);
                 }
             });
         }else {
@@ -87,7 +90,7 @@ public class GoodsFilterAdapter extends RecyclerView.Adapter<GoodsFilterAdapter.
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    GoodsDetailActivity.start(context, bean.getId(), GoodsType.EQUIPMENT);
+                    GoodsDetailActivity.start(context, bean.getId(), GOODS_EQUIPMENT);
                 }
             });
         }

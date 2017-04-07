@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public interface VideoDetailView {
     void onGetVideoDetailList(ArrayList<VideoDetail> video);
 
-    void onLikesResult(boolean success);
+    void onLikesResult(boolean success, int currentItem);
 
-    void onDeleteLikesResult(boolean success);
+    void onDeleteLikesResult(boolean success, int currentItem);
 }

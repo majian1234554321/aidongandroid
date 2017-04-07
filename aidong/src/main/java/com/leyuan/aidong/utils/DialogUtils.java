@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 
 
+@Deprecated
 public class DialogUtils {
 
     private static Dialog dialog;

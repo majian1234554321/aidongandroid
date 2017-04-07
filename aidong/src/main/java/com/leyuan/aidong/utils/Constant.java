@@ -67,6 +67,25 @@ public class Constant {
     public static final String COPY_IMAGE = "copy_image";
     public static final String POSITION = "position";
 
+    public static final String PAY_ALI = "alipay";
+    public static final String PAY_WEIXIN = "wxpay";
+
+    public static final String GOODS_EQUIPMENT = "equipment";
+    public static final String GOODS_FOODS = "foods";
+    public static final String GOODS_NUTRITION = "nutrition";
+
+    public static final int DYNAMIC_NONE = -1;
+    public static final int DYNAMIC_VIDEO = 0;
+    public static final int DYNAMIC_ONE_IMAGE = 1;
+    public static final int DYNAMIC_TWO_IMAGE = 2;
+    public static final int DYNAMIC_THREE_IMAGE = 3;
+    public static final int DYNAMIC_FOUR_IMAGE = 4;
+    public static final int DYNAMIC_FIVE_IMAGE = 5;
+    public static final int DYNAMIC_SIX_IMAGE = 6;
+
+    public static final int HOME_IMAGE_AND_HORIZONTAL_LIST = 0;
+    public static final int HOME_TITLE_AND_VERTICAL_LIST = 1;
+
     public static class Chat {
         public static final String SYSYTEM_ID = "admin";
     }

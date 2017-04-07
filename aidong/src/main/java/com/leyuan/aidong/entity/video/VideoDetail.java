@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-public class VideoDetail implements Parcelable{
+public class VideoDetail implements Parcelable {
     @SerializedName("id")
     private int vId;
 
@@ -39,6 +39,8 @@ public class VideoDetail implements Parcelable{
     @SerializedName("updated_at")
     private String updated_at;
     private int contentId;
+    private byte isParsed;
+
 
     protected VideoDetail(Parcel in) {
         vId = in.readInt();
@@ -53,6 +55,7 @@ public class VideoDetail implements Parcelable{
         commentsCount = in.readString();
         updated_at = in.readString();
         contentId = in.readInt();
+        isParsed = in.readByte();
     }
 
     public static final Creator<VideoDetail> CREATOR = new Creator<VideoDetail>() {
@@ -163,6 +166,18 @@ public class VideoDetail implements Parcelable{
         this.contentId = contentId;
     }
 
+    public boolean isParsed() {
+        return isParsed > 0;
+    }
+
+    public void setIsParsed(boolean isParsed) {
+        if (isParsed) {
+            this.isParsed = 1;
+        } else {
+            this.isParsed = 0;
+        }
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -182,5 +197,6 @@ public class VideoDetail implements Parcelable{
         dest.writeString(commentsCount);
         dest.writeString(updated_at);
         dest.writeInt(contentId);
+        dest.writeByte(isParsed);
     }
 }

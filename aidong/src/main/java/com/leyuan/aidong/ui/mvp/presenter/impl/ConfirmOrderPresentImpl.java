@@ -10,9 +10,8 @@ import com.leyuan.aidong.entity.data.ShopData;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
-import com.leyuan.aidong.module.pay.AliPay;
 import com.leyuan.aidong.module.pay.PayInterface;
-import com.leyuan.aidong.module.pay.WeiXinPay;
+import com.leyuan.aidong.module.pay.PayUtils;
 import com.leyuan.aidong.ui.mvp.model.AddressModel;
 import com.leyuan.aidong.ui.mvp.model.CartModel;
 import com.leyuan.aidong.ui.mvp.model.CouponModel;
@@ -25,7 +24,6 @@ import com.leyuan.aidong.ui.mvp.model.impl.EquipmentModelImpl;
 import com.leyuan.aidong.ui.mvp.model.impl.NurtureModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.ConfirmOrderPresent;
 import com.leyuan.aidong.ui.mvp.view.ConfirmOrderActivityView;
-import com.leyuan.aidong.utils.constant.PayType;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.List;
@@ -97,10 +95,7 @@ public class ConfirmOrderPresentImpl implements ConfirmOrderPresent{
         equipmentModel.buyEquipmentImmediately(new ProgressSubscriber<PayOrderData>(context) {
             @Override
             public void onNext(PayOrderData payOrderData) {
-                String payType = payOrderData.getOrder().getPayType();
-                PayInterface payInterface = PayType.ALI.equals(payType) ? new AliPay(context,listener)
-                        : new WeiXinPay(context,listener);
-                payInterface.payOrder(payOrderData.getOrder().getpayOption());
+                PayUtils.pay(context,payOrderData.getOrder(),listener);
             }
         },skuCode,amount,coupon,integral,coin,payType,pickUpWay,pickUpId,pickUpDate);
     }
@@ -115,10 +110,7 @@ public class ConfirmOrderPresentImpl implements ConfirmOrderPresent{
         nurtureModel.buyNurtureImmediately(new ProgressSubscriber<PayOrderData>(context) {
             @Override
             public void onNext(PayOrderData payOrderData) {
-                String payType = payOrderData.getOrder().getPayType();
-                PayInterface payInterface = PayType.ALI.equals(payType) ? new AliPay(context,listener)
-                        : new WeiXinPay(context,listener);
-                payInterface.payOrder(payOrderData.getOrder().getpayOption());
+                PayUtils.pay(context,payOrderData.getOrder(),listener);
             }
         },skuCode,amount,coupon,integral,coin,payType,pickUpWay,pickUpId,pickUpDate);
     }
@@ -132,10 +124,7 @@ public class ConfirmOrderPresentImpl implements ConfirmOrderPresent{
         cartModel.payCart(new ProgressSubscriber<PayOrderData>(context) {
             @Override
             public void onNext(PayOrderData payOrderData) {
-                String payType = payOrderData.getOrder().getPayType();
-                PayInterface payInterface = PayType.ALI.equals(payType) ? new AliPay(context,listener)
-                        : new WeiXinPay(context,listener);
-                payInterface.payOrder(payOrderData.getOrder().getpayOption());
+                PayUtils.pay(context,payOrderData.getOrder(),listener);
             }
         },integral,coin,coupon,payType,pickUpId,pickUpDate,id);
     }

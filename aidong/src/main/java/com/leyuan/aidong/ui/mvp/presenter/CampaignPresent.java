@@ -11,6 +11,10 @@ import com.leyuan.aidong.widget.SwitcherLayout;
  */
 public interface CampaignPresent {
 
+    void getData(String list);
+
+    void requestMoreData(int pageSize,int page,String list);
+
     /**
      * 第一次正常加载数据活动列表数据
      * @param switcherLayout SwitcherLayout

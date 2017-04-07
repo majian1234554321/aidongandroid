@@ -6,7 +6,7 @@ import com.leyuan.aidong.entity.video.CommentsVideoResult;
 import com.leyuan.aidong.entity.video.VideoDetailResult;
 import com.leyuan.aidong.entity.video.VideoListResult;
 import com.leyuan.aidong.entity.video.VideoRelationResult;
-import com.leyuan.aidong.http.subscriber.BaseSubscriber;
+import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.ui.mvp.model.impl.VideoModelImpl;
 import com.leyuan.aidong.ui.mvp.view.VideoCommentView;
 import com.leyuan.aidong.ui.mvp.view.VideoDetailView;
@@ -52,7 +52,7 @@ public class VideoPresenterImpl {
     }
 
     public void getVideoList(String page, String type) {
-        videoModel.getVideoList(new BaseSubscriber<VideoListResult>(context) {
+        videoModel.getVideoList(new ProgressSubscriber<VideoListResult>(context) {
             @Override
             public void onNext(VideoListResult videoListResult) {
                 if (viewListener != null)
@@ -70,7 +70,7 @@ public class VideoPresenterImpl {
 
 
     public void getMoreVideoList(String page, String type) {
-        videoModel.getVideoList(new BaseSubscriber<VideoListResult>(context) {
+        videoModel.getVideoList(new ProgressSubscriber<VideoListResult>(context) {
             @Override
             public void onNext(VideoListResult videoListResult) {
                 if (viewListener != null)
@@ -88,7 +88,7 @@ public class VideoPresenterImpl {
 
 
     public void getVideoDetail(String series_id) {
-        videoModel.getVideoDetail(new BaseSubscriber<VideoDetailResult>(context) {
+        videoModel.getVideoDetail(new ProgressSubscriber<VideoDetailResult>(context) {
             @Override
             public void onNext(VideoDetailResult videoDetailResult) {
                 if (videoDetailView != null) {
@@ -106,12 +106,12 @@ public class VideoPresenterImpl {
         }, series_id);
     }
 
-    public void likeVideo(String series_id, String video_id) {
-        videoModel.addLikes(new BaseSubscriber<Object>(context) {
+    public void likeVideo(String series_id, String video_id, final int currentItem) {
+        videoModel.addLikes(new ProgressSubscriber<Object>(context) {
             @Override
             public void onNext(Object o) {
                 if (videoDetailView != null) {
-                    videoDetailView.onLikesResult(true);
+                    videoDetailView.onLikesResult(true, currentItem);
                 }
             }
 
@@ -119,18 +119,18 @@ public class VideoPresenterImpl {
             public void onError(Throwable e) {
                 super.onError(e);
                 if (videoDetailView != null) {
-                    videoDetailView.onLikesResult(false);
+                    videoDetailView.onLikesResult(false, currentItem);
                 }
             }
         }, series_id, video_id);
     }
 
-    public void deleteLikeVideo(String series_id, String video_id) {
-        videoModel.deleteLikes(new BaseSubscriber<Object>(context) {
+    public void deleteLikeVideo(String series_id, String video_id, final int currentItem) {
+        videoModel.deleteLikes(new ProgressSubscriber<Object>(context) {
             @Override
             public void onNext(Object o) {
                 if (videoDetailView != null) {
-                    videoDetailView.onDeleteLikesResult(true);
+                    videoDetailView.onDeleteLikesResult(true, currentItem);
                 }
             }
 
@@ -138,7 +138,7 @@ public class VideoPresenterImpl {
             public void onError(Throwable e) {
                 super.onError(e);
                 if (videoDetailView != null) {
-                    videoDetailView.onDeleteLikesResult(false);
+                    videoDetailView.onDeleteLikesResult(false, currentItem);
                 }
             }
         }, series_id, video_id);
@@ -146,7 +146,7 @@ public class VideoPresenterImpl {
 
 
     public void getComments(String series_id, String phase, String page) {
-        videoModel.getComments(new BaseSubscriber<CommentsVideoResult>(context) {
+        videoModel.getComments(new ProgressSubscriber<CommentsVideoResult>(context) {
             @Override
             public void onNext(CommentsVideoResult commentsVideoResult) {
                 if (videoCommentView != null) {
@@ -165,7 +165,7 @@ public class VideoPresenterImpl {
     }
 
     public void commentVideo(String content, String series_id, String video_id) {
-        videoModel.addCommont(new BaseSubscriber<Object>(context) {
+        videoModel.addCommont(new ProgressSubscriber<Object>(context) {
             @Override
             public void onNext(Object o) {
                 if (videoCommentView != null)
@@ -182,7 +182,7 @@ public class VideoPresenterImpl {
     }
 
     public void getVideoRelation(String id, String page) {
-        videoModel.getVideoRelation(new BaseSubscriber<VideoRelationResult.VideoRelation>(context) {
+        videoModel.getVideoRelation(new ProgressSubscriber<VideoRelationResult.VideoRelation>(context) {
             @Override
             public void onNext(VideoRelationResult.VideoRelation videoRelation) {
                 if (videoRelationView != null)

@@ -26,12 +26,15 @@ import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
 import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ScreenUtil;
-import com.leyuan.aidong.utils.constant.GoodsType;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import pub.devrel.easypermissions.EasyPermissions;
+
+import static com.leyuan.aidong.utils.Constant.GOODS_EQUIPMENT;
+import static com.leyuan.aidong.utils.Constant.GOODS_FOODS;
+import static com.leyuan.aidong.utils.Constant.GOODS_NUTRITION;
 
 
 public class BaseActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks {
@@ -101,13 +104,13 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
                 Logger.e("TAG", "developing");
                 break;
             case "food":
-                GoodsDetailActivity.start(this, id, GoodsType.FOOD);
+                GoodsDetailActivity.start(this, id, GOODS_FOODS);
                 break;
             case "nutrition":
-                GoodsDetailActivity.start(this, id, GoodsType.NUTRITION);
+                GoodsDetailActivity.start(this, id, GOODS_NUTRITION);
                 break;
             case "equipment":
-                GoodsDetailActivity.start(this, id, GoodsType.EQUIPMENT);
+                GoodsDetailActivity.start(this, id, GOODS_EQUIPMENT);
                 break;
             default:
                 Logger.e("TAG", "can not support this type,please check it");
@@ -136,7 +139,7 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
                 VenuesDetailActivity.start(this, bannerBean.getLink());
                 break;
             case "21":
-                GoodsDetailActivity.start(this, bannerBean.getLink(), GoodsType.NUTRITION);
+                GoodsDetailActivity.start(this, bannerBean.getLink(), GOODS_NUTRITION);
                 break;
             case "22":
                 CourseActivity.start(this,bannerBean.getLink());

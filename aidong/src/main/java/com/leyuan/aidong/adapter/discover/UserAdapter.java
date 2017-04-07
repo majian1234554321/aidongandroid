@@ -87,7 +87,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
     public void addMoreData(List<UserBean> data) {
         if (data != null) {
             this.data.addAll(data);
-            notifyDataSetChanged();
         }
     }
 

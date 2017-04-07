@@ -16,7 +16,6 @@ import com.leyuan.aidong.ui.mvp.presenter.RecommendPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.RecommendPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.EquipmentActivityView;
 import com.leyuan.aidong.utils.SystemInfoUtils;
-import com.leyuan.aidong.utils.constant.GoodsType;
 import com.leyuan.aidong.utils.constant.RecommendGoods;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.leyuan.aidong.widget.SwitcherLayout;
@@ -29,6 +28,8 @@ import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.leyuan.aidong.utils.Constant.GOODS_EQUIPMENT;
 
 
 /**
@@ -61,7 +62,7 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
     private void initTopLayout(){
         SimpleTitleBar titleBar = (SimpleTitleBar)findViewById(R.id.title_bar);
         RecyclerView categoryView = (RecyclerView)findViewById(R.id.rv_category);
-        CategoryAdapter categoryAdapter = new CategoryAdapter(this,GoodsType.EQUIPMENT);
+        CategoryAdapter categoryAdapter = new CategoryAdapter(this, GOODS_EQUIPMENT);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.HORIZONTAL,false);
         categoryView.setLayoutManager(layoutManager);

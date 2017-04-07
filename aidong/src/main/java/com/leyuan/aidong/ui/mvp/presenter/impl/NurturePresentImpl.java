@@ -12,6 +12,7 @@ import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.aidong.module.pay.AliPay;
 import com.leyuan.aidong.module.pay.PayInterface;
+import com.leyuan.aidong.module.pay.PayUtils;
 import com.leyuan.aidong.module.pay.WeiXinPay;
 import com.leyuan.aidong.ui.mvp.model.NurtureModel;
 import com.leyuan.aidong.ui.mvp.model.impl.NurtureModelImpl;
@@ -113,10 +114,7 @@ public class NurturePresentImpl implements NurturePresent{
         nurtureModel.buyNurtureImmediately(new ProgressSubscriber<PayOrderData>(context) {
             @Override
             public void onNext(PayOrderData payOrderData) {
-                String payType = payOrderData.getOrder().getPayType();
-                PayInterface payInterface = "alipay".equals(payType) ? new AliPay(context,listener)
-                        : new WeiXinPay(context,listener);
-                payInterface.payOrder(payOrderData.getOrder().getpayOption());
+                PayUtils.pay(context,payOrderData.getOrder(),listener);
             }
         },skuCode,amount,coupon,integral,coin,payType,pickUpWay,pickUpId,pickUpDate);
     }

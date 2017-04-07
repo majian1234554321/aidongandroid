@@ -13,9 +13,8 @@ import com.leyuan.aidong.http.subscriber.CommonSubscriber;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
-import com.leyuan.aidong.module.pay.AliPay;
 import com.leyuan.aidong.module.pay.PayInterface;
-import com.leyuan.aidong.module.pay.WeiXinPay;
+import com.leyuan.aidong.module.pay.PayUtils;
 import com.leyuan.aidong.ui.mvp.model.CampaignModel;
 import com.leyuan.aidong.ui.mvp.model.CouponModel;
 import com.leyuan.aidong.ui.mvp.model.impl.CampaignModelImpl;
@@ -27,7 +26,6 @@ import com.leyuan.aidong.ui.mvp.view.CampaignFragmentView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.constant.CouponType;
-import com.leyuan.aidong.utils.constant.PayType;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
@@ -65,6 +63,41 @@ public class CampaignPresentImpl implements CampaignPresent {
     public CampaignPresentImpl(Context context, CampaignDetailActivityView view) {
         this.context = context;
         this.campaignDetailView = view;
+    }
+
+    @Override
+    public void getData(String list) {
+        if(campaignModel == null){
+            campaignModel = new CampaignModelImpl();
+        }
+      /*  campaignModel.getCampaigns(new BaseSubscriber<CampaignData>(context) {
+            @Override
+            public void onStart() {
+                super.onStart();
+                campaignActivityView.showLoadingView();
+            }
+
+            @Override
+            public void onNext(CampaignData campaignData) {
+                campaignActivityView.hideLoadingView();
+                if(campaignData.getCampaign() != null && !campaignData.getCampaign().isEmpty()){
+                    campaignActivityView.updateRecyclerView(campaignData.getCampaign());
+                }else{
+                    campaignActivityView.showEmptyView();
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                campaignActivityView.showErrorView();
+            }
+        },Constant.PAGE_FIRST,list);*/
+    }
+
+    @Override
+    public void requestMoreData(int pageSize, int page, String list) {
+
     }
 
     @Override
@@ -169,10 +202,7 @@ public class CampaignPresentImpl implements CampaignPresent {
             @Override
             public void onNext(PayOrderData payOrderData) {
                 if(!"purchased".equals(payOrderData.getOrder().getStatus())) {
-                    String payType = payOrderData.getOrder().getPayType();
-                    PayInterface payInterface = PayType.ALI.equals(payType) ? new AliPay(context, listener)
-                            : new WeiXinPay(context, listener);
-                    payInterface.payOrder(payOrderData.getOrder().getpayOption());
+                    PayUtils.pay(context,payOrderData.getOrder(),listener);
                 }else {
                     appointCampaignActivityView.onFreeCampaignAppointed();
                 }

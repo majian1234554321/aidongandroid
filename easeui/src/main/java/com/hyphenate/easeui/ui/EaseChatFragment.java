@@ -67,7 +67,9 @@ import java.util.List;
  * you can see ChatActivity in demo for your reference
  *
  */
-public class EaseChatFragment extends EaseBaseFragment implements EMMessageListener {
+public class
+
+EaseChatFragment extends EaseBaseFragment implements EMMessageListener {
     protected static final String TAG = "EaseChatFragment";
     protected static final int REQUEST_CODE_MAP = 1;
     protected static final int REQUEST_CODE_CAMERA = 2;

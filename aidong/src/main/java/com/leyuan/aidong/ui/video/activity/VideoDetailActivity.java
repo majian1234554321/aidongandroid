@@ -182,7 +182,7 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
     private void fillingViewData(int index) {
         VideoDetail videoDetail = videos.get(index);
         layout_under.setVisibility(View.VISIBLE);
-        iv_like.setImageResource(R.drawable.video_details_praise_no);
+        iv_like.setImageResource(videoDetail.isParsed() ? R.drawable.details_like : R.drawable.video_details_praise_no);
         tv_reply_count.setText("" + videoDetail.getCommentsCount());
         tv_like_count.setText("" + videoDetail.getLikesCount());
         tv_course_name.printString("" + videoDetail.getVideoName());
@@ -261,11 +261,21 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
                 break;
             case R.id.iv_like:
                 //赞
-                if (!App.mInstance.isLogin()) {
+                if (videos.isEmpty())
+                    return;
+                if (!App.getInstance().isLogin()) {
                     startActivity(new Intent(this, LoginActivity.class));
-                } else if (videos != null && !videos.isEmpty()) {
-                    itemPrased = videos.get(viewPager.getCurrentItem()).getPhase();
-                    parseVideo(itemPrased);
+                } else {
+                    int currentItem = viewPager.getCurrentItem();
+                    Logger.i("video", "currentItem = " + currentItem);
+                    VideoDetail videoDetail = videos.get(currentItem);
+
+                    if (videoDetail.isParsed()) {
+                        presenter.deleteLikeVideo(String.valueOf(series_id), String.valueOf(videoDetail.getPhase()), currentItem);
+                    } else {
+                        presenter.likeVideo(String.valueOf(series_id), String.valueOf(videoDetail.getPhase()), currentItem);
+                    }
+
                 }
 
                 break;
@@ -275,8 +285,8 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
         }
     }
 
-    private void parseVideo(int currentItem) {
-        presenter.likeVideo(String.valueOf(series_id), String.valueOf(currentItem));
+    private void parseVideo(int phase, int currentItem) {
+        presenter.likeVideo(String.valueOf(series_id), String.valueOf(phase), currentItem);
     }
 
     private void share(final VideoDetail video) {
@@ -287,11 +297,13 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
 
     @Override
     public void onGetVideoDetailList(ArrayList<VideoDetail> vs) {
-        this.videos = vs;
+        if (vs != null && !vs.isEmpty()) {
+            this.videos = vs;
+        }
         if (phase == -1) {
             phase = videos.size() - 1;
         }
-        if (videos != null && videos.size() > 0) {
+        if (!videos.isEmpty()) {
             blurBitmaps = new Bitmap[videos.size()];
             for (int i = 0; i < videos.size(); i++) {
                 final VideoDetail videoDetail = videos.get(i);
@@ -359,17 +371,25 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
 
 
     @Override
-    public void onLikesResult(boolean success) {
+    public void onLikesResult(boolean success, int currentItem) {
         if (success) {
-            videos.get(itemPrased).setLikesCount(videos.get(itemPrased).getLikesCount() + 1);
-            tv_like_count.setText("" + videos.get(itemPrased).getLikesCount());
+            VideoDetail videoDetail = videos.get(currentItem);
+            videoDetail.setLikesCount(videoDetail.getLikesCount() + 1);
+            videoDetail.setIsParsed(true);
+            tv_like_count.setText("" + videoDetail.getLikesCount());
             iv_like.setImageResource(R.drawable.details_like);
         }
     }
 
     @Override
-    public void onDeleteLikesResult(boolean success) {
-
+    public void onDeleteLikesResult(boolean success, int currentItem) {
+        if (success) {
+            VideoDetail videoDetail = videos.get(currentItem);
+            videoDetail.setLikesCount(videoDetail.getLikesCount() - 1);
+            videoDetail.setIsParsed(false);
+            tv_like_count.setText("" + videoDetail.getLikesCount());
+            iv_like.setImageResource(R.drawable.video_details_praise_no);
+        }
     }
 
     @Override

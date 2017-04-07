@@ -12,6 +12,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.ui.home.activity.GoodsFilterActivity;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.constant.GoodsType;
 
 import java.util.ArrayList;
 
@@ -24,7 +25,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.FoodVi
     private String type;
     private ArrayList<CategoryBean> data = new ArrayList<>();
 
-    public CategoryAdapter(Context context,String type) {
+
+    public CategoryAdapter(Context context, @GoodsType String type) {
         this.context = context;
         this.type = type;
     }
