@@ -17,9 +17,10 @@ public class DialogUtils {
      * you must call releaseDialog when view destroyed
      */
     public static void showDialog(Context context, String message, boolean cancelable) {
-//        if(dialog == null){
-        dialog = wattingDialog(context, message, cancelable);
+//        if (dialog != null && dialog.isShowing()) {
+//            dialog.dismiss();
 //        }
+        dialog = wattingDialog(context, message, cancelable);
         dialog.show();
     }
 

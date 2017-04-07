@@ -61,6 +61,12 @@ public class VideoModelImpl {
                 .subscribe(subscriber);
     }
 
+    public void deleteLikes(Observer<Object> subscriber, String series_id, String video_id) {
+        service.deleteLikes(series_id, video_id)
+                .compose(transform())
+                .subscribe(subscriber);
+    }
+
     public void getComments(Observer<CommentsVideoResult> subscriber, String series_id, String phase, String page) {
         service.getComments(series_id, phase, page)
                 .compose(RxHelper.<CommentsVideoResult>transform())

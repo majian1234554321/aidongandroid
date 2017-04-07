@@ -125,6 +125,25 @@ public class VideoPresenterImpl {
         }, series_id, video_id);
     }
 
+    public void deleteLikeVideo(String series_id, String video_id) {
+        videoModel.deleteLikes(new BaseSubscriber<Object>(context) {
+            @Override
+            public void onNext(Object o) {
+                if (videoDetailView != null) {
+                    videoDetailView.onDeleteLikesResult(true);
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                if (videoDetailView != null) {
+                    videoDetailView.onDeleteLikesResult(false);
+                }
+            }
+        }, series_id, video_id);
+    }
+
 
     public void getComments(String series_id, String phase, String page) {
         videoModel.getComments(new BaseSubscriber<CommentsVideoResult>(context) {

@@ -38,7 +38,7 @@ import java.util.List;
  * 视频评论界面
  * Created by song on 2016/7/22.
  */
-public class VideoCommentActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, VideoCommentView {
+public class VideoCommentActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, VideoCommentView, VideoCommentAdapter.OnItemClickListener {
 
     private VideoCommentAdapter adapter;
     private CircleImageView img_header;
@@ -140,6 +140,7 @@ public class VideoCommentActivity extends BaseActivity implements SwipeRefreshLa
             }
         });
         adapter = new VideoCommentAdapter(this);
+        adapter.setOnItemClickListener(this);
         listView.setLayoutManager(new LinearLayoutManager(this));
         listView.setAdapter(adapter);
     }
@@ -201,4 +202,9 @@ public class VideoCommentActivity extends BaseActivity implements SwipeRefreshLa
         }
     }
 
+    @Override
+    public void onClick(String name) {
+        String comment = edit_comment.getText().toString().trim();
+        edit_comment.setText("回复" + name + ": " + comment);
+    }
 }

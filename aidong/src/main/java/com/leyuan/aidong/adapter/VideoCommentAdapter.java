@@ -48,11 +48,20 @@ public class VideoCommentAdapter extends RecyclerView.Adapter<VideoCommentAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         CommentBean comment = mComments.get(position);
+        final String name = comment.getPublisher().getName();
 
         GlideLoader.getInstance().displayCircleImage(comment.getPublisher().getAvatar(), holder.img_avatar);
-        holder.txt_user.setText("" + comment.getPublisher().getName());
+        holder.txt_user.setText("" + name);
         holder.txt_content.setText("" + comment.getContent());
         holder.txt_time.setText("" + comment.getPublishedAt());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onClick(name);
+                }
+            }
+        });
     }
 
 
@@ -77,6 +86,17 @@ public class VideoCommentAdapter extends RecyclerView.Adapter<VideoCommentAdapte
             txt_content = (TextView) convertView.findViewById(R.id.txt_content);
             txt_time = (TextView) convertView.findViewById(R.id.txt_time);
         }
+    }
+
+    private OnItemClickListener onItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    public interface OnItemClickListener {
+
+        void onClick(String name);
     }
 
 }

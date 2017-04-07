@@ -11,4 +11,6 @@ public interface VideoDetailView {
     void onGetVideoDetailList(ArrayList<VideoDetail> video);
 
     void onLikesResult(boolean success);
+
+    void onDeleteLikesResult(boolean success);
 }

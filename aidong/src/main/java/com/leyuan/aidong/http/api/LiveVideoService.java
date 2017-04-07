@@ -36,6 +36,11 @@ public interface LiveVideoService {
     Observable<BaseBean<Object>> addLikes(@Path("series_id") String series_id,
                                           @Path("video_id") String video_id);
 
+    @POST("videos/{series_id}_{video_id}/likes")
+    Observable<BaseBean<Object>> deleteLikes(@Path("series_id") String series_id,
+                                          @Path("video_id") String video_id);
+
+
     @GET("videos/{series_id}_{phase}/comments")
     Observable<BaseBean<CommentsVideoResult>> getComments(@Path("series_id") String series_id,
                                                           @Path("phase") String phase, @Query("page") String page);

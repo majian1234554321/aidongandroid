@@ -12,6 +12,8 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.VenuesAdapter;
 import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
+import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
@@ -49,6 +51,18 @@ public class VenuesSubbranchActivity extends BaseActivity {
         rvVenues.setLayoutManager(new LinearLayoutManager(this));
 
         VenuesAdapter adapter = new VenuesAdapter(this, venuesList);
-        rvVenues.setAdapter(adapter);
+
+        HeaderAndFooterRecyclerViewAdapter headerAndFooterRecyclerViewAdapter = new HeaderAndFooterRecyclerViewAdapter(adapter);
+
+        rvVenues.setAdapter(headerAndFooterRecyclerViewAdapter);
+
+        rvVenues.addOnScrollListener(new EndlessRecyclerOnScrollListener(){
+
+            @Override
+            public void onLoadNextPage(View view) {
+                super.onLoadNextPage(view);
+
+            }
+        });
     }
 }

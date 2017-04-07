@@ -36,7 +36,7 @@ import com.leyuan.aidong.widget.media.TextViewPrintly;
 
 import java.util.ArrayList;
 
-public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPageChangeListener, View.OnClickListener, VideoDetailView{
+public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPageChangeListener, View.OnClickListener, VideoDetailView {
 
     private static final int BITMAP_BLUR_OK = 3;
     private ViewPager viewPager;
@@ -151,7 +151,7 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
                             if (videos != null && videos.size() > 0) {
                                 VideoDetail detail = videos.get(position);
                                 VideoMoreActivity.newInstance(VideoDetailActivity.this, detail.getVideoName()
-                                        , String.valueOf(series_id), position,videos);
+                                        , String.valueOf(series_id), position, videos);
                             }
 
                         }
@@ -240,7 +240,7 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
                 if (videos != null && videos.size() > 0) {
                     VideoDetail detail = videos.get(position);
                     VideoMoreActivity.newInstance(VideoDetailActivity.this, detail.getVideoName(),
-                            String.valueOf(series_id), position,videos);
+                            String.valueOf(series_id), position, videos);
                 }
                 break;
             case R.id.iv_share:
@@ -263,7 +263,7 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
                 //赞
                 if (!App.mInstance.isLogin()) {
                     startActivity(new Intent(this, LoginActivity.class));
-                } else {
+                } else if (videos != null && !videos.isEmpty()) {
                     itemPrased = videos.get(viewPager.getCurrentItem()).getPhase();
                     parseVideo(itemPrased);
                 }
@@ -361,10 +361,15 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
     @Override
     public void onLikesResult(boolean success) {
         if (success) {
-            iv_like.setImageResource(R.drawable.details_like);
             videos.get(itemPrased).setLikesCount(videos.get(itemPrased).getLikesCount() + 1);
             tv_like_count.setText("" + videos.get(itemPrased).getLikesCount());
+            iv_like.setImageResource(R.drawable.details_like);
         }
+    }
+
+    @Override
+    public void onDeleteLikesResult(boolean success) {
+
     }
 
     @Override
