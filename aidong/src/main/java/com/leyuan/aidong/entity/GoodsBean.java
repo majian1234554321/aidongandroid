@@ -3,6 +3,8 @@ package com.leyuan.aidong.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.leyuan.aidong.utils.constant.GoodsType;
+
 import java.util.ArrayList;
 
 /**
@@ -56,7 +58,7 @@ public class GoodsBean implements Parcelable {
         return product_id;
     }
 
-    public void setProduct_id(String product_id) {
+    public void setProductId(String product_id) {
         this.product_id = product_id;
     }
 
@@ -64,7 +66,7 @@ public class GoodsBean implements Parcelable {
         return product_type;
     }
 
-    public void setProduct_type(String product_type) {
+    public void setProductType(@GoodsType String product_type) {
         this.product_type = product_type;
     }
 

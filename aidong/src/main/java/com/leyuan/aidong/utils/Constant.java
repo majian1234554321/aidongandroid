@@ -67,13 +67,16 @@ public class Constant {
     public static final String COPY_IMAGE = "copy_image";
     public static final String POSITION = "position";
 
+    //支付类型
     public static final String PAY_ALI = "alipay";
     public static final String PAY_WEIXIN = "wxpay";
 
+    //商品类型
     public static final String GOODS_EQUIPMENT = "equipment";
     public static final String GOODS_FOODS = "foods";
     public static final String GOODS_NUTRITION = "nutrition";
 
+    //动态类型
     public static final int DYNAMIC_NONE = -1;
     public static final int DYNAMIC_VIDEO = 0;
     public static final int DYNAMIC_ONE_IMAGE = 1;
@@ -83,8 +86,30 @@ public class Constant {
     public static final int DYNAMIC_FIVE_IMAGE = 5;
     public static final int DYNAMIC_SIX_IMAGE = 6;
 
+    //首页item类型
     public static final int HOME_IMAGE_AND_HORIZONTAL_LIST = 0;
     public static final int HOME_TITLE_AND_VERTICAL_LIST = 1;
+
+    //确认订单结算类型
+    public static final String SETTLEMENT_CART = "cart";
+    public static final String SETTLEMENT_NURTURE_IMMEDIATELY = "nutrition";
+    public static final String SETTLEMENT_EQUIPMENT_IMMEDIATELY = "equipment";
+
+    //获取优惠券的位置
+    public static final String COUPON_EQUIPMENT = "equipment";
+    public static final String COUPON_NUTRITION = "nutrition";
+    public static final String COUPON_COURSE = "course";
+    public static final String COUPON_CAMPAIGN = "campaign";
+    public static final String COUPON_CART = "cart";
+
+    //推荐商品位置
+    public static final String RECOMMEND_EQUIPMENT = "equipment";
+    public static final String RECOMMEND_NUTRITION = "nutrition";
+    public static final String RECOMMEND_CART = "cart";
+
+    //交货方式
+    public static final String DELIVERY_EXPRESS = "0";  //快递
+    public static final String DELIVERY_SELF = "1";     //自提
 
     public static class Chat {
         public static final String SYSYTEM_ID = "admin";

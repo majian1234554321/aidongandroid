@@ -8,18 +8,17 @@ import com.leyuan.aidong.entity.data.ShopData;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
-import com.leyuan.aidong.module.pay.AliPay;
 import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.module.pay.PayUtils;
-import com.leyuan.aidong.module.pay.WeiXinPay;
 import com.leyuan.aidong.ui.mine.view.CartHeaderView;
 import com.leyuan.aidong.ui.mvp.model.CartModel;
 import com.leyuan.aidong.ui.mvp.model.impl.CartModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.CartPresent;
 import com.leyuan.aidong.ui.mvp.view.GoodsSkuPopupWindowView;
 import com.leyuan.aidong.ui.mvp.view.UpdateDeliveryInfoActivityView;
-import com.leyuan.aidong.utils.constant.DeliveryType;
 import com.leyuan.aidong.widget.SwitcherLayout;
+
+import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
 
 /**
  * 购物车
@@ -120,7 +119,7 @@ public class CartPresentImpl implements CartPresent{
         cartModel.updateDeliveryInfo(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
-                if(DeliveryType.EXPRESS.equals(gymId)){
+                if(DELIVERY_EXPRESS.equals(gymId)){
                     updateDeliveryInfoActivityView.setExpressResult(baseBean);
                 }else {
                     updateDeliveryInfoActivityView.setSelfDeliveryResult(baseBean);

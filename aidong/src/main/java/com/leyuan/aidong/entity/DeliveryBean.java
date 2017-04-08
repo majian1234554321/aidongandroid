@@ -3,19 +3,22 @@ package com.leyuan.aidong.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.leyuan.aidong.utils.constant.DeliveryType;
+
 /**
  * 商品详情配送实体
  * Created by song on 2016/9/22.
  */
 public class DeliveryBean implements Parcelable {
-    public String type;        //type: 取货方式, #0-快递　1-自提
+    public @DeliveryType String type;        //type: 取货方式, #0-快递　1-自提
     public VenuesBean info;
 
+    @DeliveryType
     public String getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(@DeliveryType String type) {
         this.type = type;
     }
 

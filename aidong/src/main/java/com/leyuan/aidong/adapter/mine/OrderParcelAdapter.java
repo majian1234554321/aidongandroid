@@ -11,10 +11,11 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.ConfirmOrderGoodsAdapter;
 import com.leyuan.aidong.entity.ParcelBean;
-import com.leyuan.aidong.utils.constant.DeliveryType;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
 
 /**
  * 订单列表中包裹适配器
@@ -50,7 +51,7 @@ public class OrderParcelAdapter extends RecyclerView.Adapter<OrderParcelAdapter.
     public void onBindViewHolder(final CartHolder holder, final int position) {
         final ParcelBean bean = data.get(position);
         holder.tvShopName.setText(bean.getAddress());
-        String type = DeliveryType.EXPRESS.equals(bean.getPickUpWay()) ? "快递" : "自提";
+        String type = DELIVERY_EXPRESS.equals(bean.getPickUpWay()) ? "快递" : "自提";
         holder.tvDeliveryType.setText(type);
         holder.rvShop.setLayoutManager(new LinearLayoutManager(context));
         final ConfirmOrderGoodsAdapter goodsAdapter = new ConfirmOrderGoodsAdapter(context);

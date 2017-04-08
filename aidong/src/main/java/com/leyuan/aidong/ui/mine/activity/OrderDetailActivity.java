@@ -34,7 +34,6 @@ import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.QRCodeUtil;
 import com.leyuan.aidong.utils.SystemInfoUtils;
-import com.leyuan.aidong.utils.constant.DeliveryType;
 import com.leyuan.aidong.widget.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.ExtendTextView;
 import com.leyuan.aidong.widget.SimpleTitleBar;
@@ -46,6 +45,7 @@ import java.util.List;
 import cn.iwgang.countdownview.CountdownView;
 
 import static com.leyuan.aidong.module.pay.WeiXinPay.payListener;
+import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
 import static com.leyuan.aidong.utils.Constant.EXPRESS_PRICE;
 import static com.leyuan.aidong.utils.Constant.PAY_ALI;
 import static com.leyuan.aidong.utils.Constant.PAY_WEIXIN;
@@ -235,7 +235,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
         timer.start(DateUtils.getCountdown(bean.getCreatedAt(), ORDER_COUNTDOWN_MILL));
 
         for (ParcelBean parcelBean : bean.getParcel()) {
-            if(DeliveryType.EXPRESS.equals(parcelBean.getPickUpWay())){
+            if(DELIVERY_EXPRESS.equals(parcelBean.getPickUpWay())){
                 expressList.add(parcelBean);
             }else {
                 selfDeliveryList.add(parcelBean);

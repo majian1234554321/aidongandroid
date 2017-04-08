@@ -16,6 +16,9 @@ import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.utils.TransitionHelper;
 
+import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
+import static com.leyuan.aidong.utils.Constant.DELIVERY_SELF;
+
 
 /**
  * 配送信息
@@ -23,8 +26,6 @@ import com.leyuan.aidong.utils.TransitionHelper;
  */
 public class DeliveryInfoActivity extends BaseActivity implements View.OnClickListener{
     private static final int CODE_SELECT_VENUES = 1;
-    private static final String EXPRESS = "0";
-    private static final String SELF_DELIVERY = "1";
 
     private ImageView tvBack;
     private TextView tvFinish;
@@ -42,7 +43,7 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        slideFromBottomAnimations();
+        setSlideAnimation();
         setContentView(R.layout.activity_delivery_info);
         if(getIntent() != null){
             id = getIntent().getStringExtra("id");
@@ -95,7 +96,7 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
                 tvExpress.setBackgroundResource(R.drawable.shape_solid_corner_black);
                 tvSelfDelivery.setBackgroundResource(R.drawable.shape_solid_corner_white);
                 deliveryLayout.setVisibility(View.GONE);
-                deliveryBean.setType(EXPRESS);
+                deliveryBean.setType(DELIVERY_EXPRESS);
                 deliveryBean.getInfo().setGymId(null);
                 break;
             case R.id.tv_self_delivery:
@@ -104,7 +105,7 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
                 tvExpress.setBackgroundResource(R.drawable.shape_solid_corner_white);
                 tvSelfDelivery.setBackgroundResource(R.drawable.shape_solid_corner_black);
                 deliveryLayout.setVisibility(View.VISIBLE);
-                deliveryBean.setType(SELF_DELIVERY);
+                deliveryBean.setType(DELIVERY_SELF);
                 break;
             case R.id.ll_delivery_address:
                 Intent intent = new Intent(this,SelfDeliveryVenuesActivity.class);
@@ -130,5 +131,4 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
             deliveryBean.setInfo(venuesBean);
         }
     }
-
 }

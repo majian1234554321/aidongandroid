@@ -577,6 +577,11 @@
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
+
+        <!--********************友盟统计************************* -->
+        <meta-data android:value="557e76dc67e58e0bf90009be" android:name="UMENG_APPKEY"/>
+        <meta-data android:value="Channel ID" android:name="UMENG_CHANNEL"/>
+
     </application>
 
 </manifest>

@@ -32,10 +32,8 @@ import com.leyuan.aidong.ui.mine.activity.UpdateDeliveryInfoActivity;
 import com.leyuan.aidong.ui.mvp.presenter.ConfirmOrderPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.ConfirmOrderPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.ConfirmOrderActivityView;
-import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.FormatUtil;
-import com.leyuan.aidong.utils.constant.CouponType;
 import com.leyuan.aidong.utils.constant.DeliveryType;
 import com.leyuan.aidong.utils.constant.PayType;
 import com.leyuan.aidong.utils.constant.SettlementType;
@@ -47,13 +45,22 @@ import com.leyuan.aidong.widget.SwitcherLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.leyuan.aidong.utils.Constant.COUPON_CART;
+import static com.leyuan.aidong.utils.Constant.COUPON_EQUIPMENT;
+import static com.leyuan.aidong.utils.Constant.COUPON_NUTRITION;
+import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
 import static com.leyuan.aidong.utils.Constant.EXPRESS_PRICE;
+import static com.leyuan.aidong.utils.Constant.GOODS_EQUIPMENT;
+import static com.leyuan.aidong.utils.Constant.GOODS_NUTRITION;
 import static com.leyuan.aidong.utils.Constant.PAY_ALI;
 import static com.leyuan.aidong.utils.Constant.PAY_WEIXIN;
 import static com.leyuan.aidong.utils.Constant.REQUEST_ADD_ADDRESS;
 import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_ADDRESS;
 import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_COUPON;
 import static com.leyuan.aidong.utils.Constant.REQUEST_UPDATE_DELIVERY;
+import static com.leyuan.aidong.utils.Constant.SETTLEMENT_CART;
+import static com.leyuan.aidong.utils.Constant.SETTLEMENT_EQUIPMENT_IMMEDIATELY;
+import static com.leyuan.aidong.utils.Constant.SETTLEMENT_NURTURE_IMMEDIATELY;
 
 
 /**
@@ -110,12 +117,12 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private String coin;
     private String coupon;
     private @PayType String payType;
-    private String pickUpWay;           //取货方式(0-快递 1-自提)
-    private String pickUpId;            //自提门店id或快递地址id
-    private String pickUpDate;          //自提时间
+    private @DeliveryType String pickUpWay;           //取货方式(0-快递 1-自提)
+    private String pickUpId;                          //自提门店id或快递地址id
+    private String pickUpDate;                        //自提时间
 
     private String couponType;
-    private String settlementType;
+    private @SettlementType String settlementType;
     private double totalGoodsPrice;
     private boolean needExpress = false;
 
@@ -139,6 +146,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_order);
+        present = new ConfirmOrderPresentImpl(this,this);
         initVariable();
         initView();
         setListener();
@@ -163,7 +171,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             shopBeanList.add(shop);
             pickUpId = shop.getPickUp().info.getId();
             pickUpWay = shop.getPickUp().getType();
-            if(DeliveryType.EXPRESS.equals(pickUpWay)){
+            if(DELIVERY_EXPRESS.equals(pickUpWay)){
                 pickUpDate = null;
             }
             if(!shop.getItem().isEmpty()){
@@ -171,17 +179,21 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 skuCode = goods.getSkuCode();
                 amount = FormatUtil.parseInt(goods.getAmount());
                 totalGoodsPrice = FormatUtil.parseDouble(goods.getPrice())* amount;
-                if(Constant.GOODS_NUTRITION.equals(goods.getType())){
-                    couponType = CouponType.NUTRITION;
-                    settlementType = SettlementType.NURTURE_IMMEDIATELY;
+                if(GOODS_NUTRITION.equals(goods.getType())){
+                    goods.setProductId(goods.getId());
+                    goods.setProductType(GOODS_NUTRITION);
+                    couponType = COUPON_NUTRITION;
+                    settlementType = SETTLEMENT_NURTURE_IMMEDIATELY;
                 }else {
-                    couponType = CouponType.EQUIPMENT;
-                    settlementType = SettlementType.EQUIPMENT_IMMEDIATELY;
+                    goods.setProductId(goods.getId());
+                    goods.setProductType(GOODS_EQUIPMENT);
+                    couponType = COUPON_EQUIPMENT;
+                    settlementType = SETTLEMENT_EQUIPMENT_IMMEDIATELY;
                 }
             }
         }else {
-            couponType = CouponType.CART;
-            settlementType  = SettlementType.CART;
+            couponType = COUPON_CART;
+            settlementType  = SETTLEMENT_CART;
             totalGoodsPrice = getIntent().getDoubleExtra("totalGoodsPrice", 0f);
         }
 
@@ -195,8 +207,6 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         for (int i = 0; i < goodsList.size(); i++) {
             itemIds[i] = goodsList.get(i).getId();
         }
-
-        present = new ConfirmOrderPresentImpl(this,this);
     }
 
     private void initView() {
@@ -232,7 +242,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         shopAdapter.setData(shopBeanList);
 
         for (ShopBean shopBean : shopBeanList) {
-            if(DeliveryType.EXPRESS.equals(shopBean.getPickUp().getType())){
+            if(DELIVERY_EXPRESS.equals(shopBean.getPickUp().getType())){
                 needExpress = true;
                 addressLayout.setVisibility(View.VISIBLE);
             }else {
@@ -302,15 +312,15 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             return;
         }
         switch (settlementType){
-            case SettlementType.CART:
+            case SETTLEMENT_CART:
                 present.payCart(integral,coin,coupon,payType, pickUpId,
                         pickUpDate,payListener,itemIds);
                 break;
-            case SettlementType.NURTURE_IMMEDIATELY:
+            case SETTLEMENT_NURTURE_IMMEDIATELY:
                 present.buyNurtureImmediately(skuCode,amount,coupon,integral,coin,payType,
                         String.valueOf(pickUpWay), pickUpId,pickUpDate,payListener);
                 break;
-            case SettlementType.EQUIPMENT_IMMEDIATELY:
+            case SETTLEMENT_EQUIPMENT_IMMEDIATELY:
                 present.buyEquipmentImmediately(skuCode,amount,coupon,integral,coin,payType,
                         String.valueOf(pickUpWay), pickUpId,pickUpDate,payListener);
                 break;

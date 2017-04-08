@@ -17,7 +17,6 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.RecommendPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.NurtureActivityView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.SystemInfoUtils;
-import com.leyuan.aidong.utils.constant.RecommendGoods;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
@@ -29,6 +28,8 @@ import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.leyuan.aidong.utils.Constant.RECOMMEND_NUTRITION;
 
 
 /**
@@ -55,7 +56,7 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
         initTopLayout();
         initSwipeRefreshLayout();
         initRecommendRecyclerView();
-        recommendPresent.commendLoadRecommendData(switcherLayout, RecommendGoods.NUTRITION);
+        recommendPresent.commendLoadRecommendData(switcherLayout,RECOMMEND_NUTRITION);
     }
 
     private void initTopLayout(){
@@ -84,7 +85,7 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
             public void onRefresh() {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recommendView);
-                recommendPresent.pullToRefreshRecommendData(RecommendGoods.NUTRITION);
+                recommendPresent.pullToRefreshRecommendData(RECOMMEND_NUTRITION);
             }
         });
 
@@ -93,7 +94,7 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
             public void onClick(View v) {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recommendView);
-                recommendPresent.commendLoadRecommendData(switcherLayout, RecommendGoods.NUTRITION);
+                recommendPresent.commendLoadRecommendData(switcherLayout,RECOMMEND_NUTRITION);
             }
         });
     }
@@ -119,8 +120,7 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
         public void onLoadNextPage(View view) {
             currPage ++;
             if (nurtureList != null && nurtureList.size() >= pageSize) {
-                recommendPresent.requestMoreRecommendData(recommendView,pageSize,currPage,
-                        RecommendGoods.NUTRITION);
+                recommendPresent.requestMoreRecommendData(recommendView,pageSize,currPage, RECOMMEND_NUTRITION);
             }
         }
     };

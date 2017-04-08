@@ -16,7 +16,6 @@ import com.leyuan.aidong.ui.mvp.presenter.RecommendPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.RecommendPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.EquipmentActivityView;
 import com.leyuan.aidong.utils.SystemInfoUtils;
-import com.leyuan.aidong.utils.constant.RecommendGoods;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
@@ -30,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.leyuan.aidong.utils.Constant.GOODS_EQUIPMENT;
+import static com.leyuan.aidong.utils.Constant.RECOMMEND_EQUIPMENT;
 
 
 /**
@@ -56,7 +56,7 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
         initTopLayout();
         initSwipeRefreshLayout();
         initRecommendRecyclerView();
-        present.commendLoadRecommendData(switcherLayout, RecommendGoods.EQUIPMENT);
+        present.commendLoadRecommendData(switcherLayout, RECOMMEND_EQUIPMENT);
     }
 
     private void initTopLayout(){
@@ -85,7 +85,7 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
             public void onRefresh() {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recommendView);
-                present.pullToRefreshRecommendData( RecommendGoods.EQUIPMENT);
+                present.pullToRefreshRecommendData(RECOMMEND_EQUIPMENT);
             }
         });
 
@@ -94,7 +94,7 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
             public void onClick(View v) {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recommendView);
-                present.commendLoadRecommendData(switcherLayout, RecommendGoods.EQUIPMENT);
+                present.commendLoadRecommendData(switcherLayout, RECOMMEND_EQUIPMENT);
             }
         });
     }
@@ -118,7 +118,7 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
         public void onLoadNextPage(View view) {
             currPage ++;
             if (equipmentList != null && equipmentList.size() >= pageSize) {
-                present.requestMoreRecommendData(recommendView,pageSize,currPage, RecommendGoods.EQUIPMENT);
+                present.requestMoreRecommendData(recommendView,pageSize,currPage,RECOMMEND_EQUIPMENT);
             }
         }
     };

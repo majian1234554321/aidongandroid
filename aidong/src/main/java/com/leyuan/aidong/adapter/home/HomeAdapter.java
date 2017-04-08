@@ -29,6 +29,11 @@ public class HomeAdapter extends BaseHolderViewAdapter<HomeBean> {
     }
 
     @Override
+    protected int getLayoutResId(int viewType) {
+        return 0;
+    }
+
+    @Override
     protected int getViewType(int position, @NonNull HomeBean data) {
         return data.getItemType();
     }
