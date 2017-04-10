@@ -21,7 +21,7 @@ import java.util.List;
  * 小团体课列表适配器
  * Created by song on 2016/8/17.
  */
-public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseViewHolder>{
+public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseViewHolder> {
     private Context context;
     private List<CourseBean> data = new ArrayList<>();
 
@@ -30,7 +30,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
     }
 
     public void setData(List<CourseBean> data) {
-        if(data != null) {
+        if (data != null) {
             this.data = data;
         }
     }
@@ -42,7 +42,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
 
     @Override
     public CourseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_course,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_course, parent, false);
         return new CourseViewHolder(view);
     }
 
@@ -55,14 +55,15 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
                 FormatUtil.parseDouble(bean.getPrice())));
         holder.name.setText(bean.getName());
         holder.address.setText(bean.getAddress());
-        holder.time.setText(String.format(context.getString(R.string.time_with_line),bean.getClassTime(),bean.getBreakTime()));
-        holder.count.setText(String.format(context.getString(R.string.course_count),bean.getAppliedCount(),bean.getPlace()));
-        holder.distance.setText(String.format(context.getString(R.string.distance_km),bean.getDistance()));
+        holder.time.setText(String.format(context.getString(R.string.time_with_line), bean.getClassTime(), bean.getBreakTime()));
+        holder.count.setText(String.format(context.getString(R.string.course_count), bean.getAppliedCount(), bean.getPlace()));
+        holder.distance.setText(String.format("%.2f", (bean.getDistance() / 1000)) + "km");
+//                String.format(context.getString(R.string.distance_km),bean.getDistance()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CourseDetailActivity.start(context,bean.getCode());
+                CourseDetailActivity.start(context, bean.getCode());
             }
         });
     }
@@ -77,17 +78,17 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
         TextView count;
         TextView distance;
 
-        public CourseViewHolder (View itemView) {
+        public CourseViewHolder(View itemView) {
             super(itemView);
 
-            cover = (ImageView)itemView.findViewById(R.id.dv_course_cover);
+            cover = (ImageView) itemView.findViewById(R.id.dv_course_cover);
             brand = (ImageView) itemView.findViewById(R.id.iv_brand);
-            price = (TextView)itemView.findViewById(R.id.tv_course_price);
-            name = (TextView)itemView.findViewById(R.id.tv_course_name);
-            address = (TextView)itemView.findViewById(R.id.tv_course_address);
-            time = (TextView)itemView.findViewById(R.id.tv_course_time);
-            count = (TextView)itemView.findViewById(R.id.tv_course_count);
-            distance = (TextView)itemView.findViewById(R.id.tv_course_distance);
+            price = (TextView) itemView.findViewById(R.id.tv_course_price);
+            name = (TextView) itemView.findViewById(R.id.tv_course_name);
+            address = (TextView) itemView.findViewById(R.id.tv_course_address);
+            time = (TextView) itemView.findViewById(R.id.tv_course_time);
+            count = (TextView) itemView.findViewById(R.id.tv_course_count);
+            distance = (TextView) itemView.findViewById(R.id.tv_course_distance);
         }
     }
 }

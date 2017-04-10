@@ -15,7 +15,7 @@ public class CourseBean {
     private String class_time;
     private String break_time;
     private String address;
-    private String distance;
+    private double distance;
     private String brand_logo;
 
     public String getBrandLogo() {
@@ -106,11 +106,11 @@ public class CourseBean {
         this.address = address;
     }
 
-    public String getDistance() {
+    public double getDistance() {
         return distance;
     }
 
-    public void setDistance(String distance) {
+    public void setDistance(double distance) {
         this.distance = distance;
     }
 
