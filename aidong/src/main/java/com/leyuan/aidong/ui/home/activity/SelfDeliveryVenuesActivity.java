@@ -1,14 +1,10 @@
 package com.leyuan.aidong.ui.home.activity;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.transition.Slide;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -65,7 +61,7 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setupWindowAnimations();
+       setSlideAnimation();
         setContentView(R.layout.activity_self_delivery);
         goodsPresent = new GoodsDetailPresentImpl(this,this);
         venuesPresent = new VenuesPresentImpl(this,this);
@@ -206,15 +202,4 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
     public void showEndFooterView() {
         RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
     }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private void setupWindowAnimations() {
-        Slide bottom = new Slide();
-        bottom.setDuration(300);
-        bottom.excludeTarget(android.R.id.statusBarBackground,true);
-        bottom.excludeTarget(R.id.rl_top,true);
-        bottom.setSlideEdge(Gravity.BOTTOM);
-        getWindow().setEnterTransition(bottom);
-    }
-
 }

@@ -50,6 +50,7 @@ public class BoxingActivity extends AbsBoxingActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         explodeIn();
         setContentView(R.layout.activity_boxing);
         createToolbar();
@@ -64,7 +65,7 @@ public class BoxingActivity extends AbsBoxingActivity {
             mPickerFragment = (BoxingFragment) BoxingFragment.newInstance().setSelectedBundle(medias);
             getSupportFragmentManager()
                     .beginTransaction()
-                    .setCustomAnimations(R.anim.slide_in_bottom,R.anim.fade_out)
+                    .setCustomAnimations(R.anim.slide_in_bottom, R.anim.fade_out)
                     .replace(R.id.content_layout, mPickerFragment, BoxingFragment.TAG)
                     .commit();
         }
@@ -100,26 +101,29 @@ public class BoxingActivity extends AbsBoxingActivity {
         setResult(Activity.RESULT_OK, intent);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             finishAfterTransition();
-        } else{
+        } else {
             finish();
         }
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    protected void explodeIn(){
-        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-        Explode explodeIn = new Explode();
-        explodeIn.setDuration(300);
-        explodeIn.setMode(Explode.MODE_IN);
-        explodeIn.excludeTarget(android.R.id.statusBarBackground,true);
+    protected void explodeIn() {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+            Explode explodeIn = new Explode();
+            explodeIn.setDuration(300);
+            explodeIn.setMode(Explode.MODE_IN);
+            explodeIn.excludeTarget(android.R.id.statusBarBackground, true);
 
-        Explode explodeOut = new Explode();
-        explodeOut.setDuration(300);
-        explodeOut.setMode(Explode.MODE_OUT);
-        explodeOut.excludeTarget(android.R.id.statusBarBackground,true);
+            Explode explodeOut = new Explode();
+            explodeOut.setDuration(300);
+            explodeOut.setMode(Explode.MODE_OUT);
+            explodeOut.excludeTarget(android.R.id.statusBarBackground, true);
 
-        getWindow().setEnterTransition(explodeIn);
-        getWindow().setExitTransition(explodeOut);
+            getWindow().setEnterTransition(explodeIn);
+            getWindow().setExitTransition(explodeOut);
+        }
     }
-
 }
+
+
