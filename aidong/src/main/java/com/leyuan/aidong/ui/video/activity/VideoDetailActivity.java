@@ -61,6 +61,7 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
 
     private ArrayList<VideoDetail> videos = new ArrayList<>();
     private SharePopupWindow sharePopupWindow;
+    private String parseList;
 
     private int tag_width;
     @SuppressLint("HandlerLeak")
@@ -194,7 +195,7 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
     private void fillingViewDataNoAnimation(int index) {
         VideoDetail videoDetail = videos.get(index);
         layout_under.setVisibility(View.VISIBLE);
-        iv_like.setImageResource(R.drawable.video_details_praise_no);
+        iv_like.setImageResource(videoDetail.isParsed() ? R.drawable.details_like : R.drawable.video_details_praise_no);
         tv_reply_count.setText("" + videoDetail.getCommentsCount());
         tv_like_count.setText("" + videoDetail.getLikesCount());
         tv_course_name.setText("" + videoDetail.getVideoName());
@@ -300,6 +301,7 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
         if (vs != null && !vs.isEmpty()) {
             this.videos = vs;
         }
+        parseList = App.getInstance().getParseString();
         if (phase == -1) {
             phase = videos.size() - 1;
         }
@@ -307,6 +309,10 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
             blurBitmaps = new Bitmap[videos.size()];
             for (int i = 0; i < videos.size(); i++) {
                 final VideoDetail videoDetail = videos.get(i);
+                if (parseList != null && parseList.contains(videoDetail.getvId() + "")) {
+                    videoDetail.setIsParsed(true);
+                }
+
 
                 View view = View.inflate(VideoDetailActivity.this, R.layout.item_video_detail_viewpager, null);
                 final ImageView iv_cover = (ImageView) view.findViewById(R.id.iv_cover);
@@ -378,6 +384,7 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
             videoDetail.setIsParsed(true);
             tv_like_count.setText("" + videoDetail.getLikesCount());
             iv_like.setImageResource(R.drawable.details_like);
+            App.getInstance().addParseId(videoDetail.getvId() + "");
         }
     }
 
@@ -389,6 +396,8 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
             videoDetail.setIsParsed(false);
             tv_like_count.setText("" + videoDetail.getLikesCount());
             iv_like.setImageResource(R.drawable.video_details_praise_no);
+
+            App.getInstance().deleteParseId(videoDetail.getvId() + "");
         }
     }
 

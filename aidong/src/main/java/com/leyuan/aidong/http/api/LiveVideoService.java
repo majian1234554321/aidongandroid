@@ -7,6 +7,7 @@ import com.leyuan.aidong.entity.video.VideoDetailResult;
 import com.leyuan.aidong.entity.video.VideoListResult;
 import com.leyuan.aidong.entity.video.VideoRelationResult;
 
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -36,7 +37,7 @@ public interface LiveVideoService {
     Observable<BaseBean<Object>> addLikes(@Path("series_id") String series_id,
                                           @Path("video_id") String video_id);
 
-    @POST("videos/{series_id}_{video_id}/likes")
+    @DELETE("videos/{series_id}_{video_id}/likes")
     Observable<BaseBean<Object>> deleteLikes(@Path("series_id") String series_id,
                                           @Path("video_id") String video_id);
 

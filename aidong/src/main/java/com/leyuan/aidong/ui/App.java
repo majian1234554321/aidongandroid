@@ -43,6 +43,7 @@ public class App extends MultiDexApplication {
 
     public LocationClient mLocationClient = null;
     public BDLocationListener myListener = new MyLocationListener();
+    private String parseString;
 
     @Override
     public void onCreate() {
@@ -97,6 +98,7 @@ public class App extends MultiDexApplication {
         mLocationClient.setLocOption(option);
     }
 
+
     public class MyLocationListener implements BDLocationListener {
 
         @Override
@@ -125,6 +127,7 @@ public class App extends MultiDexApplication {
 
     public void exitLogin() {
         setUser(null);
+        parseString = null;
     }
 
     public UserCoach getUser() {
@@ -200,6 +203,46 @@ public class App extends MultiDexApplication {
             cityLocation = SharePrefUtils.getString(this, "cityLocation", null);
         }
         return cityLocation;
+    }
+
+    public String getParseString() {
+        if (getUser() != null) {
+            if (parseString == null) {
+                String user = getUser().getId() + "";
+                parseString = SharePrefUtils.getString(this, user, null);
+            }
+        } else {
+            parseString = null;
+        }
+        return parseString;
+    }
+
+    public void setParseString(String parseString) {
+        if (getUser() != null) {
+            this.parseString = parseString;
+            String user = getUser().getId() + "";
+            SharePrefUtils.putString(this, user, parseString);
+        }
+    }
+
+    public void addParseId(String parseId) {
+        StringBuffer p = new StringBuffer();
+        if (getParseString() != null)
+            p.append(getParseString());
+        p.append(parseId).append(" ");
+        setParseString(p.toString());
+    }
+
+    public void deleteParseId(String parseId) {
+        parseString = getParseString();
+        if (parseString != null) {
+            Logger.i("parse", parseString);
+            parseString = parseString.replace(parseId, "").trim();
+
+            Logger.i("parse", parseString);
+        }
+        setParseString(parseString);
+
     }
 
 }

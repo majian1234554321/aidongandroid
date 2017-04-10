@@ -240,4 +240,5 @@
     <string name="login_password">登录密码</string>
     <string name="check_old_phone">验证原手机</string>
     <string name="check_phone">验证手机</string>
+    <string name="store">商城</string>
 </resources>
