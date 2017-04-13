@@ -15,6 +15,7 @@ import com.leyuan.aidong.ui.mvp.presenter.HomePresent;
 import com.leyuan.aidong.ui.mvp.view.BrandActivityView;
 import com.leyuan.aidong.ui.mvp.view.HomeFragmentView;
 import com.leyuan.aidong.ui.mvp.view.LocationActivityView;
+import com.leyuan.aidong.ui.mvp.view.StoreFragmentView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
@@ -32,12 +33,22 @@ public class HomePresentImpl implements HomePresent {
     private HomeFragmentView homeFragmentView;            //首页View层实体
     private BrandActivityView brandDetailActivityView;    //品牌详情View层实体
     private LocationActivityView locationActivityView;    //切换地址view层实体
+    private StoreFragmentView storeFragmentView;
 
     private List<HomeBean> homeBeanList;
 
     public HomePresentImpl(Context context, HomeFragmentView view) {
         this.context = context;
         this.homeFragmentView = view;
+        homeBeanList = new ArrayList<>();
+        if(homeModel == null){
+            homeModel = new HomeModelImpl(context);
+        }
+    }
+
+    public HomePresentImpl(Context context, StoreFragmentView view) {
+        this.context = context;
+        this.storeFragmentView = view;
         homeBeanList = new ArrayList<>();
         if(homeModel == null){
             homeModel = new HomeModelImpl(context);
@@ -149,5 +160,15 @@ public class HomePresentImpl implements HomePresent {
                 }
             }
         },id,page);
+    }
+
+    @Override
+    public void commonLoadStoreData(SwitcherLayout switcherLayout) {
+
+    }
+
+    @Override
+    public void pullToRefreshStoreData() {
+
     }
 }

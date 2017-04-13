@@ -182,6 +182,7 @@ public class GoodsBean implements Parcelable {
         this.code = code;
     }
 
+
     public String getType() {
         return type;
     }

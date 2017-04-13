@@ -37,6 +37,17 @@
                 android:padding="5dp"
                 android:src="@drawable/icon_back" />
 
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:gravity="center_vertical"
+                android:text="￥999"
+                android:textColor="@color/main_red"
+                android:textSize="20sp"
+                android:visibility="invisible" />
+
             <ImageView
                 android:id="@+id/iv_share"
                 android:layout_width="wrap_content"

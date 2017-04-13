@@ -58,7 +58,7 @@
     <string name="un_join_confirm">确认取消参加吗?</string>
     <string name="campaign_during">%1$s-%2$s</string>
     <string name="no_vip_tip"> <Data><![CDATA[如果您还不是该会所会员,需要在前台另外支付
-    <font color="#FF5000">80元</font>方可参加本次活动]]></Data></string>
+    <font color="#FF5000">%1$s元</font>方可参加本次活动]]></Data></string>
 
     <string name="status_appoint">马上预约</string>
     <string name="status_appoint_end">预约已结束</string>

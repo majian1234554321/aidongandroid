@@ -247,8 +247,6 @@
             <include layout="@layout/inc_bold_line" />
 
 
-            <!--会员身份信息-->
-            <include layout="@layout/inc_mine_identity" />
 
             <!--订单信息-->
             <TextView

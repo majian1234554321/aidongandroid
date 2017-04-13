@@ -404,6 +404,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 updateAddressStatus(address);
             }else if(requestCode == REQUEST_SELECT_COUPON){
                 CouponBean couponBean = data.getParcelableExtra("coupon");
+                coupon = couponBean.getId();
                 if(FormatUtil.parseInt(couponBean.getDiscount()) != 0) {
                     tvCoupon.setText(String.format(getString(R.string.rmb_minus_price_double),
                             FormatUtil.parseDouble(couponBean.getDiscount())));

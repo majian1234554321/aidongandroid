@@ -58,4 +58,15 @@ public interface HomePresent {
      * 获取开通城市列表
      */
     void getOpenCity();
+
+    /**
+     * 第一次加载数据
+     * @param switcherLayout SwitcherLayout
+     */
+    void commonLoadStoreData(SwitcherLayout switcherLayout);
+
+    /**
+     * 首页列表下拉刷新
+     */
+    void pullToRefreshStoreData();
 }
