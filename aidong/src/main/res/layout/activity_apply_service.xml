@@ -58,9 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:scrollbars="none"
-                android:background="@color/base_theme"
-
-                />
+                android:background="@color/white" />
 
 
             <include layout="@layout/inc_bold_line" />
@@ -90,7 +88,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/shape_solid_black"
+                    android:background="@drawable/shape_solid_corner_black"
                     android:gravity="center"
                     android:text="换货"
                     android:textColor="@color/white"

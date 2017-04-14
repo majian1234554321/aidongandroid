@@ -21,7 +21,7 @@ import static com.leyuan.aidong.utils.Constant.GOODS_NUTRITION;
         GOODS_FOODS
 })
 @Retention(RetentionPolicy.SOURCE)
-@Target({ElementType.PARAMETER,ElementType.CONSTRUCTOR})
+@Target({ElementType.PARAMETER,ElementType.METHOD})
 public @interface GoodsType {
 
 }

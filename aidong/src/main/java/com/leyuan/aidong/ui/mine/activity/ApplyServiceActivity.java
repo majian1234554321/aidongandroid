@@ -39,11 +39,6 @@ public class ApplyServiceActivity extends BaseActivity implements View.OnClickLi
 
     private ImageView ivBack;
     private TextView tvNext;
-    //    private ImageView dvCover;
-//    private TextView tvName;
-//    private ImageView ivMinus;
-//    private TextView tvCount;
-//    private ImageView ivAdd;
     private TextView tvReturn;
     private TextView tvExchange;
     private EditText etProblem;
@@ -124,7 +119,6 @@ public class ApplyServiceActivity extends BaseActivity implements View.OnClickLi
 
                 String content = etProblem.getText().toString().trim();
                 if (TextUtils.isEmpty(content)) {
-//                    ToastUtil.show("请输入原因", this);
                     ToastGlobal.showShort("请输入原因");
                     return;
                 }
@@ -136,7 +130,6 @@ public class ApplyServiceActivity extends BaseActivity implements View.OnClickLi
                 }
 
                 if (items.isEmpty()) {
-//                    ToastUtil.show("请至少选择一件商品", this);
                     ToastGlobal.showShort("请至少选择一件商品");
                     return;
                 }
@@ -154,7 +147,7 @@ public class ApplyServiceActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.tv_return:
                 type = 1;
-                tvReturn.setBackgroundResource(R.drawable.shape_solid_black);
+                tvReturn.setBackgroundResource(R.drawable.shape_solid_corner_black);
                 tvReturn.setTextColor(Color.parseColor("#ffffff"));
                 tvExchange.setBackgroundResource(R.drawable.shape_solid_corner_white);
                 tvExchange.setTextColor(Color.parseColor("#000000"));
@@ -164,7 +157,7 @@ public class ApplyServiceActivity extends BaseActivity implements View.OnClickLi
                 type = 0;
                 tvReturn.setBackgroundResource(R.drawable.shape_solid_corner_white);
                 tvReturn.setTextColor(Color.parseColor("#000000"));
-                tvExchange.setBackgroundResource(R.drawable.shape_solid_black);
+                tvExchange.setBackgroundResource(R.drawable.shape_solid_corner_black);
                 tvExchange.setTextColor(Color.parseColor("#ffffff"));
                 break;
             default:

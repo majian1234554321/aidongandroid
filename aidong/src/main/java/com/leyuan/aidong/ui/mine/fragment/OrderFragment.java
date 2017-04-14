@@ -13,6 +13,7 @@ import com.leyuan.aidong.adapter.mine.OrderAdapter;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.OrderBean;
 import com.leyuan.aidong.ui.BaseLazyFragment;
+import com.leyuan.aidong.ui.mine.activity.CartActivity;
 import com.leyuan.aidong.ui.mine.activity.OrderDetailActivity;
 import com.leyuan.aidong.ui.mvp.presenter.OrderPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.OrderPresentImpl;
@@ -176,8 +177,8 @@ public class OrderFragment extends BaseLazyFragment implements OrderFragmentView
 
 
         @Override
-        public void onBuyAgain() {
-
+        public void onBuyAgain(String id) {
+            present.reBuyOrder(id);
         }
 
         @Override
@@ -186,6 +187,10 @@ public class OrderFragment extends BaseLazyFragment implements OrderFragmentView
         }
     }
 
+    @Override
+    public void reBuyOrderResult(List<String> cartIds) {
+        CartActivity.start(getContext(),cartIds);
+    }
 
     @Override
     public void cancelOrderResult(BaseBean baseBean) {

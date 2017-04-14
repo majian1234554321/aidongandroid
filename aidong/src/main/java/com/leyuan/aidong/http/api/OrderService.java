@@ -1,6 +1,7 @@
 package com.leyuan.aidong.http.api;
 
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.CartIdBean;
 import com.leyuan.aidong.entity.data.OrderData;
 import com.leyuan.aidong.entity.data.OrderDetailData;
 
@@ -42,4 +43,8 @@ public interface OrderService {
 
     @DELETE("mine/orders/{id}")
     Observable<BaseBean> deleteOrder(@Path("id") String id);
+
+    @FormUrlEncoded
+    @POST("mine/cart/readd")
+    Observable<BaseBean<CartIdBean>> reBuyOrder(@Field("id") String id);
 }

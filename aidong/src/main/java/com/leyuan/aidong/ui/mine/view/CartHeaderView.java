@@ -44,21 +44,23 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
     private CartPresent cartPresent;
     private CartHeaderCallback callback;
     private int goodsCount;
+    private List<String> reBuyIds = new ArrayList<>();
 
-    public CartHeaderView(Context context) {
+    public CartHeaderView(Context context,List<String> reBuyIds) {
         this(context,null,0);
-    }
-
-    public CartHeaderView(Context context, AttributeSet attrs) {
-        super(context, attrs,0);
-    }
-
-    public CartHeaderView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        this.reBuyIds = reBuyIds;
         this.context = context;
         cartPresent = new CartPresentImpl(context, this);
         initView();
         cartPresent.commonLoadData(switcherLayout);
+    }
+
+    public CartHeaderView(Context context, AttributeSet attrs) {
+        this(context, attrs,0);
+    }
+
+    public CartHeaderView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
     }
 
     private void initView(){
@@ -67,7 +69,7 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
         tvRecommend = (TextView) headerView.findViewById(R.id.tv_recommend);
         switcherLayout = new SwitcherLayout(context,shopView);
         shopView.setLayoutManager(new LinearLayoutManager(context));
-        shopAdapter = new CartShopAdapter(context);
+        shopAdapter = new CartShopAdapter(context,reBuyIds);
         shopView.setAdapter(shopAdapter);
         shopAdapter.setShopChangeListener(this);
     }

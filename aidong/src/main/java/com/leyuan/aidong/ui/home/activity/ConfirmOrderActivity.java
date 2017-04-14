@@ -26,6 +26,7 @@ import com.leyuan.aidong.module.pay.SimplePayListener;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.activity.AddAddressActivity;
 import com.leyuan.aidong.ui.mine.activity.CartActivity;
+import com.leyuan.aidong.ui.mine.activity.PaySuccessActivity;
 import com.leyuan.aidong.ui.mine.activity.SelectAddressActivity;
 import com.leyuan.aidong.ui.mine.activity.SelectCouponActivity;
 import com.leyuan.aidong.ui.mine.activity.UpdateDeliveryInfoActivity;
@@ -333,7 +334,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         @Override
         public void onSuccess(String code, Object object) {
             Toast.makeText(ConfirmOrderActivity.this,"支付成功",Toast.LENGTH_LONG).show();
-            startActivity(new Intent(ConfirmOrderActivity.this,AppointSuccessActivity.class));
+            startActivity(new Intent(ConfirmOrderActivity.this,PaySuccessActivity.class));
         }
     };
 

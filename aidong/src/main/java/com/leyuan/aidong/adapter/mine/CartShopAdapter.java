@@ -27,9 +27,11 @@ public class CartShopAdapter extends RecyclerView.Adapter<CartShopAdapter.CartHo
     private Context context;
     private List<ShopBean> data = new ArrayList<>();
     private ShopChangeListener shopChangeListener;
+    private List<String> reBuyIds = new ArrayList<>();
 
-    public CartShopAdapter(Context context) {
+    public CartShopAdapter(Context context,List<String> reBuyIds) {
         this.context = context;
+        this.reBuyIds = reBuyIds;
     }
 
     public void setData(List<ShopBean> data) {
@@ -57,7 +59,7 @@ public class CartShopAdapter extends RecyclerView.Adapter<CartShopAdapter.CartHo
         String type = DELIVERY_EXPRESS.equals(bean.getPickUp().getType()) ? "快递" : "自提";
         holder.tvDeliveryType.setText(type);
         holder.rvShop.setLayoutManager(new LinearLayoutManager(context));
-        final CartGoodsAdapter goodsAdapter = new CartGoodsAdapter(context);
+        final CartGoodsAdapter goodsAdapter = new CartGoodsAdapter(context,reBuyIds);
         holder.rvShop.setAdapter(goodsAdapter);
         goodsAdapter.setData(bean.getItem());
         if (bean.allItemIsSoldOut()) {

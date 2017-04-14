@@ -62,6 +62,7 @@ public class GoodsBean implements Parcelable {
         this.product_id = product_id;
     }
 
+    @GoodsType
     public String getProductType() {
         return product_type;
     }

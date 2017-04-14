@@ -30,9 +30,11 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
     private Context context;
     private List<GoodsBean> data = new ArrayList<>();
     private GoodsChangeListener goodsChangeListener;
+    private List<String> reBuyId;
 
-    public CartGoodsAdapter(Context context) {
+    public CartGoodsAdapter(Context context,List<String> reBuyIds) {
         this.context = context;
+        this.reBuyId = reBuyIds;
     }
 
     public void setData(List<GoodsBean> data) {
@@ -56,6 +58,7 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
     @Override
     public void onBindViewHolder(final GoodsHolder holder, final int position) {
         final GoodsBean bean = data.get(position);
+
         GlideLoader.getInstance().displayImage(bean.getCover(), holder.cover);
         holder.name.setText(bean.getName());
         ArrayList<String> specValue = bean.getSpecValue();

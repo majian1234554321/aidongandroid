@@ -342,7 +342,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
                 orderPresent.deleteOrder(orderId);
                 break;
             case R.id.tv_rebuy:
-
+                orderPresent.reBuyOrder(orderId);
                 break;
             default:
                 break;
@@ -380,6 +380,12 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
     }
 
     @Override
+    public void reBuyOrderResult(List<String> cartIds) {
+        CartActivity.start(this,cartIds);
+    }
+
+
+    @Override
     public void onCheckedChanged(CustomNestRadioGroup group, int checkedId) {
         switch (checkedId){
             case R.id.cb_alipay:
@@ -392,6 +398,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
                 break;
         }
     }
+
 
     @Override
     public void onEnd(CountdownView cv) {
