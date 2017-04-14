@@ -383,12 +383,44 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void setRefreshCartDataResult(List<ShopBean> updatedList) {
         if(updatedList != null) {
-            shopBeanList = updatedList;
+            //这里是直接刷新购物车所以要剔除掉比购物车中多的数据
+            List<String> containGoodsId = new ArrayList<>();
+            for (int i = 0; i < shopBeanList.size(); i++) {
+                for (int j = 0; j < shopBeanList.get(i).getItem().size(); j++) {
+                    containGoodsId.add(shopBeanList.get(i).getItem().get(j).getId());
+                }
+            }
+
+            List<ShopBean> containShop = new ArrayList<>();
+            for (int i = 0; i < updatedList.size(); i++) {
+                for (int j = 0; j < updatedList.get(i).getItem().size(); j++) {
+                    if(containGoodsId.contains(updatedList.get(i).getItem().get(j).getId())){
+                        containShop.add(updatedList.get(i));
+                    }
+                }
+            }
+
+            List<ShopBean> result = new ArrayList<>();
+            for (int i = 0; i < containShop.size(); i++) {
+                ShopBean shop = new ShopBean();
+                shop.setPickUp(containShop.get(i).getPickUp());
+                List<GoodsBean> goodsBeanList = new ArrayList<>();
+                for (int j = 0; j < containShop.get(i).getItem().size(); j++) {
+                    if(containGoodsId.contains(containShop.get(i).getItem().get(j).getId())) {
+                        goodsBeanList.add(containShop.get(i).getItem().get(j));
+                        shop.setItem(goodsBeanList);
+                    }
+                }
+                result.add(shop);
+            }
+
+            shopBeanList = result;
             shopAdapter.setData(shopBeanList);
 
+            //将购物车中的数据传递到购物车界面
             Intent intent = new Intent(this, CartActivity.class);
             intent.putParcelableArrayListExtra("shopBeanList",
-                    (ArrayList<? extends Parcelable>) shopBeanList);
+                    (ArrayList<? extends Parcelable>) updatedList);
             setResult(RESULT_OK,intent);
         }
     }

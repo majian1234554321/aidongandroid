@@ -3,6 +3,8 @@ package com.leyuan.aidong.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.leyuan.aidong.utils.constant.DeliveryType;
+
 import java.util.List;
 
 /**
@@ -11,7 +13,7 @@ import java.util.List;
  */
 public class ShopBean implements Parcelable {
     private List<GoodsBean> item;
-    private DeliveryBean pick_up;
+    private @DeliveryType DeliveryBean pick_up;
 
     private boolean checked = false;            //标记该商店是否被选中
 
