@@ -97,7 +97,7 @@ public class HomePresentImpl implements HomePresent {
                 switcherLayout.showContentLayout();
                 homeFragmentView.updateRecyclerView(homeBeanList);
              /*   if(!homeBeanList.isEmpty()){
-                    homeFragmentView.updateRecyclerView(homeBeanList);
+                    homeFragmentView.updateCartRecyclerView(homeBeanList);
                     switcherLayout.showContentLayout();
                 } else{
                     switcherLayout.showEmptyLayout();

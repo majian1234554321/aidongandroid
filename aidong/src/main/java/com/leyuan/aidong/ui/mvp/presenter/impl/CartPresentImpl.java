@@ -62,7 +62,7 @@ public class CartPresentImpl implements CartPresent{
             public void onNext(ShopData shopData) {
                 if(shopData != null && shopData.getCart() != null  && !shopData.getCart().isEmpty()){
                     switcherLayout.showContentLayout();
-                    cartHeaderView.updateRecyclerView(shopData.getCart());
+                    cartHeaderView.updateCartRecyclerView(shopData.getCart());
                 }else {
                     cartHeaderView.showEmptyGoodsView();
                 }
@@ -76,7 +76,7 @@ public class CartPresentImpl implements CartPresent{
             @Override
             public void onNext(ShopData shopData) {
                 if(shopData != null && shopData.getCart() != null  && !shopData.getCart().isEmpty()){
-                    cartHeaderView.updateRecyclerView(shopData.getCart());
+                    cartHeaderView.updateCartRecyclerView(shopData.getCart());
                 }else {
                     cartHeaderView.showEmptyGoodsView();
                 }

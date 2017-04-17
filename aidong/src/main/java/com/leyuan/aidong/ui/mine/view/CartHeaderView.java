@@ -40,16 +40,16 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
     private RecyclerView shopView;
     private CartShopAdapter shopAdapter;
     private List<ShopBean> shopBeanList = new ArrayList<>();
+    private List<String> reBuyIds = new ArrayList<>();
 
     private CartPresent cartPresent;
     private CartHeaderCallback callback;
     private int goodsCount;
-    private List<String> reBuyIds = new ArrayList<>();
 
     public CartHeaderView(Context context,List<String> reBuyIds) {
         this(context,null,0);
-        this.reBuyIds = reBuyIds;
         this.context = context;
+        this.reBuyIds = reBuyIds;
         cartPresent = new CartPresentImpl(context, this);
         initView();
         cartPresent.commonLoadData(switcherLayout);
@@ -69,7 +69,7 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
         tvRecommend = (TextView) headerView.findViewById(R.id.tv_recommend);
         switcherLayout = new SwitcherLayout(context,shopView);
         shopView.setLayoutManager(new LinearLayoutManager(context));
-        shopAdapter = new CartShopAdapter(context,reBuyIds);
+        shopAdapter = new CartShopAdapter(context);
         shopView.setAdapter(shopAdapter);
         shopAdapter.setShopChangeListener(this);
     }
@@ -83,19 +83,46 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
     }
 
     @Override
-    public void updateRecyclerView(List<ShopBean> list) {
+    public void updateCartRecyclerView(List<ShopBean> list) {
         shopBeanList.clear();
         shopBeanList.addAll(list);
+
+        for (ShopBean shopBean : shopBeanList) {
+            for (GoodsBean bean : shopBean.getItem()) {
+                bean.setChecked(reBuyIds.contains(bean.getId()));
+            }
+        }
+
+        for (ShopBean shopBean : shopBeanList) {
+            boolean isAllShopGoodsSelected = true;
+            for (GoodsBean bean : shopBean.getItem()) {
+                if (!bean.isChecked()) {
+                    isAllShopGoodsSelected = false;
+                    break;
+                }
+            }
+            shopBean.setChecked(isAllShopGoodsSelected);
+        }
+
+        boolean isAllShopSelected = true;
+        for (ShopBean shopBean : shopBeanList) {
+            if(!shopBean.isChecked()){
+                isAllShopSelected = false;
+                break;
+            }
+        }
+
+
         shopAdapter.setData(shopBeanList);
         if(callback != null ){
-            callback.onCartDataLoadFinish();
+            callback.onCartDataLoadFinish(isAllShopSelected);
         }
     }
 
     @Override
     public void showEmptyGoodsView() {
         if(callback != null ){
-            callback.onCartDataLoadFinish();
+            callback.onCartDataLoadFinish(false);
             callback.onAllGoodsDeleted();
         }
         shopBeanList.clear();
@@ -181,11 +208,6 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
         pullToRefreshCartData();
     }
 
-    public void updateCartLocal(List<ShopBean> list){
-        shopBeanList.clear();
-        shopBeanList.addAll(list);
-        shopAdapter.setData(shopBeanList);
-    }
 
     private boolean isAllShopChecked(){
         if(shopBeanList == null || shopBeanList.isEmpty()){
@@ -294,7 +316,7 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
     }
 
     public interface CartHeaderCallback{
-        void onCartDataLoadFinish();
+        void onCartDataLoadFinish(boolean isAllSelected);
         void onAllGoodsDeleted();
         void onAllCheckedChanged(boolean allChecked);
         void onPriceAndSettlementCountChanged(double totalPrice, int settlementCount);

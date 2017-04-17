@@ -34,13 +34,12 @@ public class PaySuccessActivity extends BaseActivity implements View.OnClickList
     private TextView tvOrder;
     private RecommendAdapter recommendAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
-    private RecommendPresent present;
 
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay_success);
-        present = new RecommendPresentImpl(this,this);
+        RecommendPresent present = new RecommendPresentImpl(this,this);
         initView();
         setListener();
         present.pullToRefreshRecommendData(RECOMMEND_CART);
@@ -93,6 +92,7 @@ public class PaySuccessActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void updateRecyclerView(List<GoodsBean> goodsBeanList) {
-
+        recommendAdapter.setData(goodsBeanList);
+        wrapperAdapter.notifyDataSetChanged();
     }
 }

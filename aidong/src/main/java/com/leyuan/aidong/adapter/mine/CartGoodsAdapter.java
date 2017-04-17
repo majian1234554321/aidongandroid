@@ -29,17 +29,27 @@ import java.util.List;
 public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.GoodsHolder> {
     private Context context;
     private List<GoodsBean> data = new ArrayList<>();
-    private GoodsChangeListener goodsChangeListener;
-    private List<String> reBuyId;
 
-    public CartGoodsAdapter(Context context,List<String> reBuyIds) {
+    private GoodsChangeListener goodsChangeListener;
+
+    public CartGoodsAdapter(Context context) {
         this.context = context;
-        this.reBuyId = reBuyIds;
     }
 
     public void setData(List<GoodsBean> data) {
+
         if (data != null) {
             this.data = data;
+
+         /*   for (GoodsBean bean : this.data) {
+                if (this.reBuyIds.contains(bean.getId())) {
+                    bean.setChecked(true);
+                } else {
+                    bean.setChecked(false);
+                }
+            }*/
+
+
             notifyDataSetChanged();
         }
     }

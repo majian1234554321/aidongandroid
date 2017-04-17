@@ -182,7 +182,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
     }
 
     @Override
-    public void onCartDataLoadFinish() {
+    public void onCartDataLoadFinish(boolean isAllSelected) {
         refreshLayout.setRefreshing(false);
         if(isFirstGetData) {
             isFirstGetData = false;
@@ -190,6 +190,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
             bottomLayout.setVisibility(View.VISIBLE);
             cartHeaderView.showRecommendText(!isEditing);
             recommendPresent.pullToRefreshRecommendData(RECOMMEND_CART);
+            rbSelectAll.setChecked(isAllSelected);
         }
     }
 
@@ -225,7 +226,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
         if(resultCode == RESULT_OK){
             if(requestCode == REQUEST_SETTLEMENT_CART){
                 List<ShopBean> shopBeanList = data.getParcelableArrayListExtra("shopBeanList");
-                cartHeaderView.updateCartLocal(shopBeanList);
+                cartHeaderView.updateCartRecyclerView(shopBeanList);
             }
         }
     }

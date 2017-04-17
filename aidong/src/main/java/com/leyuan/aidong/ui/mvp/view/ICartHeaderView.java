@@ -14,7 +14,7 @@ public interface ICartHeaderView {
      * 更新列表
      * @param shopBeanList ShopBean
      */
-    void updateRecyclerView(List<ShopBean> shopBeanList);
+    void updateCartRecyclerView(List<ShopBean> shopBeanList);
 
     /**
      * 显示购物车没有数据布局
