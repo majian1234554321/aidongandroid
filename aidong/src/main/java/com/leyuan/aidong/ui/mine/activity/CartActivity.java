@@ -64,7 +64,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
 
     private RecommendPresent recommendPresent;
     private boolean isEditing = false;
-    private boolean isFirstGetData = true;
+    private boolean needLoadRecommendData = true;
 
     private List<String> reBuyIds = new ArrayList<>();
 
@@ -184,8 +184,8 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
     @Override
     public void onCartDataLoadFinish(boolean isAllSelected) {
         refreshLayout.setRefreshing(false);
-        if(isFirstGetData) {
-            isFirstGetData = false;
+        if(needLoadRecommendData) {
+            needLoadRecommendData = false;
             tvEdit.setVisibility(View.VISIBLE);
             bottomLayout.setVisibility(View.VISIBLE);
             cartHeaderView.showRecommendText(!isEditing);

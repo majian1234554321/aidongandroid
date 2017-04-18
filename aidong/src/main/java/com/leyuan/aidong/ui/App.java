@@ -23,6 +23,8 @@ import com.leyuan.aidong.utils.VersionManager;
 import com.squareup.leakcanary.LeakCanary;
 
 import io.realm.Realm;
+import jp.wasabeef.takt.Seat;
+import jp.wasabeef.takt.Takt;
 
 import static com.leyuan.aidong.utils.Constant.DEFAULT_CITY;
 
@@ -49,6 +51,7 @@ public class App extends MultiDexApplication {
         super.onCreate();
         mInstance = this;
         context = getApplicationContext();
+        Takt.stock(this).seat(Seat.TOP_CENTER).play();
         initConfig();
     }
 
@@ -79,6 +82,12 @@ public class App extends MultiDexApplication {
         mLocationClient.start();
     }
 
+
+
+    @Override public void onTerminate() {
+        Takt.finish();
+        super.onTerminate();
+    }
 
     private void initLocation() {
         LocationClientOption option = new LocationClientOption();

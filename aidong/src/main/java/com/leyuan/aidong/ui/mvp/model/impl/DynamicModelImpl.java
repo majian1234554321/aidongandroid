@@ -77,4 +77,12 @@ public class DynamicModelImpl implements DynamicModel{
                 .compose(RxHelper.<LikeData>transform())
                 .subscribe(subscriber);
     }
+
+    @Override
+    public void reportDynamic(Subscriber<BaseBean> subscriber, String id,String type) {
+        dynamicService.reportDynamic(id,type)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
 }

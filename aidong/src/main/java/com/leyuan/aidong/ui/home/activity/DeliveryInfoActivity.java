@@ -33,7 +33,7 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
     private TextView tvSelfDelivery;
     private LinearLayout deliveryLayout;
     private LinearLayout llDeliveryAddress;
-    private TextView tvVenues;
+    private TextView tvVenuesName;
     private TextView tvVenuesAddress;
 
     private String id;
@@ -61,12 +61,16 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
         tvSelfDelivery = (TextView) findViewById(R.id.tv_self_delivery);
         deliveryLayout = (LinearLayout)findViewById(R.id.ll_self_delivery);
         llDeliveryAddress = (LinearLayout) findViewById(R.id.ll_delivery_address);
-        tvVenues = (TextView) findViewById(R.id.tv_shop);
+        tvVenuesName = (TextView) findViewById(R.id.tv_shop);
         tvVenuesAddress = (TextView) findViewById(R.id.tv_shop_address);
         if(deliveryBean != null) {
-            tvVenues.setText(deliveryBean.getInfo().getName());
+            if(deliveryBean.getType().equals(DELIVERY_EXPRESS)){
+                setExpressSelected();
+            }else {
+                setSelfDeliverySelected();
+            }
+            tvVenuesName.setText(deliveryBean.getInfo().getName());
             tvVenuesAddress.setText(deliveryBean.getInfo().getAddress());
-            tvVenuesAddress.setVisibility(View.VISIBLE);
         }
     }
 
@@ -91,21 +95,10 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
                 compatFinish();
                 break;
             case R.id.tv_express:
-                tvExpress.setTextColor(Color.parseColor("#ffffff"));
-                tvSelfDelivery.setTextColor(Color.parseColor("#000000"));
-                tvExpress.setBackgroundResource(R.drawable.shape_solid_corner_black);
-                tvSelfDelivery.setBackgroundResource(R.drawable.shape_solid_corner_white);
-                deliveryLayout.setVisibility(View.GONE);
-                deliveryBean.setType(DELIVERY_EXPRESS);
-                deliveryBean.getInfo().setGymId(null);
+                setExpressSelected();
                 break;
             case R.id.tv_self_delivery:
-                tvExpress.setTextColor(Color.parseColor("#000000"));
-                tvSelfDelivery.setTextColor(Color.parseColor("#ffffff"));
-                tvExpress.setBackgroundResource(R.drawable.shape_solid_corner_white);
-                tvSelfDelivery.setBackgroundResource(R.drawable.shape_solid_corner_black);
-                deliveryLayout.setVisibility(View.VISIBLE);
-                deliveryBean.setType(DELIVERY_SELF);
+                setSelfDeliverySelected();
                 break;
             case R.id.ll_delivery_address:
                 Intent intent = new Intent(this,SelfDeliveryVenuesActivity.class);
@@ -118,15 +111,33 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
                 break;
             default:
                 break;
-            
         }
+    }
+
+    private void setExpressSelected(){
+        tvExpress.setTextColor(Color.parseColor("#ffffff"));
+        tvSelfDelivery.setTextColor(Color.parseColor("#000000"));
+        tvExpress.setBackgroundResource(R.drawable.shape_solid_corner_black);
+        tvSelfDelivery.setBackgroundResource(R.drawable.shape_solid_corner_white);
+        deliveryLayout.setVisibility(View.GONE);
+        deliveryBean.setType(DELIVERY_EXPRESS);
+    }
+
+
+    private void setSelfDeliverySelected(){
+        tvExpress.setTextColor(Color.parseColor("#000000"));
+        tvSelfDelivery.setTextColor(Color.parseColor("#ffffff"));
+        tvExpress.setBackgroundResource(R.drawable.shape_solid_corner_white);
+        tvSelfDelivery.setBackgroundResource(R.drawable.shape_solid_corner_black);
+        deliveryLayout.setVisibility(View.VISIBLE);
+        deliveryBean.setType(DELIVERY_SELF);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(data != null && requestCode == CODE_SELECT_VENUES){
             VenuesBean venuesBean = data.getParcelableExtra("venues");
-            tvVenues.setText(venuesBean.getName());
+            tvVenuesName.setText(venuesBean.getName());
             tvVenuesAddress.setText(venuesBean.getAddress());
             deliveryBean.setInfo(venuesBean);
         }

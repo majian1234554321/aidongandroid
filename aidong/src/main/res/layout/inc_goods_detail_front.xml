@@ -107,6 +107,8 @@
                 android:layout_marginLeft="7.5dp"
                 android:layout_marginRight="7.5dp"
                 android:paddingBottom="15dp" />
+
+            <include layout="@layout/inc_bold_line"/>
         </LinearLayout>
 
         <LinearLayout
@@ -119,8 +121,8 @@
             android:paddingRight="@dimen/right_margin">
 
             <TextView
-                android:id="@+id/tv_select"
-                android:layout_width="50dp"
+                android:id="@+id/tv_select_sku"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="选择:"
@@ -128,7 +130,7 @@
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/tv_select_specification"
+                android:id="@+id/tv_select_count"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -137,7 +139,7 @@
                 android:drawablePadding="5dp"
                 android:drawableRight="@drawable/icon_right_arrow"
                 android:singleLine="true"
-                android:text=""
+                android:text="1个"
                 android:textColor="@color/black"
                 android:textSize="15sp" />
         </LinearLayout>

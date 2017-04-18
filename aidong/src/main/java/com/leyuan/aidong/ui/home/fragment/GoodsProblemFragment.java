@@ -32,7 +32,8 @@ public class GoodsProblemFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         tvContent = (TextView) view.findViewById(R.id.tv_content);
         if(!TextUtils.isEmpty(content)){
-            RichText.from(content).into(tvContent);
+            RichText.from(content).placeHolder(R.drawable.place_holder_logo)
+                    .error(R.drawable.place_holder_logo).into(tvContent);
         }
     }
 }

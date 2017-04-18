@@ -29,11 +29,11 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
     private SelectSkuListener selectSkuListener;
     private List<String> selectedSkuValues = new ArrayList<>();   //已经选中的sku值
 
-    public GoodsSkuAdapter(Context context, List<LocalGoodsSkuBean> localSkuList, List<GoodsSkuBean> skuList,List<String> selectedSkuVaules) {
+    public GoodsSkuAdapter(Context context, List<LocalGoodsSkuBean> localSkuList, List<GoodsSkuBean> skuList,List<String> selectedSkuValues) {
         this.context = context;
         this.localSkuList = localSkuList;
         this.skuList = skuList;
-        this.selectedSkuValues = selectedSkuVaules;
+        this.selectedSkuValues = selectedSkuValues;
     }
 
     @Override

@@ -103,8 +103,8 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     private LinearLayout couponLayout;
     private RecyclerView couponView;
     private LinearLayout skuLayout;
-    private TextView tvSelect;
-    private TextView tvSku;
+    private TextView tvSelectSku;
+    private TextView tvCount;
     private LinearLayout recommendCodeLayout;
     private TextView tvRecommendCode;
     private LinearLayout addressLayout;
@@ -184,8 +184,8 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         couponLayout = (LinearLayout) findViewById(R.id.ll_coupon);
         couponView = (RecyclerView) findViewById(R.id.rv_coupon);
         skuLayout = (LinearLayout) findViewById(R.id.ll_goods_sku);
-        tvSelect = (TextView) findViewById(R.id.tv_select);
-        tvSku = (TextView) findViewById(R.id.tv_select_specification);
+        tvSelectSku = (TextView) findViewById(R.id.tv_select_sku);
+        tvCount = (TextView) findViewById(R.id.tv_select_count);
         recommendCodeLayout = (LinearLayout) findViewById(R.id.ll_code);
         tvRecommendCode = (TextView) findViewById(R.id.tv_recommend_code);
         addressLayout = (LinearLayout) findViewById(R.id.ll_address);
@@ -301,15 +301,16 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         for (String s : this.bean.spec.name) {
             skuStr.append(s).append(EMPTY_STR);
         }
-        tvSku.setText(skuStr);
+        tvSelectSku.setText(String.format(getString(R.string.sku_select),skuStr));
+
         if (bean.pick_up != null) {
             if (DELIVERY_EXPRESS.equals(bean.pick_up.type)) {
                 tvAddressInfo.setVisibility(View.GONE);
-                tvDeliveryInfo.setText("快递");
+                tvDeliveryInfo.setText(getString(R.string.express));
             } else {
                 tvAddressInfo.setVisibility(View.VISIBLE);
-                tvAddressInfo.setText(bean.pick_up.info.getAddress());
-                tvDeliveryInfo.setText("自提");
+                tvAddressInfo.setText(bean.pick_up.info.getName());
+                tvDeliveryInfo.setText(getString(R.string.self_delivery));
             }
         }
 
@@ -322,85 +323,11 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         if(selectedSkuValues != null) {
             this.selectedSkuValues = selectedSkuValues;
         }
-        tvSelect.setText(isAllSkuConfirm() ? "已选择:" : "选择:");
-        StringBuilder sb = new StringBuilder(skuTip);
-        if(isAllSkuConfirm()){
-            sb.append(count).append("个");
-        }
-        tvSku.setText(sb);
+        tvSelectSku.setText(isAllSkuConfirm() ? String.format(getString(R.string.sku_selected),skuTip)
+                : String.format(getString(R.string.sku_select),skuTip));
+        tvCount.setText(String.format(getString(R.string.count_string),count));
     }
 
-    @Override
-    public void onScrollChanged(ObserveScrollView scrollView, int x, int y, int oldX, int oldY) {
-        int height = DensityUtil.dp2px(this,300);
-        if (y <= 0) {
-            topLayout.setBackgroundColor(Color.argb( 0, 0,0,0));
-        } else if (y > 0 && y <= height) {
-            float ratio = (float) y / height;
-            float alpha = (255 * ratio);
-            topLayout.setBackgroundColor(Color.argb((int) alpha, 0,0,0));
-        } else {
-            topLayout.setBackgroundColor(Color.argb(255, 0,0,0));
-        }
-    }
-
-    @Override
-    public View createTabView(ViewGroup container, int position, PagerAdapter adapter) {
-        View tabView = LayoutInflater.from(this).inflate(R.layout.tab_goods_detail_text, container, false);
-        TextView text = (TextView) tabView.findViewById(R.id.tv_tab_text);
-        String[] campaignTab = getResources().getStringArray(R.array.goodsDetailTab);
-        text.setText(campaignTab[position]);
-        if (position == 0) {
-            text.setTypeface(Typeface.DEFAULT_BOLD);
-        }
-        allTabView.add(tabView);
-        return tabView;
-    }
-
-    @Override
-    public void onDismiss() {
-        rootLayout.animate().scaleY(1f).setInterpolator(new AccelerateInterpolator(2)).start();
-        rootLayout.animate().scaleX(1f).setInterpolator(new AccelerateInterpolator(2)).start();
-    }
-
-    @Override
-    public void onCouponClick(final int position) {
-        if(App.mInstance.isLogin()) {
-            CouponModel model = new CouponModelImpl();
-            model.obtainCoupon(new ProgressSubscriber<BaseBean>(this) {
-                @Override
-                public void onNext(BaseBean baseBean) {
-                    if (baseBean.getStatus() == Constant.OK) {
-                        bean.coupon.get(position).setStatus("1");
-                        couponAdapter.notifyDataSetChanged();
-                        Toast.makeText(GoodsDetailActivity.this, "领取成功", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(GoodsDetailActivity.this, baseBean.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                }
-            }, bean.coupon.get(position).getId());
-        }else {
-            startActivityForResult(new Intent(this,LoginActivity.class),Constant.REQUEST_LOGIN);
-        }
-    }
-
-    private class MyOnSlideDetailsListener implements SlideDetailsLayout.OnSlideDetailsListener{
-        @Override
-        public void onStatusChanged(SlideDetailsLayout.Status status) {
-            if (status == SlideDetailsLayout.Status.OPEN) {
-                tvTip.setText(getString(R.string.tip_close));
-                ivArrow.setBackgroundResource(R.drawable.icon_arrow_down);
-                tvTitle.setVisibility(View.VISIBLE);
-                tvTitle.animate().scaleX(1).scaleY(1).setInterpolator
-                        (new AccelerateDecelerateInterpolator()).setDuration(200).start();
-            } else {
-                tvTip.setText(getString(R.string.tip_open));
-                ivArrow.setBackgroundResource(R.drawable.icon_arrow_up);
-                tvTitle.animate().scaleX(0).scaleY(0).setInterpolator
-                        (new AccelerateDecelerateInterpolator()).setDuration(200).start();
-            }
-        }
-    }
 
     //todo optimize
     private void showSkuPopupWindow(Context context, GoodsDetailBean detailBean, List<String> selectedSkuValues, String from) {
@@ -476,15 +403,13 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         if (requestCode == REQUEST_SELECT_ADDRESS) {
             DeliveryBean deliveryBean = data.getParcelableExtra("deliveryBean");
             bean.pick_up = deliveryBean;
-            if (deliveryBean != null) {
-                if (DELIVERY_EXPRESS.equals(deliveryBean.type)) {
-                    tvAddressInfo.setVisibility(View.GONE);
-                    tvDeliveryInfo.setText("快递");
-                } else {
-                    tvAddressInfo.setVisibility(View.VISIBLE);
-                    tvAddressInfo.setText(deliveryBean.info.getAddress());
-                    tvDeliveryInfo.setText("自提");
-                }
+            if (DELIVERY_EXPRESS.equals(deliveryBean.type)) {
+                tvAddressInfo.setVisibility(View.GONE);
+                tvDeliveryInfo.setText(getString(R.string.express));
+            } else {
+                tvAddressInfo.setVisibility(View.VISIBLE);
+                tvAddressInfo.setText(deliveryBean.info.getName());
+                tvDeliveryInfo.setText(getString(R.string.self_delivery));
             }
         } else if (requestCode == REQUEST_CONFIRM) {
             if (skuPopupWindow != null) {
@@ -511,4 +436,77 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     private boolean isAllSkuConfirm(){
         return this.selectedSkuValues.size() == bean.spec.name.size();
     }
+
+    @Override
+    public void onScrollChanged(ObserveScrollView scrollView, int x, int y, int oldX, int oldY) {
+        int height = DensityUtil.dp2px(this,300);
+        if (y <= 0) {
+            topLayout.setBackgroundColor(Color.argb( 0, 0,0,0));
+        } else if (y > 0 && y <= height) {
+            float ratio = (float) y / height;
+            float alpha = (255 * ratio);
+            topLayout.setBackgroundColor(Color.argb((int) alpha, 0,0,0));
+        } else {
+            topLayout.setBackgroundColor(Color.argb(255, 0,0,0));
+        }
+    }
+
+    @Override
+    public View createTabView(ViewGroup container, int position, PagerAdapter adapter) {
+        View tabView = LayoutInflater.from(this).inflate(R.layout.tab_goods_detail_text, container, false);
+        TextView text = (TextView) tabView.findViewById(R.id.tv_tab_text);
+        String[] campaignTab = getResources().getStringArray(R.array.goodsDetailTab);
+        text.setText(campaignTab[position]);
+        if (position == 0) {
+            text.setTypeface(Typeface.DEFAULT_BOLD);
+        }
+        allTabView.add(tabView);
+        return tabView;
+    }
+
+    @Override
+    public void onDismiss() {
+        rootLayout.animate().scaleY(1f).setInterpolator(new AccelerateInterpolator(2)).start();
+        rootLayout.animate().scaleX(1f).setInterpolator(new AccelerateInterpolator(2)).start();
+    }
+
+    @Override
+    public void onCouponClick(final int position) {
+        if(App.mInstance.isLogin()) {
+            CouponModel model = new CouponModelImpl();
+            model.obtainCoupon(new ProgressSubscriber<BaseBean>(this) {
+                @Override
+                public void onNext(BaseBean baseBean) {
+                    if (baseBean.getStatus() == Constant.OK) {
+                        bean.coupon.get(position).setStatus("1");
+                        couponAdapter.notifyDataSetChanged();
+                        Toast.makeText(GoodsDetailActivity.this, "领取成功", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(GoodsDetailActivity.this, baseBean.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+            }, bean.coupon.get(position).getId());
+        }else {
+            startActivityForResult(new Intent(this,LoginActivity.class),Constant.REQUEST_LOGIN);
+        }
+    }
+
+    private class MyOnSlideDetailsListener implements SlideDetailsLayout.OnSlideDetailsListener{
+        @Override
+        public void onStatusChanged(SlideDetailsLayout.Status status) {
+            if (status == SlideDetailsLayout.Status.OPEN) {
+                tvTip.setText(getString(R.string.tip_close));
+                ivArrow.setBackgroundResource(R.drawable.icon_arrow_down);
+                tvTitle.setVisibility(View.VISIBLE);
+                tvTitle.animate().scaleX(1).scaleY(1).setInterpolator
+                        (new AccelerateDecelerateInterpolator()).setDuration(200).start();
+            } else {
+                tvTip.setText(getString(R.string.tip_open));
+                ivArrow.setBackgroundResource(R.drawable.icon_arrow_up);
+                tvTitle.animate().scaleX(0).scaleY(0).setInterpolator
+                        (new AccelerateDecelerateInterpolator()).setDuration(200).start();
+            }
+        }
+    }
+
 }

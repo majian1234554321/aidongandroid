@@ -189,10 +189,18 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
 
     @Override
     public void updateRecyclerView(List<VenuesBean> venuesBeanList) {
+        for (VenuesBean venuesBean : venuesBeanList) {
+            if(venuesBean.getId().equals(deliveryBean.getInfo().getId())){
+                venuesBean.setChecked(true);
+                break;
+            }
+        }
+
         if(refreshLayout.isRefreshing()){
             data.clear();
             refreshLayout.setRefreshing(false);
         }
+
         data.addAll(venuesBeanList);
         deliveryAdapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();

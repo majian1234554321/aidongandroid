@@ -16,4 +16,5 @@ public interface DynamicDetailActivityView {
     void showEndFooterView();
     void addLikeResult(int position,BaseBean baseBean);
     void cancelLikeResult(int position,BaseBean baseBean);
+    void reportResult(BaseBean baseBean);
 }
