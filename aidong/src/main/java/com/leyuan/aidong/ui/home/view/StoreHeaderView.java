@@ -52,14 +52,14 @@ public class StoreHeaderView extends RelativeLayout{
             }
         });
 
-        headerView.findViewById(R.id.tv_nurture).setOnClickListener(new OnClickListener() {
+        headerView.findViewById(R.id.ll_nurture).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, NurtureActivity.class);
                 (context).startActivity(intent);
             }
         });
-        headerView.findViewById(R.id.tv_equipment).setOnClickListener(new OnClickListener() {
+        headerView.findViewById(R.id.ll_equipment).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, EquipmentActivity.class);

@@ -1,7 +1,9 @@
 package com.leyuan.aidong.ui.mvp.view;
 
 import com.leyuan.aidong.entity.BannerBean;
+import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.HomeBean;
+import com.leyuan.aidong.entity.VenuesBean;
 
 import java.util.List;
 
@@ -34,4 +36,8 @@ public interface HomeFragmentView {
      * 显示FooterView，提示没有任何内容了
      */
     void showEndFooterView();
+
+    void updateSportsHistory(List<VenuesBean> venuesBeanList);
+
+    void updateCourseCategory(List<CategoryBean> courseBeanList);
 }

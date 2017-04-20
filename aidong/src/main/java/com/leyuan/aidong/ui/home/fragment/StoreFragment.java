@@ -11,11 +11,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.adapter.home.StoreAdapter;
-import com.leyuan.aidong.entity.HomeItemBean;
+import com.leyuan.aidong.adapter.home.HomeAdapter;
+import com.leyuan.aidong.entity.BannerBean;
+import com.leyuan.aidong.entity.DynamicBean;
+import com.leyuan.aidong.entity.HomeBean;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.home.activity.SearchActivity;
 import com.leyuan.aidong.ui.home.view.StoreHeaderView;
+import com.leyuan.aidong.ui.home.viewholder.ImageAndHorizontalListHolder;
+import com.leyuan.aidong.ui.home.viewholder.TitleAndVerticalListHolder;
 import com.leyuan.aidong.ui.mvp.presenter.HomePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.HomePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.StoreFragmentView;
@@ -26,19 +30,23 @@ import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.leyuan.aidong.utils.Constant.HOME_IMAGE_AND_HORIZONTAL_LIST;
+import static com.leyuan.aidong.utils.Constant.HOME_TITLE_AND_VERTICAL_LIST;
+
 /**
  * 商城
  * Created by song on 2017/4/12.
  */
 public class StoreFragment extends BaseFragment implements StoreFragmentView{
+    private static final String TYPE_STORE = "market";
     private ImageView ivSearch;
     private StoreHeaderView headerView;
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
-    private StoreAdapter storeAdapter;
+    private HomeAdapter homeAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
-    private List<HomeItemBean> data = new ArrayList<>();
+    private List<HomeBean> data = new ArrayList<>();
 
     private HomePresent homePresent;
 
@@ -53,18 +61,24 @@ public class StoreFragment extends BaseFragment implements StoreFragmentView{
         homePresent = new HomePresentImpl(getContext(),this);
         initView(view);
         setListener();
-        homePresent.commonLoadStoreData(switcherLayout);
+        initData();
+
     }
 
     private void initView(View view){
         ivSearch = (ImageView) view.findViewById(R.id.iv_search);
         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout);
-        switcherLayout = new SwitcherLayout(getContext(),recyclerView);
+        switcherLayout = new SwitcherLayout(getContext(),refreshLayout);
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_goods);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         headerView = new StoreHeaderView(getContext());
-        storeAdapter = new StoreAdapter(getContext());
-        wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(storeAdapter);
+        HomeAdapter.Builder<DynamicBean> builder = new HomeAdapter.Builder<>(getContext());
+        builder.addType(ImageAndHorizontalListHolder.class,
+                HOME_IMAGE_AND_HORIZONTAL_LIST, R.layout.vh_image_and_horizontal_list)
+                .addType(TitleAndVerticalListHolder.class,
+                        HOME_TITLE_AND_VERTICAL_LIST, R.layout.vh_title_and_vertical_list);
+        homeAdapter = builder.build();
+        wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(homeAdapter);
         recyclerView.setAdapter(wrapperAdapter);
         RecyclerViewUtils.setHeaderView(recyclerView, headerView);
     }
@@ -81,20 +95,36 @@ public class StoreFragment extends BaseFragment implements StoreFragmentView{
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                homePresent.commonLoadStoreData(switcherLayout);
+                homePresent.commonLoadData(switcherLayout,TYPE_STORE);
             }
         });
     }
 
 
+    private void initData(){
+        homePresent.getStoreBanners();
+        homePresent.commonLoadData(switcherLayout,TYPE_STORE);
+    }
+
     @Override
-    public void updateRecyclerView(List<HomeItemBean> homeBeanList) {
+    public void updateBanners(List<BannerBean> bannerBeanList) {
+        if (bannerBeanList != null && !bannerBeanList.isEmpty()) {
+            headerView.getBannerView().setVisibility(View.VISIBLE);
+            headerView.getBannerView().setAutoPlayAble(bannerBeanList.size() > 1);
+            headerView.getBannerView().setData(bannerBeanList, null);
+        } else {
+            headerView.getBannerView().setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void updateRecyclerView(List<HomeBean> homeBeanList) {
         if (refreshLayout.isRefreshing()) {
             data.clear();
             refreshLayout.setRefreshing(false);
         }
         data.addAll(homeBeanList);
-        storeAdapter.setData(data);
+        homeAdapter.updateData(data);
         wrapperAdapter.notifyDataSetChanged();
     }
 }

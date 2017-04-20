@@ -72,8 +72,8 @@ public class HomePresentImpl implements HomePresent {
     }
 
     @Override
-    public void getPopupBanner() {
-        homeFragmentView.updatePopupBanner(homeModel.getPopupBanners());
+    public void getHomePopupBanner() {
+        homeFragmentView.updatePopupBanner(homeModel.getHomePopupBanners());
     }
 
     @Override
@@ -82,12 +82,27 @@ public class HomePresentImpl implements HomePresent {
     }
 
     @Override
-    public void getBanners() {
-        homeFragmentView.updateBanner(homeModel.getBanners());
+    public void getHomeBanners() {
+        homeFragmentView.updateBanner(homeModel.getHomeBanners());
     }
 
     @Override
-    public void commonLoadData(final SwitcherLayout switcherLayout) {
+    public void getStoreBanners() {
+        storeFragmentView.updateBanners(homeModel.getStoreBanners());
+    }
+
+    @Override
+    public void getSportHistory() {
+        homeFragmentView.updateSportsHistory(homeModel.getSportsHistory());
+    }
+
+    @Override
+    public void getCourseCategoryList() {
+        homeFragmentView.updateCourseCategory(homeModel.getCourseCategory());
+    }
+
+    @Override
+    public void commonLoadData(final SwitcherLayout switcherLayout,String type) {
         homeModel.getRecommendList(new CommonSubscriber<HomeData>(switcherLayout) {
             @Override
             public void onNext(HomeData homeData) {
@@ -95,7 +110,12 @@ public class HomePresentImpl implements HomePresent {
                     homeBeanList = homeData.getHome();
                 }
                 switcherLayout.showContentLayout();
-                homeFragmentView.updateRecyclerView(homeBeanList);
+                if(homeFragmentView != null) {
+                    homeFragmentView.updateRecyclerView(homeBeanList);
+                }
+                if(storeFragmentView != null){
+                    storeFragmentView.updateRecyclerView(homeBeanList);
+                }
              /*   if(!homeBeanList.isEmpty()){
                     homeFragmentView.updateCartRecyclerView(homeBeanList);
                     switcherLayout.showContentLayout();
@@ -104,28 +124,38 @@ public class HomePresentImpl implements HomePresent {
                 }*/
 
             }
-        },Constant.PAGE_FIRST);
+        },Constant.PAGE_FIRST,type);
     }
 
     @Override
-    public void pullToRefreshHomeData() {
+    public void pullToRefreshHomeData(String type) {
         homeModel.getRecommendList(new RefreshSubscriber<HomeData>(context) {
             @Override
             public void onNext(HomeData homeBean) {
                 if(homeBean != null && homeBean.getHome() != null){
-                    homeFragmentView.updateRecyclerView(homeBean.getHome());
+                    if(homeFragmentView != null) {
+                        homeFragmentView.updateRecyclerView(homeBean.getHome());
+                    }
+                    if(storeFragmentView != null){
+                        storeFragmentView.updateRecyclerView(homeBean.getHome());
+                    }
                 }
             }
-        }, Constant.PAGE_FIRST);
+        }, Constant.PAGE_FIRST,type);
     }
 
     @Override
-    public void requestMoreHomeData(RecyclerView recyclerView, final int pageSize, int page) {
+    public void requestMoreHomeData(RecyclerView recyclerView, final int pageSize, int page,String type) {
         homeModel.getRecommendList(new RequestMoreSubscriber<HomeData>(context,recyclerView,pageSize) {
             @Override
             public void onNext(HomeData homeBean) {
                 if(homeBean != null && homeBean.getHome()!= null){
-                    homeFragmentView.updateRecyclerView(homeBean.getHome());
+                    if(homeFragmentView != null) {
+                        homeFragmentView.updateRecyclerView(homeBean.getHome());
+                    }
+                    if(storeFragmentView != null){
+                        storeFragmentView.updateRecyclerView(homeBean.getHome());
+                    }
                 }
 
                 //没有更多数据了显示到底提示
@@ -133,7 +163,7 @@ public class HomePresentImpl implements HomePresent {
                     homeFragmentView.showEndFooterView();
                 }
             }
-        }, 1);
+        }, page,type);
     }
 
     @Override
@@ -160,15 +190,5 @@ public class HomePresentImpl implements HomePresent {
                 }
             }
         },id,page);
-    }
-
-    @Override
-    public void commonLoadStoreData(SwitcherLayout switcherLayout) {
-
-    }
-
-    @Override
-    public void pullToRefreshStoreData() {
-
     }
 }

@@ -7,10 +7,11 @@ import android.text.TextUtils;
 import android.util.Base64;
 
 import com.leyuan.aidong.entity.BannerBean;
-import com.leyuan.aidong.entity.DistrictBean;
 import com.leyuan.aidong.entity.CategoryBean;
+import com.leyuan.aidong.entity.DistrictBean;
 import com.leyuan.aidong.entity.SystemBean;
 import com.leyuan.aidong.entity.UserBean;
+import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.entity.data.FollowData;
 
 import java.io.ByteArrayInputStream;
@@ -24,134 +25,19 @@ import java.util.List;
 
 /**
  * 获取系统配置信息帮助类
- * app启动时发送获取最新配置的网络请求，将配置信息保存到本地
+ * app启动时发送获取最新配置的网络请求，将配置信息赋值给常亮并保存到本地
  * 当需要使用到配置信息时，先从内存读取，如果没有再从本地获取
  * Created by song on 2016/11/10.
  */
 public class SystemInfoUtils {
     public static final String KEY_SYSTEM = "system";
     public static final String KEY_FOLLOW = "follow";
-    // 0-开机广告 1-首页广告位 2-弹出广告位 3-发现广告位
+    // 0-开机广告 1-首页广告位 2-弹出广告位 3-发现广告位 4-商城广告位
     private static final String BANNER_SPLASH = "0";
     private static final String BANNER_HOME = "1";
-    private static final String BOUNCED_AD = "2";
+    private static final String BANNER_HOME_BOUNCED = "2";
     private static final String BANNER_DISCOVER = "3";
-
-
-    public static List<UserBean> getFollowList(Context context) {
-        List<UserBean> followList = new ArrayList<>();
-        if (Constant.followData != null && Constant.followData.getFollow() != null) {
-            followList = Constant.followData.getFollow();
-        } else {
-            Object bean = getSystemInfoBean(context, KEY_FOLLOW);
-            if (bean instanceof FollowData) {
-                followList = ((FollowData) bean).getFollow();
-            }
-        }
-        return followList;
-    }
-
-    public static void removeFollow(UserBean bean) {
-        if (Constant.followData == null || Constant.followData.getFollow() == null
-                || bean == null || TextUtils.isEmpty(bean.getId())) {
-            return;
-        }
-        int index = -1;
-        List<UserBean> followList = Constant.followData.getFollow();
-
-        for (int i = 0; i < followList.size(); i++) {
-            if (bean.getId().equals(followList.get(i).getId())) {
-                index = i;
-                break;
-            }
-        }
-        if (index != -1) {
-            followList.remove(index);
-        }
-    }
-
-    public static void addFollow(UserBean bean) {
-        if (bean != null) {
-            Constant.followData.getFollow().add(bean);
-        }
-    }
-
-    /**
-     * 获取发现广告
-     */
-    public static List<BannerBean> getDiscoverBanner(Context context) {
-        List<BannerBean> bannerBeanList = new ArrayList<>();
-        List<BannerBean> discoverBannerBeanList = new ArrayList<>();
-        if (Constant.systemInfoBean != null && Constant.systemInfoBean.getBanner() != null) {
-            bannerBeanList = Constant.systemInfoBean.getBanner();
-        } else {
-            Object bean = getSystemInfoBean(context, KEY_SYSTEM);
-            if (bean instanceof SystemBean) {
-                bannerBeanList = ((SystemBean) bean).getBanner();
-            }
-        }
-
-        for (BannerBean bannerBean : bannerBeanList) {
-            if (BANNER_DISCOVER.equals(bannerBean.getPosition())) {
-                discoverBannerBeanList.add(bannerBean);
-            }
-        }
-        return discoverBannerBeanList;
-    }
-
-
-    public static boolean isFollow(Context context, String uid){
-        boolean isFollow = false;
-        List<UserBean> followList = getFollowList(context);
-        for (UserBean userBean : followList) {
-            if(userBean.getId().equals(uid)){
-                isFollow = true;
-                break;
-            }
-        }
-        return isFollow;
-    }
-
-
-    public static boolean isFollow(Context context, UserBean bean) {
-
-        boolean isFollow = false;
-        List<UserBean> followList = getFollowList(context);
-        for (UserBean userBean : followList) {
-            if (bean == null) {
-                return false;
-            }
-            if (userBean.getId().equals(bean.getId())) {
-                isFollow = true;
-                break;
-            }
-        }
-        return isFollow;
-    }
-
-
-    /**
-     * 获取首页广告
-     */
-    public static List<BannerBean> getHomeBanner(Context context) {
-        List<BannerBean> bannerBeanList = new ArrayList<>();
-        List<BannerBean> homeBannerBeanList = new ArrayList<>();
-        if (Constant.systemInfoBean != null && Constant.systemInfoBean.getBanner() != null) {
-            bannerBeanList = Constant.systemInfoBean.getBanner();
-        } else {
-            Object bean = getSystemInfoBean(context, KEY_SYSTEM);
-            if (bean instanceof SystemBean) {
-                bannerBeanList = ((SystemBean) bean).getBanner();
-            }
-        }
-
-        for (BannerBean bannerBean : bannerBeanList) {
-            if (BANNER_HOME.equals(bannerBean.getPosition())) {
-                homeBannerBeanList.add(bannerBean);
-            }
-        }
-        return homeBannerBeanList;
-    }
+    private static final String BANNER_STORE = "4";
 
     /**
      * 获取闪屏页广告
@@ -177,6 +63,29 @@ public class SystemInfoUtils {
     }
 
     /**
+     * 获取首页广告
+     */
+    public static List<BannerBean> getHomeBanner(Context context) {
+        List<BannerBean> bannerBeanList = new ArrayList<>();
+        List<BannerBean> homeBannerBeanList = new ArrayList<>();
+        if (Constant.systemInfoBean != null && Constant.systemInfoBean.getBanner() != null) {
+            bannerBeanList = Constant.systemInfoBean.getBanner();
+        } else {
+            Object bean = getSystemInfoBean(context, KEY_SYSTEM);
+            if (bean instanceof SystemBean) {
+                bannerBeanList = ((SystemBean) bean).getBanner();
+            }
+        }
+
+        for (BannerBean bannerBean : bannerBeanList) {
+            if (BANNER_HOME.equals(bannerBean.getPosition())) {
+                homeBannerBeanList.add(bannerBean);
+            }
+        }
+        return homeBannerBeanList;
+    }
+
+    /**
      * 获取首页弹框广告 支持多张图片
      */
     public static List<BannerBean> getHomePopupBanner(Context context) {
@@ -191,12 +100,59 @@ public class SystemInfoUtils {
             }
         }
         for (BannerBean bannerBean : bannerBeanList) {
-            if (BOUNCED_AD.equals(bannerBean.getPosition())) {
+            if (BANNER_HOME_BOUNCED.equals(bannerBean.getPosition())) {
                 popupBannerList.add(bannerBean);
                 break;
             }
         }
         return popupBannerList;
+    }
+
+
+    /**
+     * 获取商城广告
+     */
+    public static List<BannerBean> getStoreBanner(Context context) {
+        List<BannerBean> bannerBeanList = new ArrayList<>();
+        List<BannerBean> discoverBannerBeanList = new ArrayList<>();
+        if (Constant.systemInfoBean != null && Constant.systemInfoBean.getBanner() != null) {
+            bannerBeanList = Constant.systemInfoBean.getBanner();
+        } else {
+            Object bean = getSystemInfoBean(context, KEY_SYSTEM);
+            if (bean instanceof SystemBean) {
+                bannerBeanList = ((SystemBean) bean).getBanner();
+            }
+        }
+
+        for (BannerBean bannerBean : bannerBeanList) {
+            if (BANNER_STORE.equals(bannerBean.getPosition())) {
+                discoverBannerBeanList.add(bannerBean);
+            }
+        }
+        return discoverBannerBeanList;
+    }
+
+    /**
+     * 获取发现广告
+     */
+    public static List<BannerBean> getDiscoverBanner(Context context) {
+        List<BannerBean> bannerBeanList = new ArrayList<>();
+        List<BannerBean> discoverBannerBeanList = new ArrayList<>();
+        if (Constant.systemInfoBean != null && Constant.systemInfoBean.getBanner() != null) {
+            bannerBeanList = Constant.systemInfoBean.getBanner();
+        } else {
+            Object bean = getSystemInfoBean(context, KEY_SYSTEM);
+            if (bean instanceof SystemBean) {
+                bannerBeanList = ((SystemBean) bean).getBanner();
+            }
+        }
+
+        for (BannerBean bannerBean : bannerBeanList) {
+            if (BANNER_DISCOVER.equals(bannerBean.getPosition())) {
+                discoverBannerBeanList.add(bannerBean);
+            }
+        }
+        return discoverBannerBeanList;
     }
 
     /**
@@ -213,6 +169,24 @@ public class SystemInfoUtils {
             return null;
         }
     }
+
+    /**
+     * 获取运动足记
+     * @param context
+     * @return
+     */
+    public static List<VenuesBean> getSportsHistory(Context context){
+        if (Constant.systemInfoBean != null && Constant.systemInfoBean.getGyms() != null) { //内存有直接从内存读取返回
+            return Constant.systemInfoBean.getGyms();
+        } else {          // 从本地读取
+            Object bean = getSystemInfoBean(context, KEY_SYSTEM);
+            if (bean instanceof SystemBean) {
+                return ((SystemBean) bean).getGyms();
+            }
+            return null;
+        }
+    }
+
 
     /**
      * 获取预约倒计时
@@ -320,6 +294,100 @@ public class SystemInfoUtils {
             return null;
         }
     }
+
+
+    /**
+     * 获取关注列表
+     * @param context
+     * @return
+     */
+    public static List<UserBean> getFollowList(Context context) {
+        List<UserBean> followList = new ArrayList<>();
+        if (Constant.followData != null && Constant.followData.getFollow() != null) {
+            followList = Constant.followData.getFollow();
+        } else {
+            Object bean = getSystemInfoBean(context, KEY_FOLLOW);
+            if (bean instanceof FollowData) {
+                followList = ((FollowData) bean).getFollow();
+            }
+        }
+        return followList;
+    }
+
+    /**
+     * 判断是否关注
+     * @param context
+     * @param uid
+     * @return
+     */
+    public static boolean isFollow(Context context, String uid){
+        boolean isFollow = false;
+        List<UserBean> followList = getFollowList(context);
+        for (UserBean userBean : followList) {
+            if(userBean.getId().equals(uid)){
+                isFollow = true;
+                break;
+            }
+        }
+        return isFollow;
+    }
+
+    /**
+     * 判断是否关注
+     * @param context
+     * @param bean
+     * @return
+     */
+    public static boolean isFollow(Context context, UserBean bean) {
+
+        boolean isFollow = false;
+        List<UserBean> followList = getFollowList(context);
+        for (UserBean userBean : followList) {
+            if (bean == null) {
+                return false;
+            }
+            if (userBean.getId().equals(bean.getId())) {
+                isFollow = true;
+                break;
+            }
+        }
+        return isFollow;
+    }
+
+    /**
+     * 添加关注
+     * @param bean
+     */
+    public static void addFollow(UserBean bean) {
+        if (bean != null) {
+            Constant.followData.getFollow().add(bean);
+        }
+    }
+
+    /**
+     * 删除关注
+     * @param bean
+     */
+    public static void removeFollow(UserBean bean) {
+        if (Constant.followData == null || Constant.followData.getFollow() == null
+                || bean == null || TextUtils.isEmpty(bean.getId())) {
+            return;
+        }
+        int index = -1;
+        List<UserBean> followList = Constant.followData.getFollow();
+
+        for (int i = 0; i < followList.size(); i++) {
+            if (bean.getId().equals(followList.get(i).getId())) {
+                index = i;
+                break;
+            }
+        }
+        if (index != -1) {
+            followList.remove(index);
+        }
+    }
+
+
 
     /**
      * 存放实体类以及任意类型

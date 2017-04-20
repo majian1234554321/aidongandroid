@@ -97,6 +97,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".ui.home.activity.CourseCategoryActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".ui.mine.activity.account.UserAgreementActivity"
             android:screenOrientation="portrait" />
 

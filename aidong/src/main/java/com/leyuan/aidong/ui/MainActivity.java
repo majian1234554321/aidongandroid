@@ -17,6 +17,7 @@ import com.leyuan.aidong.module.chat.manager.EmMessageManager;
 import com.leyuan.aidong.receivers.ChatMessageReceiver;
 import com.leyuan.aidong.ui.discover.fragment.DiscoverHomeFragment;
 import com.leyuan.aidong.ui.home.fragment.HomeFragment;
+import com.leyuan.aidong.ui.home.fragment.StoreFragment;
 import com.leyuan.aidong.ui.mine.fragment.MineFragment;
 import com.leyuan.aidong.ui.video.fragment.VideoHomeFragment;
 import com.leyuan.aidong.utils.Constant;
@@ -30,6 +31,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private RelativeLayout tabNearLayout;
     private RelativeLayout tabFoundLayout;
+    private RelativeLayout tabStoreLayout;
     private RelativeLayout tabDiscoverLayout;
     private RelativeLayout tabMineLayout;
     private ImageView img_new_message;
@@ -55,6 +57,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private void initView() {
         tabNearLayout = (RelativeLayout) findViewById(R.id.tabNearLayout);
         tabFoundLayout = (RelativeLayout) findViewById(R.id.tabFoundLayout);
+        tabStoreLayout = (RelativeLayout) findViewById(R.id.tabStoreLayout);
         tabDiscoverLayout = (RelativeLayout) findViewById(R.id.tabContactorLayout);
         tabMineLayout = (RelativeLayout) findViewById(R.id.tabMineLayout);
         img_new_message = (ImageView) findViewById(R.id.img_new_message);
@@ -64,6 +67,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         initFragments();
         tabNearLayout.setOnClickListener(this);
         tabFoundLayout.setOnClickListener(this);
+        tabStoreLayout.setOnClickListener(this);
         tabDiscoverLayout.setOnClickListener(this);
         tabMineLayout.setOnClickListener(this);
 
@@ -77,6 +81,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         fm = getSupportFragmentManager();
         mFragments.add(new HomeFragment());
         mFragments.add(new VideoHomeFragment());
+        mFragments.add(new StoreFragment());
         mFragments.add(new DiscoverHomeFragment());
         mFragments.add(new MineFragment());
         setTabSelection(0);
@@ -105,13 +110,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 setTabSelection(1);
                 showFragment(1);
                 break;
-            case R.id.tabContactorLayout:
+            case R.id.tabStoreLayout:
                 setTabSelection(2);
                 showFragment(2);
                 break;
-            case R.id.tabMineLayout:
+            case R.id.tabContactorLayout:
                 setTabSelection(3);
                 showFragment(3);
+                break;
+            case R.id.tabMineLayout:
+                setTabSelection(4);
+                showFragment(4);
                 break;
             default:
                 break;
@@ -151,10 +160,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 tabFoundLayout.setClickable(false);
                 break;
             case 2:
+                tabStoreLayout.setSelected(true);
+                tabStoreLayout.setClickable(false);
+                break;
+            case 3:
                 tabDiscoverLayout.setSelected(true);
                 tabDiscoverLayout.setClickable(false);
                 break;
-            case 3:
+            case 4:
                 tabMineLayout.setSelected(true);
                 tabMineLayout.setClickable(false);
                 break;
@@ -164,11 +177,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void resetTabBtn() {
         tabNearLayout.setSelected(false);
         tabFoundLayout.setSelected(false);
+        tabStoreLayout.setSelected(false);
         tabDiscoverLayout.setSelected(false);
         tabMineLayout.setSelected(false);
 
         tabNearLayout.setClickable(true);
         tabFoundLayout.setClickable(true);
+        tabStoreLayout.setClickable(true);
         tabDiscoverLayout.setClickable(true);
         tabMineLayout.setClickable(true);
     }

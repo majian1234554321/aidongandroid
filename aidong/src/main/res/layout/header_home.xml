@@ -10,191 +10,146 @@
         android:id="@+id/banner"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:background="@color/white"
         app:banner_pageChangeDuration="5000"
         app:banner_pointAutoPlayAble="true"
         app:banner_pointContainerBackground="@android:color/transparent"
         app:banner_pointDrawable="@drawable/selector_banner"
         app:banner_pointTopBottomMargin="5dp"
-        app:banner_transitionEffect="depth"
-        android:background="@color/white"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/tv_course"
-            android:layout_width="@dimen/pref_0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/home_course"
-            android:textSize="13sp"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:clickable="true"
-            android:background="?selectableItemBackground"
-            android:drawableTop="@drawable/home_course"/>
-
-        <TextView
-            android:id="@+id/tv_nurture"
-            android:layout_width="@dimen/pref_0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/home_nurture"
-            android:textSize="13sp"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:clickable="true"
-            android:background="?selectableItemBackground"
-            android:drawableTop="@drawable/home_nurture"/>
-
-        <TextView
-            android:id="@+id/tv_food"
-            android:layout_width="@dimen/pref_0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/home_food"
-            android:textSize="13sp"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:clickable="true"
-            android:background="?selectableItemBackground"
-            android:drawableTop="@drawable/home_food"
-            android:visibility="gone"/>
-        <TextView
-            android:id="@+id/tv_activity"
-            android:layout_width="@dimen/pref_0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/home_activity"
-            android:textSize="13sp"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:clickable="true"
-            android:background="?selectableItemBackground"
-            android:drawableTop="@drawable/home_activity"/>
-        <TextView
-            android:id="@+id/tv_equipment"
-            android:layout_width="@dimen/pref_0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/home_equipment"
-            android:textSize="13sp"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:clickable="true"
-            android:background="?selectableItemBackground"
-            android:drawableTop="@drawable/home_equipment"/>
-    </LinearLayout>
+        app:banner_transitionEffect="depth" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="90dp"
         android:orientation="horizontal"
         android:visibility="gone">
+
         <TextView
 
             android:layout_width="@dimen/pref_0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/home_activity"
-            android:textSize="13sp"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:clickable="true"
             android:background="?selectableItemBackground"
-            android:drawableTop="@drawable/home_activity"/>
+            android:clickable="true"
+            android:drawableTop="@drawable/home_activity"
+            android:gravity="center"
+            android:text="@string/home_activity"
+            android:textColor="@color/black"
+            android:textSize="13sp" />
+
         <TextView
             android:layout_width="@dimen/pref_0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/home_equipment"
-            android:textSize="13sp"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:clickable="true"
             android:background="?selectableItemBackground"
-            android:drawableTop="@drawable/home_equipment"/>
+            android:clickable="true"
+            android:drawableTop="@drawable/home_equipment"
+            android:gravity="center"
+            android:text="@string/home_equipment"
+            android:textColor="@color/black"
+            android:textSize="13sp" />
+
         <TextView
             android:id="@+id/tv_competition"
             android:layout_width="@dimen/pref_0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/home_competition"
-            android:textSize="13sp"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:clickable="true"
-            android:visibility="invisible"
             android:background="?selectableItemBackground"
-            android:drawableTop="@drawable/home_competition"/>
+            android:clickable="true"
+            android:drawableTop="@drawable/home_competition"
+            android:gravity="center"
+            android:text="@string/home_competition"
+            android:textColor="@color/black"
+            android:textSize="13sp"
+            android:visibility="invisible" />
     </LinearLayout>
 
-    <include layout="@layout/inc_line"/>
+    <include layout="@layout/inc_line" />
 
     <LinearLayout
+        android:id="@+id/ll_sport_history"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:paddingLeft="@dimen/left_margin"
-        android:paddingRight="@dimen/right_margin"
-        android:orientation="horizontal"
-        android:visibility="gone">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/home_sport"
-            android:layout_gravity="center_vertical"/>
-
-        <View
-            android:layout_width="0.5dp"
-            android:layout_height="40dp"
-            android:background="@color/line_color"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"/>
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/left_margin"
+            android:paddingRight="@dimen/right_margin"
+            android:visibility="visible">
 
             <ImageView
-                android:id="@+id/iv_venues_cover"
-                android:layout_width="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/home_sport" />
+
+            <View
+                android:layout_width="0.5dp"
                 android:layout_height="40dp"
-                android:src="@drawable/place_holder_logo"
-                android:layout_centerVertical="true"/>
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/line_color" />
 
-            <TextView
-                android:id="@+id/tv_venues_name"
+            <com.gongwen.marqueen.MarqueeView
+                android:id="@+id/marquee_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:background="@color/white"/>
+
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="爱动健身(长丰店)"
-                android:textColor="@color/c3"
-                android:textSize="15sp"
-                android:layout_toRightOf="@+id/iv_venues_cover"
-                android:layout_alignTop="@+id/iv_venues_cover"
-                android:layout_marginLeft="15dp"
-                android:singleLine="true" />
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/icon_right_arrow" />
+        </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_venues_distance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2.8km"
-                android:textColor="@color/c9"
-                android:textSize="13sp"
-                android:layout_toRightOf="@+id/iv_venues_cover"
-                android:layout_alignBottom="@+id/iv_venues_cover"
-                android:layout_marginLeft="15dp"
-                android:singleLine="true" />
-        </RelativeLayout>
+        <include layout="@layout/inc_bold_line"/>
 
-        <ImageView
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_course"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/icon_right_arrow"/>
+            android:layout_height="55dp"
+            android:layout_gravity="center"
+            android:drawableLeft="@drawable/icon_point"
+            android:drawablePadding="5dp"
+            android:drawableRight="@drawable/icon_point"
+            android:gravity="center"
+            android:text="热门课程"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_course"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_more_course"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            android:drawablePadding="10dp"
+            android:drawableRight="@drawable/icon_right_arrow"
+            android:gravity="center"
+            android:text="查看全部"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <include layout="@layout/inc_bold_line"/>
     </LinearLayout>
 </LinearLayout>

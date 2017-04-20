@@ -10,12 +10,12 @@
         android:id="@+id/tv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="内容"
+        android:text="111"
         android:padding="10dp"
         android:textColor="@color/c3"
         android:textSize="14sp"
         android:layout_marginLeft="2dp"
-        android:layout_marginRight="2dp"/>
+        android:layout_marginRight="2dp" />
 
     <!--点赞布局-->
     <LinearLayout

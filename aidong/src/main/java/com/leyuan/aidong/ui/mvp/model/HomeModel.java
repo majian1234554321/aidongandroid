@@ -1,6 +1,8 @@
 package com.leyuan.aidong.ui.mvp.model;
 
 import com.leyuan.aidong.entity.BannerBean;
+import com.leyuan.aidong.entity.CategoryBean;
+import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.entity.data.BrandData;
 import com.leyuan.aidong.entity.data.HomeData;
 
@@ -18,7 +20,7 @@ public interface HomeModel {
      * @param subscriber Subscriber
      * @param page 页码
      */
-    void getRecommendList(Subscriber<HomeData> subscriber, int page);
+    void getRecommendList(Subscriber<HomeData> subscriber, int page,String list);
 
     /**
      * 获取首页分类详情
@@ -29,19 +31,32 @@ public interface HomeModel {
     void getBrandDetail(Subscriber<BrandData> subscriber, String id, int page);
 
     /**
-     * 获取Banner
+     * 获取首页Banner
      */
-    List<BannerBean> getBanners();
+    List<BannerBean> getHomeBanners();
+
+    /**
+     * 获取商城Banner
+     */
+    List<BannerBean> getStoreBanners();
 
     /**
      * 获取首页弹出式广告
      * @return
      */
-    List<BannerBean> getPopupBanners();
+    List<BannerBean> getHomePopupBanners();
 
+    /**
+     * 获取运动足记
+     * @return
+     */
+    List<VenuesBean> getSportsHistory();
     /**
      * 获取开通城市
      * @return
      */
     List<String> getOpenCity();
+
+
+    List<CategoryBean>  getCourseCategory();
 }
