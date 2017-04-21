@@ -237,4 +237,14 @@ public class DynamicPresentImpl implements DynamicPresent {
             }
         }, dynamicId, page);
     }
+
+    @Override
+    public void reportDynamic(String id, String type) {
+        dynamicModel.reportDynamic(new ProgressSubscriber<BaseBean>(context) {
+            @Override
+            public void onNext(BaseBean baseBean) {
+                dynamicDetailActivityView.reportResult(baseBean);
+            }
+        },id,type);
+    }
 }

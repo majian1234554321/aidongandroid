@@ -65,8 +65,7 @@ public abstract class BaseHolderViewAdapter<T> extends RecyclerView.Adapter<Base
 
     protected abstract BaseRecyclerViewHolder getViewHolder(ViewGroup parent, View inflatedView, int viewType);
 
-    protected abstract int getLayoutResId(int viewType);
-
-
-
+    protected  int getLayoutResId(int viewType){
+        return 0;
+    }
 }

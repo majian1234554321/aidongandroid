@@ -3,6 +3,8 @@ package com.leyuan.aidong.ui.mvp.view;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.OrderDetailBean;
 
+import java.util.List;
+
 /**
  * 订单详情
  * Created by song on 2016/8/30.
@@ -33,4 +35,10 @@ public interface OrderDetailActivityView {
      */
     void deleteOrderResult(BaseBean baseBean);
 
+
+    /**
+     * 再次购买
+     * @param cartIds
+     */
+    void reBuyOrderResult(List<String> cartIds);
 }

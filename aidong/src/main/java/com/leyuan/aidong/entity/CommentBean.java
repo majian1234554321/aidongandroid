@@ -11,8 +11,11 @@ public class CommentBean {
     private String id;
     @SerializedName("content")
     private String content;
-    @SerializedName("created_at")
+    @SerializedName("published_at")
     private String published_at;
+
+    @SerializedName("created_at")
+    private String created_at;
 
     @SerializedName("publisher")
     private Publisher publisher;
@@ -102,5 +105,21 @@ public class CommentBean {
 
     public void setPublishedAt(String published_at) {
         this.published_at = published_at;
+    }
+
+    public String getPublished_at() {
+        return published_at;
+    }
+
+    public void setPublished_at(String published_at) {
+        this.published_at = published_at;
+    }
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
 }

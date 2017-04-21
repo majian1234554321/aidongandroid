@@ -36,20 +36,6 @@ public class ImageAndHorizontalListHolder extends BaseRecyclerViewHolder<HomeBea
         cover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* Intent i = new Intent(context, BrandActivity.class);
-                i.putExtra("type",bean.getType());
-                i.putExtra("id",bean.getId());
-                i.putExtra("title",bean.getTitle());
-                i.putExtra("url",bean.getImage());
-                i.putExtra("introduce",bean.getIntroduce());
-
-                ImageView sharedView = cover;
-                String transitionName = context.getString(R.string.transition_home);
-
-                ActivityOptions transitionActivityOptions =
-                        ActivityOptions.makeSceneTransitionAnimation((MainActivity) context, sharedView, transitionName);
-                context.startActivity(i, transitionActivityOptions.toBundle());*/
-
                 BrandActivity.start(context, bean.getType(),bean.getId(),bean.getTitle(),
                         bean.getImage(),bean.getIntroduce());
             }

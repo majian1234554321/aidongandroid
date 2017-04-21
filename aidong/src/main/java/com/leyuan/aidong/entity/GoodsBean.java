@@ -34,7 +34,6 @@ public class GoodsBean implements Parcelable {
     private DeliveryBean deliveryBean;      //商品默认取货方式
     private boolean checked = false;        //标记商品是否被选中
 
-
     /**
      * 购物车中商品id为product_id type为product_type id为该商品在购物车中的排列标记
      */
@@ -62,6 +61,7 @@ public class GoodsBean implements Parcelable {
         this.product_id = product_id;
     }
 
+    @GoodsType
     public String getProductType() {
         return product_type;
     }
@@ -181,6 +181,7 @@ public class GoodsBean implements Parcelable {
     public void setCode(String code) {
         this.code = code;
     }
+
 
     public String getType() {
         return type;

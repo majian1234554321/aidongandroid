@@ -85,6 +85,9 @@ public interface OrderPresent {
      */
     void feedbackOrder(String id, String type, String[] items, String content, String[] image, String address);
 
-
-
+    /**
+     * 再次购买
+     * @param orderId
+     */
+    void reBuyOrder(String orderId);
 }

@@ -31,6 +31,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
     protected Context context;
     private LinearLayout root;
     private ImageView ivAvatar;
+    private ImageView ivGender;
     private TextView tvName;
     private TextView tvTime;
     private ImageView ivCoachFlag;
@@ -57,6 +58,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         this.context = context;
         root = (LinearLayout) itemView.findViewById(R.id.ll_root);
         ivAvatar = (ImageView) itemView.findViewById(R.id.dv_avatar);
+        ivGender = (ImageView) itemView.findViewById(R.id.iv_gender);
         ivCoachFlag = (ImageView) itemView.findViewById(R.id.iv_coach_flag);
         tvName = (TextView) itemView.findViewById(R.id.tv_name);
         tvTime = (TextView) itemView.findViewById(R.id.tv_time);
@@ -83,6 +85,8 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             tvTime.setText(Utils.getData(dynamic.published_at));
             ivCoachFlag.setVisibility("Coach".equals(dynamic.publisher.user_type)
                     ? View.VISIBLE : View.GONE);
+            ivGender.setBackgroundResource("0".equals(dynamic.publisher.gender)
+                    ? R.drawable.icon_man : R.drawable.icon_woman);
         }
         tvContent.setText(dynamic.content);
 

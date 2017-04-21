@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.mvp.model.impl;
 
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.CartIdBean;
 import com.leyuan.aidong.entity.data.OrderData;
 import com.leyuan.aidong.entity.data.OrderDetailData;
 import com.leyuan.aidong.http.RetrofitHelper;
@@ -69,6 +70,12 @@ public class OrderModelImpl implements OrderModel {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
+    }
 
+    @Override
+    public void reBuyOrder(Subscriber<CartIdBean> subscriber, String orderId) {
+        orderService.reBuyOrder(orderId)
+                .compose(RxHelper.<CartIdBean>transform())
+                .subscribe(subscriber);
     }
 }

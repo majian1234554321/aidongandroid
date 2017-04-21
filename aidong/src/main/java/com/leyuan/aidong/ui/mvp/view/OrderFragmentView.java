@@ -50,4 +50,10 @@ public interface OrderFragmentView {
      * @param baseBean
      */
     void deleteOrderResult(BaseBean baseBean);
+
+    /**
+     * 再次购买
+     * @param cartIds
+     */
+    void reBuyOrderResult(List<String> cartIds);
 }

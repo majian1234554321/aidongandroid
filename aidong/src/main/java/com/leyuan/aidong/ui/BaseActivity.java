@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -186,6 +187,7 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
         }
     }
 
+    @TargetApi(21)
     protected void setSlideAnimation(){
         if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
             Slide slide = new Slide();

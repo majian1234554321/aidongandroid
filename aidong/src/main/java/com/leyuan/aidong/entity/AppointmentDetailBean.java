@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName;
  */
 public class AppointmentDetailBean {
     private String id;              //订单号
+    private String is_vip;
     private String link_id;             //关联课程或者活动编号
     private String appointment_type;    //订单类型 course-课程 campaign-活动
     private String name;             //产品名称
@@ -243,5 +244,13 @@ public class AppointmentDetailBean {
 
     public void setPayInfo(PayInfo payInfo) {
         this.payInfo = payInfo;
+    }
+
+    public String getIs_vip() {
+        return is_vip;
+    }
+
+    public void setIs_vip(String is_vip) {
+        this.is_vip = is_vip;
     }
 }

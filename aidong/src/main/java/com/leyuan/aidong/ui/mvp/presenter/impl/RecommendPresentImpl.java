@@ -15,6 +15,7 @@ import com.leyuan.aidong.ui.mvp.view.AppointSuccessActivityView;
 import com.leyuan.aidong.ui.mvp.view.CartActivityView;
 import com.leyuan.aidong.ui.mvp.view.EquipmentActivityView;
 import com.leyuan.aidong.ui.mvp.view.NurtureActivityView;
+import com.leyuan.aidong.ui.mvp.view.PaySuccessActivityView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.constant.RecommendGoodsPosition;
 import com.leyuan.aidong.widget.SwitcherLayout;
@@ -32,7 +33,8 @@ public class RecommendPresentImpl implements RecommendPresent{
     private NurtureActivityView nurtureActivityView;
     private EquipmentActivityView equipmentActivityView;
     private CartActivityView cartActivityView;
-    private AppointSuccessActivityView successActivityView;
+    private AppointSuccessActivityView appointSuccessActivityView;
+    private PaySuccessActivityView paySuccessActivityView;
 
     public RecommendPresentImpl(Context context, NurtureActivityView view) {
         this.context = context;
@@ -51,9 +53,13 @@ public class RecommendPresentImpl implements RecommendPresent{
 
     public RecommendPresentImpl(Context context, AppointSuccessActivityView view) {
         this.context = context;
-        this.successActivityView = view;
+        this.appointSuccessActivityView = view;
     }
 
+    public RecommendPresentImpl(Context context, PaySuccessActivityView view) {
+        this.context = context;
+        this.paySuccessActivityView = view;
+    }
 
     @Override
     public void commendLoadRecommendData(final SwitcherLayout switcherLayout, @RecommendGoodsPosition String type) {
@@ -132,8 +138,11 @@ public class RecommendPresentImpl implements RecommendPresent{
         if(cartActivityView != null){
             cartActivityView.updateRecommendGoods(goodsList);
         }
-        if (successActivityView != null){
-            successActivityView.updateRecyclerView(goodsList);
+        if (appointSuccessActivityView != null){
+            appointSuccessActivityView.updateRecyclerView(goodsList);
+        }
+        if(paySuccessActivityView != null){
+            paySuccessActivityView.updateRecyclerView(goodsList);
         }
     }
 
@@ -160,8 +169,8 @@ public class RecommendPresentImpl implements RecommendPresent{
            cartActivityView.showEmptyRecommendView();
         }
 
-        if (successActivityView != null){
-            successActivityView.showEmptyView();
+        if (appointSuccessActivityView != null){
+            appointSuccessActivityView.showEmptyView();
         }
     }
 }

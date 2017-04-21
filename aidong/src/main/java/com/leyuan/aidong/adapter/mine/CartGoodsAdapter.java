@@ -29,6 +29,7 @@ import java.util.List;
 public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.GoodsHolder> {
     private Context context;
     private List<GoodsBean> data = new ArrayList<>();
+
     private GoodsChangeListener goodsChangeListener;
 
     public CartGoodsAdapter(Context context) {
@@ -36,8 +37,19 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
     }
 
     public void setData(List<GoodsBean> data) {
+
         if (data != null) {
             this.data = data;
+
+         /*   for (GoodsBean bean : this.data) {
+                if (this.reBuyIds.contains(bean.getId())) {
+                    bean.setChecked(true);
+                } else {
+                    bean.setChecked(false);
+                }
+            }*/
+
+
             notifyDataSetChanged();
         }
     }
@@ -56,6 +68,7 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
     @Override
     public void onBindViewHolder(final GoodsHolder holder, final int position) {
         final GoodsBean bean = data.get(position);
+
         GlideLoader.getInstance().displayImage(bean.getCover(), holder.cover);
         holder.name.setText(bean.getName());
         ArrayList<String> specValue = bean.getSpecValue();

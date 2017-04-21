@@ -148,7 +148,8 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
         tvAddress.setRightContent(bean.getGym().getAddress());
         tvTotalPrice.setRightContent(String.format(getString(R.string.rmb_price), bean.getPrice()));
         tvPrice.setText(String.format(getString(R.string.rmb_price), bean.getPrice()));
-        tvNoVipTip.setText(Html.fromHtml(getString(R.string.no_vip_tip)));
+        tvNoVipTip.setText(Html.fromHtml(String.format(getString(R.string.no_vip_tip),
+                bean.getGym().getAdmission())));
     }
 
     private void setListener() {

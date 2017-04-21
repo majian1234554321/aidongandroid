@@ -193,7 +193,8 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
         tvOrganizer.setText(bean.getOrganizer());
         applicantAdapter.setData(bean.getApplicant());
         if (!TextUtils.isEmpty(bean.getIntroduce())) {
-            RichText.from(bean.getIntroduce()).into(tvCampaignDesc);
+            RichText.from(bean.getIntroduce()).placeHolder(R.drawable.place_holder_logo)
+                    .error(R.drawable.place_holder_logo).into(tvCampaignDesc);
         }
         if (bean.getApplicant() == null || bean.getApplicant().isEmpty()) {
             tvCount.setText(String.format(getString(R.string.applicant_count), 0, bean.getPlace()));

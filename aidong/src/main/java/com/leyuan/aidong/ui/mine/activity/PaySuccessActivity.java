@@ -8,34 +8,41 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.adapter.home.RecommendAdapter;
+import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.MainActivity;
-import com.leyuan.aidong.adapter.home.RecommendAdapter;
+import com.leyuan.aidong.ui.mvp.presenter.RecommendPresent;
+import com.leyuan.aidong.ui.mvp.presenter.impl.RecommendPresentImpl;
+import com.leyuan.aidong.ui.mvp.view.PaySuccessActivityView;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderSpanSizeLookup;
 import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
 
+import java.util.List;
+
+import static com.leyuan.aidong.utils.Constant.RECOMMEND_CART;
+
 /**
  * 支付成功
  * Created by song on 2016/9/23.
  */
-public class PaySuccessActivity extends BaseActivity implements View.OnClickListener {
+public class PaySuccessActivity extends BaseActivity implements View.OnClickListener,PaySuccessActivityView {
     private SimpleTitleBar titleBar;
     private TextView tvHome;
     private TextView tvOrder;
-    private RecyclerView recyclerView;
     private RecommendAdapter recommendAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
-
-
 
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay_success);
+        RecommendPresent present = new RecommendPresentImpl(this,this);
         initView();
         setListener();
+        present.pullToRefreshRecommendData(RECOMMEND_CART);
     }
 
     private void initView() {
@@ -43,7 +50,7 @@ public class PaySuccessActivity extends BaseActivity implements View.OnClickList
         tvHome = (TextView) headerView.findViewById(R.id.tv_home);
         tvOrder = (TextView) headerView.findViewById(R.id.tv_order);
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
-        recyclerView = (RecyclerView) findViewById(R.id.rv_recommend);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_recommend);
         recommendAdapter = new RecommendAdapter(this);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(recommendAdapter);
         recyclerView.setAdapter(wrapperAdapter);
@@ -81,5 +88,11 @@ public class PaySuccessActivity extends BaseActivity implements View.OnClickList
             default:
                 break;
         }
+    }
+
+    @Override
+    public void updateRecyclerView(List<GoodsBean> goodsBeanList) {
+        recommendAdapter.setData(goodsBeanList);
+        wrapperAdapter.notifyDataSetChanged();
     }
 }

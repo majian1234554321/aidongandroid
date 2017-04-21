@@ -66,4 +66,11 @@ public interface DynamicModel {
      * @param page
      */
     void getLikes(Subscriber<LikeData> subscriber,String id,int page);
+
+    /**
+     * 举报动态
+     * @param subscriber
+     * @param type
+     */
+    void reportDynamic(Subscriber<BaseBean> subscriber,String id,String type);
 }

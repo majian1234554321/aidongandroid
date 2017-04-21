@@ -45,6 +45,9 @@ public interface DynamicService {
     @GET("dynamics/{id}/likes")
     Observable<BaseBean<LikeData>> getLikes(@Path("id") String id, @Query("page") int page);
 
+    @FormUrlEncoded
+    @POST("dynamics/{id}/reports")
+    Observable<BaseBean> reportDynamic(@Path("id") String id,@Field("types") String type);
 }
 
 

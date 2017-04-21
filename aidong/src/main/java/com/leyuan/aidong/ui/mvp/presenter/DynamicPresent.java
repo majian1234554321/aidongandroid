@@ -24,4 +24,6 @@ public interface DynamicPresent {
     void addLike(String id,int position);
     void cancelLike(String id,int position);
     void getLikes(String id,int page);
+
+    void reportDynamic(String id,String type);
 }

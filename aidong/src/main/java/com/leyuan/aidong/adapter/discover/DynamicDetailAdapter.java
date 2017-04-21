@@ -12,6 +12,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CommentBean;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +45,7 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<DynamicDetailAdap
         GlideLoader.getInstance().displayCircleImage(bean.getPublisher().getAvatar(), holder.avatar);
         holder.name.setText(bean.getPublisher().getName());
         holder.content.setText(bean.getContent());
-        holder.time.setText(bean.getPublishedAt());
+        holder.time.setText(Utils.getData(bean.getPublishedAt()));
 
         holder.avatar.setOnClickListener(new View.OnClickListener() {
             @Override

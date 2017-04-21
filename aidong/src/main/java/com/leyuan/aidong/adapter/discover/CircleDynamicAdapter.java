@@ -14,7 +14,6 @@ import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.constant.DynamicType;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,11 +36,6 @@ public class CircleDynamicAdapter extends BaseHolderViewAdapter<DynamicBean> {
         this.callback = builder.callback;
         this.viewHolderKeyArray = builder.viewHolderKeyArray;
         this.showLikeAndCommentLayout = builder.showLikeAndCommentLayout;
-    }
-
-    @Override
-    protected int getLayoutResId(int viewType) {
-        return 0;
     }
 
     @Override
@@ -117,41 +111,15 @@ public class CircleDynamicAdapter extends BaseHolderViewAdapter<DynamicBean> {
         }
         Class<? extends BaseCircleViewHolder> className = viewHolderInfo.holderClass;
         Logger.i("class  >>>  " + className);
-     /*   if (className.toString().contains("OneImageViewHolder")) {
-            return new OneImageViewHolder(context, parent, viewHolderInfo.layoutResID);
-        } else if (className.toString().contains("TwoImageViewHolder")) {
-            return new TwoImageViewHolder(context, parent, viewHolderInfo.layoutResID);
-        } else if (className.toString().contains("ThreeImageViewHolder")) {
-            return new ThreeImageViewHolder(context, parent, viewHolderInfo.layoutResID);
-        } else if (className.toString().contains("FourImageViewHolder")) {
-            return new FourImageViewHolder(context, parent, viewHolderInfo.layoutResID);
-        } else if (className.toString().contains("FiveImageViewHolder")) {
-            return new FiveImageViewHolder(context, parent, viewHolderInfo.layoutResID);
-        } else if (className.toString().contains("SixImageViewHolder")) {
-            return new SixImageViewHolder(context, parent, viewHolderInfo.layoutResID);
-        } else {
-            return new VideoViewHolder(context, parent, viewHolderInfo.layoutResID);
-        }*/
-
-        Constructor constructor = null;
+        Constructor constructor;
         try {
             constructor = className.getConstructor(Context.class, ViewGroup.class, int.class);
             return (BaseCircleViewHolder) constructor.newInstance(context, parent, viewHolderInfo.layoutResID);
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
-
-
 
     public interface IDynamicCallback {
         void onBackgroundClick(DynamicBean dynamicBean);

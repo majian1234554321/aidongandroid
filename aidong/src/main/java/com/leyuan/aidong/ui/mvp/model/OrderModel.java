@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.mvp.model;
 
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.CartIdBean;
 import com.leyuan.aidong.entity.data.OrderData;
 import com.leyuan.aidong.entity.data.OrderDetailData;
 
@@ -57,4 +58,12 @@ public interface OrderModel {
 
     void feedbackOrder(Subscriber<BaseBean> subscriber, String id, String type, String[] items,
                        String content, String[] image, String address);
+
+    /**
+     * 再次购买
+     * @param subscriber
+     * @param orderId
+     */
+    void reBuyOrder(Subscriber<CartIdBean> subscriber, String orderId);
 }
+

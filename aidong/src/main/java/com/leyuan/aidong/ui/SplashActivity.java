@@ -17,6 +17,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.SystemPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VersionPresenterImpl;
 import com.leyuan.aidong.ui.mvp.view.LoginAutoView;
 import com.leyuan.aidong.ui.mvp.view.VersionViewListener;
+import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.PermissionManager;
 import com.leyuan.aidong.utils.SharePrefUtils;
 import com.leyuan.aidong.utils.ToastGlobal;
@@ -69,8 +70,12 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_splash);
 
+
+
+
         SystemPresent systemPresent = new SystemPresentImpl(this);
         systemPresent.getSystemInfo(OS);
+        LogAidong.i("mLocationClient   systemPresent.getSystemInfo(OS);");
 
         splashPresenter = new SplashPresenterImpl(this);
         splashPresenter.setLoginAutoListener(this);

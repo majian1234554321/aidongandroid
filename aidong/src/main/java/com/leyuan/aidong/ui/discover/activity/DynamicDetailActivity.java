@@ -43,6 +43,7 @@ import com.leyuan.aidong.ui.video.activity.PlayerActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.KeyBoardUtil;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
@@ -229,14 +230,13 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
             comments.add(0,temp);
             commentAdapter.setData(comments);
             wrapperAdapter.notifyDataSetChanged();
-            commentView.scrollToPosition(1);
+            //commentView.scrollToPosition(1);
             etComment.clearFocus();
             etComment.setText(Constant.EMPTY_STR);
             Toast.makeText(this,"评论成功",Toast.LENGTH_LONG).show();
         }else {
             Toast.makeText(this,"评论失败:" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
         }
-
         KeyBoardUtil.closeKeyboard(etComment,this);
     }
 
@@ -271,11 +271,21 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
                 .itemsCallbackSingleChoice(0,new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                        dynamicPresent.reportDynamic(dynamic.id,text.toString());
                         return false;
                     }
                 })
                 .positiveText(R.string.sure)
                 .show();
+    }
+
+    @Override
+    public void reportResult(BaseBean baseBean) {
+        if(baseBean.getStatus() == Constant.OK){
+            ToastGlobal.showLong("举报成功");
+        }else {
+            ToastGlobal.showLong("举报失败");
+        }
     }
 
     public class DynamicCallback implements CircleDynamicAdapter.IDynamicCallback {

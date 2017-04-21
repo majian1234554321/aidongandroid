@@ -80,7 +80,7 @@ public class CampaignPresentImpl implements CampaignPresent {
             public void onNext(CampaignData campaignData) {
                 campaignActivityView.hideLoadingView();
                 if(campaignData.getCampaign() != null && !campaignData.getCampaign().isEmpty()){
-                    campaignActivityView.updateRecyclerView(campaignData.getCampaign());
+                    campaignActivityView.updateCartRecyclerView(campaignData.getCampaign());
                 }else{
                     campaignActivityView.showEmptyView();
                 }

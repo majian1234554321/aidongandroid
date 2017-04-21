@@ -1,9 +1,6 @@
 package com.leyuan.aidong.adapter.home;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -13,8 +10,6 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.App;
-import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +22,9 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityHolder> {
     private final Context context;
     private List<String> data = new ArrayList<>();
 
-    public CityAdapter(Context context) {
+    public CityAdapter(Context context, OnCitySelecetListener listener) {
         this.context = context;
+        this.listener = listener;
     }
 
     public void setData(List<String> data) {
@@ -58,13 +54,9 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                listener.onCitySelecet(str);
 
-                if (!TextUtils.equals(App.getInstance().getSelectedCity(), str)) {
-                    App.getInstance().setSelectedCity(str);
-                    ToastUtil.showConsecutiveShort("已切换到" + str);
-                    LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_SELECTED_CITY));
-                }
-                ((Activity) context).finish();
+
             }
         });
     }
@@ -78,5 +70,12 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityHolder> {
             name = (TextView) itemView.findViewById(R.id.tv_city_name);
             img_selected = (ImageView) itemView.findViewById(R.id.img_selected);
         }
+    }
+
+
+    OnCitySelecetListener listener;
+
+    public interface OnCitySelecetListener {
+        void onCitySelecet(String selectedCity);
     }
 }

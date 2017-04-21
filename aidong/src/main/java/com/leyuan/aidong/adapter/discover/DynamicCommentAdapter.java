@@ -98,7 +98,6 @@ public class DynamicCommentAdapter extends RecyclerView.Adapter<DynamicCommentAd
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             spanInfo.setSpan(new ForegroundColorSpan(Color.parseColor("#999999")),
                     0, item.publisher.name.length() + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
         }
         return spanInfo;
     }

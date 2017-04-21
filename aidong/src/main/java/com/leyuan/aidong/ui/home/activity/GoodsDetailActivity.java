@@ -5,10 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.support.v4.view.PagerAdapter;
@@ -21,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -34,12 +33,10 @@ import com.leyuan.aidong.adapter.home.GoodsDetailCouponAdapter;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.DeliveryBean;
 import com.leyuan.aidong.entity.GoodsDetailBean;
-import com.leyuan.aidong.entity.PhotoBrowseInfo;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.discover.activity.PhotoBrowseActivity;
 import com.leyuan.aidong.ui.home.fragment.GoodsDetailFragment;
 import com.leyuan.aidong.ui.home.fragment.GoodsProblemFragment;
 import com.leyuan.aidong.ui.home.fragment.GoodsServiceFragment;
@@ -52,11 +49,12 @@ import com.leyuan.aidong.ui.mvp.presenter.GoodsDetailPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.GoodsDetailPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.GoodsDetailActivityView;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
-import com.leyuan.aidong.utils.ImageRectUtils;
 import com.leyuan.aidong.utils.TransitionHelper;
 import com.leyuan.aidong.utils.constant.GoodsType;
+import com.leyuan.aidong.widget.ObserveScrollView;
 import com.leyuan.aidong.widget.SlideDetailsLayout;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
@@ -78,54 +76,55 @@ import static com.leyuan.aidong.utils.Constant.EMPTY_STR;
 import static com.leyuan.aidong.utils.Constant.REQUEST_ADD_CART;
 import static com.leyuan.aidong.utils.Constant.REQUEST_BUY_IMMEDIATELY;
 import static com.leyuan.aidong.utils.Constant.REQUEST_CONFIRM;
+import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_ADDRESS;
 import static com.leyuan.aidong.utils.Constant.REQUEST_TO_CART;
-
 
 /**
  * 商品详情
- * Created by song on 2016/9/12.
+ * Created by song on 2016/11/28.
  */
-public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnItemClickListener,
-        GoodsSkuPopupWindow.SelectSkuListener,SmartTabLayout.TabProvider,View.OnClickListener,
-        GoodsDetailActivityView,PopupWindow.OnDismissListener, GoodsDetailCouponAdapter.CouponListener {
-    private static final int CODE_SELECT_ADDRESS = 1;
+public class GoodsDetailActivity extends BaseActivity implements View.OnClickListener,
+        GoodsDetailActivityView,ObserveScrollView.ScrollViewListener, GoodsSkuPopupWindow.SelectSkuListener,
+        SmartTabLayout.TabProvider, PopupWindow.OnDismissListener, GoodsDetailCouponAdapter.CouponListener {
+    private RelativeLayout topLayout;
+    private ImageView ivBack;
+    private TextView tvTitle;
+    private ImageView ivShare;
 
     private SwitcherLayout switcherLayout;
     private LinearLayout rootLayout;
     private SlideDetailsLayout detailsLayout;
-    private AppBarLayout appBarLayout;
-    private LinearLayout contentLayout;
+    private ObserveScrollView scrollview;
     private BGABanner bannerLayout;
     private TextView tvPrice;
     private TextView tvMarketPrice;
     private TextView tvGoodsName;
+
     private LinearLayout couponLayout;
     private RecyclerView couponView;
     private LinearLayout skuLayout;
-    private TextView tvSelect;
-    private TextView tvSku;
+    private TextView tvSelectSku;
+    private TextView tvCount;
     private LinearLayout recommendCodeLayout;
     private TextView tvRecommendCode;
     private LinearLayout addressLayout;
     private TextView tvDeliveryInfo;
     private TextView tvAddressInfo;
+
     private ImageView ivArrow;
     private TextView tvTip;
 
     private SmartTabLayout tabLayout;
     private ViewPager viewPager;
 
-    private RelativeLayout titleLayout;
-    private ImageView ivBack;
-    private TextView tvTitle;
-    private ImageView ivShare;
     private LinearLayout bottomLayout;
     private ImageView ivCart;
     private TextView tvAddCart;
     private TextView tvPay;
 
+
     private List<View> allTabView = new ArrayList<>();
-    private ArrayList<String> bannerUrls = new ArrayList<>();
+    private List<String> bannerUrls = new ArrayList<>();
     private GoodsDetailCouponAdapter couponAdapter;
     private GoodsSkuPopupWindow skuPopupWindow;
     private SharePopupWindow sharePopupWindow;
@@ -137,24 +136,24 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
     private List<String> selectedSkuValues = new ArrayList<>();
     private GoodsDetailPresent goodsPresent;
 
-    public static void start(Context context, String id, @GoodsType String goodsType) {
+    public static void start(Context context, String id, @GoodsType  String type) {
         Intent starter = new Intent(context, GoodsDetailActivity.class);
-        starter.putExtra("id", id);
-        starter.putExtra("goodsType", goodsType);
+        starter.putExtra("id",id);
+        starter.putExtra("goodsType",type);
         context.startActivity(starter);
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_goods_detail);
+        setContentView(R.layout.activity_goods_detail_deprecated);
         sharePopupWindow = new SharePopupWindow(this);
-
         goodsPresent = new GoodsDetailPresentImpl(this,this);
         if(getIntent() != null){
             id = getIntent().getStringExtra("id");
             goodsType = getIntent().getStringExtra("goodsType");
         }
+
         initView();
         setListener();
         goodsPresent.getGoodsDetail(switcherLayout, goodsType,id);
@@ -167,21 +166,26 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
         sharePopupWindow.release();
     }
 
-    private void initView() {
+    @Override
+    public void showErrorView() {
+        switcherLayout.showExceptionLayout();
+        ivShare.setVisibility(View.GONE);
+    }
+
+    private void initView(){
         rootLayout = (LinearLayout) findViewById(R.id.root);
+        switcherLayout = new SwitcherLayout(this,rootLayout);
         detailsLayout = (SlideDetailsLayout) findViewById(R.id.slide_details_layout);
-        appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
-        contentLayout = (LinearLayout) findViewById(R.id.ll_content);
-        switcherLayout = new SwitcherLayout(this, contentLayout);
+        scrollview = (ObserveScrollView) findViewById(R.id.scrollview);
         bannerLayout = (BGABanner) findViewById(R.id.banner_layout);
         tvPrice = (TextView) findViewById(R.id.tv_price);
         tvMarketPrice = (TextView) findViewById(R.id.tv_market_price);
-        tvGoodsName = (TextView) findViewById(R.id.tv_goods_name);
+        tvGoodsName = (TextView) findViewById(R.id.tv_name);
         couponLayout = (LinearLayout) findViewById(R.id.ll_coupon);
         couponView = (RecyclerView) findViewById(R.id.rv_coupon);
         skuLayout = (LinearLayout) findViewById(R.id.ll_goods_sku);
-        tvSelect = (TextView) findViewById(R.id.tv_select);
-        tvSku = (TextView) findViewById(R.id.tv_select_specification);
+        tvSelectSku = (TextView) findViewById(R.id.tv_select_sku);
+        tvCount = (TextView) findViewById(R.id.tv_select_count);
         recommendCodeLayout = (LinearLayout) findViewById(R.id.ll_code);
         tvRecommendCode = (TextView) findViewById(R.id.tv_recommend_code);
         addressLayout = (LinearLayout) findViewById(R.id.ll_address);
@@ -191,7 +195,7 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
         tvTip = (TextView) findViewById(R.id.tv_tip);
         tabLayout = (SmartTabLayout) findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.vp_content);
-        titleLayout = (RelativeLayout) findViewById(R.id.rl_title);
+        topLayout = (RelativeLayout) findViewById(R.id.rl_title);
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tvTitle = (TextView) findViewById(R.id.tv_title);
         ivShare = (ImageView) findViewById(R.id.iv_share);
@@ -200,23 +204,19 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
         tvAddCart = (TextView) findViewById(R.id.tv_add_cart);
         tvPay = (TextView) findViewById(R.id.tv_pay);
 
-        //设置Banner
         bannerLayout.setAdapter(new BGABanner.Adapter() {
             @Override
             public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
-                GlideLoader.getInstance().displayImage((String) model, (ImageView) view);
+                GlideLoader.getInstance().displayImage((String)model, (ImageView)view);
             }
         });
-
-        //设置优惠券
-        couponView.setLayoutManager(new LinearLayoutManager
-                (this, LinearLayoutManager.HORIZONTAL, false));
+        couponView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
         couponAdapter = new GoodsDetailCouponAdapter(this);
         couponView.setNestedScrollingEnabled(false);
         couponView.setAdapter(couponAdapter);
     }
 
-    private void setListener() {
+    private void setListener(){
         ivBack.setOnClickListener(this);
         ivShare.setOnClickListener(this);
         skuLayout.setOnClickListener(this);
@@ -225,54 +225,10 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
         ivCart.setOnClickListener(this);
         tvAddCart.setOnClickListener(this);
         tvPay.setOnClickListener(this);
-        bannerLayout.setOnItemClickListener(this);
+        scrollview.setScrollViewListener(this);
         couponAdapter.setListener(this);
         detailsLayout.setOnSlideDetailsListener(new MyOnSlideDetailsListener());
-        appBarLayout.addOnOffsetChangedListener(new MyOnOffsetChangedListener());
     }
-
-    @Override
-    public void setGoodsDetail(GoodsDetailBean bean) {
-        this.bean = bean;
-        bannerLayout.setVisibility(View.VISIBLE);
-        bottomLayout.setVisibility(View.VISIBLE);
-        bannerUrls.addAll(bean.image);
-        bannerLayout.setData(bannerUrls, null);
-        tvTitle.setText(String.format(getString(R.string.rmb_price_double),
-                FormatUtil.parseDouble(bean.price)));
-        tvPrice.setText(String.format(getString(R.string.rmb_price_double),
-                FormatUtil.parseDouble(bean.price)));
-        tvMarketPrice.setText(String.format(getString(R.string.rmb_price_double),
-                FormatUtil.parseDouble(bean.market_price)));
-        tvMarketPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-        tvGoodsName.setText(bean.name);
-
-        if (bean.coupon == null || bean.coupon.isEmpty()) {
-            couponLayout.setVisibility(View.GONE);
-        } else {
-            couponAdapter.setData(bean.coupon);
-            couponLayout.setVisibility(View.VISIBLE);
-        }
-
-        StringBuilder skuStr = new StringBuilder();
-        for (String s : this.bean.spec.name) {
-            skuStr.append(s).append(EMPTY_STR);
-        }
-        tvSku.setText(skuStr);
-        if (bean.pick_up != null) {
-            if (DELIVERY_EXPRESS.equals(bean.pick_up.type)) {
-                tvAddressInfo.setVisibility(View.GONE);
-                tvDeliveryInfo.setText("快递");
-            } else {
-                tvAddressInfo.setVisibility(View.VISIBLE);
-                tvAddressInfo.setText(bean.pick_up.info.getAddress());
-                tvDeliveryInfo.setText("自提");
-            }
-        }
-
-        initFragments();
-    }
-
 
     @Override
     public void onClick(View v) {
@@ -299,7 +255,7 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
                         createSafeTransitionParticipants(this, false);
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.
                         makeSceneTransitionAnimation(this, pairs);
-                startActivityForResult(intent, CODE_SELECT_ADDRESS, optionsCompat.toBundle());
+                startActivityForResult(intent, REQUEST_SELECT_ADDRESS, optionsCompat.toBundle());
                 break;
             case R.id.iv_cart:
                 if (App.mInstance.isLogin()) {
@@ -319,11 +275,65 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
         }
     }
 
+    @Override
+    public void setGoodsDetail(GoodsDetailBean bean) {
+        this.bean = bean;
+        bottomLayout.setVisibility(View.VISIBLE);
+        bannerUrls.addAll(bean.image);
+        bannerLayout.setData(bannerUrls, null);
+        tvTitle.setText(String.format(getString(R.string.rmb_price_double),
+                FormatUtil.parseDouble(bean.price)));
+        tvPrice.setText(String.format(getString(R.string.rmb_price_double),
+                FormatUtil.parseDouble(bean.price)));
+        tvMarketPrice.setText(String.format(getString(R.string.rmb_price_double),
+                FormatUtil.parseDouble(bean.market_price)));
+        tvMarketPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+        tvGoodsName.setText(bean.name);
+
+        if (bean.coupon == null || bean.coupon.isEmpty()) {
+            couponLayout.setVisibility(View.GONE);
+        } else {
+            couponAdapter.setData(bean.coupon);
+            couponLayout.setVisibility(View.VISIBLE);
+        }
+
+        StringBuilder skuStr = new StringBuilder();
+        for (String s : this.bean.spec.name) {
+            skuStr.append(s).append(EMPTY_STR);
+        }
+        tvSelectSku.setText(String.format(getString(R.string.sku_select),skuStr));
+
+        if (bean.pick_up != null) {
+            if (DELIVERY_EXPRESS.equals(bean.pick_up.type)) {
+                tvAddressInfo.setVisibility(View.GONE);
+                tvDeliveryInfo.setText(getString(R.string.express));
+            } else {
+                tvAddressInfo.setVisibility(View.VISIBLE);
+                tvAddressInfo.setText(bean.pick_up.info.getName());
+                tvDeliveryInfo.setText(getString(R.string.self_delivery));
+            }
+        }
+
+        initFragments();
+    }
+
+    @Override
+    public void onSelectSkuChanged(List<String> selectedSkuValues,String skuTip,String count) {
+        this.count = count;
+        if(selectedSkuValues != null) {
+            this.selectedSkuValues = selectedSkuValues;
+        }
+        tvSelectSku.setText(isAllSkuConfirm() ? String.format(getString(R.string.sku_selected),skuTip)
+                : String.format(getString(R.string.sku_select),skuTip));
+        tvCount.setText(String.format(getString(R.string.count_string),count));
+    }
+
+
     //todo optimize
     private void showSkuPopupWindow(Context context, GoodsDetailBean detailBean, List<String> selectedSkuValues, String from) {
-        //rootLayout.animate().scaleY(0.95f).setInterpolator(new AccelerateInterpolator(2)).start();
-        //rootLayout.animate().scaleX(0.95f).setInterpolator(new AccelerateInterpolator(2)).start();
-        //contentLayout.animate().rotationX(0.8f).setInterpolator(new AccelerateInterpolator(2)).start();
+        rootLayout.animate().scaleY(0.95f).setInterpolator(new AccelerateInterpolator(2)).start();
+        rootLayout.animate().scaleX(0.95f).setInterpolator(new AccelerateInterpolator(2)).start();
+
         //if(skuPopupWindow == null){
         String recommendId = tvRecommendCode.getText().toString();
         skuPopupWindow = new GoodsSkuPopupWindow(context, detailBean, selectedSkuValues, count, recommendId, goodsType, from);
@@ -331,7 +341,6 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
         skuPopupWindow.setOnDismissListener(this);
         skuPopupWindow.showAtLocation(rootLayout, Gravity.BOTTOM, 0, 0);
     }
-
 
     private void showRecommendCodeDialog() {
         View view = View.inflate(this,R.layout.dialog_input_code,null);
@@ -352,136 +361,6 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
                     }
                 });
         builder.show();
-    }
-
-
-    @Override
-    public void showErrorView() {
-        switcherLayout.showExceptionLayout();
-        ivShare.setVisibility(View.GONE);
-        bannerLayout.setVisibility(View.GONE);
-        detailsLayout.setEnabled(false);
-    }
-
-    @Override
-    public void onBannerItemClick(BGABanner banner, View view, Object model, int position) {
-        List<ImageView> imageViewList = new ArrayList<>();
-        for (int i = 0; i < bannerUrls.size(); i++) {
-            imageViewList.add((ImageView) view);
-        }
-        List<Rect> drawableRectList = ImageRectUtils.getDrawableRects(imageViewList);
-        PhotoBrowseInfo info = PhotoBrowseInfo.create(bannerUrls, drawableRectList, position);
-        PhotoBrowseActivity.start(this, info);
-    }
-
-    @Override
-    public void onDismiss() {
-        //contentLayout.animate().rotationX(-0.8f).setInterpolator(new AccelerateInterpolator(2)).start();
-        /*rootLayout.animate().scaleY(1.0f).setInterpolator(new DecelerateInterpolator(2)).start();
-        rootLayout.animate().scaleX(1.0f).setInterpolator(new DecelerateInterpolator(2)).start();*/
-    }
-
-    @Override
-    public void onSelectSkuChanged(List<String> selectedSkuValues,String skuTip,String count) {
-        this.count = count;
-        if(selectedSkuValues != null) {
-            this.selectedSkuValues = selectedSkuValues;
-        }
-        tvSelect.setText(isAllSkuConfirm() ? "已选择:" : "选择:");
-        StringBuilder sb = new StringBuilder(skuTip);
-        if(isAllSkuConfirm()){
-            sb.append(count).append("个");
-        }
-        tvSku.setText(sb);
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        sharePopupWindow.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != RESULT_OK) {
-            return;
-        }
-        if (requestCode == CODE_SELECT_ADDRESS) {
-            DeliveryBean deliveryBean = data.getParcelableExtra("deliveryBean");
-            bean.pick_up = deliveryBean;
-            if (deliveryBean != null) {
-                if (DELIVERY_EXPRESS.equals(deliveryBean.type)) {
-                    tvAddressInfo.setVisibility(View.GONE);
-                    tvDeliveryInfo.setText("快递");
-                } else {
-                    tvAddressInfo.setVisibility(View.VISIBLE);
-                    tvAddressInfo.setText(deliveryBean.info.getAddress());
-                    tvDeliveryInfo.setText("自提");
-                }
-            }
-        } else if (requestCode == REQUEST_CONFIRM) {
-            if (skuPopupWindow != null) {
-                skuPopupWindow.confirm();
-                skuPopupWindow.dismiss();
-            }
-        } else if (requestCode == REQUEST_ADD_CART) {
-            if (skuPopupWindow != null) {
-                skuPopupWindow.addCart();
-                skuPopupWindow.dismiss();
-            }
-        } else if (requestCode == REQUEST_BUY_IMMEDIATELY) {
-            if (skuPopupWindow != null) {
-                skuPopupWindow.buyImmediately();
-                skuPopupWindow.dismiss();
-            }
-        } else if (requestCode == REQUEST_TO_CART) {
-            startActivity(new Intent(this, CartActivity.class));
-        }else if(requestCode == Constant.REQUEST_LOGIN){
-            goodsPresent.getGoodsDetail(goodsType,id);
-        }
-    }
-
-    @Override
-    public void onCouponClick(final int position) {
-        if(App.mInstance.isLogin()) {
-            CouponModel model = new CouponModelImpl();
-            model.obtainCoupon(new ProgressSubscriber<BaseBean>(this) {
-                @Override
-                public void onNext(BaseBean baseBean) {
-                    if (baseBean.getStatus() == Constant.OK) {
-                        bean.coupon.get(position).setStatus("1");
-                        couponAdapter.notifyDataSetChanged();
-                        Toast.makeText(GoodsDetailActivity.this, "领取成功", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(GoodsDetailActivity.this, baseBean.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                }
-            }, bean.coupon.get(position).getId());
-        }else {
-            startActivityForResult(new Intent(this,LoginActivity.class),Constant.REQUEST_LOGIN);
-        }
-    }
-    private class MyOnSlideDetailsListener implements SlideDetailsLayout.OnSlideDetailsListener {
-        @Override
-        public void onStatusChanged(SlideDetailsLayout.Status status) {
-            if (status == SlideDetailsLayout.Status.OPEN) {
-                tvTip.setText(getString(R.string.tip_close));
-                ivArrow.setBackgroundResource(R.drawable.icon_arrow_down);
-                tvTitle.setVisibility(View.VISIBLE);
-                tvTitle.animate().scaleX(1).scaleY(1).setInterpolator
-                        (new AccelerateDecelerateInterpolator()).setDuration(200).start();
-            } else {
-                tvTip.setText(getString(R.string.tip_open));
-                ivArrow.setBackgroundResource(R.drawable.icon_arrow_up);
-                tvTitle.animate().scaleX(0).scaleY(0).setInterpolator
-                        (new AccelerateDecelerateInterpolator()).setDuration(200).start();
-            }
-        }
-    }
-
-    private class MyOnOffsetChangedListener implements AppBarLayout.OnOffsetChangedListener {
-        @Override
-        public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-            int maxScroll = appBarLayout.getTotalScrollRange();
-            float percentage = (float) Math.abs(verticalOffset) / (float) maxScroll;
-            titleLayout.setBackgroundColor(Color.argb((int) (percentage * 255), 0, 0, 0));
-        }
     }
 
     private void initFragments() {
@@ -516,6 +395,63 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        sharePopupWindow.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK) {
+            return;
+        }
+        if (requestCode == REQUEST_SELECT_ADDRESS) {
+            DeliveryBean deliveryBean = data.getParcelableExtra("deliveryBean");
+            bean.pick_up = deliveryBean;
+            if (DELIVERY_EXPRESS.equals(deliveryBean.type)) {
+                tvAddressInfo.setVisibility(View.GONE);
+                tvDeliveryInfo.setText(getString(R.string.express));
+            } else {
+                tvAddressInfo.setVisibility(View.VISIBLE);
+                tvAddressInfo.setText(deliveryBean.info.getName());
+                tvDeliveryInfo.setText(getString(R.string.self_delivery));
+            }
+        } else if (requestCode == REQUEST_CONFIRM) {
+            if (skuPopupWindow != null) {
+                skuPopupWindow.confirm();
+                skuPopupWindow.dismiss();
+            }
+        } else if (requestCode == REQUEST_ADD_CART) {
+            if (skuPopupWindow != null) {
+                skuPopupWindow.addCart();
+                skuPopupWindow.dismiss();
+            }
+        } else if (requestCode == REQUEST_BUY_IMMEDIATELY) {
+            if (skuPopupWindow != null) {
+                skuPopupWindow.buyImmediately();
+                skuPopupWindow.dismiss();
+            }
+        } else if (requestCode == REQUEST_TO_CART) {
+            startActivity(new Intent(this, CartActivity.class));
+        }else if(requestCode == Constant.REQUEST_LOGIN){
+            goodsPresent.getGoodsDetail(goodsType,id);
+        }
+    }
+
+    private boolean isAllSkuConfirm(){
+        return this.selectedSkuValues.size() == bean.spec.name.size();
+    }
+
+    @Override
+    public void onScrollChanged(ObserveScrollView scrollView, int x, int y, int oldX, int oldY) {
+        int height = DensityUtil.dp2px(this,300);
+        if (y <= 0) {
+            topLayout.setBackgroundColor(Color.argb( 0, 0,0,0));
+        } else if (y > 0 && y <= height) {
+            float ratio = (float) y / height;
+            float alpha = (255 * ratio);
+            topLayout.setBackgroundColor(Color.argb((int) alpha, 0,0,0));
+        } else {
+            topLayout.setBackgroundColor(Color.argb(255, 0,0,0));
+        }
+    }
+
+    @Override
     public View createTabView(ViewGroup container, int position, PagerAdapter adapter) {
         View tabView = LayoutInflater.from(this).inflate(R.layout.tab_goods_detail_text, container, false);
         TextView text = (TextView) tabView.findViewById(R.id.tv_tab_text);
@@ -528,7 +464,49 @@ public class GoodsDetailActivity extends BaseActivity implements BGABanner.OnIte
         return tabView;
     }
 
-    private boolean isAllSkuConfirm(){
-        return this.selectedSkuValues.size() == bean.spec.name.size();
+    @Override
+    public void onDismiss() {
+        rootLayout.animate().scaleY(1f).setInterpolator(new AccelerateInterpolator(2)).start();
+        rootLayout.animate().scaleX(1f).setInterpolator(new AccelerateInterpolator(2)).start();
     }
+
+    @Override
+    public void onCouponClick(final int position) {
+        if(App.mInstance.isLogin()) {
+            CouponModel model = new CouponModelImpl();
+            model.obtainCoupon(new ProgressSubscriber<BaseBean>(this) {
+                @Override
+                public void onNext(BaseBean baseBean) {
+                    if (baseBean.getStatus() == Constant.OK) {
+                        bean.coupon.get(position).setStatus("1");
+                        couponAdapter.notifyDataSetChanged();
+                        Toast.makeText(GoodsDetailActivity.this, "领取成功", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(GoodsDetailActivity.this, baseBean.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+            }, bean.coupon.get(position).getId());
+        }else {
+            startActivityForResult(new Intent(this,LoginActivity.class),Constant.REQUEST_LOGIN);
+        }
+    }
+
+    private class MyOnSlideDetailsListener implements SlideDetailsLayout.OnSlideDetailsListener{
+        @Override
+        public void onStatusChanged(SlideDetailsLayout.Status status) {
+            if (status == SlideDetailsLayout.Status.OPEN) {
+                tvTip.setText(getString(R.string.tip_close));
+                ivArrow.setBackgroundResource(R.drawable.icon_arrow_down);
+                tvTitle.setVisibility(View.VISIBLE);
+                tvTitle.animate().scaleX(1).scaleY(1).setInterpolator
+                        (new AccelerateDecelerateInterpolator()).setDuration(200).start();
+            } else {
+                tvTip.setText(getString(R.string.tip_open));
+                ivArrow.setBackgroundResource(R.drawable.icon_arrow_up);
+                tvTitle.animate().scaleX(0).scaleY(0).setInterpolator
+                        (new AccelerateDecelerateInterpolator()).setDuration(200).start();
+            }
+        }
+    }
+
 }

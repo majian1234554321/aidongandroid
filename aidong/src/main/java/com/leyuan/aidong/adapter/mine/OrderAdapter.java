@@ -34,7 +34,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
     private static final String PAID = "purchased";             //已支付
     private static final String FINISHED = "confirmed";         //已完成
     private static final String CLOSED = "canceled";            //已关闭
-    private long ORDER_COUNTDOWN_MILL;
+    private long orderCountdownMill;
 
     private Context context;
     private List<OrderBean> data = new ArrayList<>();
@@ -42,7 +42,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
 
     public OrderAdapter(Context context) {
         this.context = context;
-        ORDER_COUNTDOWN_MILL = SystemInfoUtils.getAppointmentCountdown(context) * 60 * 1000;
+        orderCountdownMill = SystemInfoUtils.getAppointmentCountdown(context) * 60 * 1000;
     }
 
     public void setData(List<OrderBean> data) {
@@ -83,7 +83,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
         holder.price.setText(String.format(context.getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.getPayAmount())));
         holder.tvOrderId.setText(String.format(context.getString(R.string.order_no),bean.getId()));
-        holder.timer.start(DateUtils.getCountdown(bean.getCreated_at(), ORDER_COUNTDOWN_MILL));
+        holder.timer.start(DateUtils.getCountdown(bean.getCreated_at(), orderCountdownMill));
 
         //与订单状态有关
         if (TextUtils.isEmpty(bean.getStatus())) return;
@@ -175,7 +175,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
             @Override
             public void onClick(View v) {
                 if(orderListener != null){
-                    orderListener.onBuyAgain();
+                    orderListener.onBuyAgain(bean.getId());
                 }
             }
         });
@@ -243,7 +243,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
         void onCancelOrder(String id);
         void onDeleteOrder(String id);
         void onConfirmOrder(String id);
-        void onBuyAgain();
+        void onBuyAgain(String id);
         void onRefreshOrderStatus();
     }
 }

@@ -11,4 +11,9 @@ public interface SystemPresent {
      * @param os
      */
     void getSystemInfo(String os);
+    /**
+     * 选择城市里 去获取系统配置信息
+     * @param os
+     */
+    void getSystemInfoSelected(String os);
 }

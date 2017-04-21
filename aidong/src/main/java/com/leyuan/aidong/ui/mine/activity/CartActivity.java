@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.mine.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -63,13 +64,28 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
 
     private RecommendPresent recommendPresent;
     private boolean isEditing = false;
-    private boolean isFirstGetData = true;
+    private boolean needLoadRecommendData = true;
+
+    private List<String> reBuyIds = new ArrayList<>();
+
+    public static void start(Context context,List<String> reBuyIds) {
+        Intent starter = new Intent(context, CartActivity.class);
+        starter.putStringArrayListExtra("reBuyIds", (ArrayList<String>) reBuyIds);
+        context.startActivity(starter);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
         recommendPresent = new RecommendPresentImpl(this,this);
+        if(getIntent() != null){
+            ArrayList<String> reBuyIds = getIntent().getStringArrayListExtra("reBuyIds");
+            if(reBuyIds != null) {
+                this.reBuyIds = reBuyIds;
+            }
+        }
+
         initView();
         setListener();
     }
@@ -94,7 +110,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
                 recommendView.getAdapter(), manager.getSpanCount()));
         recommendView.setLayoutManager(manager);
         recommendView.addOnScrollListener(onScrollListener);
-        cartHeaderView = new CartHeaderView(this);
+        cartHeaderView = new CartHeaderView(this,reBuyIds);
         RecyclerViewUtils.setHeaderView(recommendView, cartHeaderView);
     }
 
@@ -166,14 +182,15 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
     }
 
     @Override
-    public void onCartDataLoadFinish() {
+    public void onCartDataLoadFinish(boolean isAllSelected) {
         refreshLayout.setRefreshing(false);
-        if(isFirstGetData) {
-            isFirstGetData = false;
+        if(needLoadRecommendData) {
+            needLoadRecommendData = false;
             tvEdit.setVisibility(View.VISIBLE);
             bottomLayout.setVisibility(View.VISIBLE);
             cartHeaderView.showRecommendText(!isEditing);
             recommendPresent.pullToRefreshRecommendData(RECOMMEND_CART);
+            rbSelectAll.setChecked(isAllSelected);
         }
     }
 
@@ -209,7 +226,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
         if(resultCode == RESULT_OK){
             if(requestCode == REQUEST_SETTLEMENT_CART){
                 List<ShopBean> shopBeanList = data.getParcelableArrayListExtra("shopBeanList");
-                cartHeaderView.updateCartLocal(shopBeanList);
+                cartHeaderView.updateCartRecyclerView(shopBeanList);
             }
         }
     }

@@ -51,6 +51,7 @@ public class Constant {
     public static final int BINDING_PHONE_OK = 21;
     public static final String BINDING_PHONE = "binding_phone";
     public static final String DEFAULT_CITY = "上海";
+    public static final String OS = "android";
     public static final String BROADCAST_ACTION_SELECTED_CITY = "com.leyuan.chat.selected_city";
     public static final Double EXPRESS_PRICE = 15d;
 
@@ -110,6 +111,7 @@ public class Constant {
     //交货方式
     public static final String DELIVERY_EXPRESS = "0";  //快递
     public static final String DELIVERY_SELF = "1";     //自提
+
 
     public static class Chat {
         public static final String SYSYTEM_ID = "admin";

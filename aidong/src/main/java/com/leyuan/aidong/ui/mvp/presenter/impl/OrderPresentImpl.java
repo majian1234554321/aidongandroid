@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.CartIdBean;
 import com.leyuan.aidong.entity.OrderBean;
 import com.leyuan.aidong.entity.OrderDetailBean;
 import com.leyuan.aidong.entity.data.OrderData;
@@ -233,5 +234,20 @@ public class OrderPresentImpl implements OrderPresent {
                 }
             }
         }, id, type, items, content, image, address);
+    }
+
+    @Override
+    public void reBuyOrder(String orderId) {
+        orderModel.reBuyOrder(new ProgressSubscriber<CartIdBean>(context) {
+            @Override
+            public void onNext(CartIdBean cartIdBean) {
+                if(orderDetailActivityView != null) {
+                    orderDetailActivityView.reBuyOrderResult(cartIdBean.getCart_ids());
+                }
+                if(orderFragmentView != null){
+                    orderFragmentView.reBuyOrderResult(cartIdBean.getCart_ids());
+                }
+            }
+        },orderId);
     }
 }

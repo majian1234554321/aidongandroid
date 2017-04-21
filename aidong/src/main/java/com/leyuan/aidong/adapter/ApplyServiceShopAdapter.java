@@ -17,6 +17,7 @@ import com.leyuan.aidong.utils.ToastGlobal;
 import java.util.ArrayList;
 
 /**
+ *
  * Created by user on 2017/3/24.
  */
 public class ApplyServiceShopAdapter extends RecyclerView.Adapter<ApplyServiceShopAdapter.ViewHolder> {
@@ -69,7 +70,7 @@ public class ApplyServiceShopAdapter extends RecyclerView.Adapter<ApplyServiceSh
                     count = amount;
                     ToastGlobal.showShort("超出最大数量");
                 }
-                if (count > 1) {
+                if (count >= 1) {
                     holder.ivMinus.setBackgroundResource(R.drawable.icon_minus);
                 }
                 holder.tvCount.setText(String.valueOf(count));
