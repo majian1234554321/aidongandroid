@@ -113,7 +113,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         }
         initView();
         setListener();
-        userInfoPresent.getUserInfo(switcherLayout, userId);
+        userInfoPresent.getUserInfo(switcherLayout,userId);
     }
 
     private void initView() {

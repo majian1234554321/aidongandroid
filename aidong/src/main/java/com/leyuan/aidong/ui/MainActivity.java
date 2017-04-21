@@ -72,7 +72,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 chatMessageReceiver, new IntentFilter(Constant.BROADCAST_ACTION_NEW_MESSAGE));
     }
 
-
     private void initFragments() {
         fm = getSupportFragmentManager();
         mFragments.add(new HomeFragment());
