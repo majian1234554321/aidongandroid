@@ -88,13 +88,13 @@ public class LocationActivity extends BaseActivity implements LocationActivityVi
     public void onCitySelecet(String str) {
         if (!TextUtils.equals(App.getInstance().getSelectedCity(), str)) {
             App.getInstance().setSelectedCity(str);
-            LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_SELECTED_CITY));
             systemPresent.getSystemInfoSelected(Constant.OS);
         }
     }
 
     @Override
     public void onGetSystemConfiguration(boolean b) {
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_SELECTED_CITY));
         ToastGlobal.showLong("已切换到" + App.getInstance().getSelectedCity());
         finish();
     }
