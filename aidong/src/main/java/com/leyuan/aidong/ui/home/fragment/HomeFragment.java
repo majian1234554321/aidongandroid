@@ -33,7 +33,6 @@ import com.leyuan.aidong.ui.home.viewholder.ImageAndHorizontalListHolder;
 import com.leyuan.aidong.ui.home.viewholder.TitleAndVerticalListHolder;
 import com.leyuan.aidong.ui.mvp.presenter.HomePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.HomePresentImpl;
-import com.leyuan.aidong.ui.mvp.presenter.impl.SystemPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.HomeFragmentView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.widget.SwitcherLayout;
@@ -139,9 +138,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView, View
     public void onRefresh() {
         currPage = 1;
         RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-        present.getSportHistory();
         present.pullToRefreshHomeData(TYPE_HOME);
-        new SystemPresentImpl(getContext()).getSystemInfo("android");
     }
 
     @Override
@@ -166,6 +163,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView, View
             }
         }
     };
+
 
     @Override
     public void updateBanner(List<BannerBean> bannerBeanList) {

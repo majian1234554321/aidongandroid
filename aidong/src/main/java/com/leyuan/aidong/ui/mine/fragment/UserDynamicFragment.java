@@ -6,6 +6,7 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -60,6 +61,7 @@ import static com.leyuan.aidong.utils.Constant.DYNAMIC_VIDEO;
  * Created by song on 2017/1/16.
  */
 public class UserDynamicFragment extends BaseFragment implements UserDynamicFragmentView {
+    private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
     private CircleDynamicAdapter circleDynamicAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
@@ -81,7 +83,7 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_user_dynamic, null);
+        return inflater.inflate(R.layout.fragment_user_dynamic, container,false);
     }
 
     @Override
@@ -103,6 +105,7 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
     }
 
     private void initRecyclerView(View view) {
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout);
         recyclerView = (RecyclerView) view.findViewById(rv_dynamic);
         dynamicList = new ArrayList<>();
         dynamicList = new ArrayList<>();
@@ -121,6 +124,15 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(wrapperAdapter);
         recyclerView.addOnScrollListener(onScrollListener);
+
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                currPage = 1;
+                RecyclerViewStateUtils.resetFooterViewState(recyclerView);
+                userInfoPresent.commonLoadDynamic(useId);
+            }
+        });
     }
 
 
@@ -137,6 +149,10 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
 
     @Override
     public void updateDynamic(List<DynamicBean> dynamicBeanList) {
+        if(refreshLayout.isRefreshing()){
+            dynamicList.clear();
+            refreshLayout.setRefreshing(false);
+        }
         dynamicList.addAll(dynamicBeanList);
         circleDynamicAdapter.updateData(dynamicList);
         wrapperAdapter.notifyDataSetChanged();
@@ -200,7 +216,8 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
             } else {
                 cover = dynamic.videos.cover;
             }
-            sharePopupWindow.showAtBottom(dynamic.publisher.name + "的动态", dynamic.content, cover, ConstantUrl.URL_SHARE_DYNAMIC);
+            sharePopupWindow.showAtBottom(dynamic.publisher.name + "的动态",
+                    dynamic.content, cover, ConstantUrl.URL_SHARE_DYNAMIC);
         }
     }
 

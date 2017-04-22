@@ -119,10 +119,9 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
 
     @Override
     public void onAddMediaClick() {
-        BoxingConfig config = new BoxingConfig(isPhoto ? BoxingConfig.Mode.MULTI_IMG :
-                BoxingConfig.Mode.VIDEO).needCamera();
-        Boxing.of(config)
-                .withIntent(this, BoxingActivity.class, selectedMedia)
+        BoxingConfig config = new BoxingConfig(isPhoto ? BoxingConfig.Mode.MULTI_IMG
+                : BoxingConfig.Mode.VIDEO).needCamera();
+        Boxing.of(config).withIntent(this, BoxingActivity.class, selectedMedia)
                 .start(this, REQUEST_MEDIA);
     }
 

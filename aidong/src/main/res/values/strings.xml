@@ -112,6 +112,8 @@
     <string name="pleaseinputpassword">请输入原密码</string>
     <string name="zhaodaowo">可通过附近的人找到我</string>
 
+    <string name="recommend_course_video">相关课程视频推荐</string>
+    <string name="appoint_course_immediately">立即预约课程</string>
     <!-- v2.1 -->
 
     <!-- url -->

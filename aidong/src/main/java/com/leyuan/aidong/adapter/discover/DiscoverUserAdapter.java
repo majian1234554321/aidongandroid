@@ -27,8 +27,13 @@ public class DiscoverUserAdapter extends RecyclerView.Adapter<DiscoverUserAdapte
     }
 
     public void setData(List<UserBean> data) {
-        this.data = data;
-        notifyDataSetChanged();
+        if(data != null) {
+            this.data = data;
+            while (this.data.size() > 8){
+                this.data.remove(8);
+            }
+            notifyDataSetChanged();
+        }
     }
 
     @Override

@@ -80,6 +80,15 @@
         <activity
             android:name=".ui.mine.activity.account.CompleteUserInfoActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.home.activity.CourseVideoDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.home.activity.RelatedVideoActivity"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.mine.activity.account.ChangePasswordActivity"
             android:screenOrientation="portrait" />

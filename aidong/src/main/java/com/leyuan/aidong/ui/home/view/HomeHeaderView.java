@@ -33,6 +33,7 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  * Created by song on 2017/2/21.
  */
 public class HomeHeaderView extends RelativeLayout{
+    private Context context;
     private BGABanner banner;
     private LinearLayout sportsLayout;
     private MarqueeView marqueeView;
@@ -51,6 +52,7 @@ public class HomeHeaderView extends RelativeLayout{
 
     public HomeHeaderView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.context = context;
         initView(context);
     }
 
@@ -115,13 +117,17 @@ public class HomeHeaderView extends RelativeLayout{
         if(venuesBeanList == null || venuesBeanList.isEmpty()){
             sportsLayout.setVisibility(GONE);
         }else {
-            if(venuesBeanList.size() > 1) {
-                marqueeView.startFlipping();
-            }else {
-                marqueeView.stopFlipping();
-            }
-            marqueeFactory.setData(venuesBeanList);
             sportsLayout.setVisibility(VISIBLE);
+            marqueeFactory.resetData(venuesBeanList);
+            if(venuesBeanList.size() > 1 ) {
+                if(!marqueeView.isFlipping()) {
+                    marqueeView.startFlipping();
+                }
+            }else {
+                if(marqueeView.isFlipping()) {
+                    marqueeView.stopFlipping();
+                }
+            }
         }
     }
 

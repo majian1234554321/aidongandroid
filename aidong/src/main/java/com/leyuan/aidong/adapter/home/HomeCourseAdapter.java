@@ -1,6 +1,7 @@
 package com.leyuan.aidong.adapter.home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CategoryBean;
+import com.leyuan.aidong.ui.home.activity.CourseVideoDetailActivity;
 import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
@@ -50,7 +52,7 @@ public class HomeCourseAdapter extends RecyclerView.Adapter<HomeCourseAdapter.Co
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // context.startActivity(new Intent(context, CourseVideoDetailActivity.class));
+              context.startActivity(new Intent(context, CourseVideoDetailActivity.class));
             }
         });
     }

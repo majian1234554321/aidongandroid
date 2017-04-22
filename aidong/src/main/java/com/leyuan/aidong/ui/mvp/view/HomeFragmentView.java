@@ -40,4 +40,6 @@ public interface HomeFragmentView {
     void updateSportsHistory(List<VenuesBean> venuesBeanList);
 
     void updateCourseCategory(List<CategoryBean> courseBeanList);
+
+
 }
