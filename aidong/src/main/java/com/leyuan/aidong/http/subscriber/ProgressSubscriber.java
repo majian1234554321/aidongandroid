@@ -1,11 +1,11 @@
 package com.leyuan.aidong.http.subscriber;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.http.subscriber.handler.ProgressDialogHandler;
 import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.utils.ToastGlobal;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -73,11 +73,11 @@ public abstract class ProgressSubscriber<T> extends Subscriber<T> implements Pro
     @Override
     public void onError(Throwable e) {
         if (e instanceof SocketTimeoutException) {
-            Toast.makeText(context, R.string.connect_timeout, Toast.LENGTH_SHORT).show();
+            ToastGlobal.showLong(R.string.connect_timeout);
         } else if (e instanceof ConnectException) {
-            Toast.makeText(context, R.string.connect_break, Toast.LENGTH_SHORT).show();
+            ToastGlobal.showLong(R.string.connect_break);
         } else {
-            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+            ToastGlobal.showLong(e.getMessage());
         }
         Logger.w("ProgressSubscriber", "error:" + e.getMessage());
         dismissProgressDialog();

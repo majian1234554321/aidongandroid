@@ -42,7 +42,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
 
     public OrderAdapter(Context context) {
         this.context = context;
-        orderCountdownMill = SystemInfoUtils.getAppointmentCountdown(context) * 60 * 1000;
+        orderCountdownMill = SystemInfoUtils.getOrderCountdown(context) * 60 * 1000;
     }
 
     public void setData(List<OrderBean> data) {

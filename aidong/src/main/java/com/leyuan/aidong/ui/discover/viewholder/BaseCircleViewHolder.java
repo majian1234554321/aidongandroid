@@ -88,7 +88,13 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             ivGender.setBackgroundResource("0".equals(dynamic.publisher.gender)
                     ? R.drawable.icon_man : R.drawable.icon_woman);
         }
-        tvContent.setText(dynamic.content);
+
+        if(TextUtils.isEmpty(dynamic.content)) {
+            tvContent.setVisibility(View.GONE);
+        }else {
+            tvContent.setText(dynamic.content);
+            tvContent.setVisibility(View.VISIBLE);
+        }
 
         if (showLikeAndCommentLayout) {
             if (dynamic.like.counter > 0) {

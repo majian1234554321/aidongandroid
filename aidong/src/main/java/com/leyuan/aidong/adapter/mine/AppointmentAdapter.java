@@ -41,7 +41,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
     public AppointmentAdapter(Context context) {
         this.context = context;
-        APPOINT_COUNTDOWN_MILL = SystemInfoUtils.getAppointmentCountdown(context) * 60 * 1000;
+        APPOINT_COUNTDOWN_MILL = SystemInfoUtils.getAppointmentCountdown(context)  * 60 * 1000;
     }
 
     public void setData(List<AppointmentBean> data) {

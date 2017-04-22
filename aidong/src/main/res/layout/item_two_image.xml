@@ -2,27 +2,54 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="245dp"
+    android:layout_height="180dp"
     android:background="@color/white">
 
-    <ImageView
-        android:id="@+id/iv_one"
+    <RelativeLayout
         android:layout_width="0dp"
         android:layout_weight="1"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"/>
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/iv_one"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:foreground="?selectableItemBackground"/>
+
+        <TextView
+            android:id="@+id/tv_one_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="14sp"
+            android:textSize="14sp"
+            android:layout_centerInParent="true"
+            android:textColor="@color/white"/>
+    </RelativeLayout>
+
 
     <View
         android:layout_width="5dp"
         android:layout_height="match_parent"
-        android:background="@color/black"
-        />
+        android:background="@color/black" />
 
-    <ImageView
-        android:id="@+id/iv_two"
+    <RelativeLayout
         android:layout_width="0dp"
         android:layout_weight="1"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"/>
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/iv_two"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:foreground="?selectableItemBackground"/>
 
+        <TextView
+            android:id="@+id/tv_two_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="14sp"
+            android:textSize="14sp"
+            android:layout_centerInParent="true"
+            android:textColor="@color/white"/>
+    </RelativeLayout>
 </LinearLayout>

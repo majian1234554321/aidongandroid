@@ -3,6 +3,8 @@ package com.leyuan.aidong.ui.mvp.model.impl;
 import android.content.Context;
 
 import com.leyuan.aidong.entity.BannerBean;
+import com.leyuan.aidong.entity.CategoryBean;
+import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.entity.data.BrandData;
 import com.leyuan.aidong.entity.data.HomeData;
 import com.leyuan.aidong.http.RetrofitHelper;
@@ -29,8 +31,8 @@ public class HomeModelImpl implements HomeModel {
     }
 
     @Override
-    public void getRecommendList(Subscriber<HomeData> subscriber, int page) {
-        homeService.getRecommendList(page)
+    public void getRecommendList(Subscriber<HomeData> subscriber, int page,String list) {
+        homeService.getRecommendList(page,list)
                 .compose(RxHelper.<HomeData>transform())
                 .subscribe(subscriber);
     }
@@ -40,21 +42,35 @@ public class HomeModelImpl implements HomeModel {
         homeService.getTypeDetail(id,page)
                 .compose(RxHelper.<BrandData>transform())
                 .subscribe(subscriber);
-
     }
 
     @Override
-    public List<BannerBean> getBanners() {
+    public List<BannerBean> getHomeBanners() {
         return SystemInfoUtils.getHomeBanner(context);
     }
 
     @Override
-    public List<BannerBean> getPopupBanners() {
+    public List<BannerBean> getStoreBanners() {
+        return  SystemInfoUtils.getStoreBanner(context);
+    }
+
+    @Override
+    public List<VenuesBean> getSportsHistory() {
+        return SystemInfoUtils.getSportsHistory(context);
+    }
+
+    @Override
+    public List<BannerBean> getHomePopupBanners() {
         return SystemInfoUtils.getHomePopupBanner(context);
     }
 
     @Override
     public List<String> getOpenCity() {
         return SystemInfoUtils.getOpenCity(context);
+    }
+
+    @Override
+    public List<CategoryBean> getCourseCategory() {
+        return SystemInfoUtils.getCourseCategory(context);
     }
 }

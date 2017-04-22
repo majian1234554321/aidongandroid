@@ -19,8 +19,10 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.HomeAdapter;
 import com.leyuan.aidong.entity.BannerBean;
+import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.HomeBean;
+import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.home.activity.LocationActivity;
@@ -52,6 +54,7 @@ import static com.leyuan.aidong.utils.Constant.HOME_TITLE_AND_VERTICAL_LIST;
  * @author song
  */
 public class HomeFragment extends BaseFragment implements HomeFragmentView, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+    private static final String TYPE_HOME = "home";
     private TextView tvLocation;
     private ImageView ivSearch;
     private HomeHeaderView headerView;
@@ -124,16 +127,18 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView, View
     }
 
     private void initData() {
-        present.getPopupBanner();
-        present.getBanners();
-        present.commonLoadData(switcherLayout);
+        present.getHomePopupBanner();
+        present.getHomeBanners();
+        present.getSportHistory();
+        present.getCourseCategoryList();
+        present.commonLoadData(switcherLayout,TYPE_HOME);
     }
 
     @Override
     public void onRefresh() {
         currPage = 1;
         RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-        present.pullToRefreshHomeData();
+        present.pullToRefreshHomeData(TYPE_HOME);
     }
 
     @Override
@@ -154,20 +159,15 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView, View
         public void onLoadNextPage(View view) {
             currPage++;
             if (data != null && data.size() >= pageSize) {
-                present.requestMoreHomeData(recyclerView, pageSize, currPage);
+                present.requestMoreHomeData(recyclerView, pageSize, currPage,TYPE_HOME);
             }
         }
     };
 
+
     @Override
     public void updateBanner(List<BannerBean> bannerBeanList) {
-        if (bannerBeanList != null && !bannerBeanList.isEmpty()) {
-            headerView.getBannerView().setVisibility(View.VISIBLE);
-            headerView.getBannerView().setAutoPlayAble(bannerBeanList.size() > 1);
-            headerView.getBannerView().setData(bannerBeanList, null);
-        } else {
-            headerView.getBannerView().setVisibility(View.GONE);
-        }
+        headerView.setHomeBannerData(bannerBeanList);
     }
 
     @Override
@@ -175,6 +175,37 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView, View
         if (banner != null && !banner.isEmpty()) {
             new HomeBannerDialog(getContext(), banner).show();
         }
+    }
+
+    @Override
+    public void updateCourseCategory(List<CategoryBean> courseBeanList) {
+        headerView.setCourseRecyclerView(courseBeanList);
+    }
+
+    @Override
+    public void updateSportsHistory(List<VenuesBean> venuesBeanList) {
+        VenuesBean v1 = new VenuesBean();
+        v1.setBrand_logo("https://www.baidu.com/img/bd_logo1.png");
+        v1.setName("百度");
+        v1.setDistance(100);
+
+        VenuesBean v2 = new VenuesBean();
+        v2.setBrand_logo("https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=2490895003," +
+                "2642262494&fm=58&s=2370E532CFA568134854D6FC0300F020");
+        v2.setName("网易");
+        v2.setDistance(99);
+
+        VenuesBean v3 = new VenuesBean();
+        v3.setBrand_logo("https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=3076306465,4196184967&fm=96");
+        v3.setName("网易云音乐");
+        v3.setDistance(1);
+
+        venuesBeanList = new ArrayList<>();
+        venuesBeanList.add(v1);
+        venuesBeanList.add(v2);
+        venuesBeanList.add(v3);
+
+        headerView.setSportHistory(venuesBeanList);
     }
 
     @Override

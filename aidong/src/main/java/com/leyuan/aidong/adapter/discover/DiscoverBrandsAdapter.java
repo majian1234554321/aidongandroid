@@ -46,7 +46,7 @@ public class DiscoverBrandsAdapter extends RecyclerView.Adapter<DiscoverBrandsAd
     @Override
     public void onBindViewHolder(VenuesHolder holder, int position) {
         final BrandBean bean = data.get(position);
-        GlideLoader.getInstance().displayImage(bean.getLogo(), holder.cover);
+        GlideLoader.getInstance().displayRoundImage(bean.getLogo(), holder.cover);
         holder.name.setText(bean.getName());
         holder.distance.setText( bean.getGyms_count() + "家分店");
 

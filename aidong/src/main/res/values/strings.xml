@@ -35,6 +35,7 @@
     <string name="complete">完成</string>
     <string name="contact_us">联系我们</string>
     <string name="found">发现</string>
+    <string name="store">商城</string>
     <string name="start_time">开始时间</string>
     <string name="RecommendWeixin">微信好友</string>
     <string name="RecommendWeibo">微博好友</string>
@@ -111,6 +112,8 @@
     <string name="pleaseinputpassword">请输入原密码</string>
     <string name="zhaodaowo">可通过附近的人找到我</string>
 
+    <string name="recommend_course_video">相关课程视频推荐</string>
+    <string name="appoint_course_immediately">立即预约课程</string>
     <!-- v2.1 -->
 
     <!-- url -->
@@ -240,5 +243,4 @@
     <string name="login_password">登录密码</string>
     <string name="check_old_phone">验证原手机</string>
     <string name="check_phone">验证手机</string>
-    <string name="store">商城</string>
 </resources>

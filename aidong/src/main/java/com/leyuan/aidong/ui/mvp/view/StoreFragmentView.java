@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.mvp.view;
 
-import com.leyuan.aidong.entity.HomeItemBean;
+import com.leyuan.aidong.entity.BannerBean;
+import com.leyuan.aidong.entity.HomeBean;
 
 import java.util.List;
 
@@ -10,5 +11,7 @@ import java.util.List;
  */
 public interface StoreFragmentView {
 
-    void updateRecyclerView(List<HomeItemBean> homeItemBeen);
+    void updateBanners(List<BannerBean> bannerBeanList);
+
+    void updateRecyclerView(List<HomeBean> homeItemBeen);
 }
