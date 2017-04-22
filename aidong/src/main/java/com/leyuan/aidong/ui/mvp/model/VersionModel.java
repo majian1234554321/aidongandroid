@@ -4,6 +4,7 @@ import com.leyuan.aidong.entity.VersionInformation;
 import com.leyuan.aidong.http.RetrofitHelper;
 import com.leyuan.aidong.http.RxHelper;
 import com.leyuan.aidong.http.api.VersionService;
+import com.leyuan.aidong.utils.Constant;
 
 import rx.Subscriber;
 
@@ -18,7 +19,7 @@ public class VersionModel {
     }
 
     public void getVersionInfo(Subscriber<VersionInformation> subscriber) {
-        service.getVersionInfo()
+        service.getVersionInfo(Constant.OS_TYPE)
                 .compose(RxHelper.<VersionInformation>transform())
                 .subscribe(subscriber);
     }

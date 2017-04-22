@@ -52,6 +52,7 @@ public class Constant {
     public static final String BINDING_PHONE = "binding_phone";
     public static final String DEFAULT_CITY = "上海";
     public static final String OS = "android";
+    public static final String OS_TYPE = "andriod";
     public static final String BROADCAST_ACTION_SELECTED_CITY = "com.leyuan.chat.selected_city";
     public static final Double EXPRESS_PRICE = 15d;
 

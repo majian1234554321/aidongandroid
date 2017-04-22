@@ -71,8 +71,6 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
 //        setContentView(R.layout.activity_splash);
 
 
-
-
         SystemPresent systemPresent = new SystemPresentImpl(this);
         systemPresent.getSystemInfo(OS);
         LogAidong.i("mLocationClient   systemPresent.getSystemInfo(OS);");
@@ -109,7 +107,7 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
     }
 
     private void showUpdateDialog(VersionInformation versionInformation) {
-        if (versionInformation.getIsUpdate() == 1 || VersionManager.mustUpdate(versionInformation.getVersion(), this)) {
+        if (versionInformation.isUpdate_force() || VersionManager.mustUpdate(versionInformation.getVersion(), this)) {
             showForceUpdateDialog(versionInformation);
         } else {
             showNormalUpdateDialog(versionInformation);
@@ -117,7 +115,7 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
     }
 
     private void showNormalUpdateDialog(VersionInformation versionInformation) {
-        final String downloadUrl = versionInformation.getApk();
+        final String downloadUrl = versionInformation.getApk_url();
         new DialogDoubleButton(this).setContentDesc("新版本 V" + versionInformation.getVersion() + " 已发布,请下载")
                 .setBtnCancelListener(new ButtonCancelListener() {
                     @Override
@@ -156,7 +154,7 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
     }
 
     private void showForceUpdateDialog(VersionInformation versionInformation) {
-        final String downloadUrl = versionInformation.getApk();
+        final String downloadUrl = versionInformation.getApk_url();
         new DialogSingleButton(this).setContentDesc("新版本 V" + versionInformation.getVersion() + " 已发布,请下载")
                 .setBtnOkListener(new ButtonOkListener() {
                     @Override
@@ -170,7 +168,7 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
     public void onAutoLoginResult(boolean success) {
         handler.removeCallbacksAndMessages(null);
         handler.sendEmptyMessageDelayed(MESSAGE, DURATION);
-        if(App.getInstance().isLogin()){
+        if (App.getInstance().isLogin()) {
             FollowPresent followPresent = new FollowPresentImpl(this);
             followPresent.getFollowList();
         }
