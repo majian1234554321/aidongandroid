@@ -203,7 +203,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         ivCart = (ImageView) findViewById(R.id.iv_cart);
         tvAddCart = (TextView) findViewById(R.id.tv_add_cart);
         tvPay = (TextView) findViewById(R.id.tv_pay);
-
+        topLayout.setBackgroundColor(Color.argb(55,0,0,0));
         bannerLayout.setAdapter(new BGABanner.Adapter() {
             @Override
             public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
@@ -441,10 +441,10 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     public void onScrollChanged(ObserveScrollView scrollView, int x, int y, int oldX, int oldY) {
         int height = DensityUtil.dp2px(this,300);
         if (y <= 0) {
-            topLayout.setBackgroundColor(Color.argb( 0, 0,0,0));
+            topLayout.setBackgroundColor(Color.argb(55,0,0,0));
         } else if (y > 0 && y <= height) {
             float ratio = (float) y / height;
-            float alpha = (255 * ratio);
+            float alpha = (200 * ratio) + 55;
             topLayout.setBackgroundColor(Color.argb((int) alpha, 0,0,0));
         } else {
             topLayout.setBackgroundColor(Color.argb(255, 0,0,0));

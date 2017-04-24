@@ -71,6 +71,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView, View
     BroadcastReceiver selectCityReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            refreshLayout.setRefreshing(true);
             initData();
         }
     };
