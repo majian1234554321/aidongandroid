@@ -26,6 +26,7 @@ public class CircleDynamicAdapter extends BaseHolderViewAdapter<DynamicBean> {
     private SparseArray<ViewHolderInfo> viewHolderKeyArray;
     private IDynamicCallback callback;
     private boolean showLikeAndCommentLayout;
+    private boolean showFollowButton;
 
     private CircleDynamicAdapter(Context context,List<DynamicBean> data){
         super(context,data);
@@ -35,6 +36,7 @@ public class CircleDynamicAdapter extends BaseHolderViewAdapter<DynamicBean> {
         this(builder.context, builder.data);
         this.callback = builder.callback;
         this.viewHolderKeyArray = builder.viewHolderKeyArray;
+        this.showFollowButton = builder.showFollowButton;
         this.showLikeAndCommentLayout = builder.showLikeAndCommentLayout;
     }
 
@@ -50,6 +52,7 @@ public class CircleDynamicAdapter extends BaseHolderViewAdapter<DynamicBean> {
             BaseCircleViewHolder circleBaseViewHolder = createCircleViewHolder(context, parent, viewHolderInfo);
             if (circleBaseViewHolder != null) {
                 circleBaseViewHolder.setCallback(callback);
+                circleBaseViewHolder.setShowFollowButton(showFollowButton);
                 circleBaseViewHolder.showLikeAndCommentLayout(showLikeAndCommentLayout);
             }
             return circleBaseViewHolder;
@@ -64,6 +67,7 @@ public class CircleDynamicAdapter extends BaseHolderViewAdapter<DynamicBean> {
         private List<T> data;
         private IDynamicCallback callback;
         private boolean showLikeAndCommentLayout;
+        private boolean showFollowButton;
 
         public Builder(Context context) {
             this.context = context;
@@ -92,6 +96,11 @@ public class CircleDynamicAdapter extends BaseHolderViewAdapter<DynamicBean> {
 
         public Builder<T> showLikeAndCommentLayout(boolean show) {
             this.showLikeAndCommentLayout = show;
+            return this;
+        }
+
+        public Builder<T> showFollowButton(boolean show) {
+            this.showFollowButton = show;
             return this;
         }
 
@@ -129,5 +138,50 @@ public class CircleDynamicAdapter extends BaseHolderViewAdapter<DynamicBean> {
         void onLikeClick(int position,String id,boolean isLike);
         void onCommentClick(DynamicBean dynamicBean);
         void onShareClick(DynamicBean dynamic);
+        void onFollowClick(String id);
+    }
+
+
+    public static class SimpleDynamicCallback implements IDynamicCallback{
+
+        @Override
+        public void onBackgroundClick(DynamicBean dynamicBean) {
+
+        }
+
+        @Override
+        public void onAvatarClick(String id) {
+
+        }
+
+        @Override
+        public void onVideoClick(String url) {
+
+        }
+
+        @Override
+        public void onImageClick(List<String> photoUrls, List<Rect> viewLocalRect, int currPosition) {
+
+        }
+
+        @Override
+        public void onLikeClick(int position, String id, boolean isLike) {
+
+        }
+
+        @Override
+        public void onCommentClick(DynamicBean dynamicBean) {
+
+        }
+
+        @Override
+        public void onShareClick(DynamicBean dynamic) {
+
+        }
+
+        @Override
+        public void onFollowClick(String id) {
+
+        }
     }
 }

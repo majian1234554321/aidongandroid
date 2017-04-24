@@ -43,6 +43,7 @@ import com.leyuan.aidong.ui.video.activity.PlayerActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.KeyBoardUtil;
+import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -66,7 +67,7 @@ import static com.leyuan.aidong.utils.Constant.DYNAMIC_VIDEO;
  * 动态详情
  * Created by song on 2016/12/28.
  */
-public class DynamicDetailActivity extends BaseActivity implements DynamicDetailActivityView,View.OnClickListener,
+public  class DynamicDetailActivity extends BaseActivity implements DynamicDetailActivityView,View.OnClickListener,
         TextView.OnEditorActionListener, SwipeRefreshLayout.OnRefreshListener, DynamicDetailAdapter.OnItemClickListener {
     private ImageView ivBack;
     private TextView tvReport;
@@ -76,8 +77,8 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
     private View header;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView commentView;
-    private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private DynamicDetailAdapter commentAdapter;
+    private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private int currPage = 1;
     private DynamicBean dynamic;
     private List<CommentBean> comments = new ArrayList<>();
@@ -136,6 +137,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
                 .addType(FourImageViewHolder.class, DYNAMIC_FOUR_IMAGE, R.layout.vh_dynamic_four_photos)
                 .addType(FiveImageViewHolder.class, DYNAMIC_FIVE_IMAGE, R.layout.vh_dynamic_five_photos)
                 .addType(SixImageViewHolder.class, DYNAMIC_SIX_IMAGE, R.layout.vh_dynamic_six_photos)
+                .showFollowButton(true)
                 .showLikeAndCommentLayout(false)
                 .setData(dynamicList)
                 .setDynamicCallback(new DynamicCallback());
@@ -288,12 +290,30 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
         }
     }
 
-    public class DynamicCallback implements CircleDynamicAdapter.IDynamicCallback {
-
-        @Override
-        public void onBackgroundClick(DynamicBean dynamicBean) {
-
+    @Override
+    public void addFollowResult(BaseBean baseBean) {
+        if(baseBean.getStatus() == Constant.OK){
+            SystemInfoUtils.addFollow(dynamic.publisher);
+            headerAdapter.notifyDataSetChanged();
+            ToastGlobal.showLong("关注成功");
+        }else {
+            ToastGlobal.showLong("关注失败" + baseBean.getMessage());
         }
+    }
+
+    @Override
+    public void cancelFollowResult(BaseBean baseBean) {
+        if(baseBean.getStatus() == Constant.OK){
+            SystemInfoUtils.removeFollow(dynamic.publisher);
+            headerAdapter.notifyDataSetChanged();
+            ToastGlobal.showLong("取消关注成功");
+        }else {
+            ToastGlobal.showLong("取消关注失败" + baseBean.getMessage());
+        }
+    }
+
+
+    public class DynamicCallback extends CircleDynamicAdapter.SimpleDynamicCallback {
 
         @Override
         public void onAvatarClick(String id) {
@@ -329,8 +349,13 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
         }
 
         @Override
-        public void onShareClick(DynamicBean dynamic) {
-
+        public void onFollowClick(String id) {
+            boolean isFollow = SystemInfoUtils.isFollow(DynamicDetailActivity.this,id);
+            if(isFollow){
+                dynamicPresent.cancelFollow(id);
+            }else {
+                dynamicPresent.addFollow(id);
+            }
         }
     }
 

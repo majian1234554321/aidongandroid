@@ -26,4 +26,7 @@ public interface DynamicPresent {
     void getLikes(String id,int page);
 
     void reportDynamic(String id,String type);
+
+    void addFollow(String id);
+    void cancelFollow(String id);
 }

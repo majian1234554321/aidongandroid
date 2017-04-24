@@ -15,7 +15,9 @@ import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.aidong.ui.mvp.model.DynamicModel;
+import com.leyuan.aidong.ui.mvp.model.FollowModel;
 import com.leyuan.aidong.ui.mvp.model.impl.DynamicModelImpl;
+import com.leyuan.aidong.ui.mvp.model.impl.FollowModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
 import com.leyuan.aidong.ui.mvp.view.DynamicDetailActivityView;
 import com.leyuan.aidong.ui.mvp.view.DynamicParseUserView;
@@ -35,6 +37,8 @@ public class DynamicPresentImpl implements DynamicPresent {
     private DynamicParseUserView dynamicParseUserView;
     private Context context;
     private DynamicModel dynamicModel;
+    private FollowModel followModel;
+
     private SportCircleFragmentView sportCircleFragmentView;
     private PublishDynamicActivityView publishDynamicActivityView;
     private DynamicDetailActivityView dynamicDetailActivityView;
@@ -246,5 +250,35 @@ public class DynamicPresentImpl implements DynamicPresent {
                 dynamicDetailActivityView.reportResult(baseBean);
             }
         },id,type);
+    }
+
+    @Override
+    public void cancelFollow(String id) {
+        if(followModel == null){
+            followModel = new FollowModelImpl();
+        }
+        followModel.cancelFollow(new ProgressSubscriber<BaseBean>(context) {
+            @Override
+            public void onNext(BaseBean baseBean) {
+                if(baseBean != null){
+                    dynamicDetailActivityView.cancelFollowResult(baseBean);
+                }
+            }
+        },id);
+    }
+
+    @Override
+    public void addFollow(String id) {
+        if(followModel == null){
+            followModel = new FollowModelImpl();
+        }
+        followModel.addFollow(new ProgressSubscriber<BaseBean>(context) {
+            @Override
+            public void onNext(BaseBean baseBean) {
+                if(baseBean != null){
+                    dynamicDetailActivityView.addFollowResult(baseBean);
+                }
+            }
+        },id);
     }
 }

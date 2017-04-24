@@ -18,6 +18,10 @@ public class UserBean implements Parcelable,Serializable{
     private String distance;    //距离
     private boolean isFollow;   //是否关注
     private String signature;
+    private String user_type;
+
+    //compat
+
 
     public UserBean(String id) {
         this.id = id;
@@ -71,43 +75,16 @@ public class UserBean implements Parcelable,Serializable{
         this.distance = distance;
     }
 
-
-    @Override
-    public int describeContents() {
-        return 0;
+    public String getUser_type() {
+        return user_type;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
-        dest.writeString(this.name);
-        dest.writeString(this.avatar);
-        dest.writeString(this.gender);
-        dest.writeString(this.distance);
+    public void setUser_type(String user_type) {
+        this.user_type = user_type;
     }
 
     public UserBean() {
     }
-
-    protected UserBean(Parcel in) {
-        this.id = in.readString();
-        this.name = in.readString();
-        this.avatar = in.readString();
-        this.gender = in.readString();
-        this.distance = in.readString();
-    }
-
-    public static final Creator<UserBean> CREATOR = new Creator<UserBean>() {
-        @Override
-        public UserBean createFromParcel(Parcel source) {
-            return new UserBean(source);
-        }
-
-        @Override
-        public UserBean[] newArray(int size) {
-            return new UserBean[size];
-        }
-    };
 
     @Override
     public String toString() {
@@ -127,4 +104,44 @@ public class UserBean implements Parcelable,Serializable{
     public void setFollow(boolean follow) {
         isFollow = follow;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.avatar);
+        dest.writeString(this.gender);
+        dest.writeString(this.distance);
+        dest.writeByte(this.isFollow ? (byte) 1 : (byte) 0);
+        dest.writeString(this.signature);
+        dest.writeString(this.user_type);
+    }
+
+    protected UserBean(Parcel in) {
+        this.id = in.readString();
+        this.name = in.readString();
+        this.avatar = in.readString();
+        this.gender = in.readString();
+        this.distance = in.readString();
+        this.isFollow = in.readByte() != 0;
+        this.signature = in.readString();
+        this.user_type = in.readString();
+    }
+
+    public static final Creator<UserBean> CREATOR = new Creator<UserBean>() {
+        @Override
+        public UserBean createFromParcel(Parcel source) {
+            return new UserBean(source);
+        }
+
+        @Override
+        public UserBean[] newArray(int size) {
+            return new UserBean[size];
+        }
+    };
 }

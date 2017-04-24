@@ -168,15 +168,11 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
 
     }
 
-    private class DynamicCallback implements CircleDynamicAdapter.IDynamicCallback {
+    private class DynamicCallback extends CircleDynamicAdapter.SimpleDynamicCallback {
 
         @Override
         public void onBackgroundClick(DynamicBean dynamicBean) {
             DynamicDetailActivity.start(getContext(), dynamicBean);
-        }
-
-        @Override
-        public void onAvatarClick(String id) {
         }
 
         @Override
@@ -216,7 +212,7 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
             } else {
                 cover = dynamic.videos.cover;
             }
-            sharePopupWindow.showAtBottom(dynamic.publisher.name + "的动态",
+            sharePopupWindow.showAtBottom(dynamic.publisher.getName() + "的动态",
                     dynamic.content, cover, ConstantUrl.URL_SHARE_DYNAMIC);
         }
     }

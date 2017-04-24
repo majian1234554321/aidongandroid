@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.DynamicBean;
+import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.Logger;
@@ -61,13 +62,13 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
     public void onBindViewHolder(final DynamicHolder holder, final int position) {
         Logger.w("recyclerView","onBindView" + position);
         final DynamicBean dynamic = data.get(position);
-        DynamicBean.Publisher publisher = dynamic.publisher;
+        UserBean publisher = dynamic.publisher;
 
         //头部信息
         if (publisher != null) {
-            holder.tvName.setText(publisher.name);
+            holder.tvName.setText(publisher.getName());
             holder.dvAvatar.setTag(publisher);
-            GlideLoader.getInstance().displayImage(publisher.avatar, holder.dvAvatar);
+            GlideLoader.getInstance().displayImage(publisher.getAvatar(), holder.dvAvatar);
             holder.dvAvatar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

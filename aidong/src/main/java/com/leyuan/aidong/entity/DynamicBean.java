@@ -24,7 +24,7 @@ public class DynamicBean implements Serializable{
     public String content;
     public List<String> image;
     public Video videos;
-    public Publisher publisher;
+    public UserBean publisher;
     public String published_at;
     public LikeUser like;
     public Comment comment;
@@ -34,14 +34,6 @@ public class DynamicBean implements Serializable{
     public class Video implements Serializable{
         public String url;
         public String cover;
-    }
-
-    public class Publisher implements Serializable{
-        public String id;
-        public String name;
-        public String avatar;
-        public String gender;
-        public String user_type;        //用户身份 空为普通用户否则教练
     }
 
     public class LikeUser implements Serializable{

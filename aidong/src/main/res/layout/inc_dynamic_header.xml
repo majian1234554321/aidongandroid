@@ -55,5 +55,14 @@
             android:text="12分钟前"
             android:textColor="@color/c9"
             android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/iv_follow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/icon_follow"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
     </RelativeLayout>
+
 </LinearLayout>

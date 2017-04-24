@@ -19,6 +19,7 @@ import com.leyuan.aidong.adapter.discover.DynamicLikeAdapter;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.utils.Utils;
 
 
@@ -35,6 +36,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
     private TextView tvName;
     private TextView tvTime;
     private ImageView ivCoachFlag;
+    private ImageView ivFollow;
 
     private TextView tvContent;
     private LinearLayout likeLayout;
@@ -51,6 +53,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
 
     protected IDynamicCallback callback;
     private boolean showLikeAndCommentLayout = true;
+    private boolean showFollowButton = false;
 
     public BaseCircleViewHolder(Context context, ViewGroup parent, int layoutResId) {
         super(context, parent, layoutResId);
@@ -60,6 +63,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         ivAvatar = (ImageView) itemView.findViewById(R.id.dv_avatar);
         ivGender = (ImageView) itemView.findViewById(R.id.iv_gender);
         ivCoachFlag = (ImageView) itemView.findViewById(R.id.iv_coach_flag);
+        ivFollow = (ImageView) itemView.findViewById(R.id.iv_follow);
         tvName = (TextView) itemView.findViewById(R.id.tv_name);
         tvTime = (TextView) itemView.findViewById(R.id.tv_time);
         tvContent = (TextView) itemView.findViewById(R.id.tv_content);
@@ -80,13 +84,20 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
     @Override
     public void onBindData(final DynamicBean dynamic, final int position) {
         if (dynamic.publisher != null) {
-            tvName.setText(dynamic.publisher.name);
-            GlideLoader.getInstance().displayCircleImage(dynamic.publisher.avatar, ivAvatar);
+            tvName.setText(dynamic.publisher.getName());
+            GlideLoader.getInstance().displayCircleImage(dynamic.publisher.getAvatar(), ivAvatar);
             tvTime.setText(Utils.getData(dynamic.published_at));
-            ivCoachFlag.setVisibility("Coach".equals(dynamic.publisher.user_type)
+            ivCoachFlag.setVisibility("Coach".equals(dynamic.publisher.getUser_type())
                     ? View.VISIBLE : View.GONE);
-            ivGender.setBackgroundResource("0".equals(dynamic.publisher.gender)
+            ivGender.setBackgroundResource("0".equals(dynamic.publisher.getGender())
                     ? R.drawable.icon_man : R.drawable.icon_woman);
+            if(showFollowButton){
+                ivFollow.setVisibility(View.VISIBLE);
+                boolean isFollow = SystemInfoUtils.isFollow(context,dynamic.publisher.getId());
+                ivFollow.setBackgroundResource(isFollow ? R.drawable.icon_following : R.drawable.icon_follow);
+            }else {
+                ivFollow.setVisibility(View.GONE);
+            }
         }
 
         if(TextUtils.isEmpty(dynamic.content)) {
@@ -142,7 +153,16 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             @Override
             public void onClick(View v) {
                 if (callback != null) {
-                    callback.onAvatarClick(dynamic.publisher.id);
+                    callback.onAvatarClick(dynamic.publisher.getId());
+                }
+            }
+        });
+
+        ivFollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(callback != null){
+                    callback.onFollowClick(dynamic.publisher.getId());
                 }
             }
         });
@@ -183,6 +203,10 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         this.showLikeAndCommentLayout = show;
     }
 
+
+    public void setShowFollowButton(boolean show){
+        this.showFollowButton = show;
+    }
 
     private boolean isLike(DynamicBean dynamic) {
         if (!App.mInstance.isLogin()) {

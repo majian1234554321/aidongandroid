@@ -21,7 +21,6 @@ import android.widget.Toast;
 import com.google.android.exoplayer.util.Util;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter;
-import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter.IDynamicCallback;
 import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.DynamicBean;
@@ -148,6 +147,7 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
                 .addType(FourImageViewHolder.class,DYNAMIC_FOUR_IMAGE, R.layout.vh_dynamic_four_photos)
                 .addType(FiveImageViewHolder.class,DYNAMIC_FIVE_IMAGE, R.layout.vh_dynamic_five_photos)
                 .addType(SixImageViewHolder.class, DYNAMIC_SIX_IMAGE, R.layout.vh_dynamic_six_photos)
+                .showFollowButton(false)
                 .showLikeAndCommentLayout(true)
                 .setDynamicCallback(new DynamicCallback());
         circleDynamicAdapter = builder.build();
@@ -190,7 +190,8 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
         RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
     }
 
-    private class DynamicCallback implements IDynamicCallback {
+
+    private class DynamicCallback extends CircleDynamicAdapter.SimpleDynamicCallback {
 
         @Override
         public void onBackgroundClick(DynamicBean dynamicBean) {
@@ -252,7 +253,7 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
             } else {
                 cover = dynamic.videos.cover;
             }
-            sharePopupWindow.showAtBottom(dynamic.publisher.name + "的动态", dynamic.content, cover, ConstantUrl.URL_SHARE_DYNAMIC);
+            sharePopupWindow.showAtBottom(dynamic.publisher.getName() + "的动态", dynamic.content, cover, ConstantUrl.URL_SHARE_DYNAMIC);
         }
     }
 

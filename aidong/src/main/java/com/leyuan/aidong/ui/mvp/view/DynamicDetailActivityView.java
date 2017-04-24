@@ -17,4 +17,6 @@ public interface DynamicDetailActivityView {
     void addLikeResult(int position,BaseBean baseBean);
     void cancelLikeResult(int position,BaseBean baseBean);
     void reportResult(BaseBean baseBean);
+    void cancelFollowResult(BaseBean baseBean);
+    void addFollowResult(BaseBean baseBean);
 }
