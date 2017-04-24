@@ -331,14 +331,14 @@ public class Utils {
 			String timeDate = timeFormat.format(date);
 			//当前日期的前一天
 			String beforeDate = getSpecifiedDayBefore();
-			if(spanTime < 60000) {
+			if(spanTime < 60000  * 60 * 4) { // 小于4h
 				return "刚刚";
-			} else if(spanTime < 3600000) { // xx分钟前
-				return spanTime / 60000 + "分钟前";
-			} else if (currDate.equals(timeDate)) {
+			} else if(spanTime < 60000  * 60 * 24) { // xx分钟前
+				return spanTime / (60000*60) + "小时前";
+			} /*else if (currDate.equals(timeDate)) {
 				SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm");
 				return "今天 " + sdf2.format(date);
-			} else if (timeDate.equals(beforeDate)) {
+			} */else if (timeDate.equals(beforeDate)) {
 				SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm");
 				return "昨天" + sdf2.format(date);
 			} else

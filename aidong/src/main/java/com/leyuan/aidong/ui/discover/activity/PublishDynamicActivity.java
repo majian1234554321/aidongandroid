@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -21,8 +22,8 @@ import com.leyuan.aidong.module.photopicker.boxing.Boxing;
 import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
 import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
 import com.leyuan.aidong.module.photopicker.boxing_impl.ui.BoxingActivity;
-import com.leyuan.aidong.module.photopicker.boxing_impl.view.SpacesItemDecoration;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.home.view.ItemDragHelperCallback;
 import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.PublishDynamicActivityView;
@@ -83,10 +84,11 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
         btSend.setEnabled(!selectedMedia.isEmpty());
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
         recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.addItemDecoration(new SpacesItemDecoration(
-                getResources().getDimensionPixelOffset(R.dimen.media_margin), 3));
         mediaAdapter = new PublishDynamicAdapter();
         recyclerView.setAdapter(mediaAdapter);
+        ItemDragHelperCallback itemDragHelperCallback = new ItemDragHelperCallback(mediaAdapter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemDragHelperCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
         mediaAdapter.setData(selectedMedia,isPhoto);
     }
 

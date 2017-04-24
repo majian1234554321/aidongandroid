@@ -87,7 +87,12 @@
                 android:id="@+id/rv_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"/>
+                android:background="@color/white"
+                android:paddingLeft="@dimen/media_margin"
+                android:paddingRight="@dimen/media_margin"
+                android:paddingBottom="@dimen/media_margin"
+                android:clipChildren="false"
+                android:clipToPadding="false"/>
 
             <Button
                 android:id="@+id/bt_publish"

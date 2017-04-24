@@ -191,4 +191,5 @@ public class ApplyServiceActivity extends BaseActivity implements View.OnClickLi
         mediaAdapter.notifyItemRemoved(position);
         mediaAdapter.notifyItemRangeChanged(position, selectedMedia.size());
     }
+
 }

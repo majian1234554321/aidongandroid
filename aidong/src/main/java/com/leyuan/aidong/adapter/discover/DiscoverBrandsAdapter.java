@@ -2,6 +2,7 @@ package com.leyuan.aidong.adapter.discover;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -39,7 +40,7 @@ public class DiscoverBrandsAdapter extends RecyclerView.Adapter<DiscoverBrandsAd
 
     @Override
     public VenuesHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = View.inflate(context, R.layout.item_discover_venues, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_discover_venues, parent,false);
         return new VenuesHolder(view);
     }
 

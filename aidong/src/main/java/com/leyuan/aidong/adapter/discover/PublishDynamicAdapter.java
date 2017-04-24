@@ -9,9 +9,11 @@ import android.widget.ImageView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.module.photopicker.boxing.BoxingMediaLoader;
 import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
+import com.leyuan.aidong.ui.home.view.ItemDragHelperCallback;
 import com.leyuan.aidong.utils.ScreenUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static com.leyuan.aidong.ui.App.context;
@@ -21,7 +23,8 @@ import static com.leyuan.aidong.ui.App.context;
  * 发表动态适配器
  * Created by song on 2017/1/13.
  */
-public class PublishDynamicAdapter extends RecyclerView.Adapter<PublishDynamicAdapter.ImageHolder> {
+public class PublishDynamicAdapter extends RecyclerView.Adapter<PublishDynamicAdapter.ImageHolder>
+        implements ItemDragHelperCallback.OnItemMoveListener{
     private static final int DEFAULT_MAX_IMAGE_COUNT = 6;
     private static final int ITEM_TYPE_MEDIA = 1;
     private static final int ITEM_TYPE_ADD_IMAGE = 2;
@@ -98,6 +101,13 @@ public class PublishDynamicAdapter extends RecyclerView.Adapter<PublishDynamicAd
         }
     }
 
+    @Override
+    public boolean onItemMove(int fromPosition, int toPosition) {
+        Collections.swap(data, fromPosition, toPosition);
+        notifyItemMoved(fromPosition, toPosition);
+        return true;
+    }
+
     class ImageHolder extends RecyclerView.ViewHolder {
         ImageView image;
         ImageView delete;
@@ -108,8 +118,7 @@ public class PublishDynamicAdapter extends RecyclerView.Adapter<PublishDynamicAd
             image = (ImageView) itemView.findViewById(R.id.dv_image);
             delete = (ImageView) itemView.findViewById(R.id.iv_delete);
             ivPlay = (ImageView) itemView.findViewById(R.id.iv_play);
-            int width = (ScreenUtil.getScreenWidth(context) -
-                    4 * context.getResources().getDimensionPixelOffset(R.dimen.media_margin))/3;
+            int width = (ScreenUtil.getScreenWidth(context) - 8 * context.getResources().getDimensionPixelOffset(R.dimen.media_margin))/3;
             int height = width;
             itemView.getLayoutParams().width = width;
             itemView.getLayoutParams().height = height;
@@ -124,4 +133,5 @@ public class PublishDynamicAdapter extends RecyclerView.Adapter<PublishDynamicAd
         void onAddMediaClick();
         void onDeleteMediaClick(int position);
     }
+
 }
