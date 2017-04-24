@@ -3,6 +3,7 @@ package com.leyuan.aidong.adapter.home;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -22,7 +23,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityHolder> {
     private final Context context;
     private List<String> data = new ArrayList<>();
 
-    public CityAdapter(Context context, OnCitySelecetListener listener) {
+    public CityAdapter(Context context, OnCitySelectListener listener) {
         this.context = context;
         this.listener = listener;
     }
@@ -41,7 +42,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityHolder> {
 
     @Override
     public CityHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = View.inflate(parent.getContext(), R.layout.item_city, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_city, parent,false);
         return new CityHolder(view);
     }
 
@@ -54,7 +55,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onCitySelecet(str);
+                listener.onCitySelect(str);
 
 
             }
@@ -73,9 +74,9 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityHolder> {
     }
 
 
-    OnCitySelecetListener listener;
+    OnCitySelectListener listener;
 
-    public interface OnCitySelecetListener {
-        void onCitySelecet(String selectedCity);
+    public interface OnCitySelectListener {
+        void onCitySelect(String selectedCity);
     }
 }

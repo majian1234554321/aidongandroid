@@ -30,7 +30,7 @@ import java.util.List;
  * 城市切换界面
  * Created by song on 2016/8/23.
  */
-public class LocationActivity extends BaseActivity implements LocationActivityView, CityAdapter.OnCitySelecetListener, SystemView {
+public class LocationActivity extends BaseActivity implements LocationActivityView, CityAdapter.OnCitySelectListener, SystemView {
     private SimpleTitleBar titleBar;
     private TextView tvLocation;
     private RecyclerView recyclerView;
@@ -85,7 +85,7 @@ public class LocationActivity extends BaseActivity implements LocationActivityVi
     }
 
     @Override
-    public void onCitySelecet(String str) {
+    public void onCitySelect(String str) {
         if (!TextUtils.equals(App.getInstance().getSelectedCity(), str)) {
             App.getInstance().setSelectedCity(str);
             systemPresent.getSystemInfoSelected(Constant.OS);

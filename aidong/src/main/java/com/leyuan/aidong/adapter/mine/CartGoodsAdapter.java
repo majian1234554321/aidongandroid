@@ -37,19 +37,8 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
     }
 
     public void setData(List<GoodsBean> data) {
-
         if (data != null) {
             this.data = data;
-
-         /*   for (GoodsBean bean : this.data) {
-                if (this.reBuyIds.contains(bean.getId())) {
-                    bean.setChecked(true);
-                } else {
-                    bean.setChecked(false);
-                }
-            }*/
-
-
             notifyDataSetChanged();
         }
     }

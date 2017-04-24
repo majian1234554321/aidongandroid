@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@drawable/selector_dynamic_bg">
 
     <include layout="@layout/inc_dynamic_header"/>
 
@@ -17,8 +17,7 @@
             android:id="@+id/dv_video"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/line_color"
-             />
+            android:background="@color/line_color" />
 
         <ImageButton
             android:layout_width="wrap_content"

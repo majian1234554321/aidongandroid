@@ -75,8 +75,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     private ImageView ivEdit;
     private SwitcherLayout switcherLayout;
     private RelativeLayout contentLayout;
-    private RelativeLayout otherEmptyPhotoLayout;
-    private RelativeLayout selfEmptyPhotoLayout;
+    private RelativeLayout emptyPhotoLayout;
     private TextView tvAddImage;
     private RecyclerView rvPhoto;
     private ImageView dvAvatar;
@@ -122,8 +121,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         ivEdit = (ImageView) findViewById(R.id.iv_edit);
         contentLayout = (RelativeLayout) findViewById(R.id.rl_content);
         switcherLayout = new SwitcherLayout(this, contentLayout);
-        otherEmptyPhotoLayout = (RelativeLayout) findViewById(R.id.rl_other_empty);
-        selfEmptyPhotoLayout = (RelativeLayout) findViewById(R.id.rl_self_empty);
+        emptyPhotoLayout = (RelativeLayout) findViewById(R.id.rl_self_empty);
         tvAddImage = (TextView) findViewById(R.id.tv_add_image);
         rvPhoto = (RecyclerView) findViewById(R.id.rv_photo);
         dvAvatar = (ImageView) findViewById(R.id.dv_avatar);
@@ -168,9 +166,9 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
             ivFollowOrPublish.setBackgroundResource(R.drawable.icon_mine_publish);
             if (!userInfoData.getPhotoWall().isEmpty()) {
                 wallAdapter.setData(userInfoData.getPhotoWall());
-                selfEmptyPhotoLayout.setVisibility(View.GONE);
+                emptyPhotoLayout.setVisibility(View.GONE);
             } else {
-                selfEmptyPhotoLayout.setVisibility(View.VISIBLE);
+                emptyPhotoLayout.setVisibility(View.VISIBLE);
             }
             ivEdit.setVisibility(View.VISIBLE);
             contactLayout.setVisibility(View.GONE);
@@ -182,9 +180,6 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
                     ? R.drawable.icon_following : R.drawable.icon_follow);
             if (!userInfoData.getPhotoWall().isEmpty()) {
                 wallAdapter.setData(userInfoData.getPhotoWall());
-            } else {
-                otherEmptyPhotoLayout.setVisibility(View.VISIBLE);
-                contactLayout.setVisibility(View.VISIBLE);
             }
             ivEdit.setVisibility(View.GONE);
             contactLayout.setVisibility(View.VISIBLE);

@@ -165,7 +165,10 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
 
     @Override
     public void showEmptyLayout() {
-
+        if(refreshLayout.isRefreshing()){
+            dynamicList.clear();
+            refreshLayout.setRefreshing(false);
+        }
     }
 
     private class DynamicCallback extends CircleDynamicAdapter.SimpleDynamicCallback {

@@ -24,6 +24,7 @@ import com.leyuan.aidong.ui.home.activity.CourseCategoryActivity;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.ToastGlobal;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
@@ -33,11 +34,11 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  * Created by song on 2017/2/21.
  */
 public class HomeHeaderView extends RelativeLayout{
-    private Context context;
     private BGABanner banner;
     private LinearLayout sportsLayout;
     private MarqueeView marqueeView;
     private LinearLayout courseLayout;
+    private List<VenuesBean> venuesBeanList = new ArrayList<>();
 
     private MarqueeFactory<RelativeLayout, VenuesBean> marqueeFactory;
     private HomeCourseAdapter courseAdapter;
@@ -52,7 +53,6 @@ public class HomeHeaderView extends RelativeLayout{
 
     public HomeHeaderView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.context = context;
         initView(context);
     }
 
@@ -113,7 +113,8 @@ public class HomeHeaderView extends RelativeLayout{
     }
 
 
-    public void setSportHistory(List<VenuesBean> venuesBeanList){
+    public void setSportHistory(List<VenuesBean> list){
+        this.venuesBeanList = list;
         if(venuesBeanList == null || venuesBeanList.isEmpty()){
             sportsLayout.setVisibility(GONE);
         }else {
@@ -137,6 +138,15 @@ public class HomeHeaderView extends RelativeLayout{
             courseLayout.setVisibility(View.VISIBLE);
         }else{
             courseLayout.setVisibility(View.GONE);
+        }
+    }
+
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        if(!marqueeView.isFlipping() && venuesBeanList.size() > 1){
+            marqueeView.startFlipping();
         }
     }
 }

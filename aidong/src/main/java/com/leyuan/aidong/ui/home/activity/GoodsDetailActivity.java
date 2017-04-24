@@ -122,7 +122,6 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     private TextView tvAddCart;
     private TextView tvPay;
 
-
     private List<View> allTabView = new ArrayList<>();
     private List<String> bannerUrls = new ArrayList<>();
     private GoodsDetailCouponAdapter couponAdapter;
