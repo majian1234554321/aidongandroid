@@ -19,11 +19,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.AccelerateInterpolator;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +31,7 @@ import com.leyuan.aidong.adapter.home.GoodsDetailCouponAdapter;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.DeliveryBean;
 import com.leyuan.aidong.entity.GoodsDetailBean;
+import com.leyuan.aidong.entity.GoodsSkuBean;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.App;
@@ -68,9 +67,6 @@ import java.util.List;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 
-import static com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow.FROM_ADD_CART;
-import static com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow.FROM_BUY;
-import static com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow.FROM_SKU;
 import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
 import static com.leyuan.aidong.utils.Constant.EMPTY_STR;
 import static com.leyuan.aidong.utils.Constant.REQUEST_ADD_CART;
@@ -85,7 +81,7 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_TO_CART;
  */
 public class GoodsDetailActivity extends BaseActivity implements View.OnClickListener,
         GoodsDetailActivityView,ObserveScrollView.ScrollViewListener, GoodsSkuPopupWindow.SelectSkuListener,
-        SmartTabLayout.TabProvider, PopupWindow.OnDismissListener, GoodsDetailCouponAdapter.CouponListener {
+        SmartTabLayout.TabProvider,GoodsDetailCouponAdapter.CouponListener {
     private RelativeLayout topLayout;
     private ImageView ivBack;
     private TextView tvTitle;
@@ -120,7 +116,9 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     private LinearLayout bottomLayout;
     private ImageView ivCart;
     private TextView tvAddCart;
-    private TextView tvPay;
+    private LinearLayout payLayout;
+    private TextView tvStockTip;
+    private TextView tvSellOut;
 
     private List<View> allTabView = new ArrayList<>();
     private List<String> bannerUrls = new ArrayList<>();
@@ -130,8 +128,9 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     private GoodsDetailBean bean;
 
     private String id;
-    private String count;
+    private String selectedCount;
     private String goodsType;
+    private boolean isSellOut = true; //是否售罄
     private List<String> selectedSkuValues = new ArrayList<>();
     private GoodsDetailPresent goodsPresent;
 
@@ -201,7 +200,9 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         bottomLayout = (LinearLayout) findViewById(R.id.ll_bottom);
         ivCart = (ImageView) findViewById(R.id.iv_cart);
         tvAddCart = (TextView) findViewById(R.id.tv_add_cart);
-        tvPay = (TextView) findViewById(R.id.tv_pay);
+        payLayout = (LinearLayout) findViewById(R.id.ll_pay);
+        tvStockTip = (TextView) findViewById(R.id.tv_count_tip);
+        tvSellOut = (TextView) findViewById(R.id.tv_sell_out);
         topLayout.setBackgroundColor(Color.argb(55,0,0,0));
         bannerLayout.setAdapter(new BGABanner.Adapter() {
             @Override
@@ -223,7 +224,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         addressLayout.setOnClickListener(this);
         ivCart.setOnClickListener(this);
         tvAddCart.setOnClickListener(this);
-        tvPay.setOnClickListener(this);
+        payLayout.setOnClickListener(this);
         scrollview.setScrollViewListener(this);
         couponAdapter.setListener(this);
         detailsLayout.setOnSlideDetailsListener(new MyOnSlideDetailsListener());
@@ -243,7 +244,11 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                 showRecommendCodeDialog();
                 break;
             case R.id.ll_goods_sku:
-                showSkuPopupWindow(this, bean, selectedSkuValues, FROM_SKU);
+                if(isSellOut) {
+                    showSkuPopupWindow(GoodsSkuPopupWindow.GoodsStatus.SellOut);
+                }else {
+                    showSkuPopupWindow(GoodsSkuPopupWindow.GoodsStatus.Normal);
+                }
                 break;
             case R.id.ll_address:
                 Intent intent = new Intent(this, DeliveryInfoActivity.class);
@@ -264,10 +269,10 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                 }
                 break;
             case R.id.tv_add_cart:
-                showSkuPopupWindow(this, bean, selectedSkuValues, FROM_ADD_CART);
+                showSkuPopupWindow(GoodsSkuPopupWindow.GoodsStatus.ConfirmToAddCart);
                 break;
-            case R.id.tv_pay:
-                showSkuPopupWindow(this, bean, selectedSkuValues, FROM_BUY);
+            case R.id.ll_pay:
+                showSkuPopupWindow(GoodsSkuPopupWindow.GoodsStatus.ConfirmToBuy);
                 break;
             default:
                 break;
@@ -313,31 +318,40 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             }
         }
 
+        for (GoodsSkuBean goodsSkuBean : bean.spec.item) {
+            if(goodsSkuBean.getStock() != 0){
+                isSellOut = false;
+                break;
+            }
+        }
+        tvSellOut.setVisibility(isSellOut ? View.VISIBLE : View.GONE);
+        payLayout.setVisibility(isSellOut ? View.GONE : View.VISIBLE);
+        tvAddCart.setVisibility(isSellOut ? View.GONE : View.VISIBLE);
+
         initFragments();
     }
 
     @Override
-    public void onSelectSkuChanged(List<String> selectedSkuValues,String skuTip,String count) {
-        this.count = count;
+    public void onSelectSkuChanged(List<String> selectedSkuValues,String skuTip,String selectedCount,int stock) {
+        this.selectedCount = selectedCount;
         if(selectedSkuValues != null) {
             this.selectedSkuValues = selectedSkuValues;
         }
         tvSelectSku.setText(isAllSkuConfirm() ? String.format(getString(R.string.sku_selected),skuTip)
                 : String.format(getString(R.string.sku_select),skuTip));
-        tvCount.setText(String.format(getString(R.string.count_string),count));
+        tvCount.setText(String.format(getString(R.string.count_string), this.selectedCount));
+        tvStockTip.setText(String.format(getString(R.string.surplus_goods_count),stock));
+        tvStockTip.setVisibility(stock <= 10 ? View.VISIBLE : View.GONE);
     }
 
 
     //todo optimize
-    private void showSkuPopupWindow(Context context, GoodsDetailBean detailBean, List<String> selectedSkuValues, String from) {
-        rootLayout.animate().scaleY(0.95f).setInterpolator(new AccelerateInterpolator(2)).start();
-        rootLayout.animate().scaleX(0.95f).setInterpolator(new AccelerateInterpolator(2)).start();
-
+    private void showSkuPopupWindow(GoodsSkuPopupWindow.GoodsStatus status) {
         //if(skuPopupWindow == null){
         String recommendId = tvRecommendCode.getText().toString();
-        skuPopupWindow = new GoodsSkuPopupWindow(context, detailBean, selectedSkuValues, count, recommendId, goodsType, from);
+        skuPopupWindow = new GoodsSkuPopupWindow(this, bean, status,selectedSkuValues, selectedCount,
+                recommendId, goodsType);
         skuPopupWindow.setSelectSkuListener(this);
-        skuPopupWindow.setOnDismissListener(this);
         skuPopupWindow.showAtLocation(rootLayout, Gravity.BOTTOM, 0, 0);
     }
 
@@ -464,12 +478,6 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     }
 
     @Override
-    public void onDismiss() {
-        rootLayout.animate().scaleY(1f).setInterpolator(new AccelerateInterpolator(2)).start();
-        rootLayout.animate().scaleX(1f).setInterpolator(new AccelerateInterpolator(2)).start();
-    }
-
-    @Override
     public void onCouponClick(final int position) {
         if(App.mInstance.isLogin()) {
             CouponModel model = new CouponModelImpl();
@@ -480,8 +488,6 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                         bean.coupon.get(position).setStatus("1");
                         couponAdapter.notifyDataSetChanged();
                         Toast.makeText(GoodsDetailActivity.this, "领取成功", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(GoodsDetailActivity.this, baseBean.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }
             }, bean.coupon.get(position).getId());

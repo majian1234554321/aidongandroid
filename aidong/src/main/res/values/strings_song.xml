@@ -46,6 +46,7 @@
     <string name="distance_km"> %1$s km </string>
     <string name="x_count"> x %1$s</string>
     <string name="goods_count"> 共%1$d件商品</string>
+    <string name="surplus_goods_count"> 仅剩%1$d件</string>
     <string name="tip_select_goods">你还没有选择商品哦!</string>
     <string name="use_price">满%1$s使用</string>
     <string name="follow_success">关注成功</string>

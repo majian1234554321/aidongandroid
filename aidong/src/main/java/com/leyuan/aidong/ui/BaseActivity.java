@@ -174,7 +174,7 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
     }
 
     protected void setFadeAnimation(){
-        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Fade in = new Fade();
             in.setDuration(300);
             in.setMode(Fade.MODE_OUT);
@@ -189,7 +189,7 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
 
     @TargetApi(21)
     protected void setSlideAnimation(){
-        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Slide slide = new Slide();
             slide.setDuration(300);
             slide.setSlideEdge(Gravity.BOTTOM);

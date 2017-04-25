@@ -190,6 +190,7 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
         equipmentList.addAll(equipments);
         adapter.setEquipmentList(equipmentList);
         wrapperAdapter.notifyDataSetChanged();
+        switcherLayout.showContentLayout();
     }
 
     @Override
@@ -201,6 +202,15 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
         nurtureList.addAll(beanList);
         adapter.setNurtureList(nurtureList);
         wrapperAdapter.notifyDataSetChanged();
+        switcherLayout.showContentLayout();
+    }
+
+    @Override
+    public void showEmptyView() {
+        if(refreshLayout.isRefreshing()){
+            refreshLayout.setRefreshing(false);
+        }
+        switcherLayout.showEmptyLayout();
     }
 
     @Override

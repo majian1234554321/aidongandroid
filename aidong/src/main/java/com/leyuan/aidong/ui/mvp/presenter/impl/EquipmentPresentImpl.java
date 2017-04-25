@@ -75,6 +75,8 @@ public class EquipmentPresentImpl implements EquipmentPresent{
                 }
                 if(!equipmentBeanList.isEmpty()){
                     filterActivityView.updateEquipmentRecyclerView(equipmentBeanList);
+                }else {
+                    filterActivityView.showEmptyView();
                 }
             }
         },Constant.PAGE_FIRST,brandId,sort);

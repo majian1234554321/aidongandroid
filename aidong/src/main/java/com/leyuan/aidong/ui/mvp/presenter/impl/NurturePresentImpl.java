@@ -10,10 +10,8 @@ import com.leyuan.aidong.http.subscriber.CommonSubscriber;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
-import com.leyuan.aidong.module.pay.AliPay;
 import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.module.pay.PayUtils;
-import com.leyuan.aidong.module.pay.WeiXinPay;
 import com.leyuan.aidong.ui.mvp.model.NurtureModel;
 import com.leyuan.aidong.ui.mvp.model.impl.NurtureModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.NurturePresent;
@@ -82,6 +80,8 @@ public class NurturePresentImpl implements NurturePresent{
                 }
                 if(!nurtureBeanList.isEmpty()){
                     filterActivityView.updateNurtureRecyclerView(nurtureBeanList);
+                }else {
+                    filterActivityView.showEmptyView();
                 }
             }
         }, Constant.PAGE_FIRST,brandId,sort);

@@ -76,7 +76,6 @@
                         android:layout_below="@+id/imageView_head"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        android:autoLink="web"
                         android:text="姓名"
                         android:textColor="@color/white"
                         android:textSize="@dimen/length28" />
