@@ -172,7 +172,8 @@ public class OrderFragment extends BaseLazyFragment implements OrderFragmentView
 
         @Override
         public void onConfirmOrder(String id) {
-            present.cancelOrder(id);
+//            present.cancelOrder(id);
+            present.confirmOrder(id);
         }
 
 
