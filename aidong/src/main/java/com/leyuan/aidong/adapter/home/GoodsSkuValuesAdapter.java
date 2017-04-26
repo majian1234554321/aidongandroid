@@ -24,10 +24,14 @@ public class GoodsSkuValuesAdapter extends RecyclerView.Adapter<GoodsSkuValuesAd
     private List<GoodsSkuValueBean> data = new ArrayList<>();
     private OnItemClickListener itemClickListener;
 
-    public GoodsSkuValuesAdapter(Context context, List<GoodsSkuValueBean> data) {
+    public GoodsSkuValuesAdapter(Context context) {
         this.context = context;
+    }
+
+    public void setData(List<GoodsSkuValueBean> data) {
         if(data != null){
             this.data = data;
+            notifyDataSetChanged();
         }
     }
 
@@ -50,6 +54,7 @@ public class GoodsSkuValuesAdapter extends RecyclerView.Adapter<GoodsSkuValuesAd
     public void onBindViewHolder(final ValueHolder holder, final int position) {
         final GoodsSkuValueBean bean = data.get(position);
         holder.value.setText(bean.getValue());
+
         if(bean.isSelected()){
             holder.value.setTextColor(Color.parseColor("#ffffffff"));
             holder.value.setBackgroundResource(R.drawable.shape_solid_corner_black);

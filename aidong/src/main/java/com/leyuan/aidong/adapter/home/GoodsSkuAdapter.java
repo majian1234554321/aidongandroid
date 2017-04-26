@@ -16,6 +16,7 @@ import com.xiaofeng.flowlayoutmanager.Alignment;
 import com.xiaofeng.flowlayoutmanager.FlowLayoutManager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -29,7 +30,8 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
     private SelectSkuListener selectSkuListener;
     private List<String> selectedSkuValues = new ArrayList<>();   //已经选中的sku值
 
-    public GoodsSkuAdapter(Context context, List<LocalGoodsSkuBean> localSkuList, List<GoodsSkuBean> skuList,List<String> selectedSkuValues) {
+    public GoodsSkuAdapter(Context context, List<LocalGoodsSkuBean> localSkuList, List<GoodsSkuBean> skuList,
+                           List<String> selectedSkuValues) {
         this.context = context;
         this.localSkuList = localSkuList;
         this.skuList = skuList;
@@ -51,13 +53,21 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
     public void onBindViewHolder(SkuHolder holder, final int position) {
         LocalGoodsSkuBean bean = localSkuList.get(position);
         holder.skuName.setText(bean.getSkuName());
-        GoodsSkuValuesAdapter skuValueAdapter = new GoodsSkuValuesAdapter(context,bean.getSkuValues());
+        GoodsSkuValuesAdapter skuValueAdapter = new GoodsSkuValuesAdapter(context);
         holder.skuValues.setAdapter(skuValueAdapter);
         FlowLayoutManager manager = new FlowLayoutManager();
         manager.setAutoMeasureEnabled(true);
         manager.setAlignment(Alignment.LEFT);
         holder.skuValues.setLayoutManager(manager);
         holder.skuValues.setNestedScrollingEnabled(false);
+        List<String> allLineNoStockSkuValue = getAllLineNoStockSkuValue();
+        List<GoodsSkuValueBean> skuValues = bean.getSkuValues();
+        for (GoodsSkuValueBean skuValue : skuValues) {
+            if (allLineNoStockSkuValue.contains(skuValue.getValue())) {
+                skuValue.setAvailable(false);
+            }
+        }
+        skuValueAdapter.setData(bean.getSkuValues());
 
         //初始化sku值按钮状态
         if(!selectedSkuValues.isEmpty()){
@@ -154,6 +164,49 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
         }
     }
 
+    //获取包含该规格的所有线路库存都为0的规格值 如[大，黄] [小，黄] 库存均为0返回黄
+    private List<String> getAllLineNoStockSkuValue(){
+        List<GoodsSkuBean> noStockSkuList = new ArrayList<>();
+        List<GoodsSkuBean> hasStockSkuList = new ArrayList<>();
+        for (GoodsSkuBean goodsSkuBean : skuList) {
+            if(goodsSkuBean.getStock() == 0){   // 注意后台约定小于0是无限库存
+                noStockSkuList.add(goodsSkuBean);
+            }else {
+                hasStockSkuList.add(goodsSkuBean);
+            }
+        }
+
+        //获取库存为0的线路中的所有规格值
+        List<String> noStockValues = new ArrayList<>();
+        for (GoodsSkuBean goodsSkuBean : noStockSkuList) {
+            for (String s : goodsSkuBean.value) {
+                if (Collections.frequency(noStockValues, s) < 1) {
+                    noStockValues.add(s);
+                }
+            }
+        }
+
+        //获取库存不为0的线路中的所有规格值
+        List<String> hasStockValues = new ArrayList<>();
+        for (GoodsSkuBean goodsSkuBean : hasStockSkuList) {
+            for (String s : goodsSkuBean.value) {
+                if (Collections.frequency(hasStockValues, s) < 1) {
+                    hasStockValues.add(s);
+                }
+            }
+        }
+
+        //将库存为0的线路中的所有规格值与库存不为0的线路比较
+        List<String> allLineNoStockValue = new ArrayList<>();
+        for (String noStockValue : noStockValues) {
+            if(!hasStockValues.contains(noStockValue)){
+                allLineNoStockValue.add(noStockValue);
+            }
+        }
+
+        return allLineNoStockValue;
+    }
+
     //获取当前选中的Sku值如['黄'] ['红'，'大']
     private List<String> getAllSelectedNodes(){
         List<String> selectedNodes = new ArrayList<>();
@@ -182,7 +235,7 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
 
     //获取包含选中的属性节点路线上的所有节点
     public List<String> getLineNodes(List<String> selectedSkuValues){
-        List<GoodsSkuBean> lines = getLines(selectedSkuValues);
+        List<GoodsSkuBean> lines = getLinesExceptNoStock(selectedSkuValues);
         List<String> allLineNodes = new ArrayList<>();
         for (GoodsSkuBean line : lines) {
             for (String s : line.value) {
@@ -192,11 +245,11 @@ public class GoodsSkuAdapter extends RecyclerView.Adapter<GoodsSkuAdapter.SkuHol
         return allLineNodes;
     }
 
-    //获取包含指定属性节点的所有路线
-    private List<GoodsSkuBean> getLines(List<String> selectedValues){
+    //获取包含指定属性节点的所有路线(排除库存为0的)
+    private List<GoodsSkuBean> getLinesExceptNoStock(List<String> selectedValues){
         ArrayList<GoodsSkuBean> usefulGoodsSkuBean = new ArrayList<>();
         for (GoodsSkuBean goodsSkuBean : skuList) {
-            if(goodsSkuBean.value.containsAll(selectedValues)){
+            if(goodsSkuBean.value.containsAll(selectedValues) && goodsSkuBean.getStock() != 0){
                 usefulGoodsSkuBean.add(goodsSkuBean);
             }
         }
