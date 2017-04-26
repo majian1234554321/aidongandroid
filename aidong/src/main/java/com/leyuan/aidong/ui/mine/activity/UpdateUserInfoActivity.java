@@ -77,7 +77,6 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
     private String height;
     private String weight;
     private String frequency;
-    private String bmi;
 
     private UserInfoPresent userInfoPresent;
     private DecimalFormat df;
@@ -137,12 +136,16 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
             e.printStackTrace();
             tvZodiac.setRightContent("");
         }
-        tvHeight.setRightContent(profileBean.getHeight()+"cm");
-        tvWeight.setRightContent(profileBean.getWeight()+"kg");
-        weight = profileBean.getWeight();
-        height = profileBean.getHeight();
-        tvBmi.setRightContent(df.format(getBMI()));
-        tvFrequency.setRightContent(profileBean.getFrequency());
+        tvHeight.setRightContent(!TextUtils.isEmpty(profileBean.getHeight())
+                ? profileBean.getHeight() + "cm" : "");
+        tvWeight.setRightContent(!TextUtils.isEmpty(profileBean.getWeight())
+                ? profileBean.getWeight() + "kg" : "");
+        tvFrequency.setRightContent(!TextUtils.isEmpty(profileBean.getFrequency())
+                ? profileBean.getFrequency()+"周/次" :"");
+        DecimalFormat df = new java.text.DecimalFormat("#.00");
+        tvBmi.setRightContent(!TextUtils.isEmpty(profileBean.getHeight())&& !TextUtils.isEmpty(profileBean.getWeight())
+                ? df.format(Utils.calBMI(FormatUtil.parseFloat(profileBean.getWeight()),
+                FormatUtil.parseFloat(profileBean.getHeight())/100)):"");
     }
 
     private void setListener() {
@@ -431,14 +434,6 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
         if (FormatUtil.parseFloat(height) != 0f && FormatUtil.parseFloat(weight) != 0f) {
             tvBmi.setRightContent(df.format(Utils.calBMI(FormatUtil.parseFloat(weight),
                     FormatUtil.parseFloat(height)/100)));
-        }
-    }
-
-    private float getBMI(){
-        if(FormatUtil.parseFloat(height) != 0f && FormatUtil.parseFloat(weight) != 0f) {
-            return Utils.calBMI(FormatUtil.parseFloat(weight), FormatUtil.parseFloat(height)/100);
-        }else {
-            return 0f;
         }
     }
 

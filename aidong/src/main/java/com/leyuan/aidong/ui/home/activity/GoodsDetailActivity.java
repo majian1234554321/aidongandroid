@@ -283,6 +283,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     public void setGoodsDetail(GoodsDetailBean bean) {
         this.bean = bean;
         bottomLayout.setVisibility(View.VISIBLE);
+
         bannerUrls.addAll(bean.image);
         bannerLayout.setData(bannerUrls, null);
         tvTitle.setText(String.format(getString(R.string.rmb_price_double),
@@ -301,38 +302,53 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             couponLayout.setVisibility(View.VISIBLE);
         }
 
-        StringBuilder skuStr = new StringBuilder();
-        for (String s : this.bean.spec.name) {
-            skuStr.append(s).append(EMPTY_STR);
-        }
-        tvSelectSku.setText(String.format(getString(R.string.sku_select),skuStr));
-
-        if (bean.pick_up != null) {
-            if (DELIVERY_EXPRESS.equals(bean.pick_up.type)) {
-                tvAddressInfo.setVisibility(View.GONE);
-                tvDeliveryInfo.setText(getString(R.string.express));
-            } else {
-                tvAddressInfo.setVisibility(View.VISIBLE);
-                tvAddressInfo.setText(bean.pick_up.info.getName());
-                tvDeliveryInfo.setText(getString(R.string.self_delivery));
-            }
-        }
-
         for (GoodsSkuBean goodsSkuBean : bean.spec.item) {
             if(goodsSkuBean.getStock() != 0){
                 isSellOut = false;
                 break;
             }
         }
-        tvSellOut.setVisibility(isSellOut ? View.VISIBLE : View.GONE);
-        payLayout.setVisibility(isSellOut ? View.GONE : View.VISIBLE);
-        tvAddCart.setVisibility(isSellOut ? View.GONE : View.VISIBLE);
+
+        if(isSellOut){
+            tvSelectSku.setText(R.string.please_choose);
+            tvCount.setText(R.string.sell_out);
+            tvSellOut.setVisibility(View.VISIBLE);
+            payLayout.setVisibility(View.GONE);
+            tvAddCart.setVisibility(View.GONE);
+            tvAddressInfo.setText(R.string.sell_out);
+            tvAddressInfo.setVisibility(View.VISIBLE);
+            tvDeliveryInfo.setVisibility(View.GONE);
+        }else {
+            StringBuilder skuStr = new StringBuilder();
+            for (String s : this.bean.spec.name) {
+                skuStr.append(s).append(EMPTY_STR);
+            }
+            tvSelectSku.setText(String.format(getString(R.string.sku_select), skuStr));
+            tvCount.setText(R.string.default_select_count);
+            tvSellOut.setVisibility(View.GONE);
+            payLayout.setVisibility(View.VISIBLE);
+            tvAddCart.setVisibility(View.VISIBLE);
+
+            if (bean.pick_up != null) {
+                if (DELIVERY_EXPRESS.equals(bean.pick_up.type)) {
+                    tvAddressInfo.setVisibility(View.GONE);
+                    tvDeliveryInfo.setText(getString(R.string.express));
+                } else {
+                    tvAddressInfo.setVisibility(View.VISIBLE);
+                    tvAddressInfo.setText(bean.pick_up.info.getName());
+                    tvDeliveryInfo.setText(getString(R.string.self_delivery));
+                }
+            }
+        }
 
         initFragments();
     }
 
     @Override
     public void onSelectSkuChanged(List<String> selectedSkuValues,String skuTip,String selectedCount,int stock) {
+        if(isSellOut){
+            return;
+        }
         this.selectedCount = selectedCount;
         if(selectedSkuValues != null) {
             this.selectedSkuValues = selectedSkuValues;

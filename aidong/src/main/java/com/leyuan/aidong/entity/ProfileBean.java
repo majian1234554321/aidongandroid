@@ -25,7 +25,7 @@ public class ProfileBean implements Parcelable {
     private String bust;
     private String waist;
     private String hip;
-    private String frequency;
+    private String movement_frequency;
     private String user_type;
     private String popularity;
 
@@ -174,11 +174,11 @@ public class ProfileBean implements Parcelable {
     }
 
     public String getFrequency() {
-        return frequency;
+        return movement_frequency;
     }
 
     public void setFrequency(String frequency) {
-        this.frequency = frequency;
+        this.movement_frequency = frequency;
     }
 
     public String getId() {
@@ -214,7 +214,7 @@ public class ProfileBean implements Parcelable {
         dest.writeString(this.bust);
         dest.writeString(this.waist);
         dest.writeString(this.hip);
-        dest.writeString(this.frequency);
+        dest.writeString(this.movement_frequency);
         dest.writeString(this.user_type);
         dest.writeString(this.popularity);
     }
@@ -240,7 +240,7 @@ public class ProfileBean implements Parcelable {
         this.bust = in.readString();
         this.waist = in.readString();
         this.hip = in.readString();
-        this.frequency = in.readString();
+        this.movement_frequency = in.readString();
         this.user_type = in.readString();
         this.popularity = in.readString();
     }

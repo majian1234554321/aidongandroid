@@ -34,5 +34,6 @@ public abstract class SimplePayListener implements PayInterface.PayListener{
                 break;
         }
         Toast.makeText(context,tip,Toast.LENGTH_LONG).show();
+
     }
 }

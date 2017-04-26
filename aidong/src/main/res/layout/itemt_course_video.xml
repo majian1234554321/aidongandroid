@@ -3,26 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingLeft="2.5dp"
-    android:paddingRight="2.5dp"
-    android:paddingBottom="15dp">
+    android:paddingBottom="15dp"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp">
 
-    <RelativeLayout
+    <ImageView
+        android:id="@+id/img_cover"
         android:layout_width="match_parent"
-        android:layout_height="116dp">
-        <ImageView
-            android:id="@+id/iv_cover"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop" />
-
-        <ImageView
-            android:id="@+id/iv_play"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/bt_start_video"
-            android:layout_centerInParent="true"/>
-    </RelativeLayout>
+        android:layout_height="90dp"
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/txt_course_name"
@@ -30,7 +19,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="1111111111"
-        android:layout_marginTop="15dp"
         android:textColor="@color/white"
         android:textSize="13sp" />
 
@@ -40,8 +28,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="22222222222222"
-        android:layout_marginTop="7dp"
         android:textColor="@color/white"
-        android:textSize="12sp" />
+        android:textSize="13sp" />
+
 
 </LinearLayout>

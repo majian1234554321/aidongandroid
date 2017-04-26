@@ -20,6 +20,7 @@ import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.module.pay.SimplePayListener;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.mine.activity.AppointmentActivity;
 import com.leyuan.aidong.ui.mine.activity.SelectCouponActivity;
 import com.leyuan.aidong.ui.mine.activity.setting.PhoneBindingActivity;
 import com.leyuan.aidong.ui.mine.activity.setting.PhoneUnBindingActivity;
@@ -228,6 +229,12 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
         public void onSuccess(String code, Object object) {
             Toast.makeText(AppointCourseActivity.this, "支付成功", Toast.LENGTH_LONG).show();
             startActivity(new Intent(AppointCourseActivity.this, AppointSuccessActivity.class));
+        }
+
+        @Override
+        public void onFail(String code, Object object) {
+            super.onFail(code, object);
+            startActivity(new Intent(AppointCourseActivity.this, AppointmentActivity.class));
         }
     };
 

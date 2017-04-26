@@ -24,7 +24,20 @@ public interface NurturePresent {
     /**
      * 下拉刷新营养品列表数据
      */
+    void pullToRefreshNurtureData(String venuesId);
+
+    /**
+     * 下拉刷新营养品列表数据
+     */
     void pullToRefreshNurtureData(String brandId,String sort);
+
+    /**
+     * 上拉加载更多营养品列表数据
+     * @param recyclerView RecyclerView
+     * @param pageSize 每页加载数
+     * @param page 页码
+     */
+    void requestMoreNurtureData(String venuesId,RecyclerView recyclerView, int pageSize, int page);
 
     /**
      * 上拉加载更多营养品列表数据

@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.video.VideoDetail;
+import com.leyuan.aidong.entity.CourseVideoBean;
 import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
@@ -18,14 +18,14 @@ import java.util.List;
 
 public class MoreVideoAdapter extends RecyclerView.Adapter<MoreVideoAdapter.VideoHolder> {
     private Context context;
-    private List<VideoDetail> data = new ArrayList<>();
+    private List<CourseVideoBean> data = new ArrayList<>();
 
 
     public MoreVideoAdapter(Context context) {
         this.context = context;
     }
 
-    public void setData(List<VideoDetail> data) {
+    public void setData(List<CourseVideoBean> data) {
         this.data = data;
         notifyDataSetChanged();
     }
@@ -43,10 +43,12 @@ public class MoreVideoAdapter extends RecyclerView.Adapter<MoreVideoAdapter.Vide
 
     @Override
     public void onBindViewHolder(VideoHolder holder, int position) {
-        VideoDetail bean = data.get(position);
+        CourseVideoBean bean = data.get(position);
         GlideLoader.getInstance().displayImage(bean.getCover(),holder.cover);
-        holder.name.setText(bean.getVideoName());
-        holder.duration.setText(bean.getDuring());
+        holder.name.setText(bean.getName());
+        holder.duration.setText("#"+bean.getType_name() );
+
+
     }
 
     class VideoHolder extends RecyclerView.ViewHolder {

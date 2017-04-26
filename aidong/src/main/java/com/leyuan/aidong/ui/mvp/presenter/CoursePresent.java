@@ -82,4 +82,13 @@ public interface CoursePresent {
     void getSpecifyCourseCoupon(String id);
 
     void getScrollDate(String day,String category);
+
+    /**
+     * 获取课程相关视频
+     */
+    void getRelateCourseVideo(String id);
+
+    void pullToRefreshVideo(String id);
+
+    void loadMoreVideo(String id,RecyclerView recyclerView,int pageSize, int page);
 }

@@ -18,6 +18,7 @@ import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.module.pay.SimplePayListener;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.mine.activity.AppointmentActivity;
 import com.leyuan.aidong.ui.mine.activity.SelectCouponActivity;
 import com.leyuan.aidong.ui.mine.activity.setting.PhoneBindingActivity;
 import com.leyuan.aidong.ui.mine.activity.setting.PhoneUnBindingActivity;
@@ -205,6 +206,12 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
         public void onSuccess(String code, Object object) {
             AppointSuccessActivity.start(AppointCampaignActivity.this, bean.getStartTime());
             Toast.makeText(AppointCampaignActivity.this, "支付成功", Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onFail(String code, Object object) {
+            super.onFail(code, object);
+            startActivity(new Intent(AppointCampaignActivity.this, AppointmentActivity.class));
         }
     };
 

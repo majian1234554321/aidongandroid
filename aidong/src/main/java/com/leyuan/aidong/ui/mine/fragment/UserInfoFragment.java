@@ -13,6 +13,8 @@ import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.Utils;
 import com.leyuan.aidong.widget.ExtendTextView;
 
+import java.text.DecimalFormat;
+
 /**
  * 资料
  * Created by song on 2016/12/27.
@@ -82,9 +84,15 @@ public class UserInfoFragment extends BaseFragment{
             e.printStackTrace();
             zodiac.setRightContent("");
         }
-        height.setRightContent(profileBean.getHeight());
-        weight.setRightContent(profileBean.getWeight());
-        bmi.setRightContent(profileBean.getBmi());
-        frequency.setRightContent(profileBean.getFrequency());
+        height.setRightContent(!TextUtils.isEmpty(profileBean.getHeight())
+                ? profileBean.getHeight() + "cm" : "");
+        weight.setRightContent(!TextUtils.isEmpty(profileBean.getWeight())
+                ? profileBean.getWeight() + "kg" : "");
+        frequency.setRightContent(!TextUtils.isEmpty(profileBean.getFrequency())
+                ? profileBean.getFrequency()+"周/次" :"");
+        DecimalFormat df = new java.text.DecimalFormat("#.00");
+        bmi.setRightContent(!TextUtils.isEmpty(profileBean.getHeight()) && !TextUtils.isEmpty(profileBean.getWeight())
+                ? df.format(Utils.calBMI(FormatUtil.parseFloat(profileBean.getWeight()),
+                FormatUtil.parseFloat(profileBean.getHeight())/100)):"");
     }
 }

@@ -4,6 +4,7 @@ import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CourseDetailData;
 import com.leyuan.aidong.entity.data.AppointmentDetailData;
 import com.leyuan.aidong.entity.data.CourseData;
+import com.leyuan.aidong.entity.data.CourseVideoData;
 import com.leyuan.aidong.entity.data.PayOrderData;
 
 import retrofit2.http.Field;
@@ -40,4 +41,8 @@ public interface CourseService {
 
     @GET("market/courses/{id}/appointment")
     Observable<BaseBean<AppointmentDetailData>> getCourseAppointDetail(@Path("id") String id);
+
+    @GET("videos/{id}/relative_videos")
+    Observable<BaseBean<CourseVideoData>> getCourseVideo(@Path("id") String id, @Query("relat") String relat, @Query("page") int page);
+
 }

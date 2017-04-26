@@ -47,4 +47,8 @@ public interface EquipmentPresent {
     void buyEquipmentImmediately(String skuCode, int amount, String coupon, String integral,
                                String coin, String payType, String pickUpWay, String pickUpId,
                                String pickUpDate,PayInterface.PayListener payListener);
+
+    void pullToRefreshEquipmentData(String venuesId);
+
+    void requestMoreEquipmentData(String venuesId,RecyclerView recyclerView, int pageSize, int page);
 }
