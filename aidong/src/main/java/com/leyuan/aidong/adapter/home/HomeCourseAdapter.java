@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CategoryBean;
@@ -48,6 +49,7 @@ public class HomeCourseAdapter extends RecyclerView.Adapter<HomeCourseAdapter.Co
     public void onBindViewHolder(CourseHolder holder, int position) {
         CategoryBean bean = data.get(position);
         GlideLoader.getInstance().displayRoundImage(bean.getImage(),holder.cover);
+        holder.name.setText(bean.getName());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,9 +61,11 @@ public class HomeCourseAdapter extends RecyclerView.Adapter<HomeCourseAdapter.Co
 
     class CourseHolder extends RecyclerView.ViewHolder{
         ImageView cover;
+        TextView name;
         public CourseHolder(View itemView) {
             super(itemView);
             cover = (ImageView) itemView.findViewById(R.id.iv_cover);
+            name = (TextView) itemView.findViewById(R.id.tv_name);
         }
     }
 }

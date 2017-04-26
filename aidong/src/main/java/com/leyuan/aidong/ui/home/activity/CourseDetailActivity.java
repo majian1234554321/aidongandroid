@@ -205,7 +205,8 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 bean.getAppliedCount(), bean.getPlace()));
         applicantAdapter.setData(bean.getApplied());
         if (!TextUtils.isEmpty(bean.getIntroduce())) {
-            RichText.from(bean.getIntroduce()).into(tvDesc);
+            RichText.from(bean.getIntroduce()).placeHolder(R.drawable.place_holder_logo)
+                    .error(R.drawable.place_holder_logo).into(tvDesc);
         }
         tvBottomPrice.setText(FormatUtil.parseDouble(bean.getPrice()) == 0f
                 ? "免费" : String.format(getString(R.string.rmb_price), bean.getPrice()));
