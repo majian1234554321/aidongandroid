@@ -59,7 +59,8 @@ public class NewsDetailActivity extends BaseActivity implements View.OnClickList
         tvTitle.setText(title);
         tvDate.setText(date);
         if (!TextUtils.isEmpty(body)) {
-            RichText.from(body).into(tvNews);
+            RichText.from(body).placeHolder(R.drawable.place_holder_logo)
+                    .error(R.drawable.place_holder_logo).into(tvNews);
         }
     }
 

@@ -329,6 +329,8 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         tvAddCart.setVisibility(isSellOut ? View.GONE : View.VISIBLE);
 
         initFragments();
+
+//        NewsDetailActivity.start(this, bean.name, bean.name, bean.service);
     }
 
     @Override
