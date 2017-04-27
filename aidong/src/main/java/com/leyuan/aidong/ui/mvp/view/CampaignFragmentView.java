@@ -26,11 +26,6 @@ public interface CampaignFragmentView {
     void showEndFooterView();
 
 
-   /* void showLoadingView();
-
-    void hideLoadingView();
-
-    void showErrorView();*/
 
 
 }

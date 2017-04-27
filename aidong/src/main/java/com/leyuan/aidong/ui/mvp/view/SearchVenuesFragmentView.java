@@ -18,4 +18,6 @@ public interface SearchVenuesFragmentView {
     void onRecyclerViewRefresh(List<VenuesBean> venuesBeanList);
 
     void onRecyclerViewLoadMore(List<VenuesBean> venuesBeanList);
+
+    void showEmptyView();
 }

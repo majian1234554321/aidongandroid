@@ -118,7 +118,7 @@ public class CoursePresentImpl implements CoursePresent{
                     switcherLayout.showContentLayout();
                     courserFragmentView.refreshRecyclerViewData(courseData.getCourse());
                 } else {
-                    switcherLayout.showEmptyLayout();
+                    courserFragmentView.showEmptyView();
                 }
             }
         }, day, category, landmark, Constant.PAGE_FIRST);

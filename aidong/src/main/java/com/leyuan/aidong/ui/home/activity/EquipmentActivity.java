@@ -142,6 +142,8 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
 
     @Override
     public void showEmptyView() {
-
+        View view = View.inflate(this,R.layout.empty_recommend,null);
+        switcherLayout.addCustomView(view,"empty");
+        switcherLayout.showCustomLayout("empty");
     }
 }

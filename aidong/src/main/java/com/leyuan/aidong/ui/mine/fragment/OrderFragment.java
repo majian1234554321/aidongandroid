@@ -145,7 +145,9 @@ public class OrderFragment extends BaseLazyFragment implements OrderFragmentView
 
     @Override
     public void showEmptyView() {
-        switcherLayout.showEmptyLayout();
+        View view = View.inflate(getContext(),R.layout.empty_order,null);
+        switcherLayout.addCustomView(view,"empty");
+        switcherLayout.showCustomLayout("empty");
     }
 
     @Override

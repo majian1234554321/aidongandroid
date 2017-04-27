@@ -20,4 +20,6 @@ public interface SearchEquipmentFragmentView {
     void onRecyclerViewRefresh(List<EquipmentBean> equipmentBeanList);
 
     void onRecyclerViewLoadMore(List<EquipmentBean> equipmentBeanList);
+
+    void showEmptyView();
 }

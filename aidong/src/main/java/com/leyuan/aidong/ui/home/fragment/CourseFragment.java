@@ -130,6 +130,7 @@ public class CourseFragment extends BasePageFragment implements CourserFragmentV
         data.addAll(courseList);
         courseAdapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();
+        switcherLayout.showContentLayout();
     }
 
     @Override
@@ -146,7 +147,9 @@ public class CourseFragment extends BasePageFragment implements CourserFragmentV
 
     @Override
     public void showEmptyView() {
-        switcherLayout.showEmptyLayout();
+        View view = View.inflate(getContext(),R.layout.empty_course,null);
+        switcherLayout.addCustomView(view,"empty");
+        switcherLayout.showCustomLayout("empty");
     }
 
     public void scrollToTop(){

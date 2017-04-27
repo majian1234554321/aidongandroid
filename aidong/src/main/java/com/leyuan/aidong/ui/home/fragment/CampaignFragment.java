@@ -115,7 +115,9 @@ public class CampaignFragment extends BaseFragment implements CampaignFragmentVi
 
     @Override
     public void showEmptyView() {
-        switcherLayout.showEmptyLayout();
+        View view = View.inflate(getContext(),R.layout.empty_campaign,null);
+        switcherLayout.addCustomView(view,"empty");
+        switcherLayout.showCustomLayout("empty");
     }
 
 
