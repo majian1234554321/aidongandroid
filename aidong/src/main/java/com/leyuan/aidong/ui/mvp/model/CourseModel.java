@@ -57,7 +57,7 @@ public interface CourseModel {
      * @param contactMobile 手机号
      */
     void buyCourse(Subscriber<PayOrderData> subscriber,String id,String couponId,String integral,
-                   String payType,String contactName,String contactMobile);
+                   String payType,String contactName,String contactMobile,String isVip);
 
     /**
      * 获取课程预约详情

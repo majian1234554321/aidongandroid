@@ -41,6 +41,7 @@ public class UserInfoPhotoAdapter extends RecyclerView.Adapter<UserInfoPhotoAdap
     public void setData(List<ImageBean> data){
         if(data != null){
             this.data = data;
+            imageViewList.clear();
             notifyDataSetChanged();
         }
     }
@@ -88,20 +89,12 @@ public class UserInfoPhotoAdapter extends RecyclerView.Adapter<UserInfoPhotoAdap
                             urls.add(imageBean.getUrl());
                         }
                         List<Rect> drawableRectList = ImageRectUtils.getDrawableRects(imageViewList);
-                        listener.onPreviewImage(urls,drawableRectList,position);
+                        listener.onPreviewPhotoWallImage(urls,drawableRectList,position);
                     }
                 }
             });
         } else {
             holder.image.setBackgroundResource(R.drawable.icon_add_photo);
-            holder.image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(listener != null){
-                        listener.onAddImageItemClick();
-                    }
-                }
-            });
         }
     }
 
@@ -124,7 +117,7 @@ public class UserInfoPhotoAdapter extends RecyclerView.Adapter<UserInfoPhotoAdap
     }
 
     public interface OnItemClickListener {
-        void onAddImageItemClick();
-        void onPreviewImage(List<String> urls,List<Rect> rectList,int currPosition);
+
+        void onPreviewPhotoWallImage(List<String> urls, List<Rect> rectList, int currPosition);
     }
 }

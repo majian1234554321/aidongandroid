@@ -41,7 +41,6 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-import static com.leyuan.aidong.R.id.birthday;
 import static com.leyuan.aidong.R.id.zodiac;
 
 /**
@@ -73,10 +72,13 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
     private String province;
     private String city;
     private String area;
+    private String birthday;
     private String gender;
     private String height;
     private String weight;
     private String frequency;
+    private String signture;
+    private String name;
 
     private UserInfoPresent userInfoPresent;
     private DecimalFormat df;
@@ -109,7 +111,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
         tvIdentify = (ExtendTextView) findViewById(R.id.identify);
         tvSignature = (ExtendTextView) findViewById(R.id.signature);
         tvAddress = (ExtendTextView) findViewById(R.id.address);
-        tvBirthday = (ExtendTextView) findViewById(birthday);
+        tvBirthday = (ExtendTextView) findViewById(R.id.tv_birthday);
         tvZodiac = (ExtendTextView) findViewById(zodiac);
         tvHeight = (ExtendTextView) findViewById(R.id.height);
         tvWeight = (ExtendTextView) findViewById(R.id.weight);
@@ -126,8 +128,8 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
         try {
             String birthday = profileBean.getBirthday();
             if(!TextUtils.isEmpty(birthday)) {
-                String mothers = birthday.substring(birthday.indexOf("年") + 1, birthday.indexOf("月"));
-                String days = birthday.substring(birthday.indexOf("月") + 1, birthday.indexOf("日"));
+                String mothers = birthday.substring(birthday.indexOf("-") + 1, birthday.lastIndexOf("-"));
+                String days = birthday.substring(birthday.lastIndexOf("-") + 1);
                 tvZodiac.setRightContent(Utils.getConstellation(FormatUtil.parseInt(mothers), FormatUtil.parseInt(days)));
             }else {
                 tvZodiac.setRightContent("");
@@ -191,7 +193,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
             case R.id.address:
                 showAddressDialog();
                 break;
-            case birthday:
+            case R.id.tv_birthday:
                 showBirthdayDialog();
                 break;
             case R.id.height:
@@ -219,6 +221,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
                 .input(getString(R.string.confirm_nickname), tvNickname.getText(), false, new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
+                        name = input.toString();
                         tvNickname.setRightContent(input.toString());
                     }
                 })
@@ -244,8 +247,8 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
     }
 
     private void uploadToServer(String avatarUrl) {
-        userInfoPresent.updateUserInfo(tvNickname.getText(), avatarUrl, gender, tvBirthday.getText(),
-                tvSignature.getText(), province, city, area, height, weight, frequency);
+        userInfoPresent.updateUserInfo(name, avatarUrl, gender, birthday,
+                signture, province, city, area, height, weight, frequency);
     }
 
     @Override
@@ -257,7 +260,6 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
         } else {
             Toast.makeText(UpdateUserInfoActivity.this, "修改失败", Toast.LENGTH_LONG).show();
         }
-
     }
 
     private void selectAvatar() {
@@ -304,6 +306,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
                 .input(getString(R.string.confirm_signature_hint), tvSignature.getText(), false, new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
+                        signture = input.toString();
                         tvSignature.setRightContent(input.toString());
                     }
                 })
@@ -338,8 +341,9 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
                             years = year;
                             mothers = monthOfYear;
                             days = dayOfMonth;
-                            tvBirthday.setRightContent(years + "年" + (mothers + 1) + "月" + days + "日");
+                            tvBirthday.setRightContent(years + "-" + (mothers + 1) + "-" + days);
                             tvZodiac.setRightContent(Utils.getConstellation(mothers + 1, days));
+                            birthday = years +"-"+(mothers + 1)+"-"+days;
                         }
                     }
                 }, years, mothers, days);

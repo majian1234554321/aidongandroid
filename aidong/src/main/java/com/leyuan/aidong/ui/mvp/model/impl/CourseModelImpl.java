@@ -59,8 +59,8 @@ public class CourseModelImpl implements CourseModel {
 
     @Override
     public void buyCourse(Subscriber<PayOrderData> subscriber, String id, @Nullable String couponId,
-                          @Nullable String integral, String payType, String contactName, String contactMobile) {
-        courseService.buyCourse(id,couponId,integral,payType,contactName,contactMobile)
+                          @Nullable String integral, String payType, String contactName, String contactMobile,String isVip) {
+        courseService.buyCourse(id,couponId,integral,payType,contactName,contactMobile,isVip)
                 .compose(RxHelper.<PayOrderData>transform())
                 .subscribe(subscriber);
     }

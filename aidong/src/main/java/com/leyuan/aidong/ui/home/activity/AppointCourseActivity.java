@@ -94,6 +94,7 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
     private CourseDetailBean bean;
     private CoursePresent coursePresent;
     private List<CouponBean> usableCoupons = new ArrayList<>();
+    private boolean isVip = false;
 
     public static void start(Context context, CourseDetailBean courseDetailBean) {
         Intent starter = new Intent(context, AppointCourseActivity.class);
@@ -172,6 +173,7 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
             tvUserName.setText(userName);
         if (!TextUtils.isEmpty(contactMobile))
             tvUserPhone.setText(contactMobile);
+        tvUserName.setSelection(userName.length());
     }
 
     @Override
@@ -195,6 +197,7 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
                 }
                 break;
             case R.id.tv_vip:
+                isVip = true;
                 tvNoVip.setTextColor(Color.parseColor("#000000"));
                 tvVip.setTextColor(Color.parseColor("#ffffff"));
                 tvNoVip.setBackgroundResource(R.drawable.shape_solid_corner_white);
@@ -202,6 +205,7 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
                 vipTipLayout.setVisibility(View.GONE);
                 break;
             case R.id.tv_no_vip:
+                isVip = false;
                 tvVip.setTextColor(Color.parseColor("#000000"));
                 tvNoVip.setTextColor(Color.parseColor("#ffffff"));
                 tvVip.setBackgroundResource(R.drawable.shape_solid_corner_white);
@@ -215,8 +219,9 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
                 } else if (TextUtils.isEmpty(contactMobile)) {
                     ToastUtil.showShort(this, "请先绑定手机");
                 } else {
+                    String vip = isVip ? "1" : "0";
                     coursePresent.buyCourse(bean.getCode(), couponId, integral, payType,
-                            userRealName, contactMobile, payListener);
+                            userRealName, contactMobile, payListener,vip);
                 }
                 break;
             default:

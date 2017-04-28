@@ -102,7 +102,7 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
     public void setAddAddress(AddressBean addressBean) {
         Intent intent = new Intent();
         intent.putExtra("address",addressBean);
-        setResult(0,intent);
+        setResult(RESULT_OK,intent);
         finish();
     }
 
@@ -112,7 +112,7 @@ public class AddAddressActivity extends BaseActivity implements View.OnClickList
         this.province = province;
         this.city = city;
         this.district = area;
-        tvAddress.setText(new StringBuilder(province).append(city).append(area));
+        tvAddress.setText(new StringBuilder(city.contains(province) ? "" : province).append(city).append(area));
     }
 
     @Override

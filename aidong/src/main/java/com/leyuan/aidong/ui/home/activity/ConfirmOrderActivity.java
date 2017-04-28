@@ -122,6 +122,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private @DeliveryType String pickUpWay;           //取货方式(0-快递 1-自提)
     private String pickUpId;                          //自提门店id或快递地址id
     private String pickUpDate;                        //自提时间
+    private String defaultAddressId;
 
     private String couponType;
     private @SettlementType String settlementType;
@@ -158,6 +159,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         }
         present.getSpecifyGoodsCoupon(couponType,itemIds);
     }
+
 
     private void initVariable(){
         payType = PAY_ALI;
@@ -284,7 +286,8 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 startActivityForResult(new Intent(this,AddAddressActivity.class), REQUEST_ADD_ADDRESS);
                 break;
             case R.id.rl_address:
-                startActivityForResult(new Intent(this,SelectAddressActivity.class), REQUEST_SELECT_ADDRESS);
+                startActivityForResult(new Intent(this,SelectAddressActivity.class).putExtra("addressId",defaultAddressId),
+                        REQUEST_SELECT_ADDRESS);
                 break;
             case R.id.tv_coupon:
                 if(usableCoupons != null && !usableCoupons.isEmpty()) {
@@ -474,11 +477,12 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void setAddressInfo(AddressBean address){
+        defaultAddressId = address.getId();
         ivDefault.setVisibility(address.isDefault() ? View.VISIBLE : View.GONE);
         tvName.setText(address.getName());
         tvPhone.setText(address.getMobile());
         StringBuilder sb = new StringBuilder("收货地址: ");
-        sb.append(address.getProvince()).append(address.getCity())
+        sb.append(address.getCity().contains(address.getProvince()) ? "" : address.getProvince()).append(address.getCity())
                 .append(address.getDistrict()).append(address.getAddress());
         tvAddress.setText(sb);
         pickUpId = address.getId();

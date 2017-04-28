@@ -36,13 +36,23 @@ public class SelectAddressActivity extends BaseActivity implements SelectAddress
     private List<AddressBean> addressList = new ArrayList<>();
     private AddressPresent addressPresent;
 
+    private String defaultAddressId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_address);
         addressPresent = new AddressPresentImpl(this,this);
+        if(getIntent() != null){
+            defaultAddressId = getIntent().getStringExtra("addressId");
+        }
         initView();
         setListener();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         addressPresent.getAddress(switcherLayout);
     }
 
@@ -68,12 +78,12 @@ public class SelectAddressActivity extends BaseActivity implements SelectAddress
     @Override
     public void setAddress(List<AddressBean> addressBeanList) {
         addressList = addressBeanList;
-        addressAdapter.setData(addressBeanList);
+        addressAdapter.setData(addressBeanList,defaultAddressId);
     }
 
     @Override
     public void showEmptyView() {
-
+        switcherLayout.showEmptyLayout();
     }
 
     @Override

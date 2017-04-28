@@ -199,7 +199,7 @@ public class CoursePresentImpl implements CoursePresent{
 
     @Override
     public void buyCourse(String id, @Nullable String couponId, @Nullable String integral, String payType,
-                          String contactName, String contactMobile, final PayInterface.PayListener listener) {
+                          String contactName, String contactMobile, final PayInterface.PayListener listener,String isVip) {
         if (courseModel == null) {
             courseModel = new CourseModelImpl(context);
         }
@@ -212,7 +212,7 @@ public class CoursePresentImpl implements CoursePresent{
                     appointCourseActivityView.onFreeCourseAppointed();
                 }
             }
-        }, id, couponId, integral, payType, contactName, contactMobile);
+        }, id, couponId, integral, payType, contactName, contactMobile,isVip);
     }
 
     @Override

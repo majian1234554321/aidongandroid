@@ -57,8 +57,8 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.AddressH
         final AddressBean bean = data.get(position);
         holder.name.setText(bean.getName());
         holder.phone.setText(bean.getMobile());
-        holder.address.setText(new StringBuilder(bean.getProvince()).append(bean.getCity())
-                .append(bean.getDistrict()).append(bean.getAddress()));
+        holder.address.setText(new StringBuilder(bean.getCity().contains(bean.getProvince()) ? "" : bean.getProvince())
+                .append(bean.getCity()).append(bean.getDistrict()).append(bean.getAddress()));
         if(bean.isDefault()){
             holder.rbDefault.setChecked(true);
             holder.tvDefault.setText("默认地址");

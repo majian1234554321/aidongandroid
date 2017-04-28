@@ -74,8 +74,8 @@ public class UserInfoFragment extends BaseFragment{
         String birthday = profileBean.getBirthday();
         try {
             if(!TextUtils.isEmpty(birthday)) {
-                String mothers = birthday.substring(birthday.indexOf("年") + 1, birthday.indexOf("月"));
-                String days = birthday.substring(birthday.indexOf("月") + 1, birthday.indexOf("日"));
+                String mothers = birthday.substring(birthday.indexOf("-") + 1, birthday.lastIndexOf("-"));
+                String days = birthday.substring(birthday.lastIndexOf("-") + 1);
                 zodiac.setRightContent(Utils.getConstellation(FormatUtil.parseInt(mothers), FormatUtil.parseInt(days)));
             }else {
                 zodiac.setRightContent("");
@@ -94,5 +94,10 @@ public class UserInfoFragment extends BaseFragment{
         bmi.setRightContent(!TextUtils.isEmpty(profileBean.getHeight()) && !TextUtils.isEmpty(profileBean.getWeight())
                 ? df.format(Utils.calBMI(FormatUtil.parseFloat(profileBean.getWeight()),
                 FormatUtil.parseFloat(profileBean.getHeight())/100)):"");
+    }
+
+    public void refreshUserInfo(ProfileBean profileBean){
+        this.profileBean = profileBean;
+        setView();
     }
 }

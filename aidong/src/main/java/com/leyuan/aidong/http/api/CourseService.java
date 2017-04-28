@@ -37,7 +37,8 @@ public interface CourseService {
                                                  @Field("integral") String integral,
                                                  @Field("pay_type") String payType,
                                                  @Field("contact_name") String contactName,
-                                                 @Field("contact_mobile") String contactMobile);
+                                                 @Field("contact_mobile") String contactMobile,
+                                                 @Field("is_vip") String isVip);
 
     @GET("market/courses/{id}/appointment")
     Observable<BaseBean<AppointmentDetailData>> getCourseAppointDetail(@Path("id") String id);

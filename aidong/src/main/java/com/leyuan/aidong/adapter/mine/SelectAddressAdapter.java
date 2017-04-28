@@ -21,6 +21,7 @@ import java.util.List;
 public class SelectAddressAdapter extends RecyclerView.Adapter<SelectAddressAdapter.AddressHolder> {
     private Context context;
     private List<AddressBean> data = new ArrayList<>();
+    private String addressId;
 
     private OnItemClickListener itemClickListener;
 
@@ -32,11 +33,12 @@ public class SelectAddressAdapter extends RecyclerView.Adapter<SelectAddressAdap
         this.itemClickListener = l;
     }
 
-    public void setData(List<AddressBean> data) {
+    public void setData(List<AddressBean> data,String addressId) {
         if (data != null) {
             this.data = data;
             notifyDataSetChanged();
         }
+        this.addressId = addressId;
     }
 
     @Override
@@ -55,8 +57,8 @@ public class SelectAddressAdapter extends RecyclerView.Adapter<SelectAddressAdap
         AddressBean bean = data.get(position);
         holder.name.setText(bean.getName());
         holder.phone.setText(bean.getMobile());
-        holder.address.setText(new StringBuilder(bean.getProvince()).append(bean.getCity())
-                .append(bean.getDistrict()).append(bean.getAddress()));
+        holder.address.setText(new StringBuilder(bean.getCity().contains(bean.getProvince()) ? "" : bean.getProvince())
+                .append(bean.getCity()).append(bean.getDistrict()).append(bean.getAddress()));
         holder.defaultAddress.setVisibility(bean.isDefault() ? View.VISIBLE :View.GONE);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +69,8 @@ public class SelectAddressAdapter extends RecyclerView.Adapter<SelectAddressAdap
                 }
             }
         });
+
+        holder.checkBox.setChecked(bean.getId().equals(addressId));
     }
 
 
