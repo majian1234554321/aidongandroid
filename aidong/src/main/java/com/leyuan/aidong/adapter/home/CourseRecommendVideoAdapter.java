@@ -19,6 +19,8 @@ import java.util.List;
 public class CourseRecommendVideoAdapter extends RecyclerView.Adapter<CourseRecommendVideoAdapter.ViewHolder> {
     private Context context;
     private List<CourseVideoBean> data = new ArrayList<>();
+    private ItemClickListener listener;
+
 
     public CourseRecommendVideoAdapter(Context context) {
         this.context = context;
@@ -26,7 +28,8 @@ public class CourseRecommendVideoAdapter extends RecyclerView.Adapter<CourseReco
 
     public void setData(List<CourseVideoBean> data) {
         if(data != null) {
-            this.data = data;
+            data.remove(0);
+            this.data.addAll(data);
             notifyDataSetChanged();
         }
     }
@@ -43,11 +46,20 @@ public class CourseRecommendVideoAdapter extends RecyclerView.Adapter<CourseReco
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        CourseVideoBean bean = data.get(position);
+    public void onBindViewHolder(ViewHolder holder, final int position) {
+        final CourseVideoBean bean = data.get(position);
         GlideLoader.getInstance().displayImage(bean.getCover(),holder.imgCover);
         holder.txtCourseName.setText(bean.getName());
         holder.txtCourseTypeDuration.setText(bean.getDuring());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(listener != null){
+                    listener.onItemClick(bean.getId());
+                }
+            }
+        });
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -61,5 +73,13 @@ public class CourseRecommendVideoAdapter extends RecyclerView.Adapter<CourseReco
             txtCourseName = (TextView) view.findViewById(R.id.txt_course_name);
             txtCourseTypeDuration = (TextView) view.findViewById(R.id.txt_course_type_duration);
         }
+    }
+
+    public void setListener(ItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface ItemClickListener{
+        void onItemClick(String videoId);
     }
 }

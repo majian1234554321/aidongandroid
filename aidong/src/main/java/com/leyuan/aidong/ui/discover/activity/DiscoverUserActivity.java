@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.UserAdapter;
@@ -25,6 +24,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.DiscoverPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.DiscoverUserActivityView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.SystemInfoUtils;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -236,9 +236,9 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
         if(baseBean.getStatus() == Constant.OK){
             SystemInfoUtils.addFollow(data.get(position));
             userAdapter.notifyDataSetChanged();
-            Toast.makeText(this,R.string.follow_success,Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong(R.string.follow_success);
         }else {
-            Toast.makeText(this,R.string.follow_fail + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong(R.string.follow_fail);
         }
     }
 
@@ -247,9 +247,9 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
         if(baseBean.getStatus() == Constant.OK){
             SystemInfoUtils.removeFollow(data.get(position));
             userAdapter.notifyDataSetChanged();
-            Toast.makeText(this,R.string.cancel_follow_success,Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong(R.string.cancel_follow_success);
         }else {
-            Toast.makeText(this,R.string.cancel_follow_fail + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong(R.string.cancel_follow_fail);
         }
     }
 

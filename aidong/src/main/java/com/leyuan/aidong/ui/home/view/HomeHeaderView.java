@@ -20,9 +20,9 @@ import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.ui.MainActivity;
+import com.leyuan.aidong.ui.discover.activity.VenuesDetailActivity;
 import com.leyuan.aidong.ui.home.activity.CourseCategoryActivity;
 import com.leyuan.aidong.utils.GlideLoader;
-import com.leyuan.aidong.utils.ToastGlobal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +90,7 @@ public class HomeHeaderView extends RelativeLayout{
         marqueeFactory.setOnItemClickListener(new MarqueeFactory.OnItemClickListener<RelativeLayout, VenuesBean>() {
             @Override
             public void onItemClickListener(MarqueeFactory.ViewHolder<RelativeLayout, VenuesBean> holder) {
-                ToastGlobal.showLong("click" + holder.data.getName());
+                VenuesDetailActivity.start(context,holder.data.getId());
             }
         });
 
@@ -114,8 +114,10 @@ public class HomeHeaderView extends RelativeLayout{
 
 
     public void setSportHistory(List<VenuesBean> list){
-        this.venuesBeanList = list;
-        if(venuesBeanList == null || venuesBeanList.isEmpty()){
+        if(list != null) {
+            this.venuesBeanList = list;
+        }
+        if(venuesBeanList.isEmpty()){
             sportsLayout.setVisibility(GONE);
         }else {
             sportsLayout.setVisibility(VISIBLE);

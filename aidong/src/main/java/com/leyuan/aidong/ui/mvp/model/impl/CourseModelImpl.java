@@ -73,8 +73,8 @@ public class CourseModelImpl implements CourseModel {
     }
 
     @Override
-    public void getCourseVideo(Subscriber<CourseVideoData> subscriber, String relate, String id, int page) {
-        courseService.getCourseVideo(id,relate,page)
+    public void getCourseVideo(Subscriber<CourseVideoData> subscriber, String relate, String id, int page,String videoId) {
+        courseService.getCourseVideo(id,relate,videoId,page)
                 .compose(RxHelper.<CourseVideoData>transform())
                 .subscribe(subscriber);
     }

@@ -12,6 +12,7 @@ import com.leyuan.aidong.entity.VersionInformation;
 import com.leyuan.aidong.ui.mvp.presenter.FollowPresent;
 import com.leyuan.aidong.ui.mvp.presenter.SystemPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
+import com.leyuan.aidong.ui.mvp.presenter.impl.MineInfoPresenterImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SplashPresenterImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SystemPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VersionPresenterImpl;
@@ -169,8 +170,11 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
         handler.removeCallbacksAndMessages(null);
         handler.sendEmptyMessageDelayed(MESSAGE, DURATION);
         if (App.getInstance().isLogin()) {
-            FollowPresent followPresent = new FollowPresentImpl(this);
+            FollowPresent followPresent = new FollowPresentImpl(this);  //获取关注列表
             followPresent.getFollowList();
+
+            MineInfoPresenterImpl infoPresent = new MineInfoPresenterImpl(this);    //初始化运动足记
+            infoPresent.getMineInfo();
         }
     }
 

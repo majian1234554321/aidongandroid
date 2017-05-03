@@ -33,7 +33,6 @@
             android:textColor="@color/white"
             android:textSize="15sp"
             android:text="管理"
-            android:visibility="gone"
             android:layout_marginRight="@dimen/right_margin"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"/>

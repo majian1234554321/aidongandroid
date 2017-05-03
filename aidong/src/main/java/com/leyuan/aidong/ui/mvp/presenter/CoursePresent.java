@@ -83,10 +83,9 @@ public interface CoursePresent {
 
     void getScrollDate(String day,String category);
 
-    /**
-     * 获取课程相关视频
-     */
-    void getRelateCourseVideo(String id);
+
+
+    void getRelateCourseVideo(String id, String videoId);
 
     void pullToRefreshVideo(String id);
 

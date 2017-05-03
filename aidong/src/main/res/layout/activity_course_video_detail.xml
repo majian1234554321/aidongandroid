@@ -4,9 +4,30 @@
     android:layout_height="match_parent"
     android:background="@color/black">
 
+    <Button
+        android:id="@+id/iv_back"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/icon_back" />
+
+    <Button
+        android:id="@+id/bt_appoint"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/text_veiw_red"
+        android:text="@string/appoint_course_immediately"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,7 +40,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="210dp">
-
 
                 <ImageView
                     android:id="@+id/img_cover"
@@ -41,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="77dp"
                 android:paddingLeft="15dp"
-                android:paddingTop="17dp">
+                android:paddingTop="20dp">
 
                 <com.leyuan.aidong.widget.media.TextViewPrintly
                     android:id="@+id/tv_course_name"
@@ -57,19 +77,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_course_name"
-                    android:layout_marginTop="12dp"
-                    android:text="0122"
+                    android:layout_marginTop="10dp"
+                    android:text=""
                     android:textColor="@color/white"
                     android:textSize="13sp" />
 
                 <ImageView
                     android:id="@+id/iv_up_arrow"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:padding="15dp"
-                    android:src="@drawable/icon_arrow_down" />
+                    android:padding="@dimen/right_margin"
+                    android:src="@drawable/icon_bottom_arrow_gray" />
 
                 <View
                     android:layout_width="match_parent"
@@ -86,13 +106,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="15dp"
                 android:ellipsize="end"
                 android:maxLines="6"
-                android:text="运动介绍运动介绍运动介绍运动介绍运动介绍运动介绍
-                运动介绍运动介绍运动介绍运动介绍运动介绍运动介绍运动介绍运动介绍
-                运动介绍运动介绍运动介绍运动介绍运动介绍运动介绍运动介绍运
-                动介绍运动介绍运动介绍运动介绍"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="12dp" />
 
@@ -113,6 +130,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="15dp"
                         android:text="@string/recommend_course_video"
+                        android:textSize="15sp"
                         android:textColor="@color/white"/>
 
                     <ImageView
@@ -121,7 +139,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="15dp"
-                        android:src="@drawable/icon_right_arrow" />
+                        android:src="@drawable/icon_right_arrow_gray" />
                 </RelativeLayout>
 
                 <android.support.v7.widget.RecyclerView
@@ -134,20 +152,4 @@
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
-
-    <Button
-        android:id="@+id/iv_back"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:background="@drawable/icon_back" />
-
-    <Button
-        android:id="@+id/bt_appoint"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/text_veiw_red"
-        android:text="@string/appoint_course_immediately"
-        android:textColor="@color/white"
-        android:textSize="16sp" />
 </RelativeLayout>

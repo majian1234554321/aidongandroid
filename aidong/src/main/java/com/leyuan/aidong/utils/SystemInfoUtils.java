@@ -11,7 +11,6 @@ import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.DistrictBean;
 import com.leyuan.aidong.entity.SystemBean;
 import com.leyuan.aidong.entity.UserBean;
-import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.entity.data.FollowData;
 
 import java.io.ByteArrayInputStream;
@@ -165,23 +164,6 @@ public class SystemInfoUtils {
             Object bean = getSystemInfoBean(context, KEY_SYSTEM);
             if (bean instanceof SystemBean) {
                 return ((SystemBean) bean).getOpen_city();
-            }
-            return null;
-        }
-    }
-
-    /**
-     * 获取运动足记
-     * @param context
-     * @return
-     */
-    public static List<VenuesBean> getSportsHistory(Context context){
-        if (Constant.systemInfoBean != null && Constant.systemInfoBean.getGyms() != null) { //内存有直接从内存读取返回
-            return Constant.systemInfoBean.getGyms();
-        } else {          // 从本地读取
-            Object bean = getSystemInfoBean(context, KEY_SYSTEM);
-            if (bean instanceof SystemBean) {
-                return ((SystemBean) bean).getGyms();
             }
             return null;
         }

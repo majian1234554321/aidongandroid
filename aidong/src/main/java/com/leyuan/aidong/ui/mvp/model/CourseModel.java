@@ -73,5 +73,5 @@ public interface CourseModel {
      * @param id
      * @param page
      */
-    void getCourseVideo(Subscriber<CourseVideoData> subscriber,String relate,String id, int page);
+    void getCourseVideo(Subscriber<CourseVideoData> subscriber,String relate,String id, int page,String videoId);
 }

@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.ApplicantAdapter;
@@ -31,6 +30,7 @@ import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.SystemInfoUtils;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.zzhoujay.richtext.RichText;
 
@@ -307,9 +307,9 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             isFollow = true;
             SystemInfoUtils.addFollow(bean.getCoach());
             ivFollow.setBackgroundResource(R.drawable.icon_following);
-            Toast.makeText(this, R.string.follow_success, Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong(R.string.follow_success);
         } else {
-            Toast.makeText(this, R.string.follow_fail + baseBean.getMessage(), Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong(R.string.follow_fail);
         }
     }
 
@@ -319,9 +319,9 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             isFollow = false;
             SystemInfoUtils.removeFollow(bean.getCoach());
             ivFollow.setBackgroundResource(R.drawable.icon_follow);
-            Toast.makeText(this, R.string.cancel_follow_success, Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong(R.string.cancel_follow_success);
         } else {
-            Toast.makeText(this, R.string.cancel_follow_fail + baseBean.getMessage(), Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong(R.string.cancel_follow_fail);
         }
     }
 
