@@ -64,7 +64,8 @@
     <string name="count_string">%1$s个</string>
     <string name="sku_selected">已选择:%1$s</string>
     <string name="sku_select">选择:%1$s</string>
-
+    <string name="sell_out">售罄无选择</string>
+    <string name="default_select_count">1个</string>
     <string name="express">快递</string>
     <string name="self_delivery">自提</string>
 
@@ -82,7 +83,7 @@
     <string name="campaign_status_applied">已报名查看详情</string>
     <string name="campaign_status_not_start">即将开始报名</string>
     <string name="campaign_status_not_pay">待支付</string>
-    <string name="campaign_status_full">报名人数已满</string>
+    <string name="campaign_status_full">报名人数已满</string>#
     <string name="campaign_appoint_end">报名已结束</string>
 
     <string name="food_material">主要食材: %1$s</string>

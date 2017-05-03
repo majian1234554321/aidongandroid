@@ -76,7 +76,7 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
         Intent starter = new Intent(context, GoodsFilterActivity.class);
         starter.putExtra("goodsType",goodsType);
         starter.putExtra("pos",pos);
-        starter.putParcelableArrayListExtra("categoryList",categoryList);
+        starter.putExtra("categoryList",categoryList);
         context.startActivity(starter);
     }
 
@@ -89,7 +89,7 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
         if(getIntent() != null){
             goodsType = getIntent().getStringExtra("goodsType");
             selectedCategoryPosition = getIntent().getIntExtra("pos",0);
-            categoryBeanList = getIntent().getParcelableArrayListExtra("categoryList");
+            categoryBeanList = (List<CategoryBean>) getIntent().getSerializableExtra("categoryList");
             categoryId = categoryBeanList.get(selectedCategoryPosition).getId();
         }
 

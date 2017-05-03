@@ -1,7 +1,6 @@
 package com.leyuan.aidong.adapter.home;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,14 +46,14 @@ public class HomeCourseAdapter extends RecyclerView.Adapter<HomeCourseAdapter.Co
 
     @Override
     public void onBindViewHolder(CourseHolder holder, int position) {
-        CategoryBean bean = data.get(position);
+        final CategoryBean bean = data.get(position);
         GlideLoader.getInstance().displayRoundImage(bean.getImage(),holder.cover);
         holder.name.setText(bean.getName());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              context.startActivity(new Intent(context, CourseVideoDetailActivity.class));
+                CourseVideoDetailActivity.start(context,bean);
             }
         });
     }

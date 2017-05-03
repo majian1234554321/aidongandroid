@@ -39,13 +39,6 @@ public class EquipmentPresentImpl implements EquipmentPresent{
         equipmentBeanList = new ArrayList<>();
     }
 
-    public EquipmentPresentImpl(Context context) {
-        this.context = context;
-        if(equipmentModel == null) {
-            equipmentModel = new EquipmentModelImpl(context);
-        }
-    }
-
 
     @Override
     public void commonLoadEquipmentData(final SwitcherLayout switcherLayout, String brandId, String sort) {
@@ -112,5 +105,15 @@ public class EquipmentPresentImpl implements EquipmentPresent{
                 PayUtils.pay(context,payOrderData.getOrder(),listener);
             }
         },skuCode,amount,coupon,integral,coin,payType,pickUpWay,pickUpId,pickUpDate);
+    }
+
+    @Override
+    public void pullToRefreshEquipmentData(String venuesId) {
+
+    }
+
+    @Override
+    public void requestMoreEquipmentData(String venuesId, RecyclerView recyclerView, int pageSize, int page) {
+
     }
 }

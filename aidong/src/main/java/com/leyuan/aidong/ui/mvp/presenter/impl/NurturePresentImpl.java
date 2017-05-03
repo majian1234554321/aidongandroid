@@ -118,4 +118,14 @@ public class NurturePresentImpl implements NurturePresent{
             }
         },skuCode,amount,coupon,integral,coin,payType,pickUpWay,pickUpId,pickUpDate);
     }
+
+    @Override
+    public void pullToRefreshNurtureData(String venuesId) {
+
+    }
+
+    @Override
+    public void requestMoreNurtureData(String venuesId, RecyclerView recyclerView, int pageSize, int page) {
+
+    }
 }

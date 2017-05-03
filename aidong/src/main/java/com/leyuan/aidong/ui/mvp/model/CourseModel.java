@@ -5,6 +5,7 @@ import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.CourseDetailData;
 import com.leyuan.aidong.entity.data.AppointmentDetailData;
 import com.leyuan.aidong.entity.data.CourseData;
+import com.leyuan.aidong.entity.data.CourseVideoData;
 import com.leyuan.aidong.entity.data.PayOrderData;
 
 import java.util.List;
@@ -64,4 +65,13 @@ public interface CourseModel {
      * @param id 课程code
      */
     void getCourseAppointDetail(Subscriber<AppointmentDetailData> subscriber, String id);
+
+    /**
+     * 获取课程视频
+     * @param subscriber
+     * @param relate relation-加载最多五个视频 all-所有
+     * @param id
+     * @param page
+     */
+    void getCourseVideo(Subscriber<CourseVideoData> subscriber,String relate,String id, int page);
 }

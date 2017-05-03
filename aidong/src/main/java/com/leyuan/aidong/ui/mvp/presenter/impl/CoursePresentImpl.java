@@ -8,9 +8,12 @@ import android.widget.Toast;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CourseBean;
 import com.leyuan.aidong.entity.CourseDetailData;
+import com.leyuan.aidong.entity.CourseVideoBean;
 import com.leyuan.aidong.entity.data.CouponData;
 import com.leyuan.aidong.entity.data.CourseData;
+import com.leyuan.aidong.entity.data.CourseVideoData;
 import com.leyuan.aidong.entity.data.PayOrderData;
+import com.leyuan.aidong.http.subscriber.BaseSubscriber;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
@@ -25,13 +28,15 @@ import com.leyuan.aidong.ui.mvp.model.impl.CourseModelImpl;
 import com.leyuan.aidong.ui.mvp.model.impl.FollowModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
 import com.leyuan.aidong.ui.mvp.view.AppointCourseActivityView;
-import com.leyuan.aidong.ui.mvp.view.AppointmentDetailActivityView;
 import com.leyuan.aidong.ui.mvp.view.CourseActivityView;
 import com.leyuan.aidong.ui.mvp.view.CourseDetailActivityView;
+import com.leyuan.aidong.ui.mvp.view.CourseVideoDetailActivityView;
 import com.leyuan.aidong.ui.mvp.view.CourserFragmentView;
+import com.leyuan.aidong.ui.mvp.view.RelatedVideoActivityView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import rx.Subscriber;
@@ -51,16 +56,23 @@ public class CoursePresentImpl implements CoursePresent{
     private CourseActivityView coursesActivityView;                 //课程列表View层对象
     private CourseDetailActivityView courseDetailActivityView;      //课程详情View层对象
     private AppointCourseActivityView appointCourseActivityView;    //预约课程View层对象
-    private AppointmentDetailActivityView appointmentDetailActivityView; //
+    private CourseVideoDetailActivityView videoDetailActivityView;
+    private RelatedVideoActivityView relatedVideoActivityView;
+
+
+    public CoursePresentImpl(Context context, RelatedVideoActivityView view) {
+        this.context = context;
+        this.relatedVideoActivityView = view;
+    }
+
+    public CoursePresentImpl(Context context, CourseVideoDetailActivityView view) {
+        this.context = context;
+        this.videoDetailActivityView = view;
+    }
 
     public CoursePresentImpl(Context context, CourseDetailActivityView view) {
         this.context = context;
         this.courseDetailActivityView = view;
-    }
-
-    public CoursePresentImpl(Context context, AppointmentDetailActivityView view) {
-        this.context = context;
-        this.appointmentDetailActivityView = view;
     }
 
     public CoursePresentImpl(Context context, CourserFragmentView view) {
@@ -257,12 +269,66 @@ public class CoursePresentImpl implements CoursePresent{
             @Override
             public void onNext(CourseData courseData) {
                 if (courseData != null && courseData.getCourse() != null && !courseData.getCourse().isEmpty()) {
-
                     if(coursesActivityView != null) {
                         coursesActivityView.setScrollPosition(courseData.getDate());
                     }
                 }
             }
         }, day, category, null, Constant.PAGE_FIRST);
+    }
+
+    @Override
+    public void getRelateCourseVideo(String id) {
+        if (courseModel == null) {
+            courseModel = new CourseModelImpl(context);
+        }
+        courseModel.getCourseVideo(new BaseSubscriber<CourseVideoData>(context) {
+            @Override
+            public void onNext(CourseVideoData courseVideoData) {
+                videoDetailActivityView.updateRelateVideo(courseVideoData.getVideos());
+            }
+        },"relation",id,1);
+    }
+
+    @Override
+    public void pullToRefreshVideo(String id) {
+        if (courseModel == null) {
+            courseModel = new CourseModelImpl(context);
+        }
+        courseModel.getCourseVideo(new BaseSubscriber<CourseVideoData>(context) {
+            @Override
+            public void onNext(CourseVideoData courseVideoData) {
+                List<CourseVideoBean> courseVideoBeanList = new ArrayList<>();
+                if(courseVideoData != null){
+                    courseVideoBeanList = courseVideoData.getVideos();
+                }
+                if(!courseVideoBeanList.isEmpty()){
+                    relatedVideoActivityView.updateRecycler(courseVideoBeanList);
+                }else {
+                    relatedVideoActivityView.showEmptyView();
+                }
+
+            }
+        },"all",id,1);
+    }
+
+    @Override
+    public void loadMoreVideo(String id,RecyclerView recyclerView,final int pageSize, int page) {
+        courseModel.getCourseVideo(new RequestMoreSubscriber<CourseVideoData>(context,recyclerView,pageSize) {
+            @Override
+            public void onNext(CourseVideoData courseVideoData) {
+                List<CourseVideoBean> courseVideoBeanList = new ArrayList<>();
+                if(courseVideoData != null){
+                    courseVideoBeanList = courseVideoData.getVideos();
+                }
+                if(!courseVideoBeanList.isEmpty()){
+                    relatedVideoActivityView.updateRecycler(courseVideoBeanList);
+                }
+                //没有更多数据了显示到底提示
+                if(courseVideoBeanList.size() < pageSize){
+                    relatedVideoActivityView.showEndFooterView();
+                }
+            }
+        },"all",id,page);
     }
 }

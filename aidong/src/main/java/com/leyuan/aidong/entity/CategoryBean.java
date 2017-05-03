@@ -1,18 +1,22 @@
 package com.leyuan.aidong.entity;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.io.Serializable;
 
 /**
  * 营养品，装备分类实体
  * Created by song on 2016/8/18.
  */
-public class CategoryBean implements Parcelable,Serializable {
+public class CategoryBean implements Serializable {
     private String id;
     private String name;    //分类名称
     private String image;   //分类图标
+
+    //课程分类需要使用
+    private String cover;
+    private String during;
+    private String video;
+    private String video_desc;
+    private String video_name;
 
     public String getId() {
         return id;
@@ -38,6 +42,46 @@ public class CategoryBean implements Parcelable,Serializable {
         this.image = image;
     }
 
+    public String getCover() {
+        return cover;
+    }
+
+    public void setCover(String cover) {
+        this.cover = cover;
+    }
+
+    public String getDuring() {
+        return during;
+    }
+
+    public void setDuring(String during) {
+        this.during = during;
+    }
+
+    public String getVideo() {
+        return video;
+    }
+
+    public void setVideo(String video) {
+        this.video = video;
+    }
+
+    public String getVideo_desc() {
+        return video_desc;
+    }
+
+    public void setVideo_desc(String video_desc) {
+        this.video_desc = video_desc;
+    }
+
+    public String getVideo_name() {
+        return video_name;
+    }
+
+    public void setVideo_name(String video_name) {
+        this.video_name = video_name;
+    }
+
     @Override
     public String toString() {
         return "CategoryBean{" +
@@ -47,36 +91,8 @@ public class CategoryBean implements Parcelable,Serializable {
                 '}';
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
-        dest.writeString(this.name);
-        dest.writeString(this.image);
-    }
-
     public CategoryBean() {
     }
 
-    protected CategoryBean(Parcel in) {
-        this.id = in.readString();
-        this.name = in.readString();
-        this.image = in.readString();
-    }
 
-    public static final Parcelable.Creator<CategoryBean> CREATOR = new Parcelable.Creator<CategoryBean>() {
-        @Override
-        public CategoryBean createFromParcel(Parcel source) {
-            return new CategoryBean(source);
-        }
-
-        @Override
-        public CategoryBean[] newArray(int size) {
-            return new CategoryBean[size];
-        }
-    };
 }

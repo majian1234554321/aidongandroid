@@ -236,6 +236,8 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
             tvSelect.setText(context.getString(R.string.selected));
             tvGoodsPrice.setText(String.format(context.getString(R.string.rmb_price_double), price));
             tvStock.setText(String.format(context.getString(R.string.int_stock_count), stock));
+            tvStockTip.setText(String.format(context.getString(R.string.surplus_goods_count),stock));
+            tvStockTip.setVisibility(stock <= 10 ? View.VISIBLE : View.GONE);
         } else {
             GlideLoader.getInstance().displayImage(unConfirmedSkuCover, dvGoodsCover);
             tvSelect.setText(context.getString(R.string.please_select));
