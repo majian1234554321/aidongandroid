@@ -118,7 +118,7 @@ public class CoursePresentImpl implements CoursePresent{
                     switcherLayout.showContentLayout();
                     courserFragmentView.refreshRecyclerViewData(courseData.getCourse());
                 } else {
-                    switcherLayout.showEmptyLayout();
+                    courserFragmentView.showEmptyView();
                 }
             }
         }, day, category, landmark, Constant.PAGE_FIRST);
@@ -199,7 +199,7 @@ public class CoursePresentImpl implements CoursePresent{
 
     @Override
     public void buyCourse(String id, @Nullable String couponId, @Nullable String integral, String payType,
-                          String contactName, String contactMobile, final PayInterface.PayListener listener) {
+                          String contactName, String contactMobile, final PayInterface.PayListener listener,String isVip) {
         if (courseModel == null) {
             courseModel = new CourseModelImpl(context);
         }
@@ -212,7 +212,7 @@ public class CoursePresentImpl implements CoursePresent{
                     appointCourseActivityView.onFreeCourseAppointed();
                 }
             }
-        }, id, couponId, integral, payType, contactName, contactMobile);
+        }, id, couponId, integral, payType, contactName, contactMobile,isVip);
     }
 
     @Override
@@ -277,17 +277,24 @@ public class CoursePresentImpl implements CoursePresent{
         }, day, category, null, Constant.PAGE_FIRST);
     }
 
+
     @Override
-    public void getRelateCourseVideo(String id) {
+    public void getRelateCourseVideo(String id, String videoId) {
         if (courseModel == null) {
             courseModel = new CourseModelImpl(context);
         }
         courseModel.getCourseVideo(new BaseSubscriber<CourseVideoData>(context) {
             @Override
             public void onNext(CourseVideoData courseVideoData) {
-                videoDetailActivityView.updateRelateVideo(courseVideoData.getVideos());
+                List<CourseVideoBean> courseVideoBeanList = new ArrayList<>();
+                if(courseVideoData != null){
+                    courseVideoBeanList = courseVideoData.getVideos();
+                }
+                if(!courseVideoBeanList.isEmpty()){
+                    videoDetailActivityView.updateRelateVideo(courseVideoBeanList);
+                }
             }
-        },"relation",id,1);
+        },"relation",id,1,videoId);
     }
 
     @Override
@@ -307,9 +314,8 @@ public class CoursePresentImpl implements CoursePresent{
                 }else {
                     relatedVideoActivityView.showEmptyView();
                 }
-
             }
-        },"all",id,1);
+        },"all",id,1,"");
     }
 
     @Override
@@ -329,6 +335,6 @@ public class CoursePresentImpl implements CoursePresent{
                     relatedVideoActivityView.showEndFooterView();
                 }
             }
-        },"all",id,page);
+        },"all",id,page,"");
     }
 }

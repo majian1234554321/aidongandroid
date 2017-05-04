@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
@@ -89,11 +90,14 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     private TextView tvMessage;
 
     private String userId;
-
     private boolean isSelf = false;
     private UserInfoData userInfoData;
     private UserInfoPhotoAdapter wallAdapter;
     private UserInfoPresent userInfoPresent;
+
+    private FragmentPagerItemAdapter adapter;
+    private boolean needRefreshPhotoWall = false;
+    private boolean needRefreshUserInfo = false;
 
     public static void start(Context context, String userId) {
         Intent starter = new Intent(context, UserInfoActivity.class);
@@ -152,8 +156,24 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     @Override
     public void updateUserInfo(UserInfoData userInfoData) {
         this.userInfoData = userInfoData;
-        setView();
-        setFragments();
+        if(!needRefreshPhotoWall && !needRefreshUserInfo) {
+            setView();
+            setFragments();
+        }else if(needRefreshPhotoWall){
+            if (!userInfoData.getPhotoWall().isEmpty()) {
+                wallAdapter.setData(userInfoData.getPhotoWall());
+                emptyPhotoLayout.setVisibility(View.GONE);
+            } else {
+                emptyPhotoLayout.setVisibility(View.VISIBLE);
+            }
+            needRefreshPhotoWall = false;
+        }else {
+            needRefreshUserInfo = false;
+            Fragment page = adapter.getPage(1);
+            if(page instanceof UserInfoFragment){
+                ((UserInfoFragment) page).refreshUserInfo(userInfoData.getProfile());
+            }
+        }
     }
 
     private void setView() {
@@ -198,7 +218,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
                 new Bundler().putString("userId", userId).get()));
         pages.add(FragmentPagerItem.of(null, userInfoFragment.getClass(),
                 new Bundler().putParcelable("profile", userInfoData.getProfile()).get()));
-        final FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);
+        adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);
         viewPager.setAdapter(adapter);
         tabLayout.setCustomTabView(this);
         tabLayout.setViewPager(viewPager);
@@ -256,11 +276,9 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
                         if (position == 0) {
                             Intent intent = new Intent(UserInfoActivity.this,UpdateUserInfoActivity.class);
                             intent.putExtra("profileBean", userInfoData.getProfile());
-                            startActivityForResult(intent,REQUEST_UPDATE_PHOTO);
-                           // UpdateUserInfoActivity.start(UserInfoActivity.this, userInfoData.getProfile());
+                            startActivityForResult(intent,REQUEST_UPDATE_INFO);
                         } else {
                             toUpdatePhotoWallActivity();
-                           // UpdatePhotoWallActivity.start(UserInfoActivity.this, userInfoData.getPhotoWall());
                         }
                     }
                 })
@@ -272,7 +290,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         Intent intent = new Intent(UserInfoActivity.this,UpdatePhotoWallActivity.class);
         intent.putParcelableArrayListExtra("photos",
                 (ArrayList<? extends Parcelable>) userInfoData.getPhotoWall());
-        startActivityForResult(intent,REQUEST_UPDATE_INFO);
+        startActivityForResult(intent,REQUEST_UPDATE_PHOTO);
     }
 
     //todo
@@ -312,21 +330,24 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
                 userInfoPresent.getUserInfo(switcherLayout, userId);
             } else if (requestCode == REQUEST_SELECT_PHOTO || requestCode == REQUEST_SELECT_VIDEO) {
                 PublishDynamicActivity.start(this, requestCode == REQUEST_SELECT_PHOTO, Boxing.getResult(data));
-            }else if(requestCode == REQUEST_UPDATE_PHOTO || requestCode == REQUEST_UPDATE_INFO){
-                userInfoData.getPhotoWall().clear();
-                wallAdapter.notifyDataSetChanged();
+            }else if(requestCode == REQUEST_UPDATE_PHOTO){
+                needRefreshPhotoWall = true;
+                resetPhotoWall();
+                userInfoPresent.getUserInfo(userId);
+            }else if(requestCode == REQUEST_UPDATE_INFO){
+                needRefreshUserInfo = true;
                 userInfoPresent.getUserInfo(userId);
             }
         }
     }
 
-    @Override
-    public void onAddImageItemClick() {
-
+    private void resetPhotoWall(){
+        userInfoData.getPhotoWall().clear();
+        wallAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onPreviewImage(List<String> urls, List<Rect> rectList, int currPosition) {
+    public void onPreviewPhotoWallImage(List<String> urls, List<Rect> rectList, int currPosition) {
         PhotoBrowseInfo info = PhotoBrowseInfo.create(urls, rectList, currPosition);
         PhotoBrowseActivity.start(this, info);
     }

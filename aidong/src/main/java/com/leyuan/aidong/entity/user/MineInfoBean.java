@@ -1,5 +1,9 @@
 package com.leyuan.aidong.entity.user;
 
+import com.leyuan.aidong.entity.VenuesBean;
+
+import java.util.List;
+
 /**
  * Created by user on 2017/3/23.
  */
@@ -23,6 +27,8 @@ public class MineInfoBean {
     public void setOrders_count(int orders_count) {
         this.orders_count = orders_count;
     }
+
+    private List<VenuesBean> gyms;  //运动足记
 
     public int getAppointed_count() {
         return appointed_count;
@@ -86,5 +92,14 @@ public class MineInfoBean {
 
     public void setCart_items_count(int cart_items_count) {
         this.cart_items_count = cart_items_count;
+    }
+
+
+    public List<VenuesBean> getGyms() {
+        return gyms;
+    }
+
+    public void setGyms(List<VenuesBean> gyms) {
+        this.gyms = gyms;
     }
 }

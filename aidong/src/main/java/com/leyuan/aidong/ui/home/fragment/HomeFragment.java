@@ -185,27 +185,6 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView, View
 
     @Override
     public void updateSportsHistory(List<VenuesBean> venuesBeanList) {
-        VenuesBean v1 = new VenuesBean();
-        v1.setBrand_logo("https://www.baidu.com/img/bd_logo1.png");
-        v1.setName("百度");
-        v1.setDistance(100);
-
-        VenuesBean v2 = new VenuesBean();
-        v2.setBrand_logo("https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=2490895003," +
-                "2642262494&fm=58&s=2370E532CFA568134854D6FC0300F020");
-        v2.setName("网易");
-        v2.setDistance(99);
-
-        VenuesBean v3 = new VenuesBean();
-        v3.setBrand_logo("https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=3076306465,4196184967&fm=96");
-        v3.setName("网易云音乐");
-        v3.setDistance(1);
-
-        venuesBeanList = new ArrayList<>();
-        venuesBeanList.add(v1);
-        venuesBeanList.add(v2);
-        venuesBeanList.add(v3);
-
         headerView.setSportHistory(venuesBeanList);
     }
 

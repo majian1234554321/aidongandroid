@@ -143,6 +143,8 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
 
     @Override
     public void showEmptyView() {
-
+        View view = View.inflate(this,R.layout.empty_recommend,null);
+        switcherLayout.addCustomView(view,"empty");
+        switcherLayout.showCustomLayout("empty");
     }
 }

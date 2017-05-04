@@ -11,6 +11,7 @@ import com.leyuan.aidong.http.RetrofitHelper;
 import com.leyuan.aidong.http.RxHelper;
 import com.leyuan.aidong.http.api.HomeService;
 import com.leyuan.aidong.ui.mvp.model.HomeModel;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 
 import java.util.List;
@@ -56,7 +57,7 @@ public class HomeModelImpl implements HomeModel {
 
     @Override
     public List<VenuesBean> getSportsHistory() {
-        return SystemInfoUtils.getSportsHistory(context);
+        return Constant.gyms;
     }
 
     @Override

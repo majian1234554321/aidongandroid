@@ -17,13 +17,10 @@ public class SystemBean implements Serializable {
     private ArrayList<CategoryBean> equipment;//装备分类
     private ArrayList<DistrictBean> landmark;
     private List<CategoryBean> gym_brand;   //场馆品牌
-    private List<VenuesBean> gyms;  //运动足记
 
     private int order_countdown; // 订单倒计时,单位分钟
     private int appointment_countdown;// 预约倒计时,单位分钟
     private long current_time;
-
-
 
     public List<String> getOpen_city() {
         return open_city;
@@ -113,13 +110,6 @@ public class SystemBean implements Serializable {
         this.current_time = current_time;
     }
 
-    public List<VenuesBean> getGyms() {
-        return gyms;
-    }
-
-    public void setGyms(List<VenuesBean> gyms) {
-        this.gyms = gyms;
-    }
 
     @Override
     public String toString() {

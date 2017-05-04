@@ -19,4 +19,6 @@ public interface SearchCampaignFragmentView {
     void onRecyclerViewRefresh(List<CampaignBean> campaignBeanList);
 
     void onRecyclerViewLoadMore(List<CampaignBean> campaignBeanList);
+
+    void showEmptyView();
 }

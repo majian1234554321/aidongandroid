@@ -45,6 +45,7 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
     private Calendar calendar = Calendar.getInstance();
     private LiveVideoDataAdapter liveMoreAdapter;
     private ArrayList<View> livingViews = new ArrayList<>();
+    private ArrayList<LiveVideoDataAdapter> liveVideoDataAdapters = new ArrayList<>();
 
     public HomeVideoAdapter(Context context, OnLivingVideoCLickListener livingVideoCLickListener,
                             OnPlaybackClickListener onPlaybackClickListener, OnSoonLiveVideoClickListener
@@ -151,17 +152,26 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
 
                 break;
             case TYPE_ITEM:
+
                 LiveVideoSoonInfo info = liveDateArray.get(i - 1);
 
                 holder.txt_live_date.setText("" + LiveDateFilterUtil.compareDate(info.getTime()));
 
-                if (LiveDateFilterUtil.compareDate(info.getTime()).contains("今日")) {
-                    liveMoreAdapter = new LiveVideoDataAdapter(context, info.getLiveVideoList(), mOnSoonLiveVideoClickListener, true);
-                    holder.list_live.setAdapter(liveMoreAdapter);
-                } else {
-                    LiveVideoDataAdapter adapter = new LiveVideoDataAdapter(context, info.getLiveVideoList(), mOnSoonLiveVideoClickListener, false);
-                    holder.list_live.setAdapter(adapter);
-                }
+
+                LiveVideoDataAdapter adapter = new LiveVideoDataAdapter(context, info.getLiveVideoList(), mOnSoonLiveVideoClickListener, true);
+                holder.list_live.setAdapter(adapter);
+                liveVideoDataAdapters.add(adapter);
+
+
+
+
+//                if (LiveDateFilterUtil.compareDate(info.getTime()).contains("今日")) {
+//                    liveMoreAdapter = new LiveVideoDataAdapter(context, info.getLiveVideoList(), mOnSoonLiveVideoClickListener, true);
+//                    holder.list_live.setAdapter(liveMoreAdapter);
+//                } else {
+//                    LiveVideoDataAdapter adapter = new LiveVideoDataAdapter(context, info.getLiveVideoList(), mOnSoonLiveVideoClickListener, false);
+//                    holder.list_live.setAdapter(adapter);
+//                }
 
                 break;
         }
@@ -259,9 +269,12 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
     }
 
     public void notifyCountDown() {
-        if (liveMoreAdapter != null) {
-            liveMoreAdapter.notifyDataSetChanged();
-        }
+//        if (liveMoreAdapter != null) {
+//            liveMoreAdapter.notifyDataSetChanged();
+//        }
+
+
+
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

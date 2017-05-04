@@ -53,7 +53,7 @@ public class HomeCourseAdapter extends RecyclerView.Adapter<HomeCourseAdapter.Co
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CourseVideoDetailActivity.start(context,bean);
+                CourseVideoDetailActivity.start(context,bean.getId());
             }
         });
     }

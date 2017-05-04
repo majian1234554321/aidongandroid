@@ -20,8 +20,10 @@
         android:drawableRight="@drawable/home_arrow"
         android:gravity="center"
         android:drawablePadding="2dp"
-        android:layout_toRightOf="@+id/iv_logo"
-        android:layout_alignBottom="@+id/iv_logo"/>
+        android:layout_centerVertical="true"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:paddingLeft="@dimen/left_margin"/>
 
     <ImageView
         android:id="@+id/iv_search"

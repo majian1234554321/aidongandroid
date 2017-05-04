@@ -2,13 +2,13 @@ package com.leyuan.aidong.ui.mvp.presenter.impl;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
 
 import com.leyuan.aidong.entity.CampaignBean;
 import com.leyuan.aidong.entity.data.CampaignData;
 import com.leyuan.aidong.entity.data.CampaignDetailData;
 import com.leyuan.aidong.entity.data.CouponData;
 import com.leyuan.aidong.entity.data.PayOrderData;
+import com.leyuan.aidong.http.subscriber.BaseSubscriber;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
@@ -24,13 +24,10 @@ import com.leyuan.aidong.ui.mvp.view.AppointCampaignActivityView;
 import com.leyuan.aidong.ui.mvp.view.CampaignDetailActivityView;
 import com.leyuan.aidong.ui.mvp.view.CampaignFragmentView;
 import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import rx.Subscriber;
 
 /**
  * 活动
@@ -111,7 +108,7 @@ public class CampaignPresentImpl implements CampaignPresent {
                     campaignActivityView.updateRecyclerView(campaignData.getCampaign());
                     switcherLayout.showContentLayout();
                 }else{
-                    switcherLayout.showEmptyLayout();
+                    campaignActivityView.showEmptyView();
                 }
             }
         },Constant.PAGE_FIRST,list);
@@ -161,7 +158,7 @@ public class CampaignPresentImpl implements CampaignPresent {
         if(campaignModel == null){
             campaignModel = new CampaignModelImpl();
         }
-        campaignModel.getCampaignDetail(new Subscriber<CampaignDetailData>() {
+        campaignModel.getCampaignDetail(new BaseSubscriber<CampaignDetailData>(context) {
             @Override
             public void onStart() {
                 switcherLayout.showLoadingLayout();
@@ -184,8 +181,7 @@ public class CampaignPresentImpl implements CampaignPresent {
 
             @Override
             public void onError(Throwable e) {
-                Logger.w("CommonSubscriber","error:" + e.toString());
-                Toast.makeText(context, "error:" + e.toString(), Toast.LENGTH_LONG).show();
+                super.onError(e);
                 switcherLayout.showExceptionLayout();
             }
         }, id);

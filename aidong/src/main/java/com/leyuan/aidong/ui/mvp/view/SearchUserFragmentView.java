@@ -18,4 +18,7 @@ public interface SearchUserFragmentView {
     void onRecyclerViewRefresh(List<UserBean> userBeanList);
 
     void onRecyclerViewLoadMore(List<UserBean> userBeanList);
+
+
+    void showEmptyView();
 }

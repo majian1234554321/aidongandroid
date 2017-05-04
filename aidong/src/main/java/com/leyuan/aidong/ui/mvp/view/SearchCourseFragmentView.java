@@ -20,4 +20,6 @@ public interface SearchCourseFragmentView {
     void onRecyclerViewRefresh(List<CourseBean> venuesBeanList);
 
     void onRecyclerViewLoadMore(List<CourseBean> venuesBeanList);
+
+    void showEmptyView();
 }

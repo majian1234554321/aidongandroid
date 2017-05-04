@@ -33,6 +33,7 @@
     <string name="applicant_count">已参加(%1$d/%2$s)</string>
     <string name="course_applicant_count">已参加(%1$s/%2$s)</string>
     <string name="appoint_time">开始预约时间:%1$s</string>
+    <string name="apply_time">开始报名时间:%1$s</string>
     <string name="detail_time">%1$s  %2$s - %3$s</string>
     <string name="rmb_price">¥ %1$s</string>
     <string name="recommend_code">推荐码:%1$s</string>
@@ -44,6 +45,7 @@
     <string name="course_count">&#160;(%1$s/%2$s&#160;人)&#160;&#160;/&#160;&#160;</string>
     <string name="venues_course_count">&#160;(%1$s/%2$s&#160;人)</string>
     <string name="distance_km"> %1$s km </string>
+    <string name="distance_km_double"> %1$.2f km </string>
     <string name="x_count"> x %1$s</string>
     <string name="goods_count"> 共%1$d件商品</string>
     <string name="surplus_goods_count"> 仅剩%1$d件</string>

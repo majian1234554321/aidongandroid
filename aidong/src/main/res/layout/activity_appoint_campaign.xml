@@ -10,7 +10,7 @@
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
-        app:stb_title="预约信息" />
+        app:stb_title="报名信息" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -27,7 +27,7 @@
                 android:layout_height="52dp"
                 android:layout_marginLeft="@dimen/left_margin"
                 android:gravity="center_vertical"
-                android:text="预约人信息"
+                android:text="报名人信息"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -37,8 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/left_margin"
-               >
+                android:paddingLeft="@dimen/left_margin">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -52,12 +51,12 @@
                     android:id="@+id/tv_input_name"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:paddingRight="@dimen/right_margin"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:background="@null"
                     android:gravity="right|center_vertical"
                     android:hint="请输入真实姓名"
+                    android:paddingRight="@dimen/right_margin"
                     android:singleLine="true"
                     android:textColor="@color/black"
                     android:textColorHint="@color/c9"
@@ -77,8 +76,8 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
                     android:text="手机号:"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
@@ -89,13 +88,13 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
                     android:background="@null"
+                    android:drawablePadding="5dp"
+                    android:drawableRight="@drawable/icon_right_arrow"
                     android:gravity="right|center_vertical"
                     android:hint="请先绑定手机"
                     android:inputType="phone"
-                    android:text=""
-                    android:drawablePadding="5dp"
-                    android:drawableRight="@drawable/icon_right_arrow"
                     android:singleLine="true"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textColorHint="@color/c9"
                     android:textSize="15sp" />
@@ -126,8 +125,7 @@
                     android:id="@+id/dv_cover"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:layout_centerVertical="true"
-                    />
+                    android:layout_centerVertical="true" />
 
                 <TextView
                     android:id="@+id/tv_name"
@@ -136,10 +134,10 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="20dp"
                     android:layout_toRightOf="@+id/dv_cover"
+                    android:singleLine="true"
                     android:text="活动名"
                     android:textColor="@color/c3"
-                    android:textSize="15sp"
-                    android:singleLine="true"/>
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/tv_organizer"
@@ -149,8 +147,8 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="20dp"
                     android:layout_toRightOf="@+id/dv_cover"
-                    android:text="组织方"
                     android:singleLine="true"
+                    android:text="组织方"
                     android:textColor="@color/c3"
                     android:textSize="15sp" />
             </RelativeLayout>
@@ -163,17 +161,59 @@
                 android:layout_height="50dp"
                 android:gravity="center_vertical"
                 app:left_text="活动时间:"
-                app:line_color="@color/transparent"/>
+                app:line_color="@color/transparent" />
 
             <include layout="@layout/inc_line_with_margin" />
 
-            <com.leyuan.aidong.widget.ExtendTextView
-                android:id="@+id/tv_address"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center_vertical"
-                app:left_text="活动地址:"
-                app:line_color="@color/transparent"/>
+                android:layout_height="56dp"
+                android:background="?selectableItemBackground"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/left_margin"
+                android:paddingRight="@dimen/right_margin">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="活动地址:"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_address_organizer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="5dp"
+                        android:gravity="right|center_vertical"
+                        android:text="组织方"
+                        android:textColor="@color/c3"
+                        android:textSize="15sp"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/tv_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:drawablePadding="5dp"
+                        android:gravity="right|center_vertical"
+                        android:text="快长宁区"
+                        android:singleLine="true"
+                        android:textColor="@color/c3"
+                        android:textSize="15sp"
+                        android:visibility="visible" />
+                </LinearLayout>
+
+            </LinearLayout>
 
             <include layout="@layout/inc_bold_line" />
 
@@ -237,15 +277,14 @@
                     android:textSize="15sp" />
 
                 <Switch
-                    android:text="@null"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"/>
+                    android:layout_gravity="center_vertical"
+                    android:text="@null" />
 
             </LinearLayout>
 
             <include layout="@layout/inc_bold_line" />
-
 
 
             <!--订单信息-->
@@ -265,39 +304,39 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="活动总额:"
-                app:line_color="@color/transparent"/>
+                app:line_color="@color/transparent" />
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_coupon_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="优惠劵:"
-                app:line_color="@color/transparent"/>
+                app:line_color="@color/transparent" />
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_discount_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="活动优惠:"
-                app:line_color="@color/transparent"/>
+                app:line_color="@color/transparent" />
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_aibi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="爱币:"
-                app:line_color="@color/transparent"/>
+                app:line_color="@color/transparent" />
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_aidou"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="爱豆:"
-                app:line_color="@color/transparent"/>
+                app:line_color="@color/transparent" />
 
             <!--支付方式-->
 
-            <include layout="@layout/inc_pay_info"/>
+            <include layout="@layout/inc_pay_info" />
 
             <include layout="@layout/inc_bold_line" />
 

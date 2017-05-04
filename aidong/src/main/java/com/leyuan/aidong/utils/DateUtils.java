@@ -279,7 +279,7 @@ public class DateUtils {
         long countdown = 0;
         Date d = parseDate(date, parseType);
         if (d != null)
-            countdown = totalMilliseconds - (System.currentTimeMillis() - d.getTime());
+            countdown = totalMilliseconds - (System.currentTimeMillis() - d.getTime()) + 5 * 1000; //延迟5s刷新状态(会引起最后几秒支付失败)
 //        Logger.i("countdown", "countdown = " + countdown + ", totalMilliseconds = " + totalMilliseconds
 //                + ", date = " + date + ", d.getTime() = " + d.getTime() + ", currentTimeMillis = " + System.currentTimeMillis());
         if (countdown < 0)

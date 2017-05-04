@@ -18,4 +18,6 @@ public interface SearchNurtureFragmentView {
     void onRecyclerViewRefresh(List<NurtureBean> venuesBeanList);
 
     void onRecyclerViewLoadMore(List<NurtureBean> venuesBeanList);
+
+    void showEmptyView();
 }

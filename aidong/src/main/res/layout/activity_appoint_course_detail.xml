@@ -96,6 +96,86 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/icon_line" />
 
+                <!--身份信息-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginLeft="@dimen/left_margin"
+                    android:layout_marginRight="@dimen/right_margin"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="52dp"
+                        android:gravity="center_vertical"
+                        android:text="我的身份"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_not_vip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="非会员"
+                        android:textColor="@color/main_red"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp"
+                        android:background="@drawable/shape_stroke_red"/>
+
+                    <TextView
+                        android:id="@+id/tv_vip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="会员"
+                        android:textColor="@color/main_red"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp"
+                        android:visibility="gone"
+                        android:background="@drawable/shape_stroke_red"/>
+                </LinearLayout>
+
+                <include layout="@layout/inc_line_black" />
+
+                <LinearLayout
+                    android:id="@+id/ll_not_vip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/left_margin"
+                        android:paddingRight="@dimen/right_margin"
+                        android:paddingBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="温馨提示："
+                            android:textSize="15sp"
+                            android:textColor="@color/c3"/>
+                        <TextView
+                            android:id="@+id/tv_vip_tip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:textColor="@color/c3"
+                            android:text="如果您还不是该会所会员,需要在前台另外支付80元方可参加本次活动"/>
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_line"/>
+                </LinearLayout>
+
                 <!--订单信息-->
                 <TextView
                     android:layout_width="wrap_content"

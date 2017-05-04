@@ -17,9 +17,10 @@ import android.widget.Toast;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.AppointmentDetailBean;
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.module.pay.AliPay;
 import com.leyuan.aidong.module.pay.PayInterface;
-import com.leyuan.aidong.module.pay.PayUtils;
 import com.leyuan.aidong.module.pay.SimplePayListener;
+import com.leyuan.aidong.module.pay.WeiXinPay;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.home.activity.AppointSuccessActivity;
 import com.leyuan.aidong.ui.home.activity.CourseDetailActivity;
@@ -85,6 +86,12 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
     private ExtendTextView tvCourseRoom;
     private ExtendTextView tvCourseTime;
     private ExtendTextView tvCourseAddress;
+
+    //会员信息
+    private TextView tvVip;
+    private LinearLayout notVipLayout;
+    private TextView tvNotVip;
+    private TextView tvNotVipTip;
 
     //订单信息
     private ExtendTextView tvTotalPrice;
@@ -197,6 +204,11 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
         tvCancelJoin = (TextView) findViewById(R.id.tv_cancel_join);
         tvConfirmJoin = (TextView) findViewById(R.id.tv_confirm);
         tvDelete = (TextView) findViewById(R.id.tv_delete);
+
+        tvNotVip = (TextView) findViewById(R.id.tv_not_vip);
+        tvVip = (TextView) findViewById(R.id.tv_vip);
+        notVipLayout = (LinearLayout) findViewById(R.id.ll_not_vip);
+        tvNotVipTip = (TextView) findViewById(R.id.tv_vip_tip);
     }
 
     private void setListener(){
@@ -220,6 +232,16 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
             rbAliPay.setChecked(true);
         }else {
             rbWeiXinPay.setChecked(true);
+        }
+
+        if(bean.is_vip()){
+            tvVip.setVisibility(View.VISIBLE);
+            tvNotVip.setVisibility(View.GONE);
+            notVipLayout.setVisibility(View.GONE);
+        }else {
+            tvVip.setVisibility(View.GONE);
+            tvNotVipTip.setVisibility(View.VISIBLE);
+            notVipLayout.setVisibility(View.VISIBLE);
         }
 
         //与订单状态无关: 订单信息
@@ -365,7 +387,9 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
                 finish();
                 break;
             case R.id.tv_pay:
-                PayUtils.pay(context,bean.getPay(),payListener);
+                PayInterface payInterface = PAY_ALI.equals(payType) ?
+                        new AliPay(this,payListener) : new WeiXinPay(this,payListener);
+                payInterface.payOrder(bean.getPay().getpayOption());
                 break;
             case R.id.tv_cancel_pay:
                 present.cancelAppoint(bean.getId());

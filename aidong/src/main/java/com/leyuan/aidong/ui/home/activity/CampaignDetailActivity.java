@@ -6,8 +6,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -25,6 +27,7 @@ import com.leyuan.aidong.ui.mvp.presenter.CampaignPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CampaignPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CampaignDetailActivityView;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.widget.SwitcherLayout;
@@ -50,9 +53,11 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
 
     private ImageView ivBack;
     private ImageView ivShare;
+    private TextView tvTopStartTime;
     private SwitcherLayout switcherLayout;
     private LinearLayout contentLayout;
     private RelativeLayout pagerLayout;
+    private Toolbar toolbar;
     private BGABanner bannerLayout;
     private TextView tvHot;
     private TextView tvCampaignName;
@@ -105,7 +110,9 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
     private void initView() {
         ivBack = (ImageView) findViewById(iv_back);
         ivShare = (ImageView) findViewById(R.id.iv_share);
+        tvTopStartTime = (TextView) findViewById(R.id.tv_start_time_tip);
         pagerLayout = (RelativeLayout) findViewById(R.id.rl_pager);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         bannerLayout = (BGABanner) findViewById(R.id.banner_layout);
         tvHot = (TextView) findViewById(R.id.tv_hot);
         contentLayout = (LinearLayout) findViewById(R.id.ll_content);
@@ -204,6 +211,13 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
         }
         tvPrice.setText(FormatUtil.parseDouble(bean.getPrice()) == 0f
                 ? "免费" : String.format(getString(R.string.rmb_price), bean.getPrice()));
+
+        tvTopStartTime.setText(String.format(getString(R.string.apply_time), bean.getStartTime()));
+        tvTopStartTime.setVisibility(STATUS_NOT_START.equals(bean.getStatus()) ? View.VISIBLE :View.GONE);
+        toolbar.getLayoutParams().height = DensityUtil.dp2px(this,STATUS_NOT_START.equals(bean.getStatus()) ? 76 : 46);
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) pagerLayout.getLayoutParams();
+        params.setMargins(0,DensityUtil.dp2px(this,STATUS_NOT_START.equals(bean.getStatus()) ? 76 : 46),0,0);
+        pagerLayout.setLayoutParams(params);
         setBottomStatus();
     }
 

@@ -50,10 +50,10 @@ public class AppointmentActivity extends BaseActivity implements SmartTabLayout.
         AppointmentFragment unJoined = new AppointmentFragment();
         pages.add(FragmentPagerItem.of(null, all.getClass(),
                 new Bundler().putString("type",AppointmentFragment.ALL).get()));
-        pages.add(FragmentPagerItem.of(null,joined.getClass(),
-                new Bundler().putString("type",AppointmentFragment.JOINED).get()));
         pages.add(FragmentPagerItem.of(null,unJoined.getClass(),
                 new Bundler().putString("type", AppointmentFragment.UN_JOIN).get()));
+        pages.add(FragmentPagerItem.of(null,joined.getClass(),
+                new Bundler().putString("type",AppointmentFragment.JOINED).get()));
         adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(),pages);
 
         viewPager.setAdapter(adapter);

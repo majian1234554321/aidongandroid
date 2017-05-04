@@ -56,12 +56,12 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
     private TextView tvUserPhone;
 
     //活动信息
-    private TextView tvType;
     private ImageView dvCover;
     private TextView tvCampaignName;
     private TextView tvOrganizer;
     private ExtendTextView tvTime;
-    private ExtendTextView tvAddress;
+    private TextView tvAddress;
+    private TextView tvAddressOrganizer;
     private TextView tvCoupon;
     private LinearLayout goldLayout;
 
@@ -112,12 +112,12 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
         tvUserName = (EditText) findViewById(R.id.tv_input_name);
         tvUserPhone = (TextView) findViewById(R.id.tv_input_phone);
-        tvType = (TextView) findViewById(R.id.tv_type);
         dvCover = (ImageView) findViewById(R.id.dv_cover);
         tvCampaignName = (TextView) findViewById(R.id.tv_name);
         tvOrganizer = (TextView) findViewById(R.id.tv_organizer);
         tvTime = (ExtendTextView) findViewById(R.id.tv_time);
-        tvAddress = (ExtendTextView) findViewById(R.id.tv_address);
+        tvAddress = (TextView) findViewById(R.id.tv_address);
+        tvAddressOrganizer = (TextView) findViewById(R.id.tv_address_organizer);
         tvCoupon = (TextView) findViewById(R.id.tv_coupon);
         goldLayout = (LinearLayout) findViewById(R.id.ll_gold);
         tvTotalPrice = (ExtendTextView) findViewById(R.id.tv_total_price);
@@ -135,7 +135,8 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
         GlideLoader.getInstance().displayImage(bean.getImage().get(0), dvCover);
         tvTime.setRightContent(String.format(getString(R.string.campaign_during), bean.getStartTime(),
                 bean.getEndTime().substring(bean.getEndTime().lastIndexOf(Constant.EMPTY_STR))));
-        tvAddress.setRightContent(bean.getAddress());
+        tvAddress.setText(bean.getAddress());
+        tvAddressOrganizer.setText(bean.getOrganizer());
         tvTotalPrice.setRightContent(String.format(getString(R.string.rmb_price), bean.getPrice()));
         tvPrice.setText(String.format(getString(R.string.rmb_price), bean.getPrice()));
     }
@@ -149,6 +150,7 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
             tvUserName.setText(userName);
         if (!TextUtils.isEmpty(contactMobile))
             tvUserPhone.setText(contactMobile);
+        tvUserName.setSelection(userName.length());
     }
 
     private void setListener() {

@@ -158,7 +158,7 @@ public class SearchPresentImpl implements SearchPresent{
                     campaignList = campaignData.getCampaign();
                 }
                 if(campaignList.isEmpty()){
-                    switcherLayout.showEmptyLayout();
+                    campaignView.showEmptyView();
                 }else {
                     switcherLayout.showContentLayout();
                     campaignView.onRecyclerViewRefresh(campaignList);
@@ -176,7 +176,7 @@ public class SearchPresentImpl implements SearchPresent{
                     equipmentList = equipmentData.getEquipment();
                 }
                 if(equipmentList.isEmpty()){
-                    switcherLayout.showEmptyLayout();
+                    equipmentView.showEmptyView();
                 }else {
                     switcherLayout.showContentLayout();
                     equipmentView.onRecyclerViewRefresh(equipmentList);
@@ -194,7 +194,7 @@ public class SearchPresentImpl implements SearchPresent{
                     courseList = courseData.getCourse();
                 }
                 if(courseList.isEmpty()){
-                    switcherLayout.showEmptyLayout();
+                    courseView.showEmptyView();
                 }else {
                     switcherLayout.showContentLayout();
                     courseView.onRecyclerViewRefresh(courseList);
@@ -213,7 +213,7 @@ public class SearchPresentImpl implements SearchPresent{
                 }
 
                 if(nurtureList.isEmpty()){
-                    switcherLayout.showEmptyLayout();
+                    nurtureView.showEmptyView();
                 }else {
                     switcherLayout.showContentLayout();
                     nurtureView.onRecyclerViewRefresh(nurtureList);
@@ -231,7 +231,7 @@ public class SearchPresentImpl implements SearchPresent{
                     userList = userData.getUser();
                 }
                 if(userList.isEmpty()){
-                    switcherLayout.showEmptyLayout();
+                    userView.showEmptyView();
                 }else {
                     switcherLayout.showContentLayout();
                     userView.onRecyclerViewRefresh(userList);
@@ -249,7 +249,7 @@ public class SearchPresentImpl implements SearchPresent{
                     venuesList = venuesData.getGym();
                 }
                 if(venuesList.isEmpty()){
-                    switcherLayout.showEmptyLayout();
+                    venuesView.showEmptyView();
                 }else {
                     switcherLayout.showContentLayout();
                     venuesView.onRecyclerViewRefresh(venuesList);

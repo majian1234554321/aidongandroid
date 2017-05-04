@@ -144,6 +144,24 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
             }
         });
 
+        goodAdapter.setListener(new ConfirmOrderGoodsAdapter.OnOrderItemClickListener() {
+            @Override
+            public void onItemClick() {
+                if(orderListener != null){
+                    orderListener.onPayOrder(bean.getId());
+                }
+            }
+        });
+
+        holder.recyclerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(orderListener != null){
+                    orderListener.onPayOrder(bean.getId());
+                }
+            }
+        });
+
         holder.tvPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

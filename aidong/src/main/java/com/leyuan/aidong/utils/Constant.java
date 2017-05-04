@@ -2,7 +2,10 @@ package com.leyuan.aidong.utils;
 
 
 import com.leyuan.aidong.entity.SystemBean;
+import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.entity.data.FollowData;
+
+import java.util.List;
 
 public class Constant {
 //    public static final String BASE_URL = "http://192.168.100.119:3000/";
@@ -56,6 +59,7 @@ public class Constant {
     public static final String BROADCAST_ACTION_SELECTED_CITY = "com.leyuan.chat.selected_city";
     public static final Double EXPRESS_PRICE = 15d;
 
+    public static List<VenuesBean> gyms;
     public static SystemBean systemInfoBean;
     public static FollowData followData;
     public static final byte ID_OFFICAL = 1;

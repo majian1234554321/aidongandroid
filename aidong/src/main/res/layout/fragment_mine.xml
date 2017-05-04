@@ -250,7 +250,6 @@
                             android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
                             android:src="@drawable/mine_prompt"
-                            android:text="1"
                             android:textColor="@color/white" />
 
                         <TextView
@@ -432,10 +431,23 @@
             android:id="@+id/img_new_shop"
             android:layout_width="8dp"
             android:layout_height="8dp"
-            android:layout_marginTop="5dp"
             android:layout_marginLeft="37dp"
+            android:layout_marginTop="5dp"
             android:src="@drawable/shape_circle_red"
             android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/txt_new_shop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="37dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/mine_prompt"
+            android:gravity="center"
+            android:text="1"
+            android:visibility="gone"
+            android:textColor="@color/white"
+            android:textSize="10sp" />
 
         <ImageView
             android:id="@+id/img_new_message"

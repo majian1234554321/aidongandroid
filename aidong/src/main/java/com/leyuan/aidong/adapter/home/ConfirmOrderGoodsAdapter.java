@@ -25,7 +25,7 @@ import java.util.List;
 public class ConfirmOrderGoodsAdapter extends RecyclerView.Adapter<ConfirmOrderGoodsAdapter.GoodsHolder>{
     private Context context;
     private List<GoodsBean> data = new ArrayList<>();
-
+    private OnOrderItemClickListener listener;
 
     public ConfirmOrderGoodsAdapter(Context context) {
         this.context = context;
@@ -67,6 +67,15 @@ public class ConfirmOrderGoodsAdapter extends RecyclerView.Adapter<ConfirmOrderG
             holder.code.setText(String.format(context.getString(R.string.recommend_code),
                     bean.getRecommendCode()));
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(listener != null){
+                    listener.onItemClick();
+                }
+            }
+        });
     }
 
     class GoodsHolder extends RecyclerView.ViewHolder {
@@ -88,5 +97,13 @@ public class ConfirmOrderGoodsAdapter extends RecyclerView.Adapter<ConfirmOrderG
             code = (TextView) itemView.findViewById(R.id.tv_recommend_code);
             count = (TextView) itemView.findViewById(R.id.tv_count);
         }
+    }
+
+    public void setListener(OnOrderItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnOrderItemClickListener{
+        void onItemClick();
     }
 }

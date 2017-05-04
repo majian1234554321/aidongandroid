@@ -17,9 +17,10 @@ import android.widget.Toast;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.AppointmentDetailBean;
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.module.pay.AliPay;
 import com.leyuan.aidong.module.pay.PayInterface;
-import com.leyuan.aidong.module.pay.PayUtils;
 import com.leyuan.aidong.module.pay.SimplePayListener;
+import com.leyuan.aidong.module.pay.WeiXinPay;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.home.activity.AppointSuccessActivity;
 import com.leyuan.aidong.ui.home.activity.CampaignDetailActivity;
@@ -370,7 +371,9 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 finish();
                 break;
             case R.id.tv_pay:
-                PayUtils.pay(context,bean.getPay(),payListener);
+                PayInterface payInterface = PAY_ALI.equals(payType) ?
+                        new AliPay(this,payListener) : new WeiXinPay(this,payListener);
+                payInterface.payOrder(bean.getPay().getpayOption());
                 break;
             case R.id.tv_cancel_pay:
                 present.cancelAppoint(bean.getId());

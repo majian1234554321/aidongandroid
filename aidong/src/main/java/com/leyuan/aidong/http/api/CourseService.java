@@ -37,12 +37,14 @@ public interface CourseService {
                                                  @Field("integral") String integral,
                                                  @Field("pay_type") String payType,
                                                  @Field("contact_name") String contactName,
-                                                 @Field("contact_mobile") String contactMobile);
+                                                 @Field("contact_mobile") String contactMobile,
+                                                 @Field("is_vip") String isVip);
 
     @GET("market/courses/{id}/appointment")
     Observable<BaseBean<AppointmentDetailData>> getCourseAppointDetail(@Path("id") String id);
 
     @GET("videos/{id}/relative_videos")
-    Observable<BaseBean<CourseVideoData>> getCourseVideo(@Path("id") String id, @Query("relat") String relat, @Query("page") int page);
+    Observable<BaseBean<CourseVideoData>> getCourseVideo(@Path("id") String id, @Query("relat") String relat,
+                                                         @Query("video_id") String video_id,@Query("page") int page);
 
 }

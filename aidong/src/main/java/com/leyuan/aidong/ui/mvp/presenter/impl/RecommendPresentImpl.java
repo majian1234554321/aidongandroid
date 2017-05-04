@@ -77,7 +77,7 @@ public class RecommendPresentImpl implements RecommendPresent{
                     updateRecyclerView(goodsList);
                     switcherLayout.showContentLayout();
                 }else{
-                    switcherLayout.showEmptyLayout();
+                    showEmptyView();
                 }
             }
         },type, Constant.PAGE_FIRST);

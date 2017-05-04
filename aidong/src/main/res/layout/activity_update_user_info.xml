@@ -116,7 +116,7 @@
                 app:text_height="45dp" />
 
             <com.leyuan.aidong.widget.ExtendTextView
-                android:id="@+id/birthday"
+                android:id="@+id/tv_birthday"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:left_text="生日"

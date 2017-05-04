@@ -123,6 +123,13 @@ public class SearchUserFragment extends BasePageFragment implements SearchUserFr
     }
 
     @Override
+    public void showEmptyView() {
+        View view = View.inflate(getContext(),R.layout.empty_search,null);
+        switcherLayout.addCustomView(view,"empty");
+        switcherLayout.showCustomLayout("empty");
+    }
+
+    @Override
     public void showEndFooterView() {
         RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
     }

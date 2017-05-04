@@ -61,7 +61,7 @@ public interface CoursePresent {
      * @param contactMobile 联系人电话
      */
     void buyCourse(String id, String couponId, String integral, String payType, String contactName,
-                   String contactMobile, PayInterface.PayListener listener);
+                   String contactMobile, PayInterface.PayListener listener,String isVip);
 
     /**
      * 添加关注
@@ -83,10 +83,9 @@ public interface CoursePresent {
 
     void getScrollDate(String day,String category);
 
-    /**
-     * 获取课程相关视频
-     */
-    void getRelateCourseVideo(String id);
+
+
+    void getRelateCourseVideo(String id, String videoId);
 
     void pullToRefreshVideo(String id);
 

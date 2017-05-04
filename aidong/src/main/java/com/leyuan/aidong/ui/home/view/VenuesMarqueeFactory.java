@@ -16,10 +16,12 @@ import com.leyuan.aidong.utils.GlideLoader;
  * Created by song on 2017/4/20.
  */
 public class VenuesMarqueeFactory extends MarqueeFactory<RelativeLayout,VenuesBean>{
+    private Context context;
     private LayoutInflater inflater;
 
     public VenuesMarqueeFactory(Context context) {
         super(context);
+        this.context = context;
         inflater = LayoutInflater.from(context);
     }
 
@@ -33,7 +35,7 @@ public class VenuesMarqueeFactory extends MarqueeFactory<RelativeLayout,VenuesBe
 
         GlideLoader.getInstance().displayRoundImage(data.getBrandLogo(),ivVenuesCover);
         tvVenuesName.setText(data.getName());
-        tvVenuesDistance.setText(data.getDistance() + "km");
+        tvVenuesDistance.setText(String.format(context.getString(R.string.distance_km),data.getDistance()/1000));
 
         return view;
     }

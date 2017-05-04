@@ -64,7 +64,9 @@ public class LiveVideoDataAdapter extends android.widget.BaseAdapter {
         if (countDown) {
             int timeRemain = LiveDateFilterUtil.compareTime(info.getLiveBeginTime());
             if (timeRemain > 0) {
-                txt_count.setText("" + LiveDateFilterUtil.convertSecondsToHMmSs(timeRemain));
+//                txt_count.setText("" + LiveDateFilterUtil.convertSecondsToHMmSs(timeRemain));
+
+                txt_count.setText(LiveDateFilterUtil.convertSecondsToDayHms(timeRemain));
             } else {
                 txt_count.setText("直播已开始");
             }

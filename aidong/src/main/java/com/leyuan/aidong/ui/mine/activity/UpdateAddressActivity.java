@@ -87,7 +87,7 @@ public class UpdateAddressActivity extends BaseActivity implements UpdateAddress
         tvTitle.setText(getString(R.string.update_address));
         etUsername.setText(bean.getName());
         etPhone.setText(bean.getMobile());
-        tvAddress.setText(new StringBuilder(bean.getProvince())
+        tvAddress.setText(new StringBuilder(bean.getCity().contains(bean.getProvince()) ? "" : bean.getProvince())
                 .append(bean.getCity()).append(bean.getDistrict()));
         etDescAddress.setText(bean.getAddress());
     }
@@ -131,7 +131,7 @@ public class UpdateAddressActivity extends BaseActivity implements UpdateAddress
         this.province = province;
         this.city = city;
         this.district = area;
-        tvAddress.setText(new StringBuilder(province).append(city).append(area));
+        tvAddress.setText(new StringBuilder(city.contains(province) ? "" :province).append(city).append(area));
     }
 
     private boolean checkInputInfo() {

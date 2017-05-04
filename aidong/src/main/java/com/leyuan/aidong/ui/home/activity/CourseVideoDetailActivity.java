@@ -14,7 +14,6 @@ import android.widget.RelativeLayout;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.CourseRecommendVideoAdapter;
-import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.CourseVideoBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
@@ -29,7 +28,7 @@ import java.util.List;
  * 课程视频详情
  * Created by song on 2017/4/21.
  */
-public class CourseVideoDetailActivity extends BaseActivity implements CourseVideoDetailActivityView,View.OnClickListener {
+public class CourseVideoDetailActivity extends BaseActivity implements CourseVideoDetailActivityView,View.OnClickListener, CourseRecommendVideoAdapter.ItemClickListener {
     private static final String RELATE = "relation";
     private ImageView ivCover;
     private ImageView ivStart;
@@ -46,25 +45,35 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
 
     private CourseRecommendVideoAdapter adapter;
     private CoursePresent coursePresent;
-    private CategoryBean courseVideo;
+    private String courseId;
+    private String videoId;
 
-    public static void start(Context context, CategoryBean courseVideo) {
+    public static void start(Context context, String courseId) {
         Intent starter = new Intent(context, CourseVideoDetailActivity.class);
-        starter.putExtra("courseVideo",courseVideo);
+        starter.putExtra("courseId",courseId);
         context.startActivity(starter);
     }
+
+    public static void start(Context context, String courseId,String videoId) {
+        Intent starter = new Intent(context, CourseVideoDetailActivity.class);
+        starter.putExtra("courseId",courseId);
+        starter.putExtra("videoId",videoId);
+        context.startActivity(starter);
+    }
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_video_detail);
         if(getIntent() != null){
-            courseVideo = (CategoryBean) getIntent().getSerializableExtra("courseVideo");
+            courseId = getIntent().getStringExtra("courseId");
+            videoId = getIntent().getStringExtra("videoId");
         }
         coursePresent = new CoursePresentImpl(this,this);
         initView();
         setListener();
-        coursePresent.getRelateCourseVideo(courseVideo.getId());
+        coursePresent.getRelateCourseVideo(courseId,videoId);
     }
 
     private void initView(){
@@ -83,18 +92,13 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
         recyclerView.setAdapter(adapter);
         ivBack = (Button) findViewById(R.id.iv_back);
         btAppoint = (Button) findViewById(R.id.bt_appoint);
-
-        GlideLoader.getInstance().displayImage(courseVideo.getCover(),ivCover);
-        tvCourseName.setText(courseVideo.getName());
-        tvAuthAndTime.setText(courseVideo.getDuring());
-        tvCourseDesc.setText(courseVideo.getVideo_desc());
-
     }
 
     private void setListener(){
         ivBack.setOnClickListener(this);
         btAppoint.setOnClickListener(this);
         layoutMoreVideo.setOnClickListener(this);
+        adapter.setListener(this);
     }
 
     @Override
@@ -106,7 +110,7 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
             case R.id.bt_appoint:
                 break;
             case R.id.layout_more_video:
-                RelatedVideoActivity.start(this,courseVideo.getId());
+                RelatedVideoActivity.start(this,courseId);
                 break;
             default:
                 break;
@@ -115,6 +119,17 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
 
     @Override
     public void updateRelateVideo(List<CourseVideoBean> videoBeanList) {
-        adapter.setData(videoBeanList);
+        if(videoBeanList != null&& !videoBeanList.isEmpty()) {
+            GlideLoader.getInstance().displayImage(videoBeanList.get(0).getCover(), ivCover);
+            tvCourseName.setText(videoBeanList.get(0).getName());
+            tvAuthAndTime.setText(videoBeanList.get(0).getDuring());
+            tvCourseDesc.setText(videoBeanList.get(0).getIntroduce());
+            adapter.setData(videoBeanList);
+        }
+    }
+
+    @Override
+    public void onItemClick(String videoId) {
+        CourseVideoDetailActivity.start(this,courseId,videoId);
     }
 }

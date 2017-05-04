@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
@@ -36,7 +35,6 @@ public class LocationActivity extends BaseActivity implements LocationActivityVi
     private RecyclerView recyclerView;
     private CityAdapter cityAdapter;
     private ImageView img_selected;
-    private RelativeLayout layout_location_city;
     private SystemPresentImpl systemPresent;
 
     @Override
@@ -52,7 +50,6 @@ public class LocationActivity extends BaseActivity implements LocationActivityVi
 
     private void initView() {
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
-        layout_location_city = (RelativeLayout) findViewById(R.id.layout_location_city);
         tvLocation = (TextView) findViewById(R.id.tv_location);
         recyclerView = (RecyclerView) findViewById(R.id.rv_city);
         img_selected = (ImageView) findViewById(R.id.img_selected);
@@ -76,12 +73,6 @@ public class LocationActivity extends BaseActivity implements LocationActivityVi
     @Override
     public void setOpenCity(final List<String> cities) {
         cityAdapter.setData(cities);
-        layout_location_city.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
     }
 
     @Override
