@@ -26,6 +26,7 @@ import java.util.List;
  * 搜索结果
  * Created by song on 2016/9/18.
  */
+//todo 利用泛型和继承重写搜索结果显示页
 public class SearchResultFragment extends BaseFragment implements SmartTabLayout.TabProvider {
     private List<View> allTabView = new ArrayList<>();
     private SmartTabLayout tabLayout;

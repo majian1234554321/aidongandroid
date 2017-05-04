@@ -96,8 +96,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     private UserInfoPresent userInfoPresent;
 
     private FragmentPagerItemAdapter adapter;
-    private boolean needRefreshPhotoWall = false;
-    private boolean needRefreshUserInfo = false;
+    private boolean needRefreshFragment = false;
 
     public static void start(Context context, String userId) {
         Intent starter = new Intent(context, UserInfoActivity.class);
@@ -156,24 +155,8 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     @Override
     public void updateUserInfo(UserInfoData userInfoData) {
         this.userInfoData = userInfoData;
-        if(!needRefreshPhotoWall && !needRefreshUserInfo) {
-            setView();
-            setFragments();
-        }else if(needRefreshPhotoWall){
-            if (!userInfoData.getPhotoWall().isEmpty()) {
-                wallAdapter.setData(userInfoData.getPhotoWall());
-                emptyPhotoLayout.setVisibility(View.GONE);
-            } else {
-                emptyPhotoLayout.setVisibility(View.VISIBLE);
-            }
-            needRefreshPhotoWall = false;
-        }else {
-            needRefreshUserInfo = false;
-            Fragment page = adapter.getPage(1);
-            if(page instanceof UserInfoFragment){
-                ((UserInfoFragment) page).refreshUserInfo(userInfoData.getProfile());
-            }
-        }
+        setView();
+        setFragments();
     }
 
     private void setView() {
@@ -192,8 +175,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
             }
             ivEdit.setVisibility(View.VISIBLE);
             contactLayout.setVisibility(View.GONE);
-            contentLayout.setPadding(0, DensityUtil.dp2px(this, 46), 0,
-                    (int) getResources().getDimension(R.dimen.dp_0));
+            contentLayout.setPadding(0, DensityUtil.dp2px(this, 46), 0, (int) getResources().getDimension(R.dimen.dp_0));
         } else {
             tvTitle.setText("TA的资料");
             ivFollowOrPublish.setBackgroundResource(SystemInfoUtils.isFollow(this,userId)
@@ -211,17 +193,25 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     }
 
     private void setFragments() {
-        FragmentPagerItems pages = new FragmentPagerItems(this);
-        UserDynamicFragment dynamicFragment = new UserDynamicFragment();
-        UserInfoFragment userInfoFragment = new UserInfoFragment();
-        pages.add(FragmentPagerItem.of(null, dynamicFragment.getClass(),
-                new Bundler().putString("userId", userId).get()));
-        pages.add(FragmentPagerItem.of(null, userInfoFragment.getClass(),
-                new Bundler().putParcelable("profile", userInfoData.getProfile()).get()));
-        adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);
-        viewPager.setAdapter(adapter);
-        tabLayout.setCustomTabView(this);
-        tabLayout.setViewPager(viewPager);
+        if(needRefreshFragment){
+            needRefreshFragment = false;
+            Fragment page = adapter.getPage(1);
+            if(page instanceof UserInfoFragment){
+                ((UserInfoFragment) page).refreshUserInfo(userInfoData.getProfile());
+            }
+        }else {
+            FragmentPagerItems pages = new FragmentPagerItems(this);
+            UserDynamicFragment dynamicFragment = new UserDynamicFragment();
+            UserInfoFragment userInfoFragment = new UserInfoFragment();
+            pages.add(FragmentPagerItem.of(null, dynamicFragment.getClass(),
+                    new Bundler().putString("userId", userId).get()));
+            pages.add(FragmentPagerItem.of(null, userInfoFragment.getClass(),
+                    new Bundler().putParcelable("profile", userInfoData.getProfile()).get()));
+            adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);
+            viewPager.setAdapter(adapter);
+            tabLayout.setCustomTabView(this);
+            tabLayout.setViewPager(viewPager);
+        }
     }
 
     @Override
@@ -331,11 +321,10 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
             } else if (requestCode == REQUEST_SELECT_PHOTO || requestCode == REQUEST_SELECT_VIDEO) {
                 PublishDynamicActivity.start(this, requestCode == REQUEST_SELECT_PHOTO, Boxing.getResult(data));
             }else if(requestCode == REQUEST_UPDATE_PHOTO){
-                needRefreshPhotoWall = true;
                 resetPhotoWall();
                 userInfoPresent.getUserInfo(userId);
             }else if(requestCode == REQUEST_UPDATE_INFO){
-                needRefreshUserInfo = true;
+                needRefreshFragment = true;
                 userInfoPresent.getUserInfo(userId);
             }
         }

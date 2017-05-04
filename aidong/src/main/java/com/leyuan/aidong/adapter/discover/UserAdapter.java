@@ -54,11 +54,17 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
         GlideLoader.getInstance().displayCircleImage(bean.getAvatar(), holder.cover);
         holder.nickname.setText(bean.getName());
         holder.distance.setText(bean.getDistance());
+
         if (!App.mInstance.isLogin()) {
             holder.follow.setBackgroundResource(R.drawable.icon_follow);
         } else {
-            holder.follow.setBackgroundResource(SystemInfoUtils.isFollow(context, bean)
-                    ? R.drawable.icon_following : R.drawable.icon_follow);
+            if(String.valueOf(App.mInstance.getUser().getId()).equals(bean.getId())){
+                holder.follow.setVisibility(View.GONE);
+            }else {
+                holder.follow.setVisibility(View.VISIBLE);
+                holder.follow.setBackgroundResource(SystemInfoUtils.isFollow(context, bean)
+                        ? R.drawable.icon_following : R.drawable.icon_follow);
+            }
         }
 
         if ("0".equals(bean.getGender())) {   //男

@@ -71,6 +71,7 @@ public class DiscoverFragment extends BasePageFragment implements DiscoverFragme
         @Override
         public void onReceive(Context context, Intent intent) {
             onRefresh();
+            refreshLayout.setRefreshing(true);
         }
     };
 

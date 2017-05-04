@@ -79,4 +79,16 @@ public interface SearchPresent {
     void requestMoreUserData(RecyclerView recyclerView, String keyword, int pageSize, int page);
 
     void requestMoreVenuesData(RecyclerView recyclerView, String keyword, int pageSize, int page);
+
+    /**
+     * 添加关注
+     * @param id
+     */
+    void addFollow(String id);
+
+    /**
+     * 取消关注
+     * @param id
+     */
+    void cancelFollow(String id);
 }
