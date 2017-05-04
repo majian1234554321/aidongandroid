@@ -342,6 +342,8 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         }
 
         initFragments();
+
+//        NewsDetailActivity.start(this, bean.name, bean.name, bean.service);
     }
 
     @Override

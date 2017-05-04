@@ -16,8 +16,17 @@ public class MineInfoBean {
     int appointing_count; //未付款预约
     int paid_orders_count; //已付款订单数量
     int unpay_orders_count;//未付款订单数量
+    int orders_count;//订单总数量
     int cart_items_count;//购物车数量
-    String view_count;//热度
+    String views_count;//热度
+
+    public int getOrders_count() {
+        return orders_count;
+    }
+
+    public void setOrders_count(int orders_count) {
+        this.orders_count = orders_count;
+    }
 
     private List<VenuesBean> gyms;  //运动足记
 
@@ -54,11 +63,11 @@ public class MineInfoBean {
     }
 
     public String getView_count() {
-        return view_count;
+        return views_count;
     }
 
     public void setView_count(String view_count) {
-        this.view_count = view_count;
+        this.views_count = view_count;
     }
 
     public int getFollowings_count() {

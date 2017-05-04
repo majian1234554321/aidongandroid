@@ -15,7 +15,6 @@
             android:id="@+id/tv_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=""
             android:textSize="15sp" />
     </LinearLayout>
 </ScrollView>

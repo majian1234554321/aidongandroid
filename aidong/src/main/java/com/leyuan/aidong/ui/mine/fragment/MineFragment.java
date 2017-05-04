@@ -59,6 +59,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
     private UserCoach user;
     private ChatMessageReceiver chatMessageReceiver;
     private MineInfoPresenterImpl presenter;
+    private TextView txt_new_shop;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -92,6 +93,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
         btn_message = (ImageButton) rootView.findViewById(R.id.btn_message);
         img_new_message = (ImageView) rootView.findViewById(R.id.img_new_message);
         img_new_shop = (ImageView) rootView.findViewById(R.id.img_new_shop);
+        txt_new_shop = (TextView) rootView.findViewById(R.id.txt_new_shop);
+
         relativeLayout_my_logo = (RelativeLayout) rootView.findViewById(R.id.relativeLayout_my_logo);
         relativeLayout_yuyue = (RelativeLayout) rootView.findViewById(R.id.relativeLayout_yuyue);
         relativeLayout_dingdang = (RelativeLayout) rootView.findViewById(R.id.relativeLayout_dingdang);
@@ -158,7 +161,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
         } else {
             relativeLayout_my_logo.setVisibility(View.GONE);
             layout_no_login.setVisibility(View.VISIBLE);
-            img_new_shop.setVisibility(View.GONE);
+//            img_new_shop.setVisibility(View.GONE);
+            txt_new_shop.setVisibility(View.GONE);
         }
     }
 
@@ -235,7 +239,13 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
 
     @Override
     public void onGetMineInfo(MineInfoBean mineInfoBean) {
-        img_new_shop.setVisibility(mineInfoBean.getCart_items_count() > 0 ? View.VISIBLE : View.GONE);
+        if (mineInfoBean.getCart_items_count() > 0) {
+            txt_new_shop.setVisibility(View.VISIBLE);
+            txt_new_shop.setText(String.valueOf(mineInfoBean.getCart_items_count()));
+        } else {
+            txt_new_shop.setVisibility(View.GONE);
+        }
+//        img_new_shop.setVisibility(mineInfoBean.getCart_items_count() > 0 ? View.VISIBLE : View.GONE);
         textView_guanzhushu.setText(mineInfoBean.getFollowings_count() + "");
         textView_beiguanzhushu.setText(mineInfoBean.getFollowers_count() + "");
         textView_yysl.setText(mineInfoBean.getAppointed_count() + "");

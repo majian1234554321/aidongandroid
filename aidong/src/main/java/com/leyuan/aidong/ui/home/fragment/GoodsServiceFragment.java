@@ -9,7 +9,10 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseFragment;
+import com.leyuan.aidong.utils.Logger;
+import com.zzhoujay.richtext.ImageHolder;
 import com.zzhoujay.richtext.RichText;
+import com.zzhoujay.richtext.RichType;
 
 /**
  * 商品详情售后服务
@@ -22,18 +25,31 @@ public class GoodsServiceFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Bundle bundle = getArguments();
-        if(bundle != null){
+        if (bundle != null) {
             content = bundle.getString("serviceText");
         }
-        return inflater.inflate(R.layout.fragment_goods_service,container,false);
+        return inflater.inflate(R.layout.fragment_goods_service, container, false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         tvContent = (TextView) view.findViewById(R.id.tv_content);
-        if(!TextUtils.isEmpty(content)){
-            RichText.from(content).placeHolder(R.drawable.place_holder_logo)
-                    .error(R.drawable.place_holder_logo).into(tvContent);
+        if (!TextUtils.isEmpty(content)) {
+
+            Logger.largeLog("RichText", content);
+
+//            content = "<p><img src=\"http://upload-images.jianshu.io/upload_images/" +
+//                    "3682352-3f50173a87599b0c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240\" /></p>";
+            RichText.from(content)
+                    .type(RichType.HTML).autoFix(true)
+                    .autoPlay(true) // gif图片是否自动播放
+                    .scaleType(ImageHolder.ScaleType.FIT_CENTER) // 图片缩放方式
+                    .size(ImageHolder.MATCH_PARENT, ImageHolder.WRAP_CONTENT)
+                    .into(tvContent); // 设置目标TextView
+
+//            RichText.from(content, RichType.MARKDOWN).into(tvContent);
+//                    .placeHolder(R.drawable.place_holder_logo)
+//                    .error(R.drawable.place_holder_logo)
         }
     }
 }

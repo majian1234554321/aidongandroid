@@ -53,6 +53,7 @@ public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.
             switch (msg.what) {
                 case COUNT_DOWN:
                     adapter.notifyCountDown();
+//                    adapter.notifyDataSetChanged();
                     mHandler.sendEmptyMessageDelayed(COUNT_DOWN, 1000);
                     break;
             }

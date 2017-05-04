@@ -101,7 +101,7 @@ public class LiveDateFilterUtil {
         long s = seconds % 60;
         long m = (seconds / 60) % 60;
         long h = (seconds / (60 * 60)) % 24;
-        return String.format("%02d:%02d:%02d", h,m,s);
+        return String.format("%02d:%02d:%02d", h, m, s);
     }
 
     public static int compareTime(String time) {
@@ -118,6 +118,16 @@ public class LiveDateFilterUtil {
         }
 
         return 0;
+    }
+
+    private static final int ONE_DAY_SECONDS = 60 * 60 * 24;
+
+    public static String convertSecondsToDayHms(int timeRemain) {
+        if (timeRemain < ONE_DAY_SECONDS) {
+            return convertSecondsToHMmSs(timeRemain);
+        } else {
+            return timeRemain / ONE_DAY_SECONDS + "天" + convertSecondsToHMmSs(timeRemain);
+        }
     }
 }
 
