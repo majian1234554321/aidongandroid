@@ -34,9 +34,9 @@ public interface OrderService {
     Observable<BaseBean> feedbackOrder(@Path("id") String id,
                                        @Field("type") String type,
                                        @Field("item[]") String[] item,
-                                       @Field("content") String content,
+                                       @Field("reason") String content,
                                        @Field("image[]") String[] image,
-                                       @Field("address") String address);
+                                       @Field("address_id") String address);
 
     @POST("mine/orders/{id}/confirm")
     Observable<BaseBean> confirmOrder(@Path("id") String id);

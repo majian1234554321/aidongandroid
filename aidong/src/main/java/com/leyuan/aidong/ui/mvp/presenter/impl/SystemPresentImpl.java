@@ -29,7 +29,7 @@ public class SystemPresentImpl implements SystemPresent {
         this.context = context;
         systemModel = new SystemModelImpl();
     }
-
+    @Override
     public void setSystemView(SystemView systemView) {
         this.systemView = systemView;
     }
@@ -45,6 +45,9 @@ public class SystemPresentImpl implements SystemPresent {
             @Override
             public void onError(Throwable e) {
                 //网络获取配置发生错误需要从本地读取配置信息
+                if (systemView != null) {
+                    systemView.onGetSystemConfiguration(false);
+                }
             }
 
             @Override
@@ -52,7 +55,9 @@ public class SystemPresentImpl implements SystemPresent {
                 if (systemBean != null) {
                     systemInfoBean = systemBean;
                     SystemInfoUtils.putSystemInfoBean(context, systemBean, SystemInfoUtils.KEY_SYSTEM);  //保存到本地
-
+                    if (systemView != null) {
+                        systemView.onGetSystemConfiguration(true);
+                    }
                     LogAidong.i("mLocationClient   SystemInfoUtils.putSystemInfoBean");
                 }
             }

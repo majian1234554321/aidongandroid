@@ -70,7 +70,7 @@ public class LivingVideoActivity extends BaseActivity implements View.OnClickLis
 
         if (mLiveVideoInfo != null)
             mVideoView.setVideoPath(mLiveVideoInfo.getLivePath());
-        //                mVideoView.setVideoPath("rtmp://pili-live-rtmp.aidong.me/aidong-tv/guanfang_jhq");
+        //                mVideoView.setVideoPath("rtmp://pili-live-rtmp.aidong.me/aidong-tv/test");
         mVideoView.start();
         mVideoView.setOnCompletionListener(new IMediaPlayer.OnCompletionListener() {
             @Override

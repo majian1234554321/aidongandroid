@@ -6,6 +6,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
@@ -23,6 +24,7 @@ import com.leyuan.aidong.ui.mvp.presenter.DiscoverPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DiscoverPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.DiscoverUserActivityView;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.SwitcherLayout;
@@ -33,6 +35,7 @@ import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * 发现-用户
@@ -74,19 +77,19 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover_user);
-        userPresent = new DiscoverPresentImpl(this,this);
+        userPresent = new DiscoverPresentImpl(this, this);
 
         initView();
         setListener();
-        userPresent.commonLoadUserData(switcherLayout,App.lat,App.lon,gender,type);
+        userPresent.commonLoadUserData(switcherLayout, App.lat, App.lon, gender, type);
     }
 
-    private void initView(){
+    private void initView() {
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tvFilter = (TextView) findViewById(R.id.tv_filter);
-        refreshLayout = (SwipeRefreshLayout)findViewById(R.id.refreshLayout);
-        switcherLayout = new SwitcherLayout(this,refreshLayout);
-        recyclerView = (RecyclerView)findViewById(R.id.rv_user);
+        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
+        switcherLayout = new SwitcherLayout(this, refreshLayout);
+        recyclerView = (RecyclerView) findViewById(R.id.rv_user);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         filterLayout = (ScrollView) findViewById(R.id.ll_filter);
         tvFinishFilter = (TextView) findViewById(R.id.tv_finish_filter);
@@ -101,7 +104,7 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
         recyclerView.addOnScrollListener(onScrollListener);
     }
 
-    private void setListener(){
+    private void setListener() {
         ivBack.setOnClickListener(this);
         tvFilter.setOnClickListener(this);
         tvFinishFilter.setOnClickListener(this);
@@ -116,15 +119,15 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
     public void onRefresh() {
         currPage = 1;
         RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-        userPresent.pullToRefreshUserData(App.lat,App.lon,gender,type);
+        userPresent.pullToRefreshUserData(App.lat, App.lon, gender, type);
     }
 
-    private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
+    private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener() {
         @Override
         public void onLoadNextPage(View view) {
-            currPage ++;
+            currPage++;
             if (data != null && data.size() >= pageSize) {
-                userPresent.requestMoreUserData(recyclerView, App.lat, App.lon,gender,type,pageSize,currPage);
+                userPresent.requestMoreUserData(recyclerView, App.lat, App.lon, gender, type, pageSize, currPage);
             }
         }
     };
@@ -132,22 +135,37 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
     @Override
     public void updateRecyclerView(List<UserBean> userList) {
         //todo shit presenter 设计有大问题
-        if(switcherLayout != null){
+        if (switcherLayout != null) {
             switcherLayout.showContentLayout();
         }
-        if(refreshLayout.isRefreshing()){
+        if (refreshLayout.isRefreshing()) {
             data.clear();
             refreshLayout.setRefreshing(false);
         }
-        data.addAll(userList);
+
+        if (App.getInstance().isLogin()) {
+            String mId = App.getInstance().getUser().getId() + "";
+
+
+            for (UserBean userBean : userList) {
+                if (!TextUtils.equals(mId, userBean.getId())) {
+                    data.add(userBean);
+                }
+                Logger.i("DiscoverUserActivity", "mID = " + mId + " , userId = " + userBean.getId());
+            }
+        } else {
+            data.addAll(userList);
+        }
+
+
         userAdapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void showEmptyView() {
-        View view = View.inflate(this,R.layout.empty_discover_user,null);
-        switcherLayout.addCustomView(view,"empty");
+        View view = View.inflate(this, R.layout.empty_discover_user, null);
+        switcherLayout.addCustomView(view, "empty");
         switcherLayout.showCustomLayout("empty");
     }
 
@@ -158,7 +176,7 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_back:
                 finish();
                 break;
@@ -176,8 +194,8 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         isChange = true;
-        if(group.getId() == R.id.rg_identify){
-            switch (checkedId){
+        if (group.getId() == R.id.rg_identify) {
+            switch (checkedId) {
                 case R.id.rb_all_identify:
                     type = TYPE_ALL_IDENTIFY;
                     break;
@@ -190,8 +208,8 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
                 default:
                     break;
             }
-        }else if(group.getId() == R.id.rg_gender){
-            switch (checkedId){
+        } else if (group.getId() == R.id.rg_gender) {
+            switch (checkedId) {
                 case R.id.rb_all_gender:
                     gender = GENDER_ALL_GENDER;
                     break;
@@ -209,9 +227,9 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
 
     @Override
     public void onBackPressed() {
-        if(drawerLayout.isDrawerOpen(filterLayout)){
+        if (drawerLayout.isDrawerOpen(filterLayout)) {
             drawerLayout.closeDrawer(filterLayout);
-        }else {
+        } else {
             finish();
         }
     }
@@ -219,36 +237,36 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
     @Override
     public void onFollowClicked(int position) {
         this.position = position;
-        if(App.mInstance.isLogin()){
+        if (App.mInstance.isLogin()) {
             UserBean userBean = data.get(position);
-            if(SystemInfoUtils.isFollow(this,userBean)){
+            if (SystemInfoUtils.isFollow(this, userBean)) {
                 userPresent.cancelFollow(userBean.getId());
-            }else {
+            } else {
                 userPresent.addFollow(userBean.getId());
             }
-        }else {
+        } else {
             startActivityForResult(new Intent(this, LoginActivity.class), Constant.REQUEST_LOGIN);
         }
     }
 
     @Override
     public void addFollowResult(BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
+        if (baseBean.getStatus() == Constant.OK) {
             SystemInfoUtils.addFollow(data.get(position));
             userAdapter.notifyDataSetChanged();
             ToastGlobal.showLong(R.string.follow_success);
-        }else {
+        } else {
             ToastGlobal.showLong(R.string.follow_fail);
         }
     }
 
     @Override
     public void cancelFollowResult(BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
+        if (baseBean.getStatus() == Constant.OK) {
             SystemInfoUtils.removeFollow(data.get(position));
             userAdapter.notifyDataSetChanged();
             ToastGlobal.showLong(R.string.cancel_follow_success);
-        }else {
+        } else {
             ToastGlobal.showLong(R.string.cancel_follow_fail);
         }
     }
@@ -256,14 +274,14 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK){
-            if(requestCode == Constant.REQUEST_LOGIN){
+        if (resultCode == RESULT_OK) {
+            if (requestCode == Constant.REQUEST_LOGIN) {
                 userAdapter.notifyDataSetChanged();
             }
         }
     }
 
-    private class SimpleDrawerDrawerListener extends  DrawerLayout.SimpleDrawerListener{
+    private class SimpleDrawerDrawerListener extends DrawerLayout.SimpleDrawerListener {
         @Override
         public void onDrawerOpened(View drawerView) {
             super.onDrawerOpened(drawerView);
@@ -272,7 +290,7 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
 
         @Override
         public void onDrawerClosed(View drawerView) {
-            if(isChange) {
+            if (isChange) {
                 currPage = 1;
                 refreshLayout.setRefreshing(true);
                 RecyclerViewStateUtils.resetFooterViewState(recyclerView);

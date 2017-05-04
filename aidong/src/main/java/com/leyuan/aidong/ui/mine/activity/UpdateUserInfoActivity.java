@@ -218,7 +218,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
                         InputType.TYPE_TEXT_FLAG_CAP_WORDS)
                 .inputRange(1, 12)
                 .positiveText(R.string.sure)
-                .input(getString(R.string.confirm_nickname), tvNickname.getText(), false, new MaterialDialog.InputCallback() {
+                .input(getString(R.string.confirm_nickname), null, false, new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
                         name = input.toString();
@@ -420,7 +420,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
 
     private List<String> generateHeightData() {
         List<String> height = new ArrayList<>();
-        for (int i = 150; i < 200; i++) {
+        for (int i = 150; i < 250; i++) {
             height.add(String.valueOf(i));
         }
         return height;
@@ -428,7 +428,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
 
     private List<String> generateWeightData() {
         List<String> weight = new ArrayList<>();
-        for (int i = 40; i < 100; i++) {
+        for (int i = 40; i < 200; i++) {
             weight.add(String.valueOf(i));
         }
         return weight;

@@ -17,6 +17,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.SplashPresenterImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SystemPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VersionPresenterImpl;
 import com.leyuan.aidong.ui.mvp.view.LoginAutoView;
+import com.leyuan.aidong.ui.mvp.view.SystemView;
 import com.leyuan.aidong.ui.mvp.view.VersionViewListener;
 import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.PermissionManager;
@@ -31,7 +32,7 @@ import com.leyuan.aidong.widget.dialog.DialogDoubleButton;
 import com.leyuan.aidong.widget.dialog.DialogSingleButton;
 
 //todo fix
-public class SplashActivity extends BaseActivity implements VersionViewListener, LoginAutoView {
+public class SplashActivity extends BaseActivity implements VersionViewListener, LoginAutoView, SystemView {
 
     private static final int MESSAGE = 1;
     private static final int DURATION = 2000;
@@ -71,23 +72,32 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_splash);
 
-
-        SystemPresent systemPresent = new SystemPresentImpl(this);
-        systemPresent.getSystemInfo(OS);
-        LogAidong.i("mLocationClient   systemPresent.getSystemInfo(OS);");
-
         splashPresenter = new SplashPresenterImpl(this);
         splashPresenter.setLoginAutoListener(this);
         versionPresenter = new VersionPresenterImpl(this, this);
 
-        App.getInstance().startLocation();
-        isFirstEnter = SharePrefUtils.getBoolean(SplashActivity.this, "isFirstEnter", true);
-        EMClient.getInstance().chatManager().loadAllConversations();
         initData();
     }
 
     private void initData() {
         versionPresenter.getVersionInfo();
+
+        SystemPresent systemPresent = new SystemPresentImpl(this);
+        systemPresent.setSystemView(this);
+        systemPresent.getSystemInfo(OS);
+        LogAidong.i("mLocationClient   systemPresent.getSystemInfo(OS);");
+
+        App.getInstance().startLocation();
+        isFirstEnter = SharePrefUtils.getBoolean(SplashActivity.this, "isFirstEnter", true);
+        EMClient.getInstance().chatManager().loadAllConversations();
+
+        if (App.getInstance().isLogin()) {
+            FollowPresent followPresent = new FollowPresentImpl(this);  //获取关注列表
+            followPresent.getFollowList();
+
+            MineInfoPresenterImpl infoPresent = new MineInfoPresenterImpl(this);    //初始化运动足记
+            infoPresent.getMineInfo();
+        }
     }
 
     @Override
@@ -104,6 +114,17 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
                 handler.sendEmptyMessageDelayed(MESSAGE, DURATION);
             }
         }
+    }
+
+    @Override
+    public void onAutoLoginResult(boolean success) {
+        handler.removeCallbacksAndMessages(null);
+        handler.sendEmptyMessageDelayed(MESSAGE, DURATION);
+
+    }
+
+    @Override
+    public void onGetSystemConfiguration(boolean b) {
 
     }
 
@@ -163,19 +184,6 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
                         startDownload(downloadUrl);
                     }
                 }).show();
-    }
-
-    @Override
-    public void onAutoLoginResult(boolean success) {
-        handler.removeCallbacksAndMessages(null);
-        handler.sendEmptyMessageDelayed(MESSAGE, DURATION);
-        if (App.getInstance().isLogin()) {
-            FollowPresent followPresent = new FollowPresentImpl(this);  //获取关注列表
-            followPresent.getFollowList();
-
-            MineInfoPresenterImpl infoPresent = new MineInfoPresenterImpl(this);    //初始化运动足记
-            infoPresent.getMineInfo();
-        }
     }
 
     @Override

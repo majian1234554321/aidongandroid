@@ -20,6 +20,7 @@ import com.leyuan.aidong.ui.mvp.view.AddressListView;
 import com.leyuan.aidong.ui.mvp.view.OrderFeedbackView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DialogUtils;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.qiniu.IQiNiuCallback;
 import com.leyuan.aidong.utils.qiniu.UploadQiNiuManager;
@@ -52,6 +53,7 @@ public class ApplyServiceNextActivity extends BaseActivity implements View.OnCli
     private static final int REQUEST_ADD_ADDRESS = 1;
 
     private OrderPresentImpl orderPresent;
+    private String address_id;
 
     public static void start(Context context, String orderId, int type, ArrayList<String> items,
                              String content, ArrayList<BaseMedia> selectedMedia) {
@@ -86,9 +88,7 @@ public class ApplyServiceNextActivity extends BaseActivity implements View.OnCli
         items = getIntent().getStringArrayListExtra("items");
         selectedMedia = getIntent().getParcelableArrayListExtra("selectedMedia");
 
-
         orderPresent = new OrderPresentImpl(this, this);
-
 
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
         infoLayout = (RelativeLayout) findViewById(R.id.rl_info);
@@ -119,16 +119,17 @@ public class ApplyServiceNextActivity extends BaseActivity implements View.OnCli
                 startActivityForResult(new Intent(this, SelectAddressActivity.class), REQUEST_SELECT_ADDRESS);
                 break;
             case R.id.tv_apply:
+
                 if (addressInfo == null) {
                     ToastGlobal.showShort("请选择联系信息");
-                } else if (selectedMedia != null) {
-                    DialogUtils.showDialog(this, "", false);
+                } else if (selectedMedia != null && !selectedMedia.isEmpty()) {
+                    DialogUtils.showDialog(this, "", true);
                     applyToQiNiu(selectedMedia);
                 } else {
-                    DialogUtils.showDialog(this, "", false);
+                    DialogUtils.showDialog(this, "", true);
                     applyToService(null);
-
                 }
+//                applyToService(null);
 
                 break;
             case R.id.tv_new_address:
@@ -140,6 +141,8 @@ public class ApplyServiceNextActivity extends BaseActivity implements View.OnCli
     }
 
     private void applyToQiNiu(ArrayList<BaseMedia> selectedMedia) {
+
+        Logger.i("applyService", "applyToQiNiu");
         UploadQiNiuManager.getInstance().uploadImages(selectedMedia, new IQiNiuCallback() {
             @Override
             public void onSuccess(List<String> urls) {
@@ -155,7 +158,18 @@ public class ApplyServiceNextActivity extends BaseActivity implements View.OnCli
     }
 
     private void applyToService(String[] images) {
-        orderPresent.feedbackOrder(orderId, type + "", (items.toArray(new String[0])), content, images, addressInfo);
+        Logger.i("applyToService", "--------------- image = " + images + ", items = " + items.get(0));
+
+//        int itemSize = items.size();
+//        String[][] itemArray = new String[itemSize][2];
+//
+//        for (int i = 0; i < itemSize; i++) {
+//            itemArray[i] = items.get(i).split("-");
+//        }
+//        itemArray[0] = new String[]{"350", "1"};
+//        (items.toArray(new String[0]))
+
+        orderPresent.feedbackOrder(orderId, type + "", items.toArray(new String[0]), content, images, address_id);
     }
 
     @Override
@@ -185,6 +199,7 @@ public class ApplyServiceNextActivity extends BaseActivity implements View.OnCli
         tv_name.setText(bean.getName());
         tv_phone.setText(bean.getMobile());
         tv_address.setText("收货地址：" + addressInfo);
+        address_id = bean.getId();
     }
 
     @Override

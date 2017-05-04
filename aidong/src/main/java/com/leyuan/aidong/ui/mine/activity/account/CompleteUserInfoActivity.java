@@ -41,6 +41,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import static com.leyuan.aidong.R.id.birthday;
+
 /**
  * 修改用户资料
  * Created by song on 2017/2/6.
@@ -99,7 +101,7 @@ public class CompleteUserInfoActivity extends BaseActivity implements UpdateUser
         tvIdentify = (ExtendTextView) findViewById(R.id.identify);
         tvSignature = (ExtendTextView) findViewById(R.id.signature);
         tvAddress = (ExtendTextView) findViewById(R.id.address);
-        tvBirthday = (ExtendTextView) findViewById(R.id.birthday);
+        tvBirthday = (ExtendTextView) findViewById(birthday);
         tvZodiac = (ExtendTextView) findViewById(R.id.zodiac);
         tvHeight = (ExtendTextView) findViewById(R.id.height);
         tvWeight = (ExtendTextView) findViewById(R.id.weight);
@@ -109,7 +111,7 @@ public class CompleteUserInfoActivity extends BaseActivity implements UpdateUser
         tvGender.setRightContent(profileBean.getGender());
         tvIdentify.setRightContent("健身爱好者");
         tvSignature.setRightContent(profileBean.getSignature());
-        tvAddress.setRightContent(profileBean.getProvince() + profileBean.getCity() + profileBean.getArea());
+        tvAddress.setRightContent("请选择城市");
         tvBirthday.setRightContent(profileBean.getBirthday());
         tvZodiac.setRightContent(profileBean.getZodiac());
         tvHeight.setRightContent(profileBean.getHeight());
@@ -174,7 +176,7 @@ public class CompleteUserInfoActivity extends BaseActivity implements UpdateUser
             case R.id.address:
                 showAddressDialog();
                 break;
-            case R.id.birthday:
+            case birthday:
                 showBirthdayDialog();
                 break;
             case R.id.height:
@@ -192,8 +194,11 @@ public class CompleteUserInfoActivity extends BaseActivity implements UpdateUser
     }
 
     private boolean verify() {
-        if (TextUtils.isEmpty(tvNickname.getText().trim())) {
-            ToastGlobal.showShort("请输入昵称");
+
+
+        if (TextUtils.equals(tvNickname.getText().trim(), getResources().getString(R.string.please_input_nickname))
+                || TextUtils.isEmpty(tvNickname.getText().trim())) {
+            ToastGlobal.showShort(R.string.please_input_nickname);
             return false;
         }
         if (TextUtils.isEmpty(tvGender.getText().trim())) {
@@ -216,7 +221,7 @@ public class CompleteUserInfoActivity extends BaseActivity implements UpdateUser
                         InputType.TYPE_TEXT_FLAG_CAP_WORDS)
                 .inputRange(1, 12)
                 .positiveText(R.string.sure)
-                .input(getString(R.string.confirm_nickname), tvNickname.getText(), false, new MaterialDialog.InputCallback() {
+                .input(getString(R.string.confirm_nickname), null, false, new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
                         tvNickname.setRightContent(input.toString());
@@ -271,7 +276,7 @@ public class CompleteUserInfoActivity extends BaseActivity implements UpdateUser
                 .appendPath(String.format(Locale.US, "%s.jpg", System.currentTimeMillis()))
                 .build();
         BoxingCropOption boxingCropOption = new BoxingCropOption(destUri);
-        boxingCropOption.aspectRatio(1,1);
+        boxingCropOption.aspectRatio(1, 1);
         BoxingConfig singleCropImgConfig = new BoxingConfig(BoxingConfig.Mode.SINGLE_IMG)
                 .withCropOption(boxingCropOption)
                 .needCamera();
@@ -295,7 +300,7 @@ public class CompleteUserInfoActivity extends BaseActivity implements UpdateUser
 
     private void showIdentifyDialog() {
         new MaterialDialog.Builder(this)
-                .title(R.string.confirm_gender)
+                .title(R.string.confirm_identify)
                 .items(R.array.identify)
                 .itemsCallbackSingleChoice(0, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
@@ -353,7 +358,8 @@ public class CompleteUserInfoActivity extends BaseActivity implements UpdateUser
                             years = year;
                             mothers = monthOfYear;
                             days = dayOfMonth;
-                            tvBirthday.setRightContent(years + "年" + (mothers + 1) + "月" + days + "日");
+                            tvBirthday.setRightContent(years + "-" + (mothers + 1) + "-" + days);
+//                            tvBirthday.setRightContent(years + "年" + (mothers + 1) + "月" + days + "日");
                             tvZodiac.setRightContent(Utils.getConstellation(mothers + 1, days));
                         }
                     }
@@ -430,7 +436,7 @@ public class CompleteUserInfoActivity extends BaseActivity implements UpdateUser
 
     private List<String> generateHeightData() {
         List<String> height = new ArrayList<>();
-        for (int i = 150; i < 200; i++) {
+        for (int i = 150; i < 250; i++) {
             height.add(String.valueOf(i));
         }
         return height;
@@ -438,7 +444,7 @@ public class CompleteUserInfoActivity extends BaseActivity implements UpdateUser
 
     private List<String> generateWeightData() {
         List<String> weight = new ArrayList<>();
-        for (int i = 40; i < 100; i++) {
+        for (int i = 40; i < 200; i++) {
             weight.add(String.valueOf(i));
         }
         return weight;
@@ -449,7 +455,8 @@ public class CompleteUserInfoActivity extends BaseActivity implements UpdateUser
 
     private void setBMI() {
         if (height != 0f && weight != 0f) {
-            tvBmi.setRightContent(String.valueOf(Utils.calBMI(weight, height)));
+            tvBmi.setRightContent(String.format(Locale.US,"%.2f", Utils.calBMI(weight, height)));
+//            String.valueOf(Utils.calBMI(weight, height)));
         }
     }
 
