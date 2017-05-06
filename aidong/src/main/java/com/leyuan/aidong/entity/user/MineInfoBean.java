@@ -4,7 +4,7 @@ import com.leyuan.aidong.entity.VenuesBean;
 
 import java.util.List;
 
-import static com.leyuan.aidong.utils.Constant.activity;
+
 
 /**
  * Created by user on 2017/3/23.

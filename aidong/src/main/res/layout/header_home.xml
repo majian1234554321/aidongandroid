@@ -10,7 +10,7 @@
         android:id="@+id/banner"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="@color/white"
+        android:background="@color/line_color"
         app:banner_pageChangeDuration="5000"
         app:banner_pointAutoPlayAble="true"
         app:banner_pointContainerBackground="@android:color/transparent"

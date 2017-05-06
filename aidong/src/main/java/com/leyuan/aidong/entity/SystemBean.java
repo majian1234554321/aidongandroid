@@ -21,6 +21,7 @@ public class SystemBean implements Serializable {
     private int order_countdown; // 订单倒计时,单位分钟
     private int appointment_countdown;// 预约倒计时,单位分钟
     private long current_time;
+    private String acivity;
 
     public List<String> getOpen_city() {
         return open_city;
@@ -110,6 +111,14 @@ public class SystemBean implements Serializable {
         this.current_time = current_time;
     }
 
+
+    public String getAcivity() {
+        return acivity;
+    }
+
+    public void setAcivity(String acivity) {
+        this.acivity = acivity;
+    }
 
     @Override
     public String toString() {

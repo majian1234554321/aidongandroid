@@ -60,7 +60,6 @@ public class Constant {
     public static final Double EXPRESS_PRICE = 15d;
 
     public static List<VenuesBean> gyms;
-    public static String activity;
     public static SystemBean systemInfoBean;
     public static FollowData followData;
     public static final byte ID_OFFICAL = 1;

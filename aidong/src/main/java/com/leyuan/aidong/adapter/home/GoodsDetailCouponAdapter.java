@@ -62,7 +62,7 @@ public class GoodsDetailCouponAdapter extends RecyclerView.Adapter<GoodsDetailCo
         }
 
         if(FormatUtil.parseInt(bean.getDiscount()) > 99){
-            holder.tvPrice.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.getResources().getDimension(R.dimen.sp_28));
+            holder.tvPrice.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.getResources().getDimension(R.dimen.sp_30));
         }else {
             holder.tvPrice.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.getResources().getDimension(R.dimen.sp_40));
         }

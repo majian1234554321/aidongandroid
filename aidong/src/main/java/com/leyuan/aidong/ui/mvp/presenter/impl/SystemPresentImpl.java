@@ -90,7 +90,6 @@ public class SystemPresentImpl implements SystemPresent {
                     public void onNext(MineInfoBean mineInfoBean) {
                         if (systemView != null) {
                             Constant.gyms = mineInfoBean.getGyms();
-                            Constant.activity = mineInfoBean.getActivity();
                             systemView.onGetSystemConfiguration(true);
                         }
                     }

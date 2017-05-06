@@ -374,4 +374,20 @@ public class Utils {
 		}
 		return dft.format(new Date());
 	}
+
+
+
+	private final static int TIME_NUMBERS = 60;
+
+	/**将总秒数转换为时分秒表达形式
+	* @param seconds 任意秒数
+	* @return %s分%s秒
+	*/
+	public static String formatTime(long seconds) {
+		long mm = seconds / TIME_NUMBERS ;
+		long ss = seconds < TIME_NUMBERS ? seconds : seconds % TIME_NUMBERS;
+		return (mm == 0 ? "" : (mm < 10 ? "0" + mm : mm) + " '")
+				+ (ss == 0 ? "" : (ss < 10 ? "0" + ss : ss) + " \"");
+	}
+
 }
