@@ -2,15 +2,17 @@ package com.leyuan.aidong.adapter.home;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CouponBean;
+import com.leyuan.aidong.utils.FormatUtil;
+import com.leyuan.aidong.utils.ToastGlobal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +61,12 @@ public class GoodsDetailCouponAdapter extends RecyclerView.Adapter<GoodsDetailCo
             holder.rlCoupon.setBackgroundResource(R.drawable.bg_goods_coupon_gray);
         }
 
+        if(FormatUtil.parseInt(bean.getDiscount()) > 99){
+            holder.tvPrice.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.getResources().getDimension(R.dimen.sp_28));
+        }else {
+            holder.tvPrice.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.getResources().getDimension(R.dimen.sp_40));
+        }
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,7 +75,7 @@ public class GoodsDetailCouponAdapter extends RecyclerView.Adapter<GoodsDetailCo
                         listener.onCouponClick(position);
                     }
                 }else {
-                    Toast.makeText(context,"已领取过该优惠券",Toast.LENGTH_LONG).show();
+                    ToastGlobal.showLong("已领取过该优惠券");
                 }
             }
         });

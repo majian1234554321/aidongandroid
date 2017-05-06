@@ -45,9 +45,10 @@ public class StoreHeaderView extends RelativeLayout{
                 GlideLoader.getInstance().displayImage(((BannerBean)model).getImage(), (ImageView)view);
             }
         });
-        banner.setOnItemClickListener(new BGABanner.OnItemClickListener() {
+
+        banner.setDelegate(new BGABanner.Delegate() {
             @Override
-            public void onBannerItemClick(BGABanner banner, View view, Object model, int position) {
+            public void onBannerItemClick(BGABanner banner, View itemView, Object model, int position) {
                 ((MainActivity)context).toTargetActivity((BannerBean)model);
             }
         });

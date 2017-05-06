@@ -46,7 +46,7 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  * 发现 -- 发现
  * Created by song on 2016/11/19.
  */
-public class DiscoverFragment extends BasePageFragment implements DiscoverFragmentView, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class DiscoverFragment extends BasePageFragment implements DiscoverFragmentView, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, BGABanner.Adapter, BGABanner.Delegate {
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
     private NestedScrollView scrollView;
@@ -122,21 +122,11 @@ public class DiscoverFragment extends BasePageFragment implements DiscoverFragme
         rvVenues.setAdapter(brandsAdapter);
         rvUser.setAdapter(userAdapter);
         rvNews.setAdapter(newsAdapter);
-        banner.setAdapter(new BGABanner.Adapter() {
-            @Override
-            public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
-                GlideLoader.getInstance().displayImage(((BannerBean) model).getImage(), (ImageView) view);
-            }
-        });
-        banner.setOnItemClickListener(new BGABanner.OnItemClickListener() {
-            @Override
-            public void onBannerItemClick(BGABanner banner, View view, Object model, int position) {
-                ((MainActivity) getActivity()).toTargetActivity((BannerBean) model);
-            }
-        });
     }
 
     private void setListener() {
+        banner.setAdapter(this);
+        banner.setDelegate(this);
         refreshLayout.setOnRefreshListener(this);
         moreVenuesLayout.setOnClickListener(this);
         moreUserLayout.setOnClickListener(this);
@@ -206,5 +196,15 @@ public class DiscoverFragment extends BasePageFragment implements DiscoverFragme
     public void onDestroy() {
         super.onDestroy();
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(selectCityReceiver);
+    }
+
+    @Override
+    public void fillBannerItem(BGABanner banner, View itemView, Object model, int position) {
+        GlideLoader.getInstance().displayImage(((BannerBean) model).getImage(), (ImageView) itemView);
+    }
+
+    @Override
+    public void onBannerItemClick(BGABanner banner, View itemView, Object model, int position) {
+        ((MainActivity) getActivity()).toTargetActivity((BannerBean) model);
     }
 }

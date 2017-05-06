@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.mvp.presenter.impl;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.leyuan.aidong.entity.user.MineInfoBean;
 import com.leyuan.aidong.http.subscriber.BaseSubscriber;
@@ -39,8 +40,13 @@ public class MineInfoPresenterImpl {
                 if(view != null) {
                     view.onGetMineInfo(mineInfoBean);
                 }
+
                 if(mineInfoBean.getGyms() != null && !mineInfoBean.getGyms().isEmpty()){
                     Constant.gyms = mineInfoBean.getGyms();
+                }
+
+                if(!TextUtils.isEmpty(mineInfoBean.getActivity())){
+                    Constant.activity = mineInfoBean.getActivity();
                 }
             }
         });

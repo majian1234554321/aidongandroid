@@ -284,6 +284,14 @@ public class CoursePresentImpl implements CoursePresent{
             courseModel = new CourseModelImpl(context);
         }
         courseModel.getCourseVideo(new BaseSubscriber<CourseVideoData>(context) {
+
+            @Override
+            public void onStart() {
+                super.onStart();
+                videoDetailActivityView.showLoadingView();
+            }
+
+
             @Override
             public void onNext(CourseVideoData courseVideoData) {
                 List<CourseVideoBean> courseVideoBeanList = new ArrayList<>();
@@ -293,7 +301,16 @@ public class CoursePresentImpl implements CoursePresent{
                 if(!courseVideoBeanList.isEmpty()){
                     videoDetailActivityView.updateRelateVideo(courseVideoBeanList);
                 }
+
+                videoDetailActivityView.showContentView();
             }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                videoDetailActivityView.showErrorView();
+            }
+
         },"relation",id,1,videoId);
     }
 

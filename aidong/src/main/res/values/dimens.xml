@@ -59,6 +59,9 @@
     <dimen name="length28">15sp</dimen>
     <dimen name="length22">13sp</dimen>
 
+    <dimen name="sp_28">28sp</dimen>
+    <dimen name="sp_40">40sp</dimen>
+
     <dimen name="dp_10">10dp</dimen>
     <dimen name="dp_0">0dp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->

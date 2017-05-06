@@ -4,6 +4,8 @@ import com.leyuan.aidong.entity.VenuesBean;
 
 import java.util.List;
 
+import static com.leyuan.aidong.utils.Constant.activity;
+
 /**
  * Created by user on 2017/3/23.
  */
@@ -19,6 +21,8 @@ public class MineInfoBean {
     int orders_count;//订单总数量
     int cart_items_count;//购物车数量
     String views_count;//热度
+
+    private String acivity;
 
     public int getOrders_count() {
         return orders_count;
@@ -101,5 +105,13 @@ public class MineInfoBean {
 
     public void setGyms(List<VenuesBean> gyms) {
         this.gyms = gyms;
+    }
+
+    public String getActivity() {
+        return acivity;
+    }
+
+    public void setActivity(String activity) {
+        this.acivity = activity;
     }
 }

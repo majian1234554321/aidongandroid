@@ -65,6 +65,7 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setSlideAnimation();
         setContentView(R.layout.activity_publish_dynamic);
         dynamicPresent = new DynamicPresentImpl(this,this);
         if(getIntent() != null){

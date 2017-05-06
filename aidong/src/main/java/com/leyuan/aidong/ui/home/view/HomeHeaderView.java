@@ -80,12 +80,13 @@ public class HomeHeaderView extends RelativeLayout{
             }
         });
 
-        banner.setOnItemClickListener(new BGABanner.OnItemClickListener() {
-            @Override
-            public void onBannerItemClick(BGABanner banner, View view, Object model, int position) {
-                ((MainActivity)context).toTargetActivity((BannerBean)model);
-            }
+        banner.setDelegate(new BGABanner.Delegate() {
+           @Override
+           public void onBannerItemClick(BGABanner banner, View itemView, Object model, int position) {
+               ((MainActivity)context).toTargetActivity((BannerBean)model);
+           }
         });
+
 
         marqueeFactory.setOnItemClickListener(new MarqueeFactory.OnItemClickListener<RelativeLayout, VenuesBean>() {
             @Override

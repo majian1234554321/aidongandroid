@@ -1,6 +1,5 @@
 package com.leyuan.aidong.ui;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -20,7 +19,6 @@ import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.http.subscriber.handler.ProgressDialogHandler;
 import com.leyuan.aidong.ui.discover.activity.VenuesDetailActivity;
 import com.leyuan.aidong.ui.home.activity.CampaignDetailActivity;
-import com.leyuan.aidong.ui.home.activity.CourseActivity;
 import com.leyuan.aidong.ui.home.activity.CourseDetailActivity;
 import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
 import com.leyuan.aidong.utils.DialogUtils;
@@ -135,7 +133,7 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
      * 广告跳转目标页
      *
      * @param bannerBean BannerBean
-     *                   广告类型,#10-内嵌网页 11-外部网页 20-场馆详情页 21-营养品详情页 22-课程列表 23-活动详情页
+     *                   广告类型,#10-内嵌网页 11-外部网页 20-场馆详情页 21-营养品详情页 22-课程详情 23-活动详情页
      */
     public void toTargetActivity(BannerBean bannerBean) {
         if (TextUtils.isEmpty(bannerBean.getType())) return;
@@ -155,7 +153,7 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
                 GoodsDetailActivity.start(this, bannerBean.getLink(), GOODS_NUTRITION);
                 break;
             case "22":
-                CourseActivity.start(this,bannerBean.getLink());
+                CourseDetailActivity.start(this,bannerBean.getLink());
                 break;
             case "23":
                 CampaignDetailActivity.start(this, bannerBean.getLink());
@@ -177,7 +175,7 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Fade in = new Fade();
             in.setDuration(300);
-            in.setMode(Fade.MODE_OUT);
+            in.setMode(Fade.MODE_IN);
             getWindow().setExitTransition(in);
 
             Fade out = new Fade();
@@ -187,14 +185,17 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
         }
     }
 
-    @TargetApi(21)
     protected void setSlideAnimation(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Slide slide = new Slide();
-            slide.setDuration(300);
-            slide.setSlideEdge(Gravity.BOTTOM);
-            slide.excludeTarget(android.R.id.statusBarBackground, true);
-            getWindow().setEnterTransition(slide);
+            Slide in = new Slide();
+            in.setDuration(300);
+            in.setSlideEdge(Gravity.BOTTOM);
+            getWindow().setEnterTransition(in);
+
+            Slide out = new Slide();
+            out.setDuration(300);
+            out.setSlideEdge(Gravity.BOTTOM);
+            getWindow().setExitTransition(out);
         }
     }
 
