@@ -9,7 +9,7 @@ import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.data.CommentData;
 import com.leyuan.aidong.entity.data.DynamicsData;
 import com.leyuan.aidong.entity.data.LikeData;
-import com.leyuan.aidong.http.subscriber.BaseSubscriber;
+import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
@@ -168,7 +168,7 @@ public class DynamicPresentImpl implements DynamicPresent {
 
     @Override
     public void pullToRefreshComments(String id) {
-        dynamicModel.getComments(new BaseSubscriber<CommentData>(context) {
+        dynamicModel.getComments(new IsLoginSubscriber<CommentData>(context) {
             @Override
             public void onNext(CommentData commentData) {
                 if (commentData != null && commentData.getComment() != null

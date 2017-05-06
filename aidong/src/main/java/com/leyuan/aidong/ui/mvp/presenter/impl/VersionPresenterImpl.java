@@ -3,7 +3,7 @@ package com.leyuan.aidong.ui.mvp.presenter.impl;
 import android.content.Context;
 
 import com.leyuan.aidong.entity.VersionInformation;
-import com.leyuan.aidong.http.subscriber.BaseSubscriber;
+import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
 import com.leyuan.aidong.ui.mvp.model.VersionModel;
 import com.leyuan.aidong.ui.mvp.view.VersionViewListener;
 
@@ -22,7 +22,7 @@ public class VersionPresenterImpl {
     }
 
     public void getVersionInfo() {
-        model.getVersionInfo(new BaseSubscriber<VersionInformation>(context) {
+        model.getVersionInfo(new IsLoginSubscriber<VersionInformation>(context) {
             @Override
             public void onNext(VersionInformation versionInfomation) {
                 listener.onGetVersionInfo(versionInfomation);

@@ -19,7 +19,7 @@ import java.util.List;
 public class MoreVideoAdapter extends RecyclerView.Adapter<MoreVideoAdapter.VideoHolder> {
     private Context context;
     private List<CourseVideoBean> data = new ArrayList<>();
-
+    private MoreVideoAdapter.OnItemClickListener listener;
 
     public MoreVideoAdapter(Context context) {
         this.context = context;
@@ -43,12 +43,20 @@ public class MoreVideoAdapter extends RecyclerView.Adapter<MoreVideoAdapter.Vide
 
     @Override
     public void onBindViewHolder(VideoHolder holder, int position) {
-        CourseVideoBean bean = data.get(position);
+        final CourseVideoBean bean = data.get(position);
         GlideLoader.getInstance().displayImage(bean.getCover(),holder.cover);
         holder.name.setText(bean.getName());
-        holder.duration.setText("#"+bean.getType_name() );
+        holder.duration.setText(String.format(context.getString(R.string.course_type_and_during),
+                bean.getTypeName(),bean.getDuring()) );
 
-
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(listener != null){
+                    listener.onItemClick(bean.getId());
+                }
+            }
+        });
     }
 
     class VideoHolder extends RecyclerView.ViewHolder {
@@ -64,5 +72,13 @@ public class MoreVideoAdapter extends RecyclerView.Adapter<MoreVideoAdapter.Vide
             name = (TextView) itemView.findViewById(R.id.txt_course_name);
             duration = (TextView) itemView.findViewById(R.id.txt_course_type_duration);
         }
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnItemClickListener{
+        void onItemClick(String videoId);
     }
 }

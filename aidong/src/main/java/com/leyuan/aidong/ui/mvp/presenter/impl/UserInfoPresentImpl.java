@@ -7,7 +7,7 @@ import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.data.DynamicsData;
 import com.leyuan.aidong.entity.data.UserInfoData;
 import com.leyuan.aidong.entity.model.UserCoach;
-import com.leyuan.aidong.http.subscriber.BaseSubscriber;
+import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
@@ -43,7 +43,7 @@ public class UserInfoPresentImpl implements UserInfoPresent {
         this.context = context;
         this.userInfoActivityView = view;
         if (userInfoModel == null) {
-            this.userInfoModel = new UserInfoModelImpl(context);
+            this.userInfoModel = new UserInfoModelImpl();
         }
 
     }
@@ -52,7 +52,7 @@ public class UserInfoPresentImpl implements UserInfoPresent {
         this.context = context;
         this.updateUserInfoActivityView = view;
         if (userInfoModel == null) {
-            this.userInfoModel = new UserInfoModelImpl(context);
+            this.userInfoModel = new UserInfoModelImpl();
         }
     }
 
@@ -60,14 +60,14 @@ public class UserInfoPresentImpl implements UserInfoPresent {
         this.context = context;
         this.dynamicFragmentView = view;
         if (userInfoModel == null) {
-            this.userInfoModel = new UserInfoModelImpl(context);
+            this.userInfoModel = new UserInfoModelImpl();
         }
     }
 
     @Override
     public void getUserInfo(String id) {
         if(App.mInstance.getUser() != null && id.equals(String.valueOf(App.mInstance.getUser().getId()))){
-            userInfoModel.getMyselfUserInfo(new BaseSubscriber<UserInfoData>(context) {
+            userInfoModel.getMyselfUserInfo(new IsLoginSubscriber<UserInfoData>(context) {
                 @Override
                 public void onNext(UserInfoData userInfoData) {
                     if (userInfoData != null && userInfoData.getProfile() != null) {
@@ -76,7 +76,7 @@ public class UserInfoPresentImpl implements UserInfoPresent {
                 }
             });
         }else {
-            userInfoModel.getUserInfo(new BaseSubscriber<UserInfoData>(context) {
+            userInfoModel.getUserInfo(new IsLoginSubscriber<UserInfoData>(context) {
                 @Override
                 public void onNext(UserInfoData userInfoData) {
                     if (userInfoData != null && userInfoData.getProfile() != null) {
@@ -118,7 +118,7 @@ public class UserInfoPresentImpl implements UserInfoPresent {
 
     @Override
     public void commonLoadDynamic(String id) {
-        userInfoModel.getUserDynamic(new BaseSubscriber<DynamicsData>(context) {
+        userInfoModel.getUserDynamic(new IsLoginSubscriber<DynamicsData>(context) {
             @Override
             public void onNext(DynamicsData dynamicsData) {
                 if (dynamicsData != null && dynamicsData.getDynamic() != null &&

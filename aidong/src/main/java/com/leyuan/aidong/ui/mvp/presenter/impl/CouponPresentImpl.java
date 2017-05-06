@@ -7,7 +7,7 @@ import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.entity.data.CouponData;
 import com.leyuan.aidong.entity.user.CouponDataSingle;
-import com.leyuan.aidong.http.subscriber.BaseSubscriber;
+import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
@@ -126,7 +126,7 @@ public class CouponPresentImpl implements CouponPresent {
 
     @Override
     public void exchangeCoupon(String id) {
-        couponModel.exchangeCoupon(new BaseSubscriber<CouponDataSingle>(context) {
+        couponModel.exchangeCoupon(new IsLoginSubscriber<CouponDataSingle>(context) {
             @Override
             public void onNext(CouponDataSingle couponDataSingle) {
                 if (couponDataSingle != null) {

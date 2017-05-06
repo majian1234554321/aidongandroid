@@ -6,14 +6,15 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.widget.ImageView;
 
-import com.bumptech.glide.BitmapRequestBuilder;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.App;
 
+import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+
+import static com.leyuan.aidong.ui.App.context;
 
 /**
  * glide
@@ -31,7 +32,13 @@ public class GlideLoader {
     }
 
     public void displayImage(String imgUrl, ImageView imageView) {
-        displayImageWithDefaultConfig(imgUrl, imageView).into(imageView);
+        Glide.with(getContext(imageView))
+                .load(imgUrl)
+                .thumbnail(0.2f)
+                .centerCrop()
+                .crossFade(300)
+                .placeholder(new ColorDrawable(0xffc6c6c6))
+                .into(imageView);
     }
 
     public void displayCircleImage(String imgUrl, ImageView imageView) {
@@ -39,6 +46,7 @@ public class GlideLoader {
                 .load(imgUrl)
                 .bitmapTransform(new CropCircleTransformation(getContext(imageView)))
                 .placeholder(R.drawable.place_holder_user)
+                .crossFade(300)
                 .into(imageView);
     }
 
@@ -48,6 +56,7 @@ public class GlideLoader {
                 .bitmapTransform(new CenterCrop(getContext(imageView)),
                         new RoundedCornersTransformation(getContext(imageView), DensityUtil.dp2px(getContext(imageView),5), 0))
                 .placeholder(new ColorDrawable(0xffc6c6c6))
+                .crossFade(300)
                 .into(imageView);
     }
 
@@ -57,6 +66,7 @@ public class GlideLoader {
                 .load(resId)
                 .bitmapTransform(new CropCircleTransformation(getContext(imageView)))
                 .placeholder(R.drawable.place_holder_user)
+                .crossFade(300)
                 .into(imageView);
     }
 
@@ -64,21 +74,24 @@ public class GlideLoader {
         Glide.with(getContext(imageView))
                 .load(resId)
                 .asGif()
+                .crossFade(300)
                 .into(imageView);
     }
 
-    private BitmapRequestBuilder displayImageWithDefaultConfig(String imgUrl, ImageView imageView) {
-        return Glide.with(getContext(imageView))
+
+    public void displayImageWithBlur(String imgUrl, ImageView imageView) {
+        Glide.with(getContext(imageView))
                 .load(imgUrl)
-                .asBitmap()
                 .thumbnail(0.2f)
-                .centerCrop()
-                .placeholder(new ColorDrawable(0xffc6c6c6));
+                .placeholder(new ColorDrawable(0xffc6c6c6))
+                // “23”：设置模糊度(在0.0到25.0之间)，默认”25";"4":图片缩放比例,默认“1”
+                .bitmapTransform(new BlurTransformation(getContext(imageView),25,4))
+                .into(imageView);
     }
 
     private Context getContext(@Nullable ImageView imageView) {
         if (imageView == null) {
-            return App.context;
+            return context;
         }
         return imageView.getContext();
     }

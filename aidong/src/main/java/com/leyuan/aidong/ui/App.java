@@ -9,19 +9,25 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
 import com.facebook.stetho.Stetho;
+import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.entity.model.UserCoach;
+import com.leyuan.aidong.entity.user.MineInfoBean;
+import com.leyuan.aidong.http.subscriber.BaseSubscriber;
 import com.leyuan.aidong.module.chat.manager.EmConfigManager;
 import com.leyuan.aidong.module.photopicker.BoxingGlideLoader;
 import com.leyuan.aidong.module.photopicker.BoxingUCrop;
 import com.leyuan.aidong.module.photopicker.boxing.BoxingCrop;
 import com.leyuan.aidong.module.photopicker.boxing.BoxingMediaLoader;
 import com.leyuan.aidong.module.photopicker.boxing.loader.IBoxingMediaLoader;
+import com.leyuan.aidong.ui.mvp.model.impl.UserInfoModelImpl;
 import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.SharePrefUtils;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.VersionManager;
 import com.squareup.leakcanary.LeakCanary;
+
+import java.util.List;
 
 import io.realm.Realm;
 import jp.wasabeef.takt.Seat;
@@ -37,8 +43,8 @@ public class App extends MultiDexApplication {
     private UserCoach user;
     private String token;
 
-    public static double lat;
-    public static double lon;
+    public static double lat = 31.214241;
+    public static double lon = 121.4141;
     public String citySelected;
     public String cityLocation;
     public static String addressStr;
@@ -116,7 +122,6 @@ public class App extends MultiDexApplication {
         mLocationClient.setLocOption(option);
     }
 
-
     public class MyLocationListener implements BDLocationListener {
 
         @Override
@@ -145,6 +150,7 @@ public class App extends MultiDexApplication {
 
     public void exitLogin() {
         setUser(null);
+        saveMineInfoBean(null);
         parseString = null;
     }
 
@@ -223,6 +229,20 @@ public class App extends MultiDexApplication {
         return cityLocation;
     }
 
+    private List<VenuesBean> sportsHistoryList;
+
+    public List<VenuesBean> getSportsHistory() {
+        if (sportsHistoryList == null) {
+            sportsHistoryList = SharePrefUtils.getSportHistory(this);
+        }
+        return sportsHistoryList;
+    }
+
+    public void saveMineInfoBean(MineInfoBean mineInfoBean) {
+        sportsHistoryList = mineInfoBean == null ? null : mineInfoBean.getGyms();
+        SharePrefUtils.saveSportsHistory(this, mineInfoBean);
+    }
+
     public String getParseString() {
         if (getUser() != null) {
             if (parseString == null) {
@@ -261,6 +281,15 @@ public class App extends MultiDexApplication {
         }
         setParseString(parseString);
 
+    }
+
+    public void getMineHistoryInfo() {
+        new UserInfoModelImpl().getMineInfo(new BaseSubscriber<MineInfoBean>(context) {
+            @Override
+            public void onNext(MineInfoBean mineInfoBean) {
+                saveMineInfoBean(mineInfoBean);
+            }
+        });
     }
 
 }

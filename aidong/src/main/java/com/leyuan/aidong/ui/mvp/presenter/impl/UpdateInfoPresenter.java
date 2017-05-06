@@ -3,7 +3,7 @@ package com.leyuan.aidong.ui.mvp.presenter.impl;
 import android.content.Context;
 
 import com.leyuan.aidong.entity.model.result.LoginResult;
-import com.leyuan.aidong.http.subscriber.BaseSubscriber;
+import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.mvp.model.impl.UploadUserModel;
 import com.leyuan.aidong.ui.mvp.view.UpdateInfoViewInterface;
@@ -21,7 +21,7 @@ public class UpdateInfoPresenter {
     }
 
     public void updateInfo(String filePath) {
-        mModel.updateInfo(new BaseSubscriber<LoginResult>(context) {
+        mModel.updateInfo(new IsLoginSubscriber<LoginResult>(context) {
             @Override
             public void onNext(LoginResult loginResult) {
                 if (loginResult != null) {

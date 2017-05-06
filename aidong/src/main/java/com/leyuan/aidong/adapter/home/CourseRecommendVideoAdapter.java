@@ -50,7 +50,8 @@ public class CourseRecommendVideoAdapter extends RecyclerView.Adapter<CourseReco
         final CourseVideoBean bean = data.get(position);
         GlideLoader.getInstance().displayImage(bean.getCover(),holder.imgCover);
         holder.txtCourseName.setText(bean.getName());
-        holder.txtCourseTypeDuration.setText(bean.getDuring());
+        holder.txtCourseTypeDuration.setText(String.format(context.getString
+                (R.string.course_type_and_during),bean.getTypeName(),bean.getDuring()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

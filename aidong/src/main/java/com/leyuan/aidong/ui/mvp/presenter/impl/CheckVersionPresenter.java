@@ -6,7 +6,7 @@ import com.leyuan.aidong.entity.user.VersionResult;
 import com.leyuan.aidong.http.RetrofitHelper;
 import com.leyuan.aidong.http.RxHelper;
 import com.leyuan.aidong.http.api.CheckVersion;
-import com.leyuan.aidong.http.subscriber.BaseSubscriber;
+import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
 
 public class CheckVersionPresenter {
 
@@ -23,7 +23,7 @@ public class CheckVersionPresenter {
     public void CheckVersion() {
         service.checkVersion()
                 .compose(RxHelper.<VersionResult>transform())
-                .subscribe(new BaseSubscriber<VersionResult>(context) {
+                .subscribe(new IsLoginSubscriber<VersionResult>(context) {
                     @Override
                     public void onNext(VersionResult versionResult) {
                         mOnResult.onResult(versionResult);

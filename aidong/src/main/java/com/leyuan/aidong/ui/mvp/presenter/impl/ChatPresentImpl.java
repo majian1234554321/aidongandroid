@@ -3,7 +3,7 @@ package com.leyuan.aidong.ui.mvp.presenter.impl;
 import android.content.Context;
 
 import com.leyuan.aidong.entity.user.UserListResult;
-import com.leyuan.aidong.http.subscriber.BaseSubscriber;
+import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
 import com.leyuan.aidong.ui.mvp.model.impl.ChatModeImpl;
 import com.leyuan.aidong.ui.mvp.view.EmChatView;
 
@@ -26,7 +26,7 @@ public class ChatPresentImpl {
     }
 
     public void getUserInfo(List<String> ids) {
-        mode.getUserInfo(new BaseSubscriber<UserListResult>(context) {
+        mode.getUserInfo(new IsLoginSubscriber<UserListResult>(context) {
             @Override
             public void onNext(UserListResult userInfoData) {
                  emChatView.onGetUserInfo(userInfoData.getProfile());

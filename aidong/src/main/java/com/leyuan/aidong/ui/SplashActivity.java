@@ -65,7 +65,7 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
                 UiManager.activityJump(SplashActivity.this, GuideActivity.class);
             } else if (startingBannerImage != null) {
 
-                AdvertisementActivity.start(SplashActivity.this,startingBannerImage);
+                AdvertisementActivity.start(SplashActivity.this, startingBannerImage);
 //                UiManager.activityJump(SplashActivity.this, AdvertisementActivity.class);
             } else {
                 UiManager.activityJump(SplashActivity.this, MainActivity.class);
@@ -102,9 +102,7 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
         if (App.getInstance().isLogin()) {
             FollowPresent followPresent = new FollowPresentImpl(this);  //获取关注列表
             followPresent.getFollowList();
-
-            MineInfoPresenterImpl infoPresent = new MineInfoPresenterImpl(this);    //初始化运动足记
-            infoPresent.getMineInfo();
+            new MineInfoPresenterImpl(this).getMineInfo();
         }
     }
 

@@ -280,6 +280,7 @@ public class SystemInfoUtils {
 
     /**
      * 获取关注列表
+     *
      * @param context
      * @return
      */
@@ -298,15 +299,16 @@ public class SystemInfoUtils {
 
     /**
      * 判断是否关注
+     *
      * @param context
      * @param uid
      * @return
      */
-    public static boolean isFollow(Context context, String uid){
+    public static boolean isFollow(Context context, String uid) {
         boolean isFollow = false;
         List<UserBean> followList = getFollowList(context);
         for (UserBean userBean : followList) {
-            if(userBean.getId().equals(uid)){
+            if (userBean.getId().equals(uid)) {
                 isFollow = true;
                 break;
             }
@@ -316,6 +318,7 @@ public class SystemInfoUtils {
 
     /**
      * 判断是否关注
+     *
      * @param context
      * @param bean
      * @return
@@ -338,6 +341,7 @@ public class SystemInfoUtils {
 
     /**
      * 添加关注
+     *
      * @param bean
      */
     public static void addFollow(UserBean bean) {
@@ -348,6 +352,7 @@ public class SystemInfoUtils {
 
     /**
      * 删除关注
+     *
      * @param bean
      */
     public static void removeFollow(UserBean bean) {
@@ -368,8 +373,6 @@ public class SystemInfoUtils {
             followList.remove(index);
         }
     }
-
-
 
     /**
      * 存放实体类以及任意类型
@@ -411,4 +414,5 @@ public class SystemInfoUtils {
         }
         return obj;
     }
+
 }

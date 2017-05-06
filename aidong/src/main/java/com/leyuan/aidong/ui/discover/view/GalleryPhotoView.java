@@ -29,7 +29,7 @@ import uk.co.senab.photoview.PhotoView;
  * 用于图片浏览页面的photoview，主要负责展开动画和回退动画的计算
  * <p>
  * <p>
- * 本代码部分参考bm-x photoview(用scroller实现动画)：https://github.com/bm-x/PhotoView
+ * 本代码部分参考bm-x photoview(用scroller实现动画)：https://github.com/bm-x/PhotoView65
  * 本代码大部分参考photoview的实现方式：https://github.com/chrisbanes/PhotoView
  */
 

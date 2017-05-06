@@ -130,9 +130,8 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView, View
     private void initData() {
         present.getHomePopupBanner();
         present.getHomeBanners();
-        present.getSportHistory();
         present.getCourseCategoryList();
-        present.commonLoadData(switcherLayout,TYPE_HOME);
+        present.commonLoadData(switcherLayout, TYPE_HOME);
     }
 
     @Override
@@ -145,6 +144,8 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView, View
     @Override
     public void onResume() {
         super.onResume();
+
+        present.getSportHistory();
         tvLocation.setText(App.getInstance().getSelectedCity());
     }
 
@@ -160,7 +161,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView, View
         public void onLoadNextPage(View view) {
             currPage++;
             if (data != null && data.size() >= pageSize) {
-                present.requestMoreHomeData(recyclerView, pageSize, currPage,TYPE_HOME);
+                present.requestMoreHomeData(recyclerView, pageSize, currPage, TYPE_HOME);
             }
         }
     };

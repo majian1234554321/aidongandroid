@@ -11,4 +11,10 @@ import java.util.List;
 public interface CourseVideoDetailActivityView {
 
     void updateRelateVideo(List<CourseVideoBean> videoBeanList);
+
+    void showLoadingView();
+
+    void showErrorView();
+
+    void showContentView();
 }

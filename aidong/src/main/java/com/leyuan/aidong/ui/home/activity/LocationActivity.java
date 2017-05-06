@@ -12,12 +12,15 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.CityAdapter;
+import com.leyuan.aidong.entity.user.MineInfoBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.HomePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.HomePresentImpl;
+import com.leyuan.aidong.ui.mvp.presenter.impl.MineInfoPresenterImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SystemPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.LocationActivityView;
+import com.leyuan.aidong.ui.mvp.view.MineInfoView;
 import com.leyuan.aidong.ui.mvp.view.SystemView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.ToastGlobal;
@@ -29,13 +32,14 @@ import java.util.List;
  * 城市切换界面
  * Created by song on 2016/8/23.
  */
-public class LocationActivity extends BaseActivity implements LocationActivityView, CityAdapter.OnCitySelectListener, SystemView {
+public class LocationActivity extends BaseActivity implements LocationActivityView, CityAdapter.OnCitySelectListener, SystemView, MineInfoView {
     private SimpleTitleBar titleBar;
     private TextView tvLocation;
     private RecyclerView recyclerView;
     private CityAdapter cityAdapter;
     private ImageView img_selected;
     private SystemPresentImpl systemPresent;
+    private MineInfoPresenterImpl presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,7 @@ public class LocationActivity extends BaseActivity implements LocationActivityVi
         homePresent.getOpenCity();
         systemPresent = new SystemPresentImpl(this);
         systemPresent.setSystemView(this);
+        presenter = new MineInfoPresenterImpl(this, this);
     }
 
     private void initView() {
@@ -85,6 +90,21 @@ public class LocationActivity extends BaseActivity implements LocationActivityVi
 
     @Override
     public void onGetSystemConfiguration(boolean b) {
+        if (App.getInstance().isLogin()) {
+            presenter.getMineInfo();
+        } else {
+            sendBroadcastAndFinish();
+        }
+    }
+
+
+    @Override
+    public void onGetMineInfo(MineInfoBean mineInfoBean) {
+        sendBroadcastAndFinish();
+    }
+
+
+    private void sendBroadcastAndFinish() {
         LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_SELECTED_CITY));
         ToastGlobal.showLong("已切换到" + App.getInstance().getSelectedCity());
         finish();

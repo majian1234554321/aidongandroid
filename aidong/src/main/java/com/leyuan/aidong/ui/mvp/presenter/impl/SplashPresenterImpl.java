@@ -4,7 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 
 import com.leyuan.aidong.entity.model.result.LoginResult;
-import com.leyuan.aidong.http.subscriber.BaseSubscriber;
+import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.mvp.model.impl.LoginModel;
 import com.leyuan.aidong.ui.mvp.view.LoginAutoView;
@@ -33,7 +33,7 @@ public class SplashPresenterImpl {
     }
 
     public void autoLogin() {
-        loginModel.autoLogin(new BaseSubscriber<LoginResult>(context) {
+        loginModel.autoLogin(new IsLoginSubscriber<LoginResult>(context) {
             @Override
             public void onNext(LoginResult user) {
                 App.mInstance.setUser(user.getUser());

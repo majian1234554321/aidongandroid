@@ -345,13 +345,13 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.discover.activity.NewsDetailActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.video.activity.WatchOfficeActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.video.activity.VideoDetailActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.video.activity.LiveCommentActivity"
             android:screenOrientation="portrait" />
@@ -416,7 +416,7 @@
         <activity android:name=".ui.mine.activity.AlbumActivity" />
         <activity
             android:name=".ui.discover.activity.VenuesDetailActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.WeiboResponseActivity"

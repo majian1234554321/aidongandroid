@@ -34,12 +34,12 @@ public class DialogDoubleButton extends BaseDialog {
     }
 
     protected void initData() {
-//        btnCancle.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                dismiss();
-//            }
-//        });
+        btnCancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
 //
 //        btnOk.setOnClickListener(new View.OnClickListener() {
 //            @Override

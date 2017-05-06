@@ -16,8 +16,13 @@ import com.leyuan.aidong.entity.PhotoBrowseInfo;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.discover.view.DotIndicator;
 import com.leyuan.aidong.ui.discover.view.GalleryPhotoView;
+import com.leyuan.aidong.utils.ImageSaveUtils;
 import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.HackyViewPager;
+import com.leyuan.aidong.widget.dialog.BaseDialog;
+import com.leyuan.aidong.widget.dialog.ButtonOkListener;
+import com.leyuan.aidong.widget.dialog.DialogDoubleButton;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -52,7 +57,7 @@ public class PhotoBrowseActivity extends BaseActivity {
         viewBuckets = new LinkedList<>();
         final int photoCount = photoBrowseInfo.getPhotosCount();
         for (int i = 0; i < photoCount; i++) {
-            GalleryPhotoView photoView = new GalleryPhotoView(this);
+            final GalleryPhotoView photoView = new GalleryPhotoView(this);
             photoView.setCleanOnDetachedFromWindow(false);
             photoView.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener() {
                 @Override
@@ -60,6 +65,31 @@ public class PhotoBrowseActivity extends BaseActivity {
                     finish();
                 }
             });
+            photoView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    new DialogDoubleButton(PhotoBrowseActivity.this)
+                            .setContentDesc("点击确定保存图片到相册")
+                            .setBtnOkListener(new ButtonOkListener() {
+                                @Override
+                                public void onClick(BaseDialog dialog) {
+                                    photoView.setDrawingCacheEnabled(true);
+                                    boolean result = ImageSaveUtils.saveImageToGallery(PhotoBrowseActivity.this,
+                                            photoView.getDrawingCache());
+                                    photoView.setDrawingCacheEnabled(false);
+                                    if (result) {
+                                        ToastGlobal.showLong(R.string.save_success);
+                                    } else {
+                                        ToastGlobal.showLong(R.string.save_fail);
+                                    }
+                                    dialog.dismiss();
+                                }
+                            }).show();
+
+                    return true;
+                }
+            });
+
             viewBuckets.add(photoView);
         }
     }

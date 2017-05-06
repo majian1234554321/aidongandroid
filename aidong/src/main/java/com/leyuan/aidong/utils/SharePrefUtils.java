@@ -4,9 +4,13 @@ package com.leyuan.aidong.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.leyuan.aidong.entity.model.UserCoach;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.leyuan.aidong.entity.VenuesBean;
+import com.leyuan.aidong.entity.model.UserCoach;
+import com.leyuan.aidong.entity.user.MineInfoBean;
+
+import java.util.List;
 
 public class SharePrefUtils {
     private static final String SHARE_PREFS_NAME = "dataconfig";
@@ -22,7 +26,7 @@ public class SharePrefUtils {
         String json = gson.toJson(user);
         mSharedPreferences.edit().putString("user", json).commit();
 
-        Logger.i(TAG," mSharedPreferences.edit().putString(\"user\", json).commit();");
+        Logger.i(TAG, " mSharedPreferences.edit().putString(\"user\", json).commit();");
     }
 
     public static UserCoach getUser(Context ctx) {
@@ -41,6 +45,42 @@ public class SharePrefUtils {
         }
         return user;
     }
+
+    public static void saveSportsHistory(Context ctx, MineInfoBean mineInfo) {
+        if (mSharedPreferences == null) {
+            mSharedPreferences = ctx.getSharedPreferences(SHARE_PREFS_NAME,
+                    Context.MODE_PRIVATE);
+        }
+        Gson gson = new Gson();
+        String json = gson.toJson(mineInfo);
+        mSharedPreferences.edit().putString("mineInfo", json).apply();
+
+        Logger.i(TAG, " mSharedPreferences.edit().putString(\"sportHistory\", json).commit();");
+    }
+
+    public static MineInfoBean getMineInfo(Context ctx) {
+        if (mSharedPreferences == null) {
+            mSharedPreferences = ctx.getSharedPreferences(SHARE_PREFS_NAME,
+                    Context.MODE_PRIVATE);
+        }
+        MineInfoBean info = null;
+        String json = mSharedPreferences.getString("mineInfo", null);
+        try {
+            Gson gson = new Gson();
+            info = gson.fromJson(json, MineInfoBean.class);
+        } catch (JsonSyntaxException e) {
+            e.printStackTrace();
+
+        }
+        return info;
+    }
+
+    public static List<VenuesBean> getSportHistory(Context ctx) {
+        MineInfoBean infoBean = getMineInfo(ctx);
+        return infoBean == null ? null : infoBean.getGyms();
+    }
+
+
 //	public static void setLogin(Context ctx, boolean value){
 //		if (mSharedPreferences == null) {
 //			mSharedPreferences = ctx.getSharedPreferences(SHARE_PREFS_NAME,

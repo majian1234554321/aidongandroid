@@ -62,7 +62,7 @@ public class CourseVideoBean {
         this.introduce = introduce;
     }
 
-    public String getType_name() {
+    public String getTypeName() {
         return type_name;
     }
 

@@ -17,6 +17,7 @@ import com.leyuan.aidong.module.thirdpartylogin.ThirdLoginUtils;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.LoginPresenter;
+import com.leyuan.aidong.ui.mvp.presenter.impl.MineInfoPresenterImpl;
 import com.leyuan.aidong.ui.mvp.view.LoginViewInterface;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DialogUtils;
@@ -131,6 +132,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             DialogUtils.showDialog(this, "", false);
             chatLoginManager.login(String.valueOf(user.getId()));
             setResult(RESULT_OK, null);
+            new MineInfoPresenterImpl(this).getMineInfo();
             new FollowPresentImpl(this).getFollowList(); //登录成功后需要获取关注列表
         }
     }

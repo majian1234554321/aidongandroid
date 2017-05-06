@@ -9,7 +9,7 @@ import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.entity.data.DiscoverData;
 import com.leyuan.aidong.entity.data.DiscoverNewsData;
 import com.leyuan.aidong.entity.data.DiscoverUserData;
-import com.leyuan.aidong.http.subscriber.BaseSubscriber;
+import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
@@ -81,7 +81,7 @@ public class DiscoverPresentImpl implements DiscoverPresent {
 
 
     public void pullToRefreshDiscoverData(){
-        discoverModel.getDiscover(new BaseSubscriber<DiscoverData>(context) {
+        discoverModel.getDiscover(new IsLoginSubscriber<DiscoverData>(context) {
             @Override
             public void onNext(DiscoverData discoverData) {
                 if(discoverData != null){

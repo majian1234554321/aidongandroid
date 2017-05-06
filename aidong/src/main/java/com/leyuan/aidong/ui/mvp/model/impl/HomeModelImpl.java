@@ -10,8 +10,8 @@ import com.leyuan.aidong.entity.data.HomeData;
 import com.leyuan.aidong.http.RetrofitHelper;
 import com.leyuan.aidong.http.RxHelper;
 import com.leyuan.aidong.http.api.HomeService;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.mvp.model.HomeModel;
-import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 
 import java.util.List;
@@ -32,15 +32,15 @@ public class HomeModelImpl implements HomeModel {
     }
 
     @Override
-    public void getRecommendList(Subscriber<HomeData> subscriber, int page,String list) {
-        homeService.getRecommendList(page,list)
+    public void getRecommendList(Subscriber<HomeData> subscriber, int page, String list) {
+        homeService.getRecommendList(page, list)
                 .compose(RxHelper.<HomeData>transform())
                 .subscribe(subscriber);
     }
 
     @Override
     public void getBrandDetail(Subscriber<BrandData> subscriber, String id, int page) {
-        homeService.getTypeDetail(id,page)
+        homeService.getTypeDetail(id, page)
                 .compose(RxHelper.<BrandData>transform())
                 .subscribe(subscriber);
     }
@@ -52,12 +52,12 @@ public class HomeModelImpl implements HomeModel {
 
     @Override
     public List<BannerBean> getStoreBanners() {
-        return  SystemInfoUtils.getStoreBanner(context);
+        return SystemInfoUtils.getStoreBanner(context);
     }
 
     @Override
     public List<VenuesBean> getSportsHistory() {
-        return Constant.gyms;
+        return App.getInstance().getSportsHistory();
     }
 
     @Override

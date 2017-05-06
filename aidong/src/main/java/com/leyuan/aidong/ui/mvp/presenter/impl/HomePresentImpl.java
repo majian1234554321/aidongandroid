@@ -83,6 +83,7 @@ public class HomePresentImpl implements HomePresent {
 
     @Override
     public void getHomeBanners() {
+
         homeFragmentView.updateBanner(homeModel.getHomeBanners());
     }
 

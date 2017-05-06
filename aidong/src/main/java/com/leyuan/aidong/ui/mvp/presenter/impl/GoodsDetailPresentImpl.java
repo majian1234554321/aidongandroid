@@ -8,7 +8,7 @@ import com.leyuan.aidong.entity.data.EquipmentDetailData;
 import com.leyuan.aidong.entity.data.FoodDetailData;
 import com.leyuan.aidong.entity.data.NurtureDetailData;
 import com.leyuan.aidong.entity.data.VenuesData;
-import com.leyuan.aidong.http.subscriber.BaseSubscriber;
+import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
@@ -64,7 +64,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                 if(equipmentModel == null){
                     equipmentModel = new EquipmentModelImpl(context);
                 }
-                equipmentModel.getEquipmentDetail(new BaseSubscriber<EquipmentDetailData>(context) {
+                equipmentModel.getEquipmentDetail(new IsLoginSubscriber<EquipmentDetailData>(context) {
                     @Override
                     public void onNext(EquipmentDetailData equipmentDetailData) {
                         if(equipmentDetailData != null && equipmentDetailData.getEquipment()!= null){
@@ -77,7 +77,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                 if(nurtureModel == null){
                     nurtureModel = new NurtureModelImpl(context);
                 }
-                nurtureModel.getNurtureDetail(new BaseSubscriber<NurtureDetailData>(context) {
+                nurtureModel.getNurtureDetail(new IsLoginSubscriber<NurtureDetailData>(context) {
                     @Override
                     public void onNext(NurtureDetailData nurtureDetailData) {
                         if(nurtureDetailData != null && nurtureDetailData.getNurture()!= null) {

@@ -3,7 +3,7 @@ package com.leyuan.aidong.ui.mvp.presenter.impl;
 import android.content.Context;
 
 import com.leyuan.aidong.entity.BaseBean;
-import com.leyuan.aidong.http.subscriber.BaseSubscriber;
+import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
 import com.leyuan.aidong.ui.mvp.model.UserInfoModel;
 import com.leyuan.aidong.ui.mvp.model.impl.UserInfoModelImpl;
 import com.leyuan.aidong.ui.mvp.view.PrivacyActivityView;
@@ -22,7 +22,7 @@ public class PrivacyPresenterImpl {
     public PrivacyPresenterImpl(Context context, PrivacyActivityView view) {
         this.context = context;
         this.view = view;
-        model = new UserInfoModelImpl(context);
+        model = new UserInfoModelImpl();
     }
 
     public boolean getIsHide() {
@@ -30,7 +30,7 @@ public class PrivacyPresenterImpl {
     }
 
     public void hideSelf(final int hide) {
-        model.hideSelf(new BaseSubscriber<BaseBean>(context) {
+        model.hideSelf(new IsLoginSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
                 if (baseBean.getStatus() == Constant.OK) {

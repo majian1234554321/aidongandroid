@@ -3,11 +3,11 @@ package com.leyuan.aidong.ui.mvp.presenter.impl;
 import android.content.Context;
 
 import com.leyuan.aidong.entity.user.MineInfoBean;
-import com.leyuan.aidong.http.subscriber.BaseSubscriber;
+import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.mvp.model.UserInfoModel;
 import com.leyuan.aidong.ui.mvp.model.impl.UserInfoModelImpl;
 import com.leyuan.aidong.ui.mvp.view.MineInfoView;
-import com.leyuan.aidong.utils.Constant;
 
 /**
  * Created by user on 2017/3/23.
@@ -23,25 +23,23 @@ public class MineInfoPresenterImpl {
 
     public MineInfoPresenterImpl(Context context) {
         this.context = context;
-        model = new UserInfoModelImpl(context);
+        model = new UserInfoModelImpl();
     }
 
     public MineInfoPresenterImpl(Context context, MineInfoView listner) {
         this.context = context;
         this.view = listner;
-        model = new UserInfoModelImpl(context);
+        model = new UserInfoModelImpl();
     }
 
     public void getMineInfo() {
-        model.getMineInfo(new BaseSubscriber<MineInfoBean>(context) {
+        model.getMineInfo(new IsLoginSubscriber<MineInfoBean>(context) {
             @Override
             public void onNext(MineInfoBean mineInfoBean) {
-                if(view != null) {
+                if (view != null) {
                     view.onGetMineInfo(mineInfoBean);
                 }
-                if(mineInfoBean.getGyms() != null && !mineInfoBean.getGyms().isEmpty()){
-                    Constant.gyms = mineInfoBean.getGyms();
-                }
+                App.getInstance().saveMineInfoBean(mineInfoBean);
             }
         });
     }

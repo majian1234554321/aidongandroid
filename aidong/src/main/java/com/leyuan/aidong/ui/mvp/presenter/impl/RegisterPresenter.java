@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.entity.user.CheckIdentifyResult;
-import com.leyuan.aidong.http.subscriber.BaseSubscriber;
+import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.mvp.model.RegisterModelInterface;
 import com.leyuan.aidong.ui.mvp.model.impl.RegisterModel;
@@ -30,7 +30,7 @@ public class RegisterPresenter implements RegisterPresenterInterface {
 
     @Override
     public void regitserIdentify(String mobile) {
-        mRegisterModelInterface.regitserIdentify(new BaseSubscriber<UserCoach>(mContext) {
+        mRegisterModelInterface.regitserIdentify(new IsLoginSubscriber<UserCoach>(mContext) {
 
             @Override
             public void onError(Throwable e) {
@@ -50,7 +50,7 @@ public class RegisterPresenter implements RegisterPresenterInterface {
     }
 
     public void foundIdentify(String mobile) {
-        mRegisterModelInterface.foundIdentify(new BaseSubscriber<UserCoach>(mContext) {
+        mRegisterModelInterface.foundIdentify(new IsLoginSubscriber<UserCoach>(mContext) {
 
             @Override
             public void onStart() {
@@ -77,7 +77,7 @@ public class RegisterPresenter implements RegisterPresenterInterface {
 
     @Override
     public void checkIdentify(String token, String code, String password) {
-        mRegisterModelInterface.checkIdentify(new BaseSubscriber<CheckIdentifyResult>(mContext) {
+        mRegisterModelInterface.checkIdentify(new IsLoginSubscriber<CheckIdentifyResult>(mContext) {
             @Override
             public void onStart() {
                 super.onStart();
@@ -106,7 +106,7 @@ public class RegisterPresenter implements RegisterPresenterInterface {
 
     @Override
     public void checkIdentifyBinding(String captcha) {
-        mRegisterModelInterface.checkIdentify(new BaseSubscriber<CheckIdentifyResult>(mContext) {
+        mRegisterModelInterface.checkIdentify(new IsLoginSubscriber<CheckIdentifyResult>(mContext) {
             @Override
             public void onStart() {
                 super.onStart();
@@ -135,7 +135,7 @@ public class RegisterPresenter implements RegisterPresenterInterface {
     @Override
     public void bindingCaptcha(String mobile) {
         bindingMobile = mobile;
-        mRegisterModelInterface.bindingCaptcha(new BaseSubscriber<UserCoach>(mContext) {
+        mRegisterModelInterface.bindingCaptcha(new IsLoginSubscriber<UserCoach>(mContext) {
 
             @Override
             public void onStart() {
@@ -162,7 +162,7 @@ public class RegisterPresenter implements RegisterPresenterInterface {
 
     @Override
     public void unbindingCaptcha(String mobile) {
-        mRegisterModelInterface.unbindingCaptcha(new BaseSubscriber<UserCoach>(mContext) {
+        mRegisterModelInterface.unbindingCaptcha(new IsLoginSubscriber<UserCoach>(mContext) {
 
             @Override
             public void onStart() {
@@ -190,7 +190,7 @@ public class RegisterPresenter implements RegisterPresenterInterface {
 
     @Override
     public void checkCaptchaImage(final String mobile, String captcha) {
-        mRegisterModelInterface.checkCaptchaImage(new BaseSubscriber<UserCoach>(mContext) {
+        mRegisterModelInterface.checkCaptchaImage(new IsLoginSubscriber<UserCoach>(mContext) {
             @Override
             public void onStart() {
                 super.onStart();

@@ -3,7 +3,7 @@ package com.leyuan.aidong.ui.mvp.presenter.impl;
 import android.content.Context;
 
 import com.leyuan.aidong.entity.model.result.LoginResult;
-import com.leyuan.aidong.http.subscriber.BaseSubscriber;
+import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.mvp.model.impl.FastLoginModel;
 import com.leyuan.aidong.ui.mvp.view.FastLoginViewInterface;
@@ -21,7 +21,7 @@ public class FastLoginPresenter {
     }
 
     public void getIdentify(String mobile) {
-        model.getIdentify(new BaseSubscriber<LoginResult>(context) {
+        model.getIdentify(new IsLoginSubscriber<LoginResult>(context) {
             @Override
             public void onNext(LoginResult loginResult) {
                 viewInterface.onGetIdentify(true);
@@ -36,7 +36,7 @@ public class FastLoginPresenter {
     }
 
     public void login(String mobile, String code) {
-        model.fastLogin(new BaseSubscriber<LoginResult>(context) {
+        model.fastLogin(new IsLoginSubscriber<LoginResult>(context) {
             @Override
             public void onNext(LoginResult loginResult) {
                 if(loginResult!=null && loginResult.getUser()!=null){

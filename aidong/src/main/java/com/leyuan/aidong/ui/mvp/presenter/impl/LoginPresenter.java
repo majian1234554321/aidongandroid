@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.leyuan.aidong.entity.model.result.LoginResult;
-import com.leyuan.aidong.http.subscriber.BaseSubscriber;
+import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
 import com.leyuan.aidong.module.thirdpartylogin.ThirdLoginUtils;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.mvp.model.impl.LoginModel;
@@ -44,7 +44,7 @@ public class LoginPresenter implements LoginPresenterInterface {
 
     @Override
     public void login(String accout, String password) {
-        loginModel.login(new BaseSubscriber<LoginResult>(context) {
+        loginModel.login(new IsLoginSubscriber<LoginResult>(context) {
             @Override
             public void onCompleted() {
 
@@ -74,7 +74,7 @@ public class LoginPresenter implements LoginPresenterInterface {
 
     @Override
     public void loginSns(String sns, String access) {
-        loginModel.loginSns(new BaseSubscriber<LoginResult>(context) {
+        loginModel.loginSns(new IsLoginSubscriber<LoginResult>(context) {
 
             @Override
             public void onStart() {
@@ -110,7 +110,7 @@ public class LoginPresenter implements LoginPresenterInterface {
 
     @Override
     public void autoLogin() {
-        loginModel.autoLogin(new BaseSubscriber<LoginResult>(context) {
+        loginModel.autoLogin(new IsLoginSubscriber<LoginResult>(context) {
             @Override
             public void onNext(LoginResult user) {
                 App.mInstance.setUser(user.getUser());

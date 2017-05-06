@@ -1,7 +1,5 @@
 package com.leyuan.aidong.ui.mvp.model.impl;
 
-import android.content.Context;
-
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.data.DynamicsData;
 import com.leyuan.aidong.entity.data.UserInfoData;
@@ -24,7 +22,7 @@ import rx.schedulers.Schedulers;
 public class UserInfoModelImpl implements UserInfoModel {
     private UserInfoService userInfoService;
 
-    public UserInfoModelImpl(Context context) {
+    public UserInfoModelImpl() {
         userInfoService = RetrofitHelper.createApi(UserInfoService.class);
     }
 
@@ -94,7 +92,6 @@ public class UserInfoModelImpl implements UserInfoModel {
                 .compose(RxHelper.<MineInfoBean>transform())
                 .subscribe(subscriber);
     }
-
 
 
     @Override

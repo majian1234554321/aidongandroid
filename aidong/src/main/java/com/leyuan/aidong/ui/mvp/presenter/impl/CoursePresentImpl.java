@@ -13,7 +13,7 @@ import com.leyuan.aidong.entity.data.CouponData;
 import com.leyuan.aidong.entity.data.CourseData;
 import com.leyuan.aidong.entity.data.CourseVideoData;
 import com.leyuan.aidong.entity.data.PayOrderData;
-import com.leyuan.aidong.http.subscriber.BaseSubscriber;
+import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
@@ -283,7 +283,15 @@ public class CoursePresentImpl implements CoursePresent{
         if (courseModel == null) {
             courseModel = new CourseModelImpl(context);
         }
-        courseModel.getCourseVideo(new BaseSubscriber<CourseVideoData>(context) {
+        courseModel.getCourseVideo(new IsLoginSubscriber<CourseVideoData>(context) {
+
+            @Override
+            public void onStart() {
+                super.onStart();
+                videoDetailActivityView.showLoadingView();
+            }
+
+
             @Override
             public void onNext(CourseVideoData courseVideoData) {
                 List<CourseVideoBean> courseVideoBeanList = new ArrayList<>();
@@ -293,7 +301,16 @@ public class CoursePresentImpl implements CoursePresent{
                 if(!courseVideoBeanList.isEmpty()){
                     videoDetailActivityView.updateRelateVideo(courseVideoBeanList);
                 }
+
+                videoDetailActivityView.showContentView();
             }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                videoDetailActivityView.showErrorView();
+            }
+
         },"relation",id,1,videoId);
     }
 
@@ -302,7 +319,7 @@ public class CoursePresentImpl implements CoursePresent{
         if (courseModel == null) {
             courseModel = new CourseModelImpl(context);
         }
-        courseModel.getCourseVideo(new BaseSubscriber<CourseVideoData>(context) {
+        courseModel.getCourseVideo(new IsLoginSubscriber<CourseVideoData>(context) {
             @Override
             public void onNext(CourseVideoData courseVideoData) {
                 List<CourseVideoBean> courseVideoBeanList = new ArrayList<>();

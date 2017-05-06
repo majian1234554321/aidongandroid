@@ -3,7 +3,7 @@ package com.leyuan.aidong.ui.mvp.presenter.impl;
 import android.content.Context;
 
 import com.leyuan.aidong.entity.BaseBean;
-import com.leyuan.aidong.http.subscriber.BaseSubscriber;
+import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.mvp.model.impl.ChangePasswordModel;
 import com.leyuan.aidong.ui.mvp.view.ChangePasswordViewInterface;
@@ -23,7 +23,7 @@ public class ChangePasswordPresenter {
     }
 
     public void changePassword(String password, String new_password, String re_passsword) {
-        mModel.changePassword(new BaseSubscriber<BaseBean>(context) {
+        mModel.changePassword(new IsLoginSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
                 if (baseBean.getStatus() == Constant.OK) {

@@ -30,7 +30,7 @@ import java.util.List;
  * 相关视频
  * Created by song on 2017/4/21.
  */
-public class RelatedVideoActivity extends BaseActivity implements RelatedVideoActivityView, SwipeRefreshLayout.OnRefreshListener {
+public class RelatedVideoActivity extends BaseActivity implements RelatedVideoActivityView, SwipeRefreshLayout.OnRefreshListener, MoreVideoAdapter.OnItemClickListener {
     private ImageView ivBack;
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
@@ -81,6 +81,7 @@ public class RelatedVideoActivity extends BaseActivity implements RelatedVideoAc
                 finish();
             }
         });
+        adapter.setOnItemClickListener(this);
     }
 
     @Override
@@ -114,11 +115,18 @@ public class RelatedVideoActivity extends BaseActivity implements RelatedVideoAc
 
     @Override
     public void showEmptyView() {
-        switcherLayout.showEmptyLayout();
+        View view = View.inflate(this,R.layout.empty_relate_video,null);
+        switcherLayout.addCustomView(view,"empty");
+        switcherLayout.showCustomLayout("empty");
     }
 
     @Override
     public void showEndFooterView() {
         RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
+    }
+
+    @Override
+    public void onItemClick(String videoId) {
+        CourseVideoDetailActivity.start(this,id,videoId);
     }
 }

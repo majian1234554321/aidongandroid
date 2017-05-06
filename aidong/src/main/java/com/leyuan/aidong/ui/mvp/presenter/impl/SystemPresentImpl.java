@@ -128,14 +128,26 @@ public class SystemPresentImpl implements SystemPresent {
                         gymList.add(0, allBean);
                     }
                 }
-
-
                 SystemInfoUtils.putSystemInfoBean(context, systemBean, SystemInfoUtils.KEY_SYSTEM);  //保存到本地 为NULL时不会保存 需修改
+
                 if (systemView != null) {
                     systemView.onGetSystemConfiguration(true);
                 }
 
-                LogAidong.i("mLocationClient   SystemInfoUtils.putSystemInfoBean");
+//                UserInfoModel model = new UserInfoModelImpl();
+//                model.getMineInfo(new ProgressSubscriber<MineInfoBean>(context) {
+//                    @Override
+//                    public void onNext(MineInfoBean mineInfoBean) {
+//
+//
+//                        if (systemView != null) {
+//                            Constant.gyms = mineInfoBean.getGyms();
+//                            Constant.activity = mineInfoBean.getActivity();
+//                            systemView.onGetSystemConfiguration(true);
+//                        }
+//                    }
+//                });
+//                LogAidong.i("mLocationClient   SystemInfoUtils.putSystemInfoBean");
             }
         }, os);
     }

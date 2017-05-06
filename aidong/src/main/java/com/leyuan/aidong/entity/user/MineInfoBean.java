@@ -20,6 +20,8 @@ public class MineInfoBean {
     int cart_items_count;//购物车数量
     String views_count;//热度
 
+    private String acivity;
+
     public int getOrders_count() {
         return orders_count;
     }
@@ -101,5 +103,13 @@ public class MineInfoBean {
 
     public void setGyms(List<VenuesBean> gyms) {
         this.gyms = gyms;
+    }
+
+    public String getActivity() {
+        return acivity;
+    }
+
+    public void setActivity(String activity) {
+        this.acivity = activity;
     }
 }

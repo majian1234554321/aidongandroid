@@ -9,7 +9,7 @@ import com.leyuan.aidong.entity.OrderBean;
 import com.leyuan.aidong.entity.OrderDetailBean;
 import com.leyuan.aidong.entity.data.OrderData;
 import com.leyuan.aidong.entity.data.OrderDetailData;
-import com.leyuan.aidong.http.subscriber.BaseSubscriber;
+import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
@@ -70,7 +70,7 @@ public class OrderPresentImpl implements OrderPresent {
 
     @Override
     public void commonLoadData(final String list) {
-        orderModel.getOrders(new BaseSubscriber<OrderData>(context) {
+        orderModel.getOrders(new IsLoginSubscriber<OrderData>(context) {
             @Override
             public void onNext(OrderData orderData) {
                 if (orderData != null && orderData.getOrder() != null) {
@@ -138,7 +138,7 @@ public class OrderPresentImpl implements OrderPresent {
 
     @Override
     public void getOrderDetail(String id) {
-        orderModel.getOrderDetail(new BaseSubscriber<OrderDetailData>(context) {
+        orderModel.getOrderDetail(new IsLoginSubscriber<OrderDetailData>(context) {
             @Override
             public void onNext(OrderDetailData orderDetailData) {
                 OrderDetailBean orderDetailBean = null;
@@ -218,7 +218,7 @@ public class OrderPresentImpl implements OrderPresent {
 
     @Override
     public void feedbackOrder(String id, String type, String[] items, String content, String[] image, String address) {
-        orderModel.feedbackOrder(new BaseSubscriber<BaseBean>(context) {
+        orderModel.feedbackOrder(new IsLoginSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
                 if (orderFeedbackView != null) {
