@@ -25,6 +25,7 @@
                 android:layout_marginTop="13dp"
                 android:layout_marginLeft="27dp"
                 android:textSize="13dp"
+                android:layout_centerHorizontal="true"
                 android:textColor="@color/black"
                 android:text="111111111111"
                 android:ellipsize="end"/>
@@ -36,6 +37,7 @@
                 android:layout_below="@id/txt_store_name"
                 android:layout_marginLeft="28dp"
                 android:textSize="10dp"
+                android:layout_centerHorizontal="true"
                 android:textColor="@color/c3"
                 android:text="111111111111" />
         </RelativeLayout>

@@ -26,6 +26,7 @@ import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.FastBlur;
 import com.leyuan.aidong.utils.LiveDateFilterUtil;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.media.TextViewPrintly;
 
 
@@ -144,11 +145,10 @@ public class LiveDetailActivity extends BaseActivity implements View.OnClickList
 
         int startTime = LiveDateFilterUtil.compareTime(info.getLiveBeginTime());
         int endTime = LiveDateFilterUtil.compareTime(info.getLiveEndTime());
-
+        Logger.i("time", "startTime = " + startTime + ", endTime = " + endTime);
         if (startTime > 0) {
             mHandler.sendEmptyMessageDelayed(LIVE_BEGIN, startTime * 1000);
-        }
-        if (endTime > 0) {
+        } else if (endTime > 0) {
             mHandler.sendEmptyMessageDelayed(LIVE_ENDED, endTime * 1000);
         }
     }

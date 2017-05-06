@@ -23,6 +23,7 @@ import com.leyuan.aidong.ui.MainActivity;
 import com.leyuan.aidong.ui.discover.activity.VenuesDetailActivity;
 import com.leyuan.aidong.ui.home.activity.CourseCategoryActivity;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,6 +84,10 @@ public class HomeHeaderView extends RelativeLayout{
         banner.setOnItemClickListener(new BGABanner.OnItemClickListener() {
             @Override
             public void onBannerItemClick(BGABanner banner, View view, Object model, int position) {
+                BannerBean bannerBean = (BannerBean) model;
+                Logger.i("bannerBean",bannerBean.toString());
+
+
                 ((MainActivity)context).toTargetActivity((BannerBean)model);
             }
         });

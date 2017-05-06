@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/iv_image"
                 android:layout_centerHorizontal="true"
-                android:text="课程分类"
+                android:text="全部类型"
                 android:textColor="@color/c3"
                 android:textSize="13sp" />
 

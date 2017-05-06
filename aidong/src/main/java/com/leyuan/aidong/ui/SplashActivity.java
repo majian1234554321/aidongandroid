@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 
 import com.hyphenate.chat.EMClient;
 import com.leyuan.aidong.entity.VersionInformation;
+import com.leyuan.aidong.ui.home.AdvertisementActivity;
 import com.leyuan.aidong.ui.mvp.presenter.FollowPresent;
 import com.leyuan.aidong.ui.mvp.presenter.SystemPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
@@ -17,7 +18,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.SplashPresenterImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SystemPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VersionPresenterImpl;
 import com.leyuan.aidong.ui.mvp.view.LoginAutoView;
-import com.leyuan.aidong.ui.mvp.view.SystemView;
+import com.leyuan.aidong.ui.mvp.view.SplashView;
 import com.leyuan.aidong.ui.mvp.view.VersionViewListener;
 import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.PermissionManager;
@@ -32,12 +33,14 @@ import com.leyuan.aidong.widget.dialog.DialogDoubleButton;
 import com.leyuan.aidong.widget.dialog.DialogSingleButton;
 
 //todo fix
-public class SplashActivity extends BaseActivity implements VersionViewListener, LoginAutoView, SystemView {
+public class SplashActivity extends BaseActivity implements VersionViewListener, LoginAutoView, SplashView {
 
     private static final int MESSAGE = 1;
     private static final int DURATION = 2000;
     private static final String OS = "android";
     private boolean isFirstEnter = true;
+    private static int httpRequestIndex;
+    private String startingBannerImage;
 
     private SplashPresenterImpl splashPresenter;
     private VersionPresenterImpl versionPresenter;
@@ -60,12 +63,17 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
         public void checkOver() {
             if (isFirstEnter) {
                 UiManager.activityJump(SplashActivity.this, GuideActivity.class);
+            } else if (startingBannerImage != null) {
+
+                AdvertisementActivity.start(SplashActivity.this,startingBannerImage);
+//                UiManager.activityJump(SplashActivity.this, AdvertisementActivity.class);
             } else {
                 UiManager.activityJump(SplashActivity.this, MainActivity.class);
             }
             finish();
         }
     };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +91,7 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
         versionPresenter.getVersionInfo();
 
         SystemPresent systemPresent = new SystemPresentImpl(this);
-        systemPresent.setSystemView(this);
+        systemPresent.setSplashView(this);
         systemPresent.getSystemInfo(OS);
         LogAidong.i("mLocationClient   systemPresent.getSystemInfo(OS);");
 
@@ -102,6 +110,7 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
 
     @Override
     public void onGetVersionInfo(VersionInformation versionInfomation) {
+        httpRequestIndex++;
         this.versionInfomation = versionInfomation;
         if (versionInfomation != null && VersionManager.shouldUpdate(versionInfomation.getVersion(), this)) {
             showUpdateDialog(versionInfomation);
@@ -120,13 +129,14 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
     public void onAutoLoginResult(boolean success) {
         handler.removeCallbacksAndMessages(null);
         handler.sendEmptyMessageDelayed(MESSAGE, DURATION);
-
     }
 
     @Override
-    public void onGetSystemConfiguration(boolean b) {
-
+    public void onGetStartingBanner(String image) {
+        this.startingBannerImage = image;
+        httpRequestIndex++;
     }
+
 
     private void showUpdateDialog(VersionInformation versionInformation) {
         if (versionInformation.isUpdate_force() || VersionManager.mustUpdate(versionInformation.getVersion(), this)) {
@@ -196,6 +206,8 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
     protected void onDestroy() {
         super.onDestroy();
         handler.removeCallbacksAndMessages(null);
+        httpRequestIndex = 0;
     }
+
 
 }

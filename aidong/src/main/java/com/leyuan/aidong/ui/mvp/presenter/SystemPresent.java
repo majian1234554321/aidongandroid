@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.mvp.presenter;
 
+import com.leyuan.aidong.ui.mvp.view.SplashView;
 import com.leyuan.aidong.ui.mvp.view.SystemView;
 
 /**
@@ -9,6 +10,8 @@ import com.leyuan.aidong.ui.mvp.view.SystemView;
 public interface SystemPresent {
 
     void setSystemView(SystemView systemView);
+
+    void setSplashView(SplashView splashView);
 
     /**
      * 获取系统配置信息

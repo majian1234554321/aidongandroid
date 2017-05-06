@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.discover.view;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -306,7 +307,7 @@ public class VenuesFilterView extends LinearLayout implements View.OnClickListen
         }
 
         for (int i = 0; i < brandList.size(); i++) {
-            if (brandList.get(i).getId().equals(id)) {
+            if (TextUtils.equals(brandList.get(i).getId(), id)) {
                 if (brandAdapter == null) {
                     brandAdapter = new CategoryListAdapter(context, brandList);
                     leftListView.setAdapter(brandAdapter);

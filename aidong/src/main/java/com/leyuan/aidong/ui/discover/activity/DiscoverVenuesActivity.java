@@ -118,7 +118,10 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
     private void refreshData() {
         currPage = 1;
         RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-        venuesPresent.pullToRefreshData(brand_id, landmark);
+
+
+        venuesPresent.commonLoadData(switcherLayout, brand_id, landmark);
+//        venuesPresent.pullToRefreshData(brand_id, landmark);
     }
 
     private void initRecyclerView() {

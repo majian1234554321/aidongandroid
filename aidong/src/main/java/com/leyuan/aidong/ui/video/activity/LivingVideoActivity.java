@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.video.LiveVideoInfo;
+import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.LiveDateFilterUtil;
@@ -30,6 +31,7 @@ public class LivingVideoActivity extends BaseActivity implements View.OnClickLis
     private ImageView img_close, img_share, img_special, img_deep_into, img_celebrity;
     LinearLayout layout_live_end, layout_refresh;
     private boolean mBackPressed;
+    private SharePopupWindow sharePopupWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +116,8 @@ public class LivingVideoActivity extends BaseActivity implements View.OnClickLis
         img_deep_into.setOnClickListener(this);
         img_celebrity.setOnClickListener(this);
         layout_refresh.setOnClickListener(this);
+
+
     }
 
     @Override
@@ -153,9 +157,11 @@ public class LivingVideoActivity extends BaseActivity implements View.OnClickLis
             case R.id.img_share:
                 if (mLiveVideoInfo != null) {
                     String url = ConstantUrl.LIVE_SHARE + mLiveVideoInfo.getLiveId();
-//                    SharePopToolVideo sharePopTool = new SharePopToolVideo(LivingVideoActivity.this, ((ViewGroup) findViewById(android.R.id.content)).getChildAt(0),
-//                            url, mController, mLiveVideoInfo.getLiveCover(), mLiveVideoInfo.getLiveContent(), mLiveVideoInfo.getLiveName());
-//                    sharePopTool.showChoseBox();
+                    if (sharePopupWindow == null) {
+                        sharePopupWindow = new SharePopupWindow(this);
+                    }
+                    sharePopupWindow.showAtBottom(mLiveVideoInfo.getLiveName(), mLiveVideoInfo.getLiveContent()
+                            , mLiveVideoInfo.getLiveCover(), url);
                 }
                 break;
             case R.id.img_special:

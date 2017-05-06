@@ -55,7 +55,7 @@ public class VenuesAdapter extends RecyclerView.Adapter<VenuesAdapter.VenuesHold
     @Override
     public void onBindViewHolder(VenuesHolder holder, int position) {
         final VenuesBean bean = data.get(position);
-        GlideLoader.getInstance().displayImage(bean.getBrandLogo(), holder.cover);
+        GlideLoader.getInstance().displayRoundImage(bean.getBrandLogo(), holder.cover);
         holder.name.setText(bean.getName());
         holder.address.setText(bean.getAddress());
         holder.distance.setText(String.format("%.2f", (bean.getDistance() / 1000)) + "km");

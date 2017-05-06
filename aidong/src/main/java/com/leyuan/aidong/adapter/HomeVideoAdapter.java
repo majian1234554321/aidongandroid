@@ -3,6 +3,7 @@ package com.leyuan.aidong.adapter;
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,7 +20,6 @@ import com.leyuan.aidong.entity.video.LiveVideoListResult;
 import com.leyuan.aidong.entity.video.LiveVideoSoonInfo;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.LiveDateFilterUtil;
-import com.leyuan.aidong.widget.MyListView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -156,11 +156,16 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
                 LiveVideoSoonInfo info = liveDateArray.get(i - 1);
 
                 holder.txt_live_date.setText("" + LiveDateFilterUtil.compareDate(info.getTime()));
+                holder.list_live.setLayoutManager(new LinearLayoutManager(context));
 
-
-                LiveVideoDataAdapter adapter = new LiveVideoDataAdapter(context, info.getLiveVideoList(), mOnSoonLiveVideoClickListener, true);
+                LiveVideoMoreAdapter adapter = new LiveVideoMoreAdapter(context, info.getLiveVideoList(), mOnSoonLiveVideoClickListener);
                 holder.list_live.setAdapter(adapter);
-                liveVideoDataAdapters.add(adapter);
+
+
+
+//                LiveVideoDataAdapter adapter = new LiveVideoDataAdapter(context, info.getLiveVideoList(), mOnSoonLiveVideoClickListener, true);
+//                holder.list_live.setAdapter(adapter);
+//                liveVideoDataAdapters.add(adapter);
 
 
 
@@ -277,12 +282,12 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
 
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         FrameLayout layout_living;
         RelativeLayout layout_single_living, rel_living;
         //        RecyclerView recycler_living;
         ViewPager viewPager_living;
-        MyListView list_live;
+        public RecyclerView list_live;
         ImageView img_living_bg, img_living, img_special, img_deep_into, img_celebrity, img_default_none_live, img_play_back;
         TextView txt_author, txt_course, txt_viewers, txt_live_date;
 
@@ -292,7 +297,7 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
             viewPager_living = (ViewPager) itemView.findViewById(R.id.viewPager_living);
             layout_single_living = (RelativeLayout) itemView.findViewById(R.id.layout_single_living);
             rel_living = (RelativeLayout) itemView.findViewById(R.id.rel_living);
-            list_live = (MyListView) itemView.findViewById(R.id.list_live);
+            list_live = (RecyclerView) itemView.findViewById(R.id.list_live);
             img_living_bg = (ImageView) itemView.findViewById(R.id.img_living_bg);
             img_living = (ImageView) itemView.findViewById(R.id.img_living);
             img_special = (ImageView) itemView.findViewById(R.id.img_special);

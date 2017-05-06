@@ -109,9 +109,10 @@ public class LiveDateFilterUtil {
 
         try {
             Date date = SecondFormat.parse(time);
-            int diff = (int) ((date.getTime() - sysSecond) / 1000);
 
-            return diff;
+//            Logger.i("time", "time = " + time + ", data time = " + date.getTime() + ", current = " + sysSecond);
+
+            return (int) ((date.getTime() - sysSecond) / 1000);
 
         } catch (ParseException e) {
             e.printStackTrace();

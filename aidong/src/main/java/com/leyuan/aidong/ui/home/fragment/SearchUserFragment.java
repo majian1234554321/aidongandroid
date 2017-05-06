@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.home.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,11 +11,17 @@ import android.view.ViewGroup;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.UserAdapter;
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.UserBean;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BasePageFragment;
+import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.SearchPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SearchPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.SearchUserFragmentView;
+import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.SystemInfoUtils;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -28,7 +35,7 @@ import java.util.List;
  * 用户搜索结果
  * Created by song on 2016/9/12.
  */
-public class SearchUserFragment extends BasePageFragment implements SearchUserFragmentView {
+public class SearchUserFragment extends BasePageFragment implements SearchUserFragmentView, UserAdapter.FollowListener {
 
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
@@ -42,6 +49,8 @@ public class SearchUserFragment extends BasePageFragment implements SearchUserFr
     private SearchPresent present;
     private String keyword;
     private boolean needLoad;
+
+    private int position;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
@@ -92,6 +101,7 @@ public class SearchUserFragment extends BasePageFragment implements SearchUserFr
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(wrapperAdapter);
         recyclerView.addOnScrollListener(onScrollListener);
+        userAdapter.setFollowListener(this);
     }
 
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
@@ -138,5 +148,42 @@ public class SearchUserFragment extends BasePageFragment implements SearchUserFr
         data.clear();
         this.keyword = keyword;
         present.commonUserData(switcherLayout,keyword);
+    }
+
+    @Override
+    public void onFollowClicked(int position) {
+        this.position = position;
+        if(App.mInstance.isLogin()){
+            UserBean userBean = data.get(position);
+            if(SystemInfoUtils.isFollow(getContext(),userBean)){
+                present.cancelFollow(userBean.getId());
+            }else {
+                present.addFollow(userBean.getId());
+            }
+        }else {
+            startActivityForResult(new Intent(getContext(), LoginActivity.class), Constant.REQUEST_LOGIN);
+        }
+    }
+
+    @Override
+    public void addFollowResult(BaseBean baseBean) {
+        if(baseBean.getStatus() == Constant.OK){
+            SystemInfoUtils.addFollow(data.get(position));
+            userAdapter.notifyDataSetChanged();
+            ToastGlobal.showLong(R.string.follow_success);
+        }else {
+            ToastGlobal.showLong(R.string.follow_fail);
+        }
+    }
+
+    @Override
+    public void cancelFollowResult(BaseBean baseBean) {
+        if(baseBean.getStatus() == Constant.OK){
+            SystemInfoUtils.removeFollow(data.get(position));
+            userAdapter.notifyDataSetChanged();
+            ToastGlobal.showLong(R.string.cancel_follow_success);
+        }else {
+            ToastGlobal.showLong(R.string.cancel_follow_fail);
+        }
     }
 }

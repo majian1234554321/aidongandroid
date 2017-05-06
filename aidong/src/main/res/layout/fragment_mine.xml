@@ -388,6 +388,7 @@
                 app:txt_name="收货地址" />
 
             <com.leyuan.aidong.widget.AidongMineItem
+                android:visibility="gone"
                 android:id="@+id/item_recommend_friend"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

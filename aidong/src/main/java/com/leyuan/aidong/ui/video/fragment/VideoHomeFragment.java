@@ -31,6 +31,9 @@ import com.leyuan.aidong.ui.video.activity.LivingVideoActivity;
 import com.leyuan.aidong.ui.video.activity.VideoDetailActivity;
 import com.leyuan.aidong.ui.video.activity.WatchOfficeActivity;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.Logger;
+
+import java.util.ArrayList;
 
 
 public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.OnLivingVideoCLickListener,
@@ -52,8 +55,20 @@ public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.
             super.handleMessage(msg);
             switch (msg.what) {
                 case COUNT_DOWN:
-                    adapter.notifyCountDown();
-//                    adapter.notifyDataSetChanged();
+//                    adapter.notifyCountDown();
+                    for (int i = 1; i < moreLiveNumber+1; i++) {
+                        RecyclerView.ViewHolder viewHolder = recyclerView.findViewHolderForAdapterPosition(i);
+                        if (viewHolder != null && viewHolder instanceof HomeVideoAdapter.ViewHolder) {
+                            HomeVideoAdapter.ViewHolder holder = (HomeVideoAdapter.ViewHolder) viewHolder;
+                            holder.list_live.getAdapter().notifyDataSetChanged();
+                        }
+                    }
+
+
+                    Logger.i("VideoHomeFragment", "COUNT_DOWN :    adapter.notifyItemRangeChanged");
+
+//                    adapter.notifyItemRangeChanged(1, moreLiveNumber);
+                    mHandler.removeCallbacksAndMessages(null);
                     mHandler.sendEmptyMessageDelayed(COUNT_DOWN, 1000);
                     break;
             }
@@ -66,6 +81,7 @@ public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.
 //            onRefresh();
         }
     };
+    private int moreLiveNumber;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -175,8 +191,10 @@ public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.
     public void onGetLiveHomeData(LiveHomeResult.LiveHome liveHome) {
         swipeRefreshLayout.setRefreshing(false);
         if (liveHome != null) {
-            adapter.refreshData(liveHome.getNow(),
-                    LiveVideoSoonInfo.createMoreLive(liveHome.getMore()), liveHome.getEmpty());
+            ArrayList<LiveVideoSoonInfo> liveMoreList = LiveVideoSoonInfo.createMoreLive(liveHome.getMore());
+            moreLiveNumber = liveMoreList.size();
+            adapter.refreshData(liveHome.getNow(), liveMoreList
+                    , liveHome.getEmpty());
             mHandler.removeCallbacksAndMessages(null);
             mHandler.sendEmptyMessageDelayed(COUNT_DOWN, 1000);
         }

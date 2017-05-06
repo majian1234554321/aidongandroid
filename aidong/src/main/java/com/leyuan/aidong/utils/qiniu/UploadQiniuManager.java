@@ -37,10 +37,10 @@ public class UploadQiNiuManager {
         return INSTANCE;
     }
 
-    public void uploadSingleImage(String path, final IQiNiuCallback callback){
+    public void uploadSingleImage(String path, final IQiNiuCallback callback) {
         qiNiuMediaUrls.clear();
         UploadManager uploadManager = new UploadManager();
-        String expectKey = generateExpectKey(path,true);
+        String expectKey = generateExpectKey(path, true);
         File file = new File(path);
         file.mkdirs();
         if (!file.exists() && file.length() <= 0) {
@@ -53,29 +53,29 @@ public class UploadQiNiuManager {
                 if (responseInfo.isOK()) {
                     qiNiuMediaUrls.add(key);
                     callback.onSuccess(qiNiuMediaUrls);
-                }else {
+                } else {
                     callback.onFail();
                 }
             }
         }, new UploadOptions(null, "test-type", true, null, null));
     }
 
-    public void uploadMedia(boolean isPhoto,final List<BaseMedia> selectedMedia, final IQiNiuCallback callback){
+    public void uploadMedia(boolean isPhoto, final List<BaseMedia> selectedMedia, final IQiNiuCallback callback) {
         qiNiuMediaUrls.clear();
         UploadManager uploadManager = new UploadManager();
         for (int i = 0; i < selectedMedia.size(); i++) {
             BaseMedia bean = selectedMedia.get(i);
             String path = bean.getPath();
-            String expectKey = generateExpectKey(path,isPhoto);
+            String expectKey = generateExpectKey(path, isPhoto);
             File file = new File(path);
             file.mkdirs();
             if (!file.exists() && file.length() <= 0) {
                 return;
             }
             byte[] bytes;
-            if(isPhoto && file.length() > PHOTO_SIZE_LIMIT ){
+            if (isPhoto && file.length() > PHOTO_SIZE_LIMIT) {
                 bytes = compressFile(path);
-            }else {
+            } else {
                 bytes = FileUtil.File2byte(path);
             }
             uploadManager.put(bytes, expectKey, QiNiuTokenUtils.getQiNiuToken(), new UpCompletionHandler() {
@@ -86,7 +86,7 @@ public class UploadQiNiuManager {
                         if (qiNiuMediaUrls.size() == selectedMedia.size()) {
                             callback.onSuccess(qiNiuMediaUrls);
                         }
-                    }else {
+                    } else {
                         callback.onFail();
                     }
                 }
@@ -94,13 +94,13 @@ public class UploadQiNiuManager {
         }
     }
 
-    public void uploadImages(final List<? extends BaseMedia> selectedImages, final IQiNiuCallback callback){
+    public void uploadImages(final List<? extends BaseMedia> selectedImages, final IQiNiuCallback callback) {
         qiNiuMediaUrls.clear();
         UploadManager uploadManager = new UploadManager();
         for (int i = 0; i < selectedImages.size(); i++) {
             BaseMedia bean = selectedImages.get(i);
             String path = bean.getPath();
-            String expectKey = generateExpectKey(path,true);
+            String expectKey = generateExpectKey(path, true);
             File file = new File(path);
             file.mkdirs();
             if (!file.exists() && file.length() <= 0) {
@@ -115,7 +115,7 @@ public class UploadQiNiuManager {
                         if (qiNiuMediaUrls.size() == selectedImages.size()) {
                             callback.onSuccess(qiNiuMediaUrls);
                         }
-                    }else {
+                    } else {
                         callback.onFail();
                     }
                 }
@@ -123,8 +123,14 @@ public class UploadQiNiuManager {
         }
     }
 
-    private String generateExpectKey(String path,boolean isImage) {
-        return (isImage ? "image/" : "video/") + App.mInstance.getUser().getId() +
+    private String generateExpectKey(String path, boolean isImage) {
+
+        int id = 0;
+        if (App.getInstance().isLogin()) {
+            id = App.getInstance().getUser().getId();
+        }
+
+        return (isImage ? "image/" : "video/") + id +
                 System.currentTimeMillis() + path.substring(path.lastIndexOf("."));
     }
 

@@ -32,6 +32,7 @@ import static com.leyuan.aidong.utils.Constant.RECOMMEND_CART;
  */
 public class AppointSuccessActivity extends BaseActivity implements View.OnClickListener,AppointSuccessActivityView{
     private TextView tvRecommend;
+    private TextView tvType;
     private TextView tvTime;
     private TextView returnHome;
     private TextView checkAppointment;
@@ -42,11 +43,13 @@ public class AppointSuccessActivity extends BaseActivity implements View.OnClick
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
 
     private String time;
+    private boolean isCourse;
     private RecommendPresent present;
 
-    public static void start(Context context,String time){
+    public static void start(Context context,String time,boolean isCourse){
         Intent intent = new Intent(context,AppointSuccessActivity.class);
         intent.putExtra("time",time);
+        intent.putExtra("isCourse",isCourse);
         context.startActivity(intent);
     }
 
@@ -57,6 +60,7 @@ public class AppointSuccessActivity extends BaseActivity implements View.OnClick
         present = new RecommendPresentImpl(this,this);
         if(getIntent() != null){
             time = getIntent().getStringExtra("time");
+            isCourse = getIntent().getBooleanExtra("isCourse",false);
         }
         initView();
         setListener();
@@ -65,7 +69,9 @@ public class AppointSuccessActivity extends BaseActivity implements View.OnClick
 
     private void initView() {
         View headerView = View.inflate(this,R.layout.header_appointment_success,null);
+        tvType = (TextView) headerView.findViewById(R.id.tv_type);
         tvRecommend = (TextView) headerView.findViewById(R.id.tv_recommend);
+        tvType.setText(isCourse?R.string.course_time:R.string.campaign_time);
         tvTime = (TextView) headerView.findViewById(R.id.tv_time);
         tvTime.setText(time);
         returnHome = (TextView) headerView.findViewById(R.id.tv_home);

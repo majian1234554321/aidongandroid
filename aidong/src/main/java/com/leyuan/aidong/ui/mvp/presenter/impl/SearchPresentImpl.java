@@ -3,6 +3,7 @@ package com.leyuan.aidong.ui.mvp.presenter.impl;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
+import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CampaignBean;
 import com.leyuan.aidong.entity.CourseBean;
 import com.leyuan.aidong.entity.EquipmentBean;
@@ -16,9 +17,12 @@ import com.leyuan.aidong.entity.data.SearchNurtureData;
 import com.leyuan.aidong.entity.data.UserData;
 import com.leyuan.aidong.entity.data.VenuesData;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
+import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
+import com.leyuan.aidong.ui.mvp.model.FollowModel;
 import com.leyuan.aidong.ui.mvp.model.SearchModel;
+import com.leyuan.aidong.ui.mvp.model.impl.FollowModelImpl;
 import com.leyuan.aidong.ui.mvp.model.impl.SearchModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.SearchPresent;
 import com.leyuan.aidong.ui.mvp.view.SearchActivityView;
@@ -44,6 +48,7 @@ import io.realm.Realm;
 public class SearchPresentImpl implements SearchPresent{
     private Context context;
     private SearchModel searchModel;
+    private FollowModel followModel;
 
     private List<CampaignBean> campaignList;
 
@@ -454,5 +459,35 @@ public class SearchPresentImpl implements SearchPresent{
                 }
             }
         },keyword,page);
+    }
+
+    @Override
+    public void addFollow(String id) {
+        if(followModel == null){
+            followModel = new FollowModelImpl();
+        }
+        followModel.addFollow(new ProgressSubscriber<BaseBean>(context) {
+            @Override
+            public void onNext(BaseBean baseBean) {
+                if(baseBean != null){
+                    userView.addFollowResult(baseBean);
+                }
+            }
+        },id);
+    }
+
+    @Override
+    public void cancelFollow(String id) {
+        if(followModel == null){
+            followModel = new FollowModelImpl();
+        }
+        followModel.cancelFollow(new ProgressSubscriber<BaseBean>(context) {
+            @Override
+            public void onNext(BaseBean baseBean) {
+                if(baseBean != null){
+                    userView.cancelFollowResult(baseBean);
+                }
+            }
+        },id);
     }
 }

@@ -20,7 +20,6 @@ import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.http.subscriber.handler.ProgressDialogHandler;
 import com.leyuan.aidong.ui.discover.activity.VenuesDetailActivity;
 import com.leyuan.aidong.ui.home.activity.CampaignDetailActivity;
-import com.leyuan.aidong.ui.home.activity.CourseActivity;
 import com.leyuan.aidong.ui.home.activity.CourseDetailActivity;
 import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
 import com.leyuan.aidong.utils.DialogUtils;
@@ -155,7 +154,9 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
                 GoodsDetailActivity.start(this, bannerBean.getLink(), GOODS_NUTRITION);
                 break;
             case "22":
-                CourseActivity.start(this,bannerBean.getLink());
+
+                CourseDetailActivity.start(this,bannerBean.getLink());
+//                CourseActivity.start(this,bannerBean.getLink());
                 break;
             case "23":
                 CampaignDetailActivity.start(this, bannerBean.getLink());
