@@ -25,6 +25,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CourseVideoDetailActivityView;
 import com.leyuan.aidong.ui.video.activity.PlayerActivity;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.utils.Utils;
@@ -148,8 +149,7 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
             GlideLoader.getInstance().displayImage(courseVideoBean.getCover(), ivCover);
             GlideLoader.getInstance().displayImageWithBlur(courseVideoBean.getCover(),ivBlur);
             tvCourseName.setText(courseVideoBean.getName());
-
-            String during = Utils.formatTime(Long.parseLong("10000"));
+            String during = Utils.formatTime(Math.round(FormatUtil.parseFloat(courseVideoBean.getDuring())));
             tvAuthAndTime.setText(String.format(getString(R.string.course_type_and_during),
                     courseVideoBean.getTypeName(),during));
             tvCourseDesc.setText(courseVideoBean.getIntroduce());
