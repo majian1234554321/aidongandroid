@@ -39,7 +39,7 @@ import java.util.List;
  * 小团体课列表
  * Created by song on 2016/10/31.
  */
-public class CourseActivity extends BaseActivity implements CourseActivityView,SmartTabLayout.TabProvider{
+public class CourseActivity extends BaseActivity implements CourseActivityView, SmartTabLayout.TabProvider {
     //todo 使用SmartTabLayout使Activity和Fragment传值失效,设置回调无效??
     private ImageView ivBack;
     private SmartTabLayout tabLayout;
@@ -50,9 +50,9 @@ public class CourseActivity extends BaseActivity implements CourseActivityView,S
     private String category;
     private ViewPager viewPager;
 
-    public static void start(Context context,String category) {
+    public static void start(Context context, String category) {
         Intent starter = new Intent(context, CourseActivity.class);
-        starter.putExtra("category",category);
+        starter.putExtra("category", category);
         context.startActivity(starter);
     }
 
@@ -60,15 +60,15 @@ public class CourseActivity extends BaseActivity implements CourseActivityView,S
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course);
-        if(getIntent() != null){
+        if (getIntent() != null) {
             category = getIntent().getStringExtra("category");
         }
-        CoursePresent present = new CoursePresentImpl(this,this);
+        CoursePresent present = new CoursePresentImpl(this, this);
         initView();
         setListener();
         present.getCategory();
         present.getBusinessCircle();
-        present.getScrollDate(days.get(0),category);
+        present.getScrollDate(days.get(0), category);
     }
 
     private void initView() {
@@ -80,11 +80,11 @@ public class CourseActivity extends BaseActivity implements CourseActivityView,S
         FragmentPagerItems pages = new FragmentPagerItems(this);
         for (int i = 0; i < days.size(); i++) {
             CourseFragment courseFragment = new CourseFragment();
-            if(!TextUtils.isEmpty(category)) {
+            if (!TextUtils.isEmpty(category)) {
                 pages.add(FragmentPagerItem.of(null, courseFragment.getClass(),
                         new Bundler().putString("date", days.get(i))
                                 .putString("category", category).get()));
-            }else {
+            } else {
                 pages.add(FragmentPagerItem.of(null, courseFragment.getClass(),
                         new Bundler().putString("date", days.get(i)).get()));
             }
@@ -94,7 +94,7 @@ public class CourseActivity extends BaseActivity implements CourseActivityView,S
         viewPager.setAdapter(adapter);
         tabLayout.setCustomTabView(this);
         tabLayout.setViewPager(viewPager);
-        tabLayout.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+        tabLayout.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 for (int i = 0; i < allTabView.size(); i++) {
@@ -114,14 +114,14 @@ public class CourseActivity extends BaseActivity implements CourseActivityView,S
         tabLayout.setOnTabClickListener(new SmartTabLayout.OnTabClickListener() {
             @Override
             public void onTabClicked(int position) {
-                if(filterView.isPopupShowing()) {
+                if (filterView.isPopupShowing()) {
                     filterView.hidePopup();
                 }
             }
         });
     }
 
-    private void setListener(){
+    private void setListener() {
         ivBack.setOnClickListener(backListener);
         filterView.setOnFilterClickListener(new MyOnFilterClickListener());
     }
@@ -133,11 +133,20 @@ public class CourseActivity extends BaseActivity implements CourseActivityView,S
         }
     };
 
+    List<CategoryBean> categoryBeanList = new ArrayList<>();
 
     @Override
     public void setCategory(List<CategoryBean> categoryBeanList) {
-        filterView.setCategoryList(categoryBeanList);
-        if(!TextUtils.isEmpty(category)){
+        CategoryBean categoryBean = new CategoryBean();
+        categoryBean.setName("全部类型");
+
+        this.categoryBeanList.add(0, categoryBean);
+        if (categoryBeanList != null) {
+            this.categoryBeanList.addAll(categoryBeanList);
+        }
+
+        filterView.setCategoryList(this.categoryBeanList);
+        if (!TextUtils.isEmpty(category)) {
             filterView.selectCategory(category);
         }
     }
@@ -152,21 +161,21 @@ public class CourseActivity extends BaseActivity implements CourseActivityView,S
         View tabView = LayoutInflater.from(this).inflate(R.layout.tab_course_text, container, false);
         TextView text = (TextView) tabView.findViewById(R.id.tv_tab_text);
         text.setText(DateUtils.getCourseSevenDate().get(position));
-        if(position == 0){
+        if (position == 0) {
             text.setTypeface(Typeface.DEFAULT_BOLD);
         }
         allTabView.add(tabView);
         return tabView;
     }
 
-    private class MyOnFilterClickListener implements CourseFilterView.OnFilterClickListener{
+    private class MyOnFilterClickListener implements CourseFilterView.OnFilterClickListener {
 
         @Override
         public void onCategoryItemClick(String category) {
             for (int i = 0; i < days.size(); i++) {
                 Fragment page = adapter.getPage(i);
-                ((CourseFragment)page).resetCategory(category);
-                ((CourseFragment)page).fetchData();
+                ((CourseFragment) page).resetCategory(category);
+                ((CourseFragment) page).fetchData();
             }
         }
 
@@ -174,18 +183,18 @@ public class CourseActivity extends BaseActivity implements CourseActivityView,S
         public void onBusinessCircleItemClick(String address) {
             for (int i = 0; i < days.size(); i++) {
                 Fragment page = adapter.getPage(i);
-                ((CourseFragment)page).resetCircle(address);
-                ((CourseFragment)page).fetchData();
+                ((CourseFragment) page).resetCircle(address);
+                ((CourseFragment) page).fetchData();
             }
         }
     }
 
-    public void animatedShow(){
+    public void animatedShow() {
         filterView.animate().translationY(0).setInterpolator
                 (new DecelerateInterpolator(2)).start();
     }
 
-    public void animatedHide(){
+    public void animatedHide() {
         filterView.animate().translationY(-filterView.getHeight()).setInterpolator
                 (new AccelerateInterpolator(2)).start();
     }
@@ -194,12 +203,12 @@ public class CourseActivity extends BaseActivity implements CourseActivityView,S
     public void setScrollPosition(String date) {
         int index = 0;
         for (int i = 0; i < days.size(); i++) {
-            if(days.get(i).equals(date)){
+            if (days.get(i).equals(date)) {
                 index = i;
                 break;
             }
         }
-        if(index != 0) {
+        if (index != 0) {
             viewPager.setCurrentItem(index);
         }
     }

@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/iv_image"
                 android:layout_centerHorizontal="true"
-                android:text="全部类型"
+                android:text="全部品牌"
                 android:textColor="@color/c3"
                 android:textSize="13sp" />
 
@@ -122,10 +122,11 @@
                     android:scrollbars="none" />
 
             </LinearLayout>
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/popup_bottom"/>
+                android:src="@drawable/popup_bottom" />
         </LinearLayout>
     </FrameLayout>
 </LinearLayout>
