@@ -9,6 +9,8 @@ import com.leyuan.aidong.ui.mvp.model.UserInfoModel;
 import com.leyuan.aidong.ui.mvp.model.impl.UserInfoModelImpl;
 import com.leyuan.aidong.ui.mvp.view.MineInfoView;
 
+import retrofit2.http.HEAD;
+
 /**
  * Created by user on 2017/3/23.
  */
@@ -43,5 +45,4 @@ public class MineInfoPresenterImpl {
             }
         });
     }
-
 }

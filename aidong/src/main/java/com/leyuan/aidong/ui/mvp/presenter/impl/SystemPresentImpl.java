@@ -15,6 +15,7 @@ import com.leyuan.aidong.ui.mvp.view.SystemView;
 import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import rx.Subscriber;
@@ -75,9 +76,18 @@ public class SystemPresentImpl implements SystemPresent {
                     List<CategoryBean> gymList = systemInfoBean.getGymBrand();
                     if (gymList != null) {
                         CategoryBean allBean = new CategoryBean();
-                        allBean.setName("全部类型");
+                        allBean.setName("全部品牌");
                         gymList.add(0, allBean);
                     }
+
+                    ArrayList<CategoryBean> courseCategoryList = systemInfoBean.getCourse();
+                    if (courseCategoryList != null) {
+                        CategoryBean categoryBean = new CategoryBean();
+                        categoryBean.setName("全部类型");
+                        courseCategoryList.add(0, categoryBean);
+                    }
+
+
                     SystemInfoUtils.putSystemInfoBean(context, systemBean, SystemInfoUtils.KEY_SYSTEM);  //保存到本地
                     if (systemView != null) {
                         systemView.onGetSystemConfiguration(true);

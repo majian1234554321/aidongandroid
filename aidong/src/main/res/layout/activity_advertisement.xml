@@ -10,13 +10,14 @@
 
     <Button
         android:id="@+id/btn_count"
-        android:layout_width="50dp"
+        android:layout_width="60dp"
         android:layout_height="35dp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="25dp"
         android:layout_marginTop="25dp"
+        android:background="#33000000"
         android:gravity="center"
-        android:text="5"
+        android:text="跳过5s"
         android:textColor="@color/white"
         android:textSize="12sp" />
 </RelativeLayout>

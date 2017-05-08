@@ -26,6 +26,8 @@ import com.leyuan.aidong.ui.mvp.view.CourseVideoDetailActivityView;
 import com.leyuan.aidong.ui.video.activity.PlayerActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.SystemInfoUtils;
+import com.leyuan.aidong.utils.Utils;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.media.TextViewPrintly;
 
@@ -100,7 +102,7 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
         recyclerView.setAdapter(adapter);
         ivBack = (Button) findViewById(R.id.iv_back);
         btAppoint = (Button) findViewById(R.id.bt_appoint);
-        btAppoint.setText(App.mInstance.isLogin() ? Constant.activity : getString(R.string.tip_new_user));
+        btAppoint.setText(SystemInfoUtils.getCourseVideoTip(this));
     }
 
     private void setListener(){
@@ -146,8 +148,10 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
             GlideLoader.getInstance().displayImage(courseVideoBean.getCover(), ivCover);
             GlideLoader.getInstance().displayImageWithBlur(courseVideoBean.getCover(),ivBlur);
             tvCourseName.setText(courseVideoBean.getName());
+
+            String during = Utils.formatTime(Long.parseLong("10000"));
             tvAuthAndTime.setText(String.format(getString(R.string.course_type_and_during),
-                    courseVideoBean.getTypeName(),courseVideoBean.getDuring()));
+                    courseVideoBean.getTypeName(),during));
             tvCourseDesc.setText(courseVideoBean.getIntroduce());
             adapter.setData(videoBeanList);
         }
@@ -161,7 +165,7 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        btAppoint.setText(Constant.activity);
+        btAppoint.setText(SystemInfoUtils.getCourseVideoTip(this));
     }
 
     @Override

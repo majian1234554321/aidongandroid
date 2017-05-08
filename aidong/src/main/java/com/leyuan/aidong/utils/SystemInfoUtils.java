@@ -22,6 +22,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.leyuan.aidong.utils.Constant.systemInfoBean;
+
 /**
  * 获取系统配置信息帮助类
  * app启动时发送获取最新配置的网络请求，将配置信息赋值给常亮并保存到本地
@@ -38,14 +40,28 @@ public class SystemInfoUtils {
     private static final String BANNER_DISCOVER = "3";
     private static final String BANNER_STORE = "4";
 
+
+    public static String getCourseVideoTip(Context context){
+        String activityTip = "";
+        if (systemInfoBean != null && systemInfoBean.getAcivity() != null) {
+            activityTip =  Constant.systemInfoBean.getAcivity() ;
+        }else {
+            Object bean = getSystemInfoBean(context, KEY_SYSTEM);
+            if (bean instanceof SystemBean) {
+                activityTip = ((SystemBean) bean).getAcivity();
+            }
+        }
+        return activityTip;
+    }
+
     /**
      * 获取闪屏页广告
      */
     public static List<BannerBean> getSplashBanner(Context context) {
         List<BannerBean> bannerBeanList = new ArrayList<>();
         List<BannerBean> splashBannerBean = new ArrayList<>();
-        if (Constant.systemInfoBean != null && Constant.systemInfoBean.getBanner() != null) {
-            bannerBeanList = Constant.systemInfoBean.getBanner();
+        if (systemInfoBean != null && systemInfoBean.getBanner() != null) {
+            bannerBeanList = systemInfoBean.getBanner();
         } else {
             Object bean = getSystemInfoBean(context, KEY_SYSTEM);
             if (bean instanceof SystemBean) {
@@ -67,8 +83,8 @@ public class SystemInfoUtils {
     public static List<BannerBean> getHomeBanner(Context context) {
         List<BannerBean> bannerBeanList = new ArrayList<>();
         List<BannerBean> homeBannerBeanList = new ArrayList<>();
-        if (Constant.systemInfoBean != null && Constant.systemInfoBean.getBanner() != null) {
-            bannerBeanList = Constant.systemInfoBean.getBanner();
+        if (systemInfoBean != null && systemInfoBean.getBanner() != null) {
+            bannerBeanList = systemInfoBean.getBanner();
         } else {
             Object bean = getSystemInfoBean(context, KEY_SYSTEM);
             if (bean instanceof SystemBean) {
@@ -90,8 +106,8 @@ public class SystemInfoUtils {
     public static List<BannerBean> getHomePopupBanner(Context context) {
         List<BannerBean> bannerBeanList = new ArrayList<>();
         List<BannerBean> popupBannerList = new ArrayList<>();
-        if (Constant.systemInfoBean != null && Constant.systemInfoBean.getBanner() != null) {
-            bannerBeanList = Constant.systemInfoBean.getBanner();
+        if (systemInfoBean != null && systemInfoBean.getBanner() != null) {
+            bannerBeanList = systemInfoBean.getBanner();
         } else {
             Object bean = getSystemInfoBean(context, KEY_SYSTEM);
             if (bean instanceof SystemBean) {
@@ -114,8 +130,8 @@ public class SystemInfoUtils {
     public static List<BannerBean> getStoreBanner(Context context) {
         List<BannerBean> bannerBeanList = new ArrayList<>();
         List<BannerBean> discoverBannerBeanList = new ArrayList<>();
-        if (Constant.systemInfoBean != null && Constant.systemInfoBean.getBanner() != null) {
-            bannerBeanList = Constant.systemInfoBean.getBanner();
+        if (systemInfoBean != null && systemInfoBean.getBanner() != null) {
+            bannerBeanList = systemInfoBean.getBanner();
         } else {
             Object bean = getSystemInfoBean(context, KEY_SYSTEM);
             if (bean instanceof SystemBean) {
@@ -137,8 +153,8 @@ public class SystemInfoUtils {
     public static List<BannerBean> getDiscoverBanner(Context context) {
         List<BannerBean> bannerBeanList = new ArrayList<>();
         List<BannerBean> discoverBannerBeanList = new ArrayList<>();
-        if (Constant.systemInfoBean != null && Constant.systemInfoBean.getBanner() != null) {
-            bannerBeanList = Constant.systemInfoBean.getBanner();
+        if (systemInfoBean != null && systemInfoBean.getBanner() != null) {
+            bannerBeanList = systemInfoBean.getBanner();
         } else {
             Object bean = getSystemInfoBean(context, KEY_SYSTEM);
             if (bean instanceof SystemBean) {
@@ -158,8 +174,8 @@ public class SystemInfoUtils {
      * 获取开通城市
      */
     public static List<String> getOpenCity(Context context) {
-        if (Constant.systemInfoBean != null && Constant.systemInfoBean.getOpen_city() != null) { //内存有直接从内存读取返回
-            return Constant.systemInfoBean.getOpen_city();
+        if (systemInfoBean != null && systemInfoBean.getOpen_city() != null) { //内存有直接从内存读取返回
+            return systemInfoBean.getOpen_city();
         } else {          // 从本地读取
             Object bean = getSystemInfoBean(context, KEY_SYSTEM);
             if (bean instanceof SystemBean) {
@@ -174,13 +190,13 @@ public class SystemInfoUtils {
      * 获取预约倒计时
      */
     public static int getAppointmentCountdown(Context context) {
-        if (Constant.systemInfoBean != null && Constant.systemInfoBean.getAppointment_countdown() != 0) { //内存有直接从内存读取返回
-            return Constant.systemInfoBean.getAppointment_countdown();
+        if (systemInfoBean != null && systemInfoBean.getAppointment_countdown() != 0) { //内存有直接从内存读取返回
+            return systemInfoBean.getAppointment_countdown();
         } else {          // 从本地读取
             Object bean = getSystemInfoBean(context, KEY_SYSTEM);
             if (bean instanceof SystemBean) {
-                Constant.systemInfoBean = ((SystemBean) bean);//缓存到内存
-                return Constant.systemInfoBean.getAppointment_countdown();
+                systemInfoBean = ((SystemBean) bean);//缓存到内存
+                return systemInfoBean.getAppointment_countdown();
             }
             return 120;
         }
@@ -190,13 +206,13 @@ public class SystemInfoUtils {
      * 获取订单倒计时
      */
     public static int getOrderCountdown(Context context) {
-        if (Constant.systemInfoBean != null && Constant.systemInfoBean.getOrder_countdown() != 0) { //内存有直接从内存读取返回
-            return Constant.systemInfoBean.getOrder_countdown();
+        if (systemInfoBean != null && systemInfoBean.getOrder_countdown() != 0) { //内存有直接从内存读取返回
+            return systemInfoBean.getOrder_countdown();
         } else {          // 从本地读取
             Object bean = getSystemInfoBean(context, KEY_SYSTEM);
             if (bean instanceof SystemBean) {
-                Constant.systemInfoBean = ((SystemBean) bean);//缓存到内存
-                return Constant.systemInfoBean.getOrder_countdown();
+                systemInfoBean = ((SystemBean) bean);//缓存到内存
+                return systemInfoBean.getOrder_countdown();
             }
             return 30;
         }
@@ -206,8 +222,8 @@ public class SystemInfoUtils {
      * 获取课程分类信息
      */
     public static List<CategoryBean> getCourseCategory(Context context) {
-        if (Constant.systemInfoBean != null && Constant.systemInfoBean.getCourse() != null) { //内存有直接从内存读取返回
-            return Constant.systemInfoBean.getCourse();
+        if (systemInfoBean != null && systemInfoBean.getCourse() != null) { //内存有直接从内存读取返回
+            return systemInfoBean.getCourse();
         } else {          // 从本地读取
             Object bean = getSystemInfoBean(context, KEY_SYSTEM);
             if (bean instanceof SystemBean) {
@@ -221,8 +237,8 @@ public class SystemInfoUtils {
      * 获取营养品分类信息
      */
     public static ArrayList<CategoryBean> getNurtureCategory(Context context) {
-        if (Constant.systemInfoBean != null && Constant.systemInfoBean.getNutrition() != null) { //内存有直接从内存读取返回
-            return Constant.systemInfoBean.getNutrition();
+        if (systemInfoBean != null && systemInfoBean.getNutrition() != null) { //内存有直接从内存读取返回
+            return systemInfoBean.getNutrition();
         } else {          // 从本地读取
             Object bean = getSystemInfoBean(context, KEY_SYSTEM);
             if (bean instanceof SystemBean) {
@@ -236,8 +252,8 @@ public class SystemInfoUtils {
      * 获取装备分类信息
      */
     public static ArrayList<CategoryBean> getEquipmentCategory(Context context) {
-        if (Constant.systemInfoBean != null && Constant.systemInfoBean.getEquipment() != null) { //内存有直接从内存读取返回
-            return Constant.systemInfoBean.getEquipment();
+        if (systemInfoBean != null && systemInfoBean.getEquipment() != null) { //内存有直接从内存读取返回
+            return systemInfoBean.getEquipment();
         } else {          // 从本地读取
             Object bean = getSystemInfoBean(context, KEY_SYSTEM);
             if (bean instanceof SystemBean) {
@@ -251,8 +267,8 @@ public class SystemInfoUtils {
      * 获取商圈信息
      */
     public static List<DistrictBean> getLandmark(Context context) {
-        if (Constant.systemInfoBean != null && Constant.systemInfoBean.getLandmark() != null) { //内存有直接从内存读取返回
-            return Constant.systemInfoBean.getLandmark();
+        if (systemInfoBean != null && systemInfoBean.getLandmark() != null) { //内存有直接从内存读取返回
+            return systemInfoBean.getLandmark();
         } else {          // 从本地读取
             Object bean = getSystemInfoBean(context, KEY_SYSTEM);
             if (bean instanceof SystemBean) {
@@ -266,8 +282,8 @@ public class SystemInfoUtils {
      * 获取场馆品牌分类
      */
     public static List<CategoryBean> getGymBrand(Context context) {
-        if (Constant.systemInfoBean != null && Constant.systemInfoBean.getGymBrand() != null) { //内存有直接从内存读取返回
-            return Constant.systemInfoBean.getGymBrand();
+        if (systemInfoBean != null && systemInfoBean.getGymBrand() != null) { //内存有直接从内存读取返回
+            return systemInfoBean.getGymBrand();
         } else {          // 从本地读取
             Object bean = getSystemInfoBean(context, KEY_SYSTEM);
             if (bean instanceof SystemBean) {

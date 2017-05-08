@@ -60,7 +60,7 @@ public class AdvertisementActivity extends BaseActivity implements View.OnClickL
                     } else {
                         handler.removeCallbacksAndMessages(null);
                         handler.sendEmptyMessageDelayed(COUNT, DIVIDER);
-                        btn_count.setText(COUNT_TIME + "");
+                        btn_count.setText("跳过" + COUNT_TIME + "s");
                     }
 
 

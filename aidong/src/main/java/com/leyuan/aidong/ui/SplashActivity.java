@@ -66,7 +66,6 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
             } else if (startingBannerImage != null) {
 
                 AdvertisementActivity.start(SplashActivity.this, startingBannerImage);
-//                UiManager.activityJump(SplashActivity.this, AdvertisementActivity.class);
             } else {
                 UiManager.activityJump(SplashActivity.this, MainActivity.class);
             }

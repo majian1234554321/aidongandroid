@@ -56,7 +56,7 @@ public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.
             switch (msg.what) {
                 case COUNT_DOWN:
 //                    adapter.notifyCountDown();
-                    for (int i = 1; i < moreLiveNumber+1; i++) {
+                    for (int i = 1; i < moreLiveNumber + 1; i++) {
                         RecyclerView.ViewHolder viewHolder = recyclerView.findViewHolderForAdapterPosition(i);
                         if (viewHolder != null && viewHolder instanceof HomeVideoAdapter.ViewHolder) {
                             HomeVideoAdapter.ViewHolder holder = (HomeVideoAdapter.ViewHolder) viewHolder;
@@ -192,7 +192,8 @@ public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.
         swipeRefreshLayout.setRefreshing(false);
         if (liveHome != null) {
             ArrayList<LiveVideoSoonInfo> liveMoreList = LiveVideoSoonInfo.createMoreLive(liveHome.getMore());
-            moreLiveNumber = liveMoreList.size();
+            if (liveMoreList != null)
+                moreLiveNumber = liveMoreList.size();
             adapter.refreshData(liveHome.getNow(), liveMoreList
                     , liveHome.getEmpty());
             mHandler.removeCallbacksAndMessages(null);

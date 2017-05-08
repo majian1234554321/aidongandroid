@@ -60,6 +60,7 @@
     <dimen name="length22">13sp</dimen>
 
     <dimen name="sp_28">28sp</dimen>
+    <dimen name="sp_30">30sp</dimen>
     <dimen name="sp_40">40sp</dimen>
 
     <dimen name="dp_10">10dp</dimen>

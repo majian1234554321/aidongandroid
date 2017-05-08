@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CourseVideoBean;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,9 +51,9 @@ public class CourseRecommendVideoAdapter extends RecyclerView.Adapter<CourseReco
         final CourseVideoBean bean = data.get(position);
         GlideLoader.getInstance().displayImage(bean.getCover(),holder.imgCover);
         holder.txtCourseName.setText(bean.getName());
-        holder.txtCourseTypeDuration.setText(String.format(context.getString
-                (R.string.course_type_and_during),bean.getTypeName(),bean.getDuring()));
-
+        String during = Utils.formatTime(Long.parseLong("1000"));
+        holder.txtCourseTypeDuration.setText(String.format(
+                context.getString(R.string.course_type_and_during), bean.getTypeName(),during));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -191,11 +191,6 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
             in.setDuration(300);
             in.setSlideEdge(Gravity.BOTTOM);
             getWindow().setEnterTransition(in);
-
-            Slide out = new Slide();
-            out.setDuration(300);
-            out.setSlideEdge(Gravity.BOTTOM);
-            getWindow().setExitTransition(out);
         }
     }
 

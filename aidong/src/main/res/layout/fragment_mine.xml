@@ -392,12 +392,13 @@
                 android:id="@+id/item_recommend_friend"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/pref_10dp"
+
                 app:divider_visible="true"
                 app:img_tag="@drawable/mine_add_friend"
                 app:txt_name="推荐好友" />
 
             <com.leyuan.aidong.widget.AidongMineItem
+                android:layout_marginTop="@dimen/pref_10dp"
                 android:id="@+id/item_after_sale"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
