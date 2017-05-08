@@ -23,8 +23,8 @@ public class CampaignDetailBean implements Parcelable {
     private String introduce;               //活动介绍
     private String price;                   //活动价格
     private String market_price;            //活动指导价
-    private String enroll_start_time;       //报名开始时间
-    private String enroll_end_time;         //报名截至时间
+    private String entry_start_time;       //报名开始时间
+    private String entry_end_time;         //报名截至时间
     private List<UserBean> appicant;        //报名的人
 
     private String status = "";
@@ -143,20 +143,20 @@ public class CampaignDetailBean implements Parcelable {
         this.market_price = market_price;
     }
 
-    public String getEnroll_start_time() {
-        return enroll_start_time;
+    public String getEntry_start_time() {
+        return entry_start_time;
     }
 
-    public void setEnroll_start_time(String enroll_start_time) {
-        this.enroll_start_time = enroll_start_time;
+    public void setEntry_start_time(String entry_start_time) {
+        this.entry_start_time = entry_start_time;
     }
 
-    public String getEnroll_end_time() {
-        return enroll_end_time;
+    public String getEntry_end_time() {
+        return entry_end_time;
     }
 
-    public void setEnroll_end_time(String enroll_end_time) {
-        this.enroll_end_time = enroll_end_time;
+    public void setEntry_end_time(String entry_end_time) {
+        this.entry_end_time = entry_end_time;
     }
 
     public String getStatus() {
@@ -226,8 +226,8 @@ public class CampaignDetailBean implements Parcelable {
         dest.writeString(this.introduce);
         dest.writeString(this.price);
         dest.writeString(this.market_price);
-        dest.writeString(this.enroll_start_time);
-        dest.writeString(this.enroll_end_time);
+        dest.writeString(this.entry_start_time);
+        dest.writeString(this.entry_end_time);
         dest.writeTypedList(this.appicant);
         dest.writeString(this.status);
         dest.writeParcelable(this.coordinate, flags);
@@ -250,8 +250,8 @@ public class CampaignDetailBean implements Parcelable {
         this.introduce = in.readString();
         this.price = in.readString();
         this.market_price = in.readString();
-        this.enroll_start_time = in.readString();
-        this.enroll_end_time = in.readString();
+        this.entry_start_time = in.readString();
+        this.entry_end_time = in.readString();
         this.appicant = in.createTypedArrayList(UserBean.CREATOR);
         this.status = in.readString();
         this.coordinate = in.readParcelable(CoordinateBean.class.getClassLoader());

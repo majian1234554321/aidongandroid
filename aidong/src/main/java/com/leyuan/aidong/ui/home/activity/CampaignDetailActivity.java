@@ -212,7 +212,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
         tvPrice.setText(FormatUtil.parseDouble(bean.getPrice()) == 0f
                 ? "免费" : String.format(getString(R.string.rmb_price), bean.getPrice()));
 
-        tvTopStartTime.setText(String.format(getString(R.string.apply_time), bean.getStartTime()));
+        tvTopStartTime.setText(String.format(getString(R.string.apply_time), bean.getEntry_start_time()));
         tvTopStartTime.setVisibility(STATUS_NOT_START.equals(bean.getStatus()) ? View.VISIBLE :View.GONE);
         toolbar.getLayoutParams().height = DensityUtil.dp2px(this,STATUS_NOT_START.equals(bean.getStatus()) ? 76 : 46);
         ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) pagerLayout.getLayoutParams();
