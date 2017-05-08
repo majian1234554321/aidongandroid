@@ -33,7 +33,7 @@ import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.Utils;
 import com.leyuan.aidong.utils.qiniu.IQiNiuCallback;
-import com.leyuan.aidong.utils.qiniu.UploadQiNiuManager;
+import com.leyuan.aidong.utils.qiniu.UploadToQiNiuManager;
 import com.leyuan.aidong.widget.ExtendTextView;
 
 import java.util.ArrayList;
@@ -231,7 +231,7 @@ public class CompleteUserInfoActivity extends BaseActivity implements UpdateUser
     }
 
     private void uploadToQiNiu() {
-        UploadQiNiuManager.getInstance().uploadSingleImage(avatarPath, new IQiNiuCallback() {
+        UploadToQiNiuManager.getInstance().uploadSingleImage(avatarPath, new IQiNiuCallback() {
             @Override
             public void onSuccess(List<String> urls) {
                 if (urls != null && !urls.isEmpty()) {

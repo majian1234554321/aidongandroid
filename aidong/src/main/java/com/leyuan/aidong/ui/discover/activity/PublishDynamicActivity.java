@@ -30,7 +30,7 @@ import com.leyuan.aidong.ui.mvp.view.PublishDynamicActivityView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.qiniu.IQiNiuCallback;
-import com.leyuan.aidong.utils.qiniu.UploadQiNiuManager;
+import com.leyuan.aidong.utils.qiniu.UploadToQiNiuManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -138,7 +138,7 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
 
     private void uploadToQiNiu(){
         showProgressDialog();
-        UploadQiNiuManager.getInstance().uploadMedia(isPhoto, selectedMedia, new IQiNiuCallback() {
+        UploadToQiNiuManager.getInstance().uploadMedia(isPhoto, selectedMedia, new IQiNiuCallback() {
             @Override
             public void onSuccess(List<String> urls) {
                 uploadToServer(urls);

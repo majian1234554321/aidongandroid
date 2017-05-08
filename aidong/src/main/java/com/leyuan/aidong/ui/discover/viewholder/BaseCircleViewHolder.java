@@ -124,6 +124,14 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
                 commentRecyclerView.setAdapter(commonAdapter);
                 commonAdapter.setData(dynamic.comment.item, dynamic.comment.count);
                 commentRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+                commonAdapter.setOnMoreCommentClickListener(new DynamicCommentAdapter.OnMoreCommentClickListener() {
+                    @Override
+                    public void onMoreCommentClick() {
+                        if (callback != null) {
+                            callback.onCommentClick(dynamic);
+                        }
+                    }
+                });
             } else {
                 commentLayout.setVisibility(View.GONE);
             }

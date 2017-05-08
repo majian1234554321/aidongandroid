@@ -2,7 +2,6 @@ package com.leyuan.aidong.ui.mvp.view;
 
 import com.leyuan.aidong.entity.AddressBean;
 import com.leyuan.aidong.entity.CouponBean;
-import com.leyuan.aidong.entity.ShopBean;
 
 import java.util.List;
 
@@ -24,5 +23,5 @@ public interface ConfirmOrderActivityView {
      */
     void setSpecifyGoodsCouponResult(List<CouponBean> couponBeanList);
 
-    void setRefreshCartDataResult(List<ShopBean> list);
+  //  void setRefreshCartDataResult(List<ShopBean> list);
 }

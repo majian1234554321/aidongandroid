@@ -24,16 +24,16 @@ import static com.leyuan.aidong.utils.FileUtil.File2byte;
  * 七牛上传
  * Created by song on 2017/2/13.
  */
-public class UploadQiNiuManager {
+public class UploadToQiNiuManager {
     private static final int PHOTO_SIZE_LIMIT = 1024 * 1024;
     private List<String> qiNiuMediaUrls = new ArrayList<>();
-    private static UploadQiNiuManager INSTANCE = new UploadQiNiuManager();
+    private static UploadToQiNiuManager INSTANCE = new UploadToQiNiuManager();
 
-    private UploadQiNiuManager() {
+    private UploadToQiNiuManager() {
 
     }
 
-    public static UploadQiNiuManager getInstance() {
+    public static UploadToQiNiuManager getInstance() {
         return INSTANCE;
     }
 

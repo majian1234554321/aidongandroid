@@ -2,20 +2,15 @@ package com.leyuan.aidong.adapter.home;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.PointF;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import com.davemorrissey.labs.subscaleview.ImageSource;
-import com.davemorrissey.labs.subscaleview.ImageViewState;
-import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.home.view.DonutProgress;
 
-import java.io.File;
 import java.util.List;
 
 import uk.co.senab.photoview.PhotoView;
@@ -56,7 +51,7 @@ public class ImagePreviewAdapter extends PagerAdapter{
     public Object instantiateItem(ViewGroup container, final int position) {
         itemView = LayoutInflater.from(container.getContext()).inflate(R.layout.item_image_preview, null);
         RelativeLayout rootView = (RelativeLayout)itemView.findViewById(R.id.root);
-        final SubsamplingScaleImageView longImage = (SubsamplingScaleImageView) itemView.findViewById(R.id.image_long);
+
         final PhotoView normalImage = (PhotoView) itemView.findViewById(R.id.image_normal);
 
         final DonutProgress progress = (DonutProgress) itemView.findViewById(R.id.view_progress);
@@ -87,14 +82,5 @@ public class ImagePreviewAdapter extends PagerAdapter{
 
 
 
-    private void displayLongImage(File file,SubsamplingScaleImageView longImg) {
-        longImg.setQuickScaleEnabled(true);
-        longImg.setZoomEnabled(true);
-        longImg.setPanEnabled(true);
-        longImg.setDoubleTapZoomDuration(100);
-        longImg.setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CENTER_CROP);
-        longImg.setDoubleTapZoomDpi(SubsamplingScaleImageView.ZOOM_FOCUS_CENTER);
-        longImg.setImage(ImageSource.uri(file.getAbsolutePath()), new ImageViewState(0, new PointF(0, 0), 0));
-    }
 
 }

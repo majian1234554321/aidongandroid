@@ -25,7 +25,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.PhotoWallPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.UpdatePhotoWallActivityView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.qiniu.IQiNiuCallback;
-import com.leyuan.aidong.utils.qiniu.UploadQiNiuManager;
+import com.leyuan.aidong.utils.qiniu.UploadToQiNiuManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,7 +109,7 @@ public class UpdatePhotoWallActivity extends BaseActivity implements View.OnClic
 
     private void uploadToQiNiu(){
         showProgressDialog();
-        UploadQiNiuManager.getInstance().uploadImages(selectedLocalImages, new IQiNiuCallback(){
+        UploadToQiNiuManager.getInstance().uploadImages(selectedLocalImages, new IQiNiuCallback(){
             @Override
             public void onSuccess(List<String> urls) {
                 uploadToServer(urls);

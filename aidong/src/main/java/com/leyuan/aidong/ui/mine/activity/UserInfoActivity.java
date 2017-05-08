@@ -133,14 +133,13 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         tvSignature = (TextView) findViewById(R.id.tv_signature);
         ivFollowOrPublish = (ImageView) findViewById(R.id.iv_follow_or_publish);
         tabLayout = (SmartTabLayout) findViewById(R.id.tab_layout);
-        viewPager = (ViewPager) findViewById(R.id.vp_content);
+        viewPager = (ViewPager) findViewById(R.id.vp_user);
         contactLayout = (LinearLayout) findViewById(R.id.ll_contact);
         tvCall = (TextView) findViewById(R.id.tv_call);
         wallAdapter = new UserInfoPhotoAdapter(this, isSelf);
         rvPhoto.setAdapter(wallAdapter);
         rvPhoto.setLayoutManager(new GridLayoutManager(this, 4));
-        rvPhoto.addItemDecoration(new SpacesItemDecoration(
-                getResources().getDimensionPixelOffset(R.dimen.photo_wall_margin), 4));
+        rvPhoto.addItemDecoration(new SpacesItemDecoration(getResources().getDimensionPixelOffset(R.dimen.photo_wall_margin), 4));
     }
 
     private void setListener() {
@@ -187,8 +186,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
             contactLayout.setVisibility(View.VISIBLE);
             tvCall.setVisibility("Coach".equals(userInfoData.getProfile().getUserType())
                     ? View.VISIBLE : View.GONE);
-            contentLayout.setPadding(0, DensityUtil.dp2px(this, 46), 0,
-                    (int) getResources().getDimension(R.dimen.pref_50dp));
+            contentLayout.setPadding(0, DensityUtil.dp2px(this, 46), 0, (int) getResources().getDimension(R.dimen.pref_50dp));
         }
     }
 

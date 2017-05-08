@@ -3,17 +3,15 @@ package com.leyuan.aidong.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.leyuan.aidong.utils.constant.DeliveryType;
-
 import java.util.List;
 
 /**
  * 购物车中商家实体
  * Created by song on 2016/9/23.
  */
-public class ShopBean implements Parcelable {
+public class ShopBean implements Parcelable{
     private List<GoodsBean> item;
-    private @DeliveryType DeliveryBean pick_up;
+    private DeliveryBean pick_up;
 
     private boolean checked = false;            //标记该商店是否被选中
 
@@ -41,6 +39,21 @@ public class ShopBean implements Parcelable {
         this.pick_up = pick_up;
     }
 
+    public ShopBean() {
+    }
+
+    public boolean allItemIsSoldOut() {
+        if (item == null)
+            return true;
+
+        for (GoodsBean bean : item) {
+            if (bean.isOnline() && bean.getStock() != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -51,9 +64,6 @@ public class ShopBean implements Parcelable {
         dest.writeTypedList(this.item);
         dest.writeParcelable(this.pick_up, flags);
         dest.writeByte(this.checked ? (byte) 1 : (byte) 0);
-    }
-
-    public ShopBean() {
     }
 
     protected ShopBean(Parcel in) {
@@ -73,16 +83,4 @@ public class ShopBean implements Parcelable {
             return new ShopBean[size];
         }
     };
-
-    public boolean allItemIsSoldOut() {
-        if (item == null)
-            return true;
-
-        for (GoodsBean bean : item) {
-            if (bean.isOnline() && bean.getStock() != 0) {
-                return false;
-            }
-        }
-        return true;
-    }
 }

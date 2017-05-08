@@ -128,7 +128,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView, View
     }
 
     private void initData() {
-        present.getHomePopupBanner();
+       // present.getHomePopupBanner();
         present.getHomeBanners();
         present.getCourseCategoryList();
         present.commonLoadData(switcherLayout, TYPE_HOME);
@@ -144,7 +144,6 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView, View
     @Override
     public void onResume() {
         super.onResume();
-
         present.getSportHistory();
         tvLocation.setText(App.getInstance().getSelectedCity());
     }

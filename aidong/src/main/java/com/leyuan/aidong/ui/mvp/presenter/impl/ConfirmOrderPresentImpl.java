@@ -139,7 +139,7 @@ public class ConfirmOrderPresentImpl implements ConfirmOrderPresent{
             @Override
             public void onNext(ShopData shopData) {
                 if(shopData != null && shopData.getCart() != null  && !shopData.getCart().isEmpty()){
-                    orderActivityView.setRefreshCartDataResult(shopData.getCart());
+                   // orderActivityView.setRefreshCartDataResult(shopData.getCart());
                 }
             }
         });

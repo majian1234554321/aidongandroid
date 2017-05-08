@@ -23,7 +23,7 @@ import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.qiniu.IQiNiuCallback;
-import com.leyuan.aidong.utils.qiniu.UploadQiNiuManager;
+import com.leyuan.aidong.utils.qiniu.UploadToQiNiuManager;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 
 import java.util.ArrayList;
@@ -143,7 +143,7 @@ public class ApplyServiceNextActivity extends BaseActivity implements View.OnCli
     private void applyToQiNiu(ArrayList<BaseMedia> selectedMedia) {
 
         Logger.i("applyService", "applyToQiNiu");
-        UploadQiNiuManager.getInstance().uploadImages(selectedMedia, new IQiNiuCallback() {
+        UploadToQiNiuManager.getInstance().uploadImages(selectedMedia, new IQiNiuCallback() {
             @Override
             public void onSuccess(List<String> urls) {
                 applyToService((urls.toArray(new String[0])));

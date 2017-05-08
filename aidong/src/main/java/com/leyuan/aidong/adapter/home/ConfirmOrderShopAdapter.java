@@ -59,6 +59,12 @@ public class ConfirmOrderShopAdapter extends RecyclerView.Adapter<ConfirmOrderSh
         holder.rvShop.setAdapter(goodsAdapter);
         goodsAdapter.setData(bean.getItem());
 
+        if(bean.getItem() == null || bean.getItem().isEmpty()){
+            holder.itemView.setVisibility(View.GONE);
+        }else {
+            holder.itemView.setVisibility(View.VISIBLE);
+        }
+
         holder.tvDeliveryType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

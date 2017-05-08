@@ -7,6 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
         android:background="@color/black">
+
         <ImageView
             android:id="@+id/iv_back"
             android:layout_width="wrap_content"
@@ -85,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:gravity="center_horizontal"
-                app:elevation="0dp">
+                app:elevation="2dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -132,7 +133,7 @@
                         android:background="@color/white"
                         android:paddingLeft="@dimen/left_margin"
                         android:paddingRight="@dimen/right_margin"
-                        app:layout_scrollFlags="scroll|enterAlways">
+                        app:layout_scrollFlags="scroll">
 
                         <ImageView
                             android:id="@+id/dv_avatar"
@@ -203,7 +204,7 @@
             </android.support.design.widget.AppBarLayout>
 
             <android.support.v4.view.ViewPager
-                android:id="@+id/vp_content"
+                android:id="@+id/vp_user"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />

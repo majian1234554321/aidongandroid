@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.RecommendAdapter;
 import com.leyuan.aidong.entity.GoodsBean;
-import com.leyuan.aidong.entity.ShopBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.view.CartHeaderView;
 import com.leyuan.aidong.ui.mvp.presenter.RecommendPresent;
@@ -225,8 +224,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK){
             if(requestCode == REQUEST_SETTLEMENT_CART){
-                List<ShopBean> shopBeanList = data.getParcelableArrayListExtra("shopBeanList");
-                cartHeaderView.updateCartRecyclerView(shopBeanList);
+                cartHeaderView.pullToRefreshCartData();
             }
         }
     }

@@ -12,6 +12,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.mine.UpdateDeliveryInfoAdapter;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.DeliveryBean;
+import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.entity.ShopBean;
 import com.leyuan.aidong.entity.UpdateDeliveryBean;
 import com.leyuan.aidong.entity.VenuesBean;
@@ -27,6 +28,7 @@ import java.util.List;
 
 import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
 import static com.leyuan.aidong.utils.Constant.DELIVERY_SELF;
+import static com.leyuan.aidong.utils.Constant.REQUEST_UPDATE_DELIVERY;
 
 /**
  * 确认订单界面修改配送信息
@@ -34,20 +36,22 @@ import static com.leyuan.aidong.utils.Constant.DELIVERY_SELF;
  */
 public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnClickListener,
         UpdateDeliveryInfoAdapter.SelfDeliveryShopListener ,UpdateDeliveryInfoActivityView{
-    private static final int REQUEST_SELECT_DELIVERY = 1;
+
     private ImageView ivBack;
     private UpdateDeliveryInfoAdapter deliveryInfoAdapter;
     private List<UpdateDeliveryBean> data = new ArrayList<>();
     private int position;
     private VenuesBean venuesBean;
     private CartPresent cartPresent;
-    private boolean updated = false;
+
+    private ArrayList<ShopBean> updatedShopList = new ArrayList<>();
 
     public static void start(Context context, ShopBean shopBean) {
         Intent starter = new Intent(context, UpdateDeliveryInfoActivity.class);
         starter.putExtra("shopBean",shopBean);
         context.startActivity(starter);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +59,7 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
         cartPresent = new CartPresentImpl(this,this);
         if(getIntent() != null){
             ShopBean shopBean = getIntent().getParcelableExtra("shopBean");
+            updatedShopList.add(shopBean);
             for (int i = 0; i < shopBean.getItem().size(); i++) {
                 UpdateDeliveryBean bean = new UpdateDeliveryBean();
                 bean.setGoods(shopBean.getItem().get(i));
@@ -103,14 +108,15 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
         Intent intent = new Intent(this,SelfDeliveryVenuesActivity.class);
         intent.putExtra("id",data.get(position).getGoods().getProductId());
         intent.putExtra("goodsType",data.get(position).getGoods().getProductType());
-        startActivityForResult(intent,REQUEST_SELECT_DELIVERY);
+        intent.putExtra("deliveryBean",data.get(position).getDeliveryInfo());
+        startActivityForResult(intent,REQUEST_UPDATE_DELIVERY);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         if(intent != null){
-            if(requestCode == REQUEST_SELECT_DELIVERY){
+            if(requestCode == REQUEST_UPDATE_DELIVERY){
                 venuesBean = intent.getParcelableExtra("venues");
                 String goodsId = data.get(position).getGoods().getId();
                 String gymId = venuesBean.getId();
@@ -127,7 +133,7 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
             deliveryBean.setType(DELIVERY_SELF);
             bean.setDeliveryInfo(deliveryBean);
             deliveryInfoAdapter.notifyDataSetChanged();
-            updated = true;
+            updateShopList(bean);
         }
     }
 
@@ -139,7 +145,7 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
             deliveryBean.setType(DELIVERY_EXPRESS);
             bean.setDeliveryInfo(deliveryBean);
             deliveryInfoAdapter.notifyDataSetChanged();
-            updated = true;
+            updateShopList(bean);
         }
     }
 
@@ -148,10 +154,48 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
         finishWithSendResult();
     }
 
-    private void finishWithSendResult(){
-        if(updated){
-            setResult(RESULT_OK,null);
+    private void updateShopList(UpdateDeliveryBean bean){
+
+        //1.移除该商品
+        int shopIndex = 0;
+        int goodsIndex = 0;
+        for (int i = 0; i < updatedShopList.size(); i++) {
+            for (int j = 0; j < updatedShopList.get(i).getItem().size(); j++) {
+                if(updatedShopList.get(i).getItem().get(j).getId().equals(bean.getGoods().getId())){
+                    shopIndex = i;
+                    goodsIndex = j;
+                }
+            }
         }
+        List<GoodsBean> goodsItems = updatedShopList.get(shopIndex).getItem();
+        goodsItems.remove(goodsIndex);
+
+        //2.若该商品的自提场馆已经存在,将该商品添加到该自提场馆
+        boolean isExist = false;
+        for (int i = 0; i < updatedShopList.size(); i++) {
+            if(updatedShopList.get(i).getPickUp().equals(bean.getDeliveryInfo())){
+                isExist = true;
+                updatedShopList.get(i).getItem().add(bean.getGoods());
+                break;
+            }
+        }
+
+        //3.该商品的自提场馆不存在,新建该商店并添加到商店列表
+        if(!isExist){
+            ShopBean shopBean = new ShopBean();
+            List<GoodsBean> goodsBeanList = new ArrayList<>();
+            goodsBeanList.add(bean.getGoods());
+            shopBean.setItem(goodsBeanList);
+            shopBean.setPickUp(bean.getDeliveryInfo());
+            updatedShopList.add(shopBean);
+        }
+    }
+
+    private void finishWithSendResult(){
+        Intent intent = new Intent();
+        intent.putParcelableArrayListExtra("shopList", updatedShopList);
+        setResult(RESULT_OK,intent);
+
         finish();
     }
 }

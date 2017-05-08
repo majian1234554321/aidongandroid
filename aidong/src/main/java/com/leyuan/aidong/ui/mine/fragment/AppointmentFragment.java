@@ -174,7 +174,7 @@ public class AppointmentFragment extends BaseLazyFragment implements Appointment
             present.commonLoadData(type);
             Toast.makeText(getContext(),"取消成功",Toast.LENGTH_LONG).show();
         }else {
-            Toast.makeText(getContext(),"取消失败" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), baseBean.getMessage(),Toast.LENGTH_LONG).show();
         }
     }
 
@@ -184,7 +184,7 @@ public class AppointmentFragment extends BaseLazyFragment implements Appointment
             present.commonLoadData(type);
             Toast.makeText(getContext(),"确认成功",Toast.LENGTH_LONG).show();
         }else {
-            Toast.makeText(getContext(),"确认失败" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), baseBean.getMessage(),Toast.LENGTH_LONG).show();
         }
     }
 
@@ -194,7 +194,7 @@ public class AppointmentFragment extends BaseLazyFragment implements Appointment
             present.commonLoadData(type);
             Toast.makeText(getContext(),"删除成功",Toast.LENGTH_LONG).show();
         }else {
-            Toast.makeText(getContext(),"删除失败" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), baseBean.getMessage(),Toast.LENGTH_LONG).show();
         }
     }
 }

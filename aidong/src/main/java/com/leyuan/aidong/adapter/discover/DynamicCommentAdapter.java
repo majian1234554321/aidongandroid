@@ -35,6 +35,8 @@ public class DynamicCommentAdapter extends RecyclerView.Adapter<DynamicCommentAd
     private Context context;
     private int totalCount;
     private List<DynamicBean.Comment.Item> data = new ArrayList<>();
+    private OnMoreCommentClickListener onMoreCommentClickListener;
+
 
     public DynamicCommentAdapter(Context context) {
         this.context = context;
@@ -80,6 +82,14 @@ public class DynamicCommentAdapter extends RecyclerView.Adapter<DynamicCommentAd
             holder.comment.setMovementMethod(LinkMovementMethod.getInstance());
         }else {
             holder.comment.setText("查看更多" + (totalCount - MAX_COMMENT_COUNT)  +"条评论");
+            holder.comment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(onMoreCommentClickListener != null){
+                        onMoreCommentClickListener.onMoreCommentClick();
+                    }
+                }
+            });
         }
     }
 
@@ -120,5 +130,13 @@ public class DynamicCommentAdapter extends RecyclerView.Adapter<DynamicCommentAd
         public void onClick(View v) {
             UserInfoActivity.start(context,bean.publisher.id);
         }
+    }
+
+    public void setOnMoreCommentClickListener(OnMoreCommentClickListener onMoreCommentClickListener) {
+        this.onMoreCommentClickListener = onMoreCommentClickListener;
+    }
+
+    public interface OnMoreCommentClickListener{
+        void onMoreCommentClick();
     }
 }

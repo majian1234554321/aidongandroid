@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.leyuan.aidong.R;
@@ -25,7 +24,6 @@ import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.module.pay.SimplePayListener;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.activity.AddAddressActivity;
-import com.leyuan.aidong.ui.mine.activity.CartActivity;
 import com.leyuan.aidong.ui.mine.activity.OrderActivity;
 import com.leyuan.aidong.ui.mine.activity.PaySuccessActivity;
 import com.leyuan.aidong.ui.mine.activity.SelectAddressActivity;
@@ -36,6 +34,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.ConfirmOrderPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.ConfirmOrderActivityView;
 import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.FormatUtil;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.constant.DeliveryType;
 import com.leyuan.aidong.utils.constant.PayType;
 import com.leyuan.aidong.utils.constant.SettlementType;
@@ -130,7 +129,6 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private boolean needExpress = false;
 
     private ConfirmOrderPresent present;
-
 
     public static void start(Context context, ShopBean shop) {
         Intent starter = new Intent(context, ConfirmOrderActivity.class);
@@ -313,7 +311,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
     private void payOrder(){
         if(needExpress && TextUtils.isEmpty(pickUpId)){
-            Toast.makeText(this,"请填写收货地址",Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong("请填写收货地址");
             return;
         }
         switch (settlementType){
@@ -337,7 +335,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private PayInterface.PayListener payListener = new SimplePayListener(this) {
         @Override
         public void onSuccess(String code, Object object) {
-            Toast.makeText(ConfirmOrderActivity.this,"支付成功",Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong("支付成功");
             startActivity(new Intent(ConfirmOrderActivity.this,PaySuccessActivity.class));
         }
 
@@ -392,51 +390,6 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     }
 
     @Override
-    public void setRefreshCartDataResult(List<ShopBean> updatedList) {
-        if(updatedList != null) {
-            //这里是直接刷新购物车所以要剔除掉比购物车中多的数据
-            List<String> containGoodsId = new ArrayList<>();
-            for (int i = 0; i < shopBeanList.size(); i++) {
-                for (int j = 0; j < shopBeanList.get(i).getItem().size(); j++) {
-                    containGoodsId.add(shopBeanList.get(i).getItem().get(j).getId());
-                }
-            }
-
-            List<ShopBean> containShop = new ArrayList<>();
-            for (int i = 0; i < updatedList.size(); i++) {
-                for (int j = 0; j < updatedList.get(i).getItem().size(); j++) {
-                    if(containGoodsId.contains(updatedList.get(i).getItem().get(j).getId())){
-                        containShop.add(updatedList.get(i));
-                    }
-                }
-            }
-
-            List<ShopBean> result = new ArrayList<>();
-            for (int i = 0; i < containShop.size(); i++) {
-                ShopBean shop = new ShopBean();
-                shop.setPickUp(containShop.get(i).getPickUp());
-                List<GoodsBean> goodsBeanList = new ArrayList<>();
-                for (int j = 0; j < containShop.get(i).getItem().size(); j++) {
-                    if(containGoodsId.contains(containShop.get(i).getItem().get(j).getId())) {
-                        goodsBeanList.add(containShop.get(i).getItem().get(j));
-                        shop.setItem(goodsBeanList);
-                    }
-                }
-                result.add(shop);
-            }
-
-            shopBeanList = result;
-            shopAdapter.setData(shopBeanList);
-
-            //将购物车中的数据传递到购物车界面
-            Intent intent = new Intent(this, CartActivity.class);
-            intent.putParcelableArrayListExtra("shopBeanList",
-                    (ArrayList<? extends Parcelable>) updatedList);
-            setResult(RESULT_OK,intent);
-        }
-    }
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == RESULT_OK){
             if(requestCode == REQUEST_SELECT_ADDRESS){
@@ -460,7 +413,9 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double),
                         totalGoodsPrice + deliveryPrice - FormatUtil.parseDouble(couponBean.getDiscount())));
             }else if(requestCode == REQUEST_UPDATE_DELIVERY){
-                present.refreshCartData();
+                List<ShopBean> shopBeanList = getIntent().getParcelableArrayListExtra("shopList");
+                shopAdapter.setData(shopBeanList);
+                setResult(RESULT_OK,null);
             }
         }
     }
@@ -487,5 +442,4 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         tvAddress.setText(sb);
         pickUpId = address.getId();
     }
-
 }
