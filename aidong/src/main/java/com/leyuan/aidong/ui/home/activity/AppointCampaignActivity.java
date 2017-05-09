@@ -80,7 +80,9 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
 
     private String couponId;
     private float integral;
-    private @PayType String payType;
+    private
+    @PayType
+    String payType;
     private String userName;
     private String contactMobile;
 
@@ -105,7 +107,9 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
         }
         initView();
         setListener();
-        campaignPresent.getSpecifyCampaignCoupon(bean.getCampaignId());
+//        campaignPresent.getSpecifyCampaignCoupon(bean.getCampaignId());
+
+        campaignPresent.getCampaignAvailableCoupon(bean.getCampaignId());
     }
 
     private void initView() {
@@ -178,6 +182,9 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
             case R.id.tv_coupon:
                 if (usableCoupons != null && !usableCoupons.isEmpty()) {
                     Intent intent = new Intent(this, SelectCouponActivity.class);
+                    if (usableCoupons != null && usableCoupons instanceof ArrayList) {
+                        intent.putParcelableArrayListExtra("couponList", (ArrayList<CouponBean>) usableCoupons);
+                    }
                     startActivityForResult(intent, REQUEST_SELECT_COUPON);
                 }
                 break;
@@ -199,14 +206,14 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
 
     @Override
     public void onFreeCampaignAppointed() {
-        AppointSuccessActivity.start(this, bean.getStartTime(),false);
+        AppointSuccessActivity.start(this, bean.getStartTime(), false);
         Toast.makeText(AppointCampaignActivity.this, "预约成功", Toast.LENGTH_LONG).show();
     }
 
     private PayInterface.PayListener payListener = new SimplePayListener(this) {
         @Override
         public void onSuccess(String code, Object object) {
-            AppointSuccessActivity.start(AppointCampaignActivity.this, bean.getStartTime(),false);
+            AppointSuccessActivity.start(AppointCampaignActivity.this, bean.getStartTime(), false);
             Toast.makeText(AppointCampaignActivity.this, "支付成功", Toast.LENGTH_LONG).show();
         }
 
@@ -243,8 +250,8 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if(data != null){
-            if(requestCode == REQUEST_SELECT_COUPON){
+        if (data != null) {
+            if (requestCode == REQUEST_SELECT_COUPON) {
                 CouponBean couponBean = data.getParcelableExtra("coupon");
                 tvCoupon.setText(String.format(getString(R.string.rmb_minus_price_double),
                         FormatUtil.parseDouble(couponBean.getDiscount())));

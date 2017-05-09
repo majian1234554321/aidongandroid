@@ -104,41 +104,44 @@ public class CouponExchangeActivity extends BaseActivity implements CouponExchan
                 tvDesc.setText(Html.fromHtml(bean.getIntroduce()));
             }
 
+            tvCouponType.setText(bean.getCoupon_type());
+            tvProduce.setText(bean.getLimitCategory());
+
             //与优惠券类型有关 折扣劵,满减劵
-            tvRmbFlag.setVisibility(bean.getType().equals("0") ? View.VISIBLE : View.GONE);
-            tvDiscountFlag.setVisibility(bean.getType().equals("0") ? View.GONE : View.VISIBLE);
-
-            if (TextUtils.equals("0", bean.getLimitExtId())) {
-                tvCouponType.setText("品类劵");
-            } else if (TextUtils.equals("common", bean.getLimitCategory())) {
-                tvCouponType.setText("通用劵");
-            } else {
-                tvCouponType.setText("专用劵");
-            }
-
-            switch (bean.getLimitCategory()) {
-                case "common":
-                    tvProduce.setText("全场所有商品可用");
-                    break;
-                case "course":
-                    tvProduce.setText("指定课程类产品可用");
-                    break;
-                case "food":
-                    tvProduce.setText("指定餐饮类产品可用");
-                    break;
-                case "campaign":
-                    tvProduce.setText("指定活动类产品可用");
-                    break;
-                case "nutrition":
-                    tvProduce.setText("指定营养品类产品可用");
-                    break;
-                case "equipment":
-                    tvProduce.setText("指定装备类产品可用");
-                    break;
-                case "ticket":
-                    tvProduce.setText("指定票务类产品可用");
-                    break;
-            }
+//            tvRmbFlag.setVisibility(bean.getType().equals("0") ? View.VISIBLE : View.GONE);
+//            tvDiscountFlag.setVisibility(bean.getType().equals("0") ? View.GONE : View.VISIBLE);
+//
+//            if (TextUtils.equals("0", bean.getLimitExtId())) {
+//                tvCouponType.setText("品类劵");
+//            } else if (TextUtils.equals("common", bean.getLimitCategory())) {
+//                tvCouponType.setText("通用劵");
+//            } else {
+//                tvCouponType.setText("专用劵");
+//            }
+//
+//            switch (bean.getLimitCategory()) {
+//                case "common":
+//                    tvProduce.setText("全场所有商品可用");
+//                    break;
+//                case "course":
+//                    tvProduce.setText("指定课程类产品可用");
+//                    break;
+//                case "food":
+//                    tvProduce.setText("指定餐饮类产品可用");
+//                    break;
+//                case "campaign":
+//                    tvProduce.setText("指定活动类产品可用");
+//                    break;
+//                case "nutrition":
+//                    tvProduce.setText("指定营养品类产品可用");
+//                    break;
+//                case "equipment":
+//                    tvProduce.setText("指定装备类产品可用");
+//                    break;
+//                case "ticket":
+//                    tvProduce.setText("指定票务类产品可用");
+//                    break;
+//            }
 
             if (TextUtils.isEmpty(bean.getStartDate())) {
                 tvTime.setText(String.format(getString(R.string.coupon_expired), bean.getEndDate()));

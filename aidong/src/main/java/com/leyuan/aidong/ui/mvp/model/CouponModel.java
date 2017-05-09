@@ -48,4 +48,6 @@ public interface CouponModel {
      * @param id         购买商品的编号数组
      */
     void getSpecifyGoodsCoupon(Subscriber<CouponData> subscriber, @CouponPosition String from, String... id);
+
+    void getGoodsAvailableCoupon(Subscriber<CouponData> subscriber, String... items);
 }
