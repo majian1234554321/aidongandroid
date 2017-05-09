@@ -127,6 +127,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private @SettlementType String settlementType;
     private double totalGoodsPrice;
     private boolean needExpress = false;
+    private int deliveryPosition;
 
     private ConfirmOrderPresent present;
 
@@ -304,6 +305,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onDeliveryTypeClick(int position) {
+        this.deliveryPosition = position;
         Intent intent = new Intent(this, UpdateDeliveryInfoActivity.class);
         intent.putExtra("shopBean",shopBeanList.get(position));
         startActivityForResult(intent,REQUEST_UPDATE_DELIVERY);
@@ -413,8 +415,33 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double),
                         totalGoodsPrice + deliveryPrice - FormatUtil.parseDouble(couponBean.getDiscount())));
             }else if(requestCode == REQUEST_UPDATE_DELIVERY){
-                List<ShopBean> shopBeanList = getIntent().getParcelableArrayListExtra("shopList");
+                List<ShopBean> result = data.getParcelableArrayListExtra("shopList");
+                shopBeanList.remove(deliveryPosition);
+
+                //1.若已有该商店,将该商店商品挂载到其下
+                for (int i = 0; i < shopBeanList.size(); i++) {
+                    for (int j = 0; j < result.size(); j++) {
+                        if(shopBeanList.get(i).getPickUp().getInfo().getName()
+                                .equals(result.get(j).getPickUp().getInfo().getName())){
+                            shopBeanList.get(i).getItem().addAll(result.get(j).getItem());
+                        }
+                    }
+                }
+
+                //2.若没有改商店将该商店添加到商店列表
+                List<String> shopNames = new ArrayList<>();
+                for (int i = 0; i < shopBeanList.size(); i++) {
+                    shopNames.add(shopBeanList.get(i).getPickUp().getInfo().getName());
+                }
+                for (int i = 0; i < result.size(); i++) {
+                    if(!shopNames.contains(result.get(i).getPickUp().getInfo().getName())){
+                        shopBeanList.add(result.get(i));
+                    }
+                }
+
                 shopAdapter.setData(shopBeanList);
+
+                //通知购物车刷新
                 setResult(RESULT_OK,null);
             }
         }
