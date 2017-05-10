@@ -16,15 +16,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.android.exoplayer.util.Util;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter;
 import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.CommentBean;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.PhotoBrowseInfo;
+import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.App;
@@ -45,6 +46,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.SportCircleFragmentView;
 import com.leyuan.aidong.ui.video.activity.PlayerActivity;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -63,6 +65,7 @@ import static com.leyuan.aidong.utils.Constant.DYNAMIC_THREE_IMAGE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_TWO_IMAGE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_VIDEO;
 import static com.leyuan.aidong.utils.Constant.REQUEST_LOGIN;
+import static com.leyuan.aidong.utils.Constant.REQUEST_REFRESH_DYNAMIC;
 import static com.leyuan.aidong.utils.Constant.REQUEST_TO_DYNAMIC;
 
 
@@ -82,6 +85,7 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
     private int currPage = 1;
     private DynamicPresent dynamicPresent;
 
+    private int position;
     private SharePopupWindow sharePopupWindow;
 
     BroadcastReceiver selectCityReceiver = new BroadcastReceiver() {
@@ -194,9 +198,11 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
     private class DynamicCallback extends CircleDynamicAdapter.SimpleDynamicCallback {
 
         @Override
-        public void onBackgroundClick(DynamicBean dynamicBean) {
+        public void onBackgroundClick(DynamicBean dynamicBean,int position) {
+            CircleFragment.this.position = position;
             if (App.mInstance.isLogin()) {
-                DynamicDetailActivity.start(getContext(), dynamicBean);
+                startActivityForResult(new Intent(getContext(),DynamicDetailActivity.class)
+                        .putExtra("dynamic",dynamicBean),REQUEST_REFRESH_DYNAMIC);
             } else {
                 invokeDynamicBean = dynamicBean;
                 startActivityForResult(new Intent(getContext(), LoginActivity.class), REQUEST_TO_DYNAMIC);
@@ -236,9 +242,11 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
         }
 
         @Override
-        public void onCommentClick(DynamicBean dynamicBean) {
+        public void onCommentClick(DynamicBean dynamicBean,int position) {
+            CircleFragment.this.position = position;
             if (App.mInstance.isLogin()) {
-                DynamicDetailActivity.start(getContext(), dynamicBean);
+                startActivityForResult(new Intent(getContext(),DynamicDetailActivity.class)
+                        .putExtra("dynamic",dynamicBean),REQUEST_REFRESH_DYNAMIC);
             } else {
                 invokeDynamicBean = dynamicBean;
                 startActivityForResult(new Intent(getContext(), LoginActivity.class), REQUEST_TO_DYNAMIC);
@@ -253,7 +261,8 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
             } else {
                 cover = dynamic.videos.cover;
             }
-            sharePopupWindow.showAtBottom(dynamic.publisher.getName() + "的动态", dynamic.content, cover, ConstantUrl.URL_SHARE_DYNAMIC);
+            sharePopupWindow.showAtBottom(dynamic.publisher.getName() + "的动态", dynamic.content,
+                    cover, ConstantUrl.URL_SHARE_DYNAMIC);
         }
     }
 
@@ -261,17 +270,14 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
     public void addLikeResult(int position, BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
             dynamicList.get(position).like.counter += 1;
-            DynamicBean dynamic = new DynamicBean();
-            DynamicBean.LikeUser likeUser = dynamic.new LikeUser();
-            DynamicBean.LikeUser.Item item = likeUser.new Item();
+            UserBean item = new UserBean();
             UserCoach user = App.mInstance.getUser();
-            item.avatar = user.getAvatar();
-            item.id = String.valueOf(user.getId());
+            item.setAvatar(user.getAvatar());
+            item.setId(String.valueOf(user.getId()));
             dynamicList.get(position).like.item.add(item);
             circleDynamicAdapter.notifyItemChanged(position);
-            Toast.makeText(getContext(), "点赞成功", Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(getContext(), "点赞失败:" + baseBean.getMessage(), Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong(baseBean.getMessage());
         }
     }
 
@@ -279,18 +285,17 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
     public void cancelLikeResult(int position, BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
             dynamicList.get(position).like.counter -= 1;
-            List<DynamicBean.LikeUser.Item> item = dynamicList.get(position).like.item;
+            List<UserBean> item = dynamicList.get(position).like.item;
             int myPosition = 0;
             for (int i = 0; i < item.size(); i++) {
-                if (item.get(i).id.equals(String.valueOf(App.mInstance.getUser().getId()))) {
+                if (item.get(i).getId().equals(String.valueOf(App.mInstance.getUser().getId()))) {
                     myPosition = i;
                 }
             }
             item.remove(myPosition);
             circleDynamicAdapter.notifyItemChanged(position);
-            Toast.makeText(getContext(), "取消赞成功", Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(getContext(), "取消赞失败:" + baseBean.getMessage(), Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong(baseBean.getMessage());
         }
     }
 
@@ -302,10 +307,18 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
             if (requestCode == REQUEST_LOGIN) {
                 dynamicPresent.pullToRefreshData();
             } else if (requestCode == REQUEST_TO_DYNAMIC) {
-                DynamicDetailActivity.start(getContext(), invokeDynamicBean);
+                startActivityForResult(new Intent(getContext(),DynamicDetailActivity.class)
+                        .putExtra("dynamic",invokeDynamicBean),REQUEST_REFRESH_DYNAMIC);
+            }else if(requestCode == REQUEST_REFRESH_DYNAMIC){
+                CommentBean comment = data.getParcelableExtra("comment");
+                DynamicBean dynamicBean = dynamicList.get(position);
+                dynamicBean.comment.item.add(0,comment);
+                circleDynamicAdapter.notifyDataSetChanged();
             }
         }
     }
+
+
 
     @Override
     public void onDestroy() {

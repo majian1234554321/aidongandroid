@@ -17,6 +17,7 @@ import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter.IDynamicCallback;
 import com.leyuan.aidong.adapter.discover.DynamicCommentAdapter;
 import com.leyuan.aidong.adapter.discover.DynamicLikeAdapter;
 import com.leyuan.aidong.entity.DynamicBean;
+import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.SystemInfoUtils;
@@ -128,7 +129,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
                     @Override
                     public void onMoreCommentClick() {
                         if (callback != null) {
-                            callback.onCommentClick(dynamic);
+                            callback.onCommentClick(dynamic,position);
                         }
                     }
                 });
@@ -152,7 +153,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             @Override
             public void onClick(View v) {
                 if (callback != null) {
-                    callback.onBackgroundClick(dynamic);
+                    callback.onBackgroundClick(dynamic,position);
                 }
             }
         });
@@ -188,7 +189,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             @Override
             public void onClick(View v) {
                 if (callback != null) {
-                    callback.onCommentClick(dynamic);
+                    callback.onCommentClick(dynamic,position);
                 }
             }
         });
@@ -216,6 +217,11 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         this.showFollowButton = show;
     }
 
+    public void notifyCommentChange(){
+        RecyclerView.Adapter adapter = commentRecyclerView.getAdapter();
+        adapter.notifyDataSetChanged();
+    }
+
     private boolean isLike(DynamicBean dynamic) {
         if (!App.mInstance.isLogin()) {
             return false;
@@ -223,9 +229,9 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         if (dynamic.like.item.isEmpty()) {
             return false;
         }
-        for (DynamicBean.LikeUser.Item item : dynamic.like.item) {
-            if (!TextUtils.isEmpty(item.id) &&
-                    item.id.equals(String.valueOf(App.mInstance.getUser().getId()))) {
+        for (UserBean item : dynamic.like.item) {
+            if (!TextUtils.isEmpty(item.getId()) &&
+                    item.getId().equals(String.valueOf(App.mInstance.getUser().getId()))) {
                 return true;
             }
         }

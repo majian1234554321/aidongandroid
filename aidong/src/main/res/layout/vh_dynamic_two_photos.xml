@@ -17,16 +17,16 @@
             android:id="@+id/dv_one"
             android:layout_width="0dp"
             android:layout_height="185dp"
-            android:layout_weight="1"
-            />
+            android:scaleType="centerCrop"
+            android:layout_weight="1" />
 
         <ImageView
             android:id="@+id/dv_two"
             android:layout_width="0dp"
             android:layout_height="185dp"
             android:layout_marginLeft="5dp"
-            android:layout_weight="1"
-            />
+            android:scaleType="centerCrop"
+            android:layout_weight="1" />
     </LinearLayout>
 
     <include layout="@layout/inc_dynamic_bottom"/>

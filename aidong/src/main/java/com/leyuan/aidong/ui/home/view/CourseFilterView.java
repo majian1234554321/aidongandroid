@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.home.view;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,7 @@ import java.util.List;
 /**
  * 课程列表筛选控件
  * Created by song on 2016/10/31.
+ * //todo 混乱.............
  */
 public class CourseFilterView extends LinearLayout implements View.OnClickListener {
     private Context context;
@@ -51,11 +53,13 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
     private int rightSelectedPosition = -1; //右边列表实际选中的位置
     private List<DistrictBean> leftCircleList = new ArrayList<>();
     private List<DistrictDescBean> rightCircleList = new ArrayList<>();
+    private int tempLeftPosition = 0;
 
     private int panelHeight;
     private boolean isPopupShowing = false;
     private boolean isCategoryShowing = false;
     private boolean isCircleShowing = false;
+
 
     public CourseFilterView(Context context) {
         this(context, null);
@@ -137,7 +141,9 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
                 tvCategory.setText(categoryList.get(position).getName());
                 hidePopup();
                 if (onFilterClickListener != null) {
-                    onFilterClickListener.onCategoryItemClick(categoryList.get(position).getName());
+                    //全部课程类型返回空
+                    onFilterClickListener.onCategoryItemClick(context.getString(R.string.course_all_type).equals(categoryList.get(position).getName())
+                            ? "" : categoryList.get(position).getName());
                 }
             }
         });
@@ -185,11 +191,15 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
         if(rightSelectedPosition != -1) {
             rightListView.setSelection(rightSelectedPosition);
             rightCircleAdapter.setSelectedBean(rightCircleList.get(rightSelectedPosition));
+        }else {
+            rightListView.setSelection(0);
+            rightCircleAdapter.setSelectedBean(rightCircleList.get(0));
         }
 
         leftListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int leftPosition, long id) {
+                tempLeftPosition = leftPosition;
                 leftCircleAdapter.setCheckItem(leftPosition);       //临时改变左边选中item的状态
 
                 if(leftCircleList.get(leftPosition) != null){       //更新右边列表数据
@@ -203,23 +213,23 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
                 }else {                                             //若左边列表实际选中的左边列表是当前点击位置 将右边列表滑至顶端
                     rightListView.setSelection(rightSelectedPosition);
                 }
+            }
+        });
 
-                rightListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int rightPosition, long id) {
-                        hidePopup();
-                        leftSelectedPosition = leftPosition;        //改变左边选中item的状态
-                        leftCircleAdapter.setSelectedBean(leftCircleList.get(leftSelectedPosition));
+        rightListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int rightPosition, long id) {
+                hidePopup();
+                leftSelectedPosition = tempLeftPosition;        //改变左边选中item的状态
+                leftCircleAdapter.setSelectedBean(leftCircleList.get(leftSelectedPosition));
 
-                        rightSelectedPosition = rightPosition;           //改变右边选中item
-                        rightCircleAdapter.setSelectedBean(rightCircleList.get(rightSelectedPosition));
-                        String address = rightCircleList.get(rightSelectedPosition).getArea();
-                        tvCircle.setText(address);
-                        if (onFilterClickListener != null) {
-                            onFilterClickListener.onBusinessCircleItemClick(address);
-                        }
-                    }
-                });
+                rightSelectedPosition = rightPosition;           //改变右边选中item
+                rightCircleAdapter.setSelectedBean(rightCircleList.get(rightSelectedPosition));
+                String address = rightCircleList.get(rightSelectedPosition).getArea();
+                tvCircle.setText(address);
+                if (onFilterClickListener != null) {
+                    onFilterClickListener.onBusinessCircleItemClick(context.getString(R.string.all_circle).equals(address) ? "" :address);
+                }
             }
         });
     }
@@ -286,12 +296,12 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
     }
 
     public void selectCategory(String category){
-        if(categoryList == null || categoryList.isEmpty()){
+        if(categoryList == null || categoryList.isEmpty() || TextUtils.isEmpty(category)){
             return;
         }
 
         for (int i = 0; i < categoryList.size(); i++) {
-            if(categoryList.get(i).getName().equals(category)){
+            if(category.equals(categoryList.get(i).getName())){
                 if(categoryAdapter == null){
                     categoryAdapter = new CategoryListAdapter(context, categoryList);
                     leftListView.setAdapter(categoryAdapter);

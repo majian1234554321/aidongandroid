@@ -125,6 +125,7 @@ public class VenuesDetailFragment extends BaseFragment implements View.OnClickLi
                 startActivity(new Intent(getContext(), NurtureActivity.class));
                 break;
             case R.id.tv_equipment:
+
                 break;
             case R.id.tv_address:
                 if (venues != null) {

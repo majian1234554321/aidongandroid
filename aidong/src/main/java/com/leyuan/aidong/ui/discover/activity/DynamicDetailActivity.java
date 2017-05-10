@@ -1,6 +1,5 @@
 package com.leyuan.aidong.ui.discover.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.net.Uri;
@@ -25,6 +24,7 @@ import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CommentBean;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.PhotoBrowseInfo;
+import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
@@ -92,17 +92,11 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
         setContentView(R.layout.activity_dynamic_detail);
         dynamicPresent = new DynamicPresentImpl(this,this);
         if(getIntent() != null){
-            dynamic = (DynamicBean) getIntent().getSerializableExtra("dynamic");
+            dynamic = getIntent().getParcelableExtra("dynamic");
         }
         initView();
         setListener();
         dynamicPresent.pullToRefreshComments(dynamic.id);
-    }
-
-    public static void start(Context context,DynamicBean bean) {
-        Intent starter = new Intent(context, DynamicDetailActivity.class);
-        starter.putExtra("dynamic",bean);
-        context.startActivity(starter);
     }
 
     private void initView(){
@@ -223,7 +217,7 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
     public void addCommentsResult(BaseBean baseBean) {
         if(baseBean.getStatus() == Constant.OK){
             CommentBean temp = new CommentBean();
-            CommentBean.Publisher publisher = temp.new Publisher();
+            UserBean publisher = new UserBean();
             publisher.setAvatar(App.mInstance.getUser().getAvatar());
             publisher.setName(App.mInstance.getUser().getName());
             temp.setContent(etComment.getText().toString());
@@ -232,12 +226,15 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
             comments.add(0,temp);
             commentAdapter.setData(comments);
             wrapperAdapter.notifyDataSetChanged();
-            //commentView.scrollToPosition(1);
             etComment.clearFocus();
             etComment.setText(Constant.EMPTY_STR);
-            Toast.makeText(this,"评论成功",Toast.LENGTH_LONG).show();
+
+            //返回新增评论 刷新动态列表
+            Intent intent = new Intent();
+            intent.putExtra("comment",temp);
+            setResult(RESULT_OK,intent);
         }else {
-            Toast.makeText(this,"评论失败:" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong(baseBean.getMessage());
         }
         KeyBoardUtil.closeKeyboard(etComment,this);
     }
@@ -286,7 +283,7 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
         if(baseBean.getStatus() == Constant.OK){
             ToastGlobal.showLong("举报成功");
         }else {
-            ToastGlobal.showLong("举报失败");
+            ToastGlobal.showLong(baseBean.getMessage());
         }
     }
 
@@ -295,9 +292,8 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
         if(baseBean.getStatus() == Constant.OK){
             SystemInfoUtils.addFollow(dynamic.publisher);
             headerAdapter.notifyDataSetChanged();
-            ToastGlobal.showLong("关注成功");
         }else {
-            ToastGlobal.showLong("关注失败" + baseBean.getMessage());
+            ToastGlobal.showLong(baseBean.getMessage());
         }
     }
 
@@ -306,9 +302,8 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
         if(baseBean.getStatus() == Constant.OK){
             SystemInfoUtils.removeFollow(dynamic.publisher);
             headerAdapter.notifyDataSetChanged();
-            ToastGlobal.showLong("取消关注成功");
         }else {
-            ToastGlobal.showLong("取消关注失败" + baseBean.getMessage());
+            ToastGlobal.showLong(baseBean.getMessage());
         }
     }
 
@@ -344,7 +339,7 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
         }
 
         @Override
-        public void onCommentClick(DynamicBean dynamicBean) {
+        public void onCommentClick(DynamicBean dynamicBean,int position) {
             KeyBoardUtil.openKeyboard(etComment,DynamicDetailActivity.this);
         }
 
@@ -363,17 +358,14 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
     public void addLikeResult(int position, BaseBean baseBean) {
         if(baseBean.getStatus() == Constant.OK){
             dynamicList.get(position).like.counter += 1;
-            DynamicBean dynamic = new DynamicBean();
-            DynamicBean.LikeUser likeUser = dynamic.new LikeUser();
-            DynamicBean.LikeUser.Item item = likeUser.new Item();
+            UserBean item = new UserBean();
             UserCoach user = App.mInstance.getUser();
-            item.avatar = user.getAvatar();
-            item.id = String.valueOf(user.getId());
+            item.setAvatar(user.getAvatar());
+            item.setId(String.valueOf(user.getId()));
             dynamicList.get(position).like.item.add(item);
             headerAdapter.notifyItemChanged(position);
-            Toast.makeText(this,"点赞成功",Toast.LENGTH_LONG).show();
         }else{
-            Toast.makeText(this,"点赞失败:" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong(baseBean.getMessage());
         }
     }
 
@@ -381,18 +373,17 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
     public void cancelLikeResult(int position, BaseBean baseBean) {
         if(baseBean.getStatus() == Constant.OK){
             dynamicList.get(position).like.counter -= 1;
-            List<DynamicBean.LikeUser.Item> item = dynamicList.get(position).like.item;
+            List<UserBean> item = dynamicList.get(position).like.item;
             int myPosition = 0;
             for (int i = 0; i < item.size(); i++) {
-                if(item.get(i).id.equals(String.valueOf(App.mInstance.getUser().getId()))){
+                if(item.get(i).getId().equals(String.valueOf(App.mInstance.getUser().getId()))){
                     myPosition = i;
                 }
             }
             item.remove(myPosition);
             headerAdapter.notifyItemChanged(position);
-            Toast.makeText(this,"取消赞成功",Toast.LENGTH_LONG).show();
         }else {
-            Toast.makeText(this,"取消赞失败:"+baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong(baseBean.getMessage());
         }
     }
 }

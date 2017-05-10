@@ -21,6 +21,7 @@ import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.PhotoBrowseInfo;
+import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.App;
@@ -55,6 +56,7 @@ import static com.leyuan.aidong.utils.Constant.DYNAMIC_SIX_IMAGE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_THREE_IMAGE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_TWO_IMAGE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_VIDEO;
+import static com.leyuan.aidong.utils.Constant.REQUEST_REFRESH_DYNAMIC;
 
 /**
  * 用户资料--动态
@@ -174,8 +176,9 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
     private class DynamicCallback extends CircleDynamicAdapter.SimpleDynamicCallback {
 
         @Override
-        public void onBackgroundClick(DynamicBean dynamicBean) {
-            DynamicDetailActivity.start(getContext(), dynamicBean);
+        public void onBackgroundClick(DynamicBean dynamicBean,int position) {
+            startActivityForResult(new Intent(getContext(),DynamicDetailActivity.class)
+                    .putExtra("dynamic",dynamicBean),REQUEST_REFRESH_DYNAMIC);
         }
 
         @Override
@@ -202,9 +205,9 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
         }
 
         @Override
-        public void onCommentClick(DynamicBean dynamicBean) {
-            DynamicDetailActivity.start(getContext(), dynamicBean);
-
+        public void onCommentClick(DynamicBean dynamicBean,int position) {
+            startActivityForResult(new Intent(getContext(),DynamicDetailActivity.class)
+                    .putExtra("dynamic",dynamicBean),REQUEST_REFRESH_DYNAMIC);
         }
 
         @Override
@@ -224,15 +227,12 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
     public void addLikeResult(int position, BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
             dynamicList.get(position).like.counter += 1;
-            DynamicBean dynamic = new DynamicBean();
-            DynamicBean.LikeUser likeUser = dynamic.new LikeUser();
-            DynamicBean.LikeUser.Item item = likeUser.new Item();
+            UserBean item = new UserBean();
             UserCoach user = App.mInstance.getUser();
-            item.avatar = user.getAvatar();
-            item.id = String.valueOf(user.getId());
+            item.setAvatar(user.getAvatar());
+            item.setId(String.valueOf(user.getId()));
             dynamicList.get(position).like.item.add(item);
             circleDynamicAdapter.notifyItemChanged(position);
-            Toast.makeText(getContext(), "点赞成功", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(getContext(), "点赞失败:" + baseBean.getMessage(), Toast.LENGTH_LONG).show();
         }
@@ -242,18 +242,17 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
     public void canLikeResult(int position, BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
             dynamicList.get(position).like.counter -= 1;
-            List<DynamicBean.LikeUser.Item> item = dynamicList.get(position).like.item;
+            List<UserBean> item = dynamicList.get(position).like.item;
             int myPosition = 0;
             for (int i = 0; i < item.size(); i++) {
-                if (item.get(i).id.equals(String.valueOf(App.mInstance.getUser().getId()))) {
+                if (item.get(i).getId().equals(String.valueOf(App.mInstance.getUser().getId()))) {
                     myPosition = i;
                 }
             }
             item.remove(myPosition);
             circleDynamicAdapter.notifyItemChanged(position);
-            Toast.makeText(getContext(), "取消赞成功", Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(getContext(), "取消赞失败:" + baseBean.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), baseBean.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 

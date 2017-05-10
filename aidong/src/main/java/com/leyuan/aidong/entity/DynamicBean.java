@@ -1,9 +1,10 @@
 package com.leyuan.aidong.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.leyuan.aidong.utils.constant.DynamicType;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_FIVE_IMAGE;
@@ -19,53 +20,17 @@ import static com.leyuan.aidong.utils.Constant.DYNAMIC_VIDEO;
  * 爱动圈动态
  * Created by song on 2016/12/26.
  */
-public class DynamicBean implements Serializable{
+public class DynamicBean implements Parcelable {
     public String id;
     public String content;
     public List<String> image;
-    public Video videos;
+    public DynamicVideoBean videos;
     public UserBean publisher;
     public String published_at;
-    public LikeUser like;
-    public Comment comment;
+    public LikeUserListBean like;
+    public CommentListBean comment;
 
     public boolean isLiked = false; //标记是否点赞
-
-    public class Video implements Serializable{
-        public String url;
-        public String cover;
-    }
-
-    public class LikeUser implements Serializable{
-        public int counter;
-        public List<Item> item = new ArrayList<>();
-        public class  Item implements Serializable{
-            public String id;
-            public String name;
-            public String avatar;
-            public String gender;
-        }
-    }
-
-
-    public class Comment implements Serializable{
-        public int count;
-
-        public List<Item> item = new ArrayList<>();
-        public class  Item implements Serializable{
-            public String id;
-            public String content;
-            public String published_at;
-            public Publisher publisher;
-            public class Publisher implements Serializable{
-                public String id;
-                public String name;
-                public String avatar;
-                public String gender;
-
-            }
-        }
-    }
 
     @DynamicType
     public  int getDynamicType(){
@@ -89,4 +54,50 @@ public class DynamicBean implements Serializable{
             return DYNAMIC_VIDEO;
         }
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.content);
+        dest.writeStringList(this.image);
+        dest.writeParcelable(this.videos, flags);
+        dest.writeParcelable(this.publisher, flags);
+        dest.writeString(this.published_at);
+        dest.writeParcelable(this.like, flags);
+        dest.writeParcelable(this.comment, flags);
+        dest.writeByte(this.isLiked ? (byte) 1 : (byte) 0);
+    }
+
+    public DynamicBean() {
+    }
+
+    protected DynamicBean(Parcel in) {
+        this.id = in.readString();
+        this.content = in.readString();
+        this.image = in.createStringArrayList();
+        this.videos = in.readParcelable(DynamicVideoBean.class.getClassLoader());
+        this.publisher = in.readParcelable(UserBean.class.getClassLoader());
+        this.published_at = in.readString();
+        this.like = in.readParcelable(LikeUserListBean.class.getClassLoader());
+        this.comment = in.readParcelable(CommentListBean.class.getClassLoader());
+        this.isLiked = in.readByte() != 0;
+    }
+
+    public static final Creator<DynamicBean> CREATOR = new Creator<DynamicBean>() {
+        @Override
+        public DynamicBean createFromParcel(Parcel source) {
+            return new DynamicBean(source);
+        }
+
+        @Override
+        public DynamicBean[] newArray(int size) {
+            return new DynamicBean[size];
+        }
+    };
 }

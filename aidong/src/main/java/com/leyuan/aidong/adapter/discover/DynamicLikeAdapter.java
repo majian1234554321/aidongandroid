@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.DynamicBean;
+import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.ui.discover.activity.DynamicParseUserActivity;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.utils.DensityUtil;
@@ -29,7 +29,7 @@ public class DynamicLikeAdapter extends RecyclerView.Adapter<DynamicLikeAdapter.
 
     private Context context;
     private int totalCount;
-    private List<DynamicBean.LikeUser.Item> data = new ArrayList<>();
+    private List<UserBean> data = new ArrayList<>();
     private String dynamicId;
 
     public DynamicLikeAdapter(Context context) {
@@ -42,7 +42,7 @@ public class DynamicLikeAdapter extends RecyclerView.Adapter<DynamicLikeAdapter.
 
     }
 
-    public void setData(List<DynamicBean.LikeUser.Item> data, int totalCount) {
+    public void setData(List<UserBean> data, int totalCount) {
         this.data = data;
         this.totalCount = totalCount;
         while (this.data.size() > MAM_USER_COUNT) {
@@ -78,12 +78,12 @@ public class DynamicLikeAdapter extends RecyclerView.Adapter<DynamicLikeAdapter.
     @Override
     public void onBindViewHolder(UserHolder holder, int position) {
         if (getItemViewType(position) == TYPE_USER) {
-            final DynamicBean.LikeUser.Item bean = data.get(position);
-            GlideLoader.getInstance().displayCircleImage(bean.avatar, holder.avatar);
+            final UserBean bean = data.get(position);
+            GlideLoader.getInstance().displayCircleImage(bean.getAvatar(), holder.avatar);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    UserInfoActivity.start(context, bean.id);
+                    UserInfoActivity.start(context, bean.getId());
                 }
             });
         } else {

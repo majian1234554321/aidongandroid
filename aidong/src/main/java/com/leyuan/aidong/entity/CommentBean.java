@@ -1,12 +1,15 @@
 package com.leyuan.aidong.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
  * 爱动圈评论
  * Created by song on 2017/1/14.
  */
-public class CommentBean {
+public class CommentBean implements Parcelable {
     @SerializedName("id")
     private String id;
     @SerializedName("content")
@@ -18,62 +21,16 @@ public class CommentBean {
     private String created_at;
 
     @SerializedName("publisher")
-    private Publisher publisher;
+    private UserBean publisher;
 
-    public class Publisher {
-        @SerializedName("publisher_id")
-        private String publisher_id;
 
-        @SerializedName("name")
-        private String name;
-        @SerializedName("avatar")
-        private String avatar;
-        @SerializedName("gender")
-        private String gender;
-        @SerializedName("id")
-        private String id;
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getPublisher_id() {
-            return publisher_id;
-        }
-
-        public void setPublisher_id(String publisher_id) {
-            this.publisher_id = publisher_id;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getAvatar() {
-            return avatar;
-        }
-
-        public void setAvatar(String avatar) {
-            this.avatar = avatar;
-        }
-
-        public String getGender() {
-            return gender;
-        }
-
-        public void setGender(String gender) {
-            this.gender = gender;
-        }
+    public UserBean getPublisher() {
+        return publisher;
     }
 
+    public void setPublisher(UserBean publisher) {
+        this.publisher = publisher;
+    }
 
     public String getId() {
         return id;
@@ -87,13 +44,6 @@ public class CommentBean {
         return published_at;
     }
 
-    public Publisher getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(Publisher publisher) {
-        this.publisher = publisher;
-    }
 
     public void setId(String id) {
         this.id = id;
@@ -122,4 +72,42 @@ public class CommentBean {
     public void setCreated_at(String created_at) {
         this.created_at = created_at;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.content);
+        dest.writeString(this.published_at);
+        dest.writeString(this.created_at);
+        dest.writeParcelable(this.publisher, flags);
+    }
+
+    public CommentBean() {
+    }
+
+    protected CommentBean(Parcel in) {
+        this.id = in.readString();
+        this.content = in.readString();
+        this.published_at = in.readString();
+        this.created_at = in.readString();
+        this.publisher = in.readParcelable(UserBean.class.getClassLoader());
+    }
+
+    public static final Creator<CommentBean> CREATOR = new Creator<CommentBean>() {
+        @Override
+        public CommentBean createFromParcel(Parcel source) {
+            return new CommentBean(source);
+        }
+
+        @Override
+        public CommentBean[] newArray(int size) {
+            return new CommentBean[size];
+        }
+    };
 }

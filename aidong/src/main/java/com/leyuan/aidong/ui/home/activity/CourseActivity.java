@@ -137,8 +137,9 @@ public class CourseActivity extends BaseActivity implements CourseActivityView, 
 
     @Override
     public void setCategory(List<CategoryBean> categoryBeanList) {
+        //手动添加全部课程类型
         CategoryBean categoryBean = new CategoryBean();
-        categoryBean.setName("全部类型");
+        categoryBean.setName(getString(R.string.course_all_type));
 
         this.categoryBeanList.add(0, categoryBean);
         if (categoryBeanList != null) {

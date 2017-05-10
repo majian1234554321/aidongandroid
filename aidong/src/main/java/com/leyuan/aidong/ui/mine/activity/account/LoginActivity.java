@@ -18,6 +18,7 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.LoginPresenter;
 import com.leyuan.aidong.ui.mvp.presenter.impl.MineInfoPresenterImpl;
+import com.leyuan.aidong.ui.mvp.presenter.impl.SystemPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.LoginViewInterface;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DialogUtils;
@@ -133,7 +134,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             chatLoginManager.login(String.valueOf(user.getId()));
             setResult(RESULT_OK, null);
             new MineInfoPresenterImpl(this).getMineInfo();
-            new FollowPresentImpl(this).getFollowList(); //登录成功后需要获取关注列表
+            new FollowPresentImpl(this).getFollowList();            //登录成功后需要获取关注列表
+            new SystemPresentImpl(this).getSystemInfo("android");   //登录成功后需要刷新配置(课程视频提示需要更新)
         }
     }
 
