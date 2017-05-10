@@ -36,7 +36,7 @@
         android:textSize="14sp"
         android:drawablePadding="5dp"
         android:layout_gravity="center_horizontal"
-        android:drawableRight="@drawable/icon_arrow_toward_right"/>
+        android:drawableRight="@drawable/icon_right_arrow"/>
 
     <include layout="@layout/inc_bold_line"/>
 </LinearLayout>

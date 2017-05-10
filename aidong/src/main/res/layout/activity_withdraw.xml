@@ -12,10 +12,7 @@
 
         <ImageView
             android:id="@+id/img_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:src="@drawable/back_icon"/>
+            style="@style/styleImageBack"/>
 
         <TextView
             android:layout_width="wrap_content"

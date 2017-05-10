@@ -13,11 +13,7 @@
 
         <ImageView
             android:id="@+id/layout_tab_mine_personal_data_fitness_is_good_img"
-            android:layout_width="@dimen/pref_35dp"
-            android:layout_height="@dimen/pref_35dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/pref_10dp"
-            android:src="@drawable/back" />
+            style="@style/styleImageBack" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

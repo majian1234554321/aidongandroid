@@ -12,11 +12,7 @@
 
         <ImageView
             android:id="@+id/layout_tab_about_mx_title_img"
-            android:layout_width="@dimen/pref_35dp"
-            android:layout_height="@dimen/pref_35dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/pref_10dp"
-            android:src="@drawable/back" />
+            style="@style/styleImageBack"/>
 
 
         <TextView

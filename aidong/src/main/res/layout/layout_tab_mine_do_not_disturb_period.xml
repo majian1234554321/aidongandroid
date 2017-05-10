@@ -21,12 +21,7 @@
 
         <ImageView
             android:id="@+id/imageview_do_not_disturb_period_back"
-            android:layout_width="@dimen/pref_35dp"
-            android:layout_height="@dimen/pref_35dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/pref_10dp"
-            android:src="@drawable/back"/>
+            style="@style/styleImageBack"/>
 
         <TextView
             android:id="@+id/textview_do_not_disturb_period_back_submit"

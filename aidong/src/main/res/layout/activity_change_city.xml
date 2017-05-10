@@ -27,7 +27,9 @@
                 android:background="@color/line_color"
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/left_margin"
-                android:text="定位城市" />
+                android:text="定位城市"
+                android:textSize="14sp"
+                android:textColor="@color/gray_normal"/>
 
             <View
                 android:layout_width="match_parent"
@@ -44,10 +46,11 @@
                     android:id="@+id/tv_location"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
-
                     android:gravity="center_vertical"
                     android:paddingLeft="@dimen/left_margin"
-                    android:text="未知" />
+                    android:text="未知"
+                    android:textSize="15sp"
+                    android:textColor="@color/c3"/>
 
                 <ImageView
                     android:id="@+id/img_selected"
@@ -72,6 +75,8 @@
                 android:layout_height="45dp"
                 android:background="@color/line_color"
                 android:gravity="center_vertical"
+                android:textColor="@color/gray_normal"
+                android:textSize="14sp"
                 android:paddingLeft="@dimen/left_margin"
                 android:text="已开通城市" />
 

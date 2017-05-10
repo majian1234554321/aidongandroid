@@ -103,10 +103,7 @@
         <ImageView
             android:id="@+id/imageView_back"
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/back_icon" />
+            style="@style/styleImageBack"/>
 
         <LinearLayout
             android:id="@+id/linear_special_topic"
