@@ -81,17 +81,7 @@ public class HomeHeaderView extends RelativeLayout{
             }
         });
 
-//<<<<<<< HEAD
-//        banner.setOnItemClickListener(new BGABanner.OnItemClickListener() {
-//            @Override
-//            public void onBannerItemClick(BGABanner banner, View view, Object model, int position) {
-//                BannerBean bannerBean = (BannerBean) model;
-//                Logger.i("bannerBean",bannerBean.toString());
-//
-//
-//                ((MainActivity)context).toTargetActivity((BannerBean)model);
-//            }
-//=======
+
         banner.setDelegate(new BGABanner.Delegate() {
            @Override
            public void onBannerItemClick(BGABanner banner, View itemView, Object model, int position) {

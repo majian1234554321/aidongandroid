@@ -7,13 +7,7 @@
 
     <ImageView
         android:id="@+id/img_left"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="15dp"
-        android:scaleType="centerCrop"
-        android:layout_centerVertical="true"
-        android:src="@drawable/back_icon"/>
+        style="@style/styleImageBack"/>
 
     <TextView
         android:id="@+id/txt_title"

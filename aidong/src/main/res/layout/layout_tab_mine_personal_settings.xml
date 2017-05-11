@@ -21,12 +21,10 @@
 
         <ImageView
             android:id="@+id/layout_tab_mine_personal_settings_title_img_back"
-            android:layout_width="@dimen/pref_35dp"
-            android:layout_height="@dimen/pref_35dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/pref_10dp"
-            android:src="@drawable/back" />
+            style="@style/styleImageBack"/>
+
     </RelativeLayout>
 
     <ScrollView

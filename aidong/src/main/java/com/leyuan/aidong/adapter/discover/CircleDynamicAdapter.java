@@ -131,12 +131,12 @@ public class CircleDynamicAdapter extends BaseHolderViewAdapter<DynamicBean> {
     }
 
     public interface IDynamicCallback {
-        void onBackgroundClick(DynamicBean dynamicBean);
+        void onBackgroundClick(DynamicBean dynamicBean,int position);
         void onAvatarClick(String id);
         void onVideoClick(String url);
         void onImageClick(List<String> photoUrls, List<Rect> viewLocalRect, int currPosition);
         void onLikeClick(int position,String id,boolean isLike);
-        void onCommentClick(DynamicBean dynamicBean);
+        void onCommentClick(DynamicBean dynamicBean,int position);
         void onShareClick(DynamicBean dynamic);
         void onFollowClick(String id);
     }
@@ -145,7 +145,7 @@ public class CircleDynamicAdapter extends BaseHolderViewAdapter<DynamicBean> {
     public static class SimpleDynamicCallback implements IDynamicCallback{
 
         @Override
-        public void onBackgroundClick(DynamicBean dynamicBean) {
+        public void onBackgroundClick(DynamicBean dynamicBean,int position) {
 
         }
 
@@ -170,7 +170,7 @@ public class CircleDynamicAdapter extends BaseHolderViewAdapter<DynamicBean> {
         }
 
         @Override
-        public void onCommentClick(DynamicBean dynamicBean) {
+        public void onCommentClick(DynamicBean dynamicBean,int position) {
 
         }
 

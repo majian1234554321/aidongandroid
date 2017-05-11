@@ -47,7 +47,7 @@ public class UserParseAdapter extends RecyclerView.Adapter<UserParseAdapter.User
 
     @Override
     public void onBindViewHolder(UserHolder holder, final int position) {
-        final CommentBean.Publisher bean = data.get(position).getPublisher();
+        final  UserBean bean = data.get(position).getPublisher();
 
         GlideLoader.getInstance().displayCircleImage(bean.getAvatar(), holder.cover);
         holder.nickname.setText(bean.getName());
@@ -56,7 +56,7 @@ public class UserParseAdapter extends RecyclerView.Adapter<UserParseAdapter.User
             holder.follow.setBackgroundResource(R.drawable.icon_follow);
         } else {
             UserBean userBean = new UserBean();
-            userBean.setId(bean.getPublisher_id());
+            userBean.setId(bean.getId());
             holder.follow.setBackgroundResource(SystemInfoUtils.isFollow(context, userBean)
                     ? R.drawable.icon_following : R.drawable.icon_follow);
         }
@@ -79,7 +79,7 @@ public class UserParseAdapter extends RecyclerView.Adapter<UserParseAdapter.User
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserInfoActivity.start(context, bean.getPublisher_id());
+                UserInfoActivity.start(context, bean.getId());
             }
         });
     }

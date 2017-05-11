@@ -36,7 +36,6 @@ public class GlideLoader {
                 .load(imgUrl)
                 .thumbnail(0.2f)
                 .centerCrop()
-                .crossFade(300)
                 .placeholder(new ColorDrawable(0xffc6c6c6))
                 .into(imageView);
     }
@@ -46,7 +45,6 @@ public class GlideLoader {
                 .load(imgUrl)
                 .bitmapTransform(new CropCircleTransformation(getContext(imageView)))
                 .placeholder(R.drawable.place_holder_user)
-                .crossFade(300)
                 .into(imageView);
     }
 
@@ -56,7 +54,6 @@ public class GlideLoader {
                 .bitmapTransform(new CenterCrop(getContext(imageView)),
                         new RoundedCornersTransformation(getContext(imageView), DensityUtil.dp2px(getContext(imageView),5), 0))
                 .placeholder(new ColorDrawable(0xffc6c6c6))
-                .crossFade(300)
                 .into(imageView);
     }
 
@@ -66,7 +63,6 @@ public class GlideLoader {
                 .load(resId)
                 .bitmapTransform(new CropCircleTransformation(getContext(imageView)))
                 .placeholder(R.drawable.place_holder_user)
-                .crossFade(300)
                 .into(imageView);
     }
 
@@ -74,7 +70,6 @@ public class GlideLoader {
         Glide.with(getContext(imageView))
                 .load(resId)
                 .asGif()
-                .crossFade(300)
                 .into(imageView);
     }
 

@@ -9,7 +9,9 @@
         android:layout_height="45dp"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/left_margin"
-        android:text="name" />
+        android:text="name"
+        android:textSize="15sp"
+        android:textColor="@color/c3"/>
 
     <ImageView
         android:id="@+id/img_selected"

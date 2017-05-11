@@ -14,12 +14,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.adapter.home.CategoryListAdapter;
+import com.leyuan.aidong.adapter.home.LeftFilterAdapter;
+import com.leyuan.aidong.adapter.home.RightFilterAdapter;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.DistrictBean;
 import com.leyuan.aidong.entity.DistrictDescBean;
-import com.leyuan.aidong.adapter.home.LeftFilterAdapter;
-import com.leyuan.aidong.adapter.home.RightFilterAdapter;
-import com.leyuan.aidong.adapter.home.CategoryListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +37,9 @@ public class VenuesFilterView extends LinearLayout implements View.OnClickListen
     private LinearLayout circleLayout;
     private TextView tvCircle;
     private ImageView ivCircleArrow;
+    private LinearLayout typeLayout;
+    private TextView tvType;
+    private ImageView ivTypeArrow;
     private View maskBgView;
     private LinearLayout contentLayout;
     private ListView leftListView;
@@ -53,6 +56,9 @@ public class VenuesFilterView extends LinearLayout implements View.OnClickListen
     private int rightSelectedPosition = -1; //右边列表实际选中的位置
     private List<DistrictBean> leftCircleList = new ArrayList<>();
     private List<DistrictDescBean> rightCircleList = new ArrayList<>();
+
+    //类型
+
 
     private int panelHeight;
     private boolean isPopupShowing = false;
@@ -75,13 +81,16 @@ public class VenuesFilterView extends LinearLayout implements View.OnClickListen
     }
 
     private void init() {
-        View view = LayoutInflater.from(context).inflate(R.layout.view_course_filter, this);
+        View view = LayoutInflater.from(context).inflate(R.layout.view_venues_filter, this);
         brandLayout = (LinearLayout) view.findViewById(R.id.ll_brand);
         tvBrand = (TextView) view.findViewById(R.id.tv_brand);
         ivBrandArrow = (ImageView) view.findViewById(R.id.iv_brand_arrow);
         circleLayout = (LinearLayout) view.findViewById(R.id.ll_business_circle);
         tvCircle = (TextView) view.findViewById(R.id.tv_circle);
         ivCircleArrow = (ImageView) view.findViewById(R.id.iv_circle_arrow);
+        typeLayout = (LinearLayout) view.findViewById(R.id.ll_type);
+        tvType = (TextView) view.findViewById(R.id.tv_type);
+        ivTypeArrow = (ImageView) view.findViewById(R.id.iv_type_arrow);
         maskBgView = view.findViewById(R.id.view_mask_bg);
         contentLayout = (LinearLayout) view.findViewById(R.id.ll_content);
         leftListView = (ListView) view.findViewById(R.id.list_left);
@@ -91,6 +100,7 @@ public class VenuesFilterView extends LinearLayout implements View.OnClickListen
     private void setListener() {
         brandLayout.setOnClickListener(this);
         circleLayout.setOnClickListener(this);
+        typeLayout.setOnClickListener(this);
         maskBgView.setOnClickListener(this);
     }
 

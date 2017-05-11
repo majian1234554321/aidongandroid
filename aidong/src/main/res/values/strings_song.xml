@@ -176,4 +176,5 @@
     <string name="rationale_camera_and_audio">App需要使用相机和录音权限才能拍照和录像，请授予该权限</string>
 
     <string name="transition_home">transition_home</string>
+
 </resources>

@@ -143,6 +143,9 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
             UpdateDeliveryBean bean = data.get(position);
             DeliveryBean deliveryBean = new DeliveryBean();
             deliveryBean.setType(DELIVERY_EXPRESS);
+            VenuesBean venuesBean = new VenuesBean();
+            venuesBean.setName("仓库发货");
+            deliveryBean.setInfo(venuesBean);
             bean.setDeliveryInfo(deliveryBean);
             deliveryInfoAdapter.notifyDataSetChanged();
             updateShopList(bean);
@@ -173,7 +176,15 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
         //2.若该商品的自提场馆已经存在,将该商品添加到该自提场馆
         boolean isExist = false;
         for (int i = 0; i < updatedShopList.size(); i++) {
-            if(updatedShopList.get(i).getPickUp().equals(bean.getDeliveryInfo())){
+            if(DELIVERY_EXPRESS.equals(updatedShopList.get(i).getPickUp().getType())
+                    &&DELIVERY_EXPRESS .equals(bean.getDeliveryInfo().getType())){
+                isExist = true;
+                updatedShopList.get(i).getItem().add(bean.getGoods());
+                break;
+            }else if(DELIVERY_SELF.equals(updatedShopList.get(i).getPickUp().getType())
+                    &&DELIVERY_SELF .equals(bean.getDeliveryInfo().getType())
+                    && updatedShopList.get(i).getPickUp().getInfo().getName()
+                    .equals(bean.getDeliveryInfo().getInfo().getName())){
                 isExist = true;
                 updatedShopList.get(i).getItem().add(bean.getGoods());
                 break;

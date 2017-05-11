@@ -53,6 +53,7 @@ public class App extends MultiDexApplication {
     public LocationClient mLocationClient = null;
     public BDLocationListener myListener = new MyLocationListener();
     private String parseString;
+    private String jPushId;
 
     @Override
     public void onCreate() {
@@ -120,6 +121,18 @@ public class App extends MultiDexApplication {
         option.SetIgnoreCacheException(false);//可选，默认false，设置是否收集CRASH信息，默认收集
         //option.setEnableSimulateGps(false);//可选，默认false，设置是否需要过滤gps仿真结果，默认需要
         mLocationClient.setLocOption(option);
+    }
+
+    public void saveJpushId(String regId) {
+        this.jPushId = regId;
+        SharePrefUtils.putString(context, "jPushId", regId);
+    }
+
+    public String getjPushId() {
+        if (jPushId == null) {
+            jPushId = SharePrefUtils.getString(context, "jPushId", null);
+        }
+        return jPushId;
     }
 
     public class MyLocationListener implements BDLocationListener {

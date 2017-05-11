@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.utils.LogAidong;
 
 import org.json.JSONException;
@@ -31,6 +32,8 @@ public class JPushReceiver extends BroadcastReceiver {
 
             String regId = bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID);
             LogAidong.i(TAG, "[MyReceiver] 接收 注册Registration Id : " + regId);
+
+            App.getInstance().saveJpushId(regId);
 
         } else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
             String value = bundle.getString(JPushInterface.EXTRA_EXTRA);

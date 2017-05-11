@@ -34,7 +34,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
-            android:src="@drawable/icon_arrow_toward_right"
+            android:src="@drawable/icon_right_arrow"
             />
         <ImageView
             android:id="@+id/img_divider"

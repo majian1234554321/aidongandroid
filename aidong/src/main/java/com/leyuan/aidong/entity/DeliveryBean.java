@@ -10,7 +10,7 @@ import com.leyuan.aidong.utils.constant.DeliveryType;
  * Created by song on 2016/9/22.
  */
 public class DeliveryBean implements Parcelable {
-    public @DeliveryType String type;        //type: 取货方式, #0-快递　1-自提
+    public String type;        //type: 取货方式, #0-快递　1-自提
     public VenuesBean info;
 
     @DeliveryType

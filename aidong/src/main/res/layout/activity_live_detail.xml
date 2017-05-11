@@ -33,7 +33,7 @@
             android:id="@+id/iv_back"
             android:layout_width="41dp"
             android:layout_height="41dp"
-            android:src="@drawable/back_icon" />
+            android:src="@drawable/icon_back" />
     </RelativeLayout>
 
     <ImageView

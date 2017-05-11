@@ -72,10 +72,6 @@ public class HomeModelImpl implements HomeModel {
 
     @Override
     public List<CategoryBean> getCourseCategory() {
-        List<CategoryBean> courseCategory = SystemInfoUtils.getCourseCategory(context);
-        if(courseCategory != null && !courseCategory.isEmpty()) {
-            courseCategory.remove(0);
-        }
-        return courseCategory;
+        return SystemInfoUtils.getCourseCategory(context);
     }
 }

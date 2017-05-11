@@ -135,7 +135,7 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
      * 广告跳转目标页
      *
      * @param bannerBean BannerBean
-     *                   广告类型,#10-内嵌网页 11-外部网页 20-场馆详情页 21-营养品详情页 22-课程详情 23-活动详情页
+     *                   广告类型,#10-内嵌网页 11-外部网页 20-场馆详情页 21-营养品详情页 22-课程列表 23-活动详情页
      */
     public void toTargetActivity(BannerBean bannerBean) {
         if (TextUtils.isEmpty(bannerBean.getType())) return;
@@ -156,7 +156,6 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
                 break;
             case "22":
                 CourseActivity.start(this,bannerBean.getLink());
-//                CourseDetailActivity.start(this,bannerBean.getLink());
                 break;
             case "23":
                 CampaignDetailActivity.start(this, bannerBean.getLink());

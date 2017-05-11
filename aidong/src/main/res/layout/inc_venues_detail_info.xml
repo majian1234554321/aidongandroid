@@ -61,7 +61,8 @@
             android:text="健康餐饮"
             android:paddingTop="10dp"
             android:textColor="@color/black"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tv_nurture"

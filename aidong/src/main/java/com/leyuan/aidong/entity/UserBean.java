@@ -21,6 +21,7 @@ public class UserBean implements Parcelable,Serializable{
     private String user_type;
 
     //compat
+    private String publisher_id;
 
 
     public UserBean(String id) {

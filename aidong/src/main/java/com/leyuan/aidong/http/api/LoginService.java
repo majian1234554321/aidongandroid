@@ -11,7 +11,8 @@ import rx.Observable;
 public interface LoginService {
     @FormUrlEncoded
     @POST("login/mobile")
-    Observable<BaseBean<LoginResult>> login(@Field("mobile") String account, @Field("password") String password);
+    Observable<BaseBean<LoginResult>> login(@Field("mobile") String account, @Field("password") String password,
+                                            @Field("register_code") String register_code);
 
     //                                            @Field("device_type") String device_type, @Field("device_token") String device_token);
 //    @FormUrlEncoded
@@ -20,5 +21,6 @@ public interface LoginService {
 
     @FormUrlEncoded
     @POST("login/sns")
-    Observable<BaseBean<LoginResult>> loginSns(@Field("sns") String sns, @Field("code") String access_token);
+    Observable<BaseBean<LoginResult>> loginSns(@Field("sns") String sns, @Field("code") String access_token
+            , @Field("register_code") String register_code);
 }

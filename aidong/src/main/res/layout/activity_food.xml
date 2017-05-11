@@ -12,11 +12,7 @@
 
         <ImageView
             android:id="@+id/iv_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:padding="10dp"
-            android:src="@drawable/icon_back" />
+            style="@style/styleImageBack" />
 
         <TextView
             android:id="@+id/tv_search"

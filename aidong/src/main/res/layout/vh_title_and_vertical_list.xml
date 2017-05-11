@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
@@ -29,7 +30,7 @@
         android:layout_height="45dp"
         android:layout_centerInParent="true"
         android:layout_gravity="center_horizontal"
-        android:drawablePadding="10dp"
+        android:drawablePadding="5dp"
         android:drawableRight="@drawable/icon_right_arrow"
         android:gravity="center"
         android:text="查看全部"

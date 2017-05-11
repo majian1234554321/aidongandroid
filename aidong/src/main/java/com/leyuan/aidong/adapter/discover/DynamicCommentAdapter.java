@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.DynamicBean;
+import com.leyuan.aidong.entity.CommentBean;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ public class DynamicCommentAdapter extends RecyclerView.Adapter<DynamicCommentAd
 
     private Context context;
     private int totalCount;
-    private List<DynamicBean.Comment.Item> data = new ArrayList<>();
+    private List<CommentBean> data = new ArrayList<>();
     private OnMoreCommentClickListener onMoreCommentClickListener;
 
 
@@ -42,7 +42,7 @@ public class DynamicCommentAdapter extends RecyclerView.Adapter<DynamicCommentAd
         this.context = context;
     }
 
-    public void setData(List<DynamicBean.Comment.Item> data,int totalCount) {
+    public void setData(List<CommentBean> data,int totalCount) {
         if(data != null) {
             this.data = data;
             this.totalCount = totalCount;
@@ -77,8 +77,8 @@ public class DynamicCommentAdapter extends RecyclerView.Adapter<DynamicCommentAd
     @Override
     public void onBindViewHolder(CommonHolder holder, int position) {
         if(getItemViewType(position) == COMMENT) {
-            DynamicBean.Comment.Item item = data.get(position);
-            holder.comment.setText(getClickableSpan(item.publisher.name + "：" + item.content,item));
+            CommentBean item = data.get(position);
+            holder.comment.setText(getClickableSpan(item.getPublisher().getName() + "：" + item.getContent(),item));
             holder.comment.setMovementMethod(LinkMovementMethod.getInstance());
         }else {
             holder.comment.setText("查看更多" + (totalCount - MAX_COMMENT_COUNT)  +"条评论");
@@ -101,21 +101,21 @@ public class DynamicCommentAdapter extends RecyclerView.Adapter<DynamicCommentAd
         }
     }
 
-    private SpannableString getClickableSpan(String content, DynamicBean.Comment.Item item) {
+    private SpannableString getClickableSpan(String content, CommentBean item) {
         SpannableString spanInfo = new SpannableString(content);
-        if (item != null && item.publisher != null && !TextUtils.isEmpty(item.publisher.name)) {
-            spanInfo.setSpan(new UserClickable(item),0, item.publisher.name.length() + 1,
+        if (item != null && item.getPublisher() != null && !TextUtils.isEmpty(item.getPublisher().getName())) {
+            spanInfo.setSpan(new UserClickable(item),0, item.getPublisher().getName().length() + 1,
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             spanInfo.setSpan(new ForegroundColorSpan(Color.parseColor("#999999")),
-                    0, item.publisher.name.length() + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    0, item.getPublisher().getName().length() + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         return spanInfo;
     }
 
     private class UserClickable extends ClickableSpan implements View.OnClickListener {
-        private DynamicBean.Comment.Item bean;
+        private CommentBean bean;
 
-        private UserClickable(DynamicBean.Comment.Item bean) {
+        private UserClickable(CommentBean bean) {
             this.bean = bean;
         }
 
@@ -128,7 +128,7 @@ public class DynamicCommentAdapter extends RecyclerView.Adapter<DynamicCommentAd
 
         @Override
         public void onClick(View v) {
-            UserInfoActivity.start(context,bean.publisher.id);
+            UserInfoActivity.start(context,bean.getPublisher().getId());
         }
     }
 

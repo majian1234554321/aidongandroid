@@ -61,12 +61,47 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/iv_image"
                 android:layout_centerHorizontal="true"
-                android:text="全部商圈"
+                android:text="热门商圈"
                 android:textColor="@color/c3"
                 android:textSize="13sp" />
 
             <ImageView
                 android:id="@+id/iv_circle_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/icon_filter_arrow" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="20dp"
+            android:background="@color/line_color"
+            android:visibility="gone"/>
+
+        <LinearLayout
+            android:id="@+id/ll_type"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?selectableItemBackground"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_image"
+                android:layout_centerHorizontal="true"
+                android:text="全部类型"
+                android:textColor="@color/c3"
+                android:textSize="13sp" />
+
+            <ImageView
+                android:id="@+id/iv_type_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
