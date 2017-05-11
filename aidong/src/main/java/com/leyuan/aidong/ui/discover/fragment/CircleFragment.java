@@ -189,12 +189,6 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
         wrapperAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void showEndFooterView() {
-        RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
-    }
-
-
     private class DynamicCallback extends CircleDynamicAdapter.SimpleDynamicCallback {
 
         @Override
@@ -310,15 +304,20 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
                 startActivityForResult(new Intent(getContext(),DynamicDetailActivity.class)
                         .putExtra("dynamic",invokeDynamicBean),REQUEST_REFRESH_DYNAMIC);
             }else if(requestCode == REQUEST_REFRESH_DYNAMIC){
+                //更新动态详情页新添加的评论
                 CommentBean comment = data.getParcelableExtra("comment");
                 DynamicBean dynamicBean = dynamicList.get(position);
                 dynamicBean.comment.item.add(0,comment);
-                circleDynamicAdapter.notifyDataSetChanged();
+                dynamicBean.comment.count ++ ;
+                circleDynamicAdapter.notifyItemChanged(position);
             }
         }
     }
 
-
+    @Override
+    public void showEndFooterView() {
+        RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
+    }
 
     @Override
     public void onDestroy() {

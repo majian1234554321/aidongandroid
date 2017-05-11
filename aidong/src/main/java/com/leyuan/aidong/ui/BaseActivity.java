@@ -177,12 +177,12 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
             Fade in = new Fade();
             in.setDuration(300);
             in.setMode(Fade.MODE_IN);
-            getWindow().setExitTransition(in);
+            getWindow().setEnterTransition(in);
 
             Fade out = new Fade();
             out.setDuration(300);
             out.setMode(Fade.MODE_OUT);
-            getWindow().setExitTransition(out);
+            getWindow().setReenterTransition(in);
         }
     }
 

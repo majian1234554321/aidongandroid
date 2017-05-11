@@ -34,7 +34,7 @@
         android:layout_height="30dp"
         android:layout_gravity="right"
         android:padding="6dp"
-        android:src="@drawable/def"/>
+        android:src="@drawable/icon_unchecked_white"/>
 
     <FrameLayout
         android:id="@+id/video_layout"

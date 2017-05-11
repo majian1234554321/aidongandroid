@@ -120,7 +120,6 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
 
     private void initHeaderView(){
         header = View.inflate(this,R.layout.header_dynamic_detail_new,null);
-
         dynamicList.add(dynamic);
         RecyclerView headerRecyclerView = (RecyclerView) header.findViewById(R.id.rv_header);
         CircleDynamicAdapter.Builder<DynamicBean> builder = new CircleDynamicAdapter.Builder<>(this);
@@ -131,7 +130,7 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
                 .addType(FourImageViewHolder.class, DYNAMIC_FOUR_IMAGE, R.layout.vh_dynamic_four_photos)
                 .addType(FiveImageViewHolder.class, DYNAMIC_FIVE_IMAGE, R.layout.vh_dynamic_five_photos)
                 .addType(SixImageViewHolder.class, DYNAMIC_SIX_IMAGE, R.layout.vh_dynamic_six_photos)
-                .showFollowButton(true)
+                .showFollowButton(!dynamic.publisher.getId().equals(String.valueOf(App.mInstance.getUser().getId())))
                 .showLikeAndCommentLayout(false)
                 .setData(dynamicList)
                 .setDynamicCallback(new DynamicCallback());
@@ -205,9 +204,11 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
             if(TextUtils.isEmpty(etComment.getText())){
                 Toast.makeText(this,"请输入评论内容",Toast.LENGTH_LONG).show();
                 return false;
+            }else {
+                dynamicPresent.addComment(dynamic.id, etComment.getText().toString());
+                KeyBoardUtil.closeKeyboard(etComment, this);
+                return true;
             }
-            dynamicPresent.addComment(dynamic.id,etComment.getText().toString());
-            return true;
         }else {
             return false;
         }
@@ -224,8 +225,9 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
             temp.setPublishedAt("刚刚");
             temp.setPublisher(publisher);
             comments.add(0,temp);
-            commentAdapter.setData(comments);
-            wrapperAdapter.notifyDataSetChanged();
+            commentAdapter.notifyItemInserted(0);
+            commentView.scrollToPosition(1);
+
             etComment.clearFocus();
             etComment.setText(Constant.EMPTY_STR);
 
@@ -236,7 +238,6 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
         }else {
             ToastGlobal.showLong(baseBean.getMessage());
         }
-        KeyBoardUtil.closeKeyboard(etComment,this);
     }
 
     @Override

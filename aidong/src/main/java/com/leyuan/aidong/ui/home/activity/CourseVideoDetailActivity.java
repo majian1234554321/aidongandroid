@@ -52,12 +52,12 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
     private Button ivBack;
     private Button btAppoint;
     private SwitcherLayout switcherLayout;
-    private LinearLayout contentLayout;
 
     private CourseRecommendVideoAdapter adapter;
     private String courseId;
     private String videoId;
     private CourseVideoBean courseVideoBean;
+    private boolean isShowDesc = true;
 
     public static void start(Context context, String courseId) {
         Intent starter = new Intent(context, CourseVideoDetailActivity.class);
@@ -94,7 +94,7 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
         tvAuthAndTime = (TextViewPrintly) findViewById(R.id.tv_auth_and_time);
         ivUpArrow = (ImageView) findViewById(R.id.iv_up_arrow);
         tvCourseDesc = (TextViewPrintly) findViewById(R.id.tv_course_desc);
-        contentLayout = (LinearLayout) findViewById(R.id.ll_content);
+        LinearLayout contentLayout = (LinearLayout) findViewById(R.id.ll_content);
         switcherLayout = new SwitcherLayout(this,contentLayout);
         layoutMoreVideo = (RelativeLayout) findViewById(R.id.layout_more_video);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -111,6 +111,7 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
         btAppoint.setOnClickListener(this);
         layoutMoreVideo.setOnClickListener(this);
         ivStart.setOnClickListener(this);
+        ivUpArrow.setOnClickListener(this);
         adapter.setListener(this);
     }
 
@@ -136,6 +137,11 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
                         .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_HLS);
                 startActivity(intent);
                 break;
+            case R.id.iv_up_arrow:
+                isShowDesc = !isShowDesc;
+                tvCourseDesc.setVisibility(isShowDesc ? View.VISIBLE : View.GONE);
+                ivUpArrow.animate().rotationBy(180).setDuration(300).start();
+                break;
             default:
                 break;
         }
@@ -148,11 +154,11 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
             courseVideoBean = videoBeanList.get(0);
             GlideLoader.getInstance().displayImage(courseVideoBean.getCover(), ivCover);
             GlideLoader.getInstance().displayImageWithBlur(courseVideoBean.getCover(),ivBlur);
-            tvCourseName.setText(courseVideoBean.getName());
+            tvCourseName.printString(courseVideoBean.getName());
             String during = Utils.formatTime(Math.round(FormatUtil.parseFloat(courseVideoBean.getDuring())));
-            tvAuthAndTime.setText(String.format(getString(R.string.course_type_and_during),
+            tvAuthAndTime.printString(String.format(getString(R.string.course_type_and_during),
                     courseVideoBean.getTypeName(),during));
-            tvCourseDesc.setText(courseVideoBean.getIntroduce());
+            tvCourseDesc.printString(courseVideoBean.getIntroduce());
             adapter.setData(videoBeanList);
         }
     }

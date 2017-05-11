@@ -26,7 +26,7 @@ public interface EquipmentModel {
      * @param subscriber Subscribers
      * @param page 页码
      */
-    void getEquipments(Subscriber<EquipmentData> subscriber, int page,String brandId,String sort);
+    void getEquipments(Subscriber<EquipmentData> subscriber, int page,String brandId,String sort,String gymId);
 
     /**
      * 获取装备详情

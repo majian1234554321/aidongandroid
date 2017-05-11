@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:paddingLeft="@dimen/left_margin"
     android:paddingRight="@dimen/right_margin"
-    android:background="@color/white">
+    android:background="?selectableItemBackground">
 
     <ImageView
         android:id="@+id/dv_avatar"

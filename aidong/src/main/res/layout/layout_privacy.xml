@@ -68,8 +68,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/pref_15dp"
-            android:src="@drawable/icon_right_arrow" />
+            android:layout_marginRight="@dimen/pref_15dp" />
+
     </RelativeLayout>
 
     <ImageView

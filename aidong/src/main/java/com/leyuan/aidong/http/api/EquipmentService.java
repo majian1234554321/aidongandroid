@@ -23,7 +23,8 @@ public interface EquipmentService {
     @GET("market/equipments")
     Observable<BaseBean<EquipmentData>> getEquipments(@Query("page") int page,
                                                       @Query("cat") String catId,
-                                                      @Query("sort") String sort);
+                                                      @Query("sort") String sort,
+                                                      @Query("gymId") String gymId);
 
     @GET("market/equipments/{id}")
     Observable<BaseBean<EquipmentDetailData>>  getEquipmentDetail(@Path("id") String id);

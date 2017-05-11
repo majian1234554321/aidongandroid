@@ -2,6 +2,7 @@ package com.leyuan.aidong.adapter.home;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,12 +53,16 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.FoodVi
     @Override
     public void onBindViewHolder(FoodViewHolder holder, final int position) {
         CategoryBean bean = data.get(position);
-        GlideLoader.getInstance().displayRoundImage(bean.getImage(), holder.cover);
+        if(TextUtils.isEmpty(bean.getImage())){
+            GlideLoader.getInstance().displayRoundLocalImage(R.drawable.app_icon, holder.cover);
+        }else {
+            GlideLoader.getInstance().displayRoundImage(bean.getImage(), holder.cover);
+        }
         holder.name.setText(bean.getName());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GoodsFilterActivity.start(context,type,data,position);
+                GoodsFilterActivity.start(context,type,position);
             }
         });
     }

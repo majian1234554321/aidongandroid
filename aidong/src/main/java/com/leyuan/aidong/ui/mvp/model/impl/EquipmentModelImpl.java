@@ -38,8 +38,8 @@ public class EquipmentModelImpl implements EquipmentModel {
     }
 
     @Override
-    public void getEquipments(Subscriber<EquipmentData> subscriber, int page, String brandId, String sort) {
-        equipmentService.getEquipments(page,brandId,sort)
+    public void getEquipments(Subscriber<EquipmentData> subscriber, int page, String brandId, String sort,String gymId) {
+        equipmentService.getEquipments(page,brandId,sort,gymId)
                 .compose(RxHelper.<EquipmentData>transform())
                 .subscribe(subscriber);
     }
