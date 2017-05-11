@@ -23,10 +23,9 @@ public interface DiscoverVenuesActivityView {
     void setBusinessCircle(List<DistrictBean> circleBeanList);
 
     /**
-     * 更新列表
-     * @param venuesBeanList
+     * 设置场馆分类
      */
-    void updateRecyclerView(List<VenuesBean> venuesBeanList);
+    void setGymTypes(List<String> gymTypesList);
 
     /**
      * 显示FooterView，提示没有任何内容了

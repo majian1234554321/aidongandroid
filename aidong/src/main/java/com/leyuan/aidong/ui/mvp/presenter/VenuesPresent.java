@@ -21,16 +21,21 @@ public interface VenuesPresent {
     void getBusinessCircle();
 
     /**
+     * 获取场馆分类
+     */
+    void getGymTypes();
+
+    /**
      * 第一次正常加载场馆列表数据
      *
      * @param switcherLayout SwitcherLayout
      */
-    void commonLoadData(SwitcherLayout switcherLayout, String brand_id, String landmark);
+    void commonLoadData(SwitcherLayout switcherLayout, String brand_id, String landmark,String gymTypes);
 
     /**
      * 下拉刷新场馆列表数据
      */
-    void pullToRefreshData(String brand_id, String landmark);
+    void pullToRefreshData(String brand_id, String landmark,String gymTypes);
 
     /**
      * 上拉加载更多场馆列表数据
@@ -38,7 +43,7 @@ public interface VenuesPresent {
      * @param recyclerView RecyclerView
      * @param page         页码
      */
-    void requestMoreData(RecyclerView recyclerView, int pageSize, int page, String brand_id, String landmark);
+    void requestMoreData(RecyclerView recyclerView, int pageSize, int page, String brand_id, String landmark,String gymTypes);
 
     /**
      * 获取场馆详情

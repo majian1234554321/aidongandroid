@@ -104,6 +104,11 @@ public class SystemPresentImpl implements SystemPresent {
                         nutrition.add(0, allBean);
                     }
 
+                    ArrayList<String> types = systemBean.getGymTypes();
+                    if(types != null){
+                        types.add(0, "全部类型");
+                    }
+
                     systemInfoBean = systemBean;
 
                     SystemInfoUtils.putSystemInfoBean(context, systemBean, SystemInfoUtils.KEY_SYSTEM);  //保存到本地
@@ -150,7 +155,7 @@ public class SystemPresentImpl implements SystemPresent {
                 List<CategoryBean> gymList = systemBean.getGymBrand();
                 if (gymList != null) {
                     CategoryBean allBean = new CategoryBean();
-                    allBean.setName("全部类型");
+                    allBean.setName("全部品牌");
                     gymList.add(0, allBean);
                 }
 
@@ -167,6 +172,7 @@ public class SystemPresentImpl implements SystemPresent {
                 if(equipments != null){
                     CategoryBean allBean = new CategoryBean();
                     allBean.setName("全部");
+                    allBean.setCover("https://www.baidu.com/img/bd_logo1.png");
                     equipments.add(0, allBean);
                 }
 
@@ -174,7 +180,13 @@ public class SystemPresentImpl implements SystemPresent {
                 if(nutrition != null){
                     CategoryBean allBean = new CategoryBean();
                     allBean.setName("全部");
+                    allBean.setCover("https://www.baidu.com/img/bd_logo1.png");
                     nutrition.add(0, allBean);
+                }
+
+                ArrayList<String> types = systemBean.getGymTypes();
+                if(types != null){
+                    types.add(0, "全部类型");
                 }
 
                 systemInfoBean = systemBean;

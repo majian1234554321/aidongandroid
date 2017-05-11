@@ -310,7 +310,7 @@ public class AppointCoachActivity extends BaseActivity implements View.OnClickLi
 
     private void unableMorning() {
         tvMorning.setTextColor(Color.parseColor("#ebebeb"));
-        tvMorning.setBackgroundResource(R.drawable.shape_stroke_gray);
+        tvMorning.setBackgroundResource(R.drawable.shape_corners_stroke_gray);
     }
 
     private void selectAfternoon() {
@@ -326,7 +326,7 @@ public class AppointCoachActivity extends BaseActivity implements View.OnClickLi
 
     private void unableAfternoon() {
         tvAfternoon.setTextColor(Color.parseColor("#ebebeb"));
-        tvAfternoon.setBackgroundResource(R.drawable.shape_stroke_gray);
+        tvAfternoon.setBackgroundResource(R.drawable.shape_corners_stroke_gray);
     }
 
     @Override

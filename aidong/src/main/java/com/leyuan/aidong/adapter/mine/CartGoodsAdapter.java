@@ -11,11 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
+import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 
@@ -83,6 +85,9 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
             holder.minus.setImageResource(FormatUtil.parseInt(bean.getAmount()) == 1 ?
                     R.drawable.icon_minus_gray : R.drawable.icon_minus);
             setShoppingClickEvent(holder, bean, position);
+            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) holder.cover.getLayoutParams();
+            layoutParams.leftMargin = DensityUtil.dp2px(context,5);
+            holder.cover.setLayoutParams(layoutParams);
 
         } else {
             holder.check.setVisibility(View.GONE);
@@ -95,7 +100,12 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
 
             holder.count.setBackgroundResource(R.drawable.shape_stroke_gray);
             holder.add.setImageResource(R.drawable.icon_add_gray);
-            holder.add.setClickable(false);
+
+
+            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) holder.cover.getLayoutParams();
+            layoutParams.leftMargin = DensityUtil.dp2px(context,35);
+            holder.cover.setLayoutParams(layoutParams);
+
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

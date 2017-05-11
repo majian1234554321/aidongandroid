@@ -106,6 +106,11 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
             public void onBusinessCircleItemClick(String address) {
                 businessCircle = address;
             }
+
+            @Override
+            public void onTypeItemClick(String type) {
+
+            }
         });
     }
 
