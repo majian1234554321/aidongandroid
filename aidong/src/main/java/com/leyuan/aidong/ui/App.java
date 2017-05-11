@@ -9,6 +9,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
 import com.facebook.stetho.Stetho;
+import com.leyuan.aidong.config.UrlConfig;
 import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.entity.user.MineInfoBean;
@@ -27,8 +28,11 @@ import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.VersionManager;
 import com.squareup.leakcanary.LeakCanary;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import cn.jpush.android.api.JPushInterface;
 import io.realm.Realm;
 import jp.wasabeef.takt.Seat;
 import jp.wasabeef.takt.Takt;
@@ -66,6 +70,9 @@ public class App extends MultiDexApplication {
 
     private void initConfig() {
         LeakCanary.install(this);
+
+        JPushInterface.setDebugMode(!UrlConfig.debug);
+        JPushInterface.init(this);
 
         SDKInitializer.initialize(this);
         initBaiduLoc();
@@ -232,6 +239,13 @@ public class App extends MultiDexApplication {
     public void setLocationCity(String city) {
         this.cityLocation = city;
         SharePrefUtils.putString(this, "cityLocation", city);
+
+
+        Set<String> sets = new HashSet<>();
+        sets.add(city + 0);
+        sets.add(getSelectedCity() + 1);
+
+        JPushInterface.setTags(this, sets, null);
     }
 
 
