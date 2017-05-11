@@ -15,6 +15,7 @@ import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CouponPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CouponExchangeActivityView;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.SimpleTitleBar;
@@ -99,7 +100,12 @@ public class CouponExchangeActivity extends BaseActivity implements CouponExchan
             layout_coupon.setVisibility(View.VISIBLE);
             tvName.setText(bean.getName());
             tvCouponPrice.setText(bean.getDiscount());
-            tvUseMoney.setText(String.format(getResources().getString(R.string.user_condition), bean.getMin()));
+            if (TextUtils.equals(bean.getMin(), Constant.NEGATIVE_ONE)) {
+                tvUseMoney.setText("指定支付价格");
+            } else {
+                tvUseMoney.setText(String.format(getResources().getString(R.string.user_condition), bean.getMin()));
+            }
+
             if (!TextUtils.isEmpty(bean.getIntroduce())) {
                 tvDesc.setText(Html.fromHtml(bean.getIntroduce()));
             }

@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,10 +11,18 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.MainActivity;
+import com.leyuan.aidong.ui.WebViewActivity;
+import com.leyuan.aidong.ui.discover.activity.VenuesDetailActivity;
+import com.leyuan.aidong.ui.home.activity.CampaignDetailActivity;
+import com.leyuan.aidong.ui.home.activity.CourseActivity;
+import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.UiManager;
+
+import static com.leyuan.aidong.utils.Constant.GOODS_NUTRITION;
 
 /**
  * Created by user on 2017/5/5.
@@ -24,11 +33,11 @@ public class AdvertisementActivity extends BaseActivity implements View.OnClickL
     private static final long DIVIDER = 1000;
     private ImageView imgBg;
     private Button btn_count;
-    private String startingBannerImage;
+    private BannerBean startingBanner;
 
-    public static void start(Context context, String startingBannerImage) {
+    public static void start(Context context, BannerBean startingBannerImage) {
         Intent intent = new Intent(context, AdvertisementActivity.class);
-        intent.putExtra("startingBannerImage", startingBannerImage);
+        intent.putExtra("startingBanner", startingBannerImage);
         context.startActivity(intent);
     }
 
@@ -37,12 +46,15 @@ public class AdvertisementActivity extends BaseActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_advertisement);
 
-        startingBannerImage = getIntent().getStringExtra("startingBannerImage");
+        startingBanner = (BannerBean) getIntent().getSerializableExtra("startingBanner");
+
+
         imgBg = (ImageView) findViewById(R.id.img_bg);
-        GlideLoader.getInstance().displayImage(startingBannerImage, imgBg);
+        GlideLoader.getInstance().displayImage(startingBanner.getImage(), imgBg);
 
         btn_count = (Button) findViewById(R.id.btn_count);
         btn_count.setOnClickListener(this);
+        imgBg.setOnClickListener(this);
         handler.sendEmptyMessageDelayed(COUNT, DIVIDER);
     }
 
@@ -74,10 +86,57 @@ public class AdvertisementActivity extends BaseActivity implements View.OnClickL
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_count:
+                handler.removeCallbacksAndMessages(null);
                 UiManager.activityJump(AdvertisementActivity.this, MainActivity.class);
                 finish();
                 break;
+            case R.id.img_bg:
+                handler.removeCallbacksAndMessages(null);
+                Intent intentMain = new Intent(this, MainActivity.class);
+                Intent intentBanner = getBannerIntent(startingBanner);
+                startActivities(new Intent[]{intentMain, intentBanner});
+
+                finish();
+                break;
         }
+    }
+
+    private Intent getBannerIntent(BannerBean startingBanner) {
+        Intent intentBanner = null;
+        switch (startingBanner.getType()) {
+            case "10":
+                intentBanner = new Intent(this, WebViewActivity.class);
+                intentBanner.putExtra("title", startingBanner.getTitle());
+                intentBanner.putExtra("url", startingBanner.getLink());
+                break;
+            case "11":
+                Uri uri = Uri.parse(startingBanner.getLink());
+                intentBanner = new Intent(Intent.ACTION_VIEW, uri);
+                break;
+            case "20":
+                intentBanner = new Intent(this, VenuesDetailActivity.class);
+                intentBanner.putExtra("id", startingBanner.getLink());
+
+                break;
+            case "21":
+                intentBanner = new Intent(this, GoodsDetailActivity.class);
+                intentBanner.putExtra("id", startingBanner.getLink());
+                intentBanner.putExtra("goodsType", GOODS_NUTRITION);
+                break;
+            case "22":
+                intentBanner = new Intent(this, CourseActivity.class);
+                intentBanner.putExtra("category", startingBanner.getLink());
+
+                break;
+            case "23":
+                intentBanner = new Intent(this, CampaignDetailActivity.class);
+                intentBanner.putExtra("id", startingBanner.getLink());
+                break;
+            default:
+
+                break;
+        }
+        return intentBanner;
     }
 
     @Override

@@ -1,9 +1,11 @@
 package com.leyuan.aidong.ui.mine.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,6 +14,8 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.mine.SelectCouponAdapter;
 import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.FormatUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,21 +27,35 @@ import java.util.List;
 public class SelectCouponActivity extends BaseActivity implements SelectCouponAdapter.CouponListener {
     private ImageView ivBack;
     private TextView tvNotUse;
+
     private SelectCouponAdapter couponAdapter;
+
     private List<CouponBean> couponBeanList = new ArrayList<>();
+    private String totalGoodsPrice;
+
+    public static void startForResult(Activity context, String totalGoodsPrice, List<CouponBean> usableCoupons, int requestSelectCoupon) {
+        Intent intent = new Intent(context, SelectCouponActivity.class);
+        if (usableCoupons != null && usableCoupons instanceof ArrayList) {
+            intent.putParcelableArrayListExtra("couponList", (ArrayList<CouponBean>) usableCoupons);
+        }
+        intent.putExtra("totalGoodsPrice", totalGoodsPrice);
+        context.startActivityForResult(intent, requestSelectCoupon);
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_coupon);
-        if(getIntent() != null){
+        if (getIntent() != null) {
             couponBeanList = getIntent().getParcelableArrayListExtra("couponList");
+            totalGoodsPrice = getIntent().getStringExtra("totalGoodsPrice");
         }
         initView();
         setListener();
     }
 
-    private void initView(){
+    private void initView() {
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tvNotUse = (TextView) findViewById(R.id.tv_not_use);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_coupon);
@@ -47,7 +65,7 @@ public class SelectCouponActivity extends BaseActivity implements SelectCouponAd
         couponAdapter.setData(couponBeanList);
     }
 
-    private void setListener(){
+    private void setListener() {
         couponAdapter.setCouponListener(this);
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,8 +79,8 @@ public class SelectCouponActivity extends BaseActivity implements SelectCouponAd
                 Intent intent = new Intent();
                 CouponBean temp = new CouponBean();
                 temp.setDiscount("0");
-                intent.putExtra("coupon",temp);
-                setResult(RESULT_OK,intent);
+                intent.putExtra("coupon", temp);
+                setResult(RESULT_OK, intent);
                 finish();
             }
         });
@@ -71,9 +89,22 @@ public class SelectCouponActivity extends BaseActivity implements SelectCouponAd
     @Override
     public void onCouponClicked(int position) {
         CouponBean couponBean = couponBeanList.get(position);
+
+        if (totalGoodsPrice != null) {
+            double discout = FormatUtil.parseDouble(couponBean.getDiscount());
+            double goodsPrice = FormatUtil.parseDouble(totalGoodsPrice);
+            if (TextUtils.equals(couponBean.getMin(), Constant.NEGATIVE_ONE)) {
+                //新手指定优惠券
+                couponBean.setDiscount(String.valueOf((goodsPrice - discout > 0 ? goodsPrice - discout : 0)));
+            } else {
+                couponBean.setDiscount(String.valueOf((goodsPrice - discout > 0 ? discout : goodsPrice)));
+            }
+        }
+
         Intent intent = new Intent();
-        intent.putExtra("coupon",couponBean);
-        setResult(RESULT_OK,intent);
+        intent.putExtra("coupon", couponBean);
+        setResult(RESULT_OK, intent);
         finish();
     }
+
 }

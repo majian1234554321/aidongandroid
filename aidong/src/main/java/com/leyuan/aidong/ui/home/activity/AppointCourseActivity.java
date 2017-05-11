@@ -192,8 +192,10 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.tv_coupon:
                 if (usableCoupons != null && !usableCoupons.isEmpty()) {
-                    Intent intent = new Intent(this, SelectCouponActivity.class);
-                    startActivityForResult(intent, REQUEST_SELECT_COUPON);
+//                    Intent intent = new Intent(this, SelectCouponActivity.class);
+//                    startActivityForResult(intent, REQUEST_SELECT_COUPON);
+
+                    SelectCouponActivity.startForResult(this, bean.getPrice(), usableCoupons, REQUEST_SELECT_COUPON);
                 }
                 break;
             case R.id.tv_vip:

@@ -3,7 +3,6 @@ package com.leyuan.aidong.ui.home.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -202,25 +201,40 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                     settlementType = SETTLEMENT_EQUIPMENT_IMMEDIATELY;
                 }
             }
+
+            List<GoodsBean> goodsList = new ArrayList<>();
+            for (ShopBean shopBean : shopBeanList) {
+                for (GoodsBean goodsBean : shopBean.getItem()) {
+                    goodsList.add(goodsBean);
+                }
+            }
+            itemIds = new String[goodsList.size()];
+            itemFromIdAmount = new String[goodsList.size()];
+
+            for (int i = 0; i < goodsList.size(); i++) {
+                itemIds[i] = goodsList.get(i).getSkuCode();
+                itemFromIdAmount[i] = couponType + "_" + goodsList.get(i).getSkuCode() + "_" + goodsList.get(i).getAmount();
+            }
         } else {
             couponType = COUPON_CART;
             settlementType = SETTLEMENT_CART;
             totalGoodsPrice = getIntent().getDoubleExtra("totalGoodsPrice", 0f);
-        }
 
-        List<GoodsBean> goodsList = new ArrayList<>();
-        for (ShopBean shopBean : shopBeanList) {
-            for (GoodsBean goodsBean : shopBean.getItem()) {
-                goodsList.add(goodsBean);
+            List<GoodsBean> goodsList = new ArrayList<>();
+            for (ShopBean shopBean : shopBeanList) {
+                for (GoodsBean goodsBean : shopBean.getItem()) {
+                    goodsList.add(goodsBean);
+                }
+            }
+            itemIds = new String[goodsList.size()];
+            itemFromIdAmount = new String[goodsList.size()];
+
+            for (int i = 0; i < goodsList.size(); i++) {
+                itemIds[i] = goodsList.get(i).getCode();
+                itemFromIdAmount[i] = goodsList.get(i).getProductType() + "_" + goodsList.get(i).getCode() + "_" + goodsList.get(i).getAmount();
             }
         }
-        itemIds = new String[goodsList.size()];
-        itemFromIdAmount = new String[goodsList.size()];
 
-        for (int i = 0; i < goodsList.size(); i++) {
-            itemIds[i] = goodsList.get(i).getSkuCode();
-            itemFromIdAmount[i] = couponType + "_" + goodsList.get(i).getSkuCode() + "_" + goodsList.get(i).getAmount();
-        }
 
     }
 
@@ -301,10 +315,14 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                         REQUEST_SELECT_ADDRESS);
                 break;
             case R.id.tv_coupon:
-                if (usableCoupons != null && !usableCoupons.isEmpty()) {
-                    startActivityForResult(new Intent(this, SelectCouponActivity.class)
-                            .putParcelableArrayListExtra("couponList", (ArrayList<? extends Parcelable>)
-                                    usableCoupons), REQUEST_SELECT_COUPON);
+                if (usableCoupons != null && !usableCoupons.isEmpty() && totalGoodsPrice > 0) {
+
+                    SelectCouponActivity.startForResult(this, totalGoodsPrice + "", usableCoupons, REQUEST_SELECT_COUPON);
+
+//                    startActivityForResult(new Intent(this, SelectCouponActivity.class)
+//                            .putParcelableArrayListExtra("couponList", (ArrayList<? extends Parcelable>)
+//                                    usableCoupons), REQUEST_SELECT_COUPON);
+
                 }
                 break;
             case R.id.tv_pay:
@@ -414,7 +432,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             } else if (requestCode == REQUEST_SELECT_COUPON) {
                 CouponBean couponBean = data.getParcelableExtra("coupon");
                 coupon = couponBean.getId();
-                if (FormatUtil.parseInt(couponBean.getDiscount()) != 0) {
+                if (FormatUtil.parseDouble(couponBean.getDiscount()) !=  -1) {
                     tvCoupon.setText(String.format(getString(R.string.rmb_minus_price_double),
                             FormatUtil.parseDouble(couponBean.getDiscount())));
                 } else {

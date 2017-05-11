@@ -2,6 +2,7 @@ package com.leyuan.aidong.adapter.home;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CouponBean;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.ToastGlobal;
 
@@ -21,7 +23,7 @@ import java.util.List;
  * 商品详情界面优惠劵适配器
  * Created by song on 2016/9/13.
  */
-public class GoodsDetailCouponAdapter extends RecyclerView.Adapter<GoodsDetailCouponAdapter.CouponHolder>{
+public class GoodsDetailCouponAdapter extends RecyclerView.Adapter<GoodsDetailCouponAdapter.CouponHolder> {
     private Context context;
     private List<CouponBean> data = new ArrayList<>();
     private CouponListener listener;
@@ -31,7 +33,7 @@ public class GoodsDetailCouponAdapter extends RecyclerView.Adapter<GoodsDetailCo
     }
 
     public void setData(List<CouponBean> data) {
-        if(data != null){
+        if (data != null) {
             this.data = data;
             notifyDataSetChanged();
         }
@@ -44,7 +46,7 @@ public class GoodsDetailCouponAdapter extends RecyclerView.Adapter<GoodsDetailCo
 
     @Override
     public CouponHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_goods_detail_coupon,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_goods_detail_coupon, parent, false);
         return new CouponHolder(view);
     }
 
@@ -52,29 +54,34 @@ public class GoodsDetailCouponAdapter extends RecyclerView.Adapter<GoodsDetailCo
     public void onBindViewHolder(final CouponHolder holder, final int position) {
         final CouponBean bean = data.get(position);
         holder.tvPrice.setText(bean.getDiscount());
-        holder.tvUserPrice.setText(String.format(context.getString(R.string.use_price),bean.getMin()));
-        if("0".equals(bean.getStatus())){   //未领
+        if (TextUtils.equals(bean.getMin(), Constant.NEGATIVE_ONE)) {
+            holder.tvUserPrice.setText("指定支付价格");
+        } else {
+            holder.tvUserPrice.setText(String.format(context.getString(R.string.use_price), bean.getMin()));
+        }
+
+        if ("0".equals(bean.getStatus())) {   //未领
             holder.tvGet.setText("点击领取");
             holder.rlCoupon.setBackgroundResource(R.drawable.bg_goods_coupon);
-        }else {
+        } else {
             holder.tvGet.setText("已领取");
             holder.rlCoupon.setBackgroundResource(R.drawable.bg_goods_coupon_gray);
         }
 
-        if(FormatUtil.parseInt(bean.getDiscount()) > 99){
-            holder.tvPrice.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.getResources().getDimension(R.dimen.sp_30));
-        }else {
-            holder.tvPrice.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.getResources().getDimension(R.dimen.sp_40));
+        if (FormatUtil.parseInt(bean.getDiscount()) > 99) {
+            holder.tvPrice.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.sp_30));
+        } else {
+            holder.tvPrice.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.sp_40));
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if("0".equals(bean.getStatus())){
-                    if(listener != null){
+                if ("0".equals(bean.getStatus())) {
+                    if (listener != null) {
                         listener.onCouponClick(position);
                     }
-                }else {
+                } else {
                     ToastGlobal.showLong("已领取过该优惠券");
                 }
             }
@@ -90,7 +97,7 @@ public class GoodsDetailCouponAdapter extends RecyclerView.Adapter<GoodsDetailCo
 
         public CouponHolder(View itemView) {
             super(itemView);
-            rlCoupon = (RelativeLayout)itemView.findViewById(R.id.rl_coupon);
+            rlCoupon = (RelativeLayout) itemView.findViewById(R.id.rl_coupon);
             tvPrice = (TextView) itemView.findViewById(R.id.tv_price);
             tvUserPrice = (TextView) itemView.findViewById(R.id.tv_user_price);
             tvGet = (TextView) itemView.findViewById(R.id.tv_get);
@@ -101,7 +108,7 @@ public class GoodsDetailCouponAdapter extends RecyclerView.Adapter<GoodsDetailCo
         this.listener = listener;
     }
 
-    public interface CouponListener{
+    public interface CouponListener {
         void onCouponClick(int position);
     }
 }

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CouponBean;
+import com.leyuan.aidong.utils.Constant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +56,13 @@ public class SelectCouponAdapter extends RecyclerView.Adapter<SelectCouponAdapte
         //与优惠劵类型无关
         holder.tvName.setText(bean.getName());
         holder.tvCouponPrice.setText(bean.getDiscount());
-        holder.tvUseMoney.setText(String.format(context.getString(R.string.user_condition), bean.getMin()));
+
+        if (TextUtils.equals(bean.getMin(), Constant.NEGATIVE_ONE)) {
+            holder.tvUseMoney.setText("指定支付价格");
+        } else {
+            holder.tvUseMoney.setText(String.format(context.getString(R.string.user_condition), bean.getMin()));
+        }
+
         if (!TextUtils.isEmpty(bean.getIntroduce())) {
             holder.tvDesc.setText(Html.fromHtml(bean.getIntroduce()));
         }
@@ -124,7 +131,7 @@ public class SelectCouponAdapter extends RecyclerView.Adapter<SelectCouponAdapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(couponListener != null){
+                if (couponListener != null) {
                     couponListener.onCouponClicked(position);
                 }
             }
@@ -164,7 +171,7 @@ public class SelectCouponAdapter extends RecyclerView.Adapter<SelectCouponAdapte
         this.couponListener = couponListener;
     }
 
-    public interface CouponListener{
+    public interface CouponListener {
         void onCouponClicked(int position);
     }
 }
