@@ -174,7 +174,6 @@ public class SystemPresentImpl implements SystemPresent {
                 if(equipments != null){
                     CategoryBean allBean = new CategoryBean();
                     allBean.setName("全部");
-                    allBean.setCover("https://www.baidu.com/img/bd_logo1.png");
                     equipments.add(0, allBean);
                 }
 
@@ -182,7 +181,6 @@ public class SystemPresentImpl implements SystemPresent {
                 if(nutrition != null){
                     CategoryBean allBean = new CategoryBean();
                     allBean.setName("全部");
-                    allBean.setCover("https://www.baidu.com/img/bd_logo1.png");
                     nutrition.add(0, allBean);
                 }
 

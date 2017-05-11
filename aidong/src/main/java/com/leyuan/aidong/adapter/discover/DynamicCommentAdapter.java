@@ -45,6 +45,9 @@ public class DynamicCommentAdapter extends RecyclerView.Adapter<DynamicCommentAd
     public void setData(List<CommentBean> data,int totalCount) {
         if(data != null) {
             this.data = data;
+            if(this.data.size() > 3){
+                this.data.remove(3);
+            }
             this.totalCount = totalCount;
             notifyDataSetChanged();
         }

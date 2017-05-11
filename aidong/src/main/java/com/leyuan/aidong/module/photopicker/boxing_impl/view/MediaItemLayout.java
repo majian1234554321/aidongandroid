@@ -166,12 +166,12 @@ public class MediaItemLayout extends FrameLayout {
     public void setAnimatedChecked(boolean isChecked){
         if (isChecked) {
             mFontLayout.setVisibility(View.VISIBLE);
-            mCheckImg.setImageDrawable(getResources().getDrawable(R.drawable.sel));
+            mCheckImg.setImageDrawable(getResources().getDrawable(R.drawable.icon_checked_red));
             Animation animation = OptAnimationLoader.loadAnimation(context, R.anim.modal_in);
             mCheckImg.startAnimation(animation);
         } else {
             mFontLayout.setVisibility(View.GONE);
-            mCheckImg.setImageDrawable(getResources().getDrawable(R.drawable.def));
+            mCheckImg.setImageDrawable(getResources().getDrawable(R.drawable.icon_unchecked_white));
             Animation animation = OptAnimationLoader.loadAnimation(context, R.anim.modal_out);
             mCheckImg.startAnimation(animation);
         }
@@ -181,10 +181,10 @@ public class MediaItemLayout extends FrameLayout {
     public void setChecked(boolean isChecked) {
         if (isChecked) {
             mFontLayout.setVisibility(View.VISIBLE);
-            mCheckImg.setImageDrawable(getResources().getDrawable(R.drawable.sel));
+            mCheckImg.setImageDrawable(getResources().getDrawable(R.drawable.icon_checked_red));
         } else {
             mFontLayout.setVisibility(View.GONE);
-            mCheckImg.setImageDrawable(getResources().getDrawable(R.drawable.def));
+            mCheckImg.setImageDrawable(getResources().getDrawable(R.drawable.icon_unchecked_white));
         }
     }
 

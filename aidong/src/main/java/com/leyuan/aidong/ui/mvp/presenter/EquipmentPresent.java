@@ -15,12 +15,12 @@ public interface EquipmentPresent {
      * 第一次进入界面加载装备列表数据
      * @param switcherLayout SwitcherLayout
      */
-    void commonLoadEquipmentData(SwitcherLayout switcherLayout,String brandId, String sort);
+    void commonLoadEquipmentData(SwitcherLayout switcherLayout,String brandId, String sort,String gymId);
 
     /**
      * 下拉刷新装备列表数据
      */
-    void pullToRefreshEquipmentData(String brandId,String sort);
+    void pullToRefreshEquipmentData(String brandId,String sort,String gymId);
 
 
     /**
@@ -29,7 +29,7 @@ public interface EquipmentPresent {
      * @param pageSize 每页加载数
      * @param page 页码
      */
-    void requestMoreEquipmentData(RecyclerView recyclerView, int pageSize, int page,String brandId, String sort);
+    void requestMoreEquipmentData(RecyclerView recyclerView, int pageSize, int page,String brandId, String sort,String gymId);
 
     /**
      * 立即购买
@@ -48,7 +48,4 @@ public interface EquipmentPresent {
                                String coin, String payType, String pickUpWay, String pickUpId,
                                String pickUpDate,PayInterface.PayListener payListener);
 
-    void pullToRefreshEquipmentData(String venuesId);
-
-    void requestMoreEquipmentData(String venuesId,RecyclerView recyclerView, int pageSize, int page);
 }

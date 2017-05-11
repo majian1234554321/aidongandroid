@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.PublishDynamicAdapter;
@@ -29,6 +28,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.PublishDynamicActivityView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.FormatUtil;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.qiniu.IQiNiuCallback;
 import com.leyuan.aidong.utils.qiniu.UploadToQiNiuManager;
 
@@ -108,9 +108,7 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
                 break;
             case R.id.bt_send:
                 if(FormatUtil.parseInt(tvContentCount.getText().toString()) > MAX_TEXT_COUNT){
-                    Toast.makeText(PublishDynamicActivity.this,
-                            String.format(getString(R.string.too_many_text),MAX_TEXT_COUNT)
-                            ,Toast.LENGTH_LONG).show();
+                    ToastGlobal.showLong( String.format(getString(R.string.too_many_text),MAX_TEXT_COUNT));
                     return;
                 }
                 uploadToQiNiu();
@@ -147,7 +145,7 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
             @Override
             public void onFail() {
                 dismissProgressDialog();
-                Toast.makeText(PublishDynamicActivity.this, "上传失败", Toast.LENGTH_LONG).show();
+                ToastGlobal.showLong("上传失败");
             }
         });
     }
@@ -169,9 +167,9 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
             setResult(RESULT_OK,null);
             finish();
             selectedMedia.clear();
-            Toast.makeText(this,"上传成功", Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong("上传失败");
         }else {
-            Toast.makeText(this,"上传失败:" + baseBean.getMessage(), Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong(baseBean.getMessage());
         }
     }
 

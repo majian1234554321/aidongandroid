@@ -210,7 +210,7 @@ public class BoxingPreviewActivity extends AbsBoxingViewActivity {
 
     private void setMenuIcon(boolean isSelected) {
         if (mNeedEdit) {
-            mSelectedMenuItem.setIcon(isSelected ? R.drawable.sel : R.drawable.def);
+            mSelectedMenuItem.setIcon(isSelected ? R.drawable.icon_checked_red : R.drawable.icon_unchecked_white);
         }
     }
 

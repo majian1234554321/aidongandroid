@@ -213,9 +213,15 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         tvStartTime.setText(String.format(getString(R.string.appoint_time),
                 bean.getEntryStartTime()));
 
-        isFollow = SystemInfoUtils.isFollow(this, bean.getCoach());
-        ivFollow.setBackgroundResource(isFollow ? R.drawable.icon_following
-                : R.drawable.icon_follow);
+        if(bean.getCoach().getId().equals(String.valueOf(App.mInstance.getUser().getId()))){
+            ivFollow.setVisibility(View.GONE);
+        }else {
+            ivFollow.setVisibility(View.VISIBLE);
+            isFollow = SystemInfoUtils.isFollow(this, bean.getCoach());
+            ivFollow.setBackgroundResource(isFollow ? R.drawable.icon_following
+                    : R.drawable.icon_follow);
+        }
+
         setBottomStatus();
     }
 

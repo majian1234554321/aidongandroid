@@ -17,8 +17,8 @@ import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.discover.activity.VenuesDetailActivity;
 import com.leyuan.aidong.ui.discover.activity.VenuesSubbranchActivity;
+import com.leyuan.aidong.ui.home.activity.GoodsFilterActivity;
 import com.leyuan.aidong.ui.home.activity.MapActivity;
-import com.leyuan.aidong.ui.home.activity.NurtureActivity;
 import com.leyuan.aidong.ui.mvp.presenter.VenuesPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VenuesPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.VenuesDetailFragmentView;
@@ -29,6 +29,8 @@ import com.leyuan.aidong.widget.SwitcherLayout;
 import cn.bingoogolapple.bgabanner.BGABanner;
 
 import static com.leyuan.aidong.R.id.tv_subbranch;
+import static com.leyuan.aidong.utils.Constant.GOODS_EQUIPMENT;
+import static com.leyuan.aidong.utils.Constant.GOODS_NUTRITION;
 
 /**
  * 场馆详情
@@ -42,9 +44,8 @@ public class VenuesDetailFragment extends BaseFragment implements View.OnClickLi
     private TextView tvName;
     private TextView tvPrice, tv_price_separator;
     private TextView tvDistance;
-    private TextView tvFood;
-    private TextView tvNurture;
-    private TextView tvEquipment;
+    private LinearLayout nurtureLayout;
+    private LinearLayout equipmentLayout;
     private TextView tvAddress;
     private TextView tvPhone;
     private TextView tvOpenTime;
@@ -88,10 +89,9 @@ public class VenuesDetailFragment extends BaseFragment implements View.OnClickLi
         tvPrice = (TextView) view.findViewById(R.id.tv_price);
         tv_price_separator = (TextView) view.findViewById(R.id.tv_price_separator);
         tvDistance = (TextView) view.findViewById(R.id.tv_distance);
-        tvFood = (TextView) view.findViewById(R.id.tv_food);
-        tvNurture = (TextView) view.findViewById(R.id.tv_nurture);
-        tvEquipment = (TextView) view.findViewById(R.id.tv_equipment);
         tvAddress = (TextView) view.findViewById(R.id.tv_address);
+        nurtureLayout = (LinearLayout) view.findViewById(R.id.ll_nurture);
+        equipmentLayout = (LinearLayout) view.findViewById(R.id.ll_equipment);
         tvPhone = (TextView) view.findViewById(R.id.tv_phone);
         tvOpenTime = (TextView) view.findViewById(R.id.tv_open_time);
         subbranchLayout = (LinearLayout) view.findViewById(R.id.ll_subbranch);
@@ -104,9 +104,8 @@ public class VenuesDetailFragment extends BaseFragment implements View.OnClickLi
 
     private void setListener() {
         shareButton.setOnClickListener(this);
-        tvFood.setOnClickListener(this);
-        tvNurture.setOnClickListener(this);
-        tvEquipment.setOnClickListener(this);
+        nurtureLayout.setOnClickListener(this);
+        equipmentLayout.setOnClickListener(this);
         tvAddress.setOnClickListener(this);
         tvPhone.setOnClickListener(this);
         tvSubbranch.setOnClickListener(this);
@@ -119,27 +118,24 @@ public class VenuesDetailFragment extends BaseFragment implements View.OnClickLi
                 sharePopupWindow.showAtBottom(venues.getName(), venues.getIntroduce(),
                         venues.getPhoto().get(0), "http://www.baidu.com");
                 break;
-            case R.id.tv_food:
-                break;
-            case R.id.tv_nurture:
-                startActivity(new Intent(getContext(), NurtureActivity.class));
-                break;
-            case R.id.tv_equipment:
 
+            case R.id.ll_equipment:
+                GoodsFilterActivity.start(getContext(),GOODS_EQUIPMENT,venues.getName(),venues.getId());
+                break;
+            case R.id.ll_nurture:
+                GoodsFilterActivity.start(getContext(),GOODS_NUTRITION,venues.getName(),venues.getId());
                 break;
             case R.id.tv_address:
                 if (venues != null) {
                     MapActivity.start(getActivity(), "场馆地址", venues.getName(), venues.getAddress(),
                             venues.getCoordinate().getLat() + "", venues.getCoordinate().getLng() + "");
                 }
-
                 break;
             case R.id.tv_phone:
                 TelephoneManager.callImmediate(getActivity(), venues.getTel());
                 break;
             case tv_subbranch:
                 VenuesSubbranchActivity.start(getActivity(), venues.getBrother());
-
                 break;
             default:
                 break;

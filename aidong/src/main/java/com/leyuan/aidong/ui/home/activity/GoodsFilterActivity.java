@@ -8,6 +8,7 @@ import android.support.v4.util.Pair;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,7 +25,9 @@ import com.leyuan.aidong.ui.mvp.presenter.NurturePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.EquipmentPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.NurturePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.GoodsFilterActivityView;
+import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.utils.TransitionHelper;
+import com.leyuan.aidong.utils.constant.GoodsType;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -34,6 +37,7 @@ import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.leyuan.aidong.utils.Constant.GOODS_EQUIPMENT;
 import static com.leyuan.aidong.utils.Constant.GOODS_NUTRITION;
 
 
@@ -50,6 +54,7 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
     private static final int PULL_TO_REFRESH_DATA = 4;
     private static final int REQUEST_MORE_DATA = 5;
 
+    private TextView tvTitle;
     private ImageView ivBack;
     private TextView tvSearch;
     private GoodsFilterView filterView;
@@ -65,18 +70,27 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
 
     private String goodsType;
     private int selectedCategoryPosition = 0;
-    private List<CategoryBean> categoryBeanList;
     private NurturePresent nurturePresent;
     private EquipmentPresent equipmentPresent;
+    private String gymName;
     private String categoryId;  //分类筛选
     private String sort;        //排序
+    private String gymId;
 
-
-    public static void start(Context context, String goodsType, ArrayList<CategoryBean> categoryList,int pos) {
+    //从营养品或装备界面跳过来
+    public static void start(Context context, @GoodsType String goodsType,int pos) {
         Intent starter = new Intent(context, GoodsFilterActivity.class);
         starter.putExtra("goodsType",goodsType);
         starter.putExtra("pos",pos);
-        starter.putExtra("categoryList",categoryList);
+        context.startActivity(starter);
+    }
+
+    //从场馆详情跳过来
+    public static void start(Context context, @GoodsType  String goodsType, String gymName, String gymId) {
+        Intent starter = new Intent(context, GoodsFilterActivity.class);
+        starter.putExtra("goodsType",goodsType);
+        starter.putExtra("gymName",gymName);
+        starter.putExtra("gymId",gymId);
         context.startActivity(starter);
     }
 
@@ -87,30 +101,49 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
         nurturePresent = new NurturePresentImpl(this,this);
         equipmentPresent = new EquipmentPresentImpl(this,this);
         if(getIntent() != null){
-            goodsType = getIntent().getStringExtra("goodsType");
-            selectedCategoryPosition = getIntent().getIntExtra("pos",0);
-            categoryBeanList = (List<CategoryBean>) getIntent().getSerializableExtra("categoryList");
-            categoryId = categoryBeanList.get(selectedCategoryPosition).getId();
+            gymName = getIntent().getStringExtra("gymName");
+            if(!TextUtils.isEmpty(gymName)){
+                gymId = getIntent().getStringExtra("gymId");
+                goodsType = getIntent().getStringExtra("goodsType");
+            }else {
+                goodsType = getIntent().getStringExtra("goodsType");
+                selectedCategoryPosition = getIntent().getIntExtra("pos",0);
+            }
         }
 
-        initTopLayout();
+        initFilterLayout();
         initSwipeRefreshLayout();
         initRecyclerView();
         getListData(COMMEND_LOAD_DATA);
     }
 
-    private void  initTopLayout(){
+    private void initFilterLayout(){
+        tvTitle = (TextView) findViewById(R.id.tv_title);
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tvSearch = (TextView)findViewById(R.id.tv_search);
         ivBack.setOnClickListener(this);
         tvSearch.setOnClickListener(this);
+        if(!TextUtils.isEmpty(gymName)){
+            tvTitle.setText(gymName);
+            tvSearch.setVisibility(View.GONE);
+        }else {
+            tvSearch.setVisibility(View.VISIBLE);
+        }
         filterView = (GoodsFilterView)findViewById(R.id.view_filter);
-        filterView.setCategoryList(categoryBeanList);
+        ArrayList<CategoryBean> nurtureCategory = SystemInfoUtils.getNurtureCategory(this);
+        ArrayList<CategoryBean> equipmentCategory = SystemInfoUtils.getEquipmentCategory(this);
+        filterView.setCategoryList(GOODS_NUTRITION.equals(goodsType)?nurtureCategory :equipmentCategory);
+        if(nurtureCategory != null && GOODS_NUTRITION.equals(goodsType)){
+            categoryId = nurtureCategory.get(selectedCategoryPosition).getId();
+        }
+        if(equipmentCategory != null && GOODS_EQUIPMENT.equals(goodsType)){
+            categoryId = equipmentCategory.get(selectedCategoryPosition).getId();
+        }
         filterView.setSelectedCategoryPosition(selectedCategoryPosition);
         filterView.setOnFilterClickListener(new GoodsFilterView.OnFilterClickListener() {
             @Override
-            public void onCategoryItemClick(int position) {
-                categoryId = categoryBeanList.get(position).getId();
+            public void onCategoryItemClick(String id) {
+                categoryId = id;
                 getListData(PULL_TO_REFRESH_DATA);
             }
 
@@ -222,9 +255,9 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
         switch (operation){
             case COMMEND_LOAD_DATA:
                 if(GOODS_NUTRITION.equals(goodsType)){
-                    nurturePresent.commendLoadNurtureData(switcherLayout, categoryId, sort);
+                    nurturePresent.commendLoadNurtureData(switcherLayout, categoryId, sort,gymId);
                 }else {
-                    equipmentPresent.commonLoadEquipmentData(switcherLayout, categoryId, sort);
+                    equipmentPresent.commonLoadEquipmentData(switcherLayout, categoryId, sort,gymId);
                 }
                 break;
             case PULL_TO_REFRESH_DATA:
@@ -232,17 +265,17 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
                 refreshLayout.setRefreshing(true);
                 RecyclerViewStateUtils.resetFooterViewState(recyclerView);
                 if(GOODS_NUTRITION.equals(goodsType)){
-                    nurturePresent.pullToRefreshNurtureData(categoryId,sort);
+                    nurturePresent.pullToRefreshNurtureData(categoryId,sort,gymId);
                 }else {
-                    equipmentPresent.pullToRefreshEquipmentData(categoryId,sort);
+                    equipmentPresent.pullToRefreshEquipmentData(categoryId,sort,gymId);
                 }
                 break;
             case REQUEST_MORE_DATA:
                 currPage ++;
                 if(GOODS_NUTRITION.equals(goodsType) && nurtureList.size() >= pageSize){
-                    nurturePresent.requestMoreNurtureData(recyclerView,pageSize,currPage, categoryId,sort);
+                    nurturePresent.requestMoreNurtureData(recyclerView,pageSize,currPage, categoryId,sort,gymId);
                 }else if(GOODS_NUTRITION.equals(goodsType) && equipmentList.size() >= pageSize){
-                    equipmentPresent.requestMoreEquipmentData(recyclerView,pageSize,currPage, categoryId,sort);
+                    equipmentPresent.requestMoreEquipmentData(recyclerView,pageSize,currPage, categoryId,sort,gymId);
                 }
                 break;
             default:

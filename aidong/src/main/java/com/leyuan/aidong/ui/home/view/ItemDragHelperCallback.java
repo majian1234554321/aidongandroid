@@ -10,14 +10,14 @@ import android.support.v7.widget.helper.ItemTouchHelper;
  * Created by song on 2017/4/24.
  */
 public class ItemDragHelperCallback extends ItemTouchHelper.Callback {
-    private OnItemMoveListener mOnItemMoveListener;
+    private OnItemMoveListener onItemMoveListener;
 
     public interface OnItemMoveListener {
         boolean onItemMove(int fromPosition, int toPosition);
     }
 
     public ItemDragHelperCallback(OnItemMoveListener onItemMoveListener) {
-        mOnItemMoveListener = onItemMoveListener;
+        this.onItemMoveListener = onItemMoveListener;
     }
 
     @Override
@@ -41,8 +41,7 @@ public class ItemDragHelperCallback extends ItemTouchHelper.Callback {
     @Override
     public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
         return !isDifferentItemViewType(viewHolder, target) &&
-                mOnItemMoveListener.onItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
-
+                onItemMoveListener.onItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
     }
 
     private boolean isDifferentItemViewType(RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
@@ -52,7 +51,6 @@ public class ItemDragHelperCallback extends ItemTouchHelper.Callback {
     @Override
     public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
         super.clearView(recyclerView, viewHolder);
-
     }
 
     @Override

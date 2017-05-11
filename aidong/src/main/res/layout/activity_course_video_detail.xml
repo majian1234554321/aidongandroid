@@ -17,7 +17,6 @@
         android:layout_height="30dp"
         android:background="@drawable/icon_back" />
 
-
     <Button
         android:id="@+id/bt_appoint"
         android:layout_width="match_parent"
@@ -64,7 +63,6 @@
                     android:src="@drawable/bt_start_video" />
             </RelativeLayout>
 
-
             <RelativeLayout
                 android:id="@+id/rl_info"
                 android:layout_width="match_parent"
@@ -98,7 +96,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:padding="@dimen/right_margin"
-                    android:src="@drawable/icon_bottom_arrow_gray" />
+                    android:src="@drawable/video_detail_down_arrow" />
 
                 <View
                     android:layout_width="match_parent"
@@ -131,7 +129,8 @@
                 <RelativeLayout
                     android:id="@+id/layout_more_video"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp">
+                    android:layout_height="50dp"
+                    android:background="?selectableItemBackground">
 
                     <TextView
                         android:layout_width="wrap_content"

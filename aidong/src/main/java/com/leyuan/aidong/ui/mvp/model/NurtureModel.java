@@ -28,7 +28,7 @@ public interface NurtureModel {
      * @param subscriber Subscribers
      * @param page       页码
      */
-    void getNurtures(Subscriber<NurtureData> subscriber, int page, String brandId, String sort);
+    void getNurtures(Subscriber<NurtureData> subscriber, int page, String brandId, String sort,String gymId);
 
     /**
      * 获取营养品详情

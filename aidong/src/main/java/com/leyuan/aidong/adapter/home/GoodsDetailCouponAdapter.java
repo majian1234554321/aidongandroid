@@ -13,11 +13,14 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.FormatUtil;
+import com.leyuan.aidong.utils.ScreenUtil;
 import com.leyuan.aidong.utils.ToastGlobal;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * 商品详情界面优惠劵适配器
@@ -63,8 +66,11 @@ public class GoodsDetailCouponAdapter extends RecyclerView.Adapter<GoodsDetailCo
         if ("0".equals(bean.getStatus())) {   //未领
             holder.tvGet.setText("点击领取");
             holder.rlCoupon.setBackgroundResource(R.drawable.bg_goods_coupon);
-        } else {
+        } else if ("1".equals(bean.getStatus())){
             holder.tvGet.setText("已领取");
+            holder.rlCoupon.setBackgroundResource(R.drawable.bg_goods_coupon_gray);
+        } else {
+            holder.tvGet.setText("已领完");
             holder.rlCoupon.setBackgroundResource(R.drawable.bg_goods_coupon_gray);
         }
 
@@ -72,6 +78,20 @@ public class GoodsDetailCouponAdapter extends RecyclerView.Adapter<GoodsDetailCo
             holder.tvPrice.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.sp_30));
         } else {
             holder.tvPrice.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.sp_40));
+        }
+
+        //只有一张优惠券 居中
+        if(data.size() == 1){
+            ViewGroup.LayoutParams layoutParams = holder.root.getLayoutParams();
+            layoutParams.width = ScreenUtil.getScreenWidth(context) - DensityUtil.dp2px(context,15);
+            holder.root.setLayoutParams(layoutParams);
+        }
+
+        //两张优惠券居中对齐
+        if(data.size() == 2){
+            ViewGroup.LayoutParams layoutParams = holder.root.getLayoutParams();
+            layoutParams.width = (ScreenUtil.getScreenWidth(context) - DensityUtil.dp2px(context,15)) / 2;
+            holder.root.setLayoutParams(layoutParams);
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -89,7 +109,7 @@ public class GoodsDetailCouponAdapter extends RecyclerView.Adapter<GoodsDetailCo
     }
 
     class CouponHolder extends RecyclerView.ViewHolder {
-
+        RelativeLayout root;
         RelativeLayout rlCoupon;
         TextView tvPrice;
         TextView tvUserPrice;
@@ -97,7 +117,8 @@ public class GoodsDetailCouponAdapter extends RecyclerView.Adapter<GoodsDetailCo
 
         public CouponHolder(View itemView) {
             super(itemView);
-            rlCoupon = (RelativeLayout) itemView.findViewById(R.id.rl_coupon);
+            root = (RelativeLayout) itemView.findViewById(R.id.root);
+            rlCoupon = (RelativeLayout)itemView.findViewById(R.id.rl_coupon);
             tvPrice = (TextView) itemView.findViewById(R.id.tv_price);
             tvUserPrice = (TextView) itemView.findViewById(R.id.tv_user_price);
             tvGet = (TextView) itemView.findViewById(R.id.tv_get);

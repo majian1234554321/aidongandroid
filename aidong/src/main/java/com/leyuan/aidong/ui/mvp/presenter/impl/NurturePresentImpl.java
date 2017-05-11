@@ -53,7 +53,7 @@ public class NurturePresentImpl implements NurturePresent{
     }
 
     @Override
-    public void commendLoadNurtureData(final SwitcherLayout switcherLayout, String brandId, String sort) {
+    public void commendLoadNurtureData(final SwitcherLayout switcherLayout, String brandId, String sort,String gymId) {
         nurtureModel.getNurtures(new CommonSubscriber<NurtureData>(switcherLayout) {
             @Override
             public void onNext(NurtureData nurtureDataBean) {
@@ -67,11 +67,11 @@ public class NurturePresentImpl implements NurturePresent{
                     switcherLayout.showEmptyLayout();
                 }
             }
-        },Constant.PAGE_FIRST,brandId,sort);
+        },Constant.PAGE_FIRST,brandId,sort,gymId);
     }
 
     @Override
-    public void pullToRefreshNurtureData(String brandId, String sort) {
+    public void pullToRefreshNurtureData(String brandId, String sort,String gymId) {
         nurtureModel.getNurtures(new RefreshSubscriber<NurtureData>(context) {
             @Override
             public void onNext(NurtureData nurtureDataBean) {
@@ -84,12 +84,12 @@ public class NurturePresentImpl implements NurturePresent{
                     filterActivityView.showEmptyView();
                 }
             }
-        }, Constant.PAGE_FIRST,brandId,sort);
+        }, Constant.PAGE_FIRST,brandId,sort,gymId);
     }
 
     @Override
     public void requestMoreNurtureData(RecyclerView recyclerView, final int pageSize, int page,
-                                       String brandId, String sort) {
+                                       String brandId, String sort,String gymId) {
         nurtureModel.getNurtures(new RequestMoreSubscriber<NurtureData>(context,recyclerView,pageSize) {
             @Override
             public void onNext(NurtureData nurtureDataBean) {
@@ -104,7 +104,7 @@ public class NurturePresentImpl implements NurturePresent{
                     filterActivityView.showEndFooterView();
                 }
             }
-        },page,brandId,sort);
+        },page,brandId,sort,gymId);
     }
 
     @Override
@@ -117,15 +117,5 @@ public class NurturePresentImpl implements NurturePresent{
                 PayUtils.pay(context,payOrderData.getOrder(),listener);
             }
         },skuCode,amount,coupon,integral,coin,payType,pickUpWay,pickUpId,pickUpDate);
-    }
-
-    @Override
-    public void pullToRefreshNurtureData(String venuesId) {
-
-    }
-
-    @Override
-    public void requestMoreNurtureData(String venuesId, RecyclerView recyclerView, int pageSize, int page) {
-
     }
 }

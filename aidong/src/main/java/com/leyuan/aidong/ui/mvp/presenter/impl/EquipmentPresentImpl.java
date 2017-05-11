@@ -41,7 +41,7 @@ public class EquipmentPresentImpl implements EquipmentPresent{
 
 
     @Override
-    public void commonLoadEquipmentData(final SwitcherLayout switcherLayout, String brandId, String sort) {
+    public void commonLoadEquipmentData(final SwitcherLayout switcherLayout, String brandId, String sort,String gymId) {
         equipmentModel.getEquipments(new CommonSubscriber<EquipmentData>(switcherLayout) {
             @Override
             public void onNext(EquipmentData equipmentData) {
@@ -55,11 +55,11 @@ public class EquipmentPresentImpl implements EquipmentPresent{
                     switcherLayout.showEmptyLayout();
                 }
             }
-        },Constant.PAGE_FIRST,brandId,sort);
+        },Constant.PAGE_FIRST,brandId,sort,gymId);
     }
 
     @Override
-    public void pullToRefreshEquipmentData(String brandId, String sort) {
+    public void pullToRefreshEquipmentData(String brandId, String sort,String gymId) {
         equipmentModel.getEquipments(new RefreshSubscriber<EquipmentData>(context) {
             @Override
             public void onNext(EquipmentData equipmentData) {
@@ -72,12 +72,12 @@ public class EquipmentPresentImpl implements EquipmentPresent{
                     filterActivityView.showEmptyView();
                 }
             }
-        },Constant.PAGE_FIRST,brandId,sort);
+        },Constant.PAGE_FIRST,brandId,sort,gymId);
     }
 
     @Override
     public void requestMoreEquipmentData(RecyclerView recyclerView, final int pageSize, int page,
-                                         String brandId, String sort) {
+                                         String brandId, String sort,String gymId) {
         equipmentModel.getEquipments(new RequestMoreSubscriber<EquipmentData>(context,recyclerView,pageSize) {
             @Override
             public void onNext(EquipmentData equipmentData) {
@@ -92,7 +92,7 @@ public class EquipmentPresentImpl implements EquipmentPresent{
                     filterActivityView.showEndFooterView();
                 }
             }
-        },page,brandId,sort);
+        },page,brandId,sort,gymId);
     }
 
     @Override
@@ -105,15 +105,5 @@ public class EquipmentPresentImpl implements EquipmentPresent{
                 PayUtils.pay(context,payOrderData.getOrder(),listener);
             }
         },skuCode,amount,coupon,integral,coin,payType,pickUpWay,pickUpId,pickUpDate);
-    }
-
-    @Override
-    public void pullToRefreshEquipmentData(String venuesId) {
-
-    }
-
-    @Override
-    public void requestMoreEquipmentData(String venuesId, RecyclerView recyclerView, int pageSize, int page) {
-
     }
 }

@@ -57,16 +57,6 @@ public class NurtureAdapter extends RecyclerView.Adapter<NurtureAdapter.NurtureV
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* Intent i = new Intent(context, GoodsDetailActivity.class);
-                i.putExtra("goodsType",GoodsType.NUTRITION);
-                i.putExtra("id",bean.getId());
-
-                View sharedView = holder.cover;
-                String transitionName = context.getString(R.string.transition_home);
-
-                ActivityOptions transitionActivityOptions =
-                        ActivityOptions.makeSceneTransitionAnimation((NurtureActivity) context, sharedView, transitionName);
-                context.startActivity(i, transitionActivityOptions.toBundle());*/
                 GoodsDetailActivity.start(context,bean.getId(), Constant.GOODS_NUTRITION);
             }
         });

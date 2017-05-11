@@ -46,47 +46,71 @@
     </LinearLayout>
 
     <include layout="@layout/inc_line_with_margin"/>
+
     <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="horizontal">
+        android:layout_height="83dp"
+        android:background="@color/white">
 
-        <TextView
-            android:id="@+id/tv_food"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/home_food"
-            android:gravity="center"
-            android:text="健康餐饮"
-            android:paddingTop="10dp"
-            android:textColor="@color/black"
-            android:textSize="13sp"
-            android:visibility="gone"/>
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
-        <TextView
-            android:id="@+id/tv_nurture"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/home_nurture"
-            android:gravity="center"
-            android:text="营养品"
-            android:paddingTop="10dp"
-            android:textColor="@color/black"
-            android:textSize="13sp" />
+            <LinearLayout
+                android:id="@+id/ll_nurture"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:background="?selectableItemBackground">
 
-        <TextView
-            android:id="@+id/tv_equipment"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/home_equipment"
-            android:gravity="center"
-            android:text="装备"
-            android:paddingTop="10dp"
-            android:textColor="@color/black"
-            android:textSize="13sp" />
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/icon_nurture_round" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="营养品"
+                    android:textColor="#333333"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="20dp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="45dp"
+                android:background="@color/line_color"/>
+
+            <LinearLayout
+                android:id="@+id/ll_equipment"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:background="?selectableItemBackground">
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/icon_equipment_round" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="装备"
+                    android:textColor="#333333"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="20dp"/>
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
     <include layout="@layout/inc_line_with_margin"/>
