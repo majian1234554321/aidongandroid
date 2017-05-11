@@ -33,12 +33,19 @@ public interface VenuesModel {
     List<DistrictBean> getBusinessCircle();
 
     /**
+     * 获取场馆类型
+     * @return
+     */
+    List<String> getGymTypes();
+
+
+    /**
      * 获取场馆列表
      * @param subscriber 返回Subscriber
      * @param page 页码
      */
      void getVenues(Subscriber<VenuesData> subscriber, int page,String brand_id,
-                    String landmark);
+                    String landmark,String gymTypes);
 
     /**
      * 获取场馆详情

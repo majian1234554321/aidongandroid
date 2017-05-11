@@ -13,11 +13,11 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.adapter.discover.VenuesAdapter;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.DistrictBean;
 import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.adapter.discover.VenuesAdapter;
 import com.leyuan.aidong.ui.discover.view.VenuesFilterView;
 import com.leyuan.aidong.ui.home.activity.SearchActivity;
 import com.leyuan.aidong.ui.mvp.presenter.VenuesPresent;
@@ -57,6 +57,7 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
     private VenuesPresent venuesPresent;
     private String brand_id;
     private String landmark;
+    private String gymTypes;
 
 
     public static void start(Context context, @Nullable String brand_id) {
@@ -76,7 +77,8 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
         setListener();
         venuesPresent.getGymBrand();
         venuesPresent.getBusinessCircle();
-        venuesPresent.commonLoadData(switcherLayout, brand_id, landmark);
+        venuesPresent.getGymTypes();
+        venuesPresent.commonLoadData(switcherLayout, brand_id, landmark, gymTypes);
     }
 
     private void initView() {
@@ -118,10 +120,7 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
     private void refreshData() {
         currPage = 1;
         RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-
-
-        venuesPresent.commonLoadData(switcherLayout, brand_id, landmark);
-//        venuesPresent.pullToRefreshData(brand_id, landmark);
+        venuesPresent.commonLoadData(switcherLayout, brand_id, landmark, gymTypes);
     }
 
     private void initRecyclerView() {
@@ -148,6 +147,12 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
                 landmark = address;
                 refreshData();
             }
+
+            @Override
+            public void onTypeItemClick(String typeStr) {
+                gymTypes = typeStr;
+                refreshData();
+            }
         });
     }
 
@@ -156,7 +161,7 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
         public void onLoadNextPage(View view) {
             currPage++;
             if (data != null && data.size() >= pageSize) {
-                venuesPresent.requestMoreData(recyclerView, pageSize, currPage, brand_id, landmark);
+                venuesPresent.requestMoreData(recyclerView, pageSize, currPage, brand_id, landmark, gymTypes);
             }
         }
 
@@ -194,20 +199,8 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
     }
 
     @Override
-    public void updateRecyclerView(List<VenuesBean> venuesBeanList) {
-        if (refreshLayout.isRefreshing()) {
-            data.clear();
-            refreshLayout.setRefreshing(false);
-        }
-        data.addAll(venuesBeanList);
-        venuesAdapter.setData(data);
-        wrapperAdapter.notifyDataSetChanged();
-    }
-
-
-    @Override
-    public void showEndFooterView() {
-        RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
+    public void setGymTypes(List<String> gymTypesList) {
+        filterView.setTypeList(gymTypesList);
     }
 
     @Override
@@ -225,6 +218,11 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
         data.addAll(venuesBeanList);
         venuesAdapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showEndFooterView() {
+        RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
     }
 
 }

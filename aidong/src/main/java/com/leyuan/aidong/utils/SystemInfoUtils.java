@@ -263,6 +263,22 @@ public class SystemInfoUtils {
         }
     }
 
+
+    /**
+     * 获取场馆类型信息
+     */
+    public static ArrayList<String> getVenuesCategory(Context context) {
+        if (systemInfoBean != null && systemInfoBean.getGymTypes() != null) { //内存有直接从内存读取返回
+            return systemInfoBean.getGymTypes();
+        } else {          // 从本地读取
+            Object bean = getSystemInfoBean(context, KEY_SYSTEM);
+            if (bean instanceof SystemBean) {
+                return ((SystemBean) bean).getGymTypes();
+            }
+            return null;
+        }
+    }
+
     /**
      * 获取商圈信息
      */

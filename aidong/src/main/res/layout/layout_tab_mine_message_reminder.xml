@@ -67,7 +67,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/pref_15dp"
-            android:src="@drawable/jiantou"/>
+            android:src="@drawable/icon_right_arrow"/>
     </RelativeLayout>
 
     <ImageView
@@ -113,7 +113,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/pref_15dp"
-            android:src="@drawable/jiantou"/>
+            android:src="@drawable/icon_right_arrow"/>
     </RelativeLayout>
 
     <ImageView
@@ -159,7 +159,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/pref_15dp"
-            android:src="@drawable/jiantou"/>
+            android:src="@drawable/icon_right_arrow"/>
     </RelativeLayout>
 
     <ImageView
@@ -202,7 +202,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/pref_15dp"
-            android:src="@drawable/jiantou_two"/>
+            android:src="@drawable/icon_right_arrow"/>
 
         <TextView
             android:layout_width="wrap_content"

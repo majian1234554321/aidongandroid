@@ -15,13 +15,14 @@ public class SystemBean implements Serializable {
     private ArrayList<CategoryBean> campaign;//活动分类
     private ArrayList<CategoryBean> nutrition;//营养品分类
     private ArrayList<CategoryBean> equipment;//装备分类
-    private ArrayList<DistrictBean> landmark;
+    private ArrayList<DistrictBean> landmark; //商圈
     private List<CategoryBean> gym_brand;   //场馆品牌
+    private ArrayList<String> gym_types;
 
     private int order_countdown; // 订单倒计时,单位分钟
     private int appointment_countdown;// 预约倒计时,单位分钟
     private long current_time;
-    private String acivity;
+    private String acivity;     //课程视频底部提示文字
 
     public List<String> getOpen_city() {
         return open_city;
@@ -118,6 +119,14 @@ public class SystemBean implements Serializable {
 
     public void setAcivity(String acivity) {
         this.acivity = acivity;
+    }
+
+    public ArrayList<String> getGymTypes() {
+        return gym_types;
+    }
+
+    public void setGym_types(ArrayList<String> gym_types) {
+        this.gym_types = gym_types;
     }
 
     @Override

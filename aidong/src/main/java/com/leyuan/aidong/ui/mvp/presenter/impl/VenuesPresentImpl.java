@@ -111,7 +111,13 @@ public class VenuesPresentImpl implements VenuesPresent {
         if (selfDeliveryVenuesActivity != null) {
             selfDeliveryVenuesActivity.setGymBrand(venuesModel.getGymBrand());
         }
+    }
 
+    @Override
+    public void getGymTypes() {
+        if (discoverVenuesActivityView != null) {
+            discoverVenuesActivityView.setGymTypes(venuesModel.getGymTypes());
+        }
     }
 
     @Override
@@ -125,7 +131,7 @@ public class VenuesPresentImpl implements VenuesPresent {
     }
 
     @Override
-    public void commonLoadData(final SwitcherLayout switcherLayout, String brand_id, String landmark) {
+    public void commonLoadData(final SwitcherLayout switcherLayout, String brand_id, String landmark,String gymTypes) {
         venuesModel.getVenues(new CommonSubscriber<VenuesData>(switcherLayout) {
             @Override
             public void onNext(VenuesData venuesData) {
@@ -139,11 +145,11 @@ public class VenuesPresentImpl implements VenuesPresent {
                     switcherLayout.showEmptyLayout();
                 }
             }
-        }, Constant.PAGE_FIRST, brand_id, landmark);
+        }, Constant.PAGE_FIRST, brand_id, landmark,gymTypes);
     }
 
     @Override
-    public void pullToRefreshData(String brand_id, String landmark) {
+    public void pullToRefreshData(String brand_id, String landmark,String gymTypes) {
         venuesModel.getVenues(new RefreshSubscriber<VenuesData>(context) {
             @Override
             public void onNext(VenuesData venuesData) {
@@ -154,12 +160,12 @@ public class VenuesPresentImpl implements VenuesPresent {
                     discoverVenuesActivityView.onRefreshData(venuesBeanList);
                 }
             }
-        }, Constant.PAGE_FIRST, brand_id, landmark);
+        }, Constant.PAGE_FIRST, brand_id, landmark,gymTypes);
     }
 
     @Override
     public void requestMoreData(RecyclerView recyclerView, final int pageSize, int page, String brand_id,
-                                String landmark) {
+                                String landmark,String gymTypes) {
         venuesModel.getVenues(new RequestMoreSubscriber<VenuesData>(context, recyclerView, pageSize) {
             @Override
             public void onNext(VenuesData venuesData) {
@@ -174,7 +180,7 @@ public class VenuesPresentImpl implements VenuesPresent {
                     discoverVenuesActivityView.showEndFooterView();
                 }
             }
-        }, page, brand_id, landmark);
+        }, page, brand_id, landmark,gymTypes);
     }
 
     @Override

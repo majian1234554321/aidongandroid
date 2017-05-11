@@ -46,9 +46,14 @@ public class VenuesModelImpl implements VenuesModel {
     }
 
     @Override
+    public List<String> getGymTypes() {
+        return SystemInfoUtils.getVenuesCategory(context);
+    }
+
+    @Override
     public void getVenues(Subscriber<VenuesData> subscriber, int page, String brand_id,
-                          String landmark) {
-        venuesService.getVenues(page, brand_id, landmark)
+                          String landmark,String gymTypes) {
+        venuesService.getVenues(page, brand_id, landmark,gymTypes)
                 .compose(RxHelper.<VenuesData>transform())
                 .subscribe(subscriber);
     }
