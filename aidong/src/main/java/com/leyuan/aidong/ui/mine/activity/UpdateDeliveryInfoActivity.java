@@ -132,7 +132,7 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
             deliveryBean.setInfo(venuesBean);
             deliveryBean.setType(DELIVERY_SELF);
             bean.setDeliveryInfo(deliveryBean);
-            deliveryInfoAdapter.notifyDataSetChanged();
+            deliveryInfoAdapter.notifyItemChanged(position);
             updateShopList(bean);
         }
     }
@@ -147,7 +147,7 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
             venuesBean.setName("仓库发货");
             deliveryBean.setInfo(venuesBean);
             bean.setDeliveryInfo(deliveryBean);
-            deliveryInfoAdapter.notifyDataSetChanged();
+            deliveryInfoAdapter.notifyItemChanged(position);
             updateShopList(bean);
         }
     }

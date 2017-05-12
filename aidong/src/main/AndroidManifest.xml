@@ -313,7 +313,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.home.activity.ConfirmOrderActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".ui.home.activity.SelfDeliveryVenuesActivity"
             android:screenOrientation="portrait" />
