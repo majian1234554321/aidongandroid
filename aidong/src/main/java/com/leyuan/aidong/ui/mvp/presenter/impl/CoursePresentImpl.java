@@ -45,7 +45,7 @@ import rx.Subscriber;
  * 课程
  * Created by song on 2016/9/21.
  */
-public class CoursePresentImpl implements CoursePresent{
+public class CoursePresentImpl implements CoursePresent {
     private Context context;
     private CourseModel courseModel;
     private FollowModel followModel;
@@ -199,65 +199,74 @@ public class CoursePresentImpl implements CoursePresent{
 
     @Override
     public void buyCourse(String id, @Nullable String couponId, @Nullable String integral, String payType,
-                          String contactName, String contactMobile, final PayInterface.PayListener listener,String isVip) {
+                          String contactName, String contactMobile, final PayInterface.PayListener listener, String isVip) {
         if (courseModel == null) {
             courseModel = new CourseModelImpl(context);
         }
         courseModel.buyCourse(new ProgressSubscriber<PayOrderData>(context) {
             @Override
             public void onNext(PayOrderData payOrderData) {
-                if(!"purchased".equals(payOrderData.getOrder().getStatus())) {
-                    PayUtils.pay(context,payOrderData.getOrder(),listener);
-                }else {
+                if (!"purchased".equals(payOrderData.getOrder().getStatus())) {
+                    PayUtils.pay(context, payOrderData.getOrder(), listener);
+                } else {
                     appointCourseActivityView.onFreeCourseAppointed();
                 }
             }
-        }, id, couponId, integral, payType, contactName, contactMobile,isVip);
+        }, id, couponId, integral, payType, contactName, contactMobile, isVip);
     }
 
     @Override
     public void addFollow(String id) {
-        if(followModel == null){
+        if (followModel == null) {
             followModel = new FollowModelImpl();
         }
         followModel.addFollow(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
-                if(baseBean != null){
+                if (baseBean != null) {
                     courseDetailActivityView.addFollowResult(baseBean);
                 }
             }
-        },id);
+        }, id);
     }
 
     @Override
     public void cancelFollow(String id) {
-        if(followModel == null){
+        if (followModel == null) {
             followModel = new FollowModelImpl();
         }
         followModel.cancelFollow(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
-                if(baseBean != null){
+                if (baseBean != null) {
                     courseDetailActivityView.cancelFollowResult(baseBean);
                 }
             }
-        },id);
+        }, id);
     }
 
     @Override
     public void getSpecifyCourseCoupon(String id) {
-        if(couponModel == null){
+        if (couponModel == null) {
             couponModel = new CouponModelImpl();
         }
-        couponModel.getSpecifyGoodsCoupon(new ProgressSubscriber<CouponData>(context,false) {
+//        couponModel.getSpecifyGoodsCoupon(new ProgressSubscriber<CouponData>(context, false) {
+//            @Override
+//            public void onNext(CouponData couponData) {
+//                if (couponData != null) {
+//                    appointCourseActivityView.setCourseCouponResult(couponData.getCoupon());//maybe null
+//                }
+//            }
+//        }, Constant.COUPON_COURSE, id);
+
+        couponModel.getGoodsAvailableCoupon(new ProgressSubscriber<CouponData>(context, false) {
             @Override
             public void onNext(CouponData couponData) {
-                if(couponData != null) {
+                if (couponData != null) {
                     appointCourseActivityView.setCourseCouponResult(couponData.getCoupon());//maybe null
                 }
             }
-        }, Constant.COUPON_COURSE,id);
+        }, Constant.COUPON_COURSE + "_" + id + "_1");
     }
 
     @Override
@@ -269,7 +278,7 @@ public class CoursePresentImpl implements CoursePresent{
             @Override
             public void onNext(CourseData courseData) {
                 if (courseData != null && courseData.getCourse() != null && !courseData.getCourse().isEmpty()) {
-                    if(coursesActivityView != null) {
+                    if (coursesActivityView != null) {
                         coursesActivityView.setScrollPosition(courseData.getDate());
                     }
                 }
@@ -295,10 +304,10 @@ public class CoursePresentImpl implements CoursePresent{
             @Override
             public void onNext(CourseVideoData courseVideoData) {
                 List<CourseVideoBean> courseVideoBeanList = new ArrayList<>();
-                if(courseVideoData != null){
+                if (courseVideoData != null) {
                     courseVideoBeanList = courseVideoData.getVideos();
                 }
-                if(!courseVideoBeanList.isEmpty()){
+                if (!courseVideoBeanList.isEmpty()) {
                     videoDetailActivityView.updateRelateVideo(courseVideoBeanList);
                 }
 
@@ -311,7 +320,7 @@ public class CoursePresentImpl implements CoursePresent{
                 videoDetailActivityView.showErrorView();
             }
 
-        },"relation",id,1,videoId);
+        }, "relation", id, 1, videoId);
     }
 
     @Override
@@ -323,35 +332,35 @@ public class CoursePresentImpl implements CoursePresent{
             @Override
             public void onNext(CourseVideoData courseVideoData) {
                 List<CourseVideoBean> courseVideoBeanList = new ArrayList<>();
-                if(courseVideoData != null){
+                if (courseVideoData != null) {
                     courseVideoBeanList = courseVideoData.getVideos();
                 }
-                if(!courseVideoBeanList.isEmpty()){
+                if (!courseVideoBeanList.isEmpty()) {
                     relatedVideoActivityView.updateRecycler(courseVideoBeanList);
-                }else {
+                } else {
                     relatedVideoActivityView.showEmptyView();
                 }
             }
-        },"all",id,1,"");
+        }, "all", id, 1, "");
     }
 
     @Override
-    public void loadMoreVideo(String id,RecyclerView recyclerView,final int pageSize, int page) {
-        courseModel.getCourseVideo(new RequestMoreSubscriber<CourseVideoData>(context,recyclerView,pageSize) {
+    public void loadMoreVideo(String id, RecyclerView recyclerView, final int pageSize, int page) {
+        courseModel.getCourseVideo(new RequestMoreSubscriber<CourseVideoData>(context, recyclerView, pageSize) {
             @Override
             public void onNext(CourseVideoData courseVideoData) {
                 List<CourseVideoBean> courseVideoBeanList = new ArrayList<>();
-                if(courseVideoData != null){
+                if (courseVideoData != null) {
                     courseVideoBeanList = courseVideoData.getVideos();
                 }
-                if(!courseVideoBeanList.isEmpty()){
+                if (!courseVideoBeanList.isEmpty()) {
                     relatedVideoActivityView.updateRecycler(courseVideoBeanList);
                 }
                 //没有更多数据了显示到底提示
-                if(courseVideoBeanList.size() < pageSize){
+                if (courseVideoBeanList.size() < pageSize) {
                     relatedVideoActivityView.showEndFooterView();
                 }
             }
-        },"all",id,page,"");
+        }, "all", id, page, "");
     }
 }

@@ -23,6 +23,8 @@ public interface ConfirmOrderPresent {
     void getSpecifyGoodsCoupon(String from,String...id);
 
 
+    void getGoodsAvailableCoupon(String... items);
+
     /**
      * 立即购买装备
      * @param skuCode skuCode

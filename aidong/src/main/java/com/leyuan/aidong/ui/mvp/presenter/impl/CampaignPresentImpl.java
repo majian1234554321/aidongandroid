@@ -63,7 +63,7 @@ public class CampaignPresentImpl implements CampaignPresent {
 
     @Override
     public void getData(String list) {
-        if(campaignModel == null){
+        if (campaignModel == null) {
             campaignModel = new CampaignModelImpl();
         }
       /*  campaignModel.getCampaigns(new BaseSubscriber<CampaignData>(context) {
@@ -97,65 +97,65 @@ public class CampaignPresentImpl implements CampaignPresent {
     }
 
     @Override
-    public void commonLoadData(final SwitcherLayout switcherLayout,String list) {
-        if(campaignModel == null){
+    public void commonLoadData(final SwitcherLayout switcherLayout, String list) {
+        if (campaignModel == null) {
             campaignModel = new CampaignModelImpl();
         }
         campaignModel.getCampaigns(new CommonSubscriber<CampaignData>(switcherLayout) {
             @Override
             public void onNext(CampaignData campaignData) {
-                if(campaignData.getCampaign() != null && !campaignData.getCampaign().isEmpty()){
+                if (campaignData.getCampaign() != null && !campaignData.getCampaign().isEmpty()) {
                     campaignActivityView.updateRecyclerView(campaignData.getCampaign());
                     switcherLayout.showContentLayout();
-                }else{
+                } else {
                     campaignActivityView.showEmptyView();
                 }
             }
-        },Constant.PAGE_FIRST,list);
+        }, Constant.PAGE_FIRST, list);
     }
 
     @Override
     public void pullToRefreshData(String list) {
-        if(campaignModel == null){
+        if (campaignModel == null) {
             campaignModel = new CampaignModelImpl();
         }
         campaignModel.getCampaigns(new RefreshSubscriber<CampaignData>(context) {
             @Override
             public void onNext(CampaignData campaignBean) {
-                if(campaignBean != null && !campaignBean.getCampaign().isEmpty()){
+                if (campaignBean != null && !campaignBean.getCampaign().isEmpty()) {
                     campaignActivityView.updateRecyclerView(campaignBean.getCampaign());
                 }
             }
-        }, Constant.PAGE_FIRST,list);
+        }, Constant.PAGE_FIRST, list);
     }
 
     @Override
-    public void requestMoreData(RecyclerView recyclerView, final int pageSize, int page,String list) {
-        if(campaignModel == null){
+    public void requestMoreData(RecyclerView recyclerView, final int pageSize, int page, String list) {
+        if (campaignModel == null) {
             campaignModel = new CampaignModelImpl();
         }
-        campaignModel.getCampaigns(new RequestMoreSubscriber<CampaignData>(context,recyclerView,pageSize) {
+        campaignModel.getCampaigns(new RequestMoreSubscriber<CampaignData>(context, recyclerView, pageSize) {
             @Override
             public void onNext(CampaignData campaignDataBean) {
-                if(campaignDataBean != null){
+                if (campaignDataBean != null) {
                     campaignBeanList = campaignDataBean.getCampaign();
-                }else{
+                } else {
                     campaignActivityView.showEndFooterView();
                 }
-                if(!campaignBeanList.isEmpty()){
+                if (!campaignBeanList.isEmpty()) {
                     campaignActivityView.updateRecyclerView(campaignBeanList);
                 }
                 //没有更多数据了显示到底提示
-                if( campaignBeanList.size() < pageSize){
+                if (campaignBeanList.size() < pageSize) {
                     campaignActivityView.showEndFooterView();
                 }
             }
-        },page,list);
+        }, page, list);
     }
 
     @Override
-    public void getCampaignDetail(final SwitcherLayout switcherLayout,String id) {
-        if(campaignModel == null){
+    public void getCampaignDetail(final SwitcherLayout switcherLayout, String id) {
+        if (campaignModel == null) {
             campaignModel = new CampaignModelImpl();
         }
         campaignModel.getCampaignDetail(new IsLoginSubscriber<CampaignDetailData>(context) {
@@ -166,10 +166,10 @@ public class CampaignPresentImpl implements CampaignPresent {
 
             @Override
             public void onNext(CampaignDetailData campaignDetailData) {
-                if(campaignDetailData.getCampaign() != null){
+                if (campaignDetailData.getCampaign() != null) {
                     switcherLayout.showContentLayout();
                     campaignDetailView.setCampaignDetail(campaignDetailData.getCampaign());
-                }else{
+                } else {
                     switcherLayout.showEmptyLayout();
                 }
             }
@@ -190,33 +190,48 @@ public class CampaignPresentImpl implements CampaignPresent {
     @Override
     public void buyCampaign(String id, String couponId, float integral, String payType, String contactName,
                             String contactMobile, final PayInterface.PayListener listener) {
-        if(campaignModel == null){
+        if (campaignModel == null) {
             campaignModel = new CampaignModelImpl();
         }
         campaignModel.buyCampaign(new ProgressSubscriber<PayOrderData>(context) {
             @Override
             public void onNext(PayOrderData payOrderData) {
-                if(!"purchased".equals(payOrderData.getOrder().getStatus())) {
-                    PayUtils.pay(context,payOrderData.getOrder(),listener);
-                }else {
+                if (!"purchased".equals(payOrderData.getOrder().getStatus())) {
+                    PayUtils.pay(context, payOrderData.getOrder(), listener);
+                } else {
                     appointCampaignActivityView.onFreeCampaignAppointed();
                 }
             }
-        },id,couponId,integral,payType,contactName,contactMobile);
+        }, id, couponId, integral, payType, contactName, contactMobile);
     }
 
     @Override
     public void getSpecifyCampaignCoupon(String id) {
-        if(couponModel == null){
+        if (couponModel == null) {
             couponModel = new CouponModelImpl();
         }
-        couponModel.getSpecifyGoodsCoupon(new ProgressSubscriber<CouponData>(context,false) {
+        couponModel.getSpecifyGoodsCoupon(new ProgressSubscriber<CouponData>(context, false) {
             @Override
             public void onNext(CouponData couponData) {
-                if(couponData != null) {
+                if (couponData != null) {
                     appointCampaignActivityView.setCampaignCouponResult(couponData.getCoupon());//maybe null
                 }
             }
-        }, Constant.COUPON_CAMPAIGN,id);
+        }, Constant.COUPON_CAMPAIGN, id);
+    }
+
+    @Override
+    public void getCampaignAvailableCoupon(String id) {
+        if (couponModel == null) {
+            couponModel = new CouponModelImpl();
+        }
+        couponModel.getGoodsAvailableCoupon(new ProgressSubscriber<CouponData>(context, false) {
+            @Override
+            public void onNext(CouponData couponData) {
+                if (couponData != null) {
+                    appointCampaignActivityView.setCampaignCouponResult(couponData.getCoupon());//maybe null
+                }
+            }
+        }, Constant.COUPON_CAMPAIGN + "_" + id + "_1");
     }
 }

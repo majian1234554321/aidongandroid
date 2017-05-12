@@ -55,6 +55,7 @@ public class RetrofitHelper {
 
                         builder.addHeader("version", App.getInstance().getVersionName());
                         builder.addHeader("deviceName", DeviceManager.getPhoneBrand());
+//                        builder.addHeader("register_code", App.getInstance().getjPushId());
 
                         Request authorised = builder.build();
                         return chain.proceed(authorised);

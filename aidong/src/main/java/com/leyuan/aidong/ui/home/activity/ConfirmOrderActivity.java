@@ -3,7 +3,6 @@ package com.leyuan.aidong.ui.home.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -69,7 +68,7 @@ import static com.leyuan.aidong.utils.Constant.SETTLEMENT_NURTURE_IMMEDIATELY;
  * Created by song on 2016/9/23.
  */
 public class ConfirmOrderActivity extends BaseActivity implements View.OnClickListener,
-        CustomNestRadioGroup.OnCheckedChangeListener ,ConfirmOrderActivityView, ConfirmOrderShopAdapter.DeliveryTypeListener {
+        CustomNestRadioGroup.OnCheckedChangeListener, ConfirmOrderActivityView, ConfirmOrderShopAdapter.DeliveryTypeListener {
     private SimpleTitleBar titleBar;
     private LinearLayout contentLayout;
     private SwitcherLayout switcherLayout;
@@ -114,17 +113,25 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private String skuCode;
     private int amount;
     private String[] itemIds;
+    private String[] itemFromIdAmount;
+
     private String integral;
     private String coin;
     private String coupon;
-    private @PayType String payType;
-    private @DeliveryType String pickUpWay;           //取货方式(0-快递 1-自提)
+    private
+    @PayType
+    String payType;
+    private
+    @DeliveryType
+    String pickUpWay;           //取货方式(0-快递 1-自提)
     private String pickUpId;                          //自提门店id或快递地址id
     private String pickUpDate;                        //自提时间
     private String defaultAddressId;
 
     private String couponType;
-    private @SettlementType String settlementType;
+    private
+    @SettlementType
+    String settlementType;
     private double totalGoodsPrice;
     private boolean needExpress = false;
     private int deliveryPosition;
@@ -133,14 +140,14 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
     public static void start(Context context, ShopBean shop) {
         Intent starter = new Intent(context, ConfirmOrderActivity.class);
-        starter.putExtra("shop",shop);
+        starter.putExtra("shop", shop);
         context.startActivity(starter);
     }
 
-    public static void start(Context context,ArrayList<ShopBean> selectedShops,double totalGoodsPrice) {
+    public static void start(Context context, ArrayList<ShopBean> selectedShops, double totalGoodsPrice) {
         Intent starter = new Intent(context, ConfirmOrderActivity.class);
-        starter.putParcelableArrayListExtra("selectedShops",selectedShops);
-        starter.putExtra("totalGoodsPrice",totalGoodsPrice);
+        starter.putParcelableArrayListExtra("selectedShops", selectedShops);
+        starter.putExtra("totalGoodsPrice", totalGoodsPrice);
         context.startActivity(starter);
     }
 
@@ -148,68 +155,88 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_order);
-        present = new ConfirmOrderPresentImpl(this,this);
+        present = new ConfirmOrderPresentImpl(this, this);
         initVariable();
         initView();
         setListener();
-        if(needExpress) {
+        if (needExpress) {
             bottomLayout.setVisibility(View.GONE);
             present.getDefaultAddress(switcherLayout);
         }
-        present.getSpecifyGoodsCoupon(couponType,itemIds);
+//        present.getSpecifyGoodsCoupon(couponType, itemIds);
+        present.getGoodsAvailableCoupon(itemFromIdAmount);
     }
 
 
-    private void initVariable(){
+    private void initVariable() {
         payType = PAY_ALI;
         days = DateUtils.getSevenDate();
         pickUpDate = days.get(0);
-        if(getIntent() == null) {
+        if (getIntent() == null) {
             return;
         }
         shopBeanList = getIntent().getParcelableArrayListExtra("selectedShops");
-        if(shopBeanList == null || shopBeanList.isEmpty()){
+        if (shopBeanList == null || shopBeanList.isEmpty()) {
             shopBeanList = new ArrayList<>();
             ShopBean shop = getIntent().getParcelableExtra("shop");
             shopBeanList.add(shop);
             pickUpId = shop.getPickUp().info.getId();
             pickUpWay = shop.getPickUp().getType();
-            if(DELIVERY_EXPRESS.equals(pickUpWay)){
+            if (DELIVERY_EXPRESS.equals(pickUpWay)) {
                 pickUpDate = null;
             }
-            if(!shop.getItem().isEmpty()){
+            if (!shop.getItem().isEmpty()) {
                 GoodsBean goods = shop.getItem().get(0);
                 skuCode = goods.getSkuCode();
                 amount = FormatUtil.parseInt(goods.getAmount());
-                totalGoodsPrice = FormatUtil.parseDouble(goods.getPrice())* amount;
-                if(GOODS_NUTRITION.equals(goods.getType())){
+                totalGoodsPrice = FormatUtil.parseDouble(goods.getPrice()) * amount;
+                if (GOODS_NUTRITION.equals(goods.getType())) {
                     goods.setProductId(goods.getId());
                     goods.setProductType(GOODS_NUTRITION);
                     couponType = COUPON_NUTRITION;
                     settlementType = SETTLEMENT_NURTURE_IMMEDIATELY;
-                }else {
+                } else {
                     goods.setProductId(goods.getId());
                     goods.setProductType(GOODS_EQUIPMENT);
                     couponType = COUPON_EQUIPMENT;
                     settlementType = SETTLEMENT_EQUIPMENT_IMMEDIATELY;
                 }
             }
-        }else {
-            couponType = COUPON_CART;
-            settlementType  = SETTLEMENT_CART;
-            totalGoodsPrice = getIntent().getDoubleExtra("totalGoodsPrice", 0f);
-        }
 
-        List<GoodsBean> goodsList = new ArrayList<>();
-        for (ShopBean shopBean : shopBeanList) {
-            for (GoodsBean goodsBean : shopBean.getItem()) {
-                goodsList.add(goodsBean);
+            List<GoodsBean> goodsList = new ArrayList<>();
+            for (ShopBean shopBean : shopBeanList) {
+                for (GoodsBean goodsBean : shopBean.getItem()) {
+                    goodsList.add(goodsBean);
+                }
+            }
+            itemIds = new String[goodsList.size()];
+            itemFromIdAmount = new String[goodsList.size()];
+
+            for (int i = 0; i < goodsList.size(); i++) {
+                itemIds[i] = goodsList.get(i).getSkuCode();
+                itemFromIdAmount[i] = couponType + "_" + goodsList.get(i).getSkuCode() + "_" + goodsList.get(i).getAmount();
+            }
+        } else {
+            couponType = COUPON_CART;
+            settlementType = SETTLEMENT_CART;
+            totalGoodsPrice = getIntent().getDoubleExtra("totalGoodsPrice", 0f);
+
+            List<GoodsBean> goodsList = new ArrayList<>();
+            for (ShopBean shopBean : shopBeanList) {
+                for (GoodsBean goodsBean : shopBean.getItem()) {
+                    goodsList.add(goodsBean);
+                }
+            }
+            itemIds = new String[goodsList.size()];
+            itemFromIdAmount = new String[goodsList.size()];
+
+            for (int i = 0; i < goodsList.size(); i++) {
+                itemIds[i] = goodsList.get(i).getCode();
+                itemFromIdAmount[i] = goodsList.get(i).getProductType() + "_" + goodsList.get(i).getCode() + "_" + goodsList.get(i).getAmount();
             }
         }
-        itemIds = new String[goodsList.size()];
-        for (int i = 0; i < goodsList.size(); i++) {
-            itemIds[i] = goodsList.get(i).getId();
-        }
+
+
     }
 
     private void initView() {
@@ -220,7 +247,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         addressLayout = (RelativeLayout) findViewById(R.id.rl_address);
         ivDefault = (ImageView) findViewById(R.id.iv_default);
         tvName = (TextView) findViewById(R.id.tv_name);
-        tvPhone = (TextView)findViewById(R.id.tv_phone);
+        tvPhone = (TextView) findViewById(R.id.tv_phone);
         tvAddress = (TextView) findViewById(R.id.tv_address);
         selfDeliveryLayout = (LinearLayout) findViewById(R.id.ll_self_delivery);
         tvTime = (TextView) findViewById(R.id.tv_time);
@@ -266,9 +293,9 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             }
         }
         tvTotalGoodsPrice.setRightContent(
-                String.format(getString(R.string.rmb_price_double),totalGoodsPrice));
+                String.format(getString(R.string.rmb_price_double), totalGoodsPrice));
         tvExpressPrice.setRightContent(
-                needExpress ? String.format(getString(R.string.rmb_price_double),EXPRESS_PRICE):"¥ 0.00");
+                needExpress ? String.format(getString(R.string.rmb_price_double), EXPRESS_PRICE) : "¥ 0.00");
         tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double),
                 needExpress ? totalGoodsPrice + EXPRESS_PRICE : totalGoodsPrice));
     }
@@ -286,7 +313,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_back:
                 finish();
                 break;
@@ -294,17 +321,15 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 showDeliveryDateDialog();
                 break;
             case R.id.rl_empty_address:
-                startActivityForResult(new Intent(this,AddAddressActivity.class), REQUEST_ADD_ADDRESS);
+                startActivityForResult(new Intent(this, AddAddressActivity.class), REQUEST_ADD_ADDRESS);
                 break;
             case R.id.rl_address:
-                startActivityForResult(new Intent(this,SelectAddressActivity.class).putExtra("addressId",defaultAddressId),
+                startActivityForResult(new Intent(this, SelectAddressActivity.class).putExtra("addressId", defaultAddressId),
                         REQUEST_SELECT_ADDRESS);
                 break;
             case R.id.tv_coupon:
-                if(usableCoupons != null && !usableCoupons.isEmpty()) {
-                    startActivityForResult(new Intent(this, SelectCouponActivity.class)
-                            .putParcelableArrayListExtra("couponList", (ArrayList<? extends Parcelable>)
-                                    usableCoupons), REQUEST_SELECT_COUPON);
+                if (usableCoupons != null && !usableCoupons.isEmpty() && totalGoodsPrice > 0) {
+                    SelectCouponActivity.startForResult(this, totalGoodsPrice + "", usableCoupons, REQUEST_SELECT_COUPON);
                 }
                 break;
             case R.id.tv_pay:
@@ -319,27 +344,27 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     public void onDeliveryTypeClick(int position) {
         this.deliveryPosition = position;
         Intent intent = new Intent(this, UpdateDeliveryInfoActivity.class);
-        intent.putExtra("shopBean",shopBeanList.get(position));
-        startActivityForResult(intent,REQUEST_UPDATE_DELIVERY);
+        intent.putExtra("shopBean", shopBeanList.get(position));
+        startActivityForResult(intent, REQUEST_UPDATE_DELIVERY);
     }
 
-    private void payOrder(){
-        if(needExpress && TextUtils.isEmpty(pickUpId)){
+    private void payOrder() {
+        if (needExpress && TextUtils.isEmpty(pickUpId)) {
             ToastGlobal.showLong("请填写收货地址");
             return;
         }
-        switch (settlementType){
+        switch (settlementType) {
             case SETTLEMENT_CART:
-                present.payCart(integral,coin,coupon,payType, pickUpId,
-                        pickUpDate,payListener,itemIds);
+                present.payCart(integral, coin, coupon, payType, pickUpId,
+                        pickUpDate, payListener, itemIds);
                 break;
             case SETTLEMENT_NURTURE_IMMEDIATELY:
-                present.buyNurtureImmediately(skuCode,amount,coupon,integral,coin,payType,
-                        String.valueOf(pickUpWay), pickUpId,pickUpDate,payListener);
+                present.buyNurtureImmediately(skuCode, amount, coupon, integral, coin, payType,
+                        String.valueOf(pickUpWay), pickUpId, pickUpDate, payListener);
                 break;
             case SETTLEMENT_EQUIPMENT_IMMEDIATELY:
-                present.buyEquipmentImmediately(skuCode,amount,coupon,integral,coin,payType,
-                        String.valueOf(pickUpWay), pickUpId,pickUpDate,payListener);
+                present.buyEquipmentImmediately(skuCode, amount, coupon, integral, coin, payType,
+                        String.valueOf(pickUpWay), pickUpId, pickUpDate, payListener);
                 break;
             default:
                 break;
@@ -350,7 +375,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         @Override
         public void onSuccess(String code, Object object) {
             ToastGlobal.showLong("支付成功");
-            startActivity(new Intent(ConfirmOrderActivity.this,PaySuccessActivity.class));
+            startActivity(new Intent(ConfirmOrderActivity.this, PaySuccessActivity.class));
         }
 
         @Override
@@ -360,7 +385,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         }
     };
 
-    private void showDeliveryDateDialog(){
+    private void showDeliveryDateDialog() {
         new MaterialDialog.Builder(this)
                 .title(R.string.confirm_date)
                 .items(days)
@@ -376,7 +401,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onCheckedChanged(CustomNestRadioGroup group, int checkedId) {
-        switch (checkedId){
+        switch (checkedId) {
             case R.id.cb_alipay:
                 payType = PAY_ALI;
                 break;
@@ -397,28 +422,28 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void setSpecifyGoodsCouponResult(List<CouponBean> usableCoupons) {
         this.usableCoupons = usableCoupons;
-        if(usableCoupons == null || usableCoupons.isEmpty()){
+        if (usableCoupons == null || usableCoupons.isEmpty()) {
             tvCoupon.setText("无可用");
-            tvCoupon.setCompoundDrawables(null,null,null,null);
+            tvCoupon.setCompoundDrawables(null, null, null, null);
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == RESULT_OK){
-            if(requestCode == REQUEST_SELECT_ADDRESS){
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_SELECT_ADDRESS) {
                 AddressBean address = data.getParcelableExtra("address");
                 setAddressInfo(address);
-            }else if(requestCode == REQUEST_ADD_ADDRESS){
+            } else if (requestCode == REQUEST_ADD_ADDRESS) {
                 AddressBean address = data.getParcelableExtra("address");
                 updateAddressStatus(address);
-            }else if(requestCode == REQUEST_SELECT_COUPON){
+            } else if (requestCode == REQUEST_SELECT_COUPON) {
                 CouponBean couponBean = data.getParcelableExtra("coupon");
                 coupon = couponBean.getId();
-                if(FormatUtil.parseInt(couponBean.getDiscount()) != 0) {
+                if (FormatUtil.parseDouble(couponBean.getDiscount()) !=  -1) {
                     tvCoupon.setText(String.format(getString(R.string.rmb_minus_price_double),
                             FormatUtil.parseDouble(couponBean.getDiscount())));
-                }else {
+                } else {
                     tvCoupon.setText("请选择");
                 }
                 tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double),
@@ -464,18 +489,18 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
-    private void updateAddressStatus(AddressBean address){
-        if(address == null){
+    private void updateAddressStatus(AddressBean address) {
+        if (address == null) {
             addressLayout.setVisibility(View.GONE);
             emptyAddressLayout.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             setAddressInfo(address);
             addressLayout.setVisibility(View.VISIBLE);
             emptyAddressLayout.setVisibility(View.GONE);
         }
     }
 
-    private void setAddressInfo(AddressBean address){
+    private void setAddressInfo(AddressBean address) {
         defaultAddressId = address.getId();
         ivDefault.setVisibility(address.isDefault() ? View.VISIBLE : View.GONE);
         tvName.setText(address.getName());

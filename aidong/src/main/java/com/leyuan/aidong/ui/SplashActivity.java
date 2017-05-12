@@ -8,6 +8,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 
 import com.hyphenate.chat.EMClient;
+import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.entity.VersionInformation;
 import com.leyuan.aidong.ui.home.AdvertisementActivity;
 import com.leyuan.aidong.ui.mvp.presenter.FollowPresent;
@@ -40,7 +41,7 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
     private static final String OS = "android";
     private boolean isFirstEnter = true;
     private static int httpRequestIndex;
-    private String startingBannerImage;
+    private BannerBean startingBanner;
 
     private SplashPresenterImpl splashPresenter;
     private VersionPresenterImpl versionPresenter;
@@ -63,9 +64,9 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
         public void checkOver() {
             if (isFirstEnter) {
                 UiManager.activityJump(SplashActivity.this, GuideActivity.class);
-            } else if (startingBannerImage != null) {
+            } else if (startingBanner != null) {
 
-                AdvertisementActivity.start(SplashActivity.this, startingBannerImage);
+                AdvertisementActivity.start(SplashActivity.this, startingBanner);
             } else {
                 UiManager.activityJump(SplashActivity.this, MainActivity.class);
             }
@@ -129,8 +130,8 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
     }
 
     @Override
-    public void onGetStartingBanner(String image) {
-        this.startingBannerImage = image;
+    public void onGetStartingBanner(BannerBean banner) {
+        this.startingBanner = banner;
         httpRequestIndex++;
     }
 

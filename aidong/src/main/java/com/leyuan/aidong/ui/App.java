@@ -9,6 +9,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
 import com.facebook.stetho.Stetho;
+import com.leyuan.aidong.config.UrlConfig;
 import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.entity.user.MineInfoBean;
@@ -27,8 +28,11 @@ import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.VersionManager;
 import com.squareup.leakcanary.LeakCanary;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import cn.jpush.android.api.JPushInterface;
 import io.realm.Realm;
 
 import static com.leyuan.aidong.utils.Constant.DEFAULT_CITY;
@@ -51,6 +55,7 @@ public class App extends MultiDexApplication {
     public LocationClient mLocationClient = null;
     public BDLocationListener myListener = new MyLocationListener();
     private String parseString;
+    private String jPushId;
 
     @Override
     public void onCreate() {
@@ -62,6 +67,9 @@ public class App extends MultiDexApplication {
 
     private void initConfig() {
         LeakCanary.install(this);
+
+        JPushInterface.setDebugMode(!UrlConfig.debug);
+        JPushInterface.init(this);
 
         SDKInitializer.initialize(this);
         initBaiduLoc();
@@ -116,6 +124,18 @@ public class App extends MultiDexApplication {
         option.SetIgnoreCacheException(false);//可选，默认false，设置是否收集CRASH信息，默认收集
         //option.setEnableSimulateGps(false);//可选，默认false，设置是否需要过滤gps仿真结果，默认需要
         mLocationClient.setLocOption(option);
+    }
+
+    public void saveJpushId(String regId) {
+        this.jPushId = regId;
+        SharePrefUtils.putString(context, "jPushId", regId);
+    }
+
+    public String getjPushId() {
+        if (jPushId == null) {
+            jPushId = SharePrefUtils.getString(context, "jPushId", null);
+        }
+        return jPushId;
     }
 
     public class MyLocationListener implements BDLocationListener {
@@ -215,6 +235,13 @@ public class App extends MultiDexApplication {
     public void setLocationCity(String city) {
         this.cityLocation = city;
         SharePrefUtils.putString(this, "cityLocation", city);
+
+
+        Set<String> sets = new HashSet<>();
+        sets.add(city + 0);
+        sets.add(getSelectedCity() + 1);
+
+        JPushInterface.setTags(this, sets, null);
     }
 
 

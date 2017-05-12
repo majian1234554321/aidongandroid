@@ -55,7 +55,6 @@ public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.
             super.handleMessage(msg);
             switch (msg.what) {
                 case COUNT_DOWN:
-//                    adapter.notifyCountDown();
                     for (int i = 1; i < moreLiveNumber + 1; i++) {
                         RecyclerView.ViewHolder viewHolder = recyclerView.findViewHolderForAdapterPosition(i);
                         if (viewHolder != null && viewHolder instanceof HomeVideoAdapter.ViewHolder) {
@@ -63,13 +62,8 @@ public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.
                             holder.list_live.getAdapter().notifyDataSetChanged();
                         }
                     }
-
-
                     Logger.i("VideoHomeFragment", "COUNT_DOWN :    adapter.notifyItemRangeChanged");
-
-//                    adapter.notifyItemRangeChanged(1, moreLiveNumber);
-                    mHandler.removeCallbacksAndMessages(null);
-                    mHandler.sendEmptyMessageDelayed(COUNT_DOWN, 1000);
+                    startLiveCountDown();
                     break;
             }
         }
@@ -118,7 +112,15 @@ public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.
     @Override
     public void onResume() {
         super.onResume();
+        startLiveCountDown();
         getDataFromInter();
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        stopLiveCountDown();
     }
 
     private void getDataFromInter() {
@@ -173,12 +175,6 @@ public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.
         startActivity(intent);
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mHandler.removeCallbacksAndMessages(null);
-        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(selectCityReceiver);
-    }
 
     @Override
     public void onVideoClick(int id) {
@@ -196,8 +192,28 @@ public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.
                 moreLiveNumber = liveMoreList.size();
             adapter.refreshData(liveHome.getNow(), liveMoreList
                     , liveHome.getEmpty());
+            startLiveCountDown();
+
+        }
+    }
+
+    private void startLiveCountDown() {
+        if (moreLiveNumber > 0) {
             mHandler.removeCallbacksAndMessages(null);
             mHandler.sendEmptyMessageDelayed(COUNT_DOWN, 1000);
         }
+    }
+
+    private void stopLiveCountDown() {
+        if (moreLiveNumber > 0) {
+            mHandler.removeCallbacksAndMessages(null);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mHandler.removeCallbacksAndMessages(null);
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(selectCityReceiver);
     }
 }

@@ -58,4 +58,6 @@ public interface CampaignPresent {
      * @param id
      */
     void getSpecifyCampaignCoupon(String id);
+
+    void getCampaignAvailableCoupon(String id);
 }

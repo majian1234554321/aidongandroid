@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CouponBean;
+import com.leyuan.aidong.utils.Constant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,61 +61,57 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponHold
         //与优惠劵类型无关
         holder.tvName.setText(bean.getName());
         holder.tvCouponPrice.setText(bean.getDiscount());
-        holder.tvUseMoney.setText(String.format(context.getString(R.string.user_condition), bean.getMin()));
+        if(TextUtils.equals(bean.getMin(), Constant.NEGATIVE_ONE)){
+            holder.tvUseMoney.setText("指定支付价格");
+        }else{
+            holder.tvUseMoney.setText(String.format(context.getString(R.string.user_condition), bean.getMin()));
+        }
+
         if (!TextUtils.isEmpty(bean.getIntroduce())) {
             holder.tvDesc.setText(Html.fromHtml(bean.getIntroduce()));
         }
+        holder.tvCouponType.setText(bean.getCoupon_type());
+        holder.tvProduce.setText(bean.getLimitCategory());
 
         //与优惠券类型有关 折扣劵,满减劵
-        holder.tvRmbFlag.setVisibility(bean.getType().equals("0") ? View.VISIBLE : View.GONE);
-        holder.tvDiscountFlag.setVisibility(bean.getType().equals("0") ? View.GONE : View.VISIBLE);
-
-        if (TextUtils.equals("0", bean.getLimitExtId())) {
-            holder.tvCouponType.setText("品类劵");
-        } else if (TextUtils.equals("common", bean.getLimitCategory())) {
-            holder.tvCouponType.setText("通用劵");
-        } else {
-            holder.tvCouponType.setText("专用劵");
-        }
-
-        switch (bean.getLimitCategory()) {
-            case "common":
-                holder.tvProduce.setText("全场所有商品可用");
-                break;
-            case "course":
-                holder.tvProduce.setText("指定课程类产品可用");
-                break;
-            case "food":
-                holder.tvProduce.setText("指定餐饮类产品可用");
-                break;
-            case "campaign":
-                holder.tvProduce.setText("指定活动类产品可用");
-                break;
-            case "nutrition":
-                holder.tvProduce.setText("指定营养品类产品可用");
-                break;
-            case "equipment":
-                holder.tvProduce.setText("指定装备类产品可用");
-                break;
-            case "ticket":
-                holder.tvProduce.setText("指定票务类产品可用");
-                break;
-        }
+//        holder.tvRmbFlag.setVisibility(bean.getType().equals("0") ? View.VISIBLE : View.GONE);
+//        holder.tvDiscountFlag.setVisibility(bean.getType().equals("0") ? View.GONE : View.VISIBLE);
 
 
-        //与优惠券类型有关 品类券,通用券,专用券
-//        if (TextUtils.equals("0", bean.getLimitCategory())) {
+//        if (TextUtils.equals("0", bean.getLimitExtId())) {
+//            holder.tvCouponType.setText("品类劵");
+//        } else if (TextUtils.equals("common", bean.getLimitCategory())) {
 //            holder.tvCouponType.setText("通用劵");
-//            holder.tvProduce.setText("全场通用");
 //        } else {
-//            if (TextUtils.equals("0", bean.getLimitExtId())) {
-//                holder.tvCouponType.setText("品类劵");
-//                holder.tvProduce.setText("指定品类产品可用");
-//            } else {
-//                holder.tvCouponType.setText("专用劵");
-//                holder.tvProduce.setText("指定特殊产品可用");
-//            }
+//            holder.tvCouponType.setText("专用劵");
 //        }
+//
+//
+//
+//        switch (bean.getLimitCategory()) {
+//            case "common":
+//                holder.tvProduce.setText("全场所有商品可用");
+//                break;
+//            case "course":
+//                holder.tvProduce.setText("指定课程类产品可用");
+//                break;
+//            case "food":
+//                holder.tvProduce.setText("指定餐饮类产品可用");
+//                break;
+//            case "campaign":
+//                holder.tvProduce.setText("指定活动类产品可用");
+//                break;
+//            case "nutrition":
+//                holder.tvProduce.setText("指定营养品类产品可用");
+//                break;
+//            case "equipment":
+//                holder.tvProduce.setText("指定装备类产品可用");
+//                break;
+//            case "ticket":
+//                holder.tvProduce.setText("指定票务类产品可用");
+//                break;
+//        }
+
 
         //与优惠劵使用状态有关 可使用,已使用,已过期
         if (TextUtils.isEmpty(type)) return;

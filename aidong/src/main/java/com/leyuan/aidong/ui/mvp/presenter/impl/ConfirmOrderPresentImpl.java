@@ -32,7 +32,7 @@ import java.util.List;
  * 确认订单
  * Created by song on 2017/3/8.
  */
-public class ConfirmOrderPresentImpl implements ConfirmOrderPresent{
+public class ConfirmOrderPresentImpl implements ConfirmOrderPresent {
     private Context context;
     private CartModel cartModel;
     private CouponModel couponModel;
@@ -53,14 +53,14 @@ public class ConfirmOrderPresentImpl implements ConfirmOrderPresent{
             @Override
             public void onNext(AddressListData addressListData) {
                 AddressBean addressBean = null;
-                if(addressListData != null){
+                if (addressListData != null) {
                     List<AddressBean> addressList = addressListData.getAddress();
                     for (AddressBean bean : addressList) {
-                        if(bean.isDefault()){
+                        if (bean.isDefault()) {
                             addressBean = bean;
                         }
                     }
-                    if(addressBean == null && !addressList.isEmpty()){
+                    if (addressBean == null && !addressList.isEmpty()) {
                         addressBean = addressList.get(0);
                     }
                 }
@@ -72,74 +72,89 @@ public class ConfirmOrderPresentImpl implements ConfirmOrderPresent{
 
     @Override
     public void getSpecifyGoodsCoupon(String from, String... id) {
-        if(couponModel == null) {
+        if (couponModel == null) {
             couponModel = new CouponModelImpl();
         }
-        couponModel.getSpecifyGoodsCoupon(new ProgressSubscriber<CouponData>(context,false) {
+        couponModel.getSpecifyGoodsCoupon(new ProgressSubscriber<CouponData>(context, false) {
             @Override
             public void onNext(CouponData couponData) {
-                if(couponData != null) {
+                if (couponData != null) {
                     orderActivityView.setSpecifyGoodsCouponResult(couponData.getCoupon());//maybe null
                 }
             }
-        },from,id);
+        }, from, id);
+    }
+
+    @Override
+    public void getGoodsAvailableCoupon(String... items) {
+        if (couponModel == null) {
+            couponModel = new CouponModelImpl();
+        }
+        couponModel.getGoodsAvailableCoupon(new ProgressSubscriber<CouponData>(context, false) {
+            @Override
+            public void onNext(CouponData couponData) {
+                if (couponData != null) {
+                    orderActivityView.setSpecifyGoodsCouponResult(couponData.getCoupon());//maybe null
+                }
+            }
+        }, items);
     }
 
     @Override
     public void buyEquipmentImmediately(String skuCode, int amount, String coupon, String integral,
                                         String coin, String payType, String pickUpWay, String pickUpId,
-                                        String pickUpDate,final PayInterface.PayListener listener) {
-        if(equipmentModel == null){
+                                        String pickUpDate, final PayInterface.PayListener listener) {
+        if (equipmentModel == null) {
             equipmentModel = new EquipmentModelImpl(context);
         }
         equipmentModel.buyEquipmentImmediately(new ProgressSubscriber<PayOrderData>(context) {
             @Override
             public void onNext(PayOrderData payOrderData) {
-                PayUtils.pay(context,payOrderData.getOrder(),listener);
+                PayUtils.pay(context, payOrderData.getOrder(), listener);
             }
-        },skuCode,amount,coupon,integral,coin,payType,pickUpWay,pickUpId,pickUpDate);
+        }, skuCode, amount, coupon, integral, coin, payType, pickUpWay, pickUpId, pickUpDate);
     }
 
     @Override
     public void buyNurtureImmediately(String skuCode, int amount, String coupon, String integral,
                                       String coin, String payType, String pickUpWay, String pickUpId,
-                                      String pickUpDate,final PayInterface.PayListener listener) {
-        if(nurtureModel == null){
+                                      String pickUpDate, final PayInterface.PayListener listener) {
+        if (nurtureModel == null) {
             nurtureModel = new NurtureModelImpl(context);
         }
         nurtureModel.buyNurtureImmediately(new ProgressSubscriber<PayOrderData>(context) {
             @Override
             public void onNext(PayOrderData payOrderData) {
-                PayUtils.pay(context,payOrderData.getOrder(),listener);
+                PayUtils.pay(context, payOrderData.getOrder(), listener);
             }
-        },skuCode,amount,coupon,integral,coin,payType,pickUpWay,pickUpId,pickUpDate);
+        }, skuCode, amount, coupon, integral, coin, payType, pickUpWay, pickUpId, pickUpDate);
     }
 
     @Override
     public void payCart(String integral, String coin, String coupon, String payType, String pickUpId,
                         String pickUpDate, final PayInterface.PayListener listener, String... id) {
-        if(cartModel == null) {
+        if (cartModel == null) {
             cartModel = new CartModelImpl();
         }
         cartModel.payCart(new ProgressSubscriber<PayOrderData>(context) {
             @Override
             public void onNext(PayOrderData payOrderData) {
-                PayUtils.pay(context,payOrderData.getOrder(),listener);
+                PayUtils.pay(context, payOrderData.getOrder(), listener);
             }
-        },integral,coin,coupon,payType,pickUpId,pickUpDate,id);
+        }, integral, coin, coupon, payType, pickUpId, pickUpDate, id);
     }
 
     @Override
     public void refreshCartData() {
-        if(cartModel == null) {
+        if (cartModel == null) {
             cartModel = new CartModelImpl();
         }
 
         cartModel.getCart(new RefreshSubscriber<ShopData>(context) {
             @Override
             public void onNext(ShopData shopData) {
-                if(shopData != null && shopData.getCart() != null  && !shopData.getCart().isEmpty()){
-                   // orderActivityView.setRefreshCartDataResult(shopData.getCart());
+                if (shopData != null && shopData.getCart() != null && !shopData.getCart().isEmpty()) {
+                    // orderActivityView.setRefreshCartDataResult(shopData.getCart());
                 }
             }
         });

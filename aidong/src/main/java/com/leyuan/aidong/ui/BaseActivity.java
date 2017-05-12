@@ -100,6 +100,7 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
 
     /**
      * 列表页跳转目标详情页
+     *
      * @param type course-课程 campaign-活动 event-赛事 food-健康餐饮 nutrition-营养品 equipment-装备
      * @param id   id
      */
@@ -107,7 +108,7 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
         if (TextUtils.isEmpty(type)) return;
         switch (type) {
             case "course":
-                CourseDetailActivity.start(this,id);
+                CourseDetailActivity.start(this, id);
                 break;
             case "campaign":
                 CampaignDetailActivity.start(this, id);
@@ -172,8 +173,8 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
         }
     }
 
-    protected void setFadeAnimation(){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+    protected void setFadeAnimation() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Fade in = new Fade();
             in.setDuration(300);
             in.setMode(Fade.MODE_IN);
@@ -186,8 +187,8 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
         }
     }
 
-    protected void setSlideAnimation(){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+    protected void setSlideAnimation() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Slide in = new Slide();
             in.setDuration(300);
             in.setSlideEdge(Gravity.BOTTOM);

@@ -9,17 +9,19 @@ import android.os.Parcelable;
  */
 public class CouponBean implements Parcelable {
     private String id;                  //优惠券编号
-    private String type;                //优惠券类型,#0-优惠券 1-折扣券
-    private String limit_category;      //优惠券限制类型,#0-通用 1-课程类 2-餐饮类 3-活动类 4-营养品类 5-装备类 6-票务类
-    private String limit_ext_id;        //#0-品类券 其他值为专用券　
+    private String coupon_type;   // 专用券，通用券，品类券　
+    private String limit_category;     //优惠券限制类型,#common-通用 course-课程类 campaign-活动类 nutrition-营养品类 equipment-装备类
     private String name;                //优惠券名字
-    private String discount;            //抵扣金额
+    private String discount;            //抵扣金额  抵扣金额或者折扣
     private String min;                 //订单最小金额可用
     private String start_date;          //有效期-开始时间
     private String end_date;            //有效期－结束时间
     private String use_date;            //使用时间
     private String introduce;           //优惠劵展开描述信息
     private String status;
+    //废弃
+    private String limit_ext_id;        //#0-品类券 其他值为专用券　
+    private String type;                //优惠券类型,#0-优惠券 1-折扣券
 
     public String getStatus() {
         return status;
@@ -117,6 +119,14 @@ public class CouponBean implements Parcelable {
         this.introduce = introduce;
     }
 
+    public String getCoupon_type() {
+        return coupon_type;
+    }
+
+    public void setCoupon_type(String coupon_type) {
+        this.coupon_type = coupon_type;
+    }
+
     @Override
     public String toString() {
         return "CouponBean{" +
@@ -134,6 +144,10 @@ public class CouponBean implements Parcelable {
                 '}';
     }
 
+    public CouponBean() {
+
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -141,42 +155,41 @@ public class CouponBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
-        dest.writeString(this.type);
-        dest.writeString(this.limit_category);
-        dest.writeString(this.limit_ext_id);
-        dest.writeString(this.name);
-        dest.writeString(this.discount);
-        dest.writeString(this.min);
-        dest.writeString(this.start_date);
-        dest.writeString(this.end_date);
-        dest.writeString(this.use_date);
-        dest.writeString(this.introduce);
-        dest.writeString(this.status);
-    }
-
-    public CouponBean() {
+        dest.writeString(id);
+        dest.writeString(coupon_type);
+        dest.writeString(limit_category);
+        dest.writeString(name);
+        dest.writeString(discount);
+        dest.writeString(min);
+        dest.writeString(start_date);
+        dest.writeString(end_date);
+        dest.writeString(use_date);
+        dest.writeString(introduce);
+        dest.writeString(status);
+        dest.writeString(limit_ext_id);
+        dest.writeString(type);
     }
 
     protected CouponBean(Parcel in) {
-        this.id = in.readString();
-        this.type = in.readString();
-        this.limit_category = in.readString();
-        this.limit_ext_id = in.readString();
-        this.name = in.readString();
-        this.discount = in.readString();
-        this.min = in.readString();
-        this.start_date = in.readString();
-        this.end_date = in.readString();
-        this.use_date = in.readString();
-        this.introduce = in.readString();
-        this.status = in.readString();
+        id = in.readString();
+        coupon_type = in.readString();
+        limit_category = in.readString();
+        name = in.readString();
+        discount = in.readString();
+        min = in.readString();
+        start_date = in.readString();
+        end_date = in.readString();
+        use_date = in.readString();
+        introduce = in.readString();
+        status = in.readString();
+        limit_ext_id = in.readString();
+        type = in.readString();
     }
 
-    public static final Parcelable.Creator<CouponBean> CREATOR = new Parcelable.Creator<CouponBean>() {
+    public static final Creator<CouponBean> CREATOR = new Creator<CouponBean>() {
         @Override
-        public CouponBean createFromParcel(Parcel source) {
-            return new CouponBean(source);
+        public CouponBean createFromParcel(Parcel in) {
+            return new CouponBean(in);
         }
 
         @Override

@@ -116,17 +116,19 @@ public class SystemPresentImpl implements SystemPresent {
                         systemView.onGetSystemConfiguration(true);
                     }
 
+                    BannerBean startingUpBanner = null;
                     String image = null;
                     if (splashView != null && systemBean.getBanner() != null) {
                         for (BannerBean bannerBean : systemBean.getBanner()) {
                             if (TextUtils.equals(bannerBean.getPosition(), "0")) {
+                                startingUpBanner = bannerBean;
                                 image = bannerBean.getImage();
                                 break;
                             }
                         }
                     }
 
-                    splashView.onGetStartingBanner(image);
+                    splashView.onGetStartingBanner(startingUpBanner);
                     LogAidong.i("mLocationClient   SystemInfoUtils.putSystemInfoBean");
                 }
             }

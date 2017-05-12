@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CouponBean;
+import com.leyuan.aidong.utils.Constant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,46 +56,56 @@ public class SelectCouponAdapter extends RecyclerView.Adapter<SelectCouponAdapte
         //与优惠劵类型无关
         holder.tvName.setText(bean.getName());
         holder.tvCouponPrice.setText(bean.getDiscount());
-        holder.tvUseMoney.setText(String.format(context.getString(R.string.user_condition), bean.getMin()));
+
+        if (TextUtils.equals(bean.getMin(), Constant.NEGATIVE_ONE)) {
+            holder.tvUseMoney.setText("指定支付价格");
+        } else {
+            holder.tvUseMoney.setText(String.format(context.getString(R.string.user_condition), bean.getMin()));
+        }
+
         if (!TextUtils.isEmpty(bean.getIntroduce())) {
             holder.tvDesc.setText(Html.fromHtml(bean.getIntroduce()));
         }
 
-        //与优惠券类型有关 折扣劵,满减劵
-        holder.tvRmbFlag.setVisibility(bean.getType().equals("0") ? View.VISIBLE : View.GONE);
-        holder.tvDiscountFlag.setVisibility(bean.getType().equals("0") ? View.GONE : View.VISIBLE);
+        holder.tvCouponType.setText(bean.getCoupon_type());
+        holder.tvProduce.setText(bean.getLimitCategory());
 
-        if (TextUtils.equals("0", bean.getLimitExtId())) {
-            holder.tvCouponType.setText("品类劵");
-        } else if (TextUtils.equals("common", bean.getLimitCategory())) {
-            holder.tvCouponType.setText("通用劵");
-        } else {
-            holder.tvCouponType.setText("专用劵");
-        }
 
-        switch (bean.getLimitCategory()) {
-            case "common":
-                holder.tvProduce.setText("全场所有商品可用");
-                break;
-            case "course":
-                holder.tvProduce.setText("指定课程类产品可用");
-                break;
-            case "food":
-                holder.tvProduce.setText("指定餐饮类产品可用");
-                break;
-            case "campaign":
-                holder.tvProduce.setText("指定活动类产品可用");
-                break;
-            case "nutrition":
-                holder.tvProduce.setText("指定营养品类产品可用");
-                break;
-            case "equipment":
-                holder.tvProduce.setText("指定装备类产品可用");
-                break;
-            case "ticket":
-                holder.tvProduce.setText("指定票务类产品可用");
-                break;
-        }
+//        //与优惠券类型有关 折扣劵,满减劵
+//        holder.tvRmbFlag.setVisibility(bean.getType().equals("0") ? View.VISIBLE : View.GONE);
+//        holder.tvDiscountFlag.setVisibility(bean.getType().equals("0") ? View.GONE : View.VISIBLE);
+//
+//        if (TextUtils.equals("0", bean.getLimitExtId())) {
+//            holder.tvCouponType.setText("品类劵");
+//        } else if (TextUtils.equals("common", bean.getLimitCategory())) {
+//            holder.tvCouponType.setText("通用劵");
+//        } else {
+//            holder.tvCouponType.setText("专用劵");
+//        }
+//
+//        switch (bean.getLimitCategory()) {
+//            case "common":
+//                holder.tvProduce.setText("全场所有商品可用");
+//                break;
+//            case "course":
+//                holder.tvProduce.setText("指定课程类产品可用");
+//                break;
+//            case "food":
+//                holder.tvProduce.setText("指定餐饮类产品可用");
+//                break;
+//            case "campaign":
+//                holder.tvProduce.setText("指定活动类产品可用");
+//                break;
+//            case "nutrition":
+//                holder.tvProduce.setText("指定营养品类产品可用");
+//                break;
+//            case "equipment":
+//                holder.tvProduce.setText("指定装备类产品可用");
+//                break;
+//            case "ticket":
+//                holder.tvProduce.setText("指定票务类产品可用");
+//                break;
+//        }
 
         if (TextUtils.isEmpty(bean.getStartDate())) {
             holder.tvTime.setText(String.format(context.getString(R.string.coupon_expired),
@@ -120,7 +131,7 @@ public class SelectCouponAdapter extends RecyclerView.Adapter<SelectCouponAdapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(couponListener != null){
+                if (couponListener != null) {
                     couponListener.onCouponClicked(position);
                 }
             }
@@ -160,7 +171,7 @@ public class SelectCouponAdapter extends RecyclerView.Adapter<SelectCouponAdapte
         this.couponListener = couponListener;
     }
 
-    public interface CouponListener{
+    public interface CouponListener {
         void onCouponClicked(int position);
     }
 }
