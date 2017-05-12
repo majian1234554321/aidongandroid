@@ -70,7 +70,7 @@ public class CouponPresentImpl implements CouponPresent {
                     switcherLayout.showContentLayout();
                     couponView.updateRecyclerView(couponList);
                 } else {
-                    switcherLayout.showEmptyLayout();
+                    couponView.showEmptyView();
                 }
             }
         }, type, Constant.PAGE_FIRST);

@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.mvp.model;
 
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CartIdBean;
+import com.leyuan.aidong.entity.ExpressBean;
 import com.leyuan.aidong.entity.data.OrderData;
 import com.leyuan.aidong.entity.data.OrderDetailData;
 
@@ -65,5 +66,12 @@ public interface OrderModel {
      * @param orderId
      */
     void reBuyOrder(Subscriber<CartIdBean> subscriber, String orderId);
+
+    /**
+     * 获取快递信息
+     * @param subscriber
+     * @param orderId
+     */
+    void getExpressInfo(Subscriber<ExpressBean> subscriber,String orderId);
 }
 

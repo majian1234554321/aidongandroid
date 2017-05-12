@@ -414,8 +414,13 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
     private PayInterface.PayListener payListener = new SimplePayListener(this) {
         @Override
         public void onSuccess(String code, Object object) {
-            Toast.makeText(AppointCourseDetailActivity.this,"支付成功啦",Toast.LENGTH_LONG).show();
+            Toast.makeText(AppointCourseDetailActivity.this,"支付成功",Toast.LENGTH_LONG).show();
             startActivity(new Intent(AppointCourseDetailActivity.this,AppointSuccessActivity.class));
+        }
+
+        @Override
+        public void onFree() {
+            AppointSuccessActivity.start(AppointCourseDetailActivity.this, bean.getAppoint().getClassTime(), false);
         }
     };
 
@@ -439,7 +444,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
             present.getAppointmentDetail(switcherLayout,orderId);
             Toast.makeText(this,"取消成功",Toast.LENGTH_LONG).show();
         }else {
-            Toast.makeText(this,"取消失败" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            Toast.makeText(this,baseBean.getMessage(),Toast.LENGTH_LONG).show();
         }
     }
 
@@ -449,7 +454,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
             present.getAppointmentDetail(switcherLayout,orderId);
             Toast.makeText(this,"确认成功",Toast.LENGTH_LONG).show();
         }else {
-            Toast.makeText(this,"确认失败" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            Toast.makeText(this,baseBean.getMessage(),Toast.LENGTH_LONG).show();
         }
     }
 
@@ -459,7 +464,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
             finish();
             Toast.makeText(this,"删除成功",Toast.LENGTH_LONG).show();
         }else {
-            Toast.makeText(this,"删除失败" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            Toast.makeText(this,baseBean.getMessage(),Toast.LENGTH_LONG).show();
         }
     }
 

@@ -73,4 +73,10 @@ public interface DynamicModel {
      * @param type
      */
     void reportDynamic(Subscriber<BaseBean> subscriber,String id,String type);
+
+    /**
+     * 删除动态
+     * @param id
+     */
+    void deleteDynamic(Subscriber<BaseBean> subscriber,String id);
 }

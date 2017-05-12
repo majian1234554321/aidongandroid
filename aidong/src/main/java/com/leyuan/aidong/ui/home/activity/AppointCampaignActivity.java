@@ -28,6 +28,7 @@ import com.leyuan.aidong.ui.mvp.view.AppointCampaignActivityView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.utils.UiManager;
 import com.leyuan.aidong.utils.constant.PayType;
@@ -208,12 +209,6 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
         }
     }
 
-    @Override
-    public void onFreeCampaignAppointed() {
-        AppointSuccessActivity.start(this, bean.getStartTime(), false);
-        Toast.makeText(AppointCampaignActivity.this, "预约成功", Toast.LENGTH_LONG).show();
-    }
-
     private PayInterface.PayListener payListener = new SimplePayListener(this) {
         @Override
         public void onSuccess(String code, Object object) {
@@ -225,6 +220,12 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
         public void onFail(String code, Object object) {
             super.onFail(code, object);
             startActivity(new Intent(AppointCampaignActivity.this, AppointmentActivity.class));
+        }
+
+        @Override
+        public void onFree() {
+            AppointSuccessActivity.start(AppointCampaignActivity.this, bean.getStartTime(), false);
+            ToastGlobal.showLong("支付成功");
         }
     };
 

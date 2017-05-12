@@ -48,6 +48,9 @@ public interface DynamicService {
     @FormUrlEncoded
     @POST("dynamics/{id}/reports")
     Observable<BaseBean> reportDynamic(@Path("id") String id,@Field("types") String type);
+
+    @DELETE("dynamics/{id}")
+    Observable<BaseBean> deleteDynamic(@Path("id") String id);
 }
 
 

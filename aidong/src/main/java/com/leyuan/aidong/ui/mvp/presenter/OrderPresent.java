@@ -90,4 +90,10 @@ public interface OrderPresent {
      * @param orderId
      */
     void reBuyOrder(String orderId);
+
+    /**
+     * 获取快递信息
+     * @param orderId
+     */
+    void getExpressInfo(String orderId);
 }

@@ -53,7 +53,7 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
     private GoodsDetailPresent goodsPresent;
     private VenuesPresent venuesPresent;
     private String goodsType;
-    private String id;
+    private String goodsId;
     private String brandId;
     private String businessCircle;
     private DeliveryBean deliveryBean;
@@ -67,7 +67,7 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
         venuesPresent = new VenuesPresentImpl(this,this);
         if(getIntent() != null){
             goodsType = getIntent().getStringExtra("goodsType");
-            id = getIntent().getStringExtra("id");
+            goodsId = getIntent().getStringExtra("goodsId");
             deliveryBean = getIntent().getParcelableExtra("deliveryBean");
         }
 
@@ -76,7 +76,7 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
 
         venuesPresent.getGymBrand();
         venuesPresent.getBusinessCircle();
-        goodsPresent.commonLoadVenues(switcherLayout,goodsType,id);
+        goodsPresent.commonLoadVenues(switcherLayout,goodsType, goodsId,brandId,businessCircle);
     }
 
 
@@ -95,16 +95,20 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
 
     private void initFilterView() {
         filterView = (VenuesFilterView)findViewById(R.id.filter_view);
+        filterView.hideTypeFilerView();
         filterView.setOnFilterClickListener(new VenuesFilterView.OnFilterClickListener() {
             @Override
             public void onBrandItemClick(String id) {
                 brandId = id;
-                //todo refresh
+                refreshLayout.setRefreshing(true);
+                goodsPresent.pullToRefreshVenues(goodsType, goodsId,brandId,businessCircle);
             }
 
             @Override
             public void onBusinessCircleItemClick(String address) {
                 businessCircle = address;
+                refreshLayout.setRefreshing(true);
+                goodsPresent.pullToRefreshVenues(goodsType, goodsId,brandId,businessCircle);
             }
 
             @Override
@@ -124,10 +128,9 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
             public void onRefresh() {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-                goodsPresent.pullToRefreshVenues(goodsType,id);
+                goodsPresent.pullToRefreshVenues(goodsType, goodsId,brandId,businessCircle);
             }
         });
-
     }
 
     private void initRecyclerView(){
@@ -145,7 +148,7 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
         public void onLoadNextPage(View view) {
             currPage ++;
             if (data != null && data.size() >= pageSize) {
-                goodsPresent.requestMoreVenues(recyclerView,pageSize,goodsType,id,currPage);
+                goodsPresent.requestMoreVenues(recyclerView,pageSize,goodsType, goodsId,currPage,brandId,businessCircle);
             }
         }
     };
@@ -193,8 +196,8 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
     }
 
     @Override
-    public void updateRecyclerView(List<VenuesBean> venuesBeanList) {
-
+    public void onRefreshData(List<VenuesBean> venuesBeanList) {
+        switcherLayout.showContentLayout();
         if(deliveryBean != null && deliveryBean.getInfo() != null) {
             for (VenuesBean venuesBean : venuesBeanList) {
                 if (venuesBean.getId().equals(deliveryBean.getInfo().getId())) {
@@ -212,6 +215,20 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
         data.addAll(venuesBeanList);
         deliveryAdapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onLoadMoreData(List<VenuesBean> venuesBeanList) {
+        data.addAll(venuesBeanList);
+        deliveryAdapter.setData(data);
+        wrapperAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showEmptyView() {
+        View view = View.inflate(this,R.layout.empty_venues,null);
+        switcherLayout.addCustomView(view,"empty");
+        switcherLayout.showCustomLayout("empty");
     }
 
     @Override

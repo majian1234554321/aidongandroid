@@ -383,6 +383,12 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             super.onFail(code, object);
             startActivity(new Intent(ConfirmOrderActivity.this, OrderActivity.class));
         }
+
+        @Override
+        public void onFree() {
+            startActivity(new Intent(ConfirmOrderActivity.this,PaySuccessActivity.class));
+            ToastGlobal.showLong("支付成功");
+        }
     };
 
     private void showDeliveryDateDialog() {

@@ -19,6 +19,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter;
 import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.CommentBean;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.PhotoBrowseInfo;
 import com.leyuan.aidong.entity.UserBean;
@@ -48,7 +49,9 @@ import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
 import static com.leyuan.aidong.R.id.rv_dynamic;
+import static com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity.RESULT_DELETE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_FIVE_IMAGE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_FOUR_IMAGE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_ONE_IMAGE;
@@ -72,6 +75,7 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
     private int currPage = 1;
     private String useId;
     private UserInfoPresent userInfoPresent;
+    private int clickPosition;
 
     private SharePopupWindow sharePopupWindow;
 
@@ -137,7 +141,6 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
         });
     }
 
-
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener() {
         @Override
         public void onLoadNextPage(View view) {
@@ -177,6 +180,7 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
 
         @Override
         public void onBackgroundClick(DynamicBean dynamicBean,int position) {
+            clickPosition = position;
             startActivityForResult(new Intent(getContext(),DynamicDetailActivity.class)
                     .putExtra("dynamic",dynamicBean),REQUEST_REFRESH_DYNAMIC);
         }
@@ -206,6 +210,7 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
 
         @Override
         public void onCommentClick(DynamicBean dynamicBean,int position) {
+            clickPosition = position;
             startActivityForResult(new Intent(getContext(),DynamicDetailActivity.class)
                     .putExtra("dynamic",dynamicBean),REQUEST_REFRESH_DYNAMIC);
         }
@@ -260,6 +265,20 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         sharePopupWindow.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+           if(requestCode == REQUEST_REFRESH_DYNAMIC){
+                //更新动态详情页新添加的评论
+                CommentBean comment = data.getParcelableExtra("comment");
+                DynamicBean dynamicBean = dynamicList.get(clickPosition);
+                dynamicBean.comment.item.add(0,comment);
+                dynamicBean.comment.count ++ ;
+                circleDynamicAdapter.notifyItemChanged(clickPosition);
+            }
+        }else if(resultCode == RESULT_DELETE){
+            dynamicList.remove(clickPosition);
+            circleDynamicAdapter.updateData(dynamicList);
+            circleDynamicAdapter.notifyItemRemoved(clickPosition);
+        }
     }
 
     @Override

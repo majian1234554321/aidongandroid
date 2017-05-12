@@ -5,6 +5,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.Toast;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.utils.Logger;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -50,7 +51,7 @@ public abstract class RefreshSubscriber<T> extends Subscriber<T> {
         } else {
             Toast.makeText(context, "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-
+        Logger.w("onError","error:" + e.getMessage());
         onErrorView();
     }
 

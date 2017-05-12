@@ -85,4 +85,12 @@ public class DynamicModelImpl implements DynamicModel{
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
     }
+
+    @Override
+    public void deleteDynamic(Subscriber<BaseBean> subscriber,String id) {
+        dynamicService.deleteDynamic(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
 }

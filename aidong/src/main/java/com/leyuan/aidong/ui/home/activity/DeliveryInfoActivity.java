@@ -36,7 +36,7 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
     private TextView tvVenuesName;
     private TextView tvVenuesAddress;
 
-    private String id;
+    private String goodsId;
     private String goodsType;
     private DeliveryBean deliveryBean;
 
@@ -46,7 +46,7 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
         setSlideAnimation();
         setContentView(R.layout.activity_delivery_info);
         if(getIntent() != null){
-            id = getIntent().getStringExtra("id");
+            goodsId = getIntent().getStringExtra("goodsId");
             goodsType = getIntent().getStringExtra("goodsType");
             deliveryBean = getIntent().getParcelableExtra("deliveryBean");
         }
@@ -103,7 +103,7 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
             case R.id.ll_delivery_address:
                 Intent intent = new Intent(this,SelfDeliveryVenuesActivity.class);
                 intent.putExtra("goodsType",goodsType);
-                intent.putExtra("id",id);
+                intent.putExtra("goodsId", goodsId);
                 intent.putExtra("deliveryBean",deliveryBean);
                 final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(this, false);
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, pairs);

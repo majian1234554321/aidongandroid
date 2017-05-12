@@ -32,14 +32,14 @@ public interface GoodsDetailPresent {
      * @param type 装备:equipment 健康餐饮:food 营养品 nurture
      * @param sku Sku码
      */
-    void commonLoadVenues(SwitcherLayout switcherLayout,String type,String sku);
+    void commonLoadVenues(SwitcherLayout switcherLayout,String type,String sku,String brandId,String landmark);
 
     /**
      * 下拉刷新装备的自提场馆
      * @param type  装备:equipment 健康餐饮:food 营养品 nurture
      * @param sku Sku码
      */
-    void pullToRefreshVenues(String type,String sku);
+    void pullToRefreshVenues(String type,String sku,String brandId,String landmark);
 
 
     /**
@@ -49,6 +49,6 @@ public interface GoodsDetailPresent {
      * @param sku Sku码
      * @param page 页码
      */
-    void requestMoreVenues(RecyclerView recyclerView, final int pageSize, String type, String sku, int page);
+    void requestMoreVenues(RecyclerView recyclerView, final int pageSize, String type, String sku, int page,String brandId,String landmark);
 
 }

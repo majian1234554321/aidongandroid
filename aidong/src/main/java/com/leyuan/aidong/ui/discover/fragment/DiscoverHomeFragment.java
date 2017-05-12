@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.leyuan.aidong.R;
@@ -24,6 +23,7 @@ import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.discover.activity.PublishDynamicActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
@@ -120,7 +120,7 @@ public class DiscoverHomeFragment extends BaseFragment implements SmartTabLayout
                         })
                         .show();
             }else {
-                Toast.makeText(getContext(),"请先登陆再来发帖",Toast.LENGTH_LONG).show();
+                ToastGlobal.showLong("请先登陆再来发帖");
                 startActivity(new Intent(getContext(), LoginActivity.class));
             }
         }

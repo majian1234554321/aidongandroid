@@ -243,13 +243,15 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
             super.onFail(code, object);
             startActivity(new Intent(AppointCourseActivity.this, AppointmentActivity.class));
         }
+
+        @Override
+        public void onFree() {
+            AppointSuccessActivity.start(AppointCourseActivity.this, bean.getClassDate() +" "+ bean.getClassTime(),true);
+            Toast.makeText(AppointCourseActivity.this, "预约成功", Toast.LENGTH_LONG).show();
+        }
     };
 
-    @Override
-    public void onFreeCourseAppointed() {
-        AppointSuccessActivity.start(this, bean.getClassDate() +" "+ bean.getClassTime(),true);
-        Toast.makeText(AppointCourseActivity.this, "预约成功", Toast.LENGTH_LONG).show();
-    }
+
 
     @Override
     public void onCheckedChanged(CustomNestRadioGroup group, int checkedId) {

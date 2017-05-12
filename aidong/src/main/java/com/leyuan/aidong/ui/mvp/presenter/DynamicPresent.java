@@ -29,4 +29,5 @@ public interface DynamicPresent {
 
     void addFollow(String id);
     void cancelFollow(String id);
+    void deleteDynamic(String id);
 }

@@ -31,7 +31,9 @@ public interface NurtureService {
     Observable<BaseBean<NurtureDetailData>> getNurtureDetail(@Path("id") String id);
 
     @GET("nutrition/{id}/gyms")
-    Observable<BaseBean<VenuesData>> getDeliveryVenues(@Path("id") String id,@Query("page")int page);
+    Observable<BaseBean<VenuesData>> getDeliveryVenues(@Path("id") String id,@Query("page")int page,
+                                                       @Query("brand_id") String brandId,
+                                                       @Query("landmark") String landmark);
 
     @FormUrlEncoded
     @POST("market/nutrition/{skuCode}")
