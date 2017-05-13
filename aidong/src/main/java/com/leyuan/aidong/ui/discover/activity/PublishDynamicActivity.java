@@ -165,9 +165,9 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
         dismissProgressDialog();
         if(baseBean.getStatus() == Constant.OK){
             setResult(RESULT_OK,null);
-            finish();
             selectedMedia.clear();
-            ToastGlobal.showLong("上传失败");
+            ToastGlobal.showLong("上传成功");
+            finish();
         }else {
             ToastGlobal.showLong(baseBean.getMessage());
         }

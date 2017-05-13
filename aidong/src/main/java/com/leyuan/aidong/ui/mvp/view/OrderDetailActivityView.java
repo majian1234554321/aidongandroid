@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.mvp.view;
 
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.ExpressBean;
 import com.leyuan.aidong.entity.OrderDetailBean;
 
 import java.util.List;
@@ -41,4 +42,10 @@ public interface OrderDetailActivityView {
      * @param cartIds
      */
     void reBuyOrderResult(List<String> cartIds);
+
+    /**
+     * 设置快递信息
+     * @param expressBean
+     */
+    void getExpressInfoResult(ExpressBean expressBean);
 }

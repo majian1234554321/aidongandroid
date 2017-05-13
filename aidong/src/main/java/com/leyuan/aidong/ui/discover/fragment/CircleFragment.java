@@ -57,6 +57,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
+import static com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity.RESULT_DELETE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_FIVE_IMAGE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_FOUR_IMAGE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_ONE_IMAGE;
@@ -85,7 +86,7 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
     private int currPage = 1;
     private DynamicPresent dynamicPresent;
 
-    private int position;
+    private int clickPosition;
     private SharePopupWindow sharePopupWindow;
 
     BroadcastReceiver selectCityReceiver = new BroadcastReceiver() {
@@ -193,7 +194,7 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
 
         @Override
         public void onBackgroundClick(DynamicBean dynamicBean,int position) {
-            CircleFragment.this.position = position;
+            CircleFragment.this.clickPosition = position;
             if (App.mInstance.isLogin()) {
                 startActivityForResult(new Intent(getContext(),DynamicDetailActivity.class)
                         .putExtra("dynamic",dynamicBean),REQUEST_REFRESH_DYNAMIC);
@@ -237,7 +238,7 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
 
         @Override
         public void onCommentClick(DynamicBean dynamicBean,int position) {
-            CircleFragment.this.position = position;
+            CircleFragment.this.clickPosition = position;
             if (App.mInstance.isLogin()) {
                 startActivityForResult(new Intent(getContext(),DynamicDetailActivity.class)
                         .putExtra("dynamic",dynamicBean),REQUEST_REFRESH_DYNAMIC);
@@ -306,11 +307,15 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
             }else if(requestCode == REQUEST_REFRESH_DYNAMIC){
                 //更新动态详情页新添加的评论
                 CommentBean comment = data.getParcelableExtra("comment");
-                DynamicBean dynamicBean = dynamicList.get(position);
+                DynamicBean dynamicBean = dynamicList.get(clickPosition);
                 dynamicBean.comment.item.add(0,comment);
                 dynamicBean.comment.count ++ ;
-                circleDynamicAdapter.notifyItemChanged(position);
+                circleDynamicAdapter.notifyItemChanged(clickPosition);
             }
+        }else if(resultCode == RESULT_DELETE){
+            dynamicList.remove(clickPosition);
+            circleDynamicAdapter.updateData(dynamicList);
+            circleDynamicAdapter.notifyItemRemoved(clickPosition);
         }
     }
 

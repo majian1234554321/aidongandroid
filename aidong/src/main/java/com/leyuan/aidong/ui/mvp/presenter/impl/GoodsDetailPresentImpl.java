@@ -8,8 +8,8 @@ import com.leyuan.aidong.entity.data.EquipmentDetailData;
 import com.leyuan.aidong.entity.data.FoodDetailData;
 import com.leyuan.aidong.entity.data.NurtureDetailData;
 import com.leyuan.aidong.entity.data.VenuesData;
-import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
+import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.aidong.ui.mvp.model.EquipmentModel;
@@ -168,7 +168,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
     }
 
     @Override
-    public void commonLoadVenues(final SwitcherLayout switcherLayout, @GoodsType String type, String sku) {
+    public void commonLoadVenues(final SwitcherLayout switcherLayout, @GoodsType String type, String sku,String brandId,String landmark) {
         switch (type){
             case GOODS_EQUIPMENT:
                 if(equipmentModel == null){
@@ -182,12 +182,12 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                         }
                         if(!venuesBeanList.isEmpty()){
                             switcherLayout.showContentLayout();
-                            venuesActivityView.updateRecyclerView(venuesBeanList);
+                            venuesActivityView.onRefreshData(venuesBeanList);
                         }else {
-                            switcherLayout.showEmptyLayout();
+                            venuesActivityView.showEmptyView();
                         }
                     }
-                },sku, Constant.PAGE_FIRST);
+                },sku, Constant.PAGE_FIRST,brandId,landmark);
                 break;
             case GOODS_NUTRITION:
                 if(nurtureModel == null){
@@ -201,12 +201,12 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                         }
                         if(!venuesBeanList.isEmpty()){
                             switcherLayout.showContentLayout();
-                            venuesActivityView.updateRecyclerView(venuesBeanList);
+                            venuesActivityView.onRefreshData(venuesBeanList);
                         }else {
-                            switcherLayout.showEmptyLayout();
+                            venuesActivityView.showEmptyView();
                         }
                     }
-                },sku, Constant.PAGE_FIRST);
+                },sku, Constant.PAGE_FIRST,brandId,landmark);
 
                 break;
             case GOODS_FOODS:
@@ -221,9 +221,9 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                         }
                         if(!venuesBeanList.isEmpty()){
                             switcherLayout.showContentLayout();
-                            venuesActivityView.updateRecyclerView(venuesBeanList);
+                            venuesActivityView.onRefreshData(venuesBeanList);
                         }else {
-                            switcherLayout.showEmptyLayout();
+                            venuesActivityView.showEmptyView();
                         }
                     }
                 },sku, Constant.PAGE_FIRST);
@@ -235,7 +235,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
     }
 
     @Override
-    public void pullToRefreshVenues(@GoodsType String type, String sku) {
+    public void pullToRefreshVenues(@GoodsType String type, String sku,String brandId,String landmark) {
         switch (type){
             case GOODS_EQUIPMENT:
                 if(equipmentModel == null){
@@ -248,10 +248,12 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                             venuesBeanList = venuesData.getGym();
                         }
                         if(!venuesBeanList.isEmpty()){
-                            venuesActivityView.updateRecyclerView(venuesBeanList);
+                            venuesActivityView.onRefreshData(venuesBeanList);
+                        }else {
+                            venuesActivityView.showEmptyView();
                         }
                     }
-                },sku,Constant.PAGE_FIRST);
+                },sku,Constant.PAGE_FIRST,brandId,landmark);
 
                 break;
             case GOODS_NUTRITION:
@@ -265,10 +267,12 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                             venuesBeanList = venuesData.getGym();
                         }
                         if(!venuesBeanList.isEmpty()){
-                            venuesActivityView.updateRecyclerView(venuesBeanList);
+                            venuesActivityView.onRefreshData(venuesBeanList);
+                        }else {
+                            venuesActivityView.showEmptyView();
                         }
                     }
-                },sku,Constant.PAGE_FIRST);
+                },sku,Constant.PAGE_FIRST,brandId,landmark);
                 break;
             case GOODS_FOODS:
                 if(foodModel == null){
@@ -281,7 +285,9 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                             venuesBeanList = venuesData.getGym();
                         }
                         if(!venuesBeanList.isEmpty()){
-                            venuesActivityView.updateRecyclerView(venuesBeanList);
+                            venuesActivityView.onRefreshData(venuesBeanList);
+                        }else {
+                            venuesActivityView.showEmptyView();
                         }
                     }
                 },sku,Constant.PAGE_FIRST);
@@ -293,7 +299,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
     }
 
     @Override
-    public void requestMoreVenues(RecyclerView recyclerView, final int pageSize, @GoodsType String type, String sku, int page) {
+    public void requestMoreVenues(RecyclerView recyclerView, final int pageSize, @GoodsType String type, String sku, int page,String brandId,String landmark) {
         switch (type) {
             case GOODS_EQUIPMENT:
                 if (equipmentModel == null) {
@@ -306,14 +312,14 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                             venuesBeanList = venuesData.getGym();
                         }
                         if (!venuesBeanList.isEmpty()) {
-                            venuesActivityView.updateRecyclerView(venuesBeanList);
+                            venuesActivityView.onLoadMoreData(venuesBeanList);
                         }
                         //没有更多数据了显示到底提示
                         if (venuesBeanList.size() < pageSize) {
                             venuesActivityView.showEndFooterView();
                         }
                     }
-                }, sku, page);
+                }, sku, page,brandId,landmark);
                 break;
             case GOODS_NUTRITION:
                 if (nurtureModel == null) {
@@ -326,14 +332,14 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                             venuesBeanList = venuesData.getGym();
                         }
                         if (!venuesBeanList.isEmpty()) {
-                            venuesActivityView.updateRecyclerView(venuesBeanList);
+                            venuesActivityView.onLoadMoreData(venuesBeanList);
                         }
                         //没有更多数据了显示到底提示
                         if (venuesBeanList.size() < pageSize) {
                             venuesActivityView.showEndFooterView();
                         }
                     }
-                }, sku, page);
+                }, sku, page,brandId,landmark);
                 break;
             case GOODS_FOODS:
                 if (foodModel == null) {
@@ -346,7 +352,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                             venuesBeanList = venuesData.getGym();
                         }
                         if (!venuesBeanList.isEmpty()) {
-                            venuesActivityView.updateRecyclerView(venuesBeanList);
+                            venuesActivityView.onLoadMoreData(venuesBeanList);
                         }
                         //没有更多数据了显示到底提示
                         if (venuesBeanList.size() < pageSize) {

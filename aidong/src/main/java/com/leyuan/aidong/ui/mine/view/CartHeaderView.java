@@ -290,21 +290,17 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
     private ArrayList<ShopBean> getSelectedShops(){
         ArrayList<ShopBean> selectedShopBeanList = new ArrayList<>();
         for (ShopBean shopBean : shopBeanList) {
-            if(shopBean.isChecked()){
-                selectedShopBeanList.add(shopBean);
-            }else{
-                ShopBean tempShopBean = new ShopBean();
-                List<GoodsBean> goodsBeanList = new ArrayList<>();
-                for (GoodsBean goodsBean : shopBean.getItem()) {
-                    if(goodsBean.isChecked()){
-                        goodsBeanList.add(goodsBean);
-                    }
+            ShopBean tempShopBean = new ShopBean();
+            List<GoodsBean> goodsBeanList = new ArrayList<>();
+            for (GoodsBean goodsBean : shopBean.getItem()) {
+                if(goodsBean.isChecked() && goodsBean.isOnline() && goodsBean.getStock() != 0){
+                    goodsBeanList.add(goodsBean);
                 }
-                if(!goodsBeanList.isEmpty()){
-                    tempShopBean.setItem(goodsBeanList);
-                    tempShopBean.setPickUp(shopBean.getPickUp());
-                    selectedShopBeanList.add(tempShopBean);
-                }
+            }
+            if(!goodsBeanList.isEmpty()){
+                tempShopBean.setItem(goodsBeanList);
+                tempShopBean.setPickUp(shopBean.getPickUp());
+                selectedShopBeanList.add(tempShopBean);
             }
         }
         return selectedShopBeanList;

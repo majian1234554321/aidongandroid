@@ -41,7 +41,7 @@ public interface EquipmentModel {
      * @param skuCode sku码
      * @param page 页码
      */
-    void getDeliveryVenues(Subscriber<VenuesData> subscriber, String skuCode, int page);
+    void getDeliveryVenues(Subscriber<VenuesData> subscriber, String skuCode, int page,String brandId,String landmark);
 
 
     /**

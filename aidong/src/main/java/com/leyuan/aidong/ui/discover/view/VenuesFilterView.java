@@ -381,12 +381,8 @@ public class VenuesFilterView extends LinearLayout implements View.OnClickListen
             this.typeList = typeList;
     }
 
-    public boolean isPopupShowing() {
-        return isPopupShowing;
-    }
-
-    public void dismissPopup() {
-        hidePopup();
+    public void hideTypeFilerView() {
+        typeLayout.setVisibility(GONE);
     }
 
     public void selectCategory(String id) {

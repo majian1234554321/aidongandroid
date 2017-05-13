@@ -52,8 +52,8 @@ public class EquipmentModelImpl implements EquipmentModel {
     }
 
     @Override
-    public void getDeliveryVenues(Subscriber<VenuesData> subscriber, String skuCode, int page) {
-        equipmentService.getDeliveryVenues(skuCode,page)
+    public void getDeliveryVenues(Subscriber<VenuesData> subscriber, String skuCode, int page,String brandId,String landmark) {
+        equipmentService.getDeliveryVenues(skuCode,page,brandId,landmark)
                 .compose(RxHelper.<VenuesData>transform())
                 .subscribe(subscriber);
     }

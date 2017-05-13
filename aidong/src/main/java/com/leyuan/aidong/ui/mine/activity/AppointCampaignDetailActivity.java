@@ -34,6 +34,7 @@ import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.QRCodeUtil;
 import com.leyuan.aidong.utils.SystemInfoUtils;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.constant.PayType;
 import com.leyuan.aidong.widget.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.ExtendTextView;
@@ -398,8 +399,13 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
     private PayInterface.PayListener payListener = new SimplePayListener(this) {
         @Override
         public void onSuccess(String code, Object object) {
-            Toast.makeText(AppointCampaignDetailActivity.this,"支付成功",Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong("支付成功");
             startActivity(new Intent(AppointCampaignDetailActivity.this,AppointSuccessActivity.class));
+        }
+
+        @Override
+        public void onFree() {
+            AppointSuccessActivity.start(AppointCampaignDetailActivity.this, bean.getAppoint().getClassTime(), false);
         }
     };
 

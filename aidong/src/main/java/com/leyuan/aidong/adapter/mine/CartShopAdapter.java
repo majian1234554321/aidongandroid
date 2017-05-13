@@ -85,7 +85,7 @@ public class CartShopAdapter extends RecyclerView.Adapter<CartShopAdapter.CartHo
             public void onGoodsStatusChanged() {          //商品选中状态变化时通知更改商店和购物车的状态
                 boolean isAllGoodsSelected = true;
                 for (GoodsBean goodsBean : bean.getItem()) {
-                    if (!goodsBean.isChecked()) {
+                    if (goodsBean.isOnline() && goodsBean.getStock() != 0 && !goodsBean.isChecked()) {
                         isAllGoodsSelected = false;
                         break;
                     }
@@ -102,7 +102,9 @@ public class CartShopAdapter extends RecyclerView.Adapter<CartShopAdapter.CartHo
             public void onClick(View v) {            //商店点击时改变商店和商店中商品的状态，并通知购物车相应改变
                 bean.setChecked(!bean.isChecked());
                 for (GoodsBean goodsBean : bean.getItem()) {
-                    goodsBean.setChecked(bean.isChecked());
+                    if(goodsBean.isOnline() && goodsBean.getStock() != 0) {
+                        goodsBean.setChecked(bean.isChecked());
+                    }
                 }
                 if (shopChangeListener != null) {
                     shopChangeListener.onShopStatusChanged(position);

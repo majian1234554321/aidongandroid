@@ -11,5 +11,5 @@ import java.util.List;
 public interface AppointCourseActivityView {
 
     void setCourseCouponResult(List<CouponBean> couponBeanList);
-    void onFreeCourseAppointed();
+
 }

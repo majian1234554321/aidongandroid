@@ -5,10 +5,12 @@ import android.support.v7.widget.RecyclerView;
 
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CartIdBean;
+import com.leyuan.aidong.entity.ExpressBean;
 import com.leyuan.aidong.entity.OrderBean;
 import com.leyuan.aidong.entity.OrderDetailBean;
 import com.leyuan.aidong.entity.data.OrderData;
 import com.leyuan.aidong.entity.data.OrderDetailData;
+import com.leyuan.aidong.http.subscriber.BaseSubscriber;
 import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
@@ -246,6 +248,18 @@ public class OrderPresentImpl implements OrderPresent {
                 }
                 if(orderFragmentView != null){
                     orderFragmentView.reBuyOrderResult(cartIdBean.getCart_ids());
+                }
+            }
+        },orderId);
+    }
+
+    @Override
+    public void getExpressInfo(String orderId) {
+        orderModel.getExpressInfo(new BaseSubscriber<ExpressBean>(context) {
+            @Override
+            public void onNext(ExpressBean expressBean) {
+                if(orderDetailActivityView != null){
+                    orderDetailActivityView.getExpressInfoResult(expressBean);
                 }
             }
         },orderId);

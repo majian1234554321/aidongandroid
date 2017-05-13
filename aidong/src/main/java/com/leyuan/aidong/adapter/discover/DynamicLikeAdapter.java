@@ -32,10 +32,6 @@ public class DynamicLikeAdapter extends RecyclerView.Adapter<DynamicLikeAdapter.
     private List<UserBean> data = new ArrayList<>();
     private String dynamicId;
 
-    public DynamicLikeAdapter(Context context) {
-        this.context = context;
-    }
-
     public DynamicLikeAdapter(Context context, String dynamicId) {
         this.context = context;
         this.dynamicId = dynamicId;

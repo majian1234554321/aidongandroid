@@ -281,4 +281,14 @@ public class DynamicPresentImpl implements DynamicPresent {
             }
         },id);
     }
+
+    @Override
+    public void deleteDynamic(String id) {
+        dynamicModel.deleteDynamic(new ProgressSubscriber<BaseBean>(context) {
+            @Override
+            public void onNext(BaseBean baseBean) {
+                dynamicDetailActivityView.deleteDynamicResult(baseBean);
+            }
+        },id);
+    }
 }

@@ -127,16 +127,16 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     private SharePopupWindow sharePopupWindow;
     private GoodsDetailBean bean;
 
-    private String id;
+    private String goodsId;
     private String selectedCount;
     private String goodsType;
     private boolean isSellOut = true; //是否售罄
     private List<String> selectedSkuValues = new ArrayList<>();
     private GoodsDetailPresent goodsPresent;
 
-    public static void start(Context context, String id, @GoodsType  String type) {
+    public static void start(Context context, String goodsId, @GoodsType  String type) {
         Intent starter = new Intent(context, GoodsDetailActivity.class);
-        starter.putExtra("id",id);
+        starter.putExtra("goodsId",goodsId);
         starter.putExtra("goodsType",type);
         context.startActivity(starter);
     }
@@ -149,13 +149,13 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         sharePopupWindow = new SharePopupWindow(this);
         goodsPresent = new GoodsDetailPresentImpl(this,this);
         if(getIntent() != null){
-            id = getIntent().getStringExtra("id");
+            goodsId = getIntent().getStringExtra("goodsId");
             goodsType = getIntent().getStringExtra("goodsType");
         }
 
         initView();
         setListener();
-        goodsPresent.getGoodsDetail(switcherLayout, goodsType,id);
+        goodsPresent.getGoodsDetail(switcherLayout, goodsType,goodsId);
     }
 
     @Override
@@ -253,7 +253,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.ll_address:
                 Intent intent = new Intent(this, DeliveryInfoActivity.class);
-                intent.putExtra("id", id);
+                intent.putExtra("goodsId", goodsId);
                 intent.putExtra("goodsType", goodsType);
                 intent.putExtra("deliveryBean", bean.pick_up);
                 final Pair<View, String>[] pairs = TransitionHelper.
@@ -459,7 +459,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         } else if (requestCode == REQUEST_TO_CART) {
             startActivity(new Intent(this, CartActivity.class));
         }else if(requestCode == Constant.REQUEST_LOGIN){
-            goodsPresent.getGoodsDetail(goodsType,id);
+            goodsPresent.getGoodsDetail(goodsType,goodsId);
         }
     }
 

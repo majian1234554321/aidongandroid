@@ -69,8 +69,9 @@ import static com.leyuan.aidong.utils.Constant.DYNAMIC_VIDEO;
  */
 public  class DynamicDetailActivity extends BaseActivity implements DynamicDetailActivityView,View.OnClickListener,
         TextView.OnEditorActionListener, SwipeRefreshLayout.OnRefreshListener, DynamicDetailAdapter.OnItemClickListener {
+    public static final int RESULT_DELETE = 0x3333;
     private ImageView ivBack;
-    private TextView tvReport;
+    private TextView tvReportOrDelete;
     private ImageView ivUserAvatar;
     private EditText etComment;
 
@@ -86,6 +87,8 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
     private CircleDynamicAdapter headerAdapter;
     private List<DynamicBean> dynamicList = new ArrayList<>();
 
+    private boolean isSelf = false;
+
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,6 +96,7 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
         dynamicPresent = new DynamicPresentImpl(this,this);
         if(getIntent() != null){
             dynamic = getIntent().getParcelableExtra("dynamic");
+            isSelf = dynamic.publisher.getId().equals(String.valueOf(App.mInstance.getUser().getId()));
         }
         initView();
         setListener();
@@ -102,7 +106,7 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
     private void initView(){
         initHeaderView();
         ivBack = (ImageView) findViewById(R.id.iv_back);
-        tvReport = (TextView) findViewById(R.id.tv_report);
+        tvReportOrDelete = (TextView) findViewById(R.id.tv_report_or_delete);
         ivUserAvatar = (ImageView) findViewById(R.id.dv_user_avatar);
         etComment = (EditText) findViewById(R.id.et_comment);
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
@@ -116,6 +120,7 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
         etComment.setHorizontallyScrolling(false);
         etComment.setMaxLines(5);
         GlideLoader.getInstance().displayCircleImage(App.mInstance.getUser().getAvatar(), ivUserAvatar);
+        tvReportOrDelete.setText(isSelf ? R.string.delete_dynamic: R.string.report_dynamic);
     }
 
     private void initHeaderView(){
@@ -130,7 +135,7 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
                 .addType(FourImageViewHolder.class, DYNAMIC_FOUR_IMAGE, R.layout.vh_dynamic_four_photos)
                 .addType(FiveImageViewHolder.class, DYNAMIC_FIVE_IMAGE, R.layout.vh_dynamic_five_photos)
                 .addType(SixImageViewHolder.class, DYNAMIC_SIX_IMAGE, R.layout.vh_dynamic_six_photos)
-                .showFollowButton(!dynamic.publisher.getId().equals(String.valueOf(App.mInstance.getUser().getId())))
+                .showFollowButton(!isSelf)
                 .showLikeAndCommentLayout(false)
                 .setData(dynamicList)
                 .setDynamicCallback(new DynamicCallback());
@@ -141,7 +146,7 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
 
     private void setListener(){
         ivBack.setOnClickListener(this);
-        tvReport.setOnClickListener(this);
+        tvReportOrDelete.setOnClickListener(this);
         ivUserAvatar.setOnClickListener(this);
         etComment.setOnEditorActionListener(this);
         refreshLayout.setOnRefreshListener(this);
@@ -181,8 +186,12 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
                 finish();
                 KeyBoardUtil.closeKeyboard(etComment,DynamicDetailActivity.this);
                 break;
-            case R.id.tv_report:
-                showReportDialog();
+            case R.id.tv_report_or_delete:
+                if(isSelf) {
+                    dynamicPresent.deleteDynamic(dynamic.id);
+                }else {
+                    showReportDialog();
+                }
                 break;
             default:
                 break;
@@ -225,8 +234,7 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
             temp.setPublishedAt("刚刚");
             temp.setPublisher(publisher);
             comments.add(0,temp);
-            commentAdapter.notifyItemInserted(0);
-            commentView.scrollToPosition(1);
+            commentAdapter.notifyItemChanged(0);
 
             etComment.clearFocus();
             etComment.setText(Constant.EMPTY_STR);
@@ -308,6 +316,19 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
         }
     }
 
+
+    @Override
+    public void deleteDynamicResult(BaseBean baseBean) {
+        if(baseBean.getStatus() == Constant.OK){
+            ToastGlobal.showLong("删除成功");
+
+            setResult(RESULT_DELETE,null);
+
+            finish();
+        }else {
+            ToastGlobal.showLong(baseBean.getMessage());
+        }
+    }
 
     public class DynamicCallback extends CircleDynamicAdapter.SimpleDynamicCallback {
 

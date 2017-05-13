@@ -20,6 +20,7 @@ import com.leyuan.aidong.ui.mvp.presenter.VenuesPresent;
 import com.leyuan.aidong.ui.mvp.view.AppointCoachActivityView;
 import com.leyuan.aidong.ui.mvp.view.AppointVenuesActivityView;
 import com.leyuan.aidong.ui.mvp.view.DiscoverVenuesActivityView;
+import com.leyuan.aidong.ui.mvp.view.SelfDeliveryVenuesActivityView;
 import com.leyuan.aidong.ui.mvp.view.VenuesCoachFragmentView;
 import com.leyuan.aidong.ui.mvp.view.VenuesCourseFragmentView;
 import com.leyuan.aidong.ui.mvp.view.VenuesDetailFragmentView;
@@ -44,7 +45,7 @@ public class VenuesPresentImpl implements VenuesPresent {
     private VenuesDetailFragmentView venuesDetailFragmentView;      //场馆详情View层对象
     private AppointVenuesActivityView appointVenuesActivityView;    //预约场馆View层对象
     private AppointCoachActivityView appointCoachActivityView;      //预约教练View层对象
-    private SelfDeliveryVenuesActivity selfDeliveryVenuesActivity;  //自提场馆列表View层对象
+    private SelfDeliveryVenuesActivityView selfDeliveryVenuesActivity;  //自提场馆列表View层对象
 
     public VenuesPresentImpl(Context context, DiscoverVenuesActivityView view) {
         this.context = context;
@@ -157,7 +158,14 @@ public class VenuesPresentImpl implements VenuesPresent {
                     venuesBeanList = venuesData.getGym();
                 }
                 if (!venuesBeanList.isEmpty()) {
-                    discoverVenuesActivityView.onRefreshData(venuesBeanList);
+                    if(discoverVenuesActivityView != null) {
+                        discoverVenuesActivityView.onRefreshData(venuesBeanList);
+                    }
+
+                }else {
+                    if(selfDeliveryVenuesActivity != null){
+                        selfDeliveryVenuesActivity.showEmptyView();
+                    }
                 }
             }
         }, Constant.PAGE_FIRST, brand_id, landmark,gymTypes);

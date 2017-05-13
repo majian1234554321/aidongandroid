@@ -8,9 +8,10 @@
     <ImageView
         android:layout_width="91dp"
         android:layout_height="86dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="48dp"
         android:src="@drawable/icon_pay_success"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/imageView5" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -25,13 +26,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:paddingBottom="15dp"
+        android:layout_marginLeft="@dimen/left_margin"
+        android:layout_marginRight="@dimen/right_margin"
         android:gravity="center_horizontal">
 
         <TextView
             android:id="@+id/tv_home"
-            android:layout_width="168dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="返回首页"
             android:textSize="14sp"
@@ -43,7 +47,8 @@
 
         <TextView
             android:id="@+id/tv_order"
-            android:layout_width="168dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="查看订单"
             android:textSize="14sp"
@@ -51,7 +56,7 @@
             android:paddingTop="10dp"
             android:gravity="center"
             android:visibility="visible"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="15dp"
             android:background="@drawable/shape_stroke_red"
             android:textColor="@color/main_red"/>
     </LinearLayout>

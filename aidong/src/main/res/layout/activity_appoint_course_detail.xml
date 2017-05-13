@@ -102,7 +102,8 @@
                     android:layout_height="52dp"
                     android:layout_marginLeft="@dimen/left_margin"
                     android:layout_marginRight="@dimen/right_margin"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="0dp"

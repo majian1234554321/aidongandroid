@@ -196,11 +196,7 @@ public class CampaignPresentImpl implements CampaignPresent {
         campaignModel.buyCampaign(new ProgressSubscriber<PayOrderData>(context) {
             @Override
             public void onNext(PayOrderData payOrderData) {
-                if (!"purchased".equals(payOrderData.getOrder().getStatus())) {
-                    PayUtils.pay(context, payOrderData.getOrder(), listener);
-                } else {
-                    appointCampaignActivityView.onFreeCampaignAppointed();
-                }
+                PayUtils.pay(context, payOrderData.getOrder(), listener);
             }
         }, id, couponId, integral, payType, contactName, contactMobile);
     }

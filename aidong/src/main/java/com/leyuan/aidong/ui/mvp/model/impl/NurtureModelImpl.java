@@ -50,8 +50,8 @@ public class NurtureModelImpl implements NurtureModel {
     }
 
     @Override
-    public void getDeliveryVenues(Subscriber<VenuesData> subscriber, String skuCode, int page) {
-        nurtureService.getDeliveryVenues(skuCode,page)
+    public void getDeliveryVenues(Subscriber<VenuesData> subscriber, String skuCode, int page,String gymId,String landmark) {
+        nurtureService.getDeliveryVenues(skuCode,page,gymId,landmark)
                 .compose(RxHelper.<VenuesData>transform())
                 .subscribe(subscriber);
 

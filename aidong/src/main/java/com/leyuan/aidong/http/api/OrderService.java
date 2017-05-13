@@ -2,6 +2,7 @@ package com.leyuan.aidong.http.api;
 
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CartIdBean;
+import com.leyuan.aidong.entity.ExpressBean;
 import com.leyuan.aidong.entity.data.OrderData;
 import com.leyuan.aidong.entity.data.OrderDetailData;
 
@@ -47,4 +48,7 @@ public interface OrderService {
     @FormUrlEncoded
     @POST("mine/cart/readd")
     Observable<BaseBean<CartIdBean>> reBuyOrder(@Field("id") String id);
+
+    @GET("mine/express")
+    Observable<BaseBean<ExpressBean>> getExpressInfo(@Query("order_id") String orderId);
 }

@@ -22,14 +22,17 @@ public interface SelfDeliveryVenuesActivityView {
      */
     void setBusinessCircle(List<DistrictBean> circleBeanList);
 
-    /**
-     * 更新自提场馆列表数据
-     * @param venuesBeanList
-     */
-    void updateRecyclerView(List<VenuesBean> venuesBeanList);
 
     /**
      * 显示FooterView，提示没有任何内容了
      */
     void showEndFooterView();
+
+    void showEmptyView();
+
+
+    void onRefreshData(List<VenuesBean> venuesBeanList);
+
+    void onLoadMoreData(List<VenuesBean> venuesBeanList);
+
 }

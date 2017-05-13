@@ -19,4 +19,5 @@ public interface DynamicDetailActivityView {
     void reportResult(BaseBean baseBean);
     void cancelFollowResult(BaseBean baseBean);
     void addFollowResult(BaseBean baseBean);
+    void deleteDynamicResult(BaseBean baseBean);
 }

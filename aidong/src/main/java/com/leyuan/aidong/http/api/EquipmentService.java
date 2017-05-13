@@ -30,7 +30,9 @@ public interface EquipmentService {
     Observable<BaseBean<EquipmentDetailData>>  getEquipmentDetail(@Path("id") String id);
 
     @GET("equipments/{id}/gyms")
-    Observable<BaseBean<VenuesData>> getDeliveryVenues(@Path("id") String skuCode,@Query("page") int page);
+    Observable<BaseBean<VenuesData>> getDeliveryVenues(@Path("id") String skuCode,@Query("page") int page,
+                                                       @Query("brand_id") String brandId,
+                                                       @Query("landmark") String landmark);
 
     @FormUrlEncoded
     @POST("market/equipments/{skuCode}")

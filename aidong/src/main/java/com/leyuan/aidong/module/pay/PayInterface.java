@@ -22,6 +22,8 @@ public interface PayInterface {
         void onFail(String code, Object object);
 
         void onSuccess(String code, Object object);
+
+        void onFree();
     }
 }
 

@@ -265,19 +265,31 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         tvTip = (TextView) findViewById(R.id.tv_tip);
         tvFinalPrice = (TextView) findViewById(R.id.tv_price);
         tvPay = (TextView) findViewById(R.id.tv_pay);
+        setViewInfo();
+    }
+
+    private void setViewInfo(){
+        needExpress = false;
+        addressLayout.setVisibility(View.GONE);
+        selfDeliveryLayout.setVisibility(View.GONE);
 
         shopAdapter = new ConfirmOrderShopAdapter(this);
         rvGoods.setLayoutManager(new LinearLayoutManager(this));
+        rvGoods.setNestedScrollingEnabled(false);
         rvGoods.setAdapter(shopAdapter);
         shopAdapter.setData(shopBeanList);
-
         for (ShopBean shopBean : shopBeanList) {
+            if(shopBean.getItem() == null && shopBean.getItem().isEmpty()) {
+                continue;
+            }
             if (DELIVERY_EXPRESS.equals(shopBean.getPickUp().getType())) {
                 needExpress = true;
                 addressLayout.setVisibility(View.VISIBLE);
+                selfDeliveryLayout.setVisibility(View.GONE);
             } else {
                 tvTime.setText(days.get(0));
                 selfDeliveryLayout.setVisibility(View.VISIBLE);
+                addressLayout.setVisibility(View.GONE);
             }
         }
         tvTotalGoodsPrice.setRightContent(
@@ -317,13 +329,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.tv_coupon:
                 if (usableCoupons != null && !usableCoupons.isEmpty() && totalGoodsPrice > 0) {
-
                     SelectCouponActivity.startForResult(this, totalGoodsPrice + "", usableCoupons, REQUEST_SELECT_COUPON);
-
-//                    startActivityForResult(new Intent(this, SelectCouponActivity.class)
-//                            .putParcelableArrayListExtra("couponList", (ArrayList<? extends Parcelable>)
-//                                    usableCoupons), REQUEST_SELECT_COUPON);
-
                 }
                 break;
             case R.id.tv_pay:
@@ -376,6 +382,12 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         public void onFail(String code, Object object) {
             super.onFail(code, object);
             startActivity(new Intent(ConfirmOrderActivity.this, OrderActivity.class));
+        }
+
+        @Override
+        public void onFree() {
+            startActivity(new Intent(ConfirmOrderActivity.this,PaySuccessActivity.class));
+            ToastGlobal.showLong("支付成功");
         }
     };
 
@@ -470,7 +482,12 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                     }
                 }
 
-                shopAdapter.setData(shopBeanList);
+                setViewInfo();
+                setListener();
+                if(needExpress) {
+                    bottomLayout.setVisibility(View.GONE);
+                    present.getDefaultAddress(switcherLayout);
+                }
 
                 //通知购物车刷新
                 setResult(RESULT_OK,null);

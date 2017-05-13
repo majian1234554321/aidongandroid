@@ -18,11 +18,13 @@ import android.widget.Toast;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.mine.OrderParcelAdapter;
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.ExpressBean;
 import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.entity.OrderDetailBean;
 import com.leyuan.aidong.entity.ParcelBean;
 import com.leyuan.aidong.module.pay.AliPay;
 import com.leyuan.aidong.module.pay.PayInterface;
+import com.leyuan.aidong.module.pay.SimplePayListener;
 import com.leyuan.aidong.module.pay.WeiXinPay;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.OrderPresent;
@@ -34,6 +36,7 @@ import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.QRCodeUtil;
 import com.leyuan.aidong.utils.SystemInfoUtils;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.ExtendTextView;
 import com.leyuan.aidong.widget.SimpleTitleBar;
@@ -44,7 +47,6 @@ import java.util.List;
 
 import cn.iwgang.countdownview.CountdownView;
 
-import static com.leyuan.aidong.module.pay.WeiXinPay.payListener;
 import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
 import static com.leyuan.aidong.utils.Constant.EXPRESS_PRICE;
 import static com.leyuan.aidong.utils.Constant.PAY_ALI;
@@ -349,13 +351,26 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
         }
     }
 
+    private PayInterface.PayListener payListener = new SimplePayListener(this) {
+        @Override
+        public void onSuccess(String code, Object object) {
+            ToastGlobal.showLong("支付成功");
+            startActivity(new Intent(OrderDetailActivity.this,PaySuccessActivity.class));
+        }
+
+        @Override
+        public void onFree() {
+            startActivity(new Intent(OrderDetailActivity.this,PaySuccessActivity.class));
+        }
+    };
+
     @Override
     public void cancelOrderResult(BaseBean baseBean) {
         if(baseBean.getStatus() == Constant.OK){
             orderPresent.getOrderDetail(orderId);
             Toast.makeText(this,"取消成功",Toast.LENGTH_LONG).show();
         }else {
-            Toast.makeText(this,"取消失败" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            Toast.makeText(this,baseBean.getMessage(),Toast.LENGTH_LONG).show();
         }
     }
 
@@ -365,7 +380,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
             orderPresent.getOrderDetail(orderId);
             Toast.makeText(this,"确认成功",Toast.LENGTH_LONG).show();
         }else {
-            Toast.makeText(this,"确认失败" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            Toast.makeText(this,baseBean.getMessage(),Toast.LENGTH_LONG).show();
         }
     }
 
@@ -375,7 +390,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
             orderPresent.getOrderDetail(orderId);
             Toast.makeText(this,"删除成功",Toast.LENGTH_LONG).show();
         }else {
-            Toast.makeText(this,"删除失败" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            Toast.makeText(this,baseBean.getMessage(),Toast.LENGTH_LONG).show();
         }
     }
 
@@ -384,6 +399,11 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
         CartActivity.start(this,cartIds);
     }
 
+
+    @Override
+    public void getExpressInfoResult(ExpressBean expressBean) {
+
+    }
 
     @Override
     public void onCheckedChanged(CustomNestRadioGroup group, int checkedId) {

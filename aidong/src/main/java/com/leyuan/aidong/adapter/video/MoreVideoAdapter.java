@@ -10,7 +10,9 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CourseVideoBean;
+import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,8 +48,9 @@ public class MoreVideoAdapter extends RecyclerView.Adapter<MoreVideoAdapter.Vide
         final CourseVideoBean bean = data.get(position);
         GlideLoader.getInstance().displayImage(bean.getCover(),holder.cover);
         holder.name.setText(bean.getName());
+        String during = Utils.formatTime(Math.round(FormatUtil.parseFloat(bean.getDuring())));
         holder.duration.setText(String.format(context.getString(R.string.course_type_and_during),
-                bean.getTypeName(),bean.getDuring()) );
+                bean.getTypeName(),during) );
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

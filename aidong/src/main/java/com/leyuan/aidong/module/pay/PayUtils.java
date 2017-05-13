@@ -11,8 +11,12 @@ import com.leyuan.aidong.utils.Constant;
  */
 public class PayUtils {
     public static void pay(Context context, PayOrderBean payOrderBean, PayInterface.PayListener listener) {
-        PayInterface payInterface = Constant.PAY_ALI.equals(payOrderBean.getPayType())
-                ? new AliPay(context,listener) : new WeiXinPay(context,listener);
-        payInterface.payOrder(payOrderBean.getpayOption());
+        if (!"purchased".equals(payOrderBean.getStatus())) {
+            PayInterface payInterface = Constant.PAY_ALI.equals(payOrderBean.getPayType())
+                    ? new AliPay(context, listener) : new WeiXinPay(context, listener);
+            payInterface.payOrder(payOrderBean.getpayOption());
+        }else {
+            listener.onFree();
+        }
     }
 }
