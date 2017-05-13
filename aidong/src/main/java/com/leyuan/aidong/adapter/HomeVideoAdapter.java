@@ -158,25 +158,17 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
                 holder.txt_live_date.setText("" + LiveDateFilterUtil.compareDate(info.getTime()));
                 holder.list_live.setLayoutManager(new LinearLayoutManager(context));
 
-                LiveVideoMoreAdapter adapter = new LiveVideoMoreAdapter(context, info.getLiveVideoList(), mOnSoonLiveVideoClickListener);
-                holder.list_live.setAdapter(adapter);
+                if(i == liveDateArray.size()){
+                    LiveVideoMoreAdapter adapter = new LiveVideoMoreAdapter(context, info.getLiveVideoList(), mOnSoonLiveVideoClickListener,true);
+                    holder.list_live.setAdapter(adapter);
+                }else{
+                    LiveVideoMoreAdapter adapter = new LiveVideoMoreAdapter(context, info.getLiveVideoList(), mOnSoonLiveVideoClickListener,false);
+                    holder.list_live.setAdapter(adapter);
+                }
 
 
 
-//                LiveVideoDataAdapter adapter = new LiveVideoDataAdapter(context, info.getLiveVideoList(), mOnSoonLiveVideoClickListener, true);
-//                holder.list_live.setAdapter(adapter);
-//                liveVideoDataAdapters.add(adapter);
 
-
-
-
-//                if (LiveDateFilterUtil.compareDate(info.getTime()).contains("今日")) {
-//                    liveMoreAdapter = new LiveVideoDataAdapter(context, info.getLiveVideoList(), mOnSoonLiveVideoClickListener, true);
-//                    holder.list_live.setAdapter(liveMoreAdapter);
-//                } else {
-//                    LiveVideoDataAdapter adapter = new LiveVideoDataAdapter(context, info.getLiveVideoList(), mOnSoonLiveVideoClickListener, false);
-//                    holder.list_live.setAdapter(adapter);
-//                }
 
                 break;
         }

@@ -21,6 +21,7 @@ import com.leyuan.aidong.module.photopicker.boxing.BoxingCrop;
 import com.leyuan.aidong.module.photopicker.boxing.BoxingMediaLoader;
 import com.leyuan.aidong.module.photopicker.boxing.loader.IBoxingMediaLoader;
 import com.leyuan.aidong.ui.mvp.model.impl.UserInfoModelImpl;
+import com.leyuan.aidong.utils.ForegroundCallbacks;
 import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.SharePrefUtils;
@@ -33,6 +34,7 @@ import java.util.List;
 import java.util.Set;
 
 import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 import io.realm.Realm;
 
 import static com.leyuan.aidong.utils.Constant.DEFAULT_CITY;
@@ -56,6 +58,7 @@ public class App extends MultiDexApplication {
     public BDLocationListener myListener = new MyLocationListener();
     private String parseString;
     private String jPushId;
+    public boolean isForeground;
 
     @Override
     public void onCreate() {
@@ -67,6 +70,9 @@ public class App extends MultiDexApplication {
 
     private void initConfig() {
         LeakCanary.install(this);
+
+        ForegroundCallbacks foregroundCallbacks = ForegroundCallbacks.init(this);
+        foregroundCallbacks.addListener(foregroundListener);
 
         JPushInterface.setDebugMode(!UrlConfig.debug);
         JPushInterface.init(this);
@@ -82,6 +88,17 @@ public class App extends MultiDexApplication {
 //        RichText.initCacheDir(this);
     }
 
+    private ForegroundCallbacks.Listener foregroundListener = new ForegroundCallbacks.Listener() {
+        @Override
+        public void onBecameForeground() {
+            isForeground = true;
+        }
+
+        @Override
+        public void onBecameBackground() {
+            isForeground = false;
+        }
+    };
 
     private void initImagePicker() {
         IBoxingMediaLoader loader = new BoxingGlideLoader();
@@ -222,6 +239,7 @@ public class App extends MultiDexApplication {
     public void setSelectedCity(String city) {
         this.citySelected = city;
         SharePrefUtils.putString(this, "citySelected", city);
+        setJPushTags();
     }
 
 
@@ -235,13 +253,21 @@ public class App extends MultiDexApplication {
     public void setLocationCity(String city) {
         this.cityLocation = city;
         SharePrefUtils.putString(this, "cityLocation", city);
+        setJPushTags();
+    }
 
-
+    private void setJPushTags() {
         Set<String> sets = new HashSet<>();
-        sets.add(city + 0);
-        sets.add(getSelectedCity() + 1);
-
-        JPushInterface.setTags(this, sets, null);
+        String locationCity = getLocationCity() == null ? getSelectedCity() : getLocationCity();
+        String selectCity = getSelectedCity() == null ? getLocationCity() : getSelectedCity();
+        sets.add(locationCity + 0);
+        sets.add(selectCity + 1);
+        JPushInterface.setTags(this, sets, new TagAliasCallback() {
+            @Override
+            public void gotResult(int i, String s, Set<String> set) {
+                Logger.i("setJPushTags", "result : code  = " + i + ", set.isEmpty  = " + set.isEmpty());
+            }
+        });
     }
 
 

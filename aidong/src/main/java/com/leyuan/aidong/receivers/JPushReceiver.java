@@ -5,7 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.google.gson.Gson;
+import com.leyuan.aidong.entity.PushExtroInfo;
 import com.leyuan.aidong.ui.App;
+import com.leyuan.aidong.ui.home.activity.CampaignDetailActivity;
+import com.leyuan.aidong.ui.mine.activity.AppointCampaignDetailActivity;
+import com.leyuan.aidong.ui.mine.activity.AppointCourseDetailActivity;
+import com.leyuan.aidong.ui.mine.activity.OrderDetailActivity;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.LogAidong;
 
 import org.json.JSONException;
@@ -43,10 +50,34 @@ public class JPushReceiver extends BroadcastReceiver {
         } else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
             String value = bundle.getString(JPushInterface.EXTRA_EXTRA);
             LogAidong.i(TAG, "[MyReceiver] 接收到推送下来的通知  value = " + value);
+            PushExtroInfo info = new Gson().fromJson(value, PushExtroInfo.class);
+            if (info != null) {
+                context.sendBroadcast(new Intent(NewPushMessageReceiver.ACTION));
+            }
 
         } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
             LogAidong.i(TAG, "[MyReceiver] 用户点击打开了通知");
             String value = bundle.getString(JPushInterface.EXTRA_EXTRA);
+
+            PushExtroInfo info = new Gson().fromJson(value, PushExtroInfo.class);
+            if (info == null) return;
+            if (App.getInstance().isForeground) return;
+
+            switch (info.getType()) {
+                case Constant.CAMPAIGN:
+                    AppointCampaignDetailActivity.start(context, info.getLink_id());
+                    break;
+                case Constant.ORDER:
+                    OrderDetailActivity.start(context, info.getLink_id());
+                    break;
+                case Constant.COURSE:
+                    AppointCourseDetailActivity.start(context, info.getLink_id());
+                    break;
+                case Constant.PUSH_CAMPAIGN:
+                    CampaignDetailActivity.start(context, info.getLink_id());
+                    break;
+            }
+
 
         } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
             LogAidong.i(TAG, "[MyReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));
