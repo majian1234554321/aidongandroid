@@ -62,6 +62,10 @@ public class Constant {
     public static final CharSequence NEGATIVE_ONE = "-1";
     public static final String TOTAL_GOODS_PRICE = "total_goods_price";
     public static final String COUPON_LIST = "coupon_list";
+    public static final String CAMPAIGN = "campaign";
+    public static final String ORDER = "order";
+    public static final String COURSE = "course";
+    public static final String PUSH_CAMPAIGN = "push_campaign";
 
     public static List<VenuesBean> gyms;
     public static SystemBean systemInfoBean;

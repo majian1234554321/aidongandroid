@@ -61,12 +61,14 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
     protected void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
+        Logger.w("className", getClass().getSimpleName()+" -- onResume");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
+        Logger.w("className", getClass().getSimpleName()+" -- onPause");
     }
 
     @Override

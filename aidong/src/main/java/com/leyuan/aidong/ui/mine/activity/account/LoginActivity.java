@@ -10,11 +10,13 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.module.chat.manager.EmChatLoginManager;
 import com.leyuan.aidong.module.chat.manager.EmChatRegisterManager;
 import com.leyuan.aidong.module.thirdpartylogin.ThirdLoginUtils;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.mine.activity.CouponNewcomerActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.LoginPresenter;
 import com.leyuan.aidong.ui.mvp.presenter.impl.MineInfoPresenterImpl;
@@ -26,6 +28,8 @@ import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.StringUtils;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.utils.UiManager;
+
+import java.util.ArrayList;
 
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener, LoginViewInterface, EmChatLoginManager.OnLoginListner, EmChatRegisterManager.OnChatRegisterCallback, ThirdLoginUtils.OnThirdPartyLogin {
@@ -127,7 +131,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     }
 
     @Override
-    public void loginResult(UserCoach user) {
+    public void loginResult(UserCoach user, ArrayList<CouponBean> coupons) {
         DialogUtils.dismissDialog();
         if (user != null) {
             DialogUtils.showDialog(this, "", false);
@@ -136,6 +140,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             new MineInfoPresenterImpl(this).getMineInfo();
             new FollowPresentImpl(this).getFollowList();            //登录成功后需要获取关注列表
             new SystemPresentImpl(this).getSystemInfo("android");   //登录成功后需要刷新配置(课程视频提示需要更新)
+        }
+        if (coupons != null && !coupons.isEmpty()) {
+            CouponNewcomerActivity.start(this, coupons);
         }
     }
 

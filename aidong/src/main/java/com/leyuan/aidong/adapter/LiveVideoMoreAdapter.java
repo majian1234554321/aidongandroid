@@ -20,17 +20,19 @@ import java.util.ArrayList;
  */
 public class LiveVideoMoreAdapter extends RecyclerView.Adapter<LiveVideoMoreAdapter.ViewHolder> {
 
+    private final boolean isEnd;
     private Context context;
     private ArrayList<LiveVideoInfo> livingVideos = new ArrayList<>();
     private HomeVideoAdapter.OnSoonLiveVideoClickListener onSoonLiveVideoClickListener;
     private LayoutInflater inflater;
 
     public LiveVideoMoreAdapter(Context context, ArrayList<LiveVideoInfo> livingVideos,
-                                HomeVideoAdapter.OnSoonLiveVideoClickListener onSoonLiveVideoClickListener) {
+                                HomeVideoAdapter.OnSoonLiveVideoClickListener onSoonLiveVideoClickListener, boolean isEnd) {
         this.context = context;
         this.onSoonLiveVideoClickListener = onSoonLiveVideoClickListener;
         this.livingVideos = livingVideos;
         inflater = LayoutInflater.from(context);
+        this.isEnd = isEnd;
     }
 
     @Override
@@ -65,6 +67,12 @@ public class LiveVideoMoreAdapter extends RecyclerView.Adapter<LiveVideoMoreAdap
             }
         });
 
+        if (isEnd && position == livingVideos.size() - 1) {
+            holder.img_bottom.setVisibility(View.VISIBLE);
+        } else {
+            holder.img_bottom.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
@@ -76,7 +84,7 @@ public class LiveVideoMoreAdapter extends RecyclerView.Adapter<LiveVideoMoreAdap
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView img_live_bg;
-        private ImageView img_calendar;
+        private ImageView img_calendar, img_bottom;
         private TextView txt_clock;
         private TextView txt_count;
         private TextView txt_author;
@@ -86,6 +94,7 @@ public class LiveVideoMoreAdapter extends RecyclerView.Adapter<LiveVideoMoreAdap
             super(view);
             img_live_bg = (ImageView) view.findViewById(R.id.img_live_bg);
             img_calendar = (ImageView) view.findViewById(R.id.img_calendar);
+            img_bottom = (ImageView) view.findViewById(R.id.img_bottom);
             txt_clock = (TextView) view.findViewById(R.id.txt_clock);
             txt_count = (TextView) view.findViewById(R.id.txt_count);
             txt_author = (TextView) view.findViewById(R.id.txt_author);

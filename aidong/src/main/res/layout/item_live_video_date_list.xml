@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -14,12 +13,12 @@
             android:id="@+id/img_live_bg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#22000000"/>
+            android:background="#22000000" />
 
 
         <LinearLayout
@@ -36,8 +35,7 @@
                 android:layout_width="12dp"
                 android:layout_height="12dp"
                 android:src="@drawable/icon_live_clock"
-                android:visibility="gone"
-                />
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/txt_clock"
@@ -45,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:text="倒计时"
                 android:textColor="@color/white"
-                android:textSize="12sp"/>
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/txt_count"
@@ -54,8 +52,7 @@
                 android:layout_marginLeft="5dp"
                 android:text="03:12:12"
                 android:textColor="@color/white"
-                android:textSize="12sp"
-                />
+                android:textSize="12sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -64,8 +61,7 @@
                 android:singleLine="true"
                 android:text="/"
                 android:textColor="@color/white"
-                android:textSize="12sp"
-                />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/txt_author"
@@ -75,8 +71,7 @@
                 android:singleLine="true"
                 android:text=""
                 android:textColor="@color/white"
-                android:textSize="12sp"
-                />
+                android:textSize="12sp" />
 
         </LinearLayout>
 
@@ -87,10 +82,17 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="15dp"
             android:layout_marginLeft="15dp"
+            android:singleLine="true"
             android:text=""
             android:textColor="@color/white"
-            android:singleLine="true"
-            android:textSize="20sp"/>
+            android:textSize="20sp" />
 
     </RelativeLayout>
-</FrameLayout>
+
+    <ImageView
+        android:id="@+id/img_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:visibility="gone" />
+
+</LinearLayout>

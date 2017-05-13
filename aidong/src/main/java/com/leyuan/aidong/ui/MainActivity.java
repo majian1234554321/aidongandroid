@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.module.chat.manager.EmMessageManager;
 import com.leyuan.aidong.receivers.ChatMessageReceiver;
+import com.leyuan.aidong.receivers.NewPushMessageReceiver;
 import com.leyuan.aidong.ui.discover.fragment.DiscoverHomeFragment;
 import com.leyuan.aidong.ui.home.fragment.HomeFragment;
 import com.leyuan.aidong.ui.home.fragment.StoreFragment;
@@ -42,6 +43,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private long mPressedTime = 0;
     private ChatMessageReceiver chatMessageReceiver;
+    private NewPushMessageReceiver newPushMessageReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         initView();
         initData();
+        registerMessageReceiver();
     }
 
     private void initView() {
@@ -71,9 +74,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         tabDiscoverLayout.setOnClickListener(this);
         tabMineLayout.setOnClickListener(this);
 
-        chatMessageReceiver = new ChatMessageReceiver(img_new_message);
-        LocalBroadcastManager.getInstance(this).registerReceiver(
-                chatMessageReceiver, new IntentFilter(Constant.BROADCAST_ACTION_NEW_MESSAGE));
+
     }
 
     private void initFragments() {
@@ -85,6 +86,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mFragments.add(new MineFragment());
         setTabSelection(0);
         showFragment(0);
+    }
+
+    private void registerMessageReceiver() {
+        chatMessageReceiver = new ChatMessageReceiver(img_new_message);
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                chatMessageReceiver, new IntentFilter(Constant.BROADCAST_ACTION_NEW_MESSAGE));
+
+        newPushMessageReceiver = new NewPushMessageReceiver(img_new_message);
+        registerReceiver(newPushMessageReceiver, new IntentFilter(NewPushMessageReceiver.ACTION));
     }
 
     @Override
@@ -207,6 +217,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        unregisterMessageReceiver();
+
+    }
+
+    private void unregisterMessageReceiver() {
+        unregisterReceiver(newPushMessageReceiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(chatMessageReceiver);
     }
 }

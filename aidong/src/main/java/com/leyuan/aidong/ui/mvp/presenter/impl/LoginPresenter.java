@@ -25,7 +25,7 @@ public class LoginPresenter implements LoginPresenterInterface {
     //    private QQLogin qqLogin;
     private ThirdLoginUtils thirdLoginUtils;
 
-    public LoginPresenter(Activity context,ThirdLoginUtils.OnThirdPartyLogin thirdLoginListner) {
+    public LoginPresenter(Activity context, ThirdLoginUtils.OnThirdPartyLogin thirdLoginListner) {
         this.context = context;
         loginModel = new LoginModel();
         thirdLoginUtils = new ThirdLoginUtils(context, thirdLoginListner);
@@ -54,14 +54,14 @@ public class LoginPresenter implements LoginPresenterInterface {
             public void onError(Throwable e) {
                 super.onError(e);
                 if (loginViewInterface != null)
-                    loginViewInterface.loginResult(null);
+                    loginViewInterface.loginResult(null, null);
             }
 
             @Override
             public void onNext(LoginResult user) {
                 App.mInstance.setUser(user.getUser());
                 if (loginViewInterface != null)
-                    loginViewInterface.loginResult(user.getUser());
+                    loginViewInterface.loginResult(user.getUser(), user.getCoupons());
 
             }
         }, accout, password);
@@ -92,7 +92,7 @@ public class LoginPresenter implements LoginPresenterInterface {
                 super.onError(e);
                 Logger.i("loginSns", "onError");
                 if (loginViewInterface != null)
-                    loginViewInterface.loginResult(null);
+                    loginViewInterface.loginResult(null, null);
                 //                loginViewInterface.loginResult(false);
             }
 
@@ -101,7 +101,7 @@ public class LoginPresenter implements LoginPresenterInterface {
                 Logger.i("loginSns", "onNext");
                 App.mInstance.setUser(user.getUser());
                 if (loginViewInterface != null)
-                    loginViewInterface.loginResult(user.getUser());
+                    loginViewInterface.loginResult(user.getUser(), user.getCoupons());
 
             }
         }, sns, access);
