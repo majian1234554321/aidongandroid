@@ -77,7 +77,7 @@ public class CouponActivity extends BaseActivity implements SmartTabLayout.TabPr
 
     @Override
     public View createTabView(ViewGroup container, int position, PagerAdapter adapter) {
-        View tabView = LayoutInflater.from(this).inflate(R.layout.tab_order_text, container, false);
+        View tabView = LayoutInflater.from(this).inflate(R.layout.tab_coupon_text, container, false);
         TextView text = (TextView) tabView.findViewById(R.id.tv_tab_text);
         String[] campaignTab = getResources().getStringArray(R.array.couponTab);
         text.setText(campaignTab[position]);

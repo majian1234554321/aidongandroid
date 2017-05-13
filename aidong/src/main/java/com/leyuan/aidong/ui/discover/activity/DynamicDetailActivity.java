@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.exoplayer.util.Util;
 import com.leyuan.aidong.R;
@@ -188,7 +190,7 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
                 break;
             case R.id.tv_report_or_delete:
                 if(isSelf) {
-                    dynamicPresent.deleteDynamic(dynamic.id);
+                    showDeleteDialog();
                 }else {
                     showReportDialog();
                 }
@@ -284,6 +286,22 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
                     }
                 })
                 .positiveText(R.string.sure)
+                .show();
+    }
+
+    private void showDeleteDialog(){
+        new MaterialDialog.Builder(this)
+                .content(R.string.confirm_delete)
+                .negativeText(R.string.cancel)
+                .positiveText(R.string.sure)
+                .onAny(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        if(which == DialogAction.POSITIVE){
+                            dynamicPresent.deleteDynamic(dynamic.id);
+                        }
+                    }
+                })
                 .show();
     }
 

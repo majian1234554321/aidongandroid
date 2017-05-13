@@ -57,8 +57,8 @@ public class ExtendTextView extends RelativeLayout {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ExtendTextView);
         height = typedArray.getDimensionPixelSize(R.styleable.ExtendTextView_text_height, DensityUtil.dp2px(context, 30));
         leftText = typedArray.getString(R.styleable.ExtendTextView_left_text);
-        leftPadding = typedArray.getDimensionPixelSize(R.styleable.ExtendTextView_padding_left, DensityUtil.dp2px(context, 12));
-        rightPadding = typedArray.getDimensionPixelSize(R.styleable.ExtendTextView_padding_right, DensityUtil.dp2px(context, 12));
+        leftPadding = typedArray.getDimensionPixelSize(R.styleable.ExtendTextView_padding_left, DensityUtil.dp2px(context, 15));
+        rightPadding = typedArray.getDimensionPixelSize(R.styleable.ExtendTextView_padding_right, DensityUtil.dp2px(context, 15));
         leftTextSize = typedArray.getDimensionPixelSize(R.styleable.ExtendTextView_left_text_size, 14);
         rightTextSize = typedArray.getDimensionPixelSize(R.styleable.ExtendTextView_right_text_size, 14);
         showArrow = typedArray.getBoolean(R.styleable.ExtendTextView_show_right_arrow, false);

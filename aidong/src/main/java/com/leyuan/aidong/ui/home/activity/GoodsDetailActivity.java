@@ -24,7 +24,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.GoodsDetailCouponAdapter;
@@ -51,6 +50,7 @@ import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.TransitionHelper;
 import com.leyuan.aidong.utils.constant.GoodsType;
 import com.leyuan.aidong.widget.ObserveScrollView;
@@ -504,7 +504,9 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                     if (baseBean.getStatus() == Constant.OK) {
                         bean.coupon.get(position).setStatus("1");
                         couponAdapter.notifyDataSetChanged();
-                        Toast.makeText(GoodsDetailActivity.this, "领取成功", Toast.LENGTH_LONG).show();
+                        ToastGlobal.showLong("领取成功");
+                    }else {
+                        ToastGlobal.showLong(baseBean.getMessage());
                     }
                 }
             }, bean.coupon.get(position).getId());

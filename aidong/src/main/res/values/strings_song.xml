@@ -170,6 +170,7 @@
     <string name="confirm_date">请选择自提时间</string>
     <string name="confirm_report">举报类型</string>
     <string name="confirm_signature">请输入个性签名</string>
+    <string name="confirm_delete">确定删除该条动态吗?</string>
     <string name="confirm_signature_hint">最多20个字</string>
     <string name="confirm_height">请选择身高</string>
     <string name="confirm_weight">请选择体重</string>

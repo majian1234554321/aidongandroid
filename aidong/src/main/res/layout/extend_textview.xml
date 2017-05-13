@@ -29,14 +29,14 @@
             android:text="- ¥ 0.00"
             android:layout_gravity="center_vertical"
             android:gravity="right"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginLeft="10dp"
             android:textColor="@color/black"
             android:textSize="14sp"
             android:singleLine="true"/>
 
         <ImageView
             android:id="@+id/iv_arrow"
+            android:layout_marginLeft="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"

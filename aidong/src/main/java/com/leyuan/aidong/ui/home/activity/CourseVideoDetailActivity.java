@@ -159,7 +159,12 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
             tvAuthAndTime.printString(String.format(getString(R.string.course_type_and_during),
                     courseVideoBean.getTypeName(),during));
             tvCourseDesc.printString(courseVideoBean.getIntroduce());
-            adapter.setData(videoBeanList);
+            if(videoBeanList.size() > 1) {
+                adapter.setData(videoBeanList);
+                layoutMoreVideo.setVisibility(View.VISIBLE);
+            }else {
+                layoutMoreVideo.setVisibility(View.GONE);
+            }
         }
     }
 

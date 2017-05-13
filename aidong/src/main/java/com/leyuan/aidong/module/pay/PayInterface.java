@@ -19,10 +19,23 @@ public interface PayInterface {
      */
      interface PayListener {
 
+        /**
+         * 付款失败回调
+         * @param code
+         * @param object
+         */
         void onFail(String code, Object object);
 
+        /**
+         * 付款成功回调
+         * @param code
+         * @param object
+         */
         void onSuccess(String code, Object object);
 
+        /**
+         * 免费回调
+         */
         void onFree();
     }
 }

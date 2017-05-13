@@ -140,13 +140,15 @@
                         android:background="@drawable/shape_stroke_red"/>
                 </LinearLayout>
 
-                <include layout="@layout/inc_line_black" />
+                <include layout="@layout/inc_line_black"
+                    android:visibility="gone"/>
 
                 <LinearLayout
                     android:id="@+id/ll_not_vip"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="match_parent"

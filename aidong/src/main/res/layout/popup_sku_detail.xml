@@ -106,7 +106,8 @@
             android:id="@+id/dv_goods_cover"
             android:layout_width="82dp"
             android:layout_height="82dp"
-            android:layout_marginLeft="@dimen/left_margin" />
+            android:layout_marginLeft="@dimen/left_margin"
+            android:elevation="5dp" />
     </RelativeLayout>
 
     <com.leyuan.aidong.widget.MaxHeightNestScrollView
@@ -203,7 +204,8 @@
                 android:text="确认"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:foreground="?selectableItemBackground"/>
 
             <TextView
                 android:id="@+id/tv_add_cart"
@@ -215,7 +217,8 @@
                 android:text="加入购物车"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:foreground="?selectableItemBackground"/>
 
             <LinearLayout
                 android:id="@+id/ll_buy"
@@ -224,7 +227,8 @@
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:gravity="center_vertical"
-                android:background="@color/main_red">
+                android:background="@color/main_red"
+                android:foreground="?selectableItemBackground">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -258,7 +262,8 @@
                 android:text="售罄"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:foreground="?selectableItemBackground"/>
         </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

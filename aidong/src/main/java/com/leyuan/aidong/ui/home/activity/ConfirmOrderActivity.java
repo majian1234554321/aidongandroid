@@ -163,7 +163,6 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             bottomLayout.setVisibility(View.GONE);
             present.getDefaultAddress(switcherLayout);
         }
-//        present.getSpecifyGoodsCoupon(couponType, itemIds);
         present.getGoodsAvailableCoupon(itemFromIdAmount);
     }
 
