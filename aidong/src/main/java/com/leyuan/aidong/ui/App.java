@@ -30,6 +30,7 @@ import com.leyuan.aidong.utils.VersionManager;
 import com.squareup.leakcanary.LeakCanary;
 
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -59,6 +60,7 @@ public class App extends MultiDexApplication {
     private String parseString;
     private String jPushId;
     public boolean isForeground;
+    public final static List<BaseActivity> mActivities = new LinkedList<>();
 
     @Override
     public void onCreate() {
@@ -153,6 +155,10 @@ public class App extends MultiDexApplication {
             jPushId = SharePrefUtils.getString(context, "jPushId", null);
         }
         return jPushId;
+    }
+
+    public List<BaseActivity> getActivityStack() {
+        return mActivities;
     }
 
     public class MyLocationListener implements BDLocationListener {

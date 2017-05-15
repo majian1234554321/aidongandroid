@@ -32,6 +32,7 @@ import java.util.List;
 
 import pub.devrel.easypermissions.EasyPermissions;
 
+import static com.leyuan.aidong.ui.App.mActivities;
 import static com.leyuan.aidong.utils.Constant.GOODS_EQUIPMENT;
 import static com.leyuan.aidong.utils.Constant.GOODS_FOODS;
 import static com.leyuan.aidong.utils.Constant.GOODS_NUTRITION;
@@ -44,7 +45,7 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
     protected int screenWidth;
     protected int screenHeight;
     protected ProgressDialogHandler progressDialogHandler;
-    public final static List<BaseActivity> mActivities = new LinkedList<>();
+//    public final static List<BaseActivity> mActivities = new LinkedList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
