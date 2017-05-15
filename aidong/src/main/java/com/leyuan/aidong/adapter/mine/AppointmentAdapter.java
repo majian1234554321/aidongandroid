@@ -71,7 +71,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         holder.name.setText(bean.getName());
         holder.address.setText(bean.getSubName());
         holder.price.setText(String.format(context.getString(R.string.rmb_price_double),
-                FormatUtil.parseDouble(bean.getPrice())));
+                FormatUtil.parseDouble(bean.getPay_amount())));
         holder.timer.start(DateUtils.getCountdown(bean.getCreated_at(), APPOINT_COUNTDOWN_MILL));
 
         //与订单状态有关
@@ -95,7 +95,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                         bean.getStart()));
                 holder.date.setVisibility(View.VISIBLE);
                 holder.timerLayout.setVisibility(View.GONE);
-                holder.tvCancelJoin.setVisibility(FormatUtil.parseInt(bean.getPayAmount()) == 0
+                holder.tvCancelJoin.setVisibility(FormatUtil.parseInt(bean.getPay_amount()) == 0
                         ? View.VISIBLE : View.GONE);
                 holder.tvConfirm.setVisibility(View.VISIBLE);
                 holder.tvPay.setVisibility(View.GONE);

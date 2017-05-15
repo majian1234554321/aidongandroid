@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.mine.OrderParcelAdapter;
@@ -375,9 +374,9 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
     public void cancelOrderResult(BaseBean baseBean) {
         if(baseBean.getStatus() == Constant.OK){
             orderPresent.getOrderDetail(orderId);
-            Toast.makeText(this,"取消成功",Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong("取消成功");
         }else {
-            Toast.makeText(this,baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong(baseBean.getMessage());
         }
     }
 
@@ -385,9 +384,9 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
     public void confirmOrderResult(BaseBean baseBean) {
         if(baseBean.getStatus() == Constant.OK){
             orderPresent.getOrderDetail(orderId);
-            Toast.makeText(this,"确认成功",Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong("确认成功");
         }else {
-            Toast.makeText(this,baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong(baseBean.getMessage());
         }
     }
 
@@ -395,9 +394,9 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
     public void deleteOrderResult(BaseBean baseBean) {
         if(baseBean.getStatus() == Constant.OK){
             orderPresent.getOrderDetail(orderId);
-            Toast.makeText(this,"删除成功",Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong("删除成功");
         }else {
-            Toast.makeText(this,baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong(baseBean.getMessage());
         }
     }
 

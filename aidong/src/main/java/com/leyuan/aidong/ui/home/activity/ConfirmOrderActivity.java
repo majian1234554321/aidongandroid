@@ -117,7 +117,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
     private String integral;
     private String coin;
-    private String coupon;
+    private String couponId;
     private @PayType String payType;
     private @DeliveryType String pickUpWay;           //取货方式(0-快递 1-自提)
     private String pickUpId;                          //自提门店id或快递地址id
@@ -339,15 +339,15 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         }
         switch (settlementType) {
             case SETTLEMENT_CART:
-                present.payCart(integral, coin, coupon, payType, pickUpId,
+                present.payCart(integral, coin, couponId, payType, pickUpId,
                         pickUpDate, payListener, itemIds);
                 break;
             case SETTLEMENT_NURTURE_IMMEDIATELY:
-                present.buyNurtureImmediately(skuCode, amount, coupon, integral, coin, payType,
+                present.buyNurtureImmediately(skuCode, amount, couponId, integral, coin, payType,
                         String.valueOf(pickUpWay), pickUpId, pickUpDate, payListener);
                 break;
             case SETTLEMENT_EQUIPMENT_IMMEDIATELY:
-                present.buyEquipmentImmediately(skuCode, amount, coupon, integral, coin, payType,
+                present.buyEquipmentImmediately(skuCode, amount, couponId, integral, coin, payType,
                         String.valueOf(pickUpWay), pickUpId, pickUpDate, payListener);
                 break;
             default:
@@ -429,7 +429,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 updateAddressStatus(address);
             } else if (requestCode == REQUEST_SELECT_COUPON) {
                 CouponBean couponBean = data.getParcelableExtra("coupon");
-                coupon = couponBean.getId();
+                couponId = couponBean.getId();
                 if (FormatUtil.parseDouble(couponBean.getDiscount()) != -1) {
                     tvCoupon.setText(String.format(getString(R.string.rmb_minus_price_double),
                             FormatUtil.parseDouble(couponBean.getDiscount())));

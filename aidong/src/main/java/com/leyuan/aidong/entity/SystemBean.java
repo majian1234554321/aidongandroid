@@ -23,6 +23,8 @@ public class SystemBean implements Serializable {
     private int appointment_countdown;// 预约倒计时,单位分钟
     private long current_time;
     private String acivity;     //课程视频底部提示文字
+    private double expressPrice;    //快递费
+
 
     public List<String> getOpen_city() {
         return open_city;
@@ -127,6 +129,14 @@ public class SystemBean implements Serializable {
 
     public void setGym_types(ArrayList<String> gym_types) {
         this.gym_types = gym_types;
+    }
+
+    public double getExpressPrice() {
+        return expressPrice;
+    }
+
+    public void setExpressPrice(double expressPrice) {
+        this.expressPrice = expressPrice;
     }
 
     @Override

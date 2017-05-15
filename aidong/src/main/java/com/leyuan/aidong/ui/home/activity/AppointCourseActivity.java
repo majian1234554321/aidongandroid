@@ -2,9 +2,7 @@ package com.leyuan.aidong.ui.home.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -66,12 +64,6 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
     private TextView tvCoupon;
     private LinearLayout goldLayout;
 
-    //会员身份信息
-    private TextView tvVip;
-    private TextView tvNoVip;
-    private TextView tvNoVipTip;
-    private LinearLayout vipTipLayout;
-
     //订单信息
     private ExtendTextView tvTotalPrice;
     private ExtendTextView tvCouponPrice;
@@ -128,10 +120,6 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
         tvAddress = (ExtendTextView) findViewById(R.id.tv_address);
         tvCoupon = (TextView) findViewById(R.id.tv_coupon);
         goldLayout = (LinearLayout) findViewById(R.id.ll_gold);
-        tvVip = (TextView) findViewById(R.id.tv_vip);
-        tvNoVip = (TextView) findViewById(R.id.tv_no_vip);
-        tvNoVipTip = (TextView) findViewById(R.id.tv_vip_tip);
-        vipTipLayout = (LinearLayout) findViewById(R.id.ll_vip_tip);
         tvTotalPrice = (ExtendTextView) findViewById(R.id.tv_total_price);
         tvCouponPrice = (ExtendTextView) findViewById(R.id.tv_coupon_price);
         tvDiscountPrice = (ExtendTextView) findViewById(R.id.tv_discount_price);
@@ -150,15 +138,11 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
         tvAddress.setRightContent(bean.getGym().getAddress());
         tvTotalPrice.setRightContent(String.format(getString(R.string.rmb_price), bean.getPrice()));
         tvPrice.setText(String.format(getString(R.string.rmb_price), bean.getPrice()));
-        tvNoVipTip.setText(Html.fromHtml(String.format(getString(R.string.no_vip_tip),
-                bean.getGym().getAdmission())));
     }
 
     private void setListener() {
         titleBar.setOnClickListener(this);
         tvCoupon.setOnClickListener(this);
-        tvVip.setOnClickListener(this);
-        tvNoVip.setOnClickListener(this);
         tvPay.setOnClickListener(this);
         tvUserPhone.setOnClickListener(this);
         radioGroup.setOnCheckedChangeListener(this);
@@ -192,27 +176,8 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.tv_coupon:
                 if (usableCoupons != null && !usableCoupons.isEmpty()) {
-//                    Intent intent = new Intent(this, SelectCouponActivity.class);
-//                    startActivityForResult(intent, REQUEST_SELECT_COUPON);
-
                     SelectCouponActivity.startForResult(this, bean.getPrice(), usableCoupons, REQUEST_SELECT_COUPON);
                 }
-                break;
-            case R.id.tv_vip:
-                isVip = true;
-                tvNoVip.setTextColor(Color.parseColor("#000000"));
-                tvVip.setTextColor(Color.parseColor("#ffffff"));
-                tvNoVip.setBackgroundResource(R.drawable.shape_solid_corner_white);
-                tvVip.setBackgroundResource(R.drawable.shape_solid_corner_black);
-                vipTipLayout.setVisibility(View.GONE);
-                break;
-            case R.id.tv_no_vip:
-                isVip = false;
-                tvVip.setTextColor(Color.parseColor("#000000"));
-                tvNoVip.setTextColor(Color.parseColor("#ffffff"));
-                tvVip.setBackgroundResource(R.drawable.shape_solid_corner_white);
-                tvNoVip.setBackgroundResource(R.drawable.shape_solid_corner_black);
-                vipTipLayout.setVisibility(View.VISIBLE);
                 break;
             case R.id.tv_pay:
                 String userRealName = tvUserName.getText().toString().trim();
@@ -278,10 +243,10 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         if(data != null) {
             if (requestCode == REQUEST_SELECT_COUPON) {
                 CouponBean couponBean = data.getParcelableExtra("coupon");
+                couponId = couponBean.getId();
                 tvCoupon.setText(String.format(getString(R.string.rmb_minus_price_double),
                         FormatUtil.parseDouble(couponBean.getDiscount())));
                 tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double),
