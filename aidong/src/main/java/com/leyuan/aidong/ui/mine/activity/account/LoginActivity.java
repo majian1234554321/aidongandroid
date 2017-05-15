@@ -142,8 +142,25 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             new SystemPresentImpl(this).getSystemInfo("android");   //登录成功后需要刷新配置(课程视频提示需要更新)
         }
         if (coupons != null && !coupons.isEmpty()) {
-            CouponNewcomerActivity.start(this, coupons);
+        CouponNewcomerActivity.start(this, coupons);
         }
+//        new CouponPresentImpl(this, new CouponFragmentView() {
+//            @Override
+//            public void updateRecyclerView(List<CouponBean> couponBeanList) {
+//                CouponNewcomerActivity.start(LoginActivity.this, (ArrayList<CouponBean>) couponBeanList);
+//            }
+//
+//            @Override
+//            public void showEmptyView() {
+//
+//            }
+//
+//            @Override
+//            public void showEndFooterView() {
+//
+//            }
+//        }).pullToRefreshData("valid");
+
     }
 
     @Override

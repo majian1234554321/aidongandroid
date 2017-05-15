@@ -249,4 +249,6 @@
     <string name="save_fail">保存失败</string>
     <string name="course_all_type">全部类型</string>
     <string name="all_circle">全部商圈</string>
+    <string name="new_cusmor_exclusive">新用户专享</string>
+    <string name="check_immediately">立即查看</string>
 </resources>

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import com.google.gson.Gson;
 import com.leyuan.aidong.entity.PushExtroInfo;
 import com.leyuan.aidong.ui.App;
+import com.leyuan.aidong.ui.MainActivity;
 import com.leyuan.aidong.ui.home.activity.CampaignDetailActivity;
 import com.leyuan.aidong.ui.mine.activity.AppointCampaignDetailActivity;
 import com.leyuan.aidong.ui.mine.activity.AppointCourseDetailActivity;
@@ -63,19 +64,10 @@ public class JPushReceiver extends BroadcastReceiver {
             if (info == null) return;
             if (App.getInstance().isForeground) return;
 
-            switch (info.getType()) {
-                case Constant.CAMPAIGN:
-                    AppointCampaignDetailActivity.start(context, info.getLink_id());
-                    break;
-                case Constant.ORDER:
-                    OrderDetailActivity.start(context, info.getLink_id());
-                    break;
-                case Constant.COURSE:
-                    AppointCourseDetailActivity.start(context, info.getLink_id());
-                    break;
-                case Constant.PUSH_CAMPAIGN:
-                    CampaignDetailActivity.start(context, info.getLink_id());
-                    break;
+            if (App.getInstance().getActivityStack().isEmpty()) {
+                startAppActivityByType(context, info);
+            } else {
+                startActivityByType(context, info);
             }
 
 
@@ -89,6 +81,54 @@ public class JPushReceiver extends BroadcastReceiver {
         } else {
             LogAidong.i(TAG, "[MyReceiver] Unhandled intent - " + intent.getAction());
         }
+    }
+
+
+    private void startAppActivityByType(Context context, PushExtroInfo info) {
+        Intent intentMain = new Intent(context, MainActivity.class);
+        intentMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        Intent intent = getIntentByType(context, info);
+        if (intent != null) {
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivities(new Intent[]{intentMain, intent});
+        }
+    }
+
+    private void startActivityByType(Context context, PushExtroInfo info) {
+        Intent intent = getIntentByType(context, info);
+        if (intent != null) {
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        }
+    }
+
+    private Intent getIntentByType(Context context, PushExtroInfo info) {
+        Intent intent = null;
+        switch (info.getType()) {
+            case Constant.CAMPAIGN:
+                LogAidong.i(TAG, "[MyReceiver] 用户点击打开了通知类型: CAMPAIGN 跳转");
+                intent = new Intent(context, AppointCampaignDetailActivity.class);
+                intent.putExtra("orderId", info.getLink_id());
+                break;
+            case Constant.ORDER:
+                intent = new Intent(context, OrderDetailActivity.class);
+                intent.putExtra("orderId", info.getLink_id());
+
+
+                break;
+            case Constant.COURSE:
+                intent = new Intent(context, AppointCourseDetailActivity.class);
+                intent.putExtra("orderId", info.getLink_id());
+
+                break;
+            case Constant.PUSH_CAMPAIGN:
+                intent = new Intent(context, CampaignDetailActivity.class);
+                intent.putExtra("id", info.getLink_id());
+
+                break;
+        }
+        return intent;
     }
 
 
