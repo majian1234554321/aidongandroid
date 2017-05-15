@@ -53,6 +53,7 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
         this.reBuyIds = reBuyIds;
         cartPresent = new CartPresentImpl(context, this);
         initView();
+        cartPresent.commonLoadData(switcherLayout);
     }
 
     public CartHeaderView(Context context, AttributeSet attrs) {
@@ -199,6 +200,7 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
             }
         }else {
             ToastGlobal.showLong(R.string.delete_fail);
+
         }
     }
 

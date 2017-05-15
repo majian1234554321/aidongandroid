@@ -1,6 +1,6 @@
 package com.leyuan.aidong.ui.mine.activity;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,7 +17,6 @@ import com.leyuan.aidong.entity.ShopBean;
 import com.leyuan.aidong.entity.UpdateDeliveryBean;
 import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.home.activity.ConfirmOrderActivity;
 import com.leyuan.aidong.ui.home.activity.SelfDeliveryVenuesActivity;
 import com.leyuan.aidong.ui.mvp.presenter.CartPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CartPresentImpl;
@@ -37,7 +36,6 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_UPDATE_DELIVERY;
  */
 public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnClickListener,
         UpdateDeliveryInfoAdapter.SelfDeliveryShopListener ,UpdateDeliveryInfoActivityView{
-
     private ImageView ivBack;
     private UpdateDeliveryInfoAdapter deliveryInfoAdapter;
     private List<UpdateDeliveryBean> data = new ArrayList<>();
@@ -47,11 +45,11 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
 
     private ArrayList<ShopBean> allShopBeanList = new ArrayList<>();
 
-    public static void start(Context context,ArrayList<ShopBean> allShopBeanList,int selectedPosition) {
+    public static void startForResult(Activity context, ArrayList<ShopBean> allShopBeanList, int selectedPosition,int requestCode) {
         Intent starter = new Intent(context, UpdateDeliveryInfoActivity.class);
         starter.putExtra("selectedPosition",selectedPosition);
         starter.putParcelableArrayListExtra("allShopBeanList",allShopBeanList);
-        context.startActivity(starter);
+        context.startActivityForResult(starter,requestCode);
     }
 
     @Override
@@ -108,11 +106,9 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
     @Override
     public void onSelfDeliveryClick(int position) {
         this.position = position;
-        Intent intent = new Intent(this,SelfDeliveryVenuesActivity.class);
-        intent.putExtra("goodsId",data.get(position).getGoods().getProductId());
-        intent.putExtra("goodsType",data.get(position).getGoods().getProductType());
-        intent.putExtra("deliveryBean",data.get(position).getDeliveryInfo());
-        startActivityForResult(intent,REQUEST_UPDATE_DELIVERY);
+        UpdateDeliveryBean bean = data.get(position);
+        SelfDeliveryVenuesActivity.startForResult(this,bean.getGoods().getProductId(),
+                bean.getGoods().getProductType(),bean.getDeliveryInfo(),REQUEST_UPDATE_DELIVERY);
     }
 
     @Override
@@ -210,7 +206,10 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
     }
 
     private void finishWithSendResult(){
-        ConfirmOrderActivity.start(this,allShopBeanList,0f);
+        Intent intent = new Intent();
+        intent.putParcelableArrayListExtra("shopList",allShopBeanList);
+        setResult(RESULT_OK,intent);
+
         finish();
     }
 }
