@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.adapter.mine.CouponNewcomerAdapter;
 import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.utils.UiManager;
@@ -50,10 +51,11 @@ public class CouponNewcomerActivity extends BaseActivity implements View.OnClick
 
         imgClose.setOnClickListener(this);
         layoutCheckImmediately.setOnClickListener(this);
-        if (coupons != null ) {
-            txtCouponNum.setText("恭喜您获得"+coupons.size()+"张优惠券,快去看看吧!");
+        if (coupons != null) {
+            txtCouponNum.setText("恭喜您获得" + coupons.size() + "张优惠券,快去看看吧!");
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+            CouponNewcomerAdapter couponAdapter = new CouponNewcomerAdapter(this, coupons);
+            recyclerView.setAdapter(couponAdapter);
 
         }
 
