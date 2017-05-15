@@ -12,7 +12,6 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.AppointmentDetailBean;
@@ -217,6 +216,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         tvDelete.setOnClickListener(this);
         campaignLayout.setOnClickListener(this);
         timer.setOnCountdownEndListener(this);
+        ivCode.setOnClickListener(this);
     }
 
     @Override
@@ -391,6 +391,16 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
             case R.id.rl_detail:
                 CampaignDetailActivity.start(this,bean.getLinkId());
                 break;
+            case R.id.dv_qr:
+               /* Intent intent = new Intent(this, BarCodeActivity.class);
+                intent.putExtra("code", bean.getId());
+                final Pair<View, String>[] pairs = TransitionHelper.
+                        createSafeTransitionParticipants(this, false);
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.
+                        makeSceneTransitionAnimation(this, pairs);
+                startActivity(intent,optionsCompat.toBundle());*/
+                BarCodeActivity.start(this,bean.getId());
+                break;
             default:
                 break;
         }
@@ -427,9 +437,9 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
     public void cancelAppointmentResult(BaseBean baseBean) {
         if(baseBean.getStatus() == Constant.OK){
             present.getAppointmentDetail(switcherLayout,orderId);
-            Toast.makeText(this,"取消成功",Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong("取消成功");
         }else {
-            Toast.makeText(this,"取消失败" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong(baseBean.getMessage());
         }
     }
 
@@ -437,9 +447,9 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
     public void confirmAppointmentResult(BaseBean baseBean) {
         if(baseBean.getStatus() == Constant.OK){
             present.getAppointmentDetail(switcherLayout,orderId);
-            Toast.makeText(this,"确认成功",Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong("确认成功");
         }else {
-            Toast.makeText(this,"确认失败" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong(baseBean.getMessage());
         }
     }
 
@@ -447,9 +457,9 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
     public void deleteAppointmentResult(BaseBean baseBean) {
         if(baseBean.getStatus() == Constant.OK){
             finish();
-            Toast.makeText(this,"删除成功",Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong("删除成功");
         }else {
-            Toast.makeText(this,"删除失败" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong(baseBean.getMessage());
         }
     }
 

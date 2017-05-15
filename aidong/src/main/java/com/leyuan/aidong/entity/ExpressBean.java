@@ -1,12 +1,14 @@
 package com.leyuan.aidong.entity;
 
+import java.util.List;
+
 /**
  * 快递信息
  * Created by song on 2017/5/12.
  */
 public class ExpressBean {
 
-    private String express;
+    private List<ExpressListBean> express;
     private String cover;
 
     public String getCover() {
@@ -17,11 +19,11 @@ public class ExpressBean {
         this.cover = cover;
     }
 
-    public String getExpress() {
+    public List<ExpressListBean> getExpress() {
         return express;
     }
 
-    public void setExpress(String express) {
+    public void setExpress(List<ExpressListBean> express) {
         this.express = express;
     }
 }

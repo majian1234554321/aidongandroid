@@ -23,7 +23,6 @@ import com.leyuan.aidong.ui.MainActivity;
 import com.leyuan.aidong.ui.discover.activity.VenuesDetailActivity;
 import com.leyuan.aidong.ui.home.activity.CourseCategoryActivity;
 import com.leyuan.aidong.utils.GlideLoader;
-import com.leyuan.aidong.utils.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +68,7 @@ public class HomeHeaderView extends RelativeLayout{
         marqueeFactory = new VenuesMarqueeFactory(context);
         marqueeView.setAnimInAndOut(R.anim.top_in, R.anim.bottom_out);
         marqueeView.setMarqueeFactory(marqueeFactory);
+        marqueeView.setInterval(5000);
 
         courseAdapter = new HomeCourseAdapter(context);
         rvCourse.setAdapter(courseAdapter);
@@ -81,7 +81,6 @@ public class HomeHeaderView extends RelativeLayout{
             }
         });
 
-
         banner.setDelegate(new BGABanner.Delegate() {
            @Override
            public void onBannerItemClick(BGABanner banner, View itemView, Object model, int position) {
@@ -89,7 +88,6 @@ public class HomeHeaderView extends RelativeLayout{
            }
 //>>>>>>> 7bdef4a9437380d0ccd5607641b88507c92764ac
         });
-
 
         marqueeFactory.setOnItemClickListener(new MarqueeFactory.OnItemClickListener<RelativeLayout, VenuesBean>() {
             @Override

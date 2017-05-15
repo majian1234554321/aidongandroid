@@ -144,6 +144,12 @@
         <activity
             android:name=".ui.mine.activity.PrivacyActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.mine.activity.BarCodeActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/ImageTranslucentTheme"/>
+
         <activity
             android:name=".ui.mine.activity.setting.TabHelpActivity"
             android:screenOrientation="portrait" />
@@ -302,8 +308,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.home.activity.ConfirmOrderActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.home.activity.SelfDeliveryVenuesActivity"
             android:screenOrientation="portrait" />
@@ -357,7 +362,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.video.activity.LiveDetailActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.home.AdvertisementActivity"
             android:screenOrientation="portrait" />
