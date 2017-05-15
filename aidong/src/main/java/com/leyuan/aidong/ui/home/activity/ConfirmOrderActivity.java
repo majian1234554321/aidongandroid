@@ -57,7 +57,6 @@ import static com.leyuan.aidong.utils.Constant.PAY_WEIXIN;
 import static com.leyuan.aidong.utils.Constant.REQUEST_ADD_ADDRESS;
 import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_ADDRESS;
 import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_COUPON;
-import static com.leyuan.aidong.utils.Constant.REQUEST_UPDATE_DELIVERY;
 import static com.leyuan.aidong.utils.Constant.SETTLEMENT_CART;
 import static com.leyuan.aidong.utils.Constant.SETTLEMENT_EQUIPMENT_IMMEDIATELY;
 import static com.leyuan.aidong.utils.Constant.SETTLEMENT_NURTURE_IMMEDIATELY;
@@ -134,7 +133,6 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     String settlementType;
     private double totalGoodsPrice;
     private boolean needExpress = false;
-    private int deliveryPosition;
 
     private ConfirmOrderPresent present;
 
@@ -234,8 +232,6 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 itemFromIdAmount[i] = goodsList.get(i).getProductType() + "_" + goodsList.get(i).getCode() + "_" + goodsList.get(i).getAmount();
             }
         }
-
-
     }
 
     private void initView() {
@@ -264,13 +260,6 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         tvTip = (TextView) findViewById(R.id.tv_tip);
         tvFinalPrice = (TextView) findViewById(R.id.tv_price);
         tvPay = (TextView) findViewById(R.id.tv_pay);
-        setViewInfo();
-    }
-
-    private void setViewInfo(){
-        needExpress = false;
-        addressLayout.setVisibility(View.GONE);
-        selfDeliveryLayout.setVisibility(View.GONE);
 
         shopAdapter = new ConfirmOrderShopAdapter(this);
         rvGoods.setLayoutManager(new LinearLayoutManager(this));
@@ -278,17 +267,12 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         rvGoods.setAdapter(shopAdapter);
         shopAdapter.setData(shopBeanList);
         for (ShopBean shopBean : shopBeanList) {
-            if(shopBean.getItem() == null && shopBean.getItem().isEmpty()) {
-                continue;
-            }
             if (DELIVERY_EXPRESS.equals(shopBean.getPickUp().getType())) {
                 needExpress = true;
                 addressLayout.setVisibility(View.VISIBLE);
-                selfDeliveryLayout.setVisibility(View.GONE);
             } else {
                 tvTime.setText(days.get(0));
                 selfDeliveryLayout.setVisibility(View.VISIBLE);
-                addressLayout.setVisibility(View.GONE);
             }
         }
         tvTotalGoodsPrice.setRightContent(
@@ -341,10 +325,8 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onDeliveryTypeClick(int position) {
-        this.deliveryPosition = position;
-        Intent intent = new Intent(this, UpdateDeliveryInfoActivity.class);
-        intent.putExtra("shopBean", shopBeanList.get(position));
-        startActivityForResult(intent, REQUEST_UPDATE_DELIVERY);
+        UpdateDeliveryInfoActivity.start(this, (ArrayList<ShopBean>) shopBeanList, position);
+        finish();
     }
 
     private void payOrder() {
@@ -385,7 +367,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
         @Override
         public void onFree() {
-            startActivity(new Intent(ConfirmOrderActivity.this,PaySuccessActivity.class));
+            startActivity(new Intent(ConfirmOrderActivity.this, PaySuccessActivity.class));
             ToastGlobal.showLong("支付成功");
         }
     };
@@ -445,7 +427,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             } else if (requestCode == REQUEST_SELECT_COUPON) {
                 CouponBean couponBean = data.getParcelableExtra("coupon");
                 coupon = couponBean.getId();
-                if (FormatUtil.parseDouble(couponBean.getDiscount()) !=  -1) {
+                if (FormatUtil.parseDouble(couponBean.getDiscount()) != -1) {
                     tvCoupon.setText(String.format(getString(R.string.rmb_minus_price_double),
                             FormatUtil.parseDouble(couponBean.getDiscount())));
                 } else {
@@ -456,40 +438,6 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 double deliveryPrice = needExpress ? EXPRESS_PRICE : 0;
                 tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double),
                         totalGoodsPrice + deliveryPrice - FormatUtil.parseDouble(couponBean.getDiscount())));
-            }else if(requestCode == REQUEST_UPDATE_DELIVERY){
-                List<ShopBean> result = data.getParcelableArrayListExtra("shopList");
-                shopBeanList.remove(deliveryPosition);
-
-                //1.若已有该商店,将该商店商品挂载到其下
-                for (int i = 0; i < shopBeanList.size(); i++) {
-                    for (int j = 0; j < result.size(); j++) {
-                        if(shopBeanList.get(i).getPickUp().getInfo().getName()
-                                .equals(result.get(j).getPickUp().getInfo().getName())){
-                            shopBeanList.get(i).getItem().addAll(result.get(j).getItem());
-                        }
-                    }
-                }
-
-                //2.若没有改商店将该商店添加到商店列表
-                List<String> shopNames = new ArrayList<>();
-                for (int i = 0; i < shopBeanList.size(); i++) {
-                    shopNames.add(shopBeanList.get(i).getPickUp().getInfo().getName());
-                }
-                for (int i = 0; i < result.size(); i++) {
-                    if(!shopNames.contains(result.get(i).getPickUp().getInfo().getName())){
-                        shopBeanList.add(result.get(i));
-                    }
-                }
-
-                setViewInfo();
-                setListener();
-                if(needExpress) {
-                    bottomLayout.setVisibility(View.GONE);
-                    present.getDefaultAddress(switcherLayout);
-                }
-
-                //通知购物车刷新
-                setResult(RESULT_OK,null);
             }
         }
     }

@@ -89,6 +89,12 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
         setListener();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        cartHeaderView.pullToRefreshCartData();
+    }
+
     private void initView(){
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tvEdit = (TextView) findViewById(R.id.tv_edit);

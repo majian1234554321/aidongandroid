@@ -22,6 +22,7 @@ import com.leyuan.aidong.ui.mvp.presenter.CartPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CartPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.ICartHeaderView;
 import com.leyuan.aidong.utils.FormatUtil;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
@@ -52,7 +53,6 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
         this.reBuyIds = reBuyIds;
         cartPresent = new CartPresentImpl(context, this);
         initView();
-        cartPresent.commonLoadData(switcherLayout);
     }
 
     public CartHeaderView(Context context, AttributeSet attrs) {
@@ -198,7 +198,7 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
                 callback.onAllCheckedChanged(isAllShopChecked());
             }
         }else {
-            Toast.makeText(context,R.string.delete_fail,Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong(R.string.delete_fail);
         }
     }
 

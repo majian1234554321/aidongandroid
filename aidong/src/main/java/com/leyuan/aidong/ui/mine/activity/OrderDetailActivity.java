@@ -19,6 +19,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.mine.OrderParcelAdapter;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.ExpressBean;
+import com.leyuan.aidong.entity.ExpressListBean;
 import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.entity.OrderDetailBean;
 import com.leyuan.aidong.entity.ParcelBean;
@@ -27,6 +28,7 @@ import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.module.pay.SimplePayListener;
 import com.leyuan.aidong.module.pay.WeiXinPay;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.WebViewActivity;
 import com.leyuan.aidong.ui.mvp.presenter.OrderPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.OrderPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.OrderDetailActivityView;
@@ -62,7 +64,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
     private static final String PAID = "purchased";           //已支付
     private static final String FINISH = "confirmed";         //已确认
     private static final String CLOSE = "canceled";           //已关闭
-    private long ORDER_COUNTDOWN_MILL;
+    private long orderCountdownMill;
 
     private SimpleTitleBar titleBar;
     private SwitcherLayout switcherLayout;
@@ -139,7 +141,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_detail);
-        ORDER_COUNTDOWN_MILL = SystemInfoUtils.getOrderCountdown(this) * 60 * 1000;
+        orderCountdownMill = SystemInfoUtils.getOrderCountdown(this) * 60 * 1000;
         orderPresent = new OrderPresentImpl(this,this);
         if(getIntent() != null){
             orderId = getIntent().getStringExtra("orderId");
@@ -234,7 +236,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
         tvOrderNo.setText(String.format(getString(R.string.order_no),bean.getId()));
         tvOrderNo.setVisibility(UN_PAID.equals(bean.getStatus()) ? View.GONE : View.VISIBLE);
         timeLayout.setVisibility(UN_PAID.equals(bean.getStatus()) ? View.VISIBLE : View.GONE);
-        timer.start(DateUtils.getCountdown(bean.getCreatedAt(), ORDER_COUNTDOWN_MILL));
+        timer.start(DateUtils.getCountdown(bean.getCreatedAt(), orderCountdownMill));
 
         for (ParcelBean parcelBean : bean.getParcel()) {
             if(DELIVERY_EXPRESS.equals(parcelBean.getPickUpWay())){
@@ -258,6 +260,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
             tvRemarks.setRightContent(expressParcel.getRemark());
             rlExpress.setVisibility(PAID.equals(bean.getStatus()) || FINISH.equals(bean.getStatus())
                     ? View.VISIBLE : View.GONE);
+            orderPresent.getExpressInfo(orderId);
         }else {
             expressInfoLayout.setVisibility(View.GONE);
         }
@@ -346,6 +349,10 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
             case R.id.tv_rebuy:
                 orderPresent.reBuyOrder(orderId);
                 break;
+            case R.id.ll_express_info:
+                //todo h5
+                WebViewActivity.start(this,"快递信息","www.baidu.com");
+                break;
             default:
                 break;
         }
@@ -402,7 +409,12 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
 
     @Override
     public void getExpressInfoResult(ExpressBean expressBean) {
-
+        List<ExpressListBean> express = new ArrayList<>();
+        if(expressBean.getExpress() != null || !expressBean.getExpress().isEmpty()) {
+            express  = expressBean.getExpress();
+        }
+        tvExpressAddress.setText(express.get(0).getStatus());
+        tvExpressTime.setText(express.get(0).getTime());
     }
 
     @Override

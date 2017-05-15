@@ -65,7 +65,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:elevation="10dp"
             android:fadingEdgeLength="@dimen/dp_10"
             android:orientation="horizontal"
             android:paddingLeft="10dp">
