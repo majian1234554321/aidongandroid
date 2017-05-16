@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
+import com.leyuan.aidong.utils.DateUtils;
+import com.leyuan.aidong.utils.Logger;
 
 public class VideoDetail implements Parcelable {
     @SerializedName("id")
@@ -127,8 +129,20 @@ public class VideoDetail implements Parcelable {
     }
 
     public String getDuring() {
+        if (during != null) {
+            try {
+                double time = Double.parseDouble(during);
+                Logger.i(" vidoe time = " +time);
+                return DateUtils.duringToSecond(time);
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+
+        Logger.i(" vidoe getDuring = " +during);
         return during;
     }
+
 
     public void setDuring(String during) {
         this.during = during;

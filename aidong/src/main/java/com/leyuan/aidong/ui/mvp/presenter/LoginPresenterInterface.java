@@ -9,5 +9,7 @@ public interface LoginPresenterInterface {
 
     void autoLogin();
 
+    void exitLogin();
+
     void onActivityResultData(int requestCode, int resultCode, Intent data);
 }

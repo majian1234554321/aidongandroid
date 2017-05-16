@@ -11,4 +11,6 @@ public interface LoginModelInterface {
     void loginSns(Subscriber<LoginResult> subscriber, String sns, String access_token);
 
     void autoLogin(Subscriber<LoginResult> subscriber);
+
+    void exitLogin(Subscriber<LoginResult> subscriber);
 }

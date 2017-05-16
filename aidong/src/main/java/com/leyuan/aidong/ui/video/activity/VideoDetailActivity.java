@@ -30,6 +30,7 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VideoPresenterImpl;
 import com.leyuan.aidong.ui.mvp.view.VideoDetailView;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.FastBlur;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.media.TextViewPrintly;
@@ -255,7 +256,8 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
             case R.id.iv_reply:
                 if (videos != null && videos.size() > 0) {
                     VideoDetail detail_commont = videos.get(viewPager.getCurrentItem());
-                    VideoCommentActivity.newInstance(this, series_id, detail_commont.getPhase(), detail_commont.getVideoName());
+                    VideoCommentActivity.newInstance(this, series_id, detail_commont.getPhase(),
+                            detail_commont.getVideoName(), Constant.REQUEST_VIDEO_COMMENT);
                 }
 
                 //评论
@@ -404,7 +406,25 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        sharePopupWindow.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case Constant.REQUEST_VIDEO_COMMENT:
+                    int publishCommentNumber = data.getIntExtra(Constant.PUBLISH_COMMENT_NUMBER, 0);
+
+                    Logger.i(" publishCommentNumber onActivityResult  " +publishCommentNumber);
+                    VideoDetail detail_current = videos.get(viewPager.getCurrentItem());
+                    try {
+                        int oldCommentNum = Integer.parseInt(detail_current.getCommentsCount());
+                        detail_current.setCommentsCount(String.valueOf(oldCommentNum + publishCommentNumber));
+                        tv_reply_count.setText(detail_current.getCommentsCount());
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    break;
+            }
+        }
     }
 
     @Override

@@ -244,18 +244,19 @@ public class DateUtils {
             String weekOfDate = getWeekOfDate(date);
             SimpleDateFormat formatter = new SimpleDateFormat("MM月dd");
             String dateString = formatter.format(date);
-            dates.add(dateString+weekOfDate);
+            dates.add(dateString + weekOfDate);
         }
         return dates;
     }
 
     /**
      * 根据日期获得星期
+     *
      * @param date
      * @return
      */
     public static String getWeekOfDate(Date date) {
-        String[] weekDaysCode = { "(周日)", "(周一)", "(周二)", "(周三)", "(周四)", "(周五)", "(周六)" };
+        String[] weekDaysCode = {"(周日)", "(周一)", "(周二)", "(周三)", "(周四)", "(周五)", "(周六)"};
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         int intWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1;
@@ -289,5 +290,26 @@ public class DateUtils {
 
     public static long getCountdown(String date, long totalMilliseconds) {
         return getCountdown(date, yyyyMMddHHmmss, totalMilliseconds);
+    }
+
+    public static String duringToSecond(double time) {
+//        int minate = ((int) time / 60);
+        int second = (int) time;
+        int million = (int) ((time - (int) time) * 1000);
+        StringBuffer during = new StringBuffer();
+//        if (minate > 0) {
+//            during.append(minate + "M");
+//        }
+        if (second > 0) {
+            during.append(second + "'");
+        }
+
+        if (million > 0) {
+            during.append(million + "\"");
+        }
+
+        Logger.i(" vidoe duringToSecond = " + during.toString());
+
+        return during.toString();
     }
 }

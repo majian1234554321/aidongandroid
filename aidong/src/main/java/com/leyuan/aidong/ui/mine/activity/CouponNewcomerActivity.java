@@ -70,6 +70,7 @@ public class CouponNewcomerActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.layout_check_immediately:
                 UiManager.activityJump(this, CouponActivity.class);
+                finish();
                 break;
         }
     }

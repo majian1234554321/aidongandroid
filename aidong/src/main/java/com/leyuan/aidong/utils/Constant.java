@@ -36,6 +36,7 @@ public class Constant {
     public static final int REQUEST_UPDATE_DELIVERY =102 ;
     public static final int REQUEST_SETTLEMENT_CART =103 ;
     public static final int REQUEST_REFRESH_DYNAMIC = 104;
+    public static final int REQUEST_VIDEO_COMMENT = 105;
 
     public static final int DEFAULT_MAX_UPLOAD_IMAGE_COUNT = 6;        //上传照片数量限制
     public static final String FILE_FOLDER = "Aidong";
@@ -67,6 +68,7 @@ public class Constant {
     public static final String COURSE = "course";
     public static final String PUSH_CAMPAIGN = "push_campaign";
     public static final String PUBLISH_COMMENT_NUMBER = "publishCommentNumber";
+
 
     public static List<VenuesBean> gyms;
     public static SystemBean systemInfoBean;

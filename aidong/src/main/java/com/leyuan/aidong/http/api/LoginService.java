@@ -19,6 +19,9 @@ public interface LoginService {
     @POST("login/auto")
     Observable<BaseBean<LoginResult>> autoLogin();
 
+    @POST("login/release")
+    Observable<BaseBean<LoginResult>> exitLogin();
+
     @FormUrlEncoded
     @POST("login/sns")
     Observable<BaseBean<LoginResult>> loginSns(@Field("sns") String sns, @Field("code") String access_token

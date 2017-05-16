@@ -95,7 +95,7 @@ public class SelectCouponActivity extends BaseActivity implements SelectCouponAd
             double goodsPrice = FormatUtil.parseDouble(totalGoodsPrice);
             if (TextUtils.equals(couponBean.getMin(), Constant.NEGATIVE_ONE)) {
                 //新手指定优惠券
-                couponBean.setDiscount(String.valueOf((goodsPrice - discout > 0 ? goodsPrice - discout : 0)));
+                couponBean.setDiscount(String.valueOf((goodsPrice - discout )));
             } else {
                 couponBean.setDiscount(String.valueOf((goodsPrice - discout > 0 ? discout : goodsPrice)));
             }

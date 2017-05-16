@@ -62,13 +62,22 @@ public class VideoCommentActivity extends BaseActivity implements SwipeRefreshLa
     private VideoPresenterImpl presenter;
     private int publishCommentNumber;
 
-
     public static void newInstance(Activity context, int series_id, int phase, String videoName) {
         Bundle bundle = new Bundle();
         bundle.putInt(Constant.SEIRES_ID, series_id);
         bundle.putInt(Constant.PHASE, phase);
         bundle.putString(Constant.VIDEO_NAME, videoName);
         UiManager.activityJump(context, bundle, VideoCommentActivity.class);
+        context.overridePendingTransition(R.anim.slide_in_bottom, 0);
+    }
+
+
+    public static void newInstance(Activity context, int series_id, int phase, String videoName, int requestcode) {
+        Bundle bundle = new Bundle();
+        bundle.putInt(Constant.SEIRES_ID, series_id);
+        bundle.putInt(Constant.PHASE, phase);
+        bundle.putString(Constant.VIDEO_NAME, videoName);
+        UiManager.activityJumpForResult(context, bundle, VideoCommentActivity.class, requestcode);
         context.overridePendingTransition(R.anim.slide_in_bottom, 0);
     }
 
@@ -186,11 +195,13 @@ public class VideoCommentActivity extends BaseActivity implements SwipeRefreshLa
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         finishAnimation();
+//        super.onBackPressed();
+
     }
 
     private void finishAnimation() {
+        Logger.i(" publishCommentNumber  finishAnimation " +publishCommentNumber);
         if (publishCommentNumber > 0) {
             Intent intent = new Intent();
             intent.putExtra(Constant.PUBLISH_COMMENT_NUMBER, publishCommentNumber);
@@ -219,6 +230,7 @@ public class VideoCommentActivity extends BaseActivity implements SwipeRefreshLa
             publishCommentNumber++;
             page = 1;
             getData();
+            Logger.i("publishCommentNumber" +publishCommentNumber);
         }
     }
 

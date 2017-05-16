@@ -8,10 +8,11 @@ import com.leyuan.aidong.entity.model.result.LoginResult;
 import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
 import com.leyuan.aidong.module.thirdpartylogin.ThirdLoginUtils;
 import com.leyuan.aidong.ui.App;
-import com.leyuan.aidong.ui.mvp.model.impl.LoginModel;
 import com.leyuan.aidong.ui.mvp.model.LoginModelInterface;
+import com.leyuan.aidong.ui.mvp.model.impl.LoginModel;
 import com.leyuan.aidong.ui.mvp.presenter.LoginPresenterInterface;
 import com.leyuan.aidong.ui.mvp.view.LoginAutoView;
+import com.leyuan.aidong.ui.mvp.view.LoginExitView;
 import com.leyuan.aidong.ui.mvp.view.LoginViewInterface;
 import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.Logger;
@@ -24,6 +25,7 @@ public class LoginPresenter implements LoginPresenterInterface {
     private LoginModelInterface loginModel;
     //    private QQLogin qqLogin;
     private ThirdLoginUtils thirdLoginUtils;
+    private LoginExitView exitLoginListener;
 
     public LoginPresenter(Activity context, ThirdLoginUtils.OnThirdPartyLogin thirdLoginListner) {
         this.context = context;
@@ -33,6 +35,11 @@ public class LoginPresenter implements LoginPresenterInterface {
 //        qqLogin = new QQLogin((Activity) context, thirdPartyLoginListener);
     }
 
+    public LoginPresenter(Context context) {
+        this.context = context;
+        loginModel = new LoginModel();
+    }
+
 
     public void setLoginAutoListener(LoginAutoView loginAutoListener) {
         this.loginAutoListener = loginAutoListener;
@@ -40,6 +47,10 @@ public class LoginPresenter implements LoginPresenterInterface {
 
     public void setLoginViewInterface(LoginViewInterface loginViewInterface) {
         this.loginViewInterface = loginViewInterface;
+    }
+
+    public void setExitLoginListener(LoginExitView exitLoginListener) {
+        this.exitLoginListener = exitLoginListener;
     }
 
     @Override
@@ -123,6 +134,25 @@ public class LoginPresenter implements LoginPresenterInterface {
                 super.onError(e);
                 if (loginAutoListener != null)
                     loginAutoListener.onAutoLoginResult(false);
+            }
+        });
+
+    }
+
+    @Override
+    public void exitLogin() {
+        loginModel.exitLogin(new IsLoginSubscriber<LoginResult>(context) {
+            @Override
+            public void onNext(LoginResult user) {
+                if (exitLoginListener != null)
+                    exitLoginListener.onExitLoginResult(true);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                if (exitLoginListener != null)
+                    exitLoginListener.onExitLoginResult(false);
             }
         });
 

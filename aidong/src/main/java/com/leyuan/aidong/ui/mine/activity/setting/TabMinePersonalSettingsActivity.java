@@ -23,13 +23,14 @@ import com.leyuan.aidong.ui.mine.activity.BingdingCommunityActivity;
 import com.leyuan.aidong.ui.mine.activity.PrivacyActivity;
 import com.leyuan.aidong.ui.mine.activity.account.ChangePasswordActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
+import com.leyuan.aidong.ui.mvp.presenter.impl.LoginPresenter;
+import com.leyuan.aidong.ui.mvp.view.LoginExitView;
 import com.leyuan.aidong.utils.DataCleanManager;
-import com.leyuan.aidong.utils.MyDbUtils;
 import com.leyuan.aidong.utils.TelephoneManager;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.UiManager;
 
-public class TabMinePersonalSettingsActivity extends BaseActivity {
+public class TabMinePersonalSettingsActivity extends BaseActivity implements LoginExitView {
     private ImageView layout_tab_mine_personal_settings_title_img_back;
     private RelativeLayout layout_tab_mine_personal_settings_update_password_rel;
     private Intent intent;
@@ -47,11 +48,15 @@ public class TabMinePersonalSettingsActivity extends BaseActivity {
     private static final int CUSTOMERSERVICEPHONE = 1;
     private TextView settings_contactus_txt;
     private String mobile;
-//    private String mobile = "";
+    //    private String mobile = "";
+    private LoginPresenter loginPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loginPresenter = new LoginPresenter(this);
+        loginPresenter.setExitLoginListener(this);
+
         setupView();
         initData();
     }
@@ -209,11 +214,7 @@ public class TabMinePersonalSettingsActivity extends BaseActivity {
                                             DialogInterface dialo0g,
                                             int which) {
                                         loginOut();
-                                        intent.setClass(
-                                                TabMinePersonalSettingsActivity.this,
-                                                MainActivity.class);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        startActivity(intent);
+
                                     }
                                 });
                         builder.setNegativeButton("取消", null);
@@ -267,13 +268,10 @@ public class TabMinePersonalSettingsActivity extends BaseActivity {
 
 
     private void loginOut() {
-        try {
-            MyDbUtils.clearZanmap();
-            App.getInstance().exitLogin();
-            EmChatLoginManager.loginOut();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+        loginPresenter.exitLogin();
+
+
     }
 
     private void clean() {
@@ -288,5 +286,23 @@ public class TabMinePersonalSettingsActivity extends BaseActivity {
                     .setText(R.string.the_bound);
         }
         super.onActivityResult(request, result, arg2);
+    }
+
+    @Override
+    public void onExitLoginResult(boolean result) {
+        if (result) {
+
+//            try {
+//                MyDbUtils.clearZanmap();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+            App.getInstance().exitLogin();
+            EmChatLoginManager.loginOut();
+
+            Intent intent = new Intent(TabMinePersonalSettingsActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
     }
 }

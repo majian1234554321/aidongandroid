@@ -41,4 +41,11 @@ public class LoginModel implements LoginModelInterface {
                 .compose(RxHelper.<LoginResult>transform())
                 .subscribe(subscriber);
     }
+
+    @Override
+    public void exitLogin(Subscriber<LoginResult> subscriber) {
+        mLoginService.exitLogin()
+                .compose(RxHelper.<LoginResult>transform())
+                .subscribe(subscriber);
+    }
 }
