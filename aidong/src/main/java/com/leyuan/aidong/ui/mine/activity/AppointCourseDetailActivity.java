@@ -244,7 +244,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
         tvAiDou.setRightContent(String.format(getString(R.string.rmb_minus_price_double),
                 FormatUtil.parseDouble(bean.getPay().getIntegral())));
         tvTotalPrice.setRightContent(String.format(getString(R.string.rmb_price_double),
-                FormatUtil.parseDouble(bean.getPay().getPayAmount())));
+                FormatUtil.parseDouble(bean.getPay().getTotal())));
         tvStartTime.setRightContent(bean.getPay().getCreatedAt());
         timer.start(DateUtils.getCountdown(bean.getPay().getCreatedAt(), appointCountdownMill));
         tvPayType.setRightContent(PAY_ALI.equals(bean.getPay().getPayType())? "支付宝" : "微信");
