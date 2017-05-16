@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.home.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -58,6 +59,14 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
     private String businessCircle;
     private DeliveryBean deliveryBean;
 
+    public static void startForResult(Activity context,String goodsId,String goodsType,DeliveryBean bean,int requestCode) {
+        Intent starter = new Intent(context, SelfDeliveryVenuesActivity.class);
+        starter.putExtra("goodsId",goodsId);
+        starter.putExtra("goodsType",goodsType);
+        starter.putExtra("deliveryBean",bean);
+        context.startActivityForResult(starter,requestCode);
+    }
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

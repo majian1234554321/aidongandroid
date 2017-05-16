@@ -57,6 +57,7 @@ import static com.leyuan.aidong.utils.Constant.PAY_WEIXIN;
 import static com.leyuan.aidong.utils.Constant.REQUEST_ADD_ADDRESS;
 import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_ADDRESS;
 import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_COUPON;
+import static com.leyuan.aidong.utils.Constant.REQUEST_UPDATE_DELIVERY;
 import static com.leyuan.aidong.utils.Constant.SETTLEMENT_CART;
 import static com.leyuan.aidong.utils.Constant.SETTLEMENT_EQUIPMENT_IMMEDIATELY;
 import static com.leyuan.aidong.utils.Constant.SETTLEMENT_NURTURE_IMMEDIATELY;
@@ -117,20 +118,14 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private String integral;
     private String coin;
     private String coupon;
-    private
-    @PayType
-    String payType;
-    private
-    @DeliveryType
-    String pickUpWay;           //取货方式(0-快递 1-自提)
+    private @PayType String payType;
+    private @DeliveryType String pickUpWay;           //取货方式(0-快递 1-自提)
     private String pickUpId;                          //自提门店id或快递地址id
     private String pickUpDate;                        //自提时间
     private String defaultAddressId;
 
     private String couponType;
-    private
-    @SettlementType
-    String settlementType;
+    private @SettlementType String settlementType;
     private double totalGoodsPrice;
     private boolean needExpress = false;
 
@@ -210,7 +205,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             itemFromIdAmount = new String[goodsList.size()];
 
             for (int i = 0; i < goodsList.size(); i++) {
-                itemIds[i] = goodsList.get(i).getSkuCode();
+                itemIds[i] = goodsList.get(i).getId();
                 itemFromIdAmount[i] = couponType + "_" + goodsList.get(i).getSkuCode() + "_" + goodsList.get(i).getAmount();
             }
         } else {
@@ -228,7 +223,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             itemFromIdAmount = new String[goodsList.size()];
 
             for (int i = 0; i < goodsList.size(); i++) {
-                itemIds[i] = goodsList.get(i).getCode();
+                itemIds[i] = goodsList.get(i).getId();
                 itemFromIdAmount[i] = goodsList.get(i).getProductType() + "_" + goodsList.get(i).getCode() + "_" + goodsList.get(i).getAmount();
             }
         }
@@ -266,6 +261,14 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         rvGoods.setNestedScrollingEnabled(false);
         rvGoods.setAdapter(shopAdapter);
         shopAdapter.setData(shopBeanList);
+
+        setChangeViewInfo();
+    }
+
+    private void setChangeViewInfo(){
+        needExpress = false;
+        addressLayout.setVisibility(View.GONE);
+        selfDeliveryLayout.setVisibility(View.GONE);
         for (ShopBean shopBean : shopBeanList) {
             if (DELIVERY_EXPRESS.equals(shopBean.getPickUp().getType())) {
                 needExpress = true;
@@ -275,6 +278,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 selfDeliveryLayout.setVisibility(View.VISIBLE);
             }
         }
+
         tvTotalGoodsPrice.setRightContent(
                 String.format(getString(R.string.rmb_price_double), totalGoodsPrice));
         tvExpressPrice.setRightContent(
@@ -325,8 +329,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onDeliveryTypeClick(int position) {
-        UpdateDeliveryInfoActivity.start(this, (ArrayList<ShopBean>) shopBeanList, position);
-        finish();
+        UpdateDeliveryInfoActivity.startForResult(this, (ArrayList<ShopBean>) shopBeanList,position,REQUEST_UPDATE_DELIVERY);
     }
 
     private void payOrder() {
@@ -438,6 +441,16 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 double deliveryPrice = needExpress ? EXPRESS_PRICE : 0;
                 tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double),
                         totalGoodsPrice + deliveryPrice - FormatUtil.parseDouble(couponBean.getDiscount())));
+            }else if(requestCode == REQUEST_UPDATE_DELIVERY) {
+                shopBeanList = data.getParcelableArrayListExtra("shopList");
+                shopAdapter.setData(shopBeanList);
+                setChangeViewInfo();
+                if (needExpress) {
+                    bottomLayout.setVisibility(View.GONE);
+                    present.getDefaultAddress(switcherLayout);
+                }
+
+                setResult(RESULT_OK,null);
             }
         }
     }
