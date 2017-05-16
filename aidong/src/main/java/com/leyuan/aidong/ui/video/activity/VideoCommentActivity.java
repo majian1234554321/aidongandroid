@@ -30,6 +30,8 @@ import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.utils.UiManager;
 import com.leyuan.aidong.widget.CircleImageView;
+import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
+import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 
 import java.util.List;
 
@@ -58,6 +60,7 @@ public class VideoCommentActivity extends BaseActivity implements SwipeRefreshLa
     private int page;
 
     private VideoPresenterImpl presenter;
+    private int publishCommentNumber;
 
 
     public static void newInstance(Activity context, int series_id, int phase, String videoName) {
@@ -135,16 +138,24 @@ public class VideoCommentActivity extends BaseActivity implements SwipeRefreshLa
         video_detail_down_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-                overridePendingTransition(0, R.anim.slide_out_from_top);
+                finishAnimation();
             }
         });
         adapter = new VideoCommentAdapter(this);
         adapter.setOnItemClickListener(this);
+
+        HeaderAndFooterRecyclerViewAdapter wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(adapter);
         listView.setLayoutManager(new LinearLayoutManager(this));
-        listView.setAdapter(adapter);
+        listView.setAdapter(wrapperAdapter);
+        listView.addOnScrollListener(onScrollListener);
     }
 
+    private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener() {
+        @Override
+        public void onLoadNextPage(View view) {
+            getMoreData();
+        }
+    };
 
     private void getData() {
         page = 1;
@@ -153,7 +164,7 @@ public class VideoCommentActivity extends BaseActivity implements SwipeRefreshLa
 
     private void getMoreData() {
         page++;
-        presenter.getComments(series_id, phase, String.valueOf(page));
+        presenter.getMoreComments(series_id, phase, String.valueOf(page));
     }
 
 
@@ -176,9 +187,17 @@ public class VideoCommentActivity extends BaseActivity implements SwipeRefreshLa
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        finishAnimation();
+    }
+
+    private void finishAnimation() {
+        if (publishCommentNumber > 0) {
+            Intent intent = new Intent();
+            intent.putExtra(Constant.PUBLISH_COMMENT_NUMBER, publishCommentNumber);
+            setResult(RESULT_OK, intent);
+        }
         finish();
         overridePendingTransition(0, R.anim.slide_out_from_top);
-
     }
 
     @Override
@@ -197,9 +216,16 @@ public class VideoCommentActivity extends BaseActivity implements SwipeRefreshLa
     @Override
     public void onPostCommentResult(boolean success) {
         if (success) {
+            publishCommentNumber++;
             page = 1;
             getData();
         }
+    }
+
+    @Override
+    public void onGetMoreCommentList(List<CommentBean> comment) {
+        swipeLayout.setRefreshing(false);
+        adapter.addData(comment);
     }
 
     @Override

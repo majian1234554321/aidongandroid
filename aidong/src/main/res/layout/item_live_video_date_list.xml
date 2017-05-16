@@ -93,6 +93,7 @@
         android:id="@+id/img_bottom"
         android:layout_width="match_parent"
         android:layout_height="10dp"
+        android:src="@color/base_theme"
         android:visibility="gone" />
 
 </LinearLayout>

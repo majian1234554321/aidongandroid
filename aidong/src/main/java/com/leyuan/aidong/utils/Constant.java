@@ -65,6 +65,7 @@ public class Constant {
     public static final String ORDER = "order";
     public static final String COURSE = "course";
     public static final String PUSH_CAMPAIGN = "push_campaign";
+    public static final String PUBLISH_COMMENT_NUMBER = "publishCommentNumber";
 
     public static List<VenuesBean> gyms;
     public static SystemBean systemInfoBean;
