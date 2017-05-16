@@ -53,7 +53,7 @@ public class VideoCommentAdapter extends RecyclerView.Adapter<VideoCommentAdapte
         GlideLoader.getInstance().displayCircleImage(comment.getPublisher().getAvatar(), holder.img_avatar);
         holder.txt_user.setText("" + name);
         holder.txt_content.setText("" + comment.getContent());
-        holder.txt_time.setText("" + comment.getPublishedAt());
+        holder.txt_time.setText("" + comment.getCreated_at());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

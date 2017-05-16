@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CampaignDetailBean;
@@ -29,7 +28,6 @@ import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.ToastGlobal;
-import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.utils.UiManager;
 import com.leyuan.aidong.utils.constant.PayType;
 import com.leyuan.aidong.widget.CustomNestRadioGroup;
@@ -81,9 +79,7 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
 
     private String couponId;
     private float integral;
-    private
-    @PayType
-    String payType;
+    private @PayType String payType;
     private String userName;
     private String contactMobile;
 
@@ -108,7 +104,6 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
         }
         initView();
         setListener();
-//        campaignPresent.getSpecifyCampaignCoupon(bean.getCampaignId());
 
         campaignPresent.getCampaignAvailableCoupon(bean.getCampaignId());
     }
@@ -182,23 +177,15 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
                 break;
             case R.id.tv_coupon:
                 if (usableCoupons != null && !usableCoupons.isEmpty()) {
-
                     SelectCouponActivity.startForResult(this, bean.getPrice(), usableCoupons, REQUEST_SELECT_COUPON);
-
-//                    Intent intent = new Intent(this, SelectCouponActivity.class);
-//                    if (usableCoupons != null && usableCoupons instanceof ArrayList) {
-//                        intent.putParcelableArrayListExtra("couponList", (ArrayList<CouponBean>) usableCoupons);
-//                    }
-//                    intent.putExtra("totalPrice", bean.getPrice());
-//                    startActivityForResult(intent, REQUEST_SELECT_COUPON);
                 }
                 break;
             case R.id.tv_pay:
                 String userRealName = tvUserName.getText().toString().trim();
                 if (TextUtils.isEmpty(userRealName)) {
-                    ToastUtil.showShort(this, "姓名不能为空");
+                    ToastGlobal.showLong("姓名不能为空");
                 } else if (TextUtils.isEmpty(contactMobile)) {
-                    ToastUtil.showShort(this, "请先绑定手机");
+                    ToastGlobal.showLong("请先绑定手机");
                 } else {
                     campaignPresent.buyCampaign(bean.getCampaignId(), couponId, integral,
                             payType, userRealName, contactMobile, payListener);
@@ -213,7 +200,7 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
         @Override
         public void onSuccess(String code, Object object) {
             AppointSuccessActivity.start(AppointCampaignActivity.this, bean.getStartTime(), false);
-            Toast.makeText(AppointCampaignActivity.this, "支付成功", Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong("支付成功");
         }
 
         @Override
@@ -225,7 +212,7 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
         @Override
         public void onFree() {
             AppointSuccessActivity.start(AppointCampaignActivity.this, bean.getStartTime(), false);
-            ToastGlobal.showLong("支付成功");
+            ToastGlobal.showLong("预约成功");
         }
     };
 
@@ -258,7 +245,7 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
         if (data != null) {
             if (requestCode == REQUEST_SELECT_COUPON) {
                 CouponBean couponBean = data.getParcelableExtra("coupon");
-
+                couponId = couponBean.getId();
                 tvCoupon.setText(String.format(getString(R.string.rmb_minus_price_double),
                         FormatUtil.parseDouble(couponBean.getDiscount())));
                 tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double),

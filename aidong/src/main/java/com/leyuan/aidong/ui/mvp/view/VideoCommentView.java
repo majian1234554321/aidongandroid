@@ -11,4 +11,6 @@ public interface VideoCommentView {
     void onGetCommentList(List<CommentBean> comment);
 
     void onPostCommentResult(boolean success);
+
+    void onGetMoreCommentList(List<CommentBean> comment);
 }

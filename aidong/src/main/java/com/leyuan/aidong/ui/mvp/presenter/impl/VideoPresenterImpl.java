@@ -164,6 +164,26 @@ public class VideoPresenterImpl {
         }, series_id, phase, page);
     }
 
+
+    public void getMoreComments(String series_id, String phase, String page) {
+        videoModel.getComments(new ProgressSubscriber<CommentsVideoResult>(context) {
+            @Override
+            public void onNext(CommentsVideoResult commentsVideoResult) {
+                if (videoCommentView != null) {
+                    videoCommentView.onGetMoreCommentList(commentsVideoResult.getComment());
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                if (videoCommentView != null) {
+                    videoCommentView.onGetMoreCommentList(null);
+                }
+            }
+        }, series_id, phase, page);
+    }
+
     public void commentVideo(String content, String series_id, String video_id) {
         videoModel.addCommont(new ProgressSubscriber<Object>(context) {
             @Override
