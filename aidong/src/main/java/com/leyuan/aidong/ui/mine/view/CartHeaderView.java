@@ -53,7 +53,6 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
         this.reBuyIds = reBuyIds;
         cartPresent = new CartPresentImpl(context, this);
         initView();
-        cartPresent.commonLoadData(switcherLayout);
     }
 
     public CartHeaderView(Context context, AttributeSet attrs) {
@@ -76,7 +75,6 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
     }
 
     public void pullToRefreshCartData(){
-        reBuyIds.clear();
         cartPresent.pullToRefreshData();
         if(callback != null ){
             callback.onPriceAndSettlementCountChanged(0f,0);
@@ -111,6 +109,7 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
             }
         }
 
+        reBuyIds.clear();
         shopBeanList.clear();
         shopBeanList.addAll(list);
         shopAdapter.setData(shopBeanList);

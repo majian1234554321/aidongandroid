@@ -123,11 +123,11 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponHold
                     holder.tvTime.setText(String.format(context.getString(R.string.coupon_time),
                             bean.getStartDate(), bean.getEndDate()));
                 }
-                holder.itemView.setBackgroundResource(R.drawable.bg_coupon_fold);
+                holder.itemView.setBackgroundResource(R.drawable.bg_coupon_black_fold);
                 break;
             case USED:
                 holder.tvTime.setText(String.format(context.getString(R.string.coupon_used), bean.getEndDate()));
-                holder.itemView.setBackgroundResource(R.drawable.bg_coupon_fold_gray);
+                holder.itemView.setBackgroundResource(R.drawable.bg_coupon_gray_fold);
                 holder.tvRmbFlag.setTextColor(unvalidColor);
                 holder.tvCouponPrice.setTextColor(unvalidColor);
                 holder.tvName.setTextColor(unvalidColor);
@@ -145,7 +145,7 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponHold
                     holder.tvTime.setText(String.format(context.getString(R.string.coupon_time),
                             bean.getStartDate(), bean.getEndDate()));
                 }
-                holder.itemView.setBackgroundResource(R.drawable.bg_coupon_fold_gray);
+                holder.itemView.setBackgroundResource(R.drawable.bg_coupon_gray_fold);
                 holder.tvRmbFlag.setTextColor(unvalidColor);
                 holder.tvCouponPrice.setTextColor(unvalidColor);
                 holder.tvName.setTextColor(unvalidColor);

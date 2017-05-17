@@ -82,4 +82,6 @@
     <dimen name="media_margin">5dp</dimen>
     <dimen name="photo_wall_margin">5dp</dimen>
     <dimen name="corner_radius">2dp</dimen>
+
+    <dimen name="dialog_corners">5dp</dimen>
 </resources>

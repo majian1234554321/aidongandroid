@@ -5,6 +5,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
+import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -392,14 +396,16 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 CampaignDetailActivity.start(this,bean.getLinkId());
                 break;
             case R.id.dv_qr:
-               /* Intent intent = new Intent(this, BarCodeActivity.class);
+             /*   ivCode.animate().scaleXBy(2).setDuration(500).start();
+                ivCode.animate().scaleYBy(2).setDuration(500).start();
+                ivCode.animate().rotationBy(90).setDuration(500).start();*/
+
+                Intent intent = new Intent(this, BarcodeActivity.class);
                 intent.putExtra("code", bean.getId());
-                final Pair<View, String>[] pairs = TransitionHelper.
-                        createSafeTransitionParticipants(this, false);
-                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.
-                        makeSceneTransitionAnimation(this, pairs);
-                startActivity(intent,optionsCompat.toBundle());*/
-                BarCodeActivity.start(this,bean.getId());
+                Pair participants = new Pair<>(ivCode, ViewCompat.getTransitionName(ivCode));
+                ActivityOptionsCompat transitionActivityOptions =
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(this, participants);
+                ActivityCompat.startActivity(this, intent, transitionActivityOptions.toBundle());
                 break;
             default:
                 break;

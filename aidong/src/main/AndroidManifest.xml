@@ -389,6 +389,11 @@
         <activity
             android:name=".ui.video.activity.WatchOfficeActivity"
             android:screenOrientation="portrait" />
+
+        <activity android:name=".ui.mine.activity.NewBarcodeActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
         <activity
             android:name=".ui.video.activity.VideoDetailActivity"
             android:screenOrientation="portrait" />
@@ -397,7 +402,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.video.activity.LiveDetailActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.home.AdvertisementActivity"
             android:screenOrientation="portrait" />
@@ -477,8 +482,9 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.mine.activity.BarCodeActivity"
-            android:screenOrientation="landscape" />
+            android:name=".ui.mine.activity.BarcodeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ImageTranslucentTheme"/>
 
         <activity
             android:name=".ui.home.activity.AppointSuccessActivity"

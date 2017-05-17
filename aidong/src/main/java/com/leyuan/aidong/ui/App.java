@@ -108,11 +108,7 @@ public class App extends MultiDexApplication {
         BoxingCrop.getInstance().init(new BoxingUCrop());
     }
 
-    @Override
-    public void onTrimMemory(int level) {
-        super.onTrimMemory(level);
-        ToastGlobal.showShort("onTrimMemory");
-    }
+
 
     private void initBaiduLoc() {
         mLocationClient = new LocationClient(getApplicationContext());

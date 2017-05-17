@@ -29,11 +29,11 @@ import cn.iwgang.countdownview.CountdownView;
 public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.AppointmentHolder> {
     private static final String UN_PAID = "pending";         //待付款
     private static final String UN_JOIN = "purchased";        //待参加
-    private static final String JOINED = "confirmed";        //已参加
-    private static final String CLOSE = "canceled";          //已关闭
+    private static final String JOINED = "signed";          //已参加
+    public static final String CLOSE = "canceled";          //已关闭
     private static final String REFUNDING = "refunding";     //退款中
     private static final String REFUNDED = "refunded";       //已退款
-    private long APPOINT_COUNTDOWN_MILL;
+    private long appointCountdownMill;
 
     private Context context;
     private List<AppointmentBean> data = new ArrayList<>();
@@ -41,7 +41,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
     public AppointmentAdapter(Context context) {
         this.context = context;
-        APPOINT_COUNTDOWN_MILL = SystemInfoUtils.getAppointmentCountdown(context)  * 60 * 1000;
+        appointCountdownMill = SystemInfoUtils.getAppointmentCountdown(context)  * 60 * 1000;
     }
 
     public void setData(List<AppointmentBean> data) {
@@ -63,7 +63,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     }
 
     @Override
-    public void onBindViewHolder(AppointmentHolder holder, int position) {
+    public void onBindViewHolder(AppointmentHolder holder, final int position) {
         final AppointmentBean bean = data.get(position);
 
         //与订单状态无关
@@ -72,8 +72,6 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         holder.address.setText(bean.getSubName());
         holder.price.setText(String.format(context.getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.getPay_amount())));
-        holder.timer.start(DateUtils.getCountdown(bean.getCreated_at(), APPOINT_COUNTDOWN_MILL));
-
         //与订单状态有关
         if (TextUtils.isEmpty(bean.getStatus())) return;
         switch (bean.getStatus()) {
@@ -87,6 +85,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                 holder.tvCancelJoin.setVisibility(View.GONE);
                 holder.tvDelete.setVisibility(View.GONE);
                 holder.tvConfirm.setVisibility(View.GONE);
+                holder.timer.start(DateUtils.getCountdown(bean.getCreated_at(), appointCountdownMill));
                 break;
             case UN_JOIN:           //待参加
                 holder.state.setText(context.getString(R.string.appointment_un_joined));
@@ -95,7 +94,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                         bean.getStart()));
                 holder.date.setVisibility(View.VISIBLE);
                 holder.timerLayout.setVisibility(View.GONE);
-                holder.tvCancelJoin.setVisibility(FormatUtil.parseInt(bean.getPay_amount()) == 0
+                holder.tvCancelJoin.setVisibility(FormatUtil.parseDouble(bean.getPay_amount()) == 0d
                         ? View.VISIBLE : View.GONE);
                 holder.tvConfirm.setVisibility(View.VISIBLE);
                 holder.tvPay.setVisibility(View.GONE);
@@ -185,7 +184,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             @Override
             public void onClick(View v) {
                 if (appointmentListener != null) {
-                    appointmentListener.onConfirmJoin(bean.getId());
+                    appointmentListener.onConfirmJoin(position);
                 }
             }
         });
@@ -212,7 +211,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             @Override
             public void onEnd(CountdownView cv) {
                 if(appointmentListener != null){
-                    appointmentListener.onRefreshAppointStatus();
+                    appointmentListener.onCountdownEnd(position);
                 }
             }
         });
@@ -264,10 +263,10 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
         void onDeleteOrder(String id);
 
-        void onConfirmJoin(String id);
+        void onConfirmJoin(int position);
 
         void onCancel(String id);
 
-        void onRefreshAppointStatus();
+        void onCountdownEnd(int position);
     }
 }

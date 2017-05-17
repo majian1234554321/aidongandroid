@@ -5,7 +5,7 @@
     android:layout_marginLeft="@dimen/left_margin"
     android:layout_marginRight="@dimen/right_margin"
     android:layout_marginTop="15dp"
-    android:background="@drawable/bg_coupon_fold">
+    android:background="@drawable/bg_coupon_black_fold">
 
     <LinearLayout
         android:id="@+id/ll_price"

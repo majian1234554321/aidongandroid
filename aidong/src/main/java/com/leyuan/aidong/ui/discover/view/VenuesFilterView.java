@@ -330,6 +330,7 @@ public class VenuesFilterView extends LinearLayout implements View.OnClickListen
         isPopupShowing = false;
         resetBrandStatus();
         resetBusinessCircleStatus();
+        resetTypeStatus();
         maskBgView.setVisibility(View.GONE);
         ObjectAnimator.ofFloat(contentLayout, "translationY", 0, -panelHeight).setDuration(200).start();
     }

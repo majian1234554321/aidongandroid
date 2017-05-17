@@ -20,6 +20,8 @@ import com.leyuan.aidong.ui.mvp.presenter.AppointmentPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.AppointmentPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointmentFragmentView;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.DateUtils;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
@@ -153,8 +155,17 @@ public class AppointmentFragment extends BaseLazyFragment implements Appointment
         }
 
         @Override
-        public void onConfirmJoin(String id) {
-            present.confirmAppoint(id);
+        public void onConfirmJoin(int position) {
+            AppointmentBean bean = data.get(position);
+            if(DateUtils.bigThanOneHour(bean.getStart())) {
+                if("course".equals(bean.getAppointmentType())) {
+                    ToastGlobal.showLong("未到课程时间，请稍后确认");
+                }else {
+                    ToastGlobal.showLong("未到活动时间，请稍后确认");
+                }
+            }else {
+                present.confirmAppoint(bean.getId());
+            }
         }
 
         @Override
@@ -163,8 +174,10 @@ public class AppointmentFragment extends BaseLazyFragment implements Appointment
         }
 
         @Override
-        public void onRefreshAppointStatus() {
-            present.commonLoadData(type);
+        public void onCountdownEnd(int position) {
+            AppointmentBean appointmentBean = data.get(position);
+            appointmentBean.setStatus(AppointmentAdapter.CLOSE);
+            appointmentAdapter.notifyDataSetChanged();
         }
     }
 

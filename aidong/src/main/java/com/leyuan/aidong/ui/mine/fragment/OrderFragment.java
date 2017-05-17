@@ -19,6 +19,7 @@ import com.leyuan.aidong.ui.mvp.presenter.OrderPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.OrderPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.OrderFragmentView;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -174,19 +175,20 @@ public class OrderFragment extends BaseLazyFragment implements OrderFragmentView
 
         @Override
         public void onConfirmOrder(String id) {
-//            present.cancelOrder(id);
             present.confirmOrder(id);
         }
 
 
         @Override
-        public void onBuyAgain(String id) {
+        public void onReBuyOrder(String id) {
             present.reBuyOrder(id);
         }
 
         @Override
-        public void onRefreshOrderStatus() {
-            present.commonLoadData(type);
+        public void onCountdownEnd(int position) {
+            OrderBean orderBean = data.get(position);
+            orderBean.setStatus(OrderAdapter.CLOSED);
+            orderAdapter.notifyDataSetChanged();
         }
     }
 
@@ -201,7 +203,7 @@ public class OrderFragment extends BaseLazyFragment implements OrderFragmentView
             present.commonLoadData(type);
             Toast.makeText(getContext(),"取消成功",Toast.LENGTH_LONG).show();
         }else {
-            Toast.makeText(getContext(),"取消失败" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong(baseBean.getMessage());
         }
     }
 
@@ -211,7 +213,7 @@ public class OrderFragment extends BaseLazyFragment implements OrderFragmentView
             present.commonLoadData(type);
             Toast.makeText(getContext(),"确认成功",Toast.LENGTH_LONG).show();
         }else {
-            Toast.makeText(getContext(),"确认失败" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong(baseBean.getMessage());
         }
     }
 
@@ -221,7 +223,7 @@ public class OrderFragment extends BaseLazyFragment implements OrderFragmentView
             present.commonLoadData(type);
             Toast.makeText(getContext(),"删除成功",Toast.LENGTH_LONG).show();
         }else {
-            Toast.makeText(getContext(),"删除失败" + baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong(baseBean.getMessage());
         }
     }
 }
