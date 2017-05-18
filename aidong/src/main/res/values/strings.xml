@@ -251,4 +251,8 @@
     <string name="all_circle">全部商圈</string>
     <string name="new_cusmor_exclusive">新用户专享</string>
     <string name="check_immediately">立即查看</string>
+    <string name="login_success">登陆成功</string>
+    <string name="login_chat_success">登陆聊天服务器成功</string>
+    <string name="login_chat_faile">登陆聊天服务器失败</string>
+    <string name="register_success">注册成功</string>
 </resources>

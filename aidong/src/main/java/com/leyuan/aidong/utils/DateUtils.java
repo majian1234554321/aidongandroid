@@ -18,6 +18,7 @@ public class DateUtils {
      */
     public static final String yyyyMMDD = "yyyy-MM-dd";
     public static final String yyyyMMddHHmmss = "yyyy-MM-dd HH:mm:ss";
+    public static final String yyyyMMddHHmm = "yyyy-MM-dd HH:mm";
     public static final String HHmmss = "HH:mm:ss";
     public static final String hhmmss = "HH:mm:ss";
     public static final String LOCALE_DATE_FORMAT = "yyyy年M月d日 HH:mm:ss";
@@ -280,9 +281,15 @@ public class DateUtils {
         long countdown = 0;
         Date d = parseDate(date, parseType);
         if (d != null)
-            countdown = totalMilliseconds - (System.currentTimeMillis() - d.getTime()) + 5 * 1000; //延迟5s刷新状态(会引起最后几秒支付失败)
-//        Logger.i("countdown", "countdown = " + countdown + ", totalMilliseconds = " + totalMilliseconds
-//                + ", date = " + date + ", d.getTime() = " + d.getTime() + ", currentTimeMillis = " + System.currentTimeMillis());
+            countdown = totalMilliseconds - (System.currentTimeMillis() - d.getTime());
+        long during = System.currentTimeMillis() - d.getTime();
+        Logger.i("countdown", "countdown = " + countdown
+                + ", totalMilliseconds = " + totalMilliseconds
+                + ", date = " + date
+                + ", during = " + during
+                + ", d.getTime() = " + d.getTime()
+                + ", currentTimeMillis = " + System.currentTimeMillis())
+        ;
         if (countdown < 0)
             countdown = 0;
         return countdown;
@@ -311,5 +318,14 @@ public class DateUtils {
         Logger.i(" vidoe duringToSecond = " + during.toString());
 
         return during.toString();
+    }
+
+    public static boolean bigThanOneHour(String date) {
+        Date d = parseDate(date, yyyyMMddHHmm);
+        if (d != null) {
+            return d.getTime() - System.currentTimeMillis() > 3600 * 1000l;
+        } else {
+            return false;
+        }
     }
 }

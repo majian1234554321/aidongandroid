@@ -8,8 +8,7 @@ import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.mvp.model.UserInfoModel;
 import com.leyuan.aidong.ui.mvp.model.impl.UserInfoModelImpl;
 import com.leyuan.aidong.ui.mvp.view.MineInfoView;
-
-import retrofit2.http.HEAD;
+import com.leyuan.aidong.ui.mvp.view.OnRequestResponseCallBack;
 
 /**
  * Created by user on 2017/3/23.
@@ -18,6 +17,7 @@ public class MineInfoPresenterImpl {
     private Context context;
     private MineInfoView view;
     private UserInfoModel model;
+    private OnRequestResponseCallBack callBack;
 
     public Context getContext() {
         return context;
@@ -42,7 +42,23 @@ public class MineInfoPresenterImpl {
                     view.onGetMineInfo(mineInfoBean);
                 }
                 App.getInstance().saveMineInfoBean(mineInfoBean);
+                if(callBack!=null){
+                    callBack.onRequestResponse();
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                if(callBack!=null){
+                    callBack.onRequestResponse();
+                }
             }
         });
+    }
+
+    public void setOnRequestResponse(OnRequestResponseCallBack callBack) {
+        this.callBack = callBack;
+
     }
 }

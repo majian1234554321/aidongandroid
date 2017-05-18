@@ -75,10 +75,10 @@
 
     <string name="status_appoint">马上预约</string>
     <string name="status_appoint_end">预约已结束</string>
-    <string name="status_appointed">已预约查看详情</string>
+    <string name="status_appointed">已预约 查看详情</string>
     <string name="status_full">预约人数已满</string>
     <string name="status_not_start">即将开始预约</string>
-    <string name="status_not_pay">待支付</string>
+    <string name="status_not_pay">待支付(已预约)</string>
     <string name="status_not_need">无需预约</string>
     <string name="status_course_end">课程已结束</string>
 
@@ -87,7 +87,7 @@
     <string name="campaign_status_applied">已报名查看详情</string>
     <string name="campaign_status_not_start">即将开始报名</string>
     <string name="campaign_status_not_pay">待支付</string>
-    <string name="campaign_status_full">报名人数已满</string>#
+    <string name="campaign_status_full">报名人数已满</string>
     <string name="campaign_appoint_end">报名已结束</string>
 
     <string name="food_material">主要食材: %1$s</string>
@@ -180,5 +180,7 @@
     <string name="rationale_camera_and_audio">App需要使用相机和录音权限才能拍照和录像，请授予该权限</string>
 
     <string name="transition_home">transition_home</string>
-
+    <string name="transition_code">transition_code</string>
+    <string name="transition_code_num">transition_code_num</string>
+    <string name="transition_morph_view" translatable="false">morph_view_transition</string>
 </resources>

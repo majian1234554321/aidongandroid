@@ -142,8 +142,8 @@ public class CourseFilterView extends LinearLayout implements View.OnClickListen
                 hidePopup();
                 if (onFilterClickListener != null) {
                     //全部课程类型返回空
-                    onFilterClickListener.onCategoryItemClick(context.getString(R.string.course_all_type).equals(categoryList.get(position).getId())
-                            ? "" : categoryList.get(position).getId());
+                    onFilterClickListener.onCategoryItemClick(context.getString(R.string.course_all_type).equals(categoryList.get(position).getName())
+                            ? "" : categoryList.get(position).getName());
                 }
             }
         });

@@ -28,7 +28,7 @@ import java.util.List;
  * Created by song on 2016/8/19.
  */
 public class PastCampaignActivity extends BaseActivity implements CampaignFragmentView {
-    private static final String type = "history";
+    private static final String TYPE = "history";
     private SimpleTitleBar titleBar;
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
@@ -44,13 +44,12 @@ public class PastCampaignActivity extends BaseActivity implements CampaignFragme
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_past_campaign);
-        pageSize = 10;
         campaignActivityPresent = new CampaignPresentImpl(this,this);
 
         initTop();
         initSwipeRefreshLayout();
         initRecyclerView();
-        campaignActivityPresent.commonLoadData(switcherLayout,type);
+        campaignActivityPresent.commonLoadData(switcherLayout, TYPE);
     }
 
     private void initTop(){
@@ -72,7 +71,7 @@ public class PastCampaignActivity extends BaseActivity implements CampaignFragme
             public void onRefresh() {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-                campaignActivityPresent.pullToRefreshData(type);
+                campaignActivityPresent.pullToRefreshData(TYPE);
             }
         });
     }
@@ -92,7 +91,7 @@ public class PastCampaignActivity extends BaseActivity implements CampaignFragme
         public void onLoadNextPage(View view) {
             currPage ++;
             if (data != null && data.size() >= pageSize) {
-                campaignActivityPresent.requestMoreData(recyclerView,pageSize,currPage,type);
+                campaignActivityPresent.requestMoreData(recyclerView,pageSize,currPage, TYPE);
             }
         }
     };
@@ -110,7 +109,9 @@ public class PastCampaignActivity extends BaseActivity implements CampaignFragme
 
     @Override
     public void showEmptyView() {
-        switcherLayout.showEmptyLayout();
+        View view = View.inflate(this,R.layout.empty_campaign,null);
+        switcherLayout.addCustomView(view,"empty");
+        switcherLayout.showCustomLayout("empty");
     }
 
     @Override

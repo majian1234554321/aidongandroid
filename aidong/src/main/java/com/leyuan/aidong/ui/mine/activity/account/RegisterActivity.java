@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.mine.activity.account;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
@@ -12,15 +13,24 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.CouponBean;
+import com.leyuan.aidong.entity.ProfileBean;
 import com.leyuan.aidong.entity.model.UserCoach;
+import com.leyuan.aidong.module.ChatLoginService;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.WebViewActivity;
 import com.leyuan.aidong.ui.mine.activity.CouponNewcomerActivity;
 import com.leyuan.aidong.ui.mvp.presenter.RegisterPresenterInterface;
+import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
+import com.leyuan.aidong.ui.mvp.presenter.impl.MineInfoPresenterImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.RegisterPresenter;
+import com.leyuan.aidong.ui.mvp.presenter.impl.SystemPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.RegisterViewInterface;
+import com.leyuan.aidong.ui.mvp.view.RequestCountInterface;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DialogUtils;
+import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.utils.RequestResponseCount;
 import com.leyuan.aidong.utils.StringUtils;
 import com.leyuan.aidong.utils.TimeCountUtil;
 import com.leyuan.aidong.utils.ToastGlobal;
@@ -30,8 +40,10 @@ import com.leyuan.aidong.widget.DialogImageIdentify;
 
 import java.util.ArrayList;
 
+import static com.leyuan.aidong.ui.App.context;
 
-public class RegisterActivity extends BaseActivity implements View.OnClickListener, RegisterViewInterface {
+
+public class RegisterActivity extends BaseActivity implements View.OnClickListener, RegisterViewInterface, RequestCountInterface {
 
     private CommonTitleLayout layoutTitle;
     private TextView txtProtocol;
@@ -41,6 +53,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private String mobile;
     private String code;
     private String password;
+    private ArrayList<CouponBean> coupons;
 //    private String re_password;
 
     @Override
@@ -99,7 +112,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             case R.id.button_register:
                 if (verifyEdit()) {
                     presenter.checkIdentifyRegister(App.getInstance().getToken(), code, password);
-                    presenter.checkIdentify(App.mInstance.getToken(), code, password);
+//                    presenter.checkIdentify(App.mInstance.getToken(), code, password);
                 }
                 break;
             case R.id.txt_protocol:
@@ -151,7 +164,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     public void onGetIdentifyCode(boolean success) {
         DialogUtils.dismissDialog();
         if (success) {
-            ToastUtil.showShort(App.context, "验证码已发送,请查看");
+            ToastUtil.showShort(context, "验证码已发送,请查看");
             if (mDialogImageIdentify != null && mDialogImageIdentify.isShowing()) {
                 mDialogImageIdentify.dismiss();
             }
@@ -166,7 +179,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void register(boolean success) {
-        //在onRegisterResult里面做处理
+        //改为在onRegisterResult里面做处理
 //        DialogUtils.dismissDialog();
 //        if (success) {
 //            ToastGlobal.showShort("注册成功");
@@ -195,15 +208,26 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     public void onRegisterResult(UserCoach user, ArrayList<CouponBean> coupons) {
 
         DialogUtils.dismissDialog();
-//        if (user != null) {
-//            DialogUtils.showDialog(this, "", false);
-//            chatLoginManager.login(String.valueOf(user.getId()));
-//            new MineInfoPresenterImpl(this).getMineInfo();
-//            new FollowPresentImpl(this).getFollowList();            //登录成功后需要获取关注列表
-//            new SystemPresentImpl(this).getSystemInfo("android");   //登录成功后需要刷新配置(课程视频提示需要更新)
-//        }
-        if (coupons != null && !coupons.isEmpty()) {
-            CouponNewcomerActivity.start(this, coupons);
+        this.coupons = coupons;
+
+        if (user != null) {
+            DialogUtils.showDialog(this, "", false);
+
+            ChatLoginService.startService(this, String.valueOf(user.getId()));
+
+            RequestResponseCount requestResponse = new RequestResponseCount(this);
+
+            MineInfoPresenterImpl mineInfoPresenter = new MineInfoPresenterImpl(this);
+            mineInfoPresenter.setOnRequestResponse(requestResponse);
+            mineInfoPresenter.getMineInfo();
+
+            FollowPresentImpl followPresent = new FollowPresentImpl(this);
+            followPresent.setOnRequestResponse(requestResponse);
+            followPresent.getFollowList();
+
+            SystemPresentImpl systemPresent = new SystemPresentImpl(this);
+            systemPresent.setOnRequestResponse(requestResponse);
+            systemPresent.getSystemInfo("android");
         }
 
     }
@@ -233,5 +257,35 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     protected void onDestroy() {
         super.onDestroy();
         DialogUtils.releaseDialog();
+    }
+
+    @Override
+    public void onRequestCount(int requestCount) {
+        Logger.i("requestCount = " + requestCount);
+        Logger.i("requestCount = " + requestCount);
+        if (requestCount >= 3) {
+            DialogUtils.dismissDialog();
+            finishSelf();
+        }
+    }
+
+    private void finishSelf() {
+        ToastGlobal.showShort(R.string.register_success);
+
+        if (coupons != null && !coupons.isEmpty()) {
+            Intent intentCoupon = new Intent(this, CouponNewcomerActivity.class);
+            intentCoupon.putExtra("coupons", coupons);
+
+            Intent intentCompletUser = new Intent(this, CompleteUserInfoActivity.class);
+            intentCompletUser.putExtra("profileBean", new ProfileBean());
+
+            startActivities(new Intent[]{intentCoupon, intentCompletUser});
+        } else {
+            CompleteUserInfoActivity.start(this, new ProfileBean());
+        }
+
+//        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_REGISTER_SUCCESS));
+        sendBroadcast(new Intent(Constant.BROADCAST_ACTION_REGISTER_SUCCESS));
+        finish();
     }
 }

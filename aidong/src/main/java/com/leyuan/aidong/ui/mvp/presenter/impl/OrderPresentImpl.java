@@ -78,7 +78,6 @@ public class OrderPresentImpl implements OrderPresent {
                 if (orderData != null && orderData.getOrder() != null) {
                     orderBeanList = orderData.getOrder();
                 }
-
                 if (orderBeanList.isEmpty()) {
                     orderFragmentView.showEmptyView();
                 } else {

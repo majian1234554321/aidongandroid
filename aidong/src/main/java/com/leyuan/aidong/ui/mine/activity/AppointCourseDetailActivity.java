@@ -255,7 +255,8 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
                 tvState.setText(context.getString(R.string.un_paid));
                 //timer.start(Long.parseLong(bean.getPayInfo().getLimitTime()) * 1000);
                 timerLayout.setVisibility(View.VISIBLE);
-                tvOrderNo.setVisibility(View.GONE);
+                tvOrderNo.setVisibility(View.VISIBLE);
+                tvOrderNo.setText(String.format(getString(R.string.appoint_no), bean.getId()));
                 tvCancelPay.setVisibility(View.VISIBLE);
                 tvPay.setVisibility(View.VISIBLE);
                 tvDelete.setVisibility(View.GONE);

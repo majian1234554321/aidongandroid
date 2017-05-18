@@ -25,7 +25,6 @@ import com.leyuan.aidong.utils.ForegroundCallbacks;
 import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.SharePrefUtils;
-import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.VersionManager;
 import com.squareup.leakcanary.LeakCanary;
 
@@ -108,11 +107,7 @@ public class App extends MultiDexApplication {
         BoxingCrop.getInstance().init(new BoxingUCrop());
     }
 
-    @Override
-    public void onTrimMemory(int level) {
-        super.onTrimMemory(level);
-        ToastGlobal.showShort("onTrimMemory");
-    }
+
 
     private void initBaiduLoc() {
         mLocationClient = new LocationClient(getApplicationContext());

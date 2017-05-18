@@ -74,9 +74,9 @@ public class SelectCouponAdapter extends RecyclerView.Adapter<SelectCouponAdapte
         holder.tvProduce.setText(bean.getLimitCategory());
 
         if(bean.getId().equals(selectedCouponId)){
-            holder.itemView.setBackgroundResource(R.drawable.bg_coupon_red);
+            holder.itemView.setBackgroundResource(R.drawable.bg_coupon_red_fold);
         }else {
-            holder.itemView.setBackgroundResource(R.drawable.bg_coupon_fold);
+            holder.itemView.setBackgroundResource(R.drawable.bg_coupon_black_fold);
         }
 
 

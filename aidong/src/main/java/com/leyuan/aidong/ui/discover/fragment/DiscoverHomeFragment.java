@@ -106,7 +106,7 @@ public class DiscoverHomeFragment extends BaseFragment implements SmartTabLayout
         @Override
         public void onClick(View v) {
             if(App.mInstance.isLogin()) {
-                new MaterialDialog.Builder(getContext())
+               new MaterialDialog.Builder(getContext())
                         .items(R.array.mediaType)
                         .itemsCallback(new MaterialDialog.ListCallback() {
                             @Override
@@ -117,8 +117,7 @@ public class DiscoverHomeFragment extends BaseFragment implements SmartTabLayout
                                     takeVideo();
                                 }
                             }
-                        })
-                        .show();
+                        }).show();
             }else {
                 ToastGlobal.showLong("请先登陆再来发帖");
                 startActivity(new Intent(getContext(), LoginActivity.class));

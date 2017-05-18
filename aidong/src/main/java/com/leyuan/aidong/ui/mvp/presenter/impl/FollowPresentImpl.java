@@ -16,6 +16,7 @@ import com.leyuan.aidong.ui.mvp.presenter.FollowPresent;
 import com.leyuan.aidong.ui.mvp.view.AppointmentUserActivityView;
 import com.leyuan.aidong.ui.mvp.view.FollowFragmentView;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.RequestResponseCount;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
@@ -32,6 +33,7 @@ public class FollowPresentImpl implements FollowPresent {
     private FollowFragmentView followFragment;
     private List<UserBean> userBeanList = new ArrayList<>();
     private AppointmentUserActivityView appointmentUserActivityView;
+    private RequestResponseCount requestResponse;
 
     public FollowPresentImpl(Context context) {
         this.context = context;
@@ -59,6 +61,19 @@ public class FollowPresentImpl implements FollowPresent {
                 if(followData != null ){
                     Constant.followData = followData;
                     SystemInfoUtils.putSystemInfoBean(context,followData,SystemInfoUtils.KEY_FOLLOW);
+                }
+                if(requestResponse != null){
+                    requestResponse.onRequestResponse();
+                }
+
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                if(requestResponse != null){
+                    requestResponse.onRequestResponse();
                 }
             }
         },"followings",Constant.PAGE_FIRST);
@@ -150,5 +165,9 @@ public class FollowPresentImpl implements FollowPresent {
                 }
             }
         },id);
+    }
+
+    public void setOnRequestResponse(RequestResponseCount requestResponse) {
+        this.requestResponse = requestResponse;
     }
 }

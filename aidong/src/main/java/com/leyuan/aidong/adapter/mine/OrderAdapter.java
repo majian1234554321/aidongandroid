@@ -33,7 +33,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
     private static final String UN_PAID = "pending";            //待付款
     private static final String PAID = "purchased";             //已支付
     private static final String FINISHED = "confirmed";         //已完成
-    private static final String CLOSED = "canceled";            //已关闭
+    public static final String CLOSED = "canceled";             //已关闭
     private long orderCountdownMill;
 
     private Context context;
@@ -61,7 +61,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
     }
 
     @Override
-    public void onBindViewHolder(OrderHolder holder, int position) {
+    public void onBindViewHolder(OrderHolder holder, final int position) {
         final OrderBean bean = data.get(position);
 
         //与订单状态无关
@@ -193,7 +193,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
             @Override
             public void onClick(View v) {
                 if(orderListener != null){
-                    orderListener.onBuyAgain(bean.getId());
+                    orderListener.onReBuyOrder(bean.getId());
                 }
             }
         });
@@ -211,7 +211,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
             @Override
             public void onEnd(CountdownView cv) {
                 if(orderListener != null){
-                    orderListener.onRefreshOrderStatus();
+                    orderListener.onCountdownEnd(position);
                 }
             }
         });
@@ -221,7 +221,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
         TextView state;                 //订单状态
         TextView tvOrderId;             //订单号
         LinearLayout timerLayout;       //剩余支付时间
-        CountdownView timer;    //剩余支付时间
+        CountdownView timer;            //剩余支付时间
         RecyclerView recyclerView;      //商品
         TextView count;                 //商品数量
         TextView payTip;                //实付款或者需付款
@@ -261,7 +261,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
         void onCancelOrder(String id);
         void onDeleteOrder(String id);
         void onConfirmOrder(String id);
-        void onBuyAgain(String id);
-        void onRefreshOrderStatus();
+        void onReBuyOrder(String id);
+        void onCountdownEnd(int position);
     }
 }

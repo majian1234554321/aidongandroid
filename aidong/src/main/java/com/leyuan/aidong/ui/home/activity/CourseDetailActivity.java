@@ -248,7 +248,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 break;
             case STATUS_APPOINTED:
                 tvStartTime.setVisibility(View.GONE);
-                tvBottomPrice.setVisibility(View.VISIBLE);
+                tvBottomPrice.setVisibility(View.GONE);
                 tvState.setText(R.string.status_appointed);
                 bottomLayout.setBackgroundColor(Color.parseColor("#000000"));
                 break;

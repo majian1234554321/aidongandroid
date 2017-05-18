@@ -16,6 +16,7 @@ import com.leyuan.aidong.ui.mvp.presenter.SystemPresent;
 import com.leyuan.aidong.ui.mvp.view.SplashView;
 import com.leyuan.aidong.ui.mvp.view.SystemView;
 import com.leyuan.aidong.utils.LogAidong;
+import com.leyuan.aidong.utils.RequestResponseCount;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class SystemPresentImpl implements SystemPresent {
     private SystemModel systemModel;
     private SystemView systemView;
     private SplashView splashView;
+    private RequestResponseCount requestResponse;
 
     public SystemPresentImpl(Context context) {
         this.context = context;
@@ -67,6 +69,10 @@ public class SystemPresentImpl implements SystemPresent {
 
                 if (splashView != null) {
                     splashView.onGetStartingBanner(null);
+                }
+
+                if(requestResponse != null){
+                    requestResponse.onRequestResponse();
                 }
             }
 
@@ -127,9 +133,16 @@ public class SystemPresentImpl implements SystemPresent {
                             }
                         }
                     }
+                    if (splashView != null){
+                        splashView.onGetStartingBanner(startingUpBanner);
+                    }
 
-                    splashView.onGetStartingBanner(startingUpBanner);
                     LogAidong.i("mLocationClient   SystemInfoUtils.putSystemInfoBean");
+
+                    if(requestResponse != null){
+                        requestResponse.onRequestResponse();
+                    }
+
                 }
             }
         }, os);
@@ -213,5 +226,9 @@ public class SystemPresentImpl implements SystemPresent {
 //                LogAidong.i("mLocationClient   SystemInfoUtils.putSystemInfoBean");
             }
         }, os);
+    }
+
+    public void setOnRequestResponse(RequestResponseCount requestResponse) {
+        this.requestResponse = requestResponse;
     }
 }

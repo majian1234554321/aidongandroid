@@ -16,9 +16,21 @@
   -->
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/bg_coupon_red"
-        android:state_pressed="true" />
-    <item android:drawable="@drawable/bg_coupon_red"
-        android:state_selected="true" />
-    <item android:drawable="@drawable/bg_coupon_black_fold" />
+
+    <item android:state_enabled="true" android:state_pressed="true">
+        <shape>
+            <corners android:radius="5dp" />
+
+            <solid android:color="@color/line_color"/>
+            <stroke android:color="@color/black"  android:width="0.5dp"/>
+        </shape>
+    </item>
+
+    <item android:state_enabled="false" android:state_pressed="false">
+        <shape>
+            <solid android:color="@color/white" />
+            <stroke android:color="@color/black" android:width="0.5dp"/>
+            <corners android:radius="5dp" />
+        </shape>
+    </item>
 </selector>

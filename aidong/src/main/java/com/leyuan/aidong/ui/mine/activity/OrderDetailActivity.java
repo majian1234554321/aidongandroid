@@ -215,7 +215,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
         tvReBuy.setOnClickListener(this);
         payGroup.setOnCheckedChangeListener(this);
         timer.setOnCountdownEndListener(this);
-
+        rlExpress.setOnClickListener(this);
     }
 
     @Override
@@ -256,9 +256,12 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
             tvPhone.setRightContent(expressParcel.getMobile());
             tvAddress.setRightContent(expressParcel.getAddress());
             tvRemarks.setRightContent(expressParcel.getRemark());
-            rlExpress.setVisibility(PAID.equals(bean.getStatus()) || FINISH.equals(bean.getStatus())
-                    ? View.VISIBLE : View.GONE);
-            orderPresent.getExpressInfo(orderId);
+            if(PAID.equals(bean.getStatus()) || FINISH.equals(bean.getStatus())){
+                orderPresent.getExpressInfo(orderId);
+                rlExpress.setVisibility(View.VISIBLE);
+            }else{
+                rlExpress.setVisibility(View.GONE);
+            }
         }else {
             expressInfoLayout.setVisibility(View.GONE);
         }
@@ -347,9 +350,9 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
             case R.id.tv_rebuy:
                 orderPresent.reBuyOrder(orderId);
                 break;
-            case R.id.ll_express_info:
+            case R.id.rl_express:
                 //todo h5
-                WebViewActivity.start(this,"快递信息","www.baidu.com");
+                WebViewActivity.start(this,"快递信息","http://www.baidu.com");
                 break;
             default:
                 break;
@@ -428,7 +431,6 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
                 break;
         }
     }
-
 
     @Override
     public void onEnd(CountdownView cv) {

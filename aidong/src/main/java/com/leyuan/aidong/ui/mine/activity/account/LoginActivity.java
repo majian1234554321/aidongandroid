@@ -12,6 +12,7 @@ import android.widget.EditText;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.entity.model.UserCoach;
+import com.leyuan.aidong.module.ChatLoginService;
 import com.leyuan.aidong.module.chat.manager.EmChatLoginManager;
 import com.leyuan.aidong.module.chat.manager.EmChatRegisterManager;
 import com.leyuan.aidong.module.thirdpartylogin.ThirdLoginUtils;
@@ -22,17 +23,20 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.LoginPresenter;
 import com.leyuan.aidong.ui.mvp.presenter.impl.MineInfoPresenterImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SystemPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.LoginViewInterface;
+import com.leyuan.aidong.ui.mvp.view.RequestCountInterface;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.utils.RequestResponseCount;
 import com.leyuan.aidong.utils.StringUtils;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.utils.UiManager;
 
 import java.util.ArrayList;
 
 
-public class LoginActivity extends BaseActivity implements View.OnClickListener, LoginViewInterface, EmChatLoginManager.OnLoginListner, EmChatRegisterManager.OnChatRegisterCallback, ThirdLoginUtils.OnThirdPartyLogin {
+public class LoginActivity extends BaseActivity implements View.OnClickListener, LoginViewInterface, EmChatLoginManager.OnLoginListner, EmChatRegisterManager.OnChatRegisterCallback, ThirdLoginUtils.OnThirdPartyLogin, RequestCountInterface {
 
     private static final String TAG = "LoginActivity";
     private LoginPresenter loginPresenter;
@@ -42,6 +46,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private EmChatLoginManager chatLoginManager;
     private EmChatRegisterManager chatRegisterManager;
     private LocalReceiver receiver;
+    private ArrayList<CouponBean> coupons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +70,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         intentFilter.addAction(Constant.WX_LOGIN_SUCCESS_ACTION);
         receiver = new LocalReceiver();
         registerReceiver(receiver, intentFilter);
+
+        IntentFilter registerFilter = new IntentFilter();
+        registerFilter.addAction(Constant.BROADCAST_ACTION_REGISTER_SUCCESS);
+        registerReceiver(registerReceiver, registerFilter);
     }
 
     @Override
@@ -133,17 +142,33 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     @Override
     public void loginResult(UserCoach user, ArrayList<CouponBean> coupons) {
         DialogUtils.dismissDialog();
+        this.coupons = coupons;
+
         if (user != null) {
             DialogUtils.showDialog(this, "", false);
-            chatLoginManager.login(String.valueOf(user.getId()));
-            setResult(RESULT_OK, null);
-            new MineInfoPresenterImpl(this).getMineInfo();
-            new FollowPresentImpl(this).getFollowList();            //登录成功后需要获取关注列表
-            new SystemPresentImpl(this).getSystemInfo("android");   //登录成功后需要刷新配置(课程视频提示需要更新)
+            ChatLoginService.startService(this, String.valueOf(user.getId()));
+
+//            chatLoginManager.login(String.valueOf(user.getId()));
+//            new MineInfoPresenterImpl(this).getMineInfo();
+//            new FollowPresentImpl(this).getFollowList();            //登录成功后需要获取关注列表
+//            new SystemPresentImpl(this).getSystemInfo("android");   //登录成功后需要刷新配置(课程视频提示需要更新)
+
+            RequestResponseCount requestResponse = new RequestResponseCount(this);
+
+            MineInfoPresenterImpl mineInfoPresenter = new MineInfoPresenterImpl(this);
+            mineInfoPresenter.setOnRequestResponse(requestResponse);
+            mineInfoPresenter.getMineInfo();
+
+            FollowPresentImpl followPresent = new FollowPresentImpl(this);
+            followPresent.setOnRequestResponse(requestResponse);
+            followPresent.getFollowList();
+
+            SystemPresentImpl systemPresent = new SystemPresentImpl(this);
+            systemPresent.setOnRequestResponse(requestResponse);
+            systemPresent.getSystemInfo("android");
         }
-        if (coupons != null && !coupons.isEmpty()) {
-            CouponNewcomerActivity.start(this, coupons);
-        }
+
+
 //        new CouponPresentImpl(this, new CouponFragmentView() {
 //            @Override
 //            public void updateRecyclerView(List<CouponBean> couponBeanList) {
@@ -225,7 +250,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         if (chatRegisterManager != null)
             chatRegisterManager.release();
         unregisterReceiver(receiver);
+        unregisterReceiver(registerReceiver);
         receiver = null;
+        registerReceiver = null;
     }
 
     @Override
@@ -233,6 +260,33 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         DialogUtils.showDialog(this, "", true);
         loginPresenter.loginSns(sns, code);
     }
+
+    @Override
+    public void onRequestCount(int requestCount) {
+        Logger.i("requestCount = " + requestCount);
+        if (requestCount >= 3) {
+            DialogUtils.dismissDialog();
+            finishSelf();
+        }
+
+    }
+
+    private void finishSelf() {
+        if (coupons != null && !coupons.isEmpty()) {
+            CouponNewcomerActivity.start(this, coupons);
+        }
+
+        ToastGlobal.showShort(R.string.login_success);
+        setResult(RESULT_OK, null);
+        finish();
+    }
+
+    private BroadcastReceiver registerReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            finish();
+        }
+    };
 
     public class LocalReceiver extends BroadcastReceiver {
 

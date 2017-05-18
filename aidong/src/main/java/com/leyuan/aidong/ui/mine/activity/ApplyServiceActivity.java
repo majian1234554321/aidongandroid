@@ -21,7 +21,6 @@ import com.leyuan.aidong.module.photopicker.boxing.Boxing;
 import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
 import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
 import com.leyuan.aidong.module.photopicker.boxing_impl.ui.BoxingActivity;
-import com.leyuan.aidong.module.photopicker.boxing_impl.view.SpacesItemDecoration;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.ToastGlobal;
@@ -92,12 +91,9 @@ public class ApplyServiceActivity extends BaseActivity implements View.OnClickLi
         selectedMedia = new ArrayList<>();
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
         recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.addItemDecoration(new SpacesItemDecoration(
-                getResources().getDimensionPixelOffset(R.dimen.media_margin), 3));
+        recyclerView.setNestedScrollingEnabled(false);
         mediaAdapter = new PublishDynamicAdapter();
         recyclerView.setAdapter(mediaAdapter);
-
-
     }
 
     private void setListener() {
@@ -135,14 +131,6 @@ public class ApplyServiceActivity extends BaseActivity implements View.OnClickLi
                 }
 
                 ApplyServiceNextActivity.startForResult(this, orderId, type, items, content, selectedMedia);
-
-                break;
-
-            case R.id.iv_minus:
-
-
-                break;
-            case R.id.iv_add:
 
                 break;
             case R.id.tv_return:

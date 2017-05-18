@@ -31,7 +31,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.leyuan.aidong.utils.Constant.RECOMMEND_CART;
-import static com.leyuan.aidong.utils.Constant.REQUEST_SETTLEMENT_CART;
 
 
 /**
@@ -67,6 +66,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
 
     private List<String> reBuyIds = new ArrayList<>();
 
+    //再次购买
     public static void start(Context context,List<String> reBuyIds) {
         Intent starter = new Intent(context, CartActivity.class);
         starter.putStringArrayListExtra("reBuyIds", (ArrayList<String>) reBuyIds);
@@ -89,6 +89,12 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
         setListener();
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        cartHeaderView.pullToRefreshCartData();
+    }
 
     private void initView(){
         ivBack = (ImageView) findViewById(R.id.iv_back);
@@ -218,15 +224,5 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
         cartHeaderView.showRecommendText(!isEditing);
         recommendAdapter.setData(isEditing ? emptyRecommendList : recommendList);
         wrapperAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK){
-            if(requestCode == REQUEST_SETTLEMENT_CART){
-                cartHeaderView.pullToRefreshCartData();
-            }
-        }
     }
 }

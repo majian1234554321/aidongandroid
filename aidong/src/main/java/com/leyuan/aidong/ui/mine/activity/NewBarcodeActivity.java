@@ -16,19 +16,19 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.QRCodeUtil;
 import com.leyuan.aidong.utils.ScreenUtil;
-import com.leyuan.aidong.utils.Utils;
 
 /**
- * 条形码界面
- * Created by song on 2017/5/15.
+ * 条形码
+ * Created by song on 2017/5/17.
  */
-public class BarcodeActivity extends BaseActivity{
+public class NewBarcodeActivity extends BaseActivity{
+
+    private String code;
     private TextView tvCode;
     private ImageView ivCode;
-    private String code;
 
     public static void start(Context context,String code) {
-        Intent starter = new Intent(context, BarcodeActivity.class);
+        Intent starter = new Intent(context, NewBarcodeActivity.class);
         starter.putExtra("code",code);
         context.startActivity(starter);
     }
@@ -36,28 +36,22 @@ public class BarcodeActivity extends BaseActivity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bar_code);
+        setContentView(R.layout.activity_bar_code_new);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Transition transitionFadeFast = TransitionInflater.from(this).inflateTransition(R.transition.fade_fast);
+            Transition transitionFadeFast =
+                    TransitionInflater.from(this).inflateTransition(R.transition.fade_fast);
             getWindow().setEnterTransition(transitionFadeFast);
         }
-        if(getIntent() != null){
-            code = getIntent().getStringExtra("code");
-        }
+
         tvCode = (TextView) findViewById(R.id.tv_code);
         ivCode = (ImageView) findViewById(R.id.iv_code);
+        if(getIntent() != null){
+             code = getIntent().getStringExtra("code");
+        }
+
         tvCode.setText(code);
         int width = ScreenUtil.getScreenHeight(this) - DensityUtil.dp2px(this,200);
         Bitmap barcode = QRCodeUtil.createBarcode(this, 0xFF000000, code, width, DensityUtil.dp2px(this, 125), false);
-        Bitmap bitmap = Utils.rotateBitmap(barcode, 90);
-        ivCode.setImageBitmap(bitmap);
-
- /*       ivCode.animate().scaleYBy(0.5f).setDuration(1).start();
-        ivCode.animate().scaleXBy(0.5f).setDuration(1).start();
-        ivCode.animate().rotation(-90).setDuration(1).start();
-        ivCode.setVisibility(View.VISIBLE);
-        ivCode.animate().scaleYBy(1f).setDuration(300).start();
-        ivCode.animate().scaleXBy(1f).setDuration(300).start();
-        ivCode.animate().rotation(90).setDuration(300).start();*/
+        ivCode.setImageBitmap(barcode);
     }
 }

@@ -434,7 +434,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 couponId = couponBean.getId();
                 tvCoupon.setText(FormatUtil.parseDouble(couponBean.getDiscount()) != 0
                         ? String.format(getString(R.string.rmb_minus_price_double),
-                        FormatUtil.parseDouble(couponBean.getDiscount())) : getString(R.string.please_choose));
+                        FormatUtil.parseDouble(couponBean.getDiscount())) : getString(R.string.please_select));
                 tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double),
                         FormatUtil.parseDouble(couponBean.getDiscount())));
                 double deliveryPrice = needExpress ? expressPrice : 0;
@@ -448,8 +448,6 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                     bottomLayout.setVisibility(View.GONE);
                     present.getDefaultAddress(switcherLayout);
                 }
-
-                setResult(RESULT_OK,null);
             }
         }
     }
