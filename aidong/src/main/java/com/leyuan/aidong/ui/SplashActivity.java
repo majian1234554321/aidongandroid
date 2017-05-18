@@ -11,18 +11,18 @@ import com.hyphenate.chat.EMClient;
 import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.entity.VersionInformation;
 import com.leyuan.aidong.ui.home.AdvertisementActivity;
-import com.leyuan.aidong.ui.mvp.presenter.FollowPresent;
-import com.leyuan.aidong.ui.mvp.presenter.SystemPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.MineInfoPresenterImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SplashPresenterImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SystemPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VersionPresenterImpl;
 import com.leyuan.aidong.ui.mvp.view.LoginAutoView;
+import com.leyuan.aidong.ui.mvp.view.RequestCountInterface;
 import com.leyuan.aidong.ui.mvp.view.SplashView;
 import com.leyuan.aidong.ui.mvp.view.VersionViewListener;
-import com.leyuan.aidong.utils.LogAidong;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.PermissionManager;
+import com.leyuan.aidong.utils.RequestResponseCount;
 import com.leyuan.aidong.utils.SharePrefUtils;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.UiManager;
@@ -34,13 +34,13 @@ import com.leyuan.aidong.widget.dialog.DialogDoubleButton;
 import com.leyuan.aidong.widget.dialog.DialogSingleButton;
 
 //todo fix
-public class SplashActivity extends BaseActivity implements VersionViewListener, LoginAutoView, SplashView {
+public class SplashActivity extends BaseActivity implements VersionViewListener, LoginAutoView, SplashView, RequestCountInterface {
 
     private static final int MESSAGE = 1;
     private static final int DURATION = 2000;
     private static final String OS = "android";
     private boolean isFirstEnter = true;
-    private static int httpRequestIndex;
+    private int httpRequestIndex;
     private BannerBean startingBanner;
 
     private SplashPresenterImpl splashPresenter;
@@ -88,27 +88,50 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
     }
 
     private void initData() {
-        versionPresenter.getVersionInfo();
-
-        SystemPresent systemPresent = new SystemPresentImpl(this);
-        systemPresent.setSplashView(this);
-        systemPresent.getSystemInfo(OS);
-        LogAidong.i("mLocationClient   systemPresent.getSystemInfo(OS);");
 
         App.getInstance().startLocation();
         isFirstEnter = SharePrefUtils.getBoolean(SplashActivity.this, "isFirstEnter", true);
         EMClient.getInstance().chatManager().loadAllConversations();
 
+        RequestResponseCount requestResponse = new RequestResponseCount(this);
+
+        SystemPresentImpl systemPresent = new SystemPresentImpl(this);
+        systemPresent.setOnRequestResponse(requestResponse);
+        systemPresent.getSystemInfo("android");
+        httpRequestIndex = 1;
         if (App.getInstance().isLogin()) {
-            FollowPresent followPresent = new FollowPresentImpl(this);  //获取关注列表
+
+            SplashPresenterImpl splashPresenter = new SplashPresenterImpl(this);
+            splashPresenter.setOnRequestResponse(requestResponse);
+            splashPresenter.autoLogin();
+
+            MineInfoPresenterImpl mineInfoPresenter = new MineInfoPresenterImpl(this);
+            mineInfoPresenter.setOnRequestResponse(requestResponse);
+            mineInfoPresenter.getMineInfo();
+
+            FollowPresentImpl followPresent = new FollowPresentImpl(this);
+            followPresent.setOnRequestResponse(requestResponse);
             followPresent.getFollowList();
-            new MineInfoPresenterImpl(this).getMineInfo();
+            httpRequestIndex = 4;
         }
+
+
+//        versionPresenter.getVersionInfo();
+//
+//        SystemPresent systemPresent = new SystemPresentImpl(this);
+//        systemPresent.setSplashView(this);
+//        systemPresent.getSystemInfo(OS);
+//        LogAidong.i("mLocationClient   systemPresent.getSystemInfo(OS);");
+//        if (App.getInstance().isLogin()) {
+//            FollowPresent followPresent = new FollowPresentImpl(this);  //获取关注列表
+//            followPresent.getFollowList();
+//            new MineInfoPresenterImpl(this).getMineInfo();
+//        }
     }
 
     @Override
     public void onGetVersionInfo(VersionInformation versionInfomation) {
-        httpRequestIndex++;
+//        httpRequestIndex++;
         this.versionInfomation = versionInfomation;
         if (versionInfomation != null && VersionManager.shouldUpdate(versionInfomation.getVersion(), this)) {
             showUpdateDialog(versionInfomation);
@@ -132,7 +155,7 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
     @Override
     public void onGetStartingBanner(BannerBean banner) {
         this.startingBanner = banner;
-        httpRequestIndex++;
+//        httpRequestIndex++;
     }
 
 
@@ -204,8 +227,17 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
     protected void onDestroy() {
         super.onDestroy();
         handler.removeCallbacksAndMessages(null);
-        httpRequestIndex = 0;
+//        httpRequestIndex = 0;
     }
 
 
+    @Override
+    public void onRequestCount(int requestCount) {
+
+        Logger.i("requestCount = " + requestCount);
+        if (requestCount >= httpRequestIndex) {
+            handler.removeCallbacksAndMessages(null);
+            handler.sendEmptyMessageDelayed(MESSAGE, DURATION);
+        }
+    }
 }

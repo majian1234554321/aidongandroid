@@ -9,6 +9,7 @@ import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.mvp.model.impl.LoginModel;
 import com.leyuan.aidong.ui.mvp.view.LoginAutoView;
 import com.leyuan.aidong.utils.PermissionManager;
+import com.leyuan.aidong.utils.RequestResponseCount;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +23,7 @@ public class SplashPresenterImpl {
     private Activity context;
     private LoginAutoView loginAutoListener;
     private PermissionManager permissionManager;
+    private RequestResponseCount requestResponse;
 
     public SplashPresenterImpl(Activity context) {
         this.context = context;
@@ -39,6 +41,10 @@ public class SplashPresenterImpl {
                 App.mInstance.setUser(user.getUser());
                 if (loginAutoListener != null)
                     loginAutoListener.onAutoLoginResult(true);
+
+                if (requestResponse != null) {
+                    requestResponse.onRequestResponse();
+                }
             }
 
             @Override
@@ -46,6 +52,10 @@ public class SplashPresenterImpl {
                 super.onError(e);
                 if (loginAutoListener != null)
                     loginAutoListener.onAutoLoginResult(false);
+
+                if (requestResponse != null) {
+                    requestResponse.onRequestResponse();
+                }
             }
         });
 
@@ -66,5 +76,9 @@ public class SplashPresenterImpl {
 
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         permissionManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    public void setOnRequestResponse(RequestResponseCount requestResponse) {
+        this.requestResponse = requestResponse;
     }
 }
