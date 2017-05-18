@@ -59,7 +59,6 @@ public class Constant {
     public static final String OS = "android";
     public static final String OS_TYPE = "andriod";
     public static final String BROADCAST_ACTION_SELECTED_CITY = "com.leyuan.chat.selected_city";
-    public static final Double EXPRESS_PRICE = 15d;
     public static final CharSequence NEGATIVE_ONE = "-1";
     public static final String TOTAL_GOODS_PRICE = "total_goods_price";
     public static final String COUPON_LIST = "coupon_list";

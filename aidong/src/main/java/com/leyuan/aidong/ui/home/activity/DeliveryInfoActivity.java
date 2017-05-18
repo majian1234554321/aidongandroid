@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -39,6 +40,7 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
     private String goodsId;
     private String goodsType;
     private DeliveryBean deliveryBean;
+    private String gymId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,7 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
             goodsId = getIntent().getStringExtra("goodsId");
             goodsType = getIntent().getStringExtra("goodsType");
             deliveryBean = getIntent().getParcelableExtra("deliveryBean");
+            gymId = deliveryBean.getInfo().getId();
         }
         initView();
         setListener();
@@ -69,8 +72,6 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
             }else {
                 setSelfDeliverySelected();
             }
-            tvVenuesName.setText(deliveryBean.getInfo().getName());
-            tvVenuesAddress.setText(deliveryBean.getInfo().getAddress());
         }
     }
 
@@ -120,6 +121,7 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
         tvExpress.setBackgroundResource(R.drawable.shape_solid_corner_black);
         tvSelfDelivery.setBackgroundResource(R.drawable.shape_solid_corner_white);
         deliveryLayout.setVisibility(View.GONE);
+        deliveryBean.getInfo().setId(null);
         deliveryBean.setType(DELIVERY_EXPRESS);
     }
 
@@ -131,6 +133,15 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
         tvSelfDelivery.setBackgroundResource(R.drawable.shape_solid_corner_black);
         deliveryLayout.setVisibility(View.VISIBLE);
         deliveryBean.setType(DELIVERY_SELF);
+        if(TextUtils.isEmpty(gymId)){
+            tvVenuesName.setText(getString(R.string.please_select));
+            tvVenuesAddress.setVisibility(View.GONE);
+        }else {
+            deliveryBean.getInfo().setId(gymId);
+            tvVenuesName.setText(deliveryBean.getInfo().getName());
+            tvVenuesAddress.setText(deliveryBean.getInfo().getAddress());
+            tvVenuesAddress.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -139,7 +150,9 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
             VenuesBean venuesBean = data.getParcelableExtra("venues");
             tvVenuesName.setText(venuesBean.getName());
             tvVenuesAddress.setText(venuesBean.getAddress());
+            tvVenuesAddress.setVisibility(View.VISIBLE);
             deliveryBean.setInfo(venuesBean);
+            gymId = venuesBean.getId();
         }
     }
 }

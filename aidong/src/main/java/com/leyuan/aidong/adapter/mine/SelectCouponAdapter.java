@@ -26,14 +26,17 @@ public class SelectCouponAdapter extends RecyclerView.Adapter<SelectCouponAdapte
     private Context context;
     private List<CouponBean> data = new ArrayList<>();
     private CouponListener couponListener;
+    private String selectedCouponId;
+
 
     public SelectCouponAdapter(Context context) {
         this.context = context;
     }
 
-    public void setData(List<CouponBean> data) {
+    public void setData(List<CouponBean> data,String selectedCouponId) {
         if (data != null) {
             this.data = data;
+            this.selectedCouponId = selectedCouponId;
             notifyDataSetChanged();
         }
     }
@@ -69,6 +72,12 @@ public class SelectCouponAdapter extends RecyclerView.Adapter<SelectCouponAdapte
 
         holder.tvCouponType.setText(bean.getCoupon_type());
         holder.tvProduce.setText(bean.getLimitCategory());
+
+        if(bean.getId().equals(selectedCouponId)){
+            holder.itemView.setBackgroundResource(R.drawable.bg_coupon_red);
+        }else {
+            holder.itemView.setBackgroundResource(R.drawable.bg_coupon_fold);
+        }
 
 
 //        //与优惠券类型有关 折扣劵,满减劵

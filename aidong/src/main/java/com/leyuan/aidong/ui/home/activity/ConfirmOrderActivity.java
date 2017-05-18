@@ -33,6 +33,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.ConfirmOrderPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.ConfirmOrderActivityView;
 import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.FormatUtil;
+import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.constant.DeliveryType;
 import com.leyuan.aidong.utils.constant.PayType;
@@ -49,7 +50,6 @@ import static com.leyuan.aidong.utils.Constant.COUPON_CART;
 import static com.leyuan.aidong.utils.Constant.COUPON_EQUIPMENT;
 import static com.leyuan.aidong.utils.Constant.COUPON_NUTRITION;
 import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
-import static com.leyuan.aidong.utils.Constant.EXPRESS_PRICE;
 import static com.leyuan.aidong.utils.Constant.GOODS_EQUIPMENT;
 import static com.leyuan.aidong.utils.Constant.GOODS_NUTRITION;
 import static com.leyuan.aidong.utils.Constant.PAY_ALI;
@@ -128,6 +128,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private @SettlementType String settlementType;
     private double totalGoodsPrice;
     private boolean needExpress = false;
+    private Double expressPrice = 15d;
 
     private ConfirmOrderPresent present;
 
@@ -164,6 +165,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         payType = PAY_ALI;
         days = DateUtils.getSevenDate();
         pickUpDate = days.get(0);
+        expressPrice = SystemInfoUtils.getExpressPrice(this);
         if (getIntent() == null) {
             return;
         }
@@ -282,9 +284,9 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         tvTotalGoodsPrice.setRightContent(
                 String.format(getString(R.string.rmb_price_double), totalGoodsPrice));
         tvExpressPrice.setRightContent(
-                needExpress ? String.format(getString(R.string.rmb_price_double), EXPRESS_PRICE) : "¥ 0.00");
+                needExpress ? String.format(getString(R.string.rmb_price_double), expressPrice) : "¥ 0.00");
         tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double),
-                needExpress ? totalGoodsPrice + EXPRESS_PRICE : totalGoodsPrice));
+                needExpress ? totalGoodsPrice + expressPrice : totalGoodsPrice));
     }
 
     private void setListener() {
@@ -316,7 +318,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.tv_coupon:
                 if (usableCoupons != null && !usableCoupons.isEmpty() && totalGoodsPrice > 0) {
-                    SelectCouponActivity.startForResult(this, totalGoodsPrice + "", usableCoupons, REQUEST_SELECT_COUPON);
+                    SelectCouponActivity.startForResult(this, String.valueOf(totalGoodsPrice),couponId,usableCoupons, REQUEST_SELECT_COUPON);
                 }
                 break;
             case R.id.tv_pay:
@@ -430,15 +432,12 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             } else if (requestCode == REQUEST_SELECT_COUPON) {
                 CouponBean couponBean = data.getParcelableExtra("coupon");
                 couponId = couponBean.getId();
-                if (FormatUtil.parseDouble(couponBean.getDiscount()) != -1) {
-                    tvCoupon.setText(String.format(getString(R.string.rmb_minus_price_double),
-                            FormatUtil.parseDouble(couponBean.getDiscount())));
-                } else {
-                    tvCoupon.setText("请选择");
-                }
+                tvCoupon.setText(FormatUtil.parseDouble(couponBean.getDiscount()) != 0
+                        ? String.format(getString(R.string.rmb_minus_price_double),
+                        FormatUtil.parseDouble(couponBean.getDiscount())) : getString(R.string.please_choose));
                 tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double),
                         FormatUtil.parseDouble(couponBean.getDiscount())));
-                double deliveryPrice = needExpress ? EXPRESS_PRICE : 0;
+                double deliveryPrice = needExpress ? expressPrice : 0;
                 tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double),
                         totalGoodsPrice + deliveryPrice - FormatUtil.parseDouble(couponBean.getDiscount())));
             }else if(requestCode == REQUEST_UPDATE_DELIVERY) {

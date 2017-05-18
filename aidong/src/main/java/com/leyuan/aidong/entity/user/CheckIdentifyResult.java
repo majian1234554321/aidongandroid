@@ -1,6 +1,9 @@
 package com.leyuan.aidong.entity.user;
 
+import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.entity.model.UserCoach;
+
+import java.util.ArrayList;
 
 /**
  * Created by user on 2017/3/28.
@@ -8,6 +11,8 @@ import com.leyuan.aidong.entity.model.UserCoach;
 public class CheckIdentifyResult {
     UserCoach user;
     String token;
+
+    private ArrayList<CouponBean> coupons;
 
 
     public String getToken() {
@@ -19,5 +24,21 @@ public class CheckIdentifyResult {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public UserCoach getUser() {
+        return user;
+    }
+
+    public void setUser(UserCoach user) {
+        this.user = user;
+    }
+
+    public ArrayList<CouponBean> getCoupons() {
+        return coupons;
+    }
+
+    public void setCoupons(ArrayList<CouponBean> coupons) {
+        this.coupons = coupons;
     }
 }

@@ -27,7 +27,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointCourseActivityView;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
-import com.leyuan.aidong.utils.ToastUtil;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.UiManager;
 import com.leyuan.aidong.utils.constant.PayType;
 import com.leyuan.aidong.widget.CustomNestRadioGroup;
@@ -176,15 +176,15 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.tv_coupon:
                 if (usableCoupons != null && !usableCoupons.isEmpty()) {
-                    SelectCouponActivity.startForResult(this, bean.getPrice(), usableCoupons, REQUEST_SELECT_COUPON);
+                    SelectCouponActivity.startForResult(this, bean.getPrice(),couponId, usableCoupons, REQUEST_SELECT_COUPON);
                 }
                 break;
             case R.id.tv_pay:
                 String userRealName = tvUserName.getText().toString().trim();
                 if (TextUtils.isEmpty(userRealName)) {
-                    ToastUtil.showShort(this, "姓名不能为空");
+                    ToastGlobal.showLong("姓名不能为空");
                 } else if (TextUtils.isEmpty(contactMobile)) {
-                    ToastUtil.showShort(this, "请先绑定手机");
+                    ToastGlobal.showLong("请先绑定手机");
                 } else {
                     String vip = isVip ? "1" : "0";
                     coursePresent.buyCourse(bean.getCode(), couponId, integral, payType,
@@ -247,8 +247,9 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
             if (requestCode == REQUEST_SELECT_COUPON) {
                 CouponBean couponBean = data.getParcelableExtra("coupon");
                 couponId = couponBean.getId();
-                tvCoupon.setText(String.format(getString(R.string.rmb_minus_price_double),
-                        FormatUtil.parseDouble(couponBean.getDiscount())));
+                tvCoupon.setText(FormatUtil.parseDouble(couponBean.getDiscount()) != 0
+                        ? String.format(getString(R.string.rmb_minus_price_double),
+                        FormatUtil.parseDouble(couponBean.getDiscount())) : getString(R.string.please_choose));
                 tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double),
                         FormatUtil.parseDouble(couponBean.getDiscount())));
                 tvPrice.setText(String.format(getString(R.string.rmb_price_double),

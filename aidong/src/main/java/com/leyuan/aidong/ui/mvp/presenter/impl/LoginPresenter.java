@@ -70,7 +70,7 @@ public class LoginPresenter implements LoginPresenterInterface {
 
             @Override
             public void onNext(LoginResult user) {
-                App.mInstance.setUser(user.getUser());
+                App.getInstance().setUser(user.getUser());
                 if (loginViewInterface != null)
                     loginViewInterface.loginResult(user.getUser(), user.getCoupons());
 

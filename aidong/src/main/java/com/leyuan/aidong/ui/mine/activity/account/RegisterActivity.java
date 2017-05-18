@@ -11,10 +11,12 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.config.ConstantUrl;
-import com.leyuan.aidong.entity.ProfileBean;
+import com.leyuan.aidong.entity.CouponBean;
+import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.WebViewActivity;
+import com.leyuan.aidong.ui.mine.activity.CouponNewcomerActivity;
 import com.leyuan.aidong.ui.mvp.presenter.RegisterPresenterInterface;
 import com.leyuan.aidong.ui.mvp.presenter.impl.RegisterPresenter;
 import com.leyuan.aidong.ui.mvp.view.RegisterViewInterface;
@@ -25,6 +27,8 @@ import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.widget.CommonTitleLayout;
 import com.leyuan.aidong.widget.DialogImageIdentify;
+
+import java.util.ArrayList;
 
 
 public class RegisterActivity extends BaseActivity implements View.OnClickListener, RegisterViewInterface {
@@ -94,6 +98,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 break;
             case R.id.button_register:
                 if (verifyEdit()) {
+                    presenter.checkIdentifyRegister(App.getInstance().getToken(), code, password);
                     presenter.checkIdentify(App.mInstance.getToken(), code, password);
                 }
                 break;
@@ -161,12 +166,13 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void register(boolean success) {
-        DialogUtils.dismissDialog();
-        if (success) {
-            ToastGlobal.showShort("注册成功");
-            CompleteUserInfoActivity.start(this, new ProfileBean());
-            finish();
-        }
+        //在onRegisterResult里面做处理
+//        DialogUtils.dismissDialog();
+//        if (success) {
+//            ToastGlobal.showShort("注册成功");
+//            CompleteUserInfoActivity.start(this, new ProfileBean());
+//            finish();
+//        }
     }
 
     @Override
@@ -183,6 +189,23 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onRequestStart() {
         DialogUtils.showDialog(this, "", false);
+    }
+
+    @Override
+    public void onRegisterResult(UserCoach user, ArrayList<CouponBean> coupons) {
+
+        DialogUtils.dismissDialog();
+//        if (user != null) {
+//            DialogUtils.showDialog(this, "", false);
+//            chatLoginManager.login(String.valueOf(user.getId()));
+//            new MineInfoPresenterImpl(this).getMineInfo();
+//            new FollowPresentImpl(this).getFollowList();            //登录成功后需要获取关注列表
+//            new SystemPresentImpl(this).getSystemInfo("android");   //登录成功后需要刷新配置(课程视频提示需要更新)
+//        }
+        if (coupons != null && !coupons.isEmpty()) {
+            CouponNewcomerActivity.start(this, coupons);
+        }
+
     }
 
     private void showImageIdentifyDialog(final String tel) {

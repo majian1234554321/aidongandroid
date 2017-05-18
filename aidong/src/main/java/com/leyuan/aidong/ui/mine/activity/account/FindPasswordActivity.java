@@ -7,6 +7,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.CouponBean;
+import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.RegisterPresenterInterface;
@@ -19,6 +21,8 @@ import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.widget.CommonTitleLayout;
 import com.leyuan.aidong.widget.DialogImageIdentify;
+
+import java.util.ArrayList;
 
 
 public class FindPasswordActivity extends BaseActivity implements View.OnClickListener, RegisterViewInterface {
@@ -149,6 +153,11 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onRequestStart() {
+
+    }
+
+    @Override
+    public void onRegisterResult(UserCoach user, ArrayList<CouponBean> coupons) {
 
     }
 

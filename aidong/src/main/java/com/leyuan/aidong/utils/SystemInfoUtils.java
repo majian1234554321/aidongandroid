@@ -41,6 +41,19 @@ public class SystemInfoUtils {
     private static final String BANNER_STORE = "4";
 
 
+    public static double getExpressPrice(Context context){
+        double express = 0d;
+        if (systemInfoBean != null && systemInfoBean.getAcivity() != null) {
+            express =  Constant.systemInfoBean.getExpressPrice() ;
+        }else {
+            Object bean = getSystemInfoBean(context, KEY_SYSTEM);
+            if (bean instanceof SystemBean) {
+                express = ((SystemBean) bean).getExpressPrice();
+            }
+        }
+        return express;
+    }
+
     public static String getCourseVideoTip(Context context){
         String activityTip = "";
         if (systemInfoBean != null && systemInfoBean.getAcivity() != null) {

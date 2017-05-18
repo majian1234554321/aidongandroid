@@ -3,6 +3,8 @@ package com.leyuan.aidong.ui.mine.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -32,13 +34,16 @@ public class SelectCouponActivity extends BaseActivity implements SelectCouponAd
 
     private List<CouponBean> couponBeanList = new ArrayList<>();
     private String totalGoodsPrice;
+    private String selectedCouponId;
 
-    public static void startForResult(Activity context, String totalGoodsPrice, List<CouponBean> usableCoupons, int requestSelectCoupon) {
+    public static void startForResult(Activity context, String totalGoodsPrice, @Nullable String selectedCouponId,
+                                      @NonNull List<CouponBean> usableCoupons, int requestSelectCoupon) {
         Intent intent = new Intent(context, SelectCouponActivity.class);
-        if (usableCoupons != null && usableCoupons instanceof ArrayList) {
+        if (usableCoupons instanceof ArrayList) {
             intent.putParcelableArrayListExtra("couponList", (ArrayList<CouponBean>) usableCoupons);
         }
-        intent.putExtra("totalGoodsPrice", totalGoodsPrice);
+        intent.putExtra("totalGoodsPrice",totalGoodsPrice);
+        intent.putExtra("selectedCouponId", selectedCouponId);
         context.startActivityForResult(intent, requestSelectCoupon);
 
     }
@@ -50,6 +55,7 @@ public class SelectCouponActivity extends BaseActivity implements SelectCouponAd
         if (getIntent() != null) {
             couponBeanList = getIntent().getParcelableArrayListExtra("couponList");
             totalGoodsPrice = getIntent().getStringExtra("totalGoodsPrice");
+            selectedCouponId = getIntent().getStringExtra("selectedCouponId");
         }
         initView();
         setListener();
@@ -62,7 +68,7 @@ public class SelectCouponActivity extends BaseActivity implements SelectCouponAd
         couponAdapter = new SelectCouponAdapter(this);
         recyclerView.setAdapter(couponAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        couponAdapter.setData(couponBeanList);
+        couponAdapter.setData(couponBeanList,selectedCouponId);
     }
 
     private void setListener() {

@@ -177,7 +177,7 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
                 break;
             case R.id.tv_coupon:
                 if (usableCoupons != null && !usableCoupons.isEmpty()) {
-                    SelectCouponActivity.startForResult(this, bean.getPrice(), usableCoupons, REQUEST_SELECT_COUPON);
+                    SelectCouponActivity.startForResult(this, bean.getPrice(),couponId, usableCoupons, REQUEST_SELECT_COUPON);
                 }
                 break;
             case R.id.tv_pay:
@@ -246,8 +246,9 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
             if (requestCode == REQUEST_SELECT_COUPON) {
                 CouponBean couponBean = data.getParcelableExtra("coupon");
                 couponId = couponBean.getId();
-                tvCoupon.setText(String.format(getString(R.string.rmb_minus_price_double),
-                        FormatUtil.parseDouble(couponBean.getDiscount())));
+                tvCoupon.setText(FormatUtil.parseDouble(couponBean.getDiscount()) != 0
+                        ? String.format(getString(R.string.rmb_minus_price_double),
+                        FormatUtil.parseDouble(couponBean.getDiscount())) : getString(R.string.please_choose));
                 tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double),
                         FormatUtil.parseDouble(couponBean.getDiscount())));
                 tvPrice.setText(String.format(getString(R.string.rmb_price_double),

@@ -104,6 +104,38 @@ public class RegisterPresenter implements RegisterPresenterInterface {
         }, token, code, password);
     }
 
+
+    @Override
+    public void checkIdentifyRegister(String token, String code, String password) {
+        mRegisterModelInterface.checkIdentify(new IsLoginSubscriber<CheckIdentifyResult>(mContext) {
+            @Override
+            public void onStart() {
+                super.onStart();
+                mRegisterViewInterface.onRequestStart();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+//                mRegisterViewInterface.register(false);
+                mRegisterViewInterface.onRegisterResult(null, null);
+            }
+
+            @Override
+            public void onNext(CheckIdentifyResult user) {
+
+                App.getInstance().setUser(user.getUser());
+                mRegisterViewInterface.onRegisterResult(user.getUser(), user.getCoupons());
+
+//                if (user != null) {
+//                    App.getInstance().setToken(user.getToken());
+//                    Logger.i("login", "checkIdentify token = " + user.getToken());
+//                }
+//                mRegisterViewInterface.register(true);
+            }
+        }, token, code, password);
+    }
+
     @Override
     public void checkIdentifyBinding(String captcha) {
         mRegisterModelInterface.checkIdentify(new IsLoginSubscriber<CheckIdentifyResult>(mContext) {

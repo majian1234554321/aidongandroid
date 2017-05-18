@@ -49,7 +49,6 @@ import java.util.List;
 import cn.iwgang.countdownview.CountdownView;
 
 import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
-import static com.leyuan.aidong.utils.Constant.EXPRESS_PRICE;
 import static com.leyuan.aidong.utils.Constant.PAY_ALI;
 import static com.leyuan.aidong.utils.Constant.PAY_WEIXIN;
 
@@ -292,7 +291,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
         tvTotalPrice.setRightContent(String.format(getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.getTotal())));
         tvExpressPrice.setRightContent(expressList!= null && !expressList.isEmpty()
-                ? String.format(getString(R.string.rmb_price_double),EXPRESS_PRICE):"¥ 0.00");
+                ? String.format(getString(R.string.rmb_price_double),SystemInfoUtils.getExpressPrice(this)):"¥ 0.00");
         tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double),
                 FormatUtil.parseDouble(bean.getCoupon())));
         tvAiBi.setRightContent(String.format(getString(R.string.rmb_minus_price_double),

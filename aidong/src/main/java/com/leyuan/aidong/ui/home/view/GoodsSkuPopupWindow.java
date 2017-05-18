@@ -336,7 +336,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     public void confirm() {
         if (status == GoodsStatus.ConfirmToAddCart) {
             addCart();
-        } else {
+        } else if(status == GoodsStatus.ConfirmToBuy){
             buyImmediately();
         }
     }
