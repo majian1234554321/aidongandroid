@@ -31,7 +31,7 @@ public class ImageRectUtils {
         }
     }
 
-    private static Rect getDrawableBoundsInView(ImageView iv) {
+    public static Rect getDrawableBoundsInView(ImageView iv) {
         if(iv != null && iv.getDrawable() != null) {
             Drawable d = iv.getDrawable();
             Rect result = new Rect();

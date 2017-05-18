@@ -35,6 +35,7 @@ import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.ImageRectUtils;
 import com.leyuan.aidong.utils.QRCodeUtil;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.utils.ToastGlobal;
@@ -279,7 +280,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 tvOrderNo.setText(String.format(getString(R.string.appoint_no), bean.getId()));
                 tvOrderNo.setVisibility(View.VISIBLE);
                 timerLayout.setVisibility(View.GONE);
-                tvCancelJoin.setVisibility(FormatUtil.parseDouble(bean.getPay().getTotal()) == 0f
+                tvCancelJoin.setVisibility(FormatUtil.parseDouble(bean.getPay().getTotal()) == 0d
                         ? View.VISIBLE : View.GONE);
                 tvConfirmJoin.setVisibility(View.VISIBLE);
                 tvPay.setVisibility(View.GONE);
@@ -396,15 +397,11 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 CampaignDetailActivity.start(this,bean.getLinkId());
                 break;
             case R.id.dv_qr:
-             /*   ivCode.animate().scaleXBy(2).setDuration(500).start();
-                ivCode.animate().scaleYBy(2).setDuration(500).start();
-                ivCode.animate().rotationBy(90).setDuration(500).start();*/
-
                 Intent intent = new Intent(this, BarcodeActivity.class);
                 intent.putExtra("code", bean.getId());
+                intent.putExtra("rect", ImageRectUtils.getDrawableBoundsInView(ivCode));
                 Pair participants = new Pair<>(ivCode, ViewCompat.getTransitionName(ivCode));
-                ActivityOptionsCompat transitionActivityOptions =
-                        ActivityOptionsCompat.makeSceneTransitionAnimation(this, participants);
+                ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(this);
                 ActivityCompat.startActivity(this, intent, transitionActivityOptions.toBundle());
                 break;
             default:
@@ -471,6 +468,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
 
     @Override
     public void onEnd(CountdownView cv) {
-        present.getAppointmentDetail(switcherLayout,orderId);
+        bean.getPay().setStatus(CLOSE);
+        setAppointmentDetail(bean);
     }
 }

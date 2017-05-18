@@ -1,8 +1,9 @@
 package com.leyuan.aidong.ui.mvp.model;
 
-import com.leyuan.aidong.entity.DistrictBean;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.CourseDetailData;
+import com.leyuan.aidong.entity.CourseTypeListBean;
+import com.leyuan.aidong.entity.DistrictBean;
 import com.leyuan.aidong.entity.data.AppointmentDetailData;
 import com.leyuan.aidong.entity.data.CourseData;
 import com.leyuan.aidong.entity.data.CourseVideoData;
@@ -74,4 +75,10 @@ public interface CourseModel {
      * @param page
      */
     void getCourseVideo(Subscriber<CourseVideoData> subscriber,String relate,String id, int page,String videoId);
+
+    /**
+     * 获取课程视频分类列表
+     * @param subscriber
+     */
+    void getCourseVideoTypeList(Subscriber<CourseTypeListBean> subscriber);
 }

@@ -54,15 +54,18 @@ public class SystemInfoUtils {
         return express;
     }
 
-    public static String getCourseVideoTip(Context context){
+    public static String getCourseVideoTipOnLogout(){
         String activityTip = "";
         if (systemInfoBean != null && systemInfoBean.getAcivity() != null) {
             activityTip =  Constant.systemInfoBean.getAcivity() ;
-        }else {
-            Object bean = getSystemInfoBean(context, KEY_SYSTEM);
-            if (bean instanceof SystemBean) {
-                activityTip = ((SystemBean) bean).getAcivity();
-            }
+        }
+        return activityTip;
+    }
+
+    public static String getCourseVideoTipOnLogin(){
+        String activityTip = "";
+        if (systemInfoBean != null && systemInfoBean.getActivityOnLogin() != null) {
+            activityTip =  Constant.systemInfoBean.getActivityOnLogin() ;
         }
         return activityTip;
     }

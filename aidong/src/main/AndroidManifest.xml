@@ -326,6 +326,7 @@
         <activity
             android:name=".ui.mine.activity.AppointCampaignDetailActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.home.activity.AppointCourseActivity"
             android:screenOrientation="portrait"

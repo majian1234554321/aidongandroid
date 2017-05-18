@@ -13,8 +13,8 @@ import com.leyuan.aidong.entity.data.CouponData;
 import com.leyuan.aidong.entity.data.CourseData;
 import com.leyuan.aidong.entity.data.CourseVideoData;
 import com.leyuan.aidong.entity.data.PayOrderData;
-import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
+import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
@@ -246,14 +246,6 @@ public class CoursePresentImpl implements CoursePresent {
         if (couponModel == null) {
             couponModel = new CouponModelImpl();
         }
-//        couponModel.getSpecifyGoodsCoupon(new ProgressSubscriber<CouponData>(context, false) {
-//            @Override
-//            public void onNext(CouponData couponData) {
-//                if (couponData != null) {
-//                    appointCourseActivityView.setCourseCouponResult(couponData.getCoupon());//maybe null
-//                }
-//            }
-//        }, Constant.COUPON_COURSE, id);
 
         couponModel.getGoodsAvailableCoupon(new ProgressSubscriber<CouponData>(context, false) {
             @Override
@@ -359,4 +351,5 @@ public class CoursePresentImpl implements CoursePresent {
             }
         }, "all", id, page, "");
     }
+
 }

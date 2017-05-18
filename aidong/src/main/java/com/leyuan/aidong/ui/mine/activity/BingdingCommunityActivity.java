@@ -80,7 +80,7 @@ public class BingdingCommunityActivity extends BaseActivity implements Callback{
 		});
 	}
 //	@Override
-//	public void onCancel(Platform platform, int action) {
+//	public void onCancelJoin(Platform platform, int action) {
 //		Message msg = new Message();
 //		msg.what = MSG_ACTION_CCALLBACK;
 //		msg.arg1 = 3;

@@ -94,7 +94,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                         bean.getStart()));
                 holder.date.setVisibility(View.VISIBLE);
                 holder.timerLayout.setVisibility(View.GONE);
-                holder.tvCancelJoin.setVisibility(FormatUtil.parseDouble(bean.getPay_amount()) == 0d
+                holder.tvCancelJoin.setVisibility(FormatUtil.parseDouble(bean.getPrice()) == 0d
                         ? View.VISIBLE : View.GONE);
                 holder.tvConfirm.setVisibility(View.VISIBLE);
                 holder.tvPay.setVisibility(View.GONE);
@@ -166,7 +166,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             @Override
             public void onClick(View v) {
                 if (appointmentListener != null) {
-                    appointmentListener.onCancel(bean.getId());
+                    appointmentListener.onCancelJoin(position);
                 }
             }
         });
@@ -202,7 +202,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             @Override
             public void onClick(View v) {
                 if (appointmentListener != null) {
-                    appointmentListener.onCancel(bean.getId());
+                    appointmentListener.onCancelPay(bean.getId());
                 }
             }
         });
@@ -265,7 +265,9 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
         void onConfirmJoin(int position);
 
-        void onCancel(String id);
+        void onCancelJoin(int position);
+
+        void onCancelPay(String id);
 
         void onCountdownEnd(int position);
     }

@@ -6,7 +6,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.mine.OrderAdapter;
@@ -201,7 +200,7 @@ public class OrderFragment extends BaseLazyFragment implements OrderFragmentView
     public void cancelOrderResult(BaseBean baseBean) {
         if(baseBean.getStatus() == Constant.OK){
             present.commonLoadData(type);
-            Toast.makeText(getContext(),"取消成功",Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong("取消成功");
         }else {
             ToastGlobal.showLong(baseBean.getMessage());
         }
@@ -211,7 +210,7 @@ public class OrderFragment extends BaseLazyFragment implements OrderFragmentView
     public void confirmOrderResult(BaseBean baseBean) {
         if(baseBean.getStatus() == Constant.OK){
             present.commonLoadData(type);
-            Toast.makeText(getContext(),"确认成功",Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong("确认成功");
         }else {
             ToastGlobal.showLong(baseBean.getMessage());
         }
@@ -221,7 +220,7 @@ public class OrderFragment extends BaseLazyFragment implements OrderFragmentView
     public void deleteOrderResult(BaseBean baseBean) {
         if(baseBean.getStatus() == Constant.OK){
             present.commonLoadData(type);
-            Toast.makeText(getContext(),"删除成功",Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong("删除成功");
         }else {
             ToastGlobal.showLong(baseBean.getMessage());
         }

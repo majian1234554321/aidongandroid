@@ -2,6 +2,7 @@ package com.leyuan.aidong.http.api;
 
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CourseDetailData;
+import com.leyuan.aidong.entity.CourseTypeListBean;
 import com.leyuan.aidong.entity.data.AppointmentDetailData;
 import com.leyuan.aidong.entity.data.CourseData;
 import com.leyuan.aidong.entity.data.CourseVideoData;
@@ -47,4 +48,6 @@ public interface CourseService {
     Observable<BaseBean<CourseVideoData>> getCourseVideo(@Path("id") String id, @Query("relat") String relat,
                                                          @Query("video_id") String video_id,@Query("page") int page);
 
+    @GET("videos/course_videos")
+    Observable<BaseBean<CourseTypeListBean>> getCourseVideoTypeList();
 }

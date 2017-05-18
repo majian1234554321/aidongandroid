@@ -347,7 +347,7 @@ public class Utils {
 			} else
 				/*if ((3600000*24)*2 <spanTime) */
 			{
-				SimpleDateFormat sdf2 = new SimpleDateFormat("MM-dd HH:mm");
+				SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
 				return sdf2.format(date);
 			}
 		} catch (Exception e) {

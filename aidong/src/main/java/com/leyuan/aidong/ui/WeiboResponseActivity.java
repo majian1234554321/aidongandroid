@@ -156,7 +156,7 @@ public class WeiboResponseActivity extends Activity implements IWeiboHandler.Res
             @Override
             public void onCancel() {
 
-                Logger.i("share", "  mWeiboShareAPI onCancel");
+                Logger.i("share", "  mWeiboShareAPI onCancelJoin");
             }
         });
 

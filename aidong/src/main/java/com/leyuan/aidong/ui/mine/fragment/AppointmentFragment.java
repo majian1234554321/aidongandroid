@@ -169,7 +169,21 @@ public class AppointmentFragment extends BaseLazyFragment implements Appointment
         }
 
         @Override
-        public void onCancel(String id) {
+        public void onCancelJoin(int position) {
+            AppointmentBean bean = data.get(position);
+            if(DateUtils.started(bean.getStart())){
+                if("course".equals(bean.getAppointmentType())) {
+                    ToastGlobal.showLong("课程已开始，无法取消");
+                }else {
+                    ToastGlobal.showLong("活动已开始，无法取消");
+                }
+            }else {
+                present.cancelAppoint(bean.getId());
+            }
+        }
+
+        @Override
+        public void onCancelPay(String id) {
             present.cancelAppoint(id);
         }
 

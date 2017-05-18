@@ -106,7 +106,7 @@ public class WeiBoLogin {
         @Override
         public void onCancel() {
 
-            Logger.i("loginweibo", "AuthListener onCancel");
+            Logger.i("loginweibo", "AuthListener onCancelJoin");
 
         }
 

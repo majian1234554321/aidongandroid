@@ -140,7 +140,7 @@ public class WeiBoShare {
             @Override
             public void onCancel() {
 
-                Logger.i("share", "  mWeiboShareAPI onCancel");
+                Logger.i("share", "  mWeiboShareAPI onCancelJoin");
             }
         });
 

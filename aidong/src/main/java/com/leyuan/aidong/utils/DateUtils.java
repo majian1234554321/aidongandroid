@@ -307,4 +307,13 @@ public class DateUtils {
             return false;
         }
     }
+
+    public static boolean started(String date){
+        Date d = parseDate(date, yyyyMMddHHmm);
+        if(d != null) {
+            return d.getTime() - System.currentTimeMillis() < 0;
+        }else {
+            return false;
+        }
+    }
 }

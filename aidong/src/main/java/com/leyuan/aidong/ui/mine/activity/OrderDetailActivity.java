@@ -434,6 +434,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
 
     @Override
     public void onEnd(CountdownView cv) {
-        orderPresent.getOrderDetail(orderId);
+        bean.setStatus(CLOSE);
+        setOrderDetail(bean);
     }
 }
