@@ -130,6 +130,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.tabMineLayout:
                 setTabSelection(4);
                 showFragment(4);
+
                 break;
             default:
                 break;

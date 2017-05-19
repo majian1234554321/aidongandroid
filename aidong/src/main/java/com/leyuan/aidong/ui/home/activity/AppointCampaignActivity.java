@@ -79,7 +79,9 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
 
     private String couponId;
     private float integral;
-    private @PayType String payType;
+    private
+    @PayType
+    String payType;
     private String userName;
     private String contactMobile;
 
@@ -132,7 +134,10 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
 
         tvCampaignName.setText(bean.getName());
         tvOrganizer.setText(bean.getOrganizer());
-        GlideLoader.getInstance().displayImage(bean.getImage().get(0), dvCover);
+        if (bean.getImage() != null && !bean.getImage().isEmpty()) {
+            GlideLoader.getInstance().displayImage(bean.getImage().get(0), dvCover);
+        }
+
         tvTime.setRightContent(String.format(getString(R.string.campaign_during), bean.getStartTime(),
                 bean.getEndTime().substring(bean.getEndTime().lastIndexOf(Constant.EMPTY_STR))));
         tvAddress.setText(bean.getAddress());
@@ -177,7 +182,7 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
                 break;
             case R.id.tv_coupon:
                 if (usableCoupons != null && !usableCoupons.isEmpty()) {
-                    SelectCouponActivity.startForResult(this, bean.getPrice(),couponId, usableCoupons, REQUEST_SELECT_COUPON);
+                    SelectCouponActivity.startForResult(this, bean.getPrice(), couponId, usableCoupons, REQUEST_SELECT_COUPON);
                 }
                 break;
             case R.id.tv_pay:

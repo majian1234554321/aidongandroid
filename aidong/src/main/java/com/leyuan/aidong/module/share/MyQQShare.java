@@ -25,7 +25,7 @@ public class MyQQShare {
 
         @Override
         public void onCancel() {
-            Logger.i("QQSHARE", "qqShareListener onCancel");
+            Logger.i("QQSHARE", "qqShareListener onCancelJoin");
             ToastGlobal.showShortConsecutive("分享取消");
         }
 

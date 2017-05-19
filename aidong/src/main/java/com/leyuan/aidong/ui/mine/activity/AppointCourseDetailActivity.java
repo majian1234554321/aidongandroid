@@ -253,7 +253,6 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
         switch (bean.getPay().getStatus()) {
             case UN_PAID:           //待付款
                 tvState.setText(context.getString(R.string.un_paid));
-                //timer.start(Long.parseLong(bean.getPayInfo().getLimitTime()) * 1000);
                 timerLayout.setVisibility(View.VISIBLE);
                 tvOrderNo.setVisibility(View.VISIBLE);
                 tvOrderNo.setText(String.format(getString(R.string.appoint_no), bean.getId()));
@@ -271,7 +270,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
                 tvOrderNo.setText(String.format(getString(R.string.appoint_no), bean.getId()));
                 tvOrderNo.setVisibility(View.VISIBLE);
                 timerLayout.setVisibility(View.GONE);
-                tvCancelJoin.setVisibility(FormatUtil.parseDouble(bean.getPay().getTotal()) == 0f
+                tvCancelJoin.setVisibility(FormatUtil.parseDouble(bean.getPay().getTotal()) == 0d
                         ? View.VISIBLE : View.GONE);
                 tvConfirmJoin.setVisibility(View.VISIBLE);
                 tvPay.setVisibility(View.GONE);
@@ -452,6 +451,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
 
     @Override
     public void onEnd(CountdownView cv) {
-        present.getAppointmentDetail(switcherLayout,orderId);
+        bean.getPay().setStatus(CLOSE);
+        setAppointmentDetail(bean);
     }
 }

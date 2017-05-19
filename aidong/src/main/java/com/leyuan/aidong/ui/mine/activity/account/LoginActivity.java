@@ -148,11 +148,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             DialogUtils.showDialog(this, "", false);
             ChatLoginService.startService(this, String.valueOf(user.getId()));
 
-//            chatLoginManager.login(String.valueOf(user.getId()));
-//            new MineInfoPresenterImpl(this).getMineInfo();
-//            new FollowPresentImpl(this).getFollowList();            //登录成功后需要获取关注列表
-//            new SystemPresentImpl(this).getSystemInfo("android");   //登录成功后需要刷新配置(课程视频提示需要更新)
-
             RequestResponseCount requestResponse = new RequestResponseCount(this);
 
             MineInfoPresenterImpl mineInfoPresenter = new MineInfoPresenterImpl(this);
@@ -166,6 +161,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             SystemPresentImpl systemPresent = new SystemPresentImpl(this);
             systemPresent.setOnRequestResponse(requestResponse);
             systemPresent.getSystemInfo("android");
+
         }
 
 

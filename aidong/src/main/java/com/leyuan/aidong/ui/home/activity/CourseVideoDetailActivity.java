@@ -86,6 +86,13 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
         coursePresent.getRelateCourseVideo(courseId,videoId);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        btAppoint.setText(App.mInstance.isLogin() ? SystemInfoUtils.getCourseVideoTipOnLogin()
+            : SystemInfoUtils.getCourseVideoTipOnLogout());
+    }
+
     private void initView(){
         ivBlur = (ImageView) findViewById(R.id.iv_blur);
         ivCover = (ImageView) findViewById(R.id.img_cover);
@@ -103,7 +110,6 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
         recyclerView.setAdapter(adapter);
         ivBack = (Button) findViewById(R.id.iv_back);
         btAppoint = (Button) findViewById(R.id.bt_appoint);
-        btAppoint.setText(SystemInfoUtils.getCourseVideoTip(this));
     }
 
     private void setListener(){
@@ -176,7 +182,7 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        btAppoint.setText(SystemInfoUtils.getCourseVideoTip(this));
+        btAppoint.setText(SystemInfoUtils.getCourseVideoTipOnLogin());
     }
 
     @Override

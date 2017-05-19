@@ -116,14 +116,13 @@ public class CompleteUserInfoActivity extends BaseActivity implements UpdateUser
         tvZodiac.setRightContent(profileBean.getZodiac());
         tvHeight.setRightContent(profileBean.getHeight());
         tvWeight.setRightContent(profileBean.getWeight());
-        tvBmi.setRightContent(profileBean.getBmi());
+        tvBmi.setRightContent("0");
         tvFrequency.setRightContent(profileBean.getFrequency());
         avatarUrl = profileBean.getAvatar();
         GlideLoader.getInstance().displayCircleImage(avatarUrl, ivAvatar);
 
         weight = FormatUtil.parseFloat(profileBean.getWeight());
         height = FormatUtil.parseFloat(profileBean.getHeight());
-        setBMI();
     }
 
     private void setListener() {

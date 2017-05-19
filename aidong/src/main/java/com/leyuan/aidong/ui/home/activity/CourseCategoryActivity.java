@@ -10,8 +10,11 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.CourseCategoryAdapter;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.CategoryListBean;
+import com.leyuan.aidong.entity.CourseTypeListBean;
+import com.leyuan.aidong.http.subscriber.BaseSubscriber;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.utils.SystemInfoUtils;
+import com.leyuan.aidong.ui.mvp.model.CourseModel;
+import com.leyuan.aidong.ui.mvp.model.impl.CourseModelImpl;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 
 import java.util.ArrayList;
@@ -22,47 +25,62 @@ import java.util.List;
  * Created by song on 2017/4/12.
  */
 public class CourseCategoryActivity extends BaseActivity{
+    private CourseCategoryAdapter adapter;
+    private List<CategoryBean> sourceData = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_type);
 
+        initView();
+        initData();
+    }
+
+
+    private void initView(){
         SimpleTitleBar titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_course);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        CourseCategoryAdapter adapter = new CourseCategoryAdapter(this);
+        adapter = new CourseCategoryAdapter(this);
         recyclerView.setAdapter(adapter);
-
-        List<CategoryBean> sourceData = SystemInfoUtils.getCourseCategory(this);
-        if(sourceData == null){
-            return;
-        }
-        int size = sourceData.size() / 3;
-        if(sourceData.size() % 3 != 0){
-            size ++;
-        }
-
-        List<CategoryListBean> data = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
-            CategoryListBean list = new CategoryListBean();
-            List<CategoryBean> categoryBeanList = new ArrayList<>();
-            for (int k = 0; k < sourceData.size(); k++) {
-                if(k >= i * 3 && k < (i+1) * 3 ){
-                    CategoryBean bean = sourceData.get(k);
-                    categoryBeanList.add(bean);
-                }
-            }
-            list.setCourseBeanList(categoryBeanList);
-            data.add(list);
-        }
-        adapter.setData(data);
-
 
         titleBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+    }
+
+    private void initData(){
+        CourseModel courseModel = new CourseModelImpl(this);
+        courseModel.getCourseVideoTypeList(new BaseSubscriber<CourseTypeListBean>(this) {
+            @Override
+            public void onNext(CourseTypeListBean courseTypeListBean) {
+                if(courseTypeListBean != null && courseTypeListBean.getCouses() != null){
+                    sourceData =  courseTypeListBean.getCouses();
+
+                    int size = sourceData.size() / 3;
+                    if(sourceData.size() % 3 != 0){
+                        size ++;
+                    }
+
+                    List<CategoryListBean> data = new ArrayList<>();
+                    for (int i = 0; i < size; i++) {
+                        CategoryListBean list = new CategoryListBean();
+                        List<CategoryBean> categoryBeanList = new ArrayList<>();
+                        for (int k = 0; k < sourceData.size(); k++) {
+                            if(k >= i * 3 && k < (i+1) * 3 ){
+                                CategoryBean bean = sourceData.get(k);
+                                categoryBeanList.add(bean);
+                            }
+                        }
+                        list.setCourseBeanList(categoryBeanList);
+                        data.add(list);
+                    }
+                    adapter.setData(data);
+                }
             }
         });
     }
