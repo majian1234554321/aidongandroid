@@ -192,8 +192,8 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         this.bean = bean;
         tvTitle.setText(bean.getName());
         banner.setData(bean.getCover(), null);
-        tvBannerPrice.setText(String.format(getString(R.string.rmb_price_double),
-                FormatUtil.parseDouble(bean.getPrice())));
+        tvBannerPrice.setText(FormatUtil.parseDouble(bean.getPrice()) == 0f
+                ? "免费" : String.format(getString(R.string.rmb_price), bean.getPrice()));
         GlideLoader.getInstance().displayCircleImage(bean.getCoach().getAvatar(), ivAvatar);
         tvCoachName.setText(bean.getCoach().getName());
         tvTime.setText(String.format(getString(R.string.detail_time),

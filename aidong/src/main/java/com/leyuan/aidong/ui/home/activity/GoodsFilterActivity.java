@@ -243,7 +243,9 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
         if(refreshLayout.isRefreshing()){
             refreshLayout.setRefreshing(false);
         }
-        switcherLayout.showEmptyLayout();
+        View view = View.inflate(this,R.layout.empty_search,null);
+        switcherLayout.addCustomView(view,"empty");
+        switcherLayout.showCustomLayout("empty");
     }
 
     @Override

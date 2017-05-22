@@ -62,7 +62,7 @@ public class GlideLoader {
                 .load(resId)
                 .bitmapTransform(new CenterCrop(getContext(imageView)),
                         new RoundedCornersTransformation(getContext(imageView), DensityUtil.dp2px(getContext(imageView),5), 0))
-                .placeholder(R.drawable.place_holder_user)
+                .placeholder(new ColorDrawable(0xffc6c6c6))
                 .into(imageView);
     }
 

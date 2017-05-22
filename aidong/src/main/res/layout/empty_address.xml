@@ -16,7 +16,7 @@
             android:drawablePadding="30dp"
             android:drawableTop="@drawable/empty_address"
             android:gravity="center"
-            android:text="还没有添加地址哦!"
+            android:text="暂无地址"
             android:textColor="@color/c9" />
 
     </RelativeLayout>

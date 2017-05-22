@@ -53,8 +53,8 @@ public class VenuesCourseAdapter extends RecyclerView.Adapter<VenuesCourseAdapte
     public void onBindViewHolder(CourseHolder holder, int position) {
         final CourseBean bean = data.get(position);
         holder.name.setText(bean.getName());
-        holder.price.setText(String.format(context.getString(R.string.rmb_price_double),
-                FormatUtil.parseDouble(bean.getPrice())));
+        holder.price.setText(FormatUtil.parseDouble(bean.getPrice()) == 0f ? "免费"
+                : String.format(context.getString(R.string.rmb_price_double), FormatUtil.parseDouble(bean.getPrice())));
         holder.address.setText(bean.getAddress());
         holder.time.setText(String.format(context.getString(R.string.time_with_line),
                 bean.getClassTime(),bean.getBreakTime()));

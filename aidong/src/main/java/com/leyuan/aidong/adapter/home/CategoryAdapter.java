@@ -17,6 +17,9 @@ import com.leyuan.aidong.utils.constant.GoodsType;
 
 import java.util.ArrayList;
 
+import static com.leyuan.aidong.utils.Constant.GOODS_EQUIPMENT;
+import static com.leyuan.aidong.utils.Constant.GOODS_NUTRITION;
+
 /**
  * 营养品类型适配器
  * Created by song on 2016/8/17.
@@ -54,7 +57,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.FoodVi
     public void onBindViewHolder(FoodViewHolder holder, final int position) {
         CategoryBean bean = data.get(position);
         if(TextUtils.isEmpty(bean.getImage())){
-            GlideLoader.getInstance().displayRoundLocalImage(R.drawable.app_icon, holder.cover);
+            if(GOODS_EQUIPMENT.equals(type)) {
+                GlideLoader.getInstance().displayRoundLocalImage(R.drawable.icon_all_equipment, holder.cover);
+            }else if(GOODS_NUTRITION.equals(type)){
+                GlideLoader.getInstance().displayRoundLocalImage(R.drawable.icon_all_nurture, holder.cover);
+            }
         }else {
             GlideLoader.getInstance().displayRoundImage(bean.getImage(), holder.cover);
         }

@@ -8,6 +8,7 @@
     android:paddingBottom="15dp">
 
     <RelativeLayout
+        android:id="@+id/rl_video"
         android:layout_width="match_parent"
         android:layout_height="116dp">
         <ImageView

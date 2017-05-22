@@ -16,7 +16,7 @@
             android:drawablePadding="30dp"
             android:drawableTop="@drawable/empty_recommend"
             android:gravity="center"
-            android:text="没有推荐商品!"
+            android:text="暂无推荐商品"
             android:textColor="@color/c9" />
 
     </RelativeLayout>

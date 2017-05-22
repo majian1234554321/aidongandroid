@@ -16,7 +16,7 @@
             android:drawablePadding="30dp"
             android:drawableTop="@drawable/empty_coupon"
             android:gravity="center"
-            android:text="还没有优惠券!"
+            android:text="暂无优惠券"
             android:textColor="@color/c9" />
 
     </RelativeLayout>

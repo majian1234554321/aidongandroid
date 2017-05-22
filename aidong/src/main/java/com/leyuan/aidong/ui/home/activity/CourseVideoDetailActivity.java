@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,6 +28,7 @@ import com.leyuan.aidong.ui.video.activity.PlayerActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.ScreenUtil;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.utils.Utils;
 import com.leyuan.aidong.widget.SwitcherLayout;
@@ -40,7 +42,9 @@ import java.util.List;
  */
 public class CourseVideoDetailActivity extends BaseActivity implements CourseVideoDetailActivityView,View.OnClickListener,
         CourseRecommendVideoAdapter.ItemClickListener {
+    private static final float IMAGE_RATIO = 317/176f;
     private ImageView ivBlur;
+    private RelativeLayout imageLayout;
     private ImageView ivCover;
     private ImageView ivStart;
     private TextViewPrintly tvCourseName;
@@ -89,12 +93,13 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
     @Override
     protected void onResume() {
         super.onResume();
-        btAppoint.setText(App.mInstance.isLogin() ? SystemInfoUtils.getCourseVideoTipOnLogin()
-            : SystemInfoUtils.getCourseVideoTipOnLogout());
+        btAppoint.setText(App.mInstance.isLogin() ? Constant.activityOnLogin
+                : SystemInfoUtils.getCourseVideoTipOnLogout());
     }
 
     private void initView(){
         ivBlur = (ImageView) findViewById(R.id.iv_blur);
+        imageLayout = (RelativeLayout) findViewById(R.id.rl_image);
         ivCover = (ImageView) findViewById(R.id.img_cover);
         ivStart = (ImageView) findViewById(R.id.iv_start);
         tvCourseName = (TextViewPrintly) findViewById(R.id.tv_course_name);
@@ -110,6 +115,11 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
         recyclerView.setAdapter(adapter);
         ivBack = (Button) findViewById(R.id.iv_back);
         btAppoint = (Button) findViewById(R.id.bt_appoint);
+
+        ViewGroup.LayoutParams params = imageLayout.getLayoutParams();
+        params.height = (int) (ScreenUtil.getScreenWidth(this) / IMAGE_RATIO);
+
+
     }
 
     private void setListener(){
@@ -177,12 +187,6 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
     @Override
     public void onItemClick(String videoId) {
         CourseVideoDetailActivity.start(this,courseId,videoId);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        btAppoint.setText(SystemInfoUtils.getCourseVideoTipOnLogin());
     }
 
     @Override

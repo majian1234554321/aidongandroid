@@ -23,7 +23,6 @@ public class SystemBean implements Serializable {
     private int appointment_countdown;// 预约倒计时,单位分钟
     private long current_time;
     private String acivity;     //课程视频底部提示文字(未登录状态下)
-    private String activityOnLogin; //课程视频底部提示文字(登录状态下)
     private double express_price;    //快递费
 
 
@@ -120,13 +119,6 @@ public class SystemBean implements Serializable {
         return acivity;
     }
 
-    public String getActivityOnLogin() {
-        return activityOnLogin;
-    }
-
-    public void setActivityOnLogin(String activityOnLogin) {
-        this.activityOnLogin = activityOnLogin;
-    }
 
     public void setAcivity(String acivity) {
         this.acivity = acivity;

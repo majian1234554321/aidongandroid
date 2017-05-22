@@ -16,7 +16,7 @@
             android:drawablePadding="30dp"
             android:drawableTop="@drawable/empty_appoint"
             android:gravity="center"
-            android:text="没有更多视频!"
+            android:text="暂无更多视频"
             android:textColor="@color/c9" />
 
     </RelativeLayout>

@@ -16,7 +16,7 @@
             android:drawablePadding="30dp"
             android:drawableTop="@drawable/empty_order"
             android:gravity="center"
-            android:text="还没有订单!"
+            android:text="暂无订单"
             android:textColor="@color/c9" />
 
     </RelativeLayout>

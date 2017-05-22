@@ -42,13 +42,13 @@ public class MineInfoPresenterImpl {
             public void onNext(MineInfoBean mineInfoBean) {
                 if (view != null) {
                     view.onGetMineInfo(mineInfoBean);
-                    if (!TextUtils.isEmpty(mineInfoBean.getActivity())) {
-                        Constant.systemInfoBean.setActivityOnLogin(mineInfoBean.getActivity());
-                    }
                 }
                 App.getInstance().saveMineInfoBean(mineInfoBean);
                 if (callBack != null) {
                     callBack.onRequestResponse();
+                }
+                if (!TextUtils.isEmpty(mineInfoBean.getActivity())) {
+                    Constant.activityOnLogin = mineInfoBean.getActivity();
                 }
             }
 

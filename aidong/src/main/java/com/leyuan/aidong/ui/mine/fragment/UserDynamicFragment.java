@@ -101,7 +101,7 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
         }
         userInfoPresent = new UserInfoPresentImpl(getContext(), this);
         initRecyclerView(view);
-        userInfoPresent.commonLoadDynamic(useId);
+        userInfoPresent.pullToRefreshDynamic(useId);
     }
 
     @Override
@@ -134,11 +134,16 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                currPage = 1;
-                RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-                userInfoPresent.commonLoadDynamic(useId);
+                refreshDynamic();
             }
         });
+    }
+
+    public void refreshDynamic(){
+        currPage = 1;
+        refreshLayout.setRefreshing(true);
+        RecyclerViewStateUtils.resetFooterViewState(recyclerView);
+        userInfoPresent.pullToRefreshDynamic(useId);
     }
 
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener() {
@@ -150,6 +155,7 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
             }
         }
     };
+
 
 
     @Override

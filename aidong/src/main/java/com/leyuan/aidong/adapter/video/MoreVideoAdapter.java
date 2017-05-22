@@ -6,12 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CourseVideoBean;
+import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.ScreenUtil;
 import com.leyuan.aidong.utils.Utils;
 
 import java.util.ArrayList;
@@ -19,6 +22,7 @@ import java.util.List;
 
 
 public class MoreVideoAdapter extends RecyclerView.Adapter<MoreVideoAdapter.VideoHolder> {
+    private static final float IMAGE_RATIO = 370/208f;
     private Context context;
     private List<CourseVideoBean> data = new ArrayList<>();
     private MoreVideoAdapter.OnItemClickListener listener;
@@ -63,6 +67,7 @@ public class MoreVideoAdapter extends RecyclerView.Adapter<MoreVideoAdapter.Vide
     }
 
     class VideoHolder extends RecyclerView.ViewHolder {
+        RelativeLayout videoLayout;
         ImageView cover;
         ImageView play;
         TextView name;
@@ -70,10 +75,15 @@ public class MoreVideoAdapter extends RecyclerView.Adapter<MoreVideoAdapter.Vide
 
         public VideoHolder(View itemView) {
             super(itemView);
+            videoLayout = (RelativeLayout) itemView.findViewById(R.id.rl_video);
             cover = (ImageView) itemView.findViewById(R.id.iv_cover);
             play = (ImageView) itemView.findViewById(R.id.iv_play);
             name = (TextView) itemView.findViewById(R.id.txt_course_name);
             duration = (TextView) itemView.findViewById(R.id.txt_course_type_duration);
+
+            ViewGroup.LayoutParams params = videoLayout.getLayoutParams();
+            float screenWidth = (ScreenUtil.getScreenWidth(context) - DensityUtil.dp2px(context,10))/2f;
+            params.height = (int) (screenWidth / IMAGE_RATIO);
         }
     }
 
