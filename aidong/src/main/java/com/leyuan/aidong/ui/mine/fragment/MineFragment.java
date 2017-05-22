@@ -1,5 +1,7 @@
 package com.leyuan.aidong.ui.mine.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -61,9 +63,20 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
     private MineInfoPresenterImpl presenter;
     private TextView txt_new_shop;
 
+    private BroadcastReceiver registerReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            refreshLoginState();
+        }
+    };
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        IntentFilter registerFilter = new IntentFilter();
+        registerFilter.addAction(Constant.BROADCAST_ACTION_REGISTER_SUCCESS);
+        getActivity().registerReceiver(registerReceiver, registerFilter);
     }
 
     @Nullable
@@ -151,10 +164,14 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
         super.onResume();
         img_new_message.setVisibility(EmMessageManager.isHaveUnreadMessage() ? View.VISIBLE : View.GONE);
 
-        if (App.mInstance.isLogin()) {
+        refreshLoginState();
+    }
+
+    private void refreshLoginState() {
+        if (App.getInstance().isLogin()) {
             relativeLayout_my_logo.setVisibility(View.VISIBLE);
             layout_no_login.setVisibility(View.GONE);
-            user = App.mInstance.getUser();
+            user = App.getInstance().getUser();
             textView_name.setText(user.getName());
             presenter.getMineInfo();
             GlideLoader.getInstance().displayCircleImage(user.getAvatar(), imageView_head);
@@ -235,6 +252,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
     public void onDestroy() {
         super.onDestroy();
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(chatMessageReceiver);
+        getActivity().unregisterReceiver(registerReceiver);
+        registerReceiver = null;
     }
 
     @Override

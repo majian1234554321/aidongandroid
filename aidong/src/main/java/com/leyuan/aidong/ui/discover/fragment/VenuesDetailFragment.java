@@ -63,7 +63,7 @@ public class VenuesDetailFragment extends BaseFragment implements View.OnClickLi
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_venues_detail, container,false);
+        return inflater.inflate(R.layout.fragment_venues_detail, container, false);
     }
 
     @Override
@@ -120,10 +120,10 @@ public class VenuesDetailFragment extends BaseFragment implements View.OnClickLi
                 break;
 
             case R.id.ll_equipment:
-                GoodsFilterActivity.start(getContext(),GOODS_EQUIPMENT,venues.getName(),venues.getId());
+                GoodsFilterActivity.start(getContext(), GOODS_EQUIPMENT, venues.getName(), venues.getId());
                 break;
             case R.id.ll_nurture:
-                GoodsFilterActivity.start(getContext(),GOODS_NUTRITION,venues.getName(),venues.getId());
+                GoodsFilterActivity.start(getContext(), GOODS_NUTRITION, venues.getName(), venues.getId());
                 break;
             case R.id.tv_address:
                 if (venues != null) {
@@ -155,7 +155,7 @@ public class VenuesDetailFragment extends BaseFragment implements View.OnClickLi
             tvPrice.setText(venues.getPrice() + "元起");
         }
 
-        tvDistance.setText(String.format("%.2f", (venues.getDistance() / 1000)) + "km");
+        tvDistance.setText(venues.getDistanceFormat());
         tvAddress.setText(venues.getAddress());
         tvPhone.setText(venues.getTel());
         tvOpenTime.setText(venues.getBusiness_time());

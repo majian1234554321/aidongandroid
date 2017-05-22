@@ -1,5 +1,7 @@
 package com.leyuan.aidong.entity;
 
+import android.annotation.SuppressLint;
+
 import com.google.gson.annotations.SerializedName;
 import com.leyuan.aidong.entity.model.Coordinate;
 
@@ -201,5 +203,12 @@ public class VenuesDetailBean {
                 ", business_time='" + business_time + '\'' +
                 ", service=" + service +
                 '}';
+    }
+
+    @SuppressLint("DefaultLocale")
+    public String getDistanceFormat() {
+        if (getDistance() < 100)
+            return "小于100m";
+        return String.format("%.2f", (getDistance() / 1000)) + "km";
     }
 }

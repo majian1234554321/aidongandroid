@@ -14,7 +14,7 @@
 
         <ImageView
             android:id="@+id/iv_back"
-            style="@style/styleImageBack"/>
+            style="@style/styleImageBack" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -89,6 +89,7 @@
                 app:line_color="@color/line_color"
                 app:show_right_arrow="true"
                 app:text_height="45dp" />
+
             <include layout="@layout/inc_bold_line" />
 
             <com.leyuan.aidong.widget.ExtendTextView
@@ -105,13 +106,11 @@
                 android:id="@+id/identify"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 app:left_text="身份"
                 app:line_color="@color/line_color"
                 app:show_right_arrow="true"
                 app:text_height="45dp" />
-
-
-
 
 
             <com.leyuan.aidong.widget.ExtendTextView

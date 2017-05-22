@@ -97,6 +97,7 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
 
         SystemPresentImpl systemPresent = new SystemPresentImpl(this);
         systemPresent.setOnRequestResponse(requestResponse);
+        systemPresent.setSplashView(this);
         systemPresent.getSystemInfo("android");
         httpRequestIndex = 1;
         if (App.getInstance().isLogin()) {

@@ -28,6 +28,7 @@ import com.leyuan.aidong.ui.mine.view.SelectAddressDialog;
 import com.leyuan.aidong.ui.mvp.presenter.UserInfoPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.UserInfoPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.UpdateUserInfoActivityView;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.ToastGlobal;
@@ -256,6 +257,8 @@ public class CompleteUserInfoActivity extends BaseActivity implements UpdateUser
     public void updateResult(boolean success) {
         if (success) {
             Toast.makeText(CompleteUserInfoActivity.this, "提交成功", Toast.LENGTH_LONG).show();
+            sendBroadcast(new Intent(Constant.BROADCAST_ACTION_REGISTER_SUCCESS));
+
             finish();
         } else {
             Toast.makeText(CompleteUserInfoActivity.this, "提交失败", Toast.LENGTH_LONG).show();

@@ -19,7 +19,7 @@ import java.util.List;
  * 健康餐饮界面推荐自提场馆实体
  * Created by song on 2016/8/22.
  */
-public class RecommendVenuesAdapter extends RecyclerView.Adapter<RecommendVenuesAdapter.VenuesViewHolder>{
+public class RecommendVenuesAdapter extends RecyclerView.Adapter<RecommendVenuesAdapter.VenuesViewHolder> {
     private Context context;
     private List<VenuesBean> data = new ArrayList<>();
 
@@ -28,7 +28,7 @@ public class RecommendVenuesAdapter extends RecyclerView.Adapter<RecommendVenues
     }
 
     public void setData(List<VenuesBean> data) {
-        if(data != null){
+        if (data != null) {
             this.data = data;
             notifyDataSetChanged();
         }
@@ -41,7 +41,7 @@ public class RecommendVenuesAdapter extends RecyclerView.Adapter<RecommendVenues
 
     @Override
     public VenuesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = View.inflate(parent.getContext(),R.layout.item_recommend_venues,null);
+        View view = View.inflate(parent.getContext(), R.layout.item_recommend_venues, null);
         return new VenuesViewHolder(view);
     }
 
@@ -50,13 +50,13 @@ public class RecommendVenuesAdapter extends RecyclerView.Adapter<RecommendVenues
         VenuesBean bean = data.get(position);
         GlideLoader.getInstance().displayImage(bean.getBrandLogo(), holder.cover);
         holder.name.setText(bean.getName());
-        holder.distance.setText(String.format("%.2f", (bean.getDistance() / 1000)) + "km");
+        holder.distance.setText(bean.getDistanceFormat());
 //                String.format(context.getString(R.string.distance_km),bean.getDistance()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                VenuesDetailActivity.start(context,"1");
+                VenuesDetailActivity.start(context, "1");
             }
         });
     }
@@ -68,9 +68,9 @@ public class RecommendVenuesAdapter extends RecyclerView.Adapter<RecommendVenues
 
         public VenuesViewHolder(View itemView) {
             super(itemView);
-            cover = (ImageView)itemView.findViewById(R.id.dv_venues_cover);
-            name = (TextView)itemView.findViewById(R.id.tv_venues_name);
-            distance = (TextView)itemView.findViewById(R.id.tv_venues_distance);
+            cover = (ImageView) itemView.findViewById(R.id.dv_venues_cover);
+            name = (TextView) itemView.findViewById(R.id.tv_venues_name);
+            distance = (TextView) itemView.findViewById(R.id.tv_venues_distance);
         }
     }
 }

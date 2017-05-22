@@ -84,11 +84,16 @@ public class VenuesDetailActivity extends BaseActivity implements SmartTabLayout
                     text.setTypeface(i == position ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
                 }
 
-                if (position == allTabView.size() -1) {
-                    tvAppointment.setVisibility(View.GONE);
-                } else {
+                if (position == 0) {
                     tvAppointment.setVisibility(View.VISIBLE);
+                } else {
+                    tvAppointment.setVisibility(View.GONE);
                 }
+//                if (position == allTabView.size() - 1) {
+//                    tvAppointment.setVisibility(View.GONE);
+//                } else {
+//                    tvAppointment.setVisibility(View.VISIBLE);
+//                }
             }
         });
 

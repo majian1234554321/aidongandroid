@@ -57,7 +57,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
         holder.address.setText(bean.getAddress());
         holder.time.setText(String.format(context.getString(R.string.time_with_line), bean.getClassTime(), bean.getBreakTime()));
         holder.count.setText(String.format(context.getString(R.string.course_count), bean.getAppliedCount(), bean.getPlace()));
-        holder.distance.setText(String.format("%.2f", (bean.getDistance() / 1000)) + "km");
+        holder.distance.setText(bean.getDistanceFormat());
 //                String.format(context.getString(R.string.distance_km),bean.getDistance()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

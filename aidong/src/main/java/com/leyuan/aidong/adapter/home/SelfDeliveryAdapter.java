@@ -28,7 +28,7 @@ public class SelfDeliveryAdapter extends RecyclerView.Adapter<SelfDeliveryAdapte
     }
 
     public void setData(List<VenuesBean> data) {
-        if(data != null){
+        if (data != null) {
             this.data = data;
         }
     }
@@ -40,7 +40,7 @@ public class SelfDeliveryAdapter extends RecyclerView.Adapter<SelfDeliveryAdapte
 
     @Override
     public VenuesHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_self_delivery, parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_self_delivery, parent, false);
         return new VenuesHolder(view);
     }
 
@@ -50,15 +50,13 @@ public class SelfDeliveryAdapter extends RecyclerView.Adapter<SelfDeliveryAdapte
         holder.checkBox.setChecked(bean.isChecked());
         holder.tvShopName.setText(bean.getName());
         holder.tvAddress.setText(bean.getAddress());
-        holder.tvDistance.setText(String.format("%.2f", (bean.getDistance() / 1000)) + "km");
-//                String.format(context.getResources().getString(R.string.distance_km),
-//                String.valueOf(FormatUtil.parseDouble(bean.getDistance()))));
+        holder.tvDistance.setText(bean.getDistanceFormat());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(bean.isChecked()){
+                if (bean.isChecked()) {
                     bean.setChecked(false);
-                }else {
+                } else {
                     for (int i = 0; i < data.size(); i++) {
                         data.get(i).setChecked(i == position);
                     }

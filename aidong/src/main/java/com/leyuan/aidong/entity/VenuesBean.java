@@ -1,5 +1,6 @@
 package com.leyuan.aidong.entity;
 
+import android.annotation.SuppressLint;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -155,4 +156,11 @@ public class VenuesBean implements Parcelable {
             return new VenuesBean[size];
         }
     };
+
+    @SuppressLint("DefaultLocale")
+    public String getDistanceFormat() {
+        if (getDistance() < 100)
+            return "小于100m";
+        return String.format("%.2f", (getDistance() / 1000)) + "km";
+    }
 }
