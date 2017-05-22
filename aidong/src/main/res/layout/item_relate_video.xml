@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/iv_video_cover"
-        android:layout_width="145dp"
-        android:layout_height="92dp"
+        android:layout_width="157dp"
+        android:layout_height="88dp"
         android:src="@drawable/img_default"
         android:scaleType="centerCrop" />
 

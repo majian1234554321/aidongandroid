@@ -300,20 +300,20 @@ public class DateUtils {
     }
 
     public static String duringToSecond(double time) {
-//        int minate = ((int) time / 60);
-        int second = (int) time;
-        int million = (int) ((time - (int) time) * 1000);
-        StringBuffer during = new StringBuffer();
-//        if (minate > 0) {
-//            during.append(minate + "M");
-//        }
+        int minate = ((int) time / 60);
+        int second = (int) time % 60;
+//        int million = (int) ((time - (int) time) * 1000);
+        StringBuilder during = new StringBuilder();
+        if (minate > 0) {
+            during.append(minate).append("'");
+        }
         if (second > 0) {
-            during.append(second + "'");
+            during.append(second).append("\"");
         }
 
-        if (million > 0) {
-            during.append(million + "\"");
-        }
+//        if (million > 0) {
+//            during.append(million + "\"");
+//        }
 
         Logger.i(" vidoe duringToSecond = " + during.toString());
 
@@ -329,11 +329,11 @@ public class DateUtils {
         }
     }
 
-    public static boolean started(String date){
+    public static boolean started(String date) {
         Date d = parseDate(date, yyyyMMddHHmm);
-        if(d != null) {
+        if (d != null) {
             return d.getTime() - System.currentTimeMillis() < 0;
-        }else {
+        } else {
             return false;
         }
     }

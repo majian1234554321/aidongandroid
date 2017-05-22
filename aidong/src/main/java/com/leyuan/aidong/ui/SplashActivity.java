@@ -115,18 +115,6 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
             httpRequestIndex = 4;
         }
 
-
-//        versionPresenter.getVersionInfo();
-//
-//        SystemPresent systemPresent = new SystemPresentImpl(this);
-//        systemPresent.setSplashView(this);
-//        systemPresent.getSystemInfo(OS);
-//        LogAidong.i("mLocationClient   systemPresent.getSystemInfo(OS);");
-//        if (App.getInstance().isLogin()) {
-//            FollowPresent followPresent = new FollowPresentImpl(this);  //获取关注列表
-//            followPresent.getFollowList();
-//            new MineInfoPresenterImpl(this).getMineInfo();
-//        }
     }
 
     @Override

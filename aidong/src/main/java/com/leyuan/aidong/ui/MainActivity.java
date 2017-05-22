@@ -20,6 +20,7 @@ import com.leyuan.aidong.ui.discover.fragment.DiscoverHomeFragment;
 import com.leyuan.aidong.ui.home.fragment.HomeFragment;
 import com.leyuan.aidong.ui.home.fragment.StoreFragment;
 import com.leyuan.aidong.ui.mine.fragment.MineFragment;
+import com.leyuan.aidong.ui.mvp.presenter.impl.VersionPresenterImpl;
 import com.leyuan.aidong.ui.video.fragment.VideoHomeFragment;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.LocatinCityManager;
@@ -50,6 +51,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
 
         LocatinCityManager.checkLocationCity(this);
+        new VersionPresenterImpl(this).checkVersionAndShow();
+
         setContentView(R.layout.activity_main);
 
         initView();
@@ -130,6 +133,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.tabMineLayout:
                 setTabSelection(4);
                 showFragment(4);
+//                img_new_message.setVisibility(View.GONE);
 
                 break;
             default:
