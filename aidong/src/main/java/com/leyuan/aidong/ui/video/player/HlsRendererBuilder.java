@@ -45,6 +45,7 @@ import com.google.android.exoplayer.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer.upstream.DefaultUriDataSource;
 import com.google.android.exoplayer.util.ManifestFetcher;
 import com.google.android.exoplayer.util.ManifestFetcher.ManifestCallback;
+import com.leyuan.aidong.utils.Logger;
 
 import java.io.IOException;
 import java.util.List;
@@ -65,6 +66,7 @@ public class HlsRendererBuilder implements LoveSportPlayer.RendererBuilder {
     this.context = context;
     this.userAgent = userAgent;
     this.url = url;
+    Logger.i("playerActivity " ," HlsRendererBuilder created" );
   }
 
   @Override
@@ -137,7 +139,7 @@ public class HlsRendererBuilder implements LoveSportPlayer.RendererBuilder {
       HlsSampleSource sampleSource = new HlsSampleSource(chunkSource, loadControl,
           MAIN_BUFFER_SEGMENTS * BUFFER_SEGMENT_SIZE, mainHandler, player, LoveSportPlayer.TYPE_VIDEO);
       MediaCodecVideoTrackRenderer videoRenderer = new MediaCodecVideoTrackRenderer(context,
-          sampleSource, MediaCodecSelector.DEFAULT, MediaCodec.VIDEO_SCALING_MODE_SCALE_TO_FIT,
+          sampleSource, MediaCodecSelector.DEFAULT, MediaCodec.VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING,
           5000, mainHandler, player, 50);
       MediaCodecAudioTrackRenderer audioRenderer = new MediaCodecAudioTrackRenderer(sampleSource,
           MediaCodecSelector.DEFAULT, null, true, player.getMainHandler(), player,

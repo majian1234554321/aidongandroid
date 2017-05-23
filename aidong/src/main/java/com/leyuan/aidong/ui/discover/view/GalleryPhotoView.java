@@ -12,6 +12,7 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.DecelerateInterpolator;
@@ -34,7 +35,7 @@ import uk.co.senab.photoview.PhotoView;
  */
 
 public class GalleryPhotoView extends PhotoView {
-    private static final int ANIMA_DURATION = 350;
+    private static final int ANIMA_DURATION = 3500;
 
     private BitmapTransform bitmapTransform;
     private OnEnterAnimaEndListener onEnterAnimaEndListener;
@@ -70,7 +71,7 @@ public class GalleryPhotoView extends PhotoView {
     public void draw(Canvas canvas) {
         if (clipBounds != null) {
             canvas.clipRect(clipBounds);
-            Logger.i("clip", "clipBounds  >>  " + clipBounds.toShortString());
+            Log.w("clip", "clipBounds  >>  " + clipBounds.toShortString());
             clipBounds = null;
         }
         super.draw(canvas);

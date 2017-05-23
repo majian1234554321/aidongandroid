@@ -62,14 +62,6 @@ public class SystemInfoUtils {
         return activityTip;
     }
 
-    public static String getCourseVideoTipOnLogin(){
-        String activityTip = "";
-        if (systemInfoBean != null && systemInfoBean.getActivityOnLogin() != null) {
-            activityTip =  Constant.systemInfoBean.getActivityOnLogin() ;
-        }
-        return activityTip;
-    }
-
     /**
      * 获取闪屏页广告
      */

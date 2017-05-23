@@ -13,7 +13,7 @@ public interface UserInfoPresent {
 
     void getUserInfo(SwitcherLayout switcherLayout, String id);
 
-    void commonLoadDynamic(String id);
+    void pullToRefreshDynamic(String id);
 
     void requestMoreDynamic(String id, RecyclerView recyclerView, int pageSize, int page);
 

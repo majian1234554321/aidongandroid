@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.config.ConstantUrl;
+import com.leyuan.aidong.entity.NewsBean;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.zzhoujay.richtext.RichText;
@@ -25,9 +27,12 @@ public class NewsDetailActivity extends BaseActivity implements View.OnClickList
     private String date;
     private String body;
 
+    private NewsBean bean;
+
     private SharePopupWindow sharePopupWindow;
 
-    public static void start(Context context, String title, String date, String body) {
+    @Deprecated
+    private static void start(Context context, String title, String date, String body) {
         Intent starter = new Intent(context, NewsDetailActivity.class);
         starter.putExtra("title", title);
         starter.putExtra("date", date);
@@ -35,14 +40,25 @@ public class NewsDetailActivity extends BaseActivity implements View.OnClickList
         context.startActivity(starter);
     }
 
+    public static void start(Context context, NewsBean bean) {
+        Intent starter = new Intent(context, NewsDetailActivity.class);
+        starter.putExtra("newsBean", bean);
+        context.startActivity(starter);
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_detail);
         if (getIntent() != null) {
-            title = getIntent().getStringExtra("title");
-            date = getIntent().getStringExtra("date");
-            body = getIntent().getStringExtra("body");
+//            title = getIntent().getStringExtra("title");
+//            date = getIntent().getStringExtra("date");
+//            body = getIntent().getStringExtra("body");
+            bean = (NewsBean) getIntent().getSerializableExtra("newsBean");
+            title = bean.getTitle();
+            date = bean.getDatetime();
+            body = bean.getBody();
         }
 
         initView();
@@ -76,23 +92,11 @@ public class NewsDetailActivity extends BaseActivity implements View.OnClickList
                 finish();
                 break;
             case R.id.iv_share:
-                sharePopupWindow.showAtBottom(title, date, "http://function.aidong.me/image/2017/03/17/1fe8940455d788331ca43abeb164a455.jpg",
-                        "http://www.baidu.com");
+                sharePopupWindow.showAtBottom("爱动资讯", bean.getTitle(), bean.getCover(), ConstantUrl.URL_SHARE_NEWS + bean.getId());
                 break;
             default:
                 break;
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        sharePopupWindow.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        sharePopupWindow.release();
-    }
 }

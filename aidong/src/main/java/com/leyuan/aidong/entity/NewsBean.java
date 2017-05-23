@@ -1,10 +1,12 @@
 package com.leyuan.aidong.entity;
 
+import java.io.Serializable;
+
 /**
  * 资讯
  * Created by song on 2016/11/5.
  */
-public class NewsBean {
+public class NewsBean implements Serializable{
     private String id;
     private String title;
     private String body;

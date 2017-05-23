@@ -30,7 +30,8 @@ import java.util.List;
  * 相关视频
  * Created by song on 2017/4/21.
  */
-public class RelatedVideoActivity extends BaseActivity implements RelatedVideoActivityView, SwipeRefreshLayout.OnRefreshListener, MoreVideoAdapter.OnItemClickListener {
+public class RelatedVideoActivity extends BaseActivity implements RelatedVideoActivityView,
+        SwipeRefreshLayout.OnRefreshListener, MoreVideoAdapter.OnItemClickListener {
     private ImageView ivBack;
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;

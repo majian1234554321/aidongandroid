@@ -145,12 +145,12 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_dynamic_list);
         dynamicList = new ArrayList<>();
         CircleDynamicAdapter.Builder<DynamicBean> builder = new CircleDynamicAdapter.Builder<>(getContext());
-        builder.addType(VideoViewHolder.class,DYNAMIC_VIDEO, R.layout.vh_dynamic_video)
+        builder.addType(VideoViewHolder.class, DYNAMIC_VIDEO, R.layout.vh_dynamic_video)
                 .addType(OneImageViewHolder.class, DYNAMIC_ONE_IMAGE, R.layout.vh_dynamic_one_photo)
-                .addType(TwoImageViewHolder.class,DYNAMIC_TWO_IMAGE, R.layout.vh_dynamic_two_photos)
-                .addType(ThreeImageViewHolder.class,DYNAMIC_THREE_IMAGE, R.layout.vh_dynamic_three_photos)
-                .addType(FourImageViewHolder.class,DYNAMIC_FOUR_IMAGE, R.layout.vh_dynamic_four_photos)
-                .addType(FiveImageViewHolder.class,DYNAMIC_FIVE_IMAGE, R.layout.vh_dynamic_five_photos)
+                .addType(TwoImageViewHolder.class, DYNAMIC_TWO_IMAGE, R.layout.vh_dynamic_two_photos)
+                .addType(ThreeImageViewHolder.class, DYNAMIC_THREE_IMAGE, R.layout.vh_dynamic_three_photos)
+                .addType(FourImageViewHolder.class, DYNAMIC_FOUR_IMAGE, R.layout.vh_dynamic_four_photos)
+                .addType(FiveImageViewHolder.class, DYNAMIC_FIVE_IMAGE, R.layout.vh_dynamic_five_photos)
                 .addType(SixImageViewHolder.class, DYNAMIC_SIX_IMAGE, R.layout.vh_dynamic_six_photos)
                 .showFollowButton(false)
                 .showLikeAndCommentLayout(true)
@@ -193,11 +193,11 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
     private class DynamicCallback extends CircleDynamicAdapter.SimpleDynamicCallback {
 
         @Override
-        public void onBackgroundClick(DynamicBean dynamicBean,int position) {
+        public void onBackgroundClick(DynamicBean dynamicBean, int position) {
             CircleFragment.this.clickPosition = position;
             if (App.mInstance.isLogin()) {
-                startActivityForResult(new Intent(getContext(),DynamicDetailActivity.class)
-                        .putExtra("dynamic",dynamicBean),REQUEST_REFRESH_DYNAMIC);
+                startActivityForResult(new Intent(getContext(), DynamicDetailActivity.class)
+                        .putExtra("dynamic", dynamicBean), REQUEST_REFRESH_DYNAMIC);
             } else {
                 invokeDynamicBean = dynamicBean;
                 startActivityForResult(new Intent(getContext(), LoginActivity.class), REQUEST_TO_DYNAMIC);
@@ -237,11 +237,11 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
         }
 
         @Override
-        public void onCommentClick(DynamicBean dynamicBean,int position) {
+        public void onCommentClick(DynamicBean dynamicBean, int position) {
             CircleFragment.this.clickPosition = position;
             if (App.mInstance.isLogin()) {
-                startActivityForResult(new Intent(getContext(),DynamicDetailActivity.class)
-                        .putExtra("dynamic",dynamicBean),REQUEST_REFRESH_DYNAMIC);
+                startActivityForResult(new Intent(getContext(), DynamicDetailActivity.class)
+                        .putExtra("dynamic", dynamicBean), REQUEST_REFRESH_DYNAMIC);
             } else {
                 invokeDynamicBean = dynamicBean;
                 startActivityForResult(new Intent(getContext(), LoginActivity.class), REQUEST_TO_DYNAMIC);
@@ -257,7 +257,7 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
                 cover = dynamic.videos.cover;
             }
             sharePopupWindow.showAtBottom(dynamic.publisher.getName() + "的动态", dynamic.content,
-                    cover, ConstantUrl.URL_SHARE_DYNAMIC);
+                    cover, ConstantUrl.URL_SHARE_DYNAMIC + dynamic.id);
         }
     }
 
@@ -302,17 +302,17 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
             if (requestCode == REQUEST_LOGIN) {
                 dynamicPresent.pullToRefreshData();
             } else if (requestCode == REQUEST_TO_DYNAMIC) {
-                startActivityForResult(new Intent(getContext(),DynamicDetailActivity.class)
-                        .putExtra("dynamic",invokeDynamicBean),REQUEST_REFRESH_DYNAMIC);
-            }else if(requestCode == REQUEST_REFRESH_DYNAMIC){
+                startActivityForResult(new Intent(getContext(), DynamicDetailActivity.class)
+                        .putExtra("dynamic", invokeDynamicBean), REQUEST_REFRESH_DYNAMIC);
+            } else if (requestCode == REQUEST_REFRESH_DYNAMIC) {
                 //更新动态详情页新添加的评论
                 CommentBean comment = data.getParcelableExtra("comment");
                 DynamicBean dynamicBean = dynamicList.get(clickPosition);
-                dynamicBean.comment.item.add(0,comment);
-                dynamicBean.comment.count ++ ;
+                dynamicBean.comment.item.add(0, comment);
+                dynamicBean.comment.count++;
                 circleDynamicAdapter.notifyItemChanged(clickPosition);
             }
-        }else if(resultCode == RESULT_DELETE){
+        } else if (resultCode == RESULT_DELETE) {
             dynamicList.remove(clickPosition);
             circleDynamicAdapter.updateData(dynamicList);
             circleDynamicAdapter.notifyItemRemoved(clickPosition);

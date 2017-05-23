@@ -48,7 +48,7 @@ public class DiscoverNewsAdapter extends RecyclerView.Adapter<DiscoverNewsAdapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NewsDetailActivity.start(context, bean.getTitle(), bean.getDatetime(), bean.getBody());
+                NewsDetailActivity.start(context, bean);
             }
         });
     }

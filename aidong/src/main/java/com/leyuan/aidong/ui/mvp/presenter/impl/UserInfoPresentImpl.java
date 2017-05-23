@@ -117,7 +117,7 @@ public class UserInfoPresentImpl implements UserInfoPresent {
     }
 
     @Override
-    public void commonLoadDynamic(String id) {
+    public void pullToRefreshDynamic(String id) {
         userInfoModel.getUserDynamic(new IsLoginSubscriber<DynamicsData>(context) {
             @Override
             public void onNext(DynamicsData dynamicsData) {

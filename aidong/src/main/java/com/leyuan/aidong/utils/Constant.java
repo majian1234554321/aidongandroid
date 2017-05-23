@@ -72,6 +72,7 @@ public class Constant {
 
     public static List<VenuesBean> gyms;
     public static SystemBean systemInfoBean;
+    public static String activityOnLogin; //课程视频底部提示文字(登录状态下)
     public static FollowData followData;
     public static final byte ID_OFFICAL = 1;
     public static final byte ID_COACH = 2;

@@ -1,8 +1,9 @@
 package com.leyuan.aidong.ui.discover.activity;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -55,11 +56,18 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
     private ArrayList<BaseMedia> selectedMedia;
     private DynamicPresent dynamicPresent;
 
-    public static void start(Context context,boolean isPhoto,ArrayList<BaseMedia> selectedMedia) {
-        Intent starter = new Intent(context, PublishDynamicActivity.class);
+    public static void startForResult(Fragment fragment, boolean isPhoto, ArrayList<BaseMedia> selectedMedia, int requestCode) {
+        Intent starter = new Intent(fragment.getContext(), PublishDynamicActivity.class);
         starter.putExtra("isPhoto",isPhoto);
         starter.putParcelableArrayListExtra("selectedMedia",selectedMedia);
-        context.startActivity(starter);
+        fragment.startActivityForResult(starter,requestCode);
+    }
+
+    public static void startForResult(Activity activity, boolean isPhoto, ArrayList<BaseMedia> selectedMedia, int requestCode) {
+        Intent starter = new Intent(activity, PublishDynamicActivity.class);
+        starter.putExtra("isPhoto",isPhoto);
+        starter.putParcelableArrayListExtra("selectedMedia",selectedMedia);
+        activity.startActivityForResult(starter,requestCode);
     }
 
     @Override
@@ -164,9 +172,9 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
     public void publishDynamicResult(BaseBean baseBean) {
         dismissProgressDialog();
         if(baseBean.getStatus() == Constant.OK){
-            setResult(RESULT_OK,null);
             selectedMedia.clear();
             ToastGlobal.showLong("上传成功");
+            setResult(RESULT_OK,null);
             finish();
         }else {
             ToastGlobal.showLong(baseBean.getMessage());

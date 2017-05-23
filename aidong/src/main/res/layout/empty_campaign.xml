@@ -16,7 +16,7 @@
             android:drawablePadding="30dp"
             android:drawableTop="@drawable/empty_campaign"
             android:gravity="center"
-            android:text="还没有活动!"
+            android:text="暂无活动"
             android:textColor="@color/c9" />
 
     </RelativeLayout>

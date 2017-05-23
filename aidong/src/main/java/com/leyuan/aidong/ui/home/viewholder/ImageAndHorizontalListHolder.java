@@ -40,16 +40,19 @@ public class ImageAndHorizontalListHolder extends BaseRecyclerViewHolder<HomeBea
                         bean.getImage(),bean.getIntroduce());
             }
         });
-        BigAndLittleImageAdapter adapter = new BigAndLittleImageAdapter(context,bean.getType());
-        recyclerView.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false));
-        recyclerView.setAdapter(adapter);
-        adapter.setData(bean.getItem());
-        adapter.setSeeMoreListener(new BigAndLittleImageAdapter.SeeMoreListener() {
-            @Override
-            public void onSeeMore() {
-                BrandActivity.start(context,bean.getType(),bean.getId(),bean.getTitle(),
-                        bean.getImage(),bean.getIntroduce());
-            }
-        });
+
+        if(bean.getItem() != null && !bean.getItem().isEmpty()) {
+            BigAndLittleImageAdapter adapter = new BigAndLittleImageAdapter(context, bean.getType());
+            recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+            recyclerView.setAdapter(adapter);
+            adapter.setData(bean.getItem());
+            adapter.setSeeMoreListener(new BigAndLittleImageAdapter.SeeMoreListener() {
+                @Override
+                public void onSeeMore() {
+                    BrandActivity.start(context, bean.getType(), bean.getId(), bean.getTitle(),
+                            bean.getImage(), bean.getIntroduce());
+                }
+            });
+        }
     }
 }

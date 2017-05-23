@@ -12,10 +12,10 @@ public class UrlConfig {
 
     static {
         if (debug) {
-            urlHtml = "http://app.51aidong.com/";
+            urlHtml = "http://share.51aidong.com/";
             urlHost = "http://app.51aidong.com/";
         } else {
-            urlHtml = "http://app.51aidong.com/";
+            urlHtml = "http://share.51aidong.com/";
             urlHost = "http://app.51aidong.com/";
         }
     }

@@ -10,8 +10,10 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CourseVideoBean;
+import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.ScreenUtil;
 import com.leyuan.aidong.utils.Utils;
 
 import java.util.ArrayList;
@@ -19,6 +21,7 @@ import java.util.List;
 
 
 public class CourseRecommendVideoAdapter extends RecyclerView.Adapter<CourseRecommendVideoAdapter.ViewHolder> {
+    private static final float IMAGE_RATIO = 317/176f;
     private Context context;
     private List<CourseVideoBean> data = new ArrayList<>();
     private ItemClickListener listener;
@@ -75,6 +78,9 @@ public class CourseRecommendVideoAdapter extends RecyclerView.Adapter<CourseReco
             imgCover = (ImageView) view.findViewById(R.id.img_cover);
             txtCourseName = (TextView) view.findViewById(R.id.txt_course_name);
             txtCourseTypeDuration = (TextView) view.findViewById(R.id.txt_course_type_duration);
+            ViewGroup.LayoutParams params = imgCover.getLayoutParams();
+            float width = (ScreenUtil.getScreenWidth(context) - DensityUtil.dp2px(context, 30)) / 2f;
+            params.height = (int) (width / IMAGE_RATIO);
         }
     }
 

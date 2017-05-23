@@ -245,7 +245,7 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
             holder.img_default_none_live.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mOnVideoClickListener.onVideoClick(liveHome.getLiveId());
+                    mOnVideoClickListener.onVideoClick(liveHome);
                 }
             });
         }
@@ -325,7 +325,7 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
     }
 
     public interface OnVideoClickListener {
-        void onVideoClick(int id);
+        void onVideoClick(LiveVideoInfo id);
     }
 
 

@@ -26,7 +26,6 @@ import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.CustomLayoutManager;
 
 
-
 public class CelebrityFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private int item_normal_height;
@@ -94,7 +93,7 @@ public class CelebrityFragment extends Fragment implements SwipeRefreshLayout.On
 
         initReceiver();
         initRecyclerView();
-      //  getDataFromInter();
+        //  getDataFromInter();
         return rootView;
     }
 
@@ -241,11 +240,7 @@ public class CelebrityFragment extends Fragment implements SwipeRefreshLayout.On
         public void OnClick(int position, View itemView, SpecialTopicInfo info) {
             int first_complete_visible_position = mLinearLayoutManager.findFirstCompletelyVisibleItemPosition();
             if (position == first_complete_visible_position) {
-                //                ToastTools.makeShortText("跳");
-                Intent intent = new Intent(getActivity(), VideoDetailActivity.class);
-                intent.putExtra("id", info.getId());
-                intent.putExtra("phase", info.getLatest().getPhase()-1);
-                getActivity().startActivity(intent);
+                VideoDetailActivity.start(getActivity(), info.getId(), info.getLatest().getPhase(),0);
             } else {
                 View v = mRecyclerView.getChildAt(position - mLinearLayoutManager.findFirstVisibleItemPosition());
                 Logger.i("top = " + v.getTop());
@@ -254,7 +249,6 @@ public class CelebrityFragment extends Fragment implements SwipeRefreshLayout.On
             Logger.i("onclick --- position = " + position);
         }
     };
-
 
 
     private int valueColor(int height) {
@@ -308,6 +302,6 @@ public class CelebrityFragment extends Fragment implements SwipeRefreshLayout.On
 
     @Override
     public void onRefresh() {
-       // getDataFromInter();
+        // getDataFromInter();
     }
 }

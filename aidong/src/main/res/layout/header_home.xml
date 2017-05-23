@@ -134,7 +134,11 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_course"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:paddingRight="10dp"
+            android:clipToPadding="false"
+            android:clipChildren="false"/>
+
 
         <TextView
             android:id="@+id/tv_more_course"

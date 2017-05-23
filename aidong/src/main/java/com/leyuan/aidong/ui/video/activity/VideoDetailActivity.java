@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.video.activity;
 
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -46,7 +47,7 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
     private TextView tv_reply_count, tv_like_count, txt_page_tag;
 
     private TextViewPrintly tv_course_desc, tv_course_name, tv_auth_and_time;
-    private int series_id, phase;
+    private int series_id, phase, currentPostion;
     private ArrayList<View> mViews = new ArrayList<>();
     private ArrayList<Bitmap> mBitmaps = new ArrayList<>();
     public static Bitmap blurBitmaps[];
@@ -80,17 +81,28 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
                     isJustInto = false;
                     break;
                 case BITMAP_BLUR_OK:
-                    img_blur.setImageBitmap(blurBitmaps[phase]);
+                    img_blur.setImageBitmap(blurBitmaps[currentPostion]);
                     break;
             }
         }
     };
 
+
+    public static void start(Context context, int series_id, int phase, int flag) {
+
+        Intent intent = new Intent(context, VideoDetailActivity.class);
+        if (flag > 0)
+            intent.setFlags(flag);
+        intent.putExtra("series_id", series_id);
+        intent.putExtra("phase", phase);
+        context.startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         screen_width = getResources().getDisplayMetrics().widthPixels;
-        series_id = getIntent().getIntExtra("id", 0);
+        series_id = getIntent().getIntExtra("series_id", 0);
         phase = getIntent().getIntExtra("phase", -1);
         presenter = new VideoPresenterImpl(this);
         presenter.setVideoDetailView(this);
@@ -293,88 +305,97 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
     }
 
     private void share(final VideoDetail video) {
-        final String url = ConstantUrl.VIDEO_SHARE
-                + "vid=" + video.getvId() + "&phase=" + video.getPhase();
+        final String url = ConstantUrl.URL_SHARE_VIDEO + video.getvId();
         sharePopupWindow.showAtBottom(video.getVideoName(), video.getIntroduce(), video.getCover(), url);
     }
 
     @Override
     public void onGetVideoDetailList(ArrayList<VideoDetail> vs) {
-        if (vs != null && !vs.isEmpty()) {
-            this.videos = vs;
+
+        if (vs == null || vs.isEmpty()) return;
+        videos = vs;
+        for (int i = 0; i < videos.size(); i++) {
+            if (videos.get(i).getPhase() == phase) {
+                currentPostion = i;
+                break;
+            }
         }
+
+        initViewPager();
+        initBottomTag();
+
+        if (currentPostion == 0) {
+            fillingViewDataNoAnimation(0);
+            isJustInto = false;
+        }
+        viewPager.setCurrentItem(currentPostion, false);
+
+    }
+
+    private void initBottomTag() {
+        tag_width = screen_width / videos.size();
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) layout_page_tag.getLayoutParams();
+        params.width = tag_width;
+        layout_page_tag.setLayoutParams(params);
+    }
+
+    private void initViewPager() {
         parseList = App.getInstance().getParseString();
-        if (phase == -1) {
-            phase = videos.size() - 1;
-        }
-        if (!videos.isEmpty()) {
-            blurBitmaps = new Bitmap[videos.size()];
-            for (int i = 0; i < videos.size(); i++) {
-                final VideoDetail videoDetail = videos.get(i);
-                if (parseList != null && parseList.contains(videoDetail.getvId() + "")) {
-                    videoDetail.setIsParsed(true);
-                }
+        blurBitmaps = new Bitmap[videos.size()];
+        for (int i = 0; i < videos.size(); i++) {
+            final VideoDetail videoDetail = videos.get(i);
+            if (parseList != null && parseList.contains(videoDetail.getvId() + "")) {
+                videoDetail.setIsParsed(true);
+            }
 
-
-                View view = View.inflate(VideoDetailActivity.this, R.layout.item_video_detail_viewpager, null);
-                final ImageView iv_cover = (ImageView) view.findViewById(R.id.iv_cover);
-                ImageView iv_start = (ImageView) view.findViewById(R.id.iv_start);
-                final int finalI = i;
-                Glide.with(this).load(videoDetail.getCover()).asBitmap()
-                        .into(new SimpleTarget<Bitmap>(750, 750) {
-                            @Override
-                            public void onResourceReady(final Bitmap loadedImage, GlideAnimation<? super Bitmap> glideAnimation) {
-                                if (loadedImage != null) {
-                                    iv_cover.setImageBitmap(loadedImage);
-                                    new Thread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            if (blurBitmaps != null)
-                                                blurBitmaps[finalI] = FastBlur.doBlur(Bitmap.createScaledBitmap(loadedImage, 250,
-                                                        250, false), 60, true);
-                                            if (finalI == phase) {
-                                                mHandler.sendEmptyMessage(BITMAP_BLUR_OK);
-                                            }
+            View view = View.inflate(VideoDetailActivity.this, R.layout.item_video_detail_viewpager, null);
+            final ImageView iv_cover = (ImageView) view.findViewById(R.id.iv_cover);
+            ImageView iv_start = (ImageView) view.findViewById(R.id.iv_start);
+            final int finalI = i;
+            Glide.with(this).load(videoDetail.getCover()).asBitmap()
+                    .into(new SimpleTarget<Bitmap>(750, 750) {
+                        @Override
+                        public void onResourceReady(final Bitmap loadedImage, GlideAnimation<? super Bitmap> glideAnimation) {
+                            if (loadedImage != null) {
+                                iv_cover.setImageBitmap(loadedImage);
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (blurBitmaps != null)
+                                            blurBitmaps[finalI] = FastBlur.doBlur(Bitmap.createScaledBitmap(loadedImage, 250,
+                                                    250, false), 60, true);
+                                        if (finalI == currentPostion) {
+                                            mHandler.sendEmptyMessage(BITMAP_BLUR_OK);
                                         }
-                                    }).start();
+                                    }
+                                }).start();
 
-                                }
                             }
-                        });
+                        }
+                    });
 
-                iv_start.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(VideoDetailActivity.this, PlayerActivity.class)
-                                .setData(Uri.parse(videoDetail.getVideo()))
-                                //                                            .setNurtureList(Uri.parse("http://pili-live-hls.ps.qiniucdn.com/NIU7PS/57b12c4b75b6253fb20003e4.m3u8"))
-                                .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_HLS)
-                                //                                            .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_OTHER)
-                                .putExtra(PlayerActivity.CONTENT_ID_EXTRA, "")
-                                .putExtra(PlayerActivity.CONTENT_ID_EXTRA, "")
-                                .putExtra(PlayerActivity.VIDEO_ID, String.valueOf(videoDetail.getContentId()));
+            iv_start.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(VideoDetailActivity.this, PlayerActivity.class)
+                            .setData(Uri.parse(videoDetail.getVideo()))
+                            //                                            .setNurtureList(Uri.parse("http://pili-live-hls.ps.qiniucdn.com/NIU7PS/57b12c4b75b6253fb20003e4.m3u8"))
+                            .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_HLS)
+                            //                                            .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_OTHER)
+                            .putExtra(PlayerActivity.CONTENT_ID_EXTRA, "")
+                            .putExtra(PlayerActivity.CONTENT_ID_EXTRA, "")
+                            .putExtra(PlayerActivity.VIDEO_ID, String.valueOf(videoDetail.getContentId()));
 
-                        Logger.i("playerActivity ", " from videoId =  " + videoDetail.getContentId());
-                        startActivity(intent);
-                    }
-                });
-                mViews.add(view);
-            }
-
-            pagerAdapter = new CommonViewPagerAdapter(mViews);
-            viewPager.setAdapter(pagerAdapter);
-            viewPager.addOnPageChangeListener(VideoDetailActivity.this);
-
-            tag_width = screen_width / videos.size();
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) layout_page_tag.getLayoutParams();
-            params.width = tag_width;
-            layout_page_tag.setLayoutParams(params);
-            if (phase == 0) {
-                fillingViewDataNoAnimation(0);
-                isJustInto = false;
-            }
-            viewPager.setCurrentItem(phase, false);
+                    Logger.i("playerActivity ", " from videoId =  " + videoDetail.getContentId());
+                    startActivity(intent);
+                }
+            });
+            mViews.add(view);
         }
+
+        pagerAdapter = new CommonViewPagerAdapter(mViews);
+        viewPager.setAdapter(pagerAdapter);
+        viewPager.addOnPageChangeListener(this);
     }
 
 
@@ -411,7 +432,7 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
                 case Constant.REQUEST_VIDEO_COMMENT:
                     int publishCommentNumber = data.getIntExtra(Constant.PUBLISH_COMMENT_NUMBER, 0);
 
-                    Logger.i(" publishCommentNumber onActivityResult  " +publishCommentNumber);
+                    Logger.i(" publishCommentNumber onActivityResult  " + publishCommentNumber);
                     VideoDetail detail_current = videos.get(viewPager.getCurrentItem());
                     try {
                         int oldCommentNum = Integer.parseInt(detail_current.getCommentsCount());
@@ -439,7 +460,6 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
             }
             blurBitmaps = null;
         }
-        sharePopupWindow.release();
     }
 
 }

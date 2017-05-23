@@ -19,4 +19,6 @@ public interface VenuesCourseFragmentView {
 
 
     void onGetCoursesFirst(CourseData courseData);
+
+    void showEmptyView();
 }

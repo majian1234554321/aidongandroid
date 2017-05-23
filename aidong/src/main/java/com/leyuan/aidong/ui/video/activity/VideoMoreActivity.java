@@ -68,10 +68,11 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
                     float upY = event.getY();
                     float upX = event.getX();
                     Logger.i("video upY = " + upY);
-                    if ((upY - downY) > 50 || (upY - downY > 20 && Math.abs(downX - upX) < 10)) {
+                    if (downY > 0 && ((upY - downY) > 50 || (upY - downY > 20 && Math.abs(downX - upX) < 10))) {
                         finish();
                         overridePendingTransition(0, R.anim.slide_out_from_top);
-
+                    } else {
+                        return false;
                     }
                     break;
             }
@@ -163,10 +164,10 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
         goodAdapter = new WatchOfficeRelateGoodAdapter(this, this);
         goodRecyclerView.setAdapter(goodAdapter);
 
-        scrollview.setOnTouchListener(downTouchListener);
-        videoRecyclerView.setOnTouchListener(downTouchListener);
-        courseListView.setOnTouchListener(downTouchListener);
-        goodRecyclerView.setOnTouchListener(downTouchListener);
+//        scrollview.setOnTouchListener(downTouchListener);
+//        videoRecyclerView.setOnTouchListener(downTouchListener);
+//        courseListView.setOnTouchListener(downTouchListener);
+//        goodRecyclerView.setOnTouchListener(downTouchListener);
     }
 
     private void getData() {
@@ -197,11 +198,13 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
 
     @Override
     public void onVideoClick(VideoDetail bean) {
-        Intent intent = new Intent(this, VideoDetailActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("id", series_id);
-        intent.putExtra("phase", bean.getPhase() - 1);
-        startActivity(intent);
+
+        VideoDetailActivity.start(this, series_id, bean.getPhase(), Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        Intent intent = new Intent(this, VideoDetailActivity.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        intent.putExtra("id", series_id);
+//        intent.putExtra("phase", bean.getPhase());
+//        startActivity(intent);
         overridePendingTransition(0, R.anim.slide_out_from_top);
     }
 

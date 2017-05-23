@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.VenuesDetailBean;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.BaseFragment;
@@ -116,7 +117,7 @@ public class VenuesDetailFragment extends BaseFragment implements View.OnClickLi
         switch (v.getId()) {
             case R.id.fb_share:
                 sharePopupWindow.showAtBottom(venues.getName(), venues.getIntroduce(),
-                        venues.getPhoto().get(0), "http://www.baidu.com");
+                        venues.getPhoto().get(0), ConstantUrl.URL_SHARE_GYM+venues.getId());
                 break;
 
             case R.id.ll_equipment:

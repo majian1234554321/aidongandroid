@@ -27,6 +27,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.GoodsDetailCouponAdapter;
+import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.DeliveryBean;
 import com.leyuan.aidong.entity.GoodsDetailBean;
@@ -239,7 +240,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.iv_share:
                 sharePopupWindow.showAtBottom(bean.name, bean.introduce, bean.image.get(0),
-                        "http://www.baidu.com");
+                        ConstantUrl.URL_SHARE_PRODUCT+bean.id);
                 break;
             case R.id.ll_code:
                 showRecommendCodeDialog();

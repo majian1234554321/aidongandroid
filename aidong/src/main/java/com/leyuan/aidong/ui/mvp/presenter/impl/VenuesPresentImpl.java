@@ -215,7 +215,7 @@ public class VenuesPresentImpl implements VenuesPresent {
                     switcherLayout.showContentLayout();
                     venuesCourseFragmentView.setCourses(courseData.getCourse());
                 } else {
-                    switcherLayout.showEmptyLayout();
+                    venuesCourseFragmentView.showEmptyView();
                 }
             }
         }, id, day);
@@ -229,7 +229,7 @@ public class VenuesPresentImpl implements VenuesPresent {
                 if (courseData != null && courseData.getCourse() != null && !courseData.getCourse().isEmpty()) {
                     switcherLayout.showContentLayout();
                 } else {
-                    switcherLayout.showEmptyLayout();
+                    venuesCourseFragmentView.showEmptyView();
                 }
                 venuesCourseFragmentView.onGetCoursesFirst(courseData);
             }

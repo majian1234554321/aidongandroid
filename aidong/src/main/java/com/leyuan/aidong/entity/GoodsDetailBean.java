@@ -7,7 +7,7 @@ import java.util.List;
  * Created by song on 2016/9/22.
  */
 public class GoodsDetailBean {
-    public String food_id;          //商品编号
+    public String id;          //商品编号
     public String name;             //商品名称
     public List<String> image;      //图片地址
     public String price;            //商品价格
@@ -23,7 +23,7 @@ public class GoodsDetailBean {
     @Override
     public String toString() {
         return "GoodsDetailBean{" +
-                "food_id='" + food_id + '\'' +
+                "food_id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", image=" + image +
                 ", price='" + price + '\'' +

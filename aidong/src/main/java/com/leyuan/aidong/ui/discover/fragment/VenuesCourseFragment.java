@@ -53,7 +53,6 @@ public class VenuesCourseFragment extends BaseFragment implements VenuesCourseFr
             id = bundle.getString("id");
         }
         initView(view);
-//        venuesPresent.getCourses(switcherLayout, id, days.get(0));
         venuesPresent.getCoursesFirst(switcherLayout, id);
     }
 
@@ -80,10 +79,7 @@ public class VenuesCourseFragment extends BaseFragment implements VenuesCourseFr
             courseAdapter.setData(courseData.getCourse());
             if (position > 0) {
                 dateAdapter.setSelectedPosition(position);
-
-//                dateView.scrollBy(dateView.getChildAt(position).getLeft(), 0);
                 dateView.scrollBy(dateView.getChildAt(1).getLeft() * (position - 1), 0);
-
             }
         }
     }
@@ -96,5 +92,12 @@ public class VenuesCourseFragment extends BaseFragment implements VenuesCourseFr
     @Override
     public void onItemClick(int position) {
         venuesPresent.getCourses(switcherLayout, id, days.get(position));
+    }
+
+    @Override
+    public void showEmptyView() {
+        View view = View.inflate(getContext(),R.layout.empty_course,null);
+        switcherLayout.addCustomView(view,"empty");
+        switcherLayout.showCustomLayout("empty");
     }
 }

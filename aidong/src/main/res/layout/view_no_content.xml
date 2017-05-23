@@ -31,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="还没有内容..."
+                android:text="暂无内容"
                 android:textSize="14sp"
                 android:textColor="@color/gray"/>
 

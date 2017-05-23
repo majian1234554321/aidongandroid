@@ -28,7 +28,6 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.LivePresenterImpl;
 import com.leyuan.aidong.ui.mvp.view.LiveHomeView;
 import com.leyuan.aidong.ui.video.activity.LiveDetailActivity;
 import com.leyuan.aidong.ui.video.activity.LivingVideoActivity;
-import com.leyuan.aidong.ui.video.activity.VideoDetailActivity;
 import com.leyuan.aidong.ui.video.activity.WatchOfficeActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.Logger;
@@ -177,9 +176,10 @@ public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.
 
 
     @Override
-    public void onVideoClick(int id) {
-        Intent intent = new Intent(getActivity(), VideoDetailActivity.class);
-        intent.putExtra("id", id);
+    public void onVideoClick(LiveVideoInfo liveInfo) {
+//        VideoDetailActivity.start(getActivity(), id, 0,0);
+        Intent intent = new Intent(getActivity(), LiveDetailActivity.class);
+        intent.putExtra(Constant.LIVE_INFO, liveInfo);
         startActivity(intent);
     }
 

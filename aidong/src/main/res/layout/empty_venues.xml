@@ -16,7 +16,7 @@
             android:drawablePadding="30dp"
             android:drawableTop="@drawable/empty_venues"
             android:gravity="center"
-            android:text="没有找到场馆!"
+            android:text="暂无场馆\"
             android:textColor="@color/c9" />
 
     </RelativeLayout>

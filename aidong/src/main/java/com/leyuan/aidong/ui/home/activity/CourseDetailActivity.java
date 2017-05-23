@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.ApplicantAdapter;
+import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CourseDetailBean;
 import com.leyuan.aidong.module.share.SharePopupWindow;
@@ -155,7 +156,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.iv_share:
                 sharePopupWindow.showAtBottom(bean.getName(), bean.getIntroduce(), bean.getCover().get(0),
-                        "http://www.baidu.com");
+                        ConstantUrl.URL_SHARE_COURSE+bean.getCode());
                 break;
             case R.id.ll_address:
                 MapActivity.start(this, "地址详情", bean.getGym().getName(), bean.getAddress(),
@@ -192,8 +193,8 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         this.bean = bean;
         tvTitle.setText(bean.getName());
         banner.setData(bean.getCover(), null);
-        tvBannerPrice.setText(String.format(getString(R.string.rmb_price_double),
-                FormatUtil.parseDouble(bean.getPrice())));
+        tvBannerPrice.setText(FormatUtil.parseDouble(bean.getPrice()) == 0f
+                ? "免费" : String.format(getString(R.string.rmb_price), bean.getPrice()));
         GlideLoader.getInstance().displayCircleImage(bean.getCoach().getAvatar(), ivAvatar);
         tvCoachName.setText(bean.getCoach().getName());
         tvTime.setText(String.format(getString(R.string.detail_time),

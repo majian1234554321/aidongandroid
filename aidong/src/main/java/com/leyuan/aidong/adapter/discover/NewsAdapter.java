@@ -54,7 +54,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder>{
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NewsDetailActivity.start(context,bean.getTitle(),bean.getDatetime(),bean.getBody());
+                NewsDetailActivity.start(context,bean);
             }
         });
     }

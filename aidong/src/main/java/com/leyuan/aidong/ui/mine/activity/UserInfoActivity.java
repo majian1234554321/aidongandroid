@@ -58,6 +58,7 @@ import java.util.List;
 
 import static com.leyuan.aidong.R.id.tv_message;
 import static com.leyuan.aidong.utils.Constant.REQUEST_LOGIN;
+import static com.leyuan.aidong.utils.Constant.REQUEST_PUBLISH_DYNAMIC;
 import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_PHOTO;
 import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_VIDEO;
 
@@ -161,8 +162,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     private void setView() {
         GlideLoader.getInstance().displayCircleImage(userInfoData.getProfile().getAvatar(), dvAvatar);
         tvName.setText(userInfoData.getProfile().getName());
-        tvSignature.setText(TextUtils.isEmpty(userInfoData.getProfile().getSignature())
-            ? "这个人很懒，什么都没有留下" : userInfoData.getProfile().getSignature());
+        tvSignature.setText(userInfoData.getProfile().getSignature());
         if (isSelf) {
             tvTitle.setText("我的资料");
             ivFollowOrPublish.setBackgroundResource(R.drawable.icon_mine_publish);
@@ -316,8 +316,14 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
             if (requestCode == Constant.REQUEST_LOGIN) {
                 isSelf = isSelf(userId);
                 userInfoPresent.getUserInfo(switcherLayout, userId);
-            } else if (requestCode == REQUEST_SELECT_PHOTO || requestCode == REQUEST_SELECT_VIDEO) {
-                PublishDynamicActivity.start(this, requestCode == REQUEST_SELECT_PHOTO, Boxing.getResult(data));
+            }else if(requestCode == REQUEST_SELECT_PHOTO || requestCode ==REQUEST_SELECT_VIDEO ) {
+                    PublishDynamicActivity.startForResult(this, requestCode == REQUEST_SELECT_PHOTO,
+                            Boxing.getResult(data), REQUEST_PUBLISH_DYNAMIC);
+            } else if(requestCode == REQUEST_PUBLISH_DYNAMIC){
+                Fragment page = adapter.getPage(0);
+                if(page instanceof UserDynamicFragment){
+                    ((UserDynamicFragment) page).refreshDynamic();
+                }
             }else if(requestCode == REQUEST_UPDATE_PHOTO){
                 resetPhotoWall();
                 userInfoPresent.getUserInfo(userId);

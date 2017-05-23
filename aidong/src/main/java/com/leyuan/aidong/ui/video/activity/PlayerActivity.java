@@ -234,7 +234,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback, 
         contentId = intent.getStringExtra(CONTENT_ID_EXTRA);
         provider = intent.getStringExtra(PROVIDER_EXTRA);
         videoId = intent.getStringExtra(VIDEO_ID);
-        Logger.i("playerActivity " ," into videoId =  " +videoId );
+        Logger.i("playerActivity " ," into videoId =  " +videoId +" contentType = " +contentType);
         configureSubtitleView();
         if (player == null) {
             if (!maybeRequestPermission()) {

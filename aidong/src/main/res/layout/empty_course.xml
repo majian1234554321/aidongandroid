@@ -16,7 +16,7 @@
             android:drawablePadding="30dp"
             android:drawableTop="@drawable/empty_course"
             android:gravity="center"
-            android:text="还没有课程!"
+            android:text="暂无课程"
             android:textColor="@color/c9" />
 
     </RelativeLayout>

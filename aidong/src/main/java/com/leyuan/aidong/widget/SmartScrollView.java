@@ -53,7 +53,7 @@ public class SmartScrollView extends ScrollView {
     //    private boolean intecept;
     private float oldY;
     //    private float oldX;
-    private boolean scrollTop; //true 向下 flase 向上
+    private boolean scrollTop = true; //true 向下 flase 向上
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {

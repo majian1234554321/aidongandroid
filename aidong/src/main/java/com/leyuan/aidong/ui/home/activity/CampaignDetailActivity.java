@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.ApplicantAdapter;
+import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.CampaignDetailBean;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.App;
@@ -169,7 +170,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
                 break;
             case R.id.iv_share:
                 sharePopupWindow.showAtBottom(bean.getName(), bean.getIntroduce(),
-                        bean.getImage().get(0), "http://www.baidu.com");
+                        bean.getImage().get(0), ConstantUrl.URL_SHARE_CAMPAIGN+bean.getCampaignId());
                 break;
             case R.id.tv_count:         //查看报名的人
                 AppointmentUserActivity.start(this, bean.getApplicant());

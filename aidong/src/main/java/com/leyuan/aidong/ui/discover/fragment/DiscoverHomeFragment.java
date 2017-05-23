@@ -140,17 +140,10 @@ public class DiscoverHomeFragment extends BaseFragment implements SmartTabLayout
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if(requestCode == REQUEST_SELECT_PHOTO){
-                Intent intent = new Intent(getContext(),PublishDynamicActivity.class);
-                intent.putExtra("isPhoto",true);
-                intent.putParcelableArrayListExtra("selectedMedia",Boxing.getResult(data));
-                startActivityForResult(intent,REQUEST_PUBLISH_DYNAMIC);
-            }else if(requestCode == REQUEST_SELECT_VIDEO){
-                Intent intent = new Intent(getContext(),PublishDynamicActivity.class);
-                intent.putExtra("isPhoto",false);
-                intent.putParcelableArrayListExtra("selectedMedia",Boxing.getResult(data));
-                startActivityForResult(intent,REQUEST_PUBLISH_DYNAMIC);
-            }else if(requestCode == REQUEST_PUBLISH_DYNAMIC){
+            if(requestCode == REQUEST_SELECT_PHOTO || requestCode ==REQUEST_SELECT_VIDEO ) {
+                PublishDynamicActivity.startForResult(this, requestCode == REQUEST_SELECT_PHOTO,
+                        Boxing.getResult(data), REQUEST_PUBLISH_DYNAMIC);
+            } else if(requestCode == REQUEST_PUBLISH_DYNAMIC){
                 Fragment page = adapter.getPage(1);
                 if(page instanceof CircleFragment){
                     ((CircleFragment) page).refreshData();

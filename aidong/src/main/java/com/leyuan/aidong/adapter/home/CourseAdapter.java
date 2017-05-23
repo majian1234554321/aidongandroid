@@ -51,8 +51,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
         final CourseBean bean = data.get(position);
         GlideLoader.getInstance().displayImage(bean.getCover(), holder.cover);
         GlideLoader.getInstance().displayImage(bean.getBrandLogo(), holder.brand);
-        holder.price.setText(String.format(context.getString(R.string.rmb_price_double),
-                FormatUtil.parseDouble(bean.getPrice())));
+        holder.price.setText(FormatUtil.parseDouble(bean.getPrice()) == 0f ? "免费"
+                : String.format(context.getString(R.string.rmb_price_double), FormatUtil.parseDouble(bean.getPrice())));
         holder.name.setText(bean.getName());
         holder.address.setText(bean.getAddress());
         holder.time.setText(String.format(context.getString(R.string.time_with_line), bean.getClassTime(), bean.getBreakTime()));

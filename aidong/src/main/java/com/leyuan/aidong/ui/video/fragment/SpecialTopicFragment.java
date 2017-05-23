@@ -256,10 +256,13 @@ public class SpecialTopicFragment extends Fragment implements SwipeRefreshLayout
             int first_complete_visible_position = mLinearLayoutManager.findFirstCompletelyVisibleItemPosition();
             if (position == first_complete_visible_position) {
                 //                ToastTools.makeShortText("跳");
-                Intent intent = new Intent(getActivity(), VideoDetailActivity.class);
-                intent.putExtra("id", info.getId());
-                intent.putExtra("phase", info.getLatest().getPhase() - 1);
-                getActivity().startActivity(intent);
+                VideoDetailActivity.start(getActivity(), info.getId(), info.getLatest().getPhase(),0);
+
+
+//                Intent intent = new Intent(getActivity(), VideoDetailActivity.class);
+//                intent.putExtra("id", info.getId());
+//                intent.putExtra("phase", info.getLatest().getPhase() - 1);
+//                getActivity().startActivity(intent);
             } else {
                 View v = mRecyclerView.getChildAt(position - mLinearLayoutManager.findFirstVisibleItemPosition());
                 Logger.i(TAG,"top = " + v.getTop());
