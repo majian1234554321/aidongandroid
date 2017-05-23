@@ -1,20 +1,22 @@
 package com.leyuan.aidong.http.subscriber;
 
+import android.content.Context;
+
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.SwitcherLayout;
-
-import rx.Subscriber;
 
 
 /**
  * 用于第一次正常加载数据时的Http请求
  * 慎用:该Subscriber需与SwitcherLayout结合使用
+ * //todo 设计有问题 去掉Presenter中Subscriber和控件的耦合,交由View来实现这部分逻辑
  */
-public abstract class CommonSubscriber<T> extends Subscriber<T> {
+public abstract class CommonSubscriber<T> extends BaseSubscriber<T> {
 
     private SwitcherLayout switcherLayout;
 
-    public CommonSubscriber(SwitcherLayout switcherLayout) {
+    public CommonSubscriber(Context context, SwitcherLayout switcherLayout) {
+        super(context);
         this.switcherLayout = switcherLayout;
     }
 
@@ -33,6 +35,7 @@ public abstract class CommonSubscriber<T> extends Subscriber<T> {
      */
     @Override
     public void onError(Throwable e) {
+        super.onError(e);
         Logger.e("CommonSubscriber","onError:" + e.toString());
         switcherLayout.showExceptionLayout();
     }
@@ -44,10 +47,4 @@ public abstract class CommonSubscriber<T> extends Subscriber<T> {
      */
     @Override
     public abstract void onNext(T t);
-
-    @Override
-    public void onCompleted() {
-
-    }
-
 }

@@ -81,13 +81,13 @@ public class FollowPresentImpl implements FollowPresent {
 
     @Override
     public void commonLoadData(final SwitcherLayout switcherLayout, final String type) {
-        followModel.getFollow(new CommonSubscriber<FollowData>(switcherLayout) {
+        followModel.getFollow(new CommonSubscriber<FollowData>(context,switcherLayout) {
             @Override
             public void onNext(FollowData followData) {
                 if(followData != null && !followData.getFollow().isEmpty()){
                     userBeanList = followData.getFollow();
                 }
-                if(!userBeanList.isEmpty()){
+                if(userBeanList != null && !userBeanList.isEmpty()){
                     if("followings".equals(type)) {
                         Constant.followData = followData;
                         SystemInfoUtils.putSystemInfoBean(context, followData, SystemInfoUtils.KEY_FOLLOW);
@@ -95,7 +95,7 @@ public class FollowPresentImpl implements FollowPresent {
                     switcherLayout.showContentLayout();
                     followFragment.onRefreshData(userBeanList);
                 }else {
-                    switcherLayout.showEmptyLayout();
+                    followFragment.showEmptyView();
                 }
             }
         },type,Constant.PAGE_FIRST);

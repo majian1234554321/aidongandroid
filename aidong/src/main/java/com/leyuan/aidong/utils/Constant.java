@@ -107,6 +107,7 @@ public class Constant {
     //首页item类型
     public static final int HOME_IMAGE_AND_HORIZONTAL_LIST = 0;
     public static final int HOME_TITLE_AND_VERTICAL_LIST = 1;
+    public static final int HOME_ITEM_DEFAULT = 1;
 
     //确认订单结算类型
     public static final String SETTLEMENT_CART = "cart";

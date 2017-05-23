@@ -79,7 +79,7 @@ public class DynamicPresentImpl implements DynamicPresent {
 
     @Override
     public void commonLoadData(final SwitcherLayout switcherLayout) {
-        dynamicModel.getDynamics(new CommonSubscriber<DynamicsData>(switcherLayout) {
+        dynamicModel.getDynamics(new CommonSubscriber<DynamicsData>(context,switcherLayout) {
             @Override
             public void onNext(DynamicsData dynamicsData) {
                 if (dynamicsData != null) {

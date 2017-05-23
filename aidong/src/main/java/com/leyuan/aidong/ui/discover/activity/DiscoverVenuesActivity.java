@@ -205,6 +205,7 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
 
     @Override
     public void onRefreshData(List<VenuesBean> venuesBeanList) {
+        switcherLayout.showContentLayout();
         data.clear();
         refreshLayout.setRefreshing(false);
         data.addAll(venuesBeanList);
@@ -223,6 +224,13 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
     @Override
     public void showEndFooterView() {
         RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
+    }
+
+    @Override
+    public void showEmptyView() {
+        View view = View.inflate(this,R.layout.empty_venues,null);
+        switcherLayout.addCustomView(view,"empty");
+        switcherLayout.showCustomLayout("empty");
     }
 
 }

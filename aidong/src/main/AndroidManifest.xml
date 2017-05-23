@@ -484,8 +484,7 @@
 
         <activity
             android:name=".ui.mine.activity.BarcodeActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/ImageTranslucentTheme"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.home.activity.AppointSuccessActivity"

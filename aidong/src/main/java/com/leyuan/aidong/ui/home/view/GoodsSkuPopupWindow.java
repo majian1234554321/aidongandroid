@@ -30,6 +30,7 @@ import com.leyuan.aidong.ui.mvp.view.GoodsSkuPopupWindowView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.BasePopupWindow;
 
 import java.util.ArrayList;
@@ -167,7 +168,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
             price = FormatUtil.parseDouble(line.price);
             stock = line.getStock();
             confirmedSkuCover = line.cover;
-        } else {                                                 //未选中sku
+        } else {                     //未选中sku
             skuTip = new StringBuilder();
             for (LocalGoodsSkuBean localGoodsSkuBean : localSkuBeanList) {
                 if (!localGoodsSkuBean.isSelected()) {
@@ -369,9 +370,9 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     @Override
     public void addCartResult(BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
-            Toast.makeText(context, context.getString(R.string.add_cart_success), Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong(context.getString(R.string.add_cart_success));
         } else {
-            Toast.makeText(context, context.getString(R.string.add_cart_failed), Toast.LENGTH_LONG).show();
+            ToastGlobal.showLong(context.getString(R.string.add_cart_failed));
         }
     }
 
@@ -467,7 +468,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         for (LocalGoodsSkuBean localGoodsSkuBean : unSelectedSkuBeanList) {
             result.append(localGoodsSkuBean.getSkuName()).append(Constant.EMPTY_STR);
         }
-        Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+        ToastGlobal.showLong(result.toString());
     }
 
     private boolean isAllSkuConfirm() {

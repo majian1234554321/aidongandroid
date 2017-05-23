@@ -40,13 +40,6 @@ public class NurturePresentImpl implements NurturePresent{
         }
     }
 
-    public NurturePresentImpl(Context context) {
-        this.context = context;
-        if(nurtureModel == null) {
-            nurtureModel = new NurtureModelImpl(context);
-        }
-    }
-
     @Override
     public void getCategory() {
         //nurtureActivityView.setCategory(nurtureModel.getCategory());
@@ -54,7 +47,7 @@ public class NurturePresentImpl implements NurturePresent{
 
     @Override
     public void commendLoadNurtureData(final SwitcherLayout switcherLayout, String brandId, String sort,String gymId) {
-        nurtureModel.getNurtures(new CommonSubscriber<NurtureData>(switcherLayout) {
+        nurtureModel.getNurtures(new CommonSubscriber<NurtureData>(context,switcherLayout) {
             @Override
             public void onNext(NurtureData nurtureDataBean) {
                 if(nurtureDataBean != null && nurtureDataBean.getNutrition() != null){
@@ -64,7 +57,7 @@ public class NurturePresentImpl implements NurturePresent{
                     switcherLayout.showContentLayout();
                     filterActivityView.updateNurtureRecyclerView(nurtureBeanList);
                 }else{
-                    switcherLayout.showEmptyLayout();
+                    filterActivityView.showEmptyView();
                 }
             }
         },Constant.PAGE_FIRST,brandId,sort,gymId);

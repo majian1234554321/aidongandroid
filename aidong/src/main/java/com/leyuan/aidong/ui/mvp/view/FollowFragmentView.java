@@ -24,4 +24,5 @@ public interface FollowFragmentView {
 
     void cancelFollowResult(BaseBean baseBean);
 
+    void showEmptyView();
 }

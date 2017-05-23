@@ -65,6 +65,7 @@ public class PhotoBrowseActivity extends BaseActivity {
                     finish();
                 }
             });
+
             photoView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {

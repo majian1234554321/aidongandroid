@@ -66,7 +66,7 @@ public class RecommendPresentImpl implements RecommendPresent{
         if(recommendModel == null){
             recommendModel = new RecommendModelImpl();
         }
-        recommendModel.getRecommendGoods(new CommonSubscriber<GoodsData>(switcherLayout) {
+        recommendModel.getRecommendGoods(new CommonSubscriber<GoodsData>(context,switcherLayout) {
             @Override
             public void onNext(GoodsData goodsData) {
                 List<GoodsBean> goodsList = new ArrayList<>();

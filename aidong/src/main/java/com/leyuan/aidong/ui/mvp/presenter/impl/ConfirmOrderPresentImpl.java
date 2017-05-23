@@ -49,7 +49,7 @@ public class ConfirmOrderPresentImpl implements ConfirmOrderPresent {
 
     @Override
     public void getDefaultAddress(final SwitcherLayout switcherLayout) {
-        addressModel.getAddress(new CommonSubscriber<AddressListData>(switcherLayout) {
+        addressModel.getAddress(new CommonSubscriber<AddressListData>(context,switcherLayout) {
             @Override
             public void onNext(AddressListData addressListData) {
                 AddressBean addressBean = null;

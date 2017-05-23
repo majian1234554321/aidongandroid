@@ -107,10 +107,10 @@ public class FollowerFragment extends BaseLazyFragment implements FollowFragment
 
     @Override
     public void onRefreshData(List<UserBean> userBeanList) {
-        data.clear();
         if(refreshLayout.isRefreshing()){
             refreshLayout.setRefreshing(false);
         }
+        data.clear();
         data.addAll(userBeanList);
         followAdapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();
@@ -170,4 +170,10 @@ public class FollowerFragment extends BaseLazyFragment implements FollowFragment
         }
     }
 
+    @Override
+    public void showEmptyView() {
+        View view = View.inflate(getContext(),R.layout.empty_follower,null);
+        switcherLayout.addCustomView(view,"emptyFollower");
+        switcherLayout.showCustomLayout("emptyFollower");
+    }
 }

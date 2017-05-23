@@ -60,7 +60,7 @@ public class CouponPresentImpl implements CouponPresent {
 
     @Override
     public void commonLoadData(final SwitcherLayout switcherLayout, String type) {
-        couponModel.getCoupons(new CommonSubscriber<CouponData>(switcherLayout) {
+        couponModel.getCoupons(new CommonSubscriber<CouponData>(context,switcherLayout) {
             @Override
             public void onNext(CouponData couponData) {
                 if (couponData != null) {

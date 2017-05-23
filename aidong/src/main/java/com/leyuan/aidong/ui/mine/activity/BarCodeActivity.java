@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -51,12 +50,10 @@ public class BarcodeActivity extends BaseActivity{
             rect = getIntent().getParcelableExtra("rect");
         }
 
-
         tvCode = (TextView) findViewById(R.id.tv_code);
         ivCode = (ImageView) findViewById(R.id.iv_code);
-        tvCode.setText(code);
-        ViewGroup.LayoutParams layoutParams = ivCode.getLayoutParams();
-
+        String s = code.replaceAll("\\d{4}(?!$)", "$0  ");
+        tvCode.setText(s);
 
         int width = ScreenUtil.getScreenHeight(this) - DensityUtil.dp2px(this,200);
         Bitmap barcode = QRCodeUtil.createBarcode(this, 0xFF000000, code, width, DensityUtil.dp2px(this, 125), false);

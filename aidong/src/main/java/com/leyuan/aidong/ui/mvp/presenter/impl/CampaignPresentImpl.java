@@ -101,7 +101,7 @@ public class CampaignPresentImpl implements CampaignPresent {
         if (campaignModel == null) {
             campaignModel = new CampaignModelImpl();
         }
-        campaignModel.getCampaigns(new CommonSubscriber<CampaignData>(switcherLayout) {
+        campaignModel.getCampaigns(new CommonSubscriber<CampaignData>(context,switcherLayout) {
             @Override
             public void onNext(CampaignData campaignData) {
                 if (campaignData.getCampaign() != null && !campaignData.getCampaign().isEmpty()) {

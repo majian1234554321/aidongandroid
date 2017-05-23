@@ -102,5 +102,7 @@
 
     <ImageView
         android:id="@+id/iv_back"
-        style="@style/styleImageBack" />
+        style="@style/styleImageBack"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentTop="true"/>
 </RelativeLayout>

@@ -57,7 +57,7 @@ public class CartPresentImpl implements CartPresent{
 
     @Override
     public void commonLoadData(final SwitcherLayout switcherLayout) {
-        cartModel.getCart(new CommonSubscriber<ShopData>(switcherLayout) {
+        cartModel.getCart(new CommonSubscriber<ShopData>(context,switcherLayout) {
             @Override
             public void onNext(ShopData shopData) {
                 if(shopData != null && shopData.getCart() != null  && !shopData.getCart().isEmpty()){

@@ -111,7 +111,7 @@ public class CoursePresentImpl implements CoursePresent {
         if (courseModel == null) {
             courseModel = new CourseModelImpl(context);
         }
-        courseModel.getCourses(new CommonSubscriber<CourseData>(switcherLayout) {
+        courseModel.getCourses(new CommonSubscriber<CourseData>(context,switcherLayout) {
             @Override
             public void onNext(CourseData courseData) {
                 if (courseData != null && courseData.getCourse() != null && !courseData.getCourse().isEmpty()) {

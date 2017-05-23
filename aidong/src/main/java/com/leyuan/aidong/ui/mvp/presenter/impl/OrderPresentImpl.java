@@ -89,7 +89,7 @@ public class OrderPresentImpl implements OrderPresent {
 
     @Override
     public void commonLoadData(final SwitcherLayout switcherLayout, String list) {
-        orderModel.getOrders(new CommonSubscriber<OrderData>(switcherLayout) {
+        orderModel.getOrders(new CommonSubscriber<OrderData>(context,switcherLayout) {
             @Override
             public void onNext(OrderData orderData) {
                 if (orderData != null && orderData.getOrder() != null) {
@@ -155,7 +155,7 @@ public class OrderPresentImpl implements OrderPresent {
 
     @Override
     public void getOrderDetail(final SwitcherLayout switcherLayout,String id) {
-        orderModel.getOrderDetail(new CommonSubscriber<OrderDetailData>(switcherLayout) {
+        orderModel.getOrderDetail(new CommonSubscriber<OrderDetailData>(context,switcherLayout) {
             @Override
             public void onNext(OrderDetailData orderDetailData) {
                 OrderDetailBean orderDetailBean = null;

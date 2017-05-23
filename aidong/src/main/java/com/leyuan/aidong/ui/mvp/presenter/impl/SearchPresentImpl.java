@@ -145,7 +145,7 @@ public class SearchPresentImpl implements SearchPresent{
 
     @Override
     public void commonLoadData(SwitcherLayout switcherLayout, String keyword) {
-        searchModel.searchData(new CommonSubscriber<Object>(switcherLayout) {
+        searchModel.searchData(new CommonSubscriber<Object>(context,switcherLayout) {
             @Override
             public void onNext(Object o) {
                 searchActivityView.setSearchResult(o);
@@ -156,7 +156,7 @@ public class SearchPresentImpl implements SearchPresent{
 
     @Override
     public void commonLoadCampaignData(final SwitcherLayout switcherLayout, String keyword) {
-        searchModel.searchCampaign(new CommonSubscriber<CampaignData>(switcherLayout) {
+        searchModel.searchCampaign(new CommonSubscriber<CampaignData>(context,switcherLayout) {
             @Override
             public void onNext(CampaignData campaignData) {
                 if(campaignData != null){
@@ -174,7 +174,7 @@ public class SearchPresentImpl implements SearchPresent{
 
     @Override
     public void commonLoadEquipmentData(final SwitcherLayout switcherLayout, String keyword) {
-        searchModel.searchEquipment(new CommonSubscriber<EquipmentData>(switcherLayout) {
+        searchModel.searchEquipment(new CommonSubscriber<EquipmentData>(context,switcherLayout) {
             @Override
             public void onNext(EquipmentData equipmentData) {
                 if (equipmentData != null) {
@@ -192,7 +192,7 @@ public class SearchPresentImpl implements SearchPresent{
 
     @Override
     public void commonLoadCourseData(final SwitcherLayout switcherLayout, String keyword) {
-        searchModel.searchCourse(new CommonSubscriber<CourseData>(switcherLayout) {
+        searchModel.searchCourse(new CommonSubscriber<CourseData>(context,switcherLayout) {
             @Override
             public void onNext(CourseData courseData) {
                 if(courseData != null){
@@ -210,7 +210,7 @@ public class SearchPresentImpl implements SearchPresent{
 
     @Override
     public void commonLoadNurtureData(final SwitcherLayout switcherLayout, String keyword) {
-        searchModel.searchNurture(new CommonSubscriber<SearchNurtureData>(switcherLayout) {
+        searchModel.searchNurture(new CommonSubscriber<SearchNurtureData>(context,switcherLayout) {
             @Override
             public void onNext(SearchNurtureData searchNurtureData) {
                 if(searchNurtureData != null){
@@ -229,7 +229,7 @@ public class SearchPresentImpl implements SearchPresent{
 
     @Override
     public void commonUserData(final SwitcherLayout switcherLayout, String keyword) {
-        searchModel.searchUser(new CommonSubscriber<UserData>(switcherLayout) {
+        searchModel.searchUser(new CommonSubscriber<UserData>(context,switcherLayout) {
             @Override
             public void onNext(UserData userData) {
                 if(userData != null){
@@ -247,7 +247,7 @@ public class SearchPresentImpl implements SearchPresent{
 
     @Override
     public void commonLoadVenuesData(final SwitcherLayout switcherLayout, String keyword) {
-        searchModel.searchVenues(new CommonSubscriber<VenuesData>(switcherLayout) {
+        searchModel.searchVenues(new CommonSubscriber<VenuesData>(context,switcherLayout) {
             @Override
             public void onNext(VenuesData venuesData) {
                 if(venuesData != null){
