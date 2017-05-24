@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
@@ -19,27 +18,25 @@ import com.leyuan.aidong.widget.MyListView;
  * Created by song on 2017/2/21.
  */
 public class TitleAndVerticalListHolder extends BaseRecyclerViewHolder<HomeBean>{
-    private LinearLayout root;
     private Context context;
     private TextView tvName;
     private MyListView listView;
     private TextView tvMore;
+    private View line;
 
     public TitleAndVerticalListHolder(Context context, ViewGroup viewGroup, int layoutResId) {
         super(context, viewGroup, layoutResId);
         this.context = context;
-        root = (LinearLayout) itemView.findViewById(R.id.root);
+
         tvName = (TextView) itemView.findViewById(R.id.tv_name);
         listView = (MyListView) itemView.findViewById(R.id.lv_recommend);
         tvMore = (TextView) itemView.findViewById(R.id.tv_more_campaign);
+        line = itemView.findViewById(R.id.line);
     }
 
     @Override
     public void onBindData(final HomeBean bean, int position) {
-        if(bean.getItem() == null || bean.getItem().isEmpty()){
-            root.setVisibility(View.GONE);
-        }else {
-            root.setVisibility(View.VISIBLE);
+        if(bean.getItem() != null && !bean.getItem().isEmpty()){
             CoverImageAdapter adapter = new CoverImageAdapter(context,bean.getType());
             tvName.setText(bean.getTitle());
             listView.setAdapter(adapter);
@@ -51,6 +48,13 @@ public class TitleAndVerticalListHolder extends BaseRecyclerViewHolder<HomeBean>
                     context.startActivity(new Intent(context, CampaignActivity.class));
                 }
             });
+            tvName.setVisibility(View.VISIBLE);
+            tvMore.setVisibility(View.VISIBLE);
+            line.setVisibility(View.VISIBLE);
+        }else {
+            tvName.setVisibility(View.GONE);
+            tvMore.setVisibility(View.GONE);
+            line.setVisibility(View.GONE);
         }
     }
 }

@@ -138,7 +138,7 @@ public class AppointmentPresentImpl implements AppointmentPresent {
 
     @Override
     public void getAppointmentDetail(final SwitcherLayout switcherLayout, String id) {
-        appointmentModel.getAppointmentDetail(new CommonSubscriber<AppointmentDetailData>(switcherLayout) {
+        appointmentModel.getAppointmentDetail(new CommonSubscriber<AppointmentDetailData>(context,switcherLayout) {
             @Override
             public void onNext(AppointmentDetailData appointmentDetailData) {
                 AppointmentDetailBean appointmentDetailBean = null;
@@ -199,7 +199,7 @@ public class AppointmentPresentImpl implements AppointmentPresent {
         if(courseModel == null){
             courseModel = new CourseModelImpl(context);
         }
-        courseModel.getCourseAppointDetail(new CommonSubscriber<AppointmentDetailData>(switcherLayout) {
+        courseModel.getCourseAppointDetail(new CommonSubscriber<AppointmentDetailData>(context,switcherLayout) {
             @Override
             public void onNext(AppointmentDetailData appointmentDetailData) {
                 if (appointmentDetailData != null) {
@@ -215,7 +215,7 @@ public class AppointmentPresentImpl implements AppointmentPresent {
         if(campaignModel == null){
             campaignModel = new CampaignModelImpl();
         }
-        campaignModel.getCampaignAppointDetail(new CommonSubscriber<AppointmentDetailData>(switcherLayout) {
+        campaignModel.getCampaignAppointDetail(new CommonSubscriber<AppointmentDetailData>(context,switcherLayout) {
             @Override
             public void onNext(AppointmentDetailData appointmentDetailData) {
                 if (appointmentDetailData != null) {

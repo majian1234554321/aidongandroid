@@ -133,7 +133,7 @@ public class VenuesPresentImpl implements VenuesPresent {
 
     @Override
     public void commonLoadData(final SwitcherLayout switcherLayout, String brand_id, String landmark,String gymTypes) {
-        venuesModel.getVenues(new CommonSubscriber<VenuesData>(switcherLayout) {
+        venuesModel.getVenues(new CommonSubscriber<VenuesData>(context,switcherLayout) {
             @Override
             public void onNext(VenuesData venuesData) {
                 if (venuesData != null) {
@@ -143,7 +143,7 @@ public class VenuesPresentImpl implements VenuesPresent {
                     switcherLayout.showContentLayout();
                     discoverVenuesActivityView.onRefreshData(venuesBeanList);
                 } else {
-                    switcherLayout.showEmptyLayout();
+                    discoverVenuesActivityView.showEmptyView();
                 }
             }
         }, Constant.PAGE_FIRST, brand_id, landmark,gymTypes);
@@ -193,7 +193,7 @@ public class VenuesPresentImpl implements VenuesPresent {
 
     @Override
     public void getVenuesDetail(final SwitcherLayout switcherLayout, String id) {
-        venuesModel.getVenuesDetail(new CommonSubscriber<VenuesDetailData>(switcherLayout) {
+        venuesModel.getVenuesDetail(new CommonSubscriber<VenuesDetailData>(context,switcherLayout) {
             @Override
             public void onNext(VenuesDetailData venuesDetailData) {
                 if (venuesDetailData != null && venuesDetailData.getGym() != null) {
@@ -208,7 +208,7 @@ public class VenuesPresentImpl implements VenuesPresent {
 
     @Override
     public void getCourses(final SwitcherLayout switcherLayout, String id, String day) {
-        venuesModel.getCourses(new CommonSubscriber<CourseData>(switcherLayout) {
+        venuesModel.getCourses(new CommonSubscriber<CourseData>(context,switcherLayout) {
             @Override
             public void onNext(CourseData courseData) {
                 if (courseData != null && courseData.getCourse() != null && !courseData.getCourse().isEmpty()) {
@@ -223,7 +223,7 @@ public class VenuesPresentImpl implements VenuesPresent {
 
     @Override
     public void getCoursesFirst(final SwitcherLayout switcherLayout, String id) {
-        venuesModel.getCourses(new CommonSubscriber<CourseData>(switcherLayout) {
+        venuesModel.getCourses(new CommonSubscriber<CourseData>(context,switcherLayout) {
             @Override
             public void onNext(CourseData courseData) {
                 if (courseData != null && courseData.getCourse() != null && !courseData.getCourse().isEmpty()) {
@@ -238,7 +238,7 @@ public class VenuesPresentImpl implements VenuesPresent {
 
     @Override
     public void getCoaches(final SwitcherLayout switcherLayout, String id) {
-        venuesModel.getCoaches(new CommonSubscriber<CoachData>(switcherLayout) {
+        venuesModel.getCoaches(new CommonSubscriber<CoachData>(context,switcherLayout) {
             @Override
             public void onNext(CoachData coachData) {
                 if (coachData != null && coachData.getCoach() != null && !coachData.getCoach().isEmpty()) {

@@ -90,7 +90,7 @@ public class UserInfoPresentImpl implements UserInfoPresent {
     @Override
     public void getUserInfo(final SwitcherLayout switcherLayout, String id) {
         if(App.mInstance.getUser() != null && id.equals(String.valueOf(App.mInstance.getUser().getId()))){
-            userInfoModel.getMyselfUserInfo(new CommonSubscriber<UserInfoData>(switcherLayout) {
+            userInfoModel.getMyselfUserInfo(new CommonSubscriber<UserInfoData>(context,switcherLayout) {
                 @Override
                 public void onNext(UserInfoData userInfoData) {
                     if (userInfoData != null && userInfoData.getProfile() != null) {
@@ -102,7 +102,7 @@ public class UserInfoPresentImpl implements UserInfoPresent {
                 }
             });
         }else {
-            userInfoModel.getUserInfo(new CommonSubscriber<UserInfoData>(switcherLayout) {
+            userInfoModel.getUserInfo(new CommonSubscriber<UserInfoData>(context,switcherLayout) {
                 @Override
                 public void onNext(UserInfoData userInfoData) {
                     if (userInfoData != null && userInfoData.getProfile() != null) {

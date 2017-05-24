@@ -195,6 +195,7 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
             Slide in = new Slide();
             in.setDuration(300);
             in.setSlideEdge(Gravity.BOTTOM);
+            in.excludeTarget(android.R.id.statusBarBackground, true);
             getWindow().setEnterTransition(in);
         }
     }

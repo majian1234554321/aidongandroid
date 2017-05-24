@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.baseadapter.BaseRecyclerViewHolder;
@@ -14,20 +15,26 @@ import com.leyuan.aidong.entity.HomeBean;
 import com.leyuan.aidong.ui.home.activity.BrandActivity;
 import com.leyuan.aidong.utils.GlideLoader;
 
+import static com.leyuan.aidong.R.id.rl_image;
+
 /**
  * the holder of single image and horizontal image list
  * Created by song on 2017/2/21.
  */
 public class ImageAndHorizontalListHolder extends BaseRecyclerViewHolder<HomeBean>{
     private Context context;
+    private RelativeLayout imageLayout;
     private ImageView cover;
     private RecyclerView recyclerView;
+    private View line;
 
     public ImageAndHorizontalListHolder(Context context, ViewGroup viewGroup, int layoutResId) {
         super(context, viewGroup, layoutResId);
         this.context = context;
+        imageLayout = (RelativeLayout) itemView.findViewById(rl_image);
         cover = (ImageView) itemView.findViewById(R.id.dv_cover);
         recyclerView = (RecyclerView) itemView.findViewById(R.id.rv_recommend_good);
+        line = itemView.findViewById(R.id.line);
     }
 
     @Override
@@ -53,6 +60,13 @@ public class ImageAndHorizontalListHolder extends BaseRecyclerViewHolder<HomeBea
                             bean.getImage(), bean.getIntroduce());
                 }
             });
+            line.setVisibility(View.VISIBLE);
+            imageLayout.setVisibility(View.VISIBLE);
+        }else {
+            line.setVisibility(View.GONE);
+            imageLayout.setVisibility(View.GONE);
         }
+
+
     }
 }

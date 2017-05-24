@@ -31,7 +31,7 @@ public class FoodPresentImpl implements FoodPresenter {
 
     @Override
     public void commonLoadData(final SwitcherLayout switcherLayout) {
-        foodModel.getFoods(new CommonSubscriber<FoodAndVenuesBean>(switcherLayout) {
+        foodModel.getFoods(new CommonSubscriber<FoodAndVenuesBean>(context,switcherLayout) {
             @Override
             public void onNext(FoodAndVenuesBean foodAndVenuesBean) {
                 if (foodAndVenuesBean != null && (foodAndVenuesBean.getFood() != null || foodAndVenuesBean.getPick_up_gym() != null)) {

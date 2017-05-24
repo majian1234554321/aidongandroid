@@ -15,11 +15,7 @@ public interface BrandActivityView {
      */
     void updateRecyclerView(List<GoodsBean> goodsBeanList);
 
-    /**
-     * 整体界面显示无网络界面
-     * 对于有缓存的界面空实现该方法即可
-     */
-    void showErrorView();
+
 
     /**
      * 显示FooterView，提示没有任何内容了

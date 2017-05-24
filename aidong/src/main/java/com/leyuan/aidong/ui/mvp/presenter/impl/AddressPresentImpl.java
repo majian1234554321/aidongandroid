@@ -77,7 +77,7 @@ public class AddressPresentImpl implements AddressPresent {
 
     @Override
     public void getAddress(final SwitcherLayout switcherLayout) {
-        addressModel.getAddress(new CommonSubscriber<AddressListData>(switcherLayout) {
+        addressModel.getAddress(new CommonSubscriber<AddressListData>(context,switcherLayout) {
             @Override
             public void onNext(AddressListData addressListData) {
                 List<AddressBean> addressList = new ArrayList<>();

@@ -45,8 +45,8 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setSlideAnimation();
         setContentView(R.layout.activity_delivery_info);
+        setSlideAnimation();
         if(getIntent() != null){
             goodsId = getIntent().getStringExtra("goodsId");
             goodsType = getIntent().getStringExtra("goodsType");

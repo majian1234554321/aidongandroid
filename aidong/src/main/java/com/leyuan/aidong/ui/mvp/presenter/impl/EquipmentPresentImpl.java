@@ -42,7 +42,7 @@ public class EquipmentPresentImpl implements EquipmentPresent{
 
     @Override
     public void commonLoadEquipmentData(final SwitcherLayout switcherLayout, String brandId, String sort,String gymId) {
-        equipmentModel.getEquipments(new CommonSubscriber<EquipmentData>(switcherLayout) {
+        equipmentModel.getEquipments(new CommonSubscriber<EquipmentData>(context,switcherLayout) {
             @Override
             public void onNext(EquipmentData equipmentData) {
                 if(equipmentData != null){
@@ -52,7 +52,7 @@ public class EquipmentPresentImpl implements EquipmentPresent{
                     filterActivityView.updateEquipmentRecyclerView(equipmentBeanList);
                     switcherLayout.showContentLayout();
                 }else{
-                    switcherLayout.showEmptyLayout();
+                    filterActivityView.showEmptyView();
                 }
             }
         },Constant.PAGE_FIRST,brandId,sort,gymId);

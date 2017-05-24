@@ -98,7 +98,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                 if(foodModel == null){
                     foodModel = new FoodModelImpl();
                 }
-                foodModel.getFoodDetail(new CommonSubscriber<FoodDetailData>(switcherLayout) {
+                foodModel.getFoodDetail(new CommonSubscriber<FoodDetailData>(context,switcherLayout) {
                     @Override
                     public void onNext(FoodDetailData foodDetailData) {
                         if(foodDetailData != null && foodDetailData.getFood() != null){
@@ -121,7 +121,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                 if(equipmentModel == null){
                     equipmentModel = new EquipmentModelImpl(context);
                 }
-                equipmentModel.getEquipmentDetail(new CommonSubscriber<EquipmentDetailData>(switcherLayout) {
+                equipmentModel.getEquipmentDetail(new CommonSubscriber<EquipmentDetailData>(context,switcherLayout) {
                     @Override
                     public void onNext(EquipmentDetailData equipmentDetailData) {
                         if(equipmentDetailData != null && equipmentDetailData.getEquipment()!= null){
@@ -143,7 +143,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                 if(nurtureModel == null){
                     nurtureModel = new NurtureModelImpl(context);
                 }
-                nurtureModel.getNurtureDetail(new CommonSubscriber<NurtureDetailData>(switcherLayout) {
+                nurtureModel.getNurtureDetail(new CommonSubscriber<NurtureDetailData>(context,switcherLayout) {
                     @Override
                     public void onNext(NurtureDetailData nurtureDetailData) {
                         if(nurtureDetailData != null && nurtureDetailData.getNurture()!= null){
@@ -174,7 +174,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                 if(equipmentModel == null){
                     equipmentModel = new EquipmentModelImpl(context);
                 }
-                equipmentModel.getDeliveryVenues(new CommonSubscriber<VenuesData>(switcherLayout) {
+                equipmentModel.getDeliveryVenues(new CommonSubscriber<VenuesData>(context,switcherLayout) {
                     @Override
                     public void onNext(VenuesData venuesData) {
                         if(venuesData != null && venuesData.getGym() != null){
@@ -193,7 +193,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                 if(nurtureModel == null){
                     nurtureModel = new NurtureModelImpl(context);
                 }
-                nurtureModel.getDeliveryVenues(new CommonSubscriber<VenuesData>(switcherLayout) {
+                nurtureModel.getDeliveryVenues(new CommonSubscriber<VenuesData>(context,switcherLayout) {
                     @Override
                     public void onNext(VenuesData venuesData) {
                         if(venuesData != null && venuesData.getGym() != null){
@@ -213,7 +213,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                 if(foodModel == null){
                     foodModel = new FoodModelImpl();
                 }
-                foodModel.getDeliveryVenues(new CommonSubscriber<VenuesData>(switcherLayout) {
+                foodModel.getDeliveryVenues(new CommonSubscriber<VenuesData>(context,switcherLayout) {
                     @Override
                     public void onNext(VenuesData venuesData) {
                         if(venuesData != null && venuesData.getGym() != null){

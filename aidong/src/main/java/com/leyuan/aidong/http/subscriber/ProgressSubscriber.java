@@ -2,34 +2,27 @@ package com.leyuan.aidong.http.subscriber;
 
 import android.content.Context;
 
-import com.leyuan.aidong.R;
 import com.leyuan.aidong.http.subscriber.handler.ProgressDialogHandler;
-import com.leyuan.aidong.utils.Logger;
-import com.leyuan.aidong.utils.ToastGlobal;
-
-import java.net.ConnectException;
-import java.net.SocketTimeoutException;
-
-import rx.Subscriber;
 
 /**
  * 用于普通Http请求时，在页面中显示一个ProgressDialog
  * 在onNext中返回调用者需要的数据,
  * onStart和onCompleted中显示并隐藏正在加载Progress
  * onError中对错误进行统一处理
+ * //todo 去掉Presenter中Subscriber和控件的耦合,交由View来实现这部分逻辑
  */
-public abstract class ProgressSubscriber<T> extends Subscriber<T> implements ProgressDialogHandler.ProgressCancelListener{
-
-    private Context context;
+public abstract class ProgressSubscriber<T> extends BaseSubscriber<T> implements ProgressDialogHandler.ProgressCancelListener{
     private boolean showDialog = true;
     private ProgressDialogHandler progressDialogHandler;
 
     public ProgressSubscriber(Context context) {
+        super(context);
         this.context = context;
         progressDialogHandler = new ProgressDialogHandler(context, this, true);
     }
 
     public ProgressSubscriber(Context context,boolean showDialog) {
+        super(context);
         this.context = context;
         this.showDialog = showDialog;
         progressDialogHandler = new ProgressDialogHandler(context, this, true);
@@ -72,14 +65,7 @@ public abstract class ProgressSubscriber<T> extends Subscriber<T> implements Pro
      */
     @Override
     public void onError(Throwable e) {
-        if (e instanceof SocketTimeoutException) {
-            ToastGlobal.showLong(R.string.connect_timeout);
-        } else if (e instanceof ConnectException) {
-            ToastGlobal.showLong(R.string.connect_break);
-        } else {
-            ToastGlobal.showLong(e.getMessage());
-        }
-        Logger.w("ProgressSubscriber", "error:" + e.getMessage());
+        super.onError(e);
         dismissProgressDialog();
     }
 

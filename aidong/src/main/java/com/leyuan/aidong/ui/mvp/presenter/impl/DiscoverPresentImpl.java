@@ -68,7 +68,7 @@ public class DiscoverPresentImpl implements DiscoverPresent {
 
     @Override
     public void commonLoadDiscoverData(final SwitcherLayout switcherLayout) {
-       discoverModel.getDiscover(new CommonSubscriber<DiscoverData>(switcherLayout) {
+       discoverModel.getDiscover(new CommonSubscriber<DiscoverData>(context,switcherLayout) {
             @Override
             public void onNext(DiscoverData discoverData) {
                 if(discoverData != null){
@@ -93,7 +93,7 @@ public class DiscoverPresentImpl implements DiscoverPresent {
 
     @Override
     public void commonLoadUserData(final SwitcherLayout switcherLayout,double lat, double lng, String gender, String type) {
-        discoverModel.getUsers(new CommonSubscriber<DiscoverUserData>(switcherLayout) {
+        discoverModel.getUsers(new CommonSubscriber<DiscoverUserData>(context,switcherLayout) {
             @Override
             public void onNext(DiscoverUserData discoverUserData) {
                 if(discoverUserData != null && discoverUserData.getUser() != null){
@@ -147,7 +147,7 @@ public class DiscoverPresentImpl implements DiscoverPresent {
 
     @Override
     public void commonLoadNewsData(final SwitcherLayout switcherLayout) {
-        discoverModel.getNews(new CommonSubscriber<DiscoverNewsData>(switcherLayout) {
+        discoverModel.getNews(new CommonSubscriber<DiscoverNewsData>(context,switcherLayout) {
             @Override
             public void onNext(DiscoverNewsData discoverNewsData) {
                 if(discoverNewsData != null && discoverNewsData.getNews() != null){

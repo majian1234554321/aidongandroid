@@ -79,10 +79,8 @@ public class HomeBean {
             return Constant.HOME_IMAGE_AND_HORIZONTAL_LIST;
         }else if("cover".equals(style)){
             return Constant.HOME_TITLE_AND_VERTICAL_LIST;
-        }else if("horizon".equals(style)){
-            return Constant.HOME_TITLE_AND_VERTICAL_LIST;
         }else {
-            return  -1;
+            return Constant.HOME_IMAGE_AND_HORIZONTAL_LIST;
         }
     }
 

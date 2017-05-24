@@ -152,11 +152,6 @@ public class BrandActivity extends BaseActivity implements BrandActivityView, Vi
     }
 
     @Override
-    public void showErrorView() {
-
-    }
-
-    @Override
     public void showEndFooterView() {
 
     }

@@ -70,8 +70,8 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       setSlideAnimation();
         setContentView(R.layout.activity_self_delivery);
+        setSlideAnimation();
         goodsPresent = new GoodsDetailPresentImpl(this,this);
         venuesPresent = new VenuesPresentImpl(this,this);
         if(getIntent() != null){

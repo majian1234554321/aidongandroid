@@ -36,7 +36,7 @@
             android:textColor="@color/c9"
             android:gravity="center"
             android:drawablePadding="15dp"
-            android:drawableTop="@drawable/icon_empty_user"/>
+            android:drawableTop="@drawable/empty_user"/>
 
     </RelativeLayout>
 </RelativeLayout>

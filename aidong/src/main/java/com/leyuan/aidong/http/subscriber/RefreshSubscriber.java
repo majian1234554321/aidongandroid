@@ -1,16 +1,6 @@
 package com.leyuan.aidong.http.subscriber;
 
 import android.content.Context;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.widget.Toast;
-
-import com.leyuan.aidong.R;
-import com.leyuan.aidong.utils.Logger;
-
-import java.net.ConnectException;
-import java.net.SocketTimeoutException;
-
-import rx.Subscriber;
 
 
 
@@ -18,41 +8,12 @@ import rx.Subscriber;
  * 用于上拉加载更多时的Http请求,
  * onNext中返回需要的数据,
  * onError中对错误进行统一处理,其他方法空实现
+ * //todo 去掉Presenter中Subscriber和控件的耦合,交由View来实现这部分逻辑
  */
-public abstract class RefreshSubscriber<T> extends Subscriber<T> {
-    private Context context;
-    private SwipeRefreshLayout refreshLayout;
+public abstract class RefreshSubscriber<T> extends BaseSubscriber<T> {
 
     public RefreshSubscriber(Context context) {
-        this.context = context;
-    }
-
-
-    @Override
-    public void onStart() {
-    }
-
-
-    @Override
-    public void onCompleted() {
-
-    }
-
-    /**
-     * 对错误进行统一处理
-     * @param e 异常信息
-     */
-    @Override
-    public void onError(Throwable e) {
-        if (e instanceof SocketTimeoutException) {
-            Toast.makeText(context, R.string.connect_timeout, Toast.LENGTH_SHORT).show();
-        } else if (e instanceof ConnectException) {
-            Toast.makeText(context, R.string.connect_break, Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(context, "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-        Logger.w("onError","error:" + e.getMessage());
-        onErrorView();
+        super(context);
     }
 
     /**
@@ -62,11 +23,5 @@ public abstract class RefreshSubscriber<T> extends Subscriber<T> {
     @Override
     public abstract void onNext(T t);
 
-    /**
-     * 下拉刷新需要显示加载错误的提示界面可以自己重写该方法,
-     * 默认空实现
-     */
-    public void onErrorView(){
 
-    }
 }

@@ -3,14 +3,11 @@ package com.leyuan.aidong.http.subscriber;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
 
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.NetworkUtil;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
-
-import rx.Subscriber;
 
 /**
  * 用于上拉加载更多时的Http请求,
@@ -18,15 +15,17 @@ import rx.Subscriber;
  * onStart和onCompleted中显示并隐藏正在加载的脚布局
  * onError中显示提示网络错误的脚布局
  * 目前仅适用于RecyclerView的上拉加载更多
+ * //todo 去掉Presenter中Subscriber和控件的耦合,交由View来实现这部分逻辑
  * Created by song on 2016/8/12
  */
-public abstract class RequestMoreSubscriber<T> extends Subscriber<T>{
+public abstract class RequestMoreSubscriber<T> extends BaseSubscriber<T>{
 
     private Context context;
     private RecyclerView recyclerView;
     private int pageSize;
 
     public RequestMoreSubscriber(Context context, RecyclerView recyclerView, int pageSize) {
+        super(context);
         this.context = context;
         this.recyclerView = recyclerView;
         this.pageSize = pageSize;
@@ -85,11 +84,11 @@ public abstract class RequestMoreSubscriber<T> extends Subscriber<T>{
      */
     @Override
     public void onError(Throwable e) {
+        super.onError(e);
         if(!NetworkUtil.isConnected(context)){
             showErrorFooterView();
         }else{
             hideFooterView();
-            Toast.makeText(context, "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 

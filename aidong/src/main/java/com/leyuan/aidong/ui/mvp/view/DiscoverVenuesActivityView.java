@@ -35,4 +35,6 @@ public interface DiscoverVenuesActivityView {
     void onRefreshData(List<VenuesBean> venuesBeanList);
 
     void onLoadMoreData(List<VenuesBean> venuesBeanList);
+
+    void showEmptyView();
 }

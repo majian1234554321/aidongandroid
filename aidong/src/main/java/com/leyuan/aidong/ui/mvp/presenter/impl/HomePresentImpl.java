@@ -104,7 +104,7 @@ public class HomePresentImpl implements HomePresent {
 
     @Override
     public void commonLoadData(final SwitcherLayout switcherLayout,String type) {
-        homeModel.getRecommendList(new CommonSubscriber<HomeData>(switcherLayout) {
+        homeModel.getRecommendList(new CommonSubscriber<HomeData>(context,switcherLayout) {
             @Override
             public void onNext(HomeData homeData) {
                 if(homeData != null && homeData.getHome() != null){
@@ -117,13 +117,6 @@ public class HomePresentImpl implements HomePresent {
                 if(storeFragmentView != null){
                     storeFragmentView.updateRecyclerView(homeBeanList);
                 }
-             /*   if(!homeBeanList.isEmpty()){
-                    homeFragmentView.updateCartRecyclerView(homeBeanList);
-                    switcherLayout.showContentLayout();
-                } else{
-                    switcherLayout.showEmptyLayout();
-                }*/
-
             }
         },Constant.PAGE_FIRST,type);
     }

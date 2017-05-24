@@ -145,8 +145,8 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setSlideAnimation();
         setContentView(R.layout.activity_goods_detail_deprecated);
+        setSlideAnimation();
         sharePopupWindow = new SharePopupWindow(this);
         goodsPresent = new GoodsDetailPresentImpl(this,this);
         if(getIntent() != null){

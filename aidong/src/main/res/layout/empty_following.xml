@@ -14,9 +14,9 @@
             android:layout_centerInParent="true"
             android:background="@color/white"
             android:drawablePadding="30dp"
-            android:drawableTop="@drawable/empty_user"
+            android:drawableTop="@drawable/empty_follow"
             android:gravity="center"
-            android:text="暂无其他人"
+            android:text="暂无关注"
             android:textColor="@color/c9" />
 
     </RelativeLayout>
