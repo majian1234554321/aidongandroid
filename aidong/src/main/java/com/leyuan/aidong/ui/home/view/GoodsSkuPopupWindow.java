@@ -354,6 +354,11 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         ShopBean shopBean = new ShopBean();
         List<GoodsBean> goodsBeanList = new ArrayList<>();
         GoodsBean goodsBean = new GoodsBean();
+
+        //结算界面修改自提信息时需要用到
+        goodsBean.setProductId(detailBean.id);
+        goodsBean.setProductType(goodsType);
+
         goodsBean.setName(detailBean.name);
         goodsBean.setSkuCode(line.code);
         goodsBean.setCover(detailBean.image.get(0));

@@ -14,7 +14,9 @@
             android:id="@+id/rv_dynamic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white" />
+            android:paddingTop="10dp"
+            android:clipToPadding="false"
+            android:background="@color/line_color" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>

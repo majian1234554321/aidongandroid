@@ -400,8 +400,9 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 Intent intent = new Intent(this, BarcodeActivity.class);
                 intent.putExtra("code", bean.getId());
                 intent.putExtra("rect", ImageRectUtils.getDrawableBoundsInView(ivCode));
-                Pair participants = new Pair<>(ivCode, ViewCompat.getTransitionName(ivCode));
-                ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(this);
+                Pair ivCodePair = new Pair<>(ivCode, ViewCompat.getTransitionName(ivCode));
+                ActivityOptionsCompat transitionActivityOptions
+                        = ActivityOptionsCompat.makeSceneTransitionAnimation(this);
                 ActivityCompat.startActivity(this, intent, transitionActivityOptions.toBundle());
                 break;
             default:

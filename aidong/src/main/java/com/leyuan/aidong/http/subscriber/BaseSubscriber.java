@@ -3,6 +3,7 @@ package com.leyuan.aidong.http.subscriber;
 import android.content.Context;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastGlobal;
 
 import java.net.ConnectException;
@@ -34,6 +35,7 @@ public abstract class BaseSubscriber<T> extends Subscriber<T> {
         } else {
             ToastGlobal.showShortConsecutive("" + e.getMessage());
         }
+        Logger.w("error",e.getMessage());
     }
 
     @Override

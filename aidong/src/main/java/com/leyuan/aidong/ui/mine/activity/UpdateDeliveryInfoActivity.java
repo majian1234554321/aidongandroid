@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -100,7 +101,20 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
     @Override
     public void onExpressClick(int position) {
         this.position = position;
-        cartPresent.updateGoodsDeliveryInfo(data.get(position).getGoods().getId(),DELIVERY_EXPRESS);
+        String cartId = data.get(position).getGoods().getId();
+        if(!TextUtils.isEmpty(cartId)) {
+            cartPresent.updateGoodsDeliveryInfo(cartId, DELIVERY_EXPRESS);
+        }else{
+            UpdateDeliveryBean bean = data.get(position);
+            DeliveryBean deliveryBean = new DeliveryBean();
+            deliveryBean.setType(DELIVERY_EXPRESS);
+            VenuesBean venuesBean = new VenuesBean();
+            venuesBean.setName("仓库发货");
+            deliveryBean.setInfo(venuesBean);
+            bean.setDeliveryInfo(deliveryBean);
+            deliveryInfoAdapter.notifyItemChanged(position);
+            updateShopList(bean);
+        }
     }
 
     @Override
@@ -117,9 +131,19 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
         if(intent != null){
             if(requestCode == REQUEST_UPDATE_DELIVERY){
                 venuesBean = intent.getParcelableExtra("venues");
-                String goodsId = data.get(position).getGoods().getId();
-                String gymId = venuesBean.getId();
-                cartPresent.updateGoodsDeliveryInfo(goodsId,gymId);
+                String cartId = data.get(position).getGoods().getId();
+                if(!TextUtils.isEmpty(cartId)){
+                    String gymId = venuesBean.getId();
+                    cartPresent.updateGoodsDeliveryInfo(cartId,gymId);
+                }else {
+                    UpdateDeliveryBean bean = data.get(position);
+                    DeliveryBean deliveryBean = new DeliveryBean();
+                    deliveryBean.setInfo(venuesBean);
+                    deliveryBean.setType(DELIVERY_SELF);
+                    bean.setDeliveryInfo(deliveryBean);
+                    deliveryInfoAdapter.notifyItemChanged(position);
+                    updateShopList(bean);
+                }
             }
         }
     }
@@ -151,6 +175,8 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
         }
     }
 
+
+
     @Override
     public void onBackPressed() {
         finishWithSendResult();
@@ -163,7 +189,9 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
         int goodsIndex = 0;
         for (int i = 0; i < allShopBeanList.size(); i++) {
             for (int j = 0; j < allShopBeanList.get(i).getItem().size(); j++) {
-                if(allShopBeanList.get(i).getItem().get(j).getId().equals(bean.getGoods().getId())){
+                if(!TextUtils.isEmpty(allShopBeanList.get(i).getItem().get(j).getId())
+                        && !TextUtils.isEmpty(bean.getGoods().getId())
+                        && allShopBeanList.get(i).getItem().get(j).getId().equals(bean.getGoods().getId())){
                     shopIndex = i;
                     goodsIndex = j;
                 }
@@ -211,5 +239,10 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
         setResult(RESULT_OK,intent);
 
         finish();
+    }
+
+
+    private boolean isFromCart(){
+        return false;
     }
 }

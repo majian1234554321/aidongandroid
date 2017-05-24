@@ -50,7 +50,6 @@ import static com.leyuan.aidong.utils.Constant.COUPON_CART;
 import static com.leyuan.aidong.utils.Constant.COUPON_EQUIPMENT;
 import static com.leyuan.aidong.utils.Constant.COUPON_NUTRITION;
 import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
-import static com.leyuan.aidong.utils.Constant.GOODS_EQUIPMENT;
 import static com.leyuan.aidong.utils.Constant.GOODS_NUTRITION;
 import static com.leyuan.aidong.utils.Constant.PAY_ALI;
 import static com.leyuan.aidong.utils.Constant.PAY_WEIXIN;
@@ -185,13 +184,9 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 amount = FormatUtil.parseInt(goods.getAmount());
                 totalGoodsPrice = FormatUtil.parseDouble(goods.getPrice()) * amount;
                 if (GOODS_NUTRITION.equals(goods.getType())) {
-                    goods.setProductId(goods.getId());
-                    goods.setProductType(GOODS_NUTRITION);
                     couponType = COUPON_NUTRITION;
                     settlementType = SETTLEMENT_NURTURE_IMMEDIATELY;
                 } else {
-                    goods.setProductId(goods.getId());
-                    goods.setProductType(GOODS_EQUIPMENT);
                     couponType = COUPON_EQUIPMENT;
                     settlementType = SETTLEMENT_EQUIPMENT_IMMEDIATELY;
                 }
