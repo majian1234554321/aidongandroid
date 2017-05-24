@@ -34,6 +34,7 @@ import com.leyuan.aidong.ui.mvp.view.VideoDetailView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.FastBlur;
 import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.media.TextViewPrintly;
 
 import java.util.ArrayList;
@@ -258,11 +259,15 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
                 }
                 break;
             case R.id.iv_share:
-                if (!App.mInstance.isLogin()) {
-                    startActivity(new Intent(this, LoginActivity.class));
-                } else if (videos != null && videos.size() > 0) {
+//                if (!App.mInstance.isLogin()) {
+//                    startActivity(new Intent(this, LoginActivity.class));
+//                } else
+
+                if (videos != null && videos.size() > 0) {
                     VideoDetail videoDetail = videos.get(viewPager.getCurrentItem());
                     share(videoDetail);
+                } else {
+                    ToastGlobal.showShortConsecutive("无可分享视频");
                 }
                 break;
             case R.id.iv_reply:

@@ -17,6 +17,7 @@ public class ConstantUrl {
     public final static String URL_SHARE_NEWS = BASE_URL_HTML + "share_info?nid=";
     public final static String URL_SHARE_VIDEO = BASE_URL_HTML + "share_videos?vid=";
     public final static String URL_SHARE_COUPON = BASE_URL_HTML + "share_coupon?timeno=";
+    public final static String URL_RETURN_SERVICE = BASE_URL_HTML + "return_service?rid=";
 
 
 

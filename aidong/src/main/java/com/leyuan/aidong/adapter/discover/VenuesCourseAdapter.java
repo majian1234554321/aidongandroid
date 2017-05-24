@@ -9,8 +9,11 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CourseBean;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.home.activity.CourseDetailActivity;
+import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.utils.FormatUtil;
+import com.leyuan.aidong.utils.UiManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +22,7 @@ import java.util.List;
  * 场馆详情界面课程列表适配器
  * Created by song on 2016/8/29.
  */
-public class VenuesCourseAdapter extends RecyclerView.Adapter<VenuesCourseAdapter.CourseHolder>{
+public class VenuesCourseAdapter extends RecyclerView.Adapter<VenuesCourseAdapter.CourseHolder> {
     private Context context;
     private List<CourseBean> data = new ArrayList<>();
 
@@ -32,7 +35,7 @@ public class VenuesCourseAdapter extends RecyclerView.Adapter<VenuesCourseAdapte
     }
 
     public void setData(List<CourseBean> data) {
-        if(data != null){
+        if (data != null) {
             this.data = data;
         }
         notifyDataSetChanged();
@@ -45,7 +48,7 @@ public class VenuesCourseAdapter extends RecyclerView.Adapter<VenuesCourseAdapte
 
     @Override
     public CourseHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_venues_course, parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_venues_course, parent, false);
         return new CourseHolder(view);
     }
 
@@ -57,19 +60,25 @@ public class VenuesCourseAdapter extends RecyclerView.Adapter<VenuesCourseAdapte
                 : String.format(context.getString(R.string.rmb_price_double), FormatUtil.parseDouble(bean.getPrice())));
         holder.address.setText(bean.getAddress());
         holder.time.setText(String.format(context.getString(R.string.time_with_line),
-                bean.getClassTime(),bean.getBreakTime()));
+                bean.getClassTime(), bean.getBreakTime()));
         holder.count.setText(String.format(context.getString(R.string.venues_course_count),
-                bean.getAppliedCount(),bean.getPlace()));
+                bean.getAppliedCount(), bean.getPlace()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CourseDetailActivity.start(context,bean.getCode());
+                if (App.getInstance().isLogin()) {
+                    CourseDetailActivity.start(context, bean.getCode());
+                } else {
+                    UiManager.activityJump(context, LoginActivity.class);
+                }
+
+
             }
         });
     }
 
-    class CourseHolder extends RecyclerView.ViewHolder{
+    class CourseHolder extends RecyclerView.ViewHolder {
         TextView name;
         TextView price;
         TextView address;

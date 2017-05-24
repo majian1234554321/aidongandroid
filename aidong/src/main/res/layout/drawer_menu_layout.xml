@@ -45,6 +45,7 @@
             android:background="@color/line_color" />
 
         <TextView
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="10dp"
@@ -54,11 +55,13 @@
             android:textSize="14sp" />
 
         <View
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/line_color" />
 
         <RadioGroup
+            android:visibility="gone"
             android:id="@+id/rg_identify"
             android:layout_width="match_parent"
             android:layout_height="35dp"
@@ -106,6 +109,7 @@
         </RadioGroup>
 
         <View
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_marginTop="10dp"

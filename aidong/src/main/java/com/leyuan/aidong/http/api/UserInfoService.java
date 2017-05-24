@@ -4,6 +4,7 @@ import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.data.DynamicsData;
 import com.leyuan.aidong.entity.data.UserInfoData;
 import com.leyuan.aidong.entity.user.MineInfoBean;
+import com.leyuan.aidong.entity.user.PrivacySettingData;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -23,9 +24,15 @@ public interface UserInfoService {
     @GET("mine")
     Observable<BaseBean<MineInfoBean>> getMineInfo();
 
-    @FormUrlEncoded
+//    @FormUrlEncoded
+//    @POST("mine/setting")
+//    Observable<BaseBean> hideSelf(@Field("hide") String isHide);
+
     @POST("mine/setting")
-    Observable<BaseBean> hideSelf(@Field("hide") String isHide);
+    Observable<BaseBean> hideSelf();
+
+    @GET("mine/setting")
+    Observable<BaseBean<PrivacySettingData>> getHideSetting();
 
     @FormUrlEncoded
     @PUT("mine/reset_password")

@@ -3,6 +3,7 @@ package com.leyuan.aidong.ui.mvp.presenter.impl;
 import android.content.Context;
 
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.user.PrivacySettingData;
 import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
 import com.leyuan.aidong.ui.mvp.model.UserInfoModel;
 import com.leyuan.aidong.ui.mvp.model.impl.UserInfoModelImpl;
@@ -29,6 +30,7 @@ public class PrivacyPresenterImpl {
         return SharePrefUtils.getBoolean(context, HIDE, true);
     }
 
+    @Deprecated
     public void hideSelf(final int hide) {
         model.hideSelf(new IsLoginSubscriber<BaseBean>(context) {
             @Override
@@ -47,5 +49,44 @@ public class PrivacyPresenterImpl {
                 view.onHideSelfSuccess(false);
             }
         }, hide + "");
+    }
+
+    public void hideSelf() {
+        model.hideSelf(new IsLoginSubscriber<BaseBean>(context) {
+            @Override
+            public void onNext(BaseBean baseBean) {
+                if (baseBean.getStatus() == Constant.OK) {
+                    view.onHideSelfSuccess(true);
+                } else {
+                    view.onHideSelfSuccess(false);
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                view.onHideSelfSuccess(false);
+            }
+        });
+    }
+
+    public void getHideSetting() {
+        model.getHideSetting(new IsLoginSubscriber<PrivacySettingData>(context) {
+            @Override
+            public void onNext(PrivacySettingData privacySettingData) {
+                if (privacySettingData != null && privacySettingData.getSetting() != null) {
+                    view.onGetHideSetting(privacySettingData.getSetting().isHide());
+                } else {
+                    view.onGetHideSetting(false);
+                }
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                view.onGetHideSetting(false);
+            }
+        });
     }
 }

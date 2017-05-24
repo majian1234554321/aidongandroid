@@ -4,6 +4,7 @@ import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.data.DynamicsData;
 import com.leyuan.aidong.entity.data.UserInfoData;
 import com.leyuan.aidong.entity.user.MineInfoBean;
+import com.leyuan.aidong.entity.user.PrivacySettingData;
 import com.leyuan.aidong.http.RetrofitHelper;
 import com.leyuan.aidong.http.RxHelper;
 import com.leyuan.aidong.http.api.UserInfoService;
@@ -103,11 +104,26 @@ public class UserInfoModelImpl implements UserInfoModel {
                 .subscribe(subscriber);
     }
 
+    @Deprecated
     @Override
     public void hideSelf(Subscriber<BaseBean> subscriber, String isHide) {
-        userInfoService.hideSelf(isHide)
+        userInfoService.hideSelf()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
+    @Override
+    public void hideSelf(Subscriber<BaseBean> subscriber) {
+        userInfoService.hideSelf()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+    @Override
+    public void getHideSetting(Subscriber<PrivacySettingData> subscriber) {
+        userInfoService.getHideSetting()
+                .compose(RxHelper.<PrivacySettingData>transform())
                 .subscribe(subscriber);
     }
 

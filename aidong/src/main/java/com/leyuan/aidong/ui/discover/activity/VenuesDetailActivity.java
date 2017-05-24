@@ -21,6 +21,7 @@ import com.leyuan.aidong.ui.discover.fragment.VenuesCoachFragment;
 import com.leyuan.aidong.ui.discover.fragment.VenuesCourseFragment;
 import com.leyuan.aidong.ui.discover.fragment.VenuesDetailFragment;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
+import com.leyuan.aidong.utils.Logger;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
@@ -35,6 +36,7 @@ import java.util.List;
  * Created by song on 2016/9/21.
  */
 public class VenuesDetailActivity extends BaseActivity implements SmartTabLayout.TabProvider {
+    private static final java.lang.String TAG = "VenuesDetailActivity";
     private ImageView ivBack;
     private TextView tvAppointment;
     private SmartTabLayout tabLayout;
@@ -43,6 +45,7 @@ public class VenuesDetailActivity extends BaseActivity implements SmartTabLayout
     private String id;
     private VenuesDetailBean venuesBean;
     private List<View> allTabView = new ArrayList<>();
+    private int currentPosition;
 
     public static void start(Context context, String id) {
         Intent starter = new Intent(context, VenuesDetailActivity.class);
@@ -84,16 +87,13 @@ public class VenuesDetailActivity extends BaseActivity implements SmartTabLayout
                     text.setTypeface(i == position ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
                 }
 
-//                if (position == 0) {
-//                    tvAppointment.setVisibility(View.VISIBLE);
-//                } else {
-//                    tvAppointment.setVisibility(View.GONE);
-//                }
-                if (position == allTabView.size() - 1) {
-                    tvAppointment.setVisibility(View.GONE);
-                } else {
+                Logger.i(TAG, "position = " + position);
+                if (position == 0) {
                     tvAppointment.setVisibility(View.VISIBLE);
+                } else {
+                    tvAppointment.setVisibility(View.GONE);
                 }
+                currentPosition = position;
             }
         });
 
@@ -116,23 +116,6 @@ public class VenuesDetailActivity extends BaseActivity implements SmartTabLayout
                 }
             }
         });
-
-//        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//
-//            }
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-//
-//            }
-//        });
     }
 
     @Override
@@ -150,6 +133,8 @@ public class VenuesDetailActivity extends BaseActivity implements SmartTabLayout
 
     public void loadFinish(VenuesDetailBean bean) {
         venuesBean = bean;
-        tvAppointment.setVisibility(View.VISIBLE);
+        if (currentPosition == 0) {
+            tvAppointment.setVisibility(View.VISIBLE);
+        }
     }
 }

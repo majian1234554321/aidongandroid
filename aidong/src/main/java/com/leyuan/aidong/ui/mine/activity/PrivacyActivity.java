@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 
 import com.leyuan.aidong.R;
@@ -31,22 +30,14 @@ public class PrivacyActivity extends BaseActivity implements PrivacyActivityView
 
         layout_tab_mine_personal_setting_privacy_img = (ImageView) findViewById(R.id.layout_tab_mine_personal_setting_privacy_img);
         uiswitchButton = (UISwitchButton) findViewById(R.id.switch1);
-        uiswitchButton.setChecked(privacyPresenter.getIsHide());
+        DialogUtils.showDialog(PrivacyActivity.this, "", true);
+        privacyPresenter.getHideSetting();
 
-        layout_tab_mine_personal_setting_privacy_img
-                .setOnClickListener(new OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-                        finish();
-                    }
-                });
-        uiswitchButton.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+        layout_tab_mine_personal_setting_privacy_img.setOnClickListener(new OnClickListener() {
 
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                DialogUtils.showDialog(PrivacyActivity.this, "", true);
-                privacyPresenter.hideSelf(isChecked?0:1);
+            public void onClick(View v) {
+                finish();
             }
         });
     }
@@ -54,8 +45,23 @@ public class PrivacyActivity extends BaseActivity implements PrivacyActivityView
     @Override
     public void onHideSelfSuccess(boolean success) {
         DialogUtils.dismissDialog();
-        if(success){
-            ToastUtil.showShort(this,"设置成功");
+        if (success) {
+            ToastUtil.showShort(this, "设置成功");
         }
+    }
+
+    @Override
+    public void onGetHideSetting(boolean hide) {
+        DialogUtils.dismissDialog();
+        uiswitchButton.setChecked(!hide);
+        uiswitchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                DialogUtils.showDialog(PrivacyActivity.this, "", true);
+                privacyPresenter.hideSelf();
+//                privacyPresenter.hideSelf(isChecked?0:1);
+            }
+        });
     }
 }

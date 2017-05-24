@@ -80,7 +80,7 @@
                 android:layout_marginTop="33dp"
                 android:clipChildren="false"
                 android:clipToPadding="false"
-                android:scrollbars="none"/>
+                android:scrollbars="none" />
 
             <View
                 android:layout_width="match_parent"
@@ -101,15 +101,24 @@
                 android:textColor="@color/white"
                 android:textSize="13sp" />
 
-            <com.leyuan.aidong.widget.MyListView
+            <android.support.v7.widget.RecyclerView
                 android:id="@+id/lv_relate_course"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+
                 android:layout_below="@+id/rv_relate_relate_video"
-                android:layout_marginTop="33dp"
-                android:divider="@null"
-                android:dividerHeight="10dp"
-                android:paddingBottom="10dp"/>
+                android:layout_marginTop="33dp" />
+
+
+            <!--<com.leyuan.aidong.widget.MyListView-->
+            <!--android:id="@+id/lv_relate_course"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@+id/rv_relate_relate_video"-->
+            <!--android:layout_marginTop="33dp"-->
+            <!--android:divider="@null"-->
+            <!--android:dividerHeight="10dp"-->
+            <!--android:paddingBottom="10dp"/>-->
 
 
             <View
@@ -139,7 +148,7 @@
                 android:layout_below="@+id/view_middle"
                 android:layout_marginLeft="7.5dp"
                 android:layout_marginRight="7.5dp"
-                android:layout_marginTop="33dp"/>
+                android:layout_marginTop="33dp" />
 
             <View
                 android:layout_width="match_parent"

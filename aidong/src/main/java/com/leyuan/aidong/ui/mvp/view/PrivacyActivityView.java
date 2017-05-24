@@ -5,4 +5,6 @@ package com.leyuan.aidong.ui.mvp.view;
  */
 public interface PrivacyActivityView {
     void onHideSelfSuccess(boolean success);
+
+    void onGetHideSetting(boolean hide);
 }

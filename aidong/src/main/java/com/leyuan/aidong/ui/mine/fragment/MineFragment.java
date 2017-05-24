@@ -42,6 +42,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.MineInfoPresenterImpl;
 import com.leyuan.aidong.ui.mvp.view.MineInfoView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.Md5Utils;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.utils.UiManager;
 import com.leyuan.aidong.widget.AidongMineItem;
@@ -222,14 +223,13 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
                 ToastUtil.showConsecutiveShort("暂未开放");
                 break;
             case R.id.item_after_sale:
-//                GoodsBean goodsBean = new GoodsBean();
-//                goodsBean.setName("gnc inc");
-//                goodsBean.setAmount("7");
-//                goodsBean.setId("46");
-//                ArrayList<GoodsBean> arrayList = new ArrayList<>();
-//                arrayList.add(goodsBean);
-//                ApplyServiceActivity.start(getActivity(), "20170325000068", arrayList);
-                WebViewActivity.start(getActivity(), "售后服务", ConstantUrl.URL_AFTER_SALES_SERVICE);
+                if (App.getInstance().isLogin()) {
+                    WebViewActivity.start(getActivity(), "售后服务", ConstantUrl.URL_RETURN_SERVICE +
+                            App.getInstance().getUser().getId() + "&&key=" + Md5Utils.createMd(App.getInstance().getToken()));
+                } else {
+                    UiManager.activityJump(getActivity(), LoginActivity.class);
+                }
+
                 break;
             case R.id.item_setting:
                 UiManager.activityJump(getActivity(), TabMinePersonalSettingsActivity.class);

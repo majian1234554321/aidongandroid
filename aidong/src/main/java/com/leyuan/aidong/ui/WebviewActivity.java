@@ -13,12 +13,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.utils.Logger;
 
 /**
  * WebView
  * Created by song on 2016/10/18.v
  */
 public class WebViewActivity extends BaseActivity{
+    private static final java.lang.String TAG = "WebViewActivity";
     private WebView webView;
     private String title;
     private String url;
@@ -37,6 +39,7 @@ public class WebViewActivity extends BaseActivity{
         if(getIntent() != null){
              title = getIntent().getStringExtra("title");
              url = getIntent().getStringExtra("url");
+            Logger.i(TAG,"url = " +url);
         }
 
         ImageView ivBack = (ImageView) findViewById(R.id.iv_back);

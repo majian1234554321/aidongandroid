@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
@@ -14,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.adapter.video.WatchOfficeRelateCourseAdapter;
+import com.leyuan.aidong.adapter.video.WatchOfficeRelateCoursesAdapter;
 import com.leyuan.aidong.adapter.video.WatchOfficeRelateGoodAdapter;
 import com.leyuan.aidong.adapter.video.WatchOfficeRelateVideoAdapter;
 import com.leyuan.aidong.entity.GoodsBean;
@@ -22,11 +23,11 @@ import com.leyuan.aidong.entity.video.VideoDetail;
 import com.leyuan.aidong.entity.video.VideoRelationResult;
 import com.leyuan.aidong.entity.video.WatchOfficeCourseBean;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.home.activity.CourseActivity;
 import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VideoPresenterImpl;
 import com.leyuan.aidong.ui.mvp.view.VideoRelationView;
 import com.leyuan.aidong.utils.Logger;
-import com.leyuan.aidong.widget.MyListView;
 import com.leyuan.aidong.widget.SmartScrollView;
 
 import java.util.ArrayList;
@@ -36,17 +37,17 @@ import java.util.List;
  * 视界专题详情界面展开
  * Created by auth song on 2016/7/25
  */
-public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelateGoodAdapter.OnGoodsItemClickListener, WatchOfficeRelateVideoAdapter.OnVideoItemCLickListener, VideoRelationView {
+public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelateGoodAdapter.OnGoodsItemClickListener, WatchOfficeRelateVideoAdapter.OnVideoItemCLickListener, VideoRelationView, WatchOfficeRelateCoursesAdapter.OnRelateCourseClickListener {
 
     private WatchOfficeRelateVideoAdapter videoAdapter;
-    private WatchOfficeRelateCourseAdapter courseAdapter;
+    private WatchOfficeRelateCoursesAdapter courseAdapter;
     private WatchOfficeRelateGoodAdapter goodAdapter;
 
     private String videoName;
     private String videoId;
     private String phase;
     private int position;
-    private ArrayList<VideoDetail> videos;
+    private ArrayList<VideoDetail> videos = new ArrayList<>();
 
     private int series_id;
     private int page = 1;
@@ -118,10 +119,10 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
             series_id = intent.getIntExtra("series_id", 0);
             phase = intent.getStringExtra("phase");
             position = intent.getIntExtra("position", 0);
-            videos = intent.getParcelableArrayListExtra("videos");
-            if (videos != null && videos.size() > position) {
-                videos.remove(position);
-            }
+//            videos = intent.getParcelableArrayListExtra("videos");
+//            if (videos != null && videos.size() > position) {
+//                videos.remove(position);
+//            }
         }
 
         presenter = new VideoPresenterImpl(this);
@@ -152,13 +153,17 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
 
         ImageView ivBack = (ImageView) findViewById(R.id.iv_down_arrow);
         ivBack.setOnClickListener(backListener);
+
         RecyclerView videoRecyclerView = (RecyclerView) findViewById(R.id.rv_relate_relate_video);
-        videoRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
+        videoRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         videoAdapter = new WatchOfficeRelateVideoAdapter(this, this);
         videoRecyclerView.setAdapter(videoAdapter);
-        MyListView courseListView = (MyListView) findViewById(R.id.lv_relate_course);
-        courseAdapter = new WatchOfficeRelateCourseAdapter(this);
+
+        RecyclerView courseListView = (RecyclerView) findViewById(R.id.lv_relate_course);
+        courseListView.setLayoutManager(new GridLayoutManager(this, 2));
+        courseAdapter = new WatchOfficeRelateCoursesAdapter(this, this);
         courseListView.setAdapter(courseAdapter);
+
         RecyclerView goodRecyclerView = (RecyclerView) findViewById(R.id.rv_relate_good);
         goodRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         goodAdapter = new WatchOfficeRelateGoodAdapter(this, this);
@@ -197,6 +202,11 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
     }
 
     @Override
+    public void onCourseClick(WatchOfficeCourseBean bean) {
+        CourseActivity.start(this, bean.getDictName());
+    }
+
+    @Override
     public void onVideoClick(VideoDetail bean) {
 
         VideoDetailActivity.start(this, series_id, bean.getPhase(), Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -217,13 +227,18 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
         List<GoodsBean> goodList = relateBean.getGood();
         if (videoList != null && !videoList.isEmpty()) {
             videos.addAll(videoList);
-        }
-        if (videos != null && !videos.isEmpty()) {
             videoAdapter.setData(videos);
         } else {
             findViewById(R.id.tv_relate_video).setVisibility(View.GONE);
             findViewById(R.id.rv_relate_relate_video).setVisibility(View.GONE);
         }
+
+//        if (videos != null && !videos.isEmpty()) {
+//            videoAdapter.setData(videos);
+//        } else {
+//            findViewById(R.id.tv_relate_video).setVisibility(View.GONE);
+//            findViewById(R.id.rv_relate_relate_video).setVisibility(View.GONE);
+//        }
 
         if (courseList != null && !courseList.isEmpty()) {
             courseAdapter.addList(courseList);
@@ -237,6 +252,6 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
             findViewById(R.id.tv_relate_good).setVisibility(View.GONE);
             findViewById(R.id.rv_relate_good).setVisibility(View.GONE);
         }
-
     }
+
 }

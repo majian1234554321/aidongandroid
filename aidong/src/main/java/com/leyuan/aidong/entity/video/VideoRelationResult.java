@@ -11,26 +11,18 @@ public class VideoRelationResult {
 
     VideoRelation relation;
 
-    public VideoRelation getRelation() {
-        return relation;
-    }
-
-    public void setRelation(VideoRelation relation) {
-        this.relation = relation;
-    }
-
     public class VideoRelation {
 
-        ArrayList<VideoDetail> video;
+        ArrayList<VideoDetail> videos;
         ArrayList<WatchOfficeCourseBean> course;
         ArrayList<GoodsBean> good;
 
         public ArrayList<VideoDetail> getVideo() {
-            return video;
+            return videos;
         }
 
         public void setVideo(ArrayList<VideoDetail> video) {
-            this.video = video;
+            this.videos = video;
         }
 
         public ArrayList<WatchOfficeCourseBean> getCourse() {

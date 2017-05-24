@@ -4,6 +4,7 @@ import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.data.DynamicsData;
 import com.leyuan.aidong.entity.data.UserInfoData;
 import com.leyuan.aidong.entity.user.MineInfoBean;
+import com.leyuan.aidong.entity.user.PrivacySettingData;
 
 import rx.Subscriber;
 
@@ -45,4 +46,8 @@ public interface UserInfoModel {
                         String new_password, String confirm_password);
 
     void hideSelf(Subscriber<BaseBean> subscriber, String isHide);
+
+    void hideSelf(Subscriber<BaseBean> subscriber);
+
+    void getHideSetting(Subscriber<PrivacySettingData> subscriber);
 }

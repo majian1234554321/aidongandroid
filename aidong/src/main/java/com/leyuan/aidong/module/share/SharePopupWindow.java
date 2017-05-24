@@ -13,6 +13,7 @@ import com.example.aidong.wxapi.WXEntryActivity;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.ShareActivityQQ;
 import com.leyuan.aidong.ui.WeiboResponseActivity;
+import com.leyuan.aidong.utils.HtmlToStringUtils;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.sina.weibo.sdk.api.share.BaseResponse;
@@ -31,7 +32,7 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
     private ImageView imgWeiFriend;
     private ImageView imgQq;
     private ImageView imgWeibo;
-//    private MyShareUtils myShareUtils;
+    //    private MyShareUtils myShareUtils;
     private String title;
     private String content;
     private String imageUrl;
@@ -74,12 +75,13 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
     }
 
     public void showAtBottom(String title, String content, String imageUrl, String webUrl) {
-        Logger.i("share", "show image url = " + imageUrl);
+
         this.showAtLocation(((ViewGroup) context.findViewById(android.R.id.content)).getChildAt(0), Gravity.BOTTOM, 0, 0);
         this.title = title;
-        this.content = content;
+        this.content = HtmlToStringUtils.delHTMLTag(content).substring(0, content.length() > 30 ? 30 : content.length());
         this.imageUrl = imageUrl;
         this.webUrl = webUrl;
+        Logger.i("share", "title = " + title + ",  content = " + this.content + "， image url = " + imageUrl + ", webUrl = " + webUrl);
     }
 
     @Deprecated
