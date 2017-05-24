@@ -24,7 +24,9 @@ import com.leyuan.aidong.utils.Utils;
  * Created by song on 2017/5/15.
  */
 public class BarcodeActivity extends BaseActivity{
-
+    private TextView tvCode;
+    private ImageView ivCode;
+    private String code;
     private Rect rect;
 
     public static void start(Context context, String code, Rect rect) {

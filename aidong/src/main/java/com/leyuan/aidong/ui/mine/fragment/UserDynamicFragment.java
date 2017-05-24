@@ -41,6 +41,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.UserInfoPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.UserDynamicFragmentView;
 import com.leyuan.aidong.ui.video.activity.PlayerActivity;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
@@ -66,6 +67,7 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_REFRESH_DYNAMIC;
  * Created by song on 2017/1/16.
  */
 public class UserDynamicFragment extends BaseFragment implements UserDynamicFragmentView {
+    private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
     private CircleDynamicAdapter circleDynamicAdapter;
@@ -113,6 +115,7 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
     private void initRecyclerView(View view) {
         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout);
         recyclerView = (RecyclerView) view.findViewById(rv_dynamic);
+        switcherLayout = new SwitcherLayout(getContext(),refreshLayout);
         dynamicList = new ArrayList<>();
         dynamicList = new ArrayList<>();
         CircleDynamicAdapter.Builder<DynamicBean> builder = new CircleDynamicAdapter.Builder<>(getContext());
@@ -179,6 +182,10 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
             dynamicList.clear();
             refreshLayout.setRefreshing(false);
         }
+
+        View view = View.inflate(getContext(),R.layout.empty_dynamic,null);
+        switcherLayout.addCustomView(view,"empty");
+        switcherLayout.showCustomLayout("empty");
     }
 
     private class DynamicCallback extends CircleDynamicAdapter.SimpleDynamicCallback {

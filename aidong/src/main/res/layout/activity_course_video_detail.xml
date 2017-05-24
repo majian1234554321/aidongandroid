@@ -7,7 +7,8 @@
         android:id="@+id/iv_blur"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:fitsSystemWindows="true"/>
 
     <Button
         android:id="@+id/iv_back"
@@ -54,7 +55,7 @@
                     android:id="@+id/img_cover"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerCrop"/>
 
                 <ImageView
                     android:id="@+id/iv_start"
