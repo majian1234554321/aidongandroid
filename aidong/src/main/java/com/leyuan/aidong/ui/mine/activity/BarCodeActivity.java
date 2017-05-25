@@ -7,6 +7,7 @@ import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.transition.ChangeTransform;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.widget.ImageView;
@@ -43,6 +44,7 @@ public class BarcodeActivity extends BaseActivity{
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Transition transitionFadeFast = TransitionInflater.from(this).inflateTransition(R.transition.fade_fast);
             getWindow().setEnterTransition(transitionFadeFast);
+            getWindow().setSharedElementEnterTransition(new ChangeTransform());
         }
 
         if(getIntent() != null){

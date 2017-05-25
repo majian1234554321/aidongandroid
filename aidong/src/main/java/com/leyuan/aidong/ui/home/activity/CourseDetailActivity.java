@@ -213,14 +213,18 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 ? "免费" : String.format(getString(R.string.rmb_price), bean.getPrice()));
         tvStartTime.setText(String.format(getString(R.string.appoint_time),
                 bean.getEntryStartTime()));
-
-        if(bean.getCoach().getId().equals(String.valueOf(App.mInstance.getUser().getId()))){
-            ivFollow.setVisibility(View.GONE);
+        if(App.mInstance.isLogin()) {
+            if (bean.getCoach().getId().equals(String.valueOf(App.mInstance.getUser().getId()))) {
+                ivFollow.setVisibility(View.GONE);
+            } else {
+                ivFollow.setVisibility(View.VISIBLE);
+                isFollow = SystemInfoUtils.isFollow(this, bean.getCoach());
+                ivFollow.setBackgroundResource(isFollow ? R.drawable.icon_following
+                        : R.drawable.icon_follow);
+            }
         }else {
             ivFollow.setVisibility(View.VISIBLE);
-            isFollow = SystemInfoUtils.isFollow(this, bean.getCoach());
-            ivFollow.setBackgroundResource(isFollow ? R.drawable.icon_following
-                    : R.drawable.icon_follow);
+            ivFollow.setBackgroundResource(R.drawable.icon_follow);
         }
 
         setBottomStatus();
@@ -331,6 +335,8 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             ToastGlobal.showLong(R.string.cancel_follow_fail);
         }
     }
+
+
 
     @Override
     protected void onDestroy() {

@@ -199,6 +199,19 @@ public class GoodsBean implements Parcelable {
         this.recommend_coach_id = recommend_code;
     }
 
+    public GoodsBean(String id, String name, String sku_code, String cover, String price,
+                      String type, String amount, ArrayList<String> spec_value) {
+        this.sku_code = sku_code;
+        this.id = id;
+        this.cover = cover;
+        this.name = name;
+        this.price = price;
+        this.type = type;
+        this.spec_value = spec_value;
+        this.amount = amount;
+
+    }
+
     @Override
     public String toString() {
         return "GoodsBean{" +

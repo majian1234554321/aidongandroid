@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -30,6 +31,7 @@ import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.ScreenUtil;
 import com.leyuan.aidong.utils.SystemInfoUtils;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.Utils;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.media.TextViewPrintly;
@@ -148,6 +150,10 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
                 RelatedVideoActivity.start(this,courseId);
                 break;
             case R.id.iv_start:
+                if(TextUtils.isEmpty(courseVideoBean.getFile())){
+                    ToastGlobal.showLong("视频链接为空");
+                    return;
+                }
                 Intent intent = new Intent(this, PlayerActivity.class)
                         .setData(Uri.parse(courseVideoBean.getFile()))
                         .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_HLS);

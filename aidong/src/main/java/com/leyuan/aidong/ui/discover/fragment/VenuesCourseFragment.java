@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.adapter.discover.DateAdapter;
+import com.leyuan.aidong.adapter.discover.CourseDateAdapter;
 import com.leyuan.aidong.adapter.discover.VenuesCourseAdapter;
 import com.leyuan.aidong.entity.CourseBean;
 import com.leyuan.aidong.entity.data.CourseData;
@@ -28,7 +28,7 @@ import java.util.List;
  * 场馆详情-课程
  * Created by song on 2016/8/27.
  */
-public class VenuesCourseFragment extends BaseFragment implements VenuesCourseFragmentView, DateAdapter.ItemClickListener {
+public class VenuesCourseFragment extends BaseFragment implements VenuesCourseFragmentView, CourseDateAdapter.ItemClickListener {
     private static final java.lang.String TAG = "VenuesCourseFragment";
     private SwitcherLayout switcherLayout;
     private VenuesCourseAdapter courseAdapter;
@@ -36,7 +36,7 @@ public class VenuesCourseFragment extends BaseFragment implements VenuesCourseFr
     private List<String> days;
     private VenuesPresent venuesPresent;
     private RecyclerView dateView;
-    private DateAdapter dateAdapter;
+    private CourseDateAdapter dateAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,7 +64,7 @@ public class VenuesCourseFragment extends BaseFragment implements VenuesCourseFr
         recyclerView.setAdapter(courseAdapter);
 
         dateView = (RecyclerView) view.findViewById(R.id.rv_date);
-        dateAdapter = new DateAdapter();
+        dateAdapter = new CourseDateAdapter();
         dateView.setLayoutManager(new CustomLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         dateView.setAdapter(dateAdapter);
         dateAdapter.setData(days);
