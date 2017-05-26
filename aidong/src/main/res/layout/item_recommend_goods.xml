@@ -2,60 +2,48 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:background="?selectableItemBackground"
-    android:paddingBottom="15dp"
     android:gravity="center"
+    android:orientation="vertical"
+    android:paddingBottom="15dp"
     android:paddingLeft="@dimen/left_margin"
     android:paddingRight="@dimen/right_margin">
 
-    <RelativeLayout
-        android:id="@+id/rl_cover"
-        android:layout_width="166dp"
-        android:layout_height="166dp">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/shape_stroke_gray"/>
-
-        <ImageView
-            android:id="@+id/dv_goods"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="0.5dp"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center_horizontal" />
-
-    </RelativeLayout>
+    <ImageView
+        android:id="@+id/dv_goods"
+        android:layout_width="165dp"
+        android:layout_height="165dp"
+        android:layout_gravity="center_horizontal"
+        android:scaleType="centerCrop"
+        android:foreground="@drawable/shape_stroke_gray" />
 
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/dv_goods"
+        android:layout_alignRight="@+id/dv_goods"
+        android:layout_below="@+id/dv_goods"
         android:layout_marginTop="10dp"
-        android:textSize="15sp"
-        android:text="商品名"
-        android:layout_alignLeft="@+id/rl_cover"
-        android:layout_alignRight="@+id/rl_cover"
-        android:layout_below="@+id/rl_cover"
-        android:gravity="center_vertical|left"
         android:ellipsize="end"
+        android:gravity="center_vertical|left"
         android:singleLine="true"
-        android:textColor="@color/text_black"/>
+        android:text="商品名"
+        android:textColor="@color/text_black"
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/tv_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/main_red"
+        android:layout_alignLeft="@+id/dv_goods"
+        android:layout_alignRight="@+id/dv_goods"
         android:layout_below="@+id/tv_name"
         android:layout_marginTop="6dp"
-        android:layout_alignLeft="@+id/rl_cover"
-        android:layout_alignRight="@+id/rl_cover"
         android:gravity="center_vertical|left"
-        android:text="价格"
         android:singleLine="true"
-        android:textSize="15sp"/>
+        android:text="价格"
+        android:textColor="@color/main_red"
+        android:textSize="15sp" />
 
 </RelativeLayout>

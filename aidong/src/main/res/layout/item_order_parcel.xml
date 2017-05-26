@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             android:text="仓库发货"
             android:textSize="16sp"
+            android:singleLine="true"
             android:textColor="@color/c3"/>
 
         <TextView

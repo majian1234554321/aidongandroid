@@ -179,6 +179,7 @@
                     android:text=""
                     android:textColor="@color/c9"
                     android:textSize="15sp"
+                    android:singleLine="true"
                     android:visibility="visible"/>
             </LinearLayout>
 

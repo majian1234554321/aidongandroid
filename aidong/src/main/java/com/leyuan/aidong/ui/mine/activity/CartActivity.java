@@ -187,8 +187,10 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
         RecyclerViewStateUtils.setFooterViewState(recommendView, LoadingFooter.State.TheEnd);
     }
 
+
+
     @Override
-    public void onCartDataLoadFinish(boolean isAllSelected) {
+    public void onCartDataLoadFinish(boolean isEmpty) {
         refreshLayout.setRefreshing(false);
         if(needLoadRecommendData) {
             needLoadRecommendData = false;
@@ -196,26 +198,21 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
             bottomLayout.setVisibility(View.VISIBLE);
             cartHeaderView.showRecommendText(!isEditing);
             recommendPresent.pullToRefreshRecommendData(RECOMMEND_CART);
-            rbSelectAll.setChecked(isAllSelected);
+        }
+
+        if(isEmpty){
+            isEditing = false;
+            updateEditStatus();
         }
     }
 
     @Override
-    public void onAllCheckedChanged(boolean allChecked) {
+    public void onBottomStatusChange(boolean allChecked, double totalPrice, int settlementCount) {
         rbSelectAll.setChecked(allChecked);
-    }
-
-    @Override
-    public void onPriceAndSettlementCountChanged(double totalPrice, int count) {
-        tvSettlement.setText(String.format(getString(R.string.settlement_count),count));
+        tvSettlement.setText(String.format(getString(R.string.settlement_count),settlementCount));
         tvTotalPrice.setText(String.format(getString(R.string.rmb_price_double),totalPrice));
     }
 
-    @Override
-    public void onAllGoodsDeleted() {
-        isEditing = false;
-        updateEditStatus();
-    }
 
     private void updateEditStatus(){
         tvEdit.setText(isEditing ? R.string.finish : R.string.edit);

@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.mine.view;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -73,52 +74,27 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
     public void pullToRefreshCartData(){
         cartPresent.pullToRefreshData();
         if(callback != null ){
-            callback.onPriceAndSettlementCountChanged(0f,0);
-            callback.onAllCheckedChanged(false);
+            callback.onBottomStatusChange(false,0f,0);
         }
     }
 
     @Override
     public void updateCartRecyclerView(List<ShopBean> list) {
-        for (ShopBean shopBean : list) {
-            for (GoodsBean bean : shopBean.getItem()) {
-                bean.setChecked(reBuyIds.contains(bean.getId()));
-            }
-        }
-
-        for (ShopBean shopBean : list) {
-            boolean isAllShopGoodsSelected = true;
-            for (GoodsBean bean : shopBean.getItem()) {
-                if (!bean.isChecked()) {
-                    isAllShopGoodsSelected = false;
-                    break;
-                }
-            }
-            shopBean.setChecked(isAllShopGoodsSelected);
-        }
-
-        boolean isAllShopSelected = true;
-        for (ShopBean shopBean : list) {
-            if(!shopBean.isChecked()){
-                isAllShopSelected = false;
-                break;
-            }
-        }
-
-        reBuyIds.clear();
         shopBeanList.clear();
         shopBeanList.addAll(list);
+        if(reBuyIds != null && !reBuyIds.isEmpty()) {
+            setReBuyGoods();
+        }
         shopAdapter.setData(shopBeanList);
         if(callback != null ){
-            callback.onCartDataLoadFinish(isAllShopSelected);
+            callback.onCartDataLoadFinish(false);
         }
     }
 
     @Override
     public void showEmptyGoodsView() {
         if(callback != null ){
-            callback.onCartDataLoadFinish(false);
-            callback.onAllGoodsDeleted();
+            callback.onCartDataLoadFinish(true);
         }
         shopBeanList.clear();
         shopAdapter.setData(shopBeanList);
@@ -132,8 +108,7 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
         boolean isAllShopChecked = isAllShopChecked();
         double totalPrice = calculateTotalPrice();
         if(callback != null){
-            callback.onAllCheckedChanged(isAllShopChecked);
-            callback.onPriceAndSettlementCountChanged(totalPrice, getSelectedGoods().size());
+            callback.onBottomStatusChange(isAllShopChecked,totalPrice, getSelectedGoods().size());
         }
         shopAdapter.notifyItemChanged(position);
     }
@@ -149,6 +124,42 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
         cartPresent.updateGoodsCount(goodsId,count,shopPosition,goodsPosition);
     }
 
+
+    public void deleteSelectedGoods(){
+        List<GoodsBean> selectedGoods = getSelectedGoods();
+        if(selectedGoods.isEmpty()){
+            Toast.makeText(context,R.string.tip_select_goods,Toast.LENGTH_LONG).show();
+            return;
+        }
+        StringBuilder ids = new StringBuilder();
+        for (GoodsBean selectedGood : selectedGoods) {
+            ids.append(selectedGood.getId()).append(",");
+        }
+        cartPresent.deleteMultiGoods(ids.toString());
+    }
+
+    public void changeAllGoodsStatus(boolean checked){
+        for (ShopBean bean : shopBeanList) {
+            bean.setChecked(checked);
+            for (GoodsBean goodsBean : bean.getItem()) {
+                goodsBean.setChecked(checked);
+            }
+        }
+        if(callback != null){
+            callback.onBottomStatusChange(checked,calculateTotalPrice(), getSelectedGoods().size());
+        }
+        shopAdapter.notifyDataSetChanged();
+    }
+
+    public void settlementSelectGoods(){
+        ArrayList<ShopBean> selectedShops = getSelectedShops();
+        if(selectedShops.isEmpty()){
+            Toast.makeText(context,R.string.tip_select_goods,Toast.LENGTH_LONG).show();
+            return;
+        }
+        ConfirmOrderActivity.start(context, selectedShops,calculateTotalPrice());
+    }
+
     @Override
     public void updateGoodsCountResult(BaseBean baseBean,int shopPosition,int goodsPosition) {
         if(baseBean.getStatus() == 1){
@@ -158,7 +169,7 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
             goods.setAmount(String.valueOf(goodsCount));
             shopAdapter.notifyItemChanged(shopPosition);
             if(callback != null){
-                callback.onPriceAndSettlementCountChanged(calculateTotalPrice(), getSelectedGoods().size());
+                callback.onBottomStatusChange(isAllShopChecked(),calculateTotalPrice(), getSelectedGoods().size());
             }
         }else {
             Toast.makeText(context,R.string.update_fail,Toast.LENGTH_LONG).show();
@@ -190,8 +201,7 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
                 shopAdapter.notifyItemChanged(shopPosition);
             }
             if(callback != null){
-                callback.onPriceAndSettlementCountChanged(calculateTotalPrice(), getSelectedGoods().size());
-                callback.onAllCheckedChanged(isAllShopChecked());
+                callback.onBottomStatusChange(isAllShopChecked(),calculateTotalPrice(), getSelectedGoods().size());
             }
         }else {
             ToastGlobal.showLong(R.string.delete_fail);
@@ -205,79 +215,40 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
     }
 
 
-    private boolean isAllShopChecked(){
-        if(shopBeanList == null || shopBeanList.isEmpty()){
-            return false;
+    public void showRecommendText(boolean visibility){
+        tvRecommend.setVisibility(visibility ? VISIBLE : GONE);
+    }
+
+    private void setReBuyGoods(){
+        for (ShopBean shopBean : shopBeanList) {
+            for (GoodsBean bean : shopBean.getItem()) {
+                bean.setChecked(reBuyIds.contains(bean.getId()));
+            }
+        }
+
+        for (ShopBean shopBean : shopBeanList) {
+            boolean isAllShopGoodsSelected = true;
+            for (GoodsBean bean : shopBean.getItem()) {
+                if (!bean.isChecked()) {
+                    isAllShopGoodsSelected = false;
+                    break;
+                }
+            }
+            shopBean.setChecked(isAllShopGoodsSelected);
         }
 
         boolean isAllShopChecked = true;
-        for (ShopBean bean : shopBeanList) {
-            if(!bean.isChecked()){
+        for (ShopBean shopBean : shopBeanList) {
+            if(!shopBean.isChecked()){
                 isAllShopChecked = false;
                 break;
             }
         }
-        return isAllShopChecked;
-    }
 
-    private double calculateTotalPrice(){
-        double totalPrice = 0;
-        for (GoodsBean goodsBean : getSelectedGoods()) {
-            totalPrice += FormatUtil.parseDouble(goodsBean.getPrice())
-                    * FormatUtil.parseInt(goodsBean.getAmount());
+        if(callback != null ){
+            callback.onBottomStatusChange(isAllShopChecked,calculateTotalPrice(), getSelectedGoods().size());
         }
-        return totalPrice;
-    }
-
-    private List<GoodsBean> getSelectedGoods() {
-        List<GoodsBean> goodsBeanList = new ArrayList<>();
-        for (ShopBean bean : shopBeanList) {
-            for (GoodsBean goodsBean : bean.getItem()) {
-                if (goodsBean.isChecked()) {
-                    goodsBeanList.add(goodsBean);
-                }
-            }
-        }
-        return goodsBeanList;
-    }
-
-    public void deleteSelectedGoods(){
-        List<GoodsBean> selectedGoods = getSelectedGoods();
-        if(selectedGoods.isEmpty()){
-            Toast.makeText(context,R.string.tip_select_goods,Toast.LENGTH_LONG).show();
-            return;
-        }
-        StringBuilder ids = new StringBuilder();
-        for (GoodsBean selectedGood : selectedGoods) {
-            ids.append(selectedGood.getId()).append(",");
-        }
-        cartPresent.deleteMultiGoods(ids.toString());
-    }
-
-    public void settlementSelectGoods(){
-        ArrayList<ShopBean> selectedShops = getSelectedShops();
-        if(selectedShops.isEmpty()){
-            Toast.makeText(context,R.string.tip_select_goods,Toast.LENGTH_LONG).show();
-            return;
-        }
-        ConfirmOrderActivity.start(context, selectedShops,calculateTotalPrice());
-}
-
-    public void changeAllGoodsStatus(boolean checked){
-        for (ShopBean bean : shopBeanList) {
-            bean.setChecked(checked);
-            for (GoodsBean goodsBean : bean.getItem()) {
-                goodsBean.setChecked(checked);
-            }
-        }
-        if(callback != null){
-            callback.onPriceAndSettlementCountChanged(calculateTotalPrice(), getSelectedGoods().size());
-        }
-        shopAdapter.notifyDataSetChanged();
-    }
-
-    public void showRecommendText(boolean visibility){
-        tvRecommend.setVisibility(visibility ? VISIBLE : GONE);
+        reBuyIds.clear();
     }
 
     private ArrayList<ShopBean> getSelectedShops(){
@@ -299,14 +270,59 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
         return selectedShopBeanList;
     }
 
+    private List<GoodsBean> getSelectedGoods() {
+        List<GoodsBean> goodsBeanList = new ArrayList<>();
+        for (ShopBean bean : shopBeanList) {
+            for (GoodsBean goodsBean : bean.getItem()) {
+                if (goodsBean.isChecked()) {
+                    goodsBeanList.add(goodsBean);
+                }
+            }
+        }
+        return goodsBeanList;
+    }
+
+    private double calculateTotalPrice(){
+        double totalPrice = 0;
+        for (GoodsBean goodsBean : getSelectedGoods()) {
+            totalPrice += FormatUtil.parseDouble(goodsBean.getPrice())
+                    * FormatUtil.parseInt(goodsBean.getAmount());
+        }
+        return totalPrice;
+    }
+
+    private boolean isAllShopChecked(){
+        if(shopBeanList == null || shopBeanList.isEmpty()){
+            return false;
+        }
+
+        boolean isAllShopChecked = true;
+        for (ShopBean bean : shopBeanList) {
+            if(!bean.isChecked()){
+                isAllShopChecked = false;
+                break;
+            }
+        }
+        return isAllShopChecked;
+    }
+
     public void setCartCallback(CartHeaderCallback callback) {
         this.callback = callback;
     }
 
     public interface CartHeaderCallback{
-        void onCartDataLoadFinish(boolean isAllSelected);
-        void onAllGoodsDeleted();
-        void onAllCheckedChanged(boolean allChecked);
-        void onPriceAndSettlementCountChanged(double totalPrice, int settlementCount);
+        /**
+         * 购物车数据加载完成,通知开始加载推荐商品数据
+         * @param isEmpty 是否为空数据
+         */
+        void onCartDataLoadFinish(boolean isEmpty);
+
+        /**
+         * 购物车底部状态改变回调
+         * @param allChecked 是否商店全选
+         * @param totalPrice 选中商店中商品的总价
+         * @param settlementCount 选中的商品类型数量
+         */
+        void onBottomStatusChange(@Nullable boolean allChecked, double totalPrice, int settlementCount);
     }
 }

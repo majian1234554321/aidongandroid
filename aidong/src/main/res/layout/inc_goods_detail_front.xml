@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:background="@color/white"
+            android:foreground="@color/viewfinder_mask"
             android:visibility="visible"
             app:banner_pointAutoPlayAble="false"
             app:banner_pointContainerBackground="@android:color/transparent"
@@ -23,7 +24,7 @@
             app:banner_pointTopBottomMargin="10dp"
             app:banner_indicatorGravity="top|center_horizontal"
             app:banner_transitionEffect="alpha"
-            app:layout_collapseMode="parallax"/>
+            app:layout_collapseMode="parallax" />
 
         <TextView
             android:id="@+id/tv_price"

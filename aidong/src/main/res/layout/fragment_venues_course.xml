@@ -4,19 +4,20 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingBottom="10dp"
     android:background="@color/line_color">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_date"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:elevation="2dp"
-        />
+        android:elevation="2dp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_venues_course"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-       />
+        android:clipChildren="false"
+        android:clipToPadding="false"/>
 
 </LinearLayout>

@@ -15,9 +15,8 @@ public class GoodsBean implements Parcelable {
     private static final int OUT_OF_STOCK = 1;
     private static final int SOLD_OUT = 2;
     private static final int ON_SALE = 3;
-    private String sku_code;      //商品编码
     private String id;
-    private String code;
+    private String code;           //商品编码
     private String cover;         //商品封面
     private String name;          //商品名字
     private String price;         //商品售价
@@ -70,13 +69,7 @@ public class GoodsBean implements Parcelable {
         this.product_type = product_type;
     }
 
-    public String getSku_code() {
-        return sku_code;
-    }
 
-    public void setSku_code(String sku_code) {
-        this.sku_code = sku_code;
-    }
 
     public boolean isOnline() {
         return online;
@@ -94,13 +87,7 @@ public class GoodsBean implements Parcelable {
         this.stock = stock;
     }
 
-    public String getSkuCode() {
-        return sku_code;
-    }
 
-    public void setSkuCode(String sku_code) {
-        this.sku_code = sku_code;
-    }
 
     public String getName() {
         return name;
@@ -201,7 +188,6 @@ public class GoodsBean implements Parcelable {
 
     public GoodsBean(String id, String name, String sku_code, String cover, String price,
                       String type, String amount, ArrayList<String> spec_value) {
-        this.sku_code = sku_code;
         this.id = id;
         this.cover = cover;
         this.name = name;
@@ -215,7 +201,6 @@ public class GoodsBean implements Parcelable {
     @Override
     public String toString() {
         return "GoodsBean{" +
-                "sku_code='" + sku_code + '\'' +
                 ", id='" + id + '\'' +
                 ", code='" + code + '\'' +
                 ", cover='" + cover + '\'' +
@@ -236,7 +221,6 @@ public class GoodsBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.sku_code);
         dest.writeString(this.id);
         dest.writeString(this.code);
         dest.writeString(this.cover);
@@ -261,7 +245,6 @@ public class GoodsBean implements Parcelable {
     }
 
     protected GoodsBean(Parcel in) {
-        this.sku_code = in.readString();
         this.id = in.readString();
         this.code = in.readString();
         this.cover = in.readString();

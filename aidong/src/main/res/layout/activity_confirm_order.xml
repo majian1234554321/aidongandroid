@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:background="?selectableItemBackground"
                 android:paddingTop="20dp"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/iv_default"
@@ -126,7 +126,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <include layout="@layout/inc_line_with_margin" />
 
@@ -209,6 +209,13 @@
                     android:textSize="15sp" />
 
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/line_color"
+                android:layout_marginLeft="@dimen/left_margin"
+                android:layout_marginRight="@dimen/right_margin"/>
 
             <LinearLayout
                 android:id="@+id/ll_gold"

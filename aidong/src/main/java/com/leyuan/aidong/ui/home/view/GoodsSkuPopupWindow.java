@@ -360,7 +360,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         goodsBean.setProductType(goodsType);
 
         goodsBean.setName(detailBean.name);
-        goodsBean.setSkuCode(line.code);
+        goodsBean.setCode(line.code);
         goodsBean.setCover(detailBean.image.get(0));
         goodsBean.setPrice(line.price);
         goodsBean.setType(goodsType);

@@ -18,6 +18,7 @@ import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewA
 import java.util.ArrayList;
 
 /**
+ *
  * Created by user on 2017/3/17.
  */
 public class VenuesSubbranchActivity extends BaseActivity {

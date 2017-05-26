@@ -19,5 +19,11 @@
             android:text="购物车是空的哦!"
             android:textColor="@color/c9" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/line_color"
+            android:layout_alignParentBottom="true"/>
+
     </RelativeLayout>
 </RelativeLayout>

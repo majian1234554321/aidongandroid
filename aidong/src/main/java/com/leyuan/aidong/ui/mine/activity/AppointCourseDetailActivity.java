@@ -375,10 +375,22 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
                 present.cancelAppoint(bean.getId());
                 break;
             case R.id.tv_cancel_join:
-                present.cancelAppoint(bean.getId());
+                if(DateUtils.started(bean.getAppoint().getClassTime())){
+                    if("course".equals(bean.getAppointment_type())) {
+                        ToastGlobal.showLong("课程已开始，无法取消");
+                    }
+                }else {
+                    present.cancelAppoint(bean.getId());
+                }
                 break;
             case R.id.tv_confirm:
-                present.confirmAppoint(bean.getId());
+                if(DateUtils.bigThanOneHour(bean.getAppoint().getClassTime())) {
+                    if("course".equals(bean.getAppointment_type())) {
+                        ToastGlobal.showLong("未到课程时间，请稍后确认");
+                    }
+                }else {
+                    present.confirmAppoint(bean.getId());
+                }
                 break;
             case R.id.tv_delete:
                 present.deleteAppoint(bean.getId());
