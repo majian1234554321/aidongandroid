@@ -3,19 +3,21 @@ package com.leyuan.aidong.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.leyuan.aidong.utils.FormatUtil;
+
 import java.io.Serializable;
 
 /**
  * 用户
  * Created by song on 2016/8/2.
  */
-public class UserBean implements Parcelable,Serializable{
+public class UserBean implements Parcelable, Serializable {
     //发现-人
     private String id;          //编号
     private String name;        //名字
     private String avatar;      //头像
     private String gender;      //性别
-    private String distance;    //距离
+    private double distance;    //距离
     private boolean isFollow;   //是否关注
     private String signature;
     private String user_type;
@@ -68,11 +70,15 @@ public class UserBean implements Parcelable,Serializable{
         this.gender = gender;
     }
 
-    public String getDistance() {
+    public double getDistance() {
         return distance;
     }
 
-    public void setDistance(String distance) {
+    public String getDistanceFormat() {
+        return FormatUtil.formatDistance(distance);
+    }
+
+    public void setDistance(double distance) {
         this.distance = distance;
     }
 
@@ -117,7 +123,7 @@ public class UserBean implements Parcelable,Serializable{
         dest.writeString(this.name);
         dest.writeString(this.avatar);
         dest.writeString(this.gender);
-        dest.writeString(this.distance);
+        dest.writeDouble(this.distance);
         dest.writeByte(this.isFollow ? (byte) 1 : (byte) 0);
         dest.writeString(this.signature);
         dest.writeString(this.user_type);
@@ -128,7 +134,7 @@ public class UserBean implements Parcelable,Serializable{
         this.name = in.readString();
         this.avatar = in.readString();
         this.gender = in.readString();
-        this.distance = in.readString();
+        this.distance = in.readDouble();
         this.isFollow = in.readByte() != 0;
         this.signature = in.readString();
         this.user_type = in.readString();

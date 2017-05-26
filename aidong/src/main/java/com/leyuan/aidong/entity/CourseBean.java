@@ -2,6 +2,8 @@ package com.leyuan.aidong.entity;
 
 import android.annotation.SuppressLint;
 
+import com.leyuan.aidong.utils.FormatUtil;
+
 /**
  * 课程实体
  * Created by song on 2016/8/2.
@@ -135,8 +137,6 @@ public class CourseBean {
 
     @SuppressLint("DefaultLocale")
     public String getDistanceFormat() {
-        if (getDistance() < 100)
-            return "小于100m";
-        return String.format("%.2f", (getDistance() / 1000)) + "km";
+        return FormatUtil.formatDistance(distance);
     }
 }

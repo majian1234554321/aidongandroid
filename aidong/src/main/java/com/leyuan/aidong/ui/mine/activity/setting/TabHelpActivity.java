@@ -9,8 +9,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mine.activity.account.UserAgreementActivity;
+import com.leyuan.aidong.ui.WebViewActivity;
 
 public class TabHelpActivity extends BaseActivity {
     private ImageView mlayout_tab_help_img_back;
@@ -70,9 +71,7 @@ public class TabHelpActivity extends BaseActivity {
                 .setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        intent.setClass(TabHelpActivity.this,
-                                UserAgreementActivity.class);
-                        startActivity(intent);
+                        WebViewActivity.start(TabHelpActivity.this, "用户协议", ConstantUrl.URL_USER_AGREEMENT);
                     }
                 });
     }

@@ -53,14 +53,14 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
         final UserBean bean = data.get(position);
         GlideLoader.getInstance().displayCircleImage(bean.getAvatar(), holder.cover);
         holder.nickname.setText(bean.getName());
-        holder.distance.setText(bean.getDistance());
+        holder.distance.setText(bean.getDistanceFormat());
 
         if (!App.mInstance.isLogin()) {
             holder.follow.setBackgroundResource(R.drawable.icon_follow);
         } else {
-            if(String.valueOf(App.mInstance.getUser().getId()).equals(bean.getId())){
+            if (String.valueOf(App.mInstance.getUser().getId()).equals(bean.getId())) {
                 holder.follow.setVisibility(View.GONE);
-            }else {
+            } else {
                 holder.follow.setVisibility(View.VISIBLE);
                 holder.follow.setBackgroundResource(SystemInfoUtils.isFollow(context, bean)
                         ? R.drawable.icon_following : R.drawable.icon_follow);

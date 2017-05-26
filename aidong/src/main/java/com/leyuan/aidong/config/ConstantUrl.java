@@ -18,10 +18,8 @@ public class ConstantUrl {
     public final static String URL_SHARE_VIDEO = BASE_URL_HTML + "share_videos?vid=";
     public final static String URL_SHARE_COUPON = BASE_URL_HTML + "share_coupon?timeno=";
     public final static String URL_RETURN_SERVICE = BASE_URL_HTML + "return_service?rid=";
+    public final static String LIVE_SHARE = BASE_URL_HTML + "share_live?lid=";
+    public static final String URL_USER_AGREEMENT = BASE_URL_HTML + "agreement";
+    public static final String URL_ABOUT_US = BASE_URL_HTML + "aboutus";
 
-
-
-    public final static String LIVE_SHARE = BASE_URL_HTML + "/live/index.html?lid=";
-    public static final String URL_USER_AGREEMENT = BASE_URL_HTML + "homepage";
-    public static final String URL_AFTER_SALES_SERVICE = "http://www.ostagram.ru";
 }

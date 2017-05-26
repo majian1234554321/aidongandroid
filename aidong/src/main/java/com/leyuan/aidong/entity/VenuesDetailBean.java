@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 
 import com.google.gson.annotations.SerializedName;
 import com.leyuan.aidong.entity.model.Coordinate;
+import com.leyuan.aidong.utils.FormatUtil;
 
 import java.util.ArrayList;
 
@@ -207,8 +208,6 @@ public class VenuesDetailBean {
 
     @SuppressLint("DefaultLocale")
     public String getDistanceFormat() {
-        if (getDistance() < 100)
-            return "小于100m";
-        return String.format("%.2f", (getDistance() / 1000)) + "km";
+        return FormatUtil.formatDistance(distance);
     }
 }
