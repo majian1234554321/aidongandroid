@@ -46,10 +46,8 @@ import com.leyuan.aidong.widget.SwitcherLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.leyuan.aidong.utils.Constant.COUPON_CART;
-import static com.leyuan.aidong.utils.Constant.COUPON_EQUIPMENT;
-import static com.leyuan.aidong.utils.Constant.COUPON_NUTRITION;
 import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
+import static com.leyuan.aidong.utils.Constant.DELIVERY_SELF;
 import static com.leyuan.aidong.utils.Constant.GOODS_NUTRITION;
 import static com.leyuan.aidong.utils.Constant.PAY_ALI;
 import static com.leyuan.aidong.utils.Constant.PAY_WEIXIN;
@@ -63,7 +61,7 @@ import static com.leyuan.aidong.utils.Constant.SETTLEMENT_NURTURE_IMMEDIATELY;
 
 
 /**
- * 确认订单
+ * 确认订单:从立即购买或者购物车跳转过来
  * Created by song on 2016/9/23.
  */
 public class ConfirmOrderActivity extends BaseActivity implements View.OnClickListener,
@@ -109,24 +107,24 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private List<CouponBean> usableCoupons = new ArrayList<>();
     private ConfirmOrderShopAdapter shopAdapter;
 
-    private String skuCode;
-    private int amount;
-    private String[] itemIds;
-    private String[] itemFromIdAmount;
-
     private String integral;
     private String coin;
     private String couponId;
-    private @PayType String payType;
+
+    private String skuCode;
+    private int amount;
     private @DeliveryType String pickUpWay;           //取货方式(0-快递 1-自提)
-    private String pickUpId;                          //自提门店id或快递地址id
+    private @PayType String payType;
+    private String pickUpId;                          //快递地址或自提场馆id(立即购买时)  /快递地址(购物车结算时)
     private String pickUpDate;                        //自提时间
     private String defaultAddressId;
-
-    private String couponType;
+    private String[] itemIds;
+    private String[] itemFromIdAmount;
     private @SettlementType String settlementType;
     private double totalGoodsPrice;
-    private boolean needExpress = false;
+
+    private boolean needExpress = false;              //是否需要快递
+    private boolean needSelfDelivery = false;         //是否需要自提
     private Double expressPrice = 15d;
 
     private ConfirmOrderPresent present;
@@ -161,68 +159,47 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
 
     private void initVariable() {
+        if (getIntent() == null) return;
         payType = PAY_ALI;
         days = DateUtils.getSevenDate();
-        pickUpDate = days.get(0);
         expressPrice = SystemInfoUtils.getExpressPrice(this);
-        if (getIntent() == null) {
-            return;
-        }
+
         shopBeanList = getIntent().getParcelableArrayListExtra("selectedShops");
-        if (shopBeanList == null || shopBeanList.isEmpty()) {
+        if (shopBeanList == null || shopBeanList.isEmpty()) {   //立即购买
             shopBeanList = new ArrayList<>();
             ShopBean shop = getIntent().getParcelableExtra("shop");
             shopBeanList.add(shop);
-            pickUpId = shop.getPickUp().info.getId();
+            GoodsBean goods = shop.getItem().get(0);
+            skuCode = goods.getCode();
+            amount = FormatUtil.parseInt(goods.getAmount());
+            totalGoodsPrice = FormatUtil.parseDouble(goods.getPrice()) * amount;
             pickUpWay = shop.getPickUp().getType();
-            if (DELIVERY_EXPRESS.equals(pickUpWay)) {
-                pickUpDate = null;
+            if(DELIVERY_SELF.equals(pickUpWay)){
+                pickUpId = shop.getPickUp().info.getId();
             }
-            if (!shop.getItem().isEmpty()) {
-                GoodsBean goods = shop.getItem().get(0);
-                skuCode = goods.getSkuCode();
-                amount = FormatUtil.parseInt(goods.getAmount());
-                totalGoodsPrice = FormatUtil.parseDouble(goods.getPrice()) * amount;
-                if (GOODS_NUTRITION.equals(goods.getType())) {
-                    couponType = COUPON_NUTRITION;
-                    settlementType = SETTLEMENT_NURTURE_IMMEDIATELY;
-                } else {
-                    couponType = COUPON_EQUIPMENT;
-                    settlementType = SETTLEMENT_EQUIPMENT_IMMEDIATELY;
-                }
+            if (GOODS_NUTRITION.equals(goods.getType())) {
+                settlementType = SETTLEMENT_NURTURE_IMMEDIATELY;
+            } else {
+                settlementType = SETTLEMENT_EQUIPMENT_IMMEDIATELY;
             }
-
-            List<GoodsBean> goodsList = new ArrayList<>();
-            for (ShopBean shopBean : shopBeanList) {
-                for (GoodsBean goodsBean : shopBean.getItem()) {
-                    goodsList.add(goodsBean);
-                }
-            }
-            itemIds = new String[goodsList.size()];
-            itemFromIdAmount = new String[goodsList.size()];
-
-            for (int i = 0; i < goodsList.size(); i++) {
-                itemIds[i] = goodsList.get(i).getId();
-                itemFromIdAmount[i] = couponType + "_" + goodsList.get(i).getSkuCode() + "_" + goodsList.get(i).getAmount();
-            }
-        } else {
-            couponType = COUPON_CART;
+        }else {         //购物车结算
             settlementType = SETTLEMENT_CART;
             totalGoodsPrice = getIntent().getDoubleExtra("totalGoodsPrice", 0f);
+        }
 
-            List<GoodsBean> goodsList = new ArrayList<>();
-            for (ShopBean shopBean : shopBeanList) {
-                for (GoodsBean goodsBean : shopBean.getItem()) {
-                    goodsList.add(goodsBean);
-                }
+        List<GoodsBean> goodsList = new ArrayList<>();
+        for (ShopBean shopBean : shopBeanList) {
+            for (GoodsBean goodsBean : shopBean.getItem()) {
+                goodsList.add(goodsBean);
             }
-            itemIds = new String[goodsList.size()];
-            itemFromIdAmount = new String[goodsList.size()];
+        }
+        itemIds = new String[goodsList.size()];
+        itemFromIdAmount = new String[goodsList.size()];
 
-            for (int i = 0; i < goodsList.size(); i++) {
-                itemIds[i] = goodsList.get(i).getId();
-                itemFromIdAmount[i] = goodsList.get(i).getProductType() + "_" + goodsList.get(i).getCode() + "_" + goodsList.get(i).getAmount();
-            }
+        for (int i = 0; i < goodsList.size(); i++) {
+            itemIds[i] = goodsList.get(i).getId();
+            itemFromIdAmount[i] = goodsList.get(i).getProductType() + "_"
+                    + goodsList.get(i).getCode() + "_" + goodsList.get(i).getAmount();
         }
     }
 
@@ -263,16 +240,28 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void setChangeViewInfo(){
-        needExpress = false;
-        addressLayout.setVisibility(View.GONE);
-        selfDeliveryLayout.setVisibility(View.GONE);
         for (ShopBean shopBean : shopBeanList) {
             if (DELIVERY_EXPRESS.equals(shopBean.getPickUp().getType())) {
                 needExpress = true;
-                addressLayout.setVisibility(View.VISIBLE);
-            } else {
-                tvTime.setText(days.get(0));
-                selfDeliveryLayout.setVisibility(View.VISIBLE);
+            }
+            if (DELIVERY_SELF.equals(shopBean.getPickUp().getType())) {
+                needSelfDelivery = true;
+            }
+        }
+        if(needExpress){
+            addressLayout.setVisibility(View.VISIBLE);
+            if(!settlementType.equals(SETTLEMENT_CART)){
+                pickUpWay = DELIVERY_EXPRESS;
+            }
+        }
+
+        if(needSelfDelivery){
+            pickUpDate = days.get(0);
+            selfDeliveryLayout.setVisibility(View.VISIBLE);
+
+            if(!settlementType.equals(SETTLEMENT_CART)){
+                pickUpWay = DELIVERY_SELF;
+                pickUpId = shopBeanList.get(0).getPickUp().info.getId();
             }
         }
 
@@ -336,8 +325,8 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         }
         switch (settlementType) {
             case SETTLEMENT_CART:
-                present.payCart(integral, coin, couponId, payType, pickUpId,
-                        pickUpDate, payListener, itemIds);
+                present.payCart(integral, coin, couponId, payType,
+                        pickUpId, pickUpDate, payListener, itemIds);
                 break;
             case SETTLEMENT_NURTURE_IMMEDIATELY:
                 present.buyNurtureImmediately(skuCode, amount, couponId, integral, coin, payType,
@@ -438,6 +427,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             }else if(requestCode == REQUEST_UPDATE_DELIVERY) {
                 shopBeanList = data.getParcelableArrayListExtra("shopList");
                 shopAdapter.setData(shopBeanList);
+                resetStatus();
                 setChangeViewInfo();
                 if (needExpress) {
                     bottomLayout.setVisibility(View.GONE);
@@ -468,5 +458,14 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 .append(address.getDistrict()).append(address.getAddress());
         tvAddress.setText(sb);
         pickUpId = address.getId();
+    }
+
+    private void resetStatus(){
+        needExpress = false;
+        needSelfDelivery = false;
+        pickUpId = null;
+        pickUpDate = null;
+        addressLayout.setVisibility(View.GONE);
+        selfDeliveryLayout.setVisibility(View.GONE);
     }
 }

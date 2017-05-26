@@ -14,6 +14,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -146,7 +147,6 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_detail_deprecated);
-        setSlideAnimation();
         sharePopupWindow = new SharePopupWindow(this);
         goodsPresent = new GoodsDetailPresentImpl(this,this);
         if(getIntent() != null){
@@ -367,6 +367,9 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     private void showSkuPopupWindow(GoodsSkuPopupWindow.GoodsStatus status) {
         //if(skuPopupWindow == null){
         String recommendId = tvRecommendCode.getText().toString();
+        if(TextUtils.isEmpty(recommendId)){
+            recommendId = null;
+        }
         skuPopupWindow = new GoodsSkuPopupWindow(this, bean, status,selectedSkuValues, selectedCount,
                 recommendId, goodsType);
         skuPopupWindow.setSelectSkuListener(this);

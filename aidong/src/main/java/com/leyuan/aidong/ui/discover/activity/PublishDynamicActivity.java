@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,9 +42,9 @@ import java.util.List;
  * Created by song on 2017/2/2.
  */
 public class PublishDynamicActivity extends BaseActivity implements PublishDynamicActivityView,
-        View.OnClickListener, PublishDynamicAdapter.OnItemClickListener {
+        View.OnClickListener, PublishDynamicAdapter.OnItemClickListener, View.OnKeyListener {
     private static final int REQUEST_MEDIA = 1;
-    private static final int MAX_TEXT_COUNT = 14;
+    private static final int MAX_TEXT_COUNT = 240;
 
     private ImageView ivBack;
     private EditText etContent;
@@ -72,7 +73,7 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);;
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish_dynamic);
         setSlideAnimation();
         dynamicPresent = new DynamicPresentImpl(this,this);
@@ -106,6 +107,7 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
         mediaAdapter.setOnItemClickListener(this);
         btSend.setOnClickListener(this);
         etContent.addTextChangedListener(new OnTextWatcher());
+        etContent.setOnKeyListener(this);
     }
 
     @Override
@@ -116,7 +118,7 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
                 break;
             case R.id.bt_send:
                 if(FormatUtil.parseInt(tvContentCount.getText().toString()) > MAX_TEXT_COUNT){
-                    ToastGlobal.showLong( String.format(getString(R.string.too_many_text),MAX_TEXT_COUNT));
+                    ToastGlobal.showLong(String.format(getString(R.string.too_many_text),MAX_TEXT_COUNT));
                     return;
                 }
                 uploadToQiNiu();
@@ -194,6 +196,12 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
             mediaAdapter.setData(selectedMedia,isPhoto);
             btSend.setEnabled(!selectedMedia.isEmpty());
         }
+    }
+
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+        //屏蔽掉换行健
+        return (event.getKeyCode()==KeyEvent.KEYCODE_ENTER);
     }
 
     private class OnTextWatcher implements TextWatcher {

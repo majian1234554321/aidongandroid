@@ -101,19 +101,11 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
     @Override
     public void onExpressClick(int position) {
         this.position = position;
-        String cartId = data.get(position).getGoods().getId();
-        if(!TextUtils.isEmpty(cartId)) {
-            cartPresent.updateGoodsDeliveryInfo(cartId, DELIVERY_EXPRESS);
+        if(isChangeDeliveryInfoLocal()) {
+            changeExpressInfoLocal();
         }else{
-            UpdateDeliveryBean bean = data.get(position);
-            DeliveryBean deliveryBean = new DeliveryBean();
-            deliveryBean.setType(DELIVERY_EXPRESS);
-            VenuesBean venuesBean = new VenuesBean();
-            venuesBean.setName("仓库发货");
-            deliveryBean.setInfo(venuesBean);
-            bean.setDeliveryInfo(deliveryBean);
-            deliveryInfoAdapter.notifyItemChanged(position);
-            updateShopList(bean);
+            String cartId = data.get(position).getGoods().getId();
+            cartPresent.updateGoodsDeliveryInfo(cartId, DELIVERY_EXPRESS);
         }
     }
 
@@ -131,18 +123,12 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
         if(intent != null){
             if(requestCode == REQUEST_UPDATE_DELIVERY){
                 venuesBean = intent.getParcelableExtra("venues");
-                String cartId = data.get(position).getGoods().getId();
-                if(!TextUtils.isEmpty(cartId)){
+                if(isChangeDeliveryInfoLocal()){
+                   changeSelfDeliveryInfoLocal();
+                }else {
+                    String cartId = data.get(position).getGoods().getId();
                     String gymId = venuesBean.getId();
                     cartPresent.updateGoodsDeliveryInfo(cartId,gymId);
-                }else {
-                    UpdateDeliveryBean bean = data.get(position);
-                    DeliveryBean deliveryBean = new DeliveryBean();
-                    deliveryBean.setInfo(venuesBean);
-                    deliveryBean.setType(DELIVERY_SELF);
-                    bean.setDeliveryInfo(deliveryBean);
-                    deliveryInfoAdapter.notifyItemChanged(position);
-                    updateShopList(bean);
                 }
             }
         }
@@ -150,32 +136,48 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
 
     public void setSelfDeliveryResult(BaseBean baseBean){
         if(baseBean.getStatus() == Constant.OK){
-            UpdateDeliveryBean bean = data.get(position);
-            DeliveryBean deliveryBean = new DeliveryBean();
-            deliveryBean.setInfo(venuesBean);
-            deliveryBean.setType(DELIVERY_SELF);
-            bean.setDeliveryInfo(deliveryBean);
-            deliveryInfoAdapter.notifyItemChanged(position);
-            updateShopList(bean);
+           changeSelfDeliveryInfoLocal();
         }
     }
 
     @Override
     public void setExpressResult(BaseBean baseBean) {
         if(baseBean.getStatus() == Constant.OK){
-            UpdateDeliveryBean bean = data.get(position);
-            DeliveryBean deliveryBean = new DeliveryBean();
-            deliveryBean.setType(DELIVERY_EXPRESS);
-            VenuesBean venuesBean = new VenuesBean();
-            venuesBean.setName("仓库发货");
-            deliveryBean.setInfo(venuesBean);
-            bean.setDeliveryInfo(deliveryBean);
-            deliveryInfoAdapter.notifyItemChanged(position);
-            updateShopList(bean);
+            changeExpressInfoLocal();
         }
     }
 
+    /**
+     * 判断是从立即购买还是购物车中的数据改变自提信息
+     * @return true : 立即购买本地改变自提信息
+     */
+    private boolean isChangeDeliveryInfoLocal(){
+        return TextUtils.isEmpty(data.get(position).getGoods().getId());
+    }
 
+
+    private void changeExpressInfoLocal(){
+        UpdateDeliveryBean bean = data.get(position);
+        DeliveryBean deliveryBean = new DeliveryBean();
+        deliveryBean.setType(DELIVERY_EXPRESS);
+        VenuesBean venuesBean = new VenuesBean();
+        venuesBean.setName("仓库发货");
+        deliveryBean.setInfo(venuesBean);
+        bean.setDeliveryInfo(deliveryBean);
+        deliveryInfoAdapter.notifyItemChanged(position);
+        updateShopList(bean);
+    }
+
+
+    private void changeSelfDeliveryInfoLocal(){
+        UpdateDeliveryBean bean = data.get(position);
+        DeliveryBean deliveryBean = new DeliveryBean();
+        deliveryBean.setInfo(venuesBean);
+        deliveryBean.setType(DELIVERY_SELF);
+        bean.setDeliveryInfo(deliveryBean);
+        deliveryInfoAdapter.notifyItemChanged(position);
+        updateShopList(bean);
+    }
 
     @Override
     public void onBackPressed() {
@@ -239,10 +241,5 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
         setResult(RESULT_OK,intent);
 
         finish();
-    }
-
-
-    private boolean isFromCart(){
-        return false;
     }
 }

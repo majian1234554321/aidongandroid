@@ -103,8 +103,8 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.ll_delivery_address:
                 Intent intent = new Intent(this,SelfDeliveryVenuesActivity.class);
-                intent.putExtra("goodsType",goodsType);
                 intent.putExtra("goodsId", goodsId);
+                intent.putExtra("goodsType",goodsType);
                 intent.putExtra("deliveryBean",deliveryBean);
                 final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(this, false);
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, pairs);

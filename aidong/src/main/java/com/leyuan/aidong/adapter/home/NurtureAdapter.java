@@ -18,8 +18,6 @@ import com.leyuan.aidong.utils.GlideLoader;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 /**
  * 营养品的RecyclerView适配器
  * Created by song on 2016/7/16.

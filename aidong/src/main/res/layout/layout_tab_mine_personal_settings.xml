@@ -390,6 +390,8 @@
                     android:textSize="@dimen/pref_16dp" />
             </RelativeLayout>
 
+
+
             <RelativeLayout
                 android:id="@+id/layout_tab_mine_help_rel"
                 android:layout_width="match_parent"
@@ -416,6 +418,14 @@
                     android:layout_marginRight="@dimen/pref_15dp"
                     android:src="@drawable/icon_right_arrow" />
             </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pref_0.5dp"
+                android:layout_below="@+id/layout_tab_mine_help_rel"
+                android:layout_marginLeft="@dimen/pref_15dp"
+                android:layout_marginTop="@dimen/pref__1dp"
+                android:background="@color/e_five" />
         </RelativeLayout>
     </ScrollView>
 

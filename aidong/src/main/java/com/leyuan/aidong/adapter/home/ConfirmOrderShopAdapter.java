@@ -51,7 +51,8 @@ public class ConfirmOrderShopAdapter extends RecyclerView.Adapter<ConfirmOrderSh
     @Override
     public void onBindViewHolder(final CartHolder holder, final int position) {
         final ShopBean bean = data.get(position);
-        holder.tvShopName.setText(bean.getPickUp().getInfo().getName());
+        holder.tvShopName.setText(DELIVERY_EXPRESS.equals(bean.getPickUp().getType())
+                ? "仓库发货" : bean.getPickUp().getInfo().getName());
         String type = DELIVERY_EXPRESS.equals(bean.getPickUp().getType()) ? "快递" : "自提";
         holder.tvDeliveryType.setText(type);
         holder.rvShop.setLayoutManager(new LinearLayoutManager(context));

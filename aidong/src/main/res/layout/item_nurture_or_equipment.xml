@@ -10,23 +10,13 @@
     android:paddingLeft="7.5dp"
     android:paddingRight="7.5dp">
 
-    <RelativeLayout
+    <ImageView
+        android:id="@+id/dv_nurture_cover"
         android:layout_width="match_parent"
-        android:layout_height="166dp">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/shape_stroke_gray"/>
-
-        <ImageView
-            android:id="@+id/dv_nurture_cover"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="0.5dp"
-            android:transitionName="@string/transition_home" />
-
-    </RelativeLayout>
+        android:layout_height="165dp"
+        android:scaleType="centerCrop"
+        android:foreground="@drawable/shape_stroke_gray"
+        android:transitionName="@string/transition_home" />
 
     <TextView
         android:id="@+id/tv_nurture_name"

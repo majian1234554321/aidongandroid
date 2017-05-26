@@ -136,11 +136,9 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             } else {
                 commentLayout.setVisibility(View.GONE);
             }
-            line.setVisibility(View.VISIBLE);
         } else {
             likeLayout.setVisibility(View.GONE);
             commentLayout.setVisibility(View.GONE);
-            line.setVisibility(View.GONE);
         }
 
         ivLike.setBackgroundResource(isLike(dynamic)
