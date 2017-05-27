@@ -15,6 +15,8 @@
             android:id="@+id/dv_cover"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:foreground="?selectableItemBackground"
             android:transitionName="@string/transition_home"/>
 
         <ImageView

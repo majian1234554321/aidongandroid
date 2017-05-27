@@ -53,8 +53,8 @@ public class DynamicImageAdapter extends RecyclerView.Adapter<DynamicImageAdapte
         if(!url.equals(holder.image.getTag())) {
             holder.image.setTag(url);
             int minWidth = holder.image.getLayoutParams().width;
-            GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(url,minWidth), holder.image);
-            Logger.w("recyclerView","DynamicImageAdapter " + QiNiuImageProcessUtils.minWidthScale(url,minWidth));
+            GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(context,url,minWidth), holder.image);
+            Logger.w("recyclerView","DynamicImageAdapter " + QiNiuImageProcessUtils.minWidthScale(context,url,minWidth));
         }
         ViewCompat.setTransitionName(holder.image, String.valueOf(position) + "transition");
         holder.itemView.setOnClickListener(new View.OnClickListener() {

@@ -7,7 +7,9 @@
     <ImageView
         android:id="@+id/dv_recommend_activity"
         android:layout_width="match_parent"
-        android:layout_height="150dp" />
+        android:layout_height="150dp"
+        android:scaleType="centerCrop"
+        android:foreground="?selectableItemBackground"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

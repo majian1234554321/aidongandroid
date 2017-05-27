@@ -7,7 +7,8 @@
         android:id="@+id/dv_campaign_cover"
         android:layout_width="match_parent"
         android:layout_height="190dp"
-        />
+        android:scaleType="centerCrop"
+        android:foreground="?selectableItemBackground"/>
 
     <TextView
         android:id="@+id/tv_campaign_hot"

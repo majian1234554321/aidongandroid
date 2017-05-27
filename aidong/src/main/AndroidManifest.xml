@@ -140,6 +140,9 @@
             android:name=".ui.home.activity.RelatedVideoActivity"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".ui.discover.activity.ClipPhotosActivity"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.mine.activity.account.ChangePasswordActivity"
             android:screenOrientation="portrait" />

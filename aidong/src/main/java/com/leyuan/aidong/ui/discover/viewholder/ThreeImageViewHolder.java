@@ -43,11 +43,11 @@ public class ThreeImageViewHolder extends BaseCircleViewHolder{
     public void onBindDataToChildView(@NonNull final DynamicBean data, int position,@DynamicType int viewType) {
         int bigWidth =  (ScreenUtil.getScreenWidth(context) - DensityUtil.dp2px(context,5)) * 2/3;
         int smallWidth =  (ScreenUtil.getScreenWidth(context) - DensityUtil.dp2px(context,5))/3;
-        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(data.image.get(0),
+        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(context,data.image.get(0),
                 bigWidth),one);
-        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(data.image.get(1),
+        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(context,data.image.get(1),
                 smallWidth),two);
-        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(data.image.get(2),
+        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(context,data.image.get(2),
                 smallWidth), three);
 
         final List<ImageView> imageViewList = new LinkedList<>();
