@@ -169,8 +169,15 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
                 finish();
                 break;
             case R.id.iv_share:
-                sharePopupWindow.showAtBottom(bean.getName(), bean.getIntroduce(),
-                        bean.getImage().get(0), ConstantUrl.URL_SHARE_CAMPAIGN+bean.getCampaignId());
+                if (bean != null) {
+                    String image = "";
+                    if (bean.getImage() != null && !bean.getImage().isEmpty()) {
+                        image = bean.getImage().get(0);
+                    }
+                    sharePopupWindow.showAtBottom(bean.getName()+Constant.I_DONG_FITNESS, bean.getIntroduce(),
+                            image, ConstantUrl.URL_SHARE_CAMPAIGN + bean.getCampaignId());
+                }
+
                 break;
             case R.id.tv_count:         //查看报名的人
                 AppointmentUserActivity.start(this, bean.getApplicant());
@@ -214,10 +221,10 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
                 ? "免费" : String.format(getString(R.string.rmb_price), bean.getPrice()));
 
         tvTopStartTime.setText(String.format(getString(R.string.apply_time), bean.getEntry_start_time()));
-        tvTopStartTime.setVisibility(STATUS_NOT_START.equals(bean.getStatus()) ? View.VISIBLE :View.GONE);
-        toolbar.getLayoutParams().height = DensityUtil.dp2px(this,STATUS_NOT_START.equals(bean.getStatus()) ? 76 : 46);
+        tvTopStartTime.setVisibility(STATUS_NOT_START.equals(bean.getStatus()) ? View.VISIBLE : View.GONE);
+        toolbar.getLayoutParams().height = DensityUtil.dp2px(this, STATUS_NOT_START.equals(bean.getStatus()) ? 76 : 46);
         ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) pagerLayout.getLayoutParams();
-        params.setMargins(0,DensityUtil.dp2px(this,STATUS_NOT_START.equals(bean.getStatus()) ? 76 : 46),0,0);
+        params.setMargins(0, DensityUtil.dp2px(this, STATUS_NOT_START.equals(bean.getStatus()) ? 76 : 46), 0, 0);
         pagerLayout.setLayoutParams(params);
         setBottomStatus();
     }
@@ -277,9 +284,9 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
                 startActivityForResult(new Intent(this, LoginActivity.class), Constant.REQUEST_LOGIN);
             }
         } else if (STATUS_NOT_PAY.equals(bean.getStatus())) {
-            AppointCampaignDetailActivity.start(this, bean.getCampaignId(),true);
-        }else if(STATUS_APPLIED.equals(bean.getStatus())){
-            AppointCampaignDetailActivity.start(this, bean.getCampaignId(),true);
+            AppointCampaignDetailActivity.start(this, bean.getCampaignId(), true);
+        } else if (STATUS_APPLIED.equals(bean.getStatus())) {
+            AppointCampaignDetailActivity.start(this, bean.getCampaignId(), true);
         }
     }
 

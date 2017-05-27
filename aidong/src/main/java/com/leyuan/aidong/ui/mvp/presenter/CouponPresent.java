@@ -10,6 +10,8 @@ import com.leyuan.aidong.widget.SwitcherLayout;
  */
 public interface CouponPresent {
 
+    void getShareCoupon(String order_no);
+
     /**
      * 第一次加载优惠劵列表
      * @param switcherLayout SwitcherLayout

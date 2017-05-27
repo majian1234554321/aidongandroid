@@ -153,11 +153,13 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
         super.onResume();
         userName = App.getInstance().getUser().getName();
         contactMobile = App.getInstance().getUser().getMobile();
-        if (!TextUtils.isEmpty(userName))
+        if (!TextUtils.isEmpty(userName)) {
             tvUserName.setText(userName);
-        if (!TextUtils.isEmpty(contactMobile))
+            tvUserName.setSelection(userName.length());
+        }
+        if (!TextUtils.isEmpty(contactMobile)) {
             tvUserPhone.setText(contactMobile);
-        tvUserName.setSelection(userName.length());
+        }
     }
 
     @Override

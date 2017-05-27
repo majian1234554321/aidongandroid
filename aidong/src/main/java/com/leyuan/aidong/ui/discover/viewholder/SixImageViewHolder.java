@@ -48,17 +48,17 @@ public class SixImageViewHolder extends BaseCircleViewHolder{
     @Override
     public void onBindDataToChildView(@NonNull final DynamicBean data, int position, @DynamicType int viewType) {
         int width =  (ScreenUtil.getScreenWidth(context) - DensityUtil.dp2px(context,10))/3;
-        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(data.image.get(0),
+        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(context,data.image.get(0),
                 width), one);
-        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(data.image.get(1),
+        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(context,data.image.get(1),
                 width), two);
-        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(data.image.get(2),
+        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(context,data.image.get(2),
                 width), three);
-        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(data.image.get(3),
+        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(context,data.image.get(3),
                 width), four);
-        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(data.image.get(4),
+        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(context,data.image.get(4),
                 width), five);
-        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(data.image.get(5),
+        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(context,data.image.get(5),
                 width), six);
 
         final List<ImageView> imageViewList = new LinkedList<>();

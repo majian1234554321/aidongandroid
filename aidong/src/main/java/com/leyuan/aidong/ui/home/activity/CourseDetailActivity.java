@@ -155,8 +155,15 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 finish();
                 break;
             case R.id.iv_share:
-                sharePopupWindow.showAtBottom(bean.getName(), bean.getIntroduce(), bean.getCover().get(0),
-                        ConstantUrl.URL_SHARE_COURSE+bean.getCode());
+                if (bean != null) {
+                    String image = "";
+                    if (bean.getCover() != null && !bean.getCover().isEmpty()) {
+                        image = bean.getCover().get(0);
+                    }
+                    sharePopupWindow.showAtBottom(bean.getName() + Constant.I_DONG_FITNESS, bean.getIntroduce(), image,
+                            ConstantUrl.URL_SHARE_COURSE + bean.getCode());
+                }
+
                 break;
             case R.id.ll_address:
                 MapActivity.start(this, "地址详情", bean.getGym().getName(), bean.getAddress(),
@@ -213,7 +220,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 ? "免费" : String.format(getString(R.string.rmb_price), bean.getPrice()));
         tvStartTime.setText(String.format(getString(R.string.appoint_time),
                 bean.getEntryStartTime()));
-        if(App.mInstance.isLogin()) {
+        if (App.mInstance.isLogin()) {
             if (bean.getCoach().getId().equals(String.valueOf(App.mInstance.getUser().getId()))) {
                 ivFollow.setVisibility(View.GONE);
             } else {
@@ -222,7 +229,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 ivFollow.setBackgroundResource(isFollow ? R.drawable.icon_following
                         : R.drawable.icon_follow);
             }
-        }else {
+        } else {
             ivFollow.setVisibility(View.VISIBLE);
             ivFollow.setBackgroundResource(R.drawable.icon_follow);
         }
@@ -293,10 +300,10 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             } else {
                 startActivityForResult(new Intent(this, LoginActivity.class), Constant.REQUEST_LOGIN);
             }
-        }else if(STATUS_NOT_PAY.equals(bean.getStatus())){    //待支付
-            AppointCourseDetailActivity.start(this, bean.getCode(),true);
-        }else if(STATUS_APPOINTED.equals(bean.getStatus())){  //已预约
-            AppointCourseDetailActivity.start(this, bean.getCode(),true);
+        } else if (STATUS_NOT_PAY.equals(bean.getStatus())) {    //待支付
+            AppointCourseDetailActivity.start(this, bean.getCode(), true);
+        } else if (STATUS_APPOINTED.equals(bean.getStatus())) {  //已预约
+            AppointCourseDetailActivity.start(this, bean.getCode(), true);
         }
     }
 
@@ -335,7 +342,6 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             ToastGlobal.showLong(R.string.cancel_follow_fail);
         }
     }
-
 
 
     @Override

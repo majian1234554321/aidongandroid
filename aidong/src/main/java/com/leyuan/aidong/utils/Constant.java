@@ -68,6 +68,8 @@ public class Constant {
     public static final String PUSH_CAMPAIGN = "push_campaign";
     public static final String PUBLISH_COMMENT_NUMBER = "publishCommentNumber";
     public static final String BROADCAST_ACTION_REGISTER_SUCCESS = "com.leyuan.register.success";
+    public static final String I_DONG_FITNESS = " | 爱动健身";
+    public static final String SHARE_GOODS_TITLE = "爱动精选-推荐给您一个宝贝";
 
 
     public static List<VenuesBean> gyms;

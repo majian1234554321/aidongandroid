@@ -1,6 +1,6 @@
 package com.leyuan.aidong.ui.mvp.presenter;
 
-import com.leyuan.aidong.entity.ShareBean;
+import com.leyuan.aidong.entity.ShareData;
 import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
@@ -84,5 +84,5 @@ public interface ConfirmOrderPresent {
 
     void refreshCartData();
 
-    ShareBean getShareBean();
+    ShareData.ShareCouponInfo getShareInfo();
 }

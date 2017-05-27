@@ -256,7 +256,7 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
             } else {
                 cover = dynamic.videos.cover;
             }
-            sharePopupWindow.showAtBottom(dynamic.publisher.getName() + "的动态", dynamic.content,
+            sharePopupWindow.showAtBottom("我分享了" + dynamic.publisher.getName() + "的动态，速速围观", dynamic.content,
                     cover, ConstantUrl.URL_SHARE_DYNAMIC + dynamic.id);
         }
     }

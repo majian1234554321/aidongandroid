@@ -71,11 +71,13 @@ import static com.leyuan.aidong.utils.Constant.DYNAMIC_VIDEO;
  */
 public  class DynamicDetailActivity extends BaseActivity implements DynamicDetailActivityView,View.OnClickListener,
         TextView.OnEditorActionListener, SwipeRefreshLayout.OnRefreshListener, DynamicDetailAdapter.OnItemClickListener {
+    private static final int MAX_TEXT_COUNT = 240;
     public static final int RESULT_DELETE = 0x3333;
     private ImageView ivBack;
     private TextView tvReportOrDelete;
     private ImageView ivUserAvatar;
     private EditText etComment;
+    private String content;
 
     private View header;
     private SwipeRefreshLayout refreshLayout;
@@ -212,11 +214,15 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if(actionId == IME_ACTION_SEND ){
-            if(TextUtils.isEmpty(etComment.getText())){
+            content = etComment.getText().toString();
+            if(TextUtils.isEmpty(content)){
                 Toast.makeText(this,"请输入评论内容",Toast.LENGTH_LONG).show();
                 return false;
             }else {
-                dynamicPresent.addComment(dynamic.id, etComment.getText().toString());
+                if(content.length() > MAX_TEXT_COUNT - 2){
+                    content = content.substring(0, MAX_TEXT_COUNT - 2) + "......";
+                }
+                dynamicPresent.addComment(dynamic.id, content);
                 KeyBoardUtil.closeKeyboard(etComment, this);
                 return true;
             }
@@ -232,7 +238,7 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
             UserBean publisher = new UserBean();
             publisher.setAvatar(App.mInstance.getUser().getAvatar());
             publisher.setName(App.mInstance.getUser().getName());
-            temp.setContent(etComment.getText().toString());
+            temp.setContent(content);
             temp.setPublishedAt("刚刚");
             temp.setPublisher(publisher);
             comments.add(0,temp);

@@ -143,6 +143,8 @@ public class DiscoverHomeFragment extends BaseFragment implements SmartTabLayout
             if(requestCode == REQUEST_SELECT_PHOTO || requestCode ==REQUEST_SELECT_VIDEO ) {
                 PublishDynamicActivity.startForResult(this, requestCode == REQUEST_SELECT_PHOTO,
                         Boxing.getResult(data), REQUEST_PUBLISH_DYNAMIC);
+
+                //ClipPhotosActivity.start(getContext(),Boxing.getResult(data));
             } else if(requestCode == REQUEST_PUBLISH_DYNAMIC){
                 Fragment page = adapter.getPage(1);
                 if(page instanceof CircleFragment){

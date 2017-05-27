@@ -18,7 +18,9 @@ import com.leyuan.aidong.ui.discover.view.DotIndicator;
 import com.leyuan.aidong.ui.discover.view.GalleryPhotoView;
 import com.leyuan.aidong.utils.ImageSaveUtils;
 import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.utils.ScreenUtil;
 import com.leyuan.aidong.utils.ToastGlobal;
+import com.leyuan.aidong.utils.qiniu.QiNiuImageProcessUtils;
 import com.leyuan.aidong.widget.HackyViewPager;
 import com.leyuan.aidong.widget.dialog.BaseDialog;
 import com.leyuan.aidong.widget.dialog.ButtonOkListener;
@@ -174,8 +176,8 @@ public class PhotoBrowseActivity extends BaseActivity {
         public Object instantiateItem(ViewGroup container, int position) {
             GalleryPhotoView photoView = viewBuckets.get(position);
             String photoUrl = photoBrowseInfo.getPhotoUrls().get(position);
-
-            Glide.with(PhotoBrowseActivity.this).load(photoUrl).thumbnail(0.1f).into(photoView);
+            String processUrl = QiNiuImageProcessUtils.minWidthScale(context,photoUrl,ScreenUtil.getScreenWidth(PhotoBrowseActivity.this));
+            Glide.with(PhotoBrowseActivity.this).load(processUrl).thumbnail(0.1f).into(photoView);
             //GlideLoader.getInstance().displayImage(photoUrl, photoView);
             container.addView(photoView);
             return photoView;

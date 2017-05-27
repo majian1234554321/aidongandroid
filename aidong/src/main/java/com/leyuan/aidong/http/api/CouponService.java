@@ -1,6 +1,7 @@
 package com.leyuan.aidong.http.api;
 
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.ShareData;
 import com.leyuan.aidong.entity.data.CouponData;
 import com.leyuan.aidong.entity.user.CouponDataSingle;
 
@@ -36,4 +37,8 @@ public interface CouponService {
     @FormUrlEncoded
     @POST("mine/coupons/valid")
     Observable<BaseBean<CouponData>> getGoodsAvailableCoupon(@Field("items[]") String... items);
+
+    @FormUrlEncoded
+    @POST("mine/coupons/share_coupon")
+    Observable<BaseBean<ShareData>> getShareCoupon(@Field("order_no") String order_no);
 }

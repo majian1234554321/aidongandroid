@@ -49,15 +49,15 @@ public class FiveImageViewHolder extends BaseCircleViewHolder{
         int bigWidth =  (ScreenUtil.getScreenWidth(context) - DensityUtil.dp2px(context,5))/2;
         int smallWidth =  (ScreenUtil.getScreenWidth(context) - DensityUtil.dp2px(context,10))/3;
 
-        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(data.image.get(0),
+        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(context,data.image.get(0),
                 bigWidth), one);
-        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(data.image.get(1),
+        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(context,data.image.get(1),
                 bigWidth), two);
-        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(data.image.get(2),
+        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(context,data.image.get(2),
                 smallWidth), three);
-        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(data.image.get(3),
+        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(context,data.image.get(3),
                 smallWidth), four);
-        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(data.image.get(4),
+        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(context,data.image.get(4),
                 smallWidth), five);
         final List<ImageView> imageViewList = new LinkedList<>();
         imageViewList.add(one);

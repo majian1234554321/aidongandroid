@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.mvp.model.impl;
 
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.ShareData;
 import com.leyuan.aidong.entity.data.CouponData;
 import com.leyuan.aidong.entity.user.CouponDataSingle;
 import com.leyuan.aidong.http.RetrofitHelper;
@@ -27,6 +28,13 @@ public class CouponModelImpl implements CouponModel {
     public void getCoupons(Subscriber<CouponData> subscriber, String type, int page) {
         couponService.getCoupons(type, page)
                 .compose(RxHelper.<CouponData>transform())
+                .subscribe(subscriber);
+    }
+
+    @Override
+    public void getShareCoupon(Subscriber<ShareData> subscriber, String order_no) {
+        couponService.getShareCoupon(order_no)
+                .compose(RxHelper.<ShareData>transform())
                 .subscribe(subscriber);
     }
 

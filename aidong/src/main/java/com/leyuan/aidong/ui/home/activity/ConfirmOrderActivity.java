@@ -351,7 +351,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         @Override
         public void onSuccess(String code, Object object) {
             ToastGlobal.showLong("支付成功");
-            PaySuccessActivity.start(ConfirmOrderActivity.this, present.getShareBean());
+            PaySuccessActivity.start(ConfirmOrderActivity.this, present.getShareInfo());
 //            startActivity(new Intent(ConfirmOrderActivity.this, PaySuccessActivity.class));
         }
 
@@ -363,7 +363,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
         @Override
         public void onFree() {
-            PaySuccessActivity.start(ConfirmOrderActivity.this, present.getShareBean());
+            PaySuccessActivity.start(ConfirmOrderActivity.this, present.getShareInfo());
             ToastGlobal.showLong("支付成功");
         }
     };

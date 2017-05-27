@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.leyuan.aidong.entity.AddressBean;
 import com.leyuan.aidong.entity.PayOrderBean;
-import com.leyuan.aidong.entity.ShareBean;
+import com.leyuan.aidong.entity.ShareData;
 import com.leyuan.aidong.entity.data.AddressListData;
 import com.leyuan.aidong.entity.data.CouponData;
 import com.leyuan.aidong.entity.data.PayOrderData;
@@ -43,7 +43,8 @@ public class ConfirmOrderPresentImpl implements ConfirmOrderPresent {
     private EquipmentModel equipmentModel;
     private ConfirmOrderActivityView orderActivityView;
 
-    public ShareBean shareBean;
+    private ShareData.ShareCouponInfo shareCouponInfo;
+
 
     public ConfirmOrderPresentImpl(Context context, ConfirmOrderActivityView orderActivityView) {
         this.context = context;
@@ -140,12 +141,11 @@ public class ConfirmOrderPresentImpl implements ConfirmOrderPresent {
     }
 
     private void createShareBeanByOrder(PayOrderData payOrderData) {
-        if (payOrderData.getOrder() != null && payOrderData.getOrder().getShare_coupons() != null) {
+        if (payOrderData.getOrder() != null) {
             PayOrderBean payOrderBean = payOrderData.getOrder();
-            shareBean = new ShareBean("爱动健身", "优惠券分享"
-                    , "http://function.aidong.me/image/2017/03/16/1926f2870e1736340cca5cc54ded0e03.jpg"
-                    , ShareBean.createCouponShare(payOrderBean.getCreatedAt(),
-                    payOrderBean.getId(), payOrderBean.getShare_coupons()));
+            shareCouponInfo = new ShareData().new ShareCouponInfo();
+            shareCouponInfo.setCreatedAt(payOrderBean.getCreatedAt());
+            shareCouponInfo.setNo(payOrderBean.getId());
         }
     }
 
@@ -180,8 +180,8 @@ public class ConfirmOrderPresentImpl implements ConfirmOrderPresent {
     }
 
     @Override
-    public ShareBean getShareBean() {
-        return shareBean;
+    public ShareData.ShareCouponInfo getShareInfo() {
+        return shareCouponInfo;
     }
 
 }

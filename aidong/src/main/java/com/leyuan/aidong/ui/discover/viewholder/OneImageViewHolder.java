@@ -36,7 +36,7 @@ public class OneImageViewHolder extends BaseCircleViewHolder{
 
     @Override
     public void onBindDataToChildView(@NonNull final DynamicBean data, int position, @DynamicType int viewType) {
-        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(data.image.get(0),
+        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(context,data.image.get(0),
                 ScreenUtil.getScreenWidth(context)), one);
 
         final List<ImageView> imageViewList = new LinkedList<>();

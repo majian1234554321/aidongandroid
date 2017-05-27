@@ -175,7 +175,7 @@ public class LiveDetailActivity extends BaseActivity implements View.OnClickList
                 //分享
                 if (info != null) {
                     String url = ConstantUrl.LIVE_SHARE + info.getLiveId();
-                    sharePopupWindow.showAtBottom(info.getLiveName(), info.getLiveContent(), info.getLiveCover(), url);
+                    sharePopupWindow.showAtBottom(info.getLiveName()+Constant.I_DONG_FITNESS, info.getLiveContent(), info.getLiveCover(), url);
                 }
 
                 break;

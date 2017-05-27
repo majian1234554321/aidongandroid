@@ -160,7 +160,7 @@ public class LivingVideoActivity extends BaseActivity implements View.OnClickLis
                     if (sharePopupWindow == null) {
                         sharePopupWindow = new SharePopupWindow(this);
                     }
-                    sharePopupWindow.showAtBottom(mLiveVideoInfo.getLiveName(), mLiveVideoInfo.getLiveContent()
+                    sharePopupWindow.showAtBottom(mLiveVideoInfo.getLiveName()+Constant.I_DONG_FITNESS, mLiveVideoInfo.getLiveContent()
                             , mLiveVideoInfo.getLiveCover(), url);
                 }
                 break;

@@ -310,7 +310,8 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
 
     private void share(final VideoDetail video) {
         final String url = ConstantUrl.URL_SHARE_VIDEO + video.getvId();
-        sharePopupWindow.showAtBottom(video.getVideoName(), video.getIntroduce(), video.getCover(), url);
+
+        sharePopupWindow.showAtBottom(video.getVideoName() + Constant.I_DONG_FITNESS, video.getIntroduce(), video.getCover(), url);
     }
 
     @Override

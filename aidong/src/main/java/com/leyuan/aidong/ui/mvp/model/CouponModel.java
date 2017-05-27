@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.mvp.model;
 
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.ShareData;
 import com.leyuan.aidong.entity.data.CouponData;
 import com.leyuan.aidong.entity.user.CouponDataSingle;
 import com.leyuan.aidong.utils.constant.CouponPosition;
@@ -22,6 +23,8 @@ public interface CouponModel {
      */
     void getCoupons(Subscriber<CouponData> subscriber, String type, int page);
 
+
+    void getShareCoupon(Subscriber<ShareData> subscriber, String order_no);
 
     /**
      * 领取优惠劵

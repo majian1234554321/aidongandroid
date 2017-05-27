@@ -23,6 +23,7 @@ import com.leyuan.aidong.ui.home.activity.MapActivity;
 import com.leyuan.aidong.ui.mvp.presenter.VenuesPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VenuesPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.VenuesDetailFragmentView;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.TelephoneManager;
 import com.leyuan.aidong.widget.SwitcherLayout;
@@ -116,8 +117,15 @@ public class VenuesDetailFragment extends BaseFragment implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fb_share:
-                sharePopupWindow.showAtBottom(venues.getName(), venues.getIntroduce(),
-                        venues.getPhoto().get(0), ConstantUrl.URL_SHARE_GYM+venues.getId());
+                if (venues != null) {
+                    String image = "";
+                    if (venues.getPhoto() != null && !venues.getPhoto().isEmpty()) {
+                        image = venues.getPhoto().get(0);
+                    }
+                    sharePopupWindow.showAtBottom(venues.getName() + Constant.I_DONG_FITNESS, venues.getIntroduce(),
+                            image, ConstantUrl.URL_SHARE_GYM + venues.getId());
+                }
+
                 break;
 
             case R.id.ll_equipment:

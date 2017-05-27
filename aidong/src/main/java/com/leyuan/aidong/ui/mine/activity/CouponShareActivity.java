@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.example.aidong.wxapi.WXEntryActivity;
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.ShareBean;
+import com.leyuan.aidong.entity.ShareData;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.ShareActivityQQ;
 import com.leyuan.aidong.ui.WeiboResponseActivity;
@@ -33,8 +33,8 @@ public class CouponShareActivity extends BaseActivity implements View.OnClickLis
     private String imageUrl;
     private String webUrl;
 
-    public static void start(Context context, ShareBean shareBean) {
-        start(context, shareBean.getTitle(), shareBean.getContent(), shareBean.getImageUrl(), shareBean.getWebUrl());
+    public static void start(Context context, ShareData.ShareCouponInfo shareBean) {
+        start(context, shareBean.getTitle(), shareBean.getContent(), shareBean.getImage(), shareBean.getShareUrl());
     }
 
     public static void start(Context context, String title, String content, String imageUrl, String webUrl) {

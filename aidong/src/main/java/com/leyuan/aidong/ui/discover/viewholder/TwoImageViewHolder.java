@@ -40,9 +40,9 @@ public class TwoImageViewHolder extends BaseCircleViewHolder{
     @Override
     public void onBindDataToChildView(@NonNull final DynamicBean data, int position, @DynamicType int viewType) {
         int width =  (ScreenUtil.getScreenWidth(context) - DensityUtil.dp2px(context,5))/2;
-        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(data.image.get(0),
+        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(context,data.image.get(0),
                 width), one);
-        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(data.image.get(1),
+        GlideLoader.getInstance().displayImage(QiNiuImageProcessUtils.minWidthScale(context,data.image.get(1),
                 width), two);
 
         final List<ImageView>  imageViewList = new LinkedList<>();

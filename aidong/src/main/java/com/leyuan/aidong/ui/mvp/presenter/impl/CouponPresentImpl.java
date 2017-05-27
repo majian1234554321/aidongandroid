@@ -5,10 +5,12 @@ import android.support.v7.widget.RecyclerView;
 
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CouponBean;
+import com.leyuan.aidong.entity.ShareData;
 import com.leyuan.aidong.entity.data.CouponData;
 import com.leyuan.aidong.entity.user.CouponDataSingle;
-import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
+import com.leyuan.aidong.http.subscriber.BaseSubscriber;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
+import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
@@ -17,6 +19,7 @@ import com.leyuan.aidong.ui.mvp.model.impl.CouponModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.CouponPresent;
 import com.leyuan.aidong.ui.mvp.view.CouponExchangeActivityView;
 import com.leyuan.aidong.ui.mvp.view.CouponFragmentView;
+import com.leyuan.aidong.ui.mvp.view.CouponShareView;
 import com.leyuan.aidong.ui.mvp.view.GoodsDetailActivityView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.widget.SwitcherLayout;
@@ -29,6 +32,7 @@ import java.util.List;
  * Created by song on 2016/9/14.
  */
 public class CouponPresentImpl implements CouponPresent {
+    private CouponShareView couponShareView;
     private Context context;
     private CouponModel couponModel;
 
@@ -49,6 +53,14 @@ public class CouponPresentImpl implements CouponPresent {
         }
     }
 
+    public CouponPresentImpl(Context context, CouponShareView view) {
+        this.context = context;
+        this.couponShareView = view;
+        if (couponModel == null) {
+            couponModel = new CouponModelImpl();
+        }
+    }
+
     public CouponPresentImpl(Context context, CouponExchangeActivityView view) {
         this.context = context;
         this.exchangeCouponView = view;
@@ -57,10 +69,23 @@ public class CouponPresentImpl implements CouponPresent {
         }
     }
 
+    @Override
+    public void getShareCoupon(String order_no) {
+        couponModel.getShareCoupon(new BaseSubscriber<ShareData>(context) {
+            @Override
+            public void onNext(ShareData shareData) {
+                if (couponShareView != null && shareData.getShare_coupons() != null) {
+                    couponShareView.onGetShareData(shareData.getShare_coupons());
+                }
+            }
+        }, order_no);
+
+    }
+
 
     @Override
     public void commonLoadData(final SwitcherLayout switcherLayout, String type) {
-        couponModel.getCoupons(new CommonSubscriber<CouponData>(context,switcherLayout) {
+        couponModel.getCoupons(new CommonSubscriber<CouponData>(context, switcherLayout) {
             @Override
             public void onNext(CouponData couponData) {
                 if (couponData != null) {
