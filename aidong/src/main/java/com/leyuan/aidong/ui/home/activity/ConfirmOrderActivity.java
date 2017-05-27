@@ -113,14 +113,20 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
     private String skuCode;
     private int amount;
-    private @DeliveryType String pickUpWay;           //取货方式(0-快递 1-自提)
-    private @PayType String payType;
+    private
+    @DeliveryType
+    String pickUpWay;           //取货方式(0-快递 1-自提)
+    private
+    @PayType
+    String payType;
     private String pickUpId;                          //快递地址或自提场馆id(立即购买时)  /快递地址(购物车结算时)
     private String pickUpDate;                        //自提时间
     private String defaultAddressId;
     private String[] itemIds;
     private String[] itemFromIdAmount;
-    private @SettlementType String settlementType;
+    private
+    @SettlementType
+    String settlementType;
     private double totalGoodsPrice;
 
     private boolean needExpress = false;              //是否需要快递
@@ -174,7 +180,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             amount = FormatUtil.parseInt(goods.getAmount());
             totalGoodsPrice = FormatUtil.parseDouble(goods.getPrice()) * amount;
             pickUpWay = shop.getPickUp().getType();
-            if(DELIVERY_SELF.equals(pickUpWay)){
+            if (DELIVERY_SELF.equals(pickUpWay)) {
                 pickUpId = shop.getPickUp().info.getId();
             }
             if (GOODS_NUTRITION.equals(goods.getType())) {
@@ -182,7 +188,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             } else {
                 settlementType = SETTLEMENT_EQUIPMENT_IMMEDIATELY;
             }
-        }else {         //购物车结算
+        } else {         //购物车结算
             settlementType = SETTLEMENT_CART;
             totalGoodsPrice = getIntent().getDoubleExtra("totalGoodsPrice", 0f);
         }
@@ -239,7 +245,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         setChangeViewInfo();
     }
 
-    private void setChangeViewInfo(){
+    private void setChangeViewInfo() {
         for (ShopBean shopBean : shopBeanList) {
             if (DELIVERY_EXPRESS.equals(shopBean.getPickUp().getType())) {
                 needExpress = true;
@@ -248,18 +254,18 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 needSelfDelivery = true;
             }
         }
-        if(needExpress){
+        if (needExpress) {
             addressLayout.setVisibility(View.VISIBLE);
-            if(!settlementType.equals(SETTLEMENT_CART)){
+            if (!settlementType.equals(SETTLEMENT_CART)) {
                 pickUpWay = DELIVERY_EXPRESS;
             }
         }
 
-        if(needSelfDelivery){
+        if (needSelfDelivery) {
             pickUpDate = days.get(0);
             selfDeliveryLayout.setVisibility(View.VISIBLE);
 
-            if(!settlementType.equals(SETTLEMENT_CART)){
+            if (!settlementType.equals(SETTLEMENT_CART)) {
                 pickUpWay = DELIVERY_SELF;
                 pickUpId = shopBeanList.get(0).getPickUp().info.getId();
             }
@@ -302,7 +308,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.tv_coupon:
                 if (usableCoupons != null && !usableCoupons.isEmpty() && totalGoodsPrice > 0) {
-                    SelectCouponActivity.startForResult(this, String.valueOf(totalGoodsPrice),couponId,usableCoupons, REQUEST_SELECT_COUPON);
+                    SelectCouponActivity.startForResult(this, String.valueOf(totalGoodsPrice), couponId, usableCoupons, REQUEST_SELECT_COUPON);
                 }
                 break;
             case R.id.tv_pay:
@@ -315,7 +321,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onDeliveryTypeClick(int position) {
-        UpdateDeliveryInfoActivity.startForResult(this, (ArrayList<ShopBean>) shopBeanList,position,REQUEST_UPDATE_DELIVERY);
+        UpdateDeliveryInfoActivity.startForResult(this, (ArrayList<ShopBean>) shopBeanList, position, REQUEST_UPDATE_DELIVERY);
     }
 
     private void payOrder() {
@@ -345,7 +351,8 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         @Override
         public void onSuccess(String code, Object object) {
             ToastGlobal.showLong("支付成功");
-            startActivity(new Intent(ConfirmOrderActivity.this, PaySuccessActivity.class));
+            PaySuccessActivity.start(ConfirmOrderActivity.this, present.getShareBean());
+//            startActivity(new Intent(ConfirmOrderActivity.this, PaySuccessActivity.class));
         }
 
         @Override
@@ -356,7 +363,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
         @Override
         public void onFree() {
-            startActivity(new Intent(ConfirmOrderActivity.this, PaySuccessActivity.class));
+            PaySuccessActivity.start(ConfirmOrderActivity.this, present.getShareBean());
             ToastGlobal.showLong("支付成功");
         }
     };
@@ -424,7 +431,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 double deliveryPrice = needExpress ? expressPrice : 0;
                 tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double),
                         totalGoodsPrice + deliveryPrice - FormatUtil.parseDouble(couponBean.getDiscount())));
-            }else if(requestCode == REQUEST_UPDATE_DELIVERY) {
+            } else if (requestCode == REQUEST_UPDATE_DELIVERY) {
                 shopBeanList = data.getParcelableArrayListExtra("shopList");
                 shopAdapter.setData(shopBeanList);
                 resetStatus();
@@ -460,7 +467,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         pickUpId = address.getId();
     }
 
-    private void resetStatus(){
+    private void resetStatus() {
         needExpress = false;
         needSelfDelivery = false;
         pickUpId = null;

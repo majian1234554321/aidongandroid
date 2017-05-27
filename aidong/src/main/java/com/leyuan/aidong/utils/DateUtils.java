@@ -44,6 +44,14 @@ public class DateUtils {
 
     }
 
+
+    public static long dateToLongTime(String createdAt) {
+        Date date = parseDate(createdAt, yyyyMMddHHmmss);
+        if (date != null)
+            return date.getTime() / 1000;
+        return 0;
+    }
+
     /**
      * 将Date类型转换为日期字符串
      *
@@ -337,4 +345,5 @@ public class DateUtils {
             return false;
         }
     }
+
 }

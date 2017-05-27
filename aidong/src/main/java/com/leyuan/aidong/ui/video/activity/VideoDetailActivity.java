@@ -165,8 +165,7 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
                             int position = viewPager.getCurrentItem();
                             if (videos != null && videos.size() > 0) {
                                 VideoDetail detail = videos.get(position);
-                                VideoMoreActivity.newInstance(VideoDetailActivity.this, detail.getVideoName()
-                                        , series_id, position, videos);
+                                VideoMoreActivity.newInstance(VideoDetailActivity.this, series_id, position, detail);
                             }
 
                         }
@@ -254,8 +253,8 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
                 int position = viewPager.getCurrentItem();
                 if (videos != null && videos.size() > 0) {
                     VideoDetail detail = videos.get(position);
-                    VideoMoreActivity.newInstance(VideoDetailActivity.this, detail.getVideoName(),
-                            series_id, position, videos);
+                    VideoMoreActivity.newInstance(VideoDetailActivity.this,
+                            series_id, position, detail);
                 }
                 break;
             case R.id.iv_share:

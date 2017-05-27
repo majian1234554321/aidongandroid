@@ -173,6 +173,11 @@
             android:theme="@style/ThemeSemitransparent" />
 
         <activity
+            android:name=".ui.mine.activity.CouponShareActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ThemeSemitransparent" />
+
+        <activity
             android:name=".ui.mine.activity.setting.AboutMxActivity"
             android:screenOrientation="portrait" />
         <activity

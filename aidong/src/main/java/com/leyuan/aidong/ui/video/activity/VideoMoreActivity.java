@@ -44,8 +44,7 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
     private WatchOfficeRelateGoodAdapter goodAdapter;
 
     private String videoName;
-    private String videoId;
-    private String phase;
+    private int videoId;
     private int position;
     private ArrayList<VideoDetail> videos = new ArrayList<>();
 
@@ -81,24 +80,6 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
         }
     };
 
-    /**
-     * 提供给其他界面调用传入所需的参数
-     *
-     * @param context  来源界面
-     * @param videoId  系列编号
-     * @param phase    期数
-     * @param position
-     */
-    public static void newInstance(Activity context, String videoName, String videoId, String phase, int position) {
-        Intent intent = new Intent(context, VideoMoreActivity.class);
-        intent.putExtra("videoName", videoName);
-        intent.putExtra("videoId", videoId);
-        intent.putExtra("phase", phase);
-        intent.putExtra("position", position);
-        context.startActivity(intent);
-        context.overridePendingTransition(R.anim.slide_in_bottom, 0);
-    }
-
     public static void newInstance(Activity context, String videoName, int series_id, int position, ArrayList<VideoDetail> videos) {
         Intent intent = new Intent(context, VideoMoreActivity.class);
         intent.putExtra("videoName", videoName);
@@ -109,6 +90,17 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
         context.overridePendingTransition(R.anim.slide_in_bottom, 0);
     }
 
+    public static void newInstance(Activity context, int series_id, int position, VideoDetail video) {
+        Intent intent = new Intent(context, VideoMoreActivity.class);
+        intent.putExtra("videoName", video.getVideoName());
+        intent.putExtra("series_id", series_id);
+        intent.putExtra("position", position);
+        intent.putExtra("video", video);
+        context.startActivity(intent);
+        context.overridePendingTransition(R.anim.slide_in_bottom, 0);
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,8 +109,9 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
         if (intent != null) {
             videoName = intent.getStringExtra("videoName");
             series_id = intent.getIntExtra("series_id", 0);
-            phase = intent.getStringExtra("phase");
             position = intent.getIntExtra("position", 0);
+            VideoDetail video = intent.getParcelableExtra("video");
+            videoId = video.getvId();
 //            videos = intent.getParcelableArrayListExtra("videos");
 //            if (videos != null && videos.size() > position) {
 //                videos.remove(position);
@@ -226,7 +219,12 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
         List<WatchOfficeCourseBean> courseList = relateBean.getCourse();
         List<GoodsBean> goodList = relateBean.getGood();
         if (videoList != null && !videoList.isEmpty()) {
-            videos.addAll(videoList);
+
+            for (VideoDetail videoDetail : videoList) {
+                if (videoDetail.getvId() != videoId) {
+                    videos.add(videoDetail);
+                }
+            }
             videoAdapter.setData(videos);
         } else {
             findViewById(R.id.tv_relate_video).setVisibility(View.GONE);
