@@ -9,6 +9,7 @@ import java.lang.annotation.Target;
 
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_FIVE_IMAGE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_FOUR_IMAGE;
+import static com.leyuan.aidong.utils.Constant.DYNAMIC_MULTI_IMAGE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_NONE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_ONE_IMAGE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_SIX_IMAGE;
@@ -28,6 +29,7 @@ import static com.leyuan.aidong.utils.Constant.DYNAMIC_VIDEO;
         DYNAMIC_FOUR_IMAGE,
         DYNAMIC_FIVE_IMAGE,
         DYNAMIC_SIX_IMAGE,
+        DYNAMIC_MULTI_IMAGE,
         DYNAMIC_NONE
 })
 @Retention(RetentionPolicy.SOURCE)

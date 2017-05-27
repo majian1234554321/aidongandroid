@@ -10,7 +10,16 @@ import java.util.List;
  */
 public class CourseVideoData {
 
+    private String title;
     private List<CourseVideoBean> videos;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public List<CourseVideoBean> getVideos() {
         return videos;

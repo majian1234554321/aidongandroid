@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.android.exoplayer.util.Util;
 import com.leyuan.aidong.R;
@@ -57,6 +58,7 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
     private RecyclerView recyclerView;
     private Button ivBack;
     private Button btAppoint;
+    private TextView tvRelateTitle;
     private SwitcherLayout switcherLayout;
 
     private CourseRecommendVideoAdapter adapter;
@@ -117,10 +119,10 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
         recyclerView.setAdapter(adapter);
         ivBack = (Button) findViewById(R.id.iv_back);
         btAppoint = (Button) findViewById(R.id.bt_appoint);
+        tvRelateTitle = (TextView) findViewById(R.id.tv_relate_title);
 
         ViewGroup.LayoutParams params = imageLayout.getLayoutParams();
         params.height = (int) (ScreenUtil.getScreenWidth(this) / IMAGE_RATIO);
-
 
     }
 
@@ -170,13 +172,14 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
     }
 
     @Override
-    public void updateRelateVideo(List<CourseVideoBean> videoBeanList) {
+    public void updateRelateVideo(String relateTitle,List<CourseVideoBean> videoBeanList) {
         btAppoint.setVisibility(View.VISIBLE);
         if(videoBeanList != null&& !videoBeanList.isEmpty()) {
             courseVideoBean = videoBeanList.get(0);
             GlideLoader.getInstance().displayImage(courseVideoBean.getCover(), ivCover);
             GlideLoader.getInstance().displayImageWithBlur(courseVideoBean.getCover(),ivBlur);
             tvCourseName.printString(courseVideoBean.getName());
+            tvRelateTitle.setText(relateTitle);
             String during = Utils.formatTime(Math.round(FormatUtil.parseFloat(courseVideoBean.getDuring())));
             tvAuthAndTime.printString(String.format(getString(R.string.course_type_and_during),
                     courseVideoBean.getTypeName(),during));

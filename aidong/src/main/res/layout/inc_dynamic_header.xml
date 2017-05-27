@@ -4,8 +4,12 @@
     android:layout_height="wrap_content"
     android:paddingRight="@dimen/right_margin"
     android:paddingLeft="@dimen/left_margin"
-    android:background="@drawable/selector_dynamic_bg"
-    android:orientation="horizontal">
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
 
     <!--头部用户信息布局-->
     <RelativeLayout
@@ -51,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/dv_avatar"
-            android:layout_marginLeft="12dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginRight="20dp"
             android:layout_marginStart="12dp"
             android:layout_toRightOf="@+id/iv_gender"
@@ -69,5 +73,16 @@
         android:layout_gravity="center_vertical"
         android:background="@drawable/icon_follow"
         android:layout_marginLeft="15dp"/>
+    </LinearLayout>
 
+    <!--文字内容-->
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="111"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:textColor="@color/c3"
+        android:textSize="14sp" />
 </LinearLayout>

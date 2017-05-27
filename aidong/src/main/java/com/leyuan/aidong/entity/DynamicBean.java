@@ -7,13 +7,7 @@ import com.leyuan.aidong.utils.constant.DynamicType;
 
 import java.util.List;
 
-import static com.leyuan.aidong.utils.Constant.DYNAMIC_FIVE_IMAGE;
-import static com.leyuan.aidong.utils.Constant.DYNAMIC_FOUR_IMAGE;
-import static com.leyuan.aidong.utils.Constant.DYNAMIC_NONE;
-import static com.leyuan.aidong.utils.Constant.DYNAMIC_ONE_IMAGE;
-import static com.leyuan.aidong.utils.Constant.DYNAMIC_SIX_IMAGE;
-import static com.leyuan.aidong.utils.Constant.DYNAMIC_THREE_IMAGE;
-import static com.leyuan.aidong.utils.Constant.DYNAMIC_TWO_IMAGE;
+import static com.leyuan.aidong.utils.Constant.DYNAMIC_MULTI_IMAGE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_VIDEO;
 
 /**
@@ -35,7 +29,7 @@ public class DynamicBean implements Parcelable {
     @DynamicType
     public  int getDynamicType(){
         if(image != null && !image.isEmpty()){
-            if(image.size() == 1){
+            /*if(image.size() == 1){
                 return DYNAMIC_ONE_IMAGE;
             }else if(image.size() == 2){
                 return DYNAMIC_TWO_IMAGE;
@@ -49,7 +43,8 @@ public class DynamicBean implements Parcelable {
                 return DYNAMIC_SIX_IMAGE;
             }else {
                 return DYNAMIC_NONE;
-            }
+            }*/
+            return DYNAMIC_MULTI_IMAGE;
         }else {
             return DYNAMIC_VIDEO;
         }

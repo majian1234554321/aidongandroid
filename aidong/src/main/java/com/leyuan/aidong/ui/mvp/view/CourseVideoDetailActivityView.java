@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface CourseVideoDetailActivityView {
 
-    void updateRelateVideo(List<CourseVideoBean> videoBeanList);
+    void updateRelateVideo(String title,List<CourseVideoBean> videoBeanList);
 
     void showLoadingView();
 

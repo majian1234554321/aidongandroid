@@ -291,12 +291,8 @@ public class CoursePresentImpl implements CoursePresent {
 
             @Override
             public void onNext(CourseVideoData courseVideoData) {
-                List<CourseVideoBean> courseVideoBeanList = new ArrayList<>();
-                if (courseVideoData != null) {
-                    courseVideoBeanList = courseVideoData.getVideos();
-                }
-                if (!courseVideoBeanList.isEmpty()) {
-                    videoDetailActivityView.updateRelateVideo(courseVideoBeanList);
+                if (courseVideoData != null && !courseVideoData.getVideos().isEmpty()) {
+                    videoDetailActivityView.updateRelateVideo(courseVideoData.getTitle(),courseVideoData.getVideos());
                 }
 
                 videoDetailActivityView.showContentView();
