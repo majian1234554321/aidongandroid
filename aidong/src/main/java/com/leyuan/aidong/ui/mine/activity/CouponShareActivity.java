@@ -40,8 +40,10 @@ public class CouponShareActivity extends BaseActivity implements View.OnClickLis
     public static void start(Context context, String title, String content, String imageUrl, String webUrl) {
         Intent intent = new Intent(context, CouponShareActivity.class);
         intent.putExtra("title", title);
-        String html = HtmlToStringUtils.delHTMLTag(content);
-        intent.putExtra("content", html.substring(0, html.length() > 30 ? 30 : html.length()));
+        if (content != null) {
+            String html = HtmlToStringUtils.delHTMLTag(content);
+            intent.putExtra("content", html.substring(0, html.length() > 30 ? 30 : html.length()));
+        }
         intent.putExtra("imageUrl", imageUrl);
         intent.putExtra("webUrl", webUrl);
         context.startActivity(intent);

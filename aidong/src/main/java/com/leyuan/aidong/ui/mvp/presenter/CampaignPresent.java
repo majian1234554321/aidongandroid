@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.mvp.presenter;
 
 import android.support.v7.widget.RecyclerView;
 
+import com.leyuan.aidong.entity.ShareData;
 import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
@@ -60,4 +61,6 @@ public interface CampaignPresent {
     void getSpecifyCampaignCoupon(String id);
 
     void getCampaignAvailableCoupon(String id);
+
+    ShareData.ShareCouponInfo getShareInfo();
 }

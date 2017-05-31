@@ -82,10 +82,10 @@ public class ShareData implements Serializable {
         public String getShareUrl() {
             if (App.getInstance().isLogin()) {
                 return ConstantUrl.URL_SHARE_COUPON + DateUtils.dateToLongTime(createdAt) + "&iorder="
-                        + no + "&icoupon=" + share_coupons + "&iuser=" + Md5Utils.createMd("ad|" + App.getInstance().getUser().getId());
+                        + no + "&icoupon=" + coupons + "&iuser=" + Md5Utils.createMd("ad|" + App.getInstance().getUser().getId());
             } else {
                 return ConstantUrl.URL_SHARE_COUPON + DateUtils.dateToLongTime(createdAt) + "&iorder="
-                        + no + "&icoupon=" + share_coupons + "&iuser=0";
+                        + no + "&icoupon=" + coupons + "&iuser=0";
             }
         }
 

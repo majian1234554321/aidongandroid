@@ -8,6 +8,7 @@ import com.leyuan.aidong.entity.CartIdBean;
 import com.leyuan.aidong.entity.ExpressBean;
 import com.leyuan.aidong.entity.OrderBean;
 import com.leyuan.aidong.entity.OrderDetailBean;
+import com.leyuan.aidong.entity.ShareData;
 import com.leyuan.aidong.entity.data.OrderData;
 import com.leyuan.aidong.entity.data.OrderDetailData;
 import com.leyuan.aidong.http.subscriber.BaseSubscriber;
@@ -44,6 +45,7 @@ public class OrderPresentImpl implements OrderPresent {
     private OrderDetailActivityView orderDetailActivityView;
 
     private OrderFeedbackView orderFeedbackView;
+    private ShareData.ShareCouponInfo shareInfo = new ShareData().new ShareCouponInfo();
 
     public OrderPresentImpl(Context context, OrderFeedbackView view) {
         this.context = context;
@@ -89,7 +91,7 @@ public class OrderPresentImpl implements OrderPresent {
 
     @Override
     public void commonLoadData(final SwitcherLayout switcherLayout, String list) {
-        orderModel.getOrders(new CommonSubscriber<OrderData>(context,switcherLayout) {
+        orderModel.getOrders(new CommonSubscriber<OrderData>(context, switcherLayout) {
             @Override
             public void onNext(OrderData orderData) {
                 if (orderData != null && orderData.getOrder() != null) {
@@ -150,12 +152,12 @@ public class OrderPresentImpl implements OrderPresent {
                     orderDetailActivityView.setOrderDetail(orderDetailBean);
                 }
             }
-        },id);
+        }, id);
     }
 
     @Override
-    public void getOrderDetail(final SwitcherLayout switcherLayout,String id) {
-        orderModel.getOrderDetail(new CommonSubscriber<OrderDetailData>(context,switcherLayout) {
+    public void getOrderDetail(final SwitcherLayout switcherLayout, String id) {
+        orderModel.getOrderDetail(new CommonSubscriber<OrderDetailData>(context, switcherLayout) {
             @Override
             public void onNext(OrderDetailData orderDetailData) {
                 OrderDetailBean orderDetailBean = null;
@@ -165,6 +167,8 @@ public class OrderPresentImpl implements OrderPresent {
                 if (orderDetailBean != null) {
                     switcherLayout.showContentLayout();
                     orderDetailActivityView.setOrderDetail(orderDetailBean);
+                    shareInfo.setNo(orderDetailBean.getId());
+                    shareInfo.setCreatedAt(orderDetailBean.getCreatedAt());
                 } else {
                     switcherLayout.showEmptyLayout();
                 }
@@ -177,10 +181,10 @@ public class OrderPresentImpl implements OrderPresent {
         orderModel.cancelOrder(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
-                if(orderFragmentView != null) {
+                if (orderFragmentView != null) {
                     orderFragmentView.cancelOrderResult(baseBean);
                 }
-                if(orderDetailActivityView != null) {
+                if (orderDetailActivityView != null) {
                     orderDetailActivityView.cancelOrderResult(baseBean);
                 }
             }
@@ -192,10 +196,10 @@ public class OrderPresentImpl implements OrderPresent {
         orderModel.confirmOrder(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
-                if(orderFragmentView != null) {
+                if (orderFragmentView != null) {
                     orderFragmentView.confirmOrderResult(baseBean);
                 }
-                if(orderDetailActivityView != null) {
+                if (orderDetailActivityView != null) {
                     orderDetailActivityView.confirmOrderResult(baseBean);
                 }
             }
@@ -207,10 +211,10 @@ public class OrderPresentImpl implements OrderPresent {
         orderModel.deleteOrder(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
-                if(orderFragmentView != null) {
+                if (orderFragmentView != null) {
                     orderFragmentView.deleteOrderResult(baseBean);
                 }
-                if(orderDetailActivityView != null) {
+                if (orderDetailActivityView != null) {
                     orderDetailActivityView.deleteOrderResult(baseBean);
                 }
             }
@@ -242,14 +246,14 @@ public class OrderPresentImpl implements OrderPresent {
         orderModel.reBuyOrder(new ProgressSubscriber<CartIdBean>(context) {
             @Override
             public void onNext(CartIdBean cartIdBean) {
-                if(orderDetailActivityView != null) {
+                if (orderDetailActivityView != null) {
                     orderDetailActivityView.reBuyOrderResult(cartIdBean.getCart_ids());
                 }
-                if(orderFragmentView != null){
+                if (orderFragmentView != null) {
                     orderFragmentView.reBuyOrderResult(cartIdBean.getCart_ids());
                 }
             }
-        },orderId);
+        }, orderId);
     }
 
     @Override
@@ -257,10 +261,15 @@ public class OrderPresentImpl implements OrderPresent {
         orderModel.getExpressInfo(new BaseSubscriber<ExpressBean>(context) {
             @Override
             public void onNext(ExpressBean expressBean) {
-                if(orderDetailActivityView != null){
+                if (orderDetailActivityView != null) {
                     orderDetailActivityView.getExpressInfoResult(expressBean);
                 }
             }
-        },orderId);
+        }, orderId);
+    }
+
+    @Override
+    public ShareData.ShareCouponInfo getShareInfo() {
+        return shareInfo;
     }
 }

@@ -20,11 +20,6 @@ public class PayOrderBean {
     private PayOptionBean pay_option;
 
     /********
-     * 优惠券编号
-     **********/
-    private String share_coupons;
-
-    /********
      * 订单详情
      ************/
     private String coin;
@@ -95,14 +90,6 @@ public class PayOrderBean {
 
     public void setPay_option(PayOptionBean pay_option) {
         this.pay_option = pay_option;
-    }
-
-    public String getShare_coupons() {
-        return share_coupons;
-    }
-
-    public void setShare_coupons(String share_coupons) {
-        this.share_coupons = share_coupons;
     }
 
     @Override

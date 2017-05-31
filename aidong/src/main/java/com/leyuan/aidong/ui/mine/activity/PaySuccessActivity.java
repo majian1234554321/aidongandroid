@@ -130,6 +130,7 @@ public class PaySuccessActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void onGetShareData(ShareData.ShareCouponInfo share_coupons) {
+        if (share_coupons.getCoupons() == null) return;
         shareBean.setTitle(share_coupons.getTitle());
         shareBean.setContent(share_coupons.getContent());
         shareBean.setImage(share_coupons.getImage());

@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import com.leyuan.aidong.entity.AppointmentBean;
 import com.leyuan.aidong.entity.AppointmentDetailBean;
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.ShareData;
 import com.leyuan.aidong.entity.data.AppointmentData;
 import com.leyuan.aidong.entity.data.AppointmentDetailData;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
@@ -40,16 +41,17 @@ public class AppointmentPresentImpl implements AppointmentPresent {
 
     //预约列表View层
     private AppointmentFragmentView appointmentFragmentView;
-    private List<AppointmentBean> appointmentBeanList ;
+    private List<AppointmentBean> appointmentBeanList;
 
     //预约详情View层
     private AppointmentDetailActivityView appointmentDetailActivityView;
+    private ShareData.ShareCouponInfo shareCouponInfo = new ShareData().new ShareCouponInfo();
 
     public AppointmentPresentImpl(Context context, AppointmentFragmentView view) {
         this.context = context;
         this.appointmentFragmentView = view;
         appointmentBeanList = new ArrayList<>();
-        if(appointmentModel == null){
+        if (appointmentModel == null) {
             appointmentModel = new AppointmentModelImpl();
         }
     }
@@ -57,7 +59,7 @@ public class AppointmentPresentImpl implements AppointmentPresent {
     public AppointmentPresentImpl(Context context, AppointmentDetailActivityView view) {
         this.context = context;
         this.appointmentDetailActivityView = view;
-        if(appointmentModel == null){
+        if (appointmentModel == null) {
             appointmentModel = new AppointmentModelImpl();
         }
     }
@@ -67,17 +69,17 @@ public class AppointmentPresentImpl implements AppointmentPresent {
         appointmentModel.getAppointments(new ProgressSubscriber<AppointmentData>(context) {
             @Override
             public void onNext(AppointmentData appointmentData) {
-                if(appointmentData != null &&  appointmentData.getAppointment() != null){
+                if (appointmentData != null && appointmentData.getAppointment() != null) {
                     appointmentBeanList = appointmentData.getAppointment();
                 }
-                if(!appointmentBeanList.isEmpty()){
+                if (!appointmentBeanList.isEmpty()) {
                     appointmentFragmentView.hideEmptyView();
                     appointmentFragmentView.onRecyclerViewRefresh(appointmentBeanList);
-                }else {
+                } else {
                     appointmentFragmentView.showEmptyView();
                 }
             }
-        },type, Constant.PAGE_FIRST);
+        }, type, Constant.PAGE_FIRST);
     }
 
     @Override
@@ -92,14 +94,14 @@ public class AppointmentPresentImpl implements AppointmentPresent {
 
             @Override
             public void onNext(AppointmentData appointmentData) {
-                if(appointmentData != null &&  appointmentData.getAppointment() != null){
+                if (appointmentData != null && appointmentData.getAppointment() != null) {
                     appointmentBeanList = appointmentData.getAppointment();
                 }
-                if(!appointmentBeanList.isEmpty()){
+                if (!appointmentBeanList.isEmpty()) {
                     appointmentFragmentView.hideEmptyView();
                     appointmentFragmentView.onRecyclerViewRefresh(appointmentBeanList);
-                }else {
-                    if(refreshLayout.isRefreshing()){
+                } else {
+                    if (refreshLayout.isRefreshing()) {
                         refreshLayout.setRefreshing(false);
                     }
                     appointmentFragmentView.showEmptyView();
@@ -109,50 +111,53 @@ public class AppointmentPresentImpl implements AppointmentPresent {
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
-                if(refreshLayout.isRefreshing()){
+                if (refreshLayout.isRefreshing()) {
                     refreshLayout.setRefreshing(false);
                 }
             }
-        },type, Constant.PAGE_FIRST);
+        }, type, Constant.PAGE_FIRST);
     }
 
 
     @Override
     public void requestMoreData(RecyclerView recyclerView, String type, final int pageSize, int page) {
-        appointmentModel.getAppointments(new RequestMoreSubscriber<AppointmentData>(context,recyclerView,pageSize) {
+        appointmentModel.getAppointments(new RequestMoreSubscriber<AppointmentData>(context, recyclerView, pageSize) {
             @Override
             public void onNext(AppointmentData appointmentData) {
-                if(appointmentData != null &&  appointmentData.getAppointment() != null){
+                if (appointmentData != null && appointmentData.getAppointment() != null) {
                     appointmentBeanList = appointmentData.getAppointment();
                 }
-                if(!appointmentBeanList.isEmpty()){
+                if (!appointmentBeanList.isEmpty()) {
                     appointmentFragmentView.onRecyclerViewLoadMore(appointmentBeanList);
                 }
                 //没有更多数据了显示到底提示
-                if(appointmentBeanList.size() < pageSize){
+                if (appointmentBeanList.size() < pageSize) {
                     appointmentFragmentView.showEndFooterView();
                 }
             }
-        },type,page);
+        }, type, page);
     }
 
     @Override
     public void getAppointmentDetail(final SwitcherLayout switcherLayout, String id) {
-        appointmentModel.getAppointmentDetail(new CommonSubscriber<AppointmentDetailData>(context,switcherLayout) {
+        appointmentModel.getAppointmentDetail(new CommonSubscriber<AppointmentDetailData>(context, switcherLayout) {
             @Override
             public void onNext(AppointmentDetailData appointmentDetailData) {
                 AppointmentDetailBean appointmentDetailBean = null;
-                if(appointmentDetailData != null && appointmentDetailData.getAppoint() != null){
+                if (appointmentDetailData != null && appointmentDetailData.getAppoint() != null) {
                     appointmentDetailBean = appointmentDetailData.getAppoint();
                 }
-                if(appointmentDetailBean != null){
+                if (appointmentDetailBean != null) {
                     switcherLayout.showContentLayout();
                     appointmentDetailActivityView.setAppointmentDetail(appointmentDetailBean);
-                }else {
+
+                    createShareBeanByOrder(appointmentDetailData.getAppoint().getId(),
+                            appointmentDetailData.getAppoint().getPay().getCreatedAt());
+                } else {
                     switcherLayout.showEmptyLayout();
                 }
             }
-        },id);
+        }, id);
     }
 
     @Override
@@ -160,12 +165,12 @@ public class AppointmentPresentImpl implements AppointmentPresent {
         appointmentModel.cancelAppointment(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
-                if(appointmentFragmentView!= null)
+                if (appointmentFragmentView != null)
                     appointmentFragmentView.cancelAppointmentResult(baseBean);
-                if(appointmentDetailActivityView!= null)
+                if (appointmentDetailActivityView != null)
                     appointmentDetailActivityView.cancelAppointmentResult(baseBean);
             }
-        },id);
+        }, id);
     }
 
     @Override
@@ -173,12 +178,12 @@ public class AppointmentPresentImpl implements AppointmentPresent {
         appointmentModel.confirmAppointment(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
-                if(appointmentFragmentView!= null)
+                if (appointmentFragmentView != null)
                     appointmentFragmentView.confirmAppointmentResult(baseBean);
-                if(appointmentDetailActivityView!= null)
+                if (appointmentDetailActivityView != null)
                     appointmentDetailActivityView.confirmAppointmentResult(baseBean);
             }
-        },id);
+        }, id);
     }
 
     @Override
@@ -186,43 +191,63 @@ public class AppointmentPresentImpl implements AppointmentPresent {
         appointmentModel.deleteAppointment(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
-                if(appointmentFragmentView!= null)
+                if (appointmentFragmentView != null)
                     appointmentFragmentView.deleteAppointmentResult(baseBean);
-                if(appointmentDetailActivityView!= null)
+                if (appointmentDetailActivityView != null)
                     appointmentDetailActivityView.deleteAppointmentResult(baseBean);
             }
-        },id);
+        }, id);
     }
 
     @Override
-    public void getCourseAppointDetail(final SwitcherLayout switcherLayout,String id) {
-        if(courseModel == null){
+    public void getCourseAppointDetail(final SwitcherLayout switcherLayout, String id) {
+        if (courseModel == null) {
             courseModel = new CourseModelImpl(context);
         }
-        courseModel.getCourseAppointDetail(new CommonSubscriber<AppointmentDetailData>(context,switcherLayout) {
+        courseModel.getCourseAppointDetail(new CommonSubscriber<AppointmentDetailData>(context, switcherLayout) {
             @Override
             public void onNext(AppointmentDetailData appointmentDetailData) {
                 if (appointmentDetailData != null) {
                     switcherLayout.showContentLayout();
                     appointmentDetailActivityView.setAppointmentDetail(appointmentDetailData.getAppoint());
+
+                    if (appointmentDetailData.getAppoint() != null) {
+                        createShareBeanByOrder(appointmentDetailData.getAppoint().getId(),
+                                appointmentDetailData.getAppoint().getPay().getCreatedAt());
+                    }
                 }
             }
-        },id);
+        }, id);
     }
 
     @Override
-    public void getCampaignAppointDetail(final SwitcherLayout switcherLayout,String id) {
-        if(campaignModel == null){
+    public void getCampaignAppointDetail(final SwitcherLayout switcherLayout, String id) {
+        if (campaignModel == null) {
             campaignModel = new CampaignModelImpl();
         }
-        campaignModel.getCampaignAppointDetail(new CommonSubscriber<AppointmentDetailData>(context,switcherLayout) {
+        campaignModel.getCampaignAppointDetail(new CommonSubscriber<AppointmentDetailData>(context, switcherLayout) {
             @Override
             public void onNext(AppointmentDetailData appointmentDetailData) {
                 if (appointmentDetailData != null) {
                     switcherLayout.showContentLayout();
                     appointmentDetailActivityView.setAppointmentDetail(appointmentDetailData.getAppoint());
+                    if (appointmentDetailData.getAppoint() != null) {
+                        createShareBeanByOrder(appointmentDetailData.getAppoint().getId(),
+                                appointmentDetailData.getAppoint().getPay().getCreatedAt());
+                    }
                 }
             }
-        },id);
+        }, id);
+    }
+
+
+    private void createShareBeanByOrder(String createdAt, String id) {
+        shareCouponInfo.setCreatedAt(createdAt);
+        shareCouponInfo.setNo(id);
+    }
+
+    @Override
+    public ShareData.ShareCouponInfo getShareInfo() {
+        return shareCouponInfo;
     }
 }

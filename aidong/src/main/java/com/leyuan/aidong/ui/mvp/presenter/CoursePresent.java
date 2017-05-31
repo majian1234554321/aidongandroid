@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.mvp.presenter;
 
 import android.support.v7.widget.RecyclerView;
 
+import com.leyuan.aidong.entity.ShareData;
 import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
@@ -62,6 +63,8 @@ public interface CoursePresent {
      */
     void buyCourse(String id, String couponId, String integral, String payType, String contactName,
                    String contactMobile, PayInterface.PayListener listener,String isVip);
+
+    ShareData.ShareCouponInfo getShareInfo();
 
     /**
      * 添加关注

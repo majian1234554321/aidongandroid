@@ -363,12 +363,13 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
         @Override
         public void onSuccess(String code, Object object) {
             ToastGlobal.showLong("支付成功");
-            startActivity(new Intent(OrderDetailActivity.this,PaySuccessActivity.class));
+            PaySuccessActivity.start(OrderDetailActivity.this, orderPresent.getShareInfo());
         }
 
         @Override
         public void onFree() {
-            startActivity(new Intent(OrderDetailActivity.this,PaySuccessActivity.class));
+            PaySuccessActivity.start(OrderDetailActivity.this, orderPresent.getShareInfo());
+//            startActivity(new Intent(OrderDetailActivity.this,PaySuccessActivity.class));
         }
     };
 

@@ -201,7 +201,7 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
     private PayInterface.PayListener payListener = new SimplePayListener(this) {
         @Override
         public void onSuccess(String code, Object object) {
-            AppointSuccessActivity.start(AppointCourseActivity.this, bean.getClassDate() +" "+ bean.getClassTime(),true);
+            AppointSuccessActivity.start(AppointCourseActivity.this, bean.getClassDate() +" "+ bean.getClassTime(),true, coursePresent.getShareInfo());
             Toast.makeText(AppointCourseActivity.this, "支付成功", Toast.LENGTH_LONG).show();
         }
 
@@ -213,7 +213,7 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
 
         @Override
         public void onFree() {
-            AppointSuccessActivity.start(AppointCourseActivity.this, bean.getClassDate() +" "+ bean.getClassTime(),true);
+            AppointSuccessActivity.start(AppointCourseActivity.this, bean.getClassDate() +" "+ bean.getClassTime(),true, coursePresent.getShareInfo());
             Toast.makeText(AppointCourseActivity.this, "预约成功", Toast.LENGTH_LONG).show();
         }
     };
