@@ -32,6 +32,7 @@ import com.leyuan.aidong.widget.media.TextViewPrintly;
 
 public class LiveDetailActivity extends BaseActivity implements View.OnClickListener {
 
+
     private static final int LIVE_ENDED = 0;
     private static final int LIVE_BEGIN = 1;
 
@@ -132,20 +133,25 @@ public class LiveDetailActivity extends BaseActivity implements View.OnClickList
         tv_course_desc.setText("" + info.getLiveContent());
         tv_reply_count.setText("" + info.getCommentsCou());
         tv_like_count.setText("" + info.getPraiseCou());
-        if (LiveDateFilterUtil.compareTime(info.getLiveBeginTime()) > 0) {
-            img_live_begin_or_end.setImageResource(R.drawable.live_not_start);
-            liveState = LiveState.NO_BEGIN;
-        } else if (LiveDateFilterUtil.compareTime(info.getLiveEndTime()) > 0) {
-            img_live_begin_or_end.setImageResource(R.drawable.live_detail_living);
-            liveState = LiveState.BEGINED;
-        } else {
-            img_live_begin_or_end.setImageResource(R.drawable.live_end);
-            liveState = LiveState.ENDED;
-        }
 
         int startTime = LiveDateFilterUtil.compareTime(info.getLiveBeginTime());
         int endTime = LiveDateFilterUtil.compareTime(info.getLiveEndTime());
         Logger.i("time", "startTime = " + startTime + ", endTime = " + endTime);
+
+        if (startTime > 0) {
+            img_live_begin_or_end.setImageResource(R.drawable.live_not_start);
+            liveState = LiveState.NO_BEGIN;
+        } else{
+
+            if (endTime > 0) {
+                img_live_begin_or_end.setImageResource(R.drawable.live_detail_living);
+                liveState = LiveState.BEGINED;
+            } else {
+                img_live_begin_or_end.setImageResource(R.drawable.live_end);
+                liveState = LiveState.ENDED;
+            }
+        }
+
         if (startTime > 0) {
             mHandler.sendEmptyMessageDelayed(LIVE_BEGIN, startTime * 1000);
         } else if (endTime > 0) {
@@ -175,7 +181,7 @@ public class LiveDetailActivity extends BaseActivity implements View.OnClickList
                 //分享
                 if (info != null) {
                     String url = ConstantUrl.LIVE_SHARE + info.getLiveId();
-                    sharePopupWindow.showAtBottom(info.getLiveName()+Constant.I_DONG_FITNESS, info.getLiveContent(), info.getLiveCover(), url);
+                    sharePopupWindow.showAtBottom(info.getLiveName() + Constant.I_DONG_FITNESS, info.getLiveContent(), info.getLiveCover(), url);
                 }
 
                 break;
