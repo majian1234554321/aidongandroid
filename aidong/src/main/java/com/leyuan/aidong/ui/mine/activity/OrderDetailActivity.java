@@ -75,7 +75,6 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
     //快递信息
     private LinearLayout expressInfoLayout;
     private RelativeLayout rlExpress;  //快递详情
-    private ImageView ivExpress;
     private TextView tvExpressAddress;
     private TextView tvExpressTime;
     private ExtendTextView tvBuyer;   //快递收货人信息
@@ -160,7 +159,6 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
         timer = (CountdownView) findViewById(R.id.timer);
         expressInfoLayout = (LinearLayout) findViewById(R.id.ll_express_info);
         rlExpress = (RelativeLayout) findViewById(R.id.rl_express);
-        ivExpress = (ImageView) findViewById(R.id.dv_express);
         tvExpressAddress = (TextView) findViewById(R.id.tv_express_address);
         tvExpressTime = (TextView) findViewById(R.id.tv_express_time);
         tvBuyer = (ExtendTextView) findViewById(R.id.tv_buyer);

@@ -7,6 +7,8 @@ import android.graphics.BitmapFactory;
 
 import com.leyuan.aidong.ui.App;
 
+import java.io.ByteArrayOutputStream;
+
 public class ImageUtil {
 	// 使用BitmapFactory.Options的inSampleSize参数来缩放
 	public Bitmap resizeImage(String path, int width, int height) {
@@ -193,6 +195,26 @@ public class ImageUtil {
 		
 		return imgPath+"?imageView2/" +0+"/w/" + Utils.dip2px(context, dp) +"/h/" + Utils.dip2px(context, dp);
 	}
-	
 
+	public static int[] getImageWidthAndHeight(String path){
+		BitmapFactory.Options options = new BitmapFactory.Options();
+
+		/**
+		 * 最关键在此，把options.inJustDecodeBounds = true;
+		 * 这里再decodeFile()，返回的bitmap为空，但此时调用options.outHeight时，已经包含了图片的高了
+		 */
+		options.inJustDecodeBounds = true;
+		Bitmap bitmap = BitmapFactory.decodeFile(path, options); // 此时返回的bitmap为null
+		/**
+		 *options.outHeight为原始图片的高
+		 */
+		return new int[]{options.outWidth,options.outHeight};
+	}
+
+	public static byte[] compressFile(String path) {
+		Bitmap bitmap = BitmapFactory.decodeFile(path);
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		bitmap.compress(Bitmap.CompressFormat.JPEG, 70, outputStream);
+		return outputStream.toByteArray();
+	}
 }

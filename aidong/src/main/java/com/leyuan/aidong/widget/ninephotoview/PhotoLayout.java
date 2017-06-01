@@ -23,8 +23,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-
-
 /**
  * Created by 大灯泡 on 2016/11/9.
  * <p>
@@ -45,7 +43,7 @@ public class PhotoLayout extends FlowLayout {
     private int maxSingleWidth;
     private int maxSingleHeight;
 
-    private float singleAspectRatio = 16f / 9f;   //宽高比
+    private float singleAspectRatio = 16f / 16f;   //宽高比
     private int selectedPosition = INVALID_POSITION;
     private Rect touchFrame;
     private Runnable touchReset;
@@ -66,7 +64,7 @@ public class PhotoLayout extends FlowLayout {
     }
 
     private void init() {
-        itemMargin = dp2Px(4f);
+        itemMargin = dp2Px(5f);
         recycler = new InnerRecyclerHelper();
         setOrientation(HORIZONTAL);
         setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
@@ -78,7 +76,7 @@ public class PhotoLayout extends FlowLayout {
         int widthSize = View.MeasureSpec.getSize(widthMeasureSpec);
         int childRestWidth = widthSize - getPaddingLeft() - getPaddingRight();
         updateItemCount();
-        multiChildSize = childRestWidth/3 - itemMargin * 2;
+        multiChildSize = (childRestWidth - itemMargin * 3)/3;
         if (maxSingleWidth == 0) {
             maxSingleWidth = childRestWidth * 2 / 3;
             maxSingleHeight = (int) (maxSingleWidth / singleAspectRatio);
@@ -115,14 +113,17 @@ public class PhotoLayout extends FlowLayout {
     }
 
     private void fillView(int childCount) {
+        int lineCount = childCount == 4 ? 2 : 3;
         if (childCount == 1) {
             fillSingleView();
-        } else if (childCount == 4) {
-            fillFourViews();
         } else {
             for (int i = 0; i < childCount; i++) {
                 final ImageView child = obtainView(i);
-                setupViewAndAddView(i, child, false, false);
+                if (i == lineCount) {
+                    setupViewAndAddView(i, child, true, false);
+                } else {
+                    setupViewAndAddView(i, child, false, false);
+                }
             }
         }
     }
@@ -132,21 +133,9 @@ public class PhotoLayout extends FlowLayout {
         singleChild.setAdjustViewBounds(true);
         singleChild.setMaxWidth(maxSingleWidth);
         singleChild.setMaxHeight(maxSingleHeight);
-        singleChild.setScaleType(ImageView.ScaleType.FIT_START);
+        singleChild.setScaleType(ImageView.ScaleType.CENTER_CROP);
         setupViewAndAddView(0, singleChild, false, true);
     }
-
-    private void fillFourViews() {
-        for (int i = 0; i < 4; i++) {
-            final ImageView child = obtainView(i);
-            if (i == 2) {
-                setupViewAndAddView(i, child, true, false);
-            } else {
-                setupViewAndAddView(i, child, false, false);
-            }
-        }
-    }
-
 
     private void setupViewAndAddView(int position, @NonNull ImageView v, boolean newLine, boolean isSingle) {
         setItemLayoutParams(v, newLine, isSingle);
@@ -204,7 +193,8 @@ public class PhotoLayout extends FlowLayout {
         ImageView cachedView;
         ImageView child;
         if (itemCount == 1) {
-            cachedView = recycler.getSingleCachedView();
+            cachedView = null;
+           // cachedView = recycler.getSingleCachedView();
         } else {
             cachedView = recycler.getCachedView(position);
         }
@@ -255,7 +245,7 @@ public class PhotoLayout extends FlowLayout {
 
         InnerRecyclerHelper() {
             cachedViews = new SparseArray<>();
-            singleCachedViews = new SimpleObjectPool<>(9);
+            singleCachedViews = new SimpleObjectPool<>(6);
         }
 
         ImageView getCachedView(int position) {
@@ -283,7 +273,6 @@ public class PhotoLayout extends FlowLayout {
             cachedViews.clear();
             singleCachedViews.clearPool();
         }
-
     }
 
     private class PhotoImageAdapterObserver extends PhotoBaseDataObserver {
@@ -380,10 +369,6 @@ public class PhotoLayout extends FlowLayout {
                     }
                 };
                 postDelayed(touchReset, ViewConfiguration.getPressedStateDuration());
-            }else {
-                if(onBlankClickListener != null){
-                    onBlankClickListener.onBlankClick();
-                }
             }
         } else {
             if (checkPositionValid(selectionPosition)) updateChildPressState(selectionPosition, false);
@@ -551,14 +536,6 @@ public class PhotoLayout extends FlowLayout {
         this.onItemClickListener = onItemClickListener;
     }
 
-    public OnBlankClickListener getOnBlankClickListener() {
-        return onBlankClickListener;
-    }
-
-    public void setOnBlankClickListener(OnBlankClickListener onBlankClickListener) {
-        this.onBlankClickListener = onBlankClickListener;
-    }
-
     //------------------------------------------Interface-----------------------------------------------
     private OnSetUpChildLayoutParamsListener onSetUpChildLayoutParamsListener;
 
@@ -570,11 +547,5 @@ public class PhotoLayout extends FlowLayout {
 
     public interface OnItemClickListener {
         void onItemClick(ImageView view, int position);
-    }
-
-    private OnBlankClickListener onBlankClickListener;
-
-    public interface OnBlankClickListener{
-        void onBlankClick();
     }
 }

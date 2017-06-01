@@ -21,8 +21,8 @@ import com.leyuan.aidong.R;
 public class ForceClickImageView extends ImageView {
     private static final String TAG = "ForceClickImageView";
     //前景层
-    private Drawable mForegroundDrawable;
-    private Rect mCachedBounds = new Rect();
+    private Drawable foregroundDrawable;
+    private Rect cachedBounds = new Rect();
 
     public ForceClickImageView(Context context) {
         this(context, null);
@@ -43,19 +43,19 @@ public class ForceClickImageView extends ImageView {
      */
     private void init(Context context, AttributeSet attrs, boolean needDefaultForceGroundColor) {
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ForceClickImageView);
-        mForegroundDrawable = a.getDrawable(R.styleable.ForceClickImageView_foregroundColor);
-        if (mForegroundDrawable instanceof ColorDrawable || (attrs == null && needDefaultForceGroundColor)) {
+        foregroundDrawable = a.getDrawable(R.styleable.ForceClickImageView_foregroundColor);
+        if (foregroundDrawable instanceof ColorDrawable || (attrs == null && needDefaultForceGroundColor)) {
             int foreGroundColor = a.getColor(R.styleable.ForceClickImageView_foregroundColor, 0x882b2b2b);
-            mForegroundDrawable = new StateListDrawable();
+            foregroundDrawable = new StateListDrawable();
             ColorDrawable forceDrawable = new ColorDrawable(foreGroundColor);
             ColorDrawable normalDrawable = new ColorDrawable(Color.TRANSPARENT);
-            ((StateListDrawable) mForegroundDrawable).addState(new int[]{android.R.attr.state_pressed}, forceDrawable);
-            ((StateListDrawable) mForegroundDrawable).addState(new int[]{android.R.attr.state_focused}, forceDrawable);
-            ((StateListDrawable) mForegroundDrawable).addState(new int[]{android.R.attr.state_enabled}, normalDrawable);
-            ((StateListDrawable) mForegroundDrawable).addState(new int[]{}, normalDrawable);
+            ((StateListDrawable) foregroundDrawable).addState(new int[]{android.R.attr.state_pressed}, forceDrawable);
+            ((StateListDrawable) foregroundDrawable).addState(new int[]{android.R.attr.state_focused}, forceDrawable);
+            ((StateListDrawable) foregroundDrawable).addState(new int[]{android.R.attr.state_enabled}, normalDrawable);
+            ((StateListDrawable) foregroundDrawable).addState(new int[]{}, normalDrawable);
         }
-        if (mForegroundDrawable != null) {
-            mForegroundDrawable.setCallback(this);
+        if (foregroundDrawable != null) {
+            foregroundDrawable.setCallback(this);
         }
         a.recycle();
     }
@@ -64,8 +64,8 @@ public class ForceClickImageView extends ImageView {
     @Override
     protected void drawableStateChanged() {
         super.drawableStateChanged();
-        if (mForegroundDrawable != null && mForegroundDrawable.isStateful()) {
-            mForegroundDrawable.setState(getDrawableState());
+        if (foregroundDrawable != null && foregroundDrawable.isStateful()) {
+            foregroundDrawable.setState(getDrawableState());
             invalidate();
         }
     }
@@ -74,20 +74,20 @@ public class ForceClickImageView extends ImageView {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (mForegroundDrawable != null) {
+        if (foregroundDrawable != null) {
             if (getDrawable()!=null) {
-                mForegroundDrawable.setBounds(getDrawable().getBounds());
+                foregroundDrawable.setBounds(getDrawable().getBounds());
             }else {
-                mForegroundDrawable.setBounds(mCachedBounds);
+                foregroundDrawable.setBounds(cachedBounds);
             }
-            mForegroundDrawable.draw(canvas);
+            foregroundDrawable.draw(canvas);
         }
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        if (mForegroundDrawable != null) mCachedBounds.set(0, 0, w, h);
+        if (foregroundDrawable != null) cachedBounds.set(0, 0, w, h);
     }
 
 }

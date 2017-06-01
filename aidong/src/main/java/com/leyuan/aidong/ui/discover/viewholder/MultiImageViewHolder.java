@@ -9,7 +9,9 @@ import android.widget.ImageView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.ui.discover.view.ForceClickImageView;
+import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.ScreenUtil;
 import com.leyuan.aidong.utils.constant.DynamicType;
 import com.leyuan.aidong.widget.ninephotoview.PhotoLayout;
 import com.leyuan.aidong.widget.ninephotoview.adapter.PhotoContentsBaseAdapter;
@@ -21,10 +23,10 @@ import java.util.List;
  * 图片
  * Created by song on 2017/2/16.
  */
-public class MultiImageViewHolder extends BaseCircleViewHolder implements PhotoLayout.OnItemClickListener, PhotoLayout.OnBlankClickListener {
+public class MultiImageViewHolder extends BaseCircleViewHolder implements PhotoLayout.OnItemClickListener, PhotoLayout.OnSetUpChildLayoutParamsListener {
+    private float singleAspectRatio = 16f / 9f;   //宽高比
     private PhotoLayout photoLayout;
     private InnerContainerAdapter adapter;
-    private int position;
 
     public MultiImageViewHolder(Context context, ViewGroup viewGroup, int layoutResId) {
         super(context, viewGroup, layoutResId);
@@ -35,13 +37,12 @@ public class MultiImageViewHolder extends BaseCircleViewHolder implements PhotoL
         photoLayout = (PhotoLayout) itemView.findViewById(R.id.circle_image_container);
         if (photoLayout.getOnItemClickListener() == null) {
             photoLayout.setOnItemClickListener(this);
-            photoLayout.setOnBlankClickListener(this);
+            photoLayout.setOnSetUpChildLayoutParamsListener(this);
         }
     }
 
     @Override
     public void onBindDataToChildView(@NonNull final DynamicBean data, int position, @DynamicType int viewType) {
-        this.position = position;
         if (adapter == null) {
             adapter = new InnerContainerAdapter(getContext(), data.image);
             photoLayout.setAdapter(adapter);
@@ -58,13 +59,34 @@ public class MultiImageViewHolder extends BaseCircleViewHolder implements PhotoL
     }
 
     @Override
-    public void onBlankClick() {
-        if(callback != null){
-            callback.onBackgroundClick(position);
+    public void onSetUpParams(ImageView child, PhotoLayout.LayoutParams p, int position, boolean isSingle) {
+        if(isSingle){
+            String url = adapter.data.get(0);
+            float imageWidth;
+            float imageHeight;
+            try {
+                 imageWidth = FormatUtil.parseFloat(url.substring(url.indexOf("w=") + 2,url.indexOf("_h")));
+                 imageHeight = FormatUtil.parseFloat(url.substring(url.indexOf("h=") + 2,url.lastIndexOf(".")));
+            }catch (Exception e){
+                imageWidth = 400;
+                imageHeight = 400;
+                e.printStackTrace();
+            }
+            if(imageHeight >= imageWidth){          //竖图
+                int height = (int) (ScreenUtil.getScreenWidth(context) / 2f);
+                int width = (int) (imageWidth / imageHeight * height);
+                p.height = height;
+                p.width = width;
+            }else{                                 //横图
+                int width = (int) (ScreenUtil.getScreenWidth(context)* 2 / 5f);
+                int height = (int) (imageHeight / imageWidth * width);
+                p.width = width;
+                p.height = height;
+            }
         }
     }
 
-    private static class InnerContainerAdapter extends PhotoContentsBaseAdapter {
+    private  class InnerContainerAdapter extends PhotoContentsBaseAdapter {
         private Context context;
         private List<String> data;
 

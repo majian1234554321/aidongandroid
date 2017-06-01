@@ -213,11 +213,6 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         this.showFollowButton = show;
     }
 
-    public void notifyCommentChange(){
-        RecyclerView.Adapter adapter = commentRecyclerView.getAdapter();
-        adapter.notifyDataSetChanged();
-    }
-
     private boolean isLike(DynamicBean dynamic) {
         if (!App.mInstance.isLogin()) {
             return false;

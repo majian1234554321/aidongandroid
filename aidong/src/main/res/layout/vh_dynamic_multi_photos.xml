@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:id="@+id/ll_root">
+    android:id="@+id/ll_root"
+    android:background="@color/white">
 
     <include layout="@layout/inc_dynamic_header"/>
 
@@ -11,14 +12,16 @@
     <RelativeLayout
         android:id="@+id/content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/left_margin"
+        android:layout_marginRight="10dp">
 
         <com.leyuan.aidong.widget.ninephotoview.PhotoLayout
             android:id="@+id/circle_image_container"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/left_margin"
-            android:paddingRight="@dimen/right_margin" />
+            android:background="@color/white"/>
+
     </RelativeLayout>
 
     <include layout="@layout/inc_dynamic_bottom"/>

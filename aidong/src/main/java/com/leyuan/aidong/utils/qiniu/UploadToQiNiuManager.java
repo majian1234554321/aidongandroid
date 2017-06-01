@@ -1,11 +1,8 @@
 package com.leyuan.aidong.utils.qiniu;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
 import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
 import com.leyuan.aidong.ui.App;
-import com.leyuan.aidong.utils.FileUtil;
+import com.leyuan.aidong.utils.ImageUtil;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UploadManager;
@@ -13,12 +10,13 @@ import com.qiniu.android.storage.UploadOptions;
 
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.leyuan.aidong.utils.FileUtil.File2byte;
+import static com.leyuan.aidong.utils.ImageUtil.compressFile;
+
 
 /**
  * 七牛上传
@@ -76,7 +74,7 @@ public class UploadToQiNiuManager {
             if (isPhoto && file.length() > PHOTO_SIZE_LIMIT) {
                 bytes = compressFile(path);
             } else {
-                bytes = FileUtil.File2byte(path);
+                bytes = File2byte(path);
             }
             uploadManager.put(bytes, expectKey, QiNiuTokenUtils.getQiNiuToken(), new UpCompletionHandler() {
                 @Override
@@ -124,20 +122,14 @@ public class UploadToQiNiuManager {
     }
 
     private String generateExpectKey(String path, boolean isImage) {
-
         int id = 0;
         if (App.getInstance().isLogin()) {
             id = App.getInstance().getUser().getId();
         }
-
-        return (isImage ? "image/" : "video/") + id +
-                System.currentTimeMillis() + path.substring(path.lastIndexOf("."));
+        int[] widthAndHeight = ImageUtil.getImageWidthAndHeight(path);
+        return (isImage ? "image/" : "video/") + id + "_" + System.currentTimeMillis()
+                +"*w=" + widthAndHeight[0] + "_h="+widthAndHeight[1]+ path.substring(path.lastIndexOf("."));
     }
 
-    private byte[] compressFile(String path) {
-        Bitmap bitmap = BitmapFactory.decodeFile(path);
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, outputStream);
-        return outputStream.toByteArray();
-    }
+
 }

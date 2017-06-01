@@ -36,7 +36,6 @@
         android:paddingLeft="@dimen/left_margin"
         android:orientation="horizontal"
         android:paddingTop="5dp"
-        android:paddingBottom="5dp"
         android:focusable="false"
         android:clickable="false"
         android:descendantFocusability="blocksDescendants">
@@ -58,6 +57,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
+        android:layout_marginTop="5dp"
         android:background="@color/line_color"/>
 
     <LinearLayout
