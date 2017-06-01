@@ -17,8 +17,6 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.mine.OrderParcelAdapter;
 import com.leyuan.aidong.entity.BaseBean;
-import com.leyuan.aidong.entity.ExpressBean;
-import com.leyuan.aidong.entity.ExpressListBean;
 import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.entity.OrderDetailBean;
 import com.leyuan.aidong.entity.ParcelBean;
@@ -27,7 +25,6 @@ import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.module.pay.SimplePayListener;
 import com.leyuan.aidong.module.pay.WeiXinPay;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.WebViewActivity;
 import com.leyuan.aidong.ui.mvp.presenter.OrderPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.OrderPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.OrderDetailActivityView;
@@ -349,8 +346,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
                 orderPresent.reBuyOrder(orderId);
                 break;
             case R.id.rl_express:
-                //todo h5
-                WebViewActivity.start(this,"快递信息","http://www.baidu.com");
+                ExpressInfoActivity.start(this,orderId);
                 break;
             default:
                 break;
@@ -408,13 +404,9 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
 
 
     @Override
-    public void getExpressInfoResult(ExpressBean expressBean) {
-        List<ExpressListBean> express = new ArrayList<>();
-        if(expressBean.getExpress() != null || !expressBean.getExpress().isEmpty()) {
-            express  = expressBean.getExpress();
-        }
-        tvExpressAddress.setText(express.get(0).getStatus());
-        tvExpressTime.setText(express.get(0).getTime());
+    public void getExpressInfoResult(String status,String time) {
+        tvExpressAddress.setText(status);
+        tvExpressTime.setText(time);
     }
 
     @Override

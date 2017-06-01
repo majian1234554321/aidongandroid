@@ -216,7 +216,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
                 UiManager.activityCheckLoginJump(getActivity(), AiDongMomentActivity.class);
                 break;
             case R.id.item_address:
-                // AddressActivity.start(getActivity());
                 UiManager.activityCheckLoginJump(getActivity(), AddressActivity.class);
                 break;
             case R.id.item_recommend_friend:

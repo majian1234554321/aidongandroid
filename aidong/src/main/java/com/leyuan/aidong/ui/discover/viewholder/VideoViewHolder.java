@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.ScreenUtil;
 import com.leyuan.aidong.utils.constant.DynamicType;
 
 /**
@@ -33,31 +34,12 @@ public class VideoViewHolder extends BaseCircleViewHolder{
             return;
         }
 
-    /*    String url = data.videos.cover;
         ViewGroup.LayoutParams p = ivVideo.getLayoutParams();
-
-        float imageWidth;
-        float imageHeight;
-        try {
-            imageWidth = FormatUtil.parseFloat(url.substring(url.indexOf("w=") + 2,url.indexOf("_h")));
-            imageHeight = FormatUtil.parseFloat(url.substring(url.indexOf("h=") + 2,url.lastIndexOf(".")));
-        }catch (Exception e){
-            imageWidth = 400;
-            imageHeight = 400;
-            e.printStackTrace();
-        }
-        if(imageHeight >= imageWidth){          //竖图
-            int height = (int) (ScreenUtil.getScreenWidth(context) / 2f);
-            int width = (int) (imageWidth / imageHeight * height);
-            p.height = height;
-            p.width = width;
-        }else{                                 //横图
-            int width = (int) (ScreenUtil.getScreenWidth(context)* 2 / 5f);
-            int height = (int) (imageHeight / imageWidth * width);
-            p.width = width;
-            p.height = height;
-        }
-*/
+        float height = ScreenUtil.getScreenWidth(context) / 2f;
+        float width =  (float)ScreenUtil.getScreenWidth(context) / ScreenUtil.getScreenHeight(context) * height;
+        p.height = (int) height;
+        p.width = (int) width;
+        ivVideo.setLayoutParams(p);
         GlideLoader.getInstance().displayImage(data.videos.cover, ivVideo);
 
         ivVideo.setOnClickListener(new View.OnClickListener() {

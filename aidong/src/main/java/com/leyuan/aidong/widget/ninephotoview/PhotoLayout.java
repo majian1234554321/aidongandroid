@@ -419,8 +419,6 @@ public class PhotoLayout extends FlowLayout {
             }
         }
 
-
-
         return INVALID_POSITION;
     }
 

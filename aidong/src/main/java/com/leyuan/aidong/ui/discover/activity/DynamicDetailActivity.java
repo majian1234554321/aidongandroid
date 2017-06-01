@@ -30,13 +30,7 @@ import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.discover.viewholder.FiveImageViewHolder;
-import com.leyuan.aidong.ui.discover.viewholder.FourImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.MultiImageViewHolder;
-import com.leyuan.aidong.ui.discover.viewholder.OneImageViewHolder;
-import com.leyuan.aidong.ui.discover.viewholder.SixImageViewHolder;
-import com.leyuan.aidong.ui.discover.viewholder.ThreeImageViewHolder;
-import com.leyuan.aidong.ui.discover.viewholder.TwoImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.VideoViewHolder;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
@@ -58,13 +52,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.view.inputmethod.EditorInfo.IME_ACTION_SEND;
-import static com.leyuan.aidong.utils.Constant.DYNAMIC_FIVE_IMAGE;
-import static com.leyuan.aidong.utils.Constant.DYNAMIC_FOUR_IMAGE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_MULTI_IMAGE;
-import static com.leyuan.aidong.utils.Constant.DYNAMIC_ONE_IMAGE;
-import static com.leyuan.aidong.utils.Constant.DYNAMIC_SIX_IMAGE;
-import static com.leyuan.aidong.utils.Constant.DYNAMIC_THREE_IMAGE;
-import static com.leyuan.aidong.utils.Constant.DYNAMIC_TWO_IMAGE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_VIDEO;
 
 /**
@@ -135,12 +123,6 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
         RecyclerView headerRecyclerView = (RecyclerView) header.findViewById(R.id.rv_header);
         CircleDynamicAdapter.Builder<DynamicBean> builder = new CircleDynamicAdapter.Builder<>(this);
         builder.addType(VideoViewHolder.class, DYNAMIC_VIDEO, R.layout.vh_dynamic_video)
-                .addType(OneImageViewHolder.class, DYNAMIC_ONE_IMAGE, R.layout.vh_dynamic_one_photo)
-                .addType(TwoImageViewHolder.class, DYNAMIC_TWO_IMAGE, R.layout.vh_dynamic_two_photos)
-                .addType(ThreeImageViewHolder.class, DYNAMIC_THREE_IMAGE, R.layout.vh_dynamic_three_photos)
-                .addType(FourImageViewHolder.class, DYNAMIC_FOUR_IMAGE, R.layout.vh_dynamic_four_photos)
-                .addType(FiveImageViewHolder.class, DYNAMIC_FIVE_IMAGE, R.layout.vh_dynamic_five_photos)
-                .addType(SixImageViewHolder.class, DYNAMIC_SIX_IMAGE, R.layout.vh_dynamic_six_photos)
                 .addType(MultiImageViewHolder.class,DYNAMIC_MULTI_IMAGE, R.layout.vh_dynamic_multi_photos)
                 .showFollowButton(!isSelf)
                 .showLikeAndCommentLayout(false)
