@@ -358,7 +358,7 @@
         <item name="colorAccent">#000000</item>
     </style>
 
-    <color name="subtransparent">#77000000</color>
+    <!--<color name="subtransparent">#77000000</color>-->
 
     <style name="PopupAnimation" parent="android:Animation">
         <item name="android:windowEnterAnimation">@anim/fade_in</item>

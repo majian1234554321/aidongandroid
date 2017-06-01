@@ -139,8 +139,10 @@ public class HlsRendererBuilder implements LoveSportPlayer.RendererBuilder {
       HlsSampleSource sampleSource = new HlsSampleSource(chunkSource, loadControl,
           MAIN_BUFFER_SEGMENTS * BUFFER_SEGMENT_SIZE, mainHandler, player, LoveSportPlayer.TYPE_VIDEO);
       MediaCodecVideoTrackRenderer videoRenderer = new MediaCodecVideoTrackRenderer(context,
-          sampleSource, MediaCodecSelector.DEFAULT, MediaCodec.VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING,
+          sampleSource, MediaCodecSelector.DEFAULT, MediaCodec.VIDEO_SCALING_MODE_SCALE_TO_FIT,
           5000, mainHandler, player, 50);
+
+      Logger.i("player","----------VIDEO_SCALING_MODE_SCALE_TO_FIT");
       MediaCodecAudioTrackRenderer audioRenderer = new MediaCodecAudioTrackRenderer(sampleSource,
           MediaCodecSelector.DEFAULT, null, true, player.getMainHandler(), player,
           AudioCapabilities.getCapabilities(context), AudioManager.STREAM_MUSIC);

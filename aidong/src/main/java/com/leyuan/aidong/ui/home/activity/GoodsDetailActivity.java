@@ -239,8 +239,15 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                 finish();
                 break;
             case R.id.iv_share:
-                sharePopupWindow.showAtBottom(bean.name, bean.introduce, bean.image.get(0),
-                        ConstantUrl.URL_SHARE_PRODUCT+bean.id);
+                if (bean != null) {
+                    String image = "";
+                    if (bean.image != null && !bean.image.isEmpty()) {
+                        image = bean.image.get(0);
+                    }
+                    sharePopupWindow.showAtBottom(Constant.SHARE_GOODS_TITLE,  bean.introduce, image,
+                            ConstantUrl.URL_SHARE_PRODUCT+bean.id);
+                }
+
                 break;
             case R.id.ll_code:
                 showRecommendCodeDialog();

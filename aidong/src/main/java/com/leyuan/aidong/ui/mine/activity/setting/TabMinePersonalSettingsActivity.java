@@ -291,12 +291,6 @@ public class TabMinePersonalSettingsActivity extends BaseActivity implements Log
     @Override
     public void onExitLoginResult(boolean result) {
         if (result) {
-
-//            try {
-//                MyDbUtils.clearZanmap();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
             App.getInstance().exitLogin();
             EmChatLoginManager.loginOut();
 

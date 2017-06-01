@@ -4,6 +4,8 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
 import com.leyuan.aidong.entity.CampaignBean;
+import com.leyuan.aidong.entity.PayOrderBean;
+import com.leyuan.aidong.entity.ShareData;
 import com.leyuan.aidong.entity.data.CampaignData;
 import com.leyuan.aidong.entity.data.CampaignDetailData;
 import com.leyuan.aidong.entity.data.CouponData;
@@ -42,6 +44,7 @@ public class CampaignPresentImpl implements CampaignPresent {
     private CampaignFragmentView campaignActivityView;          //活动列表View层对象
     private CampaignDetailActivityView campaignDetailView;      //活动详情View层对象
     private AppointCampaignActivityView appointCampaignActivityView;
+    private ShareData.ShareCouponInfo shareCouponInfo = new ShareData().new ShareCouponInfo();
 
     public CampaignPresentImpl(Context context, CampaignFragmentView view) {
         this.context = context;
@@ -101,7 +104,7 @@ public class CampaignPresentImpl implements CampaignPresent {
         if (campaignModel == null) {
             campaignModel = new CampaignModelImpl();
         }
-        campaignModel.getCampaigns(new CommonSubscriber<CampaignData>(context,switcherLayout) {
+        campaignModel.getCampaigns(new CommonSubscriber<CampaignData>(context, switcherLayout) {
             @Override
             public void onNext(CampaignData campaignData) {
                 if (campaignData.getCampaign() != null && !campaignData.getCampaign().isEmpty()) {
@@ -169,6 +172,10 @@ public class CampaignPresentImpl implements CampaignPresent {
                 if (campaignDetailData.getCampaign() != null) {
                     switcherLayout.showContentLayout();
                     campaignDetailView.setCampaignDetail(campaignDetailData.getCampaign());
+
+//                    createShareBeanByOrder(campaignDetailData.getCampaign().getCampaignId(),
+//                            campaignDetailData.getCampaign().getCreated_at());
+
                 } else {
                     switcherLayout.showEmptyLayout();
                 }
@@ -197,6 +204,8 @@ public class CampaignPresentImpl implements CampaignPresent {
             @Override
             public void onNext(PayOrderData payOrderData) {
                 PayUtils.pay(context, payOrderData.getOrder(), listener);
+                createShareBeanByOrder(payOrderData);
+
             }
         }, id, couponId, integral, payType, contactName, contactMobile);
     }
@@ -229,5 +238,24 @@ public class CampaignPresentImpl implements CampaignPresent {
                 }
             }
         }, Constant.COUPON_CAMPAIGN + "_" + id + "_1");
+    }
+
+    private void createShareBeanByOrder(PayOrderData payOrderData) {
+        if (payOrderData.getOrder() != null) {
+            PayOrderBean payOrderBean = payOrderData.getOrder();
+            shareCouponInfo.setCreatedAt(payOrderBean.getCreatedAt());
+            shareCouponInfo.setNo(payOrderBean.getId());
+        }
+    }
+
+
+    private void createShareBeanByOrder(String campaignId, String created_at) {
+        shareCouponInfo.setCreatedAt(created_at);
+        shareCouponInfo.setNo(campaignId);
+    }
+
+    @Override
+    public ShareData.ShareCouponInfo getShareInfo() {
+        return shareCouponInfo;
     }
 }

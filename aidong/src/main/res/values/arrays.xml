@@ -95,8 +95,8 @@
     </string-array>
 
     <string-array name="campaignTab">
-        <item>免费</item>
         <item>付费</item>
+        <item>免费</item>
     </string-array>
     <string-array name="venuesTab">
         <item>场馆</item>

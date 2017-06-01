@@ -46,10 +46,12 @@ public class CampaignActivity extends BaseActivity  implements SmartTabLayout.Ta
         FragmentPagerItems pages = new FragmentPagerItems(this);
         CampaignFragment free = new CampaignFragment();
         CampaignFragment pay = new CampaignFragment();
-        pages.add(FragmentPagerItem.of(null,free.getClass(),
-                new Bundler().putString("type",CampaignFragment.FREE).get()));
         pages.add(FragmentPagerItem.of(null, pay.getClass(),
                 new Bundler().putString("type",CampaignFragment.PAY).get()));
+
+        pages.add(FragmentPagerItem.of(null,free.getClass(),
+                new Bundler().putString("type",CampaignFragment.FREE).get()));
+
         final FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);
         viewPager.setAdapter(adapter);
         tabLayout.setCustomTabView(this);

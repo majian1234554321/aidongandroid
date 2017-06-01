@@ -9,6 +9,8 @@ import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CourseBean;
 import com.leyuan.aidong.entity.CourseDetailData;
 import com.leyuan.aidong.entity.CourseVideoBean;
+import com.leyuan.aidong.entity.PayOrderBean;
+import com.leyuan.aidong.entity.ShareData;
 import com.leyuan.aidong.entity.data.CouponData;
 import com.leyuan.aidong.entity.data.CourseData;
 import com.leyuan.aidong.entity.data.CourseVideoData;
@@ -58,6 +60,7 @@ public class CoursePresentImpl implements CoursePresent {
     private AppointCourseActivityView appointCourseActivityView;    //预约课程View层对象
     private CourseVideoDetailActivityView videoDetailActivityView;
     private RelatedVideoActivityView relatedVideoActivityView;
+    private ShareData.ShareCouponInfo shareCouponInfo = new ShareData().new ShareCouponInfo();
 
 
     public CoursePresentImpl(Context context, RelatedVideoActivityView view) {
@@ -111,7 +114,7 @@ public class CoursePresentImpl implements CoursePresent {
         if (courseModel == null) {
             courseModel = new CourseModelImpl(context);
         }
-        courseModel.getCourses(new CommonSubscriber<CourseData>(context,switcherLayout) {
+        courseModel.getCourses(new CommonSubscriber<CourseData>(context, switcherLayout) {
             @Override
             public void onNext(CourseData courseData) {
                 if (courseData != null && courseData.getCourse() != null && !courseData.getCourse().isEmpty()) {
@@ -207,8 +210,23 @@ public class CoursePresentImpl implements CoursePresent {
             @Override
             public void onNext(PayOrderData payOrderData) {
                 PayUtils.pay(context, payOrderData.getOrder(), listener);
+                createShareBeanByOrder(payOrderData);
+
             }
         }, id, couponId, integral, payType, contactName, contactMobile, isVip);
+    }
+
+    private void createShareBeanByOrder(PayOrderData payOrderData) {
+        if (payOrderData.getOrder() != null) {
+            PayOrderBean payOrderBean = payOrderData.getOrder();
+            shareCouponInfo.setCreatedAt(payOrderBean.getCreatedAt());
+            shareCouponInfo.setNo(payOrderBean.getId());
+        }
+    }
+
+    @Override
+    public ShareData.ShareCouponInfo getShareInfo() {
+        return shareCouponInfo;
     }
 
     @Override

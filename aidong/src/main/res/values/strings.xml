@@ -255,4 +255,7 @@
     <string name="login_chat_success">登陆聊天服务器成功</string>
     <string name="login_chat_faile">登陆聊天服务器失败</string>
     <string name="register_success">注册成功</string>
+    <string name="share_coupons">分享优惠券</string>
+    <string name="share_coupons_to_friends">将优惠券分享给自己的小伙伴</string>
+    <string name="share_to">分享到</string>
 </resources>

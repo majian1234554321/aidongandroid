@@ -55,7 +55,7 @@ import static com.leyuan.aidong.utils.Constant.PAY_WEIXIN;
 public class AppointCourseDetailActivity extends BaseActivity implements AppointmentDetailActivityView,
         View.OnClickListener, CustomNestRadioGroup.OnCheckedChangeListener, CountdownView.OnCountdownEndListener {
     private static final String UN_PAID = "pending";         //待付款
-    private static final String UN_JOIN= "purchased";        //待参加
+    private static final String UN_JOIN = "purchased";        //待参加
     private static final String JOINED = "confirmed";        //已参加
     private static final String CLOSE = "canceled";          //已关闭
     private static final String REFUNDING = "refunding";     //退款中
@@ -116,21 +116,23 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
     private AppointmentPresent present;
     private AppointmentDetailBean bean;
     private String orderId;
-    private @PayType String payType;
+    private
+    @PayType
+    String payType;
 
     private String code;
     private boolean fromDetail = false;
 
-    public static void start(Context context,String orderId) {
+    public static void start(Context context, String orderId) {
         Intent starter = new Intent(context, AppointCourseDetailActivity.class);
-        starter.putExtra("orderId",orderId);
+        starter.putExtra("orderId", orderId);
         context.startActivity(starter);
     }
 
-    public static void start(Context context,String code,boolean fromDetail) {
+    public static void start(Context context, String code, boolean fromDetail) {
         Intent starter = new Intent(context, AppointCourseDetailActivity.class);
-        starter.putExtra("code",code);
-        starter.putExtra("fromDetail",fromDetail);
+        starter.putExtra("code", code);
+        starter.putExtra("fromDetail", fromDetail);
         context.startActivity(starter);
     }
 
@@ -139,8 +141,8 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appoint_course_detail);
         appointCountdownMill = SystemInfoUtils.getAppointmentCountdown(this) * 60 * 1000;
-        present = new AppointmentPresentImpl(this,this);
-        if(getIntent() != null) {
+        present = new AppointmentPresentImpl(this, this);
+        if (getIntent() != null) {
             fromDetail = getIntent().getBooleanExtra("fromDetail", false);
             if (fromDetail) {
                 code = getIntent().getStringExtra("code");
@@ -151,9 +153,9 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
 
         initView();
         setListener();
-        if(fromDetail){
-            present.getCourseAppointDetail(switcherLayout,code);
-        }else {
+        if (fromDetail) {
+            present.getCourseAppointDetail(switcherLayout, code);
+        } else {
             present.getAppointmentDetail(switcherLayout, orderId);
         }
     }
@@ -161,7 +163,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
     private void initView() {
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
         scrollView = (ScrollView) findViewById(R.id.scroll_view);
-        switcherLayout = new SwitcherLayout(this,scrollView);
+        switcherLayout = new SwitcherLayout(this, scrollView);
         tvState = (TextView) findViewById(R.id.tv_state);
         tvOrderNo = (TextView) findViewById(R.id.tv_order_num);
         timerLayout = (LinearLayout) findViewById(R.id.ll_timer);
@@ -201,7 +203,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
 
     }
 
-    private void setListener(){
+    private void setListener() {
         titleBar.setOnClickListener(this);
         payGroup.setOnCheckedChangeListener(this);
         tvPay.setOnClickListener(this);
@@ -218,9 +220,9 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
         this.bean = bean;
         bottomLayout.setVisibility(View.VISIBLE);
         payType = bean.getPay().getPayType();
-        if(PAY_ALI.equals(payType)){
+        if (PAY_ALI.equals(payType)) {
             rbAliPay.setChecked(true);
-        }else {
+        } else {
             rbWeiXinPay.setChecked(true);
         }
 
@@ -247,7 +249,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
                 FormatUtil.parseDouble(bean.getPay().getTotal())));
         tvStartTime.setRightContent(bean.getPay().getCreatedAt());
         timer.start(DateUtils.getCountdown(bean.getPay().getCreatedAt(), appointCountdownMill));
-        tvPayType.setRightContent(PAY_ALI.equals(bean.getPay().getPayType())? "支付宝" : "微信");
+        tvPayType.setRightContent(PAY_ALI.equals(bean.getPay().getPayType()) ? "支付宝" : "微信");
 
         //todo 通过组合控件控制底部的按钮状态
         switch (bean.getPay().getStatus()) {
@@ -368,27 +370,27 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
                 break;
             case R.id.tv_pay:
                 PayInterface payInterface = PAY_ALI.equals(payType) ?
-                        new AliPay(this,payListener) : new WeiXinPay(this,payListener);
+                        new AliPay(this, payListener) : new WeiXinPay(this, payListener);
                 payInterface.payOrder(bean.getPay().getpayOption());
                 break;
             case R.id.tv_cancel_pay:
                 present.cancelAppoint(bean.getId());
                 break;
             case R.id.tv_cancel_join:
-                if(DateUtils.started(bean.getAppoint().getClassTime())){
-                    if("course".equals(bean.getAppointment_type())) {
+                if (DateUtils.started(bean.getAppoint().getClassTime())) {
+                    if ("course".equals(bean.getAppointment_type())) {
                         ToastGlobal.showLong("课程已开始，无法取消");
                     }
-                }else {
+                } else {
                     present.cancelAppoint(bean.getId());
                 }
                 break;
             case R.id.tv_confirm:
-                if(DateUtils.bigThanOneHour(bean.getAppoint().getClassTime())) {
-                    if("course".equals(bean.getAppointment_type())) {
+                if (DateUtils.bigThanOneHour(bean.getAppoint().getClassTime())) {
+                    if ("course".equals(bean.getAppointment_type())) {
                         ToastGlobal.showLong("未到课程时间，请稍后确认");
                     }
-                }else {
+                } else {
                     present.confirmAppoint(bean.getId());
                 }
                 break;
@@ -407,19 +409,20 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
         @Override
         public void onSuccess(String code, Object object) {
             ToastGlobal.showLong("支付成功");
-            startActivity(new Intent(AppointCourseDetailActivity.this,AppointSuccessActivity.class));
+            AppointSuccessActivity.start(AppointCourseDetailActivity.this, null, false, present.getShareInfo());
+//            startActivity(new Intent(AppointCourseDetailActivity.this,AppointSuccessActivity.class));
         }
 
         @Override
         public void onFree() {
             ToastGlobal.showLong("预约成功");
-            AppointSuccessActivity.start(AppointCourseDetailActivity.this, bean.getAppoint().getClassTime(), false);
+            AppointSuccessActivity.start(AppointCourseDetailActivity.this, bean.getAppoint().getClassTime(), false, present.getShareInfo());
         }
     };
 
     @Override
     public void onCheckedChanged(CustomNestRadioGroup group, int checkedId) {
-        switch (checkedId){
+        switch (checkedId) {
             case R.id.cb_alipay:
                 payType = PAY_ALI;
                 break;
@@ -433,30 +436,30 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
 
     @Override
     public void cancelAppointmentResult(BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
-            present.getAppointmentDetail(switcherLayout,orderId);
+        if (baseBean.getStatus() == Constant.OK) {
+            present.getAppointmentDetail(switcherLayout, orderId);
             ToastGlobal.showLong("取消成功");
-        }else {
+        } else {
             ToastGlobal.showLong(baseBean.getMessage());
         }
     }
 
     @Override
     public void confirmAppointmentResult(BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
-            present.getAppointmentDetail(switcherLayout,orderId);
+        if (baseBean.getStatus() == Constant.OK) {
+            present.getAppointmentDetail(switcherLayout, orderId);
             ToastGlobal.showLong("确认成功");
-        }else {
+        } else {
             ToastGlobal.showLong(baseBean.getMessage());
         }
     }
 
     @Override
     public void deleteAppointmentResult(BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
+        if (baseBean.getStatus() == Constant.OK) {
             finish();
             ToastGlobal.showLong("删除成功");
-        }else {
+        } else {
             ToastGlobal.showLong(baseBean.getMessage());
         }
     }

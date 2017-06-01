@@ -204,7 +204,7 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
     private PayInterface.PayListener payListener = new SimplePayListener(this) {
         @Override
         public void onSuccess(String code, Object object) {
-            AppointSuccessActivity.start(AppointCampaignActivity.this, bean.getStartTime(), false);
+            AppointSuccessActivity.start(AppointCampaignActivity.this, bean.getStartTime(), false,campaignPresent.getShareInfo());
             ToastGlobal.showLong("支付成功");
         }
 
@@ -216,7 +216,7 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
 
         @Override
         public void onFree() {
-            AppointSuccessActivity.start(AppointCampaignActivity.this, bean.getStartTime(), false);
+            AppointSuccessActivity.start(AppointCampaignActivity.this, bean.getStartTime(), false, campaignPresent.getShareInfo());
             ToastGlobal.showLong("预约成功");
         }
     };

@@ -10,6 +10,7 @@ import java.util.List;
  */
 
 public class PayOrderBean {
+    private String id;
     private String no;
     private String total;
     private String pay_type;
@@ -18,12 +19,21 @@ public class PayOrderBean {
     private List<String> item;
     private PayOptionBean pay_option;
 
-
-    /********订单详情************/
+    /********
+     * 订单详情
+     ************/
     private String coin;
     private String integral;
     private String coupon;
     private String created_at;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getNo() {
         return no;

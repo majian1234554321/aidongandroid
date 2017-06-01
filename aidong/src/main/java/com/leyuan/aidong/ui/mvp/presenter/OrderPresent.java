@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.mvp.presenter;
 
 import android.support.v7.widget.RecyclerView;
 
+import com.leyuan.aidong.entity.ShareData;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
 /**
@@ -96,4 +97,6 @@ public interface OrderPresent {
      * @param orderId
      */
     void getExpressInfo(String orderId);
+
+    ShareData.ShareCouponInfo getShareInfo();
 }

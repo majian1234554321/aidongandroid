@@ -31,6 +31,8 @@ public class CampaignDetailBean implements Parcelable {
     private CoordinateBean coordinate;
     private String view_count;
 
+    private String created_at;              //订单生成时间
+
     public String getViewCount() {
         return view_count;
     }
@@ -175,6 +177,14 @@ public class CampaignDetailBean implements Parcelable {
         this.appicant = applicant;
     }
 
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
+    }
+
     public class Applicant {
         private String idong_id;
         private String name;
@@ -232,6 +242,7 @@ public class CampaignDetailBean implements Parcelable {
         dest.writeString(this.status);
         dest.writeParcelable(this.coordinate, flags);
         dest.writeString(this.view_count);
+        dest.writeString(this.created_at);
     }
 
     public CampaignDetailBean() {
@@ -256,6 +267,7 @@ public class CampaignDetailBean implements Parcelable {
         this.status = in.readString();
         this.coordinate = in.readParcelable(CoordinateBean.class.getClassLoader());
         this.view_count = in.readString();
+        this.created_at = in.readString();
     }
 
     public static final Creator<CampaignDetailBean> CREATOR = new Creator<CampaignDetailBean>() {

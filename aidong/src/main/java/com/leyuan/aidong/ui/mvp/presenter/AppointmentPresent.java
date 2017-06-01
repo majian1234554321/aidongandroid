@@ -3,6 +3,7 @@ package com.leyuan.aidong.ui.mvp.presenter;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 
+import com.leyuan.aidong.entity.ShareData;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
 /**
@@ -68,4 +69,6 @@ public interface AppointmentPresent {
      * @param id 活动id
      */
     void getCampaignAppointDetail(SwitcherLayout switcherLayout,String id);
+
+    ShareData.ShareCouponInfo getShareInfo();
 }

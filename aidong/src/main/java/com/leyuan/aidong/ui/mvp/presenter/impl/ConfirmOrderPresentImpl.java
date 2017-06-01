@@ -3,6 +3,8 @@ package com.leyuan.aidong.ui.mvp.presenter.impl;
 import android.content.Context;
 
 import com.leyuan.aidong.entity.AddressBean;
+import com.leyuan.aidong.entity.PayOrderBean;
+import com.leyuan.aidong.entity.ShareData;
 import com.leyuan.aidong.entity.data.AddressListData;
 import com.leyuan.aidong.entity.data.CouponData;
 import com.leyuan.aidong.entity.data.PayOrderData;
@@ -41,6 +43,9 @@ public class ConfirmOrderPresentImpl implements ConfirmOrderPresent {
     private EquipmentModel equipmentModel;
     private ConfirmOrderActivityView orderActivityView;
 
+    private ShareData.ShareCouponInfo shareCouponInfo;
+
+
     public ConfirmOrderPresentImpl(Context context, ConfirmOrderActivityView orderActivityView) {
         this.context = context;
         this.orderActivityView = orderActivityView;
@@ -49,7 +54,7 @@ public class ConfirmOrderPresentImpl implements ConfirmOrderPresent {
 
     @Override
     public void getDefaultAddress(final SwitcherLayout switcherLayout) {
-        addressModel.getAddress(new CommonSubscriber<AddressListData>(context,switcherLayout) {
+        addressModel.getAddress(new CommonSubscriber<AddressListData>(context, switcherLayout) {
             @Override
             public void onNext(AddressListData addressListData) {
                 AddressBean addressBean = null;
@@ -111,6 +116,7 @@ public class ConfirmOrderPresentImpl implements ConfirmOrderPresent {
             @Override
             public void onNext(PayOrderData payOrderData) {
                 PayUtils.pay(context, payOrderData.getOrder(), listener);
+                createShareBeanByOrder(payOrderData);
             }
         }, skuCode, amount, coupon, integral, coin, payType, pickUpWay, pickUpId, pickUpDate);
     }
@@ -123,11 +129,24 @@ public class ConfirmOrderPresentImpl implements ConfirmOrderPresent {
             nurtureModel = new NurtureModelImpl(context);
         }
         nurtureModel.buyNurtureImmediately(new ProgressSubscriber<PayOrderData>(context) {
+
             @Override
             public void onNext(PayOrderData payOrderData) {
+
                 PayUtils.pay(context, payOrderData.getOrder(), listener);
+                createShareBeanByOrder(payOrderData);
+
             }
         }, skuCode, amount, coupon, integral, coin, payType, pickUpWay, pickUpId, pickUpDate);
+    }
+
+    private void createShareBeanByOrder(PayOrderData payOrderData) {
+        if (payOrderData.getOrder() != null) {
+            PayOrderBean payOrderBean = payOrderData.getOrder();
+            shareCouponInfo = new ShareData().new ShareCouponInfo();
+            shareCouponInfo.setCreatedAt(payOrderBean.getCreatedAt());
+            shareCouponInfo.setNo(payOrderBean.getId());
+        }
     }
 
     @Override
@@ -159,4 +178,10 @@ public class ConfirmOrderPresentImpl implements ConfirmOrderPresent {
             }
         });
     }
+
+    @Override
+    public ShareData.ShareCouponInfo getShareInfo() {
+        return shareCouponInfo;
+    }
+
 }

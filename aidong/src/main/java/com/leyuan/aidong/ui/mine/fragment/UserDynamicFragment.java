@@ -106,7 +106,6 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_dynamic);
         switcherLayout = new SwitcherLayout(getContext(),refreshLayout);
         dynamicList = new ArrayList<>();
-        dynamicList = new ArrayList<>();
         CircleDynamicAdapter.Builder<DynamicBean> builder = new CircleDynamicAdapter.Builder<>(getContext());
         builder.addType(VideoViewHolder.class, DYNAMIC_VIDEO, R.layout.vh_dynamic_video)
                 .addType(MultiImageViewHolder.class,DYNAMIC_MULTI_IMAGE, R.layout.vh_dynamic_multi_photos)
@@ -167,8 +166,8 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
             refreshLayout.setRefreshing(false);
         }
 
-        View view = View.inflate(getContext(),R.layout.empty_dynamic,null);
-        switcherLayout.addCustomView(view,"empty");
+        View view = View.inflate(getContext(), R.layout.empty_dynamic, null);
+        switcherLayout.addCustomView(view, "empty");
         switcherLayout.showCustomLayout("empty");
     }
 
@@ -219,7 +218,7 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
             } else {
                 cover = dynamic.videos.cover;
             }
-            sharePopupWindow.showAtBottom(dynamic.publisher.getName() + "的动态",
+            sharePopupWindow.showAtBottom("我分享了" + dynamic.publisher.getName() + "的动态，速速围观",
                     dynamic.content, cover, ConstantUrl.URL_SHARE_DYNAMIC + dynamic.id);
         }
     }
