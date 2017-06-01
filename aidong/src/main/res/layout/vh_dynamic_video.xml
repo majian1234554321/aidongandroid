@@ -8,14 +8,14 @@
 
     <include layout="@layout/inc_dynamic_header"/>
 
-    <com.leyuan.aidong.widget.SquareRelativeLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:descendantFocusability="beforeDescendants">
+        android:layout_height="155dp"
+        android:layout_marginLeft="@dimen/left_margin">
 
         <ImageView
             android:id="@+id/dv_video"
-            android:layout_width="match_parent"
+            android:layout_width="220dp"
             android:layout_height="match_parent"
             android:background="@color/line_color"
             android:scaleType="centerCrop"/>
@@ -23,13 +23,14 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="90dp"
             android:adjustViewBounds="true"
             android:focusable="false"
             android:clickable="false"
             android:background="@drawable/play_small"
             android:scaleType="centerCrop" />
-    </com.leyuan.aidong.widget.SquareRelativeLayout>
+    </RelativeLayout>
 
     <include layout="@layout/inc_dynamic_bottom"/>
 </LinearLayout>

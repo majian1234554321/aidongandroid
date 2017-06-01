@@ -134,7 +134,8 @@
 
         <activity
             android:name=".ui.home.activity.CourseVideoDetailActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/ImageTranslucentTheme"/>
 
         <activity
             android:name=".ui.home.activity.RelatedVideoActivity"
@@ -531,7 +532,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/Transparent" />
+            android:theme="@style/ImageTranslucentTheme" />
 
         <activity
             android:name=".module.photopicker.boxing_impl.record.VideoCaptureActivity"

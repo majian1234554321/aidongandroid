@@ -105,6 +105,7 @@ public class Constant {
     public static final int DYNAMIC_FOUR_IMAGE = 4;
     public static final int DYNAMIC_FIVE_IMAGE = 5;
     public static final int DYNAMIC_SIX_IMAGE = 6;
+    public static final int DYNAMIC_MULTI_IMAGE = 7;
 
     //首页item类型
     public static final int HOME_IMAGE_AND_HORIZONTAL_LIST = 0;

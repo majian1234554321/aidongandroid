@@ -228,6 +228,7 @@ public class ClipPhotosActivity extends BaseActivity implements ClipPhotosAdapte
 
     @Override
     public void onPhotoItemClick(int position) {
+
         Uri inputUri =  Uri.fromFile(new File(selectedMedia.get(position).getPath()));
         String destinationFileName = SAMPLE_CROPPED_IMAGE_NAME + ".png";
         Uri outputUri = Uri.fromFile(new File(getCacheDir(), destinationFileName));

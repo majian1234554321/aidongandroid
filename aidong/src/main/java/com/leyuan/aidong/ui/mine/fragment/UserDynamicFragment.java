@@ -31,6 +31,7 @@ import com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity;
 import com.leyuan.aidong.ui.discover.activity.PhotoBrowseActivity;
 import com.leyuan.aidong.ui.discover.viewholder.FiveImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.FourImageViewHolder;
+import com.leyuan.aidong.ui.discover.viewholder.MultiImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.OneImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.SixImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.ThreeImageViewHolder;
@@ -55,6 +56,7 @@ import static com.leyuan.aidong.R.id.rv_dynamic;
 import static com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity.RESULT_DELETE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_FIVE_IMAGE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_FOUR_IMAGE;
+import static com.leyuan.aidong.utils.Constant.DYNAMIC_MULTI_IMAGE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_ONE_IMAGE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_SIX_IMAGE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_THREE_IMAGE;
@@ -126,6 +128,7 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
                 .addType(FourImageViewHolder.class, DYNAMIC_FOUR_IMAGE, R.layout.vh_dynamic_four_photos)
                 .addType(FiveImageViewHolder.class, DYNAMIC_FIVE_IMAGE, R.layout.vh_dynamic_five_photos)
                 .addType(SixImageViewHolder.class, DYNAMIC_SIX_IMAGE, R.layout.vh_dynamic_six_photos)
+                .addType(MultiImageViewHolder.class,DYNAMIC_MULTI_IMAGE, R.layout.vh_dynamic_multi_photos)
                 .showLikeAndCommentLayout(true)
                 .setDynamicCallback(new DynamicCallback());
         circleDynamicAdapter = builder.build();
@@ -191,10 +194,10 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
     private class DynamicCallback extends CircleDynamicAdapter.SimpleDynamicCallback {
 
         @Override
-        public void onBackgroundClick(DynamicBean dynamicBean, int position) {
+        public void onBackgroundClick(int position) {
             clickPosition = position;
             startActivityForResult(new Intent(getContext(), DynamicDetailActivity.class)
-                    .putExtra("dynamic", dynamicBean), REQUEST_REFRESH_DYNAMIC);
+                    .putExtra("dynamic",dynamicList.get(position)), REQUEST_REFRESH_DYNAMIC);
         }
 
         @Override

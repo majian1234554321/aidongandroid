@@ -50,7 +50,6 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
     private RelativeLayout bottomLikeLayout;
     private RelativeLayout bottomCommentLayout;
     private RelativeLayout bottomShareLayout;
-    private View line;
 
     protected IDynamicCallback callback;
     private boolean showLikeAndCommentLayout = true;
@@ -78,7 +77,6 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
         bottomCommentLayout = (RelativeLayout) itemView.findViewById(R.id.bottom_comment_layout);
         bottomLikeLayout = (RelativeLayout) itemView.findViewById(R.id.bottom_like_layout);
         bottomShareLayout = (RelativeLayout) itemView.findViewById(R.id.bottom_share_layout);
-        line = itemView.findViewById(R.id.view_line);
     }
 
 
@@ -151,7 +149,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             @Override
             public void onClick(View v) {
                 if (callback != null) {
-                    callback.onBackgroundClick(dynamic,position);
+                    callback.onBackgroundClick(position);
                 }
             }
         });

@@ -162,26 +162,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             systemPresent.setOnRequestResponse(requestResponse);
             systemPresent.getSystemInfo("android");
 
+            sendBroadcast(new Intent(Constant.BROADCAST_ACTION_REGISTER_SUCCESS));
         }
-
-
-//        new CouponPresentImpl(this, new CouponFragmentView() {
-//            @Override
-//            public void updateRecyclerView(List<CouponBean> couponBeanList) {
-//                CouponNewcomerActivity.start(LoginActivity.this, (ArrayList<CouponBean>) couponBeanList);
-//            }
-//
-//            @Override
-//            public void showEmptyView() {
-//
-//            }
-//
-//            @Override
-//            public void showEndFooterView() {
-//
-//            }
-//        }).pullToRefreshData("valid");
-
     }
 
     @Override

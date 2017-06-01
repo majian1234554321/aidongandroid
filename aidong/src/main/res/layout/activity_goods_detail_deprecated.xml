@@ -34,9 +34,9 @@
                 style="@style/styleImageBack"/>
 
             <TextView
+                android:layout_height="match_parent"
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
                 android:layout_centerInParent="true"
                 android:gravity="center_vertical"
                 android:text="￥999"
