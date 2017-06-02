@@ -25,7 +25,6 @@ import java.util.List;
  * Created by song on 2017/2/16.
  */
 public class MultiImageViewHolder extends BaseCircleViewHolder implements PhotoLayout.OnItemClickListener, PhotoLayout.OnSetUpChildLayoutParamsListener {
-    private float longImageAspectRatio = 18f / 9f;   //宽高比
     private PhotoLayout photoLayout;
     private InnerContainerAdapter adapter;
 
@@ -68,11 +67,11 @@ public class MultiImageViewHolder extends BaseCircleViewHolder implements PhotoL
             try {
                 imageWidth = FormatUtil.parseFloat(url.substring(url.indexOf("w=") + 2, url.indexOf("_h")));
                 imageHeight = FormatUtil.parseFloat(url.substring(url.indexOf("h=") + 2, url.lastIndexOf(".")));
-                int maxWidth = (int) (ScreenUtil.getScreenWidth(context) * 2/ 5f);
+                int maxWidth = (int) (ScreenUtil.getScreenWidth(context) * 3/ 5f);
                 int maxHeight = (int) (ScreenUtil.getScreenWidth(context) / 2f);
                 int minWidth = maxWidth/2;
                 int minHeight = maxHeight /2;
-                if (imageHeight >= imageWidth) {          //竖图
+                if (imageHeight > imageWidth) {          //竖图
                     int width = (int) (imageWidth / imageHeight * maxHeight);
                     if(width < minWidth){
                         width = minWidth;
@@ -81,7 +80,7 @@ public class MultiImageViewHolder extends BaseCircleViewHolder implements PhotoL
                     p.width = width;
                 } else {                                 //横图
                     int height = (int) (imageHeight / imageWidth * maxWidth);
-                    if(height < maxHeight){
+                    if(height < minHeight){
                         height = minHeight;
                     }
                     p.width = maxWidth;

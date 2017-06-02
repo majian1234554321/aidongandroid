@@ -62,7 +62,7 @@ public class CourseRecommendVideoAdapter extends RecyclerView.Adapter<CourseReco
             @Override
             public void onClick(View v) {
                 if(listener != null){
-                    listener.onItemClick(bean.getId());
+                    listener.onItemClick(bean.getId(),bean.getCat_id());
                 }
             }
         });
@@ -89,6 +89,6 @@ public class CourseRecommendVideoAdapter extends RecyclerView.Adapter<CourseReco
     }
 
     public interface ItemClickListener{
-        void onItemClick(String videoId);
+        void onItemClick(String courseId,String videoId);
     }
 }
