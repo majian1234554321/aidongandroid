@@ -194,7 +194,7 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
     }
 
     @Override
-    public void onItemClick(String videoId) {
+    public void onItemClick(String courseId,String videoId) {
         CourseVideoDetailActivity.start(this,courseId,videoId);
     }
 

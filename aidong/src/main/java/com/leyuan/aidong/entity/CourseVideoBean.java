@@ -7,6 +7,7 @@ package com.leyuan.aidong.entity;
 public class CourseVideoBean {
 
     private String id;
+    private String cat_id;
     private String name;
     private String cover;
     private String file;
@@ -68,5 +69,13 @@ public class CourseVideoBean {
 
     public void setType_name(String type_name) {
         this.type_name = type_name;
+    }
+
+    public String getCat_id() {
+        return cat_id;
+    }
+
+    public void setCat_id(String cat_id) {
+        this.cat_id = cat_id;
     }
 }
