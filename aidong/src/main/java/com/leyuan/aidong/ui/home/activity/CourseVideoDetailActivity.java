@@ -62,20 +62,20 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
     private SwitcherLayout switcherLayout;
 
     private CourseRecommendVideoAdapter adapter;
-    private String courseId;
+    private String catId;
     private String videoId;
     private CourseVideoBean courseVideoBean;
     private boolean isShowDesc = true;
 
-    public static void start(Context context, String courseId) {
+    public static void start(Context context, String catId) {
         Intent starter = new Intent(context, CourseVideoDetailActivity.class);
-        starter.putExtra("courseId",courseId);
+        starter.putExtra("catId",catId);
         context.startActivity(starter);
     }
 
-    public static void start(Context context, String courseId,String videoId) {
+    public static void start(Context context, String catId,String videoId) {
         Intent starter = new Intent(context, CourseVideoDetailActivity.class);
-        starter.putExtra("courseId",courseId);
+        starter.putExtra("catId",catId);
         starter.putExtra("videoId",videoId);
         context.startActivity(starter);
     }
@@ -86,12 +86,12 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
         setContentView(R.layout.activity_course_video_detail);
         CoursePresent coursePresent = new CoursePresentImpl(this,this);
         if(getIntent() != null){
-            courseId = getIntent().getStringExtra("courseId");
+            catId = getIntent().getStringExtra("catId");
             videoId = getIntent().getStringExtra("videoId");
         }
         initView();
         setListener();
-        coursePresent.getRelateCourseVideo(courseId,videoId);
+        coursePresent.getRelateCourseVideo(catId,videoId);
     }
 
     @Override
@@ -149,7 +149,7 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
                 }
                 break;
             case R.id.layout_more_video:
-                RelatedVideoActivity.start(this,courseId);
+                RelatedVideoActivity.start(this, catId);
                 break;
             case R.id.iv_start:
                 if(TextUtils.isEmpty(courseVideoBean.getFile())){
@@ -194,8 +194,8 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
     }
 
     @Override
-    public void onItemClick(String courseId,String videoId) {
-        CourseVideoDetailActivity.start(this,courseId,videoId);
+    public void onItemClick(String catId,String videoId) {
+        CourseVideoDetailActivity.start(this,catId,videoId);
     }
 
     @Override

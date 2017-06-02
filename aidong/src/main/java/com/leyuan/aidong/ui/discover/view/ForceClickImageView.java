@@ -45,7 +45,7 @@ public class ForceClickImageView extends ImageView {
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ForceClickImageView);
         foregroundDrawable = a.getDrawable(R.styleable.ForceClickImageView_foregroundColor);
         if (foregroundDrawable instanceof ColorDrawable || (attrs == null && needDefaultForceGroundColor)) {
-            int foreGroundColor = a.getColor(R.styleable.ForceClickImageView_foregroundColor, 0x882b2b2b);
+            int foreGroundColor = a.getColor(R.styleable.ForceClickImageView_foregroundColor, 10000000);
             foregroundDrawable = new StateListDrawable();
             ColorDrawable forceDrawable = new ColorDrawable(foreGroundColor);
             ColorDrawable normalDrawable = new ColorDrawable(Color.TRANSPARENT);
