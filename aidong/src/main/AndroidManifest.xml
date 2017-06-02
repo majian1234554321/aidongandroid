@@ -193,6 +193,11 @@
         <activity
             android:name=".ui.mine.activity.PrivacyActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.mine.activity.ExpressInfoActivity"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.mine.activity.setting.TabHelpActivity"
             android:screenOrientation="portrait" />

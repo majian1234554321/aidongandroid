@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.ui.discover.view.ForceClickImageView;
+import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.ScreenUtil;
@@ -24,7 +25,7 @@ import java.util.List;
  * Created by song on 2017/2/16.
  */
 public class MultiImageViewHolder extends BaseCircleViewHolder implements PhotoLayout.OnItemClickListener, PhotoLayout.OnSetUpChildLayoutParamsListener {
-    private float singleAspectRatio = 16f / 9f;   //宽高比
+    private float longImageAspectRatio = 18f / 9f;   //宽高比
     private PhotoLayout photoLayout;
     private InnerContainerAdapter adapter;
 
@@ -53,40 +54,48 @@ public class MultiImageViewHolder extends BaseCircleViewHolder implements PhotoL
 
     @Override
     public void onItemClick(ImageView view, int position) {
-        if(callback != null){
-            callback.onImageClick(adapter.data,photoLayout.getContentViewsDrawableRects() ,position);
+        if (callback != null) {
+            callback.onImageClick(adapter.data, photoLayout.getContentViewsDrawableRects(), position);
         }
     }
 
     @Override
     public void onSetUpParams(ImageView child, PhotoLayout.LayoutParams p, int position, boolean isSingle) {
-        if(isSingle){
+        if (isSingle) {
             String url = adapter.data.get(0);
             float imageWidth;
             float imageHeight;
             try {
-                 imageWidth = FormatUtil.parseFloat(url.substring(url.indexOf("w=") + 2,url.indexOf("_h")));
-                 imageHeight = FormatUtil.parseFloat(url.substring(url.indexOf("h=") + 2,url.lastIndexOf(".")));
-            }catch (Exception e){
-                imageWidth = 400;
-                imageHeight = 400;
+                imageWidth = FormatUtil.parseFloat(url.substring(url.indexOf("w=") + 2, url.indexOf("_h")));
+                imageHeight = FormatUtil.parseFloat(url.substring(url.indexOf("h=") + 2, url.lastIndexOf(".")));
+                int maxWidth = (int) (ScreenUtil.getScreenWidth(context) * 2/ 5f);
+                int maxHeight = (int) (ScreenUtil.getScreenWidth(context) / 2f);
+                int minWidth = maxWidth/2;
+                int minHeight = maxHeight /2;
+                if (imageHeight >= imageWidth) {          //竖图
+                    int width = (int) (imageWidth / imageHeight * maxHeight);
+                    if(width < minWidth){
+                        width = minWidth;
+                    }
+                    p.height = maxHeight;
+                    p.width = width;
+                } else {                                 //横图
+                    int height = (int) (imageHeight / imageWidth * maxWidth);
+                    if(height < maxHeight){
+                        height = minHeight;
+                    }
+                    p.width = maxWidth;
+                    p.height = height;
+                }
+            } catch (Exception e) {
+                p.height = DensityUtil.dp2px(context, 125);
+                p.width = DensityUtil.dp2px(context, 125);
                 e.printStackTrace();
-            }
-            if(imageHeight >= imageWidth){          //竖图
-                int height = (int) (ScreenUtil.getScreenWidth(context) / 2f);
-                int width = (int) (imageWidth / imageHeight * height);
-                p.height = height;
-                p.width = width;
-            }else{                                 //横图
-                int width = (int) (ScreenUtil.getScreenWidth(context)* 2 / 5f);
-                int height = (int) (imageHeight / imageWidth * width);
-                p.width = width;
-                p.height = height;
             }
         }
     }
 
-    private  class InnerContainerAdapter extends PhotoContentsBaseAdapter {
+    private class InnerContainerAdapter extends PhotoContentsBaseAdapter {
         private Context context;
         private List<String> data;
 
@@ -107,7 +116,7 @@ public class MultiImageViewHolder extends BaseCircleViewHolder implements PhotoL
 
         @Override
         public void onBindData(int position, @NonNull ImageView convertView) {
-            GlideLoader.getInstance().displayImage(data.get(position),convertView);
+            GlideLoader.getInstance().displayImage(data.get(position), convertView);
         }
 
         @Override

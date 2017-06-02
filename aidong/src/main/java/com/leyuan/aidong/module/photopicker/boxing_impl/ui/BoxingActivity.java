@@ -17,7 +17,6 @@
 
 package com.leyuan.aidong.module.photopicker.boxing_impl.ui;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
@@ -25,9 +24,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
-import android.transition.Explode;
+import android.transition.Fade;
 import android.view.View;
-import android.view.Window;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
@@ -50,9 +48,8 @@ public class BoxingActivity extends AbsBoxingActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        explodeIn();
         setContentView(R.layout.activity_boxing);
+        setFadeAnimation();
         createToolbar();
         setTitleTxt(getBoxingConfig());
     }
@@ -65,7 +62,7 @@ public class BoxingActivity extends AbsBoxingActivity {
             mPickerFragment = (BoxingFragment) BoxingFragment.newInstance().setSelectedBundle(medias);
             getSupportFragmentManager()
                     .beginTransaction()
-                    .setCustomAnimations(R.anim.slide_in_bottom, R.anim.fade_out)
+                    .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
                     .replace(R.id.content_layout, mPickerFragment, BoxingFragment.TAG)
                     .commit();
         }
@@ -106,22 +103,17 @@ public class BoxingActivity extends AbsBoxingActivity {
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    protected void explodeIn() {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-            Explode explodeIn = new Explode();
-            explodeIn.setDuration(300);
-            explodeIn.setMode(Explode.MODE_IN);
-            explodeIn.excludeTarget(android.R.id.statusBarBackground, true);
+    protected void setFadeAnimation() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Fade in = new Fade();
+            in.setDuration(300);
+            in.setMode(Fade.MODE_IN);
+            getWindow().setEnterTransition(in);
 
-            Explode explodeOut = new Explode();
-            explodeOut.setDuration(300);
-            explodeOut.setMode(Explode.MODE_OUT);
-            explodeOut.excludeTarget(android.R.id.statusBarBackground, true);
-
-            getWindow().setEnterTransition(explodeIn);
-            getWindow().setExitTransition(explodeOut);
+            Fade out = new Fade();
+            out.setDuration(300);
+            out.setMode(Fade.MODE_OUT);
+            getWindow().setReenterTransition(in);
         }
     }
 }

@@ -1,7 +1,6 @@
 package com.leyuan.aidong.ui.mvp.view;
 
 import com.leyuan.aidong.entity.BaseBean;
-import com.leyuan.aidong.entity.ExpressBean;
 import com.leyuan.aidong.entity.OrderDetailBean;
 
 import java.util.List;
@@ -45,7 +44,6 @@ public interface OrderDetailActivityView {
 
     /**
      * 设置快递信息
-     * @param expressBean
      */
-    void getExpressInfoResult(ExpressBean expressBean);
+    void getExpressInfoResult(String status, String time);
 }

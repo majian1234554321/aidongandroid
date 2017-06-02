@@ -20,6 +20,7 @@ import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.aidong.ui.mvp.model.OrderModel;
 import com.leyuan.aidong.ui.mvp.model.impl.OrderModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.OrderPresent;
+import com.leyuan.aidong.ui.mvp.view.ExpressInfoActivityView;
 import com.leyuan.aidong.ui.mvp.view.OrderDetailActivityView;
 import com.leyuan.aidong.ui.mvp.view.OrderFeedbackView;
 import com.leyuan.aidong.ui.mvp.view.OrderFragmentView;
@@ -43,6 +44,7 @@ public class OrderPresentImpl implements OrderPresent {
 
     //订单详情View层对象
     private OrderDetailActivityView orderDetailActivityView;
+    private ExpressInfoActivityView expressInfoActivityView;
 
     private OrderFeedbackView orderFeedbackView;
     private ShareData.ShareCouponInfo shareInfo = new ShareData().new ShareCouponInfo();
@@ -67,6 +69,14 @@ public class OrderPresentImpl implements OrderPresent {
     public OrderPresentImpl(Context context, OrderDetailActivityView view) {
         this.context = context;
         this.orderDetailActivityView = view;
+        if (orderModel == null) {
+            orderModel = new OrderModelImpl();
+        }
+    }
+
+    public  OrderPresentImpl(Context context, ExpressInfoActivityView view) {
+        this.context = context;
+        this.expressInfoActivityView = view;
         if (orderModel == null) {
             orderModel = new OrderModelImpl();
         }
@@ -262,7 +272,12 @@ public class OrderPresentImpl implements OrderPresent {
             @Override
             public void onNext(ExpressBean expressBean) {
                 if (orderDetailActivityView != null) {
-                    orderDetailActivityView.getExpressInfoResult(expressBean);
+                    orderDetailActivityView.getExpressInfoResult(expressBean.express.result.list.get(0).status,
+                            expressBean.express.result.list.get(0).time);
+                }
+
+                if(expressInfoActivityView != null){
+                    expressInfoActivityView.updateExpressInfo(expressBean.cover,expressBean.express.result);
                 }
             }
         }, orderId);
