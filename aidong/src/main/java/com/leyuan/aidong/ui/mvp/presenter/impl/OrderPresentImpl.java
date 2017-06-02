@@ -272,12 +272,16 @@ public class OrderPresentImpl implements OrderPresent {
             @Override
             public void onNext(ExpressBean expressBean) {
                 if (orderDetailActivityView != null) {
-                    orderDetailActivityView.getExpressInfoResult(expressBean.express.result.list.get(0).status,
-                            expressBean.express.result.list.get(0).time);
+                    if(expressBean.express != null && expressBean.express.result != null && expressBean.express.result.list != null) {
+                        orderDetailActivityView.getExpressInfoResult(expressBean.express.result.list.get(0).status,
+                                expressBean.express.result.list.get(0).time);
+                    }
                 }
 
                 if(expressInfoActivityView != null){
-                    expressInfoActivityView.updateExpressInfo(expressBean.cover,expressBean.express.result);
+                    if(expressBean.express != null) {
+                        expressInfoActivityView.updateExpressInfo(expressBean.cover, expressBean.express.result);
+                    }
                 }
             }
         }, orderId);

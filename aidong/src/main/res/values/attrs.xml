@@ -342,6 +342,8 @@
         <attr name="lineColor" format="color" />
         <attr name="defaultDotColor" format="color" />
         <attr name="highDotColor" format="color" />
+        <attr name="defaultTextColor" format="color" />
+        <attr name="highTextColor" format="color" />
         <attr name="dotPosition" format="enum">
             <enum name="top" value="0" />
             <enum name="center" value="1" />

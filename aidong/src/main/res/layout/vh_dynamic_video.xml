@@ -3,34 +3,41 @@
     android:id="@+id/ll_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
-    <include layout="@layout/inc_dynamic_header"/>
+    <include layout="@layout/inc_dynamic_header" />
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/left_margin">
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/dv_video"
-            android:layout_width="120dp"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"/>
-
-        <ImageButton
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:adjustViewBounds="true"
-            android:focusable="false"
-            android:clickable="false"
-            android:layout_centerInParent="true"
-            android:background="@drawable/play_small"
-            android:scaleType="centerCrop" />
-    </RelativeLayout>
+            android:layout_marginLeft="@dimen/left_margin">
 
-    <include layout="@layout/inc_dynamic_bottom"/>
+            <ImageView
+                android:id="@+id/dv_video"
+                android:layout_width="120dp"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:adjustViewBounds="true"
+                android:background="@drawable/play_small"
+                android:clickable="false"
+                android:focusable="false"
+                android:scaleType="centerCrop"
+                android:elevation="5dp"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <include layout="@layout/inc_dynamic_bottom" />
 </LinearLayout>
 

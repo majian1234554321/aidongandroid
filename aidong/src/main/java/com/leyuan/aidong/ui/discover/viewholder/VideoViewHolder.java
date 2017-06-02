@@ -33,7 +33,6 @@ public class VideoViewHolder extends BaseCircleViewHolder{
         if(data.videos == null){
             return;
         }
-
         ViewGroup.LayoutParams p = ivVideo.getLayoutParams();
         float height = ScreenUtil.getScreenWidth(context) / 2f;
         float width =  (float)ScreenUtil.getScreenWidth(context) / ScreenUtil.getScreenHeight(context) * height;

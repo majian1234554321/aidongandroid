@@ -37,6 +37,7 @@ public class StepView extends RecyclerView {
     private int leftMargin, rightMargin;
     private int lineColor, lineWidth;
     private int defaultDotColor, highDotColor;
+    private int defaultTextColor,highTextColor;
     private int dotPosition;
     private int radius;
     private Drawable defaultDotDrawable;
@@ -72,6 +73,8 @@ public class StepView extends RecyclerView {
         lineColor = ta.getColor(R.styleable.StepView_lineColor, defaultColor);
         defaultDotColor = ta.getColor(R.styleable.StepView_defaultDotColor, Color.parseColor("#d0d0d0"));
         highDotColor = ta.getColor(R.styleable.StepView_highDotColor, Color.parseColor("#1c980f"));
+        defaultTextColor = ta.getColor(R.styleable.StepView_defaultTextColor, Color.parseColor("#999999"));
+        highTextColor = ta.getColor(R.styleable.StepView_defaultTextColor, Color.parseColor("#333333"));
         dotPosition = ta.getInteger(R.styleable.StepView_dotPosition, StepNodeItemDecoration.POSITION_TOP);
         defaultDotDrawable = ta.getDrawable(R.styleable.StepView_defaultDotDrawable);
         highDotDrawable = ta.getDrawable(R.styleable.StepView_highDotDrawable);
@@ -148,6 +151,8 @@ public class StepView extends RecyclerView {
             if (listener != null) {
                 listener.onBindView(holder.itemMsg, holder.itemDate, data);
             }
+            holder.itemDate.setTextColor(position == 0 ? highTextColor : defaultTextColor);
+            holder.itemMsg.setTextColor(position == 0 ?highTextColor : defaultTextColor);
         }
 
         @Override
