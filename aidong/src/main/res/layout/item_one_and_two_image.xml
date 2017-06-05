@@ -19,12 +19,8 @@
                 android:id="@+id/iv_one"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/viewfinder_mask"/>
+                android:scaleType="centerCrop"
+                android:foreground="@color/viewfinder_mask"/>
 
             <TextView
                 android:id="@+id/tv_one_name"
@@ -55,12 +51,9 @@
                     android:id="@+id/iv_two"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerCrop"
+                    android:foreground="@color/viewfinder_mask"/>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/viewfinder_mask"/>
                 <TextView
                     android:id="@+id/tv_two_name"
                     android:layout_width="wrap_content"
@@ -84,12 +77,9 @@
                     android:id="@+id/iv_three"
                     android:layout_width="match_parent"
                     android:layout_height="87.5dp"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerCrop"
+                    android:foreground="@color/viewfinder_mask"/>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/viewfinder_mask"/>
                 <TextView
                     android:id="@+id/tv_three_name"
                     android:layout_width="wrap_content"

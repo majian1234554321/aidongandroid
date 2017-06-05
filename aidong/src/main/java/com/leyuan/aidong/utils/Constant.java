@@ -128,6 +128,7 @@ public class Constant {
     public static final String RECOMMEND_EQUIPMENT = "equipment";
     public static final String RECOMMEND_NUTRITION = "nutrition";
     public static final String RECOMMEND_CART = "cart";
+    public static final String RECOMMEND_ORDER = "iorder";
 
     //交货方式
     public static final String DELIVERY_EXPRESS = "0";  //快递

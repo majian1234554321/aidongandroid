@@ -506,7 +506,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     }
 
     @Override
-    public void onCouponClick(final int position) {
+    public void onObtainCoupon(final int position) {
         if(App.mInstance.isLogin()) {
             CouponModel model = new CouponModelImpl();
             model.obtainCoupon(new ProgressSubscriber<BaseBean>(this) {
@@ -514,7 +514,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                 public void onNext(BaseBean baseBean) {
                     if (baseBean.getStatus() == Constant.OK) {
                         bean.coupon.get(position).setStatus("1");
-                        couponAdapter.notifyDataSetChanged();
+                        couponAdapter.notifyItemChanged(position);
                         ToastGlobal.showLong("领取成功");
                     }else {
                         ToastGlobal.showLong(baseBean.getMessage());

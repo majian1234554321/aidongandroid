@@ -45,7 +45,7 @@
     <!-- v2 -->
 
     <color name="text_blue">#157efb</color>
-    <color name="viewfinder_mask">#10000000</color>
+    <color name="viewfinder_mask">#20000000</color>
     <color name="video_mask">#77000000</color>
     <color name="result_view">#b0000000</color>
     <color name="possible_result_points">#c0ffff00</color>

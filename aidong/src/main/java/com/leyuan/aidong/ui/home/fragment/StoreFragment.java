@@ -147,4 +147,13 @@ public class StoreFragment extends BaseFragment implements StoreFragmentView{
         homeAdapter.updateData(data);
         wrapperAdapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void showEmptyView() {
+        data.clear();
+        if (refreshLayout.isRefreshing()) {
+            refreshLayout.setRefreshing(false);
+        }
+        homeAdapter.notifyDataSetChanged();
+    }
 }

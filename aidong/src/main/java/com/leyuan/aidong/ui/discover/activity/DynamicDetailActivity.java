@@ -226,7 +226,9 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
             temp.setContent(content);
             temp.setPublishedAt("刚刚");
             temp.setPublisher(publisher);
+
             comments.add(0,temp);
+            commentAdapter.setData(comments);
             commentAdapter.notifyItemChanged(0);
 
             etComment.clearFocus();

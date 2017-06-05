@@ -41,5 +41,6 @@ public interface HomeFragmentView {
 
     void updateCourseCategory(List<CategoryBean> courseBeanList);
 
+    void showEmptyView();
 
 }

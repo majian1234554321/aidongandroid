@@ -51,10 +51,12 @@ public class TitleAndVerticalListHolder extends BaseRecyclerViewHolder<HomeBean>
             tvName.setVisibility(View.VISIBLE);
             tvMore.setVisibility(View.VISIBLE);
             line.setVisibility(View.VISIBLE);
+            listView.setVisibility(View.VISIBLE);
         }else {
             tvName.setVisibility(View.GONE);
             tvMore.setVisibility(View.GONE);
             line.setVisibility(View.GONE);
+            listView.setVisibility(View.GONE);
         }
     }
 }

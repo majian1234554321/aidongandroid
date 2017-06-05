@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
@@ -15,21 +14,12 @@ import android.hardware.Camera;
 import android.hardware.Camera.Size;
 import android.os.Build;
 import android.os.Handler;
-import android.support.v7.app.AlertDialog;
 import android.telephony.TelephonyManager;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
-import android.text.TextPaint;
 import android.text.TextUtils;
-import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
-import android.text.style.URLSpan;
-import android.text.util.Linkify;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.io.File;
 import java.io.IOException;
@@ -399,8 +389,8 @@ public class Utils {
 	public static String formatTime(long seconds) {
 		long mm = seconds / TIME_NUMBERS ;
 		long ss = seconds < TIME_NUMBERS ? seconds : seconds % TIME_NUMBERS;
-		return (mm == 0 ? "" : (mm < 10 ? "0" + mm : mm) + " '")
-				+ (ss == 0 ? "" : (ss < 10 ? "0" + ss : ss) + " \"");
+		return (mm == 0 ? "" : (mm < 10 ? "0" + mm : mm) + "'")
+				+ (ss == 0 ? "" : (ss < 10 ? "0" + ss : ss) + "\"");
 	}
 
 	public static Bitmap rotateBitmap(Bitmap bm, final int orientationDegree) {
@@ -429,47 +419,6 @@ public class Utils {
 		canvas.drawBitmap(bm, m, paint);
 
 		return bm1;
-	}
-
-	private static final String PATTERN_PHONE = "(1[3|4|5|7|8])\\d{9}";
-	private static final String SCHEME_TEL = "tel:";
-	public static SpannableStringBuilder formatPhoneNumber(final Context context,TextView textView, String source) {
-		// 若要部分 SpannableString 可点击，需要如下设置
-		textView.setMovementMethod(LinkMovementMethod.getInstance());
-		// 将要格式化的 String 构建成一个 SpannableStringBuilder
-		SpannableStringBuilder value = new SpannableStringBuilder(source);
-
-		// 使用正则表达式匹配电话
-		Linkify.addLinks(value, Pattern.compile(PATTERN_PHONE), SCHEME_TEL);
-
-		// 获取上面到所有 addLinks 后的匹配部分(这里一个匹配项被封装成了一个 URLSpan 对象)
-		URLSpan[] urlSpans = value.getSpans(0, value.length(), URLSpan.class);
-		for (final URLSpan urlSpan : urlSpans) {
-			if (urlSpan.getURL().startsWith(SCHEME_TEL)) {
-				int start = value.getSpanStart(urlSpan);
-				int end = value.getSpanEnd(urlSpan);
-				value.removeSpan(urlSpan);
-				value.setSpan(new ClickableSpan() {
-					@Override
-					public void onClick(View widget) {
-						String phone = urlSpan.getURL().replace(SCHEME_TEL, "");
-						AlertDialog.Builder builder = new AlertDialog.Builder(context);
-						builder.setMessage("是否拨打电话：" + phone);
-						builder.setNegativeButton("取消", null);
-						builder.setPositiveButton("确定", null);
-						builder.create().show();
-					}
-
-					@Override
-					public void updateDrawState(TextPaint ds) {
-						super.updateDrawState(ds);
-						ds.setColor(Color.parseColor("#3f8de2"));
-						ds.setUnderlineText(true);
-					}
-				}, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-			}
-		}
-		return value;
 	}
 
 }

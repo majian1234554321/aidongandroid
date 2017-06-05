@@ -200,6 +200,15 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView, View
     }
 
     @Override
+    public void showEmptyView() {
+        data.clear();
+        if (refreshLayout.isRefreshing()) {
+            refreshLayout.setRefreshing(false);
+        }
+        homeAdapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_search:
