@@ -47,6 +47,11 @@ public interface IdentifyService {
     Observable<BaseBean<CheckIdentifyResult>> checkIdentify(@Field("token") String token, @Field("captcha") String captcha,
                                                             @Field("password") String password);
 
+    @FormUrlEncoded
+    @POST("captcha/check")
+    Observable<BaseBean<CheckIdentifyResult>> checkIdentifyRegister(@Field("token") String token, @Field("captcha") String captcha,
+                                                                    @Field("password") String password, @Field("register_code") String register_code);
+
 
     @FormUrlEncoded
     @POST("captcha_image/{mobile}")

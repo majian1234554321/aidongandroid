@@ -65,6 +65,15 @@ public class RegisterModel implements RegisterModelInterface {
     }
 
     @Override
+    public void checkIdentifyRegister(Subscriber<CheckIdentifyResult> subscriber, String token, String captcha, String password) {
+
+        mIdentifyService.checkIdentifyRegister(token, captcha, password, App.getInstance().getjPushId())
+                .compose(RxHelper.<CheckIdentifyResult>transform())
+                .subscribe(subscriber);
+
+    }
+
+    @Override
     public void checkCaptchaImage(Subscriber<UserCoach> subscriber, String mobile, String captcha) {
         mIdentifyService.checkCaptchaImage(mobile, captcha)
                 .compose(RxHelper.<UserCoach>transform())

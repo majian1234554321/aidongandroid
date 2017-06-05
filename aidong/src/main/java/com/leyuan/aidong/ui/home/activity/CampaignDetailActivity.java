@@ -186,7 +186,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
                 bottomToTargetActivity();
                 break;
             case R.id.ll_address:
-                MapActivity.start(this, "地址详情", bean.getAddress(), bean.getLandmark(),
+                MapActivity.start(this, "地址详情",bean.getOrganizer(), bean.getAddress(),
                         bean.getCoordinate().getLat(), bean.getCoordinate().getLng());
                 break;
             default:

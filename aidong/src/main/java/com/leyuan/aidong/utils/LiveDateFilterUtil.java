@@ -121,6 +121,23 @@ public class LiveDateFilterUtil {
         return 0;
     }
 
+    public static long compareLongTime(String time) {
+        long sysSecond = System.currentTimeMillis();
+
+        try {
+            Date date = SecondFormat.parse(time);
+
+//            Logger.i("time", "time = " + time + ", data time = " + date.getTime() + ", current = " + sysSecond);
+
+            return date.getTime() - sysSecond;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
     private static final int ONE_DAY_SECONDS = 60 * 60 * 24;
 
     public static String convertSecondsToDayHms(int timeRemain) {

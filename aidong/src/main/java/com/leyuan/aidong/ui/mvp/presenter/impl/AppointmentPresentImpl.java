@@ -241,9 +241,10 @@ public class AppointmentPresentImpl implements AppointmentPresent {
     }
 
 
-    private void createShareBeanByOrder(String createdAt, String id) {
-        shareCouponInfo.setCreatedAt(createdAt);
+    private void createShareBeanByOrder(String id, String createdAt) {
         shareCouponInfo.setNo(id);
+        shareCouponInfo.setCreatedAt(createdAt);
+
     }
 
     @Override

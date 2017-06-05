@@ -93,8 +93,8 @@
                     <ImageView
 
                         android:id="@+id/img_weichat"
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_gravity="center"
                         android:src="@drawable/share_weichat" />
                 </FrameLayout>
@@ -106,8 +106,8 @@
 
                     <ImageView
                         android:id="@+id/img_wei_friend"
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_gravity="center"
                         android:src="@drawable/share_wei_friend" />
                 </FrameLayout>
@@ -119,8 +119,8 @@
 
                     <ImageView
                         android:id="@+id/img_qq"
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_gravity="center"
                         android:src="@drawable/share_qq" />
                 </FrameLayout>
@@ -132,8 +132,8 @@
 
                     <ImageView
                         android:id="@+id/img_weibo"
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_gravity="center"
                         android:src="@drawable/share_weibo" />
                 </FrameLayout>

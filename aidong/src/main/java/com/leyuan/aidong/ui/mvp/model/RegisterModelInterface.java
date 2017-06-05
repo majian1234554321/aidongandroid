@@ -15,6 +15,8 @@ public interface RegisterModelInterface {
 
     void checkIdentify(Subscriber<CheckIdentifyResult> subscriber, String token, String captcha, String password);
 
+    void checkIdentifyRegister(Subscriber<CheckIdentifyResult> subscriber, String token, String captcha, String password);
+
     void checkCaptchaImage(Subscriber<UserCoach> subscriber, String mobile, String captcha);
 
 //    void completeUserInfo(Subscriber<UserCoach> subscriber,Map<String ,String> params,String file);

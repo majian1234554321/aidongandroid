@@ -134,28 +134,26 @@ public class LiveDetailActivity extends BaseActivity implements View.OnClickList
         tv_reply_count.setText("" + info.getCommentsCou());
         tv_like_count.setText("" + info.getPraiseCou());
 
-        int startTime = LiveDateFilterUtil.compareTime(info.getLiveBeginTime());
-        int endTime = LiveDateFilterUtil.compareTime(info.getLiveEndTime());
+        long startTime = LiveDateFilterUtil.compareLongTime(info.getLiveBeginTime());
+        long endTime = LiveDateFilterUtil.compareLongTime(info.getLiveEndTime());
         Logger.i("time", "startTime = " + startTime + ", endTime = " + endTime);
 
         if (startTime > 0) {
             img_live_begin_or_end.setImageResource(R.drawable.live_not_start);
             liveState = LiveState.NO_BEGIN;
-        } else{
-
-            if (endTime > 0) {
-                img_live_begin_or_end.setImageResource(R.drawable.live_detail_living);
-                liveState = LiveState.BEGINED;
-            } else {
-                img_live_begin_or_end.setImageResource(R.drawable.live_end);
-                liveState = LiveState.ENDED;
-            }
+        } else if (endTime > 0) {
+            img_live_begin_or_end.setImageResource(R.drawable.live_detail_living);
+            liveState = LiveState.BEGINED;
+        } else {
+            img_live_begin_or_end.setImageResource(R.drawable.live_end);
+            liveState = LiveState.ENDED;
         }
 
+
         if (startTime > 0) {
-            mHandler.sendEmptyMessageDelayed(LIVE_BEGIN, startTime * 1000);
+            mHandler.sendEmptyMessageDelayed(LIVE_BEGIN, startTime);
         } else if (endTime > 0) {
-            mHandler.sendEmptyMessageDelayed(LIVE_ENDED, endTime * 1000);
+            mHandler.sendEmptyMessageDelayed(LIVE_ENDED, endTime);
         }
     }
 

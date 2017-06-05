@@ -143,12 +143,15 @@ public class App extends MultiDexApplication {
     public void saveJpushId(String regId) {
         this.jPushId = regId;
         SharePrefUtils.putString(context, "jPushId", regId);
+        Logger.i("saveJpushId = " + jPushId);
     }
 
     public String getjPushId() {
         if (jPushId == null) {
             jPushId = SharePrefUtils.getString(context, "jPushId", null);
         }
+
+        Logger.i("getjPushId = " + jPushId);
         return jPushId;
     }
 

@@ -107,7 +107,7 @@ public class RegisterPresenter implements RegisterPresenterInterface {
 
     @Override
     public void checkIdentifyRegister(String token, String code, String password) {
-        mRegisterModelInterface.checkIdentify(new IsLoginSubscriber<CheckIdentifyResult>(mContext) {
+        mRegisterModelInterface.checkIdentifyRegister(new IsLoginSubscriber<CheckIdentifyResult>(mContext) {
             @Override
             public void onStart() {
                 super.onStart();

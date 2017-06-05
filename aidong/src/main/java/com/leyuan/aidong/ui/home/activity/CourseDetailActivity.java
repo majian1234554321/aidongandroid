@@ -166,7 +166,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
 
                 break;
             case R.id.ll_address:
-                MapActivity.start(this, "地址详情", bean.getGym().getName(), bean.getAddress(),
+                MapActivity.start(this, "地址详情", bean.getGym().getName(),bean.getGym().getAddress(),
                         bean.getGym().getCoordinate().getLat(), bean.getGym().getCoordinate().getLng());
                 break;
             case R.id.dv_avatar:
