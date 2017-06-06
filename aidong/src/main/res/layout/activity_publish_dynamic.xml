@@ -58,7 +58,6 @@
                     android:background="@color/white"
                     android:gravity="top"
                     android:hint="分享你的健身感受"
-                    android:inputType="textMultiLine"
                     android:minHeight="100dp"
                     android:paddingBottom="7dp"
                     android:paddingLeft="15dp"

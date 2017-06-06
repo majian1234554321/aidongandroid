@@ -113,20 +113,17 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
     private String skuCode;
     private int amount;
-    private
     @DeliveryType
-    String pickUpWay;           //取货方式(0-快递 1-自提)
-    private
+    private String pickUpWay;           //取货方式(0-快递 1-自提)
     @PayType
-    String payType;
+    private String payType;
     private String pickUpId;                          //快递地址或自提场馆id(立即购买时)  /快递地址(购物车结算时)
     private String pickUpDate;                        //自提时间
     private String defaultAddressId;
     private String[] itemIds;
     private String[] itemFromIdAmount;
-    private
     @SettlementType
-    String settlementType;
+    private String settlementType;
     private double totalGoodsPrice;
 
     private boolean needExpress = false;              //是否需要快递

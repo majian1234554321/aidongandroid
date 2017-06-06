@@ -131,6 +131,12 @@ public class DiscoverFragment extends BasePageFragment implements DiscoverFragme
         moreVenuesLayout.setOnClickListener(this);
         moreUserLayout.setOnClickListener(this);
         moreNewsLayout.setOnClickListener(this);
+        switcherLayout.setOnRetryListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                discoverPresent.commonLoadDiscoverData(switcherLayout);
+            }
+        });
     }
 
     @Override

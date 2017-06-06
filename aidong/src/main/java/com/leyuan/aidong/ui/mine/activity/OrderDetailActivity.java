@@ -44,6 +44,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.iwgang.countdownview.CountdownView;
+import retrofit2.http.HEAD;
 
 import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
 import static com.leyuan.aidong.utils.Constant.PAY_ALI;
@@ -253,8 +254,8 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
             tvPhone.setRightContent(expressParcel.getMobile());
             tvAddress.setRightContent(expressParcel.getAddress());
             tvRemarks.setRightContent(expressParcel.getRemark());
-            if (PAID.equals(bean.getStatus()) || FINISH.equals(bean.getStatus())) {
-                orderPresent.getExpressInfo(orderId);
+            if(PAID.equals(bean.getStatus()) || FINISH.equals(bean.getStatus())){
+                orderPresent.getOrderDetailExpressInfo(orderId);
                 rlExpress.setVisibility(View.VISIBLE);
             } else {
                 rlExpress.setVisibility(View.GONE);
@@ -385,7 +386,10 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
 
     @Override
     public void confirmOrderResult(BaseBean baseBean) {
-        if (baseBean.getStatus() == Constant.OK) {
+        if(baseBean.getStatus() == Constant.OK){
+            goodsList.clear();
+            expressList.clear();
+            selfDeliveryList.clear();
             orderPresent.getOrderDetail(orderId);
             ToastGlobal.showLong("确认成功");
         } else {

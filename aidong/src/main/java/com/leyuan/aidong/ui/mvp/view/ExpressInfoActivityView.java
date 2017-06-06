@@ -8,5 +8,9 @@ import com.leyuan.aidong.entity.ExpressResultBean;
  */
 public interface ExpressInfoActivityView {
 
-    void updateExpressInfo(String cover,ExpressResultBean expressResultBean);
+    void updateExpressInfo(String cover,String expressName,ExpressResultBean expressResultBean);
+
+    void showLoadingView();
+
+    void hideLoadingView();
 }

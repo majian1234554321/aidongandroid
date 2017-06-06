@@ -31,7 +31,8 @@
             android:paddingLeft="10dp"
             android:singleLine="true"
             android:textColorHint="@color/c9"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tv_title"

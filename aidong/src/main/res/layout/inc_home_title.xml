@@ -32,6 +32,7 @@
         android:src="@drawable/icon_search"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:padding="12dp"/>
+        android:padding="12dp"
+        android:visibility="gone"/>
 
 </RelativeLayout>

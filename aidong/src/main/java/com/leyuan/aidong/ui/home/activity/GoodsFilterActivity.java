@@ -125,9 +125,8 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
         tvSearch.setOnClickListener(this);
         if(!TextUtils.isEmpty(gymName)){
             tvTitle.setText(gymName);
-            tvSearch.setVisibility(View.GONE);
         }else {
-            tvSearch.setVisibility(View.VISIBLE);
+            tvTitle.setText(goodsType.equals(GOODS_EQUIPMENT) ? "装备" : "营养品");
         }
         filterView = (GoodsFilterView)findViewById(R.id.view_filter);
         ArrayList<CategoryBean> nurtureCategory = SystemInfoUtils.getNurtureCategory(this);

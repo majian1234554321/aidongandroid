@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
@@ -16,6 +17,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.OrderPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.ExpressInfoActivityView;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.widget.SimpleTitleBar;
+import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.stepview.StepView;
 
 /**
@@ -28,6 +30,8 @@ public class ExpressInfoActivity extends BaseActivity implements ExpressInfoActi
     private TextView tvCount;
     private TextView tvCompany;
     private TextView tvNumber;
+    private SwitcherLayout switcherLayout;
+    private LinearLayout contentLayout;
     private StepView stepView;
 
     private String orderId;
@@ -54,6 +58,8 @@ public class ExpressInfoActivity extends BaseActivity implements ExpressInfoActi
 
     private void initView(){
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
+        contentLayout = (LinearLayout) findViewById(R.id.ll_content);
+        switcherLayout = new SwitcherLayout(this,contentLayout);
         ivCover = (ImageView) findViewById(R.id.iv_cover);
         tvCount = (TextView) findViewById(R.id.tv_count);
         tvCompany = (TextView) findViewById(R.id.tv_company);
@@ -72,9 +78,9 @@ public class ExpressInfoActivity extends BaseActivity implements ExpressInfoActi
     }
 
     @Override
-    public void updateExpressInfo(String cover,ExpressResultBean bean) {
+    public void updateExpressInfo(String cover,String expressName,ExpressResultBean bean) {
         GlideLoader.getInstance().displayImage(cover,ivCover);
-        tvCompany.setText(bean.type);
+        tvCompany.setText(expressName);
         tvNumber.setText(bean.number);
         stepView.setData(bean.list);
     }
@@ -84,5 +90,15 @@ public class ExpressInfoActivity extends BaseActivity implements ExpressInfoActi
         ExpressResultBean.ExpressListBean desc = (ExpressResultBean.ExpressListBean) data;
         itemMsg.setText(desc.status);
         itemDate.setText(desc.time);
+    }
+
+    @Override
+    public void showLoadingView() {
+        switcherLayout.showLoadingLayout();
+    }
+
+    @Override
+    public void hideLoadingView() {
+        switcherLayout.showContentLayout();
     }
 }

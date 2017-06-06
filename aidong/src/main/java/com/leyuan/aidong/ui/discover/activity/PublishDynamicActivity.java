@@ -44,7 +44,7 @@ import java.util.List;
 public class PublishDynamicActivity extends BaseActivity implements PublishDynamicActivityView,
         View.OnClickListener, PublishDynamicAdapter.OnItemClickListener, View.OnKeyListener {
     private static final int REQUEST_MEDIA = 1;
-    private static final int MAX_TEXT_COUNT = 240;
+    private static final int MAX_TEXT_COUNT = 120;
 
     private ImageView ivBack;
     private EditText etContent;
@@ -213,7 +213,8 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            tvContentCount.setText(String.valueOf(s.length()));
+            byte[] bytes = s.toString().getBytes();
+            tvContentCount.setText(String.valueOf(s.toString().length()));
             tvContentCount.setTextColor(s.length() > MAX_TEXT_COUNT ? getResources()
                     .getColor(R.color.main_red) :getResources().getColor(R.color.c9));
         }

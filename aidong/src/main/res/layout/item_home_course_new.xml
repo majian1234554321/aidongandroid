@@ -10,8 +10,12 @@
         android:id="@+id/iv_cover"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:foreground="@color/viewfinder_mask"/>
+        android:scaleType="centerCrop" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/shape_solid_mask"/>
 
     <TextView
         android:id="@+id/tv_name"

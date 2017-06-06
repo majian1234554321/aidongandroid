@@ -52,9 +52,6 @@ public class NewsDetailActivity extends BaseActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_detail);
         if (getIntent() != null) {
-//            title = getIntent().getStringExtra("title");
-//            date = getIntent().getStringExtra("date");
-//            body = getIntent().getStringExtra("body");
             bean = (NewsBean) getIntent().getSerializableExtra("newsBean");
             title = bean.getTitle();
             date = bean.getDatetime();

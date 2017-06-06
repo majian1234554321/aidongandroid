@@ -98,5 +98,7 @@ public interface OrderPresent {
      */
     void getExpressInfo(String orderId);
 
+    void getOrderDetailExpressInfo(String orderId);
+
     ShareData.ShareCouponInfo getShareInfo();
 }

@@ -127,6 +127,7 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
         public void onLoadNextPage(View view) {
             currPage++;
             if (data != null && data.size() >= pageSize) {
+                ToastGlobal.showLong("next");
                 userPresent.requestMoreUserData(recyclerView, App.lat, App.lon, gender, type, pageSize, currPage);
             }
         }
