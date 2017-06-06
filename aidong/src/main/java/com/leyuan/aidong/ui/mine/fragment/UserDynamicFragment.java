@@ -145,6 +145,7 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
 
     @Override
     public void updateDynamic(List<DynamicBean> dynamicBeanList) {
+        switcherLayout.showContentLayout();
         if (refreshLayout.isRefreshing()) {
             dynamicList.clear();
             refreshLayout.setRefreshing(false);

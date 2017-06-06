@@ -252,7 +252,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
             tvAddress.setRightContent(expressParcel.getAddress());
             tvRemarks.setRightContent(expressParcel.getRemark());
             if(PAID.equals(bean.getStatus()) || FINISH.equals(bean.getStatus())){
-                orderPresent.getExpressInfo(orderId);
+                orderPresent.getOrderDetailExpressInfo(orderId);
                 rlExpress.setVisibility(View.VISIBLE);
             }else{
                 rlExpress.setVisibility(View.GONE);
@@ -380,6 +380,9 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
     @Override
     public void confirmOrderResult(BaseBean baseBean) {
         if(baseBean.getStatus() == Constant.OK){
+            goodsList.clear();
+            expressList.clear();
+            selfDeliveryList.clear();
             orderPresent.getOrderDetail(orderId);
             ToastGlobal.showLong("确认成功");
         }else {

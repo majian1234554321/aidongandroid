@@ -1,5 +1,7 @@
 package com.leyuan.aidong.ui;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -45,6 +47,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private long mPressedTime = 0;
     private ChatMessageReceiver chatMessageReceiver;
     private NewPushMessageReceiver newPushMessageReceiver;
+    private int index;
+
+    public static void start(Context context,int index) {
+        Intent starter = new Intent(context, MainActivity.class);
+        starter.putExtra("index",index);
+        context.startActivity(starter);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +63,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         new VersionPresenterImpl(this).checkVersionAndShow();
 
         setContentView(R.layout.activity_main);
+        if(getIntent() != null){
+            index = getIntent().getIntExtra("index",0);
+        }
 
         initView();
         initData();
@@ -87,8 +99,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mFragments.add(new StoreFragment());
         mFragments.add(new DiscoverHomeFragment());
         mFragments.add(new MineFragment());
-        setTabSelection(0);
-        showFragment(0);
+        setTabSelection(index);
+        showFragment(index);
     }
 
     private void registerMessageReceiver() {

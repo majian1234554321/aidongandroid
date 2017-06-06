@@ -147,6 +147,9 @@ public class CourseFragment extends BasePageFragment implements CourserFragmentV
 
     @Override
     public void showEmptyView() {
+        if(refreshLayout.isRefreshing()){
+            refreshLayout.setRefreshing(false);
+        }
         View view = View.inflate(getContext(),R.layout.empty_course,null);
         switcherLayout.addCustomView(view,"empty");
         switcherLayout.showCustomLayout("empty");

@@ -8,6 +8,7 @@ import com.leyuan.aidong.entity.CartIdBean;
 import com.leyuan.aidong.entity.ExpressBean;
 import com.leyuan.aidong.entity.OrderBean;
 import com.leyuan.aidong.entity.OrderDetailBean;
+import com.leyuan.aidong.entity.OrderDetailExpressBean;
 import com.leyuan.aidong.entity.ShareData;
 import com.leyuan.aidong.entity.data.OrderData;
 import com.leyuan.aidong.entity.data.OrderDetailData;
@@ -74,7 +75,7 @@ public class OrderPresentImpl implements OrderPresent {
         }
     }
 
-    public  OrderPresentImpl(Context context, ExpressInfoActivityView view) {
+    public OrderPresentImpl(Context context, ExpressInfoActivityView view) {
         this.context = context;
         this.expressInfoActivityView = view;
         if (orderModel == null) {
@@ -269,19 +270,32 @@ public class OrderPresentImpl implements OrderPresent {
     @Override
     public void getExpressInfo(String orderId) {
         orderModel.getExpressInfo(new BaseSubscriber<ExpressBean>(context) {
+
+            @Override
+            public void onStart() {
+                super.onStart();
+                expressInfoActivityView.showLoadingView();
+            }
+
             @Override
             public void onNext(ExpressBean expressBean) {
-                if (orderDetailActivityView != null) {
-                    if(expressBean.express != null && expressBean.express.result != null && expressBean.express.result.list != null) {
-                        orderDetailActivityView.getExpressInfoResult(expressBean.express.result.list.get(0).status,
-                                expressBean.express.result.list.get(0).time);
-                    }
+                if (expressBean.express != null) {
+                    expressInfoActivityView.hideLoadingView();
+                    expressInfoActivityView.updateExpressInfo(expressBean.cover,
+                            expressBean.express_name, expressBean.express.result);
                 }
+            }
+        }, orderId);
+    }
 
-                if(expressInfoActivityView != null){
-                    if(expressBean.express != null) {
-                        expressInfoActivityView.updateExpressInfo(expressBean.cover, expressBean.express.result);
-                    }
+    @Override
+    public void getOrderDetailExpressInfo(String orderId) {
+        orderModel.getOrderDetailExpressInfo(new BaseSubscriber<OrderDetailExpressBean>(context) {
+            @Override
+            public void onNext(OrderDetailExpressBean expressBean) {
+                if (orderDetailActivityView != null) {
+                    orderDetailActivityView.getExpressInfoResult(expressBean.getExpress().getStatus(),
+                            expressBean.getExpress().getTime());
                 }
             }
         }, orderId);

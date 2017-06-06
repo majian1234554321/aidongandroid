@@ -248,6 +248,8 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
             tvStock.setText(String.format(context.getString(R.string.int_stock_count), totalStock));
         }
         tvCount.setText(TextUtils.isEmpty(count) ? "1" : count);
+        ivMinus.setBackgroundResource(FormatUtil.parseInt(count) > 1 ? R.drawable.icon_minus
+                : R.drawable.icon_minus_gray);
     }
 
     private void setListener() {

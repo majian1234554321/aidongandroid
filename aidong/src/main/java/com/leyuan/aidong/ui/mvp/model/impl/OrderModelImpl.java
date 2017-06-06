@@ -3,6 +3,7 @@ package com.leyuan.aidong.ui.mvp.model.impl;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CartIdBean;
 import com.leyuan.aidong.entity.ExpressBean;
+import com.leyuan.aidong.entity.OrderDetailExpressBean;
 import com.leyuan.aidong.entity.data.OrderData;
 import com.leyuan.aidong.entity.data.OrderDetailData;
 import com.leyuan.aidong.http.RetrofitHelper;
@@ -85,6 +86,13 @@ public class OrderModelImpl implements OrderModel {
     public void getExpressInfo(Subscriber<ExpressBean> subscriber, String orderId) {
         orderService.getExpressInfo(orderId)
                 .compose(RxHelper.<ExpressBean>transform())
+                .subscribe(subscriber);
+    }
+
+    @Override
+    public void getOrderDetailExpressInfo(Subscriber<OrderDetailExpressBean> subscriber, String orderId) {
+        orderService.getOrderDetailExpressInfo(orderId)
+                .compose(RxHelper.<OrderDetailExpressBean>transform())
                 .subscribe(subscriber);
     }
 }
