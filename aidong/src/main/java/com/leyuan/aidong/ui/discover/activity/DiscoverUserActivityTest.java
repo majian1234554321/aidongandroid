@@ -32,6 +32,8 @@ import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListe
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
+import com.leyuan.custompullrefresh.CustomRefreshLayout;
+import com.leyuan.custompullrefresh.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,8 +42,8 @@ import java.util.List;
  * 发现-用户
  * Created by song on 2016/8/29.
  */
-public class DiscoverUserActivity extends BaseActivity implements DiscoverUserActivityView, View.OnClickListener,
-        RadioGroup.OnCheckedChangeListener, SwipeRefreshLayout.OnRefreshListener, UserAdapter.FollowListener {
+public class DiscoverUserActivityTest extends BaseActivity implements DiscoverUserActivityView, View.OnClickListener,
+        RadioGroup.OnCheckedChangeListener, SwipeRefreshLayout.OnRefreshListener, UserAdapter.FollowListener, OnRefreshListener {
     private static final String TYPE_ALL_IDENTIFY = "";
     private static final String TYPE_USER = "0";
     private static final String TYPE_COACH = "1";
@@ -52,7 +54,7 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
     private ImageView ivBack;
     private TextView tvFilter;
     private SwitcherLayout switcherLayout;
-    private SwipeRefreshLayout refreshLayout;
+    private CustomRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
 
     private DrawerLayout drawerLayout;
@@ -75,7 +77,7 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_discover_user);
+        setContentView(R.layout.activity_discover_user_test);
         userPresent = new DiscoverPresentImpl(this, this);
 
         initView();
@@ -86,15 +88,18 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
     private void initView() {
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tvFilter = (TextView) findViewById(R.id.tv_filter);
-        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
-        switcherLayout = new SwitcherLayout(this, refreshLayout);
+        refreshLayout = (CustomRefreshLayout) findViewById(R.id.refreshLayout);
+
         recyclerView = (RecyclerView) findViewById(R.id.rv_user);
+        switcherLayout = new SwitcherLayout(this, refreshLayout);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         filterLayout = (ScrollView) findViewById(R.id.ll_filter);
         tvFinishFilter = (TextView) findViewById(R.id.tv_finish_filter);
         identifyGroup = (RadioGroup) findViewById(R.id.rg_identify);
         genderGroup = (RadioGroup) findViewById(R.id.rg_gender);
-        setColorSchemeResources(refreshLayout);
+//        setColorSchemeResources(refreshLayout);
+
+
         data = new ArrayList<>();
         userAdapter = new UserAdapter(this);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(userAdapter);
@@ -115,14 +120,6 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        if(userAdapter != null){
-            userAdapter.refreshClickedPosition();
-        }
-    }
-
-    @Override
     public void onRefresh() {
         currPage = 1;
         RecyclerViewStateUtils.resetFooterViewState(recyclerView);
@@ -134,7 +131,7 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
         public void onLoadNextPage(View view) {
             currPage++;
             if (data != null && data.size() >= pageSize) {
-//                ToastGlobal.showLong("next");
+                ToastGlobal.showLong("next");
                 userPresent.requestMoreUserData(recyclerView, App.lat, App.lon, gender, type, pageSize, currPage);
             }
         }
@@ -146,10 +143,12 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
         if (switcherLayout != null) {
             switcherLayout.showContentLayout();
         }
+
         if (refreshLayout.isRefreshing()) {
             data.clear();
             refreshLayout.setRefreshing(false);
         }
+
 
         if (App.getInstance().isLogin()) {
             String mId = App.getInstance().getUser().getId() + "";

@@ -13,6 +13,7 @@ import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
     private Context context;
     private List<UserBean> data = new ArrayList<>();
     private FollowListener followListener;
+    private int clickedPostion = -1;
 
     public UserAdapter(Context context) {
         this.context = context;
@@ -85,6 +87,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                clickedPostion = position;
                 UserInfoActivity.start(context, bean.getId());
             }
         });
@@ -93,6 +96,15 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
     public void addMoreData(List<UserBean> data) {
         if (data != null) {
             this.data.addAll(data);
+        }
+    }
+
+    public void refreshClickedPosition() {
+        Logger.i("refreshClickedPosition = " +clickedPostion );
+        if (clickedPostion > -1 && clickedPostion < data.size()) {
+            UserBean bean = data.get(clickedPostion);
+            bean.setFollow(SystemInfoUtils.isFollow(context, bean.getId()));
+            notifyItemChanged(clickedPostion);
         }
     }
 

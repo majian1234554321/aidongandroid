@@ -15,6 +15,7 @@ import com.leyuan.aidong.widget.dialog.ButtonCancelListener;
 import com.leyuan.aidong.widget.dialog.ButtonOkListener;
 import com.leyuan.aidong.widget.dialog.DialogDoubleButton;
 import com.leyuan.aidong.widget.dialog.DialogSingleButton;
+import com.leyuan.aidong.widget.dialog.VersionDialog;
 
 /**
  * Created by user on 2017/3/6.
@@ -55,7 +56,7 @@ public class VersionPresenterImpl {
             @Override
             public void onNext(VersionInformation versionInfomation) {
                 if (versionInfomation != null && VersionManager.shouldUpdate(versionInfomation.getVersion(), context)) {
-                    showUpdateDialog(versionInfomation);
+                new VersionDialog(context, versionInfomation).setData().show();
                 }
             }
 
@@ -77,6 +78,8 @@ public class VersionPresenterImpl {
 
     private void showNormalUpdateDialog(VersionInformation versionInformation) {
         final String downloadUrl = versionInformation.getApk_url();
+
+
         new DialogDoubleButton(context).setContentDesc("新版本 V" + versionInformation.getVersion() + " 已发布,请下载")
                 .setBtnCancelListener(new ButtonCancelListener() {
                     @Override

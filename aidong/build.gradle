@@ -99,6 +99,7 @@ dependencies {
     compile project(':ijkplayer-java')
     compile project(':photoview')
     compile project(':easeui')
+    compile project(':custompullrefresh')
 }
 //buildscript {
 //    repositories {

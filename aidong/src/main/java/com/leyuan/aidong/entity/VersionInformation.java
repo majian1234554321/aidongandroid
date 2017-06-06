@@ -9,12 +9,11 @@ public class VersionInformation {
 
     String version;//: 版本
 
-
     boolean update_force;
 
-//    int isUpdate;//: 是否强制更新（0否，1是）
-
     String apk_url;//：下载地址（安卓）
+
+    String image;//封面
 
     public String getVersion() {
         return version;
@@ -46,5 +45,13 @@ public class VersionInformation {
 
     public void setApk_url(String apk_url) {
         this.apk_url = apk_url;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

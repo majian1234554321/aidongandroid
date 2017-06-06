@@ -19,16 +19,16 @@ import com.leyuan.aidong.utils.Logger;
  * WebView
  * Created by song on 2016/10/18.v
  */
-public class WebViewActivity extends BaseActivity{
+public class WebViewActivity extends BaseActivity {
     private static final java.lang.String TAG = "WebViewActivity";
     private WebView webView;
     private String title;
     private String url;
 
-    public static void start(Context context,String title,String url) {
+    public static void start(Context context, String title, String url) {
         Intent starter = new Intent(context, WebViewActivity.class);
-        starter.putExtra("title",title);
-        starter.putExtra("url",url);
+        starter.putExtra("title", title);
+        starter.putExtra("url", url);
         context.startActivity(starter);
     }
 
@@ -36,10 +36,10 @@ public class WebViewActivity extends BaseActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview);
-        if(getIntent() != null){
-             title = getIntent().getStringExtra("title");
-             url = getIntent().getStringExtra("url");
-            Logger.i(TAG,"url = " +url);
+        if (getIntent() != null) {
+            title = getIntent().getStringExtra("title");
+            url = getIntent().getStringExtra("url");
+            Logger.i(TAG, "url = " + url);
         }
 
         ImageView ivBack = (ImageView) findViewById(R.id.iv_back);
@@ -66,23 +66,26 @@ public class WebViewActivity extends BaseActivity{
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-          //  switcherLayout.showContentLayout();
+            //  switcherLayout.showContentLayout();
         }
 
         @Override
         public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
             super.onReceivedError(view, errorCode, description, failingUrl);
-           // switcherLayout.showExceptionLayout();
+            // switcherLayout.showExceptionLayout();
         }
     }
 
     private View.OnClickListener backListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            finish();
+            if (webView != null && webView.canGoBack()) {
+                webView.goBack();
+            } else {
+                finish();
+            }
         }
     };
-
 
 
     @Override
@@ -92,7 +95,7 @@ public class WebViewActivity extends BaseActivity{
                 webView.goBack();
                 return true;
             } else {
-               finish();
+                finish();
             }
         }
         return super.onKeyDown(keyCode, event);

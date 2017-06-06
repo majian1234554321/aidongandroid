@@ -508,6 +508,9 @@
         <activity
             android:name=".ui.discover.activity.DiscoverUserActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.discover.activity.DiscoverUserActivityTest"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.mine.activity.EMChatActivity"

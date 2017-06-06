@@ -46,7 +46,7 @@ public class SwitcherLayout {
     private final String[] mSupportedAbsListViews = new String[]
             {"listview", "gridview", "expandablelistview"};
     private final String[] mSupportedViewGroups = new String[]{"linearlayout", "relativelayout",
-            "framelayout", "scrollview", "recyclerview", "viewgroup"};
+            "framelayout", "scrollview", "recyclerview", "viewgroup","ptrframelayout"};
 
     public SwitcherLayout(Context context, View targetView) {
         this.mContext = context;

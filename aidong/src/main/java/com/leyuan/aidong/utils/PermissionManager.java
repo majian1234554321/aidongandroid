@@ -115,9 +115,10 @@ public class PermissionManager {
         if (requestCode == REQUEST_PERMISSION_CODE) {
             String resultPermission = permissions.toString();
 //            Log.i("permission"," onRequestPermissionsResult resultPermission = " + resultPermission);
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                map.remove(resultPermission);
-            }
+//            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                map.remove(resultPermission);
+//            }
+            map.remove(resultPermission);
             checkPermissionList();
         }
     }

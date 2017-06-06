@@ -1,2 +1,2 @@
-include ':aidong', ':ijkplayer-java', ':ijkplayer-exo', ':photoview'
+include ':aidong', ':ijkplayer-java', ':ijkplayer-exo', ':photoview', ':custompullrefresh'
 include ':easeui'

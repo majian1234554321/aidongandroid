@@ -13,7 +13,7 @@ import com.leyuan.aidong.R;
  */
 
 public abstract class BaseDialog extends Dialog {
-    private Context context;
+    protected Context context;
 
     protected BaseDialog(Context context) {
         this(context, R.style.selectorDialog);
