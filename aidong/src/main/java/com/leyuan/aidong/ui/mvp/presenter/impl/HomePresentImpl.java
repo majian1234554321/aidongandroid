@@ -133,6 +133,13 @@ public class HomePresentImpl implements HomePresent {
                     if(storeFragmentView != null){
                         storeFragmentView.updateRecyclerView(homeBean.getHome());
                     }
+                }else {
+                    if(homeFragmentView != null) {
+                        homeFragmentView.showEmptyView();
+                    }
+                    if(storeFragmentView != null){
+                        storeFragmentView.showEmptyView();
+                    }
                 }
             }
         }, Constant.PAGE_FIRST,type);

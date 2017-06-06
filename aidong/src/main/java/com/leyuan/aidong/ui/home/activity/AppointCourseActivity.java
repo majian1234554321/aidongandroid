@@ -27,6 +27,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointCourseActivityView;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.UiManager;
 import com.leyuan.aidong.utils.constant.PayType;
@@ -79,7 +80,9 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
 
     private String couponId;
     private String integral;
-    private @PayType String payType;
+    private
+    @PayType
+    String payType;
     private String userName;
     private String contactMobile;
 
@@ -132,7 +135,7 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
 
         GlideLoader.getInstance().displayImage(bean.getCover().get(0), dvCover);
         tvCourseName.setText(bean.getName());
-        tvClassroom.setText(bean.getClassroom()+"-"+bean.getCoach().getName());
+        tvClassroom.setText(bean.getClassroom() + "-" + bean.getCoach().getName());
         tvTime.setRightContent(String.format(getString(R.string.detail_time),
                 bean.getClassDate(), bean.getClassTime(), bean.getBreakTime()));
         tvAddress.setRightContent(bean.getGym().getAddress());
@@ -178,7 +181,7 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.tv_coupon:
                 if (usableCoupons != null && !usableCoupons.isEmpty()) {
-                    SelectCouponActivity.startForResult(this, bean.getPrice(),couponId, usableCoupons, REQUEST_SELECT_COUPON);
+                    SelectCouponActivity.startForResult(this, bean.getPrice(), couponId, usableCoupons, REQUEST_SELECT_COUPON);
                 }
                 break;
             case R.id.tv_pay:
@@ -190,7 +193,7 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
                 } else {
                     String vip = isVip ? "1" : "0";
                     coursePresent.buyCourse(bean.getCode(), couponId, integral, payType,
-                            userRealName, contactMobile, payListener,vip);
+                            userRealName, contactMobile, payListener, vip);
                 }
                 break;
             default:
@@ -201,7 +204,7 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
     private PayInterface.PayListener payListener = new SimplePayListener(this) {
         @Override
         public void onSuccess(String code, Object object) {
-            AppointSuccessActivity.start(AppointCourseActivity.this, bean.getClassDate() +" "+ bean.getClassTime(),true, coursePresent.getShareInfo());
+            AppointSuccessActivity.start(AppointCourseActivity.this, bean.getClassDate() + " " + bean.getClassTime(), true, coursePresent.getShareInfo());
             Toast.makeText(AppointCourseActivity.this, "支付成功", Toast.LENGTH_LONG).show();
         }
 
@@ -213,11 +216,11 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
 
         @Override
         public void onFree() {
-            AppointSuccessActivity.start(AppointCourseActivity.this, bean.getClassDate() +" "+ bean.getClassTime(),true, coursePresent.getShareInfo());
+            AppointSuccessActivity.start(AppointCourseActivity.this, bean.getClassDate() + " " + bean.getClassTime(), true, coursePresent.getShareInfo());
             Toast.makeText(AppointCourseActivity.this, "预约成功", Toast.LENGTH_LONG).show();
+            Logger.i("AppointCourseActivity", "share Info =   " + coursePresent.getShareInfo().toString());
         }
     };
-
 
 
     @Override
@@ -245,7 +248,7 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(data != null) {
+        if (data != null) {
             if (requestCode == REQUEST_SELECT_COUPON) {
                 CouponBean couponBean = data.getParcelableExtra("coupon");
                 couponId = couponBean.getId();

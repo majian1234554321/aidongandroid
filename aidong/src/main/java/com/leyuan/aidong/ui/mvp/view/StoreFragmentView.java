@@ -14,4 +14,6 @@ public interface StoreFragmentView {
     void updateBanners(List<BannerBean> bannerBeanList);
 
     void updateRecyclerView(List<HomeBean> homeItemBeen);
+
+    void showEmptyView();
 }

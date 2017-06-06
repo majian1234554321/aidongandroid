@@ -21,14 +21,13 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.CouponPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.RecommendPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CouponShareView;
 import com.leyuan.aidong.ui.mvp.view.PaySuccessActivityView;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderSpanSizeLookup;
 import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
 
 import java.util.List;
-
-import static com.leyuan.aidong.utils.Constant.RECOMMEND_CART;
 
 /**
  * 支付成功
@@ -71,9 +70,7 @@ public class PaySuccessActivity extends BaseActivity implements View.OnClickList
             new CouponPresentImpl(this, this).getShareCoupon(shareBean.getNo());
         }
 
-        present.pullToRefreshRecommendData(RECOMMEND_CART);
-
-
+        present.pullToRefreshRecommendData(Constant.RECOMMEND_ORDER);
     }
 
     private void initView() {

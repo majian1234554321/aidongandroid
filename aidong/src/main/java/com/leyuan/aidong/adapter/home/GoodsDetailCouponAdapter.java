@@ -99,10 +99,12 @@ public class GoodsDetailCouponAdapter extends RecyclerView.Adapter<GoodsDetailCo
             public void onClick(View v) {
                 if ("0".equals(bean.getStatus())) {
                     if (listener != null) {
-                        listener.onCouponClick(position);
+                        listener.onObtainCoupon(position);
                     }
-                } else {
+                } else if("1".equals(bean.getStatus())){
                     ToastGlobal.showLong("已领取过该优惠券");
+                }else {
+                    ToastGlobal.showLong("优惠券已领完");
                 }
             }
         });
@@ -130,6 +132,6 @@ public class GoodsDetailCouponAdapter extends RecyclerView.Adapter<GoodsDetailCo
     }
 
     public interface CouponListener {
-        void onCouponClick(int position);
+        void onObtainCoupon(int position);
     }
 }

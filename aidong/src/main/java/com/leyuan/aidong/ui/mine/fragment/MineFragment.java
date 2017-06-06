@@ -179,8 +179,14 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
         } else {
             relativeLayout_my_logo.setVisibility(View.GONE);
             layout_no_login.setVisibility(View.VISIBLE);
-//            img_new_shop.setVisibility(View.GONE);
             txt_new_shop.setVisibility(View.GONE);
+            textView_guanzhushu.setText("0");
+            textView_beiguanzhushu.setText("0");
+            textView_yysl.setText("0");
+            textView_yyjrw.setText("0");
+            textView_dd.setText("0");
+            textView_ddjrw.setText("0");
+            textView_popularity.setText("0");
         }
     }
 

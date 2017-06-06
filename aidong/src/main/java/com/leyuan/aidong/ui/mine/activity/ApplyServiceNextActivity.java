@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +39,7 @@ public class ApplyServiceNextActivity extends BaseActivity implements View.OnCli
     private SimpleTitleBar titleBar;
     private RelativeLayout infoLayout;
     private TextView tvApply, tv_name, tv_address, tv_phone;
+    private ImageView iv_default;
 
     private String orderId;
     private int type;
@@ -48,12 +50,12 @@ public class ApplyServiceNextActivity extends BaseActivity implements View.OnCli
 
     private AddressPresent addressPresent;
     private String addressInfo;
-    private TextView tv_new_address;
     private static final int REQUEST_SELECT_ADDRESS = 2;
     private static final int REQUEST_ADD_ADDRESS = 1;
 
     private OrderPresentImpl orderPresent;
     private String address_id;
+    private RelativeLayout layout_new_address;
 
     public static void start(Context context, String orderId, int type, ArrayList<String> items,
                              String content, ArrayList<BaseMedia> selectedMedia) {
@@ -96,12 +98,13 @@ public class ApplyServiceNextActivity extends BaseActivity implements View.OnCli
         tv_name = (TextView) findViewById(R.id.tv_name);
         tv_phone = (TextView) findViewById(R.id.tv_phone);
         tv_address = (TextView) findViewById(R.id.tv_address);
-        tv_new_address = (TextView) findViewById(R.id.tv_new_address);
+        layout_new_address = (RelativeLayout) findViewById(R.id.layout_new_address);
+        iv_default = (ImageView) findViewById(R.id.iv_default);
 
         titleBar.setOnClickListener(this);
         infoLayout.setOnClickListener(this);
         tvApply.setOnClickListener(this);
-        tv_new_address.setOnClickListener(this);
+        layout_new_address.setOnClickListener(this);
 
         addressPresent = new AddressPresentImpl(this, this);
         addressPresent.getAddress();
@@ -132,7 +135,7 @@ public class ApplyServiceNextActivity extends BaseActivity implements View.OnCli
 //                applyToService(null);
 
                 break;
-            case R.id.tv_new_address:
+            case R.id.layout_new_address:
                 startActivityForResult(new Intent(this, AddAddressActivity.class), REQUEST_ADD_ADDRESS);
                 break;
             default:
@@ -146,7 +149,8 @@ public class ApplyServiceNextActivity extends BaseActivity implements View.OnCli
         UploadToQiNiuManager.getInstance().uploadImages(selectedMedia, new IQiNiuCallback() {
             @Override
             public void onSuccess(List<String> urls) {
-                applyToService((urls.toArray(new String[0])));
+
+                uploadToServer(urls);
             }
 
             @Override
@@ -157,18 +161,17 @@ public class ApplyServiceNextActivity extends BaseActivity implements View.OnCli
         });
     }
 
+    private void uploadToServer(List<String> qiNiuUrls) {
+        String[] photo = new String[qiNiuUrls.size()];
+        for (int i = 0; i < qiNiuUrls.size(); i++) {
+            String urls = qiNiuUrls.get(i);
+            photo[i] = urls.substring(urls.indexOf("/") + 1);
+        }
+        applyToService(photo);
+    }
+
     private void applyToService(String[] images) {
         Logger.i("applyToService", "--------------- image = " + images + ", items = " + items.get(0));
-
-//        int itemSize = items.size();
-//        String[][] itemArray = new String[itemSize][2];
-//
-//        for (int i = 0; i < itemSize; i++) {
-//            itemArray[i] = items.get(i).split("-");
-//        }
-//        itemArray[0] = new String[]{"350", "1"};
-//        (items.toArray(new String[0]))
-
         orderPresent.feedbackOrder(orderId, type + "", items.toArray(new String[0]), content, images, address_id);
     }
 
@@ -189,7 +192,7 @@ public class ApplyServiceNextActivity extends BaseActivity implements View.OnCli
 
     private void updateAddressStatus(AddressBean address) {
         infoLayout.setVisibility(View.VISIBLE);
-        tv_new_address.setVisibility(View.GONE);
+        layout_new_address.setVisibility(View.GONE);
         setAddressInfo(address);
     }
 
@@ -200,6 +203,7 @@ public class ApplyServiceNextActivity extends BaseActivity implements View.OnCli
         tv_phone.setText(bean.getMobile());
         tv_address.setText("收货地址：" + addressInfo);
         address_id = bean.getId();
+        iv_default.setVisibility(bean.isDefault() ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -216,12 +220,18 @@ public class ApplyServiceNextActivity extends BaseActivity implements View.OnCli
     public void onGetAddressList(List<AddressBean> addressList) {
         if (addressList != null && !addressList.isEmpty()) {
             infoLayout.setVisibility(View.VISIBLE);
-            tv_new_address.setVisibility(View.GONE);
+            layout_new_address.setVisibility(View.GONE);
             AddressBean bean = addressList.get(0);
+            for (AddressBean beans : addressList) {
+                if (beans.isDefault()) {
+                    bean = beans;
+                    break;
+                }
+            }
             setAddressInfo(bean);
         } else {
             infoLayout.setVisibility(View.GONE);
-            tv_new_address.setVisibility(View.VISIBLE);
+            layout_new_address.setVisibility(View.VISIBLE);
         }
     }
 

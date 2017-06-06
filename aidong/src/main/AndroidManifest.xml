@@ -135,8 +135,7 @@
 
         <activity
             android:name=".ui.home.activity.CourseVideoDetailActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/ImageTranslucentTheme"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.home.activity.RelatedVideoActivity"

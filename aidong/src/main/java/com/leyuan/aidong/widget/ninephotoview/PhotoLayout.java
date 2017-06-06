@@ -78,7 +78,7 @@ public class PhotoLayout extends FlowLayout {
         updateItemCount();
         multiChildSize = (childRestWidth - itemMargin * 3)/3;
         if (maxSingleWidth == 0) {
-            maxSingleWidth = childRestWidth * 2 / 3;
+            maxSingleWidth = childRestWidth * 2 /  3;
             maxSingleHeight = (int) (maxSingleWidth / singleAspectRatio);
         }
 
@@ -133,7 +133,7 @@ public class PhotoLayout extends FlowLayout {
         singleChild.setAdjustViewBounds(true);
         singleChild.setMaxWidth(maxSingleWidth);
         singleChild.setMaxHeight(maxSingleHeight);
-        singleChild.setScaleType(ImageView.ScaleType.CENTER_CROP);
+       // singleChild.setScaleType(ImageView.ScaleType.CENTER_CROP);
         setupViewAndAddView(0, singleChild, false, true);
     }
 
@@ -245,7 +245,7 @@ public class PhotoLayout extends FlowLayout {
 
         InnerRecyclerHelper() {
             cachedViews = new SparseArray<>();
-            singleCachedViews = new SimpleObjectPool<>(6);
+            singleCachedViews = new SimpleObjectPool<>(9);
         }
 
         ImageView getCachedView(int position) {

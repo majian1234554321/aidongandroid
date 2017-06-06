@@ -9,12 +9,8 @@
         android:id="@+id/iv_one"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/viewfinder_mask"/>
+        android:scaleType="centerCrop"
+        android:foreground="@color/viewfinder_mask"/>
 
     <TextView
         android:id="@+id/tv_one_name"

@@ -81,6 +81,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/pref_100dp"
                 android:layout_gravity="bottom"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 android:layout_marginTop="20dp"
                 android:orientation="horizontal"
                 android:weightSum="4">
@@ -93,8 +95,8 @@
                     <ImageView
 
                         android:id="@+id/img_weichat"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:layout_gravity="center"
                         android:src="@drawable/share_weichat" />
                 </FrameLayout>
@@ -106,8 +108,8 @@
 
                     <ImageView
                         android:id="@+id/img_wei_friend"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:layout_gravity="center"
                         android:src="@drawable/share_wei_friend" />
                 </FrameLayout>
@@ -119,8 +121,8 @@
 
                     <ImageView
                         android:id="@+id/img_qq"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:layout_gravity="center"
                         android:src="@drawable/share_qq" />
                 </FrameLayout>
@@ -132,8 +134,8 @@
 
                     <ImageView
                         android:id="@+id/img_weibo"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:layout_gravity="center"
                         android:src="@drawable/share_weibo" />
                 </FrameLayout>

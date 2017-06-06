@@ -340,6 +340,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
                 break;
             case R.id.tv_after_sell:
                 ApplyServiceActivity.start(this, orderId, goodsList);
+                finish();
                 break;
             case R.id.tv_confirm:
                 orderPresent.confirmOrder(orderId);

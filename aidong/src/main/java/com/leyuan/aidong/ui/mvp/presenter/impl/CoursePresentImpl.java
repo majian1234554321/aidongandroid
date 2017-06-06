@@ -209,8 +209,9 @@ public class CoursePresentImpl implements CoursePresent {
         courseModel.buyCourse(new ProgressSubscriber<PayOrderData>(context) {
             @Override
             public void onNext(PayOrderData payOrderData) {
-                PayUtils.pay(context, payOrderData.getOrder(), listener);
                 createShareBeanByOrder(payOrderData);
+                PayUtils.pay(context, payOrderData.getOrder(), listener);
+
 
             }
         }, id, couponId, integral, payType, contactName, contactMobile, isVip);

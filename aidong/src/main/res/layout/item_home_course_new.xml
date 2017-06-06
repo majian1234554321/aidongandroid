@@ -3,19 +3,15 @@
     android:orientation="vertical"
     android:layout_width="150dp"
     android:layout_height="100dp"
-    android:layout_marginLeft="10dp">
+    android:layout_marginLeft="10dp"
+    android:background="?selectableItemBackground">
 
     <ImageView
         android:id="@+id/iv_cover"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:foreground="?selectableItemBackground"/>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/shape_solid_mask"/>
+        android:foreground="@color/viewfinder_mask"/>
 
     <TextView
         android:id="@+id/tv_name"

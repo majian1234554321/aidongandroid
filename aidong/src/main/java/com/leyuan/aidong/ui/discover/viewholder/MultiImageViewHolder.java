@@ -12,6 +12,7 @@ import com.leyuan.aidong.ui.discover.view.ForceClickImageView;
 import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ScreenUtil;
 import com.leyuan.aidong.utils.constant.DynamicType;
 import com.leyuan.aidong.widget.ninephotoview.PhotoLayout;
@@ -109,6 +110,7 @@ public class MultiImageViewHolder extends BaseCircleViewHolder implements PhotoL
             if (convertView == null) {
                 convertView = new ForceClickImageView(context);
                 convertView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                Logger.w("onCreateView","position :" + position );
             }
             return convertView;
         }
