@@ -98,8 +98,8 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
         data = new ArrayList<>();
         userAdapter = new UserAdapter(this);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(userAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(wrapperAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addOnScrollListener(onScrollListener);
     }
 
@@ -134,7 +134,6 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
         public void onLoadNextPage(View view) {
             currPage++;
             if (data != null && data.size() >= pageSize) {
-//                ToastGlobal.showLong("next");
                 userPresent.requestMoreUserData(recyclerView, App.lat, App.lon, gender, type, pageSize, currPage);
             }
         }

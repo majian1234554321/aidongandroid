@@ -207,4 +207,6 @@ public class HeaderAndFooterRecyclerViewAdapter extends RecyclerView.Adapter<Rec
             super(itemView);
         }
     }
+
+
 }

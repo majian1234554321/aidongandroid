@@ -10,8 +10,9 @@ import com.leyuan.aidong.utils.constant.DeliveryType;
  * Created by song on 2016/9/22.
  */
 public class DeliveryBean implements Parcelable {
-    public String type;        //type: 取货方式, #0-快递　1-自提
-    public VenuesBean info;
+    private String type;        //type: 取货方式, #0-快递　1-自提
+    private VenuesBean info;
+    private boolean is_send;     //是否支持快递
 
     @DeliveryType
     public String getType() {
@@ -30,6 +31,17 @@ public class DeliveryBean implements Parcelable {
         this.info = info;
     }
 
+    public boolean isSend() {
+        return is_send;
+    }
+
+    public void setIs_send(boolean is_send) {
+        this.is_send = is_send;
+    }
+
+    public DeliveryBean() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -39,17 +51,16 @@ public class DeliveryBean implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.type);
         dest.writeParcelable(this.info, flags);
-    }
-
-    public DeliveryBean() {
+        dest.writeByte(this.is_send ? (byte) 1 : (byte) 0);
     }
 
     protected DeliveryBean(Parcel in) {
         this.type = in.readString();
         this.info = in.readParcelable(VenuesBean.class.getClassLoader());
+        this.is_send = in.readByte() != 0;
     }
 
-    public static final Parcelable.Creator<DeliveryBean> CREATOR = new Parcelable.Creator<DeliveryBean>() {
+    public static final Creator<DeliveryBean> CREATOR = new Creator<DeliveryBean>() {
         @Override
         public DeliveryBean createFromParcel(Parcel source) {
             return new DeliveryBean(source);

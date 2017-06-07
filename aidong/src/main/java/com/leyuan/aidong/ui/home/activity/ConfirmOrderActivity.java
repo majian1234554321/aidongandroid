@@ -179,7 +179,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             totalGoodsPrice = FormatUtil.parseDouble(goods.getPrice()) * amount;
             pickUpWay = shop.getPickUp().getType();
             if (DELIVERY_SELF.equals(pickUpWay)) {
-                pickUpId = shop.getPickUp().info.getId();
+                pickUpId = shop.getPickUp().getInfo().getId();
             }
             if (GOODS_NUTRITION.equals(goods.getType())) {
                 settlementType = SETTLEMENT_NURTURE_IMMEDIATELY;
@@ -265,7 +265,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             tvTime.setText(pickUpDate);
             if (!settlementType.equals(SETTLEMENT_CART)) {
                 pickUpWay = DELIVERY_SELF;
-                pickUpId = shopBeanList.get(0).getPickUp().info.getId();
+                pickUpId = shopBeanList.get(0).getPickUp().getInfo().getId();
             }
         }
 

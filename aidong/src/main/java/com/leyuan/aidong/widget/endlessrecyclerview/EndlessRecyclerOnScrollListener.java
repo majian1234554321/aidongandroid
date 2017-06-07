@@ -99,6 +99,8 @@ public class EndlessRecyclerOnScrollListener extends RecyclerView.OnScrollListen
             case RecyclerView.SCROLL_STATE_IDLE:
                 Glide.with(App.context).resumeRequests();
                 break;
+            default:
+                break;
         }
     }
 

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
@@ -70,6 +71,7 @@ import java.util.List;
 import cn.bingoogolapple.bgabanner.BGABanner;
 
 import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
+import static com.leyuan.aidong.utils.Constant.DELIVERY_SELF;
 import static com.leyuan.aidong.utils.Constant.EMPTY_STR;
 import static com.leyuan.aidong.utils.Constant.REQUEST_ADD_CART;
 import static com.leyuan.aidong.utils.Constant.REQUEST_BUY_IMMEDIATELY;
@@ -132,7 +134,8 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     private String goodsId;
     private String selectedCount;
     private String goodsType;
-    private boolean isSellOut = true; //是否售罄
+    private boolean isSellOut = true;   //是否售罄
+    private boolean isContainSku = false;    //该商品是否配置规格
     private List<String> selectedSkuValues = new ArrayList<>();
     private GoodsDetailPresent goodsPresent;
 
@@ -254,7 +257,9 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.ll_goods_sku:
                 if(isSellOut) {
-                    showSkuPopupWindow(GoodsSkuPopupWindow.GoodsStatus.SellOut);
+                    if(isContainSku) {
+                        showSkuPopupWindow(GoodsSkuPopupWindow.GoodsStatus.SellOut);
+                    }
                 }else {
                     showSkuPopupWindow(GoodsSkuPopupWindow.GoodsStatus.Normal);
                 }
@@ -292,7 +297,6 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     public void setGoodsDetail(GoodsDetailBean bean) {
         this.bean = bean;
         bottomLayout.setVisibility(View.VISIBLE);
-
         bannerUrls.addAll(bean.image);
         bannerLayout.setData(bannerUrls, null);
         tvTitle.setText(String.format(getString(R.string.rmb_price_double),
@@ -316,17 +320,21 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                 isSellOut = false;
                 break;
             }
+
+            if(goodsSkuBean.value != null && !goodsSkuBean.value.isEmpty()){
+                isContainSku = true;
+                break;
+            }
         }
 
         if(isSellOut){
             tvSelectSku.setText(R.string.please_choose);
             tvCount.setText(R.string.sell_out);
+            Drawable rightArrow = getResources().getDrawable(R.drawable.icon_right_arrow);
+            tvCount.setCompoundDrawablesWithIntrinsicBounds(null,null, isContainSku ? rightArrow : null,null);
             tvSellOut.setVisibility(View.VISIBLE);
             payLayout.setVisibility(View.GONE);
             tvAddCart.setVisibility(View.GONE);
-            tvAddressInfo.setText(R.string.sell_out);
-            tvAddressInfo.setVisibility(View.VISIBLE);
-            tvDeliveryInfo.setVisibility(View.GONE);
         }else {
             StringBuilder skuStr = new StringBuilder();
             for (String s : this.bean.spec.name) {
@@ -337,16 +345,18 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             tvSellOut.setVisibility(View.GONE);
             payLayout.setVisibility(View.VISIBLE);
             tvAddCart.setVisibility(View.VISIBLE);
-
-            if (bean.pick_up != null) {
-                if (DELIVERY_EXPRESS.equals(bean.pick_up.type)) {
-                    tvAddressInfo.setVisibility(View.GONE);
-                    tvDeliveryInfo.setText(getString(R.string.express));
-                } else {
-                    tvAddressInfo.setVisibility(View.VISIBLE);
-                    tvAddressInfo.setText(bean.pick_up.info.getName());
-                    tvDeliveryInfo.setText(getString(R.string.self_delivery));
-                }
+        }if (bean.pick_up != null) {
+            if (DELIVERY_EXPRESS.equals(bean.pick_up.getType()) && bean.pick_up.isSend()) {             //默认快递
+                tvAddressInfo.setVisibility(View.GONE);
+                tvDeliveryInfo.setText(getString(R.string.express));
+            } else if(DELIVERY_SELF.equals(bean.pick_up.getType()) && bean.pick_up.getInfo() != null
+                    && !TextUtils.isEmpty(bean.pick_up.getInfo().getId())){                             //默认自提
+                tvAddressInfo.setVisibility(View.VISIBLE);
+                tvAddressInfo.setText(bean.pick_up.getInfo().getName());
+                tvDeliveryInfo.setText(getString(R.string.self_delivery));
+            }else {                                                                         //既不支持快递又不支持自提
+                tvAddressInfo.setVisibility(View.GONE);
+                tvDeliveryInfo.setText(getString(R.string.please_select));
             }
         }
 
@@ -444,12 +454,12 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         if (requestCode == REQUEST_SELECT_ADDRESS) {
             DeliveryBean deliveryBean = data.getParcelableExtra("deliveryBean");
             bean.pick_up = deliveryBean;
-            if (DELIVERY_EXPRESS.equals(deliveryBean.type)) {
+            if (DELIVERY_EXPRESS.equals(deliveryBean.getType())) {
                 tvAddressInfo.setVisibility(View.GONE);
                 tvDeliveryInfo.setText(getString(R.string.express));
             } else {
                 tvAddressInfo.setVisibility(View.VISIBLE);
-                tvAddressInfo.setText(deliveryBean.info.getName());
+                tvAddressInfo.setText(deliveryBean.getInfo().getName());
                 tvDeliveryInfo.setText(getString(R.string.self_delivery));
             }
         } else if (requestCode == REQUEST_CONFIRM) {

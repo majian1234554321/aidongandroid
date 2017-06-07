@@ -42,7 +42,7 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<DynamicDetailAdap
     @Override
     public void onBindViewHolder(CommentHolder holder, final int position) {
         final CommentBean bean = data.get(position);
-        GlideLoader.getInstance().displayCircleImage(bean.getPublisher().getAvatar(), holder.avatar);
+        GlideLoader.getInstance().displayRoundImage(bean.getPublisher().getAvatar(), holder.avatar);
         holder.name.setText(bean.getPublisher().getName());
         holder.content.setText(bean.getContent());
         holder.time.setText(Utils.getData(bean.getPublishedAt()));

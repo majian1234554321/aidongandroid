@@ -41,6 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:left_text="备注:"
-        app:line_color="@color/transparent" />
+        app:line_color="@color/transparent"
+        android:visibility="gone"/>
 
 </LinearLayout>

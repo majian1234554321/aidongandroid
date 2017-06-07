@@ -118,7 +118,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
         RecyclerViewUtils.setHeaderView(commentView, header);
         etComment.setHorizontallyScrolling(false);
         etComment.setMaxLines(5);
-        GlideLoader.getInstance().displayCircleImage(App.mInstance.getUser().getAvatar(), ivUserAvatar);
+        GlideLoader.getInstance().displayRoundImage(App.mInstance.getUser().getAvatar(), ivUserAvatar);
         tvReportOrDelete.setText(isSelf ? R.string.delete_dynamic : R.string.report_dynamic);
     }
 
@@ -340,9 +340,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
     public void deleteDynamicResult(BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
             ToastGlobal.showLong("删除成功");
-
             setResult(RESULT_DELETE, null);
-
             finish();
         } else {
             ToastGlobal.showLong(baseBean.getMessage());
