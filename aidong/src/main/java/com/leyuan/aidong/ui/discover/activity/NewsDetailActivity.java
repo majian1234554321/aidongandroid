@@ -13,6 +13,7 @@ import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.NewsBean;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.utils.Logger;
 import com.zzhoujay.richtext.RichText;
 
 /**
@@ -72,6 +73,8 @@ public class NewsDetailActivity extends BaseActivity implements View.OnClickList
         tvTitle.setText(title);
         tvDate.setText(date);
         if (!TextUtils.isEmpty(body)) {
+
+            Logger.i("RichText"," body = " + body);
             RichText.from(body).placeHolder(R.drawable.place_holder_logo)
                     .error(R.drawable.place_holder_logo).into(tvNews);
         }

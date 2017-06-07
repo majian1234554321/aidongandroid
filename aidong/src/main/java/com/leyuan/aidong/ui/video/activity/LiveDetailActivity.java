@@ -113,7 +113,7 @@ public class LiveDetailActivity extends BaseActivity implements View.OnClickList
     }
 
     public void getDataFromInter() {
-
+        if (info == null) return;
         Glide.with(this).load(info.getLiveCover()).asBitmap()
                 .into(new SimpleTarget<Bitmap>(750, 750) {
                     @Override

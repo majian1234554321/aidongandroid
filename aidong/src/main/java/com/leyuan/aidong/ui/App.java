@@ -25,6 +25,7 @@ import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.SharePrefUtils;
 import com.leyuan.aidong.utils.VersionManager;
 import com.squareup.leakcanary.LeakCanary;
+import com.zzhoujay.richtext.RichText;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -84,7 +85,7 @@ public class App extends MultiDexApplication {
         Realm.init(context);
         Stetho.initializeWithDefaults(this);
 
-//        RichText.initCacheDir(this);
+        RichText.initCacheDir(this);
     }
 
     private ForegroundCallbacks.Listener foregroundListener = new ForegroundCallbacks.Listener() {
