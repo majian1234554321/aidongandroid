@@ -164,6 +164,7 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
             super.onScrollStateChanged(recyclerView, newState);
             if(newState == RecyclerView.SCROLL_STATE_DRAGGING){
                 KeyBoardUtil.closeKeyboard(etComment,DynamicDetailActivity.this);
+                etComment.clearFocus();
             }
         }
     };
@@ -374,6 +375,7 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
         @Override
         public void onCommentClick(DynamicBean dynamicBean,int position) {
             KeyBoardUtil.openKeyboard(etComment,DynamicDetailActivity.this);
+            etComment.requestFocus();
         }
 
         @Override

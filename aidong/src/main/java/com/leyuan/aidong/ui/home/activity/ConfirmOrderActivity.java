@@ -109,6 +109,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
     private String integral;
     private String coin;
+    private String couponPrice;
     private String couponId;
 
     private String skuCode;
@@ -261,7 +262,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         if (needSelfDelivery) {
             pickUpDate = days.get(0);
             selfDeliveryLayout.setVisibility(View.VISIBLE);
-
+            tvTime.setText(pickUpDate);
             if (!settlementType.equals(SETTLEMENT_CART)) {
                 pickUpWay = DELIVERY_SELF;
                 pickUpId = shopBeanList.get(0).getPickUp().info.getId();
@@ -272,8 +273,9 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 String.format(getString(R.string.rmb_price_double), totalGoodsPrice));
         tvExpressPrice.setRightContent(
                 needExpress ? String.format(getString(R.string.rmb_price_double), expressPrice) : "¥ 0.00");
-        tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double),
-                needExpress ? totalGoodsPrice + expressPrice : totalGoodsPrice));
+        double dPrice = needExpress ? expressPrice : 0d;
+        double cPrice = !TextUtils.isEmpty(couponPrice) ?  FormatUtil.parseDouble(couponPrice) : 0d;
+        tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice -cPrice));
     }
 
     private void setListener() {
@@ -349,13 +351,13 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         public void onSuccess(String code, Object object) {
             ToastGlobal.showLong("支付成功");
             PaySuccessActivity.start(ConfirmOrderActivity.this, present.getShareInfo());
-//            startActivity(new Intent(ConfirmOrderActivity.this, PaySuccessActivity.class));
         }
 
         @Override
         public void onFail(String code, Object object) {
             super.onFail(code, object);
             startActivity(new Intent(ConfirmOrderActivity.this, OrderActivity.class));
+            finish();
         }
 
         @Override
@@ -420,14 +422,14 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             } else if (requestCode == REQUEST_SELECT_COUPON) {
                 CouponBean couponBean = data.getParcelableExtra("coupon");
                 couponId = couponBean.getId();
-                tvCoupon.setText(FormatUtil.parseDouble(couponBean.getDiscount()) != 0
+                couponPrice = couponBean.getDiscount();
+                tvCoupon.setText(FormatUtil.parseDouble(couponPrice) != 0
                         ? String.format(getString(R.string.rmb_minus_price_double),
                         FormatUtil.parseDouble(couponBean.getDiscount())) : getString(R.string.please_select));
-                tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double),
-                        FormatUtil.parseDouble(couponBean.getDiscount())));
-                double deliveryPrice = needExpress ? expressPrice : 0;
-                tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double),
-                        totalGoodsPrice + deliveryPrice - FormatUtil.parseDouble(couponBean.getDiscount())));
+                tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double), FormatUtil.parseDouble(couponPrice)));
+                double dPrice = needExpress ? expressPrice : 0;
+                double cPrice = !TextUtils.isEmpty(couponPrice) ?  FormatUtil.parseDouble(couponPrice) : 0d;
+                tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice));
             } else if (requestCode == REQUEST_UPDATE_DELIVERY) {
                 shopBeanList = data.getParcelableArrayListExtra("shopList");
                 shopAdapter.setData(shopBeanList);

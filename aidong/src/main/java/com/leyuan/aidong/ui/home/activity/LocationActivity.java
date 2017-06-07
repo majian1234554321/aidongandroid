@@ -97,7 +97,6 @@ public class LocationActivity extends BaseActivity implements LocationActivityVi
         }
     }
 
-
     @Override
     public void onGetMineInfo(MineInfoBean mineInfoBean) {
         sendBroadcastAndFinish();

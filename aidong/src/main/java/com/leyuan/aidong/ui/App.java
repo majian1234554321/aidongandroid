@@ -13,14 +13,12 @@ import com.leyuan.aidong.config.UrlConfig;
 import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.entity.user.MineInfoBean;
-import com.leyuan.aidong.http.subscriber.BaseSubscriber;
 import com.leyuan.aidong.module.chat.manager.EmConfigManager;
 import com.leyuan.aidong.module.photopicker.BoxingGlideLoader;
 import com.leyuan.aidong.module.photopicker.BoxingUCrop;
 import com.leyuan.aidong.module.photopicker.boxing.BoxingCrop;
 import com.leyuan.aidong.module.photopicker.boxing.BoxingMediaLoader;
 import com.leyuan.aidong.module.photopicker.boxing.loader.IBoxingMediaLoader;
-import com.leyuan.aidong.ui.mvp.model.impl.UserInfoModelImpl;
 import com.leyuan.aidong.utils.ForegroundCallbacks;
 import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.Logger;
@@ -332,14 +330,4 @@ public class App extends MultiDexApplication {
         setParseString(parseString);
 
     }
-
-    public void getMineHistoryInfo() {
-        new UserInfoModelImpl().getMineInfo(new BaseSubscriber<MineInfoBean>(context) {
-            @Override
-            public void onNext(MineInfoBean mineInfoBean) {
-                saveMineInfoBean(mineInfoBean);
-            }
-        });
-    }
-
 }

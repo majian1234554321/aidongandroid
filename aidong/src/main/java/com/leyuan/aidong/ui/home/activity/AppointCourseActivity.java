@@ -60,7 +60,8 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
     private TextView tvCourseName;
     private TextView tvClassroom;
     private ExtendTextView tvTime;
-    private ExtendTextView tvAddress;
+    private TextView tvVenuesName;
+    private TextView tvAddress;
     private TextView tvCoupon;
     private LinearLayout goldLayout;
 
@@ -117,7 +118,8 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
         tvCourseName = (TextView) findViewById(R.id.tv_name);
         tvClassroom = (TextView) findViewById(R.id.tv_shop);
         tvTime = (ExtendTextView) findViewById(R.id.tv_time);
-        tvAddress = (ExtendTextView) findViewById(R.id.tv_address);
+        tvAddress = (TextView) findViewById(R.id.tv_address);
+        tvVenuesName = (TextView) findViewById(R.id.tv_venues_name);
         tvCoupon = (TextView) findViewById(R.id.tv_coupon);
         goldLayout = (LinearLayout) findViewById(R.id.ll_gold);
         tvTotalPrice = (ExtendTextView) findViewById(R.id.tv_total_price);
@@ -132,10 +134,11 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
 
         GlideLoader.getInstance().displayImage(bean.getCover().get(0), dvCover);
         tvCourseName.setText(bean.getName());
+        tvVenuesName.setText(bean.getGym().getName());
         tvClassroom.setText(bean.getClassroom()+"-"+bean.getCoach().getName());
         tvTime.setRightContent(String.format(getString(R.string.detail_time),
                 bean.getClassDate(), bean.getClassTime(), bean.getBreakTime()));
-        tvAddress.setRightContent(bean.getGym().getAddress());
+        tvAddress.setText(bean.getGym().getAddress());
         tvTotalPrice.setRightContent(String.format(getString(R.string.rmb_price), bean.getPrice()));
         tvPrice.setText(String.format(getString(R.string.rmb_price), bean.getPrice()));
     }
@@ -209,6 +212,7 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
         public void onFail(String code, Object object) {
             super.onFail(code, object);
             startActivity(new Intent(AppointCourseActivity.this, AppointmentActivity.class));
+            finish();
         }
 
         @Override

@@ -34,13 +34,12 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  * Created by song on 2017/2/21.
  */
 public class HomeHeaderView extends RelativeLayout{
+    private Context context;
     private BGABanner banner;
     private LinearLayout sportsLayout;
     private MarqueeView marqueeView;
     private LinearLayout courseLayout;
     private List<VenuesBean> venuesBeanList = new ArrayList<>();
-
-    private MarqueeFactory<RelativeLayout, VenuesBean> marqueeFactory;
     private HomeCourseAdapter courseAdapter;
 
     public HomeHeaderView(Context context) {
@@ -57,6 +56,7 @@ public class HomeHeaderView extends RelativeLayout{
     }
 
     private void initView(final Context context){
+        this.context = context;
         View headerView = LayoutInflater.from(context).inflate(R.layout.header_home,this,true);
         banner = (BGABanner) headerView.findViewById(R.id.banner);
         sportsLayout = (LinearLayout) headerView.findViewById(R.id.ll_sport_history);
@@ -65,9 +65,7 @@ public class HomeHeaderView extends RelativeLayout{
         RecyclerView rvCourse = (RecyclerView) headerView.findViewById(R.id.rv_course);
         TextView tvMoreCourse = (TextView) headerView.findViewById(R.id.tv_more_course);
 
-        marqueeFactory = new VenuesMarqueeFactory(context);
         marqueeView.setAnimInAndOut(R.anim.top_in, R.anim.bottom_out);
-        marqueeView.setMarqueeFactory(marqueeFactory);
         marqueeView.setInterval(5000);
 
         courseAdapter = new HomeCourseAdapter(context);
@@ -87,13 +85,6 @@ public class HomeHeaderView extends RelativeLayout{
                ((MainActivity)context).toTargetActivity((BannerBean)model);
            }
 //>>>>>>> 7bdef4a9437380d0ccd5607641b88507c92764ac
-        });
-
-        marqueeFactory.setOnItemClickListener(new MarqueeFactory.OnItemClickListener<RelativeLayout, VenuesBean>() {
-            @Override
-            public void onItemClickListener(MarqueeFactory.ViewHolder<RelativeLayout, VenuesBean> holder) {
-                VenuesDetailActivity.start(context,holder.data.getId());
-            }
         });
 
         tvMoreCourse.setOnClickListener(new OnClickListener() {
@@ -116,22 +107,27 @@ public class HomeHeaderView extends RelativeLayout{
 
 
     public void setSportHistory(List<VenuesBean> list){
+        venuesBeanList.clear();
         if(list != null) {
-            this.venuesBeanList = list;
+            venuesBeanList.addAll(list);
         }
-        if(venuesBeanList.isEmpty()){
+        if( venuesBeanList.isEmpty()){
             sportsLayout.setVisibility(GONE);
         }else {
             sportsLayout.setVisibility(VISIBLE);
-            marqueeFactory.resetData(venuesBeanList);
+            MarqueeFactory <RelativeLayout, VenuesBean> marqueeFactory = new VenuesMarqueeFactory(context);
+            marqueeFactory.setData(venuesBeanList);
+            marqueeView.setMarqueeFactory(marqueeFactory);
+            marqueeFactory.setOnItemClickListener(new MarqueeFactory.OnItemClickListener<RelativeLayout, VenuesBean>() {
+                @Override
+                public void onItemClickListener(MarqueeFactory.ViewHolder<RelativeLayout, VenuesBean> holder) {
+                    VenuesDetailActivity.start(context,holder.data.getId());
+                }
+            });
             if(venuesBeanList.size() > 1 ) {
-                if(!marqueeView.isFlipping()) {
-                    marqueeView.startFlipping();
-                }
+                marqueeView.startFlipping();
             }else {
-                if(marqueeView.isFlipping()) {
-                    marqueeView.stopFlipping();
-                }
+                marqueeView.stopFlipping();
             }
         }
     }
@@ -144,7 +140,6 @@ public class HomeHeaderView extends RelativeLayout{
             courseLayout.setVisibility(View.GONE);
         }
     }
-
 
     @Override
     protected void onAttachedToWindow() {

@@ -212,6 +212,7 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
         public void onFail(String code, Object object) {
             super.onFail(code, object);
             startActivity(new Intent(AppointCampaignActivity.this, AppointmentActivity.class));
+            finish();
         }
 
         @Override

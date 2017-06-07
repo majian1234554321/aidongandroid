@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -28,6 +29,7 @@ import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CourseDetailActivityView;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.SystemInfoUtils;
@@ -195,7 +197,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     }
 
     @Override
-    public void setCourseDetail(CourseDetailBean bean) {
+    public void setCourseDetail(final CourseDetailBean bean) {
         ivShare.setVisibility(View.VISIBLE);
         this.bean = bean;
         tvTitle.setText(bean.getName());
@@ -235,6 +237,22 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         }
 
         setBottomStatus();
+
+        if(bean.getStatus().equals(STATUS_NOT_START)){
+            CountDownTimer timer = new CountDownTimer(DateUtils.getCounterDown(bean.getEntryStartTime()) ,1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+
+                }
+
+                @Override
+                public void onFinish() {
+                    bean.setStatus(STATUS_APPOINT);
+                    setCourseDetail(bean);
+                }
+            };
+            timer.start();// 开始计时
+        }
     }
 
     private void setBottomStatus() {

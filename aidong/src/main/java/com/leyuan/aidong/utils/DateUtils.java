@@ -346,4 +346,16 @@ public class DateUtils {
         }
     }
 
+    public static long getCounterDown(String startTime){
+        long countdown = 0;
+        Date d = parseDate(startTime, yyyyMMddHHmm);
+        if (d != null)
+            countdown =  d.getTime()-System.currentTimeMillis() ;
+
+
+        if (countdown < 0)
+            countdown = 0;
+        return countdown;
+    }
+
 }
