@@ -5,14 +5,12 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.widget.richtext.RichWebView;
 
 /**
  * 商品图文详情
@@ -21,7 +19,7 @@ import com.leyuan.aidong.utils.Logger;
 public class GoodsDetailFragment extends BaseFragment {
     private String content;
     private TextView tvContent;
-    private WebView webView;
+    private RichWebView webView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,7 +33,7 @@ public class GoodsDetailFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 //        tvContent = (TextView) view.findViewById(R.id.tv_content);
-         webView = (WebView) view.findViewById(R.id.web_view);
+        webView = (RichWebView) view.findViewById(R.id.web_view);
 
         if (!TextUtils.isEmpty(content)) {
             Logger.i("RichText", " body = " + content);
@@ -57,30 +55,31 @@ public class GoodsDetailFragment extends BaseFragment {
 //                    return drawable[0];
 //                }
 //            }, null).toString());
-            WebSettings settings = webView.getSettings();
-            settings.setJavaScriptEnabled(true);
-            webView.setWebViewClient(new WebViewClient(){
-                @Override
-                public void onPageFinished(WebView view, String url) {
-                    super.onPageFinished(view, url);
-                    webView.loadUrl("javascript:(function(){"
-                            + "var objs = document.getElementsByTagName('img'); "
-                            + "for(var i=0;i<objs.length;i++)  " + "{"
-                            + "var img = objs[i];   "
-                            + "    img.style.width = '100%';   "
-                            + "    img.style.height = 'auto';   "
-                            + "}" + "})()");
+//            WebSettings settings = webView.getSettings();
+//            settings.setJavaScriptEnabled(true);
+//            webView.setWebViewClient(new WebViewClient(){
+//                @Override
+//                public void onPageFinished(WebView view, String url) {
+//                    super.onPageFinished(view, url);
+//                    webView.loadUrl("javascript:(function(){"
+//                            + "var objs = document.getElementsByTagName('img'); "
+//                            + "for(var i=0;i<objs.length;i++)  " + "{"
+//                            + "var img = objs[i];   "
+//                            + "    img.style.width = '100%';   "
+//                            + "    img.style.height = 'auto';   "
+//                            + "}" + "})()");
+//
+//                }
+//                @Override
+//                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//                    view.loadUrl(url);
+//                    return true;
+//                }
+//
+//            });
+//            webView.loadDataWithBaseURL(null, content, "text/html", "UTF-8", null);
 
-                }
-                @Override
-                public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                    view.loadUrl(url);
-                    return true;
-                }
-
-            });
-            webView.loadDataWithBaseURL(null, content, "text/html", "UTF-8", null);
-
+            webView.setRichText(content);
 //            RichText.from(content)
 //                    .autoFix(true)
 //                    .scaleType(ImageHolder.ScaleType.CENTER_CROP)

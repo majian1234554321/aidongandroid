@@ -18,7 +18,8 @@
         android:layout_height="15dp"
         android:background="@drawable/icon_woman"
         android:layout_alignBottom="@+id/dv_user_cover"
-        android:layout_alignRight="@+id/dv_user_cover"/>
+        android:layout_alignRight="@+id/dv_user_cover"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/tv_nickname"

@@ -10,9 +10,7 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.utils.Logger;
-import com.zzhoujay.richtext.ImageHolder;
-import com.zzhoujay.richtext.RichText;
-import com.zzhoujay.richtext.RichType;
+import com.leyuan.aidong.widget.richtext.RichWebView;
 
 /**
  * 商品详情售后服务
@@ -21,6 +19,7 @@ import com.zzhoujay.richtext.RichType;
 public class GoodsServiceFragment extends BaseFragment {
     private String content;
     private TextView tvContent;
+    RichWebView richWebView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,19 +32,20 @@ public class GoodsServiceFragment extends BaseFragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        tvContent = (TextView) view.findViewById(R.id.tv_content);
+//        tvContent = (TextView) view.findViewById(R.id.tv_content);
+        richWebView = (RichWebView) view.findViewById(R.id.web_view);
         if (!TextUtils.isEmpty(content)) {
-
+            richWebView.setRichText(content);
             Logger.largeLog("RichText", content);
 
 //            content = "<p><img src=\"http://upload-images.jianshu.io/upload_images/" +
 //                    "3682352-3f50173a87599b0c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240\" /></p>";
-            RichText.from(content)
-                    .type(RichType.HTML).autoFix(true)
-                    .autoPlay(true) // gif图片是否自动播放
-                    .scaleType(ImageHolder.ScaleType.FIT_CENTER) // 图片缩放方式
-                    .size(ImageHolder.MATCH_PARENT, ImageHolder.WRAP_CONTENT)
-                    .into(tvContent); // 设置目标TextView
+//            RichText.from(content)
+//                    .type(RichType.HTML).autoFix(true)
+//                    .autoPlay(true) // gif图片是否自动播放
+//                    .scaleType(ImageHolder.ScaleType.FIT_CENTER) // 图片缩放方式
+//                    .size(ImageHolder.MATCH_PARENT, ImageHolder.WRAP_CONTENT)
+//                    .into(tvContent); // 设置目标TextView
 
 //            RichText.from(content, RichType.MARKDOWN).into(tvContent);
 //                    .placeHolder(R.drawable.place_holder_logo)

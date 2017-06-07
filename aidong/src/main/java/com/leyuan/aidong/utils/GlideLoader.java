@@ -57,6 +57,16 @@ public class GlideLoader {
                 .into(imageView);
     }
 
+
+    public void displayRoundAvatarImage(String imgUrl, ImageView imageView) {
+        Glide.with(getContext(imageView))
+                .load(imgUrl)
+                .bitmapTransform(new CenterCrop(getContext(imageView)),
+                        new RoundedCornersTransformation(getContext(imageView), DensityUtil.dp2px(getContext(imageView),5), 0))
+                .placeholder(R.drawable.icon_avatar_default)
+                .into(imageView);
+    }
+
     public void displayRoundLocalImage(@DrawableRes int resId, ImageView imageView) {
         Glide.with(getContext(imageView))
                 .load(resId)

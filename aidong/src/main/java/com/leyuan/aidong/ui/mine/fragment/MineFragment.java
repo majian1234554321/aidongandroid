@@ -175,7 +175,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
             user = App.getInstance().getUser();
             textView_name.setText(user.getName());
             presenter.getMineInfo();
-            GlideLoader.getInstance().displayCircleImage(user.getAvatar(), imageView_head);
+            GlideLoader.getInstance().displayRoundAvatarImage(user.getAvatar(), imageView_head);
         } else {
             relativeLayout_my_logo.setVisibility(View.GONE);
             layout_no_login.setVisibility(View.VISIBLE);

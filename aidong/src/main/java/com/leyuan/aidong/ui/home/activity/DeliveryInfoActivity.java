@@ -15,6 +15,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.DeliveryBean;
 import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.TransitionHelper;
 
 import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
@@ -67,10 +68,12 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
         tvVenuesName = (TextView) findViewById(R.id.tv_shop);
         tvVenuesAddress = (TextView) findViewById(R.id.tv_shop_address);
         if(deliveryBean != null) {
-            if(deliveryBean.getType().equals(DELIVERY_EXPRESS)){
+            if(deliveryBean.getType().equals(DELIVERY_EXPRESS) && deliveryBean.isSend()){
                 setExpressSelected();
-            }else {
+            }else if(deliveryBean.getType().equals(DELIVERY_SELF) && deliveryBean.getInfo() != null){
                 setSelfDeliverySelected();
+            }else {
+                setAllUnUsable();
             }
         }
     }
@@ -96,10 +99,18 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
                 compatFinish();
                 break;
             case R.id.tv_express:
-                setExpressSelected();
+                if(deliveryBean.isSend()) {
+                    setExpressSelected();
+                }else {
+                    ToastGlobal.showLong("该商品不支持快递");
+                }
                 break;
             case R.id.tv_self_delivery:
-                setSelfDeliverySelected();
+                if(deliveryBean.getInfo() != null && !TextUtils.isEmpty(deliveryBean.getInfo().getId())){
+                    setSelfDeliverySelected();
+                }else {
+                    ToastGlobal.showLong("该商品无自提场馆");
+                }
                 break;
             case R.id.ll_delivery_address:
                 Intent intent = new Intent(this,SelfDeliveryVenuesActivity.class);
@@ -117,19 +128,38 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
 
     private void setExpressSelected(){
         tvExpress.setTextColor(Color.parseColor("#ffffff"));
-        tvSelfDelivery.setTextColor(Color.parseColor("#000000"));
         tvExpress.setBackgroundResource(R.drawable.shape_solid_corner_black);
-        tvSelfDelivery.setBackgroundResource(R.drawable.shape_solid_corner_white);
+        if(deliveryBean.getInfo() != null && !TextUtils.isEmpty(deliveryBean.getInfo().getId())) {
+            tvSelfDelivery.setTextColor(Color.parseColor("#000000"));
+            tvSelfDelivery.setBackgroundResource(R.drawable.shape_solid_corner_white);
+        }else {
+            tvSelfDelivery.setTextColor(Color.parseColor("#ebebeb"));
+            tvSelfDelivery.setBackgroundResource(R.drawable.shape_stroke_corner_gray);
+        }
         deliveryLayout.setVisibility(View.GONE);
         deliveryBean.getInfo().setId(null);
         deliveryBean.setType(DELIVERY_EXPRESS);
     }
 
 
+    private void setAllUnUsable(){
+        tvSelfDelivery.setTextColor(Color.parseColor("#ebebeb"));
+        tvSelfDelivery.setBackgroundResource(R.drawable.shape_stroke_corner_gray);
+        tvExpress.setTextColor(Color.parseColor("#ebebeb"));
+        tvExpress.setBackgroundResource(R.drawable.shape_stroke_corner_gray);
+        deliveryLayout.setVisibility(View.GONE);
+        deliveryBean.getInfo().setId(null);
+    }
+
     private void setSelfDeliverySelected(){
-        tvExpress.setTextColor(Color.parseColor("#000000"));
+        if(deliveryBean.isSend()){
+            tvExpress.setTextColor(Color.parseColor("#000000"));
+            tvExpress.setBackgroundResource(R.drawable.shape_solid_corner_white);
+        }else {
+            tvExpress.setTextColor(Color.parseColor("#ebebeb"));
+            tvExpress.setBackgroundResource(R.drawable.shape_stroke_corner_gray);
+        }
         tvSelfDelivery.setTextColor(Color.parseColor("#ffffff"));
-        tvExpress.setBackgroundResource(R.drawable.shape_solid_corner_white);
         tvSelfDelivery.setBackgroundResource(R.drawable.shape_solid_corner_black);
         deliveryLayout.setVisibility(View.VISIBLE);
         deliveryBean.setType(DELIVERY_SELF);

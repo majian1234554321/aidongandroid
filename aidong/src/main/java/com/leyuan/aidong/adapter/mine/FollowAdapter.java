@@ -47,7 +47,7 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.UserHolder
     @Override
     public void onBindViewHolder(UserHolder holder, final int position) {
         final UserBean bean = data.get(position);
-        GlideLoader.getInstance().displayCircleImage(bean.getAvatar(), holder.avatar);
+        GlideLoader.getInstance().displayRoundAvatarImage(bean.getAvatar(), holder.avatar);
         holder.nickname.setText(bean.getName());
         holder.distance.setText(bean.getSignature());
         holder.gender.setBackgroundResource("0".equals(bean.getGender()) ? R.drawable.icon_man

@@ -60,8 +60,8 @@
 
         <ImageView
             android:id="@+id/dv_user_avatar"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:layout_gravity="center_vertical" />

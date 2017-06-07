@@ -84,7 +84,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
     public void onBindData(final DynamicBean dynamic, final int position) {
         if (dynamic.publisher != null) {
             tvName.setText(dynamic.publisher.getName());
-            GlideLoader.getInstance().displayCircleImage(dynamic.publisher.getAvatar(), ivAvatar);
+            GlideLoader.getInstance().displayRoundAvatarImage(dynamic.publisher.getAvatar(), ivAvatar);
             tvTime.setText(Utils.getData(dynamic.published_at));
             ivCoachFlag.setVisibility("Coach".equals(dynamic.publisher.getUser_type())
                     ? View.VISIBLE : View.GONE);

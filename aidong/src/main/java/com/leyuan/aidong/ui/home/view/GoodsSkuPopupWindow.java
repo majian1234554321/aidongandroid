@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.GoodsSkuAdapter;
@@ -250,6 +249,8 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         tvCount.setText(TextUtils.isEmpty(count) ? "1" : count);
         ivMinus.setBackgroundResource(FormatUtil.parseInt(count) > 1 ? R.drawable.icon_minus
                 : R.drawable.icon_minus_gray);
+        ivAdd.setBackgroundResource(FormatUtil.parseInt(count) == stock ? R.drawable.icon_add_gray
+                : R.drawable.icon_add);
     }
 
     private void setListener() {
@@ -279,13 +280,16 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
                     count = 1;
                     ivMinus.setBackgroundResource(R.drawable.icon_minus_gray);
                 }
+                if(count < stock){
+                    ivAdd.setBackgroundResource(R.drawable.icon_add);
+                }
                 tvCount.setText(String.valueOf(count));
                 break;
             case R.id.iv_add:
                 count++;
-                if (count > stock) {
+                if (count >= stock) {
                     count = stock;
-                    Toast.makeText(context, context.getString(R.string.stock_out), Toast.LENGTH_LONG).show();
+                    ivAdd.setBackgroundResource(R.drawable.icon_add_gray);
                 }
                 if (count > 1) {
                     ivMinus.setBackgroundResource(R.drawable.icon_minus);
@@ -408,8 +412,10 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
                 if (Integer.parseInt(tvCount.getText().toString()) > stock) {
                     tvCount.setText(String.valueOf(line.getStock()));
                 }
-                ivMinus.setBackgroundResource(Integer.parseInt(tvCount.getText().toString()) > 1 ?
-                        R.drawable.icon_minus : R.drawable.icon_minus_gray);
+                ivMinus.setBackgroundResource(Integer.parseInt(tvCount.getText().toString()) > 1
+                        ? R.drawable.icon_minus : R.drawable.icon_minus_gray);
+                ivAdd.setBackgroundResource(FormatUtil.parseInt(tvCount.getText().toString()) == stock
+                        ? R.drawable.icon_add_gray : R.drawable.icon_add);
             }
             for (String selectedNode : allSelectedNodes) {
                 skuTip.append(selectedNode).append(Constant.EMPTY_STR);

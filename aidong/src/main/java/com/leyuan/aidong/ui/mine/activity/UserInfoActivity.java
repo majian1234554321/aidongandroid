@@ -160,7 +160,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     }
 
     private void setView() {
-        GlideLoader.getInstance().displayCircleImage(userInfoData.getProfile().getAvatar(), dvAvatar);
+        GlideLoader.getInstance().displayRoundAvatarImage(userInfoData.getProfile().getAvatar(), dvAvatar);
         tvName.setText(userInfoData.getProfile().getName());
         tvSignature.setText(userInfoData.getProfile().getSignature());
         if (isSelf) {

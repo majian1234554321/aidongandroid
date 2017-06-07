@@ -50,7 +50,7 @@ public class DiscoverUserAdapter extends RecyclerView.Adapter<DiscoverUserAdapte
     @Override
     public void onBindViewHolder(UserHolder holder, int position) {
         final UserBean bean = data.get(position);
-        GlideLoader.getInstance().displayCircleImage(bean.getAvatar(), holder.avatar);
+        GlideLoader.getInstance().displayRoundAvatarImage(bean.getAvatar(), holder.avatar);
         if("0".equals(bean.getGender())){   //男
             holder.gender.setBackgroundResource(R.drawable.icon_man);
         }else {
