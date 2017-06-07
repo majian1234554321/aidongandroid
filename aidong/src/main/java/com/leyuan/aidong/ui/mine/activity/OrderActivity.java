@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.MainActivity;
 import com.leyuan.aidong.ui.mine.fragment.OrderFragment;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
@@ -107,9 +106,4 @@ public class OrderActivity extends BaseActivity implements SmartTabLayout.TabPro
         return tabView;
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        MainActivity.start(this,4);
-    }
 }

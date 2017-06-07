@@ -120,7 +120,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
             List<String> temp = new ArrayList<>();
             for (GoodsSkuBean item : detailBean.spec.item) {
                 if (item != null && item.value != null) {
-                    if(!item.value.isEmpty()) {
+                    if(!item.value.isEmpty()&& item.value.size()>i) {
                         temp.add(item.value.get(i));
                     }
                 }

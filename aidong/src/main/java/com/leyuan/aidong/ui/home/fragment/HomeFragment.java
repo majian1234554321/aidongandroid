@@ -98,6 +98,13 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView, View
         initData();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        present.getSportHistory();
+        tvLocation.setText(App.getInstance().getSelectedCity());
+    }
+
     private void initView(View view) {
         tvLocation = (TextView) view.findViewById(R.id.tv_location);
         ivSearch = (ImageView) view.findViewById(R.id.iv_search);
@@ -139,13 +146,6 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView, View
         currPage = 1;
         RecyclerViewStateUtils.resetFooterViewState(recyclerView);
         present.pullToRefreshHomeData(TYPE_HOME);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        present.getSportHistory();
-        tvLocation.setText(App.getInstance().getSelectedCity());
     }
 
     private View.OnClickListener retryListener = new View.OnClickListener() {

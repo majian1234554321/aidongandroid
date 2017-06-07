@@ -9,7 +9,7 @@ import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.DistrictBean;
 import com.leyuan.aidong.entity.DistrictDescBean;
 import com.leyuan.aidong.entity.SystemBean;
-import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
+import com.leyuan.aidong.http.subscriber.BaseSubscriber;
 import com.leyuan.aidong.ui.mvp.model.SystemModel;
 import com.leyuan.aidong.ui.mvp.model.impl.SystemModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.SystemPresent;
@@ -148,7 +148,7 @@ public class SystemPresentImpl implements SystemPresent {
 
     @Override
     public void getSystemInfoSelected(String os) {
-        systemModel.getSystem(new ProgressSubscriber<SystemBean>(context) {
+        systemModel.getSystem(new BaseSubscriber<SystemBean>(context) {
             @Override
             public void onCompleted() {
 
@@ -208,20 +208,6 @@ public class SystemPresentImpl implements SystemPresent {
                     systemView.onGetSystemConfiguration(true);
                 }
 
-//                UserInfoModel model = new UserInfoModelImpl();
-//                model.getMineInfo(new ProgressSubscriber<MineInfoBean>(context) {
-//                    @Override
-//                    public void onNext(MineInfoBean mineInfoBean) {
-//
-//
-//                        if (systemView != null) {
-//                            Constant.gyms = mineInfoBean.getGyms();
-//                            Constant.activity = mineInfoBean.getActivity();
-//                            systemView.onGetSystemConfiguration(true);
-//                        }
-//                    }
-//                });
-//                LogAidong.i("mLocationClient   SystemInfoUtils.putSystemInfoBean");
             }
         }, os);
     }

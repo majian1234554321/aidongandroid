@@ -59,32 +59,32 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
 
     @Override
     public void getGoodsDetail(@GoodsType String type, String id) {
-        switch (type){
+        switch (type) {
             case GOODS_EQUIPMENT:
-                if(equipmentModel == null){
+                if (equipmentModel == null) {
                     equipmentModel = new EquipmentModelImpl(context);
                 }
                 equipmentModel.getEquipmentDetail(new IsLoginSubscriber<EquipmentDetailData>(context) {
                     @Override
                     public void onNext(EquipmentDetailData equipmentDetailData) {
-                        if(equipmentDetailData != null && equipmentDetailData.getEquipment()!= null){
+                        if (equipmentDetailData != null && equipmentDetailData.getEquipment() != null) {
                             goodsDetailView.setGoodsDetail(equipmentDetailData.getEquipment());
                         }
                     }
-                },id);
+                }, id);
                 break;
             case GOODS_NUTRITION:
-                if(nurtureModel == null){
+                if (nurtureModel == null) {
                     nurtureModel = new NurtureModelImpl(context);
                 }
                 nurtureModel.getNurtureDetail(new IsLoginSubscriber<NurtureDetailData>(context) {
                     @Override
                     public void onNext(NurtureDetailData nurtureDetailData) {
-                        if(nurtureDetailData != null && nurtureDetailData.getNurture()!= null) {
+                        if (nurtureDetailData != null && nurtureDetailData.getNurture() != null) {
                             goodsDetailView.setGoodsDetail(nurtureDetailData.getNurture());
                         }
                     }
-                },id);
+                }, id);
                 break;
             default:
                 break;
@@ -93,18 +93,19 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
 
     @Override
     public void getGoodsDetail(final SwitcherLayout switcherLayout, @GoodsType String type, String id) {
-        switch (type){
+        if (type == null) return;
+        switch (type) {
             case GOODS_FOODS:
-                if(foodModel == null){
+                if (foodModel == null) {
                     foodModel = new FoodModelImpl();
                 }
-                foodModel.getFoodDetail(new CommonSubscriber<FoodDetailData>(context,switcherLayout) {
+                foodModel.getFoodDetail(new CommonSubscriber<FoodDetailData>(context, switcherLayout) {
                     @Override
                     public void onNext(FoodDetailData foodDetailData) {
-                        if(foodDetailData != null && foodDetailData.getFood() != null){
+                        if (foodDetailData != null && foodDetailData.getFood() != null) {
                             goodsDetailView.setGoodsDetail(foodDetailData.getFood());
                             switcherLayout.showContentLayout();
-                        }else{
+                        } else {
                             switcherLayout.showEmptyLayout();
                         }
                     }
@@ -114,42 +115,43 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                         super.onError(e);
                         goodsDetailView.showErrorView();
                     }
-                },id);
+                }, id);
                 break;
 
             case GOODS_EQUIPMENT:
-                if(equipmentModel == null){
+                if (equipmentModel == null) {
                     equipmentModel = new EquipmentModelImpl(context);
                 }
-                equipmentModel.getEquipmentDetail(new CommonSubscriber<EquipmentDetailData>(context,switcherLayout) {
+                equipmentModel.getEquipmentDetail(new CommonSubscriber<EquipmentDetailData>(context, switcherLayout) {
                     @Override
                     public void onNext(EquipmentDetailData equipmentDetailData) {
-                        if(equipmentDetailData != null && equipmentDetailData.getEquipment()!= null){
+                        if (equipmentDetailData != null && equipmentDetailData.getEquipment() != null) {
                             goodsDetailView.setGoodsDetail(equipmentDetailData.getEquipment());
                             switcherLayout.showContentLayout();
-                        }else{
+                        } else {
                             switcherLayout.showEmptyLayout();
                         }
                     }
+
                     @Override
                     public void onError(Throwable e) {
                         super.onError(e);
                         goodsDetailView.showErrorView();
                     }
-                },id);
+                }, id);
                 break;
 
             case GOODS_NUTRITION:
-                if(nurtureModel == null){
+                if (nurtureModel == null) {
                     nurtureModel = new NurtureModelImpl(context);
                 }
-                nurtureModel.getNurtureDetail(new CommonSubscriber<NurtureDetailData>(context,switcherLayout) {
+                nurtureModel.getNurtureDetail(new CommonSubscriber<NurtureDetailData>(context, switcherLayout) {
                     @Override
                     public void onNext(NurtureDetailData nurtureDetailData) {
-                        if(nurtureDetailData != null && nurtureDetailData.getNurture()!= null){
+                        if (nurtureDetailData != null && nurtureDetailData.getNurture() != null) {
                             goodsDetailView.setGoodsDetail(nurtureDetailData.getNurture());
                             switcherLayout.showContentLayout();
-                        }else{
+                        } else {
                             switcherLayout.showEmptyLayout();
                         }
                     }
@@ -159,147 +161,147 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                         super.onError(e);
                         goodsDetailView.showErrorView();
                     }
-                },id);
+                }, id);
                 break;
             default:
-                Logger.e("GoodsDetailPresentImpl","type must be foods,equipments or nutrition");
+                Logger.e("GoodsDetailPresentImpl", "type must be foods,equipments or nutrition");
                 break;
         }
     }
 
     @Override
-    public void commonLoadVenues(final SwitcherLayout switcherLayout, @GoodsType String type, String sku,String brandId,String landmark) {
-        switch (type){
+    public void commonLoadVenues(final SwitcherLayout switcherLayout, @GoodsType String type, String sku, String brandId, String landmark) {
+        switch (type) {
             case GOODS_EQUIPMENT:
-                if(equipmentModel == null){
+                if (equipmentModel == null) {
                     equipmentModel = new EquipmentModelImpl(context);
                 }
-                equipmentModel.getDeliveryVenues(new CommonSubscriber<VenuesData>(context,switcherLayout) {
+                equipmentModel.getDeliveryVenues(new CommonSubscriber<VenuesData>(context, switcherLayout) {
                     @Override
                     public void onNext(VenuesData venuesData) {
-                        if(venuesData != null && venuesData.getGym() != null){
+                        if (venuesData != null && venuesData.getGym() != null) {
                             venuesBeanList = venuesData.getGym();
                         }
-                        if(!venuesBeanList.isEmpty()){
+                        if (!venuesBeanList.isEmpty()) {
                             switcherLayout.showContentLayout();
                             venuesActivityView.onRefreshData(venuesBeanList);
-                        }else {
+                        } else {
                             venuesActivityView.showEmptyView();
                         }
                     }
-                },sku, Constant.PAGE_FIRST,brandId,landmark);
+                }, sku, Constant.PAGE_FIRST, brandId, landmark);
                 break;
             case GOODS_NUTRITION:
-                if(nurtureModel == null){
+                if (nurtureModel == null) {
                     nurtureModel = new NurtureModelImpl(context);
                 }
-                nurtureModel.getDeliveryVenues(new CommonSubscriber<VenuesData>(context,switcherLayout) {
+                nurtureModel.getDeliveryVenues(new CommonSubscriber<VenuesData>(context, switcherLayout) {
                     @Override
                     public void onNext(VenuesData venuesData) {
-                        if(venuesData != null && venuesData.getGym() != null){
+                        if (venuesData != null && venuesData.getGym() != null) {
                             venuesBeanList = venuesData.getGym();
                         }
-                        if(!venuesBeanList.isEmpty()){
+                        if (!venuesBeanList.isEmpty()) {
                             switcherLayout.showContentLayout();
                             venuesActivityView.onRefreshData(venuesBeanList);
-                        }else {
+                        } else {
                             venuesActivityView.showEmptyView();
                         }
                     }
-                },sku, Constant.PAGE_FIRST,brandId,landmark);
+                }, sku, Constant.PAGE_FIRST, brandId, landmark);
 
                 break;
             case GOODS_FOODS:
-                if(foodModel == null){
+                if (foodModel == null) {
                     foodModel = new FoodModelImpl();
                 }
-                foodModel.getDeliveryVenues(new CommonSubscriber<VenuesData>(context,switcherLayout) {
+                foodModel.getDeliveryVenues(new CommonSubscriber<VenuesData>(context, switcherLayout) {
                     @Override
                     public void onNext(VenuesData venuesData) {
-                        if(venuesData != null && venuesData.getGym() != null){
+                        if (venuesData != null && venuesData.getGym() != null) {
                             venuesBeanList = venuesData.getGym();
                         }
-                        if(!venuesBeanList.isEmpty()){
+                        if (!venuesBeanList.isEmpty()) {
                             switcherLayout.showContentLayout();
                             venuesActivityView.onRefreshData(venuesBeanList);
-                        }else {
+                        } else {
                             venuesActivityView.showEmptyView();
                         }
                     }
-                },sku, Constant.PAGE_FIRST);
+                }, sku, Constant.PAGE_FIRST);
                 break;
             default:
-                Logger.e("GoodsDetailPresentImpl","type must be foods,equipments or nutrition");
+                Logger.e("GoodsDetailPresentImpl", "type must be foods,equipments or nutrition");
                 break;
         }
     }
 
     @Override
-    public void pullToRefreshVenues(@GoodsType String type, String sku,String brandId,String landmark) {
-        switch (type){
+    public void pullToRefreshVenues(@GoodsType String type, String sku, String brandId, String landmark) {
+        switch (type) {
             case GOODS_EQUIPMENT:
-                if(equipmentModel == null){
+                if (equipmentModel == null) {
                     equipmentModel = new EquipmentModelImpl(context);
                 }
                 equipmentModel.getDeliveryVenues(new RefreshSubscriber<VenuesData>(context) {
                     @Override
                     public void onNext(VenuesData venuesData) {
-                        if(venuesData != null && venuesData.getGym() != null){
+                        if (venuesData != null && venuesData.getGym() != null) {
                             venuesBeanList = venuesData.getGym();
                         }
-                        if(!venuesBeanList.isEmpty()){
+                        if (!venuesBeanList.isEmpty()) {
                             venuesActivityView.onRefreshData(venuesBeanList);
-                        }else {
+                        } else {
                             venuesActivityView.showEmptyView();
                         }
                     }
-                },sku,Constant.PAGE_FIRST,brandId,landmark);
+                }, sku, Constant.PAGE_FIRST, brandId, landmark);
 
                 break;
             case GOODS_NUTRITION:
-                if(nurtureModel == null){
+                if (nurtureModel == null) {
                     nurtureModel = new NurtureModelImpl(context);
                 }
                 nurtureModel.getDeliveryVenues(new RefreshSubscriber<VenuesData>(context) {
                     @Override
                     public void onNext(VenuesData venuesData) {
-                        if(venuesData != null && venuesData.getGym() != null){
+                        if (venuesData != null && venuesData.getGym() != null) {
                             venuesBeanList = venuesData.getGym();
                         }
-                        if(!venuesBeanList.isEmpty()){
+                        if (!venuesBeanList.isEmpty()) {
                             venuesActivityView.onRefreshData(venuesBeanList);
-                        }else {
+                        } else {
                             venuesActivityView.showEmptyView();
                         }
                     }
-                },sku,Constant.PAGE_FIRST,brandId,landmark);
+                }, sku, Constant.PAGE_FIRST, brandId, landmark);
                 break;
             case GOODS_FOODS:
-                if(foodModel == null){
+                if (foodModel == null) {
                     foodModel = new FoodModelImpl();
                 }
                 foodModel.getDeliveryVenues(new RefreshSubscriber<VenuesData>(context) {
                     @Override
                     public void onNext(VenuesData venuesData) {
-                        if(venuesData != null && venuesData.getGym() != null){
+                        if (venuesData != null && venuesData.getGym() != null) {
                             venuesBeanList = venuesData.getGym();
                         }
-                        if(!venuesBeanList.isEmpty()){
+                        if (!venuesBeanList.isEmpty()) {
                             venuesActivityView.onRefreshData(venuesBeanList);
-                        }else {
+                        } else {
                             venuesActivityView.showEmptyView();
                         }
                     }
-                },sku,Constant.PAGE_FIRST);
+                }, sku, Constant.PAGE_FIRST);
                 break;
             default:
-                Logger.e("GoodsDetailPresentImpl","type must be foods,equipments or nutrition");
+                Logger.e("GoodsDetailPresentImpl", "type must be foods,equipments or nutrition");
                 break;
         }
     }
 
     @Override
-    public void requestMoreVenues(RecyclerView recyclerView, final int pageSize, @GoodsType String type, String sku, int page,String brandId,String landmark) {
+    public void requestMoreVenues(RecyclerView recyclerView, final int pageSize, @GoodsType String type, String sku, int page, String brandId, String landmark) {
         switch (type) {
             case GOODS_EQUIPMENT:
                 if (equipmentModel == null) {
@@ -319,7 +321,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                             venuesActivityView.showEndFooterView();
                         }
                     }
-                }, sku, page,brandId,landmark);
+                }, sku, page, brandId, landmark);
                 break;
             case GOODS_NUTRITION:
                 if (nurtureModel == null) {
@@ -339,7 +341,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                             venuesActivityView.showEndFooterView();
                         }
                     }
-                }, sku, page,brandId,landmark);
+                }, sku, page, brandId, landmark);
                 break;
             case GOODS_FOODS:
                 if (foodModel == null) {

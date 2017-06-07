@@ -84,9 +84,9 @@
 
     <string name="campaign_status_apply">马上报名</string>
     <string name="campaign_status_end">活动已结束</string>
-    <string name="campaign_status_applied">已报名查看详情</string>
+    <string name="campaign_status_applied">已报名 查看详情</string>
     <string name="campaign_status_not_start">即将开始报名</string>
-    <string name="campaign_status_not_pay">待支付</string>
+    <string name="campaign_status_not_pay">待支付(已报名)</string>
     <string name="campaign_status_full">报名人数已满</string>
     <string name="campaign_appoint_end">报名已结束</string>
 

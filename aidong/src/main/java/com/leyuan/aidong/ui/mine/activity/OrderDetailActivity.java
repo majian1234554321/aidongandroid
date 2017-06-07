@@ -376,7 +376,8 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
 
     @Override
     public void cancelOrderResult(BaseBean baseBean) {
-        if (baseBean.getStatus() == Constant.OK) {
+        if(baseBean.getStatus() == Constant.OK){
+            clearList();
             orderPresent.getOrderDetail(orderId);
             ToastGlobal.showLong("取消成功");
         } else {
@@ -387,9 +388,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
     @Override
     public void confirmOrderResult(BaseBean baseBean) {
         if(baseBean.getStatus() == Constant.OK){
-            goodsList.clear();
-            expressList.clear();
-            selfDeliveryList.clear();
+            clearList();
             orderPresent.getOrderDetail(orderId);
             ToastGlobal.showLong("确认成功");
         } else {
@@ -437,5 +436,11 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
     public void onEnd(CountdownView cv) {
         bean.setStatus(CLOSE);
         setOrderDetail(bean);
+    }
+
+    private void clearList(){
+        goodsList.clear();
+        expressList.clear();
+        selfDeliveryList.clear();
     }
 }

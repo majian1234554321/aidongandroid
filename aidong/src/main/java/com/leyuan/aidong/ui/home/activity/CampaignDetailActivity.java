@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -28,6 +29,7 @@ import com.leyuan.aidong.ui.mvp.presenter.CampaignPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CampaignPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CampaignDetailActivityView;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
@@ -195,7 +197,7 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
     }
 
     @Override
-    public void setCampaignDetail(CampaignDetailBean bean) {
+    public void setCampaignDetail(final CampaignDetailBean bean) {
         this.bean = bean;
         pagerLayout.setVisibility(View.VISIBLE);
         bottomLayout.setVisibility(View.VISIBLE);
@@ -227,6 +229,22 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
         params.setMargins(0, DensityUtil.dp2px(this, STATUS_NOT_START.equals(bean.getStatus()) ? 76 : 46), 0, 0);
         pagerLayout.setLayoutParams(params);
         setBottomStatus();
+
+        if(bean.getStatus().equals(STATUS_NOT_START)){
+            CountDownTimer timer = new CountDownTimer(DateUtils.getCounterDown(bean.getEntry_start_time()) ,1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+
+                }
+
+                @Override
+                public void onFinish() {
+                    bean.setStatus(STATUS_APPLY);
+                    setCampaignDetail(bean);
+                }
+            };
+            timer.start();// 开始计时
+        }
     }
 
     //设置底部状态
