@@ -75,7 +75,7 @@ public class PermissionManager {
     private void showPermissionDailog(final String permission, final String hint) {
         new DialogDoubleButton(context)
                 .setContentDesc(hint)
-                .setRightButton("设置")
+                .setRightButton("确定")
                 .setBtnCancelListener(new ButtonCancelListener() {
                     @Override
                     public void onClick(BaseDialog dialog) {
@@ -88,6 +88,7 @@ public class PermissionManager {
                     @Override
                     public void onClick(BaseDialog dialog) {
                         ActivityCompat.requestPermissions(context, new String[]{permission}, REQUEST_PERMISSION_CODE);
+                        map.remove(permission);
                         dialog.dismiss();
 
                     }

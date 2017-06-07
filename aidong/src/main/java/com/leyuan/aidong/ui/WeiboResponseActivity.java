@@ -12,7 +12,9 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.module.weibo.AccessTokenKeeper;
 import com.leyuan.aidong.module.weibo.WeiBoConstants;
+import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.sina.weibo.sdk.api.ImageObject;
 import com.sina.weibo.sdk.api.TextObject;
@@ -80,8 +82,22 @@ public class WeiboResponseActivity extends Activity implements IWeiboHandler.Res
         mWeiboShareAPI.handleWeiboResponse(intent, this);
     }
 
+    private int COUNT = 0;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (COUNT == 1) {
+            ToastGlobal.showShort(R.string.share_cancel);
+            finish();
+
+        }
+        COUNT++;
+    }
+
     @Override
     public void onResponse(BaseResponse baseResponse) {
+        DialogUtils.dismissDialog();
         Logger.i("share  WeiboResponseActivity ", "weibo share baseResponse.errCode = ");
         if (baseResponse != null) {
 
@@ -166,6 +182,8 @@ public class WeiboResponseActivity extends Activity implements IWeiboHandler.Res
     }
 
     public void share(final String title, final String content, String imageUrl, final String webUrl) {
+
+        DialogUtils.showDialog(this, "", true);
         Glide.with(this).load(imageUrl).asBitmap()
                 .into(new SimpleTarget<Bitmap>(100, 100) {
                     @Override
@@ -173,5 +191,11 @@ public class WeiboResponseActivity extends Activity implements IWeiboHandler.Res
                         sendMessage(title, content, resource, webUrl);
                     }
                 });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        DialogUtils.releaseDialog();
     }
 }

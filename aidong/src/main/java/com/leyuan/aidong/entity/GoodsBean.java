@@ -32,6 +32,8 @@ public class GoodsBean implements Parcelable {
     private String recommend_coach_id;      //推荐码
     private DeliveryBean deliveryBean;      //商品默认取货方式
     private boolean checked = false;        //标记商品是否被选中
+    private int can_return;                 //可退数量
+
 
     /**
      * 购物车中商品id为product_id type为product_type id为该商品在购物车中的排列标记
@@ -145,6 +147,14 @@ public class GoodsBean implements Parcelable {
         this.amount = amount;
     }
 
+    public int getCan_return() {
+        return can_return;
+    }
+
+    public void setCan_return(int can_return) {
+        this.can_return = can_return;
+    }
+
     public boolean isChecked() {
         return checked;
     }
@@ -234,6 +244,7 @@ public class GoodsBean implements Parcelable {
         dest.writeString(this.recommend_coach_id);
         dest.writeParcelable(this.deliveryBean, flags);
         dest.writeByte(this.checked ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.can_return);
         dest.writeString(this.product_id);
         dest.writeString(this.product_type);
         dest.writeByte(this.online ? (byte) 1 : (byte) 0);
@@ -258,6 +269,7 @@ public class GoodsBean implements Parcelable {
         this.recommend_coach_id = in.readString();
         this.deliveryBean = in.readParcelable(DeliveryBean.class.getClassLoader());
         this.checked = in.readByte() != 0;
+        this.can_return = in.readInt();
         this.product_id = in.readString();
         this.product_type = in.readString();
         this.online = in.readByte() != 0;

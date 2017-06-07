@@ -76,6 +76,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         tabNearLayout = (RelativeLayout) findViewById(R.id.tabNearLayout);
         tabFoundLayout = (RelativeLayout) findViewById(R.id.tabFoundLayout);
         tabStoreLayout = (RelativeLayout) findViewById(R.id.tabStoreLayout);
+
         tabDiscoverLayout = (RelativeLayout) findViewById(R.id.tabContactorLayout);
         tabMineLayout = (RelativeLayout) findViewById(R.id.tabMineLayout);
         img_new_message = (ImageView) findViewById(R.id.img_new_message);

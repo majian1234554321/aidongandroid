@@ -92,6 +92,19 @@ public class ShareData implements Serializable {
         public void setShareUrl(String shareUrl) {
             this.shareUrl = shareUrl;
         }
+
+        @Override
+        public String toString() {
+            return "ShareCouponInfo{" +
+                    "createdAt='" + createdAt + '\'' +
+                    ", no='" + no + '\'' +
+                    ", coupons='" + coupons + '\'' +
+                    ", title='" + title + '\'' +
+                    ", image='" + image + '\'' +
+                    ", content='" + content + '\'' +
+                    ", shareUrl='" + shareUrl + '\'' +
+                    '}';
+        }
     }
 
 

@@ -22,12 +22,14 @@ import com.google.android.exoplayer.util.Util;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter;
 import com.leyuan.aidong.adapter.discover.DynamicDetailAdapter;
+import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CommentBean;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.PhotoBrowseInfo;
 import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.entity.model.UserCoach;
+import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.discover.viewholder.MultiImageViewHolder;
@@ -59,7 +61,7 @@ import static com.leyuan.aidong.utils.Constant.DYNAMIC_VIDEO;
  * 动态详情
  * Created by song on 2016/12/28.
  */
-public  class DynamicDetailActivity extends BaseActivity implements DynamicDetailActivityView,View.OnClickListener,
+public class DynamicDetailActivity extends BaseActivity implements DynamicDetailActivityView, View.OnClickListener,
         TextView.OnEditorActionListener, SwipeRefreshLayout.OnRefreshListener, DynamicDetailAdapter.OnItemClickListener {
     private static final int MAX_TEXT_COUNT = 240;
     public static final int RESULT_DELETE = 0x3333;
@@ -81,23 +83,26 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
     private CircleDynamicAdapter headerAdapter;
     private List<DynamicBean> dynamicList = new ArrayList<>();
 
+    private SharePopupWindow sharePopupWindow;
+
     private boolean isSelf = false;
 
     @Override
-    protected void onCreate( Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dynamic_detail);
-        dynamicPresent = new DynamicPresentImpl(this,this);
-        if(getIntent() != null){
+        dynamicPresent = new DynamicPresentImpl(this, this);
+        if (getIntent() != null) {
             dynamic = getIntent().getParcelableExtra("dynamic");
             isSelf = dynamic.publisher.getId().equals(String.valueOf(App.mInstance.getUser().getId()));
         }
         initView();
         setListener();
         dynamicPresent.pullToRefreshComments(dynamic.id);
+        sharePopupWindow = new SharePopupWindow(this);
     }
 
-    private void initView(){
+    private void initView() {
         initHeaderView();
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tvReportOrDelete = (TextView) findViewById(R.id.tv_report_or_delete);
@@ -105,25 +110,25 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
         etComment = (EditText) findViewById(R.id.et_comment);
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
         setColorSchemeResources(refreshLayout);
-        commentView = (RecyclerView)findViewById(R.id.rv_comment);
+        commentView = (RecyclerView) findViewById(R.id.rv_comment);
         commentAdapter = new DynamicDetailAdapter(this);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(commentAdapter);
         commentView.setAdapter(wrapperAdapter);
         commentView.setLayoutManager(new LinearLayoutManager(this));
-        RecyclerViewUtils.setHeaderView(commentView,header);
+        RecyclerViewUtils.setHeaderView(commentView, header);
         etComment.setHorizontallyScrolling(false);
         etComment.setMaxLines(5);
         GlideLoader.getInstance().displayCircleImage(App.mInstance.getUser().getAvatar(), ivUserAvatar);
-        tvReportOrDelete.setText(isSelf ? R.string.delete_dynamic: R.string.report_dynamic);
+        tvReportOrDelete.setText(isSelf ? R.string.delete_dynamic : R.string.report_dynamic);
     }
 
-    private void initHeaderView(){
-        header = View.inflate(this,R.layout.header_dynamic_detail_new,null);
+    private void initHeaderView() {
+        header = View.inflate(this, R.layout.header_dynamic_detail_new, null);
         dynamicList.add(dynamic);
         RecyclerView headerRecyclerView = (RecyclerView) header.findViewById(R.id.rv_header);
         CircleDynamicAdapter.Builder<DynamicBean> builder = new CircleDynamicAdapter.Builder<>(this);
         builder.addType(VideoViewHolder.class, DYNAMIC_VIDEO, R.layout.vh_dynamic_video)
-                .addType(MultiImageViewHolder.class,DYNAMIC_MULTI_IMAGE, R.layout.vh_dynamic_multi_photos)
+                .addType(MultiImageViewHolder.class, DYNAMIC_MULTI_IMAGE, R.layout.vh_dynamic_multi_photos)
                 .showFollowButton(!isSelf)
                 .showLikeAndCommentLayout(false)
                 .setData(dynamicList)
@@ -133,7 +138,7 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
         headerRecyclerView.setAdapter(headerAdapter);
     }
 
-    private void setListener(){
+    private void setListener() {
         ivBack.setOnClickListener(this);
         tvReportOrDelete.setOnClickListener(this);
         ivUserAvatar.setOnClickListener(this);
@@ -150,36 +155,38 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
         dynamicPresent.pullToRefreshComments(dynamic.id);
     }
 
-    private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
+    private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener() {
         @Override
         public void onLoadNextPage(View view) {
-            currPage ++;
+            currPage++;
             if (comments != null && comments.size() >= pageSize) {
-                dynamicPresent.requestMoreComments(commentView,dynamic.id,currPage,pageSize);
+                dynamicPresent.requestMoreComments(commentView, dynamic.id, currPage, pageSize);
             }
         }
 
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
-            if(newState == RecyclerView.SCROLL_STATE_DRAGGING){
-                KeyBoardUtil.closeKeyboard(etComment,DynamicDetailActivity.this);
+
+            if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+                KeyBoardUtil.closeKeyboard(etComment, DynamicDetailActivity.this);
                 etComment.clearFocus();
             }
         }
+
     };
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_back:
                 finish();
-                KeyBoardUtil.closeKeyboard(etComment,DynamicDetailActivity.this);
+                KeyBoardUtil.closeKeyboard(etComment, DynamicDetailActivity.this);
                 break;
             case R.id.tv_report_or_delete:
-                if(isSelf) {
+                if (isSelf) {
                     showDeleteDialog();
-                }else {
+                } else {
                     showReportDialog();
                 }
                 break;
@@ -191,35 +198,35 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
     @Override
     public void onItemClick(int position) {
         String other = comments.get(position).getPublisher().getName();
-        other = String.format(getString(R.string.reply_other_user),other);
+        other = String.format(getString(R.string.reply_other_user), other);
         etComment.setText(other);
         etComment.setSelection(other.length());
-        KeyBoardUtil.openKeyboard(etComment,this);
+        KeyBoardUtil.openKeyboard(etComment, this);
     }
 
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-        if(actionId == IME_ACTION_SEND ){
+        if (actionId == IME_ACTION_SEND) {
             content = etComment.getText().toString();
-            if(TextUtils.isEmpty(content)){
-                Toast.makeText(this,"请输入评论内容",Toast.LENGTH_LONG).show();
+            if (TextUtils.isEmpty(content)) {
+                Toast.makeText(this, "请输入评论内容", Toast.LENGTH_LONG).show();
                 return false;
-            }else {
-                if(content.length() > MAX_TEXT_COUNT - 2){
+            } else {
+                if (content.length() > MAX_TEXT_COUNT - 2) {
                     content = content.substring(0, MAX_TEXT_COUNT - 2) + "......";
                 }
                 dynamicPresent.addComment(dynamic.id, content);
                 KeyBoardUtil.closeKeyboard(etComment, this);
                 return true;
             }
-        }else {
+        } else {
             return false;
         }
     }
 
     @Override
     public void addCommentsResult(BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
+        if (baseBean.getStatus() == Constant.OK) {
             CommentBean temp = new CommentBean();
             UserBean publisher = new UserBean();
             publisher.setAvatar(App.mInstance.getUser().getAvatar());
@@ -237,16 +244,16 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
 
             //返回新增评论 刷新动态列表
             Intent intent = new Intent();
-            intent.putExtra("comment",temp);
-            setResult(RESULT_OK,intent);
-        }else {
+            intent.putExtra("comment", temp);
+            setResult(RESULT_OK, intent);
+        } else {
             ToastGlobal.showLong(baseBean.getMessage());
         }
     }
 
     @Override
     public void updateComments(List<CommentBean> commentList) {
-        if(refreshLayout.isRefreshing()){
+        if (refreshLayout.isRefreshing()) {
             comments.clear();
             refreshLayout.setRefreshing(false);
         }
@@ -257,7 +264,7 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
 
     @Override
     public void showEmptyCommentView() {
-        if(refreshLayout.isRefreshing()){
+        if (refreshLayout.isRefreshing()) {
             comments.clear();
             refreshLayout.setRefreshing(false);
         }
@@ -268,14 +275,14 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
         RecyclerViewStateUtils.setFooterViewState(commentView, LoadingFooter.State.TheEnd);
     }
 
-    private void showReportDialog(){
+    private void showReportDialog() {
         new MaterialDialog.Builder(this)
                 .title(R.string.confirm_report)
                 .items(R.array.reportType)
-                .itemsCallbackSingleChoice(0,new MaterialDialog.ListCallbackSingleChoice() {
+                .itemsCallbackSingleChoice(0, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
-                        dynamicPresent.reportDynamic(dynamic.id,text.toString());
+                        dynamicPresent.reportDynamic(dynamic.id, text.toString());
                         return false;
                     }
                 })
@@ -283,7 +290,7 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
                 .show();
     }
 
-    private void showDeleteDialog(){
+    private void showDeleteDialog() {
         new MaterialDialog.Builder(this)
                 .content(R.string.confirm_delete)
                 .negativeText(R.string.cancel)
@@ -291,7 +298,7 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
                 .onAny(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        if(which == DialogAction.POSITIVE){
+                        if (which == DialogAction.POSITIVE) {
                             dynamicPresent.deleteDynamic(dynamic.id);
                         }
                     }
@@ -301,29 +308,29 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
 
     @Override
     public void reportResult(BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
+        if (baseBean.getStatus() == Constant.OK) {
             ToastGlobal.showLong("举报成功");
-        }else {
+        } else {
             ToastGlobal.showLong(baseBean.getMessage());
         }
     }
 
     @Override
     public void addFollowResult(BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
+        if (baseBean.getStatus() == Constant.OK) {
             SystemInfoUtils.addFollow(dynamic.publisher);
             headerAdapter.notifyDataSetChanged();
-        }else {
+        } else {
             ToastGlobal.showLong(baseBean.getMessage());
         }
     }
 
     @Override
     public void cancelFollowResult(BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
+        if (baseBean.getStatus() == Constant.OK) {
             SystemInfoUtils.removeFollow(dynamic.publisher);
             headerAdapter.notifyDataSetChanged();
-        }else {
+        } else {
             ToastGlobal.showLong(baseBean.getMessage());
         }
     }
@@ -331,13 +338,13 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
 
     @Override
     public void deleteDynamicResult(BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
+        if (baseBean.getStatus() == Constant.OK) {
             ToastGlobal.showLong("删除成功");
 
-            setResult(RESULT_DELETE,null);
+            setResult(RESULT_DELETE, null);
 
             finish();
-        }else {
+        } else {
             ToastGlobal.showLong(baseBean.getMessage());
         }
     }
@@ -345,8 +352,21 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
     public class DynamicCallback extends CircleDynamicAdapter.SimpleDynamicCallback {
 
         @Override
+        public void onShareClick(DynamicBean dynamic) {
+            String cover;
+            if (dynamic.image != null && !dynamic.image.isEmpty()) {
+                cover = dynamic.image.get(0);
+            } else {
+                cover = dynamic.videos.cover;
+            }
+            sharePopupWindow.showAtBottom("我分享了" + dynamic.publisher.getName() + "的动态，速速围观",
+                    dynamic.content, cover, ConstantUrl.URL_SHARE_DYNAMIC + dynamic.id);
+
+        }
+
+        @Override
         public void onAvatarClick(String id) {
-            UserInfoActivity.start(DynamicDetailActivity.this,id);
+            UserInfoActivity.start(DynamicDetailActivity.this, id);
         }
 
         @Override
@@ -380,10 +400,10 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
 
         @Override
         public void onFollowClick(String id) {
-            boolean isFollow = SystemInfoUtils.isFollow(DynamicDetailActivity.this,id);
-            if(isFollow){
+            boolean isFollow = SystemInfoUtils.isFollow(DynamicDetailActivity.this, id);
+            if (isFollow) {
                 dynamicPresent.cancelFollow(id);
-            }else {
+            } else {
                 dynamicPresent.addFollow(id);
             }
         }
@@ -391,7 +411,7 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
 
     @Override
     public void addLikeResult(int position, BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
+        if (baseBean.getStatus() == Constant.OK) {
             dynamicList.get(position).like.counter += 1;
             UserBean item = new UserBean();
             UserCoach user = App.mInstance.getUser();
@@ -399,25 +419,25 @@ public  class DynamicDetailActivity extends BaseActivity implements DynamicDetai
             item.setId(String.valueOf(user.getId()));
             dynamicList.get(position).like.item.add(item);
             headerAdapter.notifyItemChanged(position);
-        }else{
+        } else {
             ToastGlobal.showLong(baseBean.getMessage());
         }
     }
 
     @Override
     public void cancelLikeResult(int position, BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
+        if (baseBean.getStatus() == Constant.OK) {
             dynamicList.get(position).like.counter -= 1;
             List<UserBean> item = dynamicList.get(position).like.item;
             int myPosition = 0;
             for (int i = 0; i < item.size(); i++) {
-                if(item.get(i).getId().equals(String.valueOf(App.mInstance.getUser().getId()))){
+                if (item.get(i).getId().equals(String.valueOf(App.mInstance.getUser().getId()))) {
                     myPosition = i;
                 }
             }
             item.remove(myPosition);
             headerAdapter.notifyItemChanged(position);
-        }else {
+        } else {
             ToastGlobal.showLong(baseBean.getMessage());
         }
     }

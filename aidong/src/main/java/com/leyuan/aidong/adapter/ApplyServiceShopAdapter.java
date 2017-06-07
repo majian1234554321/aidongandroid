@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.GoodsBean;
-import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.ToastGlobal;
 
@@ -42,7 +41,7 @@ public class ApplyServiceShopAdapter extends RecyclerView.Adapter<ApplyServiceSh
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final GoodsBean bean = array.get(position);
-        final int amount = FormatUtil.parseInt(bean.getAmount());
+        final int amount =bean.getCan_return();
         GlideLoader.getInstance().displayImage(bean.getCover(), holder.dvCover);
         holder.tvName.setText(bean.getName());
         holder.ivMinus.setOnClickListener(new View.OnClickListener() {

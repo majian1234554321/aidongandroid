@@ -37,7 +37,7 @@ public class LoginModel implements LoginModelInterface {
 
     @Override
     public void autoLogin(Subscriber<LoginResult> subscriber) {
-        mLoginService.autoLogin()
+        mLoginService.autoLogin(App.getInstance().getjPushId())
                 .compose(RxHelper.<LoginResult>transform())
                 .subscribe(subscriber);
     }

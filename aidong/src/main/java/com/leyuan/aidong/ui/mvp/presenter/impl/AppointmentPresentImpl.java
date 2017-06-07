@@ -148,11 +148,12 @@ public class AppointmentPresentImpl implements AppointmentPresent {
                     appointmentDetailBean = appointmentDetailData.getAppoint();
                 }
                 if (appointmentDetailBean != null) {
+                    createShareBeanByOrder(appointmentDetailData.getAppoint().getId(),
+                            appointmentDetailData.getAppoint().getPay().getCreatedAt());
                     switcherLayout.showContentLayout();
                     appointmentDetailActivityView.setAppointmentDetail(appointmentDetailBean);
 
-                    createShareBeanByOrder(appointmentDetailData.getAppoint().getId(),
-                            appointmentDetailData.getAppoint().getPay().getCreatedAt());
+
                 } else {
                     switcherLayout.showEmptyLayout();
                 }
@@ -208,13 +209,14 @@ public class AppointmentPresentImpl implements AppointmentPresent {
             @Override
             public void onNext(AppointmentDetailData appointmentDetailData) {
                 if (appointmentDetailData != null) {
-                    switcherLayout.showContentLayout();
-                    appointmentDetailActivityView.setAppointmentDetail(appointmentDetailData.getAppoint());
-
                     if (appointmentDetailData.getAppoint() != null) {
                         createShareBeanByOrder(appointmentDetailData.getAppoint().getId(),
                                 appointmentDetailData.getAppoint().getPay().getCreatedAt());
                     }
+                    switcherLayout.showContentLayout();
+                    appointmentDetailActivityView.setAppointmentDetail(appointmentDetailData.getAppoint());
+
+
                 }
             }
         }, id);
@@ -229,21 +231,23 @@ public class AppointmentPresentImpl implements AppointmentPresent {
             @Override
             public void onNext(AppointmentDetailData appointmentDetailData) {
                 if (appointmentDetailData != null) {
-                    switcherLayout.showContentLayout();
-                    appointmentDetailActivityView.setAppointmentDetail(appointmentDetailData.getAppoint());
                     if (appointmentDetailData.getAppoint() != null) {
                         createShareBeanByOrder(appointmentDetailData.getAppoint().getId(),
                                 appointmentDetailData.getAppoint().getPay().getCreatedAt());
                     }
+                    switcherLayout.showContentLayout();
+                    appointmentDetailActivityView.setAppointmentDetail(appointmentDetailData.getAppoint());
+
                 }
             }
         }, id);
     }
 
 
-    private void createShareBeanByOrder(String createdAt, String id) {
-        shareCouponInfo.setCreatedAt(createdAt);
+    private void createShareBeanByOrder(String id, String createdAt) {
         shareCouponInfo.setNo(id);
+        shareCouponInfo.setCreatedAt(createdAt);
+
     }
 
     @Override

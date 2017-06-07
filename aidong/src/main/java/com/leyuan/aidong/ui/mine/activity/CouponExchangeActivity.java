@@ -97,6 +97,7 @@ public class CouponExchangeActivity extends BaseActivity implements CouponExchan
     public void obtainCouponResult(CouponBean bean) {
         DialogUtils.dismissDialog();
         if (bean != null) {
+            tvExchange.setText("");
             layout_coupon.setVisibility(View.VISIBLE);
             tvName.setText(bean.getName());
             tvCouponPrice.setText(bean.getDiscount());

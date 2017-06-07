@@ -115,8 +115,9 @@ public class ConfirmOrderPresentImpl implements ConfirmOrderPresent {
         equipmentModel.buyEquipmentImmediately(new ProgressSubscriber<PayOrderData>(context) {
             @Override
             public void onNext(PayOrderData payOrderData) {
-                PayUtils.pay(context, payOrderData.getOrder(), listener);
                 createShareBeanByOrder(payOrderData);
+                PayUtils.pay(context, payOrderData.getOrder(), listener);
+
             }
         }, skuCode, amount, coupon, integral, coin, payType, pickUpWay, pickUpId, pickUpDate);
     }
@@ -132,9 +133,9 @@ public class ConfirmOrderPresentImpl implements ConfirmOrderPresent {
 
             @Override
             public void onNext(PayOrderData payOrderData) {
-
-                PayUtils.pay(context, payOrderData.getOrder(), listener);
                 createShareBeanByOrder(payOrderData);
+                PayUtils.pay(context, payOrderData.getOrder(), listener);
+
 
             }
         }, skuCode, amount, coupon, integral, coin, payType, pickUpWay, pickUpId, pickUpDate);
@@ -158,6 +159,7 @@ public class ConfirmOrderPresentImpl implements ConfirmOrderPresent {
         cartModel.payCart(new ProgressSubscriber<PayOrderData>(context) {
             @Override
             public void onNext(PayOrderData payOrderData) {
+                createShareBeanByOrder(payOrderData);
                 PayUtils.pay(context, payOrderData.getOrder(), listener);
             }
         }, integral, coin, coupon, payType, pickUpId, pickUpDate, id);

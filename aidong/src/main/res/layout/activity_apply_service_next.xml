@@ -26,17 +26,37 @@
 
     <include layout="@layout/inc_line_black" />
 
-    <TextView
-        android:id="@+id/tv_new_address"
+    <RelativeLayout
+        android:id="@+id/layout_new_address"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/main_red"
-        android:gravity="center"
-        android:paddingTop="10dp"
-        android:text="新建地址"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:visibility="gone" />
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:text="暂无收获地址"
+            android:textColor="@color/txt_black"
+            android:textSize="16sp"
+            android:visibility="visible" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:text="新建地址"
+            android:drawableRight="@drawable/icon_right_arrow"
+            android:drawablePadding="5dp"
+            android:textColor="@color/txt_black"
+            android:textSize="16sp"
+            android:visibility="visible" />
+
+    </RelativeLayout>
 
 
     <RelativeLayout
@@ -45,20 +65,21 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/text"
         android:paddingTop="10dp"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/iv_default"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/left_margin"
-            android:src="@drawable/icon_default" />
+            android:src="@drawable/icon_default"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="15dp"
             android:layout_toRightOf="@+id/iv_default"
             android:text="陈细木"
             android:textColor="@color/black"

@@ -44,6 +44,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.iwgang.countdownview.CountdownView;
+import retrofit2.http.HEAD;
 
 import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
 import static com.leyuan.aidong.utils.Constant.PAY_ALI;
@@ -125,9 +126,9 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
     private String payType;
     private OrderDetailBean bean;
 
-    public static void start(Context context,String id) {
+    public static void start(Context context, String id) {
         Intent starter = new Intent(context, OrderDetailActivity.class);
-        starter.putExtra("orderId",id);
+        starter.putExtra("orderId", id);
         context.startActivity(starter);
     }
 
@@ -136,20 +137,20 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_detail);
         orderCountdownMill = SystemInfoUtils.getOrderCountdown(this) * 60 * 1000;
-        orderPresent = new OrderPresentImpl(this,this);
-        if(getIntent() != null){
+        orderPresent = new OrderPresentImpl(this, this);
+        if (getIntent() != null) {
             orderId = getIntent().getStringExtra("orderId");
         }
 
         initView();
         setListener();
-        orderPresent.getOrderDetail(switcherLayout,orderId);
+        orderPresent.getOrderDetail(switcherLayout, orderId);
     }
 
-    private void initView(){
+    private void initView() {
         titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
         llContent = (LinearLayout) findViewById(R.id.ll_content);
-        switcherLayout = new SwitcherLayout(this,llContent);
+        switcherLayout = new SwitcherLayout(this, llContent);
         tvState = (TextView) findViewById(R.id.tv_state);
         tvOrderNo = (TextView) findViewById(R.id.tv_order_no);
         timeLayout = (LinearLayout) findViewById(R.id.ll_timer);
@@ -200,7 +201,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
         selfDeliveryGoodsRecyclerView.setAdapter(selfDeliveryAdapter);
     }
 
-    private void setListener(){
+    private void setListener() {
         titleBar.setOnClickListener(this);
         tvCancel.setOnClickListener(this);
         tvPay.setOnClickListener(this);
@@ -217,33 +218,35 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
     public void setOrderDetail(OrderDetailBean bean) {
         this.bean = bean;
         int goodsCount = 0;
+        int returnCount = 0;
         bottomLayout.setVisibility(View.VISIBLE);
 
         payType = bean.getPayType();
-        if(PAY_ALI.equals(payType)){
+        if (PAY_ALI.equals(payType)) {
             rbALiPay.setChecked(true);
-        }else {
+        } else {
             rbWeiXinPay.setChecked(true);
         }
 
-        tvOrderNo.setText(String.format(getString(R.string.order_no),bean.getId()));
+        tvOrderNo.setText(String.format(getString(R.string.order_no), bean.getId()));
         tvOrderNo.setVisibility(UN_PAID.equals(bean.getStatus()) ? View.GONE : View.VISIBLE);
         timeLayout.setVisibility(UN_PAID.equals(bean.getStatus()) ? View.VISIBLE : View.GONE);
         timer.start(DateUtils.getCountdown(bean.getCreatedAt(), orderCountdownMill));
 
         for (ParcelBean parcelBean : bean.getParcel()) {
-            if(DELIVERY_EXPRESS.equals(parcelBean.getPickUpWay())){
+            if (DELIVERY_EXPRESS.equals(parcelBean.getPickUpWay())) {
                 expressList.add(parcelBean);
-            }else {
+            } else {
                 selfDeliveryList.add(parcelBean);
             }
             for (GoodsBean goodsBean : parcelBean.getItem()) {
                 goodsCount += FormatUtil.parseInt(goodsBean.getAmount());
                 goodsList.add(goodsBean);
+                returnCount += goodsBean.getCan_return();
             }
         }
 
-        if(expressList != null && !expressList.isEmpty()) {
+        if (expressList != null && !expressList.isEmpty()) {
             expressAdapter.setData(expressList);
             expressInfoLayout.setVisibility(View.VISIBLE);
             ParcelBean expressParcel = expressList.get(0);
@@ -254,26 +257,26 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
             if(PAID.equals(bean.getStatus()) || FINISH.equals(bean.getStatus())){
                 orderPresent.getOrderDetailExpressInfo(orderId);
                 rlExpress.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 rlExpress.setVisibility(View.GONE);
             }
-        }else {
+        } else {
             expressInfoLayout.setVisibility(View.GONE);
         }
 
-        if(selfDeliveryList != null && !selfDeliveryList.isEmpty()) {
+        if (selfDeliveryList != null && !selfDeliveryList.isEmpty()) {
             selfDeliveryAdapter.setData(selfDeliveryList);
             selfDeliveryInfoLayout.setVisibility(View.VISIBLE);
             tvDeliveryTime.setRightContent(selfDeliveryList.get(0).getPickUpDate());
-            if(UN_PAID.equals(bean.getStatus()) || CLOSE.equals(bean.getStatus())){
+            if (UN_PAID.equals(bean.getStatus()) || CLOSE.equals(bean.getStatus())) {
                 rlQrCode.setVisibility(View.GONE);
-            }else {
+            } else {
                 rlQrCode.setVisibility(View.VISIBLE);
-                if(PAID.equals(bean.getStatus())){
+                if (PAID.equals(bean.getStatus())) {
                     tvQrNum.setText(bean.getId());
                     ivQr.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFF000000, bean.getId(),
                             DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
-                }else {
+                } else {
                     tvQrNum.setText(bean.getId());
                     tvQrNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                     tvQrNum.setTextColor(Color.parseColor("#ebebeb"));
@@ -281,15 +284,15 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
                             DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
                 }
             }
-        }else {
+        } else {
             selfDeliveryInfoLayout.setVisibility(View.GONE);
         }
 
         //订单信息
         tvTotalPrice.setRightContent(String.format(getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.getTotal())));
-        tvExpressPrice.setRightContent(expressList!= null && !expressList.isEmpty()
-                ? String.format(getString(R.string.rmb_price_double),SystemInfoUtils.getExpressPrice(this)):"¥ 0.00");
+        tvExpressPrice.setRightContent(expressList != null && !expressList.isEmpty()
+                ? String.format(getString(R.string.rmb_price_double), SystemInfoUtils.getExpressPrice(this)) : "¥ 0.00");
         tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double),
                 FormatUtil.parseDouble(bean.getCoupon())));
         tvAiBi.setRightContent(String.format(getString(R.string.rmb_minus_price_double),
@@ -298,25 +301,28 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
                 FormatUtil.parseDouble(bean.getIntegral())));
         tvStartTime.setRightContent(bean.getCreatedAt());
         tvPayType.setVisibility(UN_PAID.equals(bean.getStatus()) ? View.GONE : View.VISIBLE);
-        tvPayType.setRightContent(PAY_ALI.equals(bean.getPayType())? "支付宝" : "微信");
+        tvPayType.setRightContent(PAY_ALI.equals(bean.getPayType()) ? "支付宝" : "微信");
         tvPrice.setText(String.format(getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.getPayAmount())));
 
         llPay.setVisibility(UN_PAID.equals(bean.getStatus()) ? View.VISIBLE : View.GONE);
-        tvGoodsCount.setText(getString(R.string.goods_count,goodsCount));
+        tvGoodsCount.setText(getString(R.string.goods_count, goodsCount));
 
         tvCancel.setVisibility(UN_PAID.equals(bean.getStatus()) ? View.VISIBLE : View.GONE);
         tvPay.setVisibility(UN_PAID.equals(bean.getStatus()) ? View.VISIBLE : View.GONE);
         tvAfterSell.setVisibility(PAID.equals(bean.getStatus()) || FINISH.equals(bean.getStatus())
-                ?View.VISIBLE:View.GONE);
+                ? View.VISIBLE : View.GONE);
+        if (returnCount == 0) {
+            tvAfterSell.setVisibility(View.GONE);
+        }
         tvConfirm.setVisibility(PAID.equals(bean.getStatus()) ? View.VISIBLE : View.GONE);
         tvReBuy.setVisibility(FINISH.equals(bean.getStatus()) || CLOSE.equals(bean.getStatus())
-            ? View.VISIBLE : View.GONE);
+                ? View.VISIBLE : View.GONE);
 
         tvState.setText(bean.getStatus().equals(UN_PAID) ? getString(R.string.un_paid)
-                :bean.getStatus().equals(PAID) ? getString(R.string.paid)
-                :bean.getStatus().equals(FINISH) ? getString(R.string.order_finish)
-                :getString(R.string.order_close));
+                : bean.getStatus().equals(PAID) ? getString(R.string.paid)
+                : bean.getStatus().equals(FINISH) ? getString(R.string.order_finish)
+                : getString(R.string.order_close));
     }
 
     @Override
@@ -330,11 +336,12 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
                 break;
             case R.id.tv_pay:
                 PayInterface payInterface = PAY_ALI.equals(payType) ?
-                        new AliPay(this,payListener) : new WeiXinPay(this,payListener);
+                        new AliPay(this, payListener) : new WeiXinPay(this, payListener);
                 payInterface.payOrder(bean.getPay_option());
                 break;
             case R.id.tv_after_sell:
-                ApplyServiceActivity.start(this,orderId,goodsList);
+                ApplyServiceActivity.start(this, orderId, goodsList);
+                finish();
                 break;
             case R.id.tv_confirm:
                 orderPresent.confirmOrder(orderId);
@@ -346,7 +353,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
                 orderPresent.reBuyOrder(orderId);
                 break;
             case R.id.rl_express:
-                ExpressInfoActivity.start(this,orderId);
+                ExpressInfoActivity.start(this, orderId);
                 break;
             default:
                 break;
@@ -373,7 +380,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
             clearList();
             orderPresent.getOrderDetail(orderId);
             ToastGlobal.showLong("取消成功");
-        }else {
+        } else {
             ToastGlobal.showLong(baseBean.getMessage());
         }
     }
@@ -384,36 +391,36 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
             clearList();
             orderPresent.getOrderDetail(orderId);
             ToastGlobal.showLong("确认成功");
-        }else {
+        } else {
             ToastGlobal.showLong(baseBean.getMessage());
         }
     }
 
     @Override
     public void deleteOrderResult(BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
+        if (baseBean.getStatus() == Constant.OK) {
             orderPresent.getOrderDetail(orderId);
             ToastGlobal.showLong("删除成功");
-        }else {
+        } else {
             ToastGlobal.showLong(baseBean.getMessage());
         }
     }
 
     @Override
     public void reBuyOrderResult(List<String> cartIds) {
-        CartActivity.start(this,cartIds);
+        CartActivity.start(this, cartIds);
     }
 
 
     @Override
-    public void getExpressInfoResult(String status,String time) {
+    public void getExpressInfoResult(String status, String time) {
         tvExpressAddress.setText(status);
         tvExpressTime.setText(time);
     }
 
     @Override
     public void onCheckedChanged(CustomNestRadioGroup group, int checkedId) {
-        switch (checkedId){
+        switch (checkedId) {
             case R.id.cb_alipay:
                 payType = PAY_ALI;
                 break;

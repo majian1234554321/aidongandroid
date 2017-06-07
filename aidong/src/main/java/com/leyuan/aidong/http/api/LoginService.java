@@ -15,9 +15,9 @@ public interface LoginService {
                                             @Field("register_code") String register_code);
 
     //                                            @Field("device_type") String device_type, @Field("device_token") String device_token);
-//    @FormUrlEncoded
+    @FormUrlEncoded
     @POST("login/auto")
-    Observable<BaseBean<LoginResult>> autoLogin();
+    Observable<BaseBean<LoginResult>> autoLogin(@Field("register_code") String register_code);
 
     @POST("login/release")
     Observable<BaseBean<LoginResult>> exitLogin();
