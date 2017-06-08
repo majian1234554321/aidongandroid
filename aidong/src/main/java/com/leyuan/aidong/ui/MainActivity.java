@@ -26,6 +26,11 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.VersionPresenterImpl;
 import com.leyuan.aidong.ui.video.fragment.VideoHomeFragment;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.LocatinCityManager;
+import com.leyuan.aidong.utils.autostart.CheckAutoStartUtils;
+import com.leyuan.aidong.widget.dialog.BaseDialog;
+import com.leyuan.aidong.widget.dialog.ButtonCancelListener;
+import com.leyuan.aidong.widget.dialog.ButtonOkListener;
+import com.leyuan.aidong.widget.dialog.DialogDoubleButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +75,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         initView();
         initData();
         registerMessageReceiver();
+        checkAutoStart();
     }
 
     private void initView() {
@@ -111,6 +117,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         newPushMessageReceiver = new NewPushMessageReceiver(img_new_message);
         registerReceiver(newPushMessageReceiver, new IntentFilter(NewPushMessageReceiver.ACTION));
+    }
+
+    private void checkAutoStart() {
+        if (CheckAutoStartUtils.isNeedCheck(this)) {
+            new DialogDoubleButton(this).setContentDesc("为了及时收到最新消息，请进入设置把应用加入自启动白名单")
+                    .setBtnCancelListener(new ButtonCancelListener() {
+                        @Override
+                        public void onClick(BaseDialog dialog) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setBtnOkListener(new ButtonOkListener() {
+                        @Override
+                        public void onClick(BaseDialog dialog) {
+                            CheckAutoStartUtils.skipToAutoStartView(MainActivity.this);
+                            dialog.dismiss();
+                        }
+                    })
+                    .show();
+        }
     }
 
     @Override

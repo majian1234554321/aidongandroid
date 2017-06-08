@@ -142,6 +142,21 @@ public class SharePrefUtils {
 
         return mSharedPreferences.getString(key, defaultValue);
     }
+    public static void putLong(Context ctx, String key, long value) {
+        if (mSharedPreferences == null) {
+            mSharedPreferences = ctx.getSharedPreferences(SHARE_PREFS_NAME,
+                    Context.MODE_PRIVATE);
+        }
+        mSharedPreferences.edit().putLong(key, value).commit();
+    }
+
+    public static long getLong(Context ctx, String key, long defaultValue) {
+        if (mSharedPreferences == null) {
+            mSharedPreferences = ctx.getSharedPreferences(SHARE_PREFS_NAME,
+                    Context.MODE_PRIVATE);
+        }
+        return mSharedPreferences.getLong(key, defaultValue);
+    }
 
 
     public static String getToken(Context context) {
@@ -150,5 +165,13 @@ public class SharePrefUtils {
 
     public static void setToken(Context context, String token) {
         putString(context, "token", token);
+    }
+
+    public static void putCheckAutoStartTime(Context ctx) {
+        putLong(ctx, "checkAutoStartTime", System.currentTimeMillis());
+    }
+
+    public static long getLastCheckAutoStartTime(Context ctx) {
+        return getLong(ctx, "checkAutoStartTime", 0);
     }
 }
