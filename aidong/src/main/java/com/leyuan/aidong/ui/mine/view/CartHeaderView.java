@@ -182,9 +182,9 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
             //change date local
             ShopBean shop = shopBeanList.get(shopPosition); // first,remove this goods
             shop.getItem().remove(goodsPosition);
-            if(shop.getItem().isEmpty()){   //if the shop is empty ,remove it
+            if(shop.getItem().isEmpty()){   //if the shop is empty, remove it
                 shopBeanList.remove(shop);
-                if(shopBeanList.isEmpty()){ //if the cart is empty ,show empty cart
+                if(shopBeanList.isEmpty()){ //if the cart is empty, show empty cart
                     showEmptyGoodsView();
                     return;
                 }
@@ -205,7 +205,6 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
             }
         }else {
             ToastGlobal.showLong(R.string.delete_fail);
-
         }
     }
 
@@ -217,6 +216,10 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
 
     public void showRecommendText(boolean visibility){
         tvRecommend.setVisibility(visibility ? VISIBLE : GONE);
+    }
+
+    public void setEditingStatus(boolean isEditing){
+        shopAdapter.setEditing(isEditing);
     }
 
     private void setReBuyGoods(){

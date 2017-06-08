@@ -326,8 +326,24 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             }
         }
 
+        if (bean.pick_up != null) {
+            if (DELIVERY_EXPRESS.equals(bean.pick_up.getType()) && bean.pick_up.isSend()) {             //默认快递
+                tvAddressInfo.setVisibility(View.GONE);
+                tvDeliveryInfo.setText(getString(R.string.express));
+            } else if(DELIVERY_SELF.equals(bean.pick_up.getType()) && bean.pick_up.getInfo() != null
+                    && !TextUtils.isEmpty(bean.pick_up.getInfo().getId())){                             //默认自提
+                tvAddressInfo.setVisibility(View.VISIBLE);
+                tvAddressInfo.setText(bean.pick_up.getInfo().getName());
+                tvDeliveryInfo.setText(getString(R.string.self_delivery));
+            }else {                                                                         //既不支持快递又不支持自提
+                isSellOut = true;//如果该商品既不支持快递也不支持自提即不能购买,认为该商品为售罄状态
+                tvAddressInfo.setVisibility(View.GONE);
+                tvDeliveryInfo.setText(getString(R.string.please_select));
+            }
+        }
+
         if(isSellOut){
-            tvSelectSku.setText(R.string.please_choose);
+            tvSelectSku.setText(hasSku ? getString(R.string.please_select) : "规格");
             tvCount.setText(R.string.sell_out);
             Drawable rightArrow = getResources().getDrawable(R.drawable.icon_right_arrow);
             tvCount.setCompoundDrawablesWithIntrinsicBounds(null,null, hasSku ? rightArrow : null,null);
@@ -344,19 +360,6 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             tvSellOut.setVisibility(View.GONE);
             payLayout.setVisibility(View.VISIBLE);
             tvAddCart.setVisibility(View.VISIBLE);
-        }if (bean.pick_up != null) {
-            if (DELIVERY_EXPRESS.equals(bean.pick_up.getType()) && bean.pick_up.isSend()) {             //默认快递
-                tvAddressInfo.setVisibility(View.GONE);
-                tvDeliveryInfo.setText(getString(R.string.express));
-            } else if(DELIVERY_SELF.equals(bean.pick_up.getType()) && bean.pick_up.getInfo() != null
-                    && !TextUtils.isEmpty(bean.pick_up.getInfo().getId())){                             //默认自提
-                tvAddressInfo.setVisibility(View.VISIBLE);
-                tvAddressInfo.setText(bean.pick_up.getInfo().getName());
-                tvDeliveryInfo.setText(getString(R.string.self_delivery));
-            }else {                                                                         //既不支持快递又不支持自提
-                tvAddressInfo.setVisibility(View.GONE);
-                tvDeliveryInfo.setText(getString(R.string.please_select));
-            }
         }
 
         initFragments();

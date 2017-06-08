@@ -115,7 +115,7 @@ public class CartPresentImpl implements CartPresent{
     }
 
     @Override
-    public void updateGoodsDeliveryInfo(String id, final String gymId) {
+    public void updateGoodsDeliveryInfo(String id,String count, final String gymId) {
         cartModel.updateDeliveryInfo(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
@@ -126,7 +126,7 @@ public class CartPresentImpl implements CartPresent{
                 }
 
             }
-        },id,gymId);
+        },id,count,gymId);
     }
 
     @Override

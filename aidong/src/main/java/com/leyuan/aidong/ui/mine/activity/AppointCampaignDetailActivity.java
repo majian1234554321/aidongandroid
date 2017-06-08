@@ -63,7 +63,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
     private static final String JOINED = "confirmed";        //已参加
     private static final String CLOSE = "canceled";          //已关闭
     private static final String REFUNDING = "refunding";     //退款中
-    private static final String REFUNDED = "refunded";       //已退款
+    private static final String REFUNDED = "returned";      //已退款
     private long APPOINT_COUNTDOWN_MILL;
 
     private SimpleTitleBar titleBar;

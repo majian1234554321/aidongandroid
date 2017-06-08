@@ -59,7 +59,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
     private static final String JOINED = "confirmed";        //已参加
     private static final String CLOSE = "canceled";          //已关闭
     private static final String REFUNDING = "refunding";     //退款中
-    private static final String REFUNDED = "refunded";       //已退款
+    private static final String REFUNDED = "returned";      //已退款
     private long appointCountdownMill;
 
     private SimpleTitleBar titleBar;

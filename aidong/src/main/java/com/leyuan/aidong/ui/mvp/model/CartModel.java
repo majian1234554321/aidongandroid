@@ -47,7 +47,7 @@ public interface CartModel {
      * @param id 商品id
      * @param gym_id 自体门店地址 快递的话为0
      */
-    void updateDeliveryInfo(Subscriber<BaseBean> subscriber, String id, String gym_id);
+    void updateDeliveryInfo(Subscriber<BaseBean> subscriber, String id,String count,  String gym_id);
 
     /**
      * 结算购物车

@@ -118,7 +118,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
         tvBmi = (ExtendTextView) findViewById(R.id.bmi);
         tvFrequency = (ExtendTextView) findViewById(R.id.frequency);
         avatarUrl = profileBean.getAvatar();
-        GlideLoader.getInstance().displayCircleImage(avatarUrl, ivAvatar);
+        GlideLoader.getInstance().displayRoundAvatarImage(avatarUrl, ivAvatar);
         tvNickname.setRightContent(profileBean.getName() == null ? "请输入昵称" : profileBean.getName());
         tvGender.setRightContent("0".equals(profileBean.getGender()) ? "男" : "女");
         tvIdentify.setRightContent("coach".equals(profileBean.getUserType()) ? "教练" : "健身爱好者");
@@ -413,7 +413,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
             List<BaseMedia> medias = Boxing.getResult(data);
             if (medias != null && !medias.isEmpty()) {
                 avatarPath = medias.get(0).getPath();
-                GlideLoader.getInstance().displayCircleImage("file://" + avatarPath, ivAvatar);
+                GlideLoader.getInstance().displayRoundAvatarImage("file://" + avatarPath, ivAvatar);
             }
         }
     }

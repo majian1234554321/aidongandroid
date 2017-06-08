@@ -56,8 +56,8 @@ public class CartModelImpl implements CartModel{
     }
 
     @Override
-    public void updateDeliveryInfo(Subscriber<BaseBean> subscriber, String id, String gym_id) {
-        cartService.updateDeliveryInfo(id,gym_id)
+    public void updateDeliveryInfo(Subscriber<BaseBean> subscriber, String id,String count, String gym_id) {
+        cartService.updateDeliveryInfo(id,count,gym_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);

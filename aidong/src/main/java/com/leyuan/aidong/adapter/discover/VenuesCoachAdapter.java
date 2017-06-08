@@ -55,7 +55,7 @@ public class VenuesCoachAdapter extends RecyclerView.Adapter<VenuesCoachAdapter.
     @Override
     public void onBindViewHolder(CoachHolder holder, int position) {
         final CoachBean bean = data.get(position);
-        GlideLoader.getInstance().displayCircleImage(bean.getAvatar(), holder.cover);
+        GlideLoader.getInstance().displayRoundAvatarImage(bean.getAvatar(), holder.cover);
         holder.name.setText(bean.getName());
         if ("0".equals(bean.getGender())) {   //男
             holder.gender.setBackgroundResource(R.drawable.icon_man);

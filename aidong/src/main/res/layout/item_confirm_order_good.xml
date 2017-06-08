@@ -48,6 +48,8 @@
         android:layout_marginRight="20dp"
         android:layout_alignLeft="@+id/tv_goods_name"/>
 
+
+
     <TextView
         android:id="@+id/tv_recommend_code"
         android:layout_width="wrap_content"

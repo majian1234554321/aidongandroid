@@ -204,7 +204,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         banner.setData(bean.getCover(), null);
         tvBannerPrice.setText(FormatUtil.parseDouble(bean.getPrice()) == 0f
                 ? "免费" : String.format(getString(R.string.rmb_price), bean.getPrice()));
-        GlideLoader.getInstance().displayCircleImage(bean.getCoach().getAvatar(), ivAvatar);
+        GlideLoader.getInstance().displayRoundAvatarImage(bean.getCoach().getAvatar(), ivAvatar);
         tvCoachName.setText(bean.getCoach().getName());
         tvTime.setText(String.format(getString(R.string.detail_time),
                 bean.getClassDate(), bean.getClassTime(), bean.getBreakTime()));
@@ -312,7 +312,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void bottomToTargetActivity() {
-        if (STATUS_APPOINT.equals(bean.getStatus())) {        //预约
+        if (STATUS_APPOINT.equals(bean.getStatus())) {            //预约
             if (App.mInstance.isLogin()) {
                 AppointCourseActivity.start(this, bean);
             } else {

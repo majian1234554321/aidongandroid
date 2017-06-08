@@ -63,7 +63,7 @@ public interface CartService {
      */
     @FormUrlEncoded
     @PUT("mine/cart/{id}")
-    Observable<BaseBean> updateDeliveryInfo(@Path("id") String id,@Field("gym_id") String gym_id);
+    Observable<BaseBean> updateDeliveryInfo(@Path("id") String id,@Field("amount") String count,@Field("gym_id") String gym_id);
 
     /**
      * 购物车结算

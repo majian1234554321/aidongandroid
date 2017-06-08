@@ -105,7 +105,8 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
             changeExpressInfoLocal();
         }else{
             String cartId = data.get(position).getGoods().getId();
-            cartPresent.updateGoodsDeliveryInfo(cartId, DELIVERY_EXPRESS);
+            String count = data.get(position).getGoods().getAmount();
+            cartPresent.updateGoodsDeliveryInfo(cartId,count, DELIVERY_EXPRESS);
         }
     }
 
@@ -127,8 +128,9 @@ public class UpdateDeliveryInfoActivity extends BaseActivity implements View.OnC
                    changeSelfDeliveryInfoLocal();
                 }else {
                     String cartId = data.get(position).getGoods().getId();
+                    String count = data.get(position).getGoods().getAmount();
                     String gymId = venuesBean.getId();
-                    cartPresent.updateGoodsDeliveryInfo(cartId,gymId);
+                    cartPresent.updateGoodsDeliveryInfo(cartId,count,gymId);
                 }
             }
         }
