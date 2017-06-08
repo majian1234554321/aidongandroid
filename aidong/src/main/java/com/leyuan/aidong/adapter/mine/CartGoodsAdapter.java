@@ -82,13 +82,24 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
             holder.check.setChecked(bean.isChecked());
             holder.dv_sold_out.setVisibility(View.GONE);
             holder.count.setText(bean.getAmount());
-            holder.minus.setImageResource(FormatUtil.parseInt(bean.getAmount()) == 1 ?
-                    R.drawable.icon_minus_gray : R.drawable.icon_minus);
+
+            if(FormatUtil.parseInt(bean.getAmount()) >= bean.getStock()){
+                holder.count.setText(String.valueOf(bean.getStock()));
+                holder.add.setImageResource(R.drawable.icon_add_gray);
+            }else {
+                holder.add.setImageResource(R.drawable.icon_add);
+            }
+
+            if(FormatUtil.parseInt(bean.getAmount()) == 1){
+                holder.minus.setImageResource(R.drawable.icon_minus_gray);
+            }else {
+                holder.minus.setImageResource(R.drawable.icon_minus);
+            }
+
             setShoppingClickEvent(holder, bean, position);
             RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) holder.cover.getLayoutParams();
             layoutParams.leftMargin = DensityUtil.dp2px(context,5);
             holder.cover.setLayoutParams(layoutParams);
-
         } else {
             holder.check.setVisibility(View.GONE);
             holder.dv_sold_out.setVisibility(View.VISIBLE);
@@ -154,6 +165,9 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
             @Override
             public void onClick(View v) {
                 int count = FormatUtil.parseInt(holder.count.getText().toString());
+                if(count >= bean.getStock()){
+                    return;
+                }
                 count++;
                 if (goodsChangeListener != null) {
                     goodsChangeListener.onGoodsCountChanged(data.get(position).getId(), count, position);

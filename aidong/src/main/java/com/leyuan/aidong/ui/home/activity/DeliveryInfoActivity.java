@@ -70,7 +70,8 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
         if(deliveryBean != null) {
             if(deliveryBean.getType().equals(DELIVERY_EXPRESS) && deliveryBean.isSend()){
                 setExpressSelected();
-            }else if(deliveryBean.getType().equals(DELIVERY_SELF) && deliveryBean.getInfo() != null){
+            }else if(deliveryBean.getType().equals(DELIVERY_SELF) && deliveryBean.getInfo() != null
+                    && !TextUtils.isEmpty(deliveryBean.getInfo().getId())){
                 setSelfDeliverySelected();
             }else {
                 setAllUnUsable();
