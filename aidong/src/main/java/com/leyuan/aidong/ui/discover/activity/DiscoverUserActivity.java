@@ -6,7 +6,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
@@ -24,7 +23,6 @@ import com.leyuan.aidong.ui.mvp.presenter.DiscoverPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DiscoverPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.DiscoverUserActivityView;
 import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.SwitcherLayout;
@@ -149,22 +147,20 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
             data.clear();
             refreshLayout.setRefreshing(false);
         }
-
-        if (App.getInstance().isLogin()) {
-            String mId = App.getInstance().getUser().getId() + "";
-
-
-            for (UserBean userBean : userList) {
-                if (!TextUtils.equals(mId, userBean.getId())) {
-                    data.add(userBean);
-                }
-                Logger.i("DiscoverUserActivity", "mID = " + mId + " , userId = " + userBean.getId());
-            }
-        } else {
-            data.addAll(userList);
-        }
-
-
+//        if (App.getInstance().isLogin()) {
+//            String mId = App.getInstance().getUser().getId() + "";
+//
+//
+//            for (UserBean userBean : userList) {
+//                if (!TextUtils.equals(mId, userBean.getId())) {
+//                    data.add(userBean);
+//                }
+//                Logger.i("DiscoverUserActivity", "mID = " + mId + " , userId = " + userBean.getId());
+//            }
+//        } else {
+//            data.addAll(userList);
+//        }
+        data.addAll(userList);
         userAdapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();
     }

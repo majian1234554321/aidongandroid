@@ -184,7 +184,7 @@ public class VideoCommentActivity extends BaseActivity implements SwipeRefreshLa
             UserCoach user = App.mInstance.getUser();
             idongId = user.getId() + "";
             myHeadUrl = user.getAvatar();
-            GlideLoader.getInstance().displayCircleImage(myHeadUrl, img_header);
+            GlideLoader.getInstance().displayRoundAvatarImage(myHeadUrl, img_header);
         }
     }
 

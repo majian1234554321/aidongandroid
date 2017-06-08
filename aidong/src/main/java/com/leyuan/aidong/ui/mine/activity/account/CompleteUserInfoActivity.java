@@ -120,7 +120,7 @@ public class CompleteUserInfoActivity extends BaseActivity implements UpdateUser
         tvBmi.setRightContent("0");
         tvFrequency.setRightContent(profileBean.getFrequency());
         avatarUrl = profileBean.getAvatar();
-        GlideLoader.getInstance().displayCircleImage(avatarUrl, ivAvatar);
+        GlideLoader.getInstance().displayRoundAvatarImage(avatarUrl, ivAvatar);
 
         weight = FormatUtil.parseFloat(profileBean.getWeight());
         height = FormatUtil.parseFloat(profileBean.getHeight());
@@ -431,7 +431,7 @@ public class CompleteUserInfoActivity extends BaseActivity implements UpdateUser
             List<BaseMedia> medias = Boxing.getResult(data);
             if (medias != null && !medias.isEmpty()) {
                 avatarPath = medias.get(0).getPath();
-                GlideLoader.getInstance().displayCircleImage("file://" + avatarPath, ivAvatar);
+                GlideLoader.getInstance().displayRoundAvatarImage("file://" + avatarPath, ivAvatar);
             }
         }
     }

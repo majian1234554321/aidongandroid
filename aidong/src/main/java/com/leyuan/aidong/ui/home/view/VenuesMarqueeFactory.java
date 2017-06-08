@@ -35,7 +35,9 @@ public class VenuesMarqueeFactory extends MarqueeFactory<RelativeLayout,VenuesBe
 
         GlideLoader.getInstance().displayRoundImage(data.getBrandLogo(),ivVenuesCover);
         tvVenuesName.setText(data.getName());
-        tvVenuesDistance.setText(String.format(context.getString(R.string.distance_km_double),data.getDistance()/1000));
+
+        tvVenuesDistance.setText(data.getDistanceFormat());
+//        tvVenuesDistance.setText(String.format(context.getString(R.string.distance_km_double),data.getDistance()/1000));
 
         return view;
     }

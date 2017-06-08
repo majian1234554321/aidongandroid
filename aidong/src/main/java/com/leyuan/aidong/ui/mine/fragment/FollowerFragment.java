@@ -161,8 +161,9 @@ public class FollowerFragment extends BaseLazyFragment implements FollowFragment
     @Override
     public void cancelFollowResult(BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
-            data.remove(data.get(position));
             SystemInfoUtils.removeFollow(data.get(position));
+//            data.remove(data.get(position));
+
             followAdapter.notifyDataSetChanged();
             Toast.makeText(getContext(), R.string.cancel_follow_success, Toast.LENGTH_LONG).show();
         } else {

@@ -90,6 +90,11 @@ public class AppointmentUserActivity extends BaseActivity implements UserAdapter
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        userAdapter.refreshClickedPosition();
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

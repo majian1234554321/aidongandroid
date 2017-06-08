@@ -12,6 +12,7 @@ import com.leyuan.aidong.entity.DistrictBean;
 import com.leyuan.aidong.entity.SystemBean;
 import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.entity.data.FollowData;
+import com.leyuan.aidong.ui.App;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -386,7 +387,8 @@ public class SystemInfoUtils {
      */
     public static void addFollow(UserBean bean) {
         if (bean != null) {
-            Constant.followData.getFollow().add(bean);
+            getFollowList(App.context).add(bean);
+//            Constant.followData.getFollow().add(bean);
         }
     }
 

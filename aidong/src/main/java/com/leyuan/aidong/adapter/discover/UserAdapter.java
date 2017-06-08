@@ -2,6 +2,7 @@ package com.leyuan.aidong.adapter.discover;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,12 +29,19 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
     private List<UserBean> data = new ArrayList<>();
     private FollowListener followListener;
     private int clickedPostion = -1;
+    String mId;
 
     public UserAdapter(Context context) {
         this.context = context;
+        if (App.getInstance().isLogin()) {
+            mId = App.getInstance().getUser().getId() + "";
+        }
     }
 
     public void setData(List<UserBean> data) {
+        if (App.getInstance().isLogin()) {
+            mId = App.getInstance().getUser().getId() + "";
+        }
         if (data != null) {
             this.data = data;
         }
@@ -91,6 +99,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
                 UserInfoActivity.start(context, bean.getId());
             }
         });
+
+        if (mId != null && TextUtils.equals(mId, bean.getId())) {
+            holder.follow.setVisibility(View.GONE);
+        }
     }
 
     public void addMoreData(List<UserBean> data) {
@@ -100,7 +112,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
     }
 
     public void refreshClickedPosition() {
-        Logger.i("refreshClickedPosition = " +clickedPostion );
+        Logger.i("refreshClickedPosition = " + clickedPostion);
         if (clickedPostion > -1 && clickedPostion < data.size()) {
             UserBean bean = data.get(clickedPostion);
             bean.setFollow(SystemInfoUtils.isFollow(context, bean.getId()));

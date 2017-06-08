@@ -121,9 +121,10 @@ public class PhoneUnBindingActivity extends BaseActivity implements View.OnClick
         if (success) {
             ToastUtil.showShort(App.context, "验证成功");
             UiManager.activityJumpForResult(this, new Bundle(), PhoneBindingActivity.class, Constant.REQUEST_PHONE_BINGDING);
-        } else {
-            ToastUtil.showShort(App.context, "验证失败 请核对手机号");
         }
+//        else {
+//            ToastUtil.showShort(App.context, "验证失败 请核对手机号");
+//        }
     }
 
     @Override

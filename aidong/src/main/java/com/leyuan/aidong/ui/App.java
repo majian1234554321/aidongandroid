@@ -163,9 +163,9 @@ public class App extends MultiDexApplication {
         @Override
         public void onReceiveLocation(BDLocation location) {
 
-            App.lat = location.getLatitude();
-            App.lon = location.getLongitude();
             if (location.getCity() != null) {
+                App.lat = location.getLatitude();
+                App.lon = location.getLongitude();
                 cityLocation = location.getCity().replace("市", "");
             }
 
@@ -175,7 +175,7 @@ public class App extends MultiDexApplication {
                 setLocationCity(cityLocation);
                 mLocationClient.stop();
             }
-            LogAidong.i(" LocationClient ok : lat = " + lat + ",   lon = " + lon + ", cityLocation = " + cityLocation);
+            LogAidong.i(" LocationClient ok : lat = " + lat + ",   lon = " + lon + ", cityLocation = " + location.getCity());
         }
 
     }
