@@ -135,7 +135,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     private String selectedCount;
     private String goodsType;
     private boolean isSellOut = true;   //是否售罄
-    private boolean isContainSku = false;    //该商品是否配置规格
+    private boolean hasSku = false;     //该商品是否配置规格
     private List<String> selectedSkuValues = new ArrayList<>();
     private GoodsDetailPresent goodsPresent;
 
@@ -250,14 +250,13 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                     sharePopupWindow.showAtBottom(Constant.SHARE_GOODS_TITLE,  bean.introduce, image,
                             ConstantUrl.URL_SHARE_PRODUCT+bean.id);
                 }
-
                 break;
             case R.id.ll_code:
                 showRecommendCodeDialog();
                 break;
             case R.id.ll_goods_sku:
                 if(isSellOut) {
-                    if(isContainSku) {
+                    if(hasSku) {
                         showSkuPopupWindow(GoodsSkuPopupWindow.GoodsStatus.SellOut);
                     }
                 }else {
@@ -322,7 +321,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             }
 
             if(goodsSkuBean.value != null && !goodsSkuBean.value.isEmpty()){
-                isContainSku = true;
+                hasSku = true;
                 break;
             }
         }
@@ -331,7 +330,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             tvSelectSku.setText(R.string.please_choose);
             tvCount.setText(R.string.sell_out);
             Drawable rightArrow = getResources().getDrawable(R.drawable.icon_right_arrow);
-            tvCount.setCompoundDrawablesWithIntrinsicBounds(null,null, isContainSku ? rightArrow : null,null);
+            tvCount.setCompoundDrawablesWithIntrinsicBounds(null,null, hasSku ? rightArrow : null,null);
             tvSellOut.setVisibility(View.VISIBLE);
             payLayout.setVisibility(View.GONE);
             tvAddCart.setVisibility(View.GONE);
@@ -454,10 +453,10 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         if (requestCode == REQUEST_SELECT_ADDRESS) {
             DeliveryBean deliveryBean = data.getParcelableExtra("deliveryBean");
             bean.pick_up = deliveryBean;
-            if (DELIVERY_EXPRESS.equals(deliveryBean.getType())) {
+            if (DELIVERY_EXPRESS.equals(deliveryBean.getType()) && bean.pick_up.isSend()) {
                 tvAddressInfo.setVisibility(View.GONE);
                 tvDeliveryInfo.setText(getString(R.string.express));
-            } else {
+            } else if(DELIVERY_SELF.equals(deliveryBean.getType())){
                 tvAddressInfo.setVisibility(View.VISIBLE);
                 tvAddressInfo.setText(deliveryBean.getInfo().getName());
                 tvDeliveryInfo.setText(getString(R.string.self_delivery));
