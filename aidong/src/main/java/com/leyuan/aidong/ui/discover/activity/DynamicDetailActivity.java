@@ -244,7 +244,9 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
 
             //返回新增评论 刷新动态列表
             Intent intent = new Intent();
-            intent.putExtra("comment", temp);
+            dynamic.comment.count ++ ;
+            dynamic.comment.item.add(0,temp);
+            intent.putExtra("dynamic", dynamic);
             setResult(RESULT_OK, intent);
         } else {
             ToastGlobal.showLong(baseBean.getMessage());
@@ -410,13 +412,20 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
     @Override
     public void addLikeResult(int position, BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
-            dynamicList.get(position).like.counter += 1;
+            DynamicBean dynamicBean = dynamicList.get(position);
+            dynamicBean.like.counter += 1;
             UserBean item = new UserBean();
             UserCoach user = App.mInstance.getUser();
             item.setAvatar(user.getAvatar());
             item.setId(String.valueOf(user.getId()));
-            dynamicList.get(position).like.item.add(item);
+            dynamicBean.like.item.add(item);
             headerAdapter.notifyItemChanged(position);
+
+            //返回新增点赞 刷新动态列表
+            Intent intent = new Intent();
+            intent.putExtra("dynamic", dynamicBean);
+            setResult(RESULT_OK, intent);
+
         } else {
             ToastGlobal.showLong(baseBean.getMessage());
         }
@@ -425,8 +434,9 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
     @Override
     public void cancelLikeResult(int position, BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
-            dynamicList.get(position).like.counter -= 1;
-            List<UserBean> item = dynamicList.get(position).like.item;
+            DynamicBean dynamicBean = dynamicList.get(position);
+            dynamicBean.like.counter -= 1;
+            List<UserBean> item = dynamicBean.like.item;
             int myPosition = 0;
             for (int i = 0; i < item.size(); i++) {
                 if (item.get(i).getId().equals(String.valueOf(App.mInstance.getUser().getId()))) {
@@ -435,6 +445,11 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
             }
             item.remove(myPosition);
             headerAdapter.notifyItemChanged(position);
+
+            //返回新增点赞 刷新动态列表
+            Intent intent = new Intent();
+            intent.putExtra("dynamic", dynamicBean);
+            setResult(RESULT_OK, intent);
         } else {
             ToastGlobal.showLong(baseBean.getMessage());
         }

@@ -15,6 +15,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.UpdateDeliveryBean;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.ToastGlobal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +56,7 @@ public class UpdateDeliveryInfoAdapter extends RecyclerView.Adapter<UpdateDelive
         final UpdateDeliveryBean bean = data.get(position);
         GlideLoader.getInstance().displayImage(bean.getGoods().getCover(), holder.dvCover);
         holder.tvGoodsName.setText(bean.getGoods().getName());
-        holder.tvCount.setText(String.format(context.getString(R.string.x_count),bean.getGoods().getAmount()));
+        holder.tvCount.setText(String.format(context.getString(R.string.x_count), bean.getGoods().getAmount()));
         ArrayList<String> specValue = bean.getGoods().getSpecValue();
         StringBuilder skuStr = new StringBuilder();
         for (String result : specValue) {
@@ -64,17 +65,17 @@ public class UpdateDeliveryInfoAdapter extends RecyclerView.Adapter<UpdateDelive
         holder.tvSku.setText(skuStr);
         holder.tvGoodsPrice.setText(String.format(context.getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.getGoods().getPrice())));
-        if(!TextUtils.isEmpty(bean.getGoods().getRecommendCode())){
+        if (!TextUtils.isEmpty(bean.getGoods().getRecommendCode())) {
             holder.tvRecommendCode.setText(String.format(context.getString(R.string.recommend_code),
                     bean.getGoods().getRecommendCode()));
         }
 
-        if(DELIVERY_EXPRESS.equals(bean.getDeliveryInfo().getType())){
+        if (DELIVERY_EXPRESS.equals(bean.getDeliveryInfo().getType())) {  //该商品支持快递
             selectExpress(holder);
             holder.tvShop.setText("请选择");
             holder.tvShopAddress.setVisibility(View.GONE);
-        }else {
-            selectSelfDelivery(holder);
+        } else {
+            selectSelfDelivery(holder, bean);
             holder.tvShop.setText(bean.getDeliveryInfo().getInfo().getName());
             holder.tvShopAddress.setText(bean.getDeliveryInfo().getInfo().getAddress());
             holder.tvShopAddress.setVisibility(View.VISIBLE);
@@ -83,14 +84,14 @@ public class UpdateDeliveryInfoAdapter extends RecyclerView.Adapter<UpdateDelive
         holder.tvSelfDelivery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectSelfDelivery(holder);
+                selectSelfDelivery(holder, bean);
             }
         });
 
         holder.llSelfDelivery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(listener != null){
+                if (listener != null) {
                     listener.onSelfDeliveryClick(position);
                 }
             }
@@ -99,26 +100,37 @@ public class UpdateDeliveryInfoAdapter extends RecyclerView.Adapter<UpdateDelive
         holder.tvExpress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectExpress(holder);
-                if(listener != null){
-                    listener.onExpressClick(position);
+                if (bean.getGoods().isSend()) {
+                    selectExpress(holder);
+                    if (listener != null) {
+                        listener.onExpressClick(position);
+                    }
+                } else {
+                    ToastGlobal.showLong("该商品不支持快递");
                 }
             }
         });
     }
 
-    private void selectExpress(DeliveryInfoHolder holder){
-        holder.tvExpress.setTextColor(Color.parseColor("#ffffff"));
+    private void selectExpress(DeliveryInfoHolder holder) {
+
         holder.tvSelfDelivery.setTextColor(Color.parseColor("#000000"));
-        holder.tvExpress.setBackgroundResource(R.drawable.shape_solid_corner_black);
         holder.tvSelfDelivery.setBackgroundResource(R.drawable.shape_solid_corner_white);
+
+        holder.tvExpress.setTextColor(Color.parseColor("#ffffff"));
+        holder.tvExpress.setBackgroundResource(R.drawable.shape_solid_corner_black);
         holder.llSelfDelivery.setVisibility(View.GONE);
     }
 
-    private void selectSelfDelivery(DeliveryInfoHolder holder){
-        holder.tvExpress.setTextColor(Color.parseColor("#000000"));
+    private void selectSelfDelivery(DeliveryInfoHolder holder, UpdateDeliveryBean bean) {
+        if (bean.getGoods().isSend()) {
+            holder.tvExpress.setTextColor(Color.parseColor("#000000"));
+            holder.tvExpress.setBackgroundResource(R.drawable.shape_solid_corner_white);
+        } else {
+            holder.tvExpress.setTextColor(Color.parseColor("#ebebeb"));
+            holder.tvExpress.setBackgroundResource(R.drawable.shape_corners_stroke_gray);
+        }
         holder.tvSelfDelivery.setTextColor(Color.parseColor("#ffffff"));
-        holder.tvExpress.setBackgroundResource(R.drawable.shape_solid_corner_white);
         holder.tvSelfDelivery.setBackgroundResource(R.drawable.shape_solid_corner_black);
         holder.llSelfDelivery.setVisibility(View.VISIBLE);
 
@@ -161,8 +173,9 @@ public class UpdateDeliveryInfoAdapter extends RecyclerView.Adapter<UpdateDelive
         this.listener = listener;
     }
 
-    public interface SelfDeliveryShopListener{
+    public interface SelfDeliveryShopListener {
         void onSelfDeliveryClick(int position);
+
         void onExpressClick(int position);
     }
 }

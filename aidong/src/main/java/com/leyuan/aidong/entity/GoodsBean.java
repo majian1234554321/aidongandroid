@@ -15,7 +15,7 @@ public class GoodsBean implements Parcelable {
     private static final int OUT_OF_STOCK = 1;
     private static final int SOLD_OUT = 2;
     private static final int ON_SALE = 3;
-    private String id;
+    private String id;             //购物车商品id
     private String code;           //商品编码
     private String cover;         //商品封面
     private String name;          //商品名字
@@ -43,6 +43,7 @@ public class GoodsBean implements Parcelable {
     private boolean online;
     private int stock;
     private String item;//退换条目和数量
+    private boolean is_send;    //该商品是否支持快递
 
     public int getSoldState() {
         if (!online) {
@@ -135,7 +136,7 @@ public class GoodsBean implements Parcelable {
         return spec_value;
     }
 
-    public void setSpec_value(ArrayList<String> spec_value) {
+    public void setSpecValue(ArrayList<String> spec_value) {
         this.spec_value = spec_value;
     }
 
@@ -192,12 +193,20 @@ public class GoodsBean implements Parcelable {
         return recommend_coach_id;
     }
 
-    public void setRecommend_code(String recommend_code) {
+    public void setRecommendCode(String recommend_code) {
         this.recommend_coach_id = recommend_code;
     }
 
+    public boolean isSend() {
+        return is_send;
+    }
+
+    public void setIs_send(boolean is_send) {
+        this.is_send = is_send;
+    }
+
     public GoodsBean(String id, String name, String sku_code, String cover, String price,
-                      String type, String amount, ArrayList<String> spec_value) {
+                     String type, String amount, ArrayList<String> spec_value) {
         this.id = id;
         this.cover = cover;
         this.name = name;
@@ -222,6 +231,17 @@ public class GoodsBean implements Parcelable {
                 ", amount='" + amount + '\'' +
                 ", checked=" + checked +
                 '}';
+    }
+
+    public GoodsBean() {
+    }
+
+    public void setItem(String item) {
+        this.item = item;
+    }
+
+    public String getItem() {
+        return item;
     }
 
     @Override
@@ -250,9 +270,7 @@ public class GoodsBean implements Parcelable {
         dest.writeByte(this.online ? (byte) 1 : (byte) 0);
         dest.writeInt(this.stock);
         dest.writeString(this.item);
-    }
-
-    public GoodsBean() {
+        dest.writeByte(this.is_send ? (byte) 1 : (byte) 0);
     }
 
     protected GoodsBean(Parcel in) {
@@ -275,6 +293,7 @@ public class GoodsBean implements Parcelable {
         this.online = in.readByte() != 0;
         this.stock = in.readInt();
         this.item = in.readString();
+        this.is_send = in.readByte() != 0;
     }
 
     public static final Creator<GoodsBean> CREATOR = new Creator<GoodsBean>() {
@@ -288,12 +307,4 @@ public class GoodsBean implements Parcelable {
             return new GoodsBean[size];
         }
     };
-
-    public void setItem(String item) {
-        this.item = item;
-    }
-
-    public String getItem() {
-        return item;
-    }
 }

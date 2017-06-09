@@ -27,9 +27,15 @@ public class CartShopAdapter extends RecyclerView.Adapter<CartShopAdapter.CartHo
     private Context context;
     private List<ShopBean> data = new ArrayList<>();
     private ShopChangeListener shopChangeListener;
+    private boolean isEditing = false;
 
     public CartShopAdapter(Context context) {
         this.context = context;
+    }
+
+    public void setEditing(boolean isEditing) {
+        this.isEditing = isEditing;
+        notifyDataSetChanged();
     }
 
     public void setData(List<ShopBean> data) {
@@ -57,15 +63,17 @@ public class CartShopAdapter extends RecyclerView.Adapter<CartShopAdapter.CartHo
         String type = DELIVERY_EXPRESS.equals(bean.getPickUp().getType()) ? "快递" : "自提";
         holder.tvDeliveryType.setText(type);
         holder.rvShop.setLayoutManager(new LinearLayoutManager(context));
-        final CartGoodsAdapter goodsAdapter = new CartGoodsAdapter(context);
+        final CartGoodsAdapter goodsAdapter = new CartGoodsAdapter(context,isEditing);
         holder.rvShop.setAdapter(goodsAdapter);
         goodsAdapter.setData(bean.getItem());
-        if (bean.allItemIsSoldOut()) {
+
+        holder.check.setChecked(bean.isChecked());
+        if (bean.allItemIsSoldOut() && !isEditing) {
             holder.check.setVisibility(View.GONE);
         } else {
             holder.check.setVisibility(View.VISIBLE);
-            holder.check.setChecked(bean.isChecked());
         }
+
         goodsAdapter.setGoodsChangeListener(new CartGoodsAdapter.GoodsChangeListener() {
             @Override
             public void onGoodsDeleted(String goodsId, int goodsPosition) {
@@ -85,7 +93,7 @@ public class CartShopAdapter extends RecyclerView.Adapter<CartShopAdapter.CartHo
             public void onGoodsStatusChanged() {          //商品选中状态变化时通知更改商店和购物车的状态
                 boolean isAllGoodsSelected = true;
                 for (GoodsBean goodsBean : bean.getItem()) {
-                    if (goodsBean.isOnline() && goodsBean.getStock() != 0 && !goodsBean.isChecked()) {
+                    if (!goodsBean.isChecked()) {
                         isAllGoodsSelected = false;
                         break;
                     }
@@ -102,9 +110,7 @@ public class CartShopAdapter extends RecyclerView.Adapter<CartShopAdapter.CartHo
             public void onClick(View v) {            //商店点击时改变商店和商店中商品的状态，并通知购物车相应改变
                 bean.setChecked(!bean.isChecked());
                 for (GoodsBean goodsBean : bean.getItem()) {
-                    if(goodsBean.isOnline() && goodsBean.getStock() != 0) {
-                        goodsBean.setChecked(bean.isChecked());
-                    }
+                    goodsBean.setChecked(bean.isChecked());
                 }
                 if (shopChangeListener != null) {
                     shopChangeListener.onShopStatusChanged(position);

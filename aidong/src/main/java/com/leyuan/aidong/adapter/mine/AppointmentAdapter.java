@@ -27,12 +27,13 @@ import cn.iwgang.countdownview.CountdownView;
  * Created by song on 2016/9/1.
  */
 public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.AppointmentHolder> {
-    private static final String UN_PAID = "pending";         //待付款
-    private static final String UN_JOIN = "purchased";        //待参加
+    private static final String UN_PAID = "pending";        //待付款
+    private static final String UN_JOIN = "purchased";      //待参加
     private static final String JOINED = "signed";          //已参加
     public static final String CLOSE = "canceled";          //已关闭
-    private static final String REFUNDING = "refunding";     //退款中
-    private static final String REFUNDED = "refunded";       //已退款
+    private static final String REFUNDING = "refunding";    //退款中
+    private static final String REFUNDED = "returned";      //已退款
+
     private long appointCountdownMill;
 
     private Context context;

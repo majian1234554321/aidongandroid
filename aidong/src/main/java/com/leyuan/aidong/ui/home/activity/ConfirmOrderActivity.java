@@ -118,9 +118,9 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private String pickUpWay;           //取货方式(0-快递 1-自提)
     @PayType
     private String payType;
-    private String pickUpId;                          //快递地址或自提场馆id(立即购买时)  /快递地址(购物车结算时)
+    private String pickUpId;                          //快递地址或自提场馆id(立即购买时)
+    private String addressId;                         //购物车结算时快递地址id
     private String pickUpDate;                        //自提时间
-    private String defaultAddressId;
     private String[] itemIds;
     private String[] itemFromIdAmount;
     @SettlementType
@@ -130,6 +130,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private boolean needExpress = false;              //是否需要快递
     private boolean needSelfDelivery = false;         //是否需要自提
     private Double expressPrice = 15d;
+
 
     private ConfirmOrderPresent present;
 
@@ -252,18 +253,22 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 needSelfDelivery = true;
             }
         }
+
         if (needExpress) {
             addressLayout.setVisibility(View.VISIBLE);
-            if (!settlementType.equals(SETTLEMENT_CART)) {
+            if (settlementType.equals(SETTLEMENT_EQUIPMENT_IMMEDIATELY)
+                    || settlementType.equals(SETTLEMENT_NURTURE_IMMEDIATELY)) {
                 pickUpWay = DELIVERY_EXPRESS;
+                pickUpDate = null;
             }
         }
 
         if (needSelfDelivery) {
             pickUpDate = days.get(0);
-            selfDeliveryLayout.setVisibility(View.VISIBLE);
             tvTime.setText(pickUpDate);
-            if (!settlementType.equals(SETTLEMENT_CART)) {
+            selfDeliveryLayout.setVisibility(View.VISIBLE);
+            if (settlementType.equals(SETTLEMENT_EQUIPMENT_IMMEDIATELY)
+                    || settlementType.equals(SETTLEMENT_NURTURE_IMMEDIATELY)) {
                 pickUpWay = DELIVERY_SELF;
                 pickUpId = shopBeanList.get(0).getPickUp().getInfo().getId();
             }
@@ -302,7 +307,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 startActivityForResult(new Intent(this, AddAddressActivity.class), REQUEST_ADD_ADDRESS);
                 break;
             case R.id.rl_address:
-                startActivityForResult(new Intent(this, SelectAddressActivity.class).putExtra("addressId", defaultAddressId),
+                startActivityForResult(new Intent(this, SelectAddressActivity.class).putExtra("addressId", addressId),
                         REQUEST_SELECT_ADDRESS);
                 break;
             case R.id.tv_coupon:
@@ -324,14 +329,25 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void payOrder() {
-        if (needExpress && TextUtils.isEmpty(pickUpId)) {
-            ToastGlobal.showLong("请填写收货地址");
-            return;
+        if(needExpress){
+            if (settlementType.equals(SETTLEMENT_EQUIPMENT_IMMEDIATELY)
+                    || settlementType.equals(SETTLEMENT_NURTURE_IMMEDIATELY)) {
+                if (TextUtils.isEmpty(pickUpId)) {
+                    ToastGlobal.showLong("请填写收货地址");
+                    return;
+                }
+            }else {
+                if (TextUtils.isEmpty(addressId)) {
+                    ToastGlobal.showLong("请填写收货地址");
+                    return;
+                }
+            }
         }
+
         switch (settlementType) {
             case SETTLEMENT_CART:
                 present.payCart(integral, coin, couponId, payType,
-                        pickUpId, pickUpDate, payListener, itemIds);
+                        addressId, pickUpDate, payListener, itemIds);
                 break;
             case SETTLEMENT_NURTURE_IMMEDIATELY:
                 present.buyNurtureImmediately(skuCode, amount, couponId, integral, coin, payType,
@@ -455,7 +471,6 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void setAddressInfo(AddressBean address) {
-        defaultAddressId = address.getId();
         ivDefault.setVisibility(address.isDefault() ? View.VISIBLE : View.GONE);
         tvName.setText(address.getName());
         tvPhone.setText(address.getMobile());
@@ -463,12 +478,18 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         sb.append(address.getCity().contains(address.getProvince()) ? "" : address.getProvince()).append(address.getCity())
                 .append(address.getDistrict()).append(address.getAddress());
         tvAddress.setText(sb);
-        pickUpId = address.getId();
+        if (settlementType.equals(SETTLEMENT_EQUIPMENT_IMMEDIATELY)
+                || settlementType.equals(SETTLEMENT_NURTURE_IMMEDIATELY)) {
+            pickUpId =  address.getId();
+        }else {
+            addressId = address.getId();
+        }
     }
 
     private void resetStatus() {
         needExpress = false;
         needSelfDelivery = false;
+        addressId = null;
         pickUpId = null;
         pickUpDate = null;
         addressLayout.setVisibility(View.GONE);

@@ -187,8 +187,6 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
         RecyclerViewStateUtils.setFooterViewState(recommendView, LoadingFooter.State.TheEnd);
     }
 
-
-
     @Override
     public void onCartDataLoadFinish(boolean isEmpty) {
         refreshLayout.setRefreshing(false);
@@ -219,6 +217,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
         bottomDeleteLayout.setVisibility(isEditing ? View.VISIBLE :View.GONE);
         bottomNormalLayout.setVisibility(isEditing ? View.GONE : View.VISIBLE);
         cartHeaderView.showRecommendText(!isEditing);
+        cartHeaderView.setEditingStatus(isEditing);
         recommendAdapter.setData(isEditing ? emptyRecommendList : recommendList);
         wrapperAdapter.notifyDataSetChanged();
     }

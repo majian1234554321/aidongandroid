@@ -52,7 +52,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
     private RelativeLayout bottomShareLayout;
 
     protected IDynamicCallback callback;
-    private boolean showLikeAndCommentLayout = true;
+    private boolean showCommentLayout = true;
     private boolean showFollowButton = false;
 
     public BaseCircleViewHolder(Context context, ViewGroup parent, int layoutResId) {
@@ -106,17 +106,18 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             tvContent.setVisibility(View.VISIBLE);
         }
 
-        if (showLikeAndCommentLayout) {
-            if (dynamic.like.counter > 0) {
-                likeLayout.setVisibility(View.VISIBLE);
-                likesRecyclerView.setLayoutManager(new LinearLayoutManager
-                        (context, LinearLayoutManager.HORIZONTAL, false));
-                DynamicLikeAdapter likeAdapter = new DynamicLikeAdapter(context, dynamic.id);
-                likeAdapter.setData(dynamic.like.item, dynamic.like.counter);
-                likesRecyclerView.setAdapter(likeAdapter);
-            } else {
-                likeLayout.setVisibility(View.GONE);
-            }
+        if (dynamic.like.counter > 0) {
+            likeLayout.setVisibility(View.VISIBLE);
+            likesRecyclerView.setLayoutManager(new LinearLayoutManager
+                    (context, LinearLayoutManager.HORIZONTAL, false));
+            DynamicLikeAdapter likeAdapter = new DynamicLikeAdapter(context, dynamic.id);
+            likeAdapter.setData(dynamic.like.item, dynamic.like.counter);
+            likesRecyclerView.setAdapter(likeAdapter);
+        } else {
+            likeLayout.setVisibility(View.GONE);
+        }
+
+        if (showCommentLayout) {
             if (dynamic.comment.count > 0) {
                 commentLayout.setVisibility(View.VISIBLE);
                 DynamicCommentAdapter commonAdapter = new DynamicCommentAdapter(context);
@@ -135,7 +136,6 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
                 commentLayout.setVisibility(View.GONE);
             }
         } else {
-            likeLayout.setVisibility(View.GONE);
             commentLayout.setVisibility(View.GONE);
         }
 
@@ -205,7 +205,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
     }
 
     public void showLikeAndCommentLayout(boolean show) {
-        this.showLikeAndCommentLayout = show;
+        this.showCommentLayout = show;
     }
 
 

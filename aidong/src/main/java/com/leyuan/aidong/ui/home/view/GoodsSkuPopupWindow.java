@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
 
 
 /**
@@ -78,7 +79,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
 
     private String goodsType;
     private String count;
-    private String recommendId;
+    private String recommendCode;
     private StringBuilder skuTip;
     private GoodsDetailBean detailBean;
     private List<LocalGoodsSkuBean> localSkuBeanList;
@@ -88,13 +89,13 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     private GoodsStatus status;
 
     public GoodsSkuPopupWindow(Context context,GoodsDetailBean detailBean,GoodsStatus status,
-                               List<String> selectedSkuValues, String count, String recommendId, String goodsType) {
+                               List<String> selectedSkuValues, String count, String recommendCode, String goodsType) {
         super(context);
         this.context = context;
         this.detailBean = detailBean;
         this.status = status;
         this.selectedSkuValues = selectedSkuValues;
-        this.recommendId = recommendId;
+        this.recommendCode = recommendCode;
         this.count = count;
         this.goodsType = goodsType;
         cartPresent = new CartPresentImpl(context, this);
@@ -290,6 +291,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
                 if (count >= stock) {
                     count = stock;
                     ivAdd.setBackgroundResource(R.drawable.icon_add_gray);
+                    ToastGlobal.showLong("超过最大库存");
                 }
                 if (count > 1) {
                     ivMinus.setBackgroundResource(R.drawable.icon_minus);
@@ -352,7 +354,10 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         GoodsSkuBean line = getLine(selectedSkuValues);
         String countStr = tvCount.getText().toString();
         String id = detailBean.pick_up.getInfo().getId();
-        cartPresent.addCart(line.code, Integer.parseInt(countStr), id, recommendId);
+        if(detailBean.pick_up.getType().equals(DELIVERY_EXPRESS)){
+            id = null;
+        }
+        cartPresent.addCart(line.code, Integer.parseInt(countStr), id, recommendCode);
     }
 
     public void buyImmediately() {
@@ -371,7 +376,8 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         goodsBean.setPrice(line.price);
         goodsBean.setType(goodsType);
         goodsBean.setAmount(tvCount.getText().toString());
-        goodsBean.setSpec_value((ArrayList<String>) line.value);
+        goodsBean.setSpecValue((ArrayList<String>) line.value);
+        goodsBean.setRecommendCode(recommendCode);
         goodsBeanList.add(goodsBean);
         shopBean.setItem(goodsBeanList);
         shopBean.setPickUp(detailBean.pick_up);

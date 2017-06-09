@@ -20,6 +20,7 @@ import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
 import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.ToastGlobal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,12 +31,14 @@ import java.util.List;
  */
 public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.GoodsHolder> {
     private Context context;
+    private boolean isEditing = false;
     private List<GoodsBean> data = new ArrayList<>();
 
     private GoodsChangeListener goodsChangeListener;
 
-    public CartGoodsAdapter(Context context) {
+    public CartGoodsAdapter(Context context,boolean isEditing) {
         this.context = context;
+        this.isEditing = isEditing;
     }
 
     public void setData(List<GoodsBean> data) {
@@ -77,9 +80,8 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
                     bean.getRecommendCode()));
         }
 
-        if (bean.isOnline() && bean.getStock() != 0) {
+        if (bean.isOnline() && bean.getStock() != 0 ) {
             holder.check.setVisibility(View.VISIBLE);
-            holder.check.setChecked(bean.isChecked());
             holder.dv_sold_out.setVisibility(View.GONE);
             holder.count.setText(bean.getAmount());
 
@@ -96,12 +98,11 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
                 holder.minus.setImageResource(R.drawable.icon_minus);
             }
 
-            setShoppingClickEvent(holder, bean, position);
             RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) holder.cover.getLayoutParams();
             layoutParams.leftMargin = DensityUtil.dp2px(context,5);
             holder.cover.setLayoutParams(layoutParams);
         } else {
-            holder.check.setVisibility(View.GONE);
+            holder.check.setVisibility(isEditing ? View.VISIBLE : View.GONE);
             holder.dv_sold_out.setVisibility(View.VISIBLE);
             holder.dv_sold_out.setImageResource(bean.isOnline() ? R.drawable.shop_sold_out : R.drawable.shop_out_of_stock);
             holder.minus.setImageResource(R.drawable.icon_minus_gray);
@@ -111,13 +112,10 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
 
             holder.count.setBackgroundResource(R.drawable.shape_stroke_gray);
             holder.add.setImageResource(R.drawable.icon_add_gray);
-
-
-            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) holder.cover.getLayoutParams();
-            layoutParams.leftMargin = DensityUtil.dp2px(context,35);
-            holder.cover.setLayoutParams(layoutParams);
-
         }
+
+        holder.check.setChecked(bean.isChecked());
+        setShoppingClickEvent(holder, bean, position);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,6 +164,7 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
             public void onClick(View v) {
                 int count = FormatUtil.parseInt(holder.count.getText().toString());
                 if(count >= bean.getStock()){
+                    ToastGlobal.showLong("超过最大库存");
                     return;
                 }
                 count++;

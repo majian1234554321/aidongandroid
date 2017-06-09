@@ -34,14 +34,13 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
     private TextView tvExpress;
     private TextView tvSelfDelivery;
     private LinearLayout deliveryLayout;
-    private LinearLayout llDeliveryAddress;
+    private LinearLayout deliveryAddressLayout;
     private TextView tvVenuesName;
     private TextView tvVenuesAddress;
 
     private String goodsId;
     private String goodsType;
     private DeliveryBean deliveryBean;
-    private String gymId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +51,8 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
             goodsId = getIntent().getStringExtra("goodsId");
             goodsType = getIntent().getStringExtra("goodsType");
             deliveryBean = getIntent().getParcelableExtra("deliveryBean");
-            gymId = deliveryBean.getInfo().getId();
         }
+
         initView();
         setListener();
     }
@@ -64,7 +63,7 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
         tvExpress = (TextView) findViewById(R.id.tv_express);
         tvSelfDelivery = (TextView) findViewById(R.id.tv_self_delivery);
         deliveryLayout = (LinearLayout)findViewById(R.id.ll_self_delivery);
-        llDeliveryAddress = (LinearLayout) findViewById(R.id.ll_delivery_address);
+        deliveryAddressLayout = (LinearLayout) findViewById(R.id.ll_delivery_address);
         tvVenuesName = (TextView) findViewById(R.id.tv_shop);
         tvVenuesAddress = (TextView) findViewById(R.id.tv_shop_address);
         if(deliveryBean != null) {
@@ -84,7 +83,7 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
         tvFinish.setOnClickListener(this);
         tvExpress.setOnClickListener(this);
         tvSelfDelivery.setOnClickListener(this);
-        llDeliveryAddress.setOnClickListener(this);
+        deliveryAddressLayout.setOnClickListener(this);
     }
 
     @Override
@@ -137,8 +136,8 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
             tvSelfDelivery.setTextColor(Color.parseColor("#ebebeb"));
             tvSelfDelivery.setBackgroundResource(R.drawable.shape_stroke_corner_gray);
         }
+
         deliveryLayout.setVisibility(View.GONE);
-        deliveryBean.getInfo().setId(null);
         deliveryBean.setType(DELIVERY_EXPRESS);
     }
 
@@ -149,7 +148,6 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
         tvExpress.setTextColor(Color.parseColor("#ebebeb"));
         tvExpress.setBackgroundResource(R.drawable.shape_stroke_corner_gray);
         deliveryLayout.setVisibility(View.GONE);
-        deliveryBean.getInfo().setId(null);
     }
 
     private void setSelfDeliverySelected(){
@@ -162,17 +160,12 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
         }
         tvSelfDelivery.setTextColor(Color.parseColor("#ffffff"));
         tvSelfDelivery.setBackgroundResource(R.drawable.shape_solid_corner_black);
+
         deliveryLayout.setVisibility(View.VISIBLE);
+        tvVenuesAddress.setVisibility(View.VISIBLE);
         deliveryBean.setType(DELIVERY_SELF);
-        if(TextUtils.isEmpty(gymId)){
-            tvVenuesName.setText(getString(R.string.please_select));
-            tvVenuesAddress.setVisibility(View.GONE);
-        }else {
-            deliveryBean.getInfo().setId(gymId);
-            tvVenuesName.setText(deliveryBean.getInfo().getName());
-            tvVenuesAddress.setText(deliveryBean.getInfo().getAddress());
-            tvVenuesAddress.setVisibility(View.VISIBLE);
-        }
+        tvVenuesName.setText(deliveryBean.getInfo().getName());
+        tvVenuesAddress.setText(deliveryBean.getInfo().getAddress());
     }
 
     @Override
@@ -183,7 +176,6 @@ public class DeliveryInfoActivity extends BaseActivity implements View.OnClickLi
             tvVenuesAddress.setText(venuesBean.getAddress());
             tvVenuesAddress.setVisibility(View.VISIBLE);
             deliveryBean.setInfo(venuesBean);
-            gymId = venuesBean.getId();
         }
     }
 }
