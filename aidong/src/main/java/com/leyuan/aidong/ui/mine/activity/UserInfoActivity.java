@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.mine.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
@@ -105,6 +106,12 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         context.startActivity(starter);
     }
 
+    public static void startForResult(Activity context, String userId, int request_code) {
+        Intent starter = new Intent(context, UserInfoActivity.class);
+        starter.putExtra("userId", userId);
+        context.startActivityForResult(starter, request_code);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,7 +123,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         }
         initView();
         setListener();
-        userInfoPresent.getUserInfo(switcherLayout,userId);
+        userInfoPresent.getUserInfo(switcherLayout, userId);
     }
 
     private void initView() {
@@ -177,7 +184,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
             contentLayout.setPadding(0, DensityUtil.dp2px(this, 46), 0, (int) getResources().getDimension(R.dimen.dp_0));
         } else {
             tvTitle.setText("TA的资料");
-            ivFollowOrPublish.setBackgroundResource(SystemInfoUtils.isFollow(this,userId)
+            ivFollowOrPublish.setBackgroundResource(SystemInfoUtils.isFollow(this, userId)
                     ? R.drawable.icon_following : R.drawable.icon_follow);
             if (!userInfoData.getPhotoWall().isEmpty()) {
                 wallAdapter.setData(userInfoData.getPhotoWall());
@@ -191,13 +198,13 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     }
 
     private void setFragments() {
-        if(needRefreshFragment){
+        if (needRefreshFragment) {
             needRefreshFragment = false;
             Fragment page = adapter.getPage(1);
-            if(page instanceof UserInfoFragment){
+            if (page instanceof UserInfoFragment) {
                 ((UserInfoFragment) page).refreshUserInfo(userInfoData.getProfile());
             }
-        }else {
+        } else {
             FragmentPagerItems pages = new FragmentPagerItems(this);
             UserDynamicFragment dynamicFragment = new UserDynamicFragment();
             UserInfoFragment userInfoFragment = new UserInfoFragment();
@@ -238,7 +245,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
                 if (App.mInstance.isLogin()) {
                     if (isSelf) {
                         publishDynamic();
-                    } else if (SystemInfoUtils.isFollow(this,userId)) {
+                    } else if (SystemInfoUtils.isFollow(this, userId)) {
                         userInfoPresent.cancelFollow(userId);
                     } else {
                         userInfoPresent.addFollow(userId);
@@ -262,9 +269,9 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
                     @Override
                     public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
                         if (position == 0) {
-                            Intent intent = new Intent(UserInfoActivity.this,UpdateUserInfoActivity.class);
+                            Intent intent = new Intent(UserInfoActivity.this, UpdateUserInfoActivity.class);
                             intent.putExtra("profileBean", userInfoData.getProfile());
-                            startActivityForResult(intent,REQUEST_UPDATE_INFO);
+                            startActivityForResult(intent, REQUEST_UPDATE_INFO);
                         } else {
                             toUpdatePhotoWallActivity();
                         }
@@ -274,11 +281,11 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     }
 
 
-    private void toUpdatePhotoWallActivity(){
-        Intent intent = new Intent(UserInfoActivity.this,UpdatePhotoWallActivity.class);
+    private void toUpdatePhotoWallActivity() {
+        Intent intent = new Intent(UserInfoActivity.this, UpdatePhotoWallActivity.class);
         intent.putParcelableArrayListExtra("photos",
                 (ArrayList<? extends Parcelable>) userInfoData.getPhotoWall());
-        startActivityForResult(intent,REQUEST_UPDATE_PHOTO);
+        startActivityForResult(intent, REQUEST_UPDATE_PHOTO);
     }
 
     //todo
@@ -316,25 +323,25 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
             if (requestCode == Constant.REQUEST_LOGIN) {
                 isSelf = isSelf(userId);
                 userInfoPresent.getUserInfo(switcherLayout, userId);
-            }else if(requestCode == REQUEST_SELECT_PHOTO || requestCode ==REQUEST_SELECT_VIDEO ) {
-                    PublishDynamicActivity.startForResult(this, requestCode == REQUEST_SELECT_PHOTO,
-                            Boxing.getResult(data), REQUEST_PUBLISH_DYNAMIC);
-            } else if(requestCode == REQUEST_PUBLISH_DYNAMIC){
+            } else if (requestCode == REQUEST_SELECT_PHOTO || requestCode == REQUEST_SELECT_VIDEO) {
+                PublishDynamicActivity.startForResult(this, requestCode == REQUEST_SELECT_PHOTO,
+                        Boxing.getResult(data), REQUEST_PUBLISH_DYNAMIC);
+            } else if (requestCode == REQUEST_PUBLISH_DYNAMIC) {
                 Fragment page = adapter.getPage(0);
-                if(page instanceof UserDynamicFragment){
+                if (page instanceof UserDynamicFragment) {
                     ((UserDynamicFragment) page).refreshDynamic();
                 }
-            }else if(requestCode == REQUEST_UPDATE_PHOTO){
+            } else if (requestCode == REQUEST_UPDATE_PHOTO) {
                 resetPhotoWall();
                 userInfoPresent.getUserInfo(userId);
-            }else if(requestCode == REQUEST_UPDATE_INFO){
+            } else if (requestCode == REQUEST_UPDATE_INFO) {
                 needRefreshFragment = true;
                 userInfoPresent.getUserInfo(userId);
             }
         }
     }
 
-    private void resetPhotoWall(){
+    private void resetPhotoWall() {
         userInfoData.getPhotoWall().clear();
         wallAdapter.notifyDataSetChanged();
     }

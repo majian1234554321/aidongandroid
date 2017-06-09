@@ -84,6 +84,12 @@ public class EaseConversationListFragment extends EaseBaseFragment{
     protected void setUpView() {
         conversationList.addAll(loadConversationList());
         conversationListView.init(conversationList);
+
+        if(conversationList.isEmpty()){
+            conversationListView.setVisibility(View.GONE);
+        }else {
+            conversationListView.setVisibility(View.VISIBLE);
+        }
         
         if(listItemClickListener != null){
             conversationListView.setOnItemClickListener(new OnItemClickListener() {
@@ -166,6 +172,11 @@ public class EaseConversationListFragment extends EaseBaseFragment{
 	            	conversationList.clear();
 	                conversationList.addAll(loadConversationList());
 	                conversationListView.refresh();
+                    if(conversationList.isEmpty()){
+                        conversationListView.setVisibility(View.GONE);
+                    }else {
+                        conversationListView.setVisibility(View.VISIBLE);
+                    }
 	                break;
 	            }
             default:

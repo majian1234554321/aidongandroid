@@ -37,6 +37,7 @@ public class Constant {
     public static final int REQUEST_SETTLEMENT_CART =103 ;
     public static final int REQUEST_REFRESH_DYNAMIC = 104;
     public static final int REQUEST_VIDEO_COMMENT = 105;
+    public static final int REQUEST_USER_INFO = 106;
 
     public static final int DEFAULT_MAX_UPLOAD_IMAGE_COUNT = 6;        //上传照片数量限制
     public static final String FILE_FOLDER = "Aidong";
@@ -70,6 +71,7 @@ public class Constant {
     public static final String BROADCAST_ACTION_REGISTER_SUCCESS = "com.leyuan.register.success";
     public static final String I_DONG_FITNESS = " | 爱动健身";
     public static final String SHARE_GOODS_TITLE = "爱动精选-推荐给您一个宝贝";
+
 
 
     public static List<VenuesBean> gyms;

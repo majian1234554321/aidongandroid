@@ -235,7 +235,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
             temp.setPublishedAt("刚刚");
             temp.setPublisher(publisher);
 
-            comments.add(0,temp);
+            comments.add(0, temp);
             commentAdapter.setData(comments);
             commentAdapter.notifyItemChanged(0);
 
@@ -244,8 +244,8 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
 
             //返回新增评论 刷新动态列表
             Intent intent = new Intent();
-            dynamic.comment.count ++ ;
-            dynamic.comment.item.add(0,temp);
+            dynamic.comment.count++;
+            dynamic.comment.item.add(0, temp);
             intent.putExtra("dynamic", dynamic);
             setResult(RESULT_OK, intent);
         } else {
@@ -366,7 +366,8 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
 
         @Override
         public void onAvatarClick(String id) {
-            UserInfoActivity.start(DynamicDetailActivity.this, id);
+            UserInfoActivity.startForResult(DynamicDetailActivity.this, id, Constant.REQUEST_USER_INFO);
+//            UserInfoActivity.start(DynamicDetailActivity.this, id);
         }
 
         @Override
@@ -393,8 +394,8 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
         }
 
         @Override
-        public void onCommentClick(DynamicBean dynamicBean,int position) {
-            KeyBoardUtil.openKeyboard(etComment,DynamicDetailActivity.this);
+        public void onCommentClick(DynamicBean dynamicBean, int position) {
+            KeyBoardUtil.openKeyboard(etComment, DynamicDetailActivity.this);
             etComment.requestFocus();
         }
 
@@ -452,6 +453,14 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
             setResult(RESULT_OK, intent);
         } else {
             ToastGlobal.showLong(baseBean.getMessage());
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constant.REQUEST_USER_INFO) {
+            headerAdapter.notifyDataSetChanged();
         }
     }
 }
