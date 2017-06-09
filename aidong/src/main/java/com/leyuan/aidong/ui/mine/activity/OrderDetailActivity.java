@@ -44,7 +44,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.iwgang.countdownview.CountdownView;
-import retrofit2.http.HEAD;
 
 import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
 import static com.leyuan.aidong.utils.Constant.PAY_ALI;
@@ -229,7 +228,6 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
         }
 
         tvOrderNo.setText(String.format(getString(R.string.order_no), bean.getId()));
-        tvOrderNo.setVisibility(UN_PAID.equals(bean.getStatus()) ? View.GONE : View.VISIBLE);
         timeLayout.setVisibility(UN_PAID.equals(bean.getStatus()) ? View.VISIBLE : View.GONE);
         timer.start(DateUtils.getCountdown(bean.getCreatedAt(), orderCountdownMill));
 

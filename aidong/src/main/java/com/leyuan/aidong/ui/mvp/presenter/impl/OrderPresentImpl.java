@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.mvp.presenter.impl;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CartIdBean;
@@ -279,10 +280,12 @@ public class OrderPresentImpl implements OrderPresent {
 
             @Override
             public void onNext(ExpressBean expressBean) {
-                if (expressBean.express != null) {
+                if (expressBean.express != null && !TextUtils.isEmpty(expressBean.express_name)) {
                     expressInfoActivityView.hideLoadingView();
                     expressInfoActivityView.updateExpressInfo(expressBean.cover,
                             expressBean.express_name, expressBean.express.result);
+                }else {
+                    expressInfoActivityView.showEmptyView();
                 }
             }
         }, orderId);

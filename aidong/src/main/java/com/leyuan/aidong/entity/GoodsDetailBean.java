@@ -11,6 +11,7 @@ public class GoodsDetailBean {
     public String name;             //商品名称
     public List<String> image;      //图片地址
     public String price;            //商品价格
+    public String floor_price;
     public String market_price;     //商品市场价
     public String introduce;        //商品更多详情
     public String question;

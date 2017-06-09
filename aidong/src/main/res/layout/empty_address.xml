@@ -13,10 +13,11 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:background="@color/white"
-            android:drawablePadding="30dp"
+            android:drawablePadding="20dp"
             android:drawableTop="@drawable/empty_address"
             android:gravity="center"
             android:text="暂无地址"
+            android:textSize="14sp"
             android:textColor="@color/c9" />
 
     </RelativeLayout>

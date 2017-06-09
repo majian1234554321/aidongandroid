@@ -22,6 +22,7 @@ public class GoodsBean implements Parcelable {
     private String price;         //商品售价
     private String market_price;  //商品市场价
     private String type;
+    private String floor_price;
 
     /******
      * 订单商品中需要用到的字段
@@ -195,6 +196,14 @@ public class GoodsBean implements Parcelable {
 
     public void setRecommendCode(String recommend_code) {
         this.recommend_coach_id = recommend_code;
+    }
+
+    public String getFloor_price() {
+        return floor_price;
+    }
+
+    public void setFloor_price(String floor_price) {
+        this.floor_price = floor_price;
     }
 
     public boolean isSend() {

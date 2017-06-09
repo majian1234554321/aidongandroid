@@ -19,7 +19,6 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter;
 import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.BaseBean;
-import com.leyuan.aidong.entity.CommentBean;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.PhotoBrowseInfo;
 import com.leyuan.aidong.entity.UserBean;
@@ -263,11 +262,11 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
         sharePopupWindow.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_REFRESH_DYNAMIC) {
-                //更新动态详情页新添加的评论
-                CommentBean comment = data.getParcelableExtra("comment");
-                DynamicBean dynamicBean = dynamicList.get(clickPosition);
-                dynamicBean.comment.item.add(0, comment);
-                dynamicBean.comment.count++;
+                //更新动态详情
+                DynamicBean dynamicBean = data.getParcelableExtra("dynamic");
+                dynamicList.remove(clickPosition);
+                dynamicList.add(clickPosition,dynamicBean);
+                circleDynamicAdapter.updateData(dynamicList);
                 circleDynamicAdapter.notifyItemChanged(clickPosition);
             }
         } else if (resultCode == RESULT_DELETE) {

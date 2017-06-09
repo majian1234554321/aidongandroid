@@ -28,6 +28,15 @@ public class AppointmentDetailBean {
         private String classroom;       //上课时间
         private String address;         //上课地址
         private String organizer;
+        private String status;
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
+        }
 
         public String getName() {
             return name;

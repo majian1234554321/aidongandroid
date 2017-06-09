@@ -28,7 +28,7 @@ public abstract class BaseSubscriber<T> extends Subscriber<T> {
     @Override
     public void onError(Throwable e) {
         e.printStackTrace();
-        Logger.e("BaseSubscriber","  ----- onError");
+        Logger.e("BaseSubscriber",e.toString());
         if (e instanceof SocketTimeoutException) {
             ToastGlobal.showShortConsecutive(R.string.connect_timeout);
         } else if (e instanceof ConnectException) {

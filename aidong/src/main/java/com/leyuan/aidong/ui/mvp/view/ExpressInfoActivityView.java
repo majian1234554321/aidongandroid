@@ -13,4 +13,6 @@ public interface ExpressInfoActivityView {
     void showLoadingView();
 
     void hideLoadingView();
+
+    void showEmptyView();
 }

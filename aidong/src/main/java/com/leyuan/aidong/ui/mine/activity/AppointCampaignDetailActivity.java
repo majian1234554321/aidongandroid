@@ -262,12 +262,12 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
 
         //todo 通过组合控件来实现底部按钮
         //与订单状态有关: 预约状态信息 课程预约信息/活动预约信息 支付方式信息 底部预约操作状态及价格信息
-        switch (bean.getPay().getStatus()) {
+        switch (bean.getAppoint().getStatus()) {
             case UN_PAID:           //待付款
                 tvState.setText(context.getString(R.string.un_paid));
                 //timer.start(Long.parseLong(bean.getPayInfo().getLimitTime()) * 1000);
                 timerLayout.setVisibility(View.VISIBLE);
-                tvOrderNo.setVisibility(View.GONE);
+                tvOrderNo.setVisibility(View.VISIBLE);
                 tvCancelPay.setVisibility(View.VISIBLE);
                 tvPay.setVisibility(View.VISIBLE);
                 tvDelete.setVisibility(View.GONE);
@@ -387,10 +387,19 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 present.cancelAppoint(bean.getId());
                 break;
             case R.id.tv_cancel_join:
+                if (DateUtils.started(bean.getAppoint().getClassTime())) {
+                    ToastGlobal.showLong("活动已开始，无法取消");
+                } else {
+                    present.cancelAppoint(bean.getId());
+                }
                 present.cancelAppoint(bean.getId());
                 break;
             case R.id.tv_confirm:
-                present.confirmAppoint(bean.getId());
+                if (DateUtils.bigThanOneHour(bean.getAppoint().getClassTime())) {
+                    ToastGlobal.showLong("未到活动时间，请稍后确认");
+                } else {
+                    present.confirmAppoint(bean.getId());
+                }
                 break;
             case R.id.tv_delete:
                 present.deleteAppoint(bean.getId());
@@ -417,7 +426,6 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         public void onSuccess(String code, Object object) {
             ToastGlobal.showLong("支付成功");
             AppointSuccessActivity.start(AppointCampaignDetailActivity.this, null, false, present.getShareInfo());
-//            startActivity(new Intent(AppointCampaignDetailActivity.this, AppointSuccessActivity.class));
         }
 
         @Override

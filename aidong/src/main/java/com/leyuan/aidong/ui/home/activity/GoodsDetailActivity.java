@@ -301,7 +301,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         tvTitle.setText(String.format(getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.price)));
         tvPrice.setText(String.format(getString(R.string.rmb_price_double),
-                FormatUtil.parseDouble(bean.price)));
+                FormatUtil.parseDouble(TextUtils.isEmpty(bean.floor_price) ? bean.price :bean.floor_price)));
         tvMarketPrice.setText(String.format(getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.market_price)));
         tvMarketPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);

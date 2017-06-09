@@ -22,6 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
             <LinearLayout
                 android:id="@+id/ll_content"
                 android:layout_width="match_parent"
@@ -35,20 +36,8 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="15dp"
                     android:text="state"
-                    android:textColor="@color/black"
+                    android:textColor="@color/main_red"
                     android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/tv_order_no"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
-                    android:text="订单号"
-                    android:layout_marginBottom="10dp"
-                    android:textColor="@color/c9"
-                    android:textSize="13sp" />
-
 
                 <LinearLayout
                     android:id="@+id/ll_timer"
@@ -56,8 +45,9 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:gravity="center">
+
+                    android:gravity="center"
+                    android:layout_gravity="center_horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -68,6 +58,8 @@
 
                     <cn.iwgang.countdownview.CountdownView
                         android:id="@+id/timer"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:isHideTimeBackground="true"
@@ -82,6 +74,17 @@
                         app:timeTextColor="@color/main_red"
                         app:suffixTextColor="@color/main_red"/>
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_order_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:text="订单号:2252"
+                    android:textColor="@color/c9"
+                    android:textSize="13sp"
+                    android:layout_marginBottom="10dp"/>
 
                 <include layout="@layout/inc_line_black" />
 

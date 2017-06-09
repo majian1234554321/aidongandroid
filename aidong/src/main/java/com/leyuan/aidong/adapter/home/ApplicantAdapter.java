@@ -48,7 +48,7 @@ public class ApplicantAdapter extends RecyclerView.Adapter<ApplicantAdapter.Appl
     @Override
     public void onBindViewHolder(ApplicantHolder holder, int position) {
         final UserBean bean = data.get(position);
-        GlideLoader.getInstance().displayCircleImage(bean.getAvatar(), holder.cover);
+        GlideLoader.getInstance().displayRoundAvatarImage(bean.getAvatar(), holder.cover);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

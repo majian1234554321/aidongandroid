@@ -62,7 +62,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Good
         GlideLoader.getInstance().displayImage(bean.getCover(), holder.dvGoods);
         holder.tvName.setText(bean.getName());
         holder.tvPrice.setText(String.format(context.getString(R.string.rmb_price_double),
-                FormatUtil.parseDouble(bean.getPrice())));
+                FormatUtil.parseDouble(TextUtils.isEmpty(bean.getFloor_price()) ? bean.getPrice() : bean.getFloor_price())));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

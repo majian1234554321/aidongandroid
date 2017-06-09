@@ -2,12 +2,21 @@ package com.leyuan.aidong.utils;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.widget.ImageView;
 
 import com.leyuan.aidong.ui.App;
 
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class ImageUtil {
 	// 使用BitmapFactory.Options的inSampleSize参数来缩放
@@ -216,5 +225,62 @@ public class ImageUtil {
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		bitmap.compress(Bitmap.CompressFormat.JPEG, 70, outputStream);
 		return outputStream.toByteArray();
+	}
+
+
+	public static void saveImg(Context context,ImageView touchImageView, String imgUrl) {
+		final String filePath = Constant.DEFAULT_SAVE_IMAGE_PATH
+				+ getFileName(imgUrl);
+
+		Drawable drawable = touchImageView.getDrawable();
+		if (drawable != null && drawable instanceof BitmapDrawable) {
+			Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+			try {
+				ImageUtil.saveImageToSD(context, filePath, bitmap, 100);
+				ToastGlobal.showLong("保存成功");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+
+	private static String getFileName(String imgUrl) {
+		int index = imgUrl.lastIndexOf('/') + 1;
+		if (index == -1) {
+			return System.currentTimeMillis() + ".jpeg";
+		}
+		return imgUrl.substring(index);
+	}
+
+	/**
+	 * 写图片文件到SD卡
+	 * @throws IOException
+	 */
+	public static void saveImageToSD(Context ctx, String filePath,
+									 Bitmap bitmap, int quality) throws IOException {
+		if (bitmap != null) {
+			File file = new File(filePath.substring(0,
+					filePath.lastIndexOf(File.separator)));
+			if (!file.exists()) {
+				file.mkdirs();
+			}
+			BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(filePath));
+			bitmap.compress(Bitmap.CompressFormat.PNG, quality, bos);
+			bos.flush();
+			bos.close();
+			if (ctx != null) {
+				scanPhoto(ctx, filePath);
+			}
+		}
+	}
+
+
+	private static void scanPhoto(Context ctx, String imgFileName) {
+		Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+		File file = new File(imgFileName);
+		Uri contentUri = Uri.fromFile(file);
+		mediaScanIntent.setData(contentUri);
+		ctx.sendBroadcast(mediaScanIntent);
 	}
 }
