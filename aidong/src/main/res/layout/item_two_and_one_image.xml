@@ -26,7 +26,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:background="@color/viewfinder_mask"/>
+                    android:foreground="@color/viewfinder_mask"/>
 
                 <TextView
                     android:id="@+id/tv_one_name"
@@ -52,7 +52,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:background="@color/viewfinder_mask"/>
+                    android:foreground="@color/viewfinder_mask"/>
 
                 <TextView
                     android:id="@+id/tv_two_name"
@@ -81,7 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:background="@color/viewfinder_mask"/>
+                android:foreground="@color/viewfinder_mask"/>
 
             <TextView
                 android:id="@+id/tv_three_name"
