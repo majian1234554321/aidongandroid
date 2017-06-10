@@ -101,4 +101,9 @@ public class ExpressInfoActivity extends BaseActivity implements ExpressInfoActi
     public void hideLoadingView() {
         switcherLayout.showContentLayout();
     }
+
+    @Override
+    public void showEmptyView() {
+        switcherLayout.showEmptyLayout();
+    }
 }

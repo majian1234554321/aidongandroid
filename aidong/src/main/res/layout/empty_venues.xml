@@ -13,10 +13,11 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:background="@color/white"
-            android:drawablePadding="30dp"
+            android:drawablePadding="20dp"
             android:drawableTop="@drawable/empty_venues"
             android:gravity="center"
-            android:text="暂无场馆\"
+            android:text="暂无场馆"
+            android:textSize="14sp"
             android:textColor="@color/c9" />
 
     </RelativeLayout>

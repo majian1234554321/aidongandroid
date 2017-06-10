@@ -21,5 +21,6 @@ public class ConstantUrl {
     public final static String LIVE_SHARE = BASE_URL_HTML + "share_live?lid=";
     public static final String URL_USER_AGREEMENT = BASE_URL_HTML + "agreement";
     public static final String URL_ABOUT_US = BASE_URL_HTML + "aboutus";
+    public final static String URL_FEEDBACK = BASE_URL_HTML + "feedback?iuser=";
 
 }

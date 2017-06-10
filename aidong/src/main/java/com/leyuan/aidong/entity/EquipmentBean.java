@@ -11,6 +11,15 @@ public class EquipmentBean {
     private String price;
     private String market_price;
     private String brand_name;
+    private String floor_price;
+
+    public String getFloor_price() {
+        return floor_price;
+    }
+
+    public void setFloor_price(String floor_price) {
+        this.floor_price = floor_price;
+    }
 
     public String getBrandName() {
         return brand_name;

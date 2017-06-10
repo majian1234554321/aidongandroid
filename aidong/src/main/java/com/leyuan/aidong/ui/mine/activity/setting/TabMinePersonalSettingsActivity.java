@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.module.chat.manager.EmChatLoginManager;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
@@ -26,6 +27,7 @@ import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.LoginPresenter;
 import com.leyuan.aidong.ui.mvp.view.LoginExitView;
 import com.leyuan.aidong.utils.DataCleanManager;
+import com.leyuan.aidong.utils.Md5Utils;
 import com.leyuan.aidong.utils.TelephoneManager;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.UiManager;
@@ -173,9 +175,13 @@ public class TabMinePersonalSettingsActivity extends BaseActivity implements Log
         layout_tab_mine_feedback_rel.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (App.getInstance().isLogin()) {
+                    WebViewActivity.start(TabMinePersonalSettingsActivity.this, "意见反馈", ConstantUrl.URL_FEEDBACK +
+                            App.getInstance().getUser().getId() + "&&key=" + Md5Utils.createMd(App.getInstance().getToken()));
+                } else {
+                    UiManager.activityJump(TabMinePersonalSettingsActivity.this, LoginActivity.class);
+                }
 
-                WebViewActivity.start(TabMinePersonalSettingsActivity.this, "意见反馈",
-                        "http://192.168.100.142:4567/customer_service");
             }
         });
         layout_tab_mine_help_rel.setOnClickListener(new OnClickListener() {

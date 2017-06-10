@@ -51,7 +51,7 @@ public class EaseUserUtils {
                                 new RoundedCornersTransformation(context,10, 0))
                         .into(imageView);
             } catch (Exception e) {
-                
+
                 //use default avatar
                 Glide.with(context).load(user.getAvatar()).diskCacheStrategy(DiskCacheStrategy.ALL)
                         .bitmapTransform(new CropCircleTransformation(context))

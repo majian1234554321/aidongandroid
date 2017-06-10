@@ -252,7 +252,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
         tvPayType.setRightContent(PAY_ALI.equals(bean.getPay().getPayType()) ? "支付宝" : "微信");
 
         //todo 通过组合控件控制底部的按钮状态
-        switch (bean.getPay().getStatus()) {
+        switch (bean.getAppoint().getStatus()) {
             case UN_PAID:           //待付款
                 tvState.setText(context.getString(R.string.un_paid));
                 timerLayout.setVisibility(View.VISIBLE);
@@ -378,18 +378,14 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
                 break;
             case R.id.tv_cancel_join:
                 if (DateUtils.started(bean.getAppoint().getClassTime())) {
-                    if ("course".equals(bean.getAppointment_type())) {
                         ToastGlobal.showLong("课程已开始，无法取消");
-                    }
                 } else {
                     present.cancelAppoint(bean.getId());
                 }
                 break;
             case R.id.tv_confirm:
                 if (DateUtils.bigThanOneHour(bean.getAppoint().getClassTime())) {
-                    if ("course".equals(bean.getAppointment_type())) {
-                        ToastGlobal.showLong("未到课程时间，请稍后确认");
-                    }
+                    ToastGlobal.showLong("未到课程时间，请稍后确认");
                 } else {
                     present.confirmAppoint(bean.getId());
                 }
@@ -410,7 +406,6 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
         public void onSuccess(String code, Object object) {
             ToastGlobal.showLong("支付成功");
             AppointSuccessActivity.start(AppointCourseDetailActivity.this, null, false, present.getShareInfo());
-//            startActivity(new Intent(AppointCourseDetailActivity.this,AppointSuccessActivity.class));
         }
 
         @Override

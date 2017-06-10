@@ -13,10 +13,11 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:background="@color/white"
-            android:drawablePadding="30dp"
+            android:drawablePadding="20dp"
             android:drawableTop="@drawable/empty_follow"
             android:gravity="center"
             android:text="暂无关注"
+            android:textSize="14sp"
             android:textColor="@color/c9" />
 
     </RelativeLayout>

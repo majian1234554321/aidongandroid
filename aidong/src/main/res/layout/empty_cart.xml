@@ -13,9 +13,10 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:background="@color/white"
-            android:drawablePadding="30dp"
+            android:drawablePadding="20dp"
             android:drawableTop="@drawable/empty_cart"
             android:gravity="center"
+            android:textSize="14sp"
             android:text="购物车是空的哦!"
             android:textColor="@color/c9" />
 
