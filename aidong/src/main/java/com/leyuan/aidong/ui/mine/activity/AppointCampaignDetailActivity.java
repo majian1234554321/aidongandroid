@@ -60,7 +60,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         View.OnClickListener, CustomNestRadioGroup.OnCheckedChangeListener, CountdownView.OnCountdownEndListener {
     private static final String UN_PAID = "pending";         //待付款
     private static final String UN_JOIN = "purchased";        //待参加
-    private static final String JOINED = "confirmed";        //已参加
+    private static final String JOINED = "signed";        //已参加
     private static final String CLOSE = "canceled";          //已关闭
     private static final String REFUNDING = "refunding";     //退款中
     private static final String REFUNDED = "returned";      //已退款

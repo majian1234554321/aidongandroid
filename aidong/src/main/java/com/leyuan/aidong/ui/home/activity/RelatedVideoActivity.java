@@ -9,6 +9,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.video.MoreVideoAdapter;
@@ -32,6 +33,7 @@ import java.util.List;
  */
 public class RelatedVideoActivity extends BaseActivity implements RelatedVideoActivityView,
         SwipeRefreshLayout.OnRefreshListener, MoreVideoAdapter.OnItemClickListener {
+    private TextView tvTitle;
     private ImageView ivBack;
     private SwitcherLayout switcherLayout;
     private SwipeRefreshLayout refreshLayout;
@@ -41,11 +43,13 @@ public class RelatedVideoActivity extends BaseActivity implements RelatedVideoAc
     private List<CourseVideoBean> data = new ArrayList<>();
     private CoursePresent coursePresent;
     private String id;
+    private String title;
     private int currPage = 1;
 
-    public static void start(Context context,String id) {
+    public static void start(Context context,String id,String title) {
         Intent starter = new Intent(context, RelatedVideoActivity.class);
         starter.putExtra("id",id);
+        starter.putExtra("title",title);
         context.startActivity(starter);
     }
 
@@ -55,6 +59,7 @@ public class RelatedVideoActivity extends BaseActivity implements RelatedVideoAc
         setContentView(R.layout.activity_related_video);
         if(getIntent() != null){
             id = getIntent().getStringExtra("id");
+            title = getIntent().getStringExtra("title");
         }
         coursePresent = new CoursePresentImpl(this,this);
         initView();
@@ -63,6 +68,7 @@ public class RelatedVideoActivity extends BaseActivity implements RelatedVideoAc
     }
 
     private void initView(){
+        tvTitle = (TextView) findViewById(R.id.tv_title);
         ivBack = (ImageView) findViewById(R.id.iv_back);
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
         switcherLayout = new SwitcherLayout(this,refreshLayout);
@@ -71,6 +77,7 @@ public class RelatedVideoActivity extends BaseActivity implements RelatedVideoAc
         wrapper = new HeaderAndFooterRecyclerViewAdapter(adapter);
         recyclerView.setAdapter(wrapper);
         recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+        tvTitle.setText(title);
     }
 
     private void setListener(){
