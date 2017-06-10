@@ -12,7 +12,6 @@ import com.hyphenate.easeui.controller.EaseUI;
 import com.hyphenate.easeui.controller.EaseUI.EaseUserProfileProvider;
 import com.hyphenate.easeui.domain.EaseUser;
 
-import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class EaseUserUtils {
@@ -54,13 +53,19 @@ public class EaseUserUtils {
 
                 //use default avatar
                 Glide.with(context).load(user.getAvatar()).diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .bitmapTransform(new CropCircleTransformation(context))
+                        .bitmapTransform(new CenterCrop(context),
+                                new RoundedCornersTransformation(context,10, 0))
                         .placeholder(R.drawable.ease_default_avatar)
                         .into(imageView);
             }
+//            Glide.with(context).load(R.drawable.ease_default_avatar)
+//                    .bitmapTransform(new CropCircleTransformation(context))
+//                    .into(imageView);
+
         } else {
             Glide.with(context).load(R.drawable.ease_default_avatar)
-                    .bitmapTransform(new CropCircleTransformation(context))
+                    .bitmapTransform(new CenterCrop(context),
+                            new RoundedCornersTransformation(context,10, 0))
                     .into(imageView);
         }
     }

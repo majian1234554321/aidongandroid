@@ -95,5 +95,6 @@
     <color name="txt_gray">#cccccc</color>
     <color name="semitransparent">#22000000</color>
     <color name="subtransparent">#4f000000</color>
+    <color name="semitransparent_standard">#80000000</color>
 
 </resources>

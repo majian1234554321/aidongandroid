@@ -142,10 +142,22 @@ public class LivingVideoActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mVideoView.stopPlayback();
-        mVideoView.release(true);
-        mVideoView.stopBackgroundPlay();
-        IjkMediaPlayer.native_profileEnd();
+        Logger.i("onDestroy onDestroy "," time --------- " + System.currentTimeMillis());
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mVideoView.stopPlayback();
+                Logger.i("onDestroy stopPlayback "," time --------- " + System.currentTimeMillis());
+                mVideoView.release(true);
+                Logger.i("onDestroy release "," time --------- " + System.currentTimeMillis());
+                mVideoView.stopBackgroundPlay();
+                Logger.i("onDestroy stopBackgroundPlay "," time --------- " + System.currentTimeMillis());
+                IjkMediaPlayer.native_profileEnd();
+                Logger.i("onDestroy native_profileEnd "," time --------- " + System.currentTimeMillis());
+            }
+        }).start();
+
     }
 
     @Override

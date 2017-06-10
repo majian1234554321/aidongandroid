@@ -47,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/rel_top"
-        android:background="#22000000" />
+        android:background="@color/semitransparent_standard" />
 
     <RelativeLayout
         android:id="@+id/layout_page_tag"

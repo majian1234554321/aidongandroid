@@ -267,6 +267,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 tvState.setText(context.getString(R.string.un_paid));
                 //timer.start(Long.parseLong(bean.getPayInfo().getLimitTime()) * 1000);
                 timerLayout.setVisibility(View.VISIBLE);
+                tvOrderNo.setText(String.format(getString(R.string.appoint_no), bean.getId()));
                 tvOrderNo.setVisibility(View.VISIBLE);
                 tvCancelPay.setVisibility(View.VISIBLE);
                 tvPay.setVisibility(View.VISIBLE);

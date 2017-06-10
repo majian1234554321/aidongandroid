@@ -78,7 +78,7 @@ public class EMChatActivity extends BaseActivity {
             }
         });
         txtTitle.setText(nickname == null ? mChatId : nickname);
-        GlideLoader.getInstance().displayCircleImage(avatar, imgRight);
+        GlideLoader.getInstance().displayRoundAvatarImage(avatar, imgRight);
     }
 
     private void initData() {

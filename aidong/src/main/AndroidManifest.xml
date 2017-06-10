@@ -108,7 +108,6 @@
         android:theme="@style/AppTheme.FullScreen">
         <activity
             android:name=".ui.SplashActivity"
-
             android:screenOrientation="portrait"
             android:theme="@style/SplashBackgroundTheme">
             <intent-filter>

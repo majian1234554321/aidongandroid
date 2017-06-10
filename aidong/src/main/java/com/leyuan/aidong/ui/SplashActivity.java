@@ -80,6 +80,11 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_splash);
 
+//        if((getIntent().getFlags() & Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) != 0){
+//            finish();
+//            return;
+//        }
+
         splashPresenter = new SplashPresenterImpl(this);
         splashPresenter.setLoginAutoListener(this);
         versionPresenter = new VersionPresenterImpl(this, this);
