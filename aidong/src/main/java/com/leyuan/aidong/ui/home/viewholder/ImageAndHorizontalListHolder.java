@@ -62,9 +62,11 @@ public class ImageAndHorizontalListHolder extends BaseRecyclerViewHolder<HomeBea
             });
             line.setVisibility(View.VISIBLE);
             imageLayout.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.VISIBLE);
         }else {
             line.setVisibility(View.GONE);
             imageLayout.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.GONE);
         }
     }
 }

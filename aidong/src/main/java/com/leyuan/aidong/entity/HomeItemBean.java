@@ -11,6 +11,7 @@ public class HomeItemBean{
     private String price;           //售价
     private String market_price;    //市场价
     private String type;            //类型
+    private String floor_price;
 
     public String getId() {
         return id;
@@ -58,6 +59,14 @@ public class HomeItemBean{
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getFloor_price() {
+        return floor_price;
+    }
+
+    public void setFloor_price(String floor_price) {
+        this.floor_price = floor_price;
     }
 
     @Override

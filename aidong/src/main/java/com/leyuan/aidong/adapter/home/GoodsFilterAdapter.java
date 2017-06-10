@@ -88,6 +88,8 @@ public class GoodsFilterAdapter extends RecyclerView.Adapter<GoodsFilterAdapter.
             holder.price.setText(String.format(context.getString(R.string.rmb_price_double),
                     FormatUtil.parseDouble(bean.getPrice())));
 
+            holder.price.setText(String.format(context.getString(R.string.rmb_price_double),
+                    FormatUtil.parseDouble(TextUtils.isEmpty(bean.getFloor_price()) ? bean.getPrice() : bean.getFloor_price())));
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -96,7 +96,7 @@
                         android:id="@+id/tv_campaign_name"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginRight="80dp"
+                        android:layout_marginRight="40dp"
                         android:layout_weight="1"
                         android:maxLines="2"
                         android:paddingTop="20dp"

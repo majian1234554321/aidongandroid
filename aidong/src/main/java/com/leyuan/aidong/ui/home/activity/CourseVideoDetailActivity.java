@@ -149,7 +149,7 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
                 }
                 break;
             case R.id.layout_more_video:
-                RelatedVideoActivity.start(this, catId);
+                RelatedVideoActivity.start(this, catId,tvRelateTitle.getText().toString());
                 break;
             case R.id.iv_start:
                 if(TextUtils.isEmpty(courseVideoBean.getFile())){

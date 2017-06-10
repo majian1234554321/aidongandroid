@@ -319,8 +319,10 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                 isSellOut = false;
                 break;
             }
+        }
 
-            if(goodsSkuBean.value != null && !goodsSkuBean.value.isEmpty()){
+        for (GoodsSkuBean goodsSkuBean : bean.spec.item) {
+            if (goodsSkuBean.value != null && !goodsSkuBean.value.isEmpty()) {
                 hasSku = true;
                 break;
             }
