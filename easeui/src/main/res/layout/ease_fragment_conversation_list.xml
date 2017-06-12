@@ -37,7 +37,7 @@
             android:drawablePadding="30dp"
             android:drawableTop="@drawable/empty_message"
             android:gravity="center"
-            android:text="暂无休息"
+            android:text="暂无消息"
             android:textColor="@color/c9" />
     </RelativeLayout>
 

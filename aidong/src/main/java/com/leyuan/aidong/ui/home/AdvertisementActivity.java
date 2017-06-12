@@ -22,6 +22,7 @@ import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.UiManager;
 
+import static com.leyuan.aidong.utils.Constant.GOODS_EQUIPMENT;
 import static com.leyuan.aidong.utils.Constant.GOODS_NUTRITION;
 
 /**
@@ -120,10 +121,11 @@ public class AdvertisementActivity extends BaseActivity implements View.OnClickL
                 break;
             case "21":
                 intentBanner = new Intent(this, GoodsDetailActivity.class);
-                intentBanner.putExtra("id", startingBanner.getLink());
+                intentBanner.putExtra("goodsId", startingBanner.getLink());
                 intentBanner.putExtra("goodsType", GOODS_NUTRITION);
                 break;
             case "22":
+
                 intentBanner = new Intent(this, CourseActivity.class);
                 intentBanner.putExtra("category", startingBanner.getLink());
 
@@ -132,8 +134,13 @@ public class AdvertisementActivity extends BaseActivity implements View.OnClickL
                 intentBanner = new Intent(this, CampaignDetailActivity.class);
                 intentBanner.putExtra("id", startingBanner.getLink());
                 break;
+            case "24":
+                intentBanner = new Intent(this, GoodsDetailActivity.class);
+                intentBanner.putExtra("goodsId", startingBanner.getLink());
+                intentBanner.putExtra("goodsType", GOODS_EQUIPMENT);
+                break;
             default:
-
+                intentBanner = new Intent();
                 break;
         }
         return intentBanner;

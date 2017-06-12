@@ -15,7 +15,6 @@ import com.leyuan.aidong.widget.dialog.ButtonCancelListener;
 import com.leyuan.aidong.widget.dialog.ButtonOkListener;
 import com.leyuan.aidong.widget.dialog.DialogDoubleButton;
 import com.leyuan.aidong.widget.dialog.DialogSingleButton;
-import com.leyuan.aidong.widget.dialog.VersionDialog;
 
 /**
  * Created by user on 2017/3/6.
@@ -55,9 +54,10 @@ public class VersionPresenterImpl {
         model.getVersionInfo(new IsLoginSubscriber<VersionInformation>(context) {
             @Override
             public void onNext(VersionInformation versionInfomation) {
-                if (versionInfomation != null && VersionManager.shouldUpdate(versionInfomation.getVersion(), context)) {
-                new VersionDialog(context, versionInfomation).setData().show();
-                }
+//                if (versionInfomation != null && VersionManager.shouldUpdate(versionInfomation.getVersion(), context)) {
+//                new VersionDialog(context, versionInfomation).setData().show();
+//                }
+                showUpdateDialog(versionInfomation);
             }
 
             @Override
@@ -68,6 +68,7 @@ public class VersionPresenterImpl {
     }
 
     private void showUpdateDialog(VersionInformation versionInformation) {
+        if(versionInformation == null ) return;
         if (versionInformation.isUpdate_force() || VersionManager.mustUpdate(versionInformation.getVersion(), context)) {
             showForceUpdateDialog(versionInformation);
         } else {
