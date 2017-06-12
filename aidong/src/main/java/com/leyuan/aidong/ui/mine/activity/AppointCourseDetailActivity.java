@@ -116,9 +116,8 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
     private AppointmentPresent present;
     private AppointmentDetailBean bean;
     private String orderId;
-    private
     @PayType
-    String payType;
+    private String payType;
 
     private String code;
     private boolean fromDetail = false;
@@ -153,11 +152,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
 
         initView();
         setListener();
-        if (fromDetail) {
-            present.getCourseAppointDetail(switcherLayout, code);
-        } else {
-            present.getAppointmentDetail(switcherLayout, orderId);
-        }
+        getCourseDetailData();
     }
 
     private void initView() {
@@ -213,6 +208,14 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
         tvDelete.setOnClickListener(this);
         courseLayout.setOnClickListener(this);
         timer.setOnCountdownEndListener(this);
+    }
+
+    private void getCourseDetailData(){
+        if (fromDetail) {
+            present.getCourseAppointDetail(switcherLayout, code);
+        } else {
+            present.getAppointmentDetail(switcherLayout, orderId);
+        }
     }
 
     @Override
@@ -374,6 +377,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
                 payInterface.payOrder(bean.getPay().getpayOption());
                 break;
             case R.id.tv_cancel_pay:
+                ToastGlobal.showLong("cancel");
                 present.cancelAppoint(bean.getId());
                 break;
             case R.id.tv_cancel_join:
@@ -432,7 +436,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
     @Override
     public void cancelAppointmentResult(BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
-            present.getAppointmentDetail(switcherLayout, orderId);
+            getCourseDetailData();
             ToastGlobal.showLong("取消成功");
         } else {
             ToastGlobal.showLong(baseBean.getMessage());
@@ -442,7 +446,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
     @Override
     public void confirmAppointmentResult(BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
-            present.getAppointmentDetail(switcherLayout, orderId);
+            getCourseDetailData();
             ToastGlobal.showLong("确认成功");
         } else {
             ToastGlobal.showLong(baseBean.getMessage());

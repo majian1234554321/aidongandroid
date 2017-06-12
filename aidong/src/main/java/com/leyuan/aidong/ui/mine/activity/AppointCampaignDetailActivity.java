@@ -120,9 +120,8 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
     //Present层对象
     private AppointmentPresent present;
     private String orderId;
-    private
     @PayType
-    String payType;
+    private String payType;
     private AppointmentDetailBean bean;
 
     private String campaignId;
@@ -158,11 +157,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
 
         initView();
         setListener();
-        if (fromDetail) {
-            present.getCampaignAppointDetail(switcherLayout, campaignId);
-        } else {
-            present.getAppointmentDetail(switcherLayout, orderId);
-        }
+        getCampaignDeatilData();
     }
 
     private void initView() {
@@ -224,6 +219,14 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         campaignLayout.setOnClickListener(this);
         timer.setOnCountdownEndListener(this);
         ivCode.setOnClickListener(this);
+    }
+
+    private void getCampaignDeatilData(){
+        if (fromDetail) {
+            present.getCampaignAppointDetail(switcherLayout, campaignId);
+        } else {
+            present.getAppointmentDetail(switcherLayout, orderId);
+        }
     }
 
     @Override
@@ -393,7 +396,6 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 } else {
                     present.cancelAppoint(bean.getId());
                 }
-//                present.cancelAppoint(bean.getId());
                 break;
             case R.id.tv_confirm:
                 if (DateUtils.bigThanOneHour(bean.getAppoint().getClassTime())) {
@@ -452,7 +454,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
     @Override
     public void cancelAppointmentResult(BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
-            present.getAppointmentDetail(switcherLayout, orderId);
+            getCampaignDeatilData();
             ToastGlobal.showLong("取消成功");
         } else {
             ToastGlobal.showLong(baseBean.getMessage());
@@ -462,7 +464,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
     @Override
     public void confirmAppointmentResult(BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
-            present.getAppointmentDetail(switcherLayout, orderId);
+            getCampaignDeatilData();
             ToastGlobal.showLong("确认成功");
         } else {
             ToastGlobal.showLong(baseBean.getMessage());

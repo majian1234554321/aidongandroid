@@ -125,7 +125,7 @@ public class GoodsBean implements Parcelable {
         this.market_price = market_price;
     }
 
-    public ArrayList<String> getSpec_name() {
+    public ArrayList<String> getSpecName() {
         return spec_name;
     }
 

@@ -188,19 +188,22 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
     }
 
     @Override
-    public void onCartDataLoadFinish(boolean isEmpty) {
+    public void onCartDataLoadFinish(boolean isCartEmpty) {
         refreshLayout.setRefreshing(false);
         if(needLoadRecommendData) {
             needLoadRecommendData = false;
-            tvEdit.setVisibility(View.VISIBLE);
             bottomLayout.setVisibility(View.VISIBLE);
             cartHeaderView.showRecommendText(!isEditing);
             recommendPresent.pullToRefreshRecommendData(RECOMMEND_CART);
         }
 
-        if(isEmpty){
-            isEditing = false;
-            updateEditStatus();
+        isEditing = false;
+        updateEditStatus();
+
+        if(!isCartEmpty){
+            tvEdit.setVisibility(View.VISIBLE);
+        }else {
+            tvEdit.setVisibility(View.GONE);
         }
     }
 
