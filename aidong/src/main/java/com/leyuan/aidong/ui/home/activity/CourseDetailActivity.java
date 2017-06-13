@@ -100,9 +100,20 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
 
         initView();
         setListener();
-        coursePresent.getCourseDetail(switcherLayout, code);
         sharePopupWindow = new SharePopupWindow(this);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(ivFollow.getVisibility() == View.VISIBLE && bean != null && bean.getCoach() != null){
+            isFollow = SystemInfoUtils.isFollow(this, bean.getCoach());
+            ivFollow.setBackgroundResource(isFollow ? R.drawable.icon_following
+                    : R.drawable.icon_follow);
+        }
+        coursePresent.getCourseDetail(switcherLayout, code);
+    }
+
 
     private void initView() {
         ivBack = (ImageView) findViewById(R.id.iv_back);
@@ -311,15 +322,6 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if(ivFollow.getVisibility() == View.VISIBLE && bean != null && bean.getCoach() != null){
-            isFollow = SystemInfoUtils.isFollow(this, bean.getCoach());
-            ivFollow.setBackgroundResource(isFollow ? R.drawable.icon_following
-                    : R.drawable.icon_follow);
-        }
-    }
 
     private void bottomToTargetActivity() {
         if (STATUS_APPOINT.equals(bean.getStatus())) {            //预约

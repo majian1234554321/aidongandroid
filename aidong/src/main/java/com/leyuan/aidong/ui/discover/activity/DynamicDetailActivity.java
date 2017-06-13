@@ -248,6 +248,9 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
             dynamic.comment.item.add(0, temp);
             intent.putExtra("dynamic", dynamic);
             setResult(RESULT_OK, intent);
+
+            //刷新头部评论数量
+            headerAdapter.notifyDataSetChanged();
         } else {
             ToastGlobal.showLong(baseBean.getMessage());
         }
@@ -367,7 +370,6 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
         @Override
         public void onAvatarClick(String id) {
             UserInfoActivity.startForResult(DynamicDetailActivity.this, id, Constant.REQUEST_USER_INFO);
-//            UserInfoActivity.start(DynamicDetailActivity.this, id);
         }
 
         @Override

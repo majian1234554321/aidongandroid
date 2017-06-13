@@ -125,7 +125,7 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
         switcherLayout.setOnRetryListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dynamicPresent.pullToRefreshData();
+                dynamicPresent.commonLoadData(switcherLayout);
             }
         });
     }

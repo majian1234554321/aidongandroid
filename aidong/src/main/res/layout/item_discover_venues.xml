@@ -16,10 +16,10 @@
         android:textSize="14sp"
         android:gravity="center"
         android:textColor="@color/black"
-        android:layout_below="@+id/rl_cover"
+        android:layout_below="@+id/dv_venues_cover"
         android:layout_marginTop="10dp"
-        android:layout_alignLeft="@+id/rl_cover"
-        android:layout_alignRight="@+id/rl_cover"
+        android:layout_alignLeft="@+id/dv_venues_cover"
+        android:layout_alignRight="@+id/dv_venues_cover"
         android:singleLine="true"/>
 
     <TextView
@@ -33,27 +33,15 @@
         android:singleLine="true"
         android:gravity="center"
         android:text="111"
-        android:layout_alignLeft="@+id/rl_cover"
-        android:layout_alignRight="@+id/rl_cover"/>
-
-    <RelativeLayout
-        android:id="@+id/rl_cover"
-        android:layout_width="91dp"
-        android:layout_height="91dp">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/shape_stroke_corner_gray"/>
+        android:layout_alignLeft="@+id/dv_venues_cover"
+        android:layout_alignRight="@+id/dv_venues_cover"/>
 
         <ImageView
             android:id="@+id/dv_venues_cover"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
             android:layout_margin="0.5dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
-    </RelativeLayout>
-
 
 </RelativeLayout>

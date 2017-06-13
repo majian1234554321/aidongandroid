@@ -101,6 +101,12 @@ public class StoreFragment extends BaseFragment implements StoreFragmentView{
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(homeAdapter);
         recyclerView.setAdapter(wrapperAdapter);
         RecyclerViewUtils.setHeaderView(recyclerView, headerView);
+        switcherLayout.setOnRetryListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initData();
+            }
+        });
     }
 
 

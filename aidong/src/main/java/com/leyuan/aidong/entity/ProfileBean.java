@@ -28,6 +28,15 @@ public class ProfileBean implements Parcelable {
     private String movement_frequency;
     private String user_type;
     private String popularity;
+    private String phone;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public String getUserType() {
         return user_type;
@@ -190,6 +199,9 @@ public class ProfileBean implements Parcelable {
     }
 
 
+    public ProfileBean() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -217,9 +229,7 @@ public class ProfileBean implements Parcelable {
         dest.writeString(this.movement_frequency);
         dest.writeString(this.user_type);
         dest.writeString(this.popularity);
-    }
-
-    public ProfileBean() {
+        dest.writeString(this.phone);
     }
 
     protected ProfileBean(Parcel in) {
@@ -243,6 +253,7 @@ public class ProfileBean implements Parcelable {
         this.movement_frequency = in.readString();
         this.user_type = in.readString();
         this.popularity = in.readString();
+        this.phone = in.readString();
     }
 
     public static final Creator<ProfileBean> CREATOR = new Creator<ProfileBean>() {

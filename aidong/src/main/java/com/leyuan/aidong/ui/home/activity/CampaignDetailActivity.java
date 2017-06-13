@@ -100,6 +100,12 @@ public class CampaignDetailActivity extends BaseActivity implements CampaignDeta
         }
         initView();
         setListener();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         campaignPresent.getCampaignDetail(switcherLayout, id);
     }
 

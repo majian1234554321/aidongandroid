@@ -80,6 +80,7 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
 
     @Override
     public void updateCartRecyclerView(List<ShopBean> list) {
+        switcherLayout.showContentLayout();
         shopBeanList.clear();
         shopBeanList.addAll(list);
         if(reBuyIds != null && !reBuyIds.isEmpty()) {

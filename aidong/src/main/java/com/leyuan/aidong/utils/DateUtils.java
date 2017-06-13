@@ -253,7 +253,11 @@ public class DateUtils {
             String weekOfDate = getWeekOfDate(date);
             SimpleDateFormat formatter = new SimpleDateFormat("MM月dd");
             String dateString = formatter.format(date);
-            dates.add(dateString + weekOfDate);
+            if(i == 0) {
+                dates.add(dateString + "(今天)");
+            }else {
+                dates.add(dateString + weekOfDate);
+            }
         }
         return dates;
     }
