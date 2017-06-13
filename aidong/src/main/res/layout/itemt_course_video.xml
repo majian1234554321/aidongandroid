@@ -17,9 +17,8 @@
         android:id="@+id/txt_course_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
         android:text="1111111111"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="4dp"
         android:textColor="@color/white"
         android:textSize="12sp" />
 
@@ -27,11 +26,10 @@
         android:id="@+id/txt_course_type_duration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
         android:text="22222222222222"
         android:textColor="@color/white"
-        android:textSize="12sp"
-        android:layout_marginTop="12dp"/>
+        android:textSize="11sp"
+        android:layout_marginTop="7dp"/>
 
 
 </LinearLayout>

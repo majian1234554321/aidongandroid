@@ -151,6 +151,9 @@ public class CourseFragment extends BasePageFragment implements CourserFragmentV
             refreshLayout.setRefreshing(false);
         }
         View view = View.inflate(getContext(),R.layout.empty_course,null);
+        SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout_empty);
+        swipeRefreshLayout.setProgressViewOffset(true,100,250);
+        swipeRefreshLayout.setOnRefreshListener(this);
         switcherLayout.addCustomView(view,"empty");
         switcherLayout.showCustomLayout("empty");
     }

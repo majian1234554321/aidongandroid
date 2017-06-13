@@ -40,7 +40,7 @@
                 android:layout_alignParentRight="true"
                 android:textColor="@color/white"
                 android:textSize="15sp"
-                android:visibility="gone"/>
+                android:visibility="visible"/>
         </RelativeLayout>
 
         <android.support.v4.widget.SwipeRefreshLayout

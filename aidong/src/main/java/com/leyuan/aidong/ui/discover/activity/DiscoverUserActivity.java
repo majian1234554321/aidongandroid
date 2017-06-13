@@ -184,10 +184,10 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
                 finish();
                 break;
             case R.id.tv_finish_filter:
-                //drawerLayout.closeDrawer(filterLayout);
+                drawerLayout.closeDrawer(filterLayout);
                 break;
             case R.id.tv_filter:
-                //drawerLayout.openDrawer(filterLayout);
+                drawerLayout.openDrawer(filterLayout);
                 break;
             default:
                 break;
