@@ -1,7 +1,9 @@
 package com.leyuan.aidong.widget;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.ScrollView;
 
@@ -34,7 +36,7 @@ public class SmartScrollView extends ScrollView {
         if (scrollY == 0 && clampedY && mListener != null && scrollTop) {
             mListener.onScrollTop();
         }
-        Logger.i("SmartScrollView", "scrollY = " + scrollY + ", clampedY = " + clampedY + ",getscrollY = " + getScrollY());
+        Logger.i("SmartScrollView", "onOverScrolled:  scrollY = " + scrollY + ", clampedY = " + clampedY + ",getscrollY = " + getScrollY());
     }
 
 
@@ -42,7 +44,7 @@ public class SmartScrollView extends ScrollView {
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
 
-        Logger.i("SmartScrollView", "getScrollY = " + getScrollY());
+//        Logger.i("SmartScrollView", "getScrollY = " + getScrollY());
         //
         //        if (getScrollY() == 0 && mListener != null) {
         //            mListener.onScrollTop();
@@ -50,40 +52,45 @@ public class SmartScrollView extends ScrollView {
 
     }
 
-    //    private boolean intecept;
     private float oldY;
-    //    private float oldX;
     private boolean scrollTop = true; //true 向下 flase 向上
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
 
+        boolean intecept = false;
+        int newX = (int) ev.getX();
+        int newY = (int) ev.getY();
+
+
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                oldY = ev.getRawY();
-                //                intecept = false;
+                oldY = ev.getY();
+                Logger.i("SmartScrollView", "onInterceptTouchEvent  MotionEvent.ACTION_DOWN:  oldY = " + oldY);
+                intecept = false;
                 break;
             case MotionEvent.ACTION_MOVE:
-                float newY = ev.getRawY();
-                //                Logger.i("action newY = " + newY + ", newX = " + ev.getX());
-                //                if (Math.abs(newY - oldY) >= 0) {
-                //                    intecept = true;
-                //                } else {
-                //                    intecept = false;
-                //                }
-
-                scrollTop = newY - oldY > 0;
-
+                if (newY - oldY > 0) {
+                    intecept = true;
+                } else {
+                    intecept = false;
+                }
+                scrollTop =intecept;
                 break;
-            //            case MotionEvent.ACTION_UP:
-            //                intecept = false;
-            //                break;
+            case MotionEvent.ACTION_UP:
+                intecept = false;
+                break;
         }
-        return super.onInterceptTouchEvent(ev);
+        Logger.i("SmartScrollView", "intecept = " + intecept+ ", newY = " + newY + " scrollTop = " + scrollTop);
+
+        return intecept;
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Log.i("SmartScrollView","onTouchEvent " + MotionEvent.actionToString(ev.getAction()));
+        }
         return super.onTouchEvent(ev);
     }
 
