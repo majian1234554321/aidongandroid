@@ -101,6 +101,11 @@ public class PhoneBindingActivity extends BaseActivity implements View.OnClickLi
             return false;
         }
 
+        if(presenter.getToken()== null){
+            ToastGlobal.showShort(R.string.please_get_identify_first);
+            return false;
+        }
+
         return true;
     }
 

@@ -19,4 +19,6 @@ public interface RegisterPresenterInterface {
     String getBingdingMobile();
 
     void checkIdentifyRegister(String token, String code, String password);
+
+    String getToken();
 }

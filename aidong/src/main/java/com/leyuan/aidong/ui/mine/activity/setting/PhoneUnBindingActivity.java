@@ -20,6 +20,7 @@ import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.StringUtils;
 import com.leyuan.aidong.utils.TimeCountUtil;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.utils.UiManager;
 import com.leyuan.aidong.widget.CommonTitleLayout;
@@ -93,6 +94,11 @@ public class PhoneUnBindingActivity extends BaseActivity implements View.OnClick
         code = getEidtVerifyCode().getText().toString().trim();
         if (TextUtils.isEmpty(code)) {
             getEidtVerifyCode().setError("请输入验证码");
+            return false;
+        }
+
+        if(presenter.getToken()== null){
+            ToastGlobal.showShort(R.string.please_get_identify_first);
             return false;
         }
 
