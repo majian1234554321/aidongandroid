@@ -389,8 +389,8 @@ public class Utils {
 	public static String formatTime(long seconds) {
 		long mm = seconds / TIME_NUMBERS ;
 		long ss = seconds < TIME_NUMBERS ? seconds : seconds % TIME_NUMBERS;
-		return (mm == 0 ? "" : (mm < 10 ? "0" + mm : mm) + "'")
-				+ (ss == 0 ? "" : (ss < 10 ? "0" + ss : ss) + "\"");
+		return (mm == 0 ? "" : (mm < 10 ? "0" + mm : mm) + ":")
+				+ (ss == 0 ? "" : (ss < 10 ? "0" + ss : ss) );
 	}
 
 	public static Bitmap rotateBitmap(Bitmap bm, final int orientationDegree) {

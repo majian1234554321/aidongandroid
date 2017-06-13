@@ -48,6 +48,7 @@ import com.leyuan.aidong.ui.mvp.view.UserInfoActivityView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.ImageRectUtils;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.utils.TelephoneManager;
 import com.leyuan.aidong.utils.ToastGlobal;
@@ -237,8 +238,12 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
                 finish();
                 break;
             case R.id.dv_avatar:
-                //PhotoBrowseInfo info = PhotoBrowseInfo.create(photoUrls, viewLocalRect, currPosition);
-                //PhotoBrowseActivity.start(this, info);
+                List<String> urls = new ArrayList<>();
+                urls.add(userInfoData.getProfile().getAvatar());
+                List<Rect> viewLocalRect = new ArrayList<>();
+                viewLocalRect.add(ImageRectUtils.getDrawableBoundsInView(ivAvatar));
+                PhotoBrowseInfo info = PhotoBrowseInfo.create(urls, viewLocalRect, 0);
+                PhotoBrowseActivity.start(this, info);
                 break;
             case R.id.iv_publish:
                 publishDynamic();
