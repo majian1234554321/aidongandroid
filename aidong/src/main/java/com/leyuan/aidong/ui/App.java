@@ -186,6 +186,7 @@ public class App extends MultiDexApplication {
 
     public void exitLogin() {
         setUser(null);
+        setToken(null);
         saveMineInfoBean(null);
         parseString = null;
     }

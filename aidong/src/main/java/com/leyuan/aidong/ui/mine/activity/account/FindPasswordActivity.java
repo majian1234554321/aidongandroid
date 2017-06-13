@@ -106,6 +106,11 @@ public class FindPasswordActivity extends BaseActivity implements View.OnClickLi
             return false;
         }
 
+        if(App.getInstance().getToken() == null){
+            ToastGlobal.showShort(R.string.please_get_identify_first);
+            return false;
+        }
+
 //        re_password = getEidtRePassword().getText().toString().trim();
 //        if (TextUtils.isEmpty(re_password)) {
 //            getEidtRePassword().setError("请输入密码");

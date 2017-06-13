@@ -258,4 +258,5 @@
     <string name="share_coupons">分享优惠券</string>
     <string name="share_coupons_to_friends">将优惠券分享给自己的小伙伴</string>
     <string name="share_to">分享到</string>
+    <string name="please_get_identify_first">请先获取验证码</string>
 </resources>

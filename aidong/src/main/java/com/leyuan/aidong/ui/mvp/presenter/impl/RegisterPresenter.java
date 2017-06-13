@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.mvp.presenter.impl;
 
 import android.content.Context;
 
+import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.entity.user.CheckIdentifyResult;
 import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
@@ -12,6 +13,7 @@ import com.leyuan.aidong.ui.mvp.presenter.RegisterPresenterInterface;
 import com.leyuan.aidong.ui.mvp.view.RegisterViewInterface;
 import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.utils.ToastGlobal;
 
 
 public class RegisterPresenter implements RegisterPresenterInterface {
@@ -138,6 +140,10 @@ public class RegisterPresenter implements RegisterPresenterInterface {
 
     @Override
     public void checkIdentifyBinding(String captcha) {
+        if (token == null) {
+            ToastGlobal.showShort(R.string.please_get_identify_first);
+            return;
+        }
         mRegisterModelInterface.checkIdentify(new IsLoginSubscriber<CheckIdentifyResult>(mContext) {
             @Override
             public void onStart() {

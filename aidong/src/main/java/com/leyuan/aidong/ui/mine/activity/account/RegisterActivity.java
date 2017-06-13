@@ -154,6 +154,13 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
         if (!getCheckboxProtocol().isChecked()) {
             // ToastUtil.showShort(.context, "需同意协议才能完成注册");
+
+            ToastGlobal.showShort("需同意协议才能完成注册");
+            return false;
+        }
+
+        if(App.getInstance().getToken() == null){
+            ToastGlobal.showShort(R.string.please_get_identify_first);
             return false;
         }
 
