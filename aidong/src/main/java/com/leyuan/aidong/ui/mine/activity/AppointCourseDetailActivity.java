@@ -377,12 +377,11 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
                 payInterface.payOrder(bean.getPay().getpayOption());
                 break;
             case R.id.tv_cancel_pay:
-                ToastGlobal.showLong("cancel");
                 present.cancelAppoint(bean.getId());
                 break;
             case R.id.tv_cancel_join:
                 if (DateUtils.started(bean.getAppoint().getClassTime())) {
-                        ToastGlobal.showLong("课程已开始，无法取消");
+                    ToastGlobal.showLong("课程已开始，无法取消");
                 } else {
                     present.cancelAppoint(bean.getId());
                 }

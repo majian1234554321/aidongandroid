@@ -164,6 +164,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         tvCall.setOnClickListener(this);
         ivFollowOrEdit.setOnClickListener(this);
         wallAdapter.setListener(this);
+        ivAvatar.setOnClickListener(this);
     }
 
     @Override
@@ -234,6 +235,10 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         switch (v.getId()) {
             case R.id.iv_back:
                 finish();
+                break;
+            case R.id.dv_avatar:
+                //PhotoBrowseInfo info = PhotoBrowseInfo.create(photoUrls, viewLocalRect, currPosition);
+                //PhotoBrowseActivity.start(this, info);
                 break;
             case R.id.iv_publish:
                 publishDynamic();

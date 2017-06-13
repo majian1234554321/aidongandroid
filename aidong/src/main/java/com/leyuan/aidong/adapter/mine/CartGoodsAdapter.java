@@ -68,7 +68,7 @@ public class CartGoodsAdapter extends RecyclerView.Adapter<CartGoodsAdapter.Good
         ArrayList<String> specName = bean.getSpecName();
         ArrayList<String> specValue = bean.getSpecValue();
         StringBuilder result = new StringBuilder();
-        for (int i = 0; i < specName.size(); i++) {
+        for (int i = 0; i < specValue.size(); i++) {
             result.append(specName.get(i)).append(":").append(specValue.get(i)).append(" ");
         }
         holder.sku.setText(result);

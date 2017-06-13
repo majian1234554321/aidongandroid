@@ -350,16 +350,10 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicH
         }
     }
 
-    public void setHandleDynamicListener(OnHandleDynamicListener listener) {
-        this.handleDynamicListener = listener;
-    }
-
     public interface OnHandleDynamicListener {
         void onAvatarClickListener();
         void onImageClickListener(View view,int itemPosition,int imagePosition);
         void onVideoClickListener(String url);
-        void onShowMoreLikeClickListener();
-        void onShowMoreCommentClickListener();
         void onLikeClickListener(String id,boolean isAddLike);
         void onCommonClickListener(int position);
         void onShareClickListener();
