@@ -218,17 +218,23 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
         List<VideoDetail> videoList = relateBean.getVideo();
         List<WatchOfficeCourseBean> courseList = relateBean.getCourse();
         List<GoodsBean> goodList = relateBean.getGood();
-        if (videoList != null && !videoList.isEmpty()) {
 
+        if (videoList != null && !videoList.isEmpty()) {
             for (VideoDetail videoDetail : videoList) {
                 if (videoDetail.getvId() != videoId) {
                     videos.add(videoDetail);
                 }
             }
-            videoAdapter.setData(videos);
+            if (videos.isEmpty()) {
+                findViewById(R.id.layout_relate_video).setVisibility(View.GONE);
+            } else {
+                videoAdapter.setData(videos);
+            }
         } else {
-            findViewById(R.id.tv_relate_video).setVisibility(View.GONE);
-            findViewById(R.id.rv_relate_relate_video).setVisibility(View.GONE);
+//            findViewById(R.id.tv_relate_video).setVisibility(View.GONE);
+//            findViewById(R.id.rv_relate_relate_video).setVisibility(View.GONE);
+
+            findViewById(R.id.layout_relate_video).setVisibility(View.GONE);
         }
 
 //        if (videos != null && !videos.isEmpty()) {
@@ -241,14 +247,18 @@ public class VideoMoreActivity extends BaseActivity implements WatchOfficeRelate
         if (courseList != null && !courseList.isEmpty()) {
             courseAdapter.addList(courseList);
         } else {
-            findViewById(R.id.tv_relate_course).setVisibility(View.GONE);
+//            findViewById(R.id.tv_relate_course).setVisibility(View.GONE);
+
+            findViewById(R.id.layout_relate_course).setVisibility(View.GONE);
         }
 
         if (goodList != null && !goodList.isEmpty()) {
             goodAdapter.setData(goodList);
         } else {
-            findViewById(R.id.tv_relate_good).setVisibility(View.GONE);
-            findViewById(R.id.rv_relate_good).setVisibility(View.GONE);
+//            findViewById(R.id.tv_relate_good).setVisibility(View.GONE);
+//            findViewById(R.id.rv_relate_good).setVisibility(View.GONE);
+
+            findViewById(R.id.layout_relate_goods).setVisibility(View.GONE);
         }
     }
 

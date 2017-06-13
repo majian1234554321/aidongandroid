@@ -15,7 +15,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/transparent">
+        android:background="@color/semitransparent_standard">
 
         <TextView
             android:id="@+id/tv_course_name"
@@ -49,129 +49,140 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="57dp"
+        android:background="@color/semitransparent_standard"
         android:scrollbars="none">
 
-        <RelativeLayout
 
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clipChildren="false"
-            android:clipToPadding="false">
+            android:orientation="vertical">
 
-
-            <TextView
-
-                android:id="@+id/tv_relate_video"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="12dp"
-                android:drawablePadding="6dp"
-                android:text="相关视频"
-                android:textColor="@color/white"
-                android:textSize="13sp" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_relate_relate_video"
-                android:layout_width="match_parent"
-                android:layout_height="146dp"
-                android:layout_marginLeft="7.5dp"
-                android:layout_marginRight="7.5dp"
-                android:layout_marginTop="33dp"
-                android:clipChildren="false"
-                android:clipToPadding="false"
-                android:scrollbars="none" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_below="@+id/rv_relate_relate_video"
-                android:layout_marginLeft="15dp"
-                android:background="#77ebebeb" />
-
-            <TextView
-                android:id="@+id/tv_relate_course"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/rv_relate_relate_video"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="12dp"
-                android:drawablePadding="6dp"
-                android:text="相关课程"
-                android:textColor="@color/white"
-                android:textSize="13sp" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/lv_relate_course"
+            <LinearLayout
+                android:id="@+id/layout_relate_video"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                android:layout_below="@+id/rv_relate_relate_video"
-                android:layout_marginTop="33dp" />
+                <TextView
+                    android:id="@+id/tv_relate_video"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="12dp"
+                    android:drawablePadding="6dp"
+                    android:text="相关视频"
+                    android:textColor="@color/white"
+                    android:textSize="13sp" />
 
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_relate_relate_video"
+                    android:layout_width="match_parent"
+                    android:layout_height="146dp"
+                    android:layout_marginLeft="7.5dp"
+                    android:layout_marginRight="7.5dp"
+                    android:layout_marginTop="33dp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:scrollbars="none" />
 
-            <!--<com.leyuan.aidong.widget.MyListView-->
-            <!--android:id="@+id/lv_relate_course"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_below="@+id/rv_relate_relate_video"-->
-            <!--android:layout_marginTop="33dp"-->
-            <!--android:divider="@null"-->
-            <!--android:dividerHeight="10dp"-->
-            <!--android:paddingBottom="10dp"/>-->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="15dp"
+                    android:background="#77ebebeb" />
 
+            </LinearLayout>
 
-            <View
-                android:id="@+id/view_middle"
+            <LinearLayout
+                android:id="@+id/layout_relate_course"
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_below="@+id/lv_relate_course"
-                android:layout_marginLeft="15dp"
-                android:background="#77ebebeb" />
-
-            <TextView
-                android:id="@+id/tv_relate_good"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/view_middle"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="12dp"
-                android:drawablePadding="6dp"
-                android:text="相关商品"
-                android:textColor="@color/white"
-                android:textSize="13sp" />
+                android:orientation="vertical">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_relate_good"
-                android:layout_width="match_parent"
-                android:layout_height="135dp"
-                android:layout_below="@+id/view_middle"
-                android:layout_marginLeft="7.5dp"
-                android:layout_marginRight="7.5dp"
-                android:layout_marginTop="33dp" />
+                <TextView
+                    android:id="@+id/tv_relate_course"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="12dp"
+                    android:drawablePadding="6dp"
+                    android:text="相关课程"
+                    android:textColor="@color/white"
+                    android:textSize="13sp" />
 
-            <View
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/lv_relate_course"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginTop="33dp" />
+
+                <View
+                    android:id="@+id/view_middle"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="15dp"
+                    android:background="#77ebebeb" />
+            </LinearLayout>
+
+            <LinearLayout
+
+                android:id="@+id/layout_relate_goods"
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_below="@+id/rv_relate_good"
-                android:layout_marginLeft="15dp"
-                android:background="#77ebebeb" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_relate_good"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="12dp"
+                    android:drawablePadding="6dp"
+                    android:text="相关商品"
+                    android:textColor="@color/white"
+                    android:textSize="13sp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_relate_good"
+                    android:layout_width="match_parent"
+                    android:layout_height="135dp"
+                    android:layout_marginLeft="7.5dp"
+                    android:layout_marginRight="7.5dp"
+                    android:layout_marginTop="33dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="15dp"
+                    android:background="#77ebebeb" />
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/iv_end"
                 android:layout_width="wrap_content"
                 android:layout_height="13dp"
-                android:layout_below="@+id/rv_relate_good"
-                android:layout_centerInParent="true"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="25dp"
                 android:src="@drawable/img_end_white" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="87dp"
-                android:layout_below="@+id/iv_end"
                 android:background="#00000000" />
-        </RelativeLayout>
+        </LinearLayout>
+
+        <!--<RelativeLayout-->
+
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:clipChildren="false"-->
+        <!--android:clipToPadding="false">-->
+
+
+        <!---->
+        <!--</RelativeLayout>-->
     </com.leyuan.aidong.widget.SmartScrollView>
 
 
