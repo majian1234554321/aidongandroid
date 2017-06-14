@@ -229,6 +229,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
         if (baseBean.getStatus() == Constant.OK) {
             CommentBean temp = new CommentBean();
             UserBean publisher = new UserBean();
+            publisher.setId(String.valueOf(App.mInstance.getUser().getId()));
             publisher.setAvatar(App.mInstance.getUser().getAvatar());
             publisher.setName(App.mInstance.getUser().getName());
             temp.setContent(content);
