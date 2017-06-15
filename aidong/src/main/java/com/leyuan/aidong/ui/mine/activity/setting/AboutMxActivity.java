@@ -25,7 +25,7 @@ public class AboutMxActivity extends BaseActivity {
 	}
 
 	protected void setupView() {
-		setContentView(R.layout.layout_about_mx);
+		setContentView(R.layout.layout_about_i_dong);
 		init();
 	}
 
