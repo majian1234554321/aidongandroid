@@ -24,7 +24,7 @@ import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.SharePrefUtils;
 import com.leyuan.aidong.utils.VersionManager;
-import com.squareup.leakcanary.LeakCanary;
+//import com.squareup.leakcanary.LeakCanary;
 import com.zzhoujay.richtext.RichText;
 
 import java.util.HashSet;
@@ -69,7 +69,7 @@ public class App extends MultiDexApplication {
     }
 
     private void initConfig() {
-        LeakCanary.install(this);
+//        LeakCanary.install(this);
 
         ForegroundCallbacks foregroundCallbacks = ForegroundCallbacks.init(this);
         foregroundCallbacks.addListener(foregroundListener);
