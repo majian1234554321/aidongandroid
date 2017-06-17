@@ -18,6 +18,7 @@ public class LiveDateFilterUtil {
 
 
     public static String compareDate(String yearMonthDay) {
+        String result = yearMonthDay;
         int cMonth = Calendar.getInstance().get(Calendar.MONTH);
         int cDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
         try {
@@ -27,16 +28,18 @@ public class LiveDateFilterUtil {
 
             if (month == cMonth) {
                 if (cDay == day) {
-                    return "今日直播";
+                    result =  "今日直播";
                 } else if ((day - cDay) == 1) {
-                    return "明日直播";
+                    result =  "明日直播";
                 }
+            }else if(yearMonthDay.length() > 10){
+                result = yearMonthDay.substring(0,10);
             }
 
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return yearMonthDay;
+        return result;
     }
 
 

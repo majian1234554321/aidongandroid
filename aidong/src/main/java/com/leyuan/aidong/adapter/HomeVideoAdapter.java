@@ -179,7 +179,7 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
         for (final LiveVideoInfo info : livingVideos) {
             View itemView = View.inflate(context, R.layout.item_living_video_adpater, null);
             ImageView img_living_bg = (ImageView) itemView.findViewById(R.id.img_living_bg);
-            GlideLoader.getInstance().displayImage(info.getLiveCover(), img_living_bg);
+            GlideLoader.getInstance().displayRoundImage(info.getLiveCover(), img_living_bg);
             img_living_bg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -195,6 +195,7 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
 
     private void initLivingVideoList(final ViewHolder holder) {
         if (livingVideos.size() > 1) {
+            holder.layout_living.setVisibility(View.VISIBLE);
             holder.viewPager_living.setVisibility(View.VISIBLE);
             holder.layout_single_living.setVisibility(View.GONE);
             holder.img_default_none_live.setVisibility(View.GONE);
@@ -222,6 +223,7 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
 
 
         } else if (livingVideos.size() == 1) {
+            holder.layout_living.setVisibility(View.VISIBLE);
             holder.viewPager_living.setVisibility(View.GONE);
             holder.img_default_none_live.setVisibility(View.GONE);
             holder.layout_single_living.setVisibility(View.VISIBLE);
@@ -238,6 +240,7 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
                 }
             });
         } else if (liveHome != null) {
+            holder.layout_living.setVisibility(View.VISIBLE);
             holder.viewPager_living.setVisibility(View.GONE);
             holder.img_default_none_live.setVisibility(View.VISIBLE);
             holder.layout_single_living.setVisibility(View.GONE);
@@ -248,6 +251,8 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
                     mOnVideoClickListener.onVideoClick(liveHome);
                 }
             });
+        }else{
+           holder.layout_living.setVisibility(View.GONE);
         }
     }
 

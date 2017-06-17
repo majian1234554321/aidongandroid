@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="text_ack_msg">已读</string>
+    <!--<string name="text_ack_msg">已读</string>-->
+    <string name="text_ack_msg"> </string>
     <string name="text_delivered_msg">送达</string>
     <string name="back">返回</string>
     <string name="save">保存</string>
