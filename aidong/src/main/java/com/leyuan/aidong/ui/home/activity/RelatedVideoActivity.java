@@ -43,12 +43,14 @@ public class RelatedVideoActivity extends BaseActivity implements RelatedVideoAc
     private List<CourseVideoBean> data = new ArrayList<>();
     private CoursePresent coursePresent;
     private String id;
+    private String videoId;
     private String title;
     private int currPage = 1;
 
-    public static void start(Context context,String id,String title) {
+    public static void start(Context context,String id,String title,String videoId) {
         Intent starter = new Intent(context, RelatedVideoActivity.class);
         starter.putExtra("id",id);
+        starter.putExtra("videoId",videoId);
         starter.putExtra("title",title);
         context.startActivity(starter);
     }
@@ -60,11 +62,12 @@ public class RelatedVideoActivity extends BaseActivity implements RelatedVideoAc
         if(getIntent() != null){
             id = getIntent().getStringExtra("id");
             title = getIntent().getStringExtra("title");
+            videoId = getIntent().getStringExtra("videoId");
         }
         coursePresent = new CoursePresentImpl(this,this);
         initView();
         setListener();
-        coursePresent.pullToRefreshVideo(id);
+        coursePresent.pullToRefreshVideo(id,videoId);
     }
 
     private void initView(){
@@ -96,7 +99,7 @@ public class RelatedVideoActivity extends BaseActivity implements RelatedVideoAc
     public void onRefresh() {
         currPage = 1;
         RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-        coursePresent.pullToRefreshVideo(id);
+        coursePresent.pullToRefreshVideo(id,videoId);
     }
 
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
@@ -104,7 +107,7 @@ public class RelatedVideoActivity extends BaseActivity implements RelatedVideoAc
         public void onLoadNextPage(View view) {
             currPage ++;
             if (data != null && data.size() >= pageSize) {
-                coursePresent.loadMoreVideo(id,recyclerView,pageSize,currPage);
+                coursePresent.loadMoreVideo(id,videoId,recyclerView,pageSize,currPage);
             }
         }
     };

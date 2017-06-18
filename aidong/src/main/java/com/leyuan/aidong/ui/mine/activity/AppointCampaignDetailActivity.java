@@ -5,10 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.util.Pair;
-import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -411,13 +407,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 CampaignDetailActivity.start(this, bean.getLinkId());
                 break;
             case R.id.dv_qr:
-                Intent intent = new Intent(this, BarcodeActivity.class);
-                intent.putExtra("code", bean.getId());
-                intent.putExtra("rect", ImageRectUtils.getDrawableBoundsInView(ivCode));
-                Pair ivCodePair = new Pair<>(ivCode, ViewCompat.getTransitionName(ivCode));
-                ActivityOptionsCompat transitionActivityOptions
-                        = ActivityOptionsCompat.makeSceneTransitionAnimation(this);
-                ActivityCompat.startActivity(this, intent, transitionActivityOptions.toBundle());
+                BarcodeActivity.start(this, bean.getId(),ImageRectUtils.getDrawableBoundsInView(ivCode));
                 break;
             default:
                 break;

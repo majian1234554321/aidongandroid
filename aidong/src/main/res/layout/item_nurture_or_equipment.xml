@@ -15,7 +15,6 @@
         android:layout_width="match_parent"
         android:layout_height="165dp"
         android:scaleType="centerCrop"
-        android:foreground="@drawable/shape_stroke_gray"
         android:transitionName="@string/transition_home" />
 
     <TextView

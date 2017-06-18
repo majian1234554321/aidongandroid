@@ -31,6 +31,7 @@ import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.ImageRectUtils;
 import com.leyuan.aidong.utils.QRCodeUtil;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.utils.ToastGlobal;
@@ -208,6 +209,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
         tvDelete.setOnClickListener(this);
         courseLayout.setOnClickListener(this);
         timer.setOnCountdownEndListener(this);
+        ivCode.setOnClickListener(this);
     }
 
     private void getCourseDetailData(){
@@ -398,6 +400,9 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
                 break;
             case R.id.rl_detail:
                 CourseDetailActivity.start(this, bean.getLinkId());
+                break;
+            case R.id.dv_qr:
+                BarcodeActivity.start(this, bean.getId(),ImageRectUtils.getDrawableBoundsInView(ivCode));
                 break;
             default:
                 break;

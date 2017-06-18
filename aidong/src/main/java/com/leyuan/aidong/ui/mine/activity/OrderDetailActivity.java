@@ -32,6 +32,7 @@ import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.FormatUtil;
+import com.leyuan.aidong.utils.ImageRectUtils;
 import com.leyuan.aidong.utils.QRCodeUtil;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.utils.ToastGlobal;
@@ -84,7 +85,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
     private LinearLayout selfDeliveryInfoLayout;
     private RelativeLayout rlQrCode;   //自提条形码
     private TextView tvQrNum;
-    private ImageView ivQr;
+    private ImageView ivCode;
     private ExtendTextView tvDeliveryTime; //自提时间
     private RecyclerView selfDeliveryGoodsRecyclerView; //自提商品信息
 
@@ -166,7 +167,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
         selfDeliveryInfoLayout = (LinearLayout) findViewById(R.id.ll_self_delivery_info);
         rlQrCode = (RelativeLayout) findViewById(R.id.rl_qr_code);
         tvQrNum = (TextView) findViewById(R.id.tv_qr_num);
-        ivQr = (ImageView) findViewById(R.id.iv_qr);
+        ivCode = (ImageView) findViewById(R.id.iv_qr);
         tvDeliveryTime = (ExtendTextView) findViewById(R.id.tv_delivery_time);
         selfDeliveryGoodsRecyclerView = (RecyclerView) findViewById(R.id.rv_self_delivery_goods);
         tvTotalPrice = (ExtendTextView) findViewById(R.id.tv_total_price);
@@ -211,6 +212,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
         payGroup.setOnCheckedChangeListener(this);
         timer.setOnCountdownEndListener(this);
         rlExpress.setOnClickListener(this);
+        ivCode.setOnClickListener(this);
     }
 
     @Override
@@ -272,13 +274,13 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
                 rlQrCode.setVisibility(View.VISIBLE);
                 if (PAID.equals(bean.getStatus())) {
                     tvQrNum.setText(bean.getId());
-                    ivQr.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFF000000, bean.getId(),
+                    ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFF000000, bean.getId(),
                             DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
                 } else {
                     tvQrNum.setText(bean.getId());
                     tvQrNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                     tvQrNum.setTextColor(Color.parseColor("#ebebeb"));
-                    ivQr.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFFebebeb, bean.getId(),
+                    ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFFebebeb, bean.getId(),
                             DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
                 }
             }
@@ -353,6 +355,9 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
             case R.id.rl_express:
                 ExpressInfoActivity.start(this, orderId);
                 break;
+            case R.id.iv_qr:
+                BarcodeActivity.start(this, bean.getId(), ImageRectUtils.getDrawableBoundsInView(ivCode));
+                break;
             default:
                 break;
         }
@@ -368,7 +373,6 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
         @Override
         public void onFree() {
             PaySuccessActivity.start(OrderDetailActivity.this, orderPresent.getShareInfo());
-//            startActivity(new Intent(OrderDetailActivity.this,PaySuccessActivity.class));
         }
     };
 

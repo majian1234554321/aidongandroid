@@ -90,7 +90,7 @@ public interface CoursePresent {
 
     void getRelateCourseVideo(String id, String videoId);
 
-    void pullToRefreshVideo(String id);
+    void pullToRefreshVideo(String id,String videoId);
 
-    void loadMoreVideo(String id,RecyclerView recyclerView,int pageSize, int page);
+    void loadMoreVideo(String id,String videoId,RecyclerView recyclerView,int pageSize, int page);
 }
