@@ -129,7 +129,8 @@ public class LiveDetailActivity extends BaseActivity implements View.OnClickList
                 });
 
         tv_course_name.setText("" + info.getLiveName());
-        tv_auth_and_time.setText(info.getLiveBeginTime() + " / " + info.getLiveAuthor());
+//        tv_auth_and_time.setText(info.getLiveBeginTime() + " / " + info.getLiveAuthor());
+        tv_auth_and_time.setText( info.getLiveAuthor() +" · " + info.getLiveBeginTime());
         tv_course_desc.setText("" + info.getLiveContent());
         tv_reply_count.setText("" + info.getCommentsCou());
         tv_like_count.setText("" + info.getPraiseCou());

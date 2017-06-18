@@ -1,6 +1,5 @@
 package com.leyuan.aidong.utils;
 
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import java.text.ParseException;
@@ -254,9 +253,9 @@ public class DateUtils {
             String weekOfDate = getWeekOfDate(date);
             SimpleDateFormat formatter = new SimpleDateFormat("MM月dd");
             String dateString = formatter.format(date);
-            if(i == 0) {
+            if (i == 0) {
                 dates.add(dateString + "(今天)");
-            }else {
+            } else {
                 dates.add(dateString + weekOfDate);
             }
         }
@@ -312,19 +311,21 @@ public class DateUtils {
         return getCountdown(date, yyyyMMddHHmmss, totalMilliseconds);
     }
 
-    @NonNull
     public static String duringToSecond(double time) {
-        int hour = (int)time / 60 * 60;
+//        int hour = (int) time / 60 * 60;
         int minute = ((int) time / 60);
         int second = (int) time % 60;
 //        int million = (int) ((time - (int) time) * 1000);
         StringBuilder during = new StringBuilder();
-        if (minute > 0) {
-            during.append(minute).append("'");
-        }
-        if (second > 0) {
-            during.append(second).append("\"");
-        }
+        during.append(formatNumberZero(minute));
+        during.append(formatNumberZero(second));
+
+//        if (minute > 0) {
+//            during.append(minute).append("'");
+//        }
+//        if (second > 0) {
+//            during.append(second).append("\"");
+//        }
 
 //        if (million > 0) {
 //            during.append(million + "\"");
@@ -333,6 +334,14 @@ public class DateUtils {
         Logger.i(" vidoe duringToSecond = " + during.toString());
 
         return during.toString();
+    }
+
+    private static String formatNumberZero(int num) {
+        if (num > 9) {
+            return num + "";
+        } else {
+            return "0" + num;
+        }
     }
 
     public static boolean bigThanOneHour(String date) {
@@ -353,11 +362,11 @@ public class DateUtils {
         }
     }
 
-    public static long getCounterDown(String startTime){
+    public static long getCounterDown(String startTime) {
         long countdown = 0;
         Date d = parseDate(startTime, yyyyMMddHHmm);
         if (d != null)
-            countdown =  d.getTime()-System.currentTimeMillis() ;
+            countdown = d.getTime() - System.currentTimeMillis();
 
 
         if (countdown < 0)

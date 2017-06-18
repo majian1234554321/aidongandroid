@@ -122,6 +122,10 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
             case TYPE_HEADER:
                 initLivingVideoList(holder);
 
+                if (liveDateArray.isEmpty()) {
+                    holder.layout_empty_living.setVisibility(View.VISIBLE);
+                }
+
                 holder.img_special.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -158,16 +162,13 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
                 holder.txt_live_date.setText("" + LiveDateFilterUtil.compareDate(info.getTime()));
                 holder.list_live.setLayoutManager(new LinearLayoutManager(context));
 
-                if(i == liveDateArray.size()){
-                    LiveVideoMoreAdapter adapter = new LiveVideoMoreAdapter(context, info.getLiveVideoList(), mOnSoonLiveVideoClickListener,true);
+                if (i == liveDateArray.size()) {
+                    LiveVideoMoreAdapter adapter = new LiveVideoMoreAdapter(context, info.getLiveVideoList(), mOnSoonLiveVideoClickListener, true);
                     holder.list_live.setAdapter(adapter);
-                }else{
-                    LiveVideoMoreAdapter adapter = new LiveVideoMoreAdapter(context, info.getLiveVideoList(), mOnSoonLiveVideoClickListener,false);
+                } else {
+                    LiveVideoMoreAdapter adapter = new LiveVideoMoreAdapter(context, info.getLiveVideoList(), mOnSoonLiveVideoClickListener, false);
                     holder.list_live.setAdapter(adapter);
                 }
-
-
-
 
 
                 break;
@@ -194,7 +195,6 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
     }
 
     private void initLivingVideoList(final ViewHolder holder) {
-        holder.layout_empty_living.setVisibility(View.VISIBLE);
         if (livingVideos.size() > 1) {
             holder.layout_living.setVisibility(View.VISIBLE);
             holder.viewPager_living.setVisibility(View.VISIBLE);
@@ -252,9 +252,8 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
                     mOnVideoClickListener.onVideoClick(liveHome);
                 }
             });
-        }else{
-           holder.layout_living.setVisibility(View.GONE);
-            holder.layout_empty_living.setVisibility(View.GONE);
+        } else {
+            holder.layout_living.setVisibility(View.GONE);
         }
     }
 
@@ -278,12 +277,11 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
 //        }
 
 
-
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         FrameLayout layout_living;
-        RelativeLayout layout_single_living, rel_living,layout_empty_living;
+        RelativeLayout layout_single_living, rel_living, layout_empty_living;
         //        RecyclerView recycler_living;
         ViewPager viewPager_living;
         public RecyclerView list_live;
@@ -305,7 +303,7 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
             img_play_back = (ImageView) itemView.findViewById(R.id.img_play_back);
 
             img_default_none_live = (ImageView) itemView.findViewById(R.id.img_default_none_live);
-            layout_empty_living  = (RelativeLayout) itemView.findViewById(R.id.layout_empty_living);
+            layout_empty_living = (RelativeLayout) itemView.findViewById(R.id.layout_empty_living);
             txt_author = (TextView) itemView.findViewById(R.id.txt_author);
             txt_course = (TextView) itemView.findViewById(R.id.txt_course);
             txt_viewers = (TextView) itemView.findViewById(R.id.txt_viewers);

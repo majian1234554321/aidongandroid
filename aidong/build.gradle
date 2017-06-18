@@ -14,7 +14,7 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     defaultConfig {
         applicationId "com.example.aidong"
-        minSdkVersion 21
+        minSdkVersion 16
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode        //old 25 5.0.1
         versionName rootProject.ext.versionName

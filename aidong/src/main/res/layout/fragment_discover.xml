@@ -24,7 +24,7 @@
                 app:banner_pointAutoPlayInterval="5000"
                 app:banner_pointAutoPlayAble="true"
                 app:banner_pointContainerBackground="@android:color/transparent"
-                app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
+                app:banner_pointDrawable="@drawable/selector_banner"
                 app:banner_pointTopBottomMargin="5dp"
                 app:banner_transitionEffect="depth" />
 

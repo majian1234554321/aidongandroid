@@ -327,7 +327,7 @@ public class CoursePresentImpl implements CoursePresent {
     }
 
     @Override
-    public void pullToRefreshVideo(String id) {
+    public void pullToRefreshVideo(String id,String videoId) {
         if (courseModel == null) {
             courseModel = new CourseModelImpl(context);
         }
@@ -344,11 +344,11 @@ public class CoursePresentImpl implements CoursePresent {
                     relatedVideoActivityView.showEmptyView();
                 }
             }
-        }, "all", id, 1, "");
+        }, "all", id, 1, videoId);
     }
 
     @Override
-    public void loadMoreVideo(String id, RecyclerView recyclerView, final int pageSize, int page) {
+    public void loadMoreVideo(String id,String videoId, RecyclerView recyclerView, final int pageSize, int page) {
         courseModel.getCourseVideo(new RequestMoreSubscriber<CourseVideoData>(context, recyclerView, pageSize) {
             @Override
             public void onNext(CourseVideoData courseVideoData) {
@@ -364,7 +364,7 @@ public class CoursePresentImpl implements CoursePresent {
                     relatedVideoActivityView.showEndFooterView();
                 }
             }
-        }, "all", id, page, "");
+        }, "all", id, page, videoId);
     }
 
 }
