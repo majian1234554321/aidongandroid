@@ -179,7 +179,7 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
         for (final LiveVideoInfo info : livingVideos) {
             View itemView = View.inflate(context, R.layout.item_living_video_adpater, null);
             ImageView img_living_bg = (ImageView) itemView.findViewById(R.id.img_living_bg);
-            GlideLoader.getInstance().displayImage(info.getLiveCover(), img_living_bg);
+            GlideLoader.getInstance().displayRoundImage(info.getLiveCover(), img_living_bg);
             img_living_bg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -194,7 +194,9 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
     }
 
     private void initLivingVideoList(final ViewHolder holder) {
+        holder.layout_empty_living.setVisibility(View.VISIBLE);
         if (livingVideos.size() > 1) {
+            holder.layout_living.setVisibility(View.VISIBLE);
             holder.viewPager_living.setVisibility(View.VISIBLE);
             holder.layout_single_living.setVisibility(View.GONE);
             holder.img_default_none_live.setVisibility(View.GONE);
@@ -222,6 +224,7 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
 
 
         } else if (livingVideos.size() == 1) {
+            holder.layout_living.setVisibility(View.VISIBLE);
             holder.viewPager_living.setVisibility(View.GONE);
             holder.img_default_none_live.setVisibility(View.GONE);
             holder.layout_single_living.setVisibility(View.VISIBLE);
@@ -238,6 +241,7 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
                 }
             });
         } else if (liveHome != null) {
+            holder.layout_living.setVisibility(View.VISIBLE);
             holder.viewPager_living.setVisibility(View.GONE);
             holder.img_default_none_live.setVisibility(View.VISIBLE);
             holder.layout_single_living.setVisibility(View.GONE);
@@ -248,6 +252,9 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
                     mOnVideoClickListener.onVideoClick(liveHome);
                 }
             });
+        }else{
+           holder.layout_living.setVisibility(View.GONE);
+            holder.layout_empty_living.setVisibility(View.GONE);
         }
     }
 
@@ -276,7 +283,7 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         FrameLayout layout_living;
-        RelativeLayout layout_single_living, rel_living;
+        RelativeLayout layout_single_living, rel_living,layout_empty_living;
         //        RecyclerView recycler_living;
         ViewPager viewPager_living;
         public RecyclerView list_live;
@@ -298,7 +305,7 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
             img_play_back = (ImageView) itemView.findViewById(R.id.img_play_back);
 
             img_default_none_live = (ImageView) itemView.findViewById(R.id.img_default_none_live);
-
+            layout_empty_living  = (RelativeLayout) itemView.findViewById(R.id.layout_empty_living);
             txt_author = (TextView) itemView.findViewById(R.id.txt_author);
             txt_course = (TextView) itemView.findViewById(R.id.txt_course);
             txt_viewers = (TextView) itemView.findViewById(R.id.txt_viewers);

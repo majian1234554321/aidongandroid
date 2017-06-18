@@ -13,23 +13,22 @@
             android:id="@+id/layout_living"
             android:layout_width="match_parent"
             android:layout_height="185dp"
-            android:background="@color/black"
-            >
+            android:background="@color/black">
 
             <RelativeLayout
                 android:id="@+id/rel_living"
-                android:clipChildren="false"
-                android:layerType="software"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:clipChildren="false"
+                android:layerType="software">
 
                 <android.support.v4.view.ViewPager
-                    android:clipChildren="false"
                     android:id="@+id/viewPager_living"
                     android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
-                    android:layout_height="match_parent"/>
+                    android:clipChildren="false" />
 
 
             </RelativeLayout>
@@ -45,43 +44,38 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/img_default"
-                />
+                android:src="@drawable/img_default" />
 
             <RelativeLayout
-                android:visibility="gone"
                 android:id="@+id/layout_single_living"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/img_living_bg"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    />
+                    android:scaleType="centerCrop" />
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="#22000000"
-                    android:scaleType="centerCrop"
-                    />
+                    android:scaleType="centerCrop" />
 
                 <ImageView
                     android:id="@+id/img_living"
                     android:layout_width="47dp"
                     android:layout_height="22dp"
                     android:layout_marginTop="15dp"
-                    android:src="@drawable/icon_live"
-                    />
+                    android:src="@drawable/icon_live" />
 
                 <ImageView
                     android:layout_width="115dp"
                     android:layout_height="26dp"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/live_videoing"
-                    />
+                    android:src="@drawable/live_videoing" />
 
                 <TextView
                     android:id="@+id/txt_author"
@@ -90,12 +84,11 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginBottom="45dp"
                     android:layout_marginLeft="15dp"
-                    android:text="超级小接"
-                    android:singleLine="true"
                     android:layout_marginRight="70dp"
+                    android:singleLine="true"
+                    android:text="超级小接"
                     android:textColor="@color/white"
-                    android:textSize="13sp"
-                    />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/txt_course"
@@ -104,12 +97,11 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginBottom="15dp"
                     android:layout_marginLeft="15dp"
+                    android:layout_marginRight="70dp"
+                    android:singleLine="true"
                     android:text="耐力训练"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:singleLine="true"
-                    android:layout_marginRight="70dp"
-                    />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/txt_viewers"
@@ -120,10 +112,9 @@
                     android:layout_marginBottom="15dp"
                     android:layout_marginRight="15dp"
                     android:text="12323"
-                    android:visibility="gone"
                     android:textColor="@color/white"
                     android:textSize="14sp"
-                    />
+                    android:visibility="gone" />
 
                 <ImageView
                     android:layout_width="13dp"
@@ -132,8 +123,7 @@
                     android:layout_marginBottom="17dp"
                     android:layout_marginRight="5dp"
                     android:layout_toLeftOf="@id/txt_viewers"
-                    android:src="@drawable/icon_live_watch_num"
-                    />
+                    android:src="@drawable/icon_live_watch_num" />
 
             </RelativeLayout>
 
@@ -147,8 +137,7 @@
             android:background="@color/white"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:weightSum="38"
-            >
+            android:weightSum="38">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -162,8 +151,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
-                    android:src="@drawable/live_play_back"
-                    />
+                    android:src="@drawable/live_play_back" />
             </LinearLayout>
 
             <LinearLayout
@@ -175,16 +163,14 @@
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="10"
-                    >
+                    android:layout_weight="10">
 
                     <ImageView
                         android:id="@+id/img_special"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/icon_live_special"
-                        />
+                        android:src="@drawable/icon_live_special" />
 
                 </RelativeLayout>
             </LinearLayout>
@@ -198,16 +184,14 @@
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="10"
-                    >
+                    android:layout_weight="10">
 
                     <ImageView
                         android:id="@+id/img_deep_into"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/icon_live_deep_into"
-                        />
+                        android:src="@drawable/icon_live_deep_into" />
 
 
                 </RelativeLayout>
@@ -222,16 +206,14 @@
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="10"
-                    >
+                    android:layout_weight="10">
 
                     <ImageView
                         android:id="@+id/img_celebrity"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/icon_live_celebrity"
-                        />
+                        android:src="@drawable/icon_live_celebrity" />
 
 
                 </RelativeLayout>
@@ -239,6 +221,25 @@
 
 
         </LinearLayout>
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/layout_empty_living"
+            android:layout_width="match_parent"
+            android:layout_height="350dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:drawablePadding="15dp"
+                android:drawableTop="@drawable/living_empty"
+                android:gravity="center"
+                android:text="暂无直播"
+                android:textColor="@color/c9"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 </FrameLayout>

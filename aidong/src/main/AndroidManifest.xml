@@ -384,6 +384,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.discover.activity.AppointVenuesActivity"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.discover.activity.AppointCoachActivity"
@@ -507,9 +508,9 @@
         <activity
             android:name=".ui.discover.activity.DiscoverUserActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.discover.activity.DiscoverUserActivityTest"
-            android:screenOrientation="portrait" />
+        <!--<activity-->
+            <!--android:name=".ui.discover.activity.DiscoverUserActivityTest"-->
+            <!--android:screenOrientation="portrait" />-->
 
         <activity
             android:name=".ui.mine.activity.EMChatActivity"

@@ -1,5 +1,6 @@
 package com.leyuan.aidong.utils;
 
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import java.text.ParseException;
@@ -311,13 +312,15 @@ public class DateUtils {
         return getCountdown(date, yyyyMMddHHmmss, totalMilliseconds);
     }
 
+    @NonNull
     public static String duringToSecond(double time) {
-        int minate = ((int) time / 60);
+        int hour = (int)time / 60 * 60;
+        int minute = ((int) time / 60);
         int second = (int) time % 60;
 //        int million = (int) ((time - (int) time) * 1000);
         StringBuilder during = new StringBuilder();
-        if (minate > 0) {
-            during.append(minate).append("'");
+        if (minute > 0) {
+            during.append(minute).append("'");
         }
         if (second > 0) {
             during.append(second).append("\"");

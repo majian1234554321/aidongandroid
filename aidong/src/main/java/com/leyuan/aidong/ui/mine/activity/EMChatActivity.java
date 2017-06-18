@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.mine.activity;
 
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +21,10 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.fragment.AiEaseChatFragment;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.widget.dialog.BaseDialog;
+import com.leyuan.aidong.widget.dialog.ButtonCancelListener;
+import com.leyuan.aidong.widget.dialog.ButtonOkListener;
+import com.leyuan.aidong.widget.dialog.DialogDoubleButton;
 
 public class EMChatActivity extends BaseActivity {
 
@@ -34,6 +39,7 @@ public class EMChatActivity extends BaseActivity {
     private TextView txtTitle;
     private ImageView imgRight;
     private FrameLayout ecLayoutContainer;
+    private ClipboardManager clipboardManager;
 
     public static void start(Context context, String id, @Nullable String name, @Nullable String avatar) {
         EaseUser user = new EaseUser(id);
@@ -58,6 +64,9 @@ public class EMChatActivity extends BaseActivity {
         avatar = getIntent().getStringExtra(Constant.AVATAR);
         initView();
         initData();
+
+        clipboardManager = (ClipboardManager)this
+                .getSystemService(Context.CLIPBOARD_SERVICE);
 
     }
 
@@ -133,7 +142,29 @@ public class EMChatActivity extends BaseActivity {
 
         @Override
         public void onMessageBubbleLongClick(EMMessage message) {
-
+//            final String content = message.;
+//           new DialogDoubleButton(EMChatActivity.this)
+//                   .setCommonTilte("提醒")
+//                   .setContentDesc("点击确定复制到剪切板")
+//                   .setBtnCancelListener(new ButtonCancelListener() {
+//                       @Override
+//                       public void onClick(BaseDialog dialog) {
+//                           dialog.dismiss();
+//                       }
+//                   })
+//                   .setBtnOkListener(new ButtonOkListener() {
+//                       @Override
+//                       public void onClick(BaseDialog dialog) {
+//                           if(clipboardManager == null){
+//                               clipboardManager = (ClipboardManager)EMChatActivity.this
+//                                       .getSystemService(Context.CLIPBOARD_SERVICE);
+//                           }
+//                           if(clipboardManager != null){
+//                               clipboardManager.setText(content);
+//                           }
+//                       }
+//                   })
+//                   .show();
         }
 
         @Override

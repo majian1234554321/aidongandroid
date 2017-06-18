@@ -153,7 +153,10 @@ public class AppointVenuesActivity extends BaseActivity implements View.OnClickL
         if (userName != null)
             etUsername.setText(userName);
         if (userPhone != null)
+        {
             etUserPhone.setText(userPhone);
+        }
+
     }
 
     private void setListener() {

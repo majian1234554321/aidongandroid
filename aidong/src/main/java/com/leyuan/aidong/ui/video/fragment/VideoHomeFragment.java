@@ -102,7 +102,7 @@ public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.
     private void initData() {
         swipeRefreshLayout.setOnRefreshListener(this);
 
-        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(manager);
         adapter = new HomeVideoAdapter(getActivity(), this, this, this, this);
         recyclerView.setAdapter(adapter);

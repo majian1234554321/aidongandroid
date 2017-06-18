@@ -25,7 +25,7 @@ public class AboutMxActivity extends BaseActivity {
 	}
 
 	protected void setupView() {
-		setContentView(R.layout.layout_about_mx);
+		setContentView(R.layout.layout_about_i_dong);
 		init();
 	}
 
@@ -38,7 +38,7 @@ public class AboutMxActivity extends BaseActivity {
 		mlayout_tab_about_mx_title_img = (ImageView) findViewById(R.id.layout_tab_about_mx_title_img);
 		textview_version = (TextView) findViewById(R.id.textview_version);
 		String version = ActivityTool.getVersion(AboutMxActivity.this);
-		textview_version.setText(version);
+		textview_version.setText("v"+version);
 	}
 
 	private void onClick() {
