@@ -134,7 +134,7 @@ public class ApplyServiceActivity extends BaseActivity implements View.OnClickLi
 
                 break;
             case R.id.tv_return:
-                type = 1;
+                type = 0;
                 tvReturn.setBackgroundResource(R.drawable.shape_solid_corner_black);
                 tvReturn.setTextColor(Color.parseColor("#ffffff"));
                 tvExchange.setBackgroundResource(R.drawable.shape_solid_corner_white);
@@ -142,7 +142,7 @@ public class ApplyServiceActivity extends BaseActivity implements View.OnClickLi
 
                 break;
             case R.id.tv_exchange:
-                type = 0;
+                type = 1;
                 tvReturn.setBackgroundResource(R.drawable.shape_solid_corner_white);
                 tvReturn.setTextColor(Color.parseColor("#000000"));
                 tvExchange.setBackgroundResource(R.drawable.shape_solid_corner_black);

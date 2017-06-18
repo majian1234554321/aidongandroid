@@ -35,6 +35,7 @@ public abstract class IsLoginSubscriber<T> extends BaseSubscriber<T> {
                     public void onClick(BaseDialog dialog) {
                         App.mInstance.exitLogin();
                         UiManager.activityJump(context, LoginActivity.class);
+                        dialog.dismiss();
                     }
                 }).show();
     }
