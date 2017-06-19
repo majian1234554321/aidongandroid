@@ -232,7 +232,9 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
 
         tvOrderNo.setText(String.format(getString(R.string.order_no), bean.getId()));
         timeLayout.setVisibility(UN_PAID.equals(bean.getStatus()) ? View.VISIBLE : View.GONE);
-        timer.start(DateUtils.getCountdown(bean.getCreatedAt(), orderCountdownMill));
+        if(UN_PAID.equals(bean.getStatus())) {
+            timer.start(DateUtils.getCountdown(bean.getCreatedAt(), orderCountdownMill));
+        }
 
         for (ParcelBean parcelBean : bean.getParcel()) {
             if (DELIVERY_EXPRESS.equals(parcelBean.getPickUpWay())) {

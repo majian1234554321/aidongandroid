@@ -256,7 +256,6 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         tvTotalPrice.setRightContent(String.format(getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.getPay().getTotal())));
         tvStartTime.setRightContent(bean.getPay().getCreatedAt());
-        timer.start(DateUtils.getCountdown(bean.getPay().getCreatedAt(), APPOINT_COUNTDOWN_MILL));
         tvPayType.setRightContent(PAY_ALI.equals(bean.getPay().getPayType()) ? "支付宝" : "微信");
 
         //todo 通过组合控件来实现底部按钮
@@ -264,8 +263,8 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         switch (bean.getAppoint().getStatus()) {
             case UN_PAID:           //待付款
                 tvState.setText(context.getString(R.string.un_paid));
-                //timer.start(Long.parseLong(bean.getPayInfo().getLimitTime()) * 1000);
                 timerLayout.setVisibility(View.VISIBLE);
+                timer.start(DateUtils.getCountdown(bean.getPay().getCreatedAt(), APPOINT_COUNTDOWN_MILL));
                 tvOrderNo.setText(String.format(getString(R.string.appoint_no), bean.getId()));
                 tvOrderNo.setVisibility(View.VISIBLE);
                 tvCancelPay.setVisibility(View.VISIBLE);

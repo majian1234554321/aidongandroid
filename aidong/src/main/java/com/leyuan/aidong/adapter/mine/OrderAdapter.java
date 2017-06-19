@@ -83,7 +83,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
         holder.price.setText(String.format(context.getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.getPayAmount())));
         holder.tvOrderId.setText(String.format(context.getString(R.string.order_no),bean.getId()));
-        holder.timer.start(DateUtils.getCountdown(bean.getCreated_at(), orderCountdownMill));
 
         //与订单状态有关
         if (TextUtils.isEmpty(bean.getStatus())) return;
@@ -98,6 +97,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
                 holder.tvConfirm.setVisibility(View.GONE);
                 holder.tvDelete.setVisibility(View.GONE);
                 holder.tvReBuy.setVisibility(View.GONE);
+                holder.timer.start(DateUtils.getCountdown(bean.getCreated_at(), orderCountdownMill));
                 break;
             case PAID:              //已付款
                 holder.state.setText(context.getString(R.string.paid));

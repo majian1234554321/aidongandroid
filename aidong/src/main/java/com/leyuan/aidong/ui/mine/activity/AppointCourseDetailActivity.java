@@ -253,7 +253,6 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
         tvTotalPrice.setRightContent(String.format(getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.getPay().getTotal())));
         tvStartTime.setRightContent(bean.getPay().getCreatedAt());
-        timer.start(DateUtils.getCountdown(bean.getPay().getCreatedAt(), appointCountdownMill));
         tvPayType.setRightContent(PAY_ALI.equals(bean.getPay().getPayType()) ? "支付宝" : "微信");
 
         //todo 通过组合控件控制底部的按钮状态
@@ -261,6 +260,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
             case UN_PAID:           //待付款
                 tvState.setText(context.getString(R.string.un_paid));
                 timerLayout.setVisibility(View.VISIBLE);
+                timer.start(DateUtils.getCountdown(bean.getPay().getCreatedAt(), appointCountdownMill));
                 tvOrderNo.setVisibility(View.VISIBLE);
                 tvOrderNo.setText(String.format(getString(R.string.appoint_no), bean.getId()));
                 tvCancelPay.setVisibility(View.VISIBLE);
