@@ -54,10 +54,9 @@ public class VersionPresenterImpl {
         model.getVersionInfo(new IsLoginSubscriber<VersionInformation>(context) {
             @Override
             public void onNext(VersionInformation versionInfomation) {
-//                if (versionInfomation != null && VersionManager.shouldUpdate(versionInfomation.getVersion(), context)) {
-//                new VersionDialog(context, versionInfomation).setData().show();
-//                }
-                showUpdateDialog(versionInfomation);
+                if (versionInfomation != null && VersionManager.shouldUpdate(versionInfomation.getVersion(), context)) {
+                    showUpdateDialog(versionInfomation);
+                }
             }
 
             @Override
@@ -68,7 +67,7 @@ public class VersionPresenterImpl {
     }
 
     private void showUpdateDialog(VersionInformation versionInformation) {
-        if(versionInformation == null ) return;
+        if (versionInformation == null) return;
         if (versionInformation.isUpdate_force() || VersionManager.mustUpdate(versionInformation.getVersion(), context)) {
             showForceUpdateDialog(versionInformation);
         } else {
