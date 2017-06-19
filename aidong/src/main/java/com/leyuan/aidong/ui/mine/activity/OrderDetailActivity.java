@@ -217,6 +217,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
 
     @Override
     public void setOrderDetail(OrderDetailBean bean) {
+        clearList();
         this.bean = bean;
         int goodsCount = 0;
         int returnCount = 0;
@@ -401,6 +402,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
     @Override
     public void deleteOrderResult(BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
+            clearList();
             orderPresent.getOrderDetail(orderId);
             ToastGlobal.showLong("删除成功");
         } else {
