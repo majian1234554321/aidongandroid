@@ -318,6 +318,7 @@ public class DateUtils {
 //        int million = (int) ((time - (int) time) * 1000);
         StringBuilder during = new StringBuilder();
         during.append(formatNumberZero(minute));
+        during.append(":");
         during.append(formatNumberZero(second));
 
 //        if (minute > 0) {

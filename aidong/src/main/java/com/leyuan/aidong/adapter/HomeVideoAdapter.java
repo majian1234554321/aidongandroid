@@ -124,6 +124,8 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
 
                 if (liveDateArray.isEmpty()) {
                     holder.layout_empty_living.setVisibility(View.VISIBLE);
+                }else{
+                    holder.layout_empty_living.setVisibility(View.GONE);
                 }
 
                 holder.img_special.setOnClickListener(new View.OnClickListener() {
