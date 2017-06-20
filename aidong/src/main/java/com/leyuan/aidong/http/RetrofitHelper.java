@@ -1,6 +1,5 @@
 package com.leyuan.aidong.http;
 
-import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.leyuan.aidong.config.UrlConfig;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.utils.DeviceManager;
@@ -13,6 +12,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -21,6 +21,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitHelper {
     private static final int DEFAULT_TIMEOUT = 30;
     private static Retrofit singleton;
+
+    private static HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
 
     public static <T> T createApi(Class<T> clazz) {
         if (singleton == null) {
@@ -39,6 +41,9 @@ public class RetrofitHelper {
     }
 
     private static OkHttpClient createClient() {
+
+
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         return new OkHttpClient.Builder()
                 .addInterceptor(new Interceptor() {
                     @Override
@@ -50,21 +55,19 @@ public class RetrofitHelper {
                         builder.addHeader("city", URLEncoder.encode(App.getInstance().getSelectedCity(), "UTF-8"));
                         builder.addHeader("lat", String.valueOf(App.lat));
                         builder.addHeader("lng", String.valueOf(App.lon));
-
                         builder.addHeader("device", "android");
-
                         builder.addHeader("version", App.getInstance().getVersionName());
                         builder.addHeader("deviceName", DeviceManager.getPhoneBrand());
-//                        builder.addHeader("register_code", App.getInstance().getjPushId());
 
                         Request authorised = builder.build();
                         return chain.proceed(authorised);
                     }
                 })
+
+                .addInterceptor(loggingInterceptor)
                 .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
-                .addNetworkInterceptor(new StethoInterceptor())
                 .build();
     }
 

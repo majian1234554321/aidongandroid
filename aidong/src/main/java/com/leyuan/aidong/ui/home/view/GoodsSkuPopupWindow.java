@@ -375,6 +375,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         goodsBean.setCover(detailBean.image.get(0));
         goodsBean.setPrice(line.price);
         goodsBean.setType(goodsType);
+        goodsBean.setisSend(detailBean.pick_up.isSend());
         goodsBean.setAmount(tvCount.getText().toString());
         goodsBean.setSpec_name((ArrayList<String>) detailBean.spec.name);
         goodsBean.setSpecValue((ArrayList<String>) line.value);
