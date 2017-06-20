@@ -178,12 +178,12 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         }
         for (GoodsSkuBean goodsSkuBean : detailBean.spec.item) {
             if (goodsSkuBean.price != null) {
-                double price = FormatUtil.parseDouble(goodsSkuBean.price);
-                if (price > maxPrice) {
-                    maxPrice = price;
+                double tempPrice = FormatUtil.parseDouble(goodsSkuBean.price);
+                if (tempPrice > maxPrice) {
+                    maxPrice = tempPrice;
                 }
-                if (price < minPrice) {
-                    minPrice = price;
+                if (tempPrice < minPrice) {
+                    minPrice = tempPrice;
                 }
             }
             totalStock += goodsSkuBean.getStock();
@@ -271,7 +271,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
             case R.id.iv_cancel:
                 if (selectSkuListener != null) {
                     selectSkuListener.onSelectSkuChanged(selectedSkuValues, skuTip.toString(),
-                            tvCount.getText().toString(),stock);
+                            tvCount.getText().toString(),stock,price);
                 }
                 dismiss();
                 break;
@@ -398,7 +398,8 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     public void dismiss() {
         super.dismiss();
         if (selectSkuListener != null) {
-            selectSkuListener.onSelectSkuChanged(selectedSkuValues, skuTip.toString(), tvCount.getText().toString(),stock);
+            selectSkuListener.onSelectSkuChanged(selectedSkuValues, skuTip.toString(),
+                    tvCount.getText().toString(),stock,price);
         }
     }
 
@@ -409,6 +410,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         if (allSelectedNodes.size() == detailBean.spec.name.size()) {
             GoodsSkuBean line = getLine(allSelectedNodes);
             if (line != null) {
+                price = FormatUtil.parseDouble(line.price);
                 tvGoodsPrice.setText(String.format(context.getString(R.string.rmb_price_double),
                         FormatUtil.parseDouble(line.price)));
                 tvStock.setText(String.format(context.getString(R.string.stock_count), line.getStock() + ""));
@@ -500,6 +502,6 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
     }
 
     public interface SelectSkuListener {
-        void onSelectSkuChanged(List<String> selectedSkuValues, String skuTip, String selectCount,int stock);
+        void onSelectSkuChanged(List<String> selectedSkuValues, String skuTip, String selectCount,int stock,double price);
     }
 }

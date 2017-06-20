@@ -174,8 +174,7 @@ public class PhotoBrowseActivity extends BaseActivity {
         public Object instantiateItem(ViewGroup container, int position) {
             GalleryPhotoView photoView = viewBuckets.get(position);
             String photoUrl = photoBrowseInfo.getPhotoUrls().get(position);
-            Glide.with(PhotoBrowseActivity.this).load(photoUrl).thumbnail(0.1f).into(photoView);
-            //GlideLoader.getInstance().displayImage(photoUrl, photoView);
+            Glide.with(PhotoBrowseActivity.this).load(photoUrl).error(R.drawable.icon_avatar_default).into(photoView);
             container.addView(photoView);
             return photoView;
         }
