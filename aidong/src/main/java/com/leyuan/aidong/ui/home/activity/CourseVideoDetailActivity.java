@@ -164,7 +164,7 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
             case R.id.iv_up_arrow:
                 isShowDesc = !isShowDesc;
                 tvCourseDesc.setVisibility(isShowDesc ? View.VISIBLE : View.GONE);
-                ivUpArrow.animate().rotationBy(180).setDuration(300).start();
+                ivUpArrow.animate().rotationBy(180).setDuration(200).start();
                 break;
             default:
                 break;
