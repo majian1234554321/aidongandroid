@@ -368,7 +368,8 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     }
 
     @Override
-    public void onSelectSkuChanged(List<String> selectedSkuValues,String skuTip,String selectedCount,int stock) {
+    public void onSelectSkuChanged(List<String> selectedSkuValues,String skuTip,
+                                   String selectedCount,int stock,double price) {
         if(isSellOut){
             return;
         }
@@ -376,11 +377,18 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         if(selectedSkuValues != null) {
             this.selectedSkuValues = selectedSkuValues;
         }
-        tvSelectSku.setText(isAllSkuConfirm() ? String.format(getString(R.string.sku_selected),skuTip)
-                : String.format(getString(R.string.sku_select),skuTip));
         tvCount.setText(String.format(getString(R.string.count_string), this.selectedCount));
-        tvStockTip.setText(String.format(getString(R.string.surplus_goods_count),stock));
-        tvStockTip.setVisibility(stock <= 10 ? View.VISIBLE : View.GONE);
+        if(isAllSkuConfirm()){
+            tvSelectSku.setText(String.format(getString(R.string.sku_selected),skuTip));
+            tvStockTip.setText(String.format(getString(R.string.surplus_goods_count),stock));
+            tvStockTip.setVisibility(stock <= 10 ? View.VISIBLE : View.GONE);
+            tvPrice.setText(String.format(getString(R.string.rmb_price_double), price));
+        }else {
+            tvSelectSku.setText(String.format(getString(R.string.sku_select),skuTip));
+            tvStockTip.setVisibility(View.GONE);
+            tvPrice.setText(String.format(getString(R.string.rmb_price_double),
+                    FormatUtil.parseDouble(TextUtils.isEmpty(bean.floor_price) ? bean.price :bean.floor_price)));
+        }
     }
 
 
