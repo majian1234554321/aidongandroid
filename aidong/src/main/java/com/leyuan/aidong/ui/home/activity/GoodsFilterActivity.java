@@ -48,8 +48,8 @@ import static com.leyuan.aidong.utils.Constant.GOODS_NUTRITION;
 public class GoodsFilterActivity extends BaseActivity implements View.OnClickListener,GoodsFilterActivityView {
     private static final String HEAT_DESC = "heat_desc";
     private static final String ORDERS_COUNT_DESC = "orders_count_desc";
-    private static final String PRICE_ASC = "price_asc";
-    private static final String PRICE_DESC = "price_desc";
+    private static final String PRICE_ASC = "floor_price_asc";
+    private static final String PRICE_DESC = "floor_price_desc";
     private static final int COMMEND_LOAD_DATA = 3;
     private static final int PULL_TO_REFRESH_DATA = 4;
     private static final int REQUEST_MORE_DATA = 5;

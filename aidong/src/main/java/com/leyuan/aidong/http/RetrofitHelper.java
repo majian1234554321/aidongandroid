@@ -1,5 +1,6 @@
 package com.leyuan.aidong.http;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.leyuan.aidong.config.UrlConfig;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.utils.DeviceManager;
@@ -65,6 +66,7 @@ public class RetrofitHelper {
                 })
 
                 .addInterceptor(loggingInterceptor)
+                .addNetworkInterceptor(new StethoInterceptor())
                 .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
