@@ -120,9 +120,9 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
     }
 
     @Override
-    public void onGoodsCountChanged(String goodsId,int count,int shopPosition,int goodsPosition) {
+    public void onGoodsCountChanged(String goodsId,int count,int shopPosition,int goodsPosition,String gymId) {
         this.goodsCount = count;
-        cartPresent.updateGoodsCount(goodsId,count,shopPosition,goodsPosition);
+        cartPresent.updateGoodsCount(goodsId,count,shopPosition,goodsPosition,gymId);
     }
 
 

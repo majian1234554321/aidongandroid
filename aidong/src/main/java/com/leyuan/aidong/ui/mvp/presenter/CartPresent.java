@@ -37,7 +37,7 @@ public interface CartPresent {
      * @param id 商品id
      * @param mount 数量
      */
-    void updateGoodsCount(String id, int mount, int shopPosition, int goodsPosition);
+    void updateGoodsCount(String id, int mount, int shopPosition, int goodsPosition,String gymId);
 
     void updateGoodsDeliveryInfo(String id,String count, String gymId);
 

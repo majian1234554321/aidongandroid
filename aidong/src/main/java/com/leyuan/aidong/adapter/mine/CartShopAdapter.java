@@ -85,7 +85,7 @@ public class CartShopAdapter extends RecyclerView.Adapter<CartShopAdapter.CartHo
             @Override
             public void onGoodsCountChanged(String goodsId, int count, int goodsPosition) {
                 if (shopChangeListener != null) {
-                    shopChangeListener.onGoodsCountChanged(goodsId, count, position, goodsPosition);
+                    shopChangeListener.onGoodsCountChanged(goodsId, count, position, goodsPosition,bean.getPickUp().getInfo().getId());
                 }
             }
 
@@ -143,7 +143,7 @@ public class CartShopAdapter extends RecyclerView.Adapter<CartShopAdapter.CartHo
 
         void onGoodsDeleted(String goodsId, int shopPosition, int goodsPosition);
 
-        void onGoodsCountChanged(String goodsId, int count, int shopPosition, int goodsPosition);
+        void onGoodsCountChanged(String goodsId, int count, int shopPosition, int goodsPosition,String gymId);
 
     }
 }
