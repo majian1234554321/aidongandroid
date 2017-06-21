@@ -210,7 +210,7 @@ public class GoodsBean implements Parcelable {
         return is_send;
     }
 
-    public void setIs_send(boolean is_send) {
+    public void setisSend(boolean is_send) {
         this.is_send = is_send;
     }
 
