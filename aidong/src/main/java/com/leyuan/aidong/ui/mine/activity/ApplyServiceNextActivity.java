@@ -172,7 +172,7 @@ public class ApplyServiceNextActivity extends BaseActivity implements View.OnCli
 
     private void applyToService(String[] images) {
         Logger.i("applyToService", "--------------- image = " + images + ", items = " + items.get(0));
-        orderPresent.feedbackOrder(orderId, type + "", items.toArray(new String[0]), content, images, address_id);
+        orderPresent.feedbackOrder(orderId, type + "", items.toArray(new String[items.size()]), content, images, address_id);
     }
 
     @Override

@@ -5,12 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.leyuan.aidong.widget.SimpleTitleBar
-        android:id="@+id/title_bar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/height_top_bar"
-        app:stb_title="切换城市" />
-
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -93,4 +87,11 @@
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
+
+    <com.leyuan.aidong.widget.SimpleTitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_top_bar"
+        app:stb_title="切换城市" />
+
 </LinearLayout>
