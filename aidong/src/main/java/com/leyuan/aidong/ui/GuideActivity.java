@@ -33,7 +33,8 @@ public class GuideActivity extends BaseActivity {
         views.add(BGABannerUtil.getItemImageView(this, R.drawable.guide1));
         views.add(BGABannerUtil.getItemImageView(this, R.drawable.guide2));
         views.add(BGABannerUtil.getItemImageView(this, R.drawable.guide3));
-        lastImage = BGABannerUtil.getItemImageView(this, R.drawable.guide4);
+        views.add(BGABannerUtil.getItemImageView(this, R.drawable.guide4));
+        lastImage = BGABannerUtil.getItemImageView(this, R.drawable.guide5);
         views.add(lastImage);
         banner.setData(views);
 
