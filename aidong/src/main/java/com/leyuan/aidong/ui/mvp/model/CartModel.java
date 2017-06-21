@@ -39,7 +39,7 @@ public interface CartModel {
      * @param id 商品id
      * @param mount 数量
      */
-    void updateDeliveryInfo(Subscriber<BaseBean> subscriber, String id, int mount);
+    void updateDeliveryInfo(Subscriber<BaseBean> subscriber, String id, int mount, String gymId);
 
     /**
      * 更新商品发货信息

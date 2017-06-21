@@ -105,13 +105,13 @@ public class CartPresentImpl implements CartPresent{
     }
 
     @Override
-    public void updateGoodsCount(String id, int mount, final int shopPosition, final int goodsPosition) {
+    public void updateGoodsCount(String id, int mount, final int shopPosition, final int goodsPosition,String gymId) {
         cartModel.updateDeliveryInfo(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
                 cartHeaderView.updateGoodsCountResult(baseBean,shopPosition,goodsPosition);  //未作校验 上层自行判断
             }
-        },id,mount);
+        },id,mount,gymId);
     }
 
     @Override
