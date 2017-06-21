@@ -36,7 +36,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:padding="8dp"
-            android:textColor="@color/white"
+            android:textColor="@color/text_disabled"
             android:textSize="16sp"/>
     </RelativeLayout>
 

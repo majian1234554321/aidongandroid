@@ -300,7 +300,7 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
         } else if (resultCode == RESULT_DELETE) {
             dynamicList.remove(clickPosition);
             circleDynamicAdapter.updateData(dynamicList);
-            circleDynamicAdapter.notifyItemRemoved(clickPosition);
+            circleDynamicAdapter.notifyDataSetChanged();
         }
     }
 
