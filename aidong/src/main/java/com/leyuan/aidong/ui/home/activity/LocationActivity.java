@@ -58,7 +58,7 @@ public class LocationActivity extends BaseActivity implements LocationActivityVi
         tvLocation = (TextView) findViewById(R.id.tv_location);
         recyclerView = (RecyclerView) findViewById(R.id.rv_city);
         img_selected = (ImageView) findViewById(R.id.img_selected);
-        tvLocation.setText(App.getInstance().getLocationCity());
+        tvLocation.setText(App.getInstance().getLocationCity() == null ? "上海" : App.getInstance().getLocationCity());
         img_selected.setVisibility(TextUtils.equals(App.getInstance().getLocationCity(), App.getInstance().getSelectedCity()) ?
                 View.VISIBLE : View.GONE);
 

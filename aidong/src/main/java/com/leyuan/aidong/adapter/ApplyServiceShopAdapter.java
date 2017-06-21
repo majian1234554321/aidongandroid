@@ -47,6 +47,8 @@ public class ApplyServiceShopAdapter extends RecyclerView.Adapter<ApplyServiceSh
         holder.ivMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                holder.ivAdd.setBackgroundResource(R.drawable.icon_add);
+
                 count = Integer.parseInt(holder.tvCount.getText().toString());
                 count--;
                 if (count <= 0) {
@@ -66,8 +68,13 @@ public class ApplyServiceShopAdapter extends RecyclerView.Adapter<ApplyServiceSh
                 count = Integer.parseInt(holder.tvCount.getText().toString());
                 count++;
                 if (count > amount) {
+
                     count = amount;
+
                     ToastGlobal.showShort("超出最大数量");
+                }
+                if(count == amount){
+                    holder.ivAdd.setBackgroundResource(R.drawable.icon_add_gray);
                 }
                 if (count >= 1) {
                     holder.ivMinus.setBackgroundResource(R.drawable.icon_minus);

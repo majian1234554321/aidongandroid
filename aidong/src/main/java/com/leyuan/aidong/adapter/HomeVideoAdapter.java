@@ -64,8 +64,6 @@ public class HomeVideoAdapter extends RecyclerView.Adapter<HomeVideoAdapter.View
         this.liveHome = liveHome.getEmpty();
         if (liveHome.getNow() != null)
             this.livingVideos.addAll(liveHome.getNow());
-
-
     }
 
     public void refreshData(ArrayList<LiveVideoInfo> livingVideos, ArrayList<LiveVideoSoonInfo> liveDateArray, LiveVideoInfo empty) {

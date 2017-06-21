@@ -104,8 +104,8 @@
             android:layout_marginBottom="20dp"
             android:layout_marginLeft="@dimen/left_margin"
             android:layout_marginTop="10dp"
-            android:text="111111111111111"
             android:textColor="@color/black"
+            android:layout_marginRight="30dp"
             android:textSize="15sp" />
 
         <ImageView
