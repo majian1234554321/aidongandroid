@@ -88,6 +88,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     private RecyclerView rvPhoto;
     private ImageView ivAvatar;
     private ImageView ivGender;
+    private ImageView ivCoach;
     private TextView tvName;
     private TextView tvSignature;
     private ImageView ivFollowOrEdit;
@@ -143,6 +144,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         rvPhoto = (RecyclerView) findViewById(R.id.rv_photo);
         ivAvatar = (ImageView) findViewById(R.id.dv_avatar);
         ivGender = (ImageView) findViewById(R.id.iv_gender);
+        ivCoach = (ImageView) findViewById(R.id.iv_coach_flag);
         tvName = (TextView) findViewById(R.id.tv_name);
         tvMessage = (TextView) findViewById(tv_message);
         tvSignature = (TextView) findViewById(R.id.tv_signature);
@@ -181,7 +183,8 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         tvSignature.setText(userInfoData.getProfile().getSignature());
         ivGender.setBackgroundResource("0".equals(userInfoData.getProfile().getGender())
                 ? R.drawable.icon_man : R.drawable.icon_woman);
-
+        ivCoach.setVisibility("Coach".equals(userInfoData.getProfile().getUserType())
+                ? View.VISIBLE : View.GONE);
         if (isSelf) {
             tvTitle.setText("我的资料");
             ivFollowOrEdit.setBackgroundResource(R.drawable.icon_edit_red);

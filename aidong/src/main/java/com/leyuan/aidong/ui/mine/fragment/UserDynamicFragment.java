@@ -272,7 +272,7 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
         } else if (resultCode == RESULT_DELETE) {
             dynamicList.remove(clickPosition);
             circleDynamicAdapter.updateData(dynamicList);
-            circleDynamicAdapter.notifyItemRemoved(clickPosition);
+            circleDynamicAdapter.notifyDataSetChanged();
         }
     }
 

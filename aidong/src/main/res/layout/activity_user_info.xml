@@ -139,7 +139,7 @@
                             android:layout_centerVertical="true" />
 
 
-                        <LinearLayout
+                        <RelativeLayout
                             android:id="@+id/ll_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -148,7 +148,8 @@
                             android:layout_marginRight="20dp"
                             android:layout_toRightOf="@id/dv_avatar"
                             android:layout_toLeftOf="@+id/iv_follow_or_edit"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:padding="1dp">
 
                             <TextView
                                 android:id="@+id/tv_name"
@@ -157,17 +158,32 @@
                                 android:text="name"
                                 android:singleLine="true"
                                 android:textColor="@color/black"
-                                android:textSize="15sp" />
+                                android:textSize="15sp"
+                                android:layout_centerVertical="true"
+                                android:includeFontPadding="false" />
 
                             <ImageView
                                 android:id="@+id/iv_gender"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/icon_man"
+                                android:background="@drawable/icon_man"
                                 android:scaleType="centerCrop"
-                                android:layout_marginLeft="10dp"/>
+                                android:layout_centerVertical="true"
+                                android:layout_toRightOf="@id/tv_name"
+                                android:layout_marginLeft="10dp" />
 
-                        </LinearLayout>
+                            <ImageView
+                                android:id="@+id/iv_coach_flag"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/icon_coach"
+                                android:scaleType="centerCrop"
+                                android:layout_centerVertical="true"
+                                android:layout_toRightOf="@id/iv_gender"
+                                android:layout_marginLeft="10dp"
+                                android:visibility="gone"/>
+
+                        </RelativeLayout>
 
                         <TextView
                             android:id="@+id/tv_signature"

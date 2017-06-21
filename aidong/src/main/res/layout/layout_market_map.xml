@@ -19,11 +19,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="13dp"
+                android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:text="1111111111111111111111111111111111111"
                 android:textColor="@color/black"
-                android:textSize="13dp" />
+                android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/txt_store_address"
