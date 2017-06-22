@@ -61,6 +61,7 @@ import com.google.android.exoplayer.util.MimeTypes;
 import com.google.android.exoplayer.util.Util;
 import com.google.android.exoplayer.util.VerboseLogUtil;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.ui.mvp.presenter.impl.VideoPresenterImpl;
 import com.leyuan.aidong.ui.video.player.ExtractorRendererBuilder;
 import com.leyuan.aidong.ui.video.player.HlsRendererBuilder;
 import com.leyuan.aidong.ui.video.player.LoveSportPlayer;
@@ -91,6 +92,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback, 
     private static final int ID_OFFSET = 2;
 
     private static final CookieManager defaultCookieManager;
+    public static final String VIDEO_CATEGORY = "category";
 
     static {
         defaultCookieManager = new CookieManager();
@@ -125,6 +127,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback, 
 
     private AudioCapabilitiesReceiver audioCapabilitiesReceiver;
     private String videoId;
+    private String category;
 
     // Activity lifecycle
 
@@ -195,26 +198,11 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback, 
 
 
     private void addVideoStatistics() {
-//        RequestParams params = new RequestParams();
-//        if (videoId != null)
-//            params.addBodyParameter("videoId", videoId);
-////        params.addBodyParameter("idongId", SharedPreferencesUtils.getInstance(this).get("user"));
-////
-//        Logger.i("playerActivity " ,"videoId =  " +videoId +",  idongId = " + SharedPreferencesUtils.getInstance(this).get("user"));
-//        MyHttpUtils http = new MyHttpUtils();
-//        http.send(HttpRequest.HttpMethod.POST, Urls.BASE_URL_TEXT + "/addVideoMsg", params, new RequestCallBack<String>() {
-//            @Override
-//            public void onSuccess(ResponseInfo<String> responseInfo) {
-//                Logger.i("playerActivity " ,"result =  " +responseInfo.result);
-//                //Toast.makeText(PlayerActivity.this,"调用统计成功",Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onFailure(HttpException e, String s) {
-//                e.printStackTrace();
-//                //Toast.makeText(PlayerActivity.this,"调用统计失败",Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        if (category != null) {
+            new VideoPresenterImpl(this).videoCoursePlayStatistics(videoId);
+        } else if (videoId != null && !TextUtils.equals("0", videoId)) {
+            new VideoPresenterImpl(this).videoPlayStatistics(videoId);
+        }
     }
 
     @Override
@@ -234,7 +222,8 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback, 
         contentId = intent.getStringExtra(CONTENT_ID_EXTRA);
         provider = intent.getStringExtra(PROVIDER_EXTRA);
         videoId = intent.getStringExtra(VIDEO_ID);
-        Logger.i("playerActivity " ," into videoId =  " +videoId +" contentType = " +contentType);
+        category = intent.getStringExtra(VIDEO_CATEGORY);
+        Logger.i("playerActivity ", " into videoId =  " + videoId + " contentType = " + contentType);
         configureSubtitleView();
         if (player == null) {
             if (!maybeRequestPermission()) {
