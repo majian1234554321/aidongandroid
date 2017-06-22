@@ -57,7 +57,7 @@ public class DynamicLikeAdapter extends RecyclerView.Adapter<DynamicLikeAdapter.
         if (totalCount <= MAM_USER_COUNT) {
             return TYPE_USER;
         } else {
-            if (position == MAM_USER_COUNT - 1) {
+            if (position == data.size() - 1) {
                 return TYPE_MORE;
             } else {
                 return TYPE_USER;

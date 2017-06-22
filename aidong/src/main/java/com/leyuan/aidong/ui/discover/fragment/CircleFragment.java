@@ -253,7 +253,7 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
             UserCoach user = App.mInstance.getUser();
             item.setAvatar(user.getAvatar());
             item.setId(String.valueOf(user.getId()));
-            dynamicList.get(position).like.item.add(item);
+            dynamicList.get(position).like.item.add(0,item);
             circleDynamicAdapter.notifyItemChanged(position);
         } else {
             ToastGlobal.showLong(baseBean.getMessage());
