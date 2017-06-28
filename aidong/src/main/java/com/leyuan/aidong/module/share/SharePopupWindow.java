@@ -79,7 +79,7 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
         this.showAtLocation(((ViewGroup) context.findViewById(android.R.id.content)).getChildAt(0), Gravity.BOTTOM, 0, 0);
         this.title = title;
         String html = HtmlToStringUtils.delHTMLTag(content);
-        this.content =  html.substring(0,html.length() > 30 ? 30 : html.length());
+        this.content = html == null ? "" : html.substring(0, html.length() > 30 ? 30 : html.length());
         this.imageUrl = imageUrl;
         this.webUrl = webUrl;
         Logger.i("share", "title = " + title + ",  content = " + this.content + "， image url = " + imageUrl + ", webUrl = " + webUrl);
