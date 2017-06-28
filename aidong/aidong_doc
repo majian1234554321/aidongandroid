@@ -1,0 +1,21 @@
+ 爱动说明文档
+
+    项目采用MVP模式
+    网络请求库使用 retrofit + okHttp
+    图片加载库使用 glide
+    图片选择库 https://github.com/Bilibili/boxing
+    下拉刷新 google官方下拉刷新控件
+    上拉加载更多 使用详见https://github.com/cundong/HeaderAndFooterRecyclerView
+    如需知道当前界面(Activity/Fragment)类名,查看Log并筛选currUIName
+
+    模块1: 首页/商城
+          首页和商城采用的同一个适配器HomeAdapter
+
+    模块3: 发现
+          爱动圈(CircleFragment)显示适配器为CircleDynamicAdapter
+          目前有两种类型的Holder VideoViewHolder(显示视频item),MultiImageViewHolder(显示多张图片item)
+          每个动态item中的相同元素的逻辑(顶部的头像 文字 底部的点赞 评论等信息)在基类BaseCircleHolder中处理的
+          其他跟具体类型有关的逻辑在VideoViewHolder,MultiImageViewHolder中
+
+          发布爱动圈动态(PublishDynamicActivity)逻辑:
+          图片先上传至七牛服务器,获取到图片url后再上传至后台具体逻辑见UploadToQiNiuManager

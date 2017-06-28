@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 首页适配器
+ * 首页和商城适配器
  * Created by song on 2017/2/21.
  */
 public class HomeAdapter extends BaseHolderViewAdapter<HomeBean> {

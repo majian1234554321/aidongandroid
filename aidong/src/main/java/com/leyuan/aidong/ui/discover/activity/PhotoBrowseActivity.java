@@ -69,25 +69,29 @@ public class PhotoBrowseActivity extends BaseActivity {
             photoView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    new DialogDoubleButton(PhotoBrowseActivity.this)
-                            .setContentDesc("点击确定保存图片到相册")
-                            .setBtnOkListener(new ButtonOkListener() {
-                                @Override
-                                public void onClick(BaseDialog dialog) {
-                                    photoView.setDrawingCacheEnabled(true);
-                                    boolean result = ImageSaveUtils.saveImageToGallery(PhotoBrowseActivity.this,
-                                            photoView.getDrawingCache());
-                                    photoView.setDrawingCacheEnabled(false);
-                                    if (result) {
-                                        ToastGlobal.showLong(R.string.save_success);
-                                    } else {
-                                        ToastGlobal.showLong(R.string.save_fail);
+                    try {
+                        new DialogDoubleButton(PhotoBrowseActivity.this)
+                                .setContentDesc("点击确定保存图片到相册")
+                                .setBtnOkListener(new ButtonOkListener() {
+                                    @Override
+                                    public void onClick(BaseDialog dialog) {
+                                        photoView.setDrawingCacheEnabled(true);
+                                        boolean result = ImageSaveUtils.saveImageToGallery(PhotoBrowseActivity.this,
+                                                photoView.getDrawingCache());
+                                        photoView.setDrawingCacheEnabled(false);
+                                        if (result) {
+                                            ToastGlobal.showLong(R.string.save_success);
+                                        } else {
+                                            ToastGlobal.showLong(R.string.save_fail);
+                                        }
+                                        dialog.dismiss();
                                     }
-                                    dialog.dismiss();
-                                }
-                            }).show();
-
-                    return true;
+                                }).show();
+                        return true;
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        return false;
+                    }
                 }
             });
 

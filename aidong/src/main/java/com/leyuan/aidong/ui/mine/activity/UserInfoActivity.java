@@ -180,10 +180,11 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     private void setView() {
         GlideLoader.getInstance().displayRoundAvatarImage(userInfoData.getProfile().getAvatar(), ivAvatar);
         tvName.setText(userInfoData.getProfile().getName());
-        tvSignature.setText(userInfoData.getProfile().getSignature());
+        tvSignature.setText(TextUtils.isEmpty(userInfoData.getProfile().getSignature())
+                ? "这个人很懒，什么都没有留下" : userInfoData.getProfile().getSignature());
         ivGender.setBackgroundResource("0".equals(userInfoData.getProfile().getGender())
                 ? R.drawable.icon_man : R.drawable.icon_woman);
-        ivCoach.setVisibility("Coach".equals(userInfoData.getProfile().getUserType())
+        ivCoach.setVisibility("Coach".equalsIgnoreCase(userInfoData.getProfile().getUserType())
                 ? View.VISIBLE : View.GONE);
         if (isSelf) {
             tvTitle.setText("我的资料");
@@ -206,7 +207,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
             }
             ivPublish.setVisibility(View.GONE);
             contactLayout.setVisibility(View.VISIBLE);
-            tvCall.setVisibility("Coach".equals(userInfoData.getProfile().getUserType())
+            tvCall.setVisibility("Coach".equalsIgnoreCase(userInfoData.getProfile().getUserType())
                     ? View.VISIBLE : View.GONE);
             contentLayout.setPadding(0, DensityUtil.dp2px(this, 46), 0, (int) getResources().getDimension(R.dimen.pref_50dp));
         }

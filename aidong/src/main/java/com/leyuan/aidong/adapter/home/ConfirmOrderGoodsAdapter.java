@@ -58,8 +58,10 @@ public class ConfirmOrderGoodsAdapter extends RecyclerView.Adapter<ConfirmOrderG
         ArrayList<String> specName = bean.getSpecName();
         ArrayList<String> specValue = bean.getSpecValue();
         StringBuilder result = new StringBuilder();
-        for (int i = 0; i < specValue.size(); i++) {
-            result.append(specName.get(i)).append(":").append(specValue.get(i)).append(" ");
+        if(specName != null && specValue != null) {
+            for (int i = 0; i < specValue.size(); i++) {
+                result.append(specName.get(i)).append(":").append(specValue.get(i)).append(" ");
+            }
         }
         holder.sku.setText(result);
         holder.price.setText(String.format(context.getString(R.string.rmb_price_double),
