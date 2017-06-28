@@ -233,8 +233,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
             @Override
             public void onSuccess(List<String> urls) {
                 if (urls != null && !urls.isEmpty()) {
-                    String url = urls.get(0);
-                    avatarUrl = url.substring(url.indexOf("/") + 1);
+                    avatarUrl = urls.get(0);
                     uploadToServer(avatarUrl);
                 }
             }
