@@ -3,6 +3,7 @@ package com.leyuan.aidong.ui.mvp.presenter.impl;
 import android.content.Context;
 
 import com.leyuan.aidong.entity.video.LiveHomeResult;
+import com.leyuan.aidong.http.subscriber.BaseSubscriber;
 import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
 import com.leyuan.aidong.ui.mvp.model.impl.VideoModelImpl;
 import com.leyuan.aidong.ui.mvp.view.LiveHomeView;
@@ -35,6 +36,15 @@ public class LivePresenterImpl {
                 viewListener.onGetLiveHomeData(null);
             }
         });
+    }
+
+    public void livePlayStatistics(String id) {
+        model.livePlayStatistics(new BaseSubscriber<Object>(context) {
+            @Override
+            public void onNext(Object o) {
+
+            }
+        }, id);
     }
 
 }

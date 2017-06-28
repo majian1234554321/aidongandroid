@@ -6,6 +6,7 @@ import com.leyuan.aidong.entity.video.CommentsVideoResult;
 import com.leyuan.aidong.entity.video.VideoDetailResult;
 import com.leyuan.aidong.entity.video.VideoListResult;
 import com.leyuan.aidong.entity.video.VideoRelationResult;
+import com.leyuan.aidong.http.subscriber.BaseSubscriber;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.ui.mvp.model.impl.VideoModelImpl;
 import com.leyuan.aidong.ui.mvp.view.VideoCommentView;
@@ -68,7 +69,6 @@ public class VideoPresenterImpl {
         }, page, type);
     }
 
-
     public void getMoreVideoList(String page, String type) {
         videoModel.getVideoList(new ProgressSubscriber<VideoListResult>(context) {
             @Override
@@ -86,6 +86,23 @@ public class VideoPresenterImpl {
         }, page, type);
     }
 
+    public void videoPlayStatistics(String id) {
+        videoModel.videoPlayStatistics(new BaseSubscriber<Object>(context) {
+            @Override
+            public void onNext(Object o) {
+
+            }
+        }, id);
+    }
+
+    public void videoCoursePlayStatistics(String id) {
+        videoModel.videoCoursePlayStatistics(new BaseSubscriber<Object>(context) {
+            @Override
+            public void onNext(Object o) {
+
+            }
+        }, id);
+    }
 
     public void getVideoDetail(String series_id) {
         videoModel.getVideoDetail(new ProgressSubscriber<VideoDetailResult>(context) {

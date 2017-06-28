@@ -200,7 +200,7 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
         tv_reply_count.setText("" + videoDetail.getCommentsCount());
         tv_like_count.setText("" + videoDetail.getLikesCount());
         tv_course_name.printString("" + videoDetail.getVideoName());
-        tv_auth_and_time.printString(videoDetail.getAuthor() + " ● " + videoDetail.getDuring());
+        tv_auth_and_time.printString(videoDetail.getAuthor() + " • " + videoDetail.getDuring());
         tv_course_desc.printString(videoDetail.getIntroduce());
         txt_page_tag.setText((index + 1) + "-" + videos.size());
     }
@@ -389,7 +389,7 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
                             //                                            .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_OTHER)
 //                            .putExtra(PlayerActivity.CONTENT_ID_EXTRA, "")
 //                            .putExtra(PlayerActivity.CONTENT_ID_EXTRA, "")
-                            .putExtra(PlayerActivity.VIDEO_ID, String.valueOf(videoDetail.getContentId()));
+                            .putExtra(PlayerActivity.VIDEO_ID, String.valueOf(videoDetail.getvId()));
 
                     Logger.i("playerActivity ", " from videoId =  " + videoDetail.getContentId());
                     startActivity(intent);

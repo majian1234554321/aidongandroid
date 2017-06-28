@@ -43,9 +43,9 @@ import java.util.List;
  * 课程视频详情
  * Created by song on 2017/4/21.
  */
-public class CourseVideoDetailActivity extends BaseActivity implements CourseVideoDetailActivityView,View.OnClickListener,
+public class CourseVideoDetailActivity extends BaseActivity implements CourseVideoDetailActivityView, View.OnClickListener,
         CourseRecommendVideoAdapter.ItemClickListener {
-    private static final float IMAGE_RATIO = 317/176f;
+    private static final float IMAGE_RATIO = 317 / 176f;
     private ImageView ivBlur;
     private RelativeLayout imageLayout;
     private ImageView ivCover;
@@ -69,14 +69,14 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
 
     public static void start(Context context, String catId) {
         Intent starter = new Intent(context, CourseVideoDetailActivity.class);
-        starter.putExtra("catId",catId);
+        starter.putExtra("catId", catId);
         context.startActivity(starter);
     }
 
-    public static void start(Context context, String catId,String videoId) {
+    public static void start(Context context, String catId, String videoId) {
         Intent starter = new Intent(context, CourseVideoDetailActivity.class);
-        starter.putExtra("catId",catId);
-        starter.putExtra("videoId",videoId);
+        starter.putExtra("catId", catId);
+        starter.putExtra("videoId", videoId);
         context.startActivity(starter);
     }
 
@@ -84,14 +84,14 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_video_detail);
-        CoursePresent coursePresent = new CoursePresentImpl(this,this);
-        if(getIntent() != null){
+        CoursePresent coursePresent = new CoursePresentImpl(this, this);
+        if (getIntent() != null) {
             catId = getIntent().getStringExtra("catId");
             videoId = getIntent().getStringExtra("videoId");
         }
         initView();
         setListener();
-        coursePresent.getRelateCourseVideo(catId,videoId);
+        coursePresent.getRelateCourseVideo(catId, videoId);
     }
 
     @Override
@@ -101,7 +101,7 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
                 : SystemInfoUtils.getCourseVideoTipOnLogout());
     }
 
-    private void initView(){
+    private void initView() {
         ivBlur = (ImageView) findViewById(R.id.iv_blur);
         imageLayout = (RelativeLayout) findViewById(R.id.rl_image);
         ivCover = (ImageView) findViewById(R.id.img_cover);
@@ -111,11 +111,11 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
         ivUpArrow = (ImageView) findViewById(R.id.iv_up_arrow);
         tvCourseDesc = (TextViewPrintly) findViewById(R.id.tv_course_desc);
         LinearLayout contentLayout = (LinearLayout) findViewById(R.id.ll_content);
-        switcherLayout = new SwitcherLayout(this,contentLayout);
+        switcherLayout = new SwitcherLayout(this, contentLayout);
         layoutMoreVideo = (RelativeLayout) findViewById(R.id.layout_more_video);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         adapter = new CourseRecommendVideoAdapter(this);
-        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerView.setAdapter(adapter);
         ivBack = (Button) findViewById(R.id.iv_back);
         btAppoint = (Button) findViewById(R.id.bt_appoint);
@@ -126,7 +126,7 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
 
     }
 
-    private void setListener(){
+    private void setListener() {
         ivBack.setOnClickListener(this);
         btAppoint.setOnClickListener(this);
         layoutMoreVideo.setOnClickListener(this);
@@ -137,28 +137,32 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_back:
                 finish();
                 break;
             case R.id.bt_appoint:
-                if(App.mInstance.isLogin()){
-                    CourseActivity.start(this,courseVideoBean.getTypeName());
-                }else {
-                    startActivityForResult(new Intent(this, LoginActivity.class),Constant.REQUEST_LOGIN);
+                if (App.mInstance.isLogin()) {
+                    CourseActivity.start(this, courseVideoBean.getTypeName());
+                } else {
+                    startActivityForResult(new Intent(this, LoginActivity.class), Constant.REQUEST_LOGIN);
                 }
                 break;
             case R.id.layout_more_video:
-                RelatedVideoActivity.start(this, catId,tvRelateTitle.getText().toString(),courseVideoBean.getId());
+                RelatedVideoActivity.start(this, catId, tvRelateTitle.getText().toString(), courseVideoBean.getId());
                 break;
             case R.id.iv_start:
-                if(TextUtils.isEmpty(courseVideoBean.getFile())){
+                if (TextUtils.isEmpty(courseVideoBean.getFile())) {
                     ToastGlobal.showLong("视频链接为空");
                     return;
                 }
                 Intent intent = new Intent(this, PlayerActivity.class)
                         .setData(Uri.parse(courseVideoBean.getFile()))
-                        .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_HLS);
+                        .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_HLS)
+                        .putExtra(PlayerActivity.VIDEO_ID, courseVideoBean.getId());
+                if (videoId == null) {
+                    intent.putExtra(PlayerActivity.VIDEO_CATEGORY, Constant.CATEGORY);
+                }
                 startActivity(intent);
                 break;
             case R.id.iv_up_arrow:
@@ -172,30 +176,30 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
     }
 
     @Override
-    public void updateRelateVideo(String relateTitle,List<CourseVideoBean> videoBeanList) {
+    public void updateRelateVideo(String relateTitle, List<CourseVideoBean> videoBeanList) {
         btAppoint.setVisibility(View.VISIBLE);
-        if(videoBeanList != null&& !videoBeanList.isEmpty()) {
+        if (videoBeanList != null && !videoBeanList.isEmpty()) {
             courseVideoBean = videoBeanList.get(0);
             GlideLoader.getInstance().displayImage(courseVideoBean.getCover(), ivCover);
-            GlideLoader.getInstance().displayImageWithBlur(courseVideoBean.getCover(),ivBlur);
+            GlideLoader.getInstance().displayImageWithBlur(courseVideoBean.getCover(), ivBlur);
             tvCourseName.printString(courseVideoBean.getName());
             tvRelateTitle.setText(relateTitle);
             String during = Utils.formatTime(Math.round(FormatUtil.parseFloat(courseVideoBean.getDuring())));
             tvAuthAndTime.printString(String.format(getString(R.string.course_type_and_during),
-                    courseVideoBean.getTypeName(),during));
+                    courseVideoBean.getTypeName(), during));
             tvCourseDesc.printString(courseVideoBean.getIntroduce());
-            if(videoBeanList.size() > 1) {
+            if (videoBeanList.size() > 1) {
                 adapter.setData(videoBeanList);
                 layoutMoreVideo.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 layoutMoreVideo.setVisibility(View.GONE);
             }
         }
     }
 
     @Override
-    public void onItemClick(String catId,String videoId) {
-        CourseVideoDetailActivity.start(this,catId,videoId);
+    public void onItemClick(String catId, String videoId) {
+        CourseVideoDetailActivity.start(this, catId, videoId);
     }
 
     @Override

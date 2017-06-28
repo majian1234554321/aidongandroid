@@ -2,7 +2,7 @@
 
 
     <style name="SplashBackgroundTheme" parent="AppTheme.FullScreen">
-        <item name="android:windowBackground">@drawable/guide1</item>
+        <item name="android:windowBackground">@drawable/bg_splash_page</item>
     </style>
 
     <!-- Base application theme. -->

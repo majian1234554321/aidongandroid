@@ -13,6 +13,7 @@ import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.video.LiveVideoInfo;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.mvp.presenter.impl.LivePresenterImpl;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.LiveDateFilterUtil;
 import com.leyuan.aidong.utils.Logger;
@@ -49,11 +50,9 @@ public class LivingVideoActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void addLivingMsg() {
-       /* RequestParams params = new RequestParams();
-        if (mLiveVideoInfo != null)
-            params.addBodyParameter("liveId", String.valueOf(mLiveVideoInfo.getLiveId()));
-//        MyHttpUtils http = new MyHttpUtils();
-//        http.send(HttpRequest.HttpMethod.POST, Urls.BASE_URL_TEXT + "/addLivingMsg.action", params, null);*/
+        if (mLiveVideoInfo != null) {
+            new LivePresenterImpl(this, null).livePlayStatistics(String.valueOf(mLiveVideoInfo.getLiveId()));
+        }
     }
 
     private void initView() {
@@ -142,19 +141,19 @@ public class LivingVideoActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Logger.i("onDestroy onDestroy "," time --------- " + System.currentTimeMillis());
+        Logger.i("onDestroy onDestroy ", " time --------- " + System.currentTimeMillis());
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 mVideoView.stopPlayback();
-                Logger.i("onDestroy stopPlayback "," time --------- " + System.currentTimeMillis());
+                Logger.i("onDestroy stopPlayback ", " time --------- " + System.currentTimeMillis());
                 mVideoView.release(true);
-                Logger.i("onDestroy release "," time --------- " + System.currentTimeMillis());
+                Logger.i("onDestroy release ", " time --------- " + System.currentTimeMillis());
                 mVideoView.stopBackgroundPlay();
-                Logger.i("onDestroy stopBackgroundPlay "," time --------- " + System.currentTimeMillis());
+                Logger.i("onDestroy stopBackgroundPlay ", " time --------- " + System.currentTimeMillis());
                 IjkMediaPlayer.native_profileEnd();
-                Logger.i("onDestroy native_profileEnd "," time --------- " + System.currentTimeMillis());
+                Logger.i("onDestroy native_profileEnd ", " time --------- " + System.currentTimeMillis());
             }
         }).start();
 
@@ -172,7 +171,7 @@ public class LivingVideoActivity extends BaseActivity implements View.OnClickLis
                     if (sharePopupWindow == null) {
                         sharePopupWindow = new SharePopupWindow(this);
                     }
-                    sharePopupWindow.showAtBottom(mLiveVideoInfo.getLiveName()+Constant.I_DONG_FITNESS, mLiveVideoInfo.getLiveContent()
+                    sharePopupWindow.showAtBottom(mLiveVideoInfo.getLiveName() + Constant.I_DONG_FITNESS, mLiveVideoInfo.getLiveContent()
                             , mLiveVideoInfo.getLiveCover(), url);
                 }
                 break;
