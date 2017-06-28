@@ -164,8 +164,7 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
         String content = etContent.getText().toString();
         String[] media = new String[qiNiuMediaUrls.size()];
         for (int i = 0; i < qiNiuMediaUrls.size(); i++) {
-            String urls = qiNiuMediaUrls.get(i);
-            media[i] = urls.substring(urls.indexOf("/") + 1);
+            media[i] = qiNiuMediaUrls.get(i);
         }
         dynamicPresent.postDynamic(isPhoto,content,media);
     }
