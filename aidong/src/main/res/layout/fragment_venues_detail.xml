@@ -38,8 +38,7 @@
                         app:banner_pointContainerBackground="@android:color/transparent"
                         app:banner_pointDrawable="@drawable/selector_banner"
                         app:banner_pointTopBottomMargin="5dp"
-                        app:banner_transitionEffect="defaultEffect"
-                        android:elevation="5dp" />
+                        app:banner_transitionEffect="defaultEffect" />
 
                     <android.support.v7.widget.Toolbar
                         android:layout_width="match_parent"

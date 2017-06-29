@@ -16,13 +16,8 @@ import com.leyuan.aidong.entity.PhotoBrowseInfo;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.discover.view.DotIndicator;
 import com.leyuan.aidong.ui.discover.view.GalleryPhotoView;
-import com.leyuan.aidong.utils.ImageSaveUtils;
 import com.leyuan.aidong.utils.Logger;
-import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.HackyViewPager;
-import com.leyuan.aidong.widget.dialog.BaseDialog;
-import com.leyuan.aidong.widget.dialog.ButtonOkListener;
-import com.leyuan.aidong.widget.dialog.DialogDoubleButton;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -66,7 +61,7 @@ public class PhotoBrowseActivity extends BaseActivity {
                 }
             });
 
-            photoView.setOnLongClickListener(new View.OnLongClickListener() {
+          /*  photoView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
                     try {
@@ -93,7 +88,7 @@ public class PhotoBrowseActivity extends BaseActivity {
                         return false;
                     }
                 }
-            });
+            });*/
 
             viewBuckets.add(photoView);
         }

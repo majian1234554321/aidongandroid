@@ -155,6 +155,7 @@ public class DiscoverFragment extends BasePageFragment implements DiscoverFragme
             banner.setVisibility(View.GONE);
         } else {
             banner.setVisibility(View.VISIBLE);
+            banner.setAutoPlayAble(bannerList.size() > 1);
             banner.setData(bannerList, null);
         }
 

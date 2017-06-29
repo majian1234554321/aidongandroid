@@ -200,7 +200,11 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
     @Override
     public boolean onKey(View v, int keyCode, KeyEvent event) {
         //屏蔽掉换行健
-        return (event.getKeyCode()==KeyEvent.KEYCODE_ENTER);
+        if(event.getKeyCode()==KeyEvent.KEYCODE_ENTER){
+            ToastGlobal.showShort("不支持换行符");
+            return true;
+        }
+        return false;
     }
 
     private class OnTextWatcher implements TextWatcher {

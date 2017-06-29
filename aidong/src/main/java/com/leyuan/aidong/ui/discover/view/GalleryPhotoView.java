@@ -235,19 +235,6 @@ public class GalleryPhotoView extends PhotoView {
         return result;
     }
 
-    private Rect rectF2rect(RectF rectf) {
-        Rect rect = new Rect();
-        if (rectf == null) {
-            rect.setEmpty();
-        } else {
-            rect.left = (int) rectf.left;
-            rect.top = (int) rectf.top;
-            rect.right = (int) rectf.right;
-            rect.bottom = (int) rectf.bottom;
-        }
-        return rect;
-    }
-
     private Rect getDrawableBounds(Drawable d) {
         if (d == null) return null;
         Rect result = new Rect();
@@ -548,25 +535,4 @@ public class GalleryPhotoView extends PhotoView {
         super.onDetachedFromWindow();
     }
 
-
-    //------------------------------------------tools block-----------------------------------------------
-    private int getViewWidth() {
-        return getWidth() - getPaddingLeft() - getPaddingRight();
-    }
-
-    private int getViewHeight() {
-        return getHeight() - getPaddingTop() - getPaddingBottom();
-    }
-
-    private int getDrawableIntrinsicWidth() {
-        Drawable d = getDrawable();
-        if (d == null) return 0;
-        return d.getIntrinsicWidth();
-    }
-
-    private int getDrawableIntrinsicHeight() {
-        Drawable d = getDrawable();
-        if (d == null) return 0;
-        return d.getIntrinsicHeight();
-    }
 }

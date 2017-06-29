@@ -34,9 +34,8 @@ public abstract class BaseSubscriber<T> extends Subscriber<T> {
         } else if (e instanceof ConnectException) {
             ToastGlobal.showShortConsecutive(R.string.connect_break);
         } else {
-            ToastGlobal.showShortConsecutive("" + e.getMessage());
+            ToastGlobal.showLong("请求失败");
         }
-
     }
 
     @Override
