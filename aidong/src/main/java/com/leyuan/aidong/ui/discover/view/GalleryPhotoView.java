@@ -35,14 +35,13 @@ import uk.co.senab.photoview.PhotoView;
  */
 
 public class GalleryPhotoView extends PhotoView {
-    private static final int ANIMA_DURATION = 300;
+    private static final int ANIMAL_DURATION = 250;
 
     private BitmapTransform bitmapTransform;
-    private OnEnterAnimaEndListener onEnterAnimaEndListener;
-    private OnExitAnimaEndListener onExitAnimaEndListener;
-
-    private boolean isPlayingEnterAnima = false;
-    private boolean isPlayingExitAnima = false;
+    private OnEnterAnimalEndListener onEnterAnimalEndListener;
+    private OnExitAnimalEndListener onExitAnimalEndListener;
+    private boolean isPlayingEnterAnimal = false;
+    private boolean isPlayingExitAnimal = false;
 
     private Point globalOffset;
     private float[] scaleRatios;
@@ -77,122 +76,112 @@ public class GalleryPhotoView extends PhotoView {
         super.draw(canvas);
     }
 
-    public void playEnterAnima(final Rect from, @Nullable final OnEnterAnimaEndListener l) {
-        this.onEnterAnimaEndListener = l;
+    public void playEnterAnimal(final Rect from, @Nullable final OnEnterAnimalEndListener l) {
+        this.onEnterAnimalEndListener = l;
         getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
-                playEnterAnimaInternal(from);
+                playEnterAnimalInternal(from);
                 getViewTreeObserver().removeOnPreDrawListener(this);
                 return false;
             }
         });
     }
 
-    private void playEnterAnimaInternal(final Rect from) {
-        if (isPlayingEnterAnima || from == null) return;
+    public void playExitAnimal(Rect to, @Nullable View alphaView, @Nullable final OnExitAnimalEndListener l) {
+        this.onExitAnimalEndListener = l;
+        playExitAnimalInternal(to, alphaView);
+    }
 
-        final Rect tFrom = new Rect(from);
-        final Rect to = new Rect();
+    private void playEnterAnimalInternal(final Rect from) {
+        if (isPlayingEnterAnimal || isPlayingExitAnimal || from == null) return;
 
-        getGlobalVisibleRect(to, globalOffset);
+        final Rect fromRect = new Rect(from);
+        final Rect toRect = getViewBounds();
 
-        tFrom.offset(-globalOffset.x, -globalOffset.y);
-        to.offset(-globalOffset.x, -globalOffset.y);
+        fromRect.offset(-globalOffset.x, -globalOffset.y);
+        toRect.offset(-globalOffset.x, -globalOffset.y);
 
-        scaleRatios = calculateRatios(tFrom, to);
+        scaleRatios = calculateRatios(fromRect, toRect);
 
-        setPivotX(tFrom.centerX() / to.width());
-        setPivotY(tFrom.centerY() / to.height());
+        this.setPivotX(fromRect.centerX() / toRect.width());
+        this.setPivotY(fromRect.centerY() / toRect.height());
 
         final AnimatorSet enterSet = new AnimatorSet();
-        enterSet.play(ObjectAnimator.ofFloat(this, View.X, tFrom.left, to.left))
-                .with(ObjectAnimator.ofFloat(this, View.Y, tFrom.top, to.top))
+        enterSet.play(ObjectAnimator.ofFloat(this, View.X, fromRect.left, toRect.left))
+                .with(ObjectAnimator.ofFloat(this, View.Y, fromRect.top, toRect.top))
                 .with(ObjectAnimator.ofFloat(this, View.SCALE_X, scaleRatios[0], 1f))
                 .with(ObjectAnimator.ofFloat(this, View.SCALE_Y, scaleRatios[1], 1f));
 
-        enterSet.setDuration(ANIMA_DURATION);
+        enterSet.setDuration(ANIMAL_DURATION);
         enterSet.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
-                isPlayingEnterAnima = true;
+                isPlayingEnterAnimal = true;
             }
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                isPlayingEnterAnima = false;
-                if (onEnterAnimaEndListener != null) {
-                    onEnterAnimaEndListener.onEnterAnimaEnd();
+                isPlayingEnterAnimal = false;
+                if (onEnterAnimalEndListener != null) {
+                    onEnterAnimalEndListener.onEnterAnimalEnd();
                 }
             }
 
             @Override
             public void onAnimationCancel(Animator animation) {
-                isPlayingEnterAnima = false;
-
+                isPlayingEnterAnimal = false;
             }
 
             @Override
             public void onAnimationRepeat(Animator animation) {
-                isPlayingEnterAnima = true;
-
+                isPlayingEnterAnimal = true;
             }
         });
         enterSet.start();
-
-
     }
 
-
-    public void playExitAnima(Rect to, @Nullable View alphaView, @Nullable final OnExitAnimaEndListener l) {
-        this.onExitAnimaEndListener = l;
-        playExitAnimaInternal(to, alphaView);
-    }
-
-    private void playExitAnimaInternal(final Rect to, @Nullable View alphaView) {
-        if (isPlayingEnterAnima || to == null || mAttacher == null) return;
+    private void playExitAnimalInternal(final Rect to, @Nullable View alphaView) {
+        if (isPlayingEnterAnimal || isPlayingExitAnimal || to == null || mAttacher == null) return;
 
         final float currentScale = getScale();
         if (currentScale > 1.0f) setScale(1.0f);
 
-        final Rect from = getViewBounds();
+        final Rect fromRect = getViewBounds();
         final Rect drawableBounds = getDrawableBounds(getDrawable());
-        final Rect target = new Rect(to);
-        from.offset(-globalOffset.x, -globalOffset.y);
-        target.offset(-globalOffset.x, -globalOffset.y);
+        final Rect toRect = new Rect(to);
+        fromRect.offset(-globalOffset.x, -globalOffset.y);
+        toRect.offset(-globalOffset.x, -globalOffset.y);
         if (drawableBounds == null) {
-            if (onExitAnimaEndListener != null) {
-                onExitAnimaEndListener.onExitAnimaEnd();
+            if (onExitAnimalEndListener != null) {
+                onExitAnimalEndListener.onExitAnimalEnd();
             }
             return;
         }
 
         //bitmap位移
-        bitmapTransform.animaTranslate(from.centerX(), target.centerX(), from.centerY(), target.centerY());
+        bitmapTransform.animalTranslate(fromRect.centerX(), toRect.centerX(), fromRect.centerY(), toRect.centerY());
 
-        float scale = calculateScaleByCenterCrop(from, drawableBounds, target);
+        float scale = calculateScaleByCenterCrop(fromRect, drawableBounds, toRect);
         //等比缩放
-        bitmapTransform.animaScale(getScale(), scale, from.centerX(), from.centerY());
+        bitmapTransform.animalScale(getScale(), scale, fromRect.centerX(), fromRect.centerY());
 
         if (alphaView != null) {
-            bitmapTransform.animaAlpha(alphaView, 1.0f, 0);
+            bitmapTransform.animalAlpha(alphaView, 1.0f, 0);
         }
 
-        if (target.width() < from.width() || target.height() < from.height()) {
-            bitmapTransform.animaClip(from, target);
+        if (toRect.width() < fromRect.width() || toRect.height() < fromRect.height()) {
+            bitmapTransform.animalClip(fromRect, toRect);
         }
-
 
         bitmapTransform.start(new OnAllFinishListener() {
             @Override
             public void onAllFinish() {
-                if (onExitAnimaEndListener != null) {
-                    onExitAnimaEndListener.onExitAnimaEnd();
+                if (onExitAnimalEndListener != null) {
+                    onExitAnimalEndListener.onExitAnimalEnd();
                 }
             }
         });
-
-
     }
 
     private float calculateScaleByCenterCrop(Rect from, Rect drawableBounds, Rect target) {
@@ -202,10 +191,8 @@ public class GalleryPhotoView extends PhotoView {
         int imageWidth = drawableBounds.width();
 
         float result;
-
-
         /**
-         * 假设原始图片高h，宽w ，Imageview的高y，宽x
+         * 假设原始图片高h，宽w ，ImageView的高y，宽x
          * 判断高宽比例，如果目标高宽比例大于原图，则原图高度不变，宽度为(w1 = (h * x) / y)拉伸
          * 画布宽高(w1,h),在原图的((w - w1) / 2, 0)位置进行切割
          */
@@ -223,14 +210,10 @@ public class GalleryPhotoView extends PhotoView {
         return result;
     }
 
-    /**
-     * 获取view的大小
-     *
-     * @return
-     */
+
     public Rect getViewBounds() {
         Rect result = new Rect();
-        getGlobalVisibleRect(result, globalOffset);
+        this.getGlobalVisibleRect(result, globalOffset);
         Logger.i(result.toShortString());
         return result;
     }
@@ -252,7 +235,6 @@ public class GalleryPhotoView extends PhotoView {
         return result;
     }
 
-
     private float[] calculateRatios(Rect startBounds, Rect endBounds) {
         float[] result = new float[2];
         float widthRatio = startBounds.width() * 1.0f / endBounds.width() * 1.0f;
@@ -262,41 +244,10 @@ public class GalleryPhotoView extends PhotoView {
         return result;
     }
 
-
-    public OnEnterAnimaEndListener getOnEnterAnimaEndListener() {
-        return onEnterAnimaEndListener;
-    }
-
-    public void setOnEnterAnimaEndListener(OnEnterAnimaEndListener onEnterAnimaEndListener) {
-        this.onEnterAnimaEndListener = onEnterAnimaEndListener;
-    }
-
-    public OnExitAnimaEndListener getOnExitAnimaEndListener() {
-        return onExitAnimaEndListener;
-    }
-
-    public void setOnExitAnimaEndListener(OnExitAnimaEndListener onExitAnimaEndListener) {
-        this.onExitAnimaEndListener = onExitAnimaEndListener;
-    }
-
-    public interface OnEnterAnimaEndListener {
-        void onEnterAnimaEnd();
-    }
-
-    public interface OnExitAnimaEndListener {
-        void onExitAnimaEnd();
-    }
-
-    interface OnAllFinishListener {
-        void onAllFinish();
-    }
-
     private class BitmapTransform implements Runnable {
 
         static final float PRECISION = 10000f;
-
         View targetView;
-
         volatile boolean isRunning;
 
         Scroller translateScroller;
@@ -339,29 +290,29 @@ public class GalleryPhotoView extends PhotoView {
             tempMatrix = new Matrix();
         }
 
-        void animaScale(float fromX, float toX, float fromY, float toY, int centerX, int centerY) {
+        void animalScale(float fromX, float toX, float fromY, float toY, int centerX, int centerY) {
             this.scaleCenterX = centerX;
             this.scaleCenterY = centerY;
-            scaleScroller.startScroll((int) (fromX * PRECISION), (int) (fromY * PRECISION), (int) ((toX - fromX) * PRECISION), (int) ((toY - fromY) * PRECISION), ANIMA_DURATION);
+            scaleScroller.startScroll((int) (fromX * PRECISION), (int) (fromY * PRECISION), (int) ((toX - fromX) * PRECISION), (int) ((toY - fromY) * PRECISION), ANIMAL_DURATION);
         }
 
-        void animaScale(float from, float to, int centerX, int centerY) {
-            animaScale(from, to, from, to, centerX, centerY);
+        void animalScale(float from, float to, int centerX, int centerY) {
+            animalScale(from, to, from, to, centerX, centerY);
         }
 
-        void animaTranslate(int fromX, int toX, int fromY, int toY) {
+        void animalTranslate(int fromX, int toX, int fromY, int toY) {
             preTranslateX = 0;
             preTranslateY = 0;
-            translateScroller.startScroll(0, 0, toX - fromX, toY - fromY, ANIMA_DURATION);
-            Logger.i("animaTranslate", (toX - fromX) +":" +(toY - fromY));
+            translateScroller.startScroll(0, 0, toX - fromX, toY - fromY, ANIMAL_DURATION);
+            Logger.i("animalTranslate", (toX - fromX) +":" +(toY - fromY));
         }
 
-        void animaAlpha(View target, float fromAlpha, float toAlpha) {
+        void animalAlpha(View target, float fromAlpha, float toAlpha) {
             this.targetView = target;
-            alphaScroller.startScroll((int) (fromAlpha * PRECISION), 0, (int) ((toAlpha - fromAlpha) * PRECISION), 0, ANIMA_DURATION);
+            alphaScroller.startScroll((int) (fromAlpha * PRECISION), 0, (int) ((toAlpha - fromAlpha) * PRECISION), 0, ANIMAL_DURATION);
         }
 
-        void animaClip(Rect clipFrom, Rect clipTo) {
+        void animalClip(Rect clipFrom, Rect clipTo) {
             this.clipFrom = new RectF(clipFrom);
             this.clipTo = new RectF(clipTo);
             Logger.i("clip", "clipFrom  >>>  " + clipFrom.toShortString());
@@ -375,7 +326,7 @@ public class GalleryPhotoView extends PhotoView {
                 dx = dx - 1;
                 dy = dy - 1;
                 //从1开始,乘以1w保证精度
-                clipScroller.startScroll((int) (0 * PRECISION), (int) (0 * PRECISION), (int) (dx * PRECISION), (int) (dy * PRECISION), ANIMA_DURATION);
+                clipScroller.startScroll((int) (0 * PRECISION), (int) (0 * PRECISION), (int) (dx * PRECISION), (int) (dy * PRECISION), ANIMAL_DURATION);
             }
         }
 
@@ -398,7 +349,7 @@ public class GalleryPhotoView extends PhotoView {
                 dx += curX - preTranslateX;
                 dy += curY - preTranslateY;
 
-                Logger.i("animaTranslate", dx+" :"+ dy);
+                Logger.i("animalTranslate", dx+" :"+ dy);
 
                 preTranslateX = curX;
                 preTranslateY = curY;
@@ -443,12 +394,12 @@ public class GalleryPhotoView extends PhotoView {
                  */
 
 
-                float ratiofLeftAndRight = Math.abs(clipFrom.left - clipTo.left) / Math.abs(clipFrom.right - clipTo.right);
-                float ratiofTopAndBottom = Math.abs(clipFrom.top - clipTo.top) / Math.abs(clipFrom.bottom - clipTo.bottom);
+                float ratioLeftAndRight = Math.abs(clipFrom.left - clipTo.left) / Math.abs(clipFrom.right - clipTo.right);
+                float ratioTopAndBottom = Math.abs(clipFrom.top - clipTo.top) / Math.abs(clipFrom.bottom - clipTo.bottom);
 
-                float dClipRight = dx / (ratiofLeftAndRight + 1);
+                float dClipRight = dx / (ratioLeftAndRight + 1);
                 float dClipLeft = dx - dClipRight;
-                float dClipBottom = dy / (ratiofTopAndBottom + 1);
+                float dClipBottom = dy / (ratioTopAndBottom + 1);
                 float dClipTop = dy - dClipBottom;
 
 
@@ -528,11 +479,21 @@ public class GalleryPhotoView extends PhotoView {
         }
     }
 
-
     @Override
     protected void onDetachedFromWindow() {
         bitmapTransform.stop(true);
         super.onDetachedFromWindow();
     }
 
+    public interface OnEnterAnimalEndListener {
+        void onEnterAnimalEnd();
+    }
+
+    public interface OnExitAnimalEndListener {
+        void onExitAnimalEnd();
+    }
+
+    interface OnAllFinishListener {
+        void onAllFinish();
+    }
 }

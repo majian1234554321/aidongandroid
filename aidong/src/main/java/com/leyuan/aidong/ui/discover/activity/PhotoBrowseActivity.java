@@ -149,9 +149,9 @@ public class PhotoBrowseActivity extends BaseActivity {
         }
         dotIndicator.setVisibility(View.GONE);
         final Rect endRect = photoBrowseInfo.getViewLocalRects().get(photoViewpager.getCurrentItem());
-        currentPhotoView.playExitAnima(endRect, blackBackground, new GalleryPhotoView.OnExitAnimaEndListener() {
+        currentPhotoView.playExitAnimal(endRect, blackBackground, new GalleryPhotoView.OnExitAnimalEndListener() {
             @Override
-            public void onExitAnimaEnd() {
+            public void onExitAnimalEnd() {
                 PhotoBrowseActivity.super.finish();
                 overridePendingTransition(0, 0);
             }
@@ -189,7 +189,7 @@ public class PhotoBrowseActivity extends BaseActivity {
                 isFirstInitlize = false;
                 final GalleryPhotoView targetView = (GalleryPhotoView) object;
                 final Rect startRect = photoBrowseInfo.getViewLocalRects().get(position);
-                targetView.playEnterAnima(startRect, null);
+                targetView.playEnterAnimal(startRect, null);
             }
             super.setPrimaryItem(container, position, object);
         }

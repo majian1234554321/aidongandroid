@@ -25,6 +25,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.VenuesPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.VenuesDetailFragmentView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.ScreenUtil;
 import com.leyuan.aidong.utils.TelephoneManager;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
@@ -102,6 +103,9 @@ public class VenuesDetailFragment extends BaseFragment implements View.OnClickLi
         ivWifi = (ImageView) view.findViewById(R.id.iv_wifi);
         ivBath = (ImageView) view.findViewById(R.id.iv_bath);
         ivFood = (ImageView) view.findViewById(R.id.iv_food);
+
+        ViewGroup.LayoutParams layoutParams = bannerLayout.getLayoutParams();
+        layoutParams.height = ScreenUtil.getScreenWidth(getContext());
     }
 
     private void setListener() {
@@ -188,7 +192,6 @@ public class VenuesDetailFragment extends BaseFragment implements View.OnClickLi
             @Override
             public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
                 GlideLoader.getInstance().displayImage(((String) model), (ImageView) view);
-
             }
         });
 
