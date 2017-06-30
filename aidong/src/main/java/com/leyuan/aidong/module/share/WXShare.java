@@ -28,6 +28,7 @@ import java.io.ByteArrayOutputStream;
  * 或其他合适的地方将你的应用id注册到微信。注册函数示例如下图所示。
  */
 
+@Deprecated
 public class WXShare {
 
     public final static String WX_APP_ID = "wx365ab323b9269d30";
