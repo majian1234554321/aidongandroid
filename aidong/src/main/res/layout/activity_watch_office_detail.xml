@@ -92,17 +92,17 @@
         <com.leyuan.aidong.widget.media.TextViewPrintly
             android:id="@+id/tv_course_desc"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_below="@+id/rl_info"
             android:layout_above="@id/iv_share"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="18dp"
-            android:ellipsize="end"
-            android:maxLines="6"
+
             android:textColor="@color/white"
             android:textSize="12dp"/>
-
+        <!--android:ellipsize="end"-->
+        <!--android:maxLines="6"-->
         <TextView
             android:id="@+id/tv_reply_count"
             android:layout_width="wrap_content"
