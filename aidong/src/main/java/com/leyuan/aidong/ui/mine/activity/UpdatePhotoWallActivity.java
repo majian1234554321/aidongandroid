@@ -125,8 +125,7 @@ public class UpdatePhotoWallActivity extends BaseActivity implements View.OnClic
     private void uploadToServer(List<String> qiNiuUrls){
         String[] photo = new String[qiNiuUrls.size()];
         for (int i = 0; i < qiNiuUrls.size(); i++) {
-            String urls = qiNiuUrls.get(i);
-            photo[i] = urls.substring(urls.indexOf("/") + 1);
+            photo[i] = qiNiuUrls.get(i);
         }
         photoWallPresent.addPhotos(photo);
     }
@@ -135,7 +134,9 @@ public class UpdatePhotoWallActivity extends BaseActivity implements View.OnClic
     public void onAddImageItemClick() {
         BoxingConfig multi = new BoxingConfig(BoxingConfig.Mode.MULTI_IMG);
         multi.maxCount(8 - selectedNetImages.size()).isNeedPaging();
-        Boxing.of(multi).withIntent(this, BoxingActivity.class,selectedLocalImages).start(this, REQUEST_CODE);
+        Boxing.of(multi)
+                .withIntent(this, BoxingActivity.class,selectedLocalImages)
+                .start(this, REQUEST_CODE);
     }
 
     @Override
