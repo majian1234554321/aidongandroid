@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
+import android.text.method.ScrollingMovementMethod;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -179,6 +180,7 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
         iv_share.setOnClickListener(this);
         iv_reply.setOnClickListener(this);
         iv_like.setOnClickListener(this);
+        tv_course_desc.setMovementMethod(ScrollingMovementMethod.getInstance());
     }
 
     public void getDataFromInter() {
