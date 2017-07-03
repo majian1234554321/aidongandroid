@@ -50,7 +50,11 @@ public class OrderParcelAdapter extends RecyclerView.Adapter<OrderParcelAdapter.
     @Override
     public void onBindViewHolder(final CartHolder holder, final int position) {
         final ParcelBean bean = data.get(position);
-        holder.tvShopName.setText(bean.getAddress());
+        if(DELIVERY_EXPRESS.equals(bean.getPickUpWay())){
+            holder.tvShopName.setText("仓库发货");
+        }else {
+            holder.tvShopName.setText(bean.getAddress());
+        }
         String type = DELIVERY_EXPRESS.equals(bean.getPickUpWay()) ? "快递" : "自提";
         holder.tvDeliveryType.setText(type);
         holder.rvShop.setLayoutManager(new LinearLayoutManager(context));

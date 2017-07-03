@@ -18,7 +18,7 @@
         android:orientation="vertical"
         android:background="@color/white">
 
-        <ScrollView
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -204,7 +204,7 @@
                     </com.leyuan.aidong.widget.CustomNestRadioGroup>
                 </LinearLayout>
             </LinearLayout>
-        </ScrollView>
+        </android.support.v4.widget.NestedScrollView>
     </LinearLayout>
 
     <!--底部操作按钮信息-->

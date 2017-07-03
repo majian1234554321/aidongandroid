@@ -194,9 +194,11 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
         tvReBuy = (TextView) findViewById(R.id.tv_rebuy);
 
         expressAdapter = new OrderParcelAdapter(this);
+        expressGoodsRecyclerView.setNestedScrollingEnabled(false);
         expressGoodsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         expressGoodsRecyclerView.setAdapter(expressAdapter);
         selfDeliveryAdapter = new OrderParcelAdapter(this);
+        selfDeliveryGoodsRecyclerView.setNestedScrollingEnabled(false);
         selfDeliveryGoodsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         selfDeliveryGoodsRecyclerView.setAdapter(selfDeliveryAdapter);
     }

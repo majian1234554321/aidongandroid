@@ -38,7 +38,9 @@ public class RxHelper {
                             return createDataObservable(result.getData());
                         } else if (result.getStatus() == Constant.NOT_LOGIN) {
                             return Observable.error(new NotLoginException(result.getMessage()));
-                        } else {
+                        } else if(result.getStatus() == 0){
+                            return Observable.error(new ZeroException(result.getMessage()));
+                        }else {
                             // the exception will callback at Subscriber's onError
                             return Observable.error(new ServerException(result.getMessage()));
                         }

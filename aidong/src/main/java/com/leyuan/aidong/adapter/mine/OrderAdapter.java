@@ -18,6 +18,7 @@ import com.leyuan.aidong.entity.OrderBean;
 import com.leyuan.aidong.entity.ParcelBean;
 import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.FormatUtil;
+import com.leyuan.aidong.utils.NoDoubleClickListener;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 
 import java.util.ArrayList;
@@ -189,14 +190,15 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
             }
         });
 
-        holder.tvReBuy.setOnClickListener(new View.OnClickListener() {
+        holder.tvReBuy.setOnClickListener(new NoDoubleClickListener() {
             @Override
-            public void onClick(View v) {
+            protected void onNoDoubleClick(View v) {
                 if(orderListener != null){
                     orderListener.onReBuyOrder(bean.getId());
                 }
             }
         });
+
 
         holder.tvDelete.setOnClickListener(new View.OnClickListener() {
             @Override

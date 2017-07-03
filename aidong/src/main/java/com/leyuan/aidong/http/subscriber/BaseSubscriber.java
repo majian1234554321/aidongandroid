@@ -3,6 +3,7 @@ package com.leyuan.aidong.http.subscriber;
 import android.content.Context;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.http.ZeroException;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastGlobal;
 
@@ -33,6 +34,8 @@ public abstract class BaseSubscriber<T> extends Subscriber<T> {
             ToastGlobal.showShortConsecutive(R.string.connect_timeout);
         } else if (e instanceof ConnectException) {
             ToastGlobal.showShortConsecutive(R.string.connect_break);
+        }else if (e instanceof ZeroException) {
+            ToastGlobal.showShortConsecutive(e.getMessage());
         } else {
             ToastGlobal.showLong("请求失败");
         }
