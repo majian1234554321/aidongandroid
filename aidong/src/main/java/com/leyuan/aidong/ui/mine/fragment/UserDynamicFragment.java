@@ -30,6 +30,7 @@ import com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity;
 import com.leyuan.aidong.ui.discover.activity.PhotoBrowseActivity;
 import com.leyuan.aidong.ui.discover.viewholder.MultiImageViewHolder;
 import com.leyuan.aidong.ui.discover.viewholder.VideoViewHolder;
+import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.UserInfoPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.UserInfoPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.UserDynamicFragmentView;
@@ -49,6 +50,7 @@ import static com.leyuan.aidong.ui.discover.activity.DynamicDetailActivity.RESUL
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_MULTI_IMAGE;
 import static com.leyuan.aidong.utils.Constant.DYNAMIC_VIDEO;
 import static com.leyuan.aidong.utils.Constant.REQUEST_REFRESH_DYNAMIC;
+import static com.leyuan.aidong.utils.Constant.REQUEST_TO_DYNAMIC;
 
 /**
  * 用户资料--动态
@@ -66,7 +68,7 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
     private String useId;
     private UserInfoPresent userInfoPresent;
     private int clickPosition;
-
+    private DynamicBean invokeDynamicBean;
     private SharePopupWindow sharePopupWindow;
 
     public static UserDynamicFragment newInstance(String id) {
@@ -175,9 +177,14 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
 
         @Override
         public void onBackgroundClick(int position) {
-            clickPosition = position;
-            startActivityForResult(new Intent(getContext(), DynamicDetailActivity.class)
-                    .putExtra("dynamic",dynamicList.get(position)), REQUEST_REFRESH_DYNAMIC);
+            UserDynamicFragment.this.clickPosition = position;
+            if (App.mInstance.isLogin()) {
+                startActivityForResult(new Intent(getContext(), DynamicDetailActivity.class)
+                        .putExtra("dynamic", dynamicList.get(position)), REQUEST_REFRESH_DYNAMIC);
+            } else {
+                invokeDynamicBean = dynamicList.get(position);
+                startActivityForResult(new Intent(getContext(), LoginActivity.class), REQUEST_TO_DYNAMIC);
+            }
         }
 
         @Override
@@ -205,9 +212,14 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
 
         @Override
         public void onCommentClick(DynamicBean dynamicBean, int position) {
-            clickPosition = position;
-            startActivityForResult(new Intent(getContext(), DynamicDetailActivity.class)
-                    .putExtra("dynamic", dynamicBean), REQUEST_REFRESH_DYNAMIC);
+            UserDynamicFragment.this.clickPosition = position;
+            if (App.mInstance.isLogin()) {
+                startActivityForResult(new Intent(getContext(), DynamicDetailActivity.class)
+                        .putExtra("dynamic", dynamicBean), REQUEST_REFRESH_DYNAMIC);
+            } else {
+                invokeDynamicBean = dynamicBean;
+                startActivityForResult(new Intent(getContext(), LoginActivity.class), REQUEST_TO_DYNAMIC);
+            }
         }
 
         @Override
@@ -261,7 +273,11 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
         super.onActivityResult(requestCode, resultCode, data);
         sharePopupWindow.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == REQUEST_REFRESH_DYNAMIC) {
+            if (requestCode == REQUEST_TO_DYNAMIC) {
+                startActivityForResult(new Intent(getContext(), DynamicDetailActivity.class)
+                        .putExtra("dynamic", invokeDynamicBean), REQUEST_REFRESH_DYNAMIC);
+            } else if (requestCode == REQUEST_REFRESH_DYNAMIC) {
+
                 //更新动态详情
                 DynamicBean dynamicBean = data.getParcelableExtra("dynamic");
                 dynamicList.remove(clickPosition);
