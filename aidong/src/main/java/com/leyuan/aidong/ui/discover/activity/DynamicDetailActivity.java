@@ -94,7 +94,8 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
         dynamicPresent = new DynamicPresentImpl(this, this);
         if (getIntent() != null) {
             dynamic = getIntent().getParcelableExtra("dynamic");
-            isSelf = dynamic.publisher.getId().equals(String.valueOf(App.mInstance.getUser().getId()));
+            isSelf = App.mInstance.getUser() != null &&
+                    dynamic.publisher.getId().equals(String.valueOf(App.mInstance.getUser().getId()));
         }
         initView();
         setListener();
