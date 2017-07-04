@@ -296,8 +296,8 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
         //订单信息
         tvTotalPrice.setRightContent(String.format(getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.getTotal())));
-        tvExpressPrice.setRightContent(expressList != null && !expressList.isEmpty()
-                ? String.format(getString(R.string.rmb_price_double), SystemInfoUtils.getExpressPrice(this)) : "¥ 0.00");
+        tvExpressPrice.setRightContent( String.format(getString(R.string.rmb_price_double),
+                FormatUtil.parseDouble(bean.getExpressPrice())));
         tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double),
                 FormatUtil.parseDouble(bean.getCoupon())));
         tvAiBi.setRightContent(String.format(getString(R.string.rmb_minus_price_double),
@@ -309,7 +309,6 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
         tvPayType.setRightContent(PAY_ALI.equals(bean.getPayType()) ? "支付宝" : "微信");
         tvPrice.setText(String.format(getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.getPayAmount())));
-
         llPay.setVisibility(UN_PAID.equals(bean.getStatus()) ? View.VISIBLE : View.GONE);
         tvGoodsCount.setText(getString(R.string.goods_count, goodsCount));
 

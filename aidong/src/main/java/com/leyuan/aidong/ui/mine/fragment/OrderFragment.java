@@ -67,8 +67,8 @@ public class OrderFragment extends BaseLazyFragment implements OrderFragmentView
         }
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_order,null);
         initSwipeRefreshLayout(view);
-        initSwitcherLayout();
         initRecyclerView(view);
+        initSwitcherLayout();
         return view;
     }
 

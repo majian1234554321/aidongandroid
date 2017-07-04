@@ -8,10 +8,40 @@
     上拉加载更多 使用详见https://github.com/cundong/HeaderAndFooterRecyclerView
     如需知道当前界面(Activity/Fragment)类名,查看Log并筛选currUIName
 
-    模块1: 首页/商城
+    模块1:
           首页和商城采用的同一个适配器HomeAdapter
+          首页           HomeFragment
+          首页推荐位详情   BrandActivity
+          首页切换城市     LocationActivity
 
-    模块3: 发现
+          课程视频        CourseVideoActivity
+          更多相关课程视频  RelatedVideoActivity
+          课程分类     CourseCategoryActivity
+          课程列表     CourseActivity
+          课程详情     CourseDetailActivity
+          预约课程     AppointCourseActivity
+
+          活动列表     CampaignActivity
+          免费/付费活动列表 CampaignFragment
+          往期活动    PastCampaignActivity
+          活动详情    CampaignDetailActivity
+          预约活动    AppointCampaignActivity
+
+          活动/课程预约成功  AppointSuccessActivity
+
+    模块3:
+          首页和商城采用的同一个适配器HomeAdapter
+          商城        StoreFragment
+
+          营养品      NurtureActivity
+          装备        EquipmentActivity
+          营养品/装备详情      GoodsDetailActivity
+          营养品/装备筛选      GoodsFilterActivity
+          营养品/装备规格弹框   GoodsSkuPopupWindow
+          营养品/装备配送信息   DeliveryInfoActivity
+          营养品/装备自提门店选择 SelfDeliveryVenuesActivity
+
+    模块4: 发现
           爱动圈(CircleFragment)显示适配器为CircleDynamicAdapter
           目前有两种类型的Holder VideoViewHolder(显示视频item),MultiImageViewHolder(显示多张图片item)
           每个动态item中的相同元素的逻辑(顶部的头像 文字 底部的点赞 评论等信息)在基类BaseCircleHolder中处理的
