@@ -18,6 +18,7 @@ public class OrderDetailBean {
     private PayOptionBean pay_option;
     private List<ParcelBean> parcel;
     private String pay_type;
+    private String express_price;
 
     public String getPayType() {
         return pay_type;
@@ -105,5 +106,13 @@ public class OrderDetailBean {
 
     public void setParcel(List<ParcelBean> parcel) {
         this.parcel = parcel;
+    }
+
+    public String getExpressPrice() {
+        return express_price;
+    }
+
+    public void setExpress_price(String express_price) {
+        this.express_price = express_price;
     }
 }

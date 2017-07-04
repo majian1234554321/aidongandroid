@@ -89,7 +89,7 @@ public class UserInfoFragment extends BaseFragment{
         weight.setRightContent(!TextUtils.isEmpty(profileBean.getWeight())
                 ? profileBean.getWeight() + "kg" : "");
         frequency.setRightContent(!TextUtils.isEmpty(profileBean.getFrequency())
-                ? profileBean.getFrequency()+"周/次" :"");
+                ? profileBean.getFrequency()+"次/周" :"");
         DecimalFormat df = new java.text.DecimalFormat("#.00");
         bmi.setRightContent(!TextUtils.isEmpty(profileBean.getHeight()) && !TextUtils.isEmpty(profileBean.getWeight())
                 ? df.format(Utils.calBMI(FormatUtil.parseFloat(profileBean.getWeight()),
