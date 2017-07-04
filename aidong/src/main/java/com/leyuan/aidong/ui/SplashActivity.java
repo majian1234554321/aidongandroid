@@ -11,6 +11,7 @@ import com.hyphenate.chat.EMClient;
 import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.entity.VersionInformation;
 import com.leyuan.aidong.ui.home.AdvertisementActivity;
+import com.leyuan.aidong.ui.mine.activity.test.LocationTestActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.MineInfoPresenterImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SplashPresenterImpl;
@@ -20,6 +21,7 @@ import com.leyuan.aidong.ui.mvp.view.LoginAutoView;
 import com.leyuan.aidong.ui.mvp.view.RequestCountInterface;
 import com.leyuan.aidong.ui.mvp.view.SplashView;
 import com.leyuan.aidong.ui.mvp.view.VersionViewListener;
+import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.PermissionManager;
 import com.leyuan.aidong.utils.RequestResponseCount;
@@ -68,7 +70,8 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
 
                 AdvertisementActivity.start(SplashActivity.this, startingBanner);
             } else {
-                UiManager.activityJump(SplashActivity.this, MainActivity.class);
+//                UiManager.activityJump(SplashActivity.this, MainActivity.class);
+                UiManager.activityJump(SplashActivity.this, LocationTestActivity.class);
             }
             finish();
         }
@@ -149,7 +152,8 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
     @Override
     public void onGetStartingBanner(BannerBean banner) {
         this.startingBanner = banner;
-//        httpRequestIndex++;
+
+        LogAidong.i(" LocationClient  onGetStartingBanner SystemInfo");
     }
 
 

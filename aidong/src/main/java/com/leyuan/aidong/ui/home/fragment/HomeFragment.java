@@ -73,6 +73,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView, View
         public void onReceive(Context context, Intent intent) {
             refreshLayout.setRefreshing(true);
             initData();
+            tvLocation.setText(App.getInstance().getSelectedCity());
         }
     };
 

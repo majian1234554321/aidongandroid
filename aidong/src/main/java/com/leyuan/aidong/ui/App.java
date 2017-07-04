@@ -24,7 +24,6 @@ import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.SharePrefUtils;
 import com.leyuan.aidong.utils.VersionManager;
-//import com.squareup.leakcanary.LeakCanary;
 import com.zzhoujay.richtext.RichText;
 
 import java.util.HashSet;
@@ -37,6 +36,8 @@ import cn.jpush.android.api.TagAliasCallback;
 import io.realm.Realm;
 
 import static com.leyuan.aidong.utils.Constant.DEFAULT_CITY;
+
+//import com.squareup.leakcanary.LeakCanary;
 
 public class App extends MultiDexApplication {
 
@@ -112,7 +113,7 @@ public class App extends MultiDexApplication {
         mLocationClient = new LocationClient(getApplicationContext());
         mLocationClient.registerLocationListener(myListener);
         initLocation();
-        mLocationClient.start();
+//        mLocationClient.start();
         LogAidong.i("mLocationClient.start();");
     }
 
@@ -174,6 +175,7 @@ public class App extends MultiDexApplication {
             if (cityLocation != null) {
                 setLocationCity(cityLocation);
                 mLocationClient.stop();
+//                LocatinCityManager.checkLocationCityFirstly(cityLocation);
             }
             LogAidong.i(" LocationClient ok : lat = " + lat + ",   lon = " + lon + ", cityLocation = " + location.getCity());
         }
@@ -236,7 +238,7 @@ public class App extends MultiDexApplication {
     }
 
     public void startLocation() {
-        mLocationClient.start();
+//        mLocationClient.start();
     }
 
 

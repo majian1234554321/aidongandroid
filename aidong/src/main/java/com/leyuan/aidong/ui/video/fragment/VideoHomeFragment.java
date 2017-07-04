@@ -71,7 +71,7 @@ public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.
     BroadcastReceiver selectCityReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-//            onRefresh();
+            onRefresh();
         }
     };
     private int moreLiveNumber;
