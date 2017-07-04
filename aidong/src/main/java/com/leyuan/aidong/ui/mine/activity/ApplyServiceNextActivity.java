@@ -164,8 +164,7 @@ public class ApplyServiceNextActivity extends BaseActivity implements View.OnCli
     private void uploadToServer(List<String> qiNiuUrls) {
         String[] photo = new String[qiNiuUrls.size()];
         for (int i = 0; i < qiNiuUrls.size(); i++) {
-            String urls = qiNiuUrls.get(i);
-            photo[i] = urls.substring(urls.indexOf("/") + 1);
+            photo[i] = qiNiuUrls.get(i);
         }
         applyToService(photo);
     }

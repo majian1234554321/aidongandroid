@@ -2,7 +2,6 @@ package com.leyuan.aidong.ui.mvp.presenter.impl;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CartIdBean;
@@ -14,8 +13,8 @@ import com.leyuan.aidong.entity.ShareData;
 import com.leyuan.aidong.entity.data.OrderData;
 import com.leyuan.aidong.entity.data.OrderDetailData;
 import com.leyuan.aidong.http.subscriber.BaseSubscriber;
-import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
+import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
@@ -280,7 +279,7 @@ public class OrderPresentImpl implements OrderPresent {
 
             @Override
             public void onNext(ExpressBean expressBean) {
-                if (expressBean.express != null && !TextUtils.isEmpty(expressBean.express_name)) {
+                if (expressBean.express != null && expressBean.express.result != null && expressBean.express.result.list != null) {
                     expressInfoActivityView.hideLoadingView();
                     expressInfoActivityView.updateExpressInfo(expressBean.cover,
                             expressBean.express_name, expressBean.express.result);
