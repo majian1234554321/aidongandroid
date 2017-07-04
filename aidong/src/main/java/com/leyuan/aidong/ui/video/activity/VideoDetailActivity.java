@@ -204,7 +204,7 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
         tv_course_name.printString("" + videoDetail.getVideoName());
         tv_auth_and_time.printString(videoDetail.getAuthor() + " • " + videoDetail.getDuring());
         tv_course_desc.printString(videoDetail.getIntroduce());
-        txt_page_tag.setText((index + 1) + "-" + videos.size());
+        txt_page_tag.setText(videoDetail.getPhase()+ "-" + videos.size());
     }
 
     private void fillingViewDataNoAnimation(int index) {
@@ -216,7 +216,8 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
         tv_course_name.setText("" + videoDetail.getVideoName());
         tv_auth_and_time.printString(videoDetail.getAuthor() + " • " + videoDetail.getDuring());
         tv_course_desc.setText(videoDetail.getIntroduce());
-        txt_page_tag.setText((index + 1) + "-" + videos.size());
+//        txt_page_tag.setText((index + 1) + "-" + videos.size());
+        txt_page_tag.setText(videoDetail.getPhase()+ "-" + videos.size());
     }
 
     @Override

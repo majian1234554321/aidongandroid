@@ -14,7 +14,7 @@ import com.leyuan.aidong.entity.NewsBean;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.utils.Logger;
-import com.zzhoujay.richtext.RichText;
+import com.leyuan.aidong.widget.richtext.RichWebView;
 
 /**
  * 资讯详情
@@ -31,6 +31,7 @@ public class NewsDetailActivity extends BaseActivity implements View.OnClickList
     private NewsBean bean;
 
     private SharePopupWindow sharePopupWindow;
+    private RichWebView webView;
 
     @Deprecated
     private static void start(Context context, String title, String date, String body) {
@@ -69,14 +70,17 @@ public class NewsDetailActivity extends BaseActivity implements View.OnClickList
         ivShare = (ImageView) findViewById(R.id.iv_share);
         TextView tvTitle = (TextView) findViewById(R.id.tv_title);
         TextView tvDate = (TextView) findViewById(R.id.tv_date);
-        TextView tvNews = (TextView) findViewById(R.id.tv_news);
+
+        webView = (RichWebView)findViewById(R.id.web_view);
+//        TextView tvNews = (TextView) findViewById(R.id.tv_news);
         tvTitle.setText(title);
         tvDate.setText(date);
         if (!TextUtils.isEmpty(body)) {
 
             Logger.i("RichText"," body = " + body);
-            RichText.from(body).placeHolder(R.drawable.place_holder_logo)
-                    .error(R.drawable.place_holder_logo).into(tvNews);
+            webView.setRichText(body);
+//            RichText.from(body).placeHolder(R.drawable.place_holder_logo)
+//                    .error(R.drawable.place_holder_logo).into(tvNews);
         }
     }
 
