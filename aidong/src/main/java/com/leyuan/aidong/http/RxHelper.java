@@ -3,6 +3,7 @@ package com.leyuan.aidong.http;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.http.api.exception.NotLoginException;
 import com.leyuan.aidong.http.api.exception.ServerException;
+import com.leyuan.aidong.http.api.exception.ZeroException;
 import com.leyuan.aidong.utils.Constant;
 
 import rx.Observable;
