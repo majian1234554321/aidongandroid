@@ -36,9 +36,7 @@ import com.leyuan.aidong.ui.mvp.view.DiscoverFragmentView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.SystemInfoUtils;
-import com.leyuan.custompullrefresh.ptr.PtrDefaultHandler;
 import com.leyuan.custompullrefresh.ptr.PtrFrameLayout;
-import com.leyuan.custompullrefresh.ptr.PtrHandler;
 
 import java.util.List;
 
@@ -104,6 +102,7 @@ public class DiscoverFragment extends BasePageFragment implements DiscoverFragme
         refreshLayout = (PtrFrameLayout) view.findViewById(R.id.refreshLayout);
         scrollView = (NestedScrollView) view.findViewById(R.id.scroll_view);
         //switcherLayout = new SwitcherLayout(getContext(), scrollView);
+        initPtrFrameLayout(refreshLayout);
         banner = (BGABanner) view.findViewById(R.id.banner);
         venuesLayout = (LinearLayout) view.findViewById(R.id.ll_venues);
         userLayout = (LinearLayout) view.findViewById(R.id.ll_user);
@@ -154,6 +153,7 @@ public class DiscoverFragment extends BasePageFragment implements DiscoverFragme
     @Override
     public void setDiscoverData(DiscoverData discoverData) {
         if (refreshLayout.isRefreshing()) {
+            refreshLayout.refreshComplete();
            // refreshLayout.setRefreshing(false);
         }
 

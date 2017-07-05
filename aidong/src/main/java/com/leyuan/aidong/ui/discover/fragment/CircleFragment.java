@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -41,11 +40,11 @@ import com.leyuan.aidong.ui.mvp.view.SportCircleFragmentView;
 import com.leyuan.aidong.ui.video.activity.PlayerActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.ToastGlobal;
-import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
+import com.leyuan.custompullrefresh.ptr.PtrFrameLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,8 +63,8 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_TO_DYNAMIC;
  * Created by song on 2016/12/26.
  */
 public class CircleFragment extends BasePageFragment implements SportCircleFragmentView {
-    private SwitcherLayout switcherLayout;
-    private SwipeRefreshLayout refreshLayout;
+    //private SwitcherLayout switcherLayout;
+    private PtrFrameLayout refreshLayout;
     private RecyclerView recyclerView;
     private CircleDynamicAdapter circleDynamicAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
@@ -109,25 +108,26 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
 
     @Override
     public void fetchData() {
-        dynamicPresent.commonLoadData(switcherLayout);
+        dynamicPresent.pullToRefreshData();
+        //dynamicPresent.pullToRefreshData(switcherLayout);
     }
 
     private void initSwipeRefreshLayout(View view) {
-        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout);
-        switcherLayout = new SwitcherLayout(getContext(), refreshLayout);
-        setColorSchemeResources(refreshLayout);
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        refreshLayout = (PtrFrameLayout) view.findViewById(R.id.refreshLayout);
+        //switcherLayout = new SwitcherLayout(getContext(), refreshLayout);
+        initPtrFrameLayout(refreshLayout);
+      /*  refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 refreshData();
             }
-        });
-        switcherLayout.setOnRetryListener(new View.OnClickListener() {
+        });*/
+      /*  switcherLayout.setOnRetryListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dynamicPresent.commonLoadData(switcherLayout);
             }
-        });
+        });*/
     }
 
     private void initRecyclerView(View view) {
@@ -156,9 +156,15 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
         }
     };
 
+
+    @Override
+    public void onRefresh() {
+        refreshData();
+    }
+
     public void refreshData() {
         currPage = 1;
-        refreshLayout.setRefreshing(true);
+       // refreshLayout.setRefreshing(true);
         RecyclerViewStateUtils.resetFooterViewState(recyclerView);
         dynamicPresent.pullToRefreshData();
     }
@@ -167,7 +173,8 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
     public void updateRecyclerView(List<DynamicBean> dynamicBeanList) {
         if (refreshLayout.isRefreshing()) {
             dynamicList.clear();
-            refreshLayout.setRefreshing(false);
+            //refreshLayout.setRefreshing(false);
+            refreshLayout.refreshComplete();
         }
         dynamicList.addAll(dynamicBeanList);
         circleDynamicAdapter.updateData(dynamicList);

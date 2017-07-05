@@ -61,7 +61,6 @@ public class BaseFragment extends Fragment implements EasyPermissions.Permission
                     @Override
                     public void run() {
                         onRefresh();
-                        refreshLayout.refreshComplete();
                     }
                 }, 100);
             }
