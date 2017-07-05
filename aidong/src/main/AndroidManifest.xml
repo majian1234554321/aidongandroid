@@ -862,6 +862,17 @@
 
         <!-- </>值来自开发者平台取得的AppKey-->
 
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.leyuan.aidong.file.provider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider"/>
+        </provider>
+
     </application>
 
 </manifest>
