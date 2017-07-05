@@ -11,7 +11,6 @@ import com.hyphenate.chat.EMClient;
 import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.entity.VersionInformation;
 import com.leyuan.aidong.ui.home.AdvertisementActivity;
-import com.leyuan.aidong.ui.mine.activity.test.LocationTestActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.MineInfoPresenterImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SplashPresenterImpl;
@@ -70,8 +69,8 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
 
                 AdvertisementActivity.start(SplashActivity.this, startingBanner);
             } else {
-//                UiManager.activityJump(SplashActivity.this, MainActivity.class);
-                UiManager.activityJump(SplashActivity.this, LocationTestActivity.class);
+                UiManager.activityJump(SplashActivity.this, MainActivity.class);
+//                UiManager.activityJump(SplashActivity.this, LocationTestActivity.class);
             }
             finish();
         }

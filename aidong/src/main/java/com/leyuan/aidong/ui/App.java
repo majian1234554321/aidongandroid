@@ -113,7 +113,7 @@ public class App extends MultiDexApplication {
         mLocationClient = new LocationClient(getApplicationContext());
         mLocationClient.registerLocationListener(myListener);
         initLocation();
-//        mLocationClient.start();
+        mLocationClient.start();
         LogAidong.i("mLocationClient.start();");
     }
 
@@ -238,7 +238,7 @@ public class App extends MultiDexApplication {
     }
 
     public void startLocation() {
-//        mLocationClient.start();
+        mLocationClient.start();
     }
 
 
