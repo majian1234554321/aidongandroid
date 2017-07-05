@@ -4,9 +4,10 @@ import android.content.Context;
 import android.support.annotation.ColorRes;
 import android.util.AttributeSet;
 
-import in.srain.cube.views.ptr.PtrClassicDefaultHeader;
-import in.srain.cube.views.ptr.PtrDefaultHandler;
-import in.srain.cube.views.ptr.PtrFrameLayout;
+import com.leyuan.custompullrefresh.ptr.PtrClassicDefaultHeader;
+import com.leyuan.custompullrefresh.ptr.PtrDefaultHandler;
+import com.leyuan.custompullrefresh.ptr.PtrFrameLayout;
+
 
 /**
  * Created by user on 2017/6/6.

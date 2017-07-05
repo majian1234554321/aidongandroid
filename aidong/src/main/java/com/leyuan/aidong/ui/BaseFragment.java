@@ -17,7 +17,12 @@ import com.leyuan.aidong.ui.discover.activity.VenuesDetailActivity;
 import com.leyuan.aidong.ui.home.activity.CampaignDetailActivity;
 import com.leyuan.aidong.ui.home.activity.CourseDetailActivity;
 import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
+import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.Logger;
+import com.leyuan.custompullrefresh.ptr.PtrDefaultHandler;
+import com.leyuan.custompullrefresh.ptr.PtrFrameLayout;
+import com.leyuan.custompullrefresh.ptr.PtrHandler;
+import com.leyuan.custompullrefresh.ptr.header.StoreHouseHeader;
 
 import java.util.List;
 
@@ -27,16 +32,50 @@ import static com.leyuan.aidong.utils.Constant.GOODS_NUTRITION;
 
 
 public class BaseFragment extends Fragment implements EasyPermissions.PermissionCallbacks, View.OnTouchListener {
-    private static final String TAG = "BaseFragment";
+    protected static final String REFRESH_STRING = "FITNESS";
+    protected static final String TAG = "BaseFragment";
     protected int pageSize = 25; //分页数据量
 
-    /**
-     * 设置下拉刷新颜色
-     *
-     * @param refreshLayout
-     */
     protected void setColorSchemeResources(SwipeRefreshLayout refreshLayout) {
         refreshLayout.setColorSchemeResources(R.color.black, R.color.red, R.color.orange, R.color.gray);
+    }
+
+    protected void initPtrFrameLayout(final PtrFrameLayout refreshLayout){
+        final StoreHouseHeader header = new StoreHouseHeader(getContext());
+        header.setPadding(0, DensityUtil.dp2px(getContext(),15), 0, 0);
+        header.initWithString(REFRESH_STRING);
+        refreshLayout.setHeaderView(header);
+        refreshLayout.addPtrUIHandler(header);
+        refreshLayout.setDurationToCloseHeader(1000);
+        refreshLayout.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                refreshLayout.autoRefresh(false);
+            }
+        }, 100);
+        refreshLayout.disableWhenHorizontalMove(true);
+        refreshLayout.setPtrHandler(new PtrHandler() {
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                frame.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        onRefresh();
+                        refreshLayout.refreshComplete();
+                    }
+                }, 100);
+            }
+
+            @Override
+            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+                // 默认实现，根据实际情况做改动
+                return  PtrDefaultHandler.checkContentCanBePulledDown(frame, content, header);
+            }
+        });
+    }
+
+    protected void onRefresh(){
+
     }
 
 
