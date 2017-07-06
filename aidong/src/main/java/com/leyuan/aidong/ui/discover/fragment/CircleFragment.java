@@ -157,10 +157,10 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
     };
 
 
-    @Override
+   /* @Override
     public void onRefresh() {
         refreshData();
-    }
+    }*/
 
     public void refreshData() {
         currPage = 1;

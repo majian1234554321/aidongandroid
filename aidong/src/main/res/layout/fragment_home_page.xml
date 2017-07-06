@@ -9,7 +9,7 @@
        android:id="@+id/rl_title"
        layout="@layout/inc_home_title"/>
 
-    <com.leyuan.custompullrefresh.ptr.PtrFrameLayout
+    <com.leyuan.custompullrefresh.CustomRefreshLayout
         android:id="@+id/sr_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,11 +20,10 @@
         app:ptr_keep_header_when_refresh="true"
         app:ptr_pull_to_fresh="false"
         android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:background="@color/gray_normal">
+        android:focusableInTouchMode="true">
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_home"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-    </com.leyuan.custompullrefresh.ptr.PtrFrameLayout>
+    </com.leyuan.custompullrefresh.CustomRefreshLayout>
 </LinearLayout>

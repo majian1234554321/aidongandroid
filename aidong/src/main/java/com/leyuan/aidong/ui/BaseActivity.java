@@ -22,9 +22,12 @@ import com.leyuan.aidong.ui.home.activity.CampaignDetailActivity;
 import com.leyuan.aidong.ui.home.activity.CourseActivity;
 import com.leyuan.aidong.ui.home.activity.CourseDetailActivity;
 import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
+import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ScreenUtil;
+import com.leyuan.custompullrefresh.ptr.PtrFrameLayout;
+import com.leyuan.custompullrefresh.ptr.header.StoreHouseHeader;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.LinkedList;
@@ -39,6 +42,7 @@ import static com.leyuan.aidong.utils.Constant.GOODS_NUTRITION;
 
 
 public class BaseActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks {
+    protected static final String REFRESH_STRING = "FITNESS";
     private static final String TAG = "BaseActivity";
 
     protected int pageSize = 25; //默认分页数据量
@@ -72,6 +76,7 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
         Logger.w("className", getClass().getSimpleName()+" -- onPause");
     }
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -99,6 +104,22 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
      */
     protected void setColorSchemeResources(SwipeRefreshLayout refreshLayout) {
         refreshLayout.setColorSchemeResources(R.color.black, R.color.red, R.color.orange, R.color.gray);
+    }
+
+
+    protected void initPtrFrameLayout(final PtrFrameLayout refreshLayout) {
+        final StoreHouseHeader header = new StoreHouseHeader(this);
+        header.setPadding(0, DensityUtil.dp2px(this, 15), 0, 0);
+        header.initWithString(REFRESH_STRING);
+        refreshLayout.setHeaderView(header);
+        refreshLayout.addPtrUIHandler(header);
+        refreshLayout.setDurationToCloseHeader(1000);
+        refreshLayout.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                refreshLayout.autoRefresh(false);
+            }
+        }, 100);
     }
 
     /**

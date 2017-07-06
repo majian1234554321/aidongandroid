@@ -19,9 +19,7 @@ import com.leyuan.aidong.ui.home.activity.CourseDetailActivity;
 import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
 import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.Logger;
-import com.leyuan.custompullrefresh.ptr.PtrDefaultHandler;
 import com.leyuan.custompullrefresh.ptr.PtrFrameLayout;
-import com.leyuan.custompullrefresh.ptr.PtrHandler;
 import com.leyuan.custompullrefresh.ptr.header.StoreHouseHeader;
 
 import java.util.List;
@@ -53,8 +51,7 @@ public class BaseFragment extends Fragment implements EasyPermissions.Permission
                 refreshLayout.autoRefresh(false);
             }
         }, 100);
-        refreshLayout.disableWhenHorizontalMove(true);
-        refreshLayout.setPtrHandler(new PtrHandler() {
+      /*  refreshLayout.setPtrHandler(new PtrHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
                 frame.postDelayed(new Runnable() {
@@ -70,12 +67,12 @@ public class BaseFragment extends Fragment implements EasyPermissions.Permission
                 // 默认实现，根据实际情况做改动
                 return  PtrDefaultHandler.checkContentCanBePulledDown(frame, content, header);
             }
-        });
+        });*/
     }
 
-    protected void onRefresh(){
+   /* protected void onRefresh(){
 
-    }
+    }*/
 
 
     /**
