@@ -3,7 +3,6 @@ package com.leyuan.aidong.ui.discover.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -30,6 +29,8 @@ import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListe
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
+import com.leyuan.custompullrefresh.CustomRefreshLayout;
+import com.leyuan.custompullrefresh.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,7 @@ import java.util.List;
  * Created by song on 2016/8/29.
  */
 public class DiscoverUserActivity extends BaseActivity implements DiscoverUserActivityView, View.OnClickListener,
-        RadioGroup.OnCheckedChangeListener, SwipeRefreshLayout.OnRefreshListener, UserAdapter.FollowListener {
+        RadioGroup.OnCheckedChangeListener, UserAdapter.FollowListener, OnRefreshListener {
     private static final String TYPE_ALL_IDENTIFY = "";
     private static final String TYPE_USER = "0";
     private static final String TYPE_COACH = "1";
@@ -50,7 +51,7 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
     private ImageView ivBack;
     private TextView tvFilter;
     private SwitcherLayout switcherLayout;
-    private SwipeRefreshLayout refreshLayout;
+    private CustomRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
 
     private DrawerLayout drawerLayout;
@@ -84,7 +85,7 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
     private void initView() {
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tvFilter = (TextView) findViewById(R.id.tv_filter);
-        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
+        refreshLayout = (CustomRefreshLayout) findViewById(R.id.refreshLayout);
         switcherLayout = new SwitcherLayout(this, refreshLayout);
         recyclerView = (RecyclerView) findViewById(R.id.rv_user);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
@@ -92,7 +93,6 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
         tvFinishFilter = (TextView) findViewById(R.id.tv_finish_filter);
         identifyGroup = (RadioGroup) findViewById(R.id.rg_identify);
         genderGroup = (RadioGroup) findViewById(R.id.rg_gender);
-        setColorSchemeResources(refreshLayout);
         data = new ArrayList<>();
         userAdapter = new UserAdapter(this);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(userAdapter);
@@ -147,19 +147,6 @@ public class DiscoverUserActivity extends BaseActivity implements DiscoverUserAc
             data.clear();
             refreshLayout.setRefreshing(false);
         }
-//        if (App.getInstance().isLogin()) {
-//            String mId = App.getInstance().getUser().getId() + "";
-//
-//
-//            for (UserBean userBean : userList) {
-//                if (!TextUtils.equals(mId, userBean.getId())) {
-//                    data.add(userBean);
-//                }
-//                Logger.i("DiscoverUserActivity", "mID = " + mId + " , userId = " + userBean.getId());
-//            }
-//        } else {
-//            data.addAll(userList);
-//        }
         data.addAll(userList);
         userAdapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();

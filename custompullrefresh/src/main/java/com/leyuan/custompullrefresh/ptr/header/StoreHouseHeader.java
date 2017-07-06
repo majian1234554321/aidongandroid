@@ -9,12 +9,12 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.Transformation;
 
-import java.util.ArrayList;
-
 import com.leyuan.custompullrefresh.ptr.PtrFrameLayout;
 import com.leyuan.custompullrefresh.ptr.PtrUIHandler;
 import com.leyuan.custompullrefresh.ptr.indicator.PtrIndicator;
 import com.leyuan.custompullrefresh.ptr.util.PtrLocalDisplay;
+
+import java.util.ArrayList;
 
 
 public class StoreHouseHeader extends View implements PtrUIHandler {
@@ -44,7 +44,7 @@ public class StoreHouseHeader extends View implements PtrUIHandler {
     private Transformation mTransformation = new Transformation();
     private boolean mIsInLoading = false;
     private AniController mAniController = new AniController();
-    private int mTextColor = Color.WHITE;
+    private int mTextColor = Color.BLACK;
 
     public StoreHouseHeader(Context context) {
         super(context);

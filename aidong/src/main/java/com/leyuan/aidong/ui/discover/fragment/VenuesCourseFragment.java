@@ -96,7 +96,7 @@ public class VenuesCourseFragment extends BaseFragment implements VenuesCourseFr
 
     @Override
     public void showEmptyView() {
-        View view = View.inflate(getContext(),R.layout.empty_course,null);
+        View view = View.inflate(getContext(),R.layout.empty_venues_course,null);
         switcherLayout.addCustomView(view,"empty");
         switcherLayout.showCustomLayout("empty");
     }

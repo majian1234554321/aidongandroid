@@ -7,7 +7,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -32,6 +31,8 @@ import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
+import com.leyuan.custompullrefresh.CustomRefreshLayout;
+import com.leyuan.custompullrefresh.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +49,7 @@ public class StoreFragment extends BaseFragment implements StoreFragmentView{
     private ImageView ivSearch;
     private StoreHeaderView headerView;
     private SwitcherLayout switcherLayout;
-    private SwipeRefreshLayout refreshLayout;
+    private CustomRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
     private HomeAdapter homeAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
@@ -87,7 +88,7 @@ public class StoreFragment extends BaseFragment implements StoreFragmentView{
 
     private void initView(View view){
         ivSearch = (ImageView) view.findViewById(R.id.iv_search);
-        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout);
+        refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.refreshLayout);
         switcherLayout = new SwitcherLayout(getContext(),refreshLayout);
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_goods);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -118,14 +119,13 @@ public class StoreFragment extends BaseFragment implements StoreFragmentView{
             }
         });
 
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-                homePresent.commonLoadData(switcherLayout,TYPE_STORE);
+                homePresent.pullToRefreshHomeData(TYPE_STORE);
             }
         });
     }
-
 
     private void initData(){
         homePresent.getStoreBanners();

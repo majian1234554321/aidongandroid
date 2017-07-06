@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
         app:stb_title="往期活动"/>
-    <android.support.v4.widget.SwipeRefreshLayout
+    <com.leyuan.custompullrefresh.CustomRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -18,5 +18,5 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         </android.support.v7.widget.RecyclerView>
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </com.leyuan.custompullrefresh.CustomRefreshLayout>
 </LinearLayout>

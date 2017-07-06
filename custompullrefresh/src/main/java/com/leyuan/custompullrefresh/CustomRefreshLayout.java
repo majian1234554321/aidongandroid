@@ -20,6 +20,7 @@ import com.leyuan.custompullrefresh.util.DensityUtil;
 public class CustomRefreshLayout extends PtrFrameLayout {
     protected static final String REFRESH_STRING = "FITNESS";
     OnRefreshListener mListener;
+    private StoreHouseHeader header;
     private PtrClassicDefaultHeader mPtrClassicHeader;
 
     public CustomRefreshLayout(Context context) {
@@ -46,18 +47,17 @@ public class CustomRefreshLayout extends PtrFrameLayout {
     }
 
     protected void initPtrFrameLayout() {
-        final StoreHouseHeader header = new StoreHouseHeader(getContext());
-        header.setPadding(0, DensityUtil.dp2px(getContext(), 15), 0, 0);
+        header = new StoreHouseHeader(getContext());
         header.initWithString(REFRESH_STRING);
         setHeaderView(header);
         addPtrUIHandler(header);
         setDurationToCloseHeader(1000);
-        postDelayed(new Runnable() {
+        /*postDelayed(new Runnable() {
             @Override
             public void run() {
                 autoRefresh(false);
             }
-        }, 100);
+        }, 100);*/
         disableWhenHorizontalMove(true);
 
     }
@@ -70,7 +70,7 @@ public class CustomRefreshLayout extends PtrFrameLayout {
 
     @Deprecated
     public void setProgressViewOffset(boolean scale, int start, int end) {
-
+        header.setPadding(0, DensityUtil.dp2px(getContext(), start), 0, 0);
     }
 
     /**
@@ -107,7 +107,12 @@ public class CustomRefreshLayout extends PtrFrameLayout {
         if (!refreshing) {
             refreshComplete();
         } else {
-
+            postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    autoRefresh(false);
+                }
+            }, 100);
         }
     }
 }

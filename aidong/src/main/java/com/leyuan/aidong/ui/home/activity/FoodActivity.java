@@ -101,7 +101,7 @@ public class FoodActivity extends BaseActivity implements FoodActivityView, View
     private void initSwipeRefreshLayout() {
         refreshLayout = (SwipeRefreshLayout)findViewById(R.id.refreshLayout);
         switcherLayout = new SwitcherLayout(this,refreshLayout);
-        setColorSchemeResources(refreshLayout);
+       // setColorSchemeResources(refreshLayout);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

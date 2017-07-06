@@ -67,7 +67,7 @@ public class SearchEquipmentFragment extends BasePageFragment implements SearchE
     private void initSwipeRefreshLayout(View view) {
         refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.refreshLayout);
         switcherLayout = new SwitcherLayout(getContext(), refreshLayout);
-        setColorSchemeResources(refreshLayout);
+        //setColorSchemeResources(refreshLayout);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

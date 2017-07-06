@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.transition.Fade;
@@ -14,7 +13,6 @@ import android.transition.Slide;
 import android.util.Log;
 import android.view.Gravity;
 
-import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.http.subscriber.handler.ProgressDialogHandler;
 import com.leyuan.aidong.ui.discover.activity.VenuesDetailActivity;
@@ -72,6 +70,7 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
         Logger.w("className", getClass().getSimpleName()+" -- onPause");
     }
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -92,14 +91,14 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
     }
 
 
-    /**
+   /* *//**
      * 设置SwipeRefreshLayout下拉刷新颜色
      *
      * @param refreshLayout
-     */
+     *//*
     protected void setColorSchemeResources(SwipeRefreshLayout refreshLayout) {
         refreshLayout.setColorSchemeResources(R.color.black, R.color.red, R.color.orange, R.color.gray);
-    }
+    }*/
 
     /**
      * 列表页跳转目标详情页
