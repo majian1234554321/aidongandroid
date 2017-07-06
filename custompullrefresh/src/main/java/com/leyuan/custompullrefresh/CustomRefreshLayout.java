@@ -24,13 +24,11 @@ public class CustomRefreshLayout extends PtrFrameLayout {
     private PtrClassicDefaultHeader mPtrClassicHeader;
 
     public CustomRefreshLayout(Context context) {
-        super(context);
-        initViews();
+        this(context, null);
     }
 
     public CustomRefreshLayout(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initViews();
+        this(context, attrs, 0);
     }
 
     public CustomRefreshLayout(Context context, AttributeSet attrs, int defStyle) {
