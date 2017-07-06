@@ -7,7 +7,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -41,6 +40,7 @@ import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewA
 import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
+import com.leyuan.custompullrefresh.ptr.PtrFrameLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,14 +53,14 @@ import static com.leyuan.aidong.utils.Constant.HOME_TITLE_AND_VERTICAL_LIST;
  *
  * @author song
  */
-public class HomeFragment extends BaseFragment implements HomeFragmentView, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class HomeFragment extends BaseFragment implements HomeFragmentView, View.OnClickListener {
     private static final String TYPE_HOME = "home";
     private TextView tvLocation;
     private ImageView ivSearch;
     private HomeHeaderView headerView;
     private SwitcherLayout switcherLayout;
     private RecyclerView recyclerView;
-    private SwipeRefreshLayout refreshLayout;
+    private PtrFrameLayout refreshLayout;
 
     private int currPage = 1;
     private ArrayList<HomeBean> data = new ArrayList<>();
@@ -71,7 +71,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView, View
     BroadcastReceiver selectCityReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            refreshLayout.setRefreshing(true);
+            //refreshLayout.setRefreshing(true);
             initData();
             tvLocation.setText(App.getInstance().getSelectedCity());
         }
@@ -109,9 +109,9 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView, View
     private void initView(View view) {
         tvLocation = (TextView) view.findViewById(R.id.tv_location);
         ivSearch = (ImageView) view.findViewById(R.id.iv_search);
-        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.sr_refresh);
+        refreshLayout = (PtrFrameLayout) view.findViewById(R.id.sr_refresh);
+        initPtrFrameLayout(refreshLayout);
         switcherLayout = new SwitcherLayout(getContext(), refreshLayout);
-        setColorSchemeResources(refreshLayout);
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_home);
         data = new ArrayList<>();
         HomeAdapter.Builder<DynamicBean> builder = new HomeAdapter.Builder<>(getContext());
@@ -131,7 +131,7 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView, View
     private void setListener() {
         tvLocation.setOnClickListener(this);
         ivSearch.setOnClickListener(this);
-        refreshLayout.setOnRefreshListener(this);
+        //refreshLayout.setOnRefreshListener(this);
         switcherLayout.setOnRetryListener(retryListener);
     }
 
@@ -193,7 +193,8 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView, View
     public void updateRecyclerView(List<HomeBean> homeBeanList) {
         if (refreshLayout.isRefreshing()) {
             data.clear();
-            refreshLayout.setRefreshing(false);
+            //refreshLayout.setRefreshing(false);
+            refreshLayout.refreshComplete();
         }
         data.addAll(homeBeanList);
         homeAdapter.updateData(data);
@@ -204,7 +205,8 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView, View
     public void showEmptyView() {
         data.clear();
         if (refreshLayout.isRefreshing()) {
-            refreshLayout.setRefreshing(false);
+           // refreshLayout.setRefreshing(false);
+
         }
         homeAdapter.notifyDataSetChanged();
     }
