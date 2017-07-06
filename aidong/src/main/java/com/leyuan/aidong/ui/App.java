@@ -71,6 +71,8 @@ public class App extends MultiDexApplication {
 
     private void initConfig() {
 //        LeakCanary.install(this);
+//        UrlConfig.get();
+
 
         ForegroundCallbacks foregroundCallbacks = ForegroundCallbacks.init(this);
         foregroundCallbacks.addListener(foregroundListener);
@@ -106,7 +108,6 @@ public class App extends MultiDexApplication {
         BoxingMediaLoader.getInstance().init(loader);
         BoxingCrop.getInstance().init(new BoxingUCrop());
     }
-
 
 
     private void initBaiduLoc() {

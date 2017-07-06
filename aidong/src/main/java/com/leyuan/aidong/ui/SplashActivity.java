@@ -8,6 +8,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 
 import com.hyphenate.chat.EMClient;
+import com.leyuan.aidong.config.UrlConfig;
 import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.entity.VersionInformation;
 import com.leyuan.aidong.ui.home.AdvertisementActivity;
@@ -86,10 +87,8 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
 //            finish();
 //            return;
 //        }
+        UrlConfig.setDebug(!UrlConfig.debug);
 
-        splashPresenter = new SplashPresenterImpl(this);
-        splashPresenter.setLoginAutoListener(this);
-        versionPresenter = new VersionPresenterImpl(this, this);
 
         initData();
     }
@@ -100,8 +99,26 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
         isFirstEnter = SharePrefUtils.getBoolean(SplashActivity.this, "isFirstEnter", true);
         EMClient.getInstance().chatManager().loadAllConversations();
 
-        RequestResponseCount requestResponse = new RequestResponseCount(this);
+        if (!SharePrefUtils.getReleaseConfig(false)) {
+            UrlConfig.get(new UrlConfig.Callback() {
+                @Override
+                public void onResponse(String response) {
+                    requestData();
+                }
+            });
+        } else {
+            requestData();
+        }
 
+
+    }
+
+    private void requestData() {
+        splashPresenter = new SplashPresenterImpl(this);
+        splashPresenter.setLoginAutoListener(this);
+        versionPresenter = new VersionPresenterImpl(this, this);
+
+        RequestResponseCount requestResponse = new RequestResponseCount(this);
         SystemPresentImpl systemPresent = new SystemPresentImpl(this);
         systemPresent.setOnRequestResponse(requestResponse);
         systemPresent.setSplashView(this);
@@ -122,7 +139,6 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
             followPresent.getFollowList();
             httpRequestIndex = 4;
         }
-
     }
 
     @Override
