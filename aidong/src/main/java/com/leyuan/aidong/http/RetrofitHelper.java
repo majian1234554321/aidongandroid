@@ -73,4 +73,9 @@ public class RetrofitHelper {
                 .build();
     }
 
+
+
+    public static void setSingleton(Retrofit singleton) {
+        RetrofitHelper.singleton = singleton;
+    }
 }

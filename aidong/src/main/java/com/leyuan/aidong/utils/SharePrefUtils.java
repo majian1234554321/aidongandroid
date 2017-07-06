@@ -9,6 +9,7 @@ import com.google.gson.JsonSyntaxException;
 import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.entity.user.MineInfoBean;
+import com.leyuan.aidong.ui.App;
 
 import java.util.List;
 
@@ -142,6 +143,7 @@ public class SharePrefUtils {
 
         return mSharedPreferences.getString(key, defaultValue);
     }
+
     public static void putLong(Context ctx, String key, long value) {
         if (mSharedPreferences == null) {
             mSharedPreferences = ctx.getSharedPreferences(SHARE_PREFS_NAME,
@@ -173,5 +175,13 @@ public class SharePrefUtils {
 
     public static long getLastCheckAutoStartTime(Context ctx) {
         return getLong(ctx, "checkAutoStartTime", 0);
+    }
+
+    public static void putReleaseConfig(boolean release) {
+        putBoolean(App.context, "release", release);
+    }
+
+    public static boolean getReleaseConfig(boolean defaul) {
+        return getBoolean(App.context, "release", defaul);
     }
 }

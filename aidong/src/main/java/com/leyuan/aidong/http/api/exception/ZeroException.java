@@ -1,4 +1,4 @@
-package com.leyuan.aidong.http;
+package com.leyuan.aidong.http.api.exception;
 
 /**
  * Created by song on 17/07/03.
