@@ -73,6 +73,7 @@ public class BaseFragment extends Fragment implements EasyPermissions.Permission
         });
     }
 
+    @Deprecated
     protected void onRefresh(){
 
     }
