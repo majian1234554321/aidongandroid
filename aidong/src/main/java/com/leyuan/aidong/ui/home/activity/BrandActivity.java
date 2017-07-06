@@ -3,7 +3,6 @@ package com.leyuan.aidong.ui.home.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,9 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.adapter.home.RecommendAdapter;
 import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.adapter.home.RecommendAdapter;
 import com.leyuan.aidong.ui.mvp.presenter.HomePresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.HomePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.BrandActivityView;
@@ -24,6 +23,8 @@ import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewA
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderSpanSizeLookup;
 import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
+import com.leyuan.custompullrefresh.CustomRefreshLayout;
+import com.leyuan.custompullrefresh.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,11 +33,11 @@ import java.util.List;
  * 首页品牌详情
  * Created by song on 2016/8/18.
  */
-public class BrandActivity extends BaseActivity implements BrandActivityView, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class BrandActivity extends BaseActivity implements BrandActivityView, View.OnClickListener, OnRefreshListener {
     private SimpleTitleBar titleBar;
     private ImageView dvCover;
     private TextView tvDesc;
-    private SwipeRefreshLayout refreshLayout;
+    private CustomRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
 
     private int currPage = 1;
@@ -84,12 +85,11 @@ public class BrandActivity extends BaseActivity implements BrandActivityView, Vi
         View headerView = View.inflate(this,R.layout.header_brand_detail,null);
         dvCover = (ImageView) headerView.findViewById(R.id.dv_cover);
         tvDesc = (TextView)headerView.findViewById(R.id.tv_brand_desc);
-        refreshLayout = (SwipeRefreshLayout)findViewById(R.id.refreshLayout);
+        refreshLayout = (CustomRefreshLayout)findViewById(R.id.refreshLayout);
         recyclerView = (RecyclerView)findViewById(R.id.rv_brand_detail);
         titleBar.setTitle(title);
         GlideLoader.getInstance().displayImage(url, dvCover);
         tvDesc.setText(introduce);
-        setColorSchemeResources(refreshLayout);
         data = new ArrayList<>();
         brandAdapter = new RecommendAdapter(this,type);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(brandAdapter);

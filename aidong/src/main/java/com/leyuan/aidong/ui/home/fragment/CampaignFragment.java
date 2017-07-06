@@ -72,7 +72,6 @@ public class CampaignFragment extends BaseFragment implements CampaignFragmentVi
     private void initSwipeRefreshLayout(View view){
         refreshLayout = (CustomRefreshLayout)view.findViewById(R.id.refreshLayout);
         switcherLayout = new SwitcherLayout(getActivity(),refreshLayout);
-        initPtrFrameLayout(refreshLayout);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {

@@ -111,7 +111,6 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView, View
         tvLocation = (TextView) view.findViewById(R.id.tv_location);
         ivSearch = (ImageView) view.findViewById(R.id.iv_search);
         refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.sr_refresh);
-        initPtrFrameLayout(refreshLayout);
         switcherLayout = new SwitcherLayout(getContext(), refreshLayout);
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_home);
         data = new ArrayList<>();

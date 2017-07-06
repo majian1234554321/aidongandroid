@@ -122,11 +122,10 @@ public class StoreFragment extends BaseFragment implements StoreFragmentView{
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-                homePresent.commonLoadData(switcherLayout,TYPE_STORE);
+                homePresent.pullToRefreshHomeData(TYPE_STORE);
             }
         });
     }
-
 
     private void initData(){
         homePresent.getStoreBanners();

@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,7 +35,9 @@ import com.leyuan.aidong.ui.mvp.view.DiscoverFragmentView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.SystemInfoUtils;
-import com.leyuan.custompullrefresh.ptr.PtrFrameLayout;
+import com.leyuan.aidong.widget.SwitcherLayout;
+import com.leyuan.custompullrefresh.CustomRefreshLayout;
+import com.leyuan.custompullrefresh.OnRefreshListener;
 
 import java.util.List;
 
@@ -48,10 +49,11 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  * 发现 -- 发现
  * Created by song on 2016/11/19.
  */
-public class DiscoverFragment extends BasePageFragment implements DiscoverFragmentView, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, BGABanner.Adapter, BGABanner.Delegate {
-    //private SwitcherLayout switcherLayout;
-    private PtrFrameLayout refreshLayout;
+public class DiscoverFragment extends BasePageFragment implements DiscoverFragmentView, View.OnClickListener, BGABanner.Adapter, BGABanner.Delegate, OnRefreshListener {
+    private SwitcherLayout switcherLayout;
+    private CustomRefreshLayout refreshLayout;
     private NestedScrollView scrollView;
+    private LinearLayout contentLayout;
     private BGABanner banner;
     private LinearLayout venuesLayout;
     private LinearLayout userLayout;
@@ -73,7 +75,7 @@ public class DiscoverFragment extends BasePageFragment implements DiscoverFragme
         @Override
         public void onReceive(Context context, Intent intent) {
             onRefresh();
-           // refreshLayout.setRefreshing(true);
+            refreshLayout.setRefreshing(true);
         }
     };
 
@@ -94,15 +96,14 @@ public class DiscoverFragment extends BasePageFragment implements DiscoverFragme
 
     @Override
     public void fetchData() {
-        discoverPresent.pullToRefreshDiscoverData();
-        //discoverPresent.commonLoadDiscoverData(switcherLayout);
+        discoverPresent.commonLoadDiscoverData(switcherLayout);
     }
 
     private void initView(View view) {
-        refreshLayout = (PtrFrameLayout) view.findViewById(R.id.refreshLayout);
+        refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.refreshLayout);
         scrollView = (NestedScrollView) view.findViewById(R.id.scroll_view);
-        //switcherLayout = new SwitcherLayout(getContext(), scrollView);
-        initPtrFrameLayout(refreshLayout);
+        contentLayout = (LinearLayout) view.findViewById(R.id.ll_content);
+        switcherLayout = new SwitcherLayout(getContext(), contentLayout);
         banner = (BGABanner) view.findViewById(R.id.banner);
         venuesLayout = (LinearLayout) view.findViewById(R.id.ll_venues);
         userLayout = (LinearLayout) view.findViewById(R.id.ll_user);
@@ -126,23 +127,21 @@ public class DiscoverFragment extends BasePageFragment implements DiscoverFragme
         rvVenues.setAdapter(brandsAdapter);
         rvUser.setAdapter(userAdapter);
         rvNews.setAdapter(newsAdapter);
-
-
     }
 
     private void setListener() {
         banner.setAdapter(this);
         banner.setDelegate(this);
-       // refreshLayout.setOnRefreshListener(this);
+        refreshLayout.setOnRefreshListener(this);
         moreVenuesLayout.setOnClickListener(this);
         moreUserLayout.setOnClickListener(this);
         moreNewsLayout.setOnClickListener(this);
-      /*  switcherLayout.setOnRetryListener(new View.OnClickListener() {
+        switcherLayout.setOnRetryListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 discoverPresent.commonLoadDiscoverData(switcherLayout);
             }
-        });*/
+        });
     }
 
     @Override
@@ -153,8 +152,7 @@ public class DiscoverFragment extends BasePageFragment implements DiscoverFragme
     @Override
     public void setDiscoverData(DiscoverData discoverData) {
         if (refreshLayout.isRefreshing()) {
-            refreshLayout.refreshComplete();
-           // refreshLayout.setRefreshing(false);
+            refreshLayout.setRefreshing(false);
         }
 
         List<BannerBean> bannerList = SystemInfoUtils.getDiscoverBanner(getContext());

@@ -66,7 +66,6 @@ public class PastCampaignActivity extends BaseActivity implements CampaignFragme
     private void initSwipeRefreshLayout(){
         refreshLayout = (CustomRefreshLayout)findViewById(R.id.refreshLayout);
         switcherLayout = new SwitcherLayout(this,findViewById(R.id.refreshLayout));
-        initPtrFrameLayout(refreshLayout);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {

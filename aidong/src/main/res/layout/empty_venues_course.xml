@@ -4,10 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <com.leyuan.custompullrefresh.CustomRefreshLayout
-        android:id="@+id/refreshLayout_empty"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -26,5 +23,5 @@
                 android:textSize="14sp" />
 
         </RelativeLayout>
-    </com.leyuan.custompullrefresh.CustomRefreshLayout>
+
 </RelativeLayout>
