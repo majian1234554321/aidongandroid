@@ -121,7 +121,7 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
     private void refreshData() {
         currPage = 1;
         RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-        venuesPresent.commonLoadData(switcherLayout, brand_id, landmark, gymTypes);
+        venuesPresent.pullToRefreshData(brand_id, landmark, gymTypes);
     }
 
     private void initRecyclerView() {

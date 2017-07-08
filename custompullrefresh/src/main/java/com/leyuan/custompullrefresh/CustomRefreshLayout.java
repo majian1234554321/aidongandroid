@@ -51,8 +51,8 @@ public class CustomRefreshLayout extends PtrFrameLayout {
         header.initWithString(REFRESH_STRING);
         setHeaderView(header);
         addPtrUIHandler(header);
-        setDurationToCloseHeader(1000);
-        /*postDelayed(new Runnable() {
+        setDurationToCloseHeader(500);
+    /*    postDelayed(new Runnable() {
             @Override
             public void run() {
                 autoRefresh(false);
