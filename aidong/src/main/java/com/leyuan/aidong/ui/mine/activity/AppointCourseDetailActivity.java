@@ -122,6 +122,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
 
     private String code;
     private boolean fromDetail = false;
+    private String status;
 
     public static void start(Context context, String orderId) {
         Intent starter = new Intent(context, AppointCourseDetailActivity.class);
@@ -223,6 +224,7 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
     @Override
     public void setAppointmentDetail(AppointmentDetailBean bean) {
         this.bean = bean;
+        this.status = bean.getAppoint().getStatus();
         bottomLayout.setVisibility(View.VISIBLE);
         payType = bean.getPay().getPayType();
         if (PAY_ALI.equals(payType)) {
@@ -402,7 +404,9 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
                 CourseDetailActivity.start(this, bean.getLinkId());
                 break;
             case R.id.dv_qr:
-                BarcodeActivity.start(this, bean.getId(),ImageRectUtils.getDrawableBoundsInView(ivCode));
+                if(UN_JOIN.equals(status)) {
+                    BarcodeActivity.start(this, bean.getId(), ImageRectUtils.getDrawableBoundsInView(ivCode));
+                }
                 break;
             default:
                 break;

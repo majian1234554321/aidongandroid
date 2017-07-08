@@ -122,6 +122,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
 
     private String campaignId;
     private boolean fromDetail = false;
+    private String status;
 
     public static void start(Context context, String orderId) {
         Intent starter = new Intent(context, AppointCampaignDetailActivity.class);
@@ -153,7 +154,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
 
         initView();
         setListener();
-        getCampaignDeatilData();
+        getCampaignDetailData();
     }
 
     private void initView() {
@@ -217,7 +218,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         ivCode.setOnClickListener(this);
     }
 
-    private void getCampaignDeatilData(){
+    private void getCampaignDetailData(){
         if (fromDetail) {
             present.getCampaignAppointDetail(switcherLayout, campaignId);
         } else {
@@ -228,6 +229,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
     @Override
     public void setAppointmentDetail(AppointmentDetailBean bean) {
         this.bean = bean;
+        this.status = bean.getAppoint().getStatus();
         bottomLayout.setVisibility(View.VISIBLE);
         payType = bean.getPay().getPayType();
         if (PAY_ALI.equals(payType)) {
@@ -406,7 +408,9 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 CampaignDetailActivity.start(this, bean.getLinkId());
                 break;
             case R.id.dv_qr:
-                BarcodeActivity.start(this, bean.getId(),ImageRectUtils.getDrawableBoundsInView(ivCode));
+                if(UN_JOIN.equals(status)) {
+                    BarcodeActivity.start(this, bean.getId(), ImageRectUtils.getDrawableBoundsInView(ivCode));
+                }
                 break;
             default:
                 break;
@@ -443,7 +447,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
     @Override
     public void cancelAppointmentResult(BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
-            getCampaignDeatilData();
+            getCampaignDetailData();
             ToastGlobal.showLong("取消成功");
         } else {
             ToastGlobal.showLong(baseBean.getMessage());
@@ -453,7 +457,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
     @Override
     public void confirmAppointmentResult(BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
-            getCampaignDeatilData();
+            getCampaignDetailData();
             ToastGlobal.showLong("确认成功");
         } else {
             ToastGlobal.showLong(baseBean.getMessage());

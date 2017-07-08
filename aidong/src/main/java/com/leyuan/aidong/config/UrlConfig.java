@@ -5,7 +5,7 @@ package com.leyuan.aidong.config;
  * Created by user on 2015/5/20
  */
 public class UrlConfig {
-    public static final boolean debug = false;
+    public static final boolean debug = true;
 
     private static String urlHtml;
     private static String urlHost;

@@ -27,7 +27,6 @@ public class TitleAndVerticalListHolder extends BaseRecyclerViewHolder<HomeBean>
     public TitleAndVerticalListHolder(Context context, ViewGroup viewGroup, int layoutResId) {
         super(context, viewGroup, layoutResId);
         this.context = context;
-
         tvName = (TextView) itemView.findViewById(R.id.tv_name);
         listView = (MyListView) itemView.findViewById(R.id.lv_recommend);
         tvMore = (TextView) itemView.findViewById(R.id.tv_more_campaign);
@@ -36,27 +35,33 @@ public class TitleAndVerticalListHolder extends BaseRecyclerViewHolder<HomeBean>
 
     @Override
     public void onBindData(final HomeBean bean, int position) {
-        if(bean.getItem() != null && !bean.getItem().isEmpty()){
-            CoverImageAdapter adapter = new CoverImageAdapter(context,bean.getType());
-            tvName.setText(bean.getTitle());
-            listView.setAdapter(adapter);
-            adapter.setList(bean.getItem());
-            tvMore.setVisibility("campaign".equals(bean.getType()) ? View.VISIBLE : View.GONE);
-            tvMore.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    context.startActivity(new Intent(context, CampaignActivity.class));
-                }
-            });
-            tvName.setVisibility(View.VISIBLE);
-            tvMore.setVisibility(View.VISIBLE);
-            line.setVisibility(View.VISIBLE);
-            listView.setVisibility(View.VISIBLE);
+        //补丁:去除商品以竖向列表出现的形式
+        if(bean.getType().equals("nutrition") || bean.getType().equals("equipment")){
+            setLayoutVisibility(false);
         }else {
-            tvName.setVisibility(View.GONE);
-            tvMore.setVisibility(View.GONE);
-            line.setVisibility(View.GONE);
-            listView.setVisibility(View.GONE);
+            if (bean.getItem() != null && !bean.getItem().isEmpty()) {
+                CoverImageAdapter adapter = new CoverImageAdapter(context, bean.getType());
+                tvName.setText(bean.getTitle());
+                listView.setAdapter(adapter);
+                adapter.setList(bean.getItem());
+                tvMore.setVisibility("campaign".equals(bean.getType()) ? View.VISIBLE : View.GONE);
+                tvMore.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        context.startActivity(new Intent(context, CampaignActivity.class));
+                    }
+                });
+                setLayoutVisibility(true);
+            } else {
+                setLayoutVisibility(false);
+            }
         }
+    }
+
+    private void setLayoutVisibility(boolean v){
+        tvName.setVisibility(v ? View.VISIBLE : View.GONE);
+        tvMore.setVisibility(v ? View.VISIBLE :View.GONE);
+        line.setVisibility(v ? View.VISIBLE :View.GONE);
+        listView.setVisibility(v ? View.VISIBLE :View.GONE);
     }
 }

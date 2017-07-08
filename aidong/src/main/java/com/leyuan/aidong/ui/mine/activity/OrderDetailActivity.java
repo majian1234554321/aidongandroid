@@ -125,6 +125,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
     private OrderPresent orderPresent;
     private String payType;
     private OrderDetailBean bean;
+    private String status;
 
     public static void start(Context context, String id) {
         Intent starter = new Intent(context, OrderDetailActivity.class);
@@ -221,6 +222,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
     public void setOrderDetail(OrderDetailBean bean) {
         clearList();
         this.bean = bean;
+        this.status = bean.getStatus();
         int goodsCount = 0;
         int returnCount = 0;
         bottomLayout.setVisibility(View.VISIBLE);
@@ -360,7 +362,9 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailActi
                 ExpressInfoActivity.start(this, orderId);
                 break;
             case R.id.iv_qr:
-                BarcodeActivity.start(this, bean.getId(), ImageRectUtils.getDrawableBoundsInView(ivCode));
+                if(PAID.equals(status)){
+                     BarcodeActivity.start(this, bean.getId(), ImageRectUtils.getDrawableBoundsInView(ivCode));
+                }
                 break;
             default:
                 break;

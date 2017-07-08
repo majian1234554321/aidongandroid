@@ -39,34 +39,41 @@ public class ImageAndHorizontalListHolder extends BaseRecyclerViewHolder<HomeBea
 
     @Override
     public void onBindData(final HomeBean bean, int position) {
-        GlideLoader.getInstance().displayImage(bean.getImage(), cover);
-        cover.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BrandActivity.start(context, bean.getType(),bean.getId(),bean.getTitle(),
-                        bean.getImage(),bean.getIntroduce());
-            }
-        });
-
-        if(bean.getItem() != null && !bean.getItem().isEmpty()) {
-            BigAndLittleImageAdapter adapter = new BigAndLittleImageAdapter(context, bean.getType());
-            recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-            recyclerView.setAdapter(adapter);
-            adapter.setData(bean.getItem());
-            adapter.setSeeMoreListener(new BigAndLittleImageAdapter.SeeMoreListener() {
+        //补丁:去除横向活动列表的情况
+        if("campaign".equals(bean.getType())){
+            setLayoutVisibility(false);
+        }else {
+            GlideLoader.getInstance().displayImage(bean.getImage(), cover);
+            cover.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onSeeMore() {
+                public void onClick(View v) {
                     BrandActivity.start(context, bean.getType(), bean.getId(), bean.getTitle(),
                             bean.getImage(), bean.getIntroduce());
                 }
             });
-            line.setVisibility(View.VISIBLE);
-            imageLayout.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.VISIBLE);
-        }else {
-            line.setVisibility(View.GONE);
-            imageLayout.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.GONE);
+
+            if (bean.getItem() != null && !bean.getItem().isEmpty()) {
+                BigAndLittleImageAdapter adapter = new BigAndLittleImageAdapter(context, bean.getType());
+                recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+                recyclerView.setAdapter(adapter);
+                adapter.setData(bean.getItem());
+                adapter.setSeeMoreListener(new BigAndLittleImageAdapter.SeeMoreListener() {
+                    @Override
+                    public void onSeeMore() {
+                        BrandActivity.start(context, bean.getType(), bean.getId(), bean.getTitle(),
+                                bean.getImage(), bean.getIntroduce());
+                    }
+                });
+                setLayoutVisibility(true);
+            } else {
+                setLayoutVisibility(false);
+            }
         }
+    }
+
+    private void setLayoutVisibility(boolean v){
+        line.setVisibility(v ? View.VISIBLE : View.GONE);
+        imageLayout.setVisibility(v ? View.VISIBLE : View.GONE);
+        recyclerView.setVisibility(v ? View.VISIBLE : View.GONE);
     }
 }
