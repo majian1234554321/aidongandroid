@@ -37,7 +37,7 @@ public abstract class BaseSubscriber<T> extends Subscriber<T> {
         }else if (e instanceof ZeroException) {
             ToastGlobal.showShortConsecutive(e.getMessage());
         } else {
-            ToastGlobal.showLong("请求失败");
+            ToastGlobal.showShortConsecutive("请求失败");
         }
     }
 

@@ -5,7 +5,7 @@ package com.leyuan.aidong.config;
  * Created by user on 2015/5/20
  */
 public class UrlConfig {
-    public static final boolean debug = true;
+    public static final boolean debug = false;
 
     private static String urlHtml;
     private static String urlHost;
@@ -15,8 +15,8 @@ public class UrlConfig {
             urlHtml = "http://share.51aidong.com/";
             urlHost = "http://app.51aidong.com/";
         } else {
-            urlHtml = "http://share.51aidong.com/";
-            urlHost = "http://app.51aidong.com/";
+            urlHtml = "http://share.aidong.me/";
+            urlHost = "http://a.aidong.me/";
         }
     }
 
