@@ -70,8 +70,6 @@ public class App extends MultiDexApplication {
     }
 
     private void initConfig() {
-//        LeakCanary.install(this);
-//        UrlConfig.get();
         UrlConfig.setDebug(!UrlConfig.debug);
 
         ForegroundCallbacks foregroundCallbacks = ForegroundCallbacks.init(this);
