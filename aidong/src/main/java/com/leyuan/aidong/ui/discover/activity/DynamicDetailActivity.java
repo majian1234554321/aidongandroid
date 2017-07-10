@@ -5,7 +5,6 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -175,7 +174,6 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
                 etComment.clearFocus();
             }
         }
-
     };
 
     @Override
@@ -203,6 +201,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
         other = String.format(getString(R.string.reply_other_user), other);
         etComment.setText(other);
         etComment.setSelection(other.length());
+        etComment.requestFocus();
         KeyBoardUtil.openKeyboard(etComment, this);
     }
 
