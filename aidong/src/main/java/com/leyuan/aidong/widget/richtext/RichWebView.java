@@ -1,6 +1,9 @@
 package com.leyuan.aidong.widget.richtext;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -42,8 +45,17 @@ public class RichWebView extends WebView {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
+                if(url.startsWith("http:") || url.startsWith("https:") ) {
+                    view.loadUrl(url);
+                    return false;
+                }else{
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    if(getContext() != null && getContext() instanceof AppCompatActivity){
+                        getContext().startActivity(intent);
+                    }
+
+                    return true;
+                }
             }
 
         });

@@ -84,9 +84,9 @@ public class App extends MultiDexApplication {
 
         EmConfigManager.getInstance().initializeEaseUi(this);
         Realm.init(context);
-//        if(UrlConfig.debug){
+        if(UrlConfig.debug){
             Stetho.initializeWithDefaults(this);
-//        }
+        }
 
         RichText.initCacheDir(this);
     }
