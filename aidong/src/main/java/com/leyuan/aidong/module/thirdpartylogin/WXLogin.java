@@ -1,8 +1,11 @@
 package com.leyuan.aidong.module.thirdpartylogin;
 
 import android.content.Context;
+import android.content.Intent;
 import android.widget.Toast;
 
+import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.Logger;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -14,7 +17,10 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 public class WXLogin {
     public final static String WX_APP_ID = "wx365ab323b9269d30";
     private IWXAPI api;
-    public  WXLogin(Context context){
+    Context context;
+
+    public WXLogin(Context context) {
+        this.context = context;
         api = WXAPIFactory.createWXAPI(context, WX_APP_ID, true);
         api.registerApp(WX_APP_ID);
     }
@@ -25,6 +31,14 @@ public class WXLogin {
         }
         if (!api.isWXAppInstalled()) {
             Toast.makeText(context, "没有安装微信", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent();
+            intent.setAction(Constant.WX_LOGIN_SUCCESS_ACTION);
+            intent.putExtra(Constant.STATE, 4);
+            intent.setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+            context.sendBroadcast(intent);
+            Logger.i("login ", " sendBroadcast");
+
+
             return;
         }
         api.registerApp(WX_APP_ID);
@@ -33,9 +47,6 @@ public class WXLogin {
         req.state = "com.lht.bridge.session";
         api.sendReq(req);
     }
-
-
-
 
 
 }

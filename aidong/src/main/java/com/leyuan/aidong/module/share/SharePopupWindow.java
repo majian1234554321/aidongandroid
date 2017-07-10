@@ -15,6 +15,8 @@ import com.leyuan.aidong.ui.ShareActivityQQ;
 import com.leyuan.aidong.ui.WeiboResponseActivity;
 import com.leyuan.aidong.utils.HtmlToStringUtils;
 import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.utils.ThirdClientValid;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.sina.weibo.sdk.api.share.BaseResponse;
 import com.sina.weibo.sdk.api.share.IWeiboHandler;
@@ -102,6 +104,12 @@ public class SharePopupWindow extends PopupWindow implements View.OnClickListene
                 dismiss();
                 break;
             case R.id.img_qq:
+                if (!ThirdClientValid.isQQClientAvailable(context)) {
+                    ToastGlobal.showLong("没有安装QQ");
+                    dismiss();
+                    return;
+                }
+
 //                myShareUtils.share(MyShareUtils.SHARE_QQ, title, content, imageUrl, webUrl);
                 ShareActivityQQ.start(context, title, content, imageUrl, webUrl);
                 dismiss();

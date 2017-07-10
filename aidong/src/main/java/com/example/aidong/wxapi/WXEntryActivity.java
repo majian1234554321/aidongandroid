@@ -67,7 +67,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         api.registerApp(APP_ID);
         api.handleIntent(getIntent(), this);
 
-
         if (title != null) {
             share(title, content, imageUrl, webUrl, isCircle);
         }
@@ -143,6 +142,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         }
         if (!api.isWXAppInstalled()) {
             Toast.makeText(this, "没有安装微信", Toast.LENGTH_SHORT).show();
+            finish();
             return;
         }
 

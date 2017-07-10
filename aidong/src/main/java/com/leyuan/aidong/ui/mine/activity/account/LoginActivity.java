@@ -29,6 +29,7 @@ import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.RequestResponseCount;
 import com.leyuan.aidong.utils.StringUtils;
+import com.leyuan.aidong.utils.ThirdClientValid;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.ToastUtil;
 import com.leyuan.aidong.utils.UiManager;
@@ -97,19 +98,27 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 UiManager.activityJump(this, RegisterActivity.class);
                 break;
             case R.id.button_weixin:
-
-                loginPresenter.loginThirdParty(ThirdLoginUtils.LOGIN_WEIXIN);
                 DialogUtils.showDialog(this, "", true);
+                loginPresenter.loginThirdParty(ThirdLoginUtils.LOGIN_WEIXIN);
+
 
                 break;
             case R.id.button_weibo:
-                loginPresenter.loginThirdParty(ThirdLoginUtils.LOGIN_WEIBO);
                 DialogUtils.showDialog(this, "", true);
+                loginPresenter.loginThirdParty(ThirdLoginUtils.LOGIN_WEIBO);
+
 
                 break;
             case R.id.button_qq:
-                loginPresenter.loginThirdParty(ThirdLoginUtils.LOGIN_QQ);
+                if (!ThirdClientValid.isQQClientAvailable(this)) {
+                   ToastGlobal.showLong("没有安装QQ");
+                    return;
+
+                }
+
                 DialogUtils.showDialog(this, "", true);
+                loginPresenter.loginThirdParty(ThirdLoginUtils.LOGIN_QQ);
+
 
                 break;
         }
