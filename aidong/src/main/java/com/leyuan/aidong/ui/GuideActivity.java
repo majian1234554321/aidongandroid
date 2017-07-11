@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.config.UrlConfig;
 import com.leyuan.aidong.utils.SharePrefUtils;
 
 import java.util.ArrayList;
@@ -33,7 +34,12 @@ public class GuideActivity extends BaseActivity {
         views.add(BGABannerUtil.getItemImageView(this, R.drawable.guide1));
         views.add(BGABannerUtil.getItemImageView(this, R.drawable.guide2));
         views.add(BGABannerUtil.getItemImageView(this, R.drawable.guide3));
-        views.add(BGABannerUtil.getItemImageView(this, R.drawable.guide4));
+        if (UrlConfig.isMi) {
+            views.add(BGABannerUtil.getItemImageView(this, R.drawable.guide4_xiaomi));
+        } else {
+            views.add(BGABannerUtil.getItemImageView(this, R.drawable.guide4));
+        }
+
         lastImage = BGABannerUtil.getItemImageView(this, R.drawable.guide5);
         views.add(lastImage);
         banner.setData(views);
