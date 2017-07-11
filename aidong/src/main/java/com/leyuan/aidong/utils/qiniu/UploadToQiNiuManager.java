@@ -3,6 +3,7 @@ package com.leyuan.aidong.utils.qiniu;
 import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.utils.ImageUtil;
+import com.leyuan.aidong.utils.ScreenUtil;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UploadManager;
@@ -126,10 +127,14 @@ public class UploadToQiNiuManager {
         if (App.getInstance().isLogin()) {
             id = App.getInstance().getUser().getId();
         }
-        int[] widthAndHeight = ImageUtil.getImageWidthAndHeight(path);
+        int[] widthAndHeight = new int[2];
+        if(isImage){
+            widthAndHeight = ImageUtil.getImageWidthAndHeight(path);
+        }else {
+            widthAndHeight[0] = ScreenUtil.getScreenWidth(App.context);
+            widthAndHeight[1] = ScreenUtil.getScreenHeight(App.context);
+        }
         return (isImage ? "image/" : "video/") + id + "_" + System.currentTimeMillis()
                 +"*w=" + widthAndHeight[0] + "_h="+widthAndHeight[1]+ path.substring(path.lastIndexOf("."));
     }
-
-
 }
