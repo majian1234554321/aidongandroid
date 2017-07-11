@@ -1,9 +1,11 @@
 package com.leyuan.aidong.utils.qiniu;
 
+import android.graphics.Bitmap;
+
 import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.utils.ImageUtil;
-import com.leyuan.aidong.utils.ScreenUtil;
+import com.leyuan.aidong.utils.Utils;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UploadManager;
@@ -131,8 +133,9 @@ public class UploadToQiNiuManager {
         if(isImage){
             widthAndHeight = ImageUtil.getImageWidthAndHeight(path);
         }else {
-            widthAndHeight[0] = ScreenUtil.getScreenWidth(App.context);
-            widthAndHeight[1] = ScreenUtil.getScreenHeight(App.context);
+            Bitmap videoThumbnail = Utils.getVideoThumbnail(path);
+            widthAndHeight[0] = videoThumbnail.getWidth();
+            widthAndHeight[1] = videoThumbnail.getHeight();
         }
         return (isImage ? "image/" : "video/") + id + "_" + System.currentTimeMillis()
                 +"*w=" + widthAndHeight[0] + "_h="+widthAndHeight[1]+ path.substring(path.lastIndexOf("."));

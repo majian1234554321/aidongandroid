@@ -12,6 +12,7 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.hardware.Camera;
 import android.hardware.Camera.Size;
+import android.media.MediaMetadataRetriever;
 import android.os.Build;
 import android.os.Handler;
 import android.telephony.TelephonyManager;
@@ -419,6 +420,14 @@ public class Utils {
 		canvas.drawBitmap(bm, m, paint);
 
 		return bm1;
+	}
+
+
+	public static Bitmap getVideoThumbnail(String videoPath) {
+		MediaMetadataRetriever media =new MediaMetadataRetriever();
+		media.setDataSource(videoPath);
+		Bitmap bitmap = media.getFrameAtTime();
+		return bitmap;
 	}
 
 }
