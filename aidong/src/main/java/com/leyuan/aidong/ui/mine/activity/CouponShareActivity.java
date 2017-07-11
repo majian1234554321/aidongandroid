@@ -16,6 +16,8 @@ import com.leyuan.aidong.ui.ShareActivityQQ;
 import com.leyuan.aidong.ui.WeiboResponseActivity;
 import com.leyuan.aidong.utils.HtmlToStringUtils;
 import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.utils.ThirdClientValid;
+import com.leyuan.aidong.utils.ToastGlobal;
 
 /**
  * Created by user on 2017/5/13.
@@ -78,13 +80,27 @@ public class CouponShareActivity extends BaseActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.img_weichat:
-                WXEntryActivity.start(this, title, content, imageUrl, webUrl, false);
+                if(ThirdClientValid.isWeixinAvilible(this)){
+                    WXEntryActivity.start(this, title, content, imageUrl, webUrl, false);
+                }else{
+                    ToastGlobal.showShortConsecutive(R.string.no_install_wx);
+                }
+
                 break;
             case R.id.img_wei_friend:
-                WXEntryActivity.start(this, title, content, imageUrl, webUrl, true);
+                if(ThirdClientValid.isWeixinAvilible(this)){
+                    WXEntryActivity.start(this, title, content, imageUrl, webUrl, true);
+                }else{
+                    ToastGlobal.showShortConsecutive(R.string.no_install_wx);
+                }
+
                 break;
             case R.id.img_qq:
-                ShareActivityQQ.start(this, title, content, imageUrl, webUrl);
+                if(ThirdClientValid.isQQClientAvailable(this)){
+                    ShareActivityQQ.start(this, title, content, imageUrl, webUrl);
+                }else{
+                    ToastGlobal.showShortConsecutive(R.string.no_install_QQ);
+                }
                 break;
             case R.id.img_weibo:
                 WeiboResponseActivity.start(this, title, content, imageUrl, webUrl);

@@ -262,4 +262,6 @@
     <string name="i_dong_slogan">积聚能量，随心而动</string>
     <string name="leyuan_company">乐渊网络科技 (上海) 有限公司</string>
     <string name="copyright_time">Copyright ©2015–2017</string>
+    <string name="no_install_wx">没有安装微信</string>
+    <string name="no_install_QQ">没有安装QQ</string>
 </resources>
