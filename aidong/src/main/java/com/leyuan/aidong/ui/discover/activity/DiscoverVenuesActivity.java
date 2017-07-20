@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -28,6 +27,8 @@ import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListe
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
+import com.leyuan.custompullrefresh.CustomRefreshLayout;
+import com.leyuan.custompullrefresh.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +46,7 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
     private ImageView ivSearch;
 
     private RecyclerView recyclerView;
-    private SwipeRefreshLayout refreshLayout;
+    private CustomRefreshLayout refreshLayout;
     private SwitcherLayout switcherLayout;
     private VenuesFilterView filterView;
 
@@ -105,22 +106,22 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
     }
 
     private void initSwipeRefreshLayout() {
-        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
+        refreshLayout = (CustomRefreshLayout) findViewById(R.id.refreshLayout);
         switcherLayout = new SwitcherLayout(this, refreshLayout);
-        refreshLayout.setProgressViewOffset(true, 100, 250);
-        setColorSchemeResources(refreshLayout);
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        refreshLayout.setProgressViewOffset(true, 50,100);
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
                 refreshData();
             }
         });
+
     }
 
     private void refreshData() {
         currPage = 1;
         RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-        venuesPresent.commonLoadData(switcherLayout, brand_id, landmark, gymTypes);
+        venuesPresent.pullToRefreshData(brand_id, landmark, gymTypes);
     }
 
     private void initRecyclerView() {

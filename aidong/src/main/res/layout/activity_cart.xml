@@ -35,7 +35,7 @@
             android:visibility="gone" />
     </RelativeLayout>
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <com.leyuan.custompullrefresh.CustomRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
             android:id="@+id/rv_recommend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </com.leyuan.custompullrefresh.CustomRefreshLayout>
 
     <LinearLayout
         android:id="@+id/ll_bottom"

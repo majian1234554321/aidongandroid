@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -37,19 +36,24 @@ import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.widget.SwitcherLayout;
+import com.leyuan.custompullrefresh.CustomRefreshLayout;
+import com.leyuan.custompullrefresh.OnRefreshListener;
 
 import java.util.List;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 
+
+
 /**
  * 发现 -- 发现
  * Created by song on 2016/11/19.
  */
-public class DiscoverFragment extends BasePageFragment implements DiscoverFragmentView, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, BGABanner.Adapter, BGABanner.Delegate {
+public class DiscoverFragment extends BasePageFragment implements DiscoverFragmentView, View.OnClickListener, BGABanner.Adapter, BGABanner.Delegate, OnRefreshListener {
     private SwitcherLayout switcherLayout;
-    private SwipeRefreshLayout refreshLayout;
+    private CustomRefreshLayout refreshLayout;
     private NestedScrollView scrollView;
+    private LinearLayout contentLayout;
     private BGABanner banner;
     private LinearLayout venuesLayout;
     private LinearLayout userLayout;
@@ -96,9 +100,10 @@ public class DiscoverFragment extends BasePageFragment implements DiscoverFragme
     }
 
     private void initView(View view) {
-        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout);
+        refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.refreshLayout);
         scrollView = (NestedScrollView) view.findViewById(R.id.scroll_view);
-        switcherLayout = new SwitcherLayout(getContext(), scrollView);
+        contentLayout = (LinearLayout) view.findViewById(R.id.ll_content);
+        switcherLayout = new SwitcherLayout(getContext(), contentLayout);
         banner = (BGABanner) view.findViewById(R.id.banner);
         venuesLayout = (LinearLayout) view.findViewById(R.id.ll_venues);
         userLayout = (LinearLayout) view.findViewById(R.id.ll_user);

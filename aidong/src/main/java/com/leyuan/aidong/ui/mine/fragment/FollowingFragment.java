@@ -1,6 +1,5 @@
 package com.leyuan.aidong.ui.mine.fragment;
 
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,6 +22,8 @@ import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListe
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
+import com.leyuan.custompullrefresh.CustomRefreshLayout;
+import com.leyuan.custompullrefresh.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,7 @@ public class FollowingFragment extends BaseLazyFragment implements FollowFragmen
     public static final String FOLLOWING = "followings";
 
     private SwitcherLayout switcherLayout;
-    private SwipeRefreshLayout refreshLayout;
+    private CustomRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
 
     private int currPage = 1;
@@ -62,9 +63,8 @@ public class FollowingFragment extends BaseLazyFragment implements FollowFragmen
 
 
     private void initSwipeRefreshLayout(View view) {
-        refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.refreshLayout);
-        setColorSchemeResources(refreshLayout);
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        refreshLayout = (CustomRefreshLayout)view.findViewById(R.id.refreshLayout);
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
                 currPage = 1;

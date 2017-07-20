@@ -16,7 +16,7 @@ import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
-import com.leyuan.aidong.ui.mvp.presenter.DynamicParsePresent;
+import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicParsePresent;
 import com.leyuan.aidong.ui.mvp.view.DynamicParseUserView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.SystemInfoUtils;

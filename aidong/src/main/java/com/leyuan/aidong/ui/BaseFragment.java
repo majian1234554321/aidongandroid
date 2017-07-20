@@ -7,11 +7,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.ui.discover.activity.VenuesDetailActivity;
 import com.leyuan.aidong.ui.home.activity.CampaignDetailActivity;
@@ -27,18 +25,13 @@ import static com.leyuan.aidong.utils.Constant.GOODS_NUTRITION;
 
 
 public class BaseFragment extends Fragment implements EasyPermissions.PermissionCallbacks, View.OnTouchListener {
-    private static final String TAG = "BaseFragment";
+
+    protected static final String TAG = "BaseFragment";
     protected int pageSize = 25; //分页数据量
 
-    /**
-     * 设置下拉刷新颜色
-     *
-     * @param refreshLayout
-     */
-    protected void setColorSchemeResources(SwipeRefreshLayout refreshLayout) {
+    /*protected void setColorSchemeResources(SwipeRefreshLayout refreshLayout) {
         refreshLayout.setColorSchemeResources(R.color.black, R.color.red, R.color.orange, R.color.gray);
-    }
-
+    }*/
 
     /**
      * 广告跳转目标页

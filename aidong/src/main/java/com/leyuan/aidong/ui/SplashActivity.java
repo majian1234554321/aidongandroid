@@ -87,9 +87,6 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
 //            return;
 //        }
 
-        splashPresenter = new SplashPresenterImpl(this);
-        splashPresenter.setLoginAutoListener(this);
-        versionPresenter = new VersionPresenterImpl(this, this);
 
         initData();
     }
@@ -99,9 +96,15 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
         App.getInstance().startLocation();
         isFirstEnter = SharePrefUtils.getBoolean(SplashActivity.this, "isFirstEnter", true);
         EMClient.getInstance().chatManager().loadAllConversations();
+        requestData();
+    }
+
+    private void requestData() {
+        splashPresenter = new SplashPresenterImpl(this);
+        splashPresenter.setLoginAutoListener(this);
+        versionPresenter = new VersionPresenterImpl(this, this);
 
         RequestResponseCount requestResponse = new RequestResponseCount(this);
-
         SystemPresentImpl systemPresent = new SystemPresentImpl(this);
         systemPresent.setOnRequestResponse(requestResponse);
         systemPresent.setSplashView(this);
@@ -122,7 +125,6 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
             followPresent.getFollowList();
             httpRequestIndex = 4;
         }
-
     }
 
     @Override

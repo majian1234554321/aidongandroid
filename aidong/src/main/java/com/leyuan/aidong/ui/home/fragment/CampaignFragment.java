@@ -1,17 +1,16 @@
 package com.leyuan.aidong.ui.home.fragment;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.CampaignAdapter;
 import com.leyuan.aidong.entity.CampaignBean;
+import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.mvp.presenter.CampaignPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CampaignPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CampaignFragmentView;
@@ -20,6 +19,8 @@ import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListe
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
+import com.leyuan.custompullrefresh.CustomRefreshLayout;
+import com.leyuan.custompullrefresh.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,12 +29,12 @@ import java.util.List;
  * 活动
  * Created by song on 2016/9/9.
  */
-public class CampaignFragment extends BaseFragment implements CampaignFragmentView {
+public class CampaignFragment extends BaseFragment implements CampaignFragmentView, OnRefreshListener {
     public static final String FREE = "free";
     public static final String PAY = "need_to_pay";
 
     private SwitcherLayout switcherLayout;
-    private SwipeRefreshLayout refreshLayout;
+    private CustomRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
     private CampaignPresent campaignPresent;
 
@@ -69,17 +70,9 @@ public class CampaignFragment extends BaseFragment implements CampaignFragmentVi
     }
 
     private void initSwipeRefreshLayout(View view){
-        refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.refreshLayout);
+        refreshLayout = (CustomRefreshLayout)view.findViewById(R.id.refreshLayout);
         switcherLayout = new SwitcherLayout(getActivity(),refreshLayout);
-        setColorSchemeResources(refreshLayout);
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                currPage = 1;
-                RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-                campaignPresent.pullToRefreshData(type);
-            }
-        });
+        refreshLayout.setOnRefreshListener(this);
     }
 
     private void initRecyclerView(View view) {
@@ -90,6 +83,13 @@ public class CampaignFragment extends BaseFragment implements CampaignFragmentVi
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(wrapperAdapter);
         recyclerView.addOnScrollListener(onScrollListener);
+    }
+
+    @Override
+    public void onRefresh() {
+        currPage = 1;
+        RecyclerViewStateUtils.resetFooterViewState(recyclerView);
+        campaignPresent.pullToRefreshData(type);
     }
 
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
@@ -116,6 +116,8 @@ public class CampaignFragment extends BaseFragment implements CampaignFragmentVi
     @Override
     public void showEmptyView() {
         View view = View.inflate(getContext(),R.layout.empty_campaign,null);
+        CustomRefreshLayout refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.refreshLayout_empty);
+        refreshLayout.setOnRefreshListener(this);
         switcherLayout.addCustomView(view,"empty");
         switcherLayout.showCustomLayout("empty");
     }

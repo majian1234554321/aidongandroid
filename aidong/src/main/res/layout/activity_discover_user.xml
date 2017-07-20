@@ -43,7 +43,7 @@
                 android:visibility="visible"/>
         </RelativeLayout>
 
-        <android.support.v4.widget.SwipeRefreshLayout
+        <com.leyuan.custompullrefresh.CustomRefreshLayout
             android:id="@+id/refreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -51,7 +51,7 @@
             android:id="@+id/rv_user"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-        </android.support.v4.widget.SwipeRefreshLayout>
+        </com.leyuan.custompullrefresh.CustomRefreshLayout>
     </LinearLayout>
 
 

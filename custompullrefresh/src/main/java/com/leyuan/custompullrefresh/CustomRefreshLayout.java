@@ -3,28 +3,32 @@ package com.leyuan.custompullrefresh;
 import android.content.Context;
 import android.support.annotation.ColorRes;
 import android.util.AttributeSet;
+import android.view.View;
 
-import in.srain.cube.views.ptr.PtrClassicDefaultHeader;
-import in.srain.cube.views.ptr.PtrDefaultHandler;
-import in.srain.cube.views.ptr.PtrFrameLayout;
+import com.leyuan.custompullrefresh.ptr.PtrClassicDefaultHeader;
+import com.leyuan.custompullrefresh.ptr.PtrDefaultHandler;
+import com.leyuan.custompullrefresh.ptr.PtrFrameLayout;
+import com.leyuan.custompullrefresh.ptr.PtrHandler;
+import com.leyuan.custompullrefresh.ptr.header.StoreHouseHeader;
+import com.leyuan.custompullrefresh.util.DensityUtil;
+
 
 /**
  * Created by user on 2017/6/6.
  */
 
 public class CustomRefreshLayout extends PtrFrameLayout {
-
+    protected static final String REFRESH_STRING = "FITNESS";
     OnRefreshListener mListener;
+    private StoreHouseHeader header;
     private PtrClassicDefaultHeader mPtrClassicHeader;
 
     public CustomRefreshLayout(Context context) {
-        super(context);
-        initViews();
+        this(context, null);
     }
 
     public CustomRefreshLayout(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initViews();
+        this(context, attrs, 0);
     }
 
     public CustomRefreshLayout(Context context, AttributeSet attrs, int defStyle) {
@@ -33,11 +37,29 @@ public class CustomRefreshLayout extends PtrFrameLayout {
     }
 
     private void initViews() {
-        setResistance(3.5f);
-        mPtrClassicHeader = new PtrClassicDefaultHeader(getContext());
-        setHeaderView(mPtrClassicHeader);
-        addPtrUIHandler(mPtrClassicHeader);
+        initPtrFrameLayout();
+//        setResistance(3.5f);
+//        mPtrClassicHeader = new PtrClassicDefaultHeader(getContext());
+//        setHeaderView(mPtrClassicHeader);
+//        addPtrUIHandler(mPtrClassicHeader);
     }
+
+    protected void initPtrFrameLayout() {
+        header = new StoreHouseHeader(getContext());
+        header.initWithString(REFRESH_STRING);
+        setHeaderView(header);
+        addPtrUIHandler(header);
+        setDurationToCloseHeader(500);
+    /*    postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                autoRefresh(false);
+            }
+        }, 100);*/
+        disableWhenHorizontalMove(true);
+
+    }
+
 
     @Deprecated
     public void setColorSchemeResources(@ColorRes int... colorResIds) {
@@ -46,7 +68,7 @@ public class CustomRefreshLayout extends PtrFrameLayout {
 
     @Deprecated
     public void setProgressViewOffset(boolean scale, int start, int end) {
-
+        header.setPadding(0, DensityUtil.dp2px(getContext(), start), 0, 0);
     }
 
     /**
@@ -55,12 +77,24 @@ public class CustomRefreshLayout extends PtrFrameLayout {
      */
     public void setOnRefreshListener(OnRefreshListener listener) {
         mListener = listener;
-        setPtrHandler(new PtrDefaultHandler() {
+        setPtrHandler(new PtrHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                mListener.onRefresh();
+                frame.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mListener.onRefresh();
+                    }
+                }, 100);
+            }
+
+            @Override
+            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+                // 默认实现，根据实际情况做改动
+                return PtrDefaultHandler.checkContentCanBePulledDown(frame, content, header);
             }
         });
+
     }
 
     public boolean isRefreshing() {
@@ -70,6 +104,13 @@ public class CustomRefreshLayout extends PtrFrameLayout {
     public void setRefreshing(boolean refreshing) {
         if (!refreshing) {
             refreshComplete();
+        } else {
+            postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    autoRefresh(false);
+                }
+            }, 100);
         }
     }
 }

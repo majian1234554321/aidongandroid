@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<com.leyuan.custompullrefresh.CustomRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/refreshLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
+    android:layout_height="match_parent">
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <LinearLayout
+            android:id="@+id/ll_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -21,8 +24,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="190dp"
                 android:background="@color/white"
-                app:banner_pointAutoPlayInterval="5000"
                 app:banner_pointAutoPlayAble="true"
+                app:banner_pointAutoPlayInterval="5000"
                 app:banner_pointContainerBackground="@android:color/transparent"
                 app:banner_pointDrawable="@drawable/selector_banner"
                 app:banner_pointTopBottomMargin="5dp"
@@ -172,8 +175,6 @@
 
                 <include layout="@layout/inc_bold_line" />
             </LinearLayout>
-
-
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
-</android.support.v4.widget.SwipeRefreshLayout>
+</com.leyuan.custompullrefresh.CustomRefreshLayout>

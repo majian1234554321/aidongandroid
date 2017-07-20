@@ -23,6 +23,8 @@ import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListe
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
+import com.leyuan.custompullrefresh.CustomRefreshLayout;
+import com.leyuan.custompullrefresh.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,11 +34,11 @@ import java.util.List;
  * Created by song on 2017/4/21.
  */
 public class RelatedVideoActivity extends BaseActivity implements RelatedVideoActivityView,
-        SwipeRefreshLayout.OnRefreshListener, MoreVideoAdapter.OnItemClickListener {
+    MoreVideoAdapter.OnItemClickListener, OnRefreshListener {
     private TextView tvTitle;
     private ImageView ivBack;
     private SwitcherLayout switcherLayout;
-    private SwipeRefreshLayout refreshLayout;
+    private CustomRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
     private MoreVideoAdapter adapter;
     private HeaderAndFooterRecyclerViewAdapter wrapper;
@@ -73,7 +75,7 @@ public class RelatedVideoActivity extends BaseActivity implements RelatedVideoAc
     private void initView(){
         tvTitle = (TextView) findViewById(R.id.tv_title);
         ivBack = (ImageView) findViewById(R.id.iv_back);
-        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
+        refreshLayout = (CustomRefreshLayout) findViewById(R.id.refreshLayout);
         switcherLayout = new SwitcherLayout(this,refreshLayout);
         recyclerView = (RecyclerView) findViewById(R.id.rv_video);
         adapter = new MoreVideoAdapter(this);

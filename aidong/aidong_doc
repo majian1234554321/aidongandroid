@@ -30,6 +30,9 @@
           活动/课程预约成功  AppointSuccessActivity
           活动/课程已参加的人 AppointmentUserActivity
  
+
+    模块2: 视界
+
     模块3:
           首页和商城采用的同一个适配器HomeAdapter
           商城        StoreFragment

@@ -11,7 +11,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -31,15 +30,17 @@ import com.leyuan.aidong.ui.video.activity.LivingVideoActivity;
 import com.leyuan.aidong.ui.video.activity.WatchOfficeActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.Logger;
+import com.leyuan.custompullrefresh.CustomRefreshLayout;
+import com.leyuan.custompullrefresh.OnRefreshListener;
 
 import java.util.ArrayList;
 
 
 public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.OnLivingVideoCLickListener,
         HomeVideoAdapter.OnPlaybackClickListener, HomeVideoAdapter.OnSoonLiveVideoClickListener,
-        HomeVideoAdapter.OnVideoClickListener, SwipeRefreshLayout.OnRefreshListener, LiveHomeView {
+        HomeVideoAdapter.OnVideoClickListener, OnRefreshListener, LiveHomeView {
 
-    private SwipeRefreshLayout swipeRefreshLayout;
+    private CustomRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
 
     private HomeVideoAdapter adapter;
@@ -93,7 +94,7 @@ public class VideoHomeFragment extends BaseFragment implements HomeVideoAdapter.
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         presenter = new LivePresenterImpl(getActivity(), this);
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout = (CustomRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
 
         initData();

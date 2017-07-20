@@ -5,7 +5,6 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -49,6 +48,8 @@ import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewA
 import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
+import com.leyuan.custompullrefresh.CustomRefreshLayout;
+import com.leyuan.custompullrefresh.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +63,7 @@ import static com.leyuan.aidong.utils.Constant.DYNAMIC_VIDEO;
  * Created by song on 2016/12/28.
  */
 public class DynamicDetailActivity extends BaseActivity implements DynamicDetailActivityView, View.OnClickListener,
-        TextView.OnEditorActionListener, SwipeRefreshLayout.OnRefreshListener, DynamicDetailAdapter.OnItemClickListener {
+        TextView.OnEditorActionListener,DynamicDetailAdapter.OnItemClickListener, OnRefreshListener {
     private static final int MAX_TEXT_COUNT = 240;
     public static final int RESULT_DELETE = 0x3333;
     private ImageView ivBack;
@@ -72,7 +73,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
     private String content;
 
     private View header;
-    private SwipeRefreshLayout refreshLayout;
+    private CustomRefreshLayout refreshLayout;
     private RecyclerView commentView;
     private DynamicDetailAdapter commentAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
@@ -109,8 +110,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
         tvReportOrDelete = (TextView) findViewById(R.id.tv_report_or_delete);
         ivUserAvatar = (ImageView) findViewById(R.id.dv_user_avatar);
         etComment = (EditText) findViewById(R.id.et_comment);
-        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
-        setColorSchemeResources(refreshLayout);
+        refreshLayout = (CustomRefreshLayout) findViewById(R.id.refreshLayout);
         commentView = (RecyclerView) findViewById(R.id.rv_comment);
         commentAdapter = new DynamicDetailAdapter(this);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(commentAdapter);
@@ -174,7 +174,6 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
                 etComment.clearFocus();
             }
         }
-
     };
 
     @Override
@@ -202,6 +201,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
         other = String.format(getString(R.string.reply_other_user), other);
         etComment.setText(other);
         etComment.setSelection(other.length());
+        etComment.requestFocus();
         KeyBoardUtil.openKeyboard(etComment, this);
     }
 

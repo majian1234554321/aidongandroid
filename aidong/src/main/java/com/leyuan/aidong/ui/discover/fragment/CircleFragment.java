@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -46,6 +45,8 @@ import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListe
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
+import com.leyuan.custompullrefresh.CustomRefreshLayout;
+import com.leyuan.custompullrefresh.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +66,7 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_TO_DYNAMIC;
  */
 public class CircleFragment extends BasePageFragment implements SportCircleFragmentView {
     private SwitcherLayout switcherLayout;
-    private SwipeRefreshLayout refreshLayout;
+    private CustomRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
     private CircleDynamicAdapter circleDynamicAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
@@ -109,14 +110,14 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
 
     @Override
     public void fetchData() {
+       // dynamicPresent.pullToRefreshData();
         dynamicPresent.commonLoadData(switcherLayout);
     }
 
     private void initSwipeRefreshLayout(View view) {
-        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout);
+        refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.refreshLayout);
         switcherLayout = new SwitcherLayout(getContext(), refreshLayout);
-        setColorSchemeResources(refreshLayout);
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
                 refreshData();
@@ -155,6 +156,8 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
             }
         }
     };
+
+
 
     public void refreshData() {
         currPage = 1;

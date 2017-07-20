@@ -302,9 +302,14 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                 FormatUtil.parseDouble(bean.price)));
         tvPrice.setText(String.format(getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(TextUtils.isEmpty(bean.floor_price) ? bean.price :bean.floor_price)));
-        tvMarketPrice.setText(String.format(getString(R.string.rmb_price_double),
-                FormatUtil.parseDouble(bean.market_price)));
-        tvMarketPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+        if(!TextUtils.isEmpty(bean.market_price)) {
+            tvMarketPrice.setText(String.format(getString(R.string.rmb_price_double),
+                    FormatUtil.parseDouble(bean.market_price)));
+            tvMarketPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+            tvMarketPrice.setVisibility(View.VISIBLE);
+        }else {
+            tvMarketPrice.setVisibility(View.GONE);
+        }
         tvGoodsName.setText(bean.name);
 
         if (bean.coupon == null || bean.coupon.isEmpty()) {

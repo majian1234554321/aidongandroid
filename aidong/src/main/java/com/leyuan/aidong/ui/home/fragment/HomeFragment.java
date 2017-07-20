@@ -7,7 +7,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -41,6 +40,8 @@ import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewA
 import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
+import com.leyuan.custompullrefresh.CustomRefreshLayout;
+import com.leyuan.custompullrefresh.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,14 +54,14 @@ import static com.leyuan.aidong.utils.Constant.HOME_TITLE_AND_VERTICAL_LIST;
  *
  * @author song
  */
-public class HomeFragment extends BaseFragment implements HomeFragmentView, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class HomeFragment extends BaseFragment implements HomeFragmentView, View.OnClickListener, OnRefreshListener {
     private static final String TYPE_HOME = "home";
     private TextView tvLocation;
     private ImageView ivSearch;
     private HomeHeaderView headerView;
     private SwitcherLayout switcherLayout;
     private RecyclerView recyclerView;
-    private SwipeRefreshLayout refreshLayout;
+    private CustomRefreshLayout refreshLayout;
 
     private int currPage = 1;
     private ArrayList<HomeBean> data = new ArrayList<>();
@@ -109,9 +110,8 @@ public class HomeFragment extends BaseFragment implements HomeFragmentView, View
     private void initView(View view) {
         tvLocation = (TextView) view.findViewById(R.id.tv_location);
         ivSearch = (ImageView) view.findViewById(R.id.iv_search);
-        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.sr_refresh);
+        refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.sr_refresh);
         switcherLayout = new SwitcherLayout(getContext(), refreshLayout);
-        setColorSchemeResources(refreshLayout);
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_home);
         data = new ArrayList<>();
         HomeAdapter.Builder<DynamicBean> builder = new HomeAdapter.Builder<>(getContext());

@@ -1,7 +1,6 @@
 package com.leyuan.aidong.ui.home.fragment;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,6 +20,8 @@ import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListe
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
+import com.leyuan.custompullrefresh.CustomRefreshLayout;
+import com.leyuan.custompullrefresh.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,13 +30,13 @@ import java.util.List;
  * 课程列表
  * Created by song on 2016/11/1.
  */
-public class CourseFragment extends BasePageFragment implements CourserFragmentView, SwipeRefreshLayout.OnRefreshListener {
+public class CourseFragment extends BasePageFragment implements CourserFragmentView, OnRefreshListener {
     private static final int HIDE_THRESHOLD = 80;
     private int scrolledDistance = 0;
     private boolean filterViewVisible = true;
 
     private SwitcherLayout switcherLayout;
-    private SwipeRefreshLayout refreshLayout;
+    private CustomRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
 
     private int currPage = 1;
@@ -68,10 +69,9 @@ public class CourseFragment extends BasePageFragment implements CourserFragmentV
     }
 
     private void initRefreshLayout(View view) {
-        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout);
+        refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.refreshLayout);
         switcherLayout = new SwitcherLayout(getContext(),refreshLayout);
-        setColorSchemeResources(refreshLayout);
-        refreshLayout.setProgressViewOffset(true,100,250);
+        refreshLayout.setProgressViewOffset(true,50,0);
         refreshLayout.setOnRefreshListener(this);
     }
 
@@ -151,9 +151,9 @@ public class CourseFragment extends BasePageFragment implements CourserFragmentV
             refreshLayout.setRefreshing(false);
         }
         View view = View.inflate(getContext(),R.layout.empty_course,null);
-        SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout_empty);
-        swipeRefreshLayout.setProgressViewOffset(true,100,250);
-        swipeRefreshLayout.setOnRefreshListener(this);
+        CustomRefreshLayout refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.refreshLayout_empty);
+        refreshLayout.setProgressViewOffset(true,50,0);
+        refreshLayout.setOnRefreshListener(this);
         switcherLayout.addCustomView(view,"empty");
         switcherLayout.showCustomLayout("empty");
     }

@@ -25,6 +25,8 @@ import com.leyuan.aidong.widget.endlessrecyclerview.HeaderSpanSizeLookup;
 import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
+import com.leyuan.custompullrefresh.CustomRefreshLayout;
+import com.leyuan.custompullrefresh.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +41,7 @@ import static com.leyuan.aidong.utils.Constant.RECOMMEND_NUTRITION;
 //todo 营养品界面和装备界面合成一个界面
 public class NurtureActivity extends BaseActivity implements NurtureActivityView{
     private SwitcherLayout switcherLayout;
-    private SwipeRefreshLayout refreshLayout;
+    private CustomRefreshLayout refreshLayout;
     private RecyclerView recommendView;
 
     private int currPage = 1;
@@ -77,10 +79,9 @@ public class NurtureActivity extends BaseActivity implements NurtureActivityView
     }
 
     private void initSwipeRefreshLayout() {
-        refreshLayout = (SwipeRefreshLayout)findViewById(R.id.refreshLayout);
+        refreshLayout = (CustomRefreshLayout)findViewById(R.id.refreshLayout);
         switcherLayout = new SwitcherLayout(this,refreshLayout);
-        setColorSchemeResources(refreshLayout);
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
                 currPage = 1;

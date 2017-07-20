@@ -3,7 +3,6 @@ package com.leyuan.aidong.ui.mine.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -26,6 +25,8 @@ import com.leyuan.aidong.widget.endlessrecyclerview.HeaderSpanSizeLookup;
 import com.leyuan.aidong.widget.endlessrecyclerview.RecyclerViewUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
 import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
+import com.leyuan.custompullrefresh.CustomRefreshLayout;
+import com.leyuan.custompullrefresh.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,12 +40,12 @@ import static com.leyuan.aidong.utils.Constant.RECOMMEND_CART;
  * //todo shit 购物车的实现需要重构
  */
 public class CartActivity extends BaseActivity implements CartActivityView, View.OnClickListener,
-        SwipeRefreshLayout.OnRefreshListener, CartHeaderView.CartHeaderCallback {
+        CartHeaderView.CartHeaderCallback, OnRefreshListener {
     private ImageView ivBack;
     private TextView tvEdit;
 
     private CartHeaderView cartHeaderView;
-    private SwipeRefreshLayout refreshLayout;
+    private CustomRefreshLayout refreshLayout;
     private RecyclerView recommendView;
     private int currPage = 1;
     private RecommendAdapter recommendAdapter;
@@ -99,7 +100,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
     private void initView(){
         ivBack = (ImageView) findViewById(R.id.iv_back);
         tvEdit = (TextView) findViewById(R.id.tv_edit);
-        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
+        refreshLayout = (CustomRefreshLayout) findViewById(R.id.refreshLayout);
         recommendView = (RecyclerView)findViewById(R.id.rv_recommend);
         bottomLayout = (LinearLayout) findViewById(R.id.ll_bottom);
         rbSelectAll = (CheckBox) findViewById(R.id.rb_select_all);
@@ -133,6 +134,7 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
     @Override
     public void onRefresh() {
         currPage = 1;
+        RecyclerViewStateUtils.resetFooterViewState(recommendView);
         cartHeaderView.pullToRefreshCartData();
     }
 
@@ -172,6 +174,10 @@ public class CartActivity extends BaseActivity implements CartActivityView, View
 
     @Override
     public void updateRecommendGoods(List<GoodsBean> goodsBeanList) {
+        if(refreshLayout.isRefreshing()){
+            recommendList.clear();
+            refreshLayout.setRefreshing(false);
+        }
         recommendList.addAll(goodsBeanList);
         recommendAdapter.setData(recommendList);
         wrapperAdapter.notifyDataSetChanged();

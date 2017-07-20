@@ -7,7 +7,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -26,11 +25,13 @@ import com.leyuan.aidong.ui.video.activity.VideoDetailActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.CustomLayoutManager;
+import com.leyuan.custompullrefresh.CustomRefreshLayout;
+import com.leyuan.custompullrefresh.OnRefreshListener;
 
 import java.util.ArrayList;
 
 
-public class SpecialTopicFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, VideoListViewLister {
+public class SpecialTopicFragment extends Fragment implements OnRefreshListener, VideoListViewLister {
 
     private int item_normal_height;
     private int item_max_height;
@@ -45,7 +46,7 @@ public class SpecialTopicFragment extends Fragment implements SwipeRefreshLayout
     private int first_complete_visible_position;
 
     private RecyclerView mRecyclerView;
-    private SwipeRefreshLayout layout_refresh;
+    private CustomRefreshLayout layout_refresh;
     private LinearLayout layout_video_empty;
     private VideoPresenterImpl presenter;
 
@@ -103,7 +104,7 @@ public class SpecialTopicFragment extends Fragment implements SwipeRefreshLayout
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        layout_refresh = (SwipeRefreshLayout) view.findViewById(R.id.layout_refresh);
+        layout_refresh = (CustomRefreshLayout) view.findViewById(R.id.layout_refresh);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         layout_video_empty = (LinearLayout) view.findViewById(R.id.layout_video_empty);
         layout_refresh.setOnRefreshListener(this);
