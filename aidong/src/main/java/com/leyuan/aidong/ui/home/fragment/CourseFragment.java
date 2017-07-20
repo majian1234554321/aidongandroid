@@ -71,7 +71,7 @@ public class CourseFragment extends BasePageFragment implements CourserFragmentV
     private void initRefreshLayout(View view) {
         refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.refreshLayout);
         switcherLayout = new SwitcherLayout(getContext(),refreshLayout);
-        refreshLayout.setProgressViewOffset(true,50,0);
+        refreshLayout.setProgressViewOffset(true,50,100);
         refreshLayout.setOnRefreshListener(this);
     }
 
@@ -152,7 +152,7 @@ public class CourseFragment extends BasePageFragment implements CourserFragmentV
         }
         View view = View.inflate(getContext(),R.layout.empty_course,null);
         CustomRefreshLayout refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.refreshLayout_empty);
-        refreshLayout.setProgressViewOffset(true,50,0);
+        refreshLayout.setProgressViewOffset(true,50,100);
         refreshLayout.setOnRefreshListener(this);
         switcherLayout.addCustomView(view,"empty");
         switcherLayout.showCustomLayout("empty");

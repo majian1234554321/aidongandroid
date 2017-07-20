@@ -45,6 +45,8 @@
           营养品/装备配送信息   DeliveryInfoActivity
           营养品/装备自提门店选择 SelfDeliveryVenuesActivity
 
+
+
     模块4: 发现
           爱动圈(CircleFragment)显示适配器为CircleDynamicAdapter
           目前有两种类型的Holder VideoViewHolder(显示视频item),MultiImageViewHolder(显示多张图片item)
@@ -80,6 +82,11 @@
           	  ApplyServiceNextActivity 申请售后第二步
 
 
+    支付相关:
+          	     订单详情     OrderDetailActivity
+          	     确认订单(商品) ConfirmOrderActivity
+                  预约课程     AppointCourseActivity
+                  预约活动    AppointCampaignActivity
     支付逻辑:
         目前支持微信和支付宝支付
         相关类在C:\WorkSpace\Aidong_V5\aidong\src\main\java\com\leyuan\aidong\module\pay
