@@ -385,7 +385,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/pref_5dp"
                     android:layout_toLeftOf="@+id/layout_tab_mine_personal_settings_contactus_go"
-                    android:text="021-54730961"
+                    android:text="021-52997778"
                     android:textColor="@color/actionsheet_gray"
                     android:textSize="@dimen/pref_16dp" />
             </RelativeLayout>

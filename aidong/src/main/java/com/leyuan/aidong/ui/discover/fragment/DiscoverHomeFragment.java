@@ -60,18 +60,20 @@ public class DiscoverHomeFragment extends BaseFragment implements SmartTabLayout
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.view_pager);
         tabLayout.setCustomTabView(this);
         camera.setOnClickListener(cameraClickListener);
-        camera.animate().scaleX(0).scaleY(0).setDuration(10);
+        camera.setVisibility(View.VISIBLE);
+//        camera.animate().scaleX(0).scaleY(0).setDuration(10);
 
         FragmentPagerItems pages = new FragmentPagerItems(getContext());
-        pages.add(FragmentPagerItem.of(null,DiscoverFragment.class));
+
         pages.add(FragmentPagerItem.of(null,CircleFragment.class));
+        pages.add(FragmentPagerItem.of(null,DiscoverFragment.class));
         adapter = new FragmentPagerItemAdapter(getChildFragmentManager(), pages);
         viewPager.setAdapter(adapter);
         tabLayout.setViewPager(viewPager);
         tabLayout.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
             @Override
             public void onPageSelected(int position) {
-                setCameraVisible(position == 1);
+                setCameraVisible(position == 0);
 
                 //reset tip dot
                 View tip = tabLayout.getTabAt(position).findViewById(R.id.tv_tab_tip);
@@ -93,10 +95,10 @@ public class DiscoverHomeFragment extends BaseFragment implements SmartTabLayout
         TextView tip = (TextView) tabView.findViewById(R.id.tv_tab_tip);
         tip.setVisibility(View.GONE);
         if(position == 0){
-            text.setText(R.string.tab_discover);
+            text.setText(R.string.tab_sport_circle);
             text.setTypeface(Typeface.DEFAULT_BOLD);
         }else {
-            text.setText(R.string.tab_sport_circle);
+            text.setText(R.string.tab_discover);
         }
         allTabView.add(tabView);
         return tabView;
