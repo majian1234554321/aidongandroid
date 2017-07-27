@@ -141,6 +141,8 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
      */
     public void toTargetActivity(BannerBean bannerBean) {
         if (TextUtils.isEmpty(bannerBean.getType())) return;
+        if (TextUtils.isEmpty(bannerBean.getLink())) return;
+
         switch (bannerBean.getType()) {
             case "10":
                 WebViewActivity.start(this, bannerBean.getTitle(), bannerBean.getLink());

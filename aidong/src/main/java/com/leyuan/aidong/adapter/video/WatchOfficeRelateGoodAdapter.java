@@ -51,7 +51,7 @@ public class WatchOfficeRelateGoodAdapter extends RecyclerView.Adapter<WatchOffi
         final GoodsBean bean = data.get(position);
         GlideLoader.getInstance().displayImage(bean.getCover(), holder.cover);
         holder.name.setText(bean.getName());
-        holder.price.setText(new StringBuilder().append("¥").append(bean.getPrice()));
+        holder.price.setText(new StringBuilder().append("¥").append(bean.getPrice() == null?bean.getMarket_price():bean.getPrice()));
         holder.cover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

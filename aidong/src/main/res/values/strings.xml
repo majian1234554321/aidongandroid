@@ -264,4 +264,6 @@
     <string name="copyright_time">Copyright ©2015–2017</string>
     <string name="no_install_wx">没有安装微信</string>
     <string name="no_install_QQ">没有安装QQ</string>
+    <string name="message">消息</string>
+    <string name="clear">清空</string>
 </resources>

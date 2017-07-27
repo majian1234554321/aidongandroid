@@ -42,9 +42,9 @@ public class Constant {
     public static final int REQUEST_NEXT_ACTIVITY = 10;
     public static final int REQUEST_PHONE_BINGDING = 22;
     public static final int REQUEST_ADD_ADDRESS = 100;
-    public static final int REQUEST_SELECT_ADDRESS =101 ;
-    public static final int REQUEST_UPDATE_DELIVERY =102 ;
-    public static final int REQUEST_SETTLEMENT_CART =103 ;
+    public static final int REQUEST_SELECT_ADDRESS = 101;
+    public static final int REQUEST_UPDATE_DELIVERY = 102;
+    public static final int REQUEST_SETTLEMENT_CART = 103;
     public static final int REQUEST_REFRESH_DYNAMIC = 104;
     public static final int REQUEST_VIDEO_COMMENT = 105;
     public static final int REQUEST_USER_INFO = 106;
@@ -84,7 +84,7 @@ public class Constant {
     public static final String VIDEO = "video";
     public static final String LIVE = "live";
     public static final String CATEGORY = "category";
-
+    public static final String BROADCAST_ACTION_CLEAR_CMD_MESSAGE = "broadcast_action_clear_cmd_message";
 
     public static List<VenuesBean> gyms;
     public static SystemBean systemInfoBean;
@@ -147,6 +147,21 @@ public class Constant {
     //交货方式
     public static final String DELIVERY_EXPRESS = "0";  //快递
     public static final String DELIVERY_SELF = "1";     //自提
+
+    //透传消息字段定义
+    public static String KDNUSERNAME = "kDNUserName";
+    public static final String CIRCLE = "circle";
+    public static final String KCMDMSGTYPE = "kCMDMsgType";
+    public static final String KDNPRAISEAVATAR = "kDNPraiseAvatar";
+    public static final String KDNID = "kDNID";
+    public static final String KDNOCCURTIME = "kDNOccurTime";
+    public static final String KDNCONTENT = "kDNContent";
+    public static final String KDNCONTENTURL = "kDNContentUrl";
+    public static final String KDNCOMMENTTYPE = "kDNCommentType";
+    public static final String KDNMSGID = "kDNMsgID";
+    public static final String KDNCONTENTTYPE = "kDNContentType";
+    public static final String KDNREPLYSITENICKNAME = "kDNreplySiteNickName";
+    public static final String BROADCAST_ACTION_RECEIVER_CMD_MESSAGE = "broadcast_action_receiver_cmd_message";
 
 
     public static class Chat {

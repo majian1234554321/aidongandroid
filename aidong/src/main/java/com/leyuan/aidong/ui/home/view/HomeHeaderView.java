@@ -84,7 +84,6 @@ public class HomeHeaderView extends RelativeLayout{
            public void onBannerItemClick(BGABanner banner, View itemView, Object model, int position) {
                ((MainActivity)context).toTargetActivity((BannerBean)model);
            }
-//>>>>>>> 7bdef4a9437380d0ccd5607641b88507c92764ac
         });
 
         tvMoreCourse.setOnClickListener(new OnClickListener() {

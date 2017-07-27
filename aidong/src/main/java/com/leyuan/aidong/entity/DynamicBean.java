@@ -3,6 +3,7 @@ package com.leyuan.aidong.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.constant.DynamicType;
 
 import java.util.List;
@@ -27,8 +28,8 @@ public class DynamicBean implements Parcelable {
     public boolean isLiked = false; //标记是否点赞
 
     @DynamicType
-    public  int getDynamicType(){
-        if(image != null && !image.isEmpty()){
+    public int getDynamicType() {
+        if (image != null && !image.isEmpty()) {
             /*if(image.size() == 1){
                 return DYNAMIC_ONE_IMAGE;
             }else if(image.size() == 2){
@@ -45,7 +46,7 @@ public class DynamicBean implements Parcelable {
                 return DYNAMIC_NONE;
             }*/
             return DYNAMIC_MULTI_IMAGE;
-        }else {
+        } else {
             return DYNAMIC_VIDEO;
         }
     }
@@ -95,4 +96,20 @@ public class DynamicBean implements Parcelable {
             return new DynamicBean[size];
         }
     };
+
+    public String getUnifromCover() {
+        if (getDynamicType() == DYNAMIC_MULTI_IMAGE) {
+            return image.get(0);
+        } else if (videos != null) {
+            return videos.cover;
+        }
+        return null;
+    }
+
+    public int getDynamicTypeInteger() {
+        if (getDynamicType() == Constant.DYNAMIC_MULTI_IMAGE) {
+            return 0;
+        }
+        return 1;
+    }
 }

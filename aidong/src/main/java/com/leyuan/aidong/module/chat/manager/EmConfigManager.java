@@ -6,12 +6,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.support.v4.content.LocalBroadcastManager;
-import android.widget.Toast;
 
 import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMCmdMessageBody;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMOptions;
 import com.hyphenate.easeui.EaseConstant;
@@ -19,7 +17,10 @@ import com.hyphenate.easeui.controller.EaseUI;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.model.EaseNotifier;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
+import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EMLog;
+import com.leyuan.aidong.config.UrlConfig;
+import com.leyuan.aidong.entity.CircleDynamicBean;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.module.chat.CallReceiver;
 import com.leyuan.aidong.module.chat.MyContactListener;
@@ -32,7 +33,6 @@ import com.leyuan.aidong.ui.mvp.view.EmChatView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.Logger;
-import com.leyuan.aidong.config.UrlConfig;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -173,29 +173,47 @@ public class EmConfigManager implements EmChatView {
 
             @Override
             public void onCmdMessageReceived(List<EMMessage> messages) {
+
                 for (EMMessage message : messages) {
                     EMLog.d(TAG, "receive command message");
-                    //get message body
-                    EMCmdMessageBody cmdMsgBody = (EMCmdMessageBody) message.getBody();
-                    final String action = cmdMsgBody.action();//获取自定义action
-                    //red packet code : 处理红包回执透传消息
-//                    if (!easeUI.hasForegroundActivies()) {
-//                        if (action.equals(RPConstant.REFRESH_GROUP_RED_PACKET_ACTION)) {
-//                            RedPacketUtil.receiveRedPacketAckMessage(message);
-//                            broadcastManager.sendBroadcast(new Intent(RPConstant.REFRESH_GROUP_RED_PACKET_ACTION));
-//                        }
-//                    }
+                    CircleDynamicBean bean = new CircleDynamicBean();
 
-                    if (action.equals("__Call_ReqP2P_ConferencePattern")) {
-                        String title = message.getStringAttribute("em_apns_ext", "conference call");
-                        Toast.makeText(appContext, title, Toast.LENGTH_LONG).show();
+                    try {
+                        bean.setFromAvatar(message.getStringAttribute(Constant.KDNPRAISEAVATAR));
+                        bean.setFromName(message.getStringAttribute(Constant.KDNUSERNAME));
+                        bean.setDynamicId(message.getStringAttribute(Constant.KDNID));
+                        bean.setTime(message.getStringAttribute(Constant.KDNOCCURTIME));
+                        bean.setContent(message.getStringAttribute(Constant.KDNCONTENT));
+                        bean.setImageUrl(message.getStringAttribute(Constant.KDNCONTENTURL));
+                        bean.setCommentType(message.getIntAttribute(Constant.KDNCOMMENTTYPE));
+//                        bean.setKDNMSGID(message.getStringAttribute(Constant.KDNMSGID));
+                        bean.setDynamicType(message.getIntAttribute(Constant.KDNCONTENTTYPE));
+                        bean.setReplySiteNickname(message.getStringAttribute(Constant.KDNREPLYSITENICKNAME));
+
+                        App.getInstance().saveDynamicCmdMessage(bean);
+
+                        EMLog.d(TAG, "CircleDynamicBean = " + bean.toString());
+                    } catch (HyphenateException e) {
+                        e.printStackTrace();
                     }
+
+
+//                    EMCmdMessageBody cmdMsgBody = (EMCmdMessageBody) message.getBody();
+//                    final String action = cmdMsgBody.action();//获取自定义action
+
+//                    if (action.equals("__Call_ReqP2P_ConferencePattern")) {
+//                        String title = message.getStringAttribute("em_apns_ext", "conference call");
+//                        Toast.makeText(appContext, title, Toast.LENGTH_LONG).show();
+//                    }
                     //end of red packet code
                     //获取扩展属性 此处省略
                     //maybe you need get extension of your message
                     //message.getStringAttribute("");
-                    EMLog.d(TAG, String.format("Command：action:%s,message:%s", action, message.toString()));
+//                    EMLog.d(TAG, String.format("Command：action:%s,message:%s", action, message.toString()));
                 }
+
+                App.getInstance().refreshDynamicCmdMessage();
+                LocalBroadcastManager.getInstance(appContext).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_RECEIVER_CMD_MESSAGE));
             }
 
             @Override

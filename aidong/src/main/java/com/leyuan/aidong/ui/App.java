@@ -10,6 +10,8 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
 import com.facebook.stetho.Stetho;
 import com.leyuan.aidong.config.UrlConfig;
+import com.leyuan.aidong.database.DynamicDb;
+import com.leyuan.aidong.entity.CircleDynamicBean;
 import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.entity.user.MineInfoBean;
@@ -22,10 +24,12 @@ import com.leyuan.aidong.module.photopicker.boxing.loader.IBoxingMediaLoader;
 import com.leyuan.aidong.utils.ForegroundCallbacks;
 import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.utils.Md5Utils;
 import com.leyuan.aidong.utils.SharePrefUtils;
 import com.leyuan.aidong.utils.VersionManager;
 import com.zzhoujay.richtext.RichText;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -83,11 +87,13 @@ public class App extends MultiDexApplication {
 
         EmConfigManager.getInstance().initializeEaseUi(this);
         Realm.init(context);
-        if(UrlConfig.debug){
+        if (UrlConfig.debug) {
             Stetho.initializeWithDefaults(this);
         }
 
         RichText.initCacheDir(this);
+
+        Logger.i("md5", Md5Utils.createMd("ae2c037cd273f69bfb5c96902d95b151"));
     }
 
     private ForegroundCallbacks.Listener foregroundListener = new ForegroundCallbacks.Listener() {
@@ -157,6 +163,28 @@ public class App extends MultiDexApplication {
 
     public List<BaseActivity> getActivityStack() {
         return mActivities;
+    }
+
+    private ArrayList<CircleDynamicBean> cmdCircleDynamicBeans;
+
+    public ArrayList<CircleDynamicBean> getCMDCirleDynamicBean() {
+        if (cmdCircleDynamicBeans == null) {
+            cmdCircleDynamicBeans = new DynamicDb(this).queryAll();
+        }
+        return cmdCircleDynamicBeans;
+    }
+
+    public void saveDynamicCmdMessage(CircleDynamicBean bean) {
+        new DynamicDb(this).insertInto(bean);
+    }
+
+    public void refreshDynamicCmdMessage() {
+        cmdCircleDynamicBeans = new DynamicDb(this).queryAll();
+    }
+
+    public void clearCMDMessage() {
+        cmdCircleDynamicBeans = null;
+        new DynamicDb(this).clear();
     }
 
     public class MyLocationListener implements BDLocationListener {

@@ -28,6 +28,7 @@ import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.PhotoBrowseInfo;
 import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.entity.model.UserCoach;
+import com.leyuan.aidong.module.chat.CMDMessageManager;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
@@ -63,7 +64,7 @@ import static com.leyuan.aidong.utils.Constant.DYNAMIC_VIDEO;
  * Created by song on 2016/12/28.
  */
 public class DynamicDetailActivity extends BaseActivity implements DynamicDetailActivityView, View.OnClickListener,
-        TextView.OnEditorActionListener,DynamicDetailAdapter.OnItemClickListener, OnRefreshListener {
+        TextView.OnEditorActionListener, DynamicDetailAdapter.OnItemClickListener, OnRefreshListener {
     private static final int MAX_TEXT_COUNT = 240;
     public static final int RESULT_DELETE = 0x3333;
     private ImageView ivBack;
@@ -87,6 +88,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
     private SharePopupWindow sharePopupWindow;
 
     private boolean isSelf = false;
+    private String replyName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -197,6 +199,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
 
     @Override
     public void onItemClick(int position) {
+        replyName = comments.get(position).getPublisher().getName();
         String other = comments.get(position).getPublisher().getName();
         other = String.format(getString(R.string.reply_other_user), other);
         etComment.setText(other);
@@ -253,6 +256,9 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
 
             //刷新头部评论数量
             headerAdapter.notifyDataSetChanged();
+
+            CMDMessageManager.sendCMDMessage(dynamic.publisher.getId(), App.getInstance().getUser().getAvatar(), App.getInstance().getUser().getName(), dynamic.id, content
+                    , dynamic.getUnifromCover(), 0, null, dynamic.getDynamicTypeInteger(), replyName);
         } else {
             ToastGlobal.showLong(baseBean.getMessage());
         }

@@ -13,6 +13,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
     private static final String DB_NAME = "mysql.db";
     public static final String TABLE_NAME = "default";
+    private static final String TABLE_NAME_DYNAMIC = "dynamic";
 
 
     public DataBaseHelper(Context context) {
@@ -21,7 +22,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "create table if not exists " + TABLE_NAME + " (Id integer primary key, videoId integer)";
+        String sql = "create table if not exists dynamic (_id integer primary key autoincrement, " +
+                "kCMDMsgType integer,kDNPraiseAvatar varchar(64),kDNUserName varchar(64),kDNID varchar(64)" +
+                ",kDNOccurTime varchar(64),kDNContent varchar(64),kDNContentUrl varchar(64),kDNCommentType integer" +
+                ",kDNMsgID varchar(64),kDNContentType integer,kDNreplySiteNickName varchar(64))";
         db.execSQL(sql);
     }
 

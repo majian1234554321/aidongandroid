@@ -102,6 +102,53 @@ public class AppointVenuesActivity extends BaseActivity implements View.OnClickL
         setListener();
     }
 
+    private void initView() {
+        titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
+        tvVenuesName = (TextView) findViewById(R.id.tv_name);
+        tvAddress = (TextView) findViewById(R.id.tv_address);
+        ivPhone = (ImageView) findViewById(R.id.iv_phone);
+        rvDate = (RecyclerView) findViewById(R.id.rv_date);
+        tvMorning = (TextView) findViewById(R.id.tv_morning);
+        tvAfternoon = (TextView) findViewById(R.id.tv_afternoon);
+        etUsername = (EditText) findViewById(R.id.et_username);
+        etUserPhone = (EditText) findViewById(R.id.et_phone);
+        tvAppoint = (TextView) findViewById(R.id.tv_appointment);
+
+
+        initButtonStatus();
+        rvDate.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        dateAdapter = new DateAdapter(selectedPosition);
+        rvDate.setAdapter(dateAdapter);
+
+        days = DateUtils.getSevenDate();
+        dateAdapter.setData(days);
+
+        tvVenuesName.setText(venuesName);
+        tvAddress.setText(venuesAddress);
+
+        appointDate = days.get(0);
+        Calendar c = Calendar.getInstance();
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+        if (hour >= 15) {
+            appointDate = days.get(1);
+        }
+        if (userName != null)
+            etUsername.setText(userName);
+        if (userPhone != null) {
+            etUserPhone.setText(userPhone);
+        }
+
+    }
+
+    private void setListener() {
+        titleBar.setOnClickListener(this);
+        ivPhone.setOnClickListener(this);
+        tvMorning.setOnClickListener(this);
+        tvAfternoon.setOnClickListener(this);
+        dateAdapter.setItemClickListener(this);
+        tvAppoint.setOnClickListener(this);
+    }
+
     private void initButtonStatus() {
         Calendar c = Calendar.getInstance();
         int hour = c.get(Calendar.HOUR_OF_DAY);
@@ -123,45 +170,6 @@ public class AppointVenuesActivity extends BaseActivity implements View.OnClickL
             isAfternoonUnable = false;
             selectedPosition = 1;
         }
-    }
-
-    private void initView() {
-        titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
-        tvVenuesName = (TextView) findViewById(R.id.tv_name);
-        tvAddress = (TextView) findViewById(R.id.tv_address);
-        ivPhone = (ImageView) findViewById(R.id.iv_phone);
-        rvDate = (RecyclerView) findViewById(R.id.rv_date);
-        tvMorning = (TextView) findViewById(R.id.tv_morning);
-        tvAfternoon = (TextView) findViewById(R.id.tv_afternoon);
-        etUsername = (EditText) findViewById(R.id.et_username);
-        etUserPhone = (EditText) findViewById(R.id.et_phone);
-        tvAppoint = (TextView) findViewById(R.id.tv_appointment);
-        initButtonStatus();
-        rvDate.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        dateAdapter = new DateAdapter(selectedPosition);
-        rvDate.setAdapter(dateAdapter);
-        days = DateUtils.getSevenDate();
-        dateAdapter.setData(days);
-        tvVenuesName.setText(venuesName);
-        tvAddress.setText(venuesAddress);
-
-        appointDate = days.get(0);
-        if (userName != null)
-            etUsername.setText(userName);
-        if (userPhone != null)
-        {
-            etUserPhone.setText(userPhone);
-        }
-
-    }
-
-    private void setListener() {
-        titleBar.setOnClickListener(this);
-        ivPhone.setOnClickListener(this);
-        tvMorning.setOnClickListener(this);
-        tvAfternoon.setOnClickListener(this);
-        dateAdapter.setItemClickListener(this);
-        tvAppoint.setOnClickListener(this);
     }
 
     @Override

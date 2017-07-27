@@ -88,7 +88,6 @@ public class DialogImageIdentify extends Dialog {
 
     }
 
-
     public void refreshImage(String mobile) {
         Logger.i(TAG,"refreshImage mobile = " +mobile);
         Glide.with(context).load(ConstantUrl.CAPTCHA_IMAGE + mobile + "?time=" + System.currentTimeMillis())

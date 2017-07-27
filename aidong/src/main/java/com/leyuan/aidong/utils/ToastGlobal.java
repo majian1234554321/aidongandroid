@@ -44,5 +44,20 @@ public class ToastGlobal {
         toast.show();
     }
 
+    public static void showLongConsecutive (String message) {
+        if (toast == null) {
+            toast = Toast.makeText(App.context, "", Toast.LENGTH_LONG);
+        }
+        toast.setText(message);
+        toast.show();
+    }
+
+    public static void showLongConsecutive (int message) {
+        if (toast == null) {
+            toast = Toast.makeText(App.context, "", Toast.LENGTH_LONG);
+        }
+        toast.setText(message);
+        toast.show();
+    }
 
 }

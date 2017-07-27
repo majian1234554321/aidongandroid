@@ -139,6 +139,8 @@ public class CircleDynamicAdapter extends BaseHolderViewAdapter<DynamicBean> {
         void onCommentClick(DynamicBean dynamicBean,int position);
         void onShareClick(DynamicBean dynamic);
         void onFollowClick(String id);
+
+        void onLikeClick(DynamicBean dynamic);
     }
 
 
@@ -181,6 +183,11 @@ public class CircleDynamicAdapter extends BaseHolderViewAdapter<DynamicBean> {
 
         @Override
         public void onFollowClick(String id) {
+
+        }
+
+        @Override
+        public void onLikeClick(DynamicBean dynamic) {
 
         }
     }

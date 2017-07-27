@@ -6,6 +6,7 @@
     android:background="@color/white"
     android:orientation="vertical">
 
+    <include layout="@layout/layout_cmd_dynamic_hint"/>
     <include layout="@layout/inc_dynamic_header" />
 
     <LinearLayout

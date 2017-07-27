@@ -39,8 +39,7 @@ public class DateUtils {
 
     public static String calendarToStr(Calendar calendar1, String format) {
         SimpleDateFormat formatter = new SimpleDateFormat(format);
-        String str = formatter.format(calendar1.getTime());
-        return str;
+        return formatter.format(calendar1.getTime());
 
     }
 
@@ -373,6 +372,10 @@ public class DateUtils {
         if (countdown < 0)
             countdown = 0;
         return countdown;
+    }
+
+    public static String getCurrentTime() {
+        return calendarToStr(Calendar.getInstance(), yyyyMMddHHmmss);
     }
 
 }
