@@ -17,39 +17,7 @@
 
     <include layout="@layout/inc_line_black" />
 
-    <RelativeLayout
-        android:id="@+id/rl_qr_code"
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_qr_num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:text="88777"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/black"
-            android:textSize="30sp" />
-
-        <ImageView
-            android:id="@+id/iv_qr"
-            android:layout_width="294dp"
-            android:layout_height="73dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="25dp"
-            android:background="@color/line_color"
-            android:layout_below="@+id/tv_qr_num"
-            android:layout_centerHorizontal="true" />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/icon_line"
-            android:layout_alignParentBottom="true"/>
-    </RelativeLayout>
 
     <!--自提时间-->
     <LinearLayout

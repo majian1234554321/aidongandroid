@@ -244,6 +244,9 @@
             android:name=".ui.mine.activity.OrderDetailActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.mine.activity.OrderDetailMultiplePackagesActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.mine.activity.FollowActivity"
             android:screenOrientation="portrait" />
         <activity

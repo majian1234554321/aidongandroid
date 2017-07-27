@@ -2,13 +2,10 @@ package com.leyuan.aidong.ui.mine.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
@@ -16,6 +13,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.mine.OrderParcelAdapter;
+import com.leyuan.aidong.adapter.mine.OrderParcelMultiplePackagesAdapter;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.entity.OrderDetailBean;
@@ -30,10 +28,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.OrderPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.OrderDetailActivityView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DateUtils;
-import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.FormatUtil;
-import com.leyuan.aidong.utils.ImageRectUtils;
-import com.leyuan.aidong.utils.QRCodeUtil;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.CustomNestRadioGroup;
@@ -83,9 +78,9 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
 
     //自提信息
     private LinearLayout selfDeliveryInfoLayout;
-    private RelativeLayout rlQrCode;   //自提条形码
-    private TextView tvQrNum;
-    private ImageView ivCode;
+//    private RelativeLayout rlQrCode;   //自提条形码
+//    private TextView tvQrNum;
+//    private ImageView ivCode;
     private ExtendTextView tvDeliveryTime; //自提时间
     private RecyclerView selfDeliveryGoodsRecyclerView; //自提商品信息
 
@@ -120,7 +115,7 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
     private List<ParcelBean> selfDeliveryList = new ArrayList<>();
     private ArrayList<GoodsBean> goodsList = new ArrayList<>();
     private OrderParcelAdapter expressAdapter;
-    private OrderParcelAdapter selfDeliveryAdapter;
+    private OrderParcelMultiplePackagesAdapter selfDeliveryAdapter;
     private String orderId;
     private OrderPresent orderPresent;
     private String payType;
@@ -166,9 +161,9 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
         tvRemarks = (ExtendTextView) findViewById(R.id.tv_remarks);
         expressGoodsRecyclerView = (RecyclerView) findViewById(R.id.rv_express_goods);
         selfDeliveryInfoLayout = (LinearLayout) findViewById(R.id.ll_self_delivery_info);
-        rlQrCode = (RelativeLayout) findViewById(R.id.rl_qr_code);
-        tvQrNum = (TextView) findViewById(R.id.tv_qr_num);
-        ivCode = (ImageView) findViewById(R.id.iv_qr);
+//        rlQrCode = (RelativeLayout) findViewById(R.id.rl_qr_code);
+//        tvQrNum = (TextView) findViewById(R.id.tv_qr_num);
+//        ivCode = (ImageView) findViewById(R.id.iv_qr);
         tvDeliveryTime = (ExtendTextView) findViewById(R.id.tv_delivery_time);
         selfDeliveryGoodsRecyclerView = (RecyclerView) findViewById(R.id.rv_self_delivery_goods);
         tvTotalPrice = (ExtendTextView) findViewById(R.id.tv_total_price);
@@ -198,7 +193,7 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
         expressGoodsRecyclerView.setNestedScrollingEnabled(false);
         expressGoodsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         expressGoodsRecyclerView.setAdapter(expressAdapter);
-        selfDeliveryAdapter = new OrderParcelAdapter(this);
+        selfDeliveryAdapter = new OrderParcelMultiplePackagesAdapter(this);
         selfDeliveryGoodsRecyclerView.setNestedScrollingEnabled(false);
         selfDeliveryGoodsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         selfDeliveryGoodsRecyclerView.setAdapter(selfDeliveryAdapter);
@@ -215,7 +210,7 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
         payGroup.setOnCheckedChangeListener(this);
         timer.setOnCountdownEndListener(this);
         rlExpress.setOnClickListener(this);
-        ivCode.setOnClickListener(this);
+//        ivCode.setOnClickListener(this);
     }
 
     @Override
@@ -272,25 +267,27 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
         }
 
         if (selfDeliveryList != null && !selfDeliveryList.isEmpty()) {
+            selfDeliveryAdapter.setPayStatus(bean.getStatus());
             selfDeliveryAdapter.setData(selfDeliveryList);
             selfDeliveryInfoLayout.setVisibility(View.VISIBLE);
             tvDeliveryTime.setRightContent(selfDeliveryList.get(0).getPickUpDate());
-            if (UN_PAID.equals(bean.getStatus()) || CLOSE.equals(bean.getStatus())) {
-                rlQrCode.setVisibility(View.GONE);
-            } else {
-                rlQrCode.setVisibility(View.VISIBLE);
-                if (PAID.equals(bean.getStatus())) {
-                    tvQrNum.setText(bean.getId());
-                    ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFF000000, bean.getId(),
-                            DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
-                } else {
-                    tvQrNum.setText(bean.getId());
-                    tvQrNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-                    tvQrNum.setTextColor(Color.parseColor("#ebebeb"));
-                    ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFFebebeb, bean.getId(),
-                            DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
-                }
-            }
+
+//            if (UN_PAID.equals(bean.getStatus()) || CLOSE.equals(bean.getStatus())) {
+//                rlQrCode.setVisibility(View.GONE);
+//            } else {
+//                rlQrCode.setVisibility(View.VISIBLE);
+//                if (PAID.equals(bean.getStatus())) {
+//                    tvQrNum.setText(bean.getId());
+//                    ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFF000000, bean.getId(),
+//                            DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
+//                } else {
+//                    tvQrNum.setText(bean.getId());
+//                    tvQrNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+//                    tvQrNum.setTextColor(Color.parseColor("#ebebeb"));
+//                    ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFFebebeb, bean.getId(),
+//                            DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
+//                }
+//            }
         } else {
             selfDeliveryInfoLayout.setVisibility(View.GONE);
         }
@@ -362,9 +359,9 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
                 ExpressInfoActivity.start(this, orderId);
                 break;
             case R.id.iv_qr:
-                if(PAID.equals(status)){
-                     BarcodeActivity.start(this, bean.getId(), ImageRectUtils.getDrawableBoundsInView(ivCode));
-                }
+//                if(PAID.equals(status)){
+//                     BarcodeActivity.start(this, bean.getId(), ImageRectUtils.getDrawableBoundsInView(ivCode));
+//                }
                 break;
             default:
                 break;

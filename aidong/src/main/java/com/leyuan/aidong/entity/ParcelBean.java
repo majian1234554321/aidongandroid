@@ -9,6 +9,8 @@ import java.util.List;
  * Created by song on 2017/3/23.
  */
 public class ParcelBean {
+    private String id;
+    private String order_id;
     private String name;
     private String address;
     private String mobile;
@@ -20,6 +22,23 @@ public class ParcelBean {
     private String pick_up_status;  // 包裹状态
 
     private List<GoodsBean> item;
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getOrder_id() {
+        return order_id;
+    }
+
+    public void setOrder_id(String order_id) {
+        this.order_id = order_id;
+    }
 
     public String getName() {
         return name;

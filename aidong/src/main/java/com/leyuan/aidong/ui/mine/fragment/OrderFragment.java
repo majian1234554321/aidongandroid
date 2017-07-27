@@ -12,7 +12,7 @@ import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.OrderBean;
 import com.leyuan.aidong.ui.BaseLazyFragment;
 import com.leyuan.aidong.ui.mine.activity.CartActivity;
-import com.leyuan.aidong.ui.mine.activity.OrderDetailActivity;
+import com.leyuan.aidong.ui.mine.activity.OrderDetailMultiplePackagesActivity;
 import com.leyuan.aidong.ui.mvp.presenter.OrderPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.OrderPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.OrderFragmentView;
@@ -159,7 +159,7 @@ public class OrderFragment extends BaseLazyFragment implements OrderFragmentView
 
         @Override
         public void onPayOrder(String id) {
-            OrderDetailActivity.start(getContext(),id);
+            OrderDetailMultiplePackagesActivity.start(getContext(),id);
         }
 
         @Override
