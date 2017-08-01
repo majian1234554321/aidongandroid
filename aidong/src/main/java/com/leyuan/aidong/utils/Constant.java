@@ -85,6 +85,7 @@ public class Constant {
     public static final String LIVE = "live";
     public static final String CATEGORY = "category";
     public static final String BROADCAST_ACTION_CLEAR_CMD_MESSAGE = "broadcast_action_clear_cmd_message";
+    public static final String DYNAMIC_ID = "dynamic_id";
 
     public static List<VenuesBean> gyms;
     public static SystemBean systemInfoBean;

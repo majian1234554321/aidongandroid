@@ -186,6 +186,7 @@ public class CircleDynamicAdapter extends BaseHolderViewAdapter<DynamicBean> {
 
         }
 
+        @Deprecated
         @Override
         public void onLikeClick(DynamicBean dynamic) {
 

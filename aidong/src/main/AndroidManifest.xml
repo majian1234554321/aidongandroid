@@ -241,9 +241,6 @@
             android:name=".ui.mine.activity.SelectCouponActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.OrderDetailActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.mine.activity.OrderDetailMultiplePackagesActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -338,6 +335,10 @@
             android:name=".ui.home.activity.NurtureActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullScreen" />
+        <activity
+            android:name=".ui.home.activity.FoodAndBeverageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.FullScreen" />
 
         <activity
             android:name=".ui.home.activity.AppointCampaignActivity"
@@ -385,6 +386,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.discover.activity.DynamicDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.discover.activity.DynamicDetailByIdActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.discover.activity.CMDMessageActivity"

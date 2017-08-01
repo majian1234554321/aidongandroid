@@ -238,12 +238,12 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
         @Override
         public void onLikeClick(DynamicBean dynamic) {
             super.onLikeClick(dynamic);
-            if (App.mInstance.isLogin()) {
-                UserCoach me = App.getInstance().getUser();
-
-                CMDMessageManager.sendCMDMessage(dynamic.publisher.getId(), me.getAvatar(), me.getName(), dynamic.id, null
-                        , dynamic.getUnifromCover(), 1, null, dynamic.getDynamicTypeInteger(), null);
-            }
+//            if (App.mInstance.isLogin()) {
+//                UserCoach me = App.getInstance().getUser();
+//
+//                CMDMessageManager.sendCMDMessage(dynamic.publisher.getId(), me.getAvatar(), me.getName(), dynamic.id, null
+//                        , dynamic.getUnifromCover(), 1, null, dynamic.getDynamicTypeInteger(), null);
+//            }
         }
 
         @Override
@@ -281,6 +281,12 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
             item.setId(String.valueOf(user.getId()));
             dynamicList.get(position).like.item.add(0, item);
             circleDynamicAdapter.notifyItemChanged(position);
+
+            DynamicBean dynamic = dynamicList.get(position);
+            CMDMessageManager.sendCMDMessage(dynamic.publisher.getId(), App.getInstance().getUser().getAvatar(),
+                    App.getInstance().getUser().getName(), dynamic.id, null, dynamic.getUnifromCover(), 1, null,
+                    dynamic.getDynamicTypeInteger(), null);
+
         } else {
             ToastGlobal.showLong(baseBean.getMessage());
         }

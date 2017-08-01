@@ -27,7 +27,7 @@ ext {
     targetSdkVersion = 25
 
     versionCode = 33
-    versionName = "5.0.78"
+    versionName = "5.1.0"
 
     design = 'com.android.support:design:25.1.1'
     appcompatv7 = 'com.android.support:appcompat-v7:25.1.1'

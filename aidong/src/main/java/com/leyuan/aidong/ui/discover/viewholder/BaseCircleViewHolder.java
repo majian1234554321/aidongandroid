@@ -96,7 +96,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
     @Override
     public void onBindData(final DynamicBean dynamic, final int position) {
         if (position == 0 && context instanceof MainActivity && App.getInstance().getCMDCirleDynamicBean()
-                !=null && !App.getInstance().getCMDCirleDynamicBean().isEmpty()) {
+                != null && !App.getInstance().getCMDCirleDynamicBean().isEmpty()) {
 
             layoutCmdMessage.setVisibility(View.VISIBLE);
             layoutCmdMessage.setOnClickListener(new View.OnClickListener() {
@@ -107,10 +107,10 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             });
 
             ArrayList<CircleDynamicBean> beanList = App.getInstance().getCMDCirleDynamicBean();
-            CircleDynamicBean bean = beanList.get(beanList.size() -1);
+            CircleDynamicBean bean = beanList.get(beanList.size() - 1);
 
-            GlideLoader.getInstance().displayRoundAvatarImage(bean.getFromAvatar(),imgCMDAvatar);
-            txtCmdMessageNum.setText(beanList.size()+"条新消息");
+            GlideLoader.getInstance().displayRoundAvatarImage(bean.getFromAvatar(), imgCMDAvatar);
+            txtCmdMessageNum.setText(beanList.size() + "条新消息");
         } else {
             layoutCmdMessage.setVisibility(View.GONE);
         }
@@ -209,7 +209,14 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
             public void onClick(View v) {
                 if (callback != null) {
                     callback.onLikeClick(position, dynamic.id, isLike(dynamic));
-                    callback.onLikeClick(dynamic);
+//                    if (App.getInstance().isLogin() && !TextUtils.equals(App.getInstance().getUser().getId() + "", dynamic.publisher.getId())
+//                            && isLike(dynamic)) {
+//                        CMDMessageManager.sendCMDMessage(dynamic.publisher.getId(), App.getInstance().getUser().getAvatar(),
+//                                App.getInstance().getUser().getName(), dynamic.id, null, dynamic.getUnifromCover(), 1, null,
+//                                dynamic.getDynamicTypeInteger(), null);
+//
+//                    }
+//                    callback.onLikeClick(dynamic);
                 }
             }
         });

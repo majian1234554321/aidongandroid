@@ -1,6 +1,7 @@
 package com.leyuan.aidong.http.api;
 
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.data.CommentData;
 import com.leyuan.aidong.entity.data.DiscoverData;
 import com.leyuan.aidong.entity.data.DynamicsData;
@@ -20,6 +21,10 @@ import rx.Observable;
  * Created by song on 2016/12/26.
  */
 public interface DynamicService {
+
+    @GET("dynamics/{id}")
+    Observable<BaseBean<DynamicBean>> getDynamicDetail(@Path("id") String id);
+
     @GET("dynamics")
     Observable<BaseBean<DynamicsData>> getDynamics(@Query("page") int page);
 
@@ -51,6 +56,7 @@ public interface DynamicService {
 
     @DELETE("dynamics/{id}")
     Observable<BaseBean> deleteDynamic(@Path("id") String id);
+
 }
 
 

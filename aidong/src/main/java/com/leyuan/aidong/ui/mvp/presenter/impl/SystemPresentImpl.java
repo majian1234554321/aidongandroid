@@ -110,6 +110,14 @@ public class SystemPresentImpl implements SystemPresent {
                         nutrition.add(0, allBean);
                     }
 
+                    ArrayList<CategoryBean> foods = systemBean.getFoods();
+                    if(foods != null){
+                        CategoryBean allBean = new CategoryBean();
+                        allBean.setName("全部");
+                        foods.add(0, allBean);
+                    }
+
+
                     ArrayList<String> types = systemBean.getGymTypes();
                     if(types != null){
                         types.add(0, "全部类型");

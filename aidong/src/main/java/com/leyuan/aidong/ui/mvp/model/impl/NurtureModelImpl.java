@@ -43,6 +43,13 @@ public class NurtureModelImpl implements NurtureModel {
     }
 
     @Override
+    public void getFoodAndBeverage(Subscriber<NurtureData> subscriber, int page, String brandId, String sort,String gymId) {
+        nurtureService.getFoodAndBeverage(page,brandId,sort,gymId)
+                .compose(RxHelper.<NurtureData>transform())
+                .subscribe(subscriber);
+    }
+
+    @Override
     public void getNurtureDetail(Subscriber<NurtureDetailData> subscriber, String id) {
         nurtureService.getNurtureDetail(id)
                 .compose(RxHelper.<NurtureDetailData>transform())

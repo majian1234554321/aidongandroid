@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.mvp.view;
 
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.CommentBean;
+import com.leyuan.aidong.entity.DynamicBean;
 
 import java.util.List;
 
@@ -20,4 +21,6 @@ public interface DynamicDetailActivityView {
     void cancelFollowResult(BaseBean baseBean);
     void addFollowResult(BaseBean baseBean);
     void deleteDynamicResult(BaseBean baseBean);
+
+    void onGetDynamicDetail(DynamicBean dynamicBean);
 }

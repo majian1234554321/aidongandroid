@@ -30,6 +30,8 @@ public interface NurtureModel {
      */
     void getNurtures(Subscriber<NurtureData> subscriber, int page, String brandId, String sort,String gymId);
 
+    void getFoodAndBeverage(Subscriber<NurtureData> subscriber, int page, String brandId, String sort, String gymId);
+
     /**
      * 获取营养品详情
      *

@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui.discover.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.net.Uri;
@@ -63,7 +64,7 @@ import static com.leyuan.aidong.utils.Constant.DYNAMIC_VIDEO;
  * 动态详情
  * Created by song on 2016/12/28.
  */
-public class DynamicDetailActivity extends BaseActivity implements DynamicDetailActivityView, View.OnClickListener,
+public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDetailActivityView, View.OnClickListener,
         TextView.OnEditorActionListener, DynamicDetailAdapter.OnItemClickListener, OnRefreshListener {
     private static final int MAX_TEXT_COUNT = 240;
     public static final int RESULT_DELETE = 0x3333;
@@ -90,6 +91,14 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
     private boolean isSelf = false;
     private String replyName;
     private UserBean replyUser;
+    private String dynamicId;
+
+
+    public static void startById(Context context, String dynamicId) {
+        Intent intent = new Intent(context, DynamicDetailByIdActivity.class);
+        intent.putExtra(Constant.DYNAMIC_ID, dynamicId);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,13 +107,21 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
         dynamicPresent = new DynamicPresentImpl(this, this);
         if (getIntent() != null) {
             dynamic = getIntent().getParcelableExtra("dynamic");
+            dynamicId = getIntent().getStringExtra(Constant.DYNAMIC_ID);
+        }
+
+        if(dynamic != null){
             isSelf = App.mInstance.getUser() != null &&
                     dynamic.publisher.getId().equals(String.valueOf(App.mInstance.getUser().getId()));
+            initView();
+            setListener();
+            dynamicPresent.pullToRefreshComments(dynamic.id);
+            sharePopupWindow = new SharePopupWindow(this);
         }
-        initView();
-        setListener();
-        dynamicPresent.pullToRefreshComments(dynamic.id);
-        sharePopupWindow = new SharePopupWindow(this);
+
+        if(dynamicId != null){
+            dynamicPresent.getDynamicDetail(dynamicId);
+        }
     }
 
     private void initView() {
@@ -173,7 +190,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
             super.onScrollStateChanged(recyclerView, newState);
 
             if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
-                KeyBoardUtil.closeKeyboard(etComment, DynamicDetailActivity.this);
+                KeyBoardUtil.closeKeyboard(etComment, DynamicDetailByIdActivity.this);
                 etComment.clearFocus();
             }
         }
@@ -184,7 +201,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
         switch (v.getId()) {
             case R.id.iv_back:
                 finish();
-                KeyBoardUtil.closeKeyboard(etComment, DynamicDetailActivity.this);
+                KeyBoardUtil.closeKeyboard(etComment, DynamicDetailByIdActivity.this);
                 break;
             case R.id.tv_report_or_delete:
                 if (isSelf) {
@@ -263,7 +280,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
 
             CMDMessageManager.sendCMDMessage(dynamic.publisher.getId(), App.getInstance().getUser().getAvatar(), App.getInstance().getUser().getName(), dynamic.id, content
                     , dynamic.getUnifromCover(), 0, null, dynamic.getDynamicTypeInteger(), replyName);
-            if(replyUser != null){
+            if (replyUser != null) {
                 CMDMessageManager.sendCMDMessage(replyUser.getId(), App.getInstance().getUser().getAvatar(), App.getInstance().getUser().getName(), dynamic.id, content
                         , dynamic.getUnifromCover(), 0, null, dynamic.getDynamicTypeInteger(), replyName);
                 replyUser = null;
@@ -372,7 +389,14 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
 
     @Override
     public void onGetDynamicDetail(DynamicBean dynamicBean) {
-
+        if(dynamic != null){
+            isSelf = App.mInstance.getUser() != null &&
+                    dynamic.publisher.getId().equals(String.valueOf(App.mInstance.getUser().getId()));
+            initView();
+            setListener();
+            dynamicPresent.pullToRefreshComments(dynamic.id);
+            sharePopupWindow = new SharePopupWindow(this);
+        }
     }
 
     public class DynamicCallback extends CircleDynamicAdapter.SimpleDynamicCallback {
@@ -387,17 +411,16 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
             }
             sharePopupWindow.showAtBottom("我分享了" + dynamic.publisher.getName() + "的动态，速速围观",
                     dynamic.content, cover, ConstantUrl.URL_SHARE_DYNAMIC + dynamic.id);
-
         }
 
         @Override
         public void onAvatarClick(String id) {
-            UserInfoActivity.startForResult(DynamicDetailActivity.this, id, Constant.REQUEST_USER_INFO);
+            UserInfoActivity.startForResult(DynamicDetailByIdActivity.this, id, Constant.REQUEST_USER_INFO);
         }
 
         @Override
         public void onVideoClick(String url) {
-            Intent intent = new Intent(DynamicDetailActivity.this, PlayerActivity.class)
+            Intent intent = new Intent(DynamicDetailByIdActivity.this, PlayerActivity.class)
                     .setData(Uri.parse(url))
                     .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_HLS);
             startActivity(intent);
@@ -406,7 +429,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
         @Override
         public void onImageClick(List<String> photoUrls, List<Rect> viewLocalRect, int currPosition) {
             PhotoBrowseInfo info = PhotoBrowseInfo.create(photoUrls, viewLocalRect, currPosition);
-            PhotoBrowseActivity.start(DynamicDetailActivity.this, info);
+            PhotoBrowseActivity.start(DynamicDetailByIdActivity.this, info);
         }
 
         @Override
@@ -420,13 +443,13 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
 
         @Override
         public void onCommentClick(DynamicBean dynamicBean, int position) {
-            KeyBoardUtil.openKeyboard(etComment, DynamicDetailActivity.this);
+            KeyBoardUtil.openKeyboard(etComment, DynamicDetailByIdActivity.this);
             etComment.requestFocus();
         }
 
         @Override
         public void onFollowClick(String id) {
-            boolean isFollow = SystemInfoUtils.isFollow(DynamicDetailActivity.this, id);
+            boolean isFollow = SystemInfoUtils.isFollow(DynamicDetailByIdActivity.this, id);
             if (isFollow) {
                 dynamicPresent.cancelFollow(id);
             } else {

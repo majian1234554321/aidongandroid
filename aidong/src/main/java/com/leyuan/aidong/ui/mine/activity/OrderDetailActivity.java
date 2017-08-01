@@ -51,9 +51,11 @@ import static com.leyuan.aidong.utils.Constant.PAY_ALI;
 import static com.leyuan.aidong.utils.Constant.PAY_WEIXIN;
 
 /**
- * 订单详情
+ * 订单详情 该类已废弃 OrderDetailMultiplePackagesActivity 准备删除
  * Created by song on 2016/9/1.
  */
+
+@Deprecated
 public class OrderDetailActivity extends BaseActivity implements OrderDetailActivityView, View.OnClickListener,
         CustomNestRadioGroup.OnCheckedChangeListener, CountdownView.OnCountdownEndListener {
     private static final String UN_PAID = "pending";          //待付款

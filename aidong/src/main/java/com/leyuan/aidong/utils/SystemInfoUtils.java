@@ -42,11 +42,11 @@ public class SystemInfoUtils {
     private static final String BANNER_STORE = "4";
 
 
-    public static double getExpressPrice(Context context){
+    public static double getExpressPrice(Context context) {
         double express = 0d;
         if (systemInfoBean != null && systemInfoBean.getAcivity() != null) {
-            express =  Constant.systemInfoBean.getExpressPrice() ;
-        }else {
+            express = Constant.systemInfoBean.getExpressPrice();
+        } else {
             Object bean = getSystemInfoBean(context, KEY_SYSTEM);
             if (bean instanceof SystemBean) {
                 express = ((SystemBean) bean).getExpressPrice();
@@ -55,10 +55,10 @@ public class SystemInfoUtils {
         return express;
     }
 
-    public static String getCourseVideoTipOnLogout(){
+    public static String getCourseVideoTipOnLogout() {
         String activityTip = "";
         if (systemInfoBean != null && systemInfoBean.getAcivity() != null) {
-            activityTip =  Constant.systemInfoBean.getAcivity() ;
+            activityTip = Constant.systemInfoBean.getAcivity();
         }
         return activityTip;
     }
@@ -252,6 +252,23 @@ public class SystemInfoUtils {
             Object bean = getSystemInfoBean(context, KEY_SYSTEM);
             if (bean instanceof SystemBean) {
                 return ((SystemBean) bean).getNutrition();
+            }
+            return null;
+        }
+    }
+
+    /**
+     * 获取餐饮分类信息
+     */
+    public static ArrayList<CategoryBean> getFoodsCategory(Context context) {
+        if (systemInfoBean != null && systemInfoBean.getFoods() != null) { //内存有直接从内存读取返回
+            return systemInfoBean.getFoods();
+        } else {          // 从本地读取
+            Object bean = getSystemInfoBean(context, KEY_SYSTEM);
+            if (bean instanceof SystemBean) {
+                //把本地数据做进内存缓存
+                systemInfoBean = (SystemBean) bean;
+                return systemInfoBean.getFoods();
             }
             return null;
         }

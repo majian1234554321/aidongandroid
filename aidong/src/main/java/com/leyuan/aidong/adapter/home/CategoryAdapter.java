@@ -18,6 +18,7 @@ import com.leyuan.aidong.utils.constant.GoodsType;
 import java.util.ArrayList;
 
 import static com.leyuan.aidong.utils.Constant.GOODS_EQUIPMENT;
+import static com.leyuan.aidong.utils.Constant.GOODS_FOODS;
 import static com.leyuan.aidong.utils.Constant.GOODS_NUTRITION;
 
 /**
@@ -61,6 +62,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.FoodVi
                 GlideLoader.getInstance().displayRoundLocalImage(R.drawable.icon_all_equipment, holder.cover);
             }else if(GOODS_NUTRITION.equals(type)){
                 GlideLoader.getInstance().displayRoundLocalImage(R.drawable.icon_all_nurture, holder.cover);
+            }else if(GOODS_FOODS.equals(type)){
+                GlideLoader.getInstance().displayRoundLocalImage(R.drawable.icon_all_foods, holder.cover);
             }
         }else {
             GlideLoader.getInstance().displayRoundImage(bean.getImage(), holder.cover);

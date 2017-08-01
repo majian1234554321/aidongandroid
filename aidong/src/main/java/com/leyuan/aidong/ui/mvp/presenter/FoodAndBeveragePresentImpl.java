@@ -1,4 +1,4 @@
-package com.leyuan.aidong.ui.mvp.presenter.impl;
+package com.leyuan.aidong.ui.mvp.presenter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +14,6 @@ import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.module.pay.PayUtils;
 import com.leyuan.aidong.ui.mvp.model.NurtureModel;
 import com.leyuan.aidong.ui.mvp.model.impl.NurtureModelImpl;
-import com.leyuan.aidong.ui.mvp.presenter.NurturePresent;
 import com.leyuan.aidong.ui.mvp.view.GoodsFilterActivityView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.widget.SwitcherLayout;
@@ -23,32 +22,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 营养品
- * Created by song on 2016/8/15.
+ * Created by user on 2017/8/1.
  */
-public class NurturePresentImpl implements NurturePresent{
+public class FoodAndBeveragePresentImpl {
     private Context context;
     private NurtureModel nurtureModel;
     private GoodsFilterActivityView filterActivityView;
     private List<NurtureBean> nurtureBeanList = new ArrayList<>();
 
-    public NurturePresentImpl(GoodsFilterActivityView filterActivityView, Context context) {
+    public FoodAndBeveragePresentImpl(GoodsFilterActivityView filterActivityView, Context context) {
         this.context = context;
         this.filterActivityView = filterActivityView;
-        if(nurtureModel == null) {
+        if (nurtureModel == null) {
             nurtureModel = new NurtureModelImpl(context);
         }
     }
 
-    @Deprecated
-    @Override
-    public void getCategory() {
-        //nurtureActivityView.setCategory(nurtureModel.getCategory());
-    }
-
-    @Override
-    public void commendLoadNurtureData(final SwitcherLayout switcherLayout, String brandId, String sort,String gymId) {
-        nurtureModel.getNurtures(new CommonSubscriber<NurtureData>(context,switcherLayout) {
+    public void commendLoadFoodsData(final SwitcherLayout switcherLayout, String brandId, String sort, String gymId) {
+        nurtureModel.getFoodAndBeverage(new CommonSubscriber<NurtureData>(context,switcherLayout) {
             @Override
             public void onNext(NurtureData nurtureDataBean) {
                 if(nurtureDataBean != null && nurtureDataBean.getNutrition() != null){
@@ -61,12 +52,11 @@ public class NurturePresentImpl implements NurturePresent{
                     filterActivityView.showEmptyView();
                 }
             }
-        },Constant.PAGE_FIRST,brandId,sort,gymId);
+        }, Constant.PAGE_FIRST,brandId,sort,gymId);
     }
 
-    @Override
-    public void pullToRefreshNurtureData(String brandId, String sort,String gymId) {
-        nurtureModel.getNurtures(new RefreshSubscriber<NurtureData>(context) {
+    public void pullToRefreshFoodsData(String brandId, String sort, String gymId) {
+        nurtureModel.getFoodAndBeverage(new RefreshSubscriber<NurtureData>(context) {
             @Override
             public void onNext(NurtureData nurtureDataBean) {
                 if(nurtureDataBean != null && nurtureDataBean.getNutrition() != null){
@@ -81,10 +71,9 @@ public class NurturePresentImpl implements NurturePresent{
         }, Constant.PAGE_FIRST,brandId,sort,gymId);
     }
 
-    @Override
-    public void requestMoreNurtureData(RecyclerView recyclerView, final int pageSize, int page,
-                                       String brandId, String sort,String gymId) {
-        nurtureModel.getNurtures(new RequestMoreSubscriber<NurtureData>(context,recyclerView,pageSize) {
+    public void requestMoreFoodsData(RecyclerView recyclerView, final int pageSize, int page,
+                                     String brandId, String sort, String gymId) {
+        nurtureModel.getFoodAndBeverage(new RequestMoreSubscriber<NurtureData>(context,recyclerView,pageSize) {
             @Override
             public void onNext(NurtureData nurtureDataBean) {
                 if(nurtureDataBean != null && nurtureDataBean.getNutrition() != null){
@@ -101,10 +90,7 @@ public class NurturePresentImpl implements NurturePresent{
         },page,brandId,sort,gymId);
     }
 
-
-
-    @Override
-    public void buyNurtureImmediately(String skuCode, int amount, String coupon, String integral,
+    public void buyFoodsImmediately(String skuCode, int amount, String coupon, String integral,
                                       String coin, String payType, String pickUpWay, String pickUpId,
                                       String pickUpDate,final PayInterface.PayListener listener) {
         nurtureModel.buyNurtureImmediately(new ProgressSubscriber<PayOrderData>(context) {

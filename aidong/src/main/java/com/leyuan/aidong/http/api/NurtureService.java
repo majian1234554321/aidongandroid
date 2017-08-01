@@ -27,6 +27,12 @@ public interface NurtureService {
                                                    @Query("sort") String sort,
                                                    @Query("gym") String gymId);
 
+    @GET("market/foods")
+    Observable<BaseBean<NurtureData>> getFoodAndBeverage(@Query("page") int page,
+                                                  @Query("cat") String catId,
+                                                  @Query("sort") String sort,
+                                                  @Query("gym") String gymId);
+
     @GET("market/nutrition/{id}")
     Observable<BaseBean<NurtureDetailData>> getNurtureDetail(@Path("id") String id);
 

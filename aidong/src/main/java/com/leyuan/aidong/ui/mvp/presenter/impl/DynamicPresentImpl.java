@@ -9,8 +9,9 @@ import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.data.CommentData;
 import com.leyuan.aidong.entity.data.DynamicsData;
 import com.leyuan.aidong.entity.data.LikeData;
-import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
+import com.leyuan.aidong.http.subscriber.BaseSubscriber;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
+import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
@@ -77,9 +78,10 @@ public class DynamicPresentImpl implements DynamicPresent {
         }
     }
 
+
     @Override
     public void commonLoadData(final SwitcherLayout switcherLayout) {
-        dynamicModel.getDynamics(new CommonSubscriber<DynamicsData>(context,switcherLayout) {
+        dynamicModel.getDynamics(new CommonSubscriber<DynamicsData>(context, switcherLayout) {
             @Override
             public void onNext(DynamicsData dynamicsData) {
                 if (dynamicsData != null) {
@@ -127,6 +129,24 @@ public class DynamicPresentImpl implements DynamicPresent {
                 }
             }
         }, page);
+    }
+
+
+    @Override
+    public void getDynamicDetail(String id) {
+        dynamicModel.getDynamicDetail(new BaseSubscriber<DynamicBean>(context) {
+            @Override
+            public void onNext(DynamicBean dynamicBean) {
+                dynamicDetailActivityView.onGetDynamicDetail(dynamicBean);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                dynamicDetailActivityView.onGetDynamicDetail(null);
+            }
+        }, id);
+
     }
 
     @Override
@@ -208,8 +228,8 @@ public class DynamicPresentImpl implements DynamicPresent {
                 if (sportCircleFragmentView != null) {
                     sportCircleFragmentView.addLikeResult(position, baseBean);
                 }
-                if(dynamicDetailActivityView != null){
-                    dynamicDetailActivityView.addLikeResult(position,baseBean);
+                if (dynamicDetailActivityView != null) {
+                    dynamicDetailActivityView.addLikeResult(position, baseBean);
                 }
             }
         }, id);
@@ -223,8 +243,8 @@ public class DynamicPresentImpl implements DynamicPresent {
                 if (sportCircleFragmentView != null) {
                     sportCircleFragmentView.cancelLikeResult(position, baseBean);
                 }
-                if(dynamicDetailActivityView != null){
-                    dynamicDetailActivityView.cancelLikeResult(position,baseBean);
+                if (dynamicDetailActivityView != null) {
+                    dynamicDetailActivityView.cancelLikeResult(position, baseBean);
                 }
             }
         }, id);
@@ -249,37 +269,37 @@ public class DynamicPresentImpl implements DynamicPresent {
             public void onNext(BaseBean baseBean) {
                 dynamicDetailActivityView.reportResult(baseBean);
             }
-        },id,type);
+        }, id, type);
     }
 
     @Override
     public void cancelFollow(String id) {
-        if(followModel == null){
+        if (followModel == null) {
             followModel = new FollowModelImpl();
         }
         followModel.cancelFollow(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
-                if(baseBean != null){
+                if (baseBean != null) {
                     dynamicDetailActivityView.cancelFollowResult(baseBean);
                 }
             }
-        },id);
+        }, id);
     }
 
     @Override
     public void addFollow(String id) {
-        if(followModel == null){
+        if (followModel == null) {
             followModel = new FollowModelImpl();
         }
         followModel.addFollow(new ProgressSubscriber<BaseBean>(context) {
             @Override
             public void onNext(BaseBean baseBean) {
-                if(baseBean != null){
+                if (baseBean != null) {
                     dynamicDetailActivityView.addFollowResult(baseBean);
                 }
             }
-        },id);
+        }, id);
     }
 
     @Override
@@ -289,6 +309,6 @@ public class DynamicPresentImpl implements DynamicPresent {
             public void onNext(BaseBean baseBean) {
                 dynamicDetailActivityView.deleteDynamicResult(baseBean);
             }
-        },id);
+        }, id);
     }
 }

@@ -14,6 +14,8 @@ public class SystemBean implements Serializable {
     private ArrayList<CategoryBean> course;  //课程分类
     private ArrayList<CategoryBean> campaign;//活动分类
     private ArrayList<CategoryBean> nutrition;//营养品分类
+    private ArrayList<CategoryBean> foods;//营养餐分类
+
     private ArrayList<CategoryBean> equipment;//装备分类
     private ArrayList<DistrictBean> landmark; //商圈
     private List<CategoryBean> gym_brand;   //场馆品牌
@@ -64,6 +66,14 @@ public class SystemBean implements Serializable {
 
     public void setNutrition(ArrayList<CategoryBean> nutrition) {
         this.nutrition = nutrition;
+    }
+
+    public ArrayList<CategoryBean> getFoods() {
+        return foods;
+    }
+
+    public void setFoods(ArrayList<CategoryBean> foods) {
+        this.foods = foods;
     }
 
     public ArrayList<CategoryBean> getEquipment() {

@@ -71,25 +71,26 @@ public class OrderParcelMultiplePackagesAdapter extends RecyclerView.Adapter<Ord
             holder.rlQrCode.setVisibility(View.GONE);
         } else {
             holder.rlQrCode.setVisibility(View.VISIBLE);
-            if (PAID.equals(payStatus)) {
-                holder.tvQrNum.setText(bean.getId());
-                holder.ivCode.setImageBitmap(QRCodeUtil.createBarcode(context, 0xFF000000, bean.getId(),
+
+            if (bean.isVerified()) {
+                holder.tvQrNum.setText(bean.getVerify_no());
+                holder.tvQrNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                holder.tvQrNum.setTextColor(Color.parseColor("#ebebeb"));
+                holder.ivCode.setImageBitmap(QRCodeUtil.createBarcode(context, 0xFFebebeb, bean.getVerify_no(),
+                        qrCodeWidth, qrCodeHeight, false));
+            } else {
+                holder.tvQrNum.setText(bean.getVerify_no());
+                holder.ivCode.setImageBitmap(QRCodeUtil.createBarcode(context, 0xFF000000, bean.getVerify_no(),
                         qrCodeWidth, qrCodeHeight, false));
                 holder.ivCode.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        BarcodeActivity.start(context, bean.getId(), ImageRectUtils.getDrawableBoundsInView( holder.ivCode));
+                        BarcodeActivity.start(context, bean.getVerify_no(), ImageRectUtils.getDrawableBoundsInView(holder.ivCode));
                     }
                 });
-            } else {
-                holder.tvQrNum.setText(bean.getId());
-                holder.tvQrNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-                holder.tvQrNum.setTextColor(Color.parseColor("#ebebeb"));
-                holder.ivCode.setImageBitmap(QRCodeUtil.createBarcode(context, 0xFFebebeb, bean.getId(),
-                        qrCodeWidth, qrCodeHeight, false));
             }
-        }
 
+        }
 
         if (DELIVERY_EXPRESS.equals(bean.getPickUpWay())) {
             holder.tvShopName.setText("仓库发货");

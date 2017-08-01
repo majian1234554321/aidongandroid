@@ -1,5 +1,7 @@
 package com.leyuan.aidong.entity;
 
+import android.text.TextUtils;
+
 import com.leyuan.aidong.utils.constant.DeliveryType;
 
 import java.util.List;
@@ -20,6 +22,9 @@ public class ParcelBean {
     private String pick_up_name;    // 自提门店名称
     private String pick_up_date;    // 自提日期
     private String pick_up_status;  // 包裹状态
+
+    private String verify_no;  // "核销码",
+    private String verify_status;  // "核销状态 undo-未核销 done-已核销",
 
     private List<GoodsBean> item;
 
@@ -72,6 +77,22 @@ public class ParcelBean {
         this.remark = remark;
     }
 
+    public String getVerify_no() {
+        return verify_no;
+    }
+
+    public void setVerify_no(String verify_no) {
+        this.verify_no = verify_no;
+    }
+
+    public String getVerify_status() {
+        return verify_status;
+    }
+
+    public void setVerify_status(String verify_status) {
+        this.verify_status = verify_status;
+    }
+
     @DeliveryType
     public String getPickUpWay() {
         return pick_up_way;
@@ -119,5 +140,10 @@ public class ParcelBean {
 
     public void setItem(List<GoodsBean> item) {
         this.item = item;
+    }
+
+    public boolean isVerified() {
+
+        return TextUtils.equals(verify_status,"done");
     }
 }

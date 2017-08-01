@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.mvp.model.impl;
 
 
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.data.CommentData;
 import com.leyuan.aidong.entity.data.DynamicsData;
 import com.leyuan.aidong.entity.data.LikeData;
@@ -29,6 +30,13 @@ public class DynamicModelImpl implements DynamicModel{
     public void getDynamics(Subscriber<DynamicsData> subscriber, int page) {
         dynamicService.getDynamics(page)
                 .compose(RxHelper.<DynamicsData>transform())
+                .subscribe(subscriber);
+    }
+
+    @Override
+    public void getDynamicDetail(Subscriber<DynamicBean> subscriber, String id) {
+        dynamicService.getDynamicDetail(id)
+                .compose(RxHelper.<DynamicBean>transform())
                 .subscribe(subscriber);
     }
 

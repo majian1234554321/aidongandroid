@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.mvp.model;
 
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.data.CommentData;
 import com.leyuan.aidong.entity.data.DynamicsData;
 import com.leyuan.aidong.entity.data.LikeData;
@@ -18,6 +19,8 @@ public interface DynamicModel {
      * @param page 页码
      */
     void getDynamics(Subscriber<DynamicsData> subscriber, int page);
+
+    void getDynamicDetail(Subscriber<DynamicBean> subscriber, String id);
 
     /**
      * 发表动态

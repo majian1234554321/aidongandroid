@@ -17,6 +17,7 @@ public interface GoodsFilterActivityView {
      */
     void updateNurtureRecyclerView(List<NurtureBean> beanList);
     void updateEquipmentRecyclerView(List<EquipmentBean> beanList);
+    void updateFoodsRecyclerView(List<NurtureBean> beanList);
     /**
      * 显示FooterView，提示没有任何内容了
      */

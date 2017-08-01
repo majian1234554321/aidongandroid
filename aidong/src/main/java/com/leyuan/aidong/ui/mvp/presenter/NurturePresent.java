@@ -21,13 +21,10 @@ public interface NurturePresent {
      */
     void commendLoadNurtureData(SwitcherLayout switcherLayout, String brandId, String sort,String gymId);
 
-
-
     /**
      * 下拉刷新营养品列表数据
      */
     void pullToRefreshNurtureData(String brandId,String sort,String gymId);
-
 
     /**
      * 上拉加载更多营养品列表数据

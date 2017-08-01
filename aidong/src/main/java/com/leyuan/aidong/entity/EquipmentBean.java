@@ -4,7 +4,7 @@ package com.leyuan.aidong.entity;
  * 装备
  * Created by song on 2016/8/23.
  */
-public class EquipmentBean {
+public class EquipmentBean extends BaseGoodsBean {
     private String id;
     private String name;
     private String cover;

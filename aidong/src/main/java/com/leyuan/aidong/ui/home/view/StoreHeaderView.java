@@ -12,6 +12,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.ui.MainActivity;
 import com.leyuan.aidong.ui.home.activity.EquipmentActivity;
+import com.leyuan.aidong.ui.home.activity.FoodAndBeverageActivity;
 import com.leyuan.aidong.ui.home.activity.NurtureActivity;
 import com.leyuan.aidong.utils.GlideLoader;
 
@@ -64,6 +65,14 @@ public class StoreHeaderView extends RelativeLayout{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, EquipmentActivity.class);
+                (context).startActivity(intent);
+            }
+        });
+
+        headerView.findViewById(R.id.ll_healthy_food).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, FoodAndBeverageActivity.class);
                 (context).startActivity(intent);
             }
         });

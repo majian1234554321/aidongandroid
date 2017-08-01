@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CircleDynamicBean;
+import com.leyuan.aidong.ui.discover.activity.DynamicDetailByIdActivity;
 import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public class CmdMessageAdapter extends RecyclerView.Adapter<CmdMessageAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        CircleDynamicBean bean = beanList.get(position);
+        final CircleDynamicBean bean = beanList.get(position);
         GlideLoader.getInstance().displayRoundAvatarImage(bean.getFromAvatar(), holder.imgAvatar);
         GlideLoader.getInstance().displayImage(bean.getImageUrl(), holder.imgCover);
         holder.txtTime.setText(bean.getTime());
@@ -66,7 +67,7 @@ public class CmdMessageAdapter extends RecyclerView.Adapter<CmdMessageAdapter.Vi
         holder.layout_root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                DynamicDetailByIdActivity.startById(context,bean.getDynamicId());
             }
         });
     }

@@ -118,7 +118,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="专题"
+                android:text="课程"
                 android:textColor="@android:color/white"
                 android:textSize="17dp" />
 
@@ -142,7 +142,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="深入"
+                android:text="活动"
                 android:textColor="@color/text_gray"
                 android:textSize="17dp" />
 
@@ -167,7 +167,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="名人"
+                android:text="专访"
                 android:textColor="@color/text_gray"
                 android:textSize="17dp" />
 

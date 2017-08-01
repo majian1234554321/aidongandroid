@@ -10,6 +10,7 @@ import java.util.ArrayList;
  */
 public class NurtureData {
     private ArrayList<NurtureBean> nutrition;
+    private ArrayList<NurtureBean> foods;
 
     public ArrayList<NurtureBean> getNutrition() {
         return nutrition;
@@ -17,6 +18,14 @@ public class NurtureData {
 
     public void setNutrition(ArrayList<NurtureBean> nutrition) {
         this.nutrition = nutrition;
+    }
+
+    public ArrayList<NurtureBean> getFoods() {
+        return foods;
+    }
+
+    public void setFoods(ArrayList<NurtureBean> foods) {
+        this.foods = foods;
     }
 
     @Override
