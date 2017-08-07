@@ -30,8 +30,15 @@ public interface DynamicService {
 
     @FormUrlEncoded
     @POST("dynamics")
-    Observable<BaseBean<DiscoverData>> postDynamic(@Field("content") String content,
+    Observable<BaseBean<DiscoverData>> postImageDynamic(@Field("content") String content,
                                                    @Field("video") String video,
+                                                   @Field("image[]") String... image);
+
+    @FormUrlEncoded
+    @POST("dynamics")
+    Observable<BaseBean<DiscoverData>> postVideoDynamic(@Field("content") String content,
+                                                   @Field("video") String video,
+                                                   @Field("qiniu") String qiniu,
                                                    @Field("image[]") String... image);
 
     @FormUrlEncoded

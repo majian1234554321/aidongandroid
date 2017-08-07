@@ -194,6 +194,53 @@ public class SystemInfoUtils {
         }
     }
 
+    /**
+     * 获取收货时间段
+     */
+    public static List<String> getPeriods(Context context) {
+        if (systemInfoBean != null && systemInfoBean.getPeriods() != null) { //内存有直接从内存读取返回
+            return systemInfoBean.getPeriods();
+        } else {          // 从本地读取
+            Object bean = getSystemInfoBean(context, KEY_SYSTEM);
+            if (bean instanceof SystemBean) {
+                systemInfoBean = (SystemBean) bean;
+                return systemInfoBean.getPeriods();
+            }
+            return null;
+        }
+    }
+
+    /**
+     * 获取限制购买天数
+     */
+    public static int getLimit_days(Context context) {
+        if (systemInfoBean != null && systemInfoBean.getLimit_days() != 0) { //内存有直接从内存读取返回
+            return systemInfoBean.getLimit_days();
+        } else {          // 从本地读取
+            Object bean = getSystemInfoBean(context, KEY_SYSTEM);
+            if (bean instanceof SystemBean) {
+                systemInfoBean = ((SystemBean) bean);//缓存到内存
+                return systemInfoBean.getLimit_days();
+            }
+            return 7;
+        }
+    }
+
+    /**
+     * 获取截止时间段
+     */
+    public static String getLimit_period(Context context) {
+        if (systemInfoBean != null && systemInfoBean.getLimit_period() != null) { //内存有直接从内存读取返回
+            return systemInfoBean.getLimit_period();
+        } else {          // 从本地读取
+            Object bean = getSystemInfoBean(context, KEY_SYSTEM);
+            if (bean instanceof SystemBean) {
+                systemInfoBean = ((SystemBean) bean);//缓存到内存
+                return systemInfoBean.getLimit_period();
+            }
+            return "18:00";
+        }
+    }
 
     /**
      * 获取预约倒计时

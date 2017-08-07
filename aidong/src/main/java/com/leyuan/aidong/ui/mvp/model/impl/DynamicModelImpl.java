@@ -19,7 +19,7 @@ import rx.schedulers.Schedulers;
  * 爱动圈
  * Created by song on 2016/12/26.
  */
-public class DynamicModelImpl implements DynamicModel{
+public class DynamicModelImpl implements DynamicModel {
     private DynamicService dynamicService;
 
     public DynamicModelImpl() {
@@ -42,15 +42,23 @@ public class DynamicModelImpl implements DynamicModel{
 
     @Override
     public void postDynamic(Subscriber<BaseBean> subscriber, String content, String video, String... image) {
-        dynamicService.postDynamic(content,video,image)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(subscriber);
+        if (video != null) {
+            dynamicService.postVideoDynamic(content, video, "1", image)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(subscriber);
+        } else {
+            dynamicService.postImageDynamic(content, video, image)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(subscriber);
+        }
+
     }
 
     @Override
     public void addComment(Subscriber<BaseBean> subscriber, String id, String content) {
-        dynamicService.addComment(id,content)
+        dynamicService.addComment(id, content)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
@@ -58,7 +66,7 @@ public class DynamicModelImpl implements DynamicModel{
 
     @Override
     public void getComments(Subscriber<CommentData> subscriber, String id, int page) {
-        dynamicService.getComments(id,page)
+        dynamicService.getComments(id, page)
                 .compose(RxHelper.<CommentData>transform())
                 .subscribe(subscriber);
     }
@@ -81,21 +89,21 @@ public class DynamicModelImpl implements DynamicModel{
 
     @Override
     public void getLikes(Subscriber<LikeData> subscriber, String id, int page) {
-        dynamicService.getLikes(id,page)
+        dynamicService.getLikes(id, page)
                 .compose(RxHelper.<LikeData>transform())
                 .subscribe(subscriber);
     }
 
     @Override
-    public void reportDynamic(Subscriber<BaseBean> subscriber, String id,String type) {
-        dynamicService.reportDynamic(id,type)
+    public void reportDynamic(Subscriber<BaseBean> subscriber, String id, String type) {
+        dynamicService.reportDynamic(id, type)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
     }
 
     @Override
-    public void deleteDynamic(Subscriber<BaseBean> subscriber,String id) {
+    public void deleteDynamic(Subscriber<BaseBean> subscriber, String id) {
         dynamicService.deleteDynamic(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

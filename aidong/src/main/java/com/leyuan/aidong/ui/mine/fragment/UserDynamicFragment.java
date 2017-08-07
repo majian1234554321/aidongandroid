@@ -191,7 +191,7 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
         public void onVideoClick(String url) {
             Intent intent = new Intent(getContext(), PlayerActivity.class)
                     .setData(Uri.parse(url))
-                    .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_HLS);
+                    .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_OTHER);
             startActivity(intent);
         }
 

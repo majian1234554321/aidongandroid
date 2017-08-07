@@ -73,6 +73,7 @@ import cn.bingoogolapple.bgabanner.BGABanner;
 import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
 import static com.leyuan.aidong.utils.Constant.DELIVERY_SELF;
 import static com.leyuan.aidong.utils.Constant.EMPTY_STR;
+import static com.leyuan.aidong.utils.Constant.GOODS_FOODS;
 import static com.leyuan.aidong.utils.Constant.REQUEST_ADD_CART;
 import static com.leyuan.aidong.utils.Constant.REQUEST_BUY_IMMEDIATELY;
 import static com.leyuan.aidong.utils.Constant.REQUEST_CONFIRM;
@@ -228,11 +229,17 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         recommendCodeLayout.setOnClickListener(this);
         addressLayout.setOnClickListener(this);
         ivCart.setOnClickListener(this);
-        tvAddCart.setOnClickListener(this);
         payLayout.setOnClickListener(this);
         scrollview.setScrollViewListener(this);
         couponAdapter.setListener(this);
         detailsLayout.setOnSlideDetailsListener(new MyOnSlideDetailsListener());
+
+        if(GOODS_FOODS.equals(goodsType)){
+            tvAddCart.setBackgroundResource(R.color.bg_gray);
+            tvAddCart.setClickable(false);
+        }else{
+            tvAddCart.setOnClickListener(this);
+        }
     }
 
     @Override

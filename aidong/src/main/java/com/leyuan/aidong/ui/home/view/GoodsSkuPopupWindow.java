@@ -37,6 +37,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
+import static com.leyuan.aidong.utils.Constant.GOODS_FOODS;
 
 
 /**
@@ -228,6 +229,10 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
             tvAdd.setVisibility(View.GONE);
             buyLayout.setVisibility(View.GONE);
             tvSellOut.setVisibility(View.GONE);
+        }
+
+        if(GOODS_FOODS.equals(goodsType)){
+            tvAdd.setVisibility(View.GONE);
         }
 
         tvGoodName.setText(detailBean.name);

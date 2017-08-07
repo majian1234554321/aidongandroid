@@ -79,7 +79,7 @@ public class UploadToQiNiuManager {
             } else {
                 bytes = File2byte(path);
             }
-            uploadManager.put(bytes, expectKey, QiNiuTokenUtils.getQiNiuToken(), new UpCompletionHandler() {
+            uploadManager.put(bytes, expectKey, QiNiuTokenUtils.getQiNiuVideoAvthumbToken(), new UpCompletionHandler() {
                 @Override
                 public void complete(String key, ResponseInfo responseInfo, JSONObject response) {
                     if (responseInfo.isOK()) {

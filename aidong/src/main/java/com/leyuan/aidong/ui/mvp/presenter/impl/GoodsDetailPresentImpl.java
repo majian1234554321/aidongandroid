@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 
 import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.entity.data.EquipmentDetailData;
-import com.leyuan.aidong.entity.data.FoodDetailData;
 import com.leyuan.aidong.entity.data.NurtureDetailData;
 import com.leyuan.aidong.entity.data.VenuesData;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
@@ -60,6 +59,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
     @Override
     public void getGoodsDetail(@GoodsType String type, String id) {
         switch (type) {
+            case GOODS_FOODS:
             case GOODS_EQUIPMENT:
                 if (equipmentModel == null) {
                     equipmentModel = new EquipmentModelImpl(context);
@@ -95,28 +95,28 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
     public void getGoodsDetail(final SwitcherLayout switcherLayout, @GoodsType String type, String id) {
         if (type == null) return;
         switch (type) {
-            case GOODS_FOODS:
-                if (foodModel == null) {
-                    foodModel = new FoodModelImpl();
-                }
-                foodModel.getFoodDetail(new CommonSubscriber<FoodDetailData>(context, switcherLayout) {
-                    @Override
-                    public void onNext(FoodDetailData foodDetailData) {
-                        if (foodDetailData != null && foodDetailData.getFood() != null) {
-                            goodsDetailView.setGoodsDetail(foodDetailData.getFood());
-                            switcherLayout.showContentLayout();
-                        } else {
-                            switcherLayout.showEmptyLayout();
-                        }
-                    }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        super.onError(e);
-                        goodsDetailView.showErrorView();
-                    }
-                }, id);
-                break;
+//                if (foodModel == null) {
+//                    foodModel = new FoodModelImpl();
+//                }
+//                foodModel.getFoodDetail(new CommonSubscriber<FoodDetailData>(context, switcherLayout) {
+//                    @Override
+//                    public void onNext(FoodDetailData foodDetailData) {
+//                        if (foodDetailData != null && foodDetailData.getFood() != null) {
+//                            goodsDetailView.setGoodsDetail(foodDetailData.getFood());
+//                            switcherLayout.showContentLayout();
+//                        } else {
+//                            switcherLayout.showEmptyLayout();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        super.onError(e);
+//                        goodsDetailView.showErrorView();
+//                    }
+//                }, id);
+//                break;
 
             case GOODS_EQUIPMENT:
                 if (equipmentModel == null) {
@@ -141,6 +141,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                 }, id);
                 break;
 
+            case GOODS_FOODS:
             case GOODS_NUTRITION:
                 if (nurtureModel == null) {
                     nurtureModel = new NurtureModelImpl(context);

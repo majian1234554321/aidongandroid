@@ -45,7 +45,7 @@ public class LocatinCityManager {
         if (localCity == null) {
             return;
         }
-        if (getOpenCity(context).contains(localCity)) {
+        if (getOpenCity(context)!=null &&  getOpenCity(context).contains(localCity)) {
             localCityIsOpen = true;
         }
         boolean isFirstCheckLocation = SharePrefUtils.getString(context, "cityLocationLast", null) == null;

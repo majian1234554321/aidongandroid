@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * 商品实体 当前包含营养品、 健康餐饮、 装备
  * Created by song on 2016/7/14.
  */
-public class GoodsBean implements Parcelable {
+public class GoodsBean  implements Parcelable {
     private static final int OUT_OF_STOCK = 1;
     private static final int SOLD_OUT = 2;
     private static final int ON_SALE = 3;

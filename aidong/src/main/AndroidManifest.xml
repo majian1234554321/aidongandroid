@@ -332,6 +332,9 @@
             android:name=".ui.home.activity.GoodsFilterActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.home.activity.GoodsListActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.home.activity.NurtureActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullScreen" />

@@ -49,7 +49,7 @@ public class EquipmentPresentImpl implements EquipmentPresent{
                     equipmentBeanList = equipmentData.getEquipment();
                 }
                 if(!equipmentBeanList.isEmpty()){
-                    filterActivityView.updateEquipmentRecyclerView(equipmentBeanList);
+                    filterActivityView.updateGoodsRecyclerView(equipmentBeanList);
                     switcherLayout.showContentLayout();
                 }else{
                     filterActivityView.showEmptyView();
@@ -67,7 +67,7 @@ public class EquipmentPresentImpl implements EquipmentPresent{
                     equipmentBeanList = equipmentData.getEquipment();
                 }
                 if(!equipmentBeanList.isEmpty()){
-                    filterActivityView.updateEquipmentRecyclerView(equipmentBeanList);
+                    filterActivityView.updateGoodsRecyclerView(equipmentBeanList);
                 }else {
                     filterActivityView.showEmptyView();
                 }
@@ -85,7 +85,7 @@ public class EquipmentPresentImpl implements EquipmentPresent{
                     equipmentBeanList = equipmentData.getEquipment();
                 }
                 if(!equipmentBeanList.isEmpty()){
-                    filterActivityView.updateEquipmentRecyclerView(equipmentBeanList);
+                    filterActivityView.updateGoodsRecyclerView(equipmentBeanList);
                 }
                 //没有更多数据了显示到底提示
                 if(equipmentBeanList != null && equipmentBeanList.size() < pageSize){

@@ -27,6 +27,34 @@ public class SystemBean implements Serializable {
     private String acivity;     //课程视频底部提示文字(未登录状态下)
     private double express_price;    //快递费
 
+    private String limit_period; //截止时间段,
+
+    private int limit_days; //限制购买天数,
+    private ArrayList<String> periods; //可选时间段
+
+    public String getLimit_period() {
+        return limit_period;
+    }
+
+    public void setLimit_period(String limit_period) {
+        this.limit_period = limit_period;
+    }
+
+    public int getLimit_days() {
+        return limit_days;
+    }
+
+    public void setLimit_days(int limit_days) {
+        this.limit_days = limit_days;
+    }
+
+    public ArrayList<String> getPeriods() {
+        return periods;
+    }
+
+    public void setPeriods(ArrayList<String> periods) {
+        this.periods = periods;
+    }
 
     public List<String> getOpen_city() {
         return open_city;

@@ -14,6 +14,7 @@ import com.leyuan.aidong.ui.mvp.presenter.RecommendPresent;
 import com.leyuan.aidong.ui.mvp.view.AppointSuccessActivityView;
 import com.leyuan.aidong.ui.mvp.view.CartActivityView;
 import com.leyuan.aidong.ui.mvp.view.EquipmentActivityView;
+import com.leyuan.aidong.ui.mvp.view.GoodsActivityView;
 import com.leyuan.aidong.ui.mvp.view.NurtureActivityView;
 import com.leyuan.aidong.ui.mvp.view.PaySuccessActivityView;
 import com.leyuan.aidong.utils.Constant;
@@ -35,6 +36,7 @@ public class RecommendPresentImpl implements RecommendPresent{
     private CartActivityView cartActivityView;
     private AppointSuccessActivityView appointSuccessActivityView;
     private PaySuccessActivityView paySuccessActivityView;
+
 
     public RecommendPresentImpl(Context context, NurtureActivityView view) {
         this.context = context;
@@ -59,6 +61,10 @@ public class RecommendPresentImpl implements RecommendPresent{
     public RecommendPresentImpl(Context context, PaySuccessActivityView view) {
         this.context = context;
         this.paySuccessActivityView = view;
+    }
+
+    public RecommendPresentImpl(Context context, GoodsActivityView goodsCategoryActivity) {
+        this.context = context;
     }
 
     @Override

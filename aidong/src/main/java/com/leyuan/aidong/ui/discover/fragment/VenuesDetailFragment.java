@@ -18,7 +18,7 @@ import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.discover.activity.VenuesDetailActivity;
 import com.leyuan.aidong.ui.discover.activity.VenuesSubbranchActivity;
-import com.leyuan.aidong.ui.home.activity.GoodsFilterActivity;
+import com.leyuan.aidong.ui.home.activity.GoodsListActivity;
 import com.leyuan.aidong.ui.home.activity.MapActivity;
 import com.leyuan.aidong.ui.mvp.presenter.VenuesPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VenuesPresentImpl;
@@ -133,10 +133,10 @@ public class VenuesDetailFragment extends BaseFragment implements View.OnClickLi
                 break;
 
             case R.id.ll_equipment:
-                GoodsFilterActivity.start(getContext(), GOODS_EQUIPMENT, venues.getName(), venues.getId());
+                GoodsListActivity.start(getContext(), GOODS_EQUIPMENT, venues.getName(), venues.getId());
                 break;
             case R.id.ll_nurture:
-                GoodsFilterActivity.start(getContext(), GOODS_NUTRITION, venues.getName(), venues.getId());
+                GoodsListActivity.start(getContext(), GOODS_NUTRITION, venues.getName(), venues.getId());
                 break;
             case R.id.tv_address:
                 if (venues != null) {

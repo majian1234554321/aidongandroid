@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.bigkoo.pickerview.OptionsPickerView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.ConfirmOrderShopAdapter;
 import com.leyuan.aidong.entity.AddressBean;
@@ -46,8 +47,11 @@ import com.leyuan.aidong.widget.SwitcherLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.leyuan.aidong.R.id.ll__receiving_time;
+import static com.leyuan.aidong.R.id.txt_receving_time;
 import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
 import static com.leyuan.aidong.utils.Constant.DELIVERY_SELF;
+import static com.leyuan.aidong.utils.Constant.GOODS_FOODS;
 import static com.leyuan.aidong.utils.Constant.GOODS_NUTRITION;
 import static com.leyuan.aidong.utils.Constant.PAY_ALI;
 import static com.leyuan.aidong.utils.Constant.PAY_WEIXIN;
@@ -131,8 +135,11 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private boolean needSelfDelivery = false;         //是否需要自提
     private Double expressPrice = 15d;
 
-
     private ConfirmOrderPresent present;
+    private TextView txtrecevingtime;
+    private LinearLayout llReceivingTime;
+    private List<String> receivingTimeQuantum;
+    private String pick_up_period;
 
     public static void start(Context context, ShopBean shop) {
         Intent starter = new Intent(context, ConfirmOrderActivity.class);
@@ -187,6 +194,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             } else {
                 settlementType = SETTLEMENT_EQUIPMENT_IMMEDIATELY;
             }
+
         } else {         //购物车结算
             settlementType = SETTLEMENT_CART;
             totalGoodsPrice = getIntent().getDoubleExtra("totalGoodsPrice", 0f);
@@ -220,6 +228,9 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         tvAddress = (TextView) findViewById(R.id.tv_address);
         selfDeliveryLayout = (LinearLayout) findViewById(R.id.ll_self_delivery);
         tvTime = (TextView) findViewById(R.id.tv_time);
+        llReceivingTime = (LinearLayout) findViewById(ll__receiving_time);
+        txtrecevingtime = (TextView) findViewById(txt_receving_time);
+
         rvGoods = (RecyclerView) findViewById(R.id.rv_goods);
         tvCoupon = (TextView) findViewById(R.id.tv_coupon);
         goldLayout = (LinearLayout) findViewById(R.id.ll_gold);
@@ -249,13 +260,24 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             if (DELIVERY_EXPRESS.equals(shopBean.getPickUp().getType())) {
                 needExpress = true;
             }
+
             if (DELIVERY_SELF.equals(shopBean.getPickUp().getType())) {
                 needSelfDelivery = true;
+            }
+
+            if (shopBean != null && shopBean.getItem() != null && !shopBean.getItem().isEmpty() &&
+                    TextUtils.equals(GOODS_FOODS, shopBean.getItem().get(0).getType())) {
+                //该商品为健康餐饮
+                llReceivingTime.setVisibility(View.VISIBLE);
+                receivingTimeQuantum = SystemInfoUtils.getPeriods(this);
+
+
             }
         }
 
         if (needExpress) {
             addressLayout.setVisibility(View.VISIBLE);
+
             if (settlementType.equals(SETTLEMENT_EQUIPMENT_IMMEDIATELY)
                     || settlementType.equals(SETTLEMENT_NURTURE_IMMEDIATELY)) {
                 pickUpWay = DELIVERY_EXPRESS;
@@ -279,8 +301,8 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         tvExpressPrice.setRightContent(
                 needExpress ? String.format(getString(R.string.rmb_price_double), expressPrice) : "¥ 0.00");
         double dPrice = needExpress ? expressPrice : 0d;
-        double cPrice = !TextUtils.isEmpty(couponPrice) ?  FormatUtil.parseDouble(couponPrice) : 0d;
-        tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice -cPrice));
+        double cPrice = !TextUtils.isEmpty(couponPrice) ? FormatUtil.parseDouble(couponPrice) : 0d;
+        tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice));
     }
 
     private void setListener() {
@@ -291,6 +313,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         tvPay.setOnClickListener(this);
         radioGroup.setOnCheckedChangeListener(this);
         selfDeliveryLayout.setOnClickListener(this);
+        llReceivingTime.setOnClickListener(this);
         shopAdapter.setListener(this);
     }
 
@@ -302,6 +325,9 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.ll_self_delivery:
                 showDeliveryDateDialog();
+                break;
+            case R.id.ll__receiving_time:
+                showReceivingDateDialog();
                 break;
             case R.id.rl_empty_address:
                 startActivityForResult(new Intent(this, AddAddressActivity.class), REQUEST_ADD_ADDRESS);
@@ -323,20 +349,38 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
+    private void showReceivingDateDialog() {
+
+        OptionsPickerView pvNoLinkOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
+
+            @Override
+            public void onOptionsSelect(int options1, int options2, int options3, View v) {
+                pickUpDate = days.get(options1);
+                pick_up_period = receivingTimeQuantum.get(options2);
+                txtrecevingtime.setText(pickUpDate + " " + pick_up_period);
+
+            }
+        }).build();
+        pvNoLinkOptions.setNPicker(days, receivingTimeQuantum, null);
+        pvNoLinkOptions.show();
+
+
+    }
+
     @Override
     public void onDeliveryTypeClick(int position) {
         UpdateDeliveryInfoActivity.startForResult(this, (ArrayList<ShopBean>) shopBeanList, position, REQUEST_UPDATE_DELIVERY);
     }
 
     private void payOrder() {
-        if(needExpress){
+        if (needExpress) {
             if (settlementType.equals(SETTLEMENT_EQUIPMENT_IMMEDIATELY)
                     || settlementType.equals(SETTLEMENT_NURTURE_IMMEDIATELY)) {
                 if (TextUtils.isEmpty(pickUpId)) {
                     ToastGlobal.showLong("请填写收货地址");
                     return;
                 }
-            }else {
+            } else {
                 if (TextUtils.isEmpty(addressId)) {
                     ToastGlobal.showLong("请填写收货地址");
                     return;
@@ -444,7 +488,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                         FormatUtil.parseDouble(couponBean.getDiscount())) : getString(R.string.please_select));
                 tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double), FormatUtil.parseDouble(couponPrice)));
                 double dPrice = needExpress ? expressPrice : 0;
-                double cPrice = !TextUtils.isEmpty(couponPrice) ?  FormatUtil.parseDouble(couponPrice) : 0d;
+                double cPrice = !TextUtils.isEmpty(couponPrice) ? FormatUtil.parseDouble(couponPrice) : 0d;
                 tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice));
             } else if (requestCode == REQUEST_UPDATE_DELIVERY) {
                 shopBeanList = data.getParcelableArrayListExtra("shopList");
@@ -480,8 +524,8 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         tvAddress.setText(sb);
         if (settlementType.equals(SETTLEMENT_EQUIPMENT_IMMEDIATELY)
                 || settlementType.equals(SETTLEMENT_NURTURE_IMMEDIATELY)) {
-            pickUpId =  address.getId();
-        }else {
+            pickUpId = address.getId();
+        } else {
             addressId = address.getId();
         }
     }

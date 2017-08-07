@@ -42,12 +42,12 @@ public class FoodAndBeveragePresentImpl {
         nurtureModel.getFoodAndBeverage(new CommonSubscriber<NurtureData>(context,switcherLayout) {
             @Override
             public void onNext(NurtureData nurtureDataBean) {
-                if(nurtureDataBean != null && nurtureDataBean.getNutrition() != null){
-                    nurtureBeanList = nurtureDataBean.getNutrition();
+                if(nurtureDataBean != null && nurtureDataBean.getFoods() != null){
+                    nurtureBeanList = nurtureDataBean.getFoods();
                 }
                 if(!nurtureBeanList.isEmpty()){
                     switcherLayout.showContentLayout();
-                    filterActivityView.updateNurtureRecyclerView(nurtureBeanList);
+                    filterActivityView.updateGoodsRecyclerView(nurtureBeanList);
                 }else{
                     filterActivityView.showEmptyView();
                 }
@@ -59,11 +59,11 @@ public class FoodAndBeveragePresentImpl {
         nurtureModel.getFoodAndBeverage(new RefreshSubscriber<NurtureData>(context) {
             @Override
             public void onNext(NurtureData nurtureDataBean) {
-                if(nurtureDataBean != null && nurtureDataBean.getNutrition() != null){
-                    nurtureBeanList = nurtureDataBean.getNutrition();
+                if(nurtureDataBean != null && nurtureDataBean.getFoods() != null){
+                    nurtureBeanList = nurtureDataBean.getFoods();
                 }
                 if(!nurtureBeanList.isEmpty()){
-                    filterActivityView.updateNurtureRecyclerView(nurtureBeanList);
+                    filterActivityView.updateGoodsRecyclerView(nurtureBeanList);
                 }else {
                     filterActivityView.showEmptyView();
                 }
@@ -76,11 +76,11 @@ public class FoodAndBeveragePresentImpl {
         nurtureModel.getFoodAndBeverage(new RequestMoreSubscriber<NurtureData>(context,recyclerView,pageSize) {
             @Override
             public void onNext(NurtureData nurtureDataBean) {
-                if(nurtureDataBean != null && nurtureDataBean.getNutrition() != null){
-                    nurtureBeanList = nurtureDataBean.getNutrition();
+                if(nurtureDataBean != null && nurtureDataBean.getFoods() != null){
+                    nurtureBeanList = nurtureDataBean.getFoods();
                 }
                 if(!nurtureBeanList.isEmpty()){
-                    filterActivityView.updateNurtureRecyclerView(nurtureBeanList);
+                    filterActivityView.updateGoodsRecyclerView(nurtureBeanList);
                 }
                 //没有更多数据了显示到底提示
                 if( nurtureBeanList.size() < pageSize){

@@ -38,12 +38,14 @@ public class GoodsFilterAdapter extends RecyclerView.Adapter<GoodsFilterAdapter.
         this.type = type;
     }
 
+    @Deprecated
     public void setNurtureList(List<NurtureBean> nurtureList) {
         if(nurtureList != null){
             this.nurtureList = nurtureList;
         }
     }
 
+    @Deprecated
     public void setEquipmentList(List<EquipmentBean> equipmentList) {
         if(equipmentList != null)
         this.equipmentList = equipmentList;
@@ -98,6 +100,8 @@ public class GoodsFilterAdapter extends RecyclerView.Adapter<GoodsFilterAdapter.
             });
         }
     }
+
+
 
     class FilterViewHolder extends RecyclerView.ViewHolder {
         ImageView cover;

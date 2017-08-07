@@ -39,6 +39,7 @@
 
           营养品      NurtureActivity
           装备        EquipmentActivity
+
           营养品/装备详情      GoodsDetailActivity
           营养品/装备筛选      GoodsFilterActivity
           营养品/装备规格弹框   GoodsSkuPopupWindow

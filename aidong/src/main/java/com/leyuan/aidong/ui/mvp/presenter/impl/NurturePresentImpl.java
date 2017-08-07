@@ -56,7 +56,7 @@ public class NurturePresentImpl implements NurturePresent{
                 }
                 if(!nurtureBeanList.isEmpty()){
                     switcherLayout.showContentLayout();
-                    filterActivityView.updateNurtureRecyclerView(nurtureBeanList);
+                    filterActivityView.updateGoodsRecyclerView(nurtureBeanList);
                 }else{
                     filterActivityView.showEmptyView();
                 }
@@ -73,7 +73,7 @@ public class NurturePresentImpl implements NurturePresent{
                     nurtureBeanList = nurtureDataBean.getNutrition();
                 }
                 if(!nurtureBeanList.isEmpty()){
-                    filterActivityView.updateNurtureRecyclerView(nurtureBeanList);
+                    filterActivityView.updateGoodsRecyclerView(nurtureBeanList);
                 }else {
                     filterActivityView.showEmptyView();
                 }
@@ -91,7 +91,7 @@ public class NurturePresentImpl implements NurturePresent{
                     nurtureBeanList = nurtureDataBean.getNutrition();
                 }
                 if(!nurtureBeanList.isEmpty()){
-                    filterActivityView.updateNurtureRecyclerView(nurtureBeanList);
+                    filterActivityView.updateGoodsRecyclerView(nurtureBeanList);
                 }
                 //没有更多数据了显示到底提示
                 if( nurtureBeanList.size() < pageSize){
