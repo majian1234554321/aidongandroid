@@ -266,4 +266,5 @@
     <string name="no_install_QQ">没有安装QQ</string>
     <string name="message">消息</string>
     <string name="clear">清空</string>
+    <string name="can_not_rebuy">\"请关闭订单从商城进入购买\"</string>
 </resources>

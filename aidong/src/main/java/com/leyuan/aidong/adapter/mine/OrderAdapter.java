@@ -20,6 +20,7 @@ import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.NoDoubleClickListener;
 import com.leyuan.aidong.utils.SystemInfoUtils;
+import com.leyuan.aidong.utils.ToastGlobal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -185,6 +186,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
             @Override
             public void onClick(View v) {
                 if(orderListener != null){
+
                     orderListener.onConfirmOrder(bean.getId());
                 }
             }
@@ -194,7 +196,12 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
             @Override
             protected void onNoDoubleClick(View v) {
                 if(orderListener != null){
-                    orderListener.onReBuyOrder(bean.getId());
+                    if(bean.is_food()){
+                        ToastGlobal.showLongConsecutive(R.string.can_not_rebuy);
+                    }else{
+                        orderListener.onReBuyOrder(bean.getId());
+                    }
+
                 }
             }
         });

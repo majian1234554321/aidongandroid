@@ -169,7 +169,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/icon_live_special" />
+                        android:src="@drawable/icon_live_course" />
 
                 </RelativeLayout>
             </LinearLayout>
@@ -190,7 +190,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/icon_live_deep_into" />
+                        android:src="@drawable/icon_live_activity" />
 
 
                 </RelativeLayout>
@@ -212,7 +212,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/icon_live_celebrity" />
+                        android:src="@drawable/icon_live_interview" />
 
 
                 </RelativeLayout>

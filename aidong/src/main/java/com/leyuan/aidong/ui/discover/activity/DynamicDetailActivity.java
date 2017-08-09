@@ -399,7 +399,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
         public void onVideoClick(String url) {
             Intent intent = new Intent(DynamicDetailActivity.this, PlayerActivity.class)
                     .setData(Uri.parse(url))
-                    .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_OTHER);
+                    .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_HLS);
             startActivity(intent);
         }
 

@@ -5,41 +5,6 @@
     android:layout_height="wrap_content"
     android:background="@color/white">
 
-    <RelativeLayout
-        android:id="@+id/rl_qr_code"
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:visibility="gone"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tv_qr_num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:text="88777"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/black"
-            android:textSize="30sp" />
-
-        <ImageView
-            android:id="@+id/iv_qr"
-            android:layout_width="294dp"
-            android:layout_height="73dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="25dp"
-            android:background="@color/line_color"
-            android:layout_below="@+id/tv_qr_num"
-            android:layout_centerHorizontal="true" />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/icon_line"
-            android:layout_alignParentBottom="true"/>
-    </RelativeLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -76,11 +41,11 @@
     </LinearLayout>
 
     <View
-       android:layout_width="match_parent"
-       android:layout_height="1px"
-       android:background="@color/line_color"
-       android:layout_marginLeft="@dimen/left_margin"
-       android:layout_marginRight="@dimen/right_margin"/>
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_color"
+        android:layout_marginLeft="@dimen/left_margin"
+        android:layout_marginRight="@dimen/right_margin"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_shop"

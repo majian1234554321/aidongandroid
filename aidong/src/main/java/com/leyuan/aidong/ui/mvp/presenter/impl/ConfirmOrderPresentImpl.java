@@ -125,7 +125,7 @@ public class ConfirmOrderPresentImpl implements ConfirmOrderPresent {
     @Override
     public void buyNurtureImmediately(String skuCode, int amount, String coupon, String integral,
                                       String coin, String payType, String pickUpWay, String pickUpId,
-                                      String pickUpDate, final PayInterface.PayListener listener) {
+                                      String pickUpDate,   String pick_up_period, final PayInterface.PayListener listener) {
         if (nurtureModel == null) {
             nurtureModel = new NurtureModelImpl(context);
         }
@@ -138,7 +138,7 @@ public class ConfirmOrderPresentImpl implements ConfirmOrderPresent {
 
 
             }
-        }, skuCode, amount, coupon, integral, coin, payType, pickUpWay, pickUpId, pickUpDate);
+        }, skuCode, amount, coupon, integral, coin, payType, pickUpWay, pickUpId, pickUpDate,pick_up_period);
     }
 
     private void createShareBeanByOrder(PayOrderData payOrderData) {

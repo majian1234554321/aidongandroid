@@ -64,6 +64,5 @@ public interface NurtureModel {
      */
     void buyNurtureImmediately(Subscriber<PayOrderData> subscriber, String skuCode, int amount,
                                String coupon, String integral, String coin, String payType,
-                               String pickUpWay, String pickUpId, String pickUpDate
-    );
+                               String pickUpWay, String pickUpId, String pickUpDate, String pick_up_period);
 }

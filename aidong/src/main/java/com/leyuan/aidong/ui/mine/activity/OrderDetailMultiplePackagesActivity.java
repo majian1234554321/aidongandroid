@@ -12,8 +12,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.adapter.mine.OrderParcelAdapter;
-import com.leyuan.aidong.adapter.mine.OrderParcelMultiplePackagesAdapter;
+import com.leyuan.aidong.adapter.mine.OrderExpressAdapter;
+import com.leyuan.aidong.adapter.mine.OrderSelfDeliveryAdapter;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.entity.OrderDetailBean;
@@ -35,6 +35,10 @@ import com.leyuan.aidong.widget.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.ExtendTextView;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.leyuan.aidong.widget.SwitcherLayout;
+import com.leyuan.aidong.widget.dialog.BaseDialog;
+import com.leyuan.aidong.widget.dialog.ButtonCancelListener;
+import com.leyuan.aidong.widget.dialog.ButtonOkListener;
+import com.leyuan.aidong.widget.dialog.DialogDoubleButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +82,7 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
 
     //自提信息
     private LinearLayout selfDeliveryInfoLayout;
-//    private RelativeLayout rlQrCode;   //自提条形码
+    //    private RelativeLayout rlQrCode;   //自提条形码
 //    private TextView tvQrNum;
 //    private ImageView ivCode;
     private ExtendTextView tvDeliveryTime; //自提时间
@@ -114,8 +118,8 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
     private List<ParcelBean> expressList = new ArrayList<>();
     private List<ParcelBean> selfDeliveryList = new ArrayList<>();
     private ArrayList<GoodsBean> goodsList = new ArrayList<>();
-    private OrderParcelAdapter expressAdapter;
-    private OrderParcelMultiplePackagesAdapter selfDeliveryAdapter;
+    private OrderExpressAdapter expressAdapter;
+    private OrderSelfDeliveryAdapter selfDeliveryAdapter;
     private String orderId;
     private OrderPresent orderPresent;
     private String payType;
@@ -189,11 +193,12 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
         tvDelete = (TextView) findViewById(R.id.tv_delete);
         tvReBuy = (TextView) findViewById(R.id.tv_rebuy);
 
-        expressAdapter = new OrderParcelAdapter(this);
+        expressAdapter = new OrderExpressAdapter(this);
         expressGoodsRecyclerView.setNestedScrollingEnabled(false);
         expressGoodsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         expressGoodsRecyclerView.setAdapter(expressAdapter);
-        selfDeliveryAdapter = new OrderParcelMultiplePackagesAdapter(this);
+
+        selfDeliveryAdapter = new OrderSelfDeliveryAdapter(this);
         selfDeliveryGoodsRecyclerView.setNestedScrollingEnabled(false);
         selfDeliveryGoodsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         selfDeliveryGoodsRecyclerView.setAdapter(selfDeliveryAdapter);
@@ -231,7 +236,7 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
 
         tvOrderNo.setText(String.format(getString(R.string.order_no), bean.getId()));
         timeLayout.setVisibility(UN_PAID.equals(bean.getStatus()) ? View.VISIBLE : View.GONE);
-        if(UN_PAID.equals(bean.getStatus())) {
+        if (UN_PAID.equals(bean.getStatus())) {
             timer.start(DateUtils.getCountdown(bean.getCreatedAt(), orderCountdownMill));
         }
 
@@ -256,7 +261,7 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
             tvPhone.setRightContent(expressParcel.getMobile());
             tvAddress.setRightContent(expressParcel.getAddress());
             tvRemarks.setRightContent(expressParcel.getRemark());
-            if(PAID.equals(bean.getStatus()) || FINISH.equals(bean.getStatus())){
+            if (PAID.equals(bean.getStatus()) || FINISH.equals(bean.getStatus())) {
                 orderPresent.getOrderDetailExpressInfo(orderId);
                 rlExpress.setVisibility(View.VISIBLE);
             } else {
@@ -295,7 +300,7 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
         //订单信息
         tvTotalPrice.setRightContent(String.format(getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.getTotal())));
-        tvExpressPrice.setRightContent( String.format(getString(R.string.rmb_price_double),
+        tvExpressPrice.setRightContent(String.format(getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.getExpressPrice())));
         tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double),
                 FormatUtil.parseDouble(bean.getCoupon())));
@@ -347,13 +352,31 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
                 finish();
                 break;
             case R.id.tv_confirm:
-                orderPresent.confirmOrder(orderId);
+                new DialogDoubleButton(this).setContentDesc("点击确认表示您已收到货物")
+                        .setBtnCancelListener(new ButtonCancelListener() {
+                            @Override
+                            public void onClick(BaseDialog dialog) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setBtnOkListener(new ButtonOkListener() {
+                            @Override
+                            public void onClick(BaseDialog dialog) {
+                                dialog.dismiss();
+                                orderPresent.confirmOrder(orderId);
+                            }
+                        }).show();
+
                 break;
             case R.id.tv_delete:
                 orderPresent.deleteOrder(orderId);
                 break;
             case R.id.tv_rebuy:
-                orderPresent.reBuyOrder(orderId);
+                if (bean.is_food()) {
+                    ToastGlobal.showLongConsecutive(R.string.can_not_rebuy);
+                } else {
+                    orderPresent.reBuyOrder(orderId);
+                }
                 break;
             case R.id.rl_express:
                 ExpressInfoActivity.start(this, orderId);
@@ -383,7 +406,7 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
 
     @Override
     public void cancelOrderResult(BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
+        if (baseBean.getStatus() == Constant.OK) {
             clearList();
             orderPresent.getOrderDetail(orderId);
             ToastGlobal.showLong("取消成功");
@@ -394,7 +417,7 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
 
     @Override
     public void confirmOrderResult(BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
+        if (baseBean.getStatus() == Constant.OK) {
             clearList();
             orderPresent.getOrderDetail(orderId);
             ToastGlobal.showLong("确认成功");
@@ -446,7 +469,7 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
         setOrderDetail(bean);
     }
 
-    private void clearList(){
+    private void clearList() {
         goodsList.clear();
         expressList.clear();
         selfDeliveryList.clear();

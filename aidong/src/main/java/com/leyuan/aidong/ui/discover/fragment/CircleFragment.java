@@ -212,7 +212,7 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
         public void onVideoClick(String url) {
             Intent intent = new Intent(getContext(), PlayerActivity.class)
                     .setData(Uri.parse(url))
-                    .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_OTHER);
+                    .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_HLS);
             startActivity(intent);
         }
 

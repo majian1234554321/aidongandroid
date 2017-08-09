@@ -52,7 +52,7 @@ public class FoodAndBeverageActivity extends BaseActivity implements NurtureActi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nurture);
+        setContentView(R.layout.activity_food_and_beverage);
         recommendPresent = new RecommendPresentImpl(this,this);
         initTopLayout();
         initSwipeRefreshLayout();

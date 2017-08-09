@@ -57,8 +57,8 @@
                     android:background="@null"
                     android:gravity="right|center_vertical"
                     android:hint="请输入真实姓名"
-                    android:text=""
                     android:singleLine="true"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textColorHint="@color/c9"
                     android:textSize="15sp" />
@@ -92,8 +92,8 @@
                     android:gravity="right|center_vertical"
                     android:hint="请输入手机号码"
                     android:inputType="phone"
-                    android:text=""
                     android:singleLine="true"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textColorHint="@color/c9"
                     android:textSize="15sp" />
@@ -133,10 +133,10 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="20dp"
                     android:layout_toRightOf="@+id/dv_cover"
+                    android:singleLine="true"
                     android:text="课程或活动名"
                     android:textColor="@color/c3"
-                    android:textSize="15sp"
-                    android:singleLine="true"/>
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/tv_shop"
@@ -270,23 +270,26 @@
                 android:id="@+id/tv_discount_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 app:left_text="课程/活动优惠:" />
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_aibi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 app:left_text="爱币:" />
 
             <com.leyuan.aidong.widget.ExtendTextView
                 android:id="@+id/tv_aidou"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 app:left_text="爱豆:" />
 
             <!--支付方式-->
 
-            <include layout="@layout/inc_pay_info"/>
+            <include layout="@layout/inc_pay_info" />
 
             <include layout="@layout/inc_bold_line" />
 

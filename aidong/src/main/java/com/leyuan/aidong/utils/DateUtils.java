@@ -21,6 +21,7 @@ public class DateUtils {
     public static final String yyyyMMddHHmm = "yyyy-MM-dd HH:mm";
     public static final String HHmmss = "HH:mm:ss";
     public static final String hhmmss = "HH:mm:ss";
+    public static final String hhmm = "HH:mm";
     public static final String LOCALE_DATE_FORMAT = "yyyy年M月d日 HH:mm:ss";
     public static final String DB_DATA_FORMAT = "yyyy-MM-DD HH:mm:ss";
     public static final String NEWS_ITEM_DATE_FORMAT = "hh:mm M月d日 yyyy";
@@ -240,6 +241,24 @@ public class DateUtils {
         return dates;
     }
 
+    /**
+     * 获取今天往后一周的日期（几月几号）
+     */
+    public static List<String> getDays(int start , int limit) {
+        List<String> dates = new ArrayList<String>();
+        Date date = new Date();//取时间
+        final Calendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        for (int i = 0; i < limit; i++) {
+            calendar.add(calendar.DATE, i == 0 ? 0 : +1);//把日期往前减少一天，若想把日期向后推一天则将负数改为正数
+            date = calendar.getTime();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            String dateString = formatter.format(date);
+            dates.add(dateString);
+        }
+        return dates;
+    }
+
 
     public static List<String> getCourseSevenDate() {
         List<String> dates = new ArrayList<String>();
@@ -259,6 +278,24 @@ public class DateUtils {
             }
         }
         return dates;
+    }
+
+    public static List<String> getLimitDays(int limitDays, String limit_period) {
+        List<String> dates = new ArrayList<String>();
+        Calendar calendar = Calendar.getInstance();
+        int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+        int currentMin = calendar.get(Calendar.MINUTE);
+        try {
+            int limitHour = Integer.parseInt(limit_period.substring(0, 2));
+            int limitMinute = Integer.parseInt(limit_period.substring(3,5));
+            if(currentHour >= limitHour){
+
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     /**

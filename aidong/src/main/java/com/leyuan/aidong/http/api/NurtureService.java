@@ -52,4 +52,17 @@ public interface NurtureService {
                                                              @Field("pick_up_way") String pickUpWay,
                                                              @Field("pick_up_id") String pickUpId,
                                                              @Field("pick_up_date") String pickUpDate);
+
+    @FormUrlEncoded
+    @POST("market/nutrition/{skuCode}")
+    Observable<BaseBean<PayOrderData>> buyGoodsImmediately(@Path("skuCode") String skuCode,
+                                                             @Field("amount") int amount,
+                                                             @Field("coupon") String coupon,
+                                                             @Field("integral") String integral,
+                                                             @Field("coin") String coin,
+                                                             @Field("pay_type") String payType,
+                                                             @Field("pick_up_way") String pickUpWay,
+                                                             @Field("pick_up_id") String pickUpId,
+                                                             @Field("pick_up_date") String pickUpDate,
+                                                             @Field("pick_up_period") String pick_up_period);
 }

@@ -19,6 +19,10 @@ import com.leyuan.aidong.ui.mvp.view.OrderFragmentView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.SwitcherLayout;
+import com.leyuan.aidong.widget.dialog.BaseDialog;
+import com.leyuan.aidong.widget.dialog.ButtonCancelListener;
+import com.leyuan.aidong.widget.dialog.ButtonOkListener;
+import com.leyuan.aidong.widget.dialog.DialogDoubleButton;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
@@ -33,7 +37,7 @@ import java.util.List;
  * 订单
  * Created by song on 2016/8/31.
  */
-public class OrderFragment extends BaseLazyFragment implements OrderFragmentView{
+public class OrderFragment extends BaseLazyFragment implements OrderFragmentView {
     public static final String ALL = "all";
     public static final String UN_PAID = "pending";
     public static final String PAID = "purchased";
@@ -51,7 +55,7 @@ public class OrderFragment extends BaseLazyFragment implements OrderFragmentView
 
     private OrderPresent present;
 
-    public static OrderFragment newInstance(String type){
+    public static OrderFragment newInstance(String type) {
         Bundle bundle = new Bundle();
         bundle.putString("type", type);
         OrderFragment fragment = new OrderFragment();
@@ -61,12 +65,12 @@ public class OrderFragment extends BaseLazyFragment implements OrderFragmentView
 
     @Override
     public View initView() {
-        present = new OrderPresentImpl(getContext(),this);
+        present = new OrderPresentImpl(getContext(), this);
         Bundle bundle = getArguments();
-        if(bundle != null){
+        if (bundle != null) {
             type = bundle.getString("type");
         }
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_order,null);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_order, null);
         initSwipeRefreshLayout(view);
         initRecyclerView(view);
         initSwitcherLayout();
@@ -75,11 +79,11 @@ public class OrderFragment extends BaseLazyFragment implements OrderFragmentView
 
     @Override
     public void fetchData() {
-        present.commonLoadData(switcherLayout,type);
+        present.commonLoadData(switcherLayout, type);
     }
 
     private void initSwipeRefreshLayout(View view) {
-        refreshLayout = (CustomRefreshLayout)view.findViewById(R.id.refreshLayout);
+        refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.refreshLayout);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -90,12 +94,12 @@ public class OrderFragment extends BaseLazyFragment implements OrderFragmentView
         });
     }
 
-    private void initSwitcherLayout(){
+    private void initSwitcherLayout() {
         switcherLayout = new SwitcherLayout(getContext(), refreshLayout);
         switcherLayout.setOnRetryListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                present.commonLoadData(switcherLayout,type);
+                present.commonLoadData(switcherLayout, type);
             }
         });
     }
@@ -113,12 +117,12 @@ public class OrderFragment extends BaseLazyFragment implements OrderFragmentView
         orderAdapter.setOrderListener(new OrderCallback());
     }
 
-    private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
+    private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener() {
         @Override
         public void onLoadNextPage(View view) {
-            currPage ++;
+            currPage++;
             if (data != null && data.size() >= pageSize) {
-                present.requestMoreData(recyclerView,type,pageSize,currPage);
+                present.requestMoreData(recyclerView, type, pageSize, currPage);
             }
         }
     };
@@ -127,7 +131,7 @@ public class OrderFragment extends BaseLazyFragment implements OrderFragmentView
     public void onRecyclerViewRefresh(List<OrderBean> orderBeanList) {
         switcherLayout.showContentLayout();
         data.clear();
-        if(refreshLayout.isRefreshing()){
+        if (refreshLayout.isRefreshing()) {
             refreshLayout.setRefreshing(false);
         }
         data.addAll(orderBeanList);
@@ -145,8 +149,8 @@ public class OrderFragment extends BaseLazyFragment implements OrderFragmentView
 
     @Override
     public void showEmptyView() {
-        View view = View.inflate(getContext(),R.layout.empty_order,null);
-        switcherLayout.addCustomView(view,"empty");
+        View view = View.inflate(getContext(), R.layout.empty_order, null);
+        switcherLayout.addCustomView(view, "empty");
         switcherLayout.showCustomLayout("empty");
     }
 
@@ -155,11 +159,11 @@ public class OrderFragment extends BaseLazyFragment implements OrderFragmentView
         RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
     }
 
-    private class OrderCallback implements OrderAdapter.OrderListener{
+    private class OrderCallback implements OrderAdapter.OrderListener {
 
         @Override
         public void onPayOrder(String id) {
-            OrderDetailMultiplePackagesActivity.start(getContext(),id);
+            OrderDetailMultiplePackagesActivity.start(getContext(), id);
         }
 
         @Override
@@ -173,13 +177,26 @@ public class OrderFragment extends BaseLazyFragment implements OrderFragmentView
         }
 
         @Override
-        public void onConfirmOrder(String id) {
-            present.confirmOrder(id);
+        public void onConfirmOrder(final String id) {
+            new DialogDoubleButton(getActivity()).setContentDesc("点击确认表示您已收到货物")
+                    .setBtnCancelListener(new ButtonCancelListener() {
+                        @Override
+                        public void onClick(BaseDialog dialog) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setBtnOkListener(new ButtonOkListener() {
+                        @Override
+                        public void onClick(BaseDialog dialog) {
+                            dialog.dismiss();
+                            present.confirmOrder(id);
+                        }
+                    }).show();
         }
-
 
         @Override
         public void onReBuyOrder(String id) {
+
             present.reBuyOrder(id);
         }
 
@@ -193,35 +210,35 @@ public class OrderFragment extends BaseLazyFragment implements OrderFragmentView
 
     @Override
     public void reBuyOrderResult(List<String> cartIds) {
-        CartActivity.start(getContext(),cartIds);
+        CartActivity.start(getContext(), cartIds);
     }
 
     @Override
     public void cancelOrderResult(BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
+        if (baseBean.getStatus() == Constant.OK) {
             present.commonLoadData(type);
             ToastGlobal.showLong("取消成功");
-        }else {
+        } else {
             ToastGlobal.showLong(baseBean.getMessage());
         }
     }
 
     @Override
     public void confirmOrderResult(BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
+        if (baseBean.getStatus() == Constant.OK) {
             present.commonLoadData(type);
             ToastGlobal.showLong("确认成功");
-        }else {
+        } else {
             ToastGlobal.showLong(baseBean.getMessage());
         }
     }
 
     @Override
     public void deleteOrderResult(BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
+        if (baseBean.getStatus() == Constant.OK) {
             present.commonLoadData(type);
             ToastGlobal.showLong("删除成功");
-        }else {
+        } else {
             ToastGlobal.showLong(baseBean.getMessage());
         }
     }

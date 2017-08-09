@@ -14,6 +14,7 @@ public class OrderBean {
     private String status;                  //订单状态 0-未支付 1-已支付 2-已发货 3-已确认收货 4-已评论
     private ArrayList<ParcelBean> parcel;   //商品实体
     private String created_at;
+    private boolean is_food;                // 是否营养餐
 
     public String getCreated_at() {
         return created_at;
@@ -69,5 +70,13 @@ public class OrderBean {
 
     public void setParcel(ArrayList<ParcelBean> parcel) {
         this.parcel = parcel;
+    }
+
+    public boolean is_food() {
+        return is_food;
+    }
+
+    public void setIs_food(boolean is_food) {
+        this.is_food = is_food;
     }
 }

@@ -1,25 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.leyuan.aidong.widget.ExtendTextView
+        android:id="@+id/tv_delivery_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:left_text="自提时间"
+        app:line_color="@color/line_color"
+        app:show_right_arrow="false"
+        app:text_height="45dp" />
 
     <RelativeLayout
         android:id="@+id/rl_qr_code"
         android:layout_width="match_parent"
         android:layout_height="180dp"
-        android:visibility="gone"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="visible">
 
         <TextView
             android:id="@+id/tv_qr_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
             android:text="88777"
-            android:layout_centerHorizontal="true"
             android:textColor="@color/black"
             android:textSize="30sp" />
 
@@ -27,69 +37,69 @@
             android:id="@+id/iv_qr"
             android:layout_width="294dp"
             android:layout_height="73dp"
+            android:layout_below="@+id/tv_qr_num"
+            android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="25dp"
-            android:background="@color/line_color"
-            android:layout_below="@+id/tv_qr_num"
-            android:layout_centerHorizontal="true" />
+            android:background="@color/line_color" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_line"
-            android:layout_alignParentBottom="true"/>
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/icon_line" />
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
         android:layout_marginRight="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:paddingLeft="@dimen/left_margin">
 
         <TextView
             android:id="@+id/tv_shop_name"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="仓库发货"
-            android:textSize="16sp"
+            android:layout_weight="1"
             android:singleLine="true"
-            android:textColor="@color/c3"/>
+            android:text="仓库发货"
+            android:textColor="@color/c3"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_delivery_type"
             android:layout_width="wrap_content"
-            android:layout_gravity="center_vertical"
             android:layout_height="wrap_content"
-            android:paddingTop="8dp"
+            android:layout_gravity="center_vertical"
+            android:background="?selectableItemBackground"
+            android:drawablePadding="5dp"
             android:paddingBottom="8dp"
             android:paddingLeft="8dp"
             android:paddingRight="5dp"
+            android:paddingTop="8dp"
             android:text="快递"
             android:textColor="@color/c3"
-            android:textSize="16sp"
-            android:drawablePadding="5dp"
-            android:background="?selectableItemBackground" />
+            android:textSize="16sp" />
 
     </LinearLayout>
 
     <View
-       android:layout_width="match_parent"
-       android:layout_height="1px"
-       android:background="@color/line_color"
-       android:layout_marginLeft="@dimen/left_margin"
-       android:layout_marginRight="@dimen/right_margin"/>
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="@dimen/left_margin"
+        android:layout_marginRight="@dimen/right_margin"
+        android:background="@color/line_color" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_shop"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/line_color"/>
+        android:background="@color/line_color" />
 
 </LinearLayout>

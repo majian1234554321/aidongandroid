@@ -19,6 +19,7 @@ import com.leyuan.aidong.ui.mine.activity.BarcodeActivity;
 import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.ImageRectUtils;
 import com.leyuan.aidong.utils.QRCodeUtil;
+import com.leyuan.aidong.widget.ExtendTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,7 @@ import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
  * 订单列表中包裹适配器
  * Created by song on 2016/9/8.
  */
-public class OrderParcelMultiplePackagesAdapter extends RecyclerView.Adapter<OrderParcelMultiplePackagesAdapter.CartHolder> {
+public class OrderSelfDeliveryAdapter extends RecyclerView.Adapter<OrderSelfDeliveryAdapter.CartHolder> {
     private final int qrCodeWidth;
     private final int qrCodeHeight;
     private Context context;
@@ -40,7 +41,7 @@ public class OrderParcelMultiplePackagesAdapter extends RecyclerView.Adapter<Ord
     private static final String CLOSE = "canceled";
     private String payStatus;
 
-    public OrderParcelMultiplePackagesAdapter(Context context) {
+    public OrderSelfDeliveryAdapter(Context context) {
         this.context = context;
         qrCodeWidth = DensityUtil.dp2px(context, 294);
         qrCodeHeight = DensityUtil.dp2px(context, 73);
@@ -60,13 +61,14 @@ public class OrderParcelMultiplePackagesAdapter extends RecyclerView.Adapter<Ord
 
     @Override
     public CartHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_order_parcel, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_order_self_delivery, parent, false);
         return new CartHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final CartHolder holder, final int position) {
         final ParcelBean bean = data.get(position);
+        holder.tv_delivery_time.setRightContent(bean.getPickUpDate());
         if (UN_PAID.equals(payStatus) || CLOSE.equals(payStatus)) {
             holder.rlQrCode.setVisibility(View.GONE);
         } else {
@@ -76,12 +78,17 @@ public class OrderParcelMultiplePackagesAdapter extends RecyclerView.Adapter<Ord
                 holder.tvQrNum.setText(bean.getVerify_no());
                 holder.tvQrNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                 holder.tvQrNum.setTextColor(Color.parseColor("#ebebeb"));
-                holder.ivCode.setImageBitmap(QRCodeUtil.createBarcode(context, 0xFFebebeb, bean.getVerify_no(),
-                        qrCodeWidth, qrCodeHeight, false));
+                if (bean.getVerify_no() != null) {
+                    holder.ivCode.setImageBitmap(QRCodeUtil.createBarcode(context, 0xFFebebeb, bean.getVerify_no(),
+                            qrCodeWidth, qrCodeHeight, false));
+                }
+
             } else {
                 holder.tvQrNum.setText(bean.getVerify_no());
-                holder.ivCode.setImageBitmap(QRCodeUtil.createBarcode(context, 0xFF000000, bean.getVerify_no(),
-                        qrCodeWidth, qrCodeHeight, false));
+                if (bean.getVerify_no() != null) {
+                    holder.ivCode.setImageBitmap(QRCodeUtil.createBarcode(context, 0xFF000000, bean.getVerify_no(),
+                            qrCodeWidth, qrCodeHeight, false));
+                }
                 holder.ivCode.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -117,9 +124,11 @@ public class OrderParcelMultiplePackagesAdapter extends RecyclerView.Adapter<Ord
         private RelativeLayout rlQrCode;   //自提条形码
         private TextView tvQrNum;
         private ImageView ivCode;
+        ExtendTextView tv_delivery_time;
 
         public CartHolder(View itemView) {
             super(itemView);
+            tv_delivery_time = (ExtendTextView) itemView.findViewById(R.id.tv_delivery_time);
             rlQrCode = (RelativeLayout) itemView.findViewById(R.id.rl_qr_code);
             tvQrNum = (TextView) itemView.findViewById(R.id.tv_qr_num);
             ivCode = (ImageView) itemView.findViewById(R.id.iv_qr);

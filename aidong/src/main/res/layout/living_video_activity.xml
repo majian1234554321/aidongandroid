@@ -117,7 +117,7 @@
                 android:layout_width="98dp"
                 android:layout_height="66dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/icon_live_special"/>
+                android:src="@drawable/icon_live_course"/>
 
             <ImageView
                 android:id="@+id/img_deep_into"
@@ -125,7 +125,7 @@
                 android:layout_height="66dp"
                 android:layout_marginLeft="11dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/icon_live_deep_into"/>
+                android:src="@drawable/icon_live_activity"/>
 
             <ImageView
                 android:id="@+id/img_celebrity"
@@ -133,7 +133,7 @@
                 android:layout_height="66dp"
                 android:layout_marginLeft="11dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/icon_live_celebrity"/>
+                android:src="@drawable/icon_live_interview"/>
         </LinearLayout>
 
 

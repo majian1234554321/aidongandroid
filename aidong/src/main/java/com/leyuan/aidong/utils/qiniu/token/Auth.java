@@ -10,6 +10,9 @@ import javax.crypto.spec.SecretKeySpec;
 
 public final class Auth {
 
+    private static final String[] deprecatedPolicyFields = new String[]{
+            "asyncOps",
+    };
     /**
      * 上传策略，参数规格详见
      * <p/>
@@ -39,9 +42,6 @@ public final class Auth {
             "persistentPipeline",
 
             "deleteAfterDays",
-    };
-    private static final String[] deprecatedPolicyFields = new String[]{
-            "asyncOps",
     };
     private final String accessKey;
     private final SecretKeySpec secretKey;

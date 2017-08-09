@@ -106,12 +106,12 @@ public class NurturePresentImpl implements NurturePresent{
     @Override
     public void buyNurtureImmediately(String skuCode, int amount, String coupon, String integral,
                                       String coin, String payType, String pickUpWay, String pickUpId,
-                                      String pickUpDate,final PayInterface.PayListener listener) {
+                                      String pickUpDate,String pick_up_period,final PayInterface.PayListener listener) {
         nurtureModel.buyNurtureImmediately(new ProgressSubscriber<PayOrderData>(context) {
             @Override
             public void onNext(PayOrderData payOrderData) {
                 PayUtils.pay(context,payOrderData.getOrder(),listener);
             }
-        },skuCode,amount,coupon,integral,coin,payType,pickUpWay,pickUpId,pickUpDate);
+        },skuCode,amount,coupon,integral,coin,payType,pickUpWay,pickUpId,pickUpDate,pick_up_period);
     }
 }

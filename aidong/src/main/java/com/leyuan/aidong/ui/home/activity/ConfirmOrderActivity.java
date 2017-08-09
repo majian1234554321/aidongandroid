@@ -107,6 +107,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private TextView tvPay;
 
     private List<String> days = new ArrayList<>();
+    private List<String> limit_days = new ArrayList<>();
     private List<ShopBean> shopBeanList = new ArrayList<>();
     private List<CouponBean> usableCoupons = new ArrayList<>();
     private ConfirmOrderShopAdapter shopAdapter;
@@ -174,6 +175,8 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         if (getIntent() == null) return;
         payType = PAY_ALI;
         days = DateUtils.getSevenDate();
+        limit_days = DateUtils.getLimitDays( SystemInfoUtils.getLimit_days(this),SystemInfoUtils.getLimit_period(this));
+        limit_days  = DateUtils.getSevenDate();
         expressPrice = SystemInfoUtils.getExpressPrice(this);
 
         shopBeanList = getIntent().getParcelableArrayListExtra("selectedShops");
@@ -270,7 +273,9 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 //该商品为健康餐饮
                 llReceivingTime.setVisibility(View.VISIBLE);
                 receivingTimeQuantum = SystemInfoUtils.getPeriods(this);
-
+                pickUpDate = limit_days.get(0);
+                pick_up_period = receivingTimeQuantum.get(0);
+                txtrecevingtime.setText(pickUpDate + " " + pick_up_period);
 
             }
         }
@@ -395,7 +400,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 break;
             case SETTLEMENT_NURTURE_IMMEDIATELY:
                 present.buyNurtureImmediately(skuCode, amount, couponId, integral, coin, payType,
-                        String.valueOf(pickUpWay), pickUpId, pickUpDate, payListener);
+                        String.valueOf(pickUpWay), pickUpId, pickUpDate,pick_up_period, payListener);
                 break;
             case SETTLEMENT_EQUIPMENT_IMMEDIATELY:
                 present.buyEquipmentImmediately(skuCode, amount, couponId, integral, coin, payType,

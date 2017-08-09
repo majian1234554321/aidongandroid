@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.utils.ImageUtil;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.Utils;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
@@ -79,12 +80,15 @@ public class UploadToQiNiuManager {
             } else {
                 bytes = File2byte(path);
             }
-            uploadManager.put(bytes, expectKey, QiNiuTokenUtils.getQiNiuVideoAvthumbToken(), new UpCompletionHandler() {
+            uploadManager.put(bytes, expectKey, QiNiuTokenUtils.getQiNiuVideoAvthumbToken(expectKey), new UpCompletionHandler() {
                 @Override
                 public void complete(String key, ResponseInfo responseInfo, JSONObject response) {
+                    Logger.i("complete Key = " + key);
+
                     if (responseInfo.isOK()) {
                         qiNiuMediaUrls.add(key);
                         if (qiNiuMediaUrls.size() == selectedMedia.size()) {
+
                             callback.onSuccess(qiNiuMediaUrls);
                         }
                     } else {
@@ -130,14 +134,14 @@ public class UploadToQiNiuManager {
             id = App.getInstance().getUser().getId();
         }
         int[] widthAndHeight = new int[2];
-        if(isImage){
+        if (isImage) {
             widthAndHeight = ImageUtil.getImageWidthAndHeight(path);
-        }else {
+        } else {
             Bitmap videoThumbnail = Utils.getVideoThumbnail(path);
             widthAndHeight[0] = videoThumbnail.getWidth();
             widthAndHeight[1] = videoThumbnail.getHeight();
         }
         return (isImage ? "image/" : "video/") + id + "_" + System.currentTimeMillis()
-                +"*w=" + widthAndHeight[0] + "_h="+widthAndHeight[1]+ path.substring(path.lastIndexOf("."));
+                + "*w=" + widthAndHeight[0] + "_h=" + widthAndHeight[1] + (isImage ? path.substring(path.lastIndexOf(".")) : ".m3u8");
     }
 }

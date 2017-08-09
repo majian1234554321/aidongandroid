@@ -123,6 +123,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:left_text="活动优惠:"
+                    android:visibility="gone"
                     app:line_color="@color/transparent" />
 
                 <com.leyuan.aidong.widget.ExtendTextView
@@ -130,6 +131,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:left_text="爱币:"
+                    android:visibility="gone"
                     app:line_color="@color/transparent" />
 
                 <com.leyuan.aidong.widget.ExtendTextView
@@ -137,6 +139,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:left_text="爱豆:"
+                    android:visibility="gone"
                     app:line_color="@color/transparent" />
 
                 <com.leyuan.aidong.widget.ExtendTextView

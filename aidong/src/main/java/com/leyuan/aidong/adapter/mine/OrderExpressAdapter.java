@@ -21,13 +21,11 @@ import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
  * 订单列表中包裹适配器
  * Created by song on 2016/9/8.
  */
-
-@Deprecated
-public class OrderParcelAdapter extends RecyclerView.Adapter<OrderParcelAdapter.CartHolder> {
+public class OrderExpressAdapter extends RecyclerView.Adapter<OrderExpressAdapter.CartHolder> {
     private Context context;
     private List<ParcelBean> data = new ArrayList<>();
 
-    public OrderParcelAdapter(Context context) {
+    public OrderExpressAdapter(Context context) {
         this.context = context;
     }
 
@@ -45,7 +43,7 @@ public class OrderParcelAdapter extends RecyclerView.Adapter<OrderParcelAdapter.
 
     @Override
     public CartHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_order_parcel,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_order_express,parent,false);
         return new CartHolder(view);
     }
 
@@ -57,7 +55,6 @@ public class OrderParcelAdapter extends RecyclerView.Adapter<OrderParcelAdapter.
         }else {
             holder.tvShopName.setText(bean.getAddress());
         }
-        String type = DELIVERY_EXPRESS.equals(bean.getPickUpWay()) ? "快递" : "自提";
         holder.tvDeliveryType.setText("快递");
         holder.rvShop.setLayoutManager(new LinearLayoutManager(context));
         final ConfirmOrderGoodsAdapter goodsAdapter = new ConfirmOrderGoodsAdapter(context);

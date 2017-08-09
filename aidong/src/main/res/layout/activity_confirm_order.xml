@@ -337,6 +337,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:line_color="@color/transparent"
+                android:visibility="gone"
                 app:left_text="商品优惠:" />
 
             <com.leyuan.aidong.widget.ExtendTextView

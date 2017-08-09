@@ -60,12 +60,10 @@ public interface ConfirmOrderPresent {
      * @param pickUpWay   取货方式(0-快递 1-自提)
      * @param pickUpId    快递地址id
      * @param pickUpDate  自提时间
-     * @param payListener payListener
      */
     void buyNurtureImmediately(String skuCode, int amount, String coupon, String integral,
                                String coin, String payType, String pickUpWay, String pickUpId,
-                               String pickUpDate, PayInterface.PayListener payListener);
-
+                               String pickUpDate, String pick_up_period, PayInterface.PayListener listener);
 
     /**
      * 购物车结算
