@@ -35,7 +35,7 @@ public interface FoodService {
 
 
     @GET("foods/{sku_code}/gyms")
-    Observable<BaseBean<VenuesData>> getDeliveryVenues(@Path("sku_code") String skuCode, int page);
+    Observable<BaseBean<VenuesData>> getDeliveryVenues(@Path("sku_code") String skuCode, @Query("page") int page);
 
     @POST("foods/{skuCode}")
     Observable<BaseBean> buyFoodImmediately(@Path("skuCode") String skuCode,

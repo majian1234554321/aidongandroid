@@ -1,5 +1,6 @@
 package com.leyuan.aidong.ui;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -9,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -26,6 +28,7 @@ import com.leyuan.aidong.ui.mvp.presenter.impl.VersionPresenterImpl;
 import com.leyuan.aidong.ui.video.fragment.VideoHomeFragment;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.LocatinCityManager;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.autostart.CheckAutoStartUtils;
 import com.leyuan.aidong.widget.dialog.BaseDialog;
 import com.leyuan.aidong.widget.dialog.ButtonCancelListener;
@@ -44,6 +47,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private RelativeLayout tabDiscoverLayout;
     private RelativeLayout tabMineLayout;
     private ImageView img_new_message;
+    private ImageView img_new_circle_message;
 
     private List<Fragment> mFragments = new ArrayList<>();
     private FragmentManager fm;
@@ -54,9 +58,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private NewPushMessageReceiver newPushMessageReceiver;
     private int index;
 
-    public static void start(Context context,int index) {
+    public static void start(Context context, int index) {
         Intent starter = new Intent(context, MainActivity.class);
-        starter.putExtra("index",index);
+        starter.putExtra("index", index);
         context.startActivity(starter);
     }
 
@@ -68,8 +72,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         new VersionPresenterImpl(this).checkVersionAndShow();
 
         setContentView(R.layout.activity_main);
-        if(getIntent() != null){
-            index = getIntent().getIntExtra("index",0);
+        if (getIntent() != null) {
+            index = getIntent().getIntExtra("index", 0);
         }
 
         initView();
@@ -86,6 +90,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         tabDiscoverLayout = (RelativeLayout) findViewById(R.id.tabContactorLayout);
         tabMineLayout = (RelativeLayout) findViewById(R.id.tabMineLayout);
         img_new_message = (ImageView) findViewById(R.id.img_new_message);
+        img_new_circle_message = (ImageView) findViewById(R.id.img_new_circle_message);
+
+        img_new_circle_message.setVisibility(App.getInstance().getCMDCirleDynamicBean() == null ||
+                App.getInstance().getCMDCirleDynamicBean().isEmpty() ? View.GONE : View.VISIBLE);
     }
 
     private void initData() {
@@ -95,8 +103,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         tabStoreLayout.setOnClickListener(this);
         tabDiscoverLayout.setOnClickListener(this);
         tabMineLayout.setOnClickListener(this);
-
-
     }
 
     private void initFragments() {
@@ -110,6 +116,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         showFragment(index);
     }
 
+    private BroadcastReceiver mainActivityReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_RECEIVER_CMD_MESSAGE)) {
+                img_new_circle_message.setVisibility(View.VISIBLE);
+            } else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_CLEAR_CMD_MESSAGE)) {
+                img_new_circle_message.setVisibility(View.GONE);
+            }
+            Logger.i("mainActivityReceiver", "onReceive action = " + intent.getAction());
+        }
+    };
+
     private void registerMessageReceiver() {
         chatMessageReceiver = new ChatMessageReceiver(img_new_message);
         LocalBroadcastManager.getInstance(this).registerReceiver(
@@ -117,6 +135,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         newPushMessageReceiver = new NewPushMessageReceiver(img_new_message);
         registerReceiver(newPushMessageReceiver, new IntentFilter(NewPushMessageReceiver.ACTION));
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constant.BROADCAST_ACTION_RECEIVER_CMD_MESSAGE);
+        filter.addAction(Constant.BROADCAST_ACTION_CLEAR_CMD_MESSAGE);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mainActivityReceiver, filter);
+
     }
 
     private void checkAutoStart() {
@@ -245,6 +269,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onResume() {
         super.onResume();
         img_new_message.setVisibility(EmMessageManager.isHaveUnreadMessage() ? View.VISIBLE : View.GONE);
+
     }
 
     @Override
@@ -268,5 +293,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private void unregisterMessageReceiver() {
         unregisterReceiver(newPushMessageReceiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(chatMessageReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mainActivityReceiver);
     }
 }

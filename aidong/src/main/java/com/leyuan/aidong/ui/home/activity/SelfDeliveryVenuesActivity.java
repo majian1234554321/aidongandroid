@@ -38,7 +38,7 @@ import java.util.List;
  * 选择自提门店
  * Created by song on 2016/9/14.
  */
-public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnClickListener,SelfDeliveryVenuesActivityView{
+public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnClickListener, SelfDeliveryVenuesActivityView {
     private ImageView ivBack;
     private TextView tvFinish;
 
@@ -60,22 +60,22 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
     private String businessCircle;
     private DeliveryBean deliveryBean;
 
-    public static void startForResult(Activity context,String goodsId,String goodsType,DeliveryBean bean,int requestCode) {
+    public static void startForResult(Activity context, String goodsId, String goodsType, DeliveryBean bean, int requestCode) {
         Intent starter = new Intent(context, SelfDeliveryVenuesActivity.class);
-        starter.putExtra("goodsId",goodsId);
-        starter.putExtra("goodsType",goodsType);
-        starter.putExtra("deliveryBean",bean);
-        context.startActivityForResult(starter,requestCode);
+        starter.putExtra("goodsId", goodsId);
+        starter.putExtra("goodsType", goodsType);
+        starter.putExtra("deliveryBean", bean);
+        context.startActivityForResult(starter, requestCode);
     }
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_self_delivery);
         setSlideAnimation();
-        goodsPresent = new GoodsDetailPresentImpl(this,this);
-        venuesPresent = new VenuesPresentImpl(this,this);
-        if(getIntent() != null){
+        goodsPresent = new GoodsDetailPresentImpl(this, this);
+        venuesPresent = new VenuesPresentImpl(this, this);
+        if (getIntent() != null) {
             goodsType = getIntent().getStringExtra("goodsType");
             goodsId = getIntent().getStringExtra("goodsId");
             deliveryBean = getIntent().getParcelableExtra("deliveryBean");
@@ -83,14 +83,16 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
 
         initView();
         setListener();
+        if (goodsId != null) {
+            venuesPresent.getGymBrand();
+            venuesPresent.getBusinessCircle();
+            goodsPresent.commonLoadVenues(switcherLayout, goodsType, goodsId, brandId, businessCircle);
+        }
 
-        venuesPresent.getGymBrand();
-        venuesPresent.getBusinessCircle();
-        goodsPresent.commonLoadVenues(switcherLayout,goodsType, goodsId,brandId,businessCircle);
     }
 
 
-    private void initView(){
+    private void initView() {
         initFilterView();
         initSwipeRefreshLayout();
         initRecyclerView();
@@ -104,21 +106,21 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
     }
 
     private void initFilterView() {
-        filterView = (VenuesFilterView)findViewById(R.id.filter_view);
+        filterView = (VenuesFilterView) findViewById(R.id.filter_view);
         filterView.hideTypeFilerView();
         filterView.setOnFilterClickListener(new VenuesFilterView.OnFilterClickListener() {
             @Override
             public void onBrandItemClick(String id) {
                 brandId = id;
                 refreshLayout.setRefreshing(true);
-                goodsPresent.pullToRefreshVenues(goodsType, goodsId,brandId,businessCircle);
+                goodsPresent.pullToRefreshVenues(goodsType, goodsId, brandId, businessCircle);
             }
 
             @Override
             public void onBusinessCircleItemClick(String address) {
                 businessCircle = address;
                 refreshLayout.setRefreshing(true);
-                goodsPresent.pullToRefreshVenues(goodsType, goodsId,brandId,businessCircle);
+                goodsPresent.pullToRefreshVenues(goodsType, goodsId, brandId, businessCircle);
             }
 
             @Override
@@ -129,21 +131,21 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
     }
 
     private void initSwipeRefreshLayout() {
-        refreshLayout = (CustomRefreshLayout)findViewById(R.id.refreshLayout);
-        switcherLayout = new SwitcherLayout(this,refreshLayout);
-        refreshLayout.setProgressViewOffset(true,50,250);
+        refreshLayout = (CustomRefreshLayout) findViewById(R.id.refreshLayout);
+        switcherLayout = new SwitcherLayout(this, refreshLayout);
+        refreshLayout.setProgressViewOffset(true, 50, 250);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-                goodsPresent.pullToRefreshVenues(goodsType, goodsId,brandId,businessCircle);
+                goodsPresent.pullToRefreshVenues(goodsType, goodsId, brandId, businessCircle);
             }
         });
     }
 
-    private void initRecyclerView(){
-        recyclerView = (RecyclerView)findViewById(R.id.rv_address);
+    private void initRecyclerView() {
+        recyclerView = (RecyclerView) findViewById(R.id.rv_address);
         data = new ArrayList<>();
         deliveryAdapter = new SelfDeliveryAdapter(this);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(deliveryAdapter);
@@ -152,36 +154,36 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
         recyclerView.addOnScrollListener(onScrollListener);
     }
 
-    private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
+    private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener() {
         @Override
         public void onLoadNextPage(View view) {
-            currPage ++;
+            currPage++;
             if (data != null && data.size() >= pageSize) {
-                goodsPresent.requestMoreVenues(recyclerView,pageSize,goodsType, goodsId,currPage,brandId,businessCircle);
+                goodsPresent.requestMoreVenues(recyclerView, pageSize, goodsType, goodsId, currPage, brandId, businessCircle);
             }
         }
     };
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_back:
                 compatFinish();
                 break;
             case R.id.tv_finish:
                 VenuesBean checked = null;
                 for (VenuesBean venuesBean : data) {
-                    if(venuesBean.isChecked()){
+                    if (venuesBean.isChecked()) {
                         checked = venuesBean;
                         break;
                     }
                 }
-                if(checked == null){
-                    Toast.makeText(this,"请选择自提场馆",Toast.LENGTH_LONG).show();
-                }else {
+                if (checked == null) {
+                    Toast.makeText(this, "请选择自提场馆", Toast.LENGTH_LONG).show();
+                } else {
                     Intent intent = new Intent();
-                    intent.putExtra("venues",checked);
-                    setResult(RESULT_OK,intent);
+                    intent.putExtra("venues", checked);
+                    setResult(RESULT_OK, intent);
                     compatFinish();
                 }
                 break;
@@ -192,14 +194,14 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
 
     @Override
     public void setGymBrand(List<CategoryBean> gymBrandBeanList) {
-        if(gymBrandBeanList != null){
+        if (gymBrandBeanList != null) {
             filterView.setBrandList(gymBrandBeanList);
         }
     }
 
     @Override
     public void setBusinessCircle(List<DistrictBean> circleBeanList) {
-        if(circleBeanList != null){
+        if (circleBeanList != null) {
             filterView.setCircleList(circleBeanList);
         }
     }
@@ -207,7 +209,7 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
     @Override
     public void onRefreshData(List<VenuesBean> venuesBeanList) {
         switcherLayout.showContentLayout();
-        if(deliveryBean != null && deliveryBean.getInfo() != null) {
+        if (deliveryBean != null && deliveryBean.getInfo() != null) {
             for (VenuesBean venuesBean : venuesBeanList) {
                 if (venuesBean.getId().equals(deliveryBean.getInfo().getId())) {
                     venuesBean.setChecked(true);
@@ -216,7 +218,7 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
             }
         }
 
-        if(refreshLayout.isRefreshing()){
+        if (refreshLayout.isRefreshing()) {
             data.clear();
             refreshLayout.setRefreshing(false);
         }
@@ -235,8 +237,8 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
 
     @Override
     public void showEmptyView() {
-        View view = View.inflate(this,R.layout.empty_venues,null);
-        switcherLayout.addCustomView(view,"empty");
+        View view = View.inflate(this, R.layout.empty_venues, null);
+        switcherLayout.addCustomView(view, "empty");
         switcherLayout.showCustomLayout("empty");
     }
 

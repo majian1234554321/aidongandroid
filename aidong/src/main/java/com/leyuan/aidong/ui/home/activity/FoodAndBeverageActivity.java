@@ -30,7 +30,7 @@ import com.leyuan.custompullrefresh.OnRefreshListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.leyuan.aidong.utils.Constant.RECOMMEND_NUTRITION;
+import static com.leyuan.aidong.utils.Constant.RECOMMEND_FOOD;
 
 
 /**
@@ -57,7 +57,7 @@ public class FoodAndBeverageActivity extends BaseActivity implements NurtureActi
         initTopLayout();
         initSwipeRefreshLayout();
         initRecommendRecyclerView();
-        recommendPresent.commendLoadRecommendData(switcherLayout,RECOMMEND_NUTRITION);
+        recommendPresent.commendLoadRecommendData(switcherLayout,RECOMMEND_FOOD);
     }
 
     private void initTopLayout(){
@@ -85,7 +85,7 @@ public class FoodAndBeverageActivity extends BaseActivity implements NurtureActi
             public void onRefresh() {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recommendView);
-                recommendPresent.pullToRefreshRecommendData(RECOMMEND_NUTRITION);
+                recommendPresent.pullToRefreshRecommendData(RECOMMEND_FOOD);
             }
         });
 
@@ -94,7 +94,7 @@ public class FoodAndBeverageActivity extends BaseActivity implements NurtureActi
             public void onClick(View v) {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recommendView);
-                recommendPresent.commendLoadRecommendData(switcherLayout,RECOMMEND_NUTRITION);
+                recommendPresent.commendLoadRecommendData(switcherLayout,RECOMMEND_FOOD);
             }
         });
     }
@@ -120,7 +120,7 @@ public class FoodAndBeverageActivity extends BaseActivity implements NurtureActi
         public void onLoadNextPage(View view) {
             currPage ++;
             if (nurtureList != null && nurtureList.size() >= pageSize) {
-                recommendPresent.requestMoreRecommendData(recommendView,pageSize,currPage, RECOMMEND_NUTRITION);
+                recommendPresent.requestMoreRecommendData(recommendView,pageSize,currPage, RECOMMEND_FOOD);
             }
         }
     };

@@ -52,6 +52,7 @@ import com.leyuan.aidong.module.photopicker.boxing_impl.adapter.BoxingAlbumAdapt
 import com.leyuan.aidong.module.photopicker.boxing_impl.adapter.BoxingMediaAdapter;
 import com.leyuan.aidong.module.photopicker.boxing_impl.view.MediaItemLayout;
 import com.leyuan.aidong.module.photopicker.boxing_impl.view.SpacesItemDecoration;
+import com.leyuan.aidong.utils.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -184,12 +185,15 @@ public class BoxingFragment extends AbsBoxingViewFragment implements View.OnClic
     }
 
     private void showEmptyData() {
+
+        Logger.i(TAG,"showEmptyData");
         mLoadingView.setVisibility(View.GONE);
         mEmptyTxt.setVisibility(View.VISIBLE);
         mRecycleView.setVisibility(View.GONE);
     }
 
     private void showData() {
+        Logger.i(TAG,"showData");
         mLoadingView.setVisibility(View.GONE);
         mEmptyTxt.setVisibility(View.GONE);
         mRecycleView.setVisibility(View.VISIBLE);
@@ -299,6 +303,7 @@ public class BoxingFragment extends AbsBoxingViewFragment implements View.OnClic
 
     private void onViewActivityRequest(List<BaseMedia> selectedMedias, List<BaseMedia> allMedias, boolean isBackClick) {
         if (isBackClick) {
+
             checkSelectedMedia(allMedias, selectedMedias);
         } else {
             onFinish(selectedMedias);

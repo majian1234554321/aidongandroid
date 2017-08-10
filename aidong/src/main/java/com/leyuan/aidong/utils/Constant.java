@@ -142,6 +142,7 @@ public class Constant {
     //推荐商品位置
     public static final String RECOMMEND_EQUIPMENT = "equipment";
     public static final String RECOMMEND_NUTRITION = "nutrition";
+    public static final String RECOMMEND_FOOD = "food";
     public static final String RECOMMEND_CART = "cart";
     public static final String RECOMMEND_ORDER = "iorder";
 

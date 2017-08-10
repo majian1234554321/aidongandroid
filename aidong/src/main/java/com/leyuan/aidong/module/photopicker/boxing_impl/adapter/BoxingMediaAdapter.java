@@ -95,6 +95,7 @@ public class BoxingMediaAdapter extends RecyclerView.Adapter {
             viewHolder.mCameraLayout.setOnClickListener(mOnCameraClickListener);
         } else {
             int pos = position - mOffset;
+
             final BaseMedia media = mMedias.get(pos);
             final ImageViewHolder vh = (ImageViewHolder) holder;
 

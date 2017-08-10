@@ -100,6 +100,7 @@ public class SystemPresentImpl implements SystemPresent {
                     if(equipments != null){
                         CategoryBean allBean = new CategoryBean();
                         allBean.setName("全部");
+                        allBean.setId("0");
                         equipments.add(0, allBean);
                     }
 
@@ -107,6 +108,7 @@ public class SystemPresentImpl implements SystemPresent {
                     if(nutrition != null){
                         CategoryBean allBean = new CategoryBean();
                         allBean.setName("全部");
+                        allBean.setId("0");
                         nutrition.add(0, allBean);
                     }
 
@@ -114,6 +116,7 @@ public class SystemPresentImpl implements SystemPresent {
                     if(foods != null){
                         CategoryBean allBean = new CategoryBean();
                         allBean.setName("全部");
+                        allBean.setId("0");
                         foods.add(0, allBean);
                     }
 
