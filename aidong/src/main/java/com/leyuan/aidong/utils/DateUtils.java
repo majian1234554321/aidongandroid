@@ -244,7 +244,7 @@ public class DateUtils {
     /**
      * 获取今天往后一周的日期（几月几号）
      */
-    public static List<String> getDays(int start , int limit) {
+    public static List<String> getDays(int start, int limit) {
         List<String> dates = new ArrayList<String>();
         Date date = new Date();//取时间
         final Calendar calendar = new GregorianCalendar();
@@ -280,22 +280,41 @@ public class DateUtils {
         return dates;
     }
 
+    public static List<String> getLimitDays(int start, int limit) {
+        List<String> dates = new ArrayList<>();
+        Date date = new Date();//取时间
+        final Calendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        for (int i = start; i < start + limit; i++) {
+            calendar.add(calendar.DATE,  i == start ? start : +1);//把日期往前减少一天，若想把日期向后推一天则将负数改为正数
+            date = calendar.getTime();
+            String weekOfDate = getWeekOfDate(date);
+            SimpleDateFormat formatter = new SimpleDateFormat("MM月dd");
+            String dateString = formatter.format(date);
+            dates.add(dateString + weekOfDate);
+        }
+        return dates;
+    }
+
     public static List<String> getLimitDays(int limitDays, String limit_period) {
-        List<String> dates = new ArrayList<String>();
         Calendar calendar = Calendar.getInstance();
         int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
         int currentMin = calendar.get(Calendar.MINUTE);
         try {
             int limitHour = Integer.parseInt(limit_period.substring(0, 2));
-            int limitMinute = Integer.parseInt(limit_period.substring(3,5));
-            if(currentHour >= limitHour){
-
+            int limitMinute = Integer.parseInt(limit_period.substring(3, 5));
+            if (currentHour < limitHour) {
+                return getLimitDays(1, limitDays );
+            } else if (currentHour == limitHour && currentMin < limitMinute) {
+                return getLimitDays(1, limitDays );
+            } else {
+                return getLimitDays(2, limitDays);
             }
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
 
-        return null;
+        return getSevenDate();
     }
 
     /**

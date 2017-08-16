@@ -67,9 +67,9 @@ public class NurtureModelImpl implements NurtureModel {
     @Override
     public void buyNurtureImmediately(Subscriber<PayOrderData> subscriber, String skuCode, int amount,
                                       String coupon, String integral, String coin, String payType,
-                                      String pickUpWay, String pickUpId, String pickUpDate, String pick_up_period) {
+                                      String pickUpWay, String pickUpId, String pickUpDate, String pick_up_period, String is_food) {
         nurtureService.buyGoodsImmediately(skuCode,amount,coupon,integral,coin,payType,pickUpWay,
-                pickUpId,pickUpDate,pick_up_period)
+                pickUpId,pickUpDate,pick_up_period,is_food)
                 .compose(RxHelper.<PayOrderData>transform())
                 .subscribe(subscriber);
     }

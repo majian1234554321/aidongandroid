@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -59,16 +60,16 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
 
     public static void startForResult(Fragment fragment, boolean isPhoto, ArrayList<BaseMedia> selectedMedia, int requestCode) {
         Intent starter = new Intent(fragment.getContext(), PublishDynamicActivity.class);
-        starter.putExtra("isPhoto",isPhoto);
-        starter.putParcelableArrayListExtra("selectedMedia",selectedMedia);
-        fragment.startActivityForResult(starter,requestCode);
+        starter.putExtra("isPhoto", isPhoto);
+        starter.putParcelableArrayListExtra("selectedMedia", selectedMedia);
+        fragment.startActivityForResult(starter, requestCode);
     }
 
     public static void startForResult(Activity activity, boolean isPhoto, ArrayList<BaseMedia> selectedMedia, int requestCode) {
         Intent starter = new Intent(activity, PublishDynamicActivity.class);
-        starter.putExtra("isPhoto",isPhoto);
-        starter.putParcelableArrayListExtra("selectedMedia",selectedMedia);
-        activity.startActivityForResult(starter,requestCode);
+        starter.putExtra("isPhoto", isPhoto);
+        starter.putParcelableArrayListExtra("selectedMedia", selectedMedia);
+        activity.startActivityForResult(starter, requestCode);
     }
 
     @Override
@@ -76,9 +77,9 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish_dynamic);
         setSlideAnimation();
-        dynamicPresent = new DynamicPresentImpl(this,this);
-        if(getIntent() != null){
-            isPhoto = getIntent().getBooleanExtra("isPhoto",true);
+        dynamicPresent = new DynamicPresentImpl(this, this);
+        if (getIntent() != null) {
+            isPhoto = getIntent().getBooleanExtra("isPhoto", true);
             selectedMedia = getIntent().getParcelableArrayListExtra("selectedMedia");
         }
         initView();
@@ -99,10 +100,10 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
         ItemDragHelperCallback itemDragHelperCallback = new ItemDragHelperCallback(mediaAdapter);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemDragHelperCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
-        mediaAdapter.setData(selectedMedia,isPhoto);
+        mediaAdapter.setData(selectedMedia, isPhoto);
     }
 
-    private void setListener(){
+    private void setListener() {
         ivBack.setOnClickListener(this);
         mediaAdapter.setOnItemClickListener(this);
         btSend.setOnClickListener(this);
@@ -112,13 +113,13 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_back:
                 finish();
                 break;
             case R.id.bt_send:
-                if(FormatUtil.parseInt(tvContentCount.getText().toString()) > MAX_TEXT_COUNT){
-                    ToastGlobal.showLong(String.format(getString(R.string.too_many_text),MAX_TEXT_COUNT));
+                if (FormatUtil.parseInt(tvContentCount.getText().toString()) > MAX_TEXT_COUNT) {
+                    ToastGlobal.showLong(String.format(getString(R.string.too_many_text), MAX_TEXT_COUNT));
                     return;
                 }
                 uploadToQiNiu();
@@ -140,11 +141,23 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
     public void onDeleteMediaClick(int position) {
         selectedMedia.remove(position);
         mediaAdapter.notifyItemRemoved(position);
-        mediaAdapter.notifyItemRangeChanged(position,selectedMedia.size());
+        mediaAdapter.notifyItemRangeChanged(position, selectedMedia.size());
         btSend.setEnabled(!selectedMedia.isEmpty());
     }
 
-    private void uploadToQiNiu(){
+    @Override
+    public void onMediaItemClick(BaseMedia baseMedia) {
+//        if (isPhoto) {
+//
+//        } else {
+//            Intent intent = new Intent(this, PlayerActivity.class)
+//                    .setData(Uri.parse(baseMedia.getPath()))
+//                    .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_OTHER);
+//            startActivity(intent);
+//        }
+    }
+
+    private void uploadToQiNiu() {
         showProgressDialog();
         UploadToQiNiuManager.getInstance().uploadMedia(isPhoto, selectedMedia, new IQiNiuCallback() {
             @Override
@@ -160,24 +173,25 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
         });
     }
 
-    private void uploadToServer(List<String> qiNiuMediaUrls){
+    private void uploadToServer(List<String> qiNiuMediaUrls) {
         String content = etContent.getText().toString();
         String[] media = new String[qiNiuMediaUrls.size()];
         for (int i = 0; i < qiNiuMediaUrls.size(); i++) {
             media[i] = qiNiuMediaUrls.get(i);
         }
-        dynamicPresent.postDynamic(isPhoto,content,media);
+        dynamicPresent.postDynamic(isPhoto, content, media);
     }
 
     @Override
     public void publishDynamicResult(BaseBean baseBean) {
         dismissProgressDialog();
-        if(baseBean.getStatus() == Constant.OK){
+        if (baseBean.getStatus() == Constant.OK) {
             selectedMedia.clear();
             ToastGlobal.showLong("上传成功");
-            setResult(RESULT_OK,null);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_PUBLISH_DYNAMIC_SUCCESS));
+            setResult(RESULT_OK, null);
             finish();
-        }else {
+        } else {
             ToastGlobal.showLong(baseBean.getMessage());
         }
     }
@@ -192,7 +206,7 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
             final List<BaseMedia> medias = Boxing.getResult(data);
             selectedMedia.clear();
             selectedMedia.addAll(medias);
-            mediaAdapter.setData(selectedMedia,isPhoto);
+            mediaAdapter.setData(selectedMedia, isPhoto);
             btSend.setEnabled(!selectedMedia.isEmpty());
         }
     }
@@ -200,7 +214,7 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
     @Override
     public boolean onKey(View v, int keyCode, KeyEvent event) {
         //屏蔽掉换行健
-        if(event.getKeyCode()==KeyEvent.KEYCODE_ENTER){
+        if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
             ToastGlobal.showShort("不支持换行符");
             return true;
         }
@@ -219,7 +233,7 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
             byte[] bytes = s.toString().getBytes();
             tvContentCount.setText(String.valueOf(s.toString().length()));
             tvContentCount.setTextColor(s.length() > MAX_TEXT_COUNT ? getResources()
-                    .getColor(R.color.main_red) :getResources().getColor(R.color.c9));
+                    .getColor(R.color.main_red) : getResources().getColor(R.color.c9));
         }
 
         @Override

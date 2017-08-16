@@ -86,6 +86,15 @@ public class PublishDynamicAdapter extends RecyclerView.Adapter<PublishDynamicAd
                     }
                 }
             });
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(onItemClickListener != null){
+                        onItemClickListener.onMediaItemClick(data.get(position));
+                    }
+                }
+            });
+
         }else {
             holder.image.setBackgroundResource(R.drawable.icon_add_photo);
             holder.delete.setVisibility(View.GONE);
@@ -132,6 +141,8 @@ public class PublishDynamicAdapter extends RecyclerView.Adapter<PublishDynamicAd
     public interface OnItemClickListener {
         void onAddMediaClick();
         void onDeleteMediaClick(int position);
+
+        void onMediaItemClick(BaseMedia baseMedia);
     }
 
 }

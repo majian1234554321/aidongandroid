@@ -95,29 +95,6 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
     public void getGoodsDetail(final SwitcherLayout switcherLayout, @GoodsType String type, String id) {
         if (type == null) return;
         switch (type) {
-
-//                if (foodModel == null) {
-//                    foodModel = new FoodModelImpl();
-//                }
-//                foodModel.getFoodDetail(new CommonSubscriber<FoodDetailData>(context, switcherLayout) {
-//                    @Override
-//                    public void onNext(FoodDetailData foodDetailData) {
-//                        if (foodDetailData != null && foodDetailData.getFood() != null) {
-//                            goodsDetailView.setGoodsDetail(foodDetailData.getFood());
-//                            switcherLayout.showContentLayout();
-//                        } else {
-//                            switcherLayout.showEmptyLayout();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        super.onError(e);
-//                        goodsDetailView.showErrorView();
-//                    }
-//                }, id);
-//                break;
-
             case GOODS_EQUIPMENT:
                 if (equipmentModel == null) {
                     equipmentModel = new EquipmentModelImpl(context);

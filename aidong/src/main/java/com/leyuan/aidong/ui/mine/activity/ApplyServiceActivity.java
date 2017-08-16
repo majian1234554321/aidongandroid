@@ -180,4 +180,9 @@ public class ApplyServiceActivity extends BaseActivity implements View.OnClickLi
         mediaAdapter.notifyItemRangeChanged(position, selectedMedia.size());
     }
 
+    @Override
+    public void onMediaItemClick(BaseMedia baseMedia) {
+
+    }
+
 }

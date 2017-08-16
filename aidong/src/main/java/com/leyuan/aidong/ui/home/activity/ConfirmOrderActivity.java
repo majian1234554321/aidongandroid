@@ -32,6 +32,7 @@ import com.leyuan.aidong.ui.mine.activity.UpdateDeliveryInfoActivity;
 import com.leyuan.aidong.ui.mvp.presenter.ConfirmOrderPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.ConfirmOrderPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.ConfirmOrderActivityView;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.SystemInfoUtils;
@@ -61,6 +62,7 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_COUPON;
 import static com.leyuan.aidong.utils.Constant.REQUEST_UPDATE_DELIVERY;
 import static com.leyuan.aidong.utils.Constant.SETTLEMENT_CART;
 import static com.leyuan.aidong.utils.Constant.SETTLEMENT_EQUIPMENT_IMMEDIATELY;
+import static com.leyuan.aidong.utils.Constant.SETTLEMENT_FOOD_IMMEDIATELY;
 import static com.leyuan.aidong.utils.Constant.SETTLEMENT_NURTURE_IMMEDIATELY;
 
 
@@ -175,12 +177,11 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         if (getIntent() == null) return;
         payType = PAY_ALI;
         days = DateUtils.getSevenDate();
-        limit_days = DateUtils.getLimitDays( SystemInfoUtils.getLimit_days(this),SystemInfoUtils.getLimit_period(this));
-        limit_days  = DateUtils.getSevenDate();
+        limit_days = DateUtils.getLimitDays(SystemInfoUtils.getLimit_days(this), SystemInfoUtils.getLimit_period(this));
         expressPrice = SystemInfoUtils.getExpressPrice(this);
 
         shopBeanList = getIntent().getParcelableArrayListExtra("selectedShops");
-        if (shopBeanList == null || shopBeanList.isEmpty()) {   //立即购买
+        if (shopBeanList == null || shopBeanList.isEmpty()) {   //立即购买 从商品或详情进入
             shopBeanList = new ArrayList<>();
             ShopBean shop = getIntent().getParcelableExtra("shop");
             shopBeanList.add(shop);
@@ -194,11 +195,13 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             }
             if (GOODS_NUTRITION.equals(goods.getType())) {
                 settlementType = SETTLEMENT_NURTURE_IMMEDIATELY;
-            } else {
+            } else if(GOODS_FOODS.equals(goods.getType())){
+                settlementType = SETTLEMENT_FOOD_IMMEDIATELY;
+            }  else{
                 settlementType = SETTLEMENT_EQUIPMENT_IMMEDIATELY;
             }
 
-        } else {         //购物车结算
+        } else {         //购物车结算 进入次界面
             settlementType = SETTLEMENT_CART;
             totalGoodsPrice = getIntent().getDoubleExtra("totalGoodsPrice", 0f);
         }
@@ -214,9 +217,10 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
         for (int i = 0; i < goodsList.size(); i++) {
             itemIds[i] = goodsList.get(i).getId();
-            itemFromIdAmount[i] = goodsList.get(i).getProductType() + "_"
+            itemFromIdAmount[i] = goodsList.get(i).getCouponGoodsType() + "_"
                     + goodsList.get(i).getCode() + "_" + goodsList.get(i).getAmount();
         }
+        int i = 6;
     }
 
     private void initView() {
@@ -269,7 +273,9 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             }
 
             if (shopBean != null && shopBean.getItem() != null && !shopBean.getItem().isEmpty() &&
-                    TextUtils.equals(GOODS_FOODS, shopBean.getItem().get(0).getType())) {
+                    (TextUtils.equals(GOODS_FOODS, shopBean.getItem().get(0).getType()) ||
+                            (TextUtils.equals(GOODS_NUTRITION, shopBean.getItem().get(0).getType())
+                                    && shopBean.getItem().get(0).getProductIdInteger() > Constant.GOODS_FOODS_START_INDEX))) {
                 //该商品为健康餐饮
                 llReceivingTime.setVisibility(View.VISIBLE);
                 receivingTimeQuantum = SystemInfoUtils.getPeriods(this);
@@ -284,7 +290,8 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             addressLayout.setVisibility(View.VISIBLE);
 
             if (settlementType.equals(SETTLEMENT_EQUIPMENT_IMMEDIATELY)
-                    || settlementType.equals(SETTLEMENT_NURTURE_IMMEDIATELY)) {
+                    || settlementType.equals(SETTLEMENT_NURTURE_IMMEDIATELY)
+                    || settlementType.equals(SETTLEMENT_FOOD_IMMEDIATELY)) {
                 pickUpWay = DELIVERY_EXPRESS;
                 pickUpDate = null;
             }
@@ -295,7 +302,8 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             tvTime.setText(pickUpDate);
             selfDeliveryLayout.setVisibility(View.VISIBLE);
             if (settlementType.equals(SETTLEMENT_EQUIPMENT_IMMEDIATELY)
-                    || settlementType.equals(SETTLEMENT_NURTURE_IMMEDIATELY)) {
+                    || settlementType.equals(SETTLEMENT_NURTURE_IMMEDIATELY)
+                    || settlementType.equals(SETTLEMENT_FOOD_IMMEDIATELY)) {
                 pickUpWay = DELIVERY_SELF;
                 pickUpId = shopBeanList.get(0).getPickUp().getInfo().getId();
             }
@@ -360,15 +368,14 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
 
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
-                pickUpDate = days.get(options1);
+                pickUpDate = limit_days.get(options1);
                 pick_up_period = receivingTimeQuantum.get(options2);
                 txtrecevingtime.setText(pickUpDate + " " + pick_up_period);
 
             }
         }).build();
-        pvNoLinkOptions.setNPicker(days, receivingTimeQuantum, null);
+        pvNoLinkOptions.setNPicker(limit_days, receivingTimeQuantum, null);
         pvNoLinkOptions.show();
-
 
     }
 
@@ -380,7 +387,8 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private void payOrder() {
         if (needExpress) {
             if (settlementType.equals(SETTLEMENT_EQUIPMENT_IMMEDIATELY)
-                    || settlementType.equals(SETTLEMENT_NURTURE_IMMEDIATELY)) {
+                    || settlementType.equals(SETTLEMENT_NURTURE_IMMEDIATELY)
+                    || settlementType.equals(SETTLEMENT_FOOD_IMMEDIATELY)) {
                 if (TextUtils.isEmpty(pickUpId)) {
                     ToastGlobal.showLong("请填写收货地址");
                     return;
@@ -398,9 +406,13 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 present.payCart(integral, coin, couponId, payType,
                         addressId, pickUpDate, payListener, itemIds);
                 break;
+            case SETTLEMENT_FOOD_IMMEDIATELY:
+                present.buyNurtureImmediately(skuCode, amount, couponId, integral, coin, payType,
+                        String.valueOf(pickUpWay), pickUpId, pickUpDate, pick_up_period,"1", payListener);
+                break;
             case SETTLEMENT_NURTURE_IMMEDIATELY:
                 present.buyNurtureImmediately(skuCode, amount, couponId, integral, coin, payType,
-                        String.valueOf(pickUpWay), pickUpId, pickUpDate,pick_up_period, payListener);
+                        String.valueOf(pickUpWay), pickUpId, pickUpDate, pick_up_period,"0", payListener);
                 break;
             case SETTLEMENT_EQUIPMENT_IMMEDIATELY:
                 present.buyEquipmentImmediately(skuCode, amount, couponId, integral, coin, payType,
@@ -528,7 +540,8 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 .append(address.getDistrict()).append(address.getAddress());
         tvAddress.setText(sb);
         if (settlementType.equals(SETTLEMENT_EQUIPMENT_IMMEDIATELY)
-                || settlementType.equals(SETTLEMENT_NURTURE_IMMEDIATELY)) {
+                || settlementType.equals(SETTLEMENT_NURTURE_IMMEDIATELY)
+                || settlementType.equals(SETTLEMENT_FOOD_IMMEDIATELY)) {
             pickUpId = address.getId();
         } else {
             addressId = address.getId();

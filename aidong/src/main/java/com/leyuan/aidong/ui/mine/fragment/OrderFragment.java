@@ -172,13 +172,31 @@ public class OrderFragment extends BaseLazyFragment implements OrderFragmentView
         }
 
         @Override
-        public void onDeleteOrder(String id) {
-            present.deleteOrder(id);
+        public void onDeleteOrder(final String id) {
+
+            new DialogDoubleButton(getActivity()).setContentDesc(getString(R.string.delete_cannot_reserve))
+                    .setBtnCancelListener(new ButtonCancelListener() {
+                        @Override
+                        public void onClick(BaseDialog dialog) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setBtnOkListener(new ButtonOkListener() {
+                        @Override
+                        public void onClick(BaseDialog dialog) {
+                            dialog.dismiss();
+                            present.deleteOrder(id);
+                        }
+                    }).show();
+
         }
 
         @Override
         public void onConfirmOrder(final String id) {
-            new DialogDoubleButton(getActivity()).setContentDesc("点击确认表示您已收到货物")
+            new DialogDoubleButton(getActivity())
+                    .setLeftButton(getString(R.string.no_received))
+                    .setRightButton(getString(R.string.have_received))
+                    .setContentDesc(getString(R.string.are_you_sure_have_to_received))
                     .setBtnCancelListener(new ButtonCancelListener() {
                         @Override
                         public void onClick(BaseDialog dialog) {

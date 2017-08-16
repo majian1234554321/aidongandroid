@@ -1,9 +1,9 @@
 package com.leyuan.aidong.ui.mvp.model;
 
 import com.leyuan.aidong.entity.BaseBean;
-import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.data.CommentData;
 import com.leyuan.aidong.entity.data.DynamicsData;
+import com.leyuan.aidong.entity.data.DynamicsSingleData;
 import com.leyuan.aidong.entity.data.LikeData;
 
 import rx.Subscriber;
@@ -20,7 +20,8 @@ public interface DynamicModel {
      */
     void getDynamics(Subscriber<DynamicsData> subscriber, int page);
 
-    void getDynamicDetail(Subscriber<DynamicBean> subscriber, String id);
+
+    void getDynamicDetail(Subscriber<DynamicsSingleData> subscriber, String id);
 
     /**
      * 发表动态

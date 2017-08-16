@@ -242,7 +242,7 @@ public class GoodsListActivity extends BaseActivity implements View.OnClickListe
     private void getListData(int operation) {
         switch (operation) {
             case COMMEND_LOAD_DATA:
-                goodsListPrenset.commendLoadNurtureData(switcherLayout, categoryId, sort, gymId);
+                goodsListPrenset.commendLoadGoodsData(switcherLayout, categoryId, sort, gymId);
 
                 break;
             case PULL_TO_REFRESH_DATA:

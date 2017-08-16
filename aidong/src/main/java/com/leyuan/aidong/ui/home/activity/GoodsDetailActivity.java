@@ -74,6 +74,7 @@ import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
 import static com.leyuan.aidong.utils.Constant.DELIVERY_SELF;
 import static com.leyuan.aidong.utils.Constant.EMPTY_STR;
 import static com.leyuan.aidong.utils.Constant.GOODS_FOODS;
+import static com.leyuan.aidong.utils.Constant.GOODS_NUTRITION;
 import static com.leyuan.aidong.utils.Constant.REQUEST_ADD_CART;
 import static com.leyuan.aidong.utils.Constant.REQUEST_BUY_IMMEDIATELY;
 import static com.leyuan.aidong.utils.Constant.REQUEST_CONFIRM;
@@ -85,8 +86,8 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_TO_CART;
  * Created by song on 2016/11/28.
  */
 public class GoodsDetailActivity extends BaseActivity implements View.OnClickListener,
-        GoodsDetailActivityView,ObserveScrollView.ScrollViewListener, GoodsSkuPopupWindow.SelectSkuListener,
-        SmartTabLayout.TabProvider,GoodsDetailCouponAdapter.CouponListener {
+        GoodsDetailActivityView, ObserveScrollView.ScrollViewListener, GoodsSkuPopupWindow.SelectSkuListener,
+        SmartTabLayout.TabProvider, GoodsDetailCouponAdapter.CouponListener {
     private RelativeLayout topLayout;
     private ImageView ivBack;
     private TextView tvTitle;
@@ -133,6 +134,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     private GoodsDetailBean bean;
 
     private String goodsId;
+    private int goodsIdInteger;
     private String selectedCount;
     private String goodsType;
     private boolean isSellOut = true;   //是否售罄
@@ -140,27 +142,30 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     private List<String> selectedSkuValues = new ArrayList<>();
     private GoodsDetailPresent goodsPresent;
 
-    public static void start(Context context, String goodsId, @GoodsType  String type) {
+    public static void start(Context context, String goodsId, @GoodsType String type) {
         Intent starter = new Intent(context, GoodsDetailActivity.class);
-        starter.putExtra("goodsId",goodsId);
-        starter.putExtra("goodsType",type);
+        starter.putExtra("goodsId", goodsId);
+        starter.putExtra("goodsType", type);
         context.startActivity(starter);
     }
 
     @Override
-    protected void onCreate( Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_detail_deprecated);
         sharePopupWindow = new SharePopupWindow(this);
-        goodsPresent = new GoodsDetailPresentImpl(this,this);
-        if(getIntent() != null){
+        goodsPresent = new GoodsDetailPresentImpl(this, this);
+        if (getIntent() != null) {
             goodsId = getIntent().getStringExtra("goodsId");
             goodsType = getIntent().getStringExtra("goodsType");
+            //根据类型和ID 转为真正类型
+            goodsType = GoodsDetailBean.getRealGoodsType(goodsType,goodsId);
         }
+        goodsIdInteger = FormatUtil.parseInt(goodsId);
 
         initView();
         setListener();
-        goodsPresent.getGoodsDetail(switcherLayout, goodsType,goodsId);
+        goodsPresent.getGoodsDetail(switcherLayout, goodsType, goodsId);
     }
 
     @Override
@@ -176,9 +181,9 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         ivShare.setVisibility(View.GONE);
     }
 
-    private void initView(){
+    private void initView() {
         rootLayout = (LinearLayout) findViewById(R.id.root);
-        switcherLayout = new SwitcherLayout(this,rootLayout);
+        switcherLayout = new SwitcherLayout(this, rootLayout);
         detailsLayout = (SlideDetailsLayout) findViewById(R.id.slide_details_layout);
         scrollview = (ObserveScrollView) findViewById(R.id.scrollview);
         bannerLayout = (BGABanner) findViewById(R.id.banner_layout);
@@ -209,20 +214,20 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         payLayout = (LinearLayout) findViewById(R.id.ll_pay);
         tvStockTip = (TextView) findViewById(R.id.tv_count_tip);
         tvSellOut = (TextView) findViewById(R.id.tv_sell_out);
-        topLayout.setBackgroundColor(Color.argb(55,0,0,0));
+        topLayout.setBackgroundColor(Color.argb(55, 0, 0, 0));
         bannerLayout.setAdapter(new BGABanner.Adapter() {
             @Override
             public void fillBannerItem(BGABanner banner, View view, Object model, int position) {
-                GlideLoader.getInstance().displayImage((String)model, (ImageView)view);
+                GlideLoader.getInstance().displayImage((String) model, (ImageView) view);
             }
         });
-        couponView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        couponView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         couponAdapter = new GoodsDetailCouponAdapter(this);
         couponView.setNestedScrollingEnabled(false);
         couponView.setAdapter(couponAdapter);
     }
 
-    private void setListener(){
+    private void setListener() {
         ivBack.setOnClickListener(this);
         ivShare.setOnClickListener(this);
         skuLayout.setOnClickListener(this);
@@ -233,13 +238,12 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         scrollview.setScrollViewListener(this);
         couponAdapter.setListener(this);
         detailsLayout.setOnSlideDetailsListener(new MyOnSlideDetailsListener());
+        tvAddCart.setOnClickListener(this);
 
-        if(GOODS_FOODS.equals(goodsType)){
-            tvAddCart.setBackgroundResource(R.color.bg_gray);
-            tvAddCart.setClickable(false);
-        }else{
-            tvAddCart.setOnClickListener(this);
-        }
+//        if (GOODS_FOODS.equals(goodsType) || ((GOODS_NUTRITION.equals(goodsType) && goodsIdInteger > Constant.GOODS_FOODS_START_INDEX))) {
+//            tvAddCart.setBackgroundResource(R.color.bg_gray);
+////            tvAddCart.setClickable(false);
+//        }
     }
 
     @Override
@@ -254,19 +258,19 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                     if (bean.image != null && !bean.image.isEmpty()) {
                         image = bean.image.get(0);
                     }
-                    sharePopupWindow.showAtBottom(Constant.SHARE_GOODS_TITLE,  bean.introduce, image,
-                            ConstantUrl.URL_SHARE_PRODUCT+bean.id);
+                    sharePopupWindow.showAtBottom(Constant.SHARE_GOODS_TITLE, bean.introduce, image,
+                            ConstantUrl.URL_SHARE_PRODUCT + bean.id);
                 }
                 break;
             case R.id.ll_code:
                 showRecommendCodeDialog();
                 break;
             case R.id.ll_goods_sku:
-                if(isSellOut) {
-                    if(hasSku) {
+                if (isSellOut) {
+                    if (hasSku) {
                         showSkuPopupWindow(GoodsSkuPopupWindow.GoodsStatus.SellOut);
                     }
-                }else {
+                } else {
                     showSkuPopupWindow(GoodsSkuPopupWindow.GoodsStatus.Normal);
                 }
                 break;
@@ -289,7 +293,12 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                 }
                 break;
             case R.id.tv_add_cart:
-                showSkuPopupWindow(GoodsSkuPopupWindow.GoodsStatus.ConfirmToAddCart);
+                if (GOODS_FOODS.equals(goodsType) || ((GOODS_NUTRITION.equals(goodsType) && goodsIdInteger > Constant.GOODS_FOODS_START_INDEX))) {
+                    ToastGlobal.showShortConsecutive(R.string.goods_can_not_add_into_cart);
+                } else {
+                    showSkuPopupWindow(GoodsSkuPopupWindow.GoodsStatus.ConfirmToAddCart);
+                }
+
                 break;
             case R.id.ll_pay:
                 showSkuPopupWindow(GoodsSkuPopupWindow.GoodsStatus.ConfirmToBuy);
@@ -302,19 +311,20 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void setGoodsDetail(GoodsDetailBean bean) {
         this.bean = bean;
+        bean.setDeliveryBeanByGoodsType(goodsType);
         bottomLayout.setVisibility(View.VISIBLE);
         bannerUrls.addAll(bean.image);
         bannerLayout.setData(bannerUrls, null);
         tvTitle.setText(String.format(getString(R.string.rmb_price_double),
-                FormatUtil.parseDouble(bean.price)));
+                FormatUtil.parseDouble(bean.floor_price)));
         tvPrice.setText(String.format(getString(R.string.rmb_price_double),
-                FormatUtil.parseDouble(TextUtils.isEmpty(bean.floor_price) ? bean.price :bean.floor_price)));
-        if(!TextUtils.isEmpty(bean.market_price)) {
+                FormatUtil.parseDouble(TextUtils.isEmpty(bean.floor_price) ? bean.price : bean.floor_price)));
+        if (!TextUtils.isEmpty(bean.market_price)) {
             tvMarketPrice.setText(String.format(getString(R.string.rmb_price_double),
                     FormatUtil.parseDouble(bean.market_price)));
             tvMarketPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
             tvMarketPrice.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             tvMarketPrice.setVisibility(View.GONE);
         }
         tvGoodsName.setText(bean.name);
@@ -327,7 +337,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         }
 
         for (GoodsSkuBean goodsSkuBean : bean.spec.item) {
-            if(goodsSkuBean.getStock() != 0){
+            if (goodsSkuBean.getStock() != 0) {
                 isSellOut = false;
                 break;
             }
@@ -344,27 +354,27 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             if (DELIVERY_EXPRESS.equals(bean.pick_up.getType()) && bean.pick_up.isSend()) {             //默认快递
                 tvAddressInfo.setVisibility(View.GONE);
                 tvDeliveryInfo.setText(getString(R.string.express));
-            } else if(DELIVERY_SELF.equals(bean.pick_up.getType()) && bean.pick_up.getInfo() != null
-                    && !TextUtils.isEmpty(bean.pick_up.getInfo().getId())){                             //默认自提
+            } else if (DELIVERY_SELF.equals(bean.pick_up.getType()) && bean.pick_up.getInfo() != null
+                    && !TextUtils.isEmpty(bean.pick_up.getInfo().getId())) {                             //默认自提
                 tvAddressInfo.setVisibility(View.VISIBLE);
                 tvAddressInfo.setText(bean.pick_up.getInfo().getName());
                 tvDeliveryInfo.setText(getString(R.string.self_delivery));
-            }else {                                                                         //既不支持快递又不支持自提
+            } else {                                                                         //既不支持快递又不支持自提
                 isSellOut = true;//如果该商品既不支持快递也不支持自提即不能购买,认为该商品为售罄状态
                 tvAddressInfo.setVisibility(View.GONE);
                 tvDeliveryInfo.setText(getString(R.string.please_select));
             }
         }
 
-        if(isSellOut){
+        if (isSellOut) {
             tvSelectSku.setText(hasSku ? getString(R.string.please_select) : "规格");
             tvCount.setText(R.string.sell_out);
             Drawable rightArrow = getResources().getDrawable(R.drawable.icon_right_arrow);
-            tvCount.setCompoundDrawablesWithIntrinsicBounds(null,null, hasSku ? rightArrow : null,null);
+            tvCount.setCompoundDrawablesWithIntrinsicBounds(null, null, hasSku ? rightArrow : null, null);
             tvSellOut.setVisibility(View.VISIBLE);
             payLayout.setVisibility(View.GONE);
             tvAddCart.setVisibility(View.GONE);
-        }else {
+        } else {
             StringBuilder skuStr = new StringBuilder();
             for (String s : this.bean.spec.name) {
                 skuStr.append(s).append(EMPTY_STR);
@@ -380,26 +390,26 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     }
 
     @Override
-    public void onSelectSkuChanged(List<String> selectedSkuValues,String skuTip,
-                                   String selectedCount,int stock,double price) {
-        if(isSellOut){
+    public void onSelectSkuChanged(List<String> selectedSkuValues, String skuTip,
+                                   String selectedCount, int stock, double price) {
+        if (isSellOut) {
             return;
         }
         this.selectedCount = selectedCount;
-        if(selectedSkuValues != null) {
+        if (selectedSkuValues != null) {
             this.selectedSkuValues = selectedSkuValues;
         }
         tvCount.setText(String.format(getString(R.string.count_string), this.selectedCount));
-        if(isAllSkuConfirm()){
-            tvSelectSku.setText(String.format(getString(R.string.sku_selected),skuTip));
-            tvStockTip.setText(String.format(getString(R.string.surplus_goods_count),stock));
+        if (isAllSkuConfirm()) {
+            tvSelectSku.setText(String.format(getString(R.string.sku_selected), skuTip));
+            tvStockTip.setText(String.format(getString(R.string.surplus_goods_count), stock));
             tvStockTip.setVisibility(stock <= 10 ? View.VISIBLE : View.GONE);
             tvPrice.setText(String.format(getString(R.string.rmb_price_double), price));
-        }else {
-            tvSelectSku.setText(String.format(getString(R.string.sku_select),skuTip));
+        } else {
+            tvSelectSku.setText(String.format(getString(R.string.sku_select), skuTip));
             tvStockTip.setVisibility(View.GONE);
             tvPrice.setText(String.format(getString(R.string.rmb_price_double),
-                    FormatUtil.parseDouble(TextUtils.isEmpty(bean.floor_price) ? bean.price :bean.floor_price)));
+                    FormatUtil.parseDouble(TextUtils.isEmpty(bean.floor_price) ? bean.price : bean.floor_price)));
         }
     }
 
@@ -408,17 +418,17 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     private void showSkuPopupWindow(GoodsSkuPopupWindow.GoodsStatus status) {
         //if(skuPopupWindow == null){
         String recommendId = tvRecommendCode.getText().toString();
-        if(TextUtils.isEmpty(recommendId)){
+        if (TextUtils.isEmpty(recommendId)) {
             recommendId = null;
         }
-        skuPopupWindow = new GoodsSkuPopupWindow(this, bean, status,selectedSkuValues, selectedCount,
+        skuPopupWindow = new GoodsSkuPopupWindow(this, bean, status, selectedSkuValues, selectedCount,
                 recommendId, goodsType);
         skuPopupWindow.setSelectSkuListener(this);
         skuPopupWindow.showAtLocation(rootLayout, Gravity.BOTTOM, 0, 0);
     }
 
     private void showRecommendCodeDialog() {
-        View view = View.inflate(this,R.layout.dialog_input_code,null);
+        View view = View.inflate(this, R.layout.dialog_input_code, null);
         final EditText etCode = (EditText) view.findViewById(R.id.et_code);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(getString(R.string.input_recommend_code))
@@ -481,7 +491,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             if (DELIVERY_EXPRESS.equals(deliveryBean.getType()) && bean.pick_up.isSend()) {
                 tvAddressInfo.setVisibility(View.GONE);
                 tvDeliveryInfo.setText(getString(R.string.express));
-            } else if(DELIVERY_SELF.equals(deliveryBean.getType())){
+            } else if (DELIVERY_SELF.equals(deliveryBean.getType())) {
                 tvAddressInfo.setVisibility(View.VISIBLE);
                 tvAddressInfo.setText(deliveryBean.getInfo().getName());
                 tvDeliveryInfo.setText(getString(R.string.self_delivery));
@@ -503,26 +513,26 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             }
         } else if (requestCode == REQUEST_TO_CART) {
             startActivity(new Intent(this, CartActivity.class));
-        }else if(requestCode == Constant.REQUEST_LOGIN){
-            goodsPresent.getGoodsDetail(goodsType,goodsId);
+        } else if (requestCode == Constant.REQUEST_LOGIN) {
+            goodsPresent.getGoodsDetail(goodsType, goodsId);
         }
     }
 
-    private boolean isAllSkuConfirm(){
+    private boolean isAllSkuConfirm() {
         return this.selectedSkuValues.size() == bean.spec.name.size();
     }
 
     @Override
     public void onScrollChanged(ObserveScrollView scrollView, int x, int y, int oldX, int oldY) {
-        int height = DensityUtil.dp2px(this,300);
+        int height = DensityUtil.dp2px(this, 300);
         if (y <= 0) {
-            topLayout.setBackgroundColor(Color.argb(55,0,0,0));
+            topLayout.setBackgroundColor(Color.argb(55, 0, 0, 0));
         } else if (y > 0 && y <= height) {
             float ratio = (float) y / height;
             float alpha = (200 * ratio) + 55;
-            topLayout.setBackgroundColor(Color.argb((int) alpha, 0,0,0));
+            topLayout.setBackgroundColor(Color.argb((int) alpha, 0, 0, 0));
         } else {
-            topLayout.setBackgroundColor(Color.argb(255, 0,0,0));
+            topLayout.setBackgroundColor(Color.argb(255, 0, 0, 0));
         }
     }
 
@@ -541,7 +551,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onObtainCoupon(final int position) {
-        if(App.mInstance.isLogin()) {
+        if (App.mInstance.isLogin()) {
             CouponModel model = new CouponModelImpl();
             model.obtainCoupon(new ProgressSubscriber<BaseBean>(this) {
                 @Override
@@ -550,17 +560,17 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                         bean.coupon.get(position).setStatus("1");
                         couponAdapter.notifyItemChanged(position);
                         ToastGlobal.showLong("领取成功");
-                    }else {
+                    } else {
                         ToastGlobal.showLong(baseBean.getMessage());
                     }
                 }
             }, bean.coupon.get(position).getId());
-        }else {
-            startActivityForResult(new Intent(this,LoginActivity.class),Constant.REQUEST_LOGIN);
+        } else {
+            startActivityForResult(new Intent(this, LoginActivity.class), Constant.REQUEST_LOGIN);
         }
     }
 
-    private class MyOnSlideDetailsListener implements SlideDetailsLayout.OnSlideDetailsListener{
+    private class MyOnSlideDetailsListener implements SlideDetailsLayout.OnSlideDetailsListener {
         @Override
         public void onStatusChanged(SlideDetailsLayout.Status status) {
             if (status == SlideDetailsLayout.Status.OPEN) {

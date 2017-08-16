@@ -1,6 +1,7 @@
 package com.leyuan.aidong.utils.qiniu;
 
 
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.qiniu.token.Auth;
 import com.leyuan.aidong.utils.qiniu.token.StringMap;
 import com.qiniu.android.utils.UrlSafeBase64;
@@ -22,16 +23,13 @@ public class QiNiuTokenUtils {
     }
 
     public static String getQiNiuVideoAvthumbToken(String expectKey) {
+        Logger.i("qiniu","生成token传进来key = " +expectKey);
 
         String base64key = UrlSafeBase64.encodeToString(bucketName +":"+expectKey);
-//        StringMap policy = new StringMap().put("persistentOps", "avthumb/m3u8/noDomain/1/segtime/5|saveas/" + base64key)
-//                .put("persistentPipeline", "aidong_video");
-//
-//        Logger.i("expectKey = " + expectKey + "   , key = " + base64key+"  ,  policy  persistentOps = " + policy.get("persistentOps")
-//                + " ,persistentPipeline = " +  policy.get("persistentPipeline") );
         Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);    //密钥配置
-
-        return auth.uploadToken(bucketName, expectKey, 3600, policy
+        String token = auth.uploadToken(bucketName, expectKey, 3600,  new StringMap().put("persistentPipeline", "aidong_video")
                 .put("persistentOps", "avthumb/m3u8/noDomain/1/segtime/5|saveas/" + base64key), true);
+        Logger.i("qiniu","生成token = " +token);
+        return token;
     }
 }

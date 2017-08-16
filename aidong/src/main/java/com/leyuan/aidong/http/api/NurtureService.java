@@ -64,5 +64,6 @@ public interface NurtureService {
                                                              @Field("pick_up_way") String pickUpWay,
                                                              @Field("pick_up_id") String pickUpId,
                                                              @Field("pick_up_date") String pickUpDate,
-                                                             @Field("pick_up_period") String pick_up_period);
+                                                             @Field("pick_up_period") String pick_up_period,
+                                                             @Field("is_food") String is_food);
 }

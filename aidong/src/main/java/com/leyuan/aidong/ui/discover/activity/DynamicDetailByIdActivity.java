@@ -389,7 +389,8 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
 
     @Override
     public void onGetDynamicDetail(DynamicBean dynamicBean) {
-        if(dynamic != null){
+        if(dynamicBean != null){
+            dynamic = dynamicBean;
             isSelf = App.mInstance.getUser() != null &&
                     dynamic.publisher.getId().equals(String.valueOf(App.mInstance.getUser().getId()));
             initView();

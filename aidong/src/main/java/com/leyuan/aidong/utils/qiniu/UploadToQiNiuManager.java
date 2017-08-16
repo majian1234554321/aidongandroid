@@ -80,10 +80,23 @@ public class UploadToQiNiuManager {
             } else {
                 bytes = File2byte(path);
             }
-            uploadManager.put(bytes, expectKey, QiNiuTokenUtils.getQiNiuVideoAvthumbToken(expectKey), new UpCompletionHandler() {
+
+
+//            String createTokenKey = expectKey;
+//            if(isPhoto){
+//                createTokenKey = generateImageExpectKey(path);
+//            }
+            String token;
+            if(isPhoto){
+                 token = QiNiuTokenUtils.getQiNiuToken();
+            }else{
+                token = QiNiuTokenUtils.getQiNiuVideoAvthumbToken(expectKey);
+            }
+            Logger.i("qiniu", "视频路径 path =" + path + "   expectKey = " + expectKey +", token = "+token);
+            uploadManager.put(bytes, expectKey,token, new UpCompletionHandler() {
                 @Override
                 public void complete(String key, ResponseInfo responseInfo, JSONObject response) {
-                    Logger.i("complete Key = " + key);
+                    Logger.i("complete Key = " + key+", responseInfo = " +responseInfo.toString()+"\nresponse = "+response.toString());
 
                     if (responseInfo.isOK()) {
                         qiNiuMediaUrls.add(key);
@@ -112,6 +125,8 @@ public class UploadToQiNiuManager {
                 return;
             }
             byte[] bytes = file.length() > PHOTO_SIZE_LIMIT ? compressFile(path) : File2byte(path);
+
+            Logger.i("qiniu", "图片路径path = " + path + "   expectKey = " + expectKey );
             uploadManager.put(bytes, expectKey, QiNiuTokenUtils.getQiNiuToken(), new UpCompletionHandler() {
                 @Override
                 public void complete(String key, ResponseInfo responseInfo, JSONObject response) {
@@ -143,5 +158,15 @@ public class UploadToQiNiuManager {
         }
         return (isImage ? "image/" : "video/") + id + "_" + System.currentTimeMillis()
                 + "*w=" + widthAndHeight[0] + "_h=" + widthAndHeight[1] + (isImage ? path.substring(path.lastIndexOf(".")) : ".m3u8");
+    }
+
+    private String generateImageExpectKey(String path) {
+        int id = 0;
+        if (App.getInstance().isLogin()) {
+            id = App.getInstance().getUser().getId();
+        }
+        int[] widthAndHeight = ImageUtil.getImageWidthAndHeight(path);
+        return "video/" + id + "_" + System.currentTimeMillis()
+                + "*w=" + widthAndHeight[0] + "_h=" + widthAndHeight[1] + ".m3u8";
     }
 }

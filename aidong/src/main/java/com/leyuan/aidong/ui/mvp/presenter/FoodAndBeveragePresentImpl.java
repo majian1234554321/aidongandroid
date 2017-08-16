@@ -98,6 +98,6 @@ public class FoodAndBeveragePresentImpl {
             public void onNext(PayOrderData payOrderData) {
                 PayUtils.pay(context,payOrderData.getOrder(),listener);
             }
-        },skuCode,amount,coupon,integral,coin,payType,pickUpWay,pickUpId,pickUpDate,null);
+        },skuCode,amount,coupon,integral,coin,payType,pickUpWay,pickUpId,pickUpDate,null,"0");
     }
 }

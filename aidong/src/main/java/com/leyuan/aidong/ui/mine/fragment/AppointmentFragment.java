@@ -21,6 +21,10 @@ import com.leyuan.aidong.ui.mvp.view.AppointmentFragmentView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.ToastGlobal;
+import com.leyuan.aidong.widget.dialog.BaseDialog;
+import com.leyuan.aidong.widget.dialog.ButtonCancelListener;
+import com.leyuan.aidong.widget.dialog.ButtonOkListener;
+import com.leyuan.aidong.widget.dialog.DialogDoubleButton;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
@@ -35,7 +39,7 @@ import java.util.List;
  * 预约
  * Created by song on 2016/8/31.
  */
-public class AppointmentFragment extends BaseLazyFragment implements AppointmentFragmentView{
+public class AppointmentFragment extends BaseLazyFragment implements AppointmentFragmentView {
     public static final String ALL = "all";
     public static final String JOINED = "signed";
     public static final String UN_JOIN = "unsigned";
@@ -54,11 +58,11 @@ public class AppointmentFragment extends BaseLazyFragment implements Appointment
     @Override
     public View initView() {
         Bundle bundle = getArguments();
-        if(bundle != null){
+        if (bundle != null) {
             type = bundle.getString("type");
         }
-        present = new AppointmentPresentImpl(getContext(),this);
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_appointment,null);
+        present = new AppointmentPresentImpl(getContext(), this);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_appointment, null);
         initSwipeRefreshLayout(view);
         initRecyclerView(view);
         return view;
@@ -70,7 +74,7 @@ public class AppointmentFragment extends BaseLazyFragment implements Appointment
     }
 
     private void initSwipeRefreshLayout(View view) {
-        refreshLayout = (CustomRefreshLayout)view.findViewById(R.id.refreshLayout);
+        refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.refreshLayout);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -93,19 +97,19 @@ public class AppointmentFragment extends BaseLazyFragment implements Appointment
         appointmentAdapter.setAppointmentListener(new AppointCallback());
     }
 
-    private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
+    private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener() {
         @Override
         public void onLoadNextPage(View view) {
-            currPage ++;
+            currPage++;
             if (data != null && data.size() >= pageSize) {
-                present.requestMoreData(recyclerView,type,pageSize,currPage);
+                present.requestMoreData(recyclerView, type, pageSize, currPage);
             }
         }
     };
 
     @Override
     public void onRecyclerViewRefresh(List<AppointmentBean> appointmentBeanList) {
-        if(refreshLayout.isRefreshing()){
+        if (refreshLayout.isRefreshing()) {
             refreshLayout.setRefreshing(false);
         }
         data.clear();
@@ -138,14 +142,14 @@ public class AppointmentFragment extends BaseLazyFragment implements Appointment
         RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
     }
 
-    private class AppointCallback implements AppointmentAdapter.AppointmentListener{
+    private class AppointCallback implements AppointmentAdapter.AppointmentListener {
 
         @Override
         public void onPayOrder(String type, String id) {
-            if("course".equals(type)){
-                AppointCourseDetailActivity.start(getContext(),id);
-            }else {
-                AppointCampaignDetailActivity.start(getContext(),id);
+            if ("course".equals(type)) {
+                AppointCourseDetailActivity.start(getContext(), id);
+            } else {
+                AppointCampaignDetailActivity.start(getContext(), id);
             }
         }
 
@@ -156,28 +160,45 @@ public class AppointmentFragment extends BaseLazyFragment implements Appointment
 
         @Override
         public void onConfirmJoin(int position) {
-            AppointmentBean bean = data.get(position);
-            if(DateUtils.bigThanOneHour(bean.getStart())) {
-                if("course".equals(bean.getAppointmentType())) {
+            final AppointmentBean bean = data.get(position);
+            if (DateUtils.bigThanOneHour(bean.getStart())) {
+                if ("course".equals(bean.getAppointmentType())) {
                     ToastGlobal.showLong("未到课程时间，请稍后确认");
-                }else {
+                } else {
                     ToastGlobal.showLong("未到活动时间，请稍后确认");
                 }
-            }else {
-                present.confirmAppoint(bean.getId());
+            } else {
+                new DialogDoubleButton(getActivity()).setLeftButton(getString(R.string.no_attend))
+                        .setRightButton(getString(R.string.have_attend))
+                        .setContentDesc(getString(R.string.are_you_sure_have_to_attend))
+                        .setBtnCancelListener(new ButtonCancelListener() {
+                            @Override
+                            public void onClick(BaseDialog dialog) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setBtnOkListener(new ButtonOkListener() {
+                            @Override
+                            public void onClick(BaseDialog dialog) {
+                                dialog.dismiss();
+                                present.confirmAppoint(bean.getId());
+                            }
+                        }).show();
+
+
             }
         }
 
         @Override
         public void onCancelJoin(int position) {
             AppointmentBean bean = data.get(position);
-            if(DateUtils.started(bean.getStart())){
-                if("course".equals(bean.getAppointmentType())) {
+            if (DateUtils.started(bean.getStart())) {
+                if ("course".equals(bean.getAppointmentType())) {
                     ToastGlobal.showLong("课程已开始，无法取消");
-                }else {
+                } else {
                     ToastGlobal.showLong("活动已开始，无法取消");
                 }
-            }else {
+            } else {
                 present.cancelAppoint(bean.getId());
             }
         }
@@ -197,31 +218,31 @@ public class AppointmentFragment extends BaseLazyFragment implements Appointment
 
     @Override
     public void cancelAppointmentResult(BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
+        if (baseBean.getStatus() == Constant.OK) {
             present.commonLoadData(type);
-            Toast.makeText(getContext(),"取消成功",Toast.LENGTH_LONG).show();
-        }else {
-            Toast.makeText(getContext(), baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "取消成功", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getContext(), baseBean.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
     @Override
     public void confirmAppointmentResult(BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
+        if (baseBean.getStatus() == Constant.OK) {
             present.commonLoadData(type);
-            Toast.makeText(getContext(),"确认成功",Toast.LENGTH_LONG).show();
-        }else {
-            Toast.makeText(getContext(), baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "确认成功", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getContext(), baseBean.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
     @Override
     public void deleteAppointmentResult(BaseBean baseBean) {
-        if(baseBean.getStatus() == Constant.OK){
+        if (baseBean.getStatus() == Constant.OK) {
             present.commonLoadData(type);
-            Toast.makeText(getContext(),"删除成功",Toast.LENGTH_LONG).show();
-        }else {
-            Toast.makeText(getContext(), baseBean.getMessage(),Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "删除成功", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getContext(), baseBean.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 }

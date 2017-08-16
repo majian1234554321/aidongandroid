@@ -63,7 +63,7 @@ public interface ConfirmOrderPresent {
      */
     void buyNurtureImmediately(String skuCode, int amount, String coupon, String integral,
                                String coin, String payType, String pickUpWay, String pickUpId,
-                               String pickUpDate, String pick_up_period, PayInterface.PayListener listener);
+                               String pickUpDate, String pick_up_period, String is_food, PayInterface.PayListener listener);
 
     /**
      * 购物车结算

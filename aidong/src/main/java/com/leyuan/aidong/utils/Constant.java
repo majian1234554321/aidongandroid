@@ -86,6 +86,8 @@ public class Constant {
     public static final String CATEGORY = "category";
     public static final String BROADCAST_ACTION_CLEAR_CMD_MESSAGE = "broadcast_action_clear_cmd_message";
     public static final String DYNAMIC_ID = "dynamic_id";
+    public static final int GOODS_FOODS_START_INDEX = 10000;
+    public static final String BROADCAST_ACTION_PUBLISH_DYNAMIC_SUCCESS = "broadcast_action_publish_dynamic_success";
 
     public static List<VenuesBean> gyms;
     public static SystemBean systemInfoBean;
@@ -130,6 +132,7 @@ public class Constant {
     //确认订单结算类型
     public static final String SETTLEMENT_CART = "cart";
     public static final String SETTLEMENT_NURTURE_IMMEDIATELY = "nutrition";
+    public static final String SETTLEMENT_FOOD_IMMEDIATELY = "food";
     public static final String SETTLEMENT_EQUIPMENT_IMMEDIATELY = "equipment";
 
     //获取优惠券的位置

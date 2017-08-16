@@ -31,7 +31,7 @@
                 android:layout_centerHorizontal="true"
                 android:text="全部"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="5dp"
                 android:singleLine="true"
                 android:textColor="@color/c3"
                 android:textSize="13sp" />
@@ -40,7 +40,6 @@
                 android:id="@+id/iv_brand_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
                 android:src="@drawable/icon_filter_arrow" />
         </LinearLayout>
 

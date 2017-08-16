@@ -1,6 +1,13 @@
 package com.leyuan.aidong.entity;
 
+import android.text.TextUtils;
+
+import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.FormatUtil;
+
 import java.util.List;
+
+import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
 
 /**
  * 营养品，健康餐饮，装备商品详情
@@ -19,6 +26,7 @@ public class GoodsDetailBean {
     public GoodsSpecBean spec;       //商品规格
     public List<CouponBean> coupon; //商品优惠券
     public DeliveryBean pick_up;
+    private String goodsType;
 
 
     @Override
@@ -33,5 +41,36 @@ public class GoodsDetailBean {
                 ", spec=" + spec +
                 ", coupon=" + coupon +
                 '}';
+    }
+
+    public static String getRealGoodsType(String goodsType, String goodsId) {
+        if (TextUtils.equals(goodsType, Constant.GOODS_NUTRITION) && FormatUtil.parseInt(goodsId) > 9999) {
+            return Constant.GOODS_FOODS;
+        }
+        return goodsType;
+    }
+
+    public String getGoodsType() {
+        if (TextUtils.equals(goodsType, Constant.GOODS_NUTRITION) && FormatUtil.parseInt(id) > 9999) {
+            return Constant.GOODS_FOODS;
+        }
+        return goodsType;
+    }
+
+    public void setGoodsType(String goodsType) {
+        this.goodsType = goodsType;
+    }
+
+    public void setGoodsType(String goodsType, String goodsId) {
+        this.goodsType = getRealGoodsType(goodsType, goodsId);
+    }
+
+    public void setDeliveryBeanByGoodsType(String goodsType) {
+        if (TextUtils.equals(goodsType, Constant.GOODS_FOODS)){
+            pick_up = new DeliveryBean();
+            pick_up.setInfo(null);
+            pick_up.setType(DELIVERY_EXPRESS);
+            pick_up.setIs_send(true);
+        }
     }
 }

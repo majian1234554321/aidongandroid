@@ -352,7 +352,10 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
                 finish();
                 break;
             case R.id.tv_confirm:
-                new DialogDoubleButton(this).setContentDesc("点击确认表示您已收到货物")
+                new DialogDoubleButton(this)
+                        .setLeftButton(getString(R.string.no_received))
+                        .setRightButton(getString(R.string.have_received))
+                        .setContentDesc(getString(R.string.are_you_sure_have_to_received)  )
                         .setBtnCancelListener(new ButtonCancelListener() {
                             @Override
                             public void onClick(BaseDialog dialog) {

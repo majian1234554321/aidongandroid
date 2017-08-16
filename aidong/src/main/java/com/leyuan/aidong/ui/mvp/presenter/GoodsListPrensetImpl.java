@@ -47,7 +47,7 @@ public class GoodsListPrensetImpl {
         return null;
     }
 
-    public void commendLoadNurtureData(SwitcherLayout switcherLayout, String categoryId, String sort, String gymId) {
+    public void commendLoadGoodsData(SwitcherLayout switcherLayout, String categoryId, String sort, String gymId) {
         if (GOODS_NUTRITION.equals(goodsType)) {
             nurturePresent.commendLoadNurtureData(switcherLayout, categoryId, sort, gymId);
         } else if (GOODS_FOODS.equals(goodsType)) {

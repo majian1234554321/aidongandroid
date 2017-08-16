@@ -8,6 +8,7 @@ import com.leyuan.aidong.entity.CommentBean;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.data.CommentData;
 import com.leyuan.aidong.entity.data.DynamicsData;
+import com.leyuan.aidong.entity.data.DynamicsSingleData;
 import com.leyuan.aidong.entity.data.LikeData;
 import com.leyuan.aidong.http.subscriber.BaseSubscriber;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
@@ -78,7 +79,6 @@ public class DynamicPresentImpl implements DynamicPresent {
         }
     }
 
-
     @Override
     public void commonLoadData(final SwitcherLayout switcherLayout) {
         dynamicModel.getDynamics(new CommonSubscriber<DynamicsData>(context, switcherLayout) {
@@ -134,10 +134,15 @@ public class DynamicPresentImpl implements DynamicPresent {
 
     @Override
     public void getDynamicDetail(String id) {
-        dynamicModel.getDynamicDetail(new BaseSubscriber<DynamicBean>(context) {
+        dynamicModel.getDynamicDetail(new BaseSubscriber<DynamicsSingleData>(context) {
             @Override
-            public void onNext(DynamicBean dynamicBean) {
-                dynamicDetailActivityView.onGetDynamicDetail(dynamicBean);
+            public void onNext(DynamicsSingleData dynamicBean) {
+                if(dynamicBean != null ){
+                    dynamicDetailActivityView.onGetDynamicDetail(dynamicBean.getDynamic());
+                }else{
+                    dynamicDetailActivityView.onGetDynamicDetail(null);
+                }
+
             }
 
             @Override

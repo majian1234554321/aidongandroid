@@ -48,14 +48,6 @@ public class CMDMessageActivity extends BaseActivity {
             }
         });
 
-        layoutTitle.setRightTextListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                beanList = null;
-                cmdMessageAdapter.refreshLayout(beanList);
-            }
-        });
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
          cmdMessageAdapter = new CmdMessageAdapter(this,beanList);

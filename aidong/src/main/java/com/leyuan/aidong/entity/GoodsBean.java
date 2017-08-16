@@ -3,6 +3,8 @@ package com.leyuan.aidong.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.constant.GoodsType;
 
 import java.util.ArrayList;
@@ -316,4 +318,14 @@ public class GoodsBean  implements Parcelable {
             return new GoodsBean[size];
         }
     };
+
+    public int getProductIdInteger() {
+        return FormatUtil.parseInt(getProductId());
+    }
+
+    public String getCouponGoodsType() {
+        if(Constant.GOODS_FOODS.equals(product_type))
+            return Constant.GOODS_NUTRITION;
+        return product_type;
+    }
 }

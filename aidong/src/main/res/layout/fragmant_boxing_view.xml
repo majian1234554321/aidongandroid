@@ -22,6 +22,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/media_recycleview"
         android:layout_width="match_parent"
@@ -31,6 +35,7 @@
         android:scrollbars="vertical"/>
 
     <include
+        android:visibility="gone"
         android:id="@+id/empty_txt"
         layout="@layout/layout_empty_txt"/>
 
@@ -41,12 +46,13 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:indeterminate="true"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
     <FrameLayout
         android:id="@+id/multi_picker_layout"
         android:layout_width="match_parent"
         android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
         android:background="@color/white">
 
         <Button
@@ -74,5 +80,5 @@
             android:textAppearance="@style/TextAppearance.App.Medium"
             android:textColor="@color/white"/>
     </FrameLayout>
-
+    </RelativeLayout>
 </LinearLayout>

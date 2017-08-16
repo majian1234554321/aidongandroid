@@ -112,6 +112,6 @@ public class NurturePresentImpl implements NurturePresent{
             public void onNext(PayOrderData payOrderData) {
                 PayUtils.pay(context,payOrderData.getOrder(),listener);
             }
-        },skuCode,amount,coupon,integral,coin,payType,pickUpWay,pickUpId,pickUpDate,pick_up_period);
+        },skuCode,amount,coupon,integral,coin,payType,pickUpWay,pickUpId,pickUpDate,pick_up_period,"0");
     }
 }

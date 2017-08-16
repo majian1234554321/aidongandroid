@@ -84,7 +84,12 @@ public class UpdateDeliveryInfoAdapter extends RecyclerView.Adapter<UpdateDelive
         holder.tvSelfDelivery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectSelfDelivery(holder, bean);
+                if(bean.getDeliveryInfo().getInfo()!=null){
+                    selectSelfDelivery(holder, bean);
+                }else {
+
+                }
+
             }
         });
 

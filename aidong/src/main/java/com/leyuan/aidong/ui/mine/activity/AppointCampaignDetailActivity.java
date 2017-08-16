@@ -40,6 +40,10 @@ import com.leyuan.aidong.widget.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.ExtendTextView;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.leyuan.aidong.widget.SwitcherLayout;
+import com.leyuan.aidong.widget.dialog.BaseDialog;
+import com.leyuan.aidong.widget.dialog.ButtonCancelListener;
+import com.leyuan.aidong.widget.dialog.ButtonOkListener;
+import com.leyuan.aidong.widget.dialog.DialogDoubleButton;
 
 import cn.iwgang.countdownview.CountdownView;
 
@@ -398,7 +402,24 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 if (DateUtils.bigThanOneHour(bean.getAppoint().getClassTime())) {
                     ToastGlobal.showLong("未到活动时间，请稍后确认");
                 } else {
-                    present.confirmAppoint(bean.getId());
+                    new DialogDoubleButton(this)
+                            .setLeftButton(getString(R.string.no_attend))
+                            .setRightButton(getString(R.string.have_attend))
+                            .setContentDesc(getString(R.string.are_you_sure_have_to_attend)  )
+                            .setBtnCancelListener(new ButtonCancelListener() {
+                                @Override
+                                public void onClick(BaseDialog dialog) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setBtnOkListener(new ButtonOkListener() {
+                                @Override
+                                public void onClick(BaseDialog dialog) {
+                                    dialog.dismiss();
+                                    present.confirmAppoint(bean.getId());
+                                }
+                            }).show();
+
                 }
                 break;
             case R.id.tv_delete:

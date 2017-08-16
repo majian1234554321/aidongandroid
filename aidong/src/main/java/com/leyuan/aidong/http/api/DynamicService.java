@@ -1,10 +1,10 @@
 package com.leyuan.aidong.http.api;
 
 import com.leyuan.aidong.entity.BaseBean;
-import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.data.CommentData;
 import com.leyuan.aidong.entity.data.DiscoverData;
 import com.leyuan.aidong.entity.data.DynamicsData;
+import com.leyuan.aidong.entity.data.DynamicsSingleData;
 import com.leyuan.aidong.entity.data.LikeData;
 
 import retrofit2.http.DELETE;
@@ -23,7 +23,7 @@ import rx.Observable;
 public interface DynamicService {
 
     @GET("dynamics/{id}")
-    Observable<BaseBean<DynamicBean>> getDynamicDetail(@Path("id") String id);
+    Observable<BaseBean<DynamicsSingleData>> getDynamicDetail(@Path("id") String id);
 
     @GET("dynamics")
     Observable<BaseBean<DynamicsData>> getDynamics(@Query("page") int page);
@@ -31,7 +31,6 @@ public interface DynamicService {
     @FormUrlEncoded
     @POST("dynamics")
     Observable<BaseBean<DiscoverData>> postImageDynamic(@Field("content") String content,
-                                                   @Field("video") String video,
                                                    @Field("image[]") String... image);
 
     @FormUrlEncoded

@@ -2,9 +2,9 @@ package com.leyuan.aidong.ui.mvp.model.impl;
 
 
 import com.leyuan.aidong.entity.BaseBean;
-import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.data.CommentData;
 import com.leyuan.aidong.entity.data.DynamicsData;
+import com.leyuan.aidong.entity.data.DynamicsSingleData;
 import com.leyuan.aidong.entity.data.LikeData;
 import com.leyuan.aidong.http.RetrofitHelper;
 import com.leyuan.aidong.http.RxHelper;
@@ -34,9 +34,9 @@ public class DynamicModelImpl implements DynamicModel {
     }
 
     @Override
-    public void getDynamicDetail(Subscriber<DynamicBean> subscriber, String id) {
+    public void getDynamicDetail(Subscriber<DynamicsSingleData> subscriber, String id) {
         dynamicService.getDynamicDetail(id)
-                .compose(RxHelper.<DynamicBean>transform())
+                .compose(RxHelper.<DynamicsSingleData>transform())
                 .subscribe(subscriber);
     }
 
@@ -48,7 +48,7 @@ public class DynamicModelImpl implements DynamicModel {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(subscriber);
         } else {
-            dynamicService.postImageDynamic(content, video, image)
+            dynamicService.postImageDynamic(content, image)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(subscriber);

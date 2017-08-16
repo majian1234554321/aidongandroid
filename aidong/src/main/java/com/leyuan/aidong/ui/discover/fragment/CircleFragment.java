@@ -82,7 +82,7 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
     private int clickPosition;
     private SharePopupWindow sharePopupWindow;
 
-    BroadcastReceiver selectCityReceiver = new BroadcastReceiver() {
+    BroadcastReceiver circleFragmentReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_SELECTED_CITY)) {
@@ -90,6 +90,8 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
             } else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_RECEIVER_CMD_MESSAGE)) {
                 refreshData();
             } else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_CLEAR_CMD_MESSAGE)) {
+                refreshData();
+            }else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_PUBLISH_DYNAMIC_SUCCESS)) {
                 refreshData();
             }
             Logger.i(TAG, "onReceive action = " + intent.getAction());
@@ -103,7 +105,8 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
         filter.addAction(Constant.BROADCAST_ACTION_SELECTED_CITY);
         filter.addAction(Constant.BROADCAST_ACTION_RECEIVER_CMD_MESSAGE);
         filter.addAction(Constant.BROADCAST_ACTION_CLEAR_CMD_MESSAGE);
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(selectCityReceiver, filter);
+        filter.addAction(Constant.BROADCAST_ACTION_PUBLISH_DYNAMIC_SUCCESS);
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(circleFragmentReceiver, filter);
     }
 
     @Override
@@ -345,6 +348,6 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
     public void onDestroy() {
         super.onDestroy();
         sharePopupWindow.release();
-        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(selectCityReceiver);
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(circleFragmentReceiver);
     }
 }
