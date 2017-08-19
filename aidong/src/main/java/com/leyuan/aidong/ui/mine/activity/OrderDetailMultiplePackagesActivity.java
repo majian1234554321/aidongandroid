@@ -274,8 +274,14 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
         if (selfDeliveryList != null && !selfDeliveryList.isEmpty()) {
             selfDeliveryAdapter.setPayStatus(bean.getStatus());
             selfDeliveryAdapter.setData(selfDeliveryList);
+            selfDeliveryAdapter.setIsFood(bean.is_food());
+
             selfDeliveryInfoLayout.setVisibility(View.VISIBLE);
             tvDeliveryTime.setRightContent(selfDeliveryList.get(0).getPickUpDate());
+            if(bean.is_food()){
+                tvDeliveryTime.setLeftTextContent(getResources().getString(R.string.send_the_meal_time));
+//                tvDeliveryTime.setRightContent(selfDeliveryList.get(0).getPickUpDate()+" "+selfDeliveryList.get(0).getPick_up_period());
+            }
 
 //            if (UN_PAID.equals(bean.getStatus()) || CLOSE.equals(bean.getStatus())) {
 //                rlQrCode.setVisibility(View.GONE);

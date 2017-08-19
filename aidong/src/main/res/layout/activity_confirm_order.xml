@@ -140,6 +140,7 @@
                     android:visibility="visible">
 
                     <TextView
+                        android:id="@+id/txt_self_delivery_identify"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -182,6 +183,7 @@
                     android:visibility="visible">
 
                     <TextView
+                        android:id="@+id/txt_receiving_left_identify"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"

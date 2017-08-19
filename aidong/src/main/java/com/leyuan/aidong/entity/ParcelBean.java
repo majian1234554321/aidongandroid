@@ -22,6 +22,7 @@ public class ParcelBean {
     private String pick_up_name;    // 自提门店名称
     private String pick_up_date;    // 自提日期
     private String pick_up_status;  // 包裹状态
+    private String pick_up_period;
 
     private String verify_no;  // "核销码",
     private String verify_status;  // "核销状态 undo-未核销 done-已核销",
@@ -116,6 +117,14 @@ public class ParcelBean {
 
     public void setPick_up_name(String pick_up_name) {
         this.pick_up_name = pick_up_name;
+    }
+
+    public String getPick_up_period() {
+        return pick_up_period;
+    }
+
+    public void setPick_up_period(String pick_up_period) {
+        this.pick_up_period = pick_up_period;
     }
 
     public String getPickUpDate() {

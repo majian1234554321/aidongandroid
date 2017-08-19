@@ -32,6 +32,8 @@ import com.google.android.exoplayer.upstream.DataSource;
 import com.google.android.exoplayer.upstream.DefaultAllocator;
 import com.google.android.exoplayer.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer.upstream.DefaultUriDataSource;
+import com.leyuan.aidong.utils.Logger;
+
 public class ExtractorRendererBuilder implements LoveSportPlayer.RendererBuilder {
 
   private static final int BUFFER_SEGMENT_SIZE = 64 * 1024;
@@ -45,6 +47,7 @@ public class ExtractorRendererBuilder implements LoveSportPlayer.RendererBuilder
     this.context = context;
     this.userAgent = userAgent;
     this.uri = uri;
+    Logger.i("ExtractorRendererBuilder ", "userAgent=  " + userAgent +  " uri = " +uri);
   }
 
   @Override

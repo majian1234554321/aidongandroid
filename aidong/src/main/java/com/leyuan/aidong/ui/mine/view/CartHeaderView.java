@@ -252,7 +252,7 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
         if(callback != null ){
             callback.onBottomStatusChange(isAllShopChecked,calculateTotalPrice(), getSelectedGoods().size());
         }
-        reBuyIds.clear();
+//        reBuyIds.clear();
     }
 
     private ArrayList<ShopBean> getSelectedShops(){

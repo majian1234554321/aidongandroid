@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static com.leyuan.aidong.R.string.selected;
 import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
 import static com.leyuan.aidong.utils.Constant.GOODS_FOODS;
 
@@ -46,6 +47,8 @@ import static com.leyuan.aidong.utils.Constant.GOODS_FOODS;
  */
 public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClickListener,
         GoodsSkuAdapter.SelectSkuListener, GoodsSkuPopupWindowView {
+    private String selectedSkuCover;
+
     public enum GoodsStatus{
         SellOut,            //售罄状态
         ConfirmToAddCart,   //确定状态(点击确认加入购物车)
@@ -239,13 +242,15 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
         tvSkuTip.setText(skuTip.toString());
         if (isAllSkuConfirm()) {
             GlideLoader.getInstance().displayImage(confirmedSkuCover, dvGoodsCover);
-            tvSelect.setText(context.getString(R.string.selected));
+            selectedSkuCover = confirmedSkuCover;
+            tvSelect.setText(context.getString(selected));
             tvGoodsPrice.setText(String.format(context.getString(R.string.rmb_price_double), price));
             tvStock.setText(String.format(context.getString(R.string.int_stock_count), stock));
             tvStockTip.setText(String.format(context.getString(R.string.surplus_goods_count),stock));
             tvStockTip.setVisibility(stock <= 10 ? View.VISIBLE : View.GONE);
         } else {
             GlideLoader.getInstance().displayImage(unConfirmedSkuCover, dvGoodsCover);
+            selectedSkuCover = unConfirmedSkuCover;
             tvSelect.setText(context.getString(R.string.please_select));
             tvGoodsPrice.setText(maxPrice == minPrice
                     ? String.format(context.getString(R.string.rmb_price_double), maxPrice)
@@ -377,7 +382,8 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
 
         goodsBean.setName(detailBean.name);
         goodsBean.setCode(line.code);
-        goodsBean.setCover(detailBean.image.get(0));
+//        goodsBean.setCover(detailBean.image.get(0));
+        goodsBean.setCover(selectedSkuCover);
         goodsBean.setPrice(line.price);
         goodsBean.setType(goodsType);
         goodsBean.setisSend(detailBean.pick_up.isSend());
@@ -421,6 +427,7 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
                         FormatUtil.parseDouble(line.price)));
                 tvStock.setText(String.format(context.getString(R.string.stock_count), line.getStock() + ""));
                 GlideLoader.getInstance().displayImage(line.cover, dvGoodsCover);
+                selectedSkuCover = line.cover;
                 stock = line.getStock();
                 tvStockTip.setText(String.format(context.getString(R.string.surplus_goods_count),stock));
                 tvStockTip.setVisibility(stock <= 10 ? View.VISIBLE : View.GONE);
@@ -435,10 +442,11 @@ public class GoodsSkuPopupWindow extends BasePopupWindow implements View.OnClick
             for (String selectedNode : allSelectedNodes) {
                 skuTip.append(selectedNode).append(Constant.EMPTY_STR);
             }
-            tvSelect.setText(context.getString(R.string.selected));
+            tvSelect.setText(context.getString(selected));
             tvSkuTip.setText(skuTip.toString());
         } else {
             GlideLoader.getInstance().displayImage(unConfirmedSkuCover, dvGoodsCover);
+            selectedSkuCover = unConfirmedSkuCover;
             tvGoodsPrice.setText(maxPrice == minPrice ? String.valueOf(maxPrice) :
                     String.format(context.getString(R.string.rmb_price_scope), minPrice, maxPrice));
             tvStock.setText(String.format(context.getString(R.string.int_stock_count), totalStock));

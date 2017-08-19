@@ -281,17 +281,17 @@ public class DateUtils {
     }
 
     public static List<String> getLimitDays(int start, int limit) {
+        Logger.i("getLimitDays","start days = " + start+", limit days = " +limit);
         List<String> dates = new ArrayList<>();
         Date date = new Date();//取时间
         final Calendar calendar = new GregorianCalendar();
         calendar.setTime(date);
         for (int i = start; i < start + limit; i++) {
-            calendar.add(calendar.DATE,  i == start ? start : +1);//把日期往前减少一天，若想把日期向后推一天则将负数改为正数
+            calendar.add(calendar.DATE, i == start ? start : +1);//把日期往前减少一天，若想把日期向后推一天则将负数改为正数
             date = calendar.getTime();
-            String weekOfDate = getWeekOfDate(date);
-            SimpleDateFormat formatter = new SimpleDateFormat("MM月dd");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             String dateString = formatter.format(date);
-            dates.add(dateString + weekOfDate);
+            dates.add(dateString);
         }
         return dates;
     }
@@ -300,9 +300,15 @@ public class DateUtils {
         Calendar calendar = Calendar.getInstance();
         int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
         int currentMin = calendar.get(Calendar.MINUTE);
+
+//        currentHour = 18;
+//        currentMin= 10;
         try {
             int limitHour = Integer.parseInt(limit_period.substring(0, 2));
             int limitMinute = Integer.parseInt(limit_period.substring(3, 5));
+
+            Logger.i("getLimitDays","currentHour = " +currentHour+", currentMin = "+currentMin+
+                    "limitHour = " +limitHour+", limitMinute = " +limitMinute);
             if (currentHour < limitHour) {
                 return getLimitDays(1, limitDays );
             } else if (currentHour == limitHour && currentMin < limitMinute) {

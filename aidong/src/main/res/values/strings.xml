@@ -275,4 +275,6 @@
     <string name="no_received">未收到</string>
     <string name="have_received">已收到</string>
     <string name="are_you_sure_have_to_received">是否确认已收到货物</string>
+    <string name="send_the_meal_time">送餐时间</string>
+    <string name="self_delivery_time">自提时间</string>
 </resources>

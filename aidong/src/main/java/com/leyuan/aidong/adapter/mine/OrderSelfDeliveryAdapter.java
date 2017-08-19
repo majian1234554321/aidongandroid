@@ -27,7 +27,7 @@ import java.util.List;
 import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
 
 /**
- * 订单列表中包裹适配器
+ * 订单列表中自提包裹适配器
  * Created by song on 2016/9/8.
  */
 public class OrderSelfDeliveryAdapter extends RecyclerView.Adapter<OrderSelfDeliveryAdapter.CartHolder> {
@@ -40,6 +40,7 @@ public class OrderSelfDeliveryAdapter extends RecyclerView.Adapter<OrderSelfDeli
     private static final String FINISH = "confirmed";         //已确认
     private static final String CLOSE = "canceled";
     private String payStatus;
+    private boolean isFood;
 
     public OrderSelfDeliveryAdapter(Context context) {
         this.context = context;
@@ -68,7 +69,14 @@ public class OrderSelfDeliveryAdapter extends RecyclerView.Adapter<OrderSelfDeli
     @Override
     public void onBindViewHolder(final CartHolder holder, final int position) {
         final ParcelBean bean = data.get(position);
-        holder.tv_delivery_time.setRightContent(bean.getPickUpDate());
+        if (isFood) {
+            holder.tv_delivery_time.setLeftTextContent(context.getResources().getString(R.string.send_the_meal_time));
+            holder.tv_delivery_time.setRightContent(bean.getPickUpDate() + " " + bean.getPick_up_period());
+        } else {
+            holder.tv_delivery_time.setLeftTextContent(context.getResources().getString(R.string.self_delivery_time));
+            holder.tv_delivery_time.setRightContent(bean.getPickUpDate());
+        }
+
         if (UN_PAID.equals(payStatus) || CLOSE.equals(payStatus)) {
             holder.rlQrCode.setVisibility(View.GONE);
         } else {
@@ -110,10 +118,15 @@ public class OrderSelfDeliveryAdapter extends RecyclerView.Adapter<OrderSelfDeli
         final ConfirmOrderGoodsAdapter goodsAdapter = new ConfirmOrderGoodsAdapter(context);
         holder.rvShop.setAdapter(goodsAdapter);
         goodsAdapter.setData(bean.getItem());
+
     }
 
     public void setPayStatus(String payStatus) {
         this.payStatus = payStatus;
+    }
+
+    public void setIsFood(boolean isFood) {
+        this.isFood = isFood;
     }
 
     class CartHolder extends RecyclerView.ViewHolder {

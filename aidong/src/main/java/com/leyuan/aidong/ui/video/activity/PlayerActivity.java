@@ -15,10 +15,12 @@
  */
 package com.leyuan.aidong.ui.video.activity;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -223,10 +225,12 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback, 
         provider = intent.getStringExtra(PROVIDER_EXTRA);
         videoId = intent.getStringExtra(VIDEO_ID);
         category = intent.getStringExtra(VIDEO_CATEGORY);
-        Logger.i("playerActivity ", " into videoId =  " + videoId + " contentType = " + contentType);
+        Logger.i("playerActivity ", " into videoId =  " + videoId + " contentType = " + contentType + " contentUri = " + contentUri);
         configureSubtitleView();
         if (player == null) {
+            Logger.i("playerActivity uri ", " maybeRequestPermission  pre ");
             if (!maybeRequestPermission()) {
+                Logger.i("playerActivity uri ", " maybeRequestPermission = true");
                 preparePlayer(true);
             }
         } else {
@@ -312,8 +316,8 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback, 
     private boolean requiresPermission(Uri uri) {
         return Util.SDK_INT >= 23
                 && Util.isLocalFileUri(uri)
-                //        && checkSelfPermission(permission.READ_EXTERNAL_STORAGE)
-                //            != PackageManager.PERMISSION_GRANTED
+                && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED
                 ;
     }
 

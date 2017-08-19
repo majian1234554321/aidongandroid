@@ -387,11 +387,11 @@ public class VideoDetailActivity extends BaseActivity implements ViewPager.OnPag
                 public void onClick(View v) {
                     Intent intent = new Intent(VideoDetailActivity.this, PlayerActivity.class)
                             .setData(Uri.parse(videoDetail.getVideo()))
-                            //                                            .setNurtureList(Uri.parse("http://pili-live-hls.ps.qiniucdn.com/NIU7PS/57b12c4b75b6253fb20003e4.m3u8"))
+                            // .setNurtureList(Uri.parse("http://pili-live-hls.ps.qiniucdn.com/NIU7PS/57b12c4b75b6253fb20003e4.m3u8"))
                             .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_HLS)
-                            //                                            .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_OTHER)
-//                            .putExtra(PlayerActivity.CONTENT_ID_EXTRA, "")
-//                            .putExtra(PlayerActivity.CONTENT_ID_EXTRA, "")
+                            // .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_OTHER)
+                            //.putExtra(PlayerActivity.CONTENT_ID_EXTRA, "")
+                             //.putExtra(PlayerActivity.CONTENT_ID_EXTRA, "")
                             .putExtra(PlayerActivity.VIDEO_ID, String.valueOf(videoDetail.getvId()));
 
                     Logger.i("playerActivity ", " from videoId =  " + videoDetail.getContentId());

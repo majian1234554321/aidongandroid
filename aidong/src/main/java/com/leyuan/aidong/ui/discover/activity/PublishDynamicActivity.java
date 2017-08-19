@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.discover.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
@@ -17,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.exoplayer.util.Util;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.PublishDynamicAdapter;
 import com.leyuan.aidong.entity.BaseBean;
@@ -29,8 +31,10 @@ import com.leyuan.aidong.ui.home.view.ItemDragHelperCallback;
 import com.leyuan.aidong.ui.mvp.presenter.DynamicPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.DynamicPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.PublishDynamicActivityView;
+import com.leyuan.aidong.ui.video.activity.PlayerActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.FormatUtil;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.qiniu.IQiNiuCallback;
 import com.leyuan.aidong.utils.qiniu.UploadToQiNiuManager;
@@ -101,6 +105,7 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemDragHelperCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
         mediaAdapter.setData(selectedMedia, isPhoto);
+        int i = 0;
     }
 
     private void setListener() {
@@ -147,14 +152,14 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
 
     @Override
     public void onMediaItemClick(BaseMedia baseMedia) {
-//        if (isPhoto) {
-//
-//        } else {
-//            Intent intent = new Intent(this, PlayerActivity.class)
-//                    .setData(Uri.parse(baseMedia.getPath()))
-//                    .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_OTHER);
-//            startActivity(intent);
-//        }
+        if (!isPhoto) {
+            Logger.i("baseMedia getPath = " + baseMedia.getPath());
+            Intent intent = new Intent(this, PlayerActivity.class)
+                    .setData(Uri.parse("file://"+ baseMedia.getPath()))
+                    .putExtra(PlayerActivity.CONTENT_TYPE_EXTRA, Util.TYPE_OTHER);
+            startActivity(intent);
+
+        }
     }
 
     private void uploadToQiNiu() {

@@ -15,7 +15,6 @@ import com.leyuan.aidong.ui.mvp.model.EquipmentModel;
 import com.leyuan.aidong.ui.mvp.model.FoodModel;
 import com.leyuan.aidong.ui.mvp.model.NurtureModel;
 import com.leyuan.aidong.ui.mvp.model.impl.EquipmentModelImpl;
-import com.leyuan.aidong.ui.mvp.model.impl.FoodModelImpl;
 import com.leyuan.aidong.ui.mvp.model.impl.NurtureModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.GoodsDetailPresent;
 import com.leyuan.aidong.ui.mvp.view.GoodsDetailActivityView;
@@ -169,6 +168,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                     }
                 }, sku, Constant.PAGE_FIRST, brandId, landmark);
                 break;
+            case GOODS_FOODS:
             case GOODS_NUTRITION:
                 if (nurtureModel == null) {
                     nurtureModel = new NurtureModelImpl(context);
@@ -189,25 +189,25 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                 }, sku, Constant.PAGE_FIRST, brandId, landmark);
 
                 break;
-            case GOODS_FOODS:
-                if (foodModel == null) {
-                    foodModel = new FoodModelImpl();
-                }
-                foodModel.getDeliveryVenues(new CommonSubscriber<VenuesData>(context, switcherLayout) {
-                    @Override
-                    public void onNext(VenuesData venuesData) {
-                        if (venuesData != null && venuesData.getGym() != null) {
-                            venuesBeanList = venuesData.getGym();
-                        }
-                        if (!venuesBeanList.isEmpty()) {
-                            switcherLayout.showContentLayout();
-                            venuesActivityView.onRefreshData(venuesBeanList);
-                        } else {
-                            venuesActivityView.showEmptyView();
-                        }
-                    }
-                }, sku, Constant.PAGE_FIRST);
-                break;
+//            case GOODS_FOODS:
+//                if (foodModel == null) {
+//                    foodModel = new FoodModelImpl();
+//                }
+//                foodModel.getDeliveryVenues(new CommonSubscriber<VenuesData>(context, switcherLayout) {
+//                    @Override
+//                    public void onNext(VenuesData venuesData) {
+//                        if (venuesData != null && venuesData.getGym() != null) {
+//                            venuesBeanList = venuesData.getGym();
+//                        }
+//                        if (!venuesBeanList.isEmpty()) {
+//                            switcherLayout.showContentLayout();
+//                            venuesActivityView.onRefreshData(venuesBeanList);
+//                        } else {
+//                            venuesActivityView.showEmptyView();
+//                        }
+//                    }
+//                }, sku, Constant.PAGE_FIRST);
+//                break;
             default:
                 Logger.e("GoodsDetailPresentImpl", "type must be foods,equipments or nutrition");
                 break;
@@ -236,6 +236,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                 }, sku, Constant.PAGE_FIRST, brandId, landmark);
 
                 break;
+            case GOODS_FOODS:
             case GOODS_NUTRITION:
                 if (nurtureModel == null) {
                     nurtureModel = new NurtureModelImpl(context);
@@ -254,24 +255,24 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                     }
                 }, sku, Constant.PAGE_FIRST, brandId, landmark);
                 break;
-            case GOODS_FOODS:
-                if (foodModel == null) {
-                    foodModel = new FoodModelImpl();
-                }
-                foodModel.getDeliveryVenues(new RefreshSubscriber<VenuesData>(context) {
-                    @Override
-                    public void onNext(VenuesData venuesData) {
-                        if (venuesData != null && venuesData.getGym() != null) {
-                            venuesBeanList = venuesData.getGym();
-                        }
-                        if (!venuesBeanList.isEmpty()) {
-                            venuesActivityView.onRefreshData(venuesBeanList);
-                        } else {
-                            venuesActivityView.showEmptyView();
-                        }
-                    }
-                }, sku, Constant.PAGE_FIRST);
-                break;
+//            case GOODS_FOODS:
+//                if (foodModel == null) {
+//                    foodModel = new FoodModelImpl();
+//                }
+//                foodModel.getDeliveryVenues(new RefreshSubscriber<VenuesData>(context) {
+//                    @Override
+//                    public void onNext(VenuesData venuesData) {
+//                        if (venuesData != null && venuesData.getGym() != null) {
+//                            venuesBeanList = venuesData.getGym();
+//                        }
+//                        if (!venuesBeanList.isEmpty()) {
+//                            venuesActivityView.onRefreshData(venuesBeanList);
+//                        } else {
+//                            venuesActivityView.showEmptyView();
+//                        }
+//                    }
+//                }, sku, Constant.PAGE_FIRST);
+//                break;
             default:
                 Logger.e("GoodsDetailPresentImpl", "type must be foods,equipments or nutrition");
                 break;
@@ -301,6 +302,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                     }
                 }, sku, page, brandId, landmark);
                 break;
+            case GOODS_FOODS:
             case GOODS_NUTRITION:
                 if (nurtureModel == null) {
                     nurtureModel = new NurtureModelImpl(context);
@@ -321,26 +323,26 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                     }
                 }, sku, page, brandId, landmark);
                 break;
-            case GOODS_FOODS:
-                if (foodModel == null) {
-                    foodModel = new FoodModelImpl();
-                }
-                foodModel.getDeliveryVenues(new RequestMoreSubscriber<VenuesData>(context, recyclerView, pageSize) {
-                    @Override
-                    public void onNext(VenuesData venuesData) {
-                        if (venuesData != null && venuesData.getGym() != null) {
-                            venuesBeanList = venuesData.getGym();
-                        }
-                        if (!venuesBeanList.isEmpty()) {
-                            venuesActivityView.onLoadMoreData(venuesBeanList);
-                        }
-                        //没有更多数据了显示到底提示
-                        if (venuesBeanList.size() < pageSize) {
-                            venuesActivityView.showEndFooterView();
-                        }
-                    }
-                }, sku, page);
-                break;
+//            case GOODS_FOODS:
+//                if (foodModel == null) {
+//                    foodModel = new FoodModelImpl();
+//                }
+//                foodModel.getDeliveryVenues(new RequestMoreSubscriber<VenuesData>(context, recyclerView, pageSize) {
+//                    @Override
+//                    public void onNext(VenuesData venuesData) {
+//                        if (venuesData != null && venuesData.getGym() != null) {
+//                            venuesBeanList = venuesData.getGym();
+//                        }
+//                        if (!venuesBeanList.isEmpty()) {
+//                            venuesActivityView.onLoadMoreData(venuesBeanList);
+//                        }
+//                        //没有更多数据了显示到底提示
+//                        if (venuesBeanList.size() < pageSize) {
+//                            venuesActivityView.showEndFooterView();
+//                        }
+//                    }
+//                }, sku, page);
+//                break;
             default:
                 Logger.e("GoodsDetailPresentImpl", "type must be foods,equipments or nutrition");
                 break;

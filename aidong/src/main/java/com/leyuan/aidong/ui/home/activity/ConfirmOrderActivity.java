@@ -32,9 +32,9 @@ import com.leyuan.aidong.ui.mine.activity.UpdateDeliveryInfoActivity;
 import com.leyuan.aidong.ui.mvp.presenter.ConfirmOrderPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.ConfirmOrderPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.ConfirmOrderActivityView;
-import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.FormatUtil;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.constant.DeliveryType;
@@ -72,6 +72,7 @@ import static com.leyuan.aidong.utils.Constant.SETTLEMENT_NURTURE_IMMEDIATELY;
  */
 public class ConfirmOrderActivity extends BaseActivity implements View.OnClickListener,
         CustomNestRadioGroup.OnCheckedChangeListener, ConfirmOrderActivityView, ConfirmOrderShopAdapter.DeliveryTypeListener {
+    private static final java.lang.String TAG = "ConfirmOrderActivity";
     private SimpleTitleBar titleBar;
     private LinearLayout contentLayout;
     private SwitcherLayout switcherLayout;
@@ -84,7 +85,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private TextView tvPhone;
     private TextView tvAddress;
     private LinearLayout selfDeliveryLayout;
-    private TextView tvTime;
+    private TextView tvTime, txt_self_delivery_identify, txt_receiving_left_identify;
 
     //商品
     private RecyclerView rvGoods;
@@ -195,9 +196,9 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             }
             if (GOODS_NUTRITION.equals(goods.getType())) {
                 settlementType = SETTLEMENT_NURTURE_IMMEDIATELY;
-            } else if(GOODS_FOODS.equals(goods.getType())){
+            } else if (GOODS_FOODS.equals(goods.getType())) {
                 settlementType = SETTLEMENT_FOOD_IMMEDIATELY;
-            }  else{
+            } else {
                 settlementType = SETTLEMENT_EQUIPMENT_IMMEDIATELY;
             }
 
@@ -220,7 +221,6 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             itemFromIdAmount[i] = goodsList.get(i).getCouponGoodsType() + "_"
                     + goodsList.get(i).getCode() + "_" + goodsList.get(i).getAmount();
         }
-        int i = 6;
     }
 
     private void initView() {
@@ -237,6 +237,9 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         tvTime = (TextView) findViewById(R.id.tv_time);
         llReceivingTime = (LinearLayout) findViewById(ll__receiving_time);
         txtrecevingtime = (TextView) findViewById(txt_receving_time);
+        txt_self_delivery_identify = (TextView) findViewById(R.id.txt_self_delivery_identify);
+        txt_receiving_left_identify = (TextView) findViewById(R.id.txt_receiving_left_identify);
+
 
         rvGoods = (RecyclerView) findViewById(R.id.rv_goods);
         tvCoupon = (TextView) findViewById(R.id.tv_coupon);
@@ -271,23 +274,13 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
             if (DELIVERY_SELF.equals(shopBean.getPickUp().getType())) {
                 needSelfDelivery = true;
             }
-
-            if (shopBean != null && shopBean.getItem() != null && !shopBean.getItem().isEmpty() &&
-                    (TextUtils.equals(GOODS_FOODS, shopBean.getItem().get(0).getType()) ||
-                            (TextUtils.equals(GOODS_NUTRITION, shopBean.getItem().get(0).getType())
-                                    && shopBean.getItem().get(0).getProductIdInteger() > Constant.GOODS_FOODS_START_INDEX))) {
-                //该商品为健康餐饮
-                llReceivingTime.setVisibility(View.VISIBLE);
-                receivingTimeQuantum = SystemInfoUtils.getPeriods(this);
-                pickUpDate = limit_days.get(0);
-                pick_up_period = receivingTimeQuantum.get(0);
-                txtrecevingtime.setText(pickUpDate + " " + pick_up_period);
-
-            }
         }
 
         if (needExpress) {
             addressLayout.setVisibility(View.VISIBLE);
+            if (TextUtils.equals(GOODS_FOODS, shopBeanList.get(0).getItem().get(0).getType())) {
+                llReceivingTime.setVisibility(View.VISIBLE);
+            }
 
             if (settlementType.equals(SETTLEMENT_EQUIPMENT_IMMEDIATELY)
                     || settlementType.equals(SETTLEMENT_NURTURE_IMMEDIATELY)
@@ -316,6 +309,24 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         double dPrice = needExpress ? expressPrice : 0d;
         double cPrice = !TextUtils.isEmpty(couponPrice) ? FormatUtil.parseDouble(couponPrice) : 0d;
         tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice));
+
+//        if (shopBean != null && shopBean.getItem() != null && !shopBean.getItem().isEmpty() &&
+//                (TextUtils.equals(GOODS_FOODS, shopBean.getItem().get(0).getType()) ||
+//                        (TextUtils.equals(GOODS_NUTRITION, shopBean.getItem().get(0).getType())
+//                                && shopBean.getItem().get(0).getProductIdInteger() > Constant.GOODS_FOODS_START_INDEX))) {
+
+        if( shopBeanList!=null && !shopBeanList.isEmpty()&& shopBeanList.get(0).getItem() != null &&
+                !shopBeanList.get(0).getItem().isEmpty() &&  GOODS_FOODS.equals(shopBeanList.get(0).getItem().get(0).getType())){
+
+            //该商品为健康餐饮
+            receivingTimeQuantum = SystemInfoUtils.getPeriods(this);
+            pickUpDate = limit_days.get(0);
+            pick_up_period = receivingTimeQuantum.get(0);
+            txtrecevingtime.setText(pickUpDate + " " + pick_up_period);
+            tvTime.setText(pickUpDate + " " + pick_up_period);
+            txt_receiving_left_identify.setText(R.string.send_the_meal_time);
+            txt_self_delivery_identify.setText(R.string.send_the_meal_time);
+        }
     }
 
     private void setListener() {
@@ -337,7 +348,15 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 finish();
                 break;
             case R.id.ll_self_delivery:
-                showDeliveryDateDialog();
+
+//                Logger.i(TAG,shopBeanList.get(0).getItem().get(0).getType());
+                if( shopBeanList!=null && !shopBeanList.isEmpty()&& shopBeanList.get(0).getItem() != null &&
+                        !shopBeanList.get(0).getItem().isEmpty() &&  GOODS_FOODS.equals(shopBeanList.get(0).getItem().get(0).getType())){
+                    showReceivingDateDialog();
+                }else{
+                    showDeliveryDateDialog();
+                }
+
                 break;
             case R.id.ll__receiving_time:
                 showReceivingDateDialog();
@@ -362,6 +381,21 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
+
+    private void showDeliveryDateDialog() {
+        new MaterialDialog.Builder(this)
+                .title(R.string.confirm_date)
+                .items(days)
+                .itemsCallback(new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+                        pickUpDate = days.get(position);
+                        tvTime.setText(pickUpDate);
+                    }
+                })
+                .show();
+    }
+
     private void showReceivingDateDialog() {
 
         OptionsPickerView pvNoLinkOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
@@ -371,7 +405,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 pickUpDate = limit_days.get(options1);
                 pick_up_period = receivingTimeQuantum.get(options2);
                 txtrecevingtime.setText(pickUpDate + " " + pick_up_period);
-
+                tvTime.setText(pickUpDate + " " + pick_up_period);
             }
         }).build();
         pvNoLinkOptions.setNPicker(limit_days, receivingTimeQuantum, null);
@@ -400,19 +434,20 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 }
             }
         }
-
+        Logger.i(TAG,"pickUpDate = " +pickUpDate+"pick_up_period =" +pick_up_period);
         switch (settlementType) {
+
             case SETTLEMENT_CART:
                 present.payCart(integral, coin, couponId, payType,
                         addressId, pickUpDate, payListener, itemIds);
                 break;
             case SETTLEMENT_FOOD_IMMEDIATELY:
                 present.buyNurtureImmediately(skuCode, amount, couponId, integral, coin, payType,
-                        String.valueOf(pickUpWay), pickUpId, pickUpDate, pick_up_period,"1", payListener);
+                        String.valueOf(pickUpWay), pickUpId, pickUpDate, pick_up_period, "1", payListener);
                 break;
             case SETTLEMENT_NURTURE_IMMEDIATELY:
                 present.buyNurtureImmediately(skuCode, amount, couponId, integral, coin, payType,
-                        String.valueOf(pickUpWay), pickUpId, pickUpDate, pick_up_period,"0", payListener);
+                        String.valueOf(pickUpWay), pickUpId, pickUpDate, pick_up_period, "0", payListener);
                 break;
             case SETTLEMENT_EQUIPMENT_IMMEDIATELY:
                 present.buyEquipmentImmediately(skuCode, amount, couponId, integral, coin, payType,
@@ -444,19 +479,6 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         }
     };
 
-    private void showDeliveryDateDialog() {
-        new MaterialDialog.Builder(this)
-                .title(R.string.confirm_date)
-                .items(days)
-                .itemsCallback(new MaterialDialog.ListCallback() {
-                    @Override
-                    public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
-                        pickUpDate = days.get(position);
-                        tvTime.setText(pickUpDate);
-                    }
-                })
-                .show();
-    }
 
     @Override
     public void onCheckedChanged(CustomNestRadioGroup group, int checkedId) {
@@ -555,6 +577,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
         pickUpId = null;
         pickUpDate = null;
         addressLayout.setVisibility(View.GONE);
+        llReceivingTime.setVisibility(View.GONE);
         selfDeliveryLayout.setVisibility(View.GONE);
     }
 }

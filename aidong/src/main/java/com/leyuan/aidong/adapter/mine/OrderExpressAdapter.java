@@ -18,7 +18,7 @@ import java.util.List;
 import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
 
 /**
- * 订单列表中包裹适配器
+ * 订单列表中快递包裹适配器
  * Created by song on 2016/9/8.
  */
 public class OrderExpressAdapter extends RecyclerView.Adapter<OrderExpressAdapter.CartHolder> {

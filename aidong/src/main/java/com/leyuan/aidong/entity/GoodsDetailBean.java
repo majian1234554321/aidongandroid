@@ -7,8 +7,6 @@ import com.leyuan.aidong.utils.FormatUtil;
 
 import java.util.List;
 
-import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
-
 /**
  * 营养品，健康餐饮，装备商品详情
  * Created by song on 2016/9/22.
@@ -20,6 +18,8 @@ public class GoodsDetailBean {
     public String price;            //商品价格
     public String floor_price;
     public String market_price;     //商品市场价
+
+
     public String introduce;        //商品更多详情
     public String question;
     public String service;
@@ -65,12 +65,13 @@ public class GoodsDetailBean {
         this.goodsType = getRealGoodsType(goodsType, goodsId);
     }
 
+    @Deprecated
     public void setDeliveryBeanByGoodsType(String goodsType) {
-        if (TextUtils.equals(goodsType, Constant.GOODS_FOODS)){
-            pick_up = new DeliveryBean();
-            pick_up.setInfo(null);
-            pick_up.setType(DELIVERY_EXPRESS);
-            pick_up.setIs_send(true);
-        }
+//        if (TextUtils.equals(goodsType, Constant.GOODS_FOODS)){
+//            pick_up = new DeliveryBean();
+//            pick_up.setInfo(null);
+//            pick_up.setType(DELIVERY_EXPRESS);
+//            pick_up.setIs_send(true);
+//        }
     }
 }
