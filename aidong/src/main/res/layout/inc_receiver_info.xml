@@ -43,5 +43,12 @@
         app:left_text="备注:"
         app:line_color="@color/transparent"
         android:visibility="gone"/>
+    <com.leyuan.aidong.widget.ExtendTextView
+        android:id="@+id/tv_send_the_meal_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:left_text="送餐时间:"
+        app:line_color="@color/transparent"
+        android:visibility="gone"/>
 
 </LinearLayout>

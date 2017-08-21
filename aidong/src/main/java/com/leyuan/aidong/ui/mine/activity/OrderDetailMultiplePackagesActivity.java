@@ -29,6 +29,7 @@ import com.leyuan.aidong.ui.mvp.view.OrderDetailActivityView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.FormatUtil;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.CustomNestRadioGroup;
@@ -59,6 +60,7 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
     private static final String PAID = "purchased";           //已支付
     private static final String FINISH = "confirmed";         //已确认
     private static final String CLOSE = "canceled";           //已关闭
+    private static final java.lang.String TAG = "OrderDetailMultiplePackagesActivity";
     private long orderCountdownMill;
 
     private SimpleTitleBar titleBar;
@@ -78,6 +80,7 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
     private ExtendTextView tvPhone;
     private ExtendTextView tvAddress;
     private ExtendTextView tvRemarks;
+    private ExtendTextView tv_send_the_meal_time;//快递送餐时间
     private RecyclerView expressGoodsRecyclerView; //快递商品信息
 
     //自提信息
@@ -163,6 +166,7 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
         tvPhone = (ExtendTextView) findViewById(R.id.tv_phone);
         tvAddress = (ExtendTextView) findViewById(R.id.tv_address);
         tvRemarks = (ExtendTextView) findViewById(R.id.tv_remarks);
+        tv_send_the_meal_time = (ExtendTextView) findViewById(R.id.tv_send_the_meal_time);
         expressGoodsRecyclerView = (RecyclerView) findViewById(R.id.rv_express_goods);
         selfDeliveryInfoLayout = (LinearLayout) findViewById(R.id.ll_self_delivery_info);
 //        rlQrCode = (RelativeLayout) findViewById(R.id.rl_qr_code);
@@ -260,12 +264,23 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
             tvBuyer.setRightContent(expressParcel.getName());
             tvPhone.setRightContent(expressParcel.getMobile());
             tvAddress.setRightContent(expressParcel.getAddress());
+
             tvRemarks.setRightContent(expressParcel.getRemark());
             if (PAID.equals(bean.getStatus()) || FINISH.equals(bean.getStatus())) {
                 orderPresent.getOrderDetailExpressInfo(orderId);
                 rlExpress.setVisibility(View.VISIBLE);
             } else {
                 rlExpress.setVisibility(View.GONE);
+            }
+
+            Logger.i(TAG,"bean.is_food() = " +bean.is_food());
+            if (bean.is_food()) {
+                tv_send_the_meal_time.setVisibility(View.VISIBLE);
+                tv_send_the_meal_time.setRightContent(expressParcel.getPickUpDate() + " " + expressParcel.getPick_up_period());
+                Logger.i(TAG,"tv_send_the_meal_time VISIBLE" );
+            } else {
+                tv_send_the_meal_time.setVisibility(View.GONE);
+                Logger.i(TAG,"tv_send_the_meal_time GONE" );
             }
         } else {
             expressInfoLayout.setVisibility(View.GONE);
@@ -278,7 +293,7 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
 
             selfDeliveryInfoLayout.setVisibility(View.VISIBLE);
             tvDeliveryTime.setRightContent(selfDeliveryList.get(0).getPickUpDate());
-            if(bean.is_food()){
+            if (bean.is_food()) {
                 tvDeliveryTime.setLeftTextContent(getResources().getString(R.string.send_the_meal_time));
 //                tvDeliveryTime.setRightContent(selfDeliveryList.get(0).getPickUpDate()+" "+selfDeliveryList.get(0).getPick_up_period());
             }
@@ -361,7 +376,7 @@ public class OrderDetailMultiplePackagesActivity extends BaseActivity implements
                 new DialogDoubleButton(this)
                         .setLeftButton(getString(R.string.no_received))
                         .setRightButton(getString(R.string.have_received))
-                        .setContentDesc(getString(R.string.are_you_sure_have_to_received)  )
+                        .setContentDesc(getString(R.string.are_you_sure_have_to_received))
                         .setBtnCancelListener(new ButtonCancelListener() {
                             @Override
                             public void onClick(BaseDialog dialog) {
