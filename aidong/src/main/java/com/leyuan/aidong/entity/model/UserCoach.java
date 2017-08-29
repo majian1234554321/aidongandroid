@@ -86,6 +86,8 @@ public class UserCoach implements Serializable {
 
 
     public String getMobile() {
+        if(mobile ==null)
+            return "";
         return mobile;
     }
 
@@ -94,6 +96,8 @@ public class UserCoach implements Serializable {
     }
 
     public String getName() {
+        if(name ==null)
+            return "";
         return name;
     }
 

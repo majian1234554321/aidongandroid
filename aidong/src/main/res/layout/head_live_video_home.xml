@@ -225,7 +225,7 @@
             android:visibility="gone"
             android:id="@+id/layout_empty_living"
             android:layout_width="match_parent"
-            android:layout_height="270dp">
+            android:layout_height="250dp">
 
             <TextView
                 android:layout_width="wrap_content"

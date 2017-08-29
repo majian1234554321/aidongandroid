@@ -24,7 +24,6 @@ import com.leyuan.aidong.module.photopicker.boxing.loader.IBoxingMediaLoader;
 import com.leyuan.aidong.utils.ForegroundCallbacks;
 import com.leyuan.aidong.utils.LogAidong;
 import com.leyuan.aidong.utils.Logger;
-import com.leyuan.aidong.utils.Md5Utils;
 import com.leyuan.aidong.utils.SharePrefUtils;
 import com.leyuan.aidong.utils.VersionManager;
 import com.zzhoujay.richtext.RichText;
@@ -93,7 +92,7 @@ public class App extends MultiDexApplication {
 
         RichText.initCacheDir(this);
 
-        Logger.i("md5", Md5Utils.createMd("ae2c037cd273f69bfb5c96902d95b151"));
+//        Logger.i("md5", Md5Utils.createMd("ae2c037cd273f69bfb5c96902d95b151"));
     }
 
     private ForegroundCallbacks.Listener foregroundListener = new ForegroundCallbacks.Listener() {

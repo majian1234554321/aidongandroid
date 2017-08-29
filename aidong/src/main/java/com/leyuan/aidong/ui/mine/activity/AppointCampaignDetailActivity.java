@@ -2,7 +2,6 @@ package com.leyuan.aidong.ui.mine.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
@@ -32,6 +31,7 @@ import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.ImageRectUtils;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.QRCodeUtil;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.utils.ToastGlobal;
@@ -264,6 +264,9 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         tvStartTime.setRightContent(bean.getPay().getCreatedAt());
         tvPayType.setRightContent(PAY_ALI.equals(bean.getPay().getPayType()) ? "支付宝" : "微信");
 
+
+        Logger.i("appointdetail","appoint status = " +bean.getAppoint().getStatus()+",bean.getAppoint().getVerify_no() = " +bean.getAppoint().getVerify_no()+
+        "bean.getAppoint().getVerify_status = " +bean.getAppoint().getVerify_status());
         //todo 通过组合控件来实现底部按钮
         //与订单状态有关: 预约状态信息 课程预约信息/活动预约信息 支付方式信息 底部预约操作状态及价格信息
         switch (bean.getAppoint().getStatus()) {
@@ -294,12 +297,18 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 tvCancelPay.setVisibility(View.GONE);
                 tvDelete.setVisibility(View.GONE);
                 codeLayout.setVisibility(View.VISIBLE);
-                tvCodeNum.setText(bean.getId());
-                tvCodeNum.setTextColor(Color.parseColor("#000000"));
-                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFF000000, bean.getId(),
-                        DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
+
                 payLayout.setVisibility(View.GONE);
                 tvPayType.setVisibility(View.VISIBLE);
+
+
+                tvCodeNum.setText(bean.getAppoint().getVerify_no());
+                if(bean.getAppoint().isVerified()){
+                    tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                }
+                tvCodeNum.setTextColor( bean.getAppoint().getverifyColor());
+                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this,bean.getAppoint().getverifyColorQr(),bean.getAppoint().getVerify_no(),
+                        DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
                 break;
             case JOINED:            //已参加
                 tvState.setText(context.getString(R.string.appointment_joined));
@@ -312,13 +321,23 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 tvCancelJoin.setVisibility(View.GONE);
                 tvConfirmJoin.setVisibility(View.GONE);
                 codeLayout.setVisibility(View.VISIBLE);
-                tvCodeNum.setText(bean.getId());
-                tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-                tvCodeNum.setTextColor(Color.parseColor("#ebebeb"));
-                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFFebebeb, bean.getId(),
-                        DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
+//                tvCodeNum.setText(bean.getId());
+//                tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+//                tvCodeNum.setTextColor(Color.parseColor("#ebebeb"));
+//                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFFebebeb, bean.getId(),
+//                        DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
                 payLayout.setVisibility(View.GONE);
                 tvPayType.setVisibility(View.VISIBLE);
+
+
+
+                tvCodeNum.setText(bean.getAppoint().getVerify_no());
+                if(bean.getAppoint().isVerified()){
+                    tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                }
+                tvCodeNum.setTextColor( bean.getAppoint().getverifyColor());
+                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this,bean.getAppoint().getverifyColorQr(),bean.getAppoint().getVerify_no(),
+                        DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
                 break;
             case CLOSE:             //已关闭
                 tvState.setText(context.getString(R.string.order_close));
@@ -345,13 +364,22 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 tvCancelJoin.setVisibility(View.GONE);
                 tvConfirmJoin.setVisibility(View.GONE);
                 codeLayout.setVisibility(View.VISIBLE);
-                tvCodeNum.setText(bean.getId());
-                tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-                tvCodeNum.setTextColor(Color.parseColor("#ebebeb"));
-                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFFebebeb, bean.getId(),
-                        DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
+//                tvCodeNum.setText(bean.getId());
+//                tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+//                tvCodeNum.setTextColor(Color.parseColor("#ebebeb"));
+//                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFFebebeb, bean.getId(),
+//                        DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
                 payLayout.setVisibility(View.GONE);
                 tvPayType.setVisibility(View.VISIBLE);
+
+
+                tvCodeNum.setText(bean.getAppoint().getVerify_no());
+                if(bean.getAppoint().isVerified()){
+                    tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                }
+                tvCodeNum.setTextColor( bean.getAppoint().getverifyColor());
+                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this,bean.getAppoint().getverifyColorQr(),bean.getAppoint().getVerify_no(),
+                        DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
                 break;
             case REFUNDED:             //已退款
                 tvState.setText(context.getString(R.string.order_refunded));
@@ -364,13 +392,23 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 tvCancelJoin.setVisibility(View.GONE);
                 tvConfirmJoin.setVisibility(View.GONE);
                 codeLayout.setVisibility(View.VISIBLE);
-                tvCodeNum.setText(bean.getId());
-                tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-                tvCodeNum.setTextColor(Color.parseColor("#ebebeb"));
-                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFFebebeb, bean.getId(),
-                        DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
+//                tvCodeNum.setText(bean.getId());
+//                tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+//                tvCodeNum.setTextColor(Color.parseColor("#ebebeb"));
+//                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFFebebeb, bean.getId(),
+//                        DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
                 payLayout.setVisibility(View.GONE);
                 tvPayType.setVisibility(View.VISIBLE);
+
+
+
+                tvCodeNum.setText(bean.getAppoint().getVerify_no());
+                if(bean.getAppoint().isVerified()){
+                    tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                }
+                tvCodeNum.setTextColor( bean.getAppoint().getverifyColor());
+                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this,bean.getAppoint().getverifyColorQr(),bean.getAppoint().getVerify_no(),
+                        DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
                 break;
             default:
                 break;

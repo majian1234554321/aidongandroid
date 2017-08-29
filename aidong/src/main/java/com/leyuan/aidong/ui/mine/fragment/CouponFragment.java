@@ -112,8 +112,8 @@ public class CouponFragment extends BaseFragment implements CouponFragmentView{
         couponAdapter = new CouponAdapter(getContext(),type);
         wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(couponAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(wrapperAdapter);
-        recyclerView.addOnScrollListener(onScrollListener);
+        recyclerView.setAdapter(couponAdapter);
+//        recyclerView.addOnScrollListener(onScrollListener);
     }
 
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){

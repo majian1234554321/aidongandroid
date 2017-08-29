@@ -14,7 +14,8 @@ public class UrlConfig {
     static {
         if (debug) {
             urlHtml = "http://share.51aidong.com/";
-            urlHost = "http://app.51aidong.com/";
+//          urlHost = "http://app.51aidong.com/";//测试服
+            urlHost = "http://app-stage.51aidong.com/";//预发布
         } else {
             urlHtml = "http://share.aidong.me/";
             urlHost = "http://a.aidong.me/";

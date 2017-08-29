@@ -155,6 +155,7 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
             tvUserName.setText(userName);
         if (!TextUtils.isEmpty(contactMobile))
             tvUserPhone.setText(contactMobile);
+        if (!TextUtils.isEmpty(userName))
         tvUserName.setSelection(userName.length());
     }
 

@@ -1,5 +1,7 @@
 package com.leyuan.aidong.entity;
 
+import android.graphics.Color;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -29,6 +31,24 @@ public class AppointmentDetailBean {
         private String address;         //上课地址
         private String organizer;
         private String status;
+        private String verify_no; //"核销码"
+        private String verify_status;//"核销状态 undo-未核销 done-已核销",
+
+        public String getVerify_no() {
+            return verify_no+"";
+        }
+
+        public void setVerify_no(String verify_no) {
+            this.verify_no = verify_no;
+        }
+
+        public String getVerify_status() {
+            return verify_status;
+        }
+
+        public void setVerify_status(String verify_status) {
+            this.verify_status = verify_status;
+        }
 
         public String getStatus() {
             return status;
@@ -92,6 +112,22 @@ public class AppointmentDetailBean {
 
         public void setOrganizer(String organizer) {
             this.organizer = organizer;
+        }
+
+        public int getverifyColor() {
+            if("undo".equals(getVerify_status()))
+                return Color.parseColor("#000000");
+            return Color.parseColor("#ebebeb");
+        }
+
+        public int getverifyColorQr() {
+            if("undo".equals(getVerify_status()))
+                return  0xFF000000;
+            return 0xFFebebeb;
+        }
+
+        public boolean isVerified() {
+            return "done".equals(getVerify_status());
         }
     }
 

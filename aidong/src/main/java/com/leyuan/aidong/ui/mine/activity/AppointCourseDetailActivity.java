@@ -2,7 +2,6 @@ package com.leyuan.aidong.ui.mine.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
@@ -286,9 +285,12 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
                 tvCancelPay.setVisibility(View.GONE);
                 tvDelete.setVisibility(View.GONE);
                 codeLayout.setVisibility(View.VISIBLE);
-                tvCodeNum.setText(bean.getId());
-                tvCodeNum.setTextColor(Color.parseColor("#000000"));
-                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFF000000, bean.getId(),
+                tvCodeNum.setText(bean.getAppoint().getVerify_no());
+                if(bean.getAppoint().isVerified()){
+                    tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                }
+                tvCodeNum.setTextColor( bean.getAppoint().getverifyColor());
+                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this,bean.getAppoint().getverifyColorQr(),bean.getAppoint().getVerify_no(),
                         DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
                 payLayout.setVisibility(View.GONE);
                 tvPayType.setVisibility(View.VISIBLE);
@@ -304,11 +306,14 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
                 tvCancelJoin.setVisibility(View.GONE);
                 tvConfirmJoin.setVisibility(View.GONE);
                 codeLayout.setVisibility(View.VISIBLE);
-                tvCodeNum.setText(bean.getId());
-                tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-                tvCodeNum.setTextColor(Color.parseColor("#ebebeb"));
-                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFFebebeb, bean.getId(),
+                tvCodeNum.setText(bean.getAppoint().getVerify_no());
+                if(bean.getAppoint().isVerified()){
+                    tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                }
+                tvCodeNum.setTextColor( bean.getAppoint().getverifyColor());
+                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this,bean.getAppoint().getverifyColorQr(),bean.getAppoint().getVerify_no(),
                         DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
+
                 payLayout.setVisibility(View.GONE);
                 tvPayType.setVisibility(View.VISIBLE);
                 break;
@@ -337,10 +342,12 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
                 tvCancelJoin.setVisibility(View.GONE);
                 tvConfirmJoin.setVisibility(View.GONE);
                 codeLayout.setVisibility(View.VISIBLE);
-                tvCodeNum.setText(bean.getId());
-                tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-                tvCodeNum.setTextColor(Color.parseColor("#ebebeb"));
-                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFFebebeb, bean.getId(),
+                tvCodeNum.setText(bean.getAppoint().getVerify_no());
+                if(bean.getAppoint().isVerified()){
+                    tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                }
+                tvCodeNum.setTextColor( bean.getAppoint().getverifyColor());
+                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this,bean.getAppoint().getverifyColorQr(),bean.getAppoint().getVerify_no(),
                         DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
                 payLayout.setVisibility(View.GONE);
                 tvPayType.setVisibility(View.VISIBLE);
@@ -356,10 +363,12 @@ public class AppointCourseDetailActivity extends BaseActivity implements Appoint
                 tvCancelJoin.setVisibility(View.GONE);
                 tvConfirmJoin.setVisibility(View.GONE);
                 codeLayout.setVisibility(View.VISIBLE);
-                tvCodeNum.setText(bean.getId());
-                tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-                tvCodeNum.setTextColor(Color.parseColor("#ebebeb"));
-                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFFebebeb, bean.getId(),
+                tvCodeNum.setText(bean.getAppoint().getVerify_no());
+                if(bean.getAppoint().isVerified()){
+                    tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                }
+                tvCodeNum.setTextColor( bean.getAppoint().getverifyColor());
+                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this,bean.getAppoint().getverifyColorQr(),bean.getAppoint().getVerify_no(),
                         DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
                 payLayout.setVisibility(View.GONE);
                 tvPayType.setVisibility(View.VISIBLE);

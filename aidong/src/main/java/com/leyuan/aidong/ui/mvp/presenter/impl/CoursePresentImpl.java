@@ -155,7 +155,7 @@ public class CoursePresentImpl implements CoursePresent {
                 if (courseData != null && !courseData.getCourse().isEmpty()) {
                     courseBeanList = courseData.getCourse();
                 }
-                if (!courseBeanList.isEmpty()) {
+                if (courseBeanList != null &&!courseBeanList.isEmpty()) {
                     courserFragmentView.loadMoreRecyclerViewData(courseBeanList);
                 }
                 //没有更多数据了显示到底提示

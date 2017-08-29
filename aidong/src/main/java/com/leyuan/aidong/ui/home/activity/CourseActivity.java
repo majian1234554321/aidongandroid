@@ -58,7 +58,9 @@ public class CourseActivity extends BaseActivity implements CourseActivityView, 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_course);
         if (getIntent() != null) {
             category = getIntent().getStringExtra("category");

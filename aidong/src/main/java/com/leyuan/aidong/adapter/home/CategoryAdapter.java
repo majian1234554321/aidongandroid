@@ -70,7 +70,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.FoodVi
             } else if (GOODS_NUTRITION.equals(type)) {
                 GlideLoader.getInstance().displayRoundLocalImage(R.drawable.icon_all_nurture, holder.cover);
             } else if (GOODS_FOODS.equals(type)) {
-                GlideLoader.getInstance().displayRoundLocalImage(R.drawable.icon_all_foods, holder.cover);
+                GlideLoader.getInstance().displayRoundLocalImage(R.drawable.icon_all_food_and_beverage, holder.cover);
             }
         } else {
             GlideLoader.getInstance().displayRoundImage(bean.getImage(), holder.cover);

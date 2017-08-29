@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -92,6 +93,9 @@ public class AdvertisementActivity extends BaseActivity implements View.OnClickL
                 finish();
                 break;
             case R.id.img_bg:
+                if (TextUtils.isEmpty(startingBanner.getLink())) {
+                    return;
+                }
                 handler.removeCallbacksAndMessages(null);
                 Intent intentMain = new Intent(this, MainActivity.class);
                 Intent intentBanner = getBannerIntent(startingBanner);

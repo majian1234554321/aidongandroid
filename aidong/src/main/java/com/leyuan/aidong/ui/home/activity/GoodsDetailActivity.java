@@ -316,7 +316,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         bannerUrls.addAll(bean.image);
         bannerLayout.setData(bannerUrls, null);
         tvTitle.setText(String.format(getString(R.string.rmb_price_double),
-                FormatUtil.parseDouble(bean.floor_price)));
+                FormatUtil.parseDouble(TextUtils.isEmpty(bean.floor_price) ? bean.price : bean.floor_price)));
         tvPrice.setText(String.format(getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(TextUtils.isEmpty(bean.floor_price) ? bean.price : bean.floor_price)));
         if (!TextUtils.isEmpty(bean.market_price)) {
