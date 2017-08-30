@@ -153,7 +153,7 @@ public class MediaItemLayout extends FrameLayout {
         if (mCoverImg == null || TextUtils.isEmpty(path)) {
             return;
         }
-        if(during > 1000 * 15){
+        if(during >= 1000 * 16){
             disabledLayout.setVisibility(VISIBLE);
         }else if(during < 1000 * 5) {
             disabledLayout.setVisibility(VISIBLE);

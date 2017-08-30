@@ -88,6 +88,7 @@ public class Constant {
     public static final String DYNAMIC_ID = "dynamic_id";
     public static final int GOODS_FOODS_START_INDEX = 10000;
     public static final String BROADCAST_ACTION_PUBLISH_DYNAMIC_SUCCESS = "broadcast_action_publish_dynamic_success";
+    public static final String BROADCAST_ACTION_EXCHANGE_COUPON_SUCCESS = "broadcast_action_exchange_coupon_success";
 
     public static List<VenuesBean> gyms;
     public static SystemBean systemInfoBean;

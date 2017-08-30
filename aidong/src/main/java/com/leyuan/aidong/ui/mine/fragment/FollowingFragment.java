@@ -98,10 +98,10 @@ public class FollowingFragment extends BaseLazyFragment implements FollowFragmen
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
         @Override
         public void onLoadNextPage(View view) {
-            currPage ++;
-            if (data != null && data.size() >= pageSize) {
-                present.requestMoreData(recyclerView,pageSize,FOLLOWING,currPage);
-            }
+//            currPage ++;
+//            if (data != null && data.size() >= pageSize) {
+//                present.requestMoreData(recyclerView,pageSize,FOLLOWING,currPage);
+//            }
         }
     };
 

@@ -1,6 +1,8 @@
 package com.leyuan.aidong.ui.mine.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
@@ -169,6 +171,8 @@ public class CouponExchangeActivity extends BaseActivity implements CouponExchan
                     }
                 }
             });
+
+            LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_EXCHANGE_COUPON_SUCCESS));
         }
     }
 

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,8 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponHold
 
     public void setData(List<CouponBean> data) {
         this.data = data;
+        Logger.i("coupon","setData data = " + data.size());
+        notifyDataSetChanged();
     }
 
     @Override

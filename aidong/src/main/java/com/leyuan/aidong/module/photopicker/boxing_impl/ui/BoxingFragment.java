@@ -425,7 +425,7 @@ public class BoxingFragment extends AbsBoxingViewFragment implements View.OnClic
         }
 
         private void videoClick(BaseMedia media) {
-            if (((VideoMedia) media).getOriginalDuration() > 1000 * 15) {
+            if (((VideoMedia) media).getOriginalDuration() >= 1000 * 16) {
                 Toast.makeText(getContext(), "视频大于15s,暂不支持", Toast.LENGTH_LONG).show();
             } else if (((VideoMedia) media).getOriginalDuration() < 1000 * 5) {
                 Toast.makeText(getContext(), "视频少于5s,暂不支持", Toast.LENGTH_LONG).show();
