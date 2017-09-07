@@ -189,7 +189,7 @@ public class BoxingFragment extends AbsBoxingViewFragment implements View.OnClic
         Logger.i(TAG,"showEmptyData");
         mLoadingView.setVisibility(View.GONE);
         mEmptyTxt.setVisibility(View.VISIBLE);
-        mRecycleView.setVisibility(View.GONE);
+        mRecycleView.setVisibility(View.VISIBLE);
     }
 
     private void showData() {

@@ -28,5 +28,4 @@
     android:gravity="center"
     android:text="@string/nothing_found"
     android:textColor="@color/black"
-    android:visibility="gone"
     tools:visibility="visible"/>
