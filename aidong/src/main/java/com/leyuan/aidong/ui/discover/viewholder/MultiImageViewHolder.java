@@ -117,7 +117,7 @@ public class MultiImageViewHolder extends BaseCircleViewHolder implements PhotoL
 
         @Override
         public void onBindData(int position, @NonNull ImageView convertView) {
-            GlideLoader.getInstance().displayImage(data.get(position), convertView);
+            GlideLoader.getInstance().displayImage(data.get(position)+"?imageslim", convertView);
         }
 
         @Override

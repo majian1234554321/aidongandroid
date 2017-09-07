@@ -6,7 +6,7 @@ package com.leyuan.aidong.config;
  */
 public class UrlConfig {
     public static final boolean debug = false;
-    public static final boolean isMi = false;
+    public static final boolean isMi = true;
 
     private static String urlHtml;
     private static String urlHost;
@@ -14,8 +14,8 @@ public class UrlConfig {
     static {
         if (debug) {
             urlHtml = "http://share.51aidong.com/";
-//          urlHost = "http://app.51aidong.com/";//测试服
-            urlHost = "http://app-stage.51aidong.com/";//预发布
+          urlHost = "http://app.51aidong.com/";//测试服
+//            urlHost = "http://app-stage.51aidong.com/";//预发布
         } else {
             urlHtml = "http://share.aidong.me/";
             urlHost = "http://a.aidong.me/";

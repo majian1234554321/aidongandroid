@@ -32,4 +32,15 @@ public class QiNiuTokenUtils {
         Logger.i("qiniu","生成token = " +token);
         return token;
     }
+
+    public static String getQiNiuVideoAvthumbToken(String tokenKey, String uploadKey) {
+        Logger.i("qiniu","生成token传进来key = " +tokenKey);
+
+        String base64key = UrlSafeBase64.encodeToString(bucketName +":"+tokenKey);
+        Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);    //密钥配置
+        String token = auth.uploadToken(bucketName, uploadKey, 3600,  new StringMap().put("persistentPipeline", "aidong_video")
+                .put("persistentOps", "avthumb/m3u8/noDomain/1/segtime/5|saveas/" + base64key), true);
+        Logger.i("qiniu","生成token = " +token);
+        return token;
+    }
 }

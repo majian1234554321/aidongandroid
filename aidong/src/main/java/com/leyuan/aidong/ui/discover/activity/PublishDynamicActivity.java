@@ -148,6 +148,11 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
         mediaAdapter.notifyItemRemoved(position);
         mediaAdapter.notifyItemRangeChanged(position, selectedMedia.size());
         btSend.setEnabled(!selectedMedia.isEmpty());
+
+        for(BaseMedia media:selectedMedia){
+            Logger.i("Publish","onDeleteMediaClick selectedMedia = " + media.getPath());
+        }
+
     }
 
     @Override
@@ -164,6 +169,10 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
 
     private void uploadToQiNiu() {
         showProgressDialog();
+        for(BaseMedia media:selectedMedia){
+            Logger.i("Publish","uploadToQiNiu selectedMedia = " + media.getPath());
+        }
+
         UploadToQiNiuManager.getInstance().uploadMedia(isPhoto, selectedMedia, new IQiNiuCallback() {
             @Override
             public void onSuccess(List<String> urls) {
@@ -211,6 +220,10 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
             final List<BaseMedia> medias = Boxing.getResult(data);
             selectedMedia.clear();
             selectedMedia.addAll(medias);
+            for(BaseMedia media:selectedMedia){
+                Logger.i("Publish","onActivityResult selectedMedia = " + media.getPath());
+            }
+
             mediaAdapter.setData(selectedMedia, isPhoto);
             btSend.setEnabled(!selectedMedia.isEmpty());
         }
