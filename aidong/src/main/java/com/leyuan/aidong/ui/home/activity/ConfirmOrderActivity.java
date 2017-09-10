@@ -442,16 +442,20 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                         addressId, pickUpDate, payListener, itemIds);
                 break;
             case SETTLEMENT_FOOD_IMMEDIATELY:
-                present.buyNurtureImmediately(skuCode, amount, couponId, integral, coin, payType,
-                        String.valueOf(pickUpWay), pickUpId, pickUpDate, pick_up_period, "1", payListener);
-                break;
+
+//                present.buyNurtureImmediately(skuCode, amount, couponId, integral, coin, payType,
+//                        String.valueOf(pickUpWay), pickUpId, pickUpDate, pick_up_period, "1", payListener);
+//                break;
             case SETTLEMENT_NURTURE_IMMEDIATELY:
-                present.buyNurtureImmediately(skuCode, amount, couponId, integral, coin, payType,
-                        String.valueOf(pickUpWay), pickUpId, pickUpDate, pick_up_period, "0", payListener);
-                break;
+//                present.buyNurtureImmediately(skuCode, amount, couponId, integral, coin, payType,
+//                        String.valueOf(pickUpWay), pickUpId, pickUpDate, pick_up_period, "0", payListener);
+//                break;
             case SETTLEMENT_EQUIPMENT_IMMEDIATELY:
-                present.buyEquipmentImmediately(skuCode, amount, couponId, integral, coin, payType,
-                        String.valueOf(pickUpWay), pickUpId, pickUpDate, payListener);
+//                present.buyEquipmentImmediately(skuCode, amount, couponId, integral, coin, payType,
+//                        String.valueOf(pickUpWay), pickUpId, pickUpDate, payListener);
+
+                present.buyGoodsImmediately(settlementType,skuCode, amount, couponId, integral, coin, payType,
+                        String.valueOf(pickUpWay), pickUpId, pickUpDate, pick_up_period, "0", payListener);
                 break;
             default:
                 break;

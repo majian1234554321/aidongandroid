@@ -23,6 +23,7 @@ import com.leyuan.aidong.ui.mvp.model.impl.AddressModelImpl;
 import com.leyuan.aidong.ui.mvp.model.impl.CartModelImpl;
 import com.leyuan.aidong.ui.mvp.model.impl.CouponModelImpl;
 import com.leyuan.aidong.ui.mvp.model.impl.EquipmentModelImpl;
+import com.leyuan.aidong.ui.mvp.model.impl.GoodsModelImpl;
 import com.leyuan.aidong.ui.mvp.model.impl.NurtureModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.ConfirmOrderPresent;
 import com.leyuan.aidong.ui.mvp.view.ConfirmOrderActivityView;
@@ -44,6 +45,7 @@ public class ConfirmOrderPresentImpl implements ConfirmOrderPresent {
     private ConfirmOrderActivityView orderActivityView;
 
     private ShareData.ShareCouponInfo shareCouponInfo;
+    private GoodsModelImpl goodsMode;
 
 
     public ConfirmOrderPresentImpl(Context context, ConfirmOrderActivityView orderActivityView) {
@@ -125,7 +127,7 @@ public class ConfirmOrderPresentImpl implements ConfirmOrderPresent {
     @Override
     public void buyNurtureImmediately(String skuCode, int amount, String coupon, String integral,
                                       String coin, String payType, String pickUpWay, String pickUpId,
-                                      String pickUpDate,   String pick_up_period, String is_food, final PayInterface.PayListener listener) {
+                                      String pickUpDate, String pick_up_period, String is_food, final PayInterface.PayListener listener) {
         if (nurtureModel == null) {
             nurtureModel = new NurtureModelImpl(context);
         }
@@ -138,7 +140,27 @@ public class ConfirmOrderPresentImpl implements ConfirmOrderPresent {
 
 
             }
-        }, skuCode, amount, coupon, integral, coin, payType, pickUpWay, pickUpId, pickUpDate,pick_up_period,is_food);
+        }, skuCode, amount, coupon, integral, coin, payType, pickUpWay, pickUpId, pickUpDate, pick_up_period, is_food);
+    }
+
+
+    @Override
+    public void buyGoodsImmediately(String type,String skuCode, int amount, String coupon, String integral,
+                                    String coin, String payType, String pickUpWay, String pickUpId,
+                                    String pickUpDate, String pick_up_period, String is_food, final PayInterface.PayListener listener) {
+       if(goodsMode == null){
+           goodsMode = new GoodsModelImpl(context);
+       }
+        goodsMode.buyNurtureImmediately(new ProgressSubscriber<PayOrderData>(context) {
+
+            @Override
+            public void onNext(PayOrderData payOrderData) {
+                createShareBeanByOrder(payOrderData);
+                PayUtils.pay(context, payOrderData.getOrder(), listener);
+
+
+            }
+        },type, skuCode, amount, coupon, integral, coin, payType, pickUpWay, pickUpId, pickUpDate, pick_up_period, is_food);
     }
 
     private void createShareBeanByOrder(PayOrderData payOrderData) {
@@ -185,5 +207,6 @@ public class ConfirmOrderPresentImpl implements ConfirmOrderPresent {
     public ShareData.ShareCouponInfo getShareInfo() {
         return shareCouponInfo;
     }
+
 
 }

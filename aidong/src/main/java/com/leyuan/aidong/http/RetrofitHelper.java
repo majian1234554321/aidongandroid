@@ -57,8 +57,8 @@ public class RetrofitHelper {
                         builder.addHeader("lat", String.valueOf(App.lat));
                         builder.addHeader("lng", String.valueOf(App.lon));
                         builder.addHeader("device", "android");
-                        builder.addHeader("version", App.getInstance().getVersionName());
-                        builder.addHeader("deviceName", DeviceManager.getPhoneBrand());
+                        builder.addHeader("ver", App.getInstance().getVersionName());
+                        builder.addHeader("os", DeviceManager.getPhoneBrand());
 
                         Request authorised = builder.build();
                         return chain.proceed(authorised);

@@ -111,7 +111,7 @@ public class Constant {
 
     //商品类型
     public static final String GOODS_EQUIPMENT = "equipment";
-    public static final String GOODS_FOODS = "foods";
+    public static final String GOODS_FOODS = "food";
     public static final String GOODS_NUTRITION = "nutrition";
 
     //动态类型

@@ -1,7 +1,7 @@
 package com.leyuan.aidong.ui.mvp.view;
 
-import com.leyuan.aidong.entity.BaseGoodsBean;
 import com.leyuan.aidong.entity.EquipmentBean;
+import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.entity.NurtureBean;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public interface GoodsFilterActivityView {
      */
     void updateNurtureRecyclerView(List<NurtureBean> beanList);
     void updateEquipmentRecyclerView(List<EquipmentBean> beanList);
-    void updateGoodsRecyclerView(List<? extends BaseGoodsBean> beanList);
+    void updateGoodsRecyclerView(List<GoodsBean> beanList);
     /**
      * 显示FooterView，提示没有任何内容了
      */

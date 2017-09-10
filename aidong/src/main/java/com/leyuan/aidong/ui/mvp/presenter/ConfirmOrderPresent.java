@@ -65,6 +65,10 @@ public interface ConfirmOrderPresent {
                                String coin, String payType, String pickUpWay, String pickUpId,
                                String pickUpDate, String pick_up_period, String is_food, PayInterface.PayListener listener);
 
+    void buyGoodsImmediately(String type, String skuCode, int amount, String coupon, String integral,
+                             String coin, String payType, String pickUpWay, String pickUpId,
+                             String pickUpDate, String pick_up_period, String is_food, PayInterface.PayListener listener);
+
     /**
      * 购物车结算
      *
@@ -77,10 +81,12 @@ public interface ConfirmOrderPresent {
      * @param pickUpDate 自提时间
      */
     void payCart(String integral, String coin, String coupon, String payType, String pickUpId,
-                 String pickUpDate, PayInterface.PayListener payListener, String... id);
+                             String pickUpDate, PayInterface.PayListener payListener, String... id);
 
 
     void refreshCartData();
 
     ShareData.ShareCouponInfo getShareInfo();
+
+
 }

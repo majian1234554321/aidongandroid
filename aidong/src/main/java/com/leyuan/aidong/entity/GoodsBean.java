@@ -25,6 +25,7 @@ public class GoodsBean  implements Parcelable {
     private String market_price;  //商品市场价
     private String type;
     private String floor_price;
+    protected String brand_name;
 
     /******
      * 订单商品中需要用到的字段
@@ -93,7 +94,13 @@ public class GoodsBean  implements Parcelable {
         this.stock = stock;
     }
 
+    public String getBrandName() {
+        return brand_name;
+    }
 
+    public void setBrandName(String brand_name) {
+        this.brand_name = brand_name;
+    }
 
     public String getName() {
         return name;

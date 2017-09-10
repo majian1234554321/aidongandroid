@@ -17,6 +17,7 @@ import com.leyuan.aidong.adapter.GoodsListAdapter;
 import com.leyuan.aidong.entity.BaseGoodsBean;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.EquipmentBean;
+import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.entity.NurtureBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.home.view.GoodsFilterView;
@@ -58,7 +59,7 @@ public class GoodsListActivity extends BaseActivity implements View.OnClickListe
     private RecyclerView recyclerView;
 
     private int currPage = 1;
-    private List<BaseGoodsBean> goodsArray;
+    private List<GoodsBean> goodsArray;
     private GoodsListAdapter adapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
 
@@ -209,7 +210,7 @@ public class GoodsListActivity extends BaseActivity implements View.OnClickListe
     }
 
     @Override
-    public void updateGoodsRecyclerView(List<? extends BaseGoodsBean> beanList) {
+    public void updateGoodsRecyclerView(List<GoodsBean> beanList) {
         if(refreshLayout.isRefreshing()){
             goodsArray.clear();
             refreshLayout.setRefreshing(false);

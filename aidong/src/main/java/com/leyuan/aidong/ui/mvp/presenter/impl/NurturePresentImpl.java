@@ -4,19 +4,14 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
 import com.leyuan.aidong.entity.NurtureBean;
-import com.leyuan.aidong.entity.data.NurtureData;
 import com.leyuan.aidong.entity.data.PayOrderData;
-import com.leyuan.aidong.http.subscriber.CommonSubscriber;
 import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
-import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
-import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
 import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.module.pay.PayUtils;
 import com.leyuan.aidong.ui.mvp.model.NurtureModel;
 import com.leyuan.aidong.ui.mvp.model.impl.NurtureModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.NurturePresent;
 import com.leyuan.aidong.ui.mvp.view.GoodsFilterActivityView;
-import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
@@ -26,6 +21,7 @@ import java.util.List;
  * 营养品
  * Created by song on 2016/8/15.
  */
+@Deprecated
 public class NurturePresentImpl implements NurturePresent{
     private Context context;
     private NurtureModel nurtureModel;
@@ -48,57 +44,57 @@ public class NurturePresentImpl implements NurturePresent{
 
     @Override
     public void commendLoadNurtureData(final SwitcherLayout switcherLayout, String brandId, String sort,String gymId) {
-        nurtureModel.getNurtures(new CommonSubscriber<NurtureData>(context,switcherLayout) {
-            @Override
-            public void onNext(NurtureData nurtureDataBean) {
-                if(nurtureDataBean != null && nurtureDataBean.getNutrition() != null){
-                    nurtureBeanList = nurtureDataBean.getNutrition();
-                }
-                if(!nurtureBeanList.isEmpty()){
-                    switcherLayout.showContentLayout();
-                    filterActivityView.updateGoodsRecyclerView(nurtureBeanList);
-                }else{
-                    filterActivityView.showEmptyView();
-                }
-            }
-        },Constant.PAGE_FIRST,brandId,sort,gymId);
+//        nurtureModel.getNurtures(new CommonSubscriber<NurtureData>(context,switcherLayout) {
+//            @Override
+//            public void onNext(NurtureData nurtureDataBean) {
+//                if(nurtureDataBean != null && nurtureDataBean.getNutrition() != null){
+//                    nurtureBeanList = nurtureDataBean.getNutrition();
+//                }
+//                if(!nurtureBeanList.isEmpty()){
+//                    switcherLayout.showContentLayout();
+//                    filterActivityView.updateGoodsRecyclerView(nurtureBeanList);
+//                }else{
+//                    filterActivityView.showEmptyView();
+//                }
+//            }
+//        },Constant.PAGE_FIRST,brandId,sort,gymId);
     }
 
     @Override
     public void pullToRefreshNurtureData(String brandId, String sort,String gymId) {
-        nurtureModel.getNurtures(new RefreshSubscriber<NurtureData>(context) {
-            @Override
-            public void onNext(NurtureData nurtureDataBean) {
-                if(nurtureDataBean != null && nurtureDataBean.getNutrition() != null){
-                    nurtureBeanList = nurtureDataBean.getNutrition();
-                }
-                if(!nurtureBeanList.isEmpty()){
-                    filterActivityView.updateGoodsRecyclerView(nurtureBeanList);
-                }else {
-                    filterActivityView.showEmptyView();
-                }
-            }
-        }, Constant.PAGE_FIRST,brandId,sort,gymId);
+//        nurtureModel.getNurtures(new RefreshSubscriber<NurtureData>(context) {
+//            @Override
+//            public void onNext(NurtureData nurtureDataBean) {
+//                if(nurtureDataBean != null && nurtureDataBean.getNutrition() != null){
+//                    nurtureBeanList = nurtureDataBean.getNutrition();
+//                }
+//                if(!nurtureBeanList.isEmpty()){
+//                    filterActivityView.updateGoodsRecyclerView(nurtureBeanList);
+//                }else {
+//                    filterActivityView.showEmptyView();
+//                }
+//            }
+//        }, Constant.PAGE_FIRST,brandId,sort,gymId);
     }
 
     @Override
     public void requestMoreNurtureData(RecyclerView recyclerView, final int pageSize, int page,
                                        String brandId, String sort,String gymId) {
-        nurtureModel.getNurtures(new RequestMoreSubscriber<NurtureData>(context,recyclerView,pageSize) {
-            @Override
-            public void onNext(NurtureData nurtureDataBean) {
-                if(nurtureDataBean != null && nurtureDataBean.getNutrition() != null){
-                    nurtureBeanList = nurtureDataBean.getNutrition();
-                }
-                if(!nurtureBeanList.isEmpty()){
-                    filterActivityView.updateGoodsRecyclerView(nurtureBeanList);
-                }
-                //没有更多数据了显示到底提示
-                if( nurtureBeanList.size() < pageSize){
-                    filterActivityView.showEndFooterView();
-                }
-            }
-        },page,brandId,sort,gymId);
+//        nurtureModel.getNurtures(new RequestMoreSubscriber<NurtureData>(context,recyclerView,pageSize) {
+//            @Override
+//            public void onNext(NurtureData nurtureDataBean) {
+//                if(nurtureDataBean != null && nurtureDataBean.getNutrition() != null){
+//                    nurtureBeanList = nurtureDataBean.getNutrition();
+//                }
+//                if(!nurtureBeanList.isEmpty()){
+//                    filterActivityView.updateGoodsRecyclerView(nurtureBeanList);
+//                }
+//                //没有更多数据了显示到底提示
+//                if( nurtureBeanList.size() < pageSize){
+//                    filterActivityView.showEndFooterView();
+//                }
+//            }
+//        },page,brandId,sort,gymId);
     }
 
 

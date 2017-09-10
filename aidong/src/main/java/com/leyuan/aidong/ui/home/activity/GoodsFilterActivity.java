@@ -14,9 +14,9 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.GoodsFilterAdapter;
-import com.leyuan.aidong.entity.BaseGoodsBean;
 import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.EquipmentBean;
+import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.entity.NurtureBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.home.view.GoodsFilterView;
@@ -49,6 +49,7 @@ import static com.leyuan.aidong.utils.Constant.GOODS_NUTRITION;
  * 营养品和装备筛选
  * Created by song on 2016/8/18.
  */
+@Deprecated
 public class GoodsFilterActivity extends BaseActivity implements View.OnClickListener,GoodsFilterActivityView {
     private static final String HEAT_DESC = "heat_desc";
     private static final String ORDERS_COUNT_DESC = "orders_count_desc";
@@ -239,9 +240,10 @@ public class GoodsFilterActivity extends BaseActivity implements View.OnClickLis
     }
 
     @Override
-    public void updateGoodsRecyclerView(List<? extends BaseGoodsBean> beanList) {
-
+    public void updateGoodsRecyclerView(List<GoodsBean> beanList) {
+        
     }
+
 
 //    @Override
 //    public void updateGoodsRecyclerView(List<BaseGoodsBean> beanList) {

@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.BaseGoodsBean;
+import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
@@ -24,14 +24,14 @@ import java.util.List;
 public class GoodsListAdapter extends RecyclerView.Adapter<GoodsListAdapter.FilterViewHolder> {
     private Context context;
     private String type;
-    private List<? extends BaseGoodsBean> goodList;
+    private List<GoodsBean> goodList;
 
     public GoodsListAdapter(Context context, @GoodsType String type) {
         this.context = context;
         this.type = type;
     }
 
-    public void setGoodsData(List<? extends BaseGoodsBean> beanList) {
+    public void setGoodsData(List<GoodsBean> beanList) {
         this.goodList = beanList;
     }
 
@@ -51,7 +51,7 @@ public class GoodsListAdapter extends RecyclerView.Adapter<GoodsListAdapter.Filt
 
     @Override
     public void onBindViewHolder(GoodsListAdapter.FilterViewHolder holder, int position) {
-        final BaseGoodsBean bean = goodList.get(position);
+        final GoodsBean bean = goodList.get(position);
         GlideLoader.getInstance().displayImage(bean.getCover(), holder.cover);
         holder.name.setText(bean.getName());
         holder.brand.setText(bean.getBrandName());
