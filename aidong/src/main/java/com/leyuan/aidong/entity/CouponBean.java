@@ -22,6 +22,7 @@ public class CouponBean implements Parcelable {
     //废弃
     private String limit_ext_id;        //#0-品类券 其他值为专用券　
     private String type;                //优惠券类型,#0-优惠券 1-折扣券
+    private String user_coupon_id;//用户优惠券编号，为避免同一ID优惠券多次选择
 
     public String getStatus() {
         return status;
@@ -29,6 +30,14 @@ public class CouponBean implements Parcelable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getUser_coupon_id() {
+        return user_coupon_id;
+    }
+
+    public void setUser_coupon_id(String user_coupon_id) {
+        this.user_coupon_id = user_coupon_id;
     }
 
     public String getId() {
@@ -168,6 +177,7 @@ public class CouponBean implements Parcelable {
         dest.writeString(status);
         dest.writeString(limit_ext_id);
         dest.writeString(type);
+        dest.writeString(user_coupon_id);
     }
 
     protected CouponBean(Parcel in) {
@@ -184,6 +194,7 @@ public class CouponBean implements Parcelable {
         status = in.readString();
         limit_ext_id = in.readString();
         type = in.readString();
+        user_coupon_id = in.readString();
     }
 
     public static final Creator<CouponBean> CREATOR = new Creator<CouponBean>() {

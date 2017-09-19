@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +74,8 @@ public class SelectCouponAdapter extends RecyclerView.Adapter<SelectCouponAdapte
         holder.tvCouponType.setText(bean.getCoupon_type());
         holder.tvProduce.setText(bean.getLimitCategory());
 
-        if(bean.getId().equals(selectedCouponId)){
+        if(TextUtils.equals( bean.getUser_coupon_id(),selectedCouponId)){
+            Logger.i("coupon","TextUtils.equals selectedUserCouponId = " + selectedCouponId+", getUser_coupon_id = " + bean.getUser_coupon_id());
             holder.itemView.setBackgroundResource(R.drawable.bg_coupon_red_fold);
         }else {
             holder.itemView.setBackgroundResource(R.drawable.bg_coupon_black_fold);

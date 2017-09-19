@@ -5,6 +5,7 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -90,7 +91,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
     private boolean isSelf = false;
     private String replyName;
     private UserBean replyUser;
-
+    CommentBean replyComment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +99,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
         dynamicPresent = new DynamicPresentImpl(this, this);
         if (getIntent() != null) {
             dynamic = getIntent().getParcelableExtra("dynamic");
+            replyComment = getIntent().getParcelableExtra("replyComment");
             isSelf = App.mInstance.getUser() != null &&
                     dynamic.publisher.getId().equals(String.valueOf(App.mInstance.getUser().getId()));
         }
@@ -105,6 +107,21 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
         setListener();
         dynamicPresent.pullToRefreshComments(dynamic.id);
         sharePopupWindow = new SharePopupWindow(this);
+        if(replyComment != null){
+            onCommentItemClick(replyComment);
+        }
+    }
+
+    private void onCommentItemClick(CommentBean replyComment) {
+        replyName = replyComment.getPublisher().getName();
+        replyUser = replyComment.getPublisher();
+
+        String other = replyComment.getPublisher().getName();
+        other = String.format(getString(R.string.reply_other_user), other);
+        etComment.setText(other);
+        etComment.setSelection(other.length());
+        etComment.requestFocus();
+        KeyBoardUtil.openKeyboard(etComment, this);
     }
 
     private void initView() {
@@ -235,31 +252,37 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
     @Override
     public void addCommentsResult(BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
-            CommentBean temp = new CommentBean();
-            UserBean publisher = new UserBean();
-            publisher.setId(String.valueOf(App.mInstance.getUser().getId()));
-            publisher.setAvatar(App.mInstance.getUser().getAvatar());
-            publisher.setName(App.mInstance.getUser().getName());
-            temp.setContent(content);
-            temp.setPublishedAt("刚刚");
-            temp.setPublisher(publisher);
-
-            comments.add(0, temp);
-            commentAdapter.setData(comments);
-            commentAdapter.notifyItemChanged(0);
-
+            refreshLayout.setRefreshing(true);
+            onRefresh();
             etComment.clearFocus();
             etComment.setText(Constant.EMPTY_STR);
 
-            //返回新增评论 刷新动态列表
-            Intent intent = new Intent();
+//            CommentBean temp = new CommentBean();
+//            UserBean publisher = new UserBean();
+//            publisher.setId(String.valueOf(App.mInstance.getUser().getId()));
+//            publisher.setAvatar(App.mInstance.getUser().getAvatar());
+//            publisher.setName(App.mInstance.getUser().getName());
+//            temp.setContent(content);
+//            temp.setPublishedAt("刚刚");
+//            temp.setPublisher(publisher);
+//
+//            comments.add(0, temp);
+//            commentAdapter.setData(comments);
+//            commentAdapter.notifyItemChanged(0);
+//
+//
+//            //返回新增评论 刷新动态列表
+//            Intent intent = new Intent();
+//            dynamic.comment.count++;
+//            dynamic.comment.item.add(0, temp);
+//            intent.putExtra("dynamic", dynamic);
+//            setResult(RESULT_OK, intent);
+//
+              //刷新头部评论数量
             dynamic.comment.count++;
-            dynamic.comment.item.add(0, temp);
-            intent.putExtra("dynamic", dynamic);
-            setResult(RESULT_OK, intent);
-
-            //刷新头部评论数量
             headerAdapter.notifyDataSetChanged();
+
+            LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_PUBLISH_DYNAMIC_SUCCESS));
 
             CMDMessageManager.sendCMDMessage(dynamic.publisher.getId(), App.getInstance().getUser().getAvatar(), App.getInstance().getUser().getName(), dynamic.id, content
                     , dynamic.getUnifromCover(), 0, null, dynamic.getDynamicTypeInteger(), replyName);
@@ -280,9 +303,13 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
             comments.clear();
             refreshLayout.setRefreshing(false);
         }
+
         comments.addAll(commentList);
         commentAdapter.setData(comments);
+//        commentAdapter.notifyDataSetChanged();
+
         wrapperAdapter.notifyDataSetChanged();
+
     }
 
     @Override
@@ -432,6 +459,11 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
             } else {
                 dynamicPresent.addFollow(id);
             }
+        }
+
+        @Override
+        public void onCommentListClick(DynamicBean dynamic, int position, CommentBean item) {
+
         }
     }
 

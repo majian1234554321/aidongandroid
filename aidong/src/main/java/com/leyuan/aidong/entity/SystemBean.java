@@ -1,5 +1,7 @@
 package com.leyuan.aidong.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,7 @@ public class SystemBean implements Serializable {
     private ArrayList<CategoryBean> course;  //课程分类
     private ArrayList<CategoryBean> campaign;//活动分类
     private ArrayList<CategoryBean> nutrition;//营养品分类
+    @SerializedName("food")
     private ArrayList<CategoryBean> foods;//营养餐分类
 
     private ArrayList<CategoryBean> equipment;//装备分类

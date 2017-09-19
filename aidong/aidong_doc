@@ -58,6 +58,9 @@
           图片先上传至七牛服务器,获取到图片url后再上传至后台
           上传七牛具体逻辑见UploadToQiNiuManager,七牛上传Token目前由客户端(QiNiuTokenUtils)自己生成
 
+          录制选择视频或图片：BoxingFragment BoxingMediaAdapter VideoMedia MediaItemLayout
+          时长控制：setVideoCover during   videoClick 1000 * 16
+
           发现            DiscoverHomeFragment
           发现-发现        DiscoverFragment
           发现-爱动圈      CircleFragment

@@ -457,6 +457,11 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
                 dynamicPresent.addFollow(id);
             }
         }
+
+        @Override
+        public void onCommentListClick(DynamicBean dynamic, int position, CommentBean item) {
+
+        }
     }
 
     @Override

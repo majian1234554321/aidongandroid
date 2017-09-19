@@ -10,19 +10,23 @@ public class UrlConfig {
 
     private static String urlHtml;
     private static String urlHost;
+    private static String urlHostUpdata;
 
     static {
         if (debug) {
             urlHtml = "http://share.51aidong.com/";
+            urlHostUpdata = "http://m.aidong.me:9020/v1/app/check/";
           urlHost = "http://app.51aidong.com/";//测试服
 //            urlHost = "http://app-stage.51aidong.com/";//预发布
         } else {
             urlHtml = "http://share.aidong.me/";
             urlHost = "http://a.aidong.me/";
+            urlHostUpdata = "http://suppliers.51aidong.com:9021/v1/app/check/";
         }
     }
 
     public static final String BASE_URL = urlHost;
     static final String BASE_URL_HTML = urlHtml;
+    public static final String BASE_URL_VERSION = urlHostUpdata;
 }
 

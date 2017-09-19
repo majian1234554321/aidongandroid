@@ -144,6 +144,7 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
     private LinearLayout llReceivingTime;
     private List<String> receivingTimeQuantum;
     private String pick_up_period;
+    private String selectedUserCouponId;
 
     public static void start(Context context, ShopBean shop) {
         Intent starter = new Intent(context, ConfirmOrderActivity.class);
@@ -370,7 +371,8 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.tv_coupon:
                 if (usableCoupons != null && !usableCoupons.isEmpty() && totalGoodsPrice > 0) {
-                    SelectCouponActivity.startForResult(this, String.valueOf(totalGoodsPrice), couponId, usableCoupons, REQUEST_SELECT_COUPON);
+                    Logger.i("coupon","startForResult selectedUserCouponId = " + selectedUserCouponId);
+                    SelectCouponActivity.startForResult(this, String.valueOf(totalGoodsPrice), couponId,selectedUserCouponId, usableCoupons, REQUEST_SELECT_COUPON);
                 }
                 break;
             case R.id.tv_pay:
@@ -524,6 +526,9 @@ public class ConfirmOrderActivity extends BaseActivity implements View.OnClickLi
                 updateAddressStatus(address);
             } else if (requestCode == REQUEST_SELECT_COUPON) {
                 CouponBean couponBean = data.getParcelableExtra("coupon");
+
+                selectedUserCouponId = couponBean.getUser_coupon_id();
+                Logger.i("coupon","onActivityResult selectedUserCouponId = " + selectedUserCouponId);
                 couponId = couponBean.getId();
                 couponPrice = couponBean.getDiscount();
                 tvCoupon.setText(FormatUtil.parseDouble(couponPrice) != 0

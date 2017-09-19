@@ -22,6 +22,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter;
 import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.CommentBean;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.PhotoBrowseInfo;
 import com.leyuan.aidong.entity.UserBean;
@@ -247,6 +248,21 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
 //                CMDMessageManager.sendCMDMessage(dynamic.publisher.getId(), me.getAvatar(), me.getName(), dynamic.id, null
 //                        , dynamic.getUnifromCover(), 1, null, dynamic.getDynamicTypeInteger(), null);
 //            }
+        }
+
+        @Override
+        public void onCommentListClick(DynamicBean dynamicBean, int position, CommentBean item) {
+            CircleFragment.this.clickPosition = position;
+            if (App.mInstance.isLogin()) {
+                startActivityForResult(new Intent(getContext(),
+                        DynamicDetailActivity.class)
+                        .putExtra("dynamic", dynamicBean)
+                        .putExtra("replyComment",item)
+                        , REQUEST_REFRESH_DYNAMIC);
+            } else {
+                invokeDynamicBean = dynamicBean;
+                startActivityForResult(new Intent(getContext(), LoginActivity.class), REQUEST_TO_DYNAMIC);
+            }
         }
 
         @Override

@@ -155,7 +155,7 @@ public class MediaItemLayout extends FrameLayout {
         }
         if(during >= 1000 * 16){
             disabledLayout.setVisibility(VISIBLE);
-        }else if(during < 1000 * 5) {
+        }else if(during < 1000 * 4) {
             disabledLayout.setVisibility(VISIBLE);
         }else {
             disabledLayout.setVisibility(GONE);

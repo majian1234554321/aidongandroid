@@ -18,6 +18,7 @@ import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter.IDynamicCallback;
 import com.leyuan.aidong.adapter.discover.DynamicCommentAdapter;
 import com.leyuan.aidong.adapter.discover.DynamicLikeAdapter;
 import com.leyuan.aidong.entity.CircleDynamicBean;
+import com.leyuan.aidong.entity.CommentBean;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.UserBean;
 import com.leyuan.aidong.ui.App;
@@ -161,6 +162,13 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
                     public void onMoreCommentClick() {
                         if (callback != null) {
                             callback.onCommentClick(dynamic, position);
+                        }
+                    }
+
+                    @Override
+                    public void onCommentClick(CommentBean item) {
+                        if (callback != null) {
+                            callback.onCommentListClick(dynamic, position,item);
                         }
                     }
                 });

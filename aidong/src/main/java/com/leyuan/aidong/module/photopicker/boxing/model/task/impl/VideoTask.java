@@ -27,6 +27,7 @@ import com.leyuan.aidong.module.photopicker.boxing.model.callback.IMediaTaskCall
 import com.leyuan.aidong.module.photopicker.boxing.model.entity.impl.VideoMedia;
 import com.leyuan.aidong.module.photopicker.boxing.model.task.IMediaTask;
 import com.leyuan.aidong.module.photopicker.boxing.utils.BoxingExecutor;
+import com.leyuan.aidong.utils.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,9 +62,10 @@ public class VideoTask implements IMediaTask<VideoMedia> {
                 MediaStore.Images.Media.DATE_MODIFIED + " desc" + " LIMIT " + page * IMediaTask.PAGE_LIMIT + " , " + IMediaTask.PAGE_LIMIT);
         try {
             int count = 0;
-            if (cursor != null && cursor.moveToFirst()) {
+//            && cursor.moveToFirst()
+            if (cursor != null ) {
                 count = cursor.getCount();
-                do {
+                while (cursor.moveToNext()){
                     String data = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATA));
                     String id = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media._ID));
                     String title = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.TITLE));
@@ -74,12 +76,28 @@ public class VideoTask implements IMediaTask<VideoMedia> {
                     VideoMedia video = new VideoMedia.Builder(id, data).setTitle(title).setDuration(duration)
                             .setSize(size).setDataTaken(date).setMimeType(type).build();
                     videoMedias.add(video);
-
-                } while (cursor.moveToNext() && !cursor.isLast() && !cursor.isLast());
+                }
+//                do {
+//                    String data = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATA));
+//                    String id = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media._ID));
+//                    String title = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.TITLE));
+//                    String type = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.MIME_TYPE));
+//                    String size = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.SIZE));
+//                    String date = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATE_TAKEN));
+//                    String duration = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DURATION));
+//                    VideoMedia video = new VideoMedia.Builder(id, data).setTitle(title).setDuration(duration)
+//                            .setSize(size).setDataTaken(date).setMimeType(type).build();
+//                    videoMedias.add(video);
+//
+//                } while (cursor.moveToNext() && !cursor.isLast() && !cursor.isLast());
+                Logger.i("media", "Cursor query result : videoMedias size = " + videoMedias.size() + ", count = " + count);
                 postMedias(callback, videoMedias, count);
             } else {
+                Logger.i("media", "Cursor query result : null");
                 postMedias(callback, null, 0);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if (cursor != null) {
                 cursor.close();

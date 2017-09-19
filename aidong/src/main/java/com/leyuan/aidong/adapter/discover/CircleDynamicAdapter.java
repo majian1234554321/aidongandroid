@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.leyuan.aidong.adapter.baseadapter.BaseHolderViewAdapter;
+import com.leyuan.aidong.entity.CommentBean;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.ui.discover.viewholder.BaseCircleViewHolder;
 import com.leyuan.aidong.utils.Logger;
@@ -141,10 +142,12 @@ public class CircleDynamicAdapter extends BaseHolderViewAdapter<DynamicBean> {
         void onFollowClick(String id);
 
         void onLikeClick(DynamicBean dynamic);
+
+        void onCommentListClick(DynamicBean dynamic, int position, CommentBean item);
     }
 
 
-    public static class SimpleDynamicCallback implements IDynamicCallback{
+    public static abstract class SimpleDynamicCallback implements IDynamicCallback{
 
         @Override
         public void onBackgroundClick(int position) {

@@ -19,6 +19,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.CircleDynamicAdapter;
 import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.CommentBean;
 import com.leyuan.aidong.entity.DynamicBean;
 import com.leyuan.aidong.entity.PhotoBrowseInfo;
 import com.leyuan.aidong.entity.UserBean;
@@ -232,6 +233,19 @@ public class UserDynamicFragment extends BaseFragment implements UserDynamicFrag
             }
             sharePopupWindow.showAtBottom("我分享了" + dynamic.publisher.getName() + "的动态，速速围观",
                     dynamic.content, cover, ConstantUrl.URL_SHARE_DYNAMIC + dynamic.id);
+        }
+
+        @Override
+        public void onCommentListClick(DynamicBean dynamic, int position, CommentBean item) {
+            UserDynamicFragment.this.clickPosition = position;
+            if (App.mInstance.isLogin()) {
+                startActivityForResult(new Intent(getContext(), DynamicDetailActivity.class)
+                        .putExtra("dynamic", dynamic)
+                        .putExtra("replyComment",item), REQUEST_REFRESH_DYNAMIC);
+            } else {
+                invokeDynamicBean = dynamic;
+                startActivityForResult(new Intent(getContext(), LoginActivity.class), REQUEST_TO_DYNAMIC);
+            }
         }
     }
 

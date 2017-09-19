@@ -91,6 +91,7 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
     private CoursePresent coursePresent;
     private List<CouponBean> usableCoupons = new ArrayList<>();
     private boolean isVip = false;
+    private String selectedUserCouponId;
 
     public static void start(Context context, CourseDetailBean courseDetailBean) {
         Intent starter = new Intent(context, AppointCourseActivity.class);
@@ -185,7 +186,7 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.tv_coupon:
                 if (usableCoupons != null && !usableCoupons.isEmpty()) {
-                    SelectCouponActivity.startForResult(this, bean.getPrice(), couponId, usableCoupons, REQUEST_SELECT_COUPON);
+                    SelectCouponActivity.startForResult(this, bean.getPrice(), couponId,selectedUserCouponId, usableCoupons, REQUEST_SELECT_COUPON);
                 }
                 break;
             case R.id.tv_pay:
@@ -256,6 +257,7 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
         if (data != null) {
             if (requestCode == REQUEST_SELECT_COUPON) {
                 CouponBean couponBean = data.getParcelableExtra("coupon");
+                selectedUserCouponId = couponBean.getUser_coupon_id();
                 couponId = couponBean.getId();
                 tvCoupon.setText(FormatUtil.parseDouble(couponBean.getDiscount()) != 0
                         ? String.format(getString(R.string.rmb_minus_price_double),

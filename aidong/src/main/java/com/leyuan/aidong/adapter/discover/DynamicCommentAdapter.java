@@ -80,9 +80,18 @@ public class DynamicCommentAdapter extends RecyclerView.Adapter<DynamicCommentAd
     @Override
     public void onBindViewHolder(CommonHolder holder, int position) {
         if(getItemViewType(position) == COMMENT) {
-            CommentBean item = data.get(position);
+            final CommentBean item = data.get(position);
             holder.comment.setText(getClickableSpan(item.getPublisher().getName() + "：" + item.getContent(),item));
             holder.comment.setMovementMethod(LinkMovementMethod.getInstance());
+            holder.comment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(onMoreCommentClickListener != null){
+                        onMoreCommentClickListener.onCommentClick(item);
+                    }
+                }
+            });
+
         }else {
             holder.comment.setText("查看更多" + (totalCount - MAX_COMMENT_COUNT)  +"条评论");
             holder.comment.setOnClickListener(new View.OnClickListener() {
@@ -141,5 +150,7 @@ public class DynamicCommentAdapter extends RecyclerView.Adapter<DynamicCommentAd
 
     public interface OnMoreCommentClickListener{
         void onMoreCommentClick();
+
+        void onCommentClick(CommentBean item);
     }
 }

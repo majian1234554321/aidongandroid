@@ -33,6 +33,7 @@ import com.leyuan.aidong.module.photopicker.boxing.model.config.BoxingConfig;
 import com.leyuan.aidong.module.photopicker.boxing.model.entity.BaseMedia;
 import com.leyuan.aidong.module.photopicker.boxing.model.entity.impl.ImageMedia;
 import com.leyuan.aidong.module.photopicker.boxing_impl.view.MediaItemLayout;
+import com.leyuan.aidong.utils.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,6 +123,7 @@ public class BoxingMediaAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
+        Logger.i("media","getItemCount size =   " + (mMedias.size() + mOffset)+" ,mMedias.size() = " +mMedias.size());
         return mMedias.size() + mOffset;
     }
 
@@ -147,10 +149,12 @@ public class BoxingMediaAdapter extends RecyclerView.Adapter {
         }
         mSelectedMedias.clear();
         mSelectedMedias.addAll(selectedMedias);
+//        Logger.i("media","setSelectedMedias size =   " + mSelectedMedias.size());
     }
 
     public void addAllData(@NonNull List<BaseMedia> data) {
         this.mMedias.addAll(data);
+        Logger.i("media","addAllData mMedias size =   " + mMedias.size());
         notifyDataSetChanged();
     }
 

@@ -95,6 +95,7 @@ public class BoxingFragment extends AbsBoxingViewFragment implements View.OnClic
         mMaxCount = BoxingManager.getInstance().getBoxingConfig().getMaxCount();
         mAlbumWindowAdapter = new BoxingAlbumAdapter(getContext());
         mMediaAdapter = new BoxingMediaAdapter(getContext());
+//        Logger.i("media","onCreateWithSelectedMedias size =   " + selectedMedias.size());
         mMediaAdapter.setSelectedMedias(selectedMedias);
     }
 
@@ -176,6 +177,7 @@ public class BoxingFragment extends AbsBoxingViewFragment implements View.OnClic
             return;
         }
         showData();
+        Logger.i("media","showMedia size =   " + medias.size());
         mMediaAdapter.addAllData(medias);
         checkSelectedMedia(medias, mMediaAdapter.getSelectedMedias());
     }
@@ -427,7 +429,7 @@ public class BoxingFragment extends AbsBoxingViewFragment implements View.OnClic
         private void videoClick(BaseMedia media) {
             if (((VideoMedia) media).getOriginalDuration() >= 1000 * 16) {
                 Toast.makeText(getContext(), "视频大于15s,暂不支持", Toast.LENGTH_LONG).show();
-            } else if (((VideoMedia) media).getOriginalDuration() < 1000 * 5) {
+            } else if (((VideoMedia) media).getOriginalDuration() < 1000 * 4) {
                 Toast.makeText(getContext(), "视频少于5s,暂不支持", Toast.LENGTH_LONG).show();
             } else {
                 ArrayList<BaseMedia> iMedias = new ArrayList<>();
