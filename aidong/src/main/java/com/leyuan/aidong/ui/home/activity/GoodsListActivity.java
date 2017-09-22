@@ -1,9 +1,12 @@
 package com.leyuan.aidong.ui.home.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,8 +26,8 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.home.view.GoodsFilterView;
 import com.leyuan.aidong.ui.mvp.presenter.GoodsListPrensetImpl;
 import com.leyuan.aidong.ui.mvp.view.GoodsFilterActivityView;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.TransitionHelper;
-import com.leyuan.aidong.utils.constant.GoodsType;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -73,9 +76,20 @@ public class GoodsListActivity extends BaseActivity implements View.OnClickListe
     private String sort;        //排序
     private String gymId;
 
+    BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            switch (intent.getAction()){
+                case Constant.BROADCAST_ACTION_GOODS_PAY_FAIL:
+                case Constant.BROADCAST_ACTION_GOODS_PAY_SUCCESS:
+                    finish();
+                    break;
+            }
+        }
+    };
 
     //从营养品或装备界面跳过来
-    public static void start(Context context, @GoodsType String goodsType, int pos) {
+    public static void start(Context context,  String goodsType, int pos) {
         Intent starter = new Intent(context, GoodsListActivity.class);
         starter.putExtra("goodsType", goodsType);
         starter.putExtra("pos", pos);
@@ -83,7 +97,7 @@ public class GoodsListActivity extends BaseActivity implements View.OnClickListe
     }
 
     //从场馆详情跳过来
-    public static void start(Context context, @GoodsType String goodsType, String gymName, String gymId) {
+    public static void start(Context context,String goodsType, String gymName, String gymId) {
         Intent starter = new Intent(context, GoodsListActivity.class);
         starter.putExtra("goodsType", goodsType);
         starter.putExtra("gymName", gymName);
@@ -94,6 +108,7 @@ public class GoodsListActivity extends BaseActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initBroadCastReceiver();
         setContentView(R.layout.activity_goods_filter);
 
         if (getIntent() != null) {
@@ -113,6 +128,14 @@ public class GoodsListActivity extends BaseActivity implements View.OnClickListe
         initSwipeRefreshLayout();
         initRecyclerView();
         getListData(COMMEND_LOAD_DATA);
+    }
+
+    private void initBroadCastReceiver() {
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constant.BROADCAST_ACTION_GOODS_PAY_SUCCESS);
+        filter.addAction(Constant.BROADCAST_ACTION_GOODS_PAY_FAIL);
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver,filter);
     }
 
     private void initFilterLayout() {
@@ -264,5 +287,9 @@ public class GoodsListActivity extends BaseActivity implements View.OnClickListe
         }
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+    }
 }

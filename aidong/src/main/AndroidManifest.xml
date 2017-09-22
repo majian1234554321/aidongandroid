@@ -310,6 +310,9 @@
             android:name=".ui.home.activity.FoodActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.home.activity.GoodsBrandRecommendActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.home.activity.PastCampaignActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -366,7 +369,12 @@
             android:name=".ui.home.activity.DeliveryInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.ConfirmOrderActivity"
+            android:name=".ui.home.activity.ConfirmOrderCartActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.home.activity.ConfirmOrderGoodsActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
@@ -513,6 +521,7 @@
         <activity
             android:name=".ui.home.activity.MapActivity"
             android:screenOrientation="portrait" />
+
 
         <activity
             android:name=".ui.mine.activity.BarcodeActivity"

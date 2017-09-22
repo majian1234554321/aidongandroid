@@ -120,6 +120,13 @@ public class SystemPresentImpl implements SystemPresent {
                         foods.add(0, allBean);
                     }
 
+                    ArrayList<CategoryBean> tickets = systemBean.getTicket();
+                    if(tickets != null){
+                        CategoryBean allBean = new CategoryBean();
+                        allBean.setName("全部");
+                        allBean.setId("0");
+                        tickets.add(0, allBean);
+                    }
 
                     ArrayList<String> types = systemBean.getGymTypes();
                     if(types != null){
@@ -216,6 +223,13 @@ public class SystemPresentImpl implements SystemPresent {
                     foods.add(0, allBean);
                 }
 
+                ArrayList<CategoryBean> tickets = systemBean.getTicket();
+                if(tickets != null){
+                    CategoryBean allBean = new CategoryBean();
+                    allBean.setName("全部");
+                    allBean.setId("0");
+                    tickets.add(0, allBean);
+                }
 
                 ArrayList<String> types = systemBean.getGymTypes();
                 if(types != null){

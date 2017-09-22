@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.leyuan.aidong.entity.VersionInformation;
-import com.leyuan.aidong.entity.user.VersionResult;
 import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
 import com.leyuan.aidong.ui.mvp.model.VersionModel;
 import com.leyuan.aidong.ui.mvp.view.VersionViewListener;
@@ -36,12 +35,43 @@ public class VersionPresenterImpl {
         model = new VersionModel();
     }
 
-    public void getVersionInfo() {
+//    public void getVersionInfo() {
+//        model.getVersionInfo(new IsLoginSubscriber<VersionResult>(context) {
+//            @Override
+//            public void onNext(VersionResult versionResult) {
+//                listener.onGetVersionInfo(versionResult.getData());
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//                super.onError(e);
+//                listener.onGetVersionInfo(null);
+//            }
+//        });
+//    }
+//
+//    public void checkVersionAndShow() {
+//        model.getVersionInfo(new IsLoginSubscriber<VersionResult>(context) {
+//            @Override
+//            public void onNext(VersionResult versionResult) {
+//                VersionInformation versionInfomation = versionResult.getData();
+//                if (versionInfomation != null && VersionManager.shouldUpdate(versionInfomation.getVersion(), context)) {
+//                    showUpdateDialog(versionInfomation);
+//                }
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//                super.onError(e);
+//            }
+//        });
+//    }
 
-        model.getVersionInfo(new IsLoginSubscriber<VersionResult>(context) {
+    public void getVersionInfo() {
+        model.getVersionInfo(new IsLoginSubscriber<VersionInformation>(context) {
             @Override
-            public void onNext(VersionResult versionResult) {
-                listener.onGetVersionInfo(versionResult.getData());
+            public void onNext(VersionInformation versionInfomation) {
+                listener.onGetVersionInfo(versionInfomation);
             }
 
             @Override
@@ -53,10 +83,9 @@ public class VersionPresenterImpl {
     }
 
     public void checkVersionAndShow() {
-        model.getVersionInfo(new IsLoginSubscriber<VersionResult>(context) {
+        model.getVersionInfo(new IsLoginSubscriber<VersionInformation>(context) {
             @Override
-            public void onNext(VersionResult versionResult) {
-                VersionInformation versionInfomation = versionResult.getData();
+            public void onNext(VersionInformation versionInfomation) {
                 if (versionInfomation != null && VersionManager.shouldUpdate(versionInfomation.getVersion(), context)) {
                     showUpdateDialog(versionInfomation);
                 }

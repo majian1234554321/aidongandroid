@@ -16,7 +16,7 @@ public class UrlConfig {
         if (debug) {
             urlHtml = "http://share.51aidong.com/";
             urlHostUpdata = "http://m.aidong.me:9020/v1/app/check/";
-          urlHost = "http://app.51aidong.com/";//测试服
+            urlHost = "http://app.51aidong.com/";//测试服
 //            urlHost = "http://app-stage.51aidong.com/";//预发布
         } else {
             urlHtml = "http://share.aidong.me/";

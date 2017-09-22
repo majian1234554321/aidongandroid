@@ -15,7 +15,6 @@ import com.leyuan.aidong.ui.mvp.presenter.GoodsDetailPresent;
 import com.leyuan.aidong.ui.mvp.view.GoodsDetailActivityView;
 import com.leyuan.aidong.ui.mvp.view.SelfDeliveryVenuesActivityView;
 import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.utils.constant.GoodsType;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
@@ -47,7 +46,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
     }
 
     @Override
-    public void getGoodsDetail(@GoodsType String type, String id) {
+    public void getGoodsDetail( String type, String id) {
         if (goodsModel == null) {
             goodsModel = new GoodsModelImpl(context);
         }
@@ -63,7 +62,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
     }
 
     @Override
-    public void getGoodsDetail(final SwitcherLayout switcherLayout, @GoodsType String type, String id) {
+    public void getGoodsDetail(final SwitcherLayout switcherLayout, String type, String id) {
         if (type == null) return;
         if (goodsModel == null) {
             goodsModel = new GoodsModelImpl(context);
@@ -91,7 +90,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
     }
 
     @Override
-    public void commonLoadVenues(final SwitcherLayout switcherLayout, @GoodsType String type, String sku, String brandId, String landmark) {
+    public void commonLoadVenues(final SwitcherLayout switcherLayout, String type, String sku, String brandId, String landmark) {
         if (goodsModel == null) {
             goodsModel = new GoodsModelImpl(context);
         }
@@ -110,77 +109,10 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
             }
         },type, sku, Constant.PAGE_FIRST, brandId, landmark);
 
-
-//        switch (type) {
-//            case GOODS_EQUIPMENT:
-//                if (equipmentModel == null) {
-//                    equipmentModel = new EquipmentModelImpl(context);
-//                }
-//                equipmentModel.getDeliveryVenues(new CommonSubscriber<VenuesData>(context, switcherLayout) {
-//                    @Override
-//                    public void onNext(VenuesData venuesData) {
-//                        if (venuesData != null && venuesData.getGym() != null) {
-//                            venuesBeanList = venuesData.getGym();
-//                        }
-//                        if (!venuesBeanList.isEmpty()) {
-//                            switcherLayout.showContentLayout();
-//                            venuesActivityView.onRefreshData(venuesBeanList);
-//                        } else {
-//                            venuesActivityView.showEmptyView();
-//                        }
-//                    }
-//                }, sku, Constant.PAGE_FIRST, brandId, landmark);
-//                break;
-//            case GOODS_FOODS:
-//            case GOODS_NUTRITION:
-//                if (nurtureModel == null) {
-//                    nurtureModel = new NurtureModelImpl(context);
-//                }
-//                nurtureModel.getDeliveryVenues(new CommonSubscriber<VenuesData>(context, switcherLayout) {
-//                    @Override
-//                    public void onNext(VenuesData venuesData) {
-//                        if (venuesData != null && venuesData.getGym() != null) {
-//                            venuesBeanList = venuesData.getGym();
-//                        }
-//                        if (!venuesBeanList.isEmpty()) {
-//                            switcherLayout.showContentLayout();
-//                            venuesActivityView.onRefreshData(venuesBeanList);
-//                        } else {
-//                            venuesActivityView.showEmptyView();
-//                        }
-//                    }
-//                }, sku, Constant.PAGE_FIRST, brandId, landmark);
-//
-//                break;
-//            case GOODS_FOODS:
-//                if (foodModel == null) {
-//                    foodModel = new FoodModelImpl();
-//                }
-//                foodModel.getDeliveryVenues(new CommonSubscriber<VenuesData>(context, switcherLayout) {
-//                    @Override
-//                    public void onNext(VenuesData venuesData) {
-//                        if (venuesData != null && venuesData.getGym() != null) {
-//                            venuesBeanList = venuesData.getGym();
-//                        }
-//                        if (!venuesBeanList.isEmpty()) {
-//                            switcherLayout.showContentLayout();
-//                            venuesActivityView.onRefreshData(venuesBeanList);
-//                        } else {
-//                            venuesActivityView.showEmptyView();
-//                        }
-
-
-//                    }
-//                }, sku, Constant.PAGE_FIRST);
-//                break;
-//            default:
-//                Logger.e("GoodsDetailPresentImpl", "type must be foods,equipments or nutrition");
-//                break;
-//        }
     }
 
     @Override
-    public void pullToRefreshVenues(@GoodsType String type, String sku, String brandId, String landmark) {
+    public void pullToRefreshVenues(String type, String sku, String brandId, String landmark) {
 
         if (goodsModel == null) {
             goodsModel = new GoodsModelImpl(context);
@@ -199,71 +131,10 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
             }
         }, type,sku, Constant.PAGE_FIRST, brandId, landmark);
 
-//        switch (type) {
-//            case GOODS_EQUIPMENT:
-//                if (equipmentModel == null) {
-//                    equipmentModel = new EquipmentModelImpl(context);
-//                }
-//                equipmentModel.getDeliveryVenues(new RefreshSubscriber<VenuesData>(context) {
-//                    @Override
-//                    public void onNext(VenuesData venuesData) {
-//                        if (venuesData != null && venuesData.getGym() != null) {
-//                            venuesBeanList = venuesData.getGym();
-//                        }
-//                        if (!venuesBeanList.isEmpty()) {
-//                            venuesActivityView.onRefreshData(venuesBeanList);
-//                        } else {
-//                            venuesActivityView.showEmptyView();
-//                        }
-//                    }
-//                }, sku, Constant.PAGE_FIRST, brandId, landmark);
-//
-//                break;
-//            case GOODS_FOODS:
-//            case GOODS_NUTRITION:
-//                if (nurtureModel == null) {
-//                    nurtureModel = new NurtureModelImpl(context);
-//                }
-//                nurtureModel.getDeliveryVenues(new RefreshSubscriber<VenuesData>(context) {
-//                    @Override
-//                    public void onNext(VenuesData venuesData) {
-//                        if (venuesData != null && venuesData.getGym() != null) {
-//                            venuesBeanList = venuesData.getGym();
-//                        }
-//                        if (!venuesBeanList.isEmpty()) {
-//                            venuesActivityView.onRefreshData(venuesBeanList);
-//                        } else {
-//                            venuesActivityView.showEmptyView();
-//                        }
-//                    }
-//                }, sku, Constant.PAGE_FIRST, brandId, landmark);
-//                break;
-////            case GOODS_FOODS:
-////                if (foodModel == null) {
-////                    foodModel = new FoodModelImpl();
-////                }
-////                foodModel.getDeliveryVenues(new RefreshSubscriber<VenuesData>(context) {
-////                    @Override
-////                    public void onNext(VenuesData venuesData) {
-////                        if (venuesData != null && venuesData.getGym() != null) {
-////                            venuesBeanList = venuesData.getGym();
-////                        }
-////                        if (!venuesBeanList.isEmpty()) {
-////                            venuesActivityView.onRefreshData(venuesBeanList);
-////                        } else {
-////                            venuesActivityView.showEmptyView();
-////                        }
-////                    }
-////                }, sku, Constant.PAGE_FIRST);
-////                break;
-//            default:
-//                Logger.e("GoodsDetailPresentImpl", "type must be foods,equipments or nutrition");
-//                break;
-//        }
     }
 
     @Override
-    public void requestMoreVenues(RecyclerView recyclerView, final int pageSize, @GoodsType String type, String sku, int page, String brandId, String landmark) {
+    public void requestMoreVenues(RecyclerView recyclerView, final int pageSize, String type, String sku, int page, String brandId, String landmark) {
         if (goodsModel == null) {
             goodsModel = new GoodsModelImpl(context);
         }
@@ -285,72 +156,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
 
 
 
-//        switch (type) {
-//            case GOODS_EQUIPMENT:
-//                if (equipmentModel == null) {
-//                    equipmentModel = new EquipmentModelImpl(context);
-//                }
-//                equipmentModel.getDeliveryVenues(new RequestMoreSubscriber<VenuesData>(context, recyclerView, pageSize) {
-//                    @Override
-//                    public void onNext(VenuesData venuesData) {
-//                        if (venuesData != null && venuesData.getGym() != null) {
-//                            venuesBeanList = venuesData.getGym();
-//                        }
-//                        if (!venuesBeanList.isEmpty()) {
-//                            venuesActivityView.onLoadMoreData(venuesBeanList);
-//                        }
-//                        //没有更多数据了显示到底提示
-//                        if (venuesBeanList.size() < pageSize) {
-//                            venuesActivityView.showEndFooterView();
-//                        }
-//                    }
-//                }, sku, page, brandId, landmark);
-//                break;
-//            case GOODS_FOODS:
-//            case GOODS_NUTRITION:
-//                if (nurtureModel == null) {
-//                    nurtureModel = new NurtureModelImpl(context);
-//                }
-//                nurtureModel.getDeliveryVenues(new RequestMoreSubscriber<VenuesData>(context, recyclerView, pageSize) {
-//                    @Override
-//                    public void onNext(VenuesData venuesData) {
-//                        if (venuesData != null && venuesData.getGym() != null) {
-//                            venuesBeanList = venuesData.getGym();
-//                        }
-//                        if (!venuesBeanList.isEmpty()) {
-//                            venuesActivityView.onLoadMoreData(venuesBeanList);
-//                        }
-//                        //没有更多数据了显示到底提示
-//                        if (venuesBeanList.size() < pageSize) {
-//                            venuesActivityView.showEndFooterView();
-//                        }
-//                    }
-//                }, sku, page, brandId, landmark);
-//                break;
-////            case GOODS_FOODS:
-////                if (foodModel == null) {
-////                    foodModel = new FoodModelImpl();
-////                }
-////                foodModel.getDeliveryVenues(new RequestMoreSubscriber<VenuesData>(context, recyclerView, pageSize) {
-////                    @Override
-////                    public void onNext(VenuesData venuesData) {
-////                        if (venuesData != null && venuesData.getGym() != null) {
-////                            venuesBeanList = venuesData.getGym();
-////                        }
-////                        if (!venuesBeanList.isEmpty()) {
-////                            venuesActivityView.onLoadMoreData(venuesBeanList);
-////                        }
-////                        //没有更多数据了显示到底提示
-////                        if (venuesBeanList.size() < pageSize) {
-////                            venuesActivityView.showEndFooterView();
-////                        }
-////                    }
-////                }, sku, page);
-////                break;
-//            default:
-//                Logger.e("GoodsDetailPresentImpl", "type must be foods,equipments or nutrition");
-//                break;
-//        }
+
     }
 
 

@@ -12,13 +12,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.adapter.home.CategoryAdapter;
-import com.leyuan.aidong.adapter.home.EquipmentAdapter;
+import com.leyuan.aidong.adapter.GoodsCategoryAdapter;
+import com.leyuan.aidong.adapter.home.GoodsRecommendAdapter;
 import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.RecommendPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.RecommendPresentImpl;
-import com.leyuan.aidong.ui.mvp.view.EquipmentActivityView;
+import com.leyuan.aidong.ui.mvp.view.NurtureActivityView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.widget.SimpleTitleBar;
@@ -35,28 +35,29 @@ import com.leyuan.custompullrefresh.OnRefreshListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.leyuan.aidong.utils.Constant.GOODS_EQUIPMENT;
-import static com.leyuan.aidong.utils.Constant.RECOMMEND_EQUIPMENT;
-
 
 /**
- * 装备
- * Created by song on 2016/8/25
+ * 商品品牌推荐界面
+ *
+ * @author song
  */
-public class EquipmentActivity extends BaseActivity implements EquipmentActivityView {
+public class GoodsBrandRecommendActivity extends BaseActivity implements NurtureActivityView {
     private SwitcherLayout switcherLayout;
     private CustomRefreshLayout refreshLayout;
     private RecyclerView recommendView;
 
     private int currPage = 1;
-    private List<GoodsBean> equipmentList;
-    private EquipmentAdapter equipmentAdapter;
+    private List<GoodsBean> goodsList;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
-    private RecommendPresent present;
+    private GoodsRecommendAdapter goodsAdapter;
+    private RecommendPresent recommendPresent;
+
+    private String goodsType;
 
     BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+
             switch (intent.getAction()) {
                 case Constant.BROADCAST_ACTION_GOODS_PAY_FAIL:
                 case Constant.BROADCAST_ACTION_GOODS_PAY_SUCCESS:
@@ -66,17 +67,24 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
         }
     };
 
+    public static void start(Context context, String goodsType) {
+        Intent intent = new Intent(context, GoodsBrandRecommendActivity.class);
+        intent.putExtra("goodsType", goodsType);
+        (context).startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        goodsType = getIntent().getStringExtra("goodsType");
         initBroadCastReceiver();
-        setContentView(R.layout.activity_equipment);
-        present = new RecommendPresentImpl(this, this);
 
+        setContentView(R.layout.activity_food_and_beverage);
+        recommendPresent = new RecommendPresentImpl(this, this);
         initTopLayout();
         initSwipeRefreshLayout();
         initRecommendRecyclerView();
-        present.commendLoadRecommendData(switcherLayout, RECOMMEND_EQUIPMENT);
+        recommendPresent.commendLoadRecommendData(switcherLayout, goodsType);
     }
 
     private void initBroadCastReceiver() {
@@ -89,12 +97,12 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
     private void initTopLayout() {
         SimpleTitleBar titleBar = (SimpleTitleBar) findViewById(R.id.title_bar);
         RecyclerView categoryView = (RecyclerView) findViewById(R.id.rv_category);
-        CategoryAdapter categoryAdapter = new CategoryAdapter(this, GOODS_EQUIPMENT);
+        GoodsCategoryAdapter categoryAdapter = new GoodsCategoryAdapter(this, goodsType);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.HORIZONTAL, false);
         categoryView.setLayoutManager(layoutManager);
         categoryView.setAdapter(categoryAdapter);
-        categoryAdapter.setData(SystemInfoUtils.getEquipmentCategory(this));
+        categoryAdapter.setData(SystemInfoUtils.getGoodsCategory(this, goodsType)); //要改
         titleBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,7 +119,7 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
             public void onRefresh() {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recommendView);
-                present.pullToRefreshRecommendData(RECOMMEND_EQUIPMENT);
+                recommendPresent.pullToRefreshRecommendData(goodsType);
             }
         });
 
@@ -120,16 +128,17 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
             public void onClick(View v) {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recommendView);
-                present.commendLoadRecommendData(switcherLayout, RECOMMEND_EQUIPMENT);
+                recommendPresent.commendLoadRecommendData(switcherLayout, goodsType);
             }
         });
     }
 
+
     private void initRecommendRecyclerView() {
         recommendView = (RecyclerView) findViewById(R.id.rv_recommend);
-        equipmentList = new ArrayList<>();
-        equipmentAdapter = new EquipmentAdapter(this);
-        wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(equipmentAdapter);
+        goodsList = new ArrayList<>();
+        goodsAdapter = new GoodsRecommendAdapter(this, goodsType);
+        wrapperAdapter = new HeaderAndFooterRecyclerViewAdapter(goodsAdapter);
         recommendView.setAdapter(wrapperAdapter);
         GridLayoutManager manager = new GridLayoutManager(this, 2);
         manager.setSpanSizeLookup(new HeaderSpanSizeLookup((HeaderAndFooterRecyclerViewAdapter)
@@ -139,12 +148,13 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
         RecyclerViewUtils.setHeaderView(recommendView, View.inflate(this, R.layout.header_nurture, null));
     }
 
+
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener() {
         @Override
         public void onLoadNextPage(View view) {
             currPage++;
-            if (equipmentList != null && equipmentList.size() >= pageSize) {
-                present.requestMoreRecommendData(recommendView, pageSize, currPage, RECOMMEND_EQUIPMENT);
+            if (goodsList != null && goodsList.size() >= pageSize) {
+                recommendPresent.requestMoreRecommendData(recommendView, pageSize, currPage, goodsType);
             }
         }
     };
@@ -152,14 +162,13 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
     @Override
     public void updateRecyclerView(List<GoodsBean> goodsBeanList) {
         if (refreshLayout.isRefreshing()) {
-            equipmentList.clear();
+            goodsList.clear();
             refreshLayout.setRefreshing(false);
         }
-        equipmentList.addAll(goodsBeanList);
-        equipmentAdapter.setData(equipmentList);
+        goodsList.addAll(goodsBeanList);
+        goodsAdapter.setData(goodsList);
         wrapperAdapter.notifyDataSetChanged();
     }
-
 
     @Override
     public void showEndFooterView() {
@@ -178,5 +187,4 @@ public class EquipmentActivity extends BaseActivity implements EquipmentActivity
         super.onDestroy();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
     }
-
 }

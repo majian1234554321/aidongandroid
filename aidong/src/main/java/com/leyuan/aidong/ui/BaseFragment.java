@@ -21,7 +21,10 @@ import java.util.List;
 
 import pub.devrel.easypermissions.EasyPermissions;
 
+import static com.leyuan.aidong.utils.Constant.GOODS_EQUIPMENT;
+import static com.leyuan.aidong.utils.Constant.GOODS_FOODS;
 import static com.leyuan.aidong.utils.Constant.GOODS_NUTRITION;
+import static com.leyuan.aidong.utils.Constant.GOODS_TICKET;
 
 
 public class BaseFragment extends Fragment implements EasyPermissions.PermissionCallbacks, View.OnTouchListener {
@@ -37,7 +40,7 @@ public class BaseFragment extends Fragment implements EasyPermissions.Permission
      * 广告跳转目标页
      *
      * @param bannerBean BannerBean
-     *                   广告类型,#10-内嵌网页 11-外部网页 20-场馆详情页 21-营养品详情页 22-课程详情页 23-活动详情页
+     *                   广告类型,#10-内嵌网页 11-外部网页 20-场馆详情页 21-营养品详情页 22-课程详情页 23-活动详情页 24装备 25健康餐 26票务
      */
     public void toTargetActivity(BannerBean bannerBean) {
         switch (bannerBean.getType()) {
@@ -60,6 +63,15 @@ public class BaseFragment extends Fragment implements EasyPermissions.Permission
                 break;
             case "23":
                 CampaignDetailActivity.start(getContext(), bannerBean.getLink());
+                break;
+            case "24":
+                GoodsDetailActivity.start(getContext(), bannerBean.getLink(), GOODS_EQUIPMENT);
+                break;
+            case "25":
+                GoodsDetailActivity.start(getContext(), bannerBean.getLink(), GOODS_FOODS);
+                break;
+            case "26":
+                GoodsDetailActivity.start(getContext(), bannerBean.getLink(), GOODS_TICKET);
                 break;
             default:
                 break;

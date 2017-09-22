@@ -34,6 +34,7 @@ import static com.leyuan.aidong.ui.App.mActivities;
 import static com.leyuan.aidong.utils.Constant.GOODS_EQUIPMENT;
 import static com.leyuan.aidong.utils.Constant.GOODS_FOODS;
 import static com.leyuan.aidong.utils.Constant.GOODS_NUTRITION;
+import static com.leyuan.aidong.utils.Constant.GOODS_TICKET;
 
 
 public class BaseActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks {
@@ -103,7 +104,7 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
     /**
      * 列表页跳转目标详情页
      *
-     * @param type course-课程 campaign-活动 event-赛事 food-健康餐饮 nutrition-营养品 equipment-装备
+     * @param type course-课程 campaign-活动 event-赛事 food-健康餐饮 nutrition-营养品 equipment-装备 ticket 票务
      * @param id   id
      */
     public void toTargetDetailActivity(String type, String id) {
@@ -127,6 +128,9 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
             case "equipment":
                 GoodsDetailActivity.start(this, id, GOODS_EQUIPMENT);
                 break;
+            case GOODS_TICKET:
+                GoodsDetailActivity.start(this, id, GOODS_TICKET);
+                break;
             default:
                 Logger.e("TAG", "can not support this type,please check it");
                 break;
@@ -137,7 +141,7 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
      * 广告跳转目标页
      *
      * @param bannerBean BannerBean
-     *                   广告类型,#10-内嵌网页 11-外部网页 20-场馆详情页 21-营养品详情页 22-课程列表 23-活动详情页
+     *                   广告类型,#10-内嵌网页 11-外部网页 20-场馆详情页 21-营养品详情页 22-课程列表 23-活动详情页 24装备 25健康餐 26票务
      */
     public void toTargetActivity(BannerBean bannerBean) {
         if (TextUtils.isEmpty(bannerBean.getType())) return;
@@ -166,6 +170,12 @@ public class BaseActivity extends AppCompatActivity implements EasyPermissions.P
                 break;
             case "24":
                 GoodsDetailActivity.start(this, bannerBean.getLink(), GOODS_EQUIPMENT);
+                break;
+            case "25":
+                GoodsDetailActivity.start(this, bannerBean.getLink(), GOODS_FOODS);
+                break;
+            case "26":
+                GoodsDetailActivity.start(this, bannerBean.getLink(), GOODS_TICKET);
                 break;
             default:
                 break;

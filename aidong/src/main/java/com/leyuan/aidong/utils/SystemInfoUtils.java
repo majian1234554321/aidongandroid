@@ -298,6 +298,7 @@ public class SystemInfoUtils {
         } else {          // 从本地读取
             Object bean = getSystemInfoBean(context, KEY_SYSTEM);
             if (bean instanceof SystemBean) {
+                systemInfoBean = (SystemBean) bean;
                 return ((SystemBean) bean).getNutrition();
             }
             return null;
@@ -330,7 +331,24 @@ public class SystemInfoUtils {
         } else {          // 从本地读取
             Object bean = getSystemInfoBean(context, KEY_SYSTEM);
             if (bean instanceof SystemBean) {
+                systemInfoBean = (SystemBean) bean;
                 return ((SystemBean) bean).getEquipment();
+            }
+            return null;
+        }
+    }
+
+    /**
+     * 获取票务分类信息
+     */
+    public static ArrayList<CategoryBean> getTicketCategory(Context context) {
+        if (systemInfoBean != null && systemInfoBean.getTicket() != null) { //内存有直接从内存读取返回
+            return systemInfoBean.getTicket();
+        } else {          // 从本地读取
+            Object bean = getSystemInfoBean(context, KEY_SYSTEM);
+            if (bean instanceof SystemBean) {
+                systemInfoBean = (SystemBean) bean;
+                return ((SystemBean) bean).getTicket();
             }
             return null;
         }
@@ -521,4 +539,13 @@ public class SystemInfoUtils {
         return obj;
     }
 
+    /**
+     *
+     * @param context
+     * @param goodsType
+     * @return 要改 目前固定返回票务分类
+     */
+    public static ArrayList<CategoryBean> getGoodsCategory(Context context, String goodsType) {//
+        return getTicketCategory(context);
+    }
 }

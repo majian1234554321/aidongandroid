@@ -1,14 +1,17 @@
 package com.leyuan.aidong.ui.home.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.util.Pair;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -55,7 +58,6 @@ import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.TransitionHelper;
-import com.leyuan.aidong.utils.constant.GoodsType;
 import com.leyuan.aidong.widget.ObserveScrollView;
 import com.leyuan.aidong.widget.SlideDetailsLayout;
 import com.leyuan.aidong.widget.SwitcherLayout;
@@ -74,7 +76,6 @@ import static com.leyuan.aidong.utils.Constant.DELIVERY_EXPRESS;
 import static com.leyuan.aidong.utils.Constant.DELIVERY_SELF;
 import static com.leyuan.aidong.utils.Constant.EMPTY_STR;
 import static com.leyuan.aidong.utils.Constant.GOODS_FOODS;
-import static com.leyuan.aidong.utils.Constant.GOODS_NUTRITION;
 import static com.leyuan.aidong.utils.Constant.REQUEST_ADD_CART;
 import static com.leyuan.aidong.utils.Constant.REQUEST_BUY_IMMEDIATELY;
 import static com.leyuan.aidong.utils.Constant.REQUEST_CONFIRM;
@@ -142,7 +143,22 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     private List<String> selectedSkuValues = new ArrayList<>();
     private GoodsDetailPresent goodsPresent;
 
-    public static void start(Context context, String goodsId, @GoodsType String type) {
+    BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            switch (intent.getAction()){
+                case Constant.BROADCAST_ACTION_GOODS_PAY_FAIL:
+                case Constant.BROADCAST_ACTION_GOODS_PAY_SUCCESS:
+                    finish();
+                    break;
+                case Constant.BROADCAST_ACTION_LOGIN_SUCCESS:
+                    goodsPresent.getGoodsDetail(switcherLayout, goodsType, goodsId);
+                    break;
+            }
+        }
+    };
+
+    public static void start(Context context, String goodsId, String type) {
         Intent starter = new Intent(context, GoodsDetailActivity.class);
         starter.putExtra("goodsId", goodsId);
         starter.putExtra("goodsType", type);
@@ -152,6 +168,8 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initBroadCastReceiver();
+
         setContentView(R.layout.activity_goods_detail_deprecated);
         sharePopupWindow = new SharePopupWindow(this);
         goodsPresent = new GoodsDetailPresentImpl(this, this);
@@ -159,7 +177,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             goodsId = getIntent().getStringExtra("goodsId");
             goodsType = getIntent().getStringExtra("goodsType");
             //根据类型和ID 转为真正类型
-            goodsType = GoodsDetailBean.getRealGoodsType(goodsType,goodsId);
+//            goodsType = GoodsDetailBean.getRealGoodsType(goodsType,goodsId);
         }
         goodsIdInteger = FormatUtil.parseInt(goodsId);
 
@@ -168,9 +186,19 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         goodsPresent.getGoodsDetail(switcherLayout, goodsType, goodsId);
     }
 
+    private void initBroadCastReceiver() {
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constant.BROADCAST_ACTION_GOODS_PAY_SUCCESS);
+        filter.addAction(Constant.BROADCAST_ACTION_GOODS_PAY_FAIL);
+        filter.addAction(Constant.BROADCAST_ACTION_LOGIN_SUCCESS);
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver,filter);
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
         skuPopupWindow = null;
         sharePopupWindow.release();
     }
@@ -240,10 +268,6 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         detailsLayout.setOnSlideDetailsListener(new MyOnSlideDetailsListener());
         tvAddCart.setOnClickListener(this);
 
-//        if (GOODS_FOODS.equals(goodsType) || ((GOODS_NUTRITION.equals(goodsType) && goodsIdInteger > Constant.GOODS_FOODS_START_INDEX))) {
-//            tvAddCart.setBackgroundResource(R.color.bg_gray);
-////            tvAddCart.setClickable(false);
-//        }
     }
 
     @Override
@@ -293,7 +317,8 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                 }
                 break;
             case R.id.tv_add_cart:
-                if (GOODS_FOODS.equals(goodsType) || ((GOODS_NUTRITION.equals(goodsType) && goodsIdInteger > Constant.GOODS_FOODS_START_INDEX))) {
+                //|| ((GOODS_NUTRITION.equals(goodsType) && goodsIdInteger > Constant.GOODS_FOODS_START_INDEX))
+                if (GOODS_FOODS.equals(goodsType) ) {
                     ToastGlobal.showShortConsecutive(R.string.goods_can_not_add_into_cart);
                 } else {
                     showSkuPopupWindow(GoodsSkuPopupWindow.GoodsStatus.ConfirmToAddCart);

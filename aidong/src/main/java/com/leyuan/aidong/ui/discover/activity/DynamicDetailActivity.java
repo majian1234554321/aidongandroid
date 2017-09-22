@@ -92,6 +92,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
     private String replyName;
     private UserBean replyUser;
     CommentBean replyComment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,7 +108,7 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
         setListener();
         dynamicPresent.pullToRefreshComments(dynamic.id);
         sharePopupWindow = new SharePopupWindow(this);
-        if(replyComment != null){
+        if (replyComment != null) {
             onCommentItemClick(replyComment);
         }
     }
@@ -278,19 +279,26 @@ public class DynamicDetailActivity extends BaseActivity implements DynamicDetail
 //            intent.putExtra("dynamic", dynamic);
 //            setResult(RESULT_OK, intent);
 //
-              //刷新头部评论数量
+            //刷新头部评论数量
             dynamic.comment.count++;
             headerAdapter.notifyDataSetChanged();
 
             LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_PUBLISH_DYNAMIC_SUCCESS));
 
-            CMDMessageManager.sendCMDMessage(dynamic.publisher.getId(), App.getInstance().getUser().getAvatar(), App.getInstance().getUser().getName(), dynamic.id, content
-                    , dynamic.getUnifromCover(), 0, null, dynamic.getDynamicTypeInteger(), replyName);
-            if(replyUser != null){
+
+            if (replyUser != null) {
                 CMDMessageManager.sendCMDMessage(replyUser.getId(), App.getInstance().getUser().getAvatar(), App.getInstance().getUser().getName(), dynamic.id, content
                         , dynamic.getUnifromCover(), 0, null, dynamic.getDynamicTypeInteger(), replyName);
+                if (!TextUtils.equals(replyUser.getId(), dynamic.publisher.getId())) {
+                    CMDMessageManager.sendCMDMessage(dynamic.publisher.getId(), App.getInstance().getUser().getAvatar(), App.getInstance().getUser().getName(), dynamic.id, content
+                            , dynamic.getUnifromCover(), 0, null, dynamic.getDynamicTypeInteger(), replyName);
+                }
                 replyUser = null;
+            } else {
+                CMDMessageManager.sendCMDMessage(dynamic.publisher.getId(), App.getInstance().getUser().getAvatar(), App.getInstance().getUser().getName(), dynamic.id, content
+                        , dynamic.getUnifromCover(), 0, null, dynamic.getDynamicTypeInteger(), replyName);
             }
+
 
         } else {
             ToastGlobal.showLong(baseBean.getMessage());

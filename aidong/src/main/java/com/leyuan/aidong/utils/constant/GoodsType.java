@@ -10,6 +10,7 @@ import java.lang.annotation.Target;
 import static com.leyuan.aidong.utils.Constant.GOODS_EQUIPMENT;
 import static com.leyuan.aidong.utils.Constant.GOODS_FOODS;
 import static com.leyuan.aidong.utils.Constant.GOODS_NUTRITION;
+import static com.leyuan.aidong.utils.Constant.GOODS_TICKET;
 
 /**
  * 商品类型:营养品,健康餐饮,装备
@@ -18,7 +19,9 @@ import static com.leyuan.aidong.utils.Constant.GOODS_NUTRITION;
 @StringDef({
         GOODS_EQUIPMENT,
         GOODS_NUTRITION,
-        GOODS_FOODS
+        GOODS_FOODS,
+        GOODS_TICKET
+
 })
 @Retention(RetentionPolicy.SOURCE)
 @Target({ElementType.PARAMETER,ElementType.METHOD})

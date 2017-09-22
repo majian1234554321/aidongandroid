@@ -13,7 +13,6 @@ import com.leyuan.aidong.ui.mvp.model.impl.GoodsModelImpl;
 import com.leyuan.aidong.ui.mvp.view.GoodsFilterActivityView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.SystemInfoUtils;
-import com.leyuan.aidong.utils.constant.GoodsType;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
@@ -22,6 +21,7 @@ import java.util.List;
 import static com.leyuan.aidong.utils.Constant.GOODS_EQUIPMENT;
 import static com.leyuan.aidong.utils.Constant.GOODS_FOODS;
 import static com.leyuan.aidong.utils.Constant.GOODS_NUTRITION;
+import static com.leyuan.aidong.utils.Constant.GOODS_TICKET;
 
 /**
  * Created by user on 2017/8/1.
@@ -33,20 +33,26 @@ public class GoodsListPrensetImpl {
     private final Context context;
     private String goodsType;
 
-    public GoodsListPrensetImpl(Context context, GoodsFilterActivityView filterActivityView, @GoodsType String goodsType) {
+    public GoodsListPrensetImpl(Context context, GoodsFilterActivityView filterActivityView,  String goodsType) {
         this.context = context;
         this.goodsType = goodsType;
         this.filterActivityView = filterActivityView;
         goodsModel = new GoodsModelImpl(context);
     }
 
-    public ArrayList<CategoryBean> getCategotyListByType() {
+    /**
+     * 要修改成活的
+     * @return
+     */
+    public ArrayList<CategoryBean> getCategotyListByType() { //
         if (GOODS_NUTRITION.equals(goodsType)) {
             return SystemInfoUtils.getNurtureCategory(context);
         } else if (GOODS_EQUIPMENT.equals(goodsType)) {
             return SystemInfoUtils.getEquipmentCategory(context);
         } else if (GOODS_FOODS.equals(goodsType)) {
             return SystemInfoUtils.getFoodsCategory(context);
+        }else if (GOODS_TICKET.equals(goodsType)) {
+            return SystemInfoUtils.getTicketCategory(context);
         }
         return null;
     }

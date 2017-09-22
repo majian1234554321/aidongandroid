@@ -6,6 +6,7 @@ import com.leyuan.aidong.R;
 
 import static com.leyuan.aidong.utils.Constant.GOODS_EQUIPMENT;
 import static com.leyuan.aidong.utils.Constant.GOODS_FOODS;
+import static com.leyuan.aidong.utils.Constant.GOODS_TICKET;
 
 /**
  * Created by user on 2017/8/1.
@@ -97,18 +98,29 @@ public class BaseGoodsBean {
         this.goodsType = goodsType;
     }
 
+
+    /**
+     * 要修改
+     */
     public static String getGoodsNameByType(Context context, GoodsType goodsType) {
-        return goodsType == BaseGoodsBean.GoodsType.NURTURE?context.getString(R.string.home_nurture):
-                goodsType == BaseGoodsBean.GoodsType.FOODS?context.getString(R.string.home_food):context.getString(R.string.home_equipment);
+        return goodsType == BaseGoodsBean.GoodsType.NURTURE ? context.getString(R.string.home_nurture) :
+                goodsType == BaseGoodsBean.GoodsType.FOODS ? context.getString(R.string.home_food) :
+                        goodsType == GoodsType.TICKET ? context.getString(R.string.ticket_competition)
+                                : context.getString(R.string.home_equipment);
     }
 
+    /**
+     * 要修改
+     */
     public static String getGoodsNameByType(Context context, String goodsType) {
         return GOODS_EQUIPMENT.equals(goodsType) ? context.getString(R.string.home_equipment) :
-                GOODS_FOODS.equals(goodsType) ? context.getString(R.string.home_food) : context.getString(R.string.home_nurture);
+                GOODS_FOODS.equals(goodsType) ? context.getString(R.string.home_food) :
+                        GOODS_TICKET.equals(goodsType) ? context.getString(R.string.ticket_competition)
+                                : context.getString(R.string.home_nurture);
     }
 
     public enum GoodsType {
-        FOODS, NURTURE, EQUIPMENT
+        FOODS, NURTURE, TICKET, EQUIPMENT
     }
 
 }

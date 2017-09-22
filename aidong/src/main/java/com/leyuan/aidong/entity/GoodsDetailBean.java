@@ -1,10 +1,5 @@
 package com.leyuan.aidong.entity;
 
-import android.text.TextUtils;
-
-import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.utils.FormatUtil;
-
 import java.util.List;
 
 /**
@@ -44,16 +39,10 @@ public class GoodsDetailBean {
     }
 
     public static String getRealGoodsType(String goodsType, String goodsId) {
-        if (TextUtils.equals(goodsType, Constant.GOODS_NUTRITION) && FormatUtil.parseInt(goodsId) > 9999) {
-            return Constant.GOODS_FOODS;
-        }
         return goodsType;
     }
 
     public String getGoodsType() {
-        if (TextUtils.equals(goodsType, Constant.GOODS_NUTRITION) && FormatUtil.parseInt(id) > 9999) {
-            return Constant.GOODS_FOODS;
-        }
         return goodsType;
     }
 
@@ -62,7 +51,7 @@ public class GoodsDetailBean {
     }
 
     public void setGoodsType(String goodsType, String goodsId) {
-        this.goodsType = getRealGoodsType(goodsType, goodsId);
+        this.goodsType =goodsType;
     }
 
     @Deprecated

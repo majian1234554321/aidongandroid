@@ -1,6 +1,11 @@
 package com.leyuan.aidong.ui.home.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +19,7 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.RecommendPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.RecommendPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.NurtureActivityView;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.leyuan.aidong.widget.SwitcherLayout;
@@ -50,15 +56,36 @@ public class FoodAndBeverageActivity extends BaseActivity implements NurtureActi
     private RecommendPresent recommendPresent;
 
     private String goodsType = GOODS_FOODS;
+
+    BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            switch (intent.getAction()){
+                case Constant.BROADCAST_ACTION_GOODS_PAY_FAIL:
+                case Constant.BROADCAST_ACTION_GOODS_PAY_SUCCESS:
+                    finish();
+                    break;
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initBroadCastReceiver();
         setContentView(R.layout.activity_food_and_beverage);
         recommendPresent = new RecommendPresentImpl(this,this);
         initTopLayout();
         initSwipeRefreshLayout();
         initRecommendRecyclerView();
         recommendPresent.commendLoadRecommendData(switcherLayout,RECOMMEND_FOOD);
+    }
+
+    private void initBroadCastReceiver() {
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constant.BROADCAST_ACTION_GOODS_PAY_SUCCESS);
+        filter.addAction(Constant.BROADCAST_ACTION_GOODS_PAY_FAIL);
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver,filter);
     }
 
     private void initTopLayout(){
@@ -147,5 +174,11 @@ public class FoodAndBeverageActivity extends BaseActivity implements NurtureActi
         View view = View.inflate(this,R.layout.empty_recommend,null);
         switcherLayout.addCustomView(view,"empty");
         switcherLayout.showCustomLayout("empty");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
     }
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -172,6 +173,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             systemPresent.getSystemInfo("android");
 
             sendBroadcast(new Intent(Constant.BROADCAST_ACTION_REGISTER_SUCCESS));
+            LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_LOGIN_SUCCESS));
         }
     }
 

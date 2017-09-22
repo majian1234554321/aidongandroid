@@ -89,6 +89,9 @@ public class Constant {
     public static final int GOODS_FOODS_START_INDEX = 10000;
     public static final String BROADCAST_ACTION_PUBLISH_DYNAMIC_SUCCESS = "broadcast_action_publish_dynamic_success";
     public static final String BROADCAST_ACTION_EXCHANGE_COUPON_SUCCESS = "broadcast_action_exchange_coupon_success";
+    public static final String BROADCAST_ACTION_GOODS_PAY_SUCCESS = "broadcast_action_goods_pay_success";
+    public static final String BROADCAST_ACTION_GOODS_PAY_FAIL = "broadcast_action_goods_pay_fail";
+    public static final String BROADCAST_ACTION_LOGIN_SUCCESS = "broadcast_action_login_success";
 
     public static List<VenuesBean> gyms;
     public static SystemBean systemInfoBean;
@@ -113,6 +116,7 @@ public class Constant {
     public static final String GOODS_EQUIPMENT = "equipment";
     public static final String GOODS_FOODS = "food";
     public static final String GOODS_NUTRITION = "nutrition";
+    public static final String GOODS_TICKET = "ticket";
 
     //动态类型
     public static final int DYNAMIC_NONE = -1;

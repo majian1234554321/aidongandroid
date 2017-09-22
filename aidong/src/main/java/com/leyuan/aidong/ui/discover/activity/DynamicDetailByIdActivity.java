@@ -110,7 +110,7 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
             dynamicId = getIntent().getStringExtra(Constant.DYNAMIC_ID);
         }
 
-        if(dynamic != null){
+        if (dynamic != null) {
             isSelf = App.mInstance.getUser() != null &&
                     dynamic.publisher.getId().equals(String.valueOf(App.mInstance.getUser().getId()));
             initView();
@@ -119,7 +119,7 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
             sharePopupWindow = new SharePopupWindow(this);
         }
 
-        if(dynamicId != null){
+        if (dynamicId != null) {
             dynamicPresent.getDynamicDetail(dynamicId);
         }
     }
@@ -278,12 +278,18 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
             //刷新头部评论数量
             headerAdapter.notifyDataSetChanged();
 
-            CMDMessageManager.sendCMDMessage(dynamic.publisher.getId(), App.getInstance().getUser().getAvatar(), App.getInstance().getUser().getName(), dynamic.id, content
-                    , dynamic.getUnifromCover(), 0, null, dynamic.getDynamicTypeInteger(), replyName);
+
             if (replyUser != null) {
                 CMDMessageManager.sendCMDMessage(replyUser.getId(), App.getInstance().getUser().getAvatar(), App.getInstance().getUser().getName(), dynamic.id, content
                         , dynamic.getUnifromCover(), 0, null, dynamic.getDynamicTypeInteger(), replyName);
+                if (!TextUtils.equals(replyUser.getId(), dynamic.publisher.getId())) {
+                    CMDMessageManager.sendCMDMessage(dynamic.publisher.getId(), App.getInstance().getUser().getAvatar(), App.getInstance().getUser().getName(), dynamic.id, content
+                            , dynamic.getUnifromCover(), 0, null, dynamic.getDynamicTypeInteger(), replyName);
+                }
                 replyUser = null;
+            } else {
+                CMDMessageManager.sendCMDMessage(dynamic.publisher.getId(), App.getInstance().getUser().getAvatar(), App.getInstance().getUser().getName(), dynamic.id, content
+                        , dynamic.getUnifromCover(), 0, null, dynamic.getDynamicTypeInteger(), replyName);
             }
 
         } else {
@@ -389,7 +395,7 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
 
     @Override
     public void onGetDynamicDetail(DynamicBean dynamicBean) {
-        if(dynamicBean != null){
+        if (dynamicBean != null) {
             dynamic = dynamicBean;
             isSelf = App.mInstance.getUser() != null &&
                     dynamic.publisher.getId().equals(String.valueOf(App.mInstance.getUser().getId()));

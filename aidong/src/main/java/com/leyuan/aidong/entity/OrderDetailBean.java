@@ -1,5 +1,7 @@
 package com.leyuan.aidong.entity;
 
+import com.leyuan.aidong.utils.Constant;
+
 import java.util.List;
 
 /**
@@ -19,7 +21,7 @@ public class OrderDetailBean {
     private List<ParcelBean> parcel;
     private String pay_type;
     private String express_price;
-    private boolean is_food; //是否营养餐,
+    private String order_type;
 
     public String getPayType() {
         return pay_type;
@@ -118,10 +120,6 @@ public class OrderDetailBean {
     }
 
     public boolean is_food() {
-        return is_food;
-    }
-
-    public void setIs_food(boolean is_food) {
-        this.is_food = is_food;
+        return Constant.GOODS_FOODS.equals(order_type);
     }
 }

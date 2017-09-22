@@ -18,7 +18,6 @@ import com.leyuan.aidong.ui.mvp.view.GoodsActivityView;
 import com.leyuan.aidong.ui.mvp.view.NurtureActivityView;
 import com.leyuan.aidong.ui.mvp.view.PaySuccessActivityView;
 import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.utils.constant.RecommendGoodsPosition;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
@@ -68,7 +67,7 @@ public class RecommendPresentImpl implements RecommendPresent{
     }
 
     @Override
-    public void commendLoadRecommendData(final SwitcherLayout switcherLayout, @RecommendGoodsPosition String type) {
+    public void commendLoadRecommendData(final SwitcherLayout switcherLayout,  String type) {
         if(recommendModel == null){
             recommendModel = new RecommendModelImpl();
         }
@@ -90,7 +89,7 @@ public class RecommendPresentImpl implements RecommendPresent{
     }
 
     @Override
-    public void pullToRefreshRecommendData(@RecommendGoodsPosition String type) {
+    public void pullToRefreshRecommendData(String type) {
         if(recommendModel == null){
             recommendModel = new RecommendModelImpl();
         }
@@ -112,7 +111,7 @@ public class RecommendPresentImpl implements RecommendPresent{
 
     @Override
     public void requestMoreRecommendData(RecyclerView recyclerView, final int pageSize, int page,
-                                         @RecommendGoodsPosition String type) {
+                                        String type) {
         if(recommendModel == null){
             recommendModel = new RecommendModelImpl();
         }
