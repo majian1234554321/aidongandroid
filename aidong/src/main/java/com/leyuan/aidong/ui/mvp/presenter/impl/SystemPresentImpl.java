@@ -102,6 +102,13 @@ public class SystemPresentImpl implements SystemPresent {
                         allBean.setName("全部");
                         allBean.setId("0");
                         equipments.add(0, allBean);
+                    }else {
+                        equipments = new ArrayList<>();
+                        CategoryBean allBean = new CategoryBean();
+                        allBean.setName("全部");
+                        allBean.setId("0");
+                        equipments.add(0, allBean);
+                        systemBean.setEquipment(equipments);
                     }
 
                     ArrayList<CategoryBean> nutrition = systemBean.getNutrition();
@@ -110,6 +117,13 @@ public class SystemPresentImpl implements SystemPresent {
                         allBean.setName("全部");
                         allBean.setId("0");
                         nutrition.add(0, allBean);
+                    }else{
+                        nutrition = new ArrayList<CategoryBean>();
+                        CategoryBean allBean = new CategoryBean();
+                        allBean.setName("全部");
+                        allBean.setId("0");
+                        nutrition.add(0, allBean);
+                        systemBean.setNutrition(nutrition);
                     }
 
                     ArrayList<CategoryBean> foods = systemBean.getFoods();
@@ -118,6 +132,13 @@ public class SystemPresentImpl implements SystemPresent {
                         allBean.setName("全部");
                         allBean.setId("0");
                         foods.add(0, allBean);
+                    }else {
+                        foods = new ArrayList<CategoryBean>();
+                        CategoryBean allBean = new CategoryBean();
+                        allBean.setName("全部");
+                        allBean.setId("0");
+                        foods.add(0, allBean);
+                        systemBean.setFoods(foods);
                     }
 
                     ArrayList<CategoryBean> tickets = systemBean.getTicket();
@@ -126,6 +147,13 @@ public class SystemPresentImpl implements SystemPresent {
                         allBean.setName("全部");
                         allBean.setId("0");
                         tickets.add(0, allBean);
+                    }else {
+                        tickets = new ArrayList<CategoryBean>();
+                        CategoryBean allBean = new CategoryBean();
+                        allBean.setName("全部");
+                        allBean.setId("0");
+                        tickets.add(0, allBean);
+                        systemBean.setTicket(tickets);
                     }
 
                     ArrayList<String> types = systemBean.getGymTypes();
@@ -205,6 +233,13 @@ public class SystemPresentImpl implements SystemPresent {
                     allBean.setName("全部");
                     allBean.setId("0");
                     equipments.add(0, allBean);
+                }else {
+                    equipments = new ArrayList<>();
+                    CategoryBean allBean = new CategoryBean();
+                    allBean.setName("全部");
+                    allBean.setId("0");
+                    equipments.add(0, allBean);
+                    systemBean.setEquipment(equipments);
                 }
 
                 ArrayList<CategoryBean> nutrition = systemBean.getNutrition();
@@ -213,6 +248,13 @@ public class SystemPresentImpl implements SystemPresent {
                     allBean.setName("全部");
                     allBean.setId("0");
                     nutrition.add(0, allBean);
+                }else{
+                    nutrition = new ArrayList<CategoryBean>();
+                    CategoryBean allBean = new CategoryBean();
+                    allBean.setName("全部");
+                    allBean.setId("0");
+                    nutrition.add(0, allBean);
+                    systemBean.setNutrition(nutrition);
                 }
 
                 ArrayList<CategoryBean> foods = systemBean.getFoods();
@@ -221,6 +263,13 @@ public class SystemPresentImpl implements SystemPresent {
                     allBean.setName("全部");
                     allBean.setId("0");
                     foods.add(0, allBean);
+                }else {
+                    foods = new ArrayList<CategoryBean>();
+                    CategoryBean allBean = new CategoryBean();
+                    allBean.setName("全部");
+                    allBean.setId("0");
+                    foods.add(0, allBean);
+                    systemBean.setFoods(foods);
                 }
 
                 ArrayList<CategoryBean> tickets = systemBean.getTicket();
@@ -229,6 +278,13 @@ public class SystemPresentImpl implements SystemPresent {
                     allBean.setName("全部");
                     allBean.setId("0");
                     tickets.add(0, allBean);
+                }else {
+                    tickets = new ArrayList<CategoryBean>();
+                    CategoryBean allBean = new CategoryBean();
+                    allBean.setName("全部");
+                    allBean.setId("0");
+                    tickets.add(0, allBean);
+                    systemBean.setTicket(tickets);
                 }
 
                 ArrayList<String> types = systemBean.getGymTypes();
