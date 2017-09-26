@@ -53,6 +53,7 @@ public class GoodsBrandRecommendActivity extends BaseActivity implements Nurture
     private RecommendPresent recommendPresent;
 
     private String goodsType;
+    private String typeName;
 
     BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -67,9 +68,10 @@ public class GoodsBrandRecommendActivity extends BaseActivity implements Nurture
         }
     };
 
-    public static void start(Context context, String goodsType) {
+    public static void start(Context context, String goodsType,String typeName) {
         Intent intent = new Intent(context, GoodsBrandRecommendActivity.class);
         intent.putExtra("goodsType", goodsType);
+        intent.putExtra("typeName", typeName);
         (context).startActivity(intent);
     }
 
@@ -77,6 +79,7 @@ public class GoodsBrandRecommendActivity extends BaseActivity implements Nurture
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         goodsType = getIntent().getStringExtra("goodsType");
+        typeName = getIntent().getStringExtra("typeName");
         initBroadCastReceiver();
 
         setContentView(R.layout.activity_food_and_beverage);
@@ -103,6 +106,7 @@ public class GoodsBrandRecommendActivity extends BaseActivity implements Nurture
         categoryView.setLayoutManager(layoutManager);
         categoryView.setAdapter(categoryAdapter);
         categoryAdapter.setData(SystemInfoUtils.getGoodsCategory(this, goodsType)); //要改
+        titleBar.setTitle(typeName);
         titleBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

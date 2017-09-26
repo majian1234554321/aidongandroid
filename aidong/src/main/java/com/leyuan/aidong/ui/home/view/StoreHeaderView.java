@@ -80,7 +80,7 @@ public class StoreHeaderView extends RelativeLayout{
         headerView.findViewById(R.id.ll_ticket).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                GoodsBrandRecommendActivity.start(context, "ticket");
+                GoodsBrandRecommendActivity.start(context, "ticket","票务赛事");
             }
         });
     }
