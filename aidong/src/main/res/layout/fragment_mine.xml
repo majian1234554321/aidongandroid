@@ -364,6 +364,13 @@
                 app:divider_visible="true"
                 app:img_tag="@drawable/mine_love_coin"
                 app:txt_name="我的爱币" />
+            <com.leyuan.aidong.widget.AidongMineItem
+                android:id="@+id/item_my_member_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:divider_visible="true"
+                app:img_tag="@drawable/mine_love_coin"
+                app:txt_name="我的会员卡" />
 
             <com.leyuan.aidong.widget.AidongMineItem
                 android:id="@+id/item_my_coupon"

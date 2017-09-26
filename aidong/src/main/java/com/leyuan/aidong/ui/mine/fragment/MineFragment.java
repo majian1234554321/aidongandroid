@@ -58,7 +58,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
     private ImageView imageView_xinbie;
     private TextView textView_name, textView_guanzhushu, textView_beiguanzhushu, textView_popularity, textView_yysl, textView_yyjrw, textView_dd, textView_ddjrw;
     private AidongMineItem item_my_coin, item_my_coupon, item_sport_timing, item_address,
-            item_recommend_friend, item_after_sale, item_setting;
+            item_recommend_friend, item_after_sale, item_setting,item_my_member_card;
     private UserCoach user;
     private ChatMessageReceiver chatMessageReceiver;
     private MineInfoPresenterImpl presenter;
@@ -126,6 +126,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
         textView_ddjrw = (TextView) rootView.findViewById(R.id.textView_ddjrw);
 
         item_my_coin = (AidongMineItem) rootView.findViewById(R.id.item_my_coin);
+        item_my_member_card = (AidongMineItem) rootView.findViewById(R.id.item_my_member_card);
         item_my_coupon = (AidongMineItem) rootView.findViewById(R.id.item_my_coupon);
         item_sport_timing = (AidongMineItem) rootView.findViewById(R.id.item_sport_timing);
         item_address = (AidongMineItem) rootView.findViewById(R.id.item_address);
@@ -145,6 +146,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
         relativeLayout_yuyue.setOnClickListener(this);
         relativeLayout_dingdang.setOnClickListener(this);
         item_my_coin.setOnClickListener(this);
+        item_my_member_card.setOnClickListener(this);
         item_my_coupon.setOnClickListener(this);
         item_sport_timing.setOnClickListener(this);
         item_address.setOnClickListener(this);
@@ -213,6 +215,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
                 UiManager.activityCheckLoginJump(getActivity(), OrderActivity.class);
                 break;
             case R.id.item_my_coin:
+                UiManager.activityJump(getActivity(), LoveCoinActivity.class);
+                break;
+            case R.id.item_my_member_card:
                 UiManager.activityJump(getActivity(), LoveCoinActivity.class);
                 break;
             case R.id.item_my_coupon:
