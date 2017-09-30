@@ -19,6 +19,7 @@ import com.leyuan.aidong.module.chat.manager.EmChatRegisterManager;
 import com.leyuan.aidong.module.thirdpartylogin.ThirdLoginUtils;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.activity.CouponNewcomerActivity;
+import com.leyuan.aidong.ui.mine.activity.setting.PhoneBindingActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.LoginPresenter;
 import com.leyuan.aidong.ui.mvp.presenter.impl.MineInfoPresenterImpl;
@@ -49,11 +50,36 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private EmChatRegisterManager chatRegisterManager;
     private LocalReceiver receiver;
     private ArrayList<CouponBean> coupons;
+    private BroadcastReceiver myReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            switch (intent.getAction()){
+                case Constant.BROADCAST_ACTION_PHONE_BINDING_SUCCESS:
+                    loginResult(user,coupons);
+                    break;
+            }
+        }
+    };
+    private UserCoach user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Logger.i("login " + TAG, " onCreate");
+
+        IntentFilter intentFilter1 = new IntentFilter();
+        intentFilter1.addAction(Constant.BROADCAST_ACTION_PHONE_BINDING_SUCCESS);
+        LocalBroadcastManager.getInstance(this).registerReceiver(myReceiver,intentFilter1);
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Constant.WX_LOGIN_SUCCESS_ACTION);
+        receiver = new LocalReceiver();
+        registerReceiver(receiver, intentFilter);
+
+        IntentFilter registerFilter = new IntentFilter();
+        registerFilter.addAction(Constant.BROADCAST_ACTION_REGISTER_SUCCESS);
+        registerReceiver(registerReceiver, registerFilter);
+
         setContentView(R.layout.activity_login);
         loginPresenter = new LoginPresenter(this, this);
         chatLoginManager = new EmChatLoginManager(this);
@@ -68,14 +94,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         findViewById(R.id.button_weibo).setOnClickListener(this);
         findViewById(R.id.button_qq).setOnClickListener(this);
 
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(Constant.WX_LOGIN_SUCCESS_ACTION);
-        receiver = new LocalReceiver();
-        registerReceiver(receiver, intentFilter);
 
-        IntentFilter registerFilter = new IntentFilter();
-        registerFilter.addAction(Constant.BROADCAST_ACTION_REGISTER_SUCCESS);
-        registerReceiver(registerReceiver, registerFilter);
     }
 
     @Override
@@ -155,6 +174,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         this.coupons = coupons;
 
         if (user != null) {
+
             DialogUtils.showDialog(this, "", false);
             ChatLoginService.startService(this, String.valueOf(user.getId()));
 
@@ -175,6 +195,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             sendBroadcast(new Intent(Constant.BROADCAST_ACTION_REGISTER_SUCCESS));
             LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_LOGIN_SUCCESS));
         }
+    }
+
+    @Override
+    public void needBindingPhone(UserCoach user, ArrayList<CouponBean> coupons) {
+        this.user = user;
+        this.coupons = coupons;
+        DialogUtils.dismissDialog();
+        UiManager.activityJump(this, PhoneBindingActivity.class);
     }
 
     @Override
@@ -240,6 +268,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             chatRegisterManager.release();
         unregisterReceiver(receiver);
         unregisterReceiver(registerReceiver);
+        unregisterReceiver(myReceiver);
         receiver = null;
         registerReceiver = null;
     }

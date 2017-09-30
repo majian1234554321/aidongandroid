@@ -3,6 +3,7 @@ package com.leyuan.aidong.ui.mvp.presenter.impl;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 
 import com.leyuan.aidong.entity.model.result.LoginResult;
 import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
@@ -71,8 +72,13 @@ public class LoginPresenter implements LoginPresenterInterface {
             @Override
             public void onNext(LoginResult user) {
                 App.getInstance().setUser(user.getUser());
-                if (loginViewInterface != null)
-                    loginViewInterface.loginResult(user.getUser(), user.getCoupons());
+                if (loginViewInterface != null) {
+                    if (TextUtils.isEmpty(user.getUser().getMobile())) {
+                        loginViewInterface.needBindingPhone(user.getUser(), user.getCoupons());
+                    } else {
+                        loginViewInterface.loginResult(user.getUser(), user.getCoupons());
+                    }
+                }
 
             }
         }, accout, password);
@@ -110,10 +116,14 @@ public class LoginPresenter implements LoginPresenterInterface {
             @Override
             public void onNext(LoginResult user) {
                 Logger.i("loginSns", "onNext");
-                App.mInstance.setUser(user.getUser());
-                if (loginViewInterface != null)
-                    loginViewInterface.loginResult(user.getUser(), user.getCoupons());
-
+                App.getInstance().setUser(user.getUser());
+                if (loginViewInterface != null) {
+                    if (TextUtils.isEmpty(user.getUser().getMobile())) {
+                        loginViewInterface.needBindingPhone(user.getUser(), user.getCoupons());
+                    } else {
+                        loginViewInterface.loginResult(user.getUser(), user.getCoupons());
+                    }
+                }
             }
         }, sns, access);
 

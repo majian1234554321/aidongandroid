@@ -23,12 +23,14 @@ import com.leyuan.aidong.receivers.NewPushMessageReceiver;
 import com.leyuan.aidong.ui.discover.fragment.DiscoverHomeFragment;
 import com.leyuan.aidong.ui.home.fragment.HomeFragment;
 import com.leyuan.aidong.ui.home.fragment.StoreFragment;
+import com.leyuan.aidong.ui.mine.activity.setting.PhoneBindingActivity;
 import com.leyuan.aidong.ui.mine.fragment.MineFragment;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VersionPresenterImpl;
 import com.leyuan.aidong.ui.video.fragment.VideoHomeFragment;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.LocatinCityManager;
 import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.utils.UiManager;
 import com.leyuan.aidong.utils.autostart.CheckAutoStartUtils;
 import com.leyuan.aidong.widget.dialog.BaseDialog;
 import com.leyuan.aidong.widget.dialog.ButtonCancelListener;
@@ -67,6 +69,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(App.getInstance().isLogin() && TextUtils.isEmpty(App.getInstance().getUser().getMobile())){
+            UiManager.activityJump(this, PhoneBindingActivity.class);
+        }
 
         LocatinCityManager.checkLocationCity(this);
         new VersionPresenterImpl(this).checkVersionAndShow();
@@ -173,7 +178,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         super.onSaveInstanceState(outState, outPersistentState);
     }
 
-
     @Override
     public void onClick(View arg0) {
         switch (arg0.getId()) {
@@ -269,7 +273,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onResume() {
         super.onResume();
         img_new_message.setVisibility(EmMessageManager.isHaveUnreadMessage() ? View.VISIBLE : View.GONE);
-
     }
 
     @Override

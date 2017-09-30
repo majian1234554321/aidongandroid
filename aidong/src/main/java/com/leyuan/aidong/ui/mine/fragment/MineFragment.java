@@ -34,6 +34,7 @@ import com.leyuan.aidong.ui.mine.activity.CouponActivity;
 import com.leyuan.aidong.ui.mine.activity.FollowActivity;
 import com.leyuan.aidong.ui.mine.activity.LoveCoinActivity;
 import com.leyuan.aidong.ui.mine.activity.MessageActivity;
+import com.leyuan.aidong.ui.mine.activity.MyMemberCardActivity;
 import com.leyuan.aidong.ui.mine.activity.OrderActivity;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
@@ -218,7 +219,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
                 UiManager.activityJump(getActivity(), LoveCoinActivity.class);
                 break;
             case R.id.item_my_member_card:
-                UiManager.activityJump(getActivity(), LoveCoinActivity.class);
+                UiManager.activityCheckLoginJump(getActivity(), MyMemberCardActivity.class);
                 break;
             case R.id.item_my_coupon:
                 UiManager.activityCheckLoginJump(getActivity(), CouponActivity.class);

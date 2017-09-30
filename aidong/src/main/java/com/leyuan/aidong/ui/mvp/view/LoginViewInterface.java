@@ -9,5 +9,7 @@ public interface LoginViewInterface {
 
     void loginResult(UserCoach user, ArrayList<CouponBean> coupons);
 
+    void needBindingPhone(UserCoach user, ArrayList<CouponBean> coupons);
+
 //    void onAutoLoginSuccess(boolean success);
 }

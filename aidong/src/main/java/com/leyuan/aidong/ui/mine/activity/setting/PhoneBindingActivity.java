@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.mine.activity.setting;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -49,6 +50,7 @@ public class PhoneBindingActivity extends BaseActivity implements View.OnClickLi
         layoutTitle.setLeftIconListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                App.getInstance().exitLogin();
                 setResult(RESULT_CANCELED, new Intent());
                 finish();
             }
@@ -133,6 +135,8 @@ public class PhoneBindingActivity extends BaseActivity implements View.OnClickLi
             Intent intent = new Intent();
             intent.putExtra(Constant.BINDING_PHONE, presenter.getBingdingMobile());
             setResult(RESULT_OK, intent);
+
+            LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_PHONE_BINDING_SUCCESS));
             finish();
         } else {
             ToastUtil.showShort(App.context, "绑定失败 请重新提交");
@@ -186,6 +190,7 @@ public class PhoneBindingActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        App.getInstance().exitLogin();
         setResult(RESULT_CANCELED, new Intent());
         finish();
     }
