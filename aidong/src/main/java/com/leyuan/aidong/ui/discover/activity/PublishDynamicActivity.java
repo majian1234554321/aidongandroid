@@ -49,7 +49,7 @@ import java.util.List;
 public class PublishDynamicActivity extends BaseActivity implements PublishDynamicActivityView,
         View.OnClickListener, PublishDynamicAdapter.OnItemClickListener, View.OnKeyListener {
     private static final int REQUEST_MEDIA = 1;
-    private static final int MAX_TEXT_COUNT = 120;
+    private static final int MAX_TEXT_COUNT = 180;
 
     private ImageView ivBack;
     private EditText etContent;
@@ -105,7 +105,6 @@ public class PublishDynamicActivity extends BaseActivity implements PublishDynam
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemDragHelperCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
         mediaAdapter.setData(selectedMedia, isPhoto);
-        int i = 0;
     }
 
     private void setListener() {
