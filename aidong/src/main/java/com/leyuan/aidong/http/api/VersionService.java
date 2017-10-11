@@ -10,7 +10,7 @@ import rx.Observable;
  * Created by user on 2017/3/6.
  */
 public interface VersionService {
-    @GET("i_fitness/version")
+    @GET("i_fitness/android")
     Observable<VersionResult> getVersionInfo(@Query("os_type") String os_type);
 
 //    @GET("mine/version")

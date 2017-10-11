@@ -33,6 +33,7 @@ public abstract class BaseSubscriber<T> extends Subscriber<T> {
         if (e instanceof SocketTimeoutException) {
             ToastGlobal.showShortConsecutive(R.string.connect_timeout);
         } else if (e instanceof ConnectException) {
+
             ToastGlobal.showShortConsecutive(R.string.connect_break);
         }else if (e instanceof ZeroException) {
             ToastGlobal.showShortConsecutive(e.getMessage());

@@ -268,7 +268,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             chatRegisterManager.release();
         unregisterReceiver(receiver);
         unregisterReceiver(registerReceiver);
-        unregisterReceiver(myReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(myReceiver);
         receiver = null;
         registerReceiver = null;
     }
