@@ -53,9 +53,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private BroadcastReceiver myReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            switch (intent.getAction()){
+            switch (intent.getAction()) {
                 case Constant.BROADCAST_ACTION_PHONE_BINDING_SUCCESS:
-                    loginResult(user,coupons);
+                    loginResult(user, coupons);
                     break;
             }
         }
@@ -69,7 +69,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
         IntentFilter intentFilter1 = new IntentFilter();
         intentFilter1.addAction(Constant.BROADCAST_ACTION_PHONE_BINDING_SUCCESS);
-        LocalBroadcastManager.getInstance(this).registerReceiver(myReceiver,intentFilter1);
+        LocalBroadcastManager.getInstance(this).registerReceiver(myReceiver, intentFilter1);
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Constant.WX_LOGIN_SUCCESS_ACTION);
@@ -131,7 +131,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 break;
             case R.id.button_qq:
                 if (!ThirdClientValid.isQQClientAvailable(this)) {
-                   ToastGlobal.showLong("没有安装QQ");
+                    ToastGlobal.showLong("没有安装QQ");
                     return;
 
                 }
@@ -275,6 +275,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void onThridLoginStart(String sns, String code) {
+        DialogUtils.dismissDialog();
+        if (TextUtils.isEmpty(sns) || TextUtils.isEmpty(code)) return;
+
         DialogUtils.showDialog(this, "", true);
         loginPresenter.loginSns(sns, code);
     }

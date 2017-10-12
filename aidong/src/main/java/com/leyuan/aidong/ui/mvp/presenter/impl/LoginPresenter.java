@@ -103,8 +103,7 @@ public class LoginPresenter implements LoginPresenterInterface {
             public void onCompleted() {
                 Logger.i("loginSns", "onCompleted");
             }
-
-            @Override
+                @Override
             public void onError(Throwable e) {
                 super.onError(e);
                 Logger.i("loginSns", "onError");

@@ -105,13 +105,14 @@ public class WeiBoLogin {
 
         @Override
         public void onCancel() {
-
+            listner.onThridLoginStart(null,null);
             Logger.i("loginweibo", "AuthListener onCancelJoin");
 
         }
 
         @Override
         public void onWeiboException(WeiboException e) {
+            listner.onThridLoginStart(null,null);
             Logger.i("loginweibo", "AuthListener onWeiboException " + e.getMessage());
         }
     }
