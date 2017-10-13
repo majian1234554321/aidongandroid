@@ -3,12 +3,16 @@ package com.leyuan.aidong.ui.mine.activity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -17,6 +21,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.utils.DeviceManager;
+import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.Logger;
 
 import java.util.HashMap;
@@ -28,12 +33,15 @@ import java.util.Map;
 public class MyMemberCardActivity extends BaseActivity {
     private static final java.lang.String TAG = "MyMemberCardActivity";
     private WebView mWebView;
+    private ImageView imgLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_member_card);
 
+        imgLoading = (ImageView) findViewById(R.id.img_loading);
+        GlideLoader.getInstance().displayDrawableGifImage(R.drawable.loading, imgLoading);
         initWebView();
     }
 
@@ -62,6 +70,9 @@ public class MyMemberCardActivity extends BaseActivity {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
+                if (newProgress > 70) {
+                    imgLoading.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -77,10 +88,14 @@ public class MyMemberCardActivity extends BaseActivity {
                 super.onPageFinished(view, url);
                 Logger.i(TAG, "mWebView.loadUrl onPageFinished");
 
-
             }
 
-//            @Override
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+            }
+
+            //            @Override
 //            public boolean shouldOverrideUrlLoading(WebView view, String url) {
 //                LogUtil.i(TAG,"over url = " + url);
 ////                view.loadUrl(url);
@@ -94,6 +109,20 @@ public class MyMemberCardActivity extends BaseActivity {
         Map<String, String> map = new HashMap<>();
         map.put("mobile", App.getInstance().getUser().getMobile());
         mWebView.loadUrl("http://opentest.aidong.me/app/cards", map);
+    }
+
+    @Override
+    // 设置回退
+    // 5、覆盖Activity类的onKeyDown(int keyCoder,KeyEvent event)方法
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        //按下返回键并且webview界面可以返回
+        if ((keyCode == KeyEvent.KEYCODE_BACK) && mWebView.canGoBack()) {
+            String currentUrl = mWebView.copyBackForwardList().getCurrentItem().getUrl();
+            Logger.i(TAG, "current url = " + currentUrl);
+            mWebView.goBack();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     class MyJSInterface {

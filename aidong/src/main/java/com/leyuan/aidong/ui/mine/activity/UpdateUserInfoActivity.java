@@ -80,6 +80,7 @@ public class UpdateUserInfoActivity extends BaseActivity implements UpdateUserIn
     private String signture;
     private String name;
 
+
     private UserInfoPresent userInfoPresent;
     private DecimalFormat df;
 
