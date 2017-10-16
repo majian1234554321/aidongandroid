@@ -119,10 +119,11 @@ public class BoxingFragment extends AbsBoxingViewFragment implements View.OnClic
     public void onPermissionsDenied(int requestCode, List<String> perms) {
         super.onPermissionsDenied(requestCode, perms);
         if (requestCode == STORAGE_PERMISSION) {
-            Toast.makeText(getContext(), R.string.storage_permission_deny, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.storage_permission_deny, Toast.LENGTH_LONG).show();
             showEmptyData();
+            getActivity().finish();
         } else if (requestCode == CAMERA_AND_AUDIO_PERMISSIONS) {
-            Toast.makeText(getContext(), R.string.camera_permission_deny, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.camera_permission_deny, Toast.LENGTH_LONG).show();
         }
     }
 

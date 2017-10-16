@@ -141,9 +141,12 @@ public class CartHeaderView extends RelativeLayout implements ICartHeaderView,Ca
 
     public void changeAllGoodsStatus(boolean checked){
         for (ShopBean bean : shopBeanList) {
+
             bean.setChecked(checked);
             for (GoodsBean goodsBean : bean.getItem()) {
-                goodsBean.setChecked(checked);
+                if (goodsBean.isOnline() && goodsBean.getStock() != 0 ) {
+                    goodsBean.setChecked(checked);
+                }
             }
         }
         if(callback != null){

@@ -1,10 +1,15 @@
 package com.leyuan.aidong.ui.mine.activity;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
@@ -23,6 +28,12 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.utils.DeviceManager;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.utils.PermissionManager;
+import com.leyuan.aidong.utils.ToastGlobal;
+import com.leyuan.aidong.widget.dialog.BaseDialog;
+import com.leyuan.aidong.widget.dialog.ButtonCancelListener;
+import com.leyuan.aidong.widget.dialog.ButtonOkListener;
+import com.leyuan.aidong.widget.dialog.DialogDoubleButton;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,8 +43,16 @@ import java.util.Map;
  */
 public class MyMemberCardActivity extends BaseActivity {
     private static final java.lang.String TAG = "MyMemberCardActivity";
+    private static final int REQUEST_PERMISSION_CODE = 103;
     private WebView mWebView;
     private ImageView imgLoading;
+    private PermissionManager permissionManager;
+    private PermissionManager.OnCheckPermissionListener premissionListener = new PermissionManager.OnCheckPermissionListener() {
+        @Override
+        public void checkOver() {
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,11 +177,21 @@ public class MyMemberCardActivity extends BaseActivity {
         @JavascriptInterface
         public void scan() {
             Logger.i(TAG, "scan invoked");
-            // 创建IntentIntegrator对象
-            IntentIntegrator intentIntegrator = new IntentIntegrator(MyMemberCardActivity.this);
-            intentIntegrator.setPrompt("请将二维码置于方框内");
-            // 开始扫描
-            intentIntegrator.initiateScan();
+
+            String permission = Manifest.permission.READ_EXTERNAL_STORAGE;
+            if (ContextCompat.checkSelfPermission(MyMemberCardActivity.this, permission)
+                    != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(MyMemberCardActivity.this, permission)) {
+                    ActivityCompat.requestPermissions(MyMemberCardActivity.this, new String[]{permission}, REQUEST_PERMISSION_CODE);
+                } else {
+                    showPermissionDailog(permission, "请打开读取权限,以正常使用应用");
+                }
+            } else {
+                IntentIntegrator intentIntegrator = new IntentIntegrator(MyMemberCardActivity.this);
+                intentIntegrator.setPrompt("请将二维码置于方框内");
+                // 开始扫描
+                intentIntegrator.initiateScan();
+            }
         }
 
         @JavascriptInterface
@@ -170,6 +199,42 @@ public class MyMemberCardActivity extends BaseActivity {
 
             Logger.i(TAG, "finish invoked");
             MyMemberCardActivity.this.finish();
+        }
+
+    }
+
+    private void showPermissionDailog(final String permission, final String hint) {
+        new DialogDoubleButton(MyMemberCardActivity.this)
+                .setContentDesc(hint)
+                .setRightButton("确定")
+                .setBtnCancelListener(new ButtonCancelListener() {
+                    @Override
+                    public void onClick(BaseDialog dialog) {
+                        dialog.dismiss();
+                        ToastGlobal.showLong("读取权限被禁用，请点击确定打开读取权限以正常使用扫描功能");
+                    }
+                })
+                .setBtnOkListener(new ButtonOkListener() {
+                    @Override
+                    public void onClick(BaseDialog dialog) {
+                        ActivityCompat.requestPermissions(MyMemberCardActivity.this, new String[]{permission}, REQUEST_PERMISSION_CODE);
+                        dialog.dismiss();
+
+                    }
+                })
+                .show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            IntentIntegrator intentIntegrator = new IntentIntegrator(MyMemberCardActivity.this);
+            intentIntegrator.setPrompt("请将二维码置于方框内");
+            // 开始扫描
+            intentIntegrator.initiateScan();
+        }else {
+            ToastGlobal.showLong("读取权限被禁用，需要手动打开，请进入设置应用管理打开权限");
         }
 
     }

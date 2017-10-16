@@ -71,7 +71,7 @@ public class GoodsCategoryAdapter extends RecyclerView.Adapter<GoodsCategoryAdap
             } else if (GOODS_FOODS.equals(type)) {
                 GlideLoader.getInstance().displayRoundLocalImage(R.drawable.icon_all_food_and_beverage, holder.cover);
             }else if (GOODS_TICKET.equals(type)) {
-                GlideLoader.getInstance().displayRoundLocalImage(R.drawable.icon_all_food_and_beverage, holder.cover);
+                GlideLoader.getInstance().displayRoundLocalImage(R.drawable.ticket_all_type, holder.cover);
             }
         } else {
             GlideLoader.getInstance().displayRoundImage(bean.getImage(), holder.cover);
@@ -84,11 +84,6 @@ public class GoodsCategoryAdapter extends RecyclerView.Adapter<GoodsCategoryAdap
             }
         });
     }
-
-
-
-
-
 
     class GoodsViewHolder extends RecyclerView.ViewHolder {
         ImageView cover;
