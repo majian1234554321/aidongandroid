@@ -11,10 +11,13 @@ import android.widget.EditText;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.entity.model.UserCoach;
+import com.leyuan.aidong.entity.user.MineInfoBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.RegisterPresenterInterface;
+import com.leyuan.aidong.ui.mvp.presenter.impl.MineInfoPresenterImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.RegisterPresenter;
+import com.leyuan.aidong.ui.mvp.view.MineInfoView;
 import com.leyuan.aidong.ui.mvp.view.RegisterViewInterface;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DialogUtils;
@@ -103,7 +106,7 @@ public class PhoneBindingActivity extends BaseActivity implements View.OnClickLi
             return false;
         }
 
-        if(presenter.getToken()== null){
+        if (presenter.getToken() == null) {
             ToastGlobal.showShort(R.string.please_get_identify_first);
             return false;
         }
@@ -135,9 +138,18 @@ public class PhoneBindingActivity extends BaseActivity implements View.OnClickLi
             Intent intent = new Intent();
             intent.putExtra(Constant.BINDING_PHONE, presenter.getBingdingMobile());
             setResult(RESULT_OK, intent);
-
             LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_PHONE_BINDING_SUCCESS));
-            finish();
+            if (App.getInstance().isLogin()) {
+                new MineInfoPresenterImpl(this, new MineInfoView() {
+                    @Override
+                    public void onGetMineInfo(MineInfoBean mineInfoBean) {
+                        finish();
+                    }
+                }).getMineInfo();
+            } else {
+                finish();
+            }
+
         } else {
             ToastUtil.showShort(App.context, "绑定失败 请重新提交");
         }
