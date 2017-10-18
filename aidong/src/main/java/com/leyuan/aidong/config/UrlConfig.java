@@ -23,7 +23,7 @@ public class UrlConfig {
         } else {
             urlHtml = "http://share.aidong.me/";
             urlHost = "http://a.aidong.me/";
-            urlHostUpdata = "http://suppliers.51aidong.com:9021/v1/app/check/";
+            urlHostUpdata = "http://me.51aidong.com:9021/v1/app/check/";
             urlMemberCard = "http://open.aidong.me/";
         }
     }
