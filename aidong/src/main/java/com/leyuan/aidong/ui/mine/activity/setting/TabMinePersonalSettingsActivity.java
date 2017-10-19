@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,6 +27,7 @@ import com.leyuan.aidong.ui.mine.activity.account.ChangePasswordActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.LoginPresenter;
 import com.leyuan.aidong.ui.mvp.view.LoginExitView;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DataCleanManager;
 import com.leyuan.aidong.utils.Md5Utils;
 import com.leyuan.aidong.utils.TelephoneManager;
@@ -298,7 +300,11 @@ public class TabMinePersonalSettingsActivity extends BaseActivity implements Log
     public void onExitLoginResult(boolean result) {
         if (result) {
             App.getInstance().exitLogin();
+            LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_EXIT_LOGIN));
+
             EmChatLoginManager.loginOut();
+            App.getInstance().clearCMDMessage();
+            LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_CLEAR_CMD_MESSAGE));
 
             Intent intent = new Intent(TabMinePersonalSettingsActivity.this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

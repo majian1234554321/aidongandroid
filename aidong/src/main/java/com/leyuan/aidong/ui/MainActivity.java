@@ -128,6 +128,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 img_new_circle_message.setVisibility(View.VISIBLE);
             } else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_CLEAR_CMD_MESSAGE)) {
                 img_new_circle_message.setVisibility(View.GONE);
+            }else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_EXIT_LOGIN)) {
+//                img_new_circle_message.setVisibility(View.GONE);
             }
             Logger.i("mainActivityReceiver", "onReceive action = " + intent.getAction());
         }
@@ -144,6 +146,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         IntentFilter filter = new IntentFilter();
         filter.addAction(Constant.BROADCAST_ACTION_RECEIVER_CMD_MESSAGE);
         filter.addAction(Constant.BROADCAST_ACTION_CLEAR_CMD_MESSAGE);
+        filter.addAction(Constant.BROADCAST_ACTION_EXIT_LOGIN);
         LocalBroadcastManager.getInstance(this).registerReceiver(mainActivityReceiver, filter);
 
     }

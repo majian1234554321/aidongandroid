@@ -93,6 +93,7 @@ public class Constant {
     public static final String BROADCAST_ACTION_GOODS_PAY_FAIL = "broadcast_action_goods_pay_fail";
     public static final String BROADCAST_ACTION_LOGIN_SUCCESS = "broadcast_action_login_success";
     public static final String BROADCAST_ACTION_PHONE_BINDING_SUCCESS = "broadcast_action_phone_binding_success";
+    public static final String BROADCAST_ACTION_EXIT_LOGIN = "broadcast_action_exit_login";
 
     public static List<VenuesBean> gyms;
     public static SystemBean systemInfoBean;

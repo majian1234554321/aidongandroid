@@ -96,7 +96,7 @@ public abstract class BaseCircleViewHolder extends BaseRecyclerViewHolder<Dynami
 
     @Override
     public void onBindData(final DynamicBean dynamic, final int position) {
-        if (position == 0 && context instanceof MainActivity && App.getInstance().getCMDCirleDynamicBean()
+        if (position == 0  && context instanceof MainActivity && App.getInstance().isLogin() && App.getInstance().getCMDCirleDynamicBean()
                 != null && !App.getInstance().getCMDCirleDynamicBean().isEmpty()) {
 
             layoutCmdMessage.setVisibility(View.VISIBLE);

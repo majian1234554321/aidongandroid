@@ -162,8 +162,8 @@ public class PhoneBindingActivity extends BaseActivity implements View.OnClickLi
             DialogUtils.showDialog(this, "", true);
             presenter.bindingCaptcha(mobile);
         } else if (mDialogImageIdentify != null && mDialogImageIdentify.isShowing()) {
-            mDialogImageIdentify.clearContent();
-            mDialogImageIdentify.refreshImage(mobile);
+            mDialogImageIdentify.dismiss();
+//            mDialogImageIdentify.refreshImage(mobile);
         }
 
     }

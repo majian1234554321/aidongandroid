@@ -94,6 +94,8 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
                 refreshData();
             }else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_PUBLISH_DYNAMIC_SUCCESS)) {
                 refreshData();
+            }else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_EXIT_LOGIN)) {
+//                refreshData();
             }
             Logger.i(TAG, "onReceive action = " + intent.getAction());
         }
@@ -107,6 +109,7 @@ public class CircleFragment extends BasePageFragment implements SportCircleFragm
         filter.addAction(Constant.BROADCAST_ACTION_RECEIVER_CMD_MESSAGE);
         filter.addAction(Constant.BROADCAST_ACTION_CLEAR_CMD_MESSAGE);
         filter.addAction(Constant.BROADCAST_ACTION_PUBLISH_DYNAMIC_SUCCESS);
+        filter.addAction(Constant.BROADCAST_ACTION_EXIT_LOGIN);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(circleFragmentReceiver, filter);
     }
 
