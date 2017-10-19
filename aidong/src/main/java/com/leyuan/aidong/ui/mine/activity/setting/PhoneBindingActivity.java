@@ -125,8 +125,8 @@ public class PhoneBindingActivity extends BaseActivity implements View.OnClickLi
             new TimeCountUtil(60000, 1000, (Button) findViewById(R.id.btn_identify)).start();
 
         } else if (mDialogImageIdentify != null && mDialogImageIdentify.isShowing()) {
-            mDialogImageIdentify.clearContent();
-            mDialogImageIdentify.refreshImage(mobile);
+            mDialogImageIdentify.dismiss();
+//            mDialogImageIdentify.refreshImage(mobile);
         }
     }
 
@@ -162,8 +162,8 @@ public class PhoneBindingActivity extends BaseActivity implements View.OnClickLi
             DialogUtils.showDialog(this, "", true);
             presenter.bindingCaptcha(mobile);
         } else if (mDialogImageIdentify != null && mDialogImageIdentify.isShowing()) {
-            mDialogImageIdentify.dismiss();
-//            mDialogImageIdentify.refreshImage(mobile);
+            mDialogImageIdentify.clearContent();
+            mDialogImageIdentify.refreshImage(mobile);
         }
 
     }
