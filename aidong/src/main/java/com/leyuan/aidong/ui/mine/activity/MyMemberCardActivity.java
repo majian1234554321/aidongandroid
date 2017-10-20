@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.config.UrlConfig;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.utils.DeviceManager;
@@ -127,7 +128,7 @@ public class MyMemberCardActivity extends BaseActivity {
 //
         Map<String, String> map = new HashMap<>();
         map.put("mobile", App.getInstance().getUser().getMobile());
-        mWebView.loadUrl("http://opentest.aidong.me/app/cards", map);
+        mWebView.loadUrl(UrlConfig.BASE_URL_MEMBER_CARD+"app/cards", map);
     }
 
     @Override
@@ -245,9 +246,9 @@ public class MyMemberCardActivity extends BaseActivity {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result != null) {
             if (result.getContents() == null) {
-                Toast.makeText(this, "取消扫描", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "取消扫描", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, "扫描内容:" + result.getContents(), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "扫描成功", Toast.LENGTH_SHORT).show();
                 //调H5方法传递扫描结果
                 Logger.i(TAG, "扫描内容 : " + result.getContents());
 //                http://opentest.aidong.me/scan_code?c=7&s=57&key=0546290113b7bc06b46d9de621775b1c

@@ -31,5 +31,6 @@ public class UrlConfig {
     public static final String BASE_URL = urlHost;
     static final String BASE_URL_HTML = urlHtml;
     public static final String BASE_URL_VERSION = urlHostUpdata;
+    public static final String BASE_URL_MEMBER_CARD = urlMemberCard;
 }
 
