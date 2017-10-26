@@ -278,4 +278,11 @@
     <string name="send_the_meal_time">送餐时间</string>
     <string name="self_delivery_time">自提时间</string>
     <string name="ticket_competition">票务赛事</string>
+    <string name="course_list">课程表</string>
+    <string name="course">课程</string>
+    <string name="drugstore">门店</string>
+    <string name="time_frame">时段</string>
+    <string name="reset">重置</string>
+    <string name="my_branch">我的品牌</string>
+    <string name="other_branch">其他品牌</string>
 </resources>
