@@ -11,6 +11,7 @@
         android:orientation="vertical">
 
         <ImageView
+            android:id="@+id/img_coach"
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:layout_gravity="center_horizontal"
@@ -19,6 +20,7 @@
             />
 
         <TextView
+            android:id="@+id/txt_coach_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -36,6 +38,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/txt_course_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
@@ -44,6 +47,7 @@
             android:textSize="16sp" />
 
         <TextView
+            android:id="@+id/txt_course_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="9dp"
@@ -51,6 +55,7 @@
             android:textColor="@color/course_oringe"
             android:textSize="14sp" />
         <TextView
+            android:id="@+id/txt_course_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="9dp"
@@ -59,6 +64,7 @@
             android:textSize="13sp" />
 
         <TextView
+            android:id="@+id/txt_course_difficulty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="9dp"
@@ -73,6 +79,7 @@
         android:layout_height="match_parent"
         >
         <ImageView
+            android:id="@+id/img_course_state"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@color/red_origin"
@@ -84,6 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
+                android:id="@+id/txt_course_origin_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/course_black"
@@ -91,6 +99,7 @@
                 android:text="$ 69"
                 />
             <TextView
+                android:id="@+id/txt_course_member_price"
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

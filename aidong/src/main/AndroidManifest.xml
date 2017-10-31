@@ -327,6 +327,9 @@
             android:name=".ui.home.activity.CourseDetailActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.home.activity.CourseDetailNewActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.home.activity.CampaignActivity"
             android:screenOrientation="portrait" />
         <activity

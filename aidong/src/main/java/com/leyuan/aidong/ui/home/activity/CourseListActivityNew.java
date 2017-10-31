@@ -118,7 +118,7 @@ public class CourseListActivityNew extends BaseActivity implements CourseActivit
                 for (int i = 0; i < allTabView.size(); i++) {
                     View tabAt = tabLayout.getTabAt(i);
                     TextView text = (TextView) tabAt.findViewById(R.id.tv_tab_text);
-//                    text.setTypeface(i == position ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
+                    text.setTypeface(i == position ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
 
                     //reset fragment
                     CourseListFragmentNew page = (CourseListFragmentNew) adapter.getPage(position);

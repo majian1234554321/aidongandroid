@@ -98,5 +98,6 @@
     <color name="semitransparent_standard">#80000000</color>
     <color name="course_oringe">#d70916</color>
     <color name="course_black">#010101</color>
+    <color name="red_price">#d51121</color>
 
 </resources>

@@ -44,6 +44,7 @@ public class CourseListAdapterNew extends RecyclerView.Adapter<CourseListAdapter
 
     @Override
     public void onBindViewHolder(CourseViewHolder holder, int position) {
+
     }
 
     class CourseViewHolder extends RecyclerView.ViewHolder {

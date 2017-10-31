@@ -34,14 +34,13 @@
 
 
         </RelativeLayout>
-
+        <!--android:background="@color/common_divider_color"-->
         <com.ogaclejapan.smarttablayout.SmartTabLayout
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_top_bar"
             android:layout_centerInParent="true"
-            android:background="@color/common_divider_color"
-            app:stl_defaultTabTextColor="@color/course_oringe"
+            app:stl_defaultTabTextColor="@color/gray_normal"
             app:stl_defaultTabTextSize="16sp"
             app:stl_defaultTabBackground="?attr/selectableItemBackground"
             app:stl_indicatorColor="@color/course_oringe"
