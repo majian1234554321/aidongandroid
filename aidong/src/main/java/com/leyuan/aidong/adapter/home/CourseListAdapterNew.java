@@ -5,9 +5,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CourseBean;
+import com.leyuan.aidong.ui.home.activity.CourseDetailNewActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,13 +49,40 @@ public class CourseListAdapterNew extends RecyclerView.Adapter<CourseListAdapter
     @Override
     public void onBindViewHolder(CourseViewHolder holder, int position) {
 
+        holder.rootView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CourseDetailNewActivity.start(context,"1");
+            }
+        });
+
     }
 
     class CourseViewHolder extends RecyclerView.ViewHolder {
 
-        public CourseViewHolder(View itemView) {
-            super(itemView);
+        private ImageView imgCoach;
+        private TextView txtCoachName;
+        private TextView txtCourseName;
+        private TextView txtCourseTime;
+        private TextView txtCourseDesc;
+        private TextView txtCourseDifficulty;
+        private ImageView imgCourseState;
+        private TextView txtCourseOriginPrice;
+        private TextView txtCourseMemberPrice;
+        private LinearLayout rootView;
 
+        public CourseViewHolder(View view) {
+            super(view);
+            imgCoach = (ImageView) view.findViewById(R.id.img_coach);
+            txtCoachName = (TextView) view.findViewById(R.id.txt_coach_name);
+            txtCourseName = (TextView) view.findViewById(R.id.txt_course_name);
+            txtCourseTime = (TextView) view.findViewById(R.id.txt_course_time);
+            txtCourseDesc = (TextView) view.findViewById(R.id.txt_course_desc);
+            txtCourseDifficulty = (TextView) view.findViewById(R.id.txt_course_difficulty);
+            imgCourseState = (ImageView) view.findViewById(R.id.img_course_state);
+            txtCourseOriginPrice = (TextView) view.findViewById(R.id.txt_course_origin_price);
+            txtCourseMemberPrice = (TextView) view.findViewById(R.id.txt_course_member_price);
+            rootView = (LinearLayout) view.findViewById(R.id.rootView);
         }
     }
 }

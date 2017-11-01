@@ -38,6 +38,9 @@ public interface CouponService {
     @POST("mine/coupons/valid")
     Observable<BaseBean<CouponData>> getGoodsAvailableCoupon(@Field("items[]") String... items);
 
+    @POST("mine/coupons/{id}/obtain_coupon")
+    Observable<BaseBean<CouponData>> getGoodsTakableCoupon(@Path("id") String id);
+
     @FormUrlEncoded
     @POST("mine/coupons/share_coupon")
     Observable<BaseBean<ShareData>> getShareCoupon(@Field("order_no") String order_no);

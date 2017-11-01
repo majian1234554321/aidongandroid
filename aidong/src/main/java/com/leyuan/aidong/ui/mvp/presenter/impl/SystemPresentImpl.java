@@ -71,7 +71,7 @@ public class SystemPresentImpl implements SystemPresent {
                     splashView.onGetStartingBanner(null);
                 }
 
-                if(requestResponse != null){
+                if (requestResponse != null) {
                     requestResponse.onRequestResponse();
                 }
             }
@@ -88,21 +88,33 @@ public class SystemPresentImpl implements SystemPresent {
                     }
 
                     ArrayList<DistrictBean> landmark = systemBean.getLandmark();
-                    if(landmark != null && !landmark.isEmpty()) {
-                        List<DistrictDescBean> districtValues = landmark.get(0).getDistrictValues();
-                        DistrictDescBean descBean = new DistrictDescBean();
-                        descBean.setArea(context.getString(R.string.all_circle));
-                        districtValues.add(0,descBean);
-                        landmark.get(0).setDistrict_values(districtValues);
+                    if (landmark != null && !landmark.isEmpty()) {
+                        for (DistrictBean districtBean : landmark) {
+                            List<DistrictDescBean> districtValues = districtBean.getDistrictValues();
+
+                            DistrictDescBean descBean = new DistrictDescBean();
+                            descBean.setArea(context.getString(R.string.all_circle));
+                            districtValues.add(0, descBean);
+//                            landmark.get(0).setDistrict_values(districtValues);
+
+                        }
+
+//
+//                        List<DistrictDescBean> districtValues = landmark.get(0).getDistrictValues();
+//
+//                        DistrictDescBean descBean = new DistrictDescBean();
+//                        descBean.setArea(context.getString(R.string.all_circle));
+//                        districtValues.add(0, descBean);
+//                        landmark.get(0).setDistrict_values(districtValues);
                     }
 
                     ArrayList<CategoryBean> equipments = systemBean.getEquipment();
-                    if(equipments != null){
+                    if (equipments != null) {
                         CategoryBean allBean = new CategoryBean();
                         allBean.setName("全部");
                         allBean.setId("0");
                         equipments.add(0, allBean);
-                    }else {
+                    } else {
                         equipments = new ArrayList<>();
                         CategoryBean allBean = new CategoryBean();
                         allBean.setName("全部");
@@ -112,12 +124,12 @@ public class SystemPresentImpl implements SystemPresent {
                     }
 
                     ArrayList<CategoryBean> nutrition = systemBean.getNutrition();
-                    if(nutrition != null){
+                    if (nutrition != null) {
                         CategoryBean allBean = new CategoryBean();
                         allBean.setName("全部");
                         allBean.setId("0");
                         nutrition.add(0, allBean);
-                    }else{
+                    } else {
                         nutrition = new ArrayList<CategoryBean>();
                         CategoryBean allBean = new CategoryBean();
                         allBean.setName("全部");
@@ -127,12 +139,12 @@ public class SystemPresentImpl implements SystemPresent {
                     }
 
                     ArrayList<CategoryBean> foods = systemBean.getFoods();
-                    if(foods != null){
+                    if (foods != null) {
                         CategoryBean allBean = new CategoryBean();
                         allBean.setName("全部");
                         allBean.setId("0");
                         foods.add(0, allBean);
-                    }else {
+                    } else {
                         foods = new ArrayList<CategoryBean>();
                         CategoryBean allBean = new CategoryBean();
                         allBean.setName("全部");
@@ -142,12 +154,12 @@ public class SystemPresentImpl implements SystemPresent {
                     }
 
                     ArrayList<CategoryBean> tickets = systemBean.getTicket();
-                    if(tickets != null){
+                    if (tickets != null) {
                         CategoryBean allBean = new CategoryBean();
                         allBean.setName("全部");
                         allBean.setId("0");
                         tickets.add(0, allBean);
-                    }else {
+                    } else {
                         tickets = new ArrayList<CategoryBean>();
                         CategoryBean allBean = new CategoryBean();
                         allBean.setName("全部");
@@ -157,7 +169,7 @@ public class SystemPresentImpl implements SystemPresent {
                     }
 
                     ArrayList<String> types = systemBean.getGymTypes();
-                    if(types != null){
+                    if (types != null) {
                         types.add(0, "全部类型");
                     }
 
@@ -177,13 +189,13 @@ public class SystemPresentImpl implements SystemPresent {
                             }
                         }
                     }
-                    if (splashView != null){
+                    if (splashView != null) {
                         splashView.onGetStartingBanner(startingUpBanner);
                     }
 
                     LogAidong.i("mLocationClient   SystemInfoUtils.putSystemInfoBean");
 
-                    if(requestResponse != null){
+                    if (requestResponse != null) {
                         requestResponse.onRequestResponse();
                     }
 
@@ -219,21 +231,31 @@ public class SystemPresentImpl implements SystemPresent {
                 }
 
                 ArrayList<DistrictBean> landmark = systemBean.getLandmark();
-                if(landmark != null && !landmark.isEmpty()) {
-                    List<DistrictDescBean> districtValues = landmark.get(0).getDistrictValues();
-                    DistrictDescBean descBean = new DistrictDescBean();
-                    descBean.setArea(context.getString(R.string.all_circle));
-                    districtValues.add(0,descBean);
-                    landmark.get(0).setDistrict_values(districtValues);
+                if (landmark != null && !landmark.isEmpty()) {
+                    for (DistrictBean districtBean : landmark) {
+                        List<DistrictDescBean> districtValues = districtBean.getDistrictValues();
+
+                        DistrictDescBean descBean = new DistrictDescBean();
+                        descBean.setArea(context.getString(R.string.all_circle));
+                        districtValues.add(0, descBean);
+//                        landmark.get(0).setDistrict_values(districtValues);
+
+                    }
+
+//                    List<DistrictDescBean> districtValues = landmark.get(0).getDistrictValues();
+//                    DistrictDescBean descBean = new DistrictDescBean();
+//                    descBean.setArea(context.getString(R.string.all_circle));
+//                    districtValues.add(0, descBean);
+//                    landmark.get(0).setDistrict_values(districtValues);
                 }
 
                 ArrayList<CategoryBean> equipments = systemBean.getEquipment();
-                if(equipments != null){
+                if (equipments != null) {
                     CategoryBean allBean = new CategoryBean();
                     allBean.setName("全部");
                     allBean.setId("0");
                     equipments.add(0, allBean);
-                }else {
+                } else {
                     equipments = new ArrayList<>();
                     CategoryBean allBean = new CategoryBean();
                     allBean.setName("全部");
@@ -243,12 +265,12 @@ public class SystemPresentImpl implements SystemPresent {
                 }
 
                 ArrayList<CategoryBean> nutrition = systemBean.getNutrition();
-                if(nutrition != null){
+                if (nutrition != null) {
                     CategoryBean allBean = new CategoryBean();
                     allBean.setName("全部");
                     allBean.setId("0");
                     nutrition.add(0, allBean);
-                }else{
+                } else {
                     nutrition = new ArrayList<CategoryBean>();
                     CategoryBean allBean = new CategoryBean();
                     allBean.setName("全部");
@@ -258,12 +280,12 @@ public class SystemPresentImpl implements SystemPresent {
                 }
 
                 ArrayList<CategoryBean> foods = systemBean.getFoods();
-                if(foods != null){
+                if (foods != null) {
                     CategoryBean allBean = new CategoryBean();
                     allBean.setName("全部");
                     allBean.setId("0");
                     foods.add(0, allBean);
-                }else {
+                } else {
                     foods = new ArrayList<CategoryBean>();
                     CategoryBean allBean = new CategoryBean();
                     allBean.setName("全部");
@@ -273,12 +295,12 @@ public class SystemPresentImpl implements SystemPresent {
                 }
 
                 ArrayList<CategoryBean> tickets = systemBean.getTicket();
-                if(tickets != null){
+                if (tickets != null) {
                     CategoryBean allBean = new CategoryBean();
                     allBean.setName("全部");
                     allBean.setId("0");
                     tickets.add(0, allBean);
-                }else {
+                } else {
                     tickets = new ArrayList<CategoryBean>();
                     CategoryBean allBean = new CategoryBean();
                     allBean.setName("全部");
@@ -288,7 +310,7 @@ public class SystemPresentImpl implements SystemPresent {
                 }
 
                 ArrayList<String> types = systemBean.getGymTypes();
-                if(types != null){
+                if (types != null) {
                     types.add(0, "全部类型");
                 }
 

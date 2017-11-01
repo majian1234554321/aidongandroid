@@ -53,4 +53,6 @@ public interface CouponModel {
     void getSpecifyGoodsCoupon(Subscriber<CouponData> subscriber, @CouponPosition String from, String... id);
 
     void getGoodsAvailableCoupon(Subscriber<CouponData> subscriber, String... items);
+
+    void getGoodsDetailCoupon(Subscriber<CouponData> subscriber, String id);
 }

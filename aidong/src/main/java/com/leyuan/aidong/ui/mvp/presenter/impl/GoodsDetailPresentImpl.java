@@ -4,12 +4,15 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
 import com.leyuan.aidong.entity.VenuesBean;
+import com.leyuan.aidong.entity.data.CouponData;
 import com.leyuan.aidong.entity.data.GoodsDetailData;
 import com.leyuan.aidong.entity.data.VenuesData;
 import com.leyuan.aidong.http.subscriber.CommonSubscriber;
 import com.leyuan.aidong.http.subscriber.IsLoginSubscriber;
+import com.leyuan.aidong.http.subscriber.ProgressSubscriber;
 import com.leyuan.aidong.http.subscriber.RefreshSubscriber;
 import com.leyuan.aidong.http.subscriber.RequestMoreSubscriber;
+import com.leyuan.aidong.ui.mvp.model.impl.CouponModelImpl;
 import com.leyuan.aidong.ui.mvp.model.impl.GoodsModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.GoodsDetailPresent;
 import com.leyuan.aidong.ui.mvp.view.GoodsDetailActivityView;
@@ -34,6 +37,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
 //    private FoodModel foodModel;
     private List<VenuesBean> venuesBeanList = new ArrayList<>();
     private GoodsModelImpl goodsModel;
+    private CouponModelImpl couponModel;
 
     public GoodsDetailPresentImpl(Context context, GoodsDetailActivityView view) {
         this.context = context;
@@ -46,7 +50,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
     }
 
     @Override
-    public void getGoodsDetail( String type, String id) {
+    public void getGoodsDetail(String type, String id) {
         if (goodsModel == null) {
             goodsModel = new GoodsModelImpl(context);
         }
@@ -62,6 +66,19 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
     }
 
     @Override
+    public void getGoodsDetailCoupon(String goodsId) {
+        if (couponModel == null) {
+            couponModel = new CouponModelImpl();
+        }
+        couponModel.getGoodsDetailCoupon(new ProgressSubscriber<CouponData>(context) {
+            @Override
+            public void onNext(CouponData couponData) {
+                goodsDetailView.setGoodsDetailCoupon(couponData.getCoupons());
+            }
+        }, goodsId);
+    }
+
+    @Override
     public void getGoodsDetail(final SwitcherLayout switcherLayout, String type, String id) {
         if (type == null) return;
         if (goodsModel == null) {
@@ -73,7 +90,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                 if (equipmentDetailData != null && equipmentDetailData.getProduct() != null) {
                     goodsDetailView.setGoodsDetail(equipmentDetailData.getProduct());
                     switcherLayout.showContentLayout();
-                }else {
+                } else {
                     switcherLayout.showEmptyLayout();
                 }
 
@@ -107,7 +124,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                     venuesActivityView.showEmptyView();
                 }
             }
-        },type, sku, Constant.PAGE_FIRST, brandId, landmark);
+        }, type, sku, Constant.PAGE_FIRST, brandId, landmark);
 
     }
 
@@ -129,7 +146,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                     venuesActivityView.showEmptyView();
                 }
             }
-        }, type,sku, Constant.PAGE_FIRST, brandId, landmark);
+        }, type, sku, Constant.PAGE_FIRST, brandId, landmark);
 
     }
 
@@ -152,9 +169,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                     venuesActivityView.showEndFooterView();
                 }
             }
-        },type, sku, page, brandId, landmark);
-
-
+        }, type, sku, page, brandId, landmark);
 
 
     }

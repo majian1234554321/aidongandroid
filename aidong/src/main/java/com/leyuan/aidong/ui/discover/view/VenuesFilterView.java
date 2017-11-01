@@ -304,7 +304,7 @@ public class VenuesFilterView extends LinearLayout implements View.OnClickListen
                 String address = rightCircleList.get(rightSelectedPosition).getArea();
                 tvCircle.setText(address);
                 if (onFilterClickListener != null) {
-                    onFilterClickListener.onBusinessCircleItemClick(context.getString(R.string.all_circle).equals(address) ? "" :address);
+                    onFilterClickListener.onBusinessCircleItemClick(leftCircleList.get(leftSelectedPosition).getDistrictName(),context.getString(R.string.all_circle).equals(address) ? "" :address);
                 }
             }
         });
@@ -362,7 +362,7 @@ public class VenuesFilterView extends LinearLayout implements View.OnClickListen
     public interface OnFilterClickListener {
         void onBrandItemClick(String brandId);
 
-        void onBusinessCircleItemClick(String address);
+        void onBusinessCircleItemClick(String area,String address);
 
         void onTypeItemClick(String type);
     }

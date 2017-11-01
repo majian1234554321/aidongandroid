@@ -39,6 +39,7 @@ import java.util.List;
  */
 public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenuesActivityView {
     private static final int HIDE_THRESHOLD = 80;
+
     private int scrolledDistance;
     private boolean filterViewVisible = true;
 
@@ -59,6 +60,7 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
     private String brand_id;
     private String landmark;
     private String gymTypes;
+    private  String bussiness_area;
 
 
     public static void start(Context context, @Nullable String brand_id) {
@@ -79,7 +81,7 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
         venuesPresent.getGymBrand();
         venuesPresent.getBusinessCircle();
         venuesPresent.getGymTypes();
-        venuesPresent.commonLoadData(switcherLayout, brand_id, landmark, gymTypes);
+        venuesPresent.commonLoadData(switcherLayout, brand_id, landmark,bussiness_area, gymTypes);
     }
 
     private void initView() {
@@ -121,7 +123,7 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
     private void refreshData() {
         currPage = 1;
         RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-        venuesPresent.pullToRefreshData(brand_id, landmark, gymTypes);
+        venuesPresent.pullToRefreshData(brand_id, landmark,bussiness_area, gymTypes);
     }
 
     private void initRecyclerView() {
@@ -144,8 +146,9 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
             }
 
             @Override
-            public void onBusinessCircleItemClick(String address) {
+            public void onBusinessCircleItemClick(String area,String address) {
                 landmark = address;
+                bussiness_area = area;
                 refreshData();
             }
 
@@ -162,7 +165,7 @@ public class DiscoverVenuesActivity extends BaseActivity implements DiscoverVenu
         public void onLoadNextPage(View view) {
             currPage++;
             if (data != null && data.size() >= pageSize) {
-                venuesPresent.requestMoreData(recyclerView, pageSize, currPage, brand_id, landmark, gymTypes);
+                venuesPresent.requestMoreData(recyclerView, pageSize, currPage, brand_id, landmark,bussiness_area, gymTypes);
             }
         }
 

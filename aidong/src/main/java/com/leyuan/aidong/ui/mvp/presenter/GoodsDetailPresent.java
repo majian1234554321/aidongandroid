@@ -18,6 +18,8 @@ public interface GoodsDetailPresent {
      */
     void getGoodsDetail(String type,String id);
 
+    void getGoodsDetailCoupon(String goodsId);
+
     /**
      * 获取商品详情
      * @param switcherLayout SwitcherLayout

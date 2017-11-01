@@ -117,7 +117,7 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
             }
 
             @Override
-            public void onBusinessCircleItemClick(String address) {
+            public void onBusinessCircleItemClick(String area,String address) {
                 businessCircle = address;
                 refreshLayout.setRefreshing(true);
                 goodsPresent.pullToRefreshVenues(goodsType, goodsId, brandId, businessCircle);

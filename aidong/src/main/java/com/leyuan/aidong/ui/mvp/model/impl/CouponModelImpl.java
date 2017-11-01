@@ -66,4 +66,11 @@ public class CouponModelImpl implements CouponModel {
                 .compose(RxHelper.<CouponData>transform())
                 .subscribe(subscriber);
     }
+
+    @Override
+    public void getGoodsDetailCoupon(Subscriber<CouponData> subscriber, String id) {
+        couponService.getGoodsTakableCoupon(id)
+                .compose(RxHelper.<CouponData>transform())
+                .subscribe(subscriber);
+    }
 }

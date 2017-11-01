@@ -28,6 +28,7 @@ public interface VenuesService {
     @GET("gyms")
     Observable<BaseBean<VenuesData>> getVenues(@Query("page") int page, @Query("brand_id") String brand_id,
                                                @Query("landmark") String landmark,
+                                               @Query("area") String area,
                                                @Query("gym_types") String gymTypes);
 
     /**

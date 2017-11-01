@@ -1,6 +1,9 @@
 package com.leyuan.aidong.ui.mvp.view;
 
+import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.entity.GoodsDetailBean;
+
+import java.util.List;
 
 /**
  * 商品详情 包含装备、健康餐饮、营养品
@@ -17,4 +20,5 @@ public interface GoodsDetailActivityView {
 
     void showErrorView();
 
+    void setGoodsDetailCoupon(List<CouponBean> coupons);
 }

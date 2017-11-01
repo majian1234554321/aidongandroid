@@ -30,12 +30,12 @@ public interface VenuesPresent {
      *
      * @param switcherLayout SwitcherLayout
      */
-    void commonLoadData(SwitcherLayout switcherLayout, String brand_id, String landmark,String gymTypes);
+    void commonLoadData(SwitcherLayout switcherLayout, String brand_id, String landmark,String area,String gymTypes);
 
     /**
      * 下拉刷新场馆列表数据
      */
-    void pullToRefreshData(String brand_id, String landmark,String gymTypes);
+    void pullToRefreshData(String brand_id, String landmark,String area,String gymTypes);
 
     /**
      * 上拉加载更多场馆列表数据
@@ -43,7 +43,7 @@ public interface VenuesPresent {
      * @param recyclerView RecyclerView
      * @param page         页码
      */
-    void requestMoreData(RecyclerView recyclerView, int pageSize, int page, String brand_id, String landmark,String gymTypes);
+    void requestMoreData(RecyclerView recyclerView, int pageSize, int page, String brand_id, String landmark,String area,String gymTypes);
 
     /**
      * 获取场馆详情

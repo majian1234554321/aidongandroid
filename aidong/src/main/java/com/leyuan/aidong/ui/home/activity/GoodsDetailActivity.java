@@ -34,6 +34,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.GoodsDetailCouponAdapter;
 import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.BaseBean;
+import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.entity.DeliveryBean;
 import com.leyuan.aidong.entity.GoodsDetailBean;
 import com.leyuan.aidong.entity.GoodsSkuBean;
@@ -47,7 +48,6 @@ import com.leyuan.aidong.ui.home.fragment.GoodsServiceFragment;
 import com.leyuan.aidong.ui.home.view.GoodsSkuPopupWindow;
 import com.leyuan.aidong.ui.mine.activity.CartActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
-import com.leyuan.aidong.ui.mvp.model.CouponModel;
 import com.leyuan.aidong.ui.mvp.model.impl.CouponModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.GoodsDetailPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.GoodsDetailPresentImpl;
@@ -146,17 +146,19 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            switch (intent.getAction()){
+            switch (intent.getAction()) {
                 case Constant.BROADCAST_ACTION_GOODS_PAY_FAIL:
                 case Constant.BROADCAST_ACTION_GOODS_PAY_SUCCESS:
                     finish();
                     break;
                 case Constant.BROADCAST_ACTION_LOGIN_SUCCESS:
                     goodsPresent.getGoodsDetail(switcherLayout, goodsType, goodsId);
+                    goodsPresent.getGoodsDetailCoupon(goodsId);
                     break;
             }
         }
     };
+    private CouponModelImpl model;
 
     public static void start(Context context, String goodsId, String type) {
         Intent starter = new Intent(context, GoodsDetailActivity.class);
@@ -184,6 +186,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         initView();
         setListener();
         goodsPresent.getGoodsDetail(switcherLayout, goodsType, goodsId);
+        goodsPresent.getGoodsDetailCoupon(goodsId);
     }
 
     private void initBroadCastReceiver() {
@@ -192,7 +195,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         filter.addAction(Constant.BROADCAST_ACTION_GOODS_PAY_SUCCESS);
         filter.addAction(Constant.BROADCAST_ACTION_GOODS_PAY_FAIL);
         filter.addAction(Constant.BROADCAST_ACTION_LOGIN_SUCCESS);
-        LocalBroadcastManager.getInstance(this).registerReceiver(receiver,filter);
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
     }
 
     @Override
@@ -207,6 +210,16 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     public void showErrorView() {
         switcherLayout.showExceptionLayout();
         ivShare.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setGoodsDetailCoupon(List<CouponBean> coupons) {
+        if (coupons == null || coupons.isEmpty()) {
+            couponLayout.setVisibility(View.GONE);
+        } else {
+            couponAdapter.setData(bean.coupon);
+            couponLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     private void initView() {
@@ -318,7 +331,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.tv_add_cart:
                 //|| ((GOODS_NUTRITION.equals(goodsType) && goodsIdInteger > Constant.GOODS_FOODS_START_INDEX))
-                if (GOODS_FOODS.equals(goodsType) ) {
+                if (GOODS_FOODS.equals(goodsType)) {
                     ToastGlobal.showShortConsecutive(R.string.goods_can_not_add_into_cart);
                 } else {
                     showSkuPopupWindow(GoodsSkuPopupWindow.GoodsStatus.ConfirmToAddCart);
@@ -354,12 +367,12 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         }
         tvGoodsName.setText(bean.name);
 
-        if (bean.coupon == null || bean.coupon.isEmpty()) {
-            couponLayout.setVisibility(View.GONE);
-        } else {
-            couponAdapter.setData(bean.coupon);
-            couponLayout.setVisibility(View.VISIBLE);
-        }
+//        if (bean.coupon == null || bean.coupon.isEmpty()) {
+//            couponLayout.setVisibility(View.GONE);
+//        } else {
+//            couponAdapter.setData(bean.coupon);
+//            couponLayout.setVisibility(View.VISIBLE);
+//        }
 
         for (GoodsSkuBean goodsSkuBean : bean.spec.item) {
             if (goodsSkuBean.getStock() != 0) {
@@ -540,6 +553,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             startActivity(new Intent(this, CartActivity.class));
         } else if (requestCode == Constant.REQUEST_LOGIN) {
             goodsPresent.getGoodsDetail(goodsType, goodsId);
+            goodsPresent.getGoodsDetailCoupon(goodsId);
         }
     }
 
@@ -577,7 +591,9 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onObtainCoupon(final int position) {
         if (App.mInstance.isLogin()) {
-            CouponModel model = new CouponModelImpl();
+            if (model == null) {
+                model = new CouponModelImpl();
+            }
             model.obtainCoupon(new ProgressSubscriber<BaseBean>(this) {
                 @Override
                 public void onNext(BaseBean baseBean) {

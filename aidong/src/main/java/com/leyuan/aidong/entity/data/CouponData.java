@@ -10,6 +10,15 @@ import java.util.List;
  */
 public class CouponData {
     private List<CouponBean> coupon;
+    private List<CouponBean> coupons;
+
+    public List<CouponBean> getCoupons() {
+        return coupons;
+    }
+
+    public void setCoupons(List<CouponBean> coupons) {
+        this.coupons = coupons;
+    }
 
     public List<CouponBean> getCoupon() {
         return coupon;

@@ -132,7 +132,7 @@ public class VenuesPresentImpl implements VenuesPresent {
     }
 
     @Override
-    public void commonLoadData(final SwitcherLayout switcherLayout, String brand_id, String landmark,String gymTypes) {
+    public void commonLoadData(final SwitcherLayout switcherLayout, String brand_id, String landmark,String area,String gymTypes) {
         venuesModel.getVenues(new CommonSubscriber<VenuesData>(context,switcherLayout) {
             @Override
             public void onNext(VenuesData venuesData) {
@@ -146,11 +146,11 @@ public class VenuesPresentImpl implements VenuesPresent {
                     discoverVenuesActivityView.showEmptyView();
                 }
             }
-        }, Constant.PAGE_FIRST, brand_id, landmark,gymTypes);
+        }, Constant.PAGE_FIRST, brand_id, landmark,area, gymTypes);
     }
 
     @Override
-    public void pullToRefreshData(String brand_id, String landmark,String gymTypes) {
+    public void pullToRefreshData(String brand_id, String landmark,String area,String gymTypes) {
         venuesModel.getVenues(new RefreshSubscriber<VenuesData>(context) {
             @Override
             public void onNext(VenuesData venuesData) {
@@ -168,12 +168,12 @@ public class VenuesPresentImpl implements VenuesPresent {
                     }
                 }
             }
-        }, Constant.PAGE_FIRST, brand_id, landmark,gymTypes);
+        }, Constant.PAGE_FIRST, brand_id, landmark,area,gymTypes);
     }
 
     @Override
     public void requestMoreData(RecyclerView recyclerView, final int pageSize, int page, String brand_id,
-                                String landmark,String gymTypes) {
+                                String landmark,String area,String gymTypes) {
         venuesModel.getVenues(new RequestMoreSubscriber<VenuesData>(context, recyclerView, pageSize) {
             @Override
             public void onNext(VenuesData venuesData) {
@@ -188,7 +188,7 @@ public class VenuesPresentImpl implements VenuesPresent {
                     discoverVenuesActivityView.showEndFooterView();
                 }
             }
-        }, page, brand_id, landmark,gymTypes);
+        }, page, brand_id, landmark,area,gymTypes);
     }
 
     @Override
