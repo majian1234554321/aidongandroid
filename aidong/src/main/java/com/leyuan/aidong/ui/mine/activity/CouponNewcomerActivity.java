@@ -37,6 +37,12 @@ public class CouponNewcomerActivity extends BaseActivity implements View.OnClick
         context.startActivity(intent);
     }
 
+    public static void start(Context context) {
+        Intent intent = new Intent(context, CouponNewcomerActivity.class);
+        context.startActivity(intent);
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

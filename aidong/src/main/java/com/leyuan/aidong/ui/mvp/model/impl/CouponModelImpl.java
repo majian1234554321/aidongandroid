@@ -9,6 +9,8 @@ import com.leyuan.aidong.http.RxHelper;
 import com.leyuan.aidong.http.api.CouponService;
 import com.leyuan.aidong.ui.mvp.model.CouponModel;
 
+import java.util.ArrayList;
+
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -66,6 +68,14 @@ public class CouponModelImpl implements CouponModel {
                 .compose(RxHelper.<CouponData>transform())
                 .subscribe(subscriber);
     }
+
+    @Override
+    public void getGoodsAvailableCoupon(Subscriber<CouponData> subscriber, ArrayList<String> items, ArrayList<String> gymid) {
+        couponService.getGoodsAvailableCoupon(items,gymid)
+                .compose(RxHelper.<CouponData>transform())
+                .subscribe(subscriber);
+    }
+
 
     @Override
     public void getGoodsDetailCoupon(Subscriber<CouponData> subscriber, String id) {

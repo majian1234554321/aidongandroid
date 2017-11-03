@@ -29,6 +29,7 @@ import com.leyuan.aidong.ui.mvp.presenter.ConfirmOrderPresent;
 import com.leyuan.aidong.ui.mvp.view.ConfirmOrderActivityView;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -93,7 +94,7 @@ public class ConfirmOrderPresentImpl implements ConfirmOrderPresent {
     }
 
     @Override
-    public void getGoodsAvailableCoupon(String... items) {
+    public void getGoodsAvailableCoupon(ArrayList<String> items,ArrayList<String> gym_ids) {
         if (couponModel == null) {
             couponModel = new CouponModelImpl();
         }
@@ -104,7 +105,7 @@ public class ConfirmOrderPresentImpl implements ConfirmOrderPresent {
                     orderActivityView.setSpecifyGoodsCouponResult(couponData.getCoupon());//maybe null
                 }
             }
-        }, items);
+        }, items,gym_ids);
     }
 
     @Override

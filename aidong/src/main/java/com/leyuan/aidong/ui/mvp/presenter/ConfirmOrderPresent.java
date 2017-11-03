@@ -4,6 +4,8 @@ import com.leyuan.aidong.entity.ShareData;
 import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
+import java.util.ArrayList;
+
 /**
  * 确定订单
  * Created by song on 2016/9/1.
@@ -27,7 +29,7 @@ public interface ConfirmOrderPresent {
     void getSpecifyGoodsCoupon(String from, String... id);
 
 
-    void getGoodsAvailableCoupon(String... items);
+    void getGoodsAvailableCoupon(ArrayList<String> items,ArrayList<String> gym_ids);
 
     /**
      * 立即购买装备

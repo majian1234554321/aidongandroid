@@ -143,6 +143,7 @@ public class PhoneBindingActivity extends BaseActivity implements View.OnClickLi
                 new MineInfoPresenterImpl(this, new MineInfoView() {
                     @Override
                     public void onGetMineInfo(MineInfoBean mineInfoBean) {
+
                         finish();
                     }
                 }).getMineInfo();

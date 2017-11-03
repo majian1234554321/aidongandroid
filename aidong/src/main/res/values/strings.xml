@@ -294,4 +294,8 @@
     <string name="cancel_queue">取消排队</string>
     <string name="more_course">更多课程</string>
     <string name="queue_confirm">确认排队</string>
+    <string name="queue_immediately">立即排队</string>
+    <string name="confirm_order">确认订单</string>
+    <string name="course_order_hint">温馨提示:付费课程可在开课前48小时取消退款!</string>
+    <string name="pay_immediately">立即支付</string>
 </resources>

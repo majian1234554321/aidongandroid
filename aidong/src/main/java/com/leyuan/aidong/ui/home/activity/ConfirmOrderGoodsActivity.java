@@ -127,7 +127,9 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
     private String addressId;                         //购物车结算时快递地址id
     private String pickUpDate;                        //自提时间
     private String[] itemIds;
-    private String[] itemFromIdAmount;
+    private  ArrayList<String>  itemFromIdAmount = new ArrayList<>();
+    private ArrayList<String> pickUpIds = new ArrayList<>();
+
     @SettlementType
     private String settlementType;
     private double totalGoodsPrice;
@@ -168,7 +170,10 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
             bottomLayout.setVisibility(View.GONE);
             present.getDefaultAddress(switcherLayout);
         }
-        present.getGoodsAvailableCoupon(itemFromIdAmount);
+
+        pickUpIds.clear();
+        pickUpIds.add(pickUpId);
+        present.getGoodsAvailableCoupon(itemFromIdAmount,pickUpIds);
     }
 
 
@@ -199,12 +204,12 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
             }
         }
         itemIds = new String[goodsList.size()];
-        itemFromIdAmount = new String[goodsList.size()];
+//        itemFromIdAmount = new String[goodsList.size()];
 
         for (int i = 0; i < goodsList.size(); i++) {
             itemIds[i] = goodsList.get(i).getId();
-            itemFromIdAmount[i] = goodsList.get(i).getCouponGoodsType() + "_"
-                    + goodsList.get(i).getCode() + "_" + goodsList.get(i).getAmount();
+            itemFromIdAmount.add(goodsList.get(i).getCouponGoodsType() + "_"
+                    + goodsList.get(i).getCode() + "_" + goodsList.get(i).getAmount());
         }
     }
 
@@ -520,6 +525,11 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
                 .append(address.getDistrict()).append(address.getAddress());
         tvAddress.setText(sb);
         pickUpId = address.getId();
+
+
+        pickUpIds.clear();
+        pickUpIds.add(pickUpId);
+        present.getGoodsAvailableCoupon(itemFromIdAmount,pickUpIds);
 
     }
 

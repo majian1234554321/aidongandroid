@@ -6,6 +6,8 @@ import com.leyuan.aidong.entity.data.CouponData;
 import com.leyuan.aidong.entity.user.CouponDataSingle;
 import com.leyuan.aidong.utils.constant.CouponPosition;
 
+import java.util.ArrayList;
+
 import rx.Subscriber;
 
 /**
@@ -53,6 +55,8 @@ public interface CouponModel {
     void getSpecifyGoodsCoupon(Subscriber<CouponData> subscriber, @CouponPosition String from, String... id);
 
     void getGoodsAvailableCoupon(Subscriber<CouponData> subscriber, String... items);
+
+    void getGoodsAvailableCoupon(Subscriber<CouponData> subscriber, ArrayList<String> items, ArrayList<String> gym_id);
 
     void getGoodsDetailCoupon(Subscriber<CouponData> subscriber, String id);
 }

@@ -299,12 +299,15 @@ public class VenuesFilterView extends LinearLayout implements View.OnClickListen
                 leftSelectedPosition = tempLeftPosition;             //改变左边选中item的状态
                 leftCircleAdapter.setSelectedBean(leftCircleList.get(leftSelectedPosition));
 
+                String selectArea = leftCircleList.get(leftSelectedPosition).getDistrictName();
+
                 rightSelectedPosition = rightPosition;           //改变右边选中item
                 rightCircleAdapter.setSelectedBean(rightCircleList.get(rightSelectedPosition));
                 String address = rightCircleList.get(rightSelectedPosition).getArea();
                 tvCircle.setText(address);
                 if (onFilterClickListener != null) {
-                    onFilterClickListener.onBusinessCircleItemClick(leftCircleList.get(leftSelectedPosition).getDistrictName(),context.getString(R.string.all_circle).equals(address) ? "" :address);
+                    onFilterClickListener.onBusinessCircleItemClick("热门商圈".equals(selectArea) ? "" :selectArea,
+                            context.getString(R.string.all_circle).equals(address) ? "" :address);
                 }
             }
         });

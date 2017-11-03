@@ -133,6 +133,10 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
     private String pickUpDate;                        //自提时间
     private String[] itemIds;
     private String[] itemFromIdAmount;
+
+    private  ArrayList<String>  itemFromIdAmount = new ArrayList<>();
+    private ArrayList<String> pickUpIds = new ArrayList<>();
+
     @SettlementType
     private String settlementType;
     private double totalGoodsPrice;
