@@ -23,6 +23,7 @@ import com.leyuan.aidong.receivers.NewPushMessageReceiver;
 import com.leyuan.aidong.ui.discover.fragment.DiscoverHomeFragment;
 import com.leyuan.aidong.ui.home.fragment.HomeFragment;
 import com.leyuan.aidong.ui.home.fragment.StoreFragment;
+import com.leyuan.aidong.ui.mine.activity.CouponNewcomerActivity;
 import com.leyuan.aidong.ui.mine.activity.setting.PhoneBindingActivity;
 import com.leyuan.aidong.ui.mine.fragment.MineFragment;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VersionPresenterImpl;
@@ -128,8 +129,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 img_new_circle_message.setVisibility(View.VISIBLE);
             } else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_CLEAR_CMD_MESSAGE)) {
                 img_new_circle_message.setVisibility(View.GONE);
-            }else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_EXIT_LOGIN)) {
-//                img_new_circle_message.setVisibility(View.GONE);
+            }else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_NEW_USER_REGISTER)) {
+                CouponNewcomerActivity.start(MainActivity.this);
             }
             Logger.i("mainActivityReceiver", "onReceive action = " + intent.getAction());
         }
@@ -147,6 +148,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         filter.addAction(Constant.BROADCAST_ACTION_RECEIVER_CMD_MESSAGE);
         filter.addAction(Constant.BROADCAST_ACTION_CLEAR_CMD_MESSAGE);
         filter.addAction(Constant.BROADCAST_ACTION_EXIT_LOGIN);
+        filter.addAction(Constant.BROADCAST_ACTION_NEW_USER_REGISTER);
         LocalBroadcastManager.getInstance(this).registerReceiver(mainActivityReceiver, filter);
 
     }

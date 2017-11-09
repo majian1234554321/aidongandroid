@@ -115,10 +115,11 @@ public class LoginPresenter implements LoginPresenterInterface {
             @Override
             public void onNext(LoginResult user) {
                 Logger.i("loginSns", "onNext");
+                Logger.i("LoginResult jsonobject",user.getProfile_info().toString());
                 App.getInstance().setUser(user.getUser());
                 if (loginViewInterface != null) {
                     if (TextUtils.isEmpty(user.getUser().getMobile())) {
-                        loginViewInterface.needBindingPhone(user.getUser(), user.getCoupons());
+                        loginViewInterface.snsNeedBindingPhone(user);
                     } else {
                         loginViewInterface.loginResult(user.getUser(), user.getCoupons());
                     }

@@ -10,7 +10,11 @@ public interface RegisterPresenterInterface {
 
     void checkIdentifyBinding( String captcha);
 
+    void checkIdentifyBindingSns(String captcha);
+
     void bindingCaptcha(String mobile);
+
+    void bindingCaptchaSns(String mobile, String profile_info, String type);
 
     void unbindingCaptcha(String mobile);
 

@@ -259,13 +259,13 @@ public class AppointCourseActivity extends BaseActivity implements View.OnClickL
                 CouponBean couponBean = data.getParcelableExtra("coupon");
                 selectedUserCouponId = couponBean.getUser_coupon_id();
                 couponId = couponBean.getId();
-                tvCoupon.setText(FormatUtil.parseDouble(couponBean.getDiscount()) != 0
+                tvCoupon.setText(FormatUtil.parseDouble(couponBean.getActual()) != 0
                         ? String.format(getString(R.string.rmb_minus_price_double),
-                        FormatUtil.parseDouble(couponBean.getDiscount())) : getString(R.string.please_select));
+                        FormatUtil.parseDouble(couponBean.getActual())) : getString(R.string.please_select));
                 tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double),
-                        FormatUtil.parseDouble(couponBean.getDiscount())));
+                        FormatUtil.parseDouble(couponBean.getActual())));
                 tvPrice.setText(String.format(getString(R.string.rmb_price_double),
-                        FormatUtil.parseDouble(bean.getPrice()) - FormatUtil.parseDouble(couponBean.getDiscount())));
+                        FormatUtil.parseDouble(bean.getPrice()) - FormatUtil.parseDouble(couponBean.getActual())));
             }
         }
     }

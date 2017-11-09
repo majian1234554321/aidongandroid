@@ -10,6 +10,8 @@ public interface RegisterModelInterface {
     void foundIdentify(Subscriber<UserCoach> subscriber, String mobile);
     void bindingCaptcha(Subscriber<UserCoach> subscriber, String mobile);
 
+    void bindingCaptchaSns(Subscriber<UserCoach> subscriber, String mobile, String profile_info, String type);
+
     void unbindingCaptcha(Subscriber<UserCoach> subscriber, String mobile);
 
 

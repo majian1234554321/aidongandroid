@@ -2,7 +2,6 @@ package com.leyuan.aidong.adapter.mine;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CouponBean;
-import com.leyuan.aidong.utils.Constant;
 
 import java.util.List;
 
@@ -55,12 +53,14 @@ public class CouponNewcomerAdapter extends RecyclerView.Adapter<CouponNewcomerAd
 
         //与优惠劵类型无关
         holder.tvName.setText(bean.getName());
-        holder.tvCouponPrice.setText(bean.getDiscount());
-        if (TextUtils.equals(bean.getMin(), Constant.NEGATIVE_ONE)) {
-            holder.tvUseMoney.setText("指定支付价格");
-        } else {
-            holder.tvUseMoney.setText(String.format(context.getString(R.string.user_condition), bean.getMin()));
-        }
+        holder.tvRmbFlag.setText(bean.getDiscountSign());
+        holder.tvCouponPrice.setText(bean.getDiscountNumber());
+//        if (TextUtils.equals(bean.getMin(), Constant.NEGATIVE_ONE)) {
+//            holder.tvUseMoney.setText("指定支付价格");
+//        } else {
+//            holder.tvUseMoney.setText(String.format(context.getString(R.string.user_condition), bean.getMin()));
+//        }
+        holder.tvUseMoney.setText(bean.getCouponDesc());
 //        holder.tvCouponType.setText(bean.getCoupon_type());
         holder.tvProduce.setText(bean.getLimitCategory());
     }

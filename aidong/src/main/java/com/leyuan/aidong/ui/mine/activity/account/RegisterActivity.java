@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.mine.activity.account;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
@@ -218,6 +219,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         this.coupons = coupons;
 
         if (user != null) {
+
+            LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_NEW_USER_REGISTER));
             DialogUtils.showDialog(this, "", false);
 
             ChatLoginService.startService(this, String.valueOf(user.getId()));

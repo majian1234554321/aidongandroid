@@ -14,9 +14,13 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.mine.CouponNewcomerAdapter;
 import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.mvp.presenter.impl.CouponPresentImpl;
+import com.leyuan.aidong.ui.mvp.view.CouponFragmentView;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.UiManager;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by user on 2017/5/13.
@@ -30,7 +34,9 @@ public class CouponNewcomerActivity extends BaseActivity implements View.OnClick
     private TextView txtCouponNum;
     private RecyclerView recyclerView;
     private RelativeLayout layoutCheckImmediately;
+    private CouponNewcomerAdapter couponAdapter;
 
+    @Deprecated
     public static void start(Context context, ArrayList<CouponBean> coupons) {
         Intent intent = new Intent(context, CouponNewcomerActivity.class);
         intent.putExtra("coupons", coupons);
@@ -57,13 +63,41 @@ public class CouponNewcomerActivity extends BaseActivity implements View.OnClick
 
         imgClose.setOnClickListener(this);
         layoutCheckImmediately.setOnClickListener(this);
-        if (coupons != null) {
-            txtCouponNum.setText("恭喜您获得" + coupons.size() + "张优惠券,快去看看吧!");
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            CouponNewcomerAdapter couponAdapter = new CouponNewcomerAdapter(this, coupons);
-            recyclerView.setAdapter(couponAdapter);
 
-        }
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+         couponAdapter = new CouponNewcomerAdapter(this, coupons);
+        recyclerView.setAdapter(couponAdapter);
+
+
+        CouponPresentImpl couponPresent = new CouponPresentImpl(this, new CouponFragmentView() {
+
+            @Override
+            public void updateRecyclerView(List<CouponBean> couponBeanList) {
+                Logger.i("coupon","couponList == " +(couponBeanList==null?"null":couponBeanList.size()+""));
+
+                if(couponBeanList!=null&& !couponBeanList.isEmpty()){
+                    txtCouponNum.setText("恭喜您获得"+couponBeanList.size()+"张优惠券,快去看看吧!");
+                    couponAdapter.setData(couponBeanList);
+                    couponAdapter.notifyDataSetChanged();
+
+                }else {
+                    finish();
+                }
+
+            }
+
+            @Override
+            public void showEmptyView() {
+
+            }
+
+            @Override
+            public void showEndFooterView() {
+
+            }
+        });
+
+        couponPresent.requestCouponData("valid");
 
     }
 
@@ -79,5 +113,11 @@ public class CouponNewcomerActivity extends BaseActivity implements View.OnClick
                 finish();
                 break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 }

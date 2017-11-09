@@ -94,6 +94,7 @@ public class Constant {
     public static final String BROADCAST_ACTION_LOGIN_SUCCESS = "broadcast_action_login_success";
     public static final String BROADCAST_ACTION_PHONE_BINDING_SUCCESS = "broadcast_action_phone_binding_success";
     public static final String BROADCAST_ACTION_EXIT_LOGIN = "broadcast_action_exit_login";
+    public static final String BROADCAST_ACTION_NEW_USER_REGISTER = "broadcast_action_new_user_register";
 
     public static List<VenuesBean> gyms;
     public static SystemBean systemInfoBean;

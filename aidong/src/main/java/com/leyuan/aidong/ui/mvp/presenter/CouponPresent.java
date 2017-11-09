@@ -19,6 +19,8 @@ public interface CouponPresent {
      */
     void commonLoadData(SwitcherLayout switcherLayout, String type);
 
+    void requestCouponData(String type);
+
     /**
      * 下拉刷新优惠劵列表
      * @param type valid: 有效的 used: 已使用的 expired:已过期的

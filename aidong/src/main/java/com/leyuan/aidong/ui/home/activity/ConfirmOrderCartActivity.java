@@ -132,9 +132,9 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
     private String addressId;                         //购物车结算时快递地址id
     private String pickUpDate;                        //自提时间
     private String[] itemIds;
-    private String[] itemFromIdAmount;
+//    private String[] itemFromIdAmount;
 
-    private  ArrayList<String>  itemFromIdAmount = new ArrayList<>();
+    private ArrayList<String> itemFromIdAmount = new ArrayList<>();
     private ArrayList<String> pickUpIds = new ArrayList<>();
 
     @SettlementType
@@ -171,7 +171,8 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
             bottomLayout.setVisibility(View.GONE);
             present.getDefaultAddress(switcherLayout);
         }
-        present.getGoodsAvailableCoupon(itemFromIdAmount);
+
+        present.getGoodsAvailableCoupon(itemFromIdAmount,pickUpIds);
     }
 
 
@@ -194,6 +195,7 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
             pickUpWay = shop.getPickUp().getType();
             if (DELIVERY_SELF.equals(pickUpWay)) {
                 pickUpId = shop.getPickUp().getInfo().getId();
+                pickUpIds.add(pickUpId);
             }
             if (GOODS_NUTRITION.equals(goods.getType())) {
                 settlementType = SETTLEMENT_NURTURE_IMMEDIATELY;
@@ -215,12 +217,12 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
             }
         }
         itemIds = new String[goodsList.size()];
-        itemFromIdAmount = new String[goodsList.size()];
+//        itemFromIdAmount = new String[goodsList.size()];
 
         for (int i = 0; i < goodsList.size(); i++) {
             itemIds[i] = goodsList.get(i).getId();
-            itemFromIdAmount[i] = goodsList.get(i).getCouponGoodsType() + "_"
-                    + goodsList.get(i).getCode() + "_" + goodsList.get(i).getAmount();
+            itemFromIdAmount.add(goodsList.get(i).getCouponGoodsType() + "_"
+                    + goodsList.get(i).getCode() + "_" + goodsList.get(i).getAmount());
         }
     }
 
@@ -316,8 +318,8 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
 //                        (TextUtils.equals(GOODS_NUTRITION, shopBean.getItem().get(0).getType())
 //                                && shopBean.getItem().get(0).getProductIdInteger() > Constant.GOODS_FOODS_START_INDEX))) {
 
-        if( shopBeanList!=null && !shopBeanList.isEmpty()&& shopBeanList.get(0).getItem() != null &&
-                !shopBeanList.get(0).getItem().isEmpty() &&  GOODS_FOODS.equals(shopBeanList.get(0).getItem().get(0).getType())){
+        if (shopBeanList != null && !shopBeanList.isEmpty() && shopBeanList.get(0).getItem() != null &&
+                !shopBeanList.get(0).getItem().isEmpty() && GOODS_FOODS.equals(shopBeanList.get(0).getItem().get(0).getType())) {
 
             //该商品为健康餐饮
             receivingTimeQuantum = SystemInfoUtils.getPeriods(this);
@@ -351,10 +353,10 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
             case R.id.ll_self_delivery:
 
 //                Logger.i(TAG,shopBeanList.get(0).getItem().get(0).getType());
-                if( shopBeanList!=null && !shopBeanList.isEmpty()&& shopBeanList.get(0).getItem() != null &&
-                        !shopBeanList.get(0).getItem().isEmpty() &&  GOODS_FOODS.equals(shopBeanList.get(0).getItem().get(0).getType())){
+                if (shopBeanList != null && !shopBeanList.isEmpty() && shopBeanList.get(0).getItem() != null &&
+                        !shopBeanList.get(0).getItem().isEmpty() && GOODS_FOODS.equals(shopBeanList.get(0).getItem().get(0).getType())) {
                     showReceivingDateDialog();
-                }else{
+                } else {
                     showDeliveryDateDialog();
                 }
 
@@ -371,8 +373,8 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
                 break;
             case R.id.tv_coupon:
                 if (usableCoupons != null && !usableCoupons.isEmpty() && totalGoodsPrice > 0) {
-                    Logger.i("coupon","startForResult selectedUserCouponId = " + selectedUserCouponId);
-                    SelectCouponActivity.startForResult(this, String.valueOf(totalGoodsPrice), couponId,selectedUserCouponId, usableCoupons, REQUEST_SELECT_COUPON);
+                    Logger.i("coupon", "startForResult selectedUserCouponId = " + selectedUserCouponId);
+                    SelectCouponActivity.startForResult(this, String.valueOf(totalGoodsPrice), couponId, selectedUserCouponId, usableCoupons, REQUEST_SELECT_COUPON);
                 }
                 break;
             case R.id.tv_pay:
@@ -436,7 +438,7 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
                 }
             }
         }
-        Logger.i(TAG,"pickUpDate = " +pickUpDate+"pick_up_period =" +pick_up_period);
+        Logger.i(TAG, "pickUpDate = " + pickUpDate + "pick_up_period =" + pick_up_period);
         switch (settlementType) {
 
             case SETTLEMENT_CART:
@@ -456,7 +458,7 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
 //                present.buyEquipmentImmediately(skuCode, amount, couponId, integral, coin, payType,
 //                        String.valueOf(pickUpWay), pickUpId, pickUpDate, payListener);
 
-                present.buyGoodsImmediately(settlementType,skuCode, amount, couponId, integral, coin, payType,
+                present.buyGoodsImmediately(settlementType, skuCode, amount, couponId, integral, coin, payType,
                         String.valueOf(pickUpWay), pickUpId, pickUpDate, pick_up_period, "0", payListener);
                 break;
             default:
@@ -533,12 +535,12 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
                 CouponBean couponBean = data.getParcelableExtra("coupon");
 
                 selectedUserCouponId = couponBean.getUser_coupon_id();
-                Logger.i("coupon","onActivityResult selectedUserCouponId = " + selectedUserCouponId);
+                Logger.i("coupon", "onActivityResult selectedUserCouponId = " + selectedUserCouponId);
                 couponId = couponBean.getId();
-                couponPrice = couponBean.getDiscount();
+                couponPrice = couponBean.getActual();
                 tvCoupon.setText(FormatUtil.parseDouble(couponPrice) != 0
                         ? String.format(getString(R.string.rmb_minus_price_double),
-                        FormatUtil.parseDouble(couponBean.getDiscount())) : getString(R.string.please_select));
+                        FormatUtil.parseDouble(couponBean.getActual())) : getString(R.string.please_select));
                 tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double), FormatUtil.parseDouble(couponPrice)));
                 double dPrice = needExpress ? expressPrice : 0;
                 double cPrice = !TextUtils.isEmpty(couponPrice) ? FormatUtil.parseDouble(couponPrice) : 0d;
@@ -581,7 +583,10 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
             pickUpId = address.getId();
         } else {
             addressId = address.getId();
+
         }
+        pickUpIds.clear();
+        pickUpIds.add(address.getId());
     }
 
     private void resetStatus() {

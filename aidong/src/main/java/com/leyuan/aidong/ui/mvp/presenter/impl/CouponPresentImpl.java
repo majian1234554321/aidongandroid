@@ -22,6 +22,7 @@ import com.leyuan.aidong.ui.mvp.view.CouponFragmentView;
 import com.leyuan.aidong.ui.mvp.view.CouponShareView;
 import com.leyuan.aidong.ui.mvp.view.GoodsDetailActivityView;
 import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.RequestResponseCount;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ public class CouponPresentImpl implements CouponPresent {
     //领取优惠劵View层对象
     private CouponExchangeActivityView exchangeCouponView;
     private GoodsDetailActivityView goodsDetailActivityView;
+    private RequestResponseCount callBack;
 
     public CouponPresentImpl(Context context, CouponFragmentView view) {
         this.context = context;
@@ -91,6 +93,10 @@ public class CouponPresentImpl implements CouponPresent {
                 if (couponData != null) {
                     couponList = couponData.getCoupon();
                 }
+                if (callBack != null) {
+                    callBack.onRequestResponse();
+                }
+
                 if (!couponList.isEmpty()) {
                     switcherLayout.showContentLayout();
                     couponView.updateRecyclerView(couponList);
@@ -98,6 +104,42 @@ public class CouponPresentImpl implements CouponPresent {
                     couponView.showEmptyView();
                 }
             }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                if (callBack != null) {
+                    callBack.onRequestResponse();
+                }
+            }
+        }, type, Constant.PAGE_FIRST);
+    }
+
+    @Override
+    public void requestCouponData(String type) {
+        couponModel.getCoupons(new RefreshSubscriber<CouponData>(context) {
+            @Override
+            public void onNext(CouponData couponData) {
+                if (couponData != null) {
+                    couponList = couponData.getCoupon();
+                }
+                if (callBack != null) {
+                    callBack.onRequestResponse();
+                }
+
+                couponView.updateRecyclerView(couponList);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                if (callBack != null) {
+                    callBack.onRequestResponse();
+                }
+                couponView.updateRecyclerView(null);
+
+            }
+
         }, type, Constant.PAGE_FIRST);
     }
 
@@ -109,10 +151,23 @@ public class CouponPresentImpl implements CouponPresent {
                 if (couponData != null) {
                     couponList = couponData.getCoupon();
                 }
+                if (callBack != null) {
+                    callBack.onRequestResponse();
+                }
+
                 if (!couponList.isEmpty()) {
                     couponView.updateRecyclerView(couponList);
                 }
             }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                if (callBack != null) {
+                    callBack.onRequestResponse();
+                }
+            }
+
         }, type, Constant.PAGE_FIRST);
     }
 
@@ -167,5 +222,9 @@ public class CouponPresentImpl implements CouponPresent {
                 exchangeCouponView.obtainCouponResult(null);
             }
         }, id);
+    }
+
+    public void setOnRequestResponse(RequestResponseCount requestResponse) {
+        this.callBack = requestResponse;
     }
 }

@@ -49,6 +49,20 @@ public class RegisterModel implements RegisterModelInterface {
 
 
     @Override
+    public void bindingCaptchaSns(Subscriber<UserCoach> subscriber, String mobile, String profile_info, String type) {
+//        RequestBody profile=
+//                RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), profile_info);
+//
+//        RequestBody typeJson=
+//                RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), type);
+
+        mIdentifyService.bindingMobileSns(mobile,profile_info,type)
+                .compose(RxHelper.<UserCoach>transform())
+                .subscribe(subscriber);
+    }
+
+
+    @Override
     public void unbindingCaptcha(Subscriber<UserCoach> subscriber, String mobile) {
         mIdentifyService.unbindingMobile(mobile)
                 .compose(RxHelper.<UserCoach>transform())

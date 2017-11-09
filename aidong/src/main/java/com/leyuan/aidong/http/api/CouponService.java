@@ -40,7 +40,7 @@ public interface CouponService {
     @POST("mine/coupons/valid")
     Observable<BaseBean<CouponData>> getGoodsAvailableCoupon(@Field("items[]") String... items);
 
-    @POST("mine/coupons/{id}/obtain_coupon")
+    @POST("exapi/{id}/obtain_coupon")
     Observable<BaseBean<CouponData>> getGoodsTakableCoupon(@Path("id") String id);
 
     @FormUrlEncoded

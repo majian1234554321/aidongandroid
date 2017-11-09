@@ -102,12 +102,14 @@ public class CouponExchangeActivity extends BaseActivity implements CouponExchan
             tvExchange.setText("");
             layout_coupon.setVisibility(View.VISIBLE);
             tvName.setText(bean.getName());
-            tvCouponPrice.setText(bean.getDiscount());
-            if (TextUtils.equals(bean.getMin(), Constant.NEGATIVE_ONE)) {
-                tvUseMoney.setText("指定支付价格");
-            } else {
-                tvUseMoney.setText(String.format(getResources().getString(R.string.user_condition), bean.getMin()));
-            }
+            tvRmbFlag.setText(bean.getDiscountSign());
+            tvCouponPrice.setText(bean.getDiscountNumber());
+//            if (TextUtils.equals(bean.getMin(), Constant.NEGATIVE_ONE)) {
+//                tvUseMoney.setText("指定支付价格");
+//            } else {
+//                tvUseMoney.setText(String.format(getResources().getString(R.string.user_condition), bean.getMin()));
+//            }
+            tvUseMoney.setText(bean.getCouponDesc());
 
             if (!TextUtils.isEmpty(bean.getIntroduce())) {
                 tvDesc.setText(Html.fromHtml(bean.getIntroduce()));

@@ -165,6 +165,38 @@ public class RegisterPresenter implements RegisterPresenterInterface {
     }
 
     @Override
+    public void checkIdentifyBindingSns(String captcha) {
+        mRegisterModelInterface.checkIdentify(new IsLoginSubscriber<CheckIdentifyResult>(mContext) {
+            @Override
+            public void onStart() {
+                super.onStart();
+                mRegisterViewInterface.onRequestStart();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                mRegisterViewInterface.register(false);
+            }
+
+            @Override
+            public void onNext(CheckIdentifyResult user) {
+                if (user.getUser() != null){
+                    App.getInstance().setUser(user.getUser());
+                }
+
+//                if (bindingMobile != null) {
+//                    UserCoach userCoach = App.mInstance.getUser();
+//                    userCoach.setMobile(bindingMobile);
+//                    App.mInstance.setUser(userCoach);
+//                }
+                mRegisterViewInterface.register(true);
+
+            }
+        }, token, captcha, null);
+    }
+
+    @Override
     public void bindingCaptcha(String mobile) {
         bindingMobile = mobile;
         mRegisterModelInterface.bindingCaptcha(new IsLoginSubscriber<UserCoach>(mContext) {
@@ -191,6 +223,35 @@ public class RegisterPresenter implements RegisterPresenterInterface {
             }
         }, mobile);
     }
+
+    @Override
+    public void bindingCaptchaSns(String mobile, String profile_info, String type) {
+        bindingMobile = mobile;
+        mRegisterModelInterface.bindingCaptchaSns(new IsLoginSubscriber<UserCoach>(mContext) {
+
+            @Override
+            public void onStart() {
+                super.onStart();
+                mRegisterViewInterface.onRequestStart();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                mRegisterViewInterface.onGetIdentifyCode(false);
+            }
+
+            @Override
+            public void onNext(UserCoach user) {
+                LogAidong.i("onNext token = ", "" + user.getToken());
+                if (user != null) {
+                    token = user.getToken();
+                }
+                mRegisterViewInterface.onGetIdentifyCode(true);
+            }
+        }, mobile, profile_info, type);
+    }
+
 
     @Override
     public void unbindingCaptcha(String mobile) {
@@ -247,6 +308,7 @@ public class RegisterPresenter implements RegisterPresenterInterface {
     public String getBingdingMobile() {
         return bindingMobile;
     }
+
     @Override
     public String getToken() {
         return token;

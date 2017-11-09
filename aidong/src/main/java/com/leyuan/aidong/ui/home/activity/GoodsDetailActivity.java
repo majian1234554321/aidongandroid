@@ -56,6 +56,7 @@ import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.TransitionHelper;
 import com.leyuan.aidong.widget.ObserveScrollView;
@@ -214,11 +215,16 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void setGoodsDetailCoupon(List<CouponBean> coupons) {
+        bean.coupon = coupons;
+
         if (coupons == null || coupons.isEmpty()) {
+            Logger.i("coupon","coupons = "+coupons);
             couponLayout.setVisibility(View.GONE);
+
         } else {
-            couponAdapter.setData(bean.coupon);
+            Logger.i("coupon","coupons = "+coupons.size());
             couponLayout.setVisibility(View.VISIBLE);
+            couponAdapter.setData(bean.coupon);
         }
     }
 

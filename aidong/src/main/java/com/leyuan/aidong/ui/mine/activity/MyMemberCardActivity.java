@@ -108,6 +108,8 @@ public class MyMemberCardActivity extends BaseActivity {
                 super.onPageFinished(view, url);
                 Logger.i(TAG, "mWebView.loadUrl onPageFinished");
 
+//                LocalBroadcastManager.getInstance(MyMemberCardActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_NEW_USER_REGISTER));
+
             }
 
             @Override

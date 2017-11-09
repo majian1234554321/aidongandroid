@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,8 +15,6 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.mine.SelectCouponAdapter;
 import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.utils.Constant;
-import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.Logger;
 
 import java.util.ArrayList;
@@ -89,7 +86,7 @@ public class SelectCouponActivity extends BaseActivity implements SelectCouponAd
             public void onClick(View v) {
                 Intent intent = new Intent();
                 CouponBean temp = new CouponBean();
-                temp.setDiscount("0");
+                temp.setActual("0");
                 intent.putExtra("coupon", temp);
                 setResult(RESULT_OK, intent);
                 finish();
@@ -101,17 +98,18 @@ public class SelectCouponActivity extends BaseActivity implements SelectCouponAd
     public void onCouponClicked(int position) {
         CouponBean couponBean = couponBeanList.get(position);
 
-        if (totalGoodsPrice != null) {
-            double discout = FormatUtil.parseDouble(couponBean.getDiscount());
-            double goodsPrice = FormatUtil.parseDouble(totalGoodsPrice);
-            if (TextUtils.equals(couponBean.getMin(), Constant.NEGATIVE_ONE)) {
-                //新手指定优惠券
-                couponBean.setDiscount(String.valueOf((goodsPrice - discout )));
-            } else {
-                couponBean.setDiscount(String.valueOf((goodsPrice - discout > 0 ? discout : goodsPrice)));
-            }
-        }
+//        if (totalGoodsPrice != null) {
+//            double discout = FormatUtil.parseDouble(couponBean.getDiscount());
+//            double goodsPrice = FormatUtil.parseDouble(totalGoodsPrice);
+//            if (TextUtils.equals(couponBean.getMin(), Constant.NEGATIVE_ONE)) {
+//                //新手指定优惠券
+//                couponBean.setDiscount(String.valueOf((goodsPrice - discout )));
+//            } else {
+//                couponBean.setDiscount(String.valueOf((goodsPrice - discout > 0 ? discout : goodsPrice)));
+//            }
+//        }
 
+        couponBean.setDiscount(couponBean.getActual());
         Intent intent = new Intent();
         intent.putExtra("coupon", couponBean);
         setResult(RESULT_OK, intent);

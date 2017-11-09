@@ -184,4 +184,5 @@ public class SharePrefUtils {
     public static boolean getReleaseConfig(boolean defaul) {
         return getBoolean(App.context, "release", defaul);
     }
+
 }

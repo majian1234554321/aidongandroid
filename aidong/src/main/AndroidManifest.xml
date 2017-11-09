@@ -206,6 +206,9 @@
             android:name=".ui.mine.activity.setting.TabHelpActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.mine.activity.setting.PhoneBindingThirdLoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.mine.activity.setting.PhoneBindingActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -687,7 +690,7 @@
         <!-- 设置环信应用的AppKey debug:	leyuan-aidong#aidongouternettest  preRelease: leyuan-aidong#aidongprerelease   release : leyuan-aidong#aidong-->
         <meta-data
             android:name="EASEMOB_APPKEY"
-            android:value="leyuan-aidong#aidong" />
+            android:value="leyuan-aidong#aidongouternettest" />
         <!-- 声明SDK所需的service SDK核心功能-->
         <service
             android:name="com.hyphenate.chat.EMChatService"

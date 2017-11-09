@@ -35,6 +35,17 @@ public interface IdentifyService {
     @POST("captcha/binding")
     Observable<BaseBean<UserCoach>> bindingMobile(@Field("mobile") String mobile);
 
+    @FormUrlEncoded
+    @POST("captcha/binding")
+    Observable<BaseBean<UserCoach>> bindingMobileSns(@Field("mobile") String mobile,
+                                                     @Field("profile_info") String profile_info,
+                                                     @Field("type") String type);
+
+//    @FormUrlEncoded
+//    @POST("captcha/binding")
+//    Observable<BaseBean<UserCoach>> bindingMobileSns(@Field("mobile") String mobile,
+//                                                     @Body RequestBody profile_info,@Body RequestBody type);
+
     /**
      * 手机号解除绑定
      */

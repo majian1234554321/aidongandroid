@@ -13,13 +13,14 @@ import android.widget.EditText;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.entity.model.UserCoach;
+import com.leyuan.aidong.entity.model.result.LoginResult;
 import com.leyuan.aidong.module.ChatLoginService;
 import com.leyuan.aidong.module.chat.manager.EmChatLoginManager;
 import com.leyuan.aidong.module.chat.manager.EmChatRegisterManager;
 import com.leyuan.aidong.module.thirdpartylogin.ThirdLoginUtils;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.activity.CouponNewcomerActivity;
-import com.leyuan.aidong.ui.mine.activity.setting.PhoneBindingActivity;
+import com.leyuan.aidong.ui.mine.activity.setting.PhoneBindingThirdLoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.LoginPresenter;
 import com.leyuan.aidong.ui.mvp.presenter.impl.MineInfoPresenterImpl;
@@ -197,12 +198,24 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         }
     }
 
+    @Deprecated
     @Override
     public void needBindingPhone(UserCoach user, ArrayList<CouponBean> coupons) {
         this.user = user;
         this.coupons = coupons;
         DialogUtils.dismissDialog();
-        UiManager.activityJump(this, PhoneBindingActivity.class);
+
+        UiManager.activityJump(this, PhoneBindingThirdLoginActivity.class);
+    }
+
+    @Override
+    public void snsNeedBindingPhone(LoginResult user) {
+        this.user = user.getUser();
+        this.coupons = user.getCoupons();
+        DialogUtils.dismissDialog();
+
+        PhoneBindingThirdLoginActivity.start(this,user.getProfile_info().toString(),user.getType().toString());
+//        UiManager.activityJump(this, PhoneBindingThirdLoginActivity.class);
     }
 
     @Override
@@ -279,6 +292,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         if (TextUtils.isEmpty(sns) || TextUtils.isEmpty(code)) return;
 
         DialogUtils.showDialog(this, "", true);
+        Logger.i("third login start","sns = +"+sns+"code = "+code);
         loginPresenter.loginSns(sns, code);
     }
 
