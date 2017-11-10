@@ -56,13 +56,17 @@
         android:layout_marginLeft="150dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="14dp"
+        android:gravity="right"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="新人抵用用劵"
+            android:text="新人抵用用劵是的是的"
+            android:maxWidth="140dp"
+            android:singleLine="true"
+            android:ellipsize="end"
             android:textColor="@color/c3"
             android:textSize="14sp" />
 
@@ -72,6 +76,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:text="指定特殊产品可用"
+            android:maxWidth="140dp"
+            android:singleLine="true"
+            android:ellipsize="end"
             android:textColor="@color/c3"
             android:textSize="14sp" />
 
@@ -81,6 +88,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:text="满300元可用"
+            android:maxWidth="140dp"
+            android:singleLine="true"
+            android:ellipsize="end"
             android:textColor="@color/c3"
             android:textSize="14sp" />
     </LinearLayout>
