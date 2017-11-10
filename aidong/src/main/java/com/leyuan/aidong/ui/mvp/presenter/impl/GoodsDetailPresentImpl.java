@@ -107,7 +107,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
     }
 
     @Override
-    public void commonLoadVenues(final SwitcherLayout switcherLayout, String type, String sku, String brandId, String landmark) {
+    public void commonLoadVenues(final SwitcherLayout switcherLayout, String type, String sku, String brandId, String landmark,String area) {
         if (goodsModel == null) {
             goodsModel = new GoodsModelImpl(context);
         }
@@ -124,12 +124,12 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                     venuesActivityView.showEmptyView();
                 }
             }
-        }, type, sku, Constant.PAGE_FIRST, brandId, landmark);
+        }, type, sku, Constant.PAGE_FIRST, brandId, landmark,area);
 
     }
 
     @Override
-    public void pullToRefreshVenues(String type, String sku, String brandId, String landmark) {
+    public void pullToRefreshVenues(String type, String sku, String brandId, String landmark,String area) {
 
         if (goodsModel == null) {
             goodsModel = new GoodsModelImpl(context);
@@ -146,12 +146,12 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                     venuesActivityView.showEmptyView();
                 }
             }
-        }, type, sku, Constant.PAGE_FIRST, brandId, landmark);
+        }, type, sku, Constant.PAGE_FIRST, brandId, landmark,area);
 
     }
 
     @Override
-    public void requestMoreVenues(RecyclerView recyclerView, final int pageSize, String type, String sku, int page, String brandId, String landmark) {
+    public void requestMoreVenues(RecyclerView recyclerView, final int pageSize, String type, String sku, int page, String brandId, String landmark,String area) {
         if (goodsModel == null) {
             goodsModel = new GoodsModelImpl(context);
         }
@@ -169,7 +169,7 @@ public class GoodsDetailPresentImpl implements GoodsDetailPresent {
                     venuesActivityView.showEndFooterView();
                 }
             }
-        }, type, sku, page, brandId, landmark);
+        }, type, sku, page, brandId, landmark,area);
 
 
     }

@@ -38,7 +38,8 @@ public interface GoodsService {
                                                        @Path("id") String id,
                                                        @Query("page") int page,
                                                        @Query("brand_id") String brandId,
-                                                       @Query("landmark") String landmark);
+                                                       @Query("landmark") String landmark,
+                                                       @Query("area") String area);
     @FormUrlEncoded
     @POST("market/products/{type}/{skuCode}")
     Observable<BaseBean<PayOrderData>> buyGoodsImmediately(@Path("type") String type,

@@ -42,8 +42,8 @@ public class GoodsModelImpl  {
                 .subscribe(subscriber);
     }
 
-    public void getDeliveryVenues(Subscriber<VenuesData> subscriber, String type, String skuCode, int page,String gymId,String landmark) {
-        nurtureService.getDeliveryVenues(type,skuCode,page,gymId,landmark)
+    public void getDeliveryVenues(Subscriber<VenuesData> subscriber, String type, String skuCode, int page,String gymId,String landmark,String area) {
+        nurtureService.getDeliveryVenues(type,skuCode,page,gymId,landmark,area)
                 .compose(RxHelper.<VenuesData>transform())
                 .subscribe(subscriber);
 

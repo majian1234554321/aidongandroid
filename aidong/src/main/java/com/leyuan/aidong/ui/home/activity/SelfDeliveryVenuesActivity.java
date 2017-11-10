@@ -58,6 +58,7 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
     private String goodsId;
     private String brandId;
     private String businessCircle;
+    private String area;
     private DeliveryBean deliveryBean;
 
     public static void startForResult(Activity context, String goodsId, String goodsType, DeliveryBean bean, int requestCode) {
@@ -86,7 +87,7 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
         if (goodsId != null) {
             venuesPresent.getGymBrand();
             venuesPresent.getBusinessCircle();
-            goodsPresent.commonLoadVenues(switcherLayout, goodsType, goodsId, brandId, businessCircle);
+            goodsPresent.commonLoadVenues(switcherLayout, goodsType, goodsId, brandId, businessCircle,area);
         }
 
     }
@@ -113,14 +114,15 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
             public void onBrandItemClick(String id) {
                 brandId = id;
                 refreshLayout.setRefreshing(true);
-                goodsPresent.pullToRefreshVenues(goodsType, goodsId, brandId, businessCircle);
+                goodsPresent.pullToRefreshVenues(goodsType, goodsId, brandId, businessCircle,area);
             }
 
             @Override
             public void onBusinessCircleItemClick(String area,String address) {
+                SelfDeliveryVenuesActivity.this.area = area;
                 businessCircle = address;
                 refreshLayout.setRefreshing(true);
-                goodsPresent.pullToRefreshVenues(goodsType, goodsId, brandId, businessCircle);
+                goodsPresent.pullToRefreshVenues(goodsType, goodsId, brandId, businessCircle,area);
             }
 
             @Override
@@ -139,7 +141,7 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
             public void onRefresh() {
                 currPage = 1;
                 RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-                goodsPresent.pullToRefreshVenues(goodsType, goodsId, brandId, businessCircle);
+                goodsPresent.pullToRefreshVenues(goodsType, goodsId, brandId, businessCircle,area);
             }
         });
     }
@@ -159,7 +161,7 @@ public class SelfDeliveryVenuesActivity extends BaseActivity implements View.OnC
         public void onLoadNextPage(View view) {
             currPage++;
             if (data != null && data.size() >= pageSize) {
-                goodsPresent.requestMoreVenues(recyclerView, pageSize, goodsType, goodsId, currPage, brandId, businessCircle);
+                goodsPresent.requestMoreVenues(recyclerView, pageSize, goodsType, goodsId, currPage, brandId, businessCircle,area);
             }
         }
     };
