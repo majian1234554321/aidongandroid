@@ -48,7 +48,9 @@ import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.leyuan.aidong.R.id.ll__receiving_time;
 import static com.leyuan.aidong.R.id.txt_receving_time;
@@ -136,6 +138,7 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
 
     private ArrayList<String> itemFromIdAmount = new ArrayList<>();
     private ArrayList<String> pickUpIds = new ArrayList<>();
+    private Map<String, String> goodsIdGymID = new HashMap();
 
     @SettlementType
     private String settlementType;
@@ -172,7 +175,7 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
             present.getDefaultAddress(switcherLayout);
         }
 
-        present.getGoodsAvailableCoupon(itemFromIdAmount,pickUpIds);
+        present.getGoodsAvailableCoupon(itemFromIdAmount, goodsIdGymID);
     }
 
 
@@ -195,6 +198,7 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
             pickUpWay = shop.getPickUp().getType();
             if (DELIVERY_SELF.equals(pickUpWay)) {
                 pickUpId = shop.getPickUp().getInfo().getId();
+
                 pickUpIds.add(pickUpId);
             }
             if (GOODS_NUTRITION.equals(goods.getType())) {
@@ -214,6 +218,10 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
         for (ShopBean shopBean : shopBeanList) {
             for (GoodsBean goodsBean : shopBean.getItem()) {
                 goodsList.add(goodsBean);
+                if (shopBean.getPickUp() != null && shopBean.getPickUp().getInfo() != null && shopBean.getPickUp().getInfo().getId() != null) {
+                    goodsIdGymID.put(goodsBean.getCode(), shopBean.getPickUp().getInfo().getId());
+                }
+
             }
         }
         itemIds = new String[goodsList.size()];
@@ -223,6 +231,7 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
             itemIds[i] = goodsList.get(i).getId();
             itemFromIdAmount.add(goodsList.get(i).getCouponGoodsType() + "_"
                     + goodsList.get(i).getCode() + "_" + goodsList.get(i).getAmount());
+
         }
     }
 

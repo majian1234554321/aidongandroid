@@ -2,7 +2,6 @@ package com.leyuan.aidong.ui.mine.activity.account;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
@@ -15,6 +14,7 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.entity.ProfileBean;
+import com.leyuan.aidong.entity.data.CouponData;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.module.ChatLoginService;
 import com.leyuan.aidong.ui.App;
@@ -22,16 +22,19 @@ import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.WebViewActivity;
 import com.leyuan.aidong.ui.mine.activity.CouponNewcomerActivity;
 import com.leyuan.aidong.ui.mvp.presenter.RegisterPresenterInterface;
+import com.leyuan.aidong.ui.mvp.presenter.impl.CouponPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.MineInfoPresenterImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.RegisterPresenter;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SystemPresentImpl;
+import com.leyuan.aidong.ui.mvp.view.CouponNewUserValidView;
 import com.leyuan.aidong.ui.mvp.view.RegisterViewInterface;
 import com.leyuan.aidong.ui.mvp.view.RequestCountInterface;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.RequestResponseCount;
+import com.leyuan.aidong.utils.SharePrefUtils;
 import com.leyuan.aidong.utils.StringUtils;
 import com.leyuan.aidong.utils.TimeCountUtil;
 import com.leyuan.aidong.utils.ToastGlobal;
@@ -160,7 +163,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             return false;
         }
 
-        if(App.getInstance().getToken() == null){
+        if (App.getInstance().getToken() == null) {
             ToastGlobal.showShort(R.string.please_get_identify_first);
             return false;
         }
@@ -220,12 +223,27 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
         if (user != null) {
 
-            LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_NEW_USER_REGISTER));
+//            LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_NEW_USER_REGISTER));
             DialogUtils.showDialog(this, "", false);
 
             ChatLoginService.startService(this, String.valueOf(user.getId()));
 
             RequestResponseCount requestResponse = new RequestResponseCount(this);
+
+            CouponPresentImpl couponPresent = new CouponPresentImpl(this, new CouponNewUserValidView() {
+
+                @Override
+                public void onGetValidNewUserCoupon(CouponData couponData) {
+                    if (couponData != null && couponData.getCoupons() != null && !couponData.getCoupons().isEmpty()) {
+                        SharePrefUtils.putNewUserCoupon(RegisterActivity.this, couponData);
+                    }
+
+                }
+            });
+
+            couponPresent.setOnRequestResponse(requestResponse);
+            couponPresent.getValidNewUserCoupon();
+
 
             MineInfoPresenterImpl mineInfoPresenter = new MineInfoPresenterImpl(this);
             mineInfoPresenter.setOnRequestResponse(requestResponse);
@@ -272,8 +290,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onRequestCount(int requestCount) {
         Logger.i("requestCount = " + requestCount);
-        Logger.i("requestCount = " + requestCount);
-        if (requestCount >= 3) {
+        if (requestCount >= 4) {
             DialogUtils.dismissDialog();
             finishSelf();
         }

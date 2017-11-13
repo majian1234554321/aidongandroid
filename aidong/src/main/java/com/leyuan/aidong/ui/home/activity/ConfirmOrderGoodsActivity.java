@@ -48,7 +48,9 @@ import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.leyuan.aidong.R.id.ll__receiving_time;
 import static com.leyuan.aidong.R.id.txt_receving_time;
@@ -129,6 +131,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
     private String[] itemIds;
     private  ArrayList<String>  itemFromIdAmount = new ArrayList<>();
     private ArrayList<String> pickUpIds = new ArrayList<>();
+    private Map<String, String> goodsIdGymID = new HashMap();
 
     @SettlementType
     private String settlementType;
@@ -144,6 +147,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
     private List<String> receivingTimeQuantum;
     private String pick_up_period;
     private String selectedUserCouponId;
+    private String currentGoodsID;
 
     public static void start(Context context, ShopBean shop) {
         Intent starter = new Intent(context, ConfirmOrderGoodsActivity.class);
@@ -171,9 +175,9 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
             present.getDefaultAddress(switcherLayout);
         }
 
-        pickUpIds.clear();
-        pickUpIds.add(pickUpId);
-        present.getGoodsAvailableCoupon(itemFromIdAmount,pickUpIds);
+//        pickUpIds.clear();
+//        pickUpIds.add(pickUpId);
+        present.getGoodsAvailableCoupon(itemFromIdAmount,goodsIdGymID);
     }
 
 
@@ -210,6 +214,10 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
             itemIds[i] = goodsList.get(i).getId();
             itemFromIdAmount.add(goodsList.get(i).getCouponGoodsType() + "_"
                     + goodsList.get(i).getCode() + "_" + goodsList.get(i).getAmount());
+            goodsIdGymID.put(goodsList.get(i).getCode(),pickUpId);
+            if(i == 0 ){
+                currentGoodsID = goodsList.get(i).getCode();
+            }
         }
     }
 
@@ -471,6 +479,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Logger.i("coupon select","onActivityResult requestCode = " + requestCode);
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_SELECT_ADDRESS) {
                 AddressBean address = data.getParcelableExtra("address");
@@ -517,6 +526,8 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
     }
 
     private void setAddressInfo(AddressBean address) {
+
+        Logger.i("coupon select","onActivityResult setAddressInfo = " + address.getId());
         ivDefault.setVisibility(address.isDefault() ? View.VISIBLE : View.GONE);
         tvName.setText(address.getName());
         tvPhone.setText(address.getMobile());
@@ -527,9 +538,11 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         pickUpId = address.getId();
 
 
-        pickUpIds.clear();
-        pickUpIds.add(pickUpId);
-        present.getGoodsAvailableCoupon(itemFromIdAmount,pickUpIds);
+        goodsIdGymID.clear();
+        goodsIdGymID.put(currentGoodsID,pickUpId);
+//        pickUpIds.clear();
+//        pickUpIds.add(pickUpId);
+        present.getGoodsAvailableCoupon(itemFromIdAmount,goodsIdGymID);
 
     }
 

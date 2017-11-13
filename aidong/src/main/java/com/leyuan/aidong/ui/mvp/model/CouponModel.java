@@ -7,6 +7,7 @@ import com.leyuan.aidong.entity.user.CouponDataSingle;
 import com.leyuan.aidong.utils.constant.CouponPosition;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import rx.Subscriber;
 
@@ -56,7 +57,7 @@ public interface CouponModel {
 
     void getGoodsAvailableCoupon(Subscriber<CouponData> subscriber, String... items);
 
-    void getGoodsAvailableCoupon(Subscriber<CouponData> subscriber, ArrayList<String> items, ArrayList<String> gym_id);
+    void getGoodsAvailableCoupon(Subscriber<CouponData> subscriber, ArrayList<String> items,  Map<String, String> gym_ids);
 
     void getGoodsDetailCoupon(Subscriber<CouponData> subscriber, String id);
 }

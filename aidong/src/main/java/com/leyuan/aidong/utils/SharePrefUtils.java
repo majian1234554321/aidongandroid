@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.leyuan.aidong.entity.VenuesBean;
+import com.leyuan.aidong.entity.data.CouponData;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.entity.user.MineInfoBean;
 import com.leyuan.aidong.ui.App;
@@ -185,4 +186,32 @@ public class SharePrefUtils {
         return getBoolean(App.context, "release", defaul);
     }
 
+    public static void putNewUserCoupon(Context context, CouponData couponData) {
+        if (mSharedPreferences == null) {
+            mSharedPreferences = context.getSharedPreferences(SHARE_PREFS_NAME,
+                    Context.MODE_PRIVATE);
+        }
+        Gson gson = new Gson();
+        String json = gson.toJson(couponData);
+        mSharedPreferences.edit().putString("newUserCoupon", json).commit();
+
+        Logger.i(TAG, " mSharedPreferences.edit().putString(\"newUserCoupon\", json).commit();");
+    }
+
+    public static CouponData getNewUserCoupon(Context context) {
+        if (mSharedPreferences == null) {
+            mSharedPreferences = context.getSharedPreferences(SHARE_PREFS_NAME,
+                    Context.MODE_PRIVATE);
+        }
+        CouponData couponData = null;
+        String json = mSharedPreferences.getString("newUserCoupon", null);
+        try {
+            Gson gson = new Gson();
+            couponData = gson.fromJson(json, CouponData.class);
+        } catch (JsonSyntaxException e) {
+            e.printStackTrace();
+
+        }
+        return couponData;
+    }
 }

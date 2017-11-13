@@ -19,6 +19,7 @@ import com.leyuan.aidong.ui.mvp.model.impl.CouponModelImpl;
 import com.leyuan.aidong.ui.mvp.presenter.CouponPresent;
 import com.leyuan.aidong.ui.mvp.view.CouponExchangeActivityView;
 import com.leyuan.aidong.ui.mvp.view.CouponFragmentView;
+import com.leyuan.aidong.ui.mvp.view.CouponNewUserValidView;
 import com.leyuan.aidong.ui.mvp.view.CouponShareView;
 import com.leyuan.aidong.ui.mvp.view.GoodsDetailActivityView;
 import com.leyuan.aidong.utils.Constant;
@@ -33,6 +34,7 @@ import java.util.List;
  * Created by song on 2016/9/14.
  */
 public class CouponPresentImpl implements CouponPresent {
+    private  CouponNewUserValidView couponNewUserValidView;
     private CouponShareView couponShareView;
     private Context context;
     private CouponModel couponModel;
@@ -66,6 +68,14 @@ public class CouponPresentImpl implements CouponPresent {
     public CouponPresentImpl(Context context, CouponExchangeActivityView view) {
         this.context = context;
         this.exchangeCouponView = view;
+        if (couponModel == null) {
+            couponModel = new CouponModelImpl();
+        }
+    }
+
+    public CouponPresentImpl(Context context, CouponNewUserValidView couponNewUserValidView) {
+        this.context = context;
+        this.couponNewUserValidView = couponNewUserValidView;
         if (couponModel == null) {
             couponModel = new CouponModelImpl();
         }
@@ -169,6 +179,31 @@ public class CouponPresentImpl implements CouponPresent {
             }
 
         }, type, Constant.PAGE_FIRST);
+    }
+
+
+    public void getValidNewUserCoupon() {
+        couponModel.getCoupons(new RefreshSubscriber<CouponData>(context) {
+            @Override
+            public void onNext(CouponData couponData) {
+                if (couponData != null && couponNewUserValidView !=null) {
+                    couponNewUserValidView.onGetValidNewUserCoupon(couponData);
+                }
+
+                if (callBack != null) {
+                    callBack.onRequestResponse();
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                if (callBack != null) {
+                    callBack.onRequestResponse();
+                }
+            }
+
+        }, "valid", Constant.PAGE_FIRST);
     }
 
     @Override

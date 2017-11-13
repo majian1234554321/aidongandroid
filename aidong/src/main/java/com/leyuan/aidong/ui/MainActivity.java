@@ -17,6 +17,8 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.leyuan.aidong.R;
+import com.leyuan.aidong.entity.CouponBean;
+import com.leyuan.aidong.entity.data.CouponData;
 import com.leyuan.aidong.module.chat.manager.EmMessageManager;
 import com.leyuan.aidong.receivers.ChatMessageReceiver;
 import com.leyuan.aidong.receivers.NewPushMessageReceiver;
@@ -26,11 +28,14 @@ import com.leyuan.aidong.ui.home.fragment.StoreFragment;
 import com.leyuan.aidong.ui.mine.activity.CouponNewcomerActivity;
 import com.leyuan.aidong.ui.mine.activity.setting.PhoneBindingActivity;
 import com.leyuan.aidong.ui.mine.fragment.MineFragment;
+import com.leyuan.aidong.ui.mvp.presenter.impl.CouponPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VersionPresenterImpl;
+import com.leyuan.aidong.ui.mvp.view.CouponFragmentView;
 import com.leyuan.aidong.ui.video.fragment.VideoHomeFragment;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.LocatinCityManager;
 import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.utils.SharePrefUtils;
 import com.leyuan.aidong.utils.UiManager;
 import com.leyuan.aidong.utils.autostart.CheckAutoStartUtils;
 import com.leyuan.aidong.widget.dialog.BaseDialog;
@@ -70,7 +75,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(App.getInstance().isLogin() && TextUtils.isEmpty(App.getInstance().getUser().getMobile())){
+        if (App.getInstance().isLogin() && TextUtils.isEmpty(App.getInstance().getUser().getMobile())) {
             UiManager.activityJump(this, PhoneBindingActivity.class);
         }
 
@@ -129,12 +134,41 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 img_new_circle_message.setVisibility(View.VISIBLE);
             } else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_CLEAR_CMD_MESSAGE)) {
                 img_new_circle_message.setVisibility(View.GONE);
-            }else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_NEW_USER_REGISTER)) {
-                CouponNewcomerActivity.start(MainActivity.this);
+            } else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_NEW_USER_REGISTER)) {
+                getNewUserCouponInfo();
+
+
             }
             Logger.i("mainActivityReceiver", "onReceive action = " + intent.getAction());
         }
     };
+
+    private void getNewUserCouponInfo() {
+
+        CouponPresentImpl couponPresent = new CouponPresentImpl(this, new CouponFragmentView() {
+            @Override
+            public void updateRecyclerView(List<CouponBean> couponBeanList) {
+
+                if(couponBeanList != null && !couponBeanList.isEmpty()){
+                    CouponNewcomerActivity.start(MainActivity.this, (ArrayList<CouponBean>) couponBeanList);
+                }
+            }
+
+            @Override
+            public void showEmptyView() {
+
+            }
+
+            @Override
+            public void showEndFooterView() {
+
+            }
+        });
+
+        couponPresent.pullToRefreshData("valid");
+
+
+    }
 
     private void registerMessageReceiver() {
         chatMessageReceiver = new ChatMessageReceiver(img_new_message);
@@ -278,6 +312,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onResume() {
         super.onResume();
         img_new_message.setVisibility(EmMessageManager.isHaveUnreadMessage() ? View.VISIBLE : View.GONE);
+        CouponData couponData = SharePrefUtils.getNewUserCoupon(MainActivity.this);
+        if(couponData != null && couponData.getCoupons()!= null &&! couponData.getCoupons().isEmpty()){
+            CouponNewcomerActivity.start(this, (ArrayList<CouponBean>) couponData.getCoupons());
+            SharePrefUtils.putNewUserCoupon(this,null);
+        }
     }
 
     @Override

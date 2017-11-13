@@ -5,6 +5,7 @@ import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * 确定订单
@@ -29,7 +30,7 @@ public interface ConfirmOrderPresent {
     void getSpecifyGoodsCoupon(String from, String... id);
 
 
-    void getGoodsAvailableCoupon(ArrayList<String> items,ArrayList<String> gym_ids);
+    void getGoodsAvailableCoupon(ArrayList<String> items, Map<String, String> gym_ids);
 
     /**
      * 立即购买装备

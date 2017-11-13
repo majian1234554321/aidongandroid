@@ -31,6 +31,7 @@ import com.leyuan.aidong.widget.SwitcherLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 确认订单
@@ -94,7 +95,7 @@ public class ConfirmOrderPresentImpl implements ConfirmOrderPresent {
     }
 
     @Override
-    public void getGoodsAvailableCoupon(ArrayList<String> items,ArrayList<String> gym_ids) {
+    public void getGoodsAvailableCoupon(ArrayList<String> items, Map<String, String> gym_ids) {
         if (couponModel == null) {
             couponModel = new CouponModelImpl();
         }

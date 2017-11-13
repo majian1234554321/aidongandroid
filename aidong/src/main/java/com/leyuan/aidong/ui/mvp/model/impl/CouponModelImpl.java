@@ -9,8 +9,15 @@ import com.leyuan.aidong.http.RxHelper;
 import com.leyuan.aidong.http.api.CouponService;
 import com.leyuan.aidong.ui.mvp.model.CouponModel;
 
-import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Map;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -70,8 +77,27 @@ public class CouponModelImpl implements CouponModel {
     }
 
     @Override
-    public void getGoodsAvailableCoupon(Subscriber<CouponData> subscriber, ArrayList<String> items, ArrayList<String> gymid) {
-        couponService.getGoodsAvailableCoupon(items,gymid)
+    public void getGoodsAvailableCoupon(Subscriber<CouponData> subscriber, ArrayList<String> items,Map<String, String> gym_ids) {
+        JSONObject root = new JSONObject();
+
+        JSONArray array = new JSONArray(items);
+        JSONObject gymJson = new JSONObject();
+
+        try {
+            root.put("items",array);
+
+            for (Map.Entry<String, String> code : gym_ids.entrySet()) {
+                gymJson.put(code.getKey(),code.getValue());
+            }
+            root.put("gym_id",gymJson);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),root.toString());
+
+        couponService.getGoodsAvailableCoupon(requestBody)
                 .compose(RxHelper.<CouponData>transform())
                 .subscribe(subscriber);
     }

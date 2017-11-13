@@ -5,8 +5,8 @@ import com.leyuan.aidong.entity.ShareData;
 import com.leyuan.aidong.entity.data.CouponData;
 import com.leyuan.aidong.entity.user.CouponDataSingle;
 
-import java.util.ArrayList;
-
+import okhttp3.RequestBody;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -46,9 +46,14 @@ public interface CouponService {
     @FormUrlEncoded
     @POST("mine/coupons/share_coupon")
     Observable<BaseBean<ShareData>> getShareCoupon(@Field("order_no") String order_no);
+//
+//    @FormUrlEncoded
+//    @POST("mine/coupons/valid")
+//    Observable<BaseBean<CouponData>> getGoodsAvailableCoupon(@Field("items[]") ArrayList<String> items,
+//                                                             @Field("gym_id[]") ArrayList<String> gym_id);
 
-    @FormUrlEncoded
+
+//    @Multipart
     @POST("mine/coupons/valid")
-    Observable<BaseBean<CouponData>> getGoodsAvailableCoupon(@Field("items[]") ArrayList<String> items,
-                                                             @Field("gym_id[]") ArrayList<String> gym_id);
+    Observable<BaseBean<CouponData>> getGoodsAvailableCoupon(@Body RequestBody requestBody);
 }

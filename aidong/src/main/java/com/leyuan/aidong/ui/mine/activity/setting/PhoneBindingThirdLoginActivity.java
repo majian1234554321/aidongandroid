@@ -11,19 +11,22 @@ import android.widget.EditText;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CouponBean;
+import com.leyuan.aidong.entity.data.CouponData;
 import com.leyuan.aidong.entity.model.UserCoach;
-import com.leyuan.aidong.entity.user.MineInfoBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.RegisterPresenterInterface;
+import com.leyuan.aidong.ui.mvp.presenter.impl.CouponPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.MineInfoPresenterImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.RegisterPresenter;
-import com.leyuan.aidong.ui.mvp.view.MineInfoView;
+import com.leyuan.aidong.ui.mvp.view.CouponNewUserValidView;
 import com.leyuan.aidong.ui.mvp.view.RegisterViewInterface;
 import com.leyuan.aidong.ui.mvp.view.RequestCountInterface;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.LogAidong;
+import com.leyuan.aidong.utils.RequestResponseCount;
+import com.leyuan.aidong.utils.SharePrefUtils;
 import com.leyuan.aidong.utils.StringUtils;
 import com.leyuan.aidong.utils.TimeCountUtil;
 import com.leyuan.aidong.utils.ToastGlobal;
@@ -156,41 +159,35 @@ public class PhoneBindingThirdLoginActivity extends BaseActivity implements View
             setResult(RESULT_OK, intent);
             LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_PHONE_BINDING_SUCCESS));
 
-            LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_NEW_USER_REGISTER));
+//            LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_NEW_USER_REGISTER));
             if (App.getInstance().isLogin()) {
-//                RequestResponseCount requestResponse = new RequestResponseCount(this);
-//
-//                MineInfoPresenterImpl mineInfoPresenter = new MineInfoPresenterImpl(this);
-//                mineInfoPresenter.setOnRequestResponse(requestResponse);
-//                mineInfoPresenter.getMineInfo();
-//
-//                CouponPresentImpl couponPresent = new CouponPresentImpl(this, new CouponFragmentView() {
-//                    @Override
-//                    public void updateRecyclerView(List<CouponBean> couponBeanList) {
-//                        SharePrefUtils.saveCouponList(couponBeanList);
-//                    }
-//
-//                    @Override
-//                    public void showEmptyView() {
-//
-//                    }
-//
-//                    @Override
-//                    public void showEndFooterView() {
-//
-//                    }
-//                });
-//
-//                couponPresent.setOnRequestResponse(requestResponse);
-//                couponPresent.pullToRefreshData("valid");
+                RequestResponseCount requestResponse = new RequestResponseCount(this);
 
-                new MineInfoPresenterImpl(this, new MineInfoView() {
+                MineInfoPresenterImpl mineInfoPresenter = new MineInfoPresenterImpl(this);
+                mineInfoPresenter.setOnRequestResponse(requestResponse);
+                mineInfoPresenter.getMineInfo();
+
+                CouponPresentImpl couponPresent = new CouponPresentImpl(this, new CouponNewUserValidView() {
+
                     @Override
-                    public void onGetMineInfo(MineInfoBean mineInfoBean) {
+                    public void onGetValidNewUserCoupon(CouponData couponData) {
+                        if(couponData != null && couponData.getCoupons() != null && !couponData.getCoupons().isEmpty()){
+                            SharePrefUtils.putNewUserCoupon(PhoneBindingThirdLoginActivity.this,couponData);
+                        }
 
-                        finish();
                     }
-                }).getMineInfo();
+                });
+
+                couponPresent.setOnRequestResponse(requestResponse);
+                couponPresent.getValidNewUserCoupon();
+
+//                new MineInfoPresenterImpl(this, new MineInfoView() {
+//                    @Override
+//                    public void onGetMineInfo(MineInfoBean mineInfoBean) {
+//
+//                        finish();
+//                    }
+//                }).getMineInfo();
             } else {
                 finish();
             }
@@ -247,7 +244,9 @@ public class PhoneBindingThirdLoginActivity extends BaseActivity implements View
 
     @Override
     public void onRequestCount(int requestCount) {
-
+         if(requestCount >= 2){
+             finish();
+         }
     }
 
     @Override
