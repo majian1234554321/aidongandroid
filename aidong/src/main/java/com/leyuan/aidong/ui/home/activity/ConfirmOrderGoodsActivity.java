@@ -289,6 +289,10 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
             selfDeliveryLayout.setVisibility(View.VISIBLE);
             pickUpWay = DELIVERY_SELF;
             pickUpId = shopBeanList.get(0).getPickUp().getInfo().getId();
+
+            goodsIdGymID.clear();
+            goodsIdGymID.put(currentGoodsID,pickUpId);
+            present.getGoodsAvailableCoupon(itemFromIdAmount,goodsIdGymID);
         }
 
         tvTotalGoodsPrice.setRightContent(
@@ -405,6 +409,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
 
     @Override
     public void onDeliveryTypeClick(int position) {
+        Logger.i("coupon select","onDeliveryTypeClick requestCode = " + REQUEST_UPDATE_DELIVERY);
         UpdateDeliveryInfoActivity.startForResult(this, (ArrayList<ShopBean>) shopBeanList, position, REQUEST_UPDATE_DELIVERY);
     }
 

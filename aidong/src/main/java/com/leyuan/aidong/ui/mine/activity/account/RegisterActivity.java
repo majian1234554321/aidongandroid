@@ -234,7 +234,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
                 @Override
                 public void onGetValidNewUserCoupon(CouponData couponData) {
-                    if (couponData != null && couponData.getCoupons() != null && !couponData.getCoupons().isEmpty()) {
+                    if (couponData != null && couponData.getCoupon() != null && !couponData.getCoupon().isEmpty()) {
                         SharePrefUtils.putNewUserCoupon(RegisterActivity.this, couponData);
                     }
 

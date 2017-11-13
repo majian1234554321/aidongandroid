@@ -313,7 +313,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         super.onResume();
         img_new_message.setVisibility(EmMessageManager.isHaveUnreadMessage() ? View.VISIBLE : View.GONE);
         CouponData couponData = SharePrefUtils.getNewUserCoupon(MainActivity.this);
-        if(couponData != null && couponData.getCoupons()!= null &&! couponData.getCoupons().isEmpty()){
+        if(couponData != null && couponData.getCoupon()!= null &&! couponData.getCoupon().isEmpty()){
             CouponNewcomerActivity.start(this, (ArrayList<CouponBean>) couponData.getCoupons());
             SharePrefUtils.putNewUserCoupon(this,null);
         }
