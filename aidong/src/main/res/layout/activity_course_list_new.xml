@@ -58,7 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-            <com.leyuan.aidong.ui.home.view.CourseFilterView
+            <com.leyuan.aidong.ui.home.view.CourseListFilterView
                 android:id="@+id/view_filter_course"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

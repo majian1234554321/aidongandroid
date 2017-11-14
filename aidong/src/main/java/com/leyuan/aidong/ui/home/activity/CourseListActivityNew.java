@@ -70,7 +70,7 @@ public class CourseListActivityNew extends BaseActivity implements CourseActivit
 
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_course);
+        setContentView(R.layout.activity_course_list_new);
         if (getIntent() != null) {
             category = getIntent().getStringExtra("category");
         }

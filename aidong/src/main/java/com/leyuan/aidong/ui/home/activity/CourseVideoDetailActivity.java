@@ -143,7 +143,8 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
                 break;
             case R.id.bt_appoint:
                 if (App.mInstance.isLogin()) {
-                    CourseListActivityNew.start(this, courseVideoBean.getTypeName());
+                    CourseActivity.start(this, courseVideoBean.getTypeName());
+//                    CourseListActivityNew.start(this, courseVideoBean.getTypeName());
                 } else {
                     startActivityForResult(new Intent(this, LoginActivity.class), Constant.REQUEST_LOGIN);
                 }

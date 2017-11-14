@@ -128,8 +128,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
     private String pickUpId;                          //快递地址或自提场馆id(立即购买时)
     private String addressId;                         //购物车结算时快递地址id
     private String pickUpDate;                        //自提时间
-    private String[] itemIds;
-    private  ArrayList<String>  itemFromIdAmount = new ArrayList<>();
+    private ArrayList<String> itemFromIdAmount = new ArrayList<>();
     private ArrayList<String> pickUpIds = new ArrayList<>();
     private Map<String, String> goodsIdGymID = new HashMap();
 
@@ -155,12 +154,12 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         context.startActivity(starter);
     }
 
-    public static void start(Context context, ArrayList<ShopBean> selectedShops, double totalGoodsPrice) {
-        Intent starter = new Intent(context, ConfirmOrderGoodsActivity.class);
-        starter.putParcelableArrayListExtra("selectedShops", selectedShops);
-        starter.putExtra("totalGoodsPrice", totalGoodsPrice);
-        context.startActivity(starter);
-    }
+//    public static void start(Context context, ArrayList<ShopBean> selectedShops, double totalGoodsPrice) {
+//        Intent starter = new Intent(context, ConfirmOrderGoodsActivity.class);
+//        starter.putParcelableArrayListExtra("selectedShops", selectedShops);
+//        starter.putExtra("totalGoodsPrice", totalGoodsPrice);
+//        context.startActivity(starter);
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,10 +173,6 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
             bottomLayout.setVisibility(View.GONE);
             present.getDefaultAddress(switcherLayout);
         }
-
-//        pickUpIds.clear();
-//        pickUpIds.add(pickUpId);
-        present.getGoodsAvailableCoupon(itemFromIdAmount,goodsIdGymID);
     }
 
 
@@ -201,21 +196,19 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         }
         settlementType = goods.getType();
 
+        //把shopBeanList转为GoodsList 重要代码
         List<GoodsBean> goodsList = new ArrayList<>();
         for (ShopBean shopBean : shopBeanList) {
             for (GoodsBean goodsBean : shopBean.getItem()) {
                 goodsList.add(goodsBean);
             }
         }
-        itemIds = new String[goodsList.size()];
-//        itemFromIdAmount = new String[goodsList.size()];
 
         for (int i = 0; i < goodsList.size(); i++) {
-            itemIds[i] = goodsList.get(i).getId();
             itemFromIdAmount.add(goodsList.get(i).getCouponGoodsType() + "_"
                     + goodsList.get(i).getCode() + "_" + goodsList.get(i).getAmount());
-            goodsIdGymID.put(goodsList.get(i).getCode(),pickUpId);
-            if(i == 0 ){
+            goodsIdGymID.put(goodsList.get(i).getCode(), pickUpId);
+            if (i == 0) {
                 currentGoodsID = goodsList.get(i).getCode();
             }
         }
@@ -264,6 +257,9 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
     }
 
     private void setChangeViewInfo() {
+        goodsIdGymID.clear();
+
+
         for (ShopBean shopBean : shopBeanList) {
             if (DELIVERY_EXPRESS.equals(shopBean.getPickUp().getType())) {
                 needExpress = true;
@@ -272,7 +268,16 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
             if (DELIVERY_SELF.equals(shopBean.getPickUp().getType())) {
                 needSelfDelivery = true;
             }
+            for (GoodsBean goodsBean : shopBean.getItem()) {
+                if (shopBean.getPickUp() != null && shopBean.getPickUp().getInfo() != null && shopBean.getPickUp().getInfo().getId() != null) {
+                    goodsIdGymID.put(goodsBean.getCode(), shopBean.getPickUp().getInfo().getId());
+                } else {
+                    goodsIdGymID.put(goodsBean.getCode(), "0");
+                }
+
+            }
         }
+        present.getGoodsAvailableCoupon(itemFromIdAmount, goodsIdGymID);
 
         if (needExpress) {
             addressLayout.setVisibility(View.VISIBLE);
@@ -290,9 +295,6 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
             pickUpWay = DELIVERY_SELF;
             pickUpId = shopBeanList.get(0).getPickUp().getInfo().getId();
 
-            goodsIdGymID.clear();
-            goodsIdGymID.put(currentGoodsID,pickUpId);
-            present.getGoodsAvailableCoupon(itemFromIdAmount,goodsIdGymID);
         }
 
         tvTotalGoodsPrice.setRightContent(
@@ -409,7 +411,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
 
     @Override
     public void onDeliveryTypeClick(int position) {
-        Logger.i("coupon select","onDeliveryTypeClick requestCode = " + REQUEST_UPDATE_DELIVERY);
+        Logger.i("coupon select", "onDeliveryTypeClick requestCode = " + REQUEST_UPDATE_DELIVERY);
         UpdateDeliveryInfoActivity.startForResult(this, (ArrayList<ShopBean>) shopBeanList, position, REQUEST_UPDATE_DELIVERY);
     }
 
@@ -484,7 +486,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Logger.i("coupon select","onActivityResult requestCode = " + requestCode);
+        Logger.i("coupon select", "onActivityResult requestCode = " + requestCode);
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_SELECT_ADDRESS) {
                 AddressBean address = data.getParcelableExtra("address");
@@ -532,7 +534,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
 
     private void setAddressInfo(AddressBean address) {
 
-        Logger.i("coupon select","onActivityResult setAddressInfo = " + address.getId());
+        Logger.i("coupon select", "onActivityResult setAddressInfo = " + address.getId());
         ivDefault.setVisibility(address.isDefault() ? View.VISIBLE : View.GONE);
         tvName.setText(address.getName());
         tvPhone.setText(address.getMobile());
@@ -541,14 +543,6 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
                 .append(address.getDistrict()).append(address.getAddress());
         tvAddress.setText(sb);
         pickUpId = address.getId();
-
-
-        goodsIdGymID.clear();
-        goodsIdGymID.put(currentGoodsID,pickUpId);
-//        pickUpIds.clear();
-//        pickUpIds.add(pickUpId);
-        present.getGoodsAvailableCoupon(itemFromIdAmount,goodsIdGymID);
-
     }
 
     private void resetStatus() {
