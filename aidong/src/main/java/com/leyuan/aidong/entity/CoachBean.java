@@ -14,6 +14,7 @@ public class CoachBean implements Parcelable {
     private String gender;
     private String mobile;
     private String id;
+    private String introduce;//'教练介绍'
 
     public String getId() {
         return id;
@@ -63,6 +64,14 @@ public class CoachBean implements Parcelable {
         this.mobile = mobile;
     }
 
+    public String getIntroduce() {
+        return introduce;
+    }
+
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -76,6 +85,7 @@ public class CoachBean implements Parcelable {
         dest.writeString(this.gender);
         dest.writeString(this.mobile);
         dest.writeString(this.id);
+        dest.writeString(this.introduce);
     }
 
     public CoachBean() {
@@ -88,6 +98,7 @@ public class CoachBean implements Parcelable {
         this.gender = in.readString();
         this.mobile = in.readString();
         this.id = in.readString();
+        this.introduce = in.readString();
     }
 
     public static final Creator<CoachBean> CREATOR = new Creator<CoachBean>() {

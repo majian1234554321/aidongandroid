@@ -6,6 +6,7 @@ import com.leyuan.aidong.config.UrlConfig;
 import com.leyuan.aidong.ui.App;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
@@ -44,12 +45,19 @@ public class RetrofitVersionHelper {
                     public Response intercept(Chain chain) throws IOException {
                         Request.Builder builder = chain.request().newBuilder();
 
-//                        builder.addHeader("city", URLEncoder.encode(App.getInstance().getSelectedCity(), "UTF-8"));
+
+                        if (App.getInstance().isLogin()) {
+                            if (App.getInstance().getToken() != null)
+                                builder.addHeader("token", App.getInstance().getToken());
+                            if (App.getInstance().getUser().getMobile() != null)
+                                builder.addHeader("mobile", App.getInstance().getUser().getMobile());
+                        }
+                        builder.addHeader("version", App.getInstance().getVersionName());
+                        builder.addHeader("city", URLEncoder.encode(App.getInstance().getSelectedCity(), "UTF-8"));
 //                        builder.addHeader("lat", String.valueOf(App.lat));
 //                        builder.addHeader("lng", String.valueOf(App.lon));
-                        builder.addHeader("version", App.getInstance().getVersionName());
 //                        builder.addHeader("deviceName", DeviceManager.getPhoneBrand());
-//                          builder.addHeader("Content-Type","application/x-www-form-urlencoded");
+//                        builder.addHeader("Content-Type","application/x-www-form-urlencoded");
 
                         Request authorised = builder.build();
                         return chain.proceed(authorised);

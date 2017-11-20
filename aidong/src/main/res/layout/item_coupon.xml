@@ -31,9 +31,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="9dp"
-            android:text="200"
+            android:text="200.0"
             android:textColor="@color/main_red"
-            android:textSize="60sp" />
+            android:textSize="50sp" />
 
 
         <TextView

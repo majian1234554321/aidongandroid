@@ -262,7 +262,8 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
                 needSelfDelivery = true;
             }
             for (GoodsBean goodsBean : shopBean.getItem()) {
-                if (shopBean.getPickUp() != null && shopBean.getPickUp().getInfo() != null && shopBean.getPickUp().getInfo().getId() != null) {
+//                if (shopBean.getPickUp() != null && shopBean.getPickUp().getInfo() != null && shopBean.getPickUp().getInfo().getId() != null) {
+                if (needSelfDelivery) {
                     goodsIdGymID.put(goodsBean.getCode(), shopBean.getPickUp().getInfo().getId());
                 } else {
                     goodsIdGymID.put(goodsBean.getCode(), "0");
@@ -491,6 +492,17 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
             tvCoupon.setText("无可用");
             tvCoupon.setCompoundDrawables(null, null, null, null);
         }
+
+        //把优惠券使用置为初始状态
+        selectedUserCouponId = null;
+        Logger.i("coupon", "setSpecifyGoodsCouponResult = " + selectedUserCouponId);
+        couponId = null;
+        couponPrice = null;
+        tvCoupon.setText(getString(R.string.please_select));
+        tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double), 0d));
+        double dPrice = needExpress ? expressPrice : 0d;
+        double cPrice = !TextUtils.isEmpty(couponPrice) ? FormatUtil.parseDouble(couponPrice) : 0d;
+        tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice));
     }
 
     @Override

@@ -36,7 +36,7 @@
                 android:layout_marginLeft="3dp"
                 android:text="2"
                 android:textColor="@color/main_red"
-                android:textSize="34sp" />
+                android:textSize="30sp" />
 
 
             <TextView

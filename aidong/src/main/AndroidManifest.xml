@@ -8,51 +8,32 @@
         android:name="com.example.aidong.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
 
-    <!-- Required  一些系统要求的权限，如访问网络等-->
+    <!-- Required  一些系统要求的权限，如访问网络等 -->
     <uses-permission android:name="com.example.aidong.permission.JPUSH_MESSAGE" />
-
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
-
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-
     <uses-permission android:name="android.permission.VIBRATE" />
-
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <!-- Optional for location -->
-
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
 
-
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-
     <uses-permission android:name="android.permission.GET_TASKS" />
-
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -135,43 +116,33 @@
         <activity
             android:name=".ui.mine.activity.account.CompleteUserInfoActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.home.activity.CourseVideoDetailActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.home.activity.RelatedVideoActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.discover.activity.ClipPhotosActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.mine.activity.account.ChangePasswordActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.mine.activity.account.FastLoginActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.mine.activity.account.FindPasswordActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.home.activity.GoodsDetailActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.home.activity.CourseCategoryActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.mine.activity.account.UserAgreementActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.mine.activity.account.XiuGaiGeXinQianMing"
             android:screenOrientation="portrait" />
@@ -179,12 +150,10 @@
             android:name=".ui.mine.activity.CouponNewcomerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ThemeSemitransparent" />
-
         <activity
             android:name=".ui.mine.activity.CouponShareActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ThemeSemitransparent" />
-
         <activity
             android:name=".ui.mine.activity.setting.AboutMxActivity"
             android:screenOrientation="portrait" />
@@ -197,11 +166,9 @@
         <activity
             android:name=".ui.mine.activity.PrivacyActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.mine.activity.ExpressInfoActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.mine.activity.setting.TabHelpActivity"
             android:screenOrientation="portrait" />
@@ -322,7 +289,6 @@
         <activity
             android:name=".ui.home.activity.CourseActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.home.activity.CourseListActivityNew"
             android:screenOrientation="portrait" />
@@ -356,7 +322,6 @@
             android:name=".ui.home.activity.FoodAndBeverageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullScreen" />
-
         <activity
             android:name=".ui.home.activity.AppointCampaignActivity"
             android:screenOrientation="portrait"
@@ -364,7 +329,6 @@
         <activity
             android:name=".ui.mine.activity.AppointCampaignDetailActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.home.activity.AppointCourseActivity"
             android:screenOrientation="portrait"
@@ -383,7 +347,6 @@
             android:name=".ui.home.activity.ConfirmOrderCartActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.home.activity.ConfirmOrderGoodsActivity"
             android:launchMode="singleTop"
@@ -440,12 +403,10 @@
         <activity
             android:name=".ui.video.activity.WatchOfficeActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.mine.activity.NewBarcodeActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".ui.video.activity.VideoDetailActivity"
             android:screenOrientation="portrait" />
@@ -465,8 +426,6 @@
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
-
-
         <activity
             android:name=".ui.video.activity.LivingVideoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -474,6 +433,7 @@
             android:theme="@style/PlayerTheme">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data android:mimeType="video/*" />
@@ -483,6 +443,7 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
+
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data android:mimeType="video/*" />
@@ -505,6 +466,7 @@
             android:theme="@style/PlayerTheme">
             <intent-filter>
                 <action android:name="com.google.android.exoplayer.demo.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data android:scheme="http" />
@@ -522,17 +484,16 @@
         <activity
             android:name=".ui.discover.activity.VenuesDetailActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.WeiboResponseActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter>
                 <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.ShareActivityQQ"
             android:screenOrientation="portrait"
@@ -540,79 +501,70 @@
         <activity
             android:name=".ui.home.activity.MapActivity"
             android:screenOrientation="portrait" />
-
-
         <activity
             android:name=".ui.mine.activity.BarcodeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ImageTranslucentTheme" />
-
         <activity
             android:name=".ui.home.activity.AppointSuccessActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.discover.activity.DiscoverUserActivity"
             android:screenOrientation="portrait" />
-        <!--<activity-->
-        <!--android:name=".ui.discover.activity.DiscoverUserActivityTest"-->
-        <!--android:screenOrientation="portrait" />-->
+        <!-- <activity -->
+        <!-- android:name=".ui.discover.activity.DiscoverUserActivityTest" -->
+        <!-- android:screenOrientation="portrait" /> -->
 
         <activity
             android:name=".ui.mine.activity.EMChatActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
-
+        <activity
+            android:name=".ui.mine.activity.AppointmentMineActivityNew"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".module.photopicker.boxing_impl.ui.BoxingActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".module.photopicker.boxing_impl.ui.BoxingPreviewActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".ui.discover.activity.PhotoBrowseActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/ImageTranslucentTheme" />
-
         <activity
             android:name=".module.photopicker.boxing_impl.record.VideoCaptureActivity"
             android:screenOrientation="portrait" />
 
         <service android:name=".module.ChatLoginService" />
 
-        <!--android:launchMode="singleTop"-->
-        <!--android:screenOrientation="portrait"-->
-        <!--android:theme="@android:style/Theme.Translucent.NoTitleBar">-->
-        <!--<intent-filter>-->
-        <!--<action android:name="android.intent.action.VIEW" />-->
-        <!--<category android:name="android.intent.category.DEFAULT" />-->
-        <!--<data android:scheme="爱动健身" />-->
-        <!--</intent-filter>-->
+        <!-- android:launchMode="singleTop" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.VIEW" /> -->
+        <!-- <category android:name="android.intent.category.DEFAULT" /> -->
+        <!-- <data android:scheme="爱动健身" /> -->
+        <!-- </intent-filter> -->
         <!-- ********************WeiXin Login Share************************* -->
         <activity
             android:name="com.example.aidong.wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar">
-
-
-        </activity>
-        <!--android:theme="@android:style/Theme.Translucent.NoTitleBar"-->
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
+        <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar" -->
         <receiver
             android:name=".receivers.WeixinRegisterReceiver"
             android:permission="com.tencent.mm.plugin.permission.SEND">
@@ -626,6 +578,7 @@
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" />
+
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="oOUovyobUoONSmPB8qGjG4Lq" />
@@ -670,7 +623,7 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-        <!--********************Weibo Login Share************************* -->
+        <!-- ********************Weibo Login Share************************* -->
         <activity
             android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
             android:configChanges="keyboardHidden|orientation"
@@ -687,11 +640,11 @@
         <service
             android:name="com.sina.weibo.sdk.net.DownloadService"
             android:exported="false" />
-        <!-- 设置环信应用的AppKey debug:	leyuan-aidong#aidongouternettest  preRelease: leyuan-aidong#aidongprerelease   release : leyuan-aidong#aidong-->
+        <!-- 设置环信应用的AppKey debug:	leyuan-aidong#aidongouternettest  preRelease: leyuan-aidong#aidongprerelease   release : leyuan-aidong#aidong -->
         <meta-data
             android:name="EASEMOB_APPKEY"
             android:value="leyuan-aidong#aidongouternettest" />
-        <!-- 声明SDK所需的service SDK核心功能-->
+        <!-- 声明SDK所需的service SDK核心功能 -->
         <service
             android:name="com.hyphenate.chat.EMChatService"
             android:exported="true" />
@@ -703,6 +656,7 @@
         <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
                 <data android:scheme="package" />
             </intent-filter>
             <!-- 可选filter -->
@@ -712,7 +666,7 @@
             </intent-filter>
         </receiver>
 
-        <!--********************友盟统计************************* -->
+        <!-- ********************友盟统计************************* -->
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="557e76dc67e58e0bf90009be" />
@@ -720,57 +674,43 @@
             android:name="UMENG_CHANNEL"
             android:value="Channel ID" />
 
-        <!--***********************极光推送***********************-->
-        <!-- Rich push 核心功能 since 2.0.6-->
+        <!-- ***********************极光推送*********************** -->
+        <!-- Rich push 核心功能 since 2.0.6 -->
         <activity
             android:name="cn.jpush.android.ui.PopWinActivity"
             android:exported="false"
-            android:theme="@style/MyDialogStyle"></activity>
+            android:theme="@style/MyDialogStyle" />
 
-        <!-- Required SDK核心功能-->
+        <!-- Required SDK核心功能 -->
 
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
             android:configChanges="orientation|keyboardHidden"
             android:exported="false"
             android:theme="@android:style/Theme.NoTitleBar">
-
             <intent-filter>
-
                 <action android:name="cn.jpush.android.ui.PushActivity" />
 
                 <category android:name="android.intent.category.DEFAULT" />
-
                 <category android:name="com.example.aidong" />
-
             </intent-filter>
-
         </activity>
 
-        <!-- Required SDK 核心功能-->
+        <!-- Required SDK 核心功能 -->
 
 
         <!-- 可配置android:process参数将PushService放在其他进程中 -->
-
 
         <service
             android:name="cn.jpush.android.service.PushService"
             android:exported="false"
             android:process=":mult">
-
-
             <intent-filter>
-
                 <action android:name="cn.jpush.android.intent.REGISTER" />
-
                 <action android:name="cn.jpush.android.intent.REPORT" />
-
                 <action android:name="cn.jpush.android.intent.PushService" />
-
                 <action android:name="cn.jpush.android.intent.PUSH_TIME" />
-
             </intent-filter>
-
         </service>
 
         <!-- since 1.8.0 option 可选项。用于同一设备中不同应用的JPush服务相互拉起的功能。 -->
@@ -778,131 +718,94 @@
 
         <!-- 若不启用该功能可删除该组件，将不拉起其他应用也不能被其他应用拉起 -->
 
-
         <service
             android:name="cn.jpush.android.service.DaemonService"
             android:enabled="true"
             android:exported="true">
-
-
             <intent-filter>
-
                 <action android:name="cn.jpush.android.intent.DaemonService" />
 
                 <category android:name="com.example.aidong" />
-
             </intent-filter>
-
         </service>
 
-        <!-- Required SDK核心功能-->
-
+        <!-- Required SDK核心功能 -->
 
         <receiver
             android:name="cn.jpush.android.service.PushReceiver"
             android:enabled="true"
             android:exported="false">
-
-
             <intent-filter android:priority="1000">
-
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
 
-                <!--Required 显示通知栏 -->
-
+                <!-- Required 显示通知栏 -->
 
                 <category android:name="com.example.aidong" />
-
             </intent-filter>
-
-
             <intent-filter>
-
                 <action android:name="android.intent.action.USER_PRESENT" />
-
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-
             </intent-filter>
 
             <!-- Optional -->
 
-
             <intent-filter>
-
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
-
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
 
                 <data android:scheme="package" />
-
             </intent-filter>
-
         </receiver>
 
-        <!-- Required SDK核心功能-->
-
+        <!-- Required SDK核心功能 -->
 
         <receiver
             android:name="cn.jpush.android.service.AlarmReceiver"
             android:exported="false" />
 
-        <!-- User defined. For test only 用户自定义的广播接收器-->
-
+        <!-- User defined. For test only 用户自定义的广播接收器 -->
 
         -
         <receiver
             android:name=".receivers.JPushReceiver"
             android:enabled="true"
             android:exported="false">
-
-
             -
             <intent-filter>
-
                 <action android:name="cn.jpush.android.intent.REGISTRATION" />
 
-                <!--Required 用户注册SDK的intent-->
-
+                <!-- Required 用户注册SDK的intent -->
 
                 <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
 
-                <!--Required 用户接收SDK消息的intent-->
-
+                <!-- Required 用户接收SDK消息的intent -->
 
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
 
-                <!--Required 用户接收SDK通知栏信息的intent-->
-
+                <!-- Required 用户接收SDK通知栏信息的intent -->
 
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
 
-                <!--Required 用户打开自定义通知栏的intent-->
-
+                <!-- Required 用户打开自定义通知栏的intent -->
 
                 <action android:name="cn.jpush.android.intent.CONNECTION" />
 
                 <!-- 接收网络变化 连接/断开 since 1.6.3 -->
 
-
                 <category android:name="com.example.aidong" />
-
             </intent-filter>
-
         </receiver>
 
         <!-- Required . Enable it you can get statistics data with channel -->
 
-
         <meta-data
             android:name="JPUSH_CHANNEL"
             android:value="developer-default" />
-
         <meta-data
             android:name="JPUSH_APPKEY"
             android:value="6278fa0fc2bbdab4b841b90f" />
 
-        <!-- </>值来自开发者平台取得的AppKey-->
-
+        <!-- </>值来自开发者平台取得的AppKey -->
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -914,6 +817,13 @@
                 android:resource="@xml/file_provider" />
         </provider>
 
+        <activity android:name=".ui.home.activity.CourseChooseSeat">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

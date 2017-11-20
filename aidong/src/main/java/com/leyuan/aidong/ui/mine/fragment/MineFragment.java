@@ -28,7 +28,7 @@ import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.WebViewActivity;
 import com.leyuan.aidong.ui.mine.activity.AddressActivity;
 import com.leyuan.aidong.ui.mine.activity.AiDongMomentActivity;
-import com.leyuan.aidong.ui.mine.activity.AppointmentActivity;
+import com.leyuan.aidong.ui.mine.activity.AppointmentMineActivityNew;
 import com.leyuan.aidong.ui.mine.activity.CartActivity;
 import com.leyuan.aidong.ui.mine.activity.CouponActivity;
 import com.leyuan.aidong.ui.mine.activity.FollowActivity;
@@ -210,7 +210,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
                 UserInfoActivity.start(getContext(), String.valueOf(App.mInstance.getUser().getId()));
                 break;
             case R.id.relativeLayout_yuyue:
-                UiManager.activityCheckLoginJump(getActivity(), AppointmentActivity.class);
+//                UiManager.activityCheckLoginJump(getActivity(), AppointmentActivity.class);
+                UiManager.activityCheckLoginJump(getActivity(), AppointmentMineActivityNew.class);
                 break;
             case R.id.relativeLayout_dingdang:
                 UiManager.activityCheckLoginJump(getActivity(), OrderActivity.class);

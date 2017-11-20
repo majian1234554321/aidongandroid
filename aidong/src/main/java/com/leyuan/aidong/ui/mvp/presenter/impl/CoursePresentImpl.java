@@ -47,6 +47,7 @@ import rx.Subscriber;
  * 课程
  * Created by song on 2016/9/21.
  */
+@Deprecated
 public class CoursePresentImpl implements CoursePresent {
     private Context context;
     private CourseModel courseModel;

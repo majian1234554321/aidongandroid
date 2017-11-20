@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CouponBean;
 import com.leyuan.aidong.utils.DensityUtil;
-import com.leyuan.aidong.utils.FormatUtil;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ScreenUtil;
 import com.leyuan.aidong.utils.ToastGlobal;
 
@@ -28,9 +28,13 @@ public class GoodsDetailCouponAdapter extends RecyclerView.Adapter<GoodsDetailCo
     private Context context;
     private List<CouponBean> data = new ArrayList<>();
     private CouponListener listener;
+    private int big, small, smaller;
 
     public GoodsDetailCouponAdapter(Context context) {
         this.context = context;
+        smaller = DensityUtil.dp2px(context, 20);
+        small = DensityUtil.dp2px(context, 25);
+        big = DensityUtil.dp2px(context, 35);
     }
 
     public void setData(List<CouponBean> data) {
@@ -55,6 +59,21 @@ public class GoodsDetailCouponAdapter extends RecyclerView.Adapter<GoodsDetailCo
     public void onBindViewHolder(final CouponHolder holder, final int position) {
         final CouponBean bean = data.get(position);
         holder.tv_rmb.setText(bean.getDiscountSign());
+
+        Logger.i("coupon GoodsDetailCouponAdapter", "bean.getDiscountNumber().length() = " + bean.getDiscountNumber().length());
+        if (bean.getDiscountNumber().length() > 8) {
+            holder.tvPrice.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+            Logger.i("coupon GoodsDetailCouponAdapter", "smaller = " + 20);
+        } else if (bean.getDiscountNumber().length() > 6) {
+            holder.tvPrice.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+            Logger.i("coupon GoodsDetailCouponAdapter", "smaller = " + 20);
+        } else if (bean.getDiscountNumber().length() > 4) {
+            holder.tvPrice.setTextSize(TypedValue.COMPLEX_UNIT_SP, 35);
+            Logger.i("coupon GoodsDetailCouponAdapter", "small = " + 35);
+        } else {
+            holder.tvPrice.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
+            Logger.i("coupon GoodsDetailCouponAdapter", "big = " +  40);
+        }
         holder.tvPrice.setText(bean.getDiscountNumber());
 
 //        if (TextUtils.equals(bean.getMin(), Constant.NEGATIVE_ONE)) {
@@ -63,35 +82,36 @@ public class GoodsDetailCouponAdapter extends RecyclerView.Adapter<GoodsDetailCo
 //            holder.tvUserPrice.setText(String.format(context.getString(R.string.use_price), bean.getMin()));
 //        }
 
+
         holder.tvUserPrice.setText(bean.getCouponDesc());
         if ("0".equals(bean.getStatus())) {   //未领
             holder.tvGet.setText("点击领取");
             holder.rlCoupon.setBackgroundResource(R.drawable.bg_goods_coupon);
-        } else if ("1".equals(bean.getStatus())){
+        } else if ("1".equals(bean.getStatus())) {
             holder.tvGet.setText("已领取");
             holder.rlCoupon.setBackgroundResource(R.drawable.bg_goods_coupon_gray);
         } else {
             holder.tvGet.setText("已领完");
             holder.rlCoupon.setBackgroundResource(R.drawable.bg_goods_coupon_gray);
         }
-
-        if (FormatUtil.parseInt(bean.getDiscountNumber()) > 99) {
-            holder.tvPrice.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.sp_30));
-        } else {
-            holder.tvPrice.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.sp_40));
-        }
+//
+//        if (FormatUtil.parseInt(bean.getDiscountNumber()) > 99) {
+//            holder.tvPrice.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.sp_30));
+//        } else {
+//            holder.tvPrice.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.sp_40));
+//        }
 
         //只有一张优惠券 居中
-        if(data.size() == 1){
+        if (data.size() == 1) {
             ViewGroup.LayoutParams layoutParams = holder.root.getLayoutParams();
-            layoutParams.width = ScreenUtil.getScreenWidth(context) - DensityUtil.dp2px(context,15);
+            layoutParams.width = ScreenUtil.getScreenWidth(context) - DensityUtil.dp2px(context, 15);
             holder.root.setLayoutParams(layoutParams);
         }
 
         //两张优惠券居中对齐
-        if(data.size() == 2){
+        if (data.size() == 2) {
             ViewGroup.LayoutParams layoutParams = holder.root.getLayoutParams();
-            layoutParams.width = (ScreenUtil.getScreenWidth(context) - DensityUtil.dp2px(context,15)) / 2;
+            layoutParams.width = (ScreenUtil.getScreenWidth(context) - DensityUtil.dp2px(context, 15)) / 2;
             holder.root.setLayoutParams(layoutParams);
         }
 
@@ -102,9 +122,9 @@ public class GoodsDetailCouponAdapter extends RecyclerView.Adapter<GoodsDetailCo
                     if (listener != null) {
                         listener.onObtainCoupon(position);
                     }
-                } else if("1".equals(bean.getStatus())){
+                } else if ("1".equals(bean.getStatus())) {
                     ToastGlobal.showLong("已领取过该优惠券");
-                }else {
+                } else {
                     ToastGlobal.showLong("优惠券已领完");
                 }
             }
@@ -122,11 +142,11 @@ public class GoodsDetailCouponAdapter extends RecyclerView.Adapter<GoodsDetailCo
         public CouponHolder(View itemView) {
             super(itemView);
             root = (RelativeLayout) itemView.findViewById(R.id.root);
-            rlCoupon = (RelativeLayout)itemView.findViewById(R.id.rl_coupon);
+            rlCoupon = (RelativeLayout) itemView.findViewById(R.id.rl_coupon);
             tvPrice = (TextView) itemView.findViewById(R.id.tv_price);
             tvUserPrice = (TextView) itemView.findViewById(R.id.tv_user_price);
             tvGet = (TextView) itemView.findViewById(R.id.tv_get);
-            tv_rmb= (TextView) itemView.findViewById(R.id.tv_rmb);
+            tv_rmb = (TextView) itemView.findViewById(R.id.tv_rmb);
         }
     }
 

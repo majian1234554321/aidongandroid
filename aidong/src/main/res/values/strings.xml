@@ -11,6 +11,7 @@
     <string name="s_second">秒前</string>
     <string name="month">月</string>
     <string name="day">日</string>
+    <string name="coach">教练</string>
     <string name="password">密码</string>
     <string name="forgetPassword">忘记密码？</string>
     <string name="regist">注册</string>
@@ -298,4 +299,12 @@
     <string name="confirm_order">确认订单</string>
     <string name="course_order_hint">温馨提示:付费课程可在开课前48小时取消退款!</string>
     <string name="pay_immediately">立即支付</string>
+    <string name="course_appoint">课程预约</string>
+    <string name="event_appoint">活动预约</string>
+    <string name="total">全部</string>
+    <string name="not_join">待参加</string>
+    <string name="joined">已参加</string>
+    <string name="seat_confirm">确认选座</string>
+    <string name="choosable">可选</string>
+    <string name="choosed">已选</string>
 </resources>

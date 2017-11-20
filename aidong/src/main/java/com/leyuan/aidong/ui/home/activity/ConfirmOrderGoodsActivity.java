@@ -207,7 +207,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
         for (int i = 0; i < goodsList.size(); i++) {
             itemFromIdAmount.add(goodsList.get(i).getCouponGoodsType() + "_"
                     + goodsList.get(i).getCode() + "_" + goodsList.get(i).getAmount());
-            goodsIdGymID.put(goodsList.get(i).getCode(), pickUpId);
+//            goodsIdGymID.put(goodsList.get(i).getCode(), pickUpId);
             if (i == 0) {
                 currentGoodsID = goodsList.get(i).getCode();
             }
@@ -269,12 +269,13 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
                 needSelfDelivery = true;
             }
             for (GoodsBean goodsBean : shopBean.getItem()) {
-                if (shopBean.getPickUp() != null && shopBean.getPickUp().getInfo() != null && shopBean.getPickUp().getInfo().getId() != null) {
+                if (needSelfDelivery) {
                     goodsIdGymID.put(goodsBean.getCode(), shopBean.getPickUp().getInfo().getId());
+                    Logger.i("coupon","if (shopBean.getPickUp() != null goodsIdGymID.put = " +shopBean.getPickUp().getInfo().getId());
                 } else {
                     goodsIdGymID.put(goodsBean.getCode(), "0");
+                    Logger.i("coupon","if } else { goodsIdGymID.put = 0" );
                 }
-
             }
         }
         present.getGoodsAvailableCoupon(itemFromIdAmount, goodsIdGymID);
@@ -482,6 +483,18 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
             tvCoupon.setText("无可用");
             tvCoupon.setCompoundDrawables(null, null, null, null);
         }
+        //把优惠券使用置为初始状态
+
+        selectedUserCouponId = null;
+        Logger.i("coupon", "setSpecifyGoodsCouponResult = " + selectedUserCouponId);
+        couponId = null;
+        couponPrice = null;
+        tvCoupon.setText(getString(R.string.please_select));
+        tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double), 0d));
+        double dPrice = needExpress ? expressPrice : 0d;
+        double cPrice = !TextUtils.isEmpty(couponPrice) ? FormatUtil.parseDouble(couponPrice) : 0d;
+        tvFinalPrice.setText(String.format(getString(R.string.rmb_price_double), totalGoodsPrice + dPrice - cPrice));
+
     }
 
     @Override

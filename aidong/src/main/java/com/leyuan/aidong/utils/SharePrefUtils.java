@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.leyuan.aidong.entity.VenuesBean;
 import com.leyuan.aidong.entity.data.CouponData;
+import com.leyuan.aidong.entity.data.CourseFilterData;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.entity.user.MineInfoBean;
 import com.leyuan.aidong.ui.App;
@@ -213,5 +214,34 @@ public class SharePrefUtils {
 
         }
         return couponData;
+    }
+
+    public static void putCourseFilterConfig(Context context, CourseFilterData courseFilterData) {
+        if (mSharedPreferences == null) {
+            mSharedPreferences = context.getSharedPreferences(SHARE_PREFS_NAME,
+                    Context.MODE_PRIVATE);
+        }
+        Gson gson = new Gson();
+        String json = gson.toJson(courseFilterData);
+        mSharedPreferences.edit().putString("courseFilterData", json).commit();
+
+        Logger.i(TAG, " mSharedPreferences.edit().putCourseFilterConfig.commit();");
+    }
+
+    public static CourseFilterData getCourseFilterConfig(Context context) {
+        if (mSharedPreferences == null) {
+            mSharedPreferences = context.getSharedPreferences(SHARE_PREFS_NAME,
+                    Context.MODE_PRIVATE);
+        }
+        CourseFilterData courseFilterData = null;
+        String json = mSharedPreferences.getString("courseFilterData", null);
+        try {
+            Gson gson = new Gson();
+            courseFilterData = gson.fromJson(json, CourseFilterData.class);
+        } catch (JsonSyntaxException e) {
+            e.printStackTrace();
+
+        }
+        return courseFilterData;
     }
 }

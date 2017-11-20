@@ -71,6 +71,11 @@
         <item>已完成</item>
     </string-array>
 
+    <string-array name="appointmentMineTab">
+        <item>课程预约</item>
+        <item>活动预约</item>
+    </string-array>
+
     <string-array name="appointmentTab">
         <item>全部</item>
         <item>待参加</item>

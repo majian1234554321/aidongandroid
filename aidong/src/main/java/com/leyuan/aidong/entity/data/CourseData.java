@@ -8,6 +8,7 @@ import java.util.ArrayList;
  * 课程数据实体
  * Created by song on 2016/8/25.
  */
+@Deprecated
 public class CourseData {
     private String date;
     private ArrayList<CourseBean> course;
