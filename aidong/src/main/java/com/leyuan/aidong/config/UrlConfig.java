@@ -19,7 +19,7 @@ public class UrlConfig {
             urlHostUpdata = "http://m.aidong.me:9020/v1/app/check/";
             urlHost = "http://app.51aidong.com/";//测试服
             urlMemberCard = "http://opentest.aidong.me/";
-            urlMemberCard = "http://stage.aidong.me/";
+//            urlMemberCard = "http://stage.aidong.me/";
 //            urlHost = "http://app-stage.51aidong.com/";//预发布
         } else {
             urlHtml = "http://share.aidong.me/";

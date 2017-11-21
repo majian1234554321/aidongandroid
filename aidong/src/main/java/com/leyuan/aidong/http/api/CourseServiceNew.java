@@ -21,7 +21,9 @@ public interface CourseServiceNew {
     Observable<BaseBean<CourseDataNew>> getCourseList(@Query("company") String company,
                                                       @Query("store") String store,
                                                       @Query("course") String course,
-                                                      @Query("time") String time);
+                                                      @Query("time") String time,
+                                                      @Query("date") String date,
+                                                      @Query("page") String page);
 
     @GET("app/api/timetable/{id}")
     Observable<BaseBean<CourseDetailDataNew>> getCourseDetail();

@@ -11,6 +11,7 @@ import com.hyphenate.chat.EMClient;
 import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.entity.VersionInformation;
 import com.leyuan.aidong.ui.home.AdvertisementActivity;
+import com.leyuan.aidong.ui.mvp.presenter.impl.CourseConfigPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.MineInfoPresenterImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.SplashPresenterImpl;
@@ -109,7 +110,12 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
         systemPresent.setOnRequestResponse(requestResponse);
         systemPresent.setSplashView(this);
         systemPresent.getSystemInfo("android");
-        httpRequestIndex = 1;
+
+        CourseConfigPresentImpl coursePresentNew = new CourseConfigPresentImpl(this);
+        coursePresentNew.setOnRequestResponse(requestResponse);
+        coursePresentNew.getCourseFilterConfig();
+
+        httpRequestIndex = 2;
         if (App.getInstance().isLogin()) {
 
             SplashPresenterImpl splashPresenter = new SplashPresenterImpl(this);
@@ -123,7 +129,7 @@ public class SplashActivity extends BaseActivity implements VersionViewListener,
             FollowPresentImpl followPresent = new FollowPresentImpl(this);
             followPresent.setOnRequestResponse(requestResponse);
             followPresent.getFollowList();
-            httpRequestIndex = 4;
+            httpRequestIndex = 5;
         }
     }
 

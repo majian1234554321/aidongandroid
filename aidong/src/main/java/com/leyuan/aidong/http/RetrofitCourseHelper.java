@@ -1,32 +1,36 @@
 package com.leyuan.aidong.http;
 
-
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.leyuan.aidong.config.UrlConfig;
 import com.leyuan.aidong.ui.App;
+import com.leyuan.aidong.utils.DeviceManager;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class RetrofitVersionHelper {
+public class RetrofitCourseHelper {
     private static final int DEFAULT_TIMEOUT = 30;
     private static Retrofit singleton;
 
-    public static <T> T createVersionApi(Class<T> clazz) {
+    private static HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+
+    public static <T> T createApi(Class<T> clazz) {
         if (singleton == null) {
-            synchronized (RetrofitVersionHelper.class) {
+            synchronized (RetrofitCourseHelper.class) {
                 if (singleton == null) {
                     Retrofit.Builder builder = new Retrofit.Builder();
-                    builder.baseUrl(UrlConfig.BASE_URL_VERSION)
+                    builder.baseUrl(UrlConfig.BASE_URL_MEMBER_CARD)
                             .addConverterFactory(GsonConverterFactory.create())//设置远程地址
                             .addCallAdapterFactory(RxJavaCallAdapterFactory.create());
 
@@ -38,28 +42,43 @@ public class RetrofitVersionHelper {
     }
 
     private static OkHttpClient createClient() {
+
+
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         return new OkHttpClient.Builder()
                 .addInterceptor(new Interceptor() {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
                         Request.Builder builder = chain.request().newBuilder();
-
-//                        builder.addHeader("city", URLEncoder.encode(App.getInstance().getSelectedCity(), "UTF-8"));
-//                        builder.addHeader("lat", String.valueOf(App.lat));
-//                        builder.addHeader("lng", String.valueOf(App.lon));
-                        builder.addHeader("version", App.getInstance().getVersionName());
-//                        builder.addHeader("deviceName", DeviceManager.getPhoneBrand());
-//                          builder.addHeader("Content-Type","application/x-www-form-urlencoded");
+                        if (App.getInstance().isLogin()) {
+                            if (App.getInstance().getToken() != null)
+                                builder.addHeader("token", App.getInstance().getToken());
+                            if (App.getInstance().getUser().getMobile() != null)
+                                builder.addHeader("mobile", App.getInstance().getUser().getMobile());
+                        }
+                        builder.addHeader("city", URLEncoder.encode(App.getInstance().getSelectedCity(), "UTF-8"));
+                        builder.addHeader("lat", String.valueOf(App.lat));
+                        builder.addHeader("lng", String.valueOf(App.lon));
+                        builder.addHeader("device", "android");
+                        builder.addHeader("ver", App.getInstance().getVersionName());
+                        builder.addHeader("os", DeviceManager.getPhoneBrand());
 
                         Request authorised = builder.build();
                         return chain.proceed(authorised);
                     }
                 })
+
+                .addInterceptor(loggingInterceptor)
+                .addNetworkInterceptor(new StethoInterceptor())
                 .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
-                .addNetworkInterceptor(new StethoInterceptor())
                 .build();
     }
 
+
+
+    public static void setSingleton(Retrofit singleton) {
+        RetrofitCourseHelper.singleton = singleton;
+    }
 }

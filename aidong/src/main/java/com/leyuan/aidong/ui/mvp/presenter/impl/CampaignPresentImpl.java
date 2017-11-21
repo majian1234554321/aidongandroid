@@ -238,7 +238,7 @@ public class CampaignPresentImpl implements CampaignPresent {
                     appointCampaignActivityView.setCampaignCouponResult(couponData.getCoupon());//maybe null
                 }
             }
-        }, Constant.COUPON_CAMPAIGN + "_" + id + "_1");
+        }, Constant.COUPON_CAMPAIGN + "_" + id + "_1_0");
     }
 
     private void createShareBeanByOrder(PayOrderData payOrderData) {

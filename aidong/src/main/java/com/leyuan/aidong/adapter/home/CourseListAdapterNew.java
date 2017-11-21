@@ -10,8 +10,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.CourseBean;
+import com.leyuan.aidong.entity.course.CourseBeanNew;
 import com.leyuan.aidong.ui.home.activity.CourseDetailNewActivity;
+import com.leyuan.aidong.utils.GlideLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,22 +23,22 @@ import java.util.List;
  */
 public class CourseListAdapterNew extends RecyclerView.Adapter<CourseListAdapterNew.CourseViewHolder> {
     private Context context;
-    private List<CourseBean> data = new ArrayList<>();
+    private List<CourseBeanNew> data = new ArrayList<>();
 
     public CourseListAdapterNew(Context context) {
         this.context = context;
     }
 
-    public void setData(List<CourseBean> data) {
-        if (data != null) {
-            this.data = data;
-        }
+    public void setData(List<CourseBeanNew> data) {
+        this.data = data;
     }
 
     @Override
     public int getItemCount() {
-//        return data.size();
-        return 9;
+        if (data == null)
+            return 0;
+        return data.size();
+//        return 9;
     }
 
     @Override
@@ -48,11 +49,20 @@ public class CourseListAdapterNew extends RecyclerView.Adapter<CourseListAdapter
 
     @Override
     public void onBindViewHolder(CourseViewHolder holder, int position) {
+        CourseBeanNew courseBean = data.get(position);
+        GlideLoader.getInstance().displayImage(courseBean.getCoach_avatar(), holder.imgCoach);
+        holder.txtCoachName.setText(courseBean.getCoach_name());
+        holder.txtCourseName.setText(courseBean.getName());
+        holder.txtCourseTime.setText(courseBean.getClass_time());
+        holder.txtCourseDesc.setText(courseBean.getIntroduce());
+        holder.txtCourseDifficulty.setText(courseBean.getStrength());
+        holder.txtCourseOriginPrice.setText("￥ "+courseBean.getPrice());
+        holder.txtCourseMemberPrice.setText("会员价: ￥"+courseBean.getMember_price());
 
         holder.rootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CourseDetailNewActivity.start(context,"1");
+                CourseDetailNewActivity.start(context, "1");
             }
         });
 

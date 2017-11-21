@@ -7,4 +7,12 @@ import java.util.ArrayList;
  */
 public class CourseDataNew {
     ArrayList<CourseBeanNew> timetable;
+
+    public ArrayList<CourseBeanNew> getTimetable() {
+        return timetable;
+    }
+
+    public void setTimetable(ArrayList<CourseBeanNew> timetable) {
+        this.timetable = timetable;
+    }
 }

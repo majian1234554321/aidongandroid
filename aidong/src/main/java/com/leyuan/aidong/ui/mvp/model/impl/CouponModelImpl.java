@@ -85,11 +85,11 @@ public class CouponModelImpl implements CouponModel {
 
         try {
             root.put("items",array);
-
-            for (Map.Entry<String, String> code : gym_ids.entrySet()) {
-                gymJson.put(code.getKey(),code.getValue());
-            }
-            root.put("gym_id",gymJson);
+//
+//            for (Map.Entry<String, String> code : gym_ids.entrySet()) {
+//                gymJson.put(code.getKey(),code.getValue());
+//            }
+//            root.put("gym_id",gymJson);
 
         } catch (JSONException e) {
             e.printStackTrace();

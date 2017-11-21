@@ -24,4 +24,12 @@ public class CourseFilterBean {
     public void setCompany(ArrayList<CourseBrand> company) {
         this.company = company;
     }
+
+    @Override
+    public String toString() {
+        return "CourseFilterBean{" +
+                "company=" + company +
+                ", course=" + course +
+                '}';
+    }
 }

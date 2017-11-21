@@ -307,4 +307,5 @@
     <string name="seat_confirm">确认选座</string>
     <string name="choosable">可选</string>
     <string name="choosed">已选</string>
+    <string name="all">全部</string>
 </resources>

@@ -34,4 +34,139 @@ public class CourseBeanNew {
 //    String reserve_time;//开始预约时间,
    CourseSeat seat;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getClass_time() {
+        return class_time;
+    }
+
+    public void setClass_time(String class_time) {
+        this.class_time = class_time;
+    }
+
+    public ArrayList<String> getTag() {
+        return tag;
+    }
+
+    public void setTag(ArrayList<String> tag) {
+        this.tag = tag;
+    }
+
+    public String getStrength() {
+        return strength;
+    }
+
+    public void setStrength(String strength) {
+        this.strength = strength;
+    }
+
+    public String getCoach_name() {
+        return coach_name;
+    }
+
+    public void setCoach_name(String coach_name) {
+        this.coach_name = coach_name;
+    }
+
+    public String getCoach_avatar() {
+        return coach_avatar;
+    }
+
+    public void setCoach_avatar(String coach_avatar) {
+        this.coach_avatar = coach_avatar;
+    }
+
+    public String getReserve_time() {
+        return reserve_time;
+    }
+
+    public void setReserve_time(String reserve_time) {
+        this.reserve_time = reserve_time;
+    }
+
+    public int getReservable() {
+        return reservable;
+    }
+
+    public void setReservable(int reservable) {
+        this.reservable = reservable;
+    }
+
+    public boolean isHas_queued() {
+        return has_queued;
+    }
+
+    public void setHas_queued(boolean has_queued) {
+        this.has_queued = has_queued;
+    }
+
+    public CoachBean getCoach() {
+        return coach;
+    }
+
+    public void setCoach(CoachBean coach) {
+        this.coach = coach;
+    }
+
+    public boolean isHas_appointed() {
+        return has_appointed;
+    }
+
+    public void setHas_appointed(boolean has_appointed) {
+        this.has_appointed = has_appointed;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
+    }
+
+    public double getMember_price() {
+        return member_price;
+    }
+
+    public void setMember_price(double member_price) {
+        this.member_price = member_price;
+    }
+
+    public String getIntroduce() {
+        return introduce;
+    }
+
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce;
+    }
+
+    public CourseSeat getSeat() {
+        return seat;
+    }
+
+    public void setSeat(CourseSeat seat) {
+        this.seat = seat;
+    }
 }

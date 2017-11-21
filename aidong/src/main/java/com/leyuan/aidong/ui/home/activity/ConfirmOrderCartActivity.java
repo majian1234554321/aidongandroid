@@ -203,8 +203,8 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
 
         for (int i = 0; i < goodsList.size(); i++) {
             itemIds[i] = goodsList.get(i).getId();
-            itemFromIdAmount.add(goodsList.get(i).getCouponGoodsType() + "_"
-                    + goodsList.get(i).getCode() + "_" + goodsList.get(i).getAmount());
+//            itemFromIdAmount.add(goodsList.get(i).getCouponGoodsType() + "_"
+//                    + goodsList.get(i).getCode() + "_" + goodsList.get(i).getAmount());
 
         }
     }
@@ -253,6 +253,8 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
 
     private void setChangeViewInfo() {
         goodsIdGymID.clear();
+        itemFromIdAmount.clear();
+
         for (ShopBean shopBean : shopBeanList) {
             if (DELIVERY_EXPRESS.equals(shopBean.getPickUp().getType())) {
                 needExpress = true;
@@ -262,10 +264,17 @@ public class ConfirmOrderCartActivity extends BaseActivity implements View.OnCli
                 needSelfDelivery = true;
             }
             for (GoodsBean goodsBean : shopBean.getItem()) {
+
 //                if (shopBean.getPickUp() != null && shopBean.getPickUp().getInfo() != null && shopBean.getPickUp().getInfo().getId() != null) {
                 if (needSelfDelivery) {
+                    itemFromIdAmount.add(goodsBean.getCouponGoodsType() + "_"
+                            + goodsBean.getCode() + "_" + goodsBean.getAmount() + "_" + shopBean.getPickUp().getInfo().getId());
                     goodsIdGymID.put(goodsBean.getCode(), shopBean.getPickUp().getInfo().getId());
                 } else {
+                    itemFromIdAmount.add(goodsBean.getCouponGoodsType() + "_"
+                            + goodsBean.getCode() + "_" + goodsBean.getAmount() + "_0");
+
+                    Logger.i("coupon", "if } else { goodsIdGymID.put = 0");
                     goodsIdGymID.put(goodsBean.getCode(), "0");
                 }
 

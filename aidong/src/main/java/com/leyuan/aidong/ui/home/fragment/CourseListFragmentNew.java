@@ -9,28 +9,25 @@ import android.view.ViewGroup;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.CourseListAdapterNew;
-import com.leyuan.aidong.entity.CourseBean;
+import com.leyuan.aidong.entity.course.CourseBeanNew;
 import com.leyuan.aidong.ui.BasePageFragment;
 import com.leyuan.aidong.ui.home.activity.CourseListActivityNew;
-import com.leyuan.aidong.ui.mvp.presenter.CoursePresent;
-import com.leyuan.aidong.ui.mvp.presenter.impl.CoursePresentImpl;
-import com.leyuan.aidong.ui.mvp.view.CourserFragmentView;
+import com.leyuan.aidong.ui.mvp.presenter.CourseListPresentImpl;
+import com.leyuan.aidong.ui.mvp.view.CourseListView;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
-import com.leyuan.aidong.widget.endlessrecyclerview.weight.LoadingFooter;
 import com.leyuan.custompullrefresh.CustomRefreshLayout;
 import com.leyuan.custompullrefresh.OnRefreshListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 课程列表
  * Created by song on 2016/11/1.
  */
-public class CourseListFragmentNew extends BasePageFragment implements CourserFragmentView, OnRefreshListener {
+public class CourseListFragmentNew extends BasePageFragment implements  OnRefreshListener, CourseListView {
     private static final int HIDE_THRESHOLD = 80;
     private int scrolledDistance = 0;
     private boolean filterViewVisible = true;
@@ -42,22 +39,24 @@ public class CourseListFragmentNew extends BasePageFragment implements CourserFr
     private int currPage = 1;
     private CourseListAdapterNew courseAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
-    private ArrayList<CourseBean> data = new ArrayList<>();
+    private ArrayList<CourseBeanNew> data = new ArrayList<>();
 
-    private String date;            //日期
-    private String category;        //分类
-    private String landmark;        //商圈
+    private String date,company,  store,  course,  time;
 
-    private CoursePresent coursePresent;
+//    private String ;            //日期
+//    private String category;        //分类
+//    private String landmark;        //商圈
+
+
+    private CourseListPresentImpl coursePresent;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_course, container, false);
         if(getArguments()!=null){
             date = getArguments().getString("date");
-            category = getArguments().getString("category");
         }
-        coursePresent = new CoursePresentImpl(getContext(),this);
+        coursePresent = new CourseListPresentImpl(getContext(),this);
         initRefreshLayout(view);
         initRecyclerView(view);
         return view;
@@ -65,7 +64,7 @@ public class CourseListFragmentNew extends BasePageFragment implements CourserFr
 
     @Override
     public void fetchData() {
-        coursePresent.commendLoadData(switcherLayout,date,category,landmark);
+        coursePresent.pullRefreshCourseList(company,store,course,time,date);
     }
 
     private void initRefreshLayout(View view) {
@@ -89,7 +88,7 @@ public class CourseListFragmentNew extends BasePageFragment implements CourserFr
     public void onRefresh() {
         currPage = 1;
         RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-        coursePresent.pullToRefreshData(date,category,landmark);
+        coursePresent.pullRefreshCourseList(company,store,course,time,date);
     }
 
     private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
@@ -97,7 +96,7 @@ public class CourseListFragmentNew extends BasePageFragment implements CourserFr
         public void onLoadNextPage(View view) {
             currPage ++;
             if (data != null && data.size() >= pageSize) {
-               coursePresent.requestMoreData(recyclerView,pageSize,date,category,landmark,currPage);
+                coursePresent.loadMoreCourseList(company,store,course,time,date,currPage+"");
             }
         }
 
@@ -120,9 +119,31 @@ public class CourseListFragmentNew extends BasePageFragment implements CourserFr
         }
     };
 
+//    @Override
+//    public void showEndFooterView() {
+//        RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
+//    }
+//
+//    @Override
+//    public void showEmptyView() {
+//        if(refreshLayout.isRefreshing()){
+//            refreshLayout.setRefreshing(false);
+//        }
+//        View view = View.inflate(getContext(),R.layout.empty_course,null);
+//        CustomRefreshLayout refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.refreshLayout_empty);
+//        refreshLayout.setProgressViewOffset(true,50,100);
+//        refreshLayout.setOnRefreshListener(this);
+//        switcherLayout.addCustomView(view,"empty");
+//        switcherLayout.showCustomLayout("empty");
+//    }
+
+    public void scrollToTop(){
+        filterViewVisible = true;
+        recyclerView.scrollToPosition(0);
+    }
 
     @Override
-    public void refreshRecyclerViewData(List<CourseBean> courseList) {
+    public void onGetRefreshCourseList(ArrayList<CourseBeanNew> courseList) {
         if(refreshLayout.isRefreshing()){
             refreshLayout.setRefreshing(false);
         }
@@ -134,42 +155,9 @@ public class CourseListFragmentNew extends BasePageFragment implements CourserFr
     }
 
     @Override
-    public void loadMoreRecyclerViewData(List<CourseBean> courseList) {
+    public void onGetMoreCourseList(ArrayList<CourseBeanNew> courseList) {
         data.addAll(courseList);
         courseAdapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();
     }
-
-    @Override
-    public void showEndFooterView() {
-        RecyclerViewStateUtils.setFooterViewState(recyclerView, LoadingFooter.State.TheEnd);
-    }
-
-    @Override
-    public void showEmptyView() {
-        if(refreshLayout.isRefreshing()){
-            refreshLayout.setRefreshing(false);
-        }
-        View view = View.inflate(getContext(),R.layout.empty_course,null);
-        CustomRefreshLayout refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.refreshLayout_empty);
-        refreshLayout.setProgressViewOffset(true,50,100);
-        refreshLayout.setOnRefreshListener(this);
-        switcherLayout.addCustomView(view,"empty");
-        switcherLayout.showCustomLayout("empty");
-    }
-
-    public void scrollToTop(){
-        filterViewVisible = true;
-        recyclerView.scrollToPosition(0);
-    }
-
-    public void resetCategory(final String category) {
-        this.category = category;
-    }
-
-    public void resetCircle(String businessCircle) {
-        this.landmark = businessCircle;
-    }
-
-
 }

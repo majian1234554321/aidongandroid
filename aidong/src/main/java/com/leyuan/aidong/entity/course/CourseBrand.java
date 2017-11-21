@@ -34,4 +34,13 @@ public class CourseBrand {
     public void setArea(ArrayList<CourseArea> area) {
         this.area = area;
     }
+
+    @Override
+    public String toString() {
+        return "CourseBrand{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", area=" + area +
+                '}';
+    }
 }

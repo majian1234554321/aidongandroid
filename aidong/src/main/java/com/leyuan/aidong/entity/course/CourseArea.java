@@ -26,5 +26,11 @@ public class CourseArea {
         this.name = name;
     }
 
-
+    @Override
+    public String toString() {
+        return "CourseArea{" +
+                "name='" + name + '\'' +
+                ", store=" + store +
+                '}';
+    }
 }

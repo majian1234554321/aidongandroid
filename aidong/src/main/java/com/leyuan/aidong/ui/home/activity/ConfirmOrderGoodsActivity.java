@@ -204,14 +204,14 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
             }
         }
 
-        for (int i = 0; i < goodsList.size(); i++) {
-            itemFromIdAmount.add(goodsList.get(i).getCouponGoodsType() + "_"
-                    + goodsList.get(i).getCode() + "_" + goodsList.get(i).getAmount());
-//            goodsIdGymID.put(goodsList.get(i).getCode(), pickUpId);
-            if (i == 0) {
-                currentGoodsID = goodsList.get(i).getCode();
-            }
-        }
+//        for (int i = 0; i < goodsList.size(); i++) {
+////            itemFromIdAmount.add(goodsList.get(i).getCouponGoodsType() + "_"
+////                    + goodsList.get(i).getCode() + "_" + goodsList.get(i).getAmount());
+////            goodsIdGymID.put(goodsList.get(i).getCode(), pickUpId);
+//            if (i == 0) {
+//                currentGoodsID = goodsList.get(i).getCode();
+//            }
+//        }
     }
 
     private void initView() {
@@ -258,7 +258,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
 
     private void setChangeViewInfo() {
         goodsIdGymID.clear();
-
+        itemFromIdAmount.clear();
 
         for (ShopBean shopBean : shopBeanList) {
             if (DELIVERY_EXPRESS.equals(shopBean.getPickUp().getType())) {
@@ -270,11 +270,17 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
             }
             for (GoodsBean goodsBean : shopBean.getItem()) {
                 if (needSelfDelivery) {
+                    itemFromIdAmount.add(goodsBean.getCouponGoodsType() + "_"
+                            + goodsBean.getCode() + "_" + goodsBean.getAmount() + "_" + shopBean.getPickUp().getInfo().getId());
+
                     goodsIdGymID.put(goodsBean.getCode(), shopBean.getPickUp().getInfo().getId());
-                    Logger.i("coupon","if (shopBean.getPickUp() != null goodsIdGymID.put = " +shopBean.getPickUp().getInfo().getId());
+                    Logger.i("coupon", "if (shopBean.getPickUp() != null goodsIdGymID.put = " + shopBean.getPickUp().getInfo().getId());
                 } else {
                     goodsIdGymID.put(goodsBean.getCode(), "0");
-                    Logger.i("coupon","if } else { goodsIdGymID.put = 0" );
+                    itemFromIdAmount.add(goodsBean.getCouponGoodsType() + "_"
+                            + goodsBean.getCode() + "_" + goodsBean.getAmount() + "_0");
+
+                    Logger.i("coupon", "if } else { goodsIdGymID.put = 0");
                 }
             }
         }
