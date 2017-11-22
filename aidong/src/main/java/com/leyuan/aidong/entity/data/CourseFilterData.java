@@ -6,13 +6,13 @@ import com.leyuan.aidong.entity.course.CourseFilterBean;
  * Created by user on 2017/11/20.
  */
 public class CourseFilterData {
-    CourseFilterBean filter;
+    CourseFilterBean config;
 
     public CourseFilterBean getFilter() {
-        return filter;
+        return config;
     }
 
     public void setFilter(CourseFilterBean filter) {
-        this.filter = filter;
+        this.config = filter;
     }
 }

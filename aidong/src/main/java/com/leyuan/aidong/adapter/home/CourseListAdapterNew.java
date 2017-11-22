@@ -50,14 +50,37 @@ public class CourseListAdapterNew extends RecyclerView.Adapter<CourseListAdapter
     @Override
     public void onBindViewHolder(CourseViewHolder holder, int position) {
         CourseBeanNew courseBean = data.get(position);
-        GlideLoader.getInstance().displayImage(courseBean.getCoach_avatar(), holder.imgCoach);
-        holder.txtCoachName.setText(courseBean.getCoach_name());
+        GlideLoader.getInstance().displayImage(courseBean.getCoach().getAvatar(), holder.imgCoach);
+        holder.txtCoachName.setText(courseBean.getCoach().getName());
         holder.txtCourseName.setText(courseBean.getName());
         holder.txtCourseTime.setText(courseBean.getClass_time());
-        holder.txtCourseDesc.setText(courseBean.getIntroduce());
-        holder.txtCourseDifficulty.setText(courseBean.getStrength());
-        holder.txtCourseOriginPrice.setText("￥ "+courseBean.getPrice());
-        holder.txtCourseMemberPrice.setText("会员价: ￥"+courseBean.getMember_price());
+        holder.txtCourseDesc.setText(courseBean.getTags());
+
+        holder.txtCourseDifficulty.setText("难度系数: " + courseBean.getStrength());
+        holder.txtCourseOriginPrice.setText("￥ " + courseBean.getPrice());
+        holder.txtCourseMemberPrice.setText("会员价: ￥" + courseBean.getMember_price());
+        holder.imgCourseState.setVisibility(View.VISIBLE);
+        switch (courseBean.getStatus()) {
+
+            case CourseBeanNew.NORMAL:
+                holder.imgCourseState.setVisibility(View.GONE);
+                break;
+            case CourseBeanNew.APPOINTED:
+                holder.imgCourseState.setVisibility(View.GONE);
+                break;
+            case CourseBeanNew.QUEUED:
+                holder.imgCourseState.setImageResource(R.drawable.icon_course_queue);
+                break;
+            case CourseBeanNew.FEW:
+                holder.imgCourseState.setImageResource(R.drawable.icon_course_few);
+                break;
+            case CourseBeanNew.QUEUEING:
+                holder.imgCourseState.setImageResource(R.drawable.icon_course_few);
+                break;
+            case CourseBeanNew.END:
+                holder.imgCourseState.setImageResource(R.drawable.icon_course_end);
+                break;
+        }
 
         holder.rootView.setOnClickListener(new View.OnClickListener() {
             @Override

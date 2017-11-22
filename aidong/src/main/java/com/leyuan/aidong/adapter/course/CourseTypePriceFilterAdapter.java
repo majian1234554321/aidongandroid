@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.course.CourseArea;
 import com.leyuan.aidong.entity.course.CourseBrand;
 
 import java.util.ArrayList;
@@ -18,17 +17,17 @@ import java.util.List;
 /**
  * Created by user on 2017/11/20.
  */
-public class CourseAreaFilterAdapter extends BaseAdapter {
+public class CourseTypePriceFilterAdapter extends BaseAdapter {
     private OnLeftItemClickListener listener;
     private Context context;
-    private List<CourseArea> circleBrandList;
+    private List<String> circleBrandList;
     private CourseBrand selectedBean;        //持久保存
     private int checkItemPosition = -1;             //临时保存
     private boolean isTempShow = false;
 
 
-    public CourseAreaFilterAdapter(Context context, ArrayList<CourseArea> circleBeanList,
-                                   OnLeftItemClickListener listener) {
+    public CourseTypePriceFilterAdapter(Context context, ArrayList<String> circleBeanList,
+                                        OnLeftItemClickListener listener) {
         this.context = context;
         this.circleBrandList = circleBeanList;
         this.listener = listener;
@@ -58,7 +57,7 @@ public class CourseAreaFilterAdapter extends BaseAdapter {
     }
 
     @Override
-    public CourseArea getItem(int position) {
+    public String getItem(int position) {
         return circleBrandList.get(position);
     }
 
@@ -83,7 +82,7 @@ public class CourseAreaFilterAdapter extends BaseAdapter {
 
 
     private void fillValue(final int position, ViewHolder holder) {
-        holder.text.setText(getItem(position).getName());
+        holder.text.setText(getItem(position));
         holder.root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,7 +109,7 @@ public class CourseAreaFilterAdapter extends BaseAdapter {
 //        }
     }
 
-    public void refreshData(ArrayList<CourseArea> area) {
+    public void refreshData(ArrayList<String> area) {
         this.circleBrandList = area;
         notifyDataSetChanged();
     }

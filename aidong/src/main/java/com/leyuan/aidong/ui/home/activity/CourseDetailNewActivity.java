@@ -55,7 +55,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
     private SharePopupWindow sharePopupWindow;
 
     public static void start(Context context, String code) {
-        Intent starter = new Intent(context, CourseDetailActivity.class);
+        Intent starter = new Intent(context, CourseDetailNewActivity.class);
         starter.putExtra("code", code);
         context.startActivity(starter);
     }

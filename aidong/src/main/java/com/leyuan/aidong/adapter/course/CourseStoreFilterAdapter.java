@@ -98,6 +98,11 @@ public class CourseStoreFilterAdapter extends BaseAdapter {
 
     }
 
+    public void refreshData(ArrayList<CourseStore> currentStoreList) {
+        this.circleBrandList = currentStoreList;
+        notifyDataSetChanged();
+    }
+
     static class ViewHolder {
         LinearLayout root;
         TextView text;

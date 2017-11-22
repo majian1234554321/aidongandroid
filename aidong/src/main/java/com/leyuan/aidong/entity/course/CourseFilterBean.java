@@ -7,14 +7,23 @@ import java.util.ArrayList;
  */
 public class CourseFilterBean {
     ArrayList<CourseBrand> company;
-    ArrayList<CourseName> course;
+    CourseName course;
+    CourseBrand mine;
 
-    public ArrayList<CourseName> getCourse() {
+    public CourseName getCourse() {
         return course;
     }
 
-    public void setCourse(ArrayList<CourseName> course) {
+    public void setCourse(CourseName course) {
         this.course = course;
+    }
+
+    public CourseBrand getMine() {
+        return mine;
+    }
+
+    public void setMine(CourseBrand mine) {
+        this.mine = mine;
     }
 
     public ArrayList<CourseBrand> getCompany() {

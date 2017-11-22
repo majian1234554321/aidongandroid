@@ -215,6 +215,9 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void setGoodsDetailCoupon(List<CouponBean> coupons) {
+        if(bean==null){
+            bean = new GoodsDetailBean();
+        }
         bean.coupon = coupons;
 
         if (coupons == null || coupons.isEmpty()) {
@@ -354,7 +357,9 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void setGoodsDetail(GoodsDetailBean bean) {
+        List<CouponBean> coupons = this.bean ==null?null:this.bean.coupon;
         this.bean = bean;
+        this.bean.coupon = coupons;
         bean.setDeliveryBeanByGoodsType(goodsType);
         bottomLayout.setVisibility(View.VISIBLE);
         bannerUrls.addAll(bean.image);

@@ -9,7 +9,10 @@ import android.view.ViewGroup;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.CourseListAdapterNew;
+import com.leyuan.aidong.entity.course.CourseArea;
 import com.leyuan.aidong.entity.course.CourseBeanNew;
+import com.leyuan.aidong.entity.course.CourseBrand;
+import com.leyuan.aidong.entity.course.CourseStore;
 import com.leyuan.aidong.ui.BasePageFragment;
 import com.leyuan.aidong.ui.home.activity.CourseListActivityNew;
 import com.leyuan.aidong.ui.mvp.presenter.CourseListPresentImpl;
@@ -27,7 +30,7 @@ import java.util.ArrayList;
  * 课程列表
  * Created by song on 2016/11/1.
  */
-public class CourseListFragmentNew extends BasePageFragment implements  OnRefreshListener, CourseListView {
+public class CourseListFragmentNew extends BasePageFragment implements OnRefreshListener, CourseListView {
     private static final int HIDE_THRESHOLD = 80;
     private int scrolledDistance = 0;
     private boolean filterViewVisible = true;
@@ -41,7 +44,7 @@ public class CourseListFragmentNew extends BasePageFragment implements  OnRefres
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private ArrayList<CourseBeanNew> data = new ArrayList<>();
 
-    private String date,company,  store,  course,  time;
+    private String date, store, course, time;
 
 //    private String ;            //日期
 //    private String category;        //分类
@@ -51,12 +54,12 @@ public class CourseListFragmentNew extends BasePageFragment implements  OnRefres
     private CourseListPresentImpl coursePresent;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_course, container, false);
-        if(getArguments()!=null){
+        if (getArguments() != null) {
             date = getArguments().getString("date");
         }
-        coursePresent = new CourseListPresentImpl(getContext(),this);
+        coursePresent = new CourseListPresentImpl(getContext(), this);
         initRefreshLayout(view);
         initRecyclerView(view);
         return view;
@@ -64,13 +67,13 @@ public class CourseListFragmentNew extends BasePageFragment implements  OnRefres
 
     @Override
     public void fetchData() {
-        coursePresent.pullRefreshCourseList(company,store,course,time,date);
+        coursePresent.pullRefreshCourseList(store, course, time, date);
     }
 
     private void initRefreshLayout(View view) {
         refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.refreshLayout);
-        switcherLayout = new SwitcherLayout(getContext(),refreshLayout);
-        refreshLayout.setProgressViewOffset(true,50,100);
+        switcherLayout = new SwitcherLayout(getContext(), refreshLayout);
+        refreshLayout.setProgressViewOffset(true, 50, 100);
         refreshLayout.setOnRefreshListener(this);
     }
 
@@ -88,28 +91,28 @@ public class CourseListFragmentNew extends BasePageFragment implements  OnRefres
     public void onRefresh() {
         currPage = 1;
         RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-        coursePresent.pullRefreshCourseList(company,store,course,time,date);
+        coursePresent.pullRefreshCourseList(store, course, time, date);
     }
 
-    private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener(){
+    private EndlessRecyclerOnScrollListener onScrollListener = new EndlessRecyclerOnScrollListener() {
         @Override
         public void onLoadNextPage(View view) {
-            currPage ++;
+            currPage++;
             if (data != null && data.size() >= pageSize) {
-                coursePresent.loadMoreCourseList(company,store,course,time,date,currPage+"");
+                coursePresent.loadMoreCourseList(store, course, time, date, currPage + "");
             }
         }
 
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
-            if (scrolledDistance > HIDE_THRESHOLD  && filterViewVisible) {           //手指向上滑动
-                ((CourseListActivityNew)getActivity()).animatedHide(); //todo 设置回调无效
+            if (scrolledDistance > HIDE_THRESHOLD && filterViewVisible) {           //手指向上滑动
+                ((CourseListActivityNew) getActivity()).animatedHide(); //todo 设置回调无效
                 filterViewVisible = false;
                 scrolledDistance = 0;
 
             } else if (scrolledDistance < -HIDE_THRESHOLD && !filterViewVisible) {   //手指向下滑动
-                ((CourseListActivityNew)getActivity()).animatedShow();
+                ((CourseListActivityNew) getActivity()).animatedShow();
                 scrolledDistance = 0;
                 filterViewVisible = true;
             }
@@ -137,14 +140,14 @@ public class CourseListFragmentNew extends BasePageFragment implements  OnRefres
 //        switcherLayout.showCustomLayout("empty");
 //    }
 
-    public void scrollToTop(){
+    public void scrollToTop() {
         filterViewVisible = true;
         recyclerView.scrollToPosition(0);
     }
 
     @Override
     public void onGetRefreshCourseList(ArrayList<CourseBeanNew> courseList) {
-        if(refreshLayout.isRefreshing()){
+        if (refreshLayout.isRefreshing()) {
             refreshLayout.setRefreshing(false);
         }
         data.clear();
@@ -159,5 +162,13 @@ public class CourseListFragmentNew extends BasePageFragment implements  OnRefres
         data.addAll(courseList);
         courseAdapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();
+    }
+
+    public void resetCurrentStore(CourseBrand currentBrand, CourseArea currentArea, CourseStore currentStore) {
+        this.store = currentBrand.getId() + "," + currentArea.getName() + "," + currentStore.getId();
+    }
+
+    public void resetCourseCategory(String currentCoursePriceType, String currentCourseCategory) {
+        this.course = currentCoursePriceType + "," + currentCourseCategory;
     }
 }

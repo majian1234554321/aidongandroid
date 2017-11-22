@@ -221,6 +221,7 @@ public class SharePrefUtils {
             mSharedPreferences = context.getSharedPreferences(SHARE_PREFS_NAME,
                     Context.MODE_PRIVATE);
         }
+        Logger.i("Course",courseFilterData.toString());
         Gson gson = new Gson();
         String json = gson.toJson(courseFilterData);
         mSharedPreferences.edit().putString("courseFilterData", json).commit();

@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CourseBean;
-import com.leyuan.aidong.ui.home.activity.CourseDetailActivity;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 
@@ -63,7 +62,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CourseDetailActivity.start(context, bean.getCode());
+//                CourseDetailActivity.start(context, bean.getCode());
             }
         });
     }

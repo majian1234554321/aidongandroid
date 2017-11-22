@@ -17,9 +17,8 @@ public interface CourseServiceNew {
     @GET("app/api/config")
     Observable<BaseBean<CourseFilterData>> getCourseFilterConfig();
 
-    @GET("app/api/timetable/")
-    Observable<BaseBean<CourseDataNew>> getCourseList(@Query("company") String company,
-                                                      @Query("store") String store,
+    @GET("app/api/timetables/")
+    Observable<BaseBean<CourseDataNew>> getCourseList(@Query("store") String store,
                                                       @Query("course") String course,
                                                       @Query("time") String time,
                                                       @Query("date") String date,

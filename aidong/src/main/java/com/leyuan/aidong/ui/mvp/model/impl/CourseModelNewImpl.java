@@ -29,9 +29,9 @@ public class CourseModelNewImpl {
                 .subscribe(subscriber);
     }
 
-    public void getCourseList(Subscriber<CourseDataNew> subscriber,String company, String store, String course, String time,
+    public void getCourseList(Subscriber<CourseDataNew> subscriber, String store, String course, String time,
                               String date,String page) {
-        courseService.getCourseList(company,store,course,time,date,page)
+        courseService.getCourseList(store,course,time,date,page)
                 .compose(RxHelper.<CourseDataNew>transform())
                 .subscribe(subscriber);
     }

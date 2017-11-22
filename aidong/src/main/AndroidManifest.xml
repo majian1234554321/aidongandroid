@@ -511,6 +511,9 @@
         <activity
             android:name=".ui.discover.activity.DiscoverUserActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.activity.CourseChooseSeat"
+            android:screenOrientation="portrait" />
         <!-- <activity -->
         <!-- android:name=".ui.discover.activity.DiscoverUserActivityTest" -->
         <!-- android:screenOrientation="portrait" /> -->
@@ -817,13 +820,7 @@
                 android:resource="@xml/file_provider" />
         </provider>
 
-        <activity android:name=".ui.home.activity.CourseChooseSeat">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>

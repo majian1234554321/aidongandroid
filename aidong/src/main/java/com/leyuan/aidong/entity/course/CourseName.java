@@ -1,25 +1,46 @@
 package com.leyuan.aidong.entity.course;
 
+import java.util.ArrayList;
+
 /**
  * Created by user on 2017/11/20.
  */
 public class CourseName {
-    String id;// 课程编号,
-    String name;// "课程名称"
+    ArrayList<String> free;
+    ArrayList<String> tuition;
+    ArrayList<String> all;
+    ArrayList<String> type = new ArrayList<>();
 
-    public String getId() {
-        return id;
+    public ArrayList<String> getFree() {
+        return free;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setFree(ArrayList<String> free) {
+        this.free = free;
     }
 
-    public String getName() {
-        return name;
+    public ArrayList<String> getTuition() {
+        return tuition;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTuition(ArrayList<String> tuition) {
+        this.tuition = tuition;
+    }
+
+    public ArrayList<String> getAll() {
+        return all;
+    }
+
+    public void setAll(ArrayList<String> all) {
+        this.all = all;
+    }
+
+    public ArrayList<String> getCourseTypePrice() {
+        if (type.isEmpty()) {
+            type.add("all");
+            type.add("free");
+            type.add("tuition");
+        }
+        return type;
     }
 }

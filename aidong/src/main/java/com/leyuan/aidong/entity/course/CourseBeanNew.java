@@ -8,31 +8,38 @@ import java.util.ArrayList;
  * Created by user on 2017/11/20.
  */
 public class CourseBeanNew {
+    public static final int NORMAL = 0;
+    public static final int APPOINTED = 1;
+    public static final int QUEUED = 2;
+    public static final int FEW = 3;
+    public static final int QUEUEING = 4;
+    public static final int END = 5;
+
     String id;// 课程编号,
     String name;// "课程名",
     String class_time;//  "上课时间 - 下课时间"，
-    ArrayList<String> tag;//  ["标签"],
+    ArrayList<String> tags;//  ["标签"],
     String strength;// 强度,
-    String coach_name;// "教练名",
-    String coach_avatar;// "教练头像",
+    CoachBean coach;
     int reservable;// 　是否可以预约,#0-否　１-是
     String reserve_time;// "预约时间",
-    boolean has_queued;// 是否已经预约,#true是　false-否
-    boolean has_appointed;// 是否已经预约,#true是　false-否
-
-
-    //详情
-    CoachBean coach;
+    int status;
     double price;//"价格
-
     double member_price;// "会员价格",
 
-    Store store;//门店
 
+    Store store;//门店
     String introduce;//课程详情
-//    boolean reservable;// 是否需要预约，
-//    String reserve_time;//开始预约时间,
-   CourseSeat seat;
+    CourseSeat seat;
+    private StringBuffer tagString = new StringBuffer();
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public String getId() {
         return id;
@@ -59,11 +66,11 @@ public class CourseBeanNew {
     }
 
     public ArrayList<String> getTag() {
-        return tag;
+        return tags;
     }
 
     public void setTag(ArrayList<String> tag) {
-        this.tag = tag;
+        this.tags = tag;
     }
 
     public String getStrength() {
@@ -74,21 +81,6 @@ public class CourseBeanNew {
         this.strength = strength;
     }
 
-    public String getCoach_name() {
-        return coach_name;
-    }
-
-    public void setCoach_name(String coach_name) {
-        this.coach_name = coach_name;
-    }
-
-    public String getCoach_avatar() {
-        return coach_avatar;
-    }
-
-    public void setCoach_avatar(String coach_avatar) {
-        this.coach_avatar = coach_avatar;
-    }
 
     public String getReserve_time() {
         return reserve_time;
@@ -106,28 +98,12 @@ public class CourseBeanNew {
         this.reservable = reservable;
     }
 
-    public boolean isHas_queued() {
-        return has_queued;
-    }
-
-    public void setHas_queued(boolean has_queued) {
-        this.has_queued = has_queued;
-    }
-
     public CoachBean getCoach() {
         return coach;
     }
 
     public void setCoach(CoachBean coach) {
         this.coach = coach;
-    }
-
-    public boolean isHas_appointed() {
-        return has_appointed;
-    }
-
-    public void setHas_appointed(boolean has_appointed) {
-        this.has_appointed = has_appointed;
     }
 
     public double getPrice() {
@@ -168,5 +144,18 @@ public class CourseBeanNew {
 
     public void setSeat(CourseSeat seat) {
         this.seat = seat;
+    }
+
+    public String getTags() {
+        if (tagString == null && tags != null) {
+            for (int i = 0; i < tags.size(); i++) {
+                if (i < tags.size() - 1) {
+                    tagString.append(tags.get(i)).append(" | ");
+                } else {
+                    tagString.append(tags.get(i));
+                }
+            }
+        }
+        return tagString.toString();
     }
 }
