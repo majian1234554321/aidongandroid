@@ -147,8 +147,12 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_store:
-                if (isPopupShowing()) {
+                if (storeContentAllIsShowing) {
                     hidePopup();
+                } else if (isPopupShowing()) {
+                    hidePopup();
+                    layoutStoreContentAll.setVisibility(VISIBLE);
+                    storeContentAllIsShowing = true;
                 } else {
                     layoutStoreContentAll.setVisibility(VISIBLE);
                     storeContentAllIsShowing = true;
@@ -156,9 +160,12 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
 
                 break;
             case R.id.ll_course_name:
-
-                if (isPopupShowing()) {
+                if (courseIsShowing) {
                     hidePopup();
+                } else if (isPopupShowing()) {
+                    hidePopup();
+                    layoutCourseContent.setVisibility(VISIBLE);
+                    courseIsShowing = true;
                 } else {
                     layoutCourseContent.setVisibility(VISIBLE);
                     courseIsShowing = true;
@@ -166,12 +173,16 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
 
                 break;
             case R.id.ll_time_frame:
-
-
+                if (isPopupShowing()) {
+                    hidePopup();
+                }
 
                 break;
 
             case R.id.view_mask_bg:
+                if (isPopupShowing()) {
+                    hidePopup();
+                }
                 break;
             default:
                 break;
@@ -206,7 +217,7 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
         @Override
         public void onClick(int position) {
             resetCurrentCategorySate(position, 0);
-            adapterCategoty.refreshData(currentCourseCategoryList);
+            refreshtCategoryAdapater(position, 0);
         }
     };
 
@@ -215,12 +226,23 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
         @Override
         public void onClick(int position) {
             resetCurrentCategorySate(-1, position);
+            refreshtCategoryAdapater(-1, position);
             if (listener != null) {
                 listener.onCourseCategoryItemClick(currentCoursePriceType, currentCourseCategory);
             }
             hidePopup();
         }
     };
+
+    private void refreshtCategoryAdapater(int pricePostion, int categoryPostion) {
+        if (pricePostion > -1) {
+            adapterTypePrice.refreshData(pricePostion);
+        }
+        if (categoryPostion > -1) {
+            adapterCategoty.refreshData(currentCourseCategoryList, categoryPostion);
+        }
+
+    }
 
     private void resetCurrentCategorySate(int pricePostion, int categoryPostion) {
         if (courseType != null && pricePostion > -1) {
@@ -263,16 +285,26 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
 
     }
 
+    private void refreshAllStoreAdapater(int brandPostion, int areaPostion, int storePostion) {
+        if (brandPostion > -1) {
+            adapterAllBrand.refreshData(brandPostion);
+        }
+        if (areaPostion > -1) {
+            adapterAllArea.refreshData(currentAreaList, areaPostion);
+        }
+
+        if (storePostion > -1) {
+            adapterAllStore.refreshData(currentStoreList, storePostion);
+        }
+    }
+
 
     private CourseBrandFilterAdapter.OnLeftItemClickListener allBrandItemClickLister = new CourseBrandFilterAdapter.OnLeftItemClickListener() {
         @Override
         public void onClick(int position) {
-            resetCurrentStoreState(position, 0, 0);
 
-            //刷新区域adapter
-            adapterAllArea.refreshData(currentAreaList);
-            //区域刷新 门店必须刷新 选区域第0个
-            adapterAllStore.refreshData(currentStoreList);
+            resetCurrentStoreState(position, 0, 0);
+            refreshAllStoreAdapater(position, 0, 0);
 
         }
     };
@@ -283,7 +315,7 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
         public void onClick(int position) {
             //刷新门店adapter
             resetCurrentStoreState(-1, position, 0);
-            adapterAllStore.refreshData(currentStoreList);
+            refreshAllStoreAdapater(-1, position, 0);
         }
 
     };
@@ -293,6 +325,7 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
         @Override
         public void onClick(int position) {
             resetCurrentStoreState(-1, -1, position);
+            refreshAllStoreAdapater(1, -1, position);
             if (listener != null) {
                 listener.onAllStoreItemClick(currentBrand, currentArea, currentStore);
             }

@@ -7,6 +7,7 @@
     android:orientation="vertical">
 
     <com.leyuan.aidong.widget.CommonTitleLayout
+        android:id="@+id/layout_title"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         app:txtTitle="@string/confirm_order" />
@@ -21,141 +22,153 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <include
+                android:id="@+id/layout_course_coach"
+                layout="@layout/inc_course_image_text" />
+
+
+            <!--<RelativeLayout-->
+            <!--android:id="@+id/l"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="120dp">-->
+
+            <!--<ImageView-->
+            <!--android:id="@+id/img_course"-->
+            <!--android:layout_width="@dimen/pref_100dp"-->
+            <!--android:layout_height="@dimen/pref_100dp"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:src="@color/black"-->
+
+            <!--/>-->
+
+            <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginLeft="135dp"-->
+            <!--android:layout_marginRight="50dp"-->
+            <!--android:orientation="vertical">-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/txt_course_name"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Dian Shang"-->
+            <!--android:textColor="@color/black"-->
+            <!--android:textSize="18sp"-->
+            <!--android:textStyle="bold"-->
+
+            <!--/>-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/txt_coach_name"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="13dp"-->
+            <!--android:text="Jan chen"-->
+            <!--android:textColor="@color/black"-->
+            <!--android:textSize="15sp" />-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/txt_course_time"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:text="10-20 周二 15:30-16:30"-->
+            <!--android:textColor="@color/black"-->
+            <!--android:textSize="15sp" />-->
+
+
+            <!--</LinearLayout>-->
+
+            <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginRight="15dp"-->
+            <!--android:src="@drawable/icon_right_arrow" />-->
+
+            <!--</RelativeLayout>-->
+
+            <!--<ImageView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/pref_0.5dp"-->
+                <!--android:layout_marginLeft="15dp"-->
+                <!--android:src="@color/common_divider_color" />-->
+
+
+            <include
+                android:id="@+id/layout_course_location"
+                layout="@layout/inc_course_location_phone" />
+
+            <!--<RelativeLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="107dp"-->
+                <!--android:layout_marginLeft="15dp"-->
+
+                <!--&gt;-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_marginRight="100dp"-->
+                    <!--android:orientation="vertical">-->
+
+                    <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="Location"-->
+                        <!--android:textColor="@color/black"-->
+                        <!--android:textSize="18sp"-->
+                        <!--android:textStyle="bold"-->
+
+                        <!--/>-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/txt_room_name"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginTop="13dp"-->
+                        <!--android:text="Jan chen"-->
+                        <!--android:textColor="@color/black"-->
+                        <!--android:textSize="15sp" />-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/txt_course_location"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginTop="10dp"-->
+                        <!--android:drawableLeft="@drawable/icon_address"-->
+                        <!--android:drawablePadding="10dp"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="111111111111111111"-->
+                        <!--android:textColor="@color/black"-->
+                        <!--android:textSize="15sp" />-->
+
+
+                <!--</LinearLayout>-->
+
+                <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_marginRight="15dp"-->
+                    <!--android:src="@drawable/telephone_number" />-->
+
+            <!--</RelativeLayout>-->
+
+            <!--<ImageView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/pref_0.5dp"-->
+                <!--android:layout_marginLeft="15dp"-->
+                <!--android:src="@color/common_divider_color" />-->
+
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="120dp">
-
-                <ImageView
-                    android:id="@+id/img_course"
-                    android:layout_width="@dimen/pref_100dp"
-                    android:layout_height="@dimen/pref_100dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
-                    android:src="@color/black"
-
-                    />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="135dp"
-                    android:layout_marginRight="50dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/txt_course_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Dian Shang"
-                        android:textColor="@color/black"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-
-                        />
-
-                    <TextView
-                        android:id="@+id/txt_coach_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="13dp"
-                        android:text="Jan chen"
-                        android:textColor="@color/black"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/txt_course_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="10-20 周二 15:30-16:30"
-                        android:textColor="@color/black"
-                        android:textSize="15sp" />
-
-
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="15dp"
-                    android:src="@drawable/icon_right_arrow" />
-
-            </RelativeLayout>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/pref_0.5dp"
-                android:layout_marginLeft="15dp"
-                android:src="@color/common_divider_color" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="107dp"
-                android:layout_marginLeft="15dp"
-
-                >
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="100dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Location"
-                        android:textColor="@color/black"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-
-                        />
-
-                    <TextView
-                        android:id="@+id/txt_room_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="13dp"
-                        android:text="Jan chen"
-                        android:textColor="@color/black"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/txt_course_location"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="111111111111111111"
-                        android:drawableLeft="@drawable/icon_address"
-                        android:drawablePadding="10dp"
-                        android:gravity="center"
-                        android:textColor="@color/black"
-                        android:textSize="15sp" />
-
-
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="15dp"
-                    android:src="@drawable/telephone_number" />
-
-            </RelativeLayout>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/pref_0.5dp"
-                android:layout_marginLeft="15dp"
-                android:src="@color/common_divider_color" />
-
-            <RelativeLayout
+                android:id="@+id/layout_course_coupon"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_marginLeft="15dp">
@@ -172,11 +185,10 @@
                     />
 
                 <RelativeLayout
-                    android:layout_alignParentBottom="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    >
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="15dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -186,13 +198,14 @@
                         android:textSize="14sp" />
 
                     <TextView
+                        android:id="@+id/txt_coupon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="15dp"
-                        android:text="请选择"
-                        android:drawableRight="@drawable/icon_right_arrow"
                         android:drawablePadding="10dp"
+                        android:drawableRight="@drawable/icon_right_arrow"
+                        android:text="请选择"
                         android:textColor="@color/c9"
                         android:textSize="14sp" />
 
@@ -235,6 +248,7 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/txt_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -260,6 +274,7 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/txt_price_total"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -285,6 +300,7 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/txt_coupon_subtract"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -310,6 +326,7 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/txt_price_real"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -323,15 +340,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@color/white">
+                android:background="@color/white"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="52dp"
                     android:layout_marginLeft="@dimen/left_margin"
                     android:gravity="center_vertical"
-                    android:text="支付方式"
+                    android:text="@string/pay_type"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -357,15 +374,15 @@
                             android:drawableLeft="@drawable/icon_ali_pay"
                             android:drawablePadding="5dp"
                             android:gravity="center_vertical"
-                            android:text="支付宝"
+                            android:text="@string/zhifubao"
                             android:textColor="@color/c3"
                             android:textSize="14sp" />
 
                         <RadioButton
                             android:id="@+id/cb_alipay"
-                            android:checked="true"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:checked="true" />
                     </LinearLayout>
 
                     <View
@@ -390,7 +407,7 @@
                             android:drawableLeft="@drawable/icon_weixin_pay"
                             android:drawablePadding="5dp"
                             android:gravity="center_vertical"
-                            android:text="微信"
+                            android:text="@string/weixin"
                             android:textColor="@color/c3"
                             android:textSize="14sp" />
 
@@ -408,10 +425,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="12dp"
                 android:gravity="center"
                 android:text="@string/course_order_hint"
                 android:textColor="@color/c9"
-                android:layout_marginBottom="12dp"
 
                 android:textSize="12sp" />
 
@@ -420,7 +437,7 @@
     </ScrollView>
 
     <Button
-        android:id="@+id/bt_"
+        android:id="@+id/bt_pay_immediately"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/course_oringe"

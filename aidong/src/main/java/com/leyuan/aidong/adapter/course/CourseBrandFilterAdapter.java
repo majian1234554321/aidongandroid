@@ -24,6 +24,7 @@ public class CourseBrandFilterAdapter extends BaseAdapter {
     private CourseBrand selectedBean;        //持久保存
     private int checkItemPosition = -1;             //临时保存
     private boolean isTempShow = false;
+    private int selectedIndex = 0;
 
 
     public CourseBrandFilterAdapter(Context context, ArrayList<CourseBrand> circleBeanList,
@@ -81,7 +82,7 @@ public class CourseBrandFilterAdapter extends BaseAdapter {
     }
 
 
-    private void fillValue(final int position, ViewHolder holder) {
+    private void fillValue(final int position, final ViewHolder holder) {
         holder.text.setText(getItem(position).getName());
         holder.root.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +90,14 @@ public class CourseBrandFilterAdapter extends BaseAdapter {
                 listener.onClick(position);
             }
         });
+
+        if (position == selectedIndex) {
+            holder.root.setBackgroundColor(context.getResources().getColor(R.color.white));
+            holder.text.setTextColor(context.getResources().getColor(R.color.main_red));
+        } else {
+            holder.root.setBackgroundColor(context.getResources().getColor(R.color.list_line_color));
+            holder.text.setTextColor(context.getResources().getColor(R.color.black));
+        }
 
 //        if (isTempShow) {
 //            if (checkItemPosition == position) {
@@ -107,6 +116,11 @@ public class CourseBrandFilterAdapter extends BaseAdapter {
 //                viewHolder.text.setTextColor(context.getResources().getColor(R.color.black));
 //            }
 //        }
+    }
+
+    public void refreshData(int brandPostion) {
+        this.selectedIndex = brandPostion;
+        notifyDataSetChanged();
     }
 
     static class ViewHolder {

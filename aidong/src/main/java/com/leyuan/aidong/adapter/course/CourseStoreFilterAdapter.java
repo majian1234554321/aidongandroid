@@ -26,6 +26,8 @@ public class CourseStoreFilterAdapter extends BaseAdapter {
     private int checkItemPosition = -1;             //临时保存
     private boolean isTempShow = false;
 
+    private int selectedIndex = 0;
+
 
     public CourseStoreFilterAdapter(Context context, ArrayList<CourseStore> circleBeanList,
                                     OnLeftItemClickListener listener) {
@@ -90,16 +92,18 @@ public class CourseStoreFilterAdapter extends BaseAdapter {
                 listener.onClick(position);
             }
         });
-//        if (getItem(position).isSelected()) {
-//            viewHolder.text.setTextColor(context.getResources().getColor(R.color.main_red));
-//        } else {
-//            viewHolder.text.setTextColor(context.getResources().getColor(R.color.black));
-//        }
+
+        if (position == selectedIndex) {
+            holder.text.setTextColor(context.getResources().getColor(R.color.main_red));
+        } else {
+            holder.text.setTextColor(context.getResources().getColor(R.color.black));
+        }
 
     }
 
-    public void refreshData(ArrayList<CourseStore> currentStoreList) {
+    public void refreshData(ArrayList<CourseStore> currentStoreList, int storePostion) {
         this.circleBrandList = currentStoreList;
+        this.selectedIndex = storePostion;
         notifyDataSetChanged();
     }
 

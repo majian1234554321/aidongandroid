@@ -308,4 +308,15 @@
     <string name="choosable">可选</string>
     <string name="choosed">已选</string>
     <string name="all">全部</string>
+    <string name="do_not_nedd_appointment">无需预约</string>
+    <string name="appointment_immediately">立即预约</string>
+    <string name="appointmented_look_detail">已预约-查看详情</string>
+    <string name="no_pay_appointmented">未付款-已预约</string>
+    <string name="queueing_look_detail">排队中-查看详情</string>
+    <string name="appoint_full_queue_immedialtely">预约已满-立即排队</string>
+    <string name="fulled">已满员</string>
+    <string name="ended">已结束</string>
+    <string name="weixin">微信</string>
+    <string name="zhifubao">支付宝</string>
+    <string name="pay_type">支付方式</string>
 </resources>

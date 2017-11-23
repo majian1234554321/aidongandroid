@@ -6,6 +6,7 @@ import com.leyuan.aidong.entity.course.CourseDetailDataNew;
 import com.leyuan.aidong.entity.data.CourseFilterData;
 
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -24,8 +25,8 @@ public interface CourseServiceNew {
                                                       @Query("date") String date,
                                                       @Query("page") String page);
 
-    @GET("app/api/timetable/{id}")
-    Observable<BaseBean<CourseDetailDataNew>> getCourseDetail();
+    @GET("app/api/timetables/{id}")
+    Observable<BaseBean<CourseDetailDataNew>> getCourseDetail(@Path("id") String id);
 
 
 }

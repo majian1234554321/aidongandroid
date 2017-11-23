@@ -1,7 +1,5 @@
 package com.leyuan.aidong.entity.course;
 
-import com.leyuan.aidong.entity.model.Coordinate;
-
 /**
  * Created by user on 2017/11/20.
  */
@@ -9,7 +7,7 @@ public class Store {
 
     String name;// "门店",
     String address;// "地址",
-    Coordinate coordinate;// [经度,维度],
+    double[] coordinate;// [经度,维度],
     String classroom;// "教室"
 
     public String getClassroom() {
@@ -36,11 +34,11 @@ public class Store {
         this.address = address;
     }
 
-    public Coordinate getCoordinate() {
+    public  double[] getCoordinate() {
         return coordinate;
     }
 
-    public void setCoordinate(Coordinate coordinate) {
+    public void setCoordinate( double[] coordinate) {
         this.coordinate = coordinate;
     }
 }

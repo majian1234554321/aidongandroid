@@ -3,6 +3,7 @@ package com.leyuan.aidong.ui.mvp.model.impl;
 import android.content.Context;
 
 import com.leyuan.aidong.entity.course.CourseDataNew;
+import com.leyuan.aidong.entity.course.CourseDetailDataNew;
 import com.leyuan.aidong.entity.data.CourseFilterData;
 import com.leyuan.aidong.http.RetrofitCourseHelper;
 import com.leyuan.aidong.http.RxHelper;
@@ -33,6 +34,12 @@ public class CourseModelNewImpl {
                               String date,String page) {
         courseService.getCourseList(store,course,time,date,page)
                 .compose(RxHelper.<CourseDataNew>transform())
+                .subscribe(subscriber);
+    }
+
+    public void getCourseDetail(Subscriber<CourseDetailDataNew> subscriber, String id){
+        courseService.getCourseDetail(id)
+                .compose(RxHelper.<CourseDetailDataNew>transform())
                 .subscribe(subscriber);
     }
 

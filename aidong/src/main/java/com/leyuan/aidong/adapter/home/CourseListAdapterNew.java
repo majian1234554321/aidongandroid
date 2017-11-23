@@ -49,7 +49,7 @@ public class CourseListAdapterNew extends RecyclerView.Adapter<CourseListAdapter
 
     @Override
     public void onBindViewHolder(CourseViewHolder holder, int position) {
-        CourseBeanNew courseBean = data.get(position);
+        final CourseBeanNew courseBean = data.get(position);
         GlideLoader.getInstance().displayImage(courseBean.getCoach().getAvatar(), holder.imgCoach);
         holder.txtCoachName.setText(courseBean.getCoach().getName());
         holder.txtCourseName.setText(courseBean.getName());
@@ -59,7 +59,7 @@ public class CourseListAdapterNew extends RecyclerView.Adapter<CourseListAdapter
         holder.txtCourseDifficulty.setText("难度系数: " + courseBean.getStrength());
         holder.txtCourseOriginPrice.setText("￥ " + courseBean.getPrice());
         holder.txtCourseMemberPrice.setText("会员价: ￥" + courseBean.getMember_price());
-        holder.imgCourseState.setVisibility(View.VISIBLE);
+
         switch (courseBean.getStatus()) {
 
             case CourseBeanNew.NORMAL:
@@ -68,24 +68,37 @@ public class CourseListAdapterNew extends RecyclerView.Adapter<CourseListAdapter
             case CourseBeanNew.APPOINTED:
                 holder.imgCourseState.setVisibility(View.GONE);
                 break;
+            case CourseBeanNew.APPOINTED_NO_PAY:
+                holder.imgCourseState.setVisibility(View.GONE);
+                break;
             case CourseBeanNew.QUEUED:
-                holder.imgCourseState.setImageResource(R.drawable.icon_course_queue);
+                holder.imgCourseState.setVisibility(View.GONE);
                 break;
             case CourseBeanNew.FEW:
+                holder.imgCourseState.setVisibility(View.VISIBLE);
                 holder.imgCourseState.setImageResource(R.drawable.icon_course_few);
                 break;
-            case CourseBeanNew.QUEUEING:
-                holder.imgCourseState.setImageResource(R.drawable.icon_course_few);
+            case CourseBeanNew.QUEUEABLE:
+                holder.imgCourseState.setVisibility(View.VISIBLE);
+                holder.imgCourseState.setImageResource(R.drawable.icon_course_queue);
+                break;
+            case CourseBeanNew.FULL:
+                holder.imgCourseState.setVisibility(View.VISIBLE);
+                holder.imgCourseState.setImageResource(R.drawable.icon_course_full);
                 break;
             case CourseBeanNew.END:
+                holder.imgCourseState.setVisibility(View.VISIBLE);
                 holder.imgCourseState.setImageResource(R.drawable.icon_course_end);
+                break;
+            default:
+                holder.imgCourseState.setVisibility(View.GONE);
                 break;
         }
 
         holder.rootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CourseDetailNewActivity.start(context, "1");
+                CourseDetailNewActivity.start(context, courseBean.getId());
             }
         });
 

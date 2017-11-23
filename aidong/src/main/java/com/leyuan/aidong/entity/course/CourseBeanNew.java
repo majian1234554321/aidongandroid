@@ -10,10 +10,12 @@ import java.util.ArrayList;
 public class CourseBeanNew {
     public static final int NORMAL = 0;
     public static final int APPOINTED = 1;
-    public static final int QUEUED = 2;
-    public static final int FEW = 3;
-    public static final int QUEUEING = 4;
-    public static final int END = 5;
+    public static final int APPOINTED_NO_PAY = 2;
+    public static final int QUEUED = 3;
+    public static final int FEW = 4;
+    public static final int QUEUEABLE = 5;
+    public static final int FULL = 6;
+    public static final int END = 7;
 
     String id;// 课程编号,
     String name;// "课程名",
@@ -28,6 +30,7 @@ public class CourseBeanNew {
     double member_price;// "会员价格",
 
 
+    ArrayList<String> image;
     Store store;//门店
     String introduce;//课程详情
     CourseSeat seat;
@@ -67,6 +70,14 @@ public class CourseBeanNew {
 
     public ArrayList<String> getTag() {
         return tags;
+    }
+
+    public ArrayList<String> getImage() {
+        return image;
+    }
+
+    public void setImage(ArrayList<String> image) {
+        this.image = image;
     }
 
     public void setTag(ArrayList<String> tag) {

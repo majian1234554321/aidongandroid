@@ -24,6 +24,7 @@ public class CourseCategoryFilterAdapter extends BaseAdapter {
     private CourseBrand selectedBean;        //持久保存
     private int checkItemPosition = -1;             //临时保存
     private boolean isTempShow = false;
+    private int selectedIndex;
 
 
     public CourseCategoryFilterAdapter(Context context, ArrayList<String> circleBeanList,
@@ -89,16 +90,18 @@ public class CourseCategoryFilterAdapter extends BaseAdapter {
                 listener.onClick(position);
             }
         });
-//        if (getItem(position).isSelected()) {
-//            viewHolder.text.setTextColor(context.getResources().getColor(R.color.main_red));
-//        } else {
-//            viewHolder.text.setTextColor(context.getResources().getColor(R.color.black));
-//        }
+
+        if (position == selectedIndex) {
+            holder.text.setTextColor(context.getResources().getColor(R.color.main_red));
+        } else {
+            holder.text.setTextColor(context.getResources().getColor(R.color.black));
+        }
 
     }
 
-    public void refreshData(ArrayList<String> currentStoreList) {
+    public void refreshData(ArrayList<String> currentStoreList, int categoryPostion) {
         this.circleBrandList = currentStoreList;
+        this.selectedIndex = categoryPostion;
         notifyDataSetChanged();
     }
 
