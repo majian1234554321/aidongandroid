@@ -19,7 +19,7 @@
             android:gravity="center"
             android:layout_height="match_parent"
             android:background="@color/transparent"
-            android:text="@string/total"
+            android:text="@string/appoint_course"
             android:textColor="@color/main_red"
             android:textSize="14sp" />
 
@@ -30,7 +30,7 @@
             android:gravity="center"
             android:layout_height="match_parent"
             android:background="@color/transparent"
-            android:text="@string/not_join"
+            android:text="@string/queue_course"
             android:textColor="@color/c6"
             android:textSize="14sp" />
 
@@ -41,7 +41,7 @@
             android:gravity="center"
             android:layout_height="match_parent"
             android:background="@color/transparent"
-            android:text="@string/joined"
+            android:text="@string/history_course"
             android:textColor="@color/c6"
             android:textSize="14sp" />
 

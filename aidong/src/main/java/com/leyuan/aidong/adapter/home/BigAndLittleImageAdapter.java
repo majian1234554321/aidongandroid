@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.HomeItemBean;
 import com.leyuan.aidong.ui.MainActivity;
-import com.leyuan.aidong.ui.home.activity.CourseActivity;
+import com.leyuan.aidong.ui.home.activity.CourseListActivityNew;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 
@@ -92,7 +92,7 @@ public class BigAndLittleImageAdapter extends RecyclerView.Adapter< RecyclerView
                 @Override
                 public void onClick(View v) {
                     if("course".equals(type)){
-                        CourseActivity.start(context,bean.getName());       //课程跳列表而不是详情
+                        CourseListActivityNew.start(context,bean.getName());       //课程跳列表而不是详情
                     }else {
                         ((MainActivity)context).toTargetDetailActivity(type,bean.getId());
                     }

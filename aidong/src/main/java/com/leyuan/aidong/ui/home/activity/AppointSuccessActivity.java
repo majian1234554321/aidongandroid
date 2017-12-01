@@ -14,7 +14,7 @@ import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.entity.ShareData;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.MainActivity;
-import com.leyuan.aidong.ui.mine.activity.AppointmentActivity;
+import com.leyuan.aidong.ui.mine.activity.AppointmentMineActivityNew;
 import com.leyuan.aidong.ui.mine.activity.CouponShareActivity;
 import com.leyuan.aidong.ui.mvp.presenter.RecommendPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CouponPresentImpl;
@@ -112,9 +112,14 @@ public class AppointSuccessActivity extends BaseActivity implements View.OnClick
                 finish();
             case R.id.tv_home:
                 startActivity(new Intent(this, MainActivity.class));
+                finish();
                 break;
             case R.id.tv_appointment:
-                startActivity(new Intent(this, AppointmentActivity.class));
+                String appointType = null;
+                AppointmentMineActivityNew.start(this,appointType);
+                finish();
+
+//                startActivity(new Intent(this, AppointmentActivity.class));
                 break;
             default:
                 break;

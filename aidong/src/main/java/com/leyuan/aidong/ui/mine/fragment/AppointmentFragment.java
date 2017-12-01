@@ -55,6 +55,15 @@ public class AppointmentFragment extends BaseLazyFragment implements Appointment
 
     private AppointmentPresent present;
 
+
+    public static AppointmentFragment newInstance(String type) {
+        AppointmentFragment fragment = new AppointmentFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("type", type);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     @Override
     public View initView() {
         Bundle bundle = getArguments();

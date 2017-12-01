@@ -80,7 +80,7 @@
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/tv_order"
+                android:id="@+id/tv_look_queue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -89,7 +89,7 @@
                 android:gravity="center"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
-                android:text="@string/queue_detail"
+                android:text="@string/look_queue"
                 android:textColor="@color/main_red"
                 android:textSize="14sp"
                 android:visibility="visible" />

@@ -33,20 +33,20 @@ public class AppointmentFragmentEventNew extends BaseFragment implements View.On
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Logger.i(TAG,"onCreate");
+        Logger.i(TAG, "onCreate");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Logger.i(TAG,"onCreateView");
+        Logger.i(TAG, "onCreateView");
         return inflater.inflate(R.layout.fragment_appointment_event, null);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Logger.i(TAG,"onViewCreated");
+        Logger.i(TAG, "onViewCreated");
 
         btAll = (TextView) view.findViewById(R.id.bt_all);
         btJoinNo = (TextView) view.findViewById(R.id.bt_join_no);
@@ -57,10 +57,11 @@ public class AppointmentFragmentEventNew extends BaseFragment implements View.On
         btJoinNo.setOnClickListener(this);
         btJoined.setOnClickListener(this);
 
-        AppointmentFragmentEventChild all = new AppointmentFragmentEventChild();
-        AppointmentFragmentEventChild joined = new AppointmentFragmentEventChild();
-        AppointmentFragmentEventChild unJoined = new AppointmentFragmentEventChild();
-//        new Bundler().putString("type",AppointmentFragment.ALL);
+        AppointmentFragment all = AppointmentFragment.newInstance(AppointmentFragment.ALL);
+
+        AppointmentFragment joined = AppointmentFragment.newInstance(AppointmentFragment.UN_JOIN);
+
+        AppointmentFragment unJoined = AppointmentFragment.newInstance(AppointmentFragment.JOINED);
         mFragments.add(all);
         mFragments.add(joined);
         mFragments.add(unJoined);
@@ -84,13 +85,13 @@ public class AppointmentFragmentEventNew extends BaseFragment implements View.On
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Logger.i(TAG,"onActivityCreated");
+        Logger.i(TAG, "onActivityCreated");
     }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        Logger.i(TAG,"setUserVisibleHint = " +isVisibleToUser);
+        Logger.i(TAG, "setUserVisibleHint = " + isVisibleToUser);
     }
 
     @Override
@@ -115,7 +116,7 @@ public class AppointmentFragmentEventNew extends BaseFragment implements View.On
     }
 
     private void changeTitleTag(int i) {
-        Logger.i("AppointmentFragmentEventNew","changeTitleTag = " +i);
+        Logger.i("AppointmentFragmentEventNew", "changeTitleTag = " + i);
         switch (i) {
             case 0:
                 btAll.setTextColor(getResources().getColor(R.color.main_red));
@@ -156,18 +157,18 @@ public class AppointmentFragmentEventNew extends BaseFragment implements View.On
     @Override
     public void onResume() {
         super.onResume();
-        Logger.i(TAG,"onResume = " );
+        Logger.i(TAG, "onResume = ");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Logger.i(TAG,"onPause" );
+        Logger.i(TAG, "onPause");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Logger.i(TAG,"onDestroy" );
+        Logger.i(TAG, "onDestroy");
     }
 }

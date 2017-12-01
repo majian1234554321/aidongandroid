@@ -16,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.entity.CategoryBean;
 import com.leyuan.aidong.entity.course.CourseArea;
 import com.leyuan.aidong.entity.course.CourseBrand;
 import com.leyuan.aidong.entity.course.CourseFilterBean;
@@ -51,7 +50,6 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
     private String category;
     private ViewPager viewPager;
 
-    List<CategoryBean> categoryBeanList = new ArrayList<>();
 
 
 //    private DrawerLayout drawerLayout;

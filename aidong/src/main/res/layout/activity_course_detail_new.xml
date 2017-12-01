@@ -43,10 +43,12 @@
             <TextView
                 android:id="@+id/txt_course_name"
                 android:layout_width="match_parent"
-                android:layout_height="58dp"
-                android:gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:minHeight="58dp"
+                android:gravity="center"
                 android:paddingLeft="15dp"
-                android:text="11111"
+                android:paddingRight="15dp"
+                android:text="1"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -57,10 +59,13 @@
                 android:layout_marginLeft="15dp"
                 android:src="@color/mine_divider" />
 
+
             <RelativeLayout
+                android:id="@+id/layout_course_coach"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 android:minHeight="105dp">
 
                 <LinearLayout
@@ -84,17 +89,16 @@
                             android:id="@+id/txt_coach_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Even Ding"
                             android:textColor="@color/black"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
                         <ImageView
                             android:id="@+id/img_coach_identify"
-                            android:layout_width="15dp"
-                            android:layout_height="15dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:src="@color/black" />
+                            android:src="@drawable/icon_coach" />
 
                     </LinearLayout>
 
@@ -103,7 +107,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="333333333333333333333333333333333333333333333"
                         android:textColor="@color/txt_black"
                         android:textSize="13sp" />
 
@@ -146,7 +149,6 @@
                     android:id="@+id/txt_normal_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="$169"
                     android:textColor="@color/txt_black"
                     android:textSize="15sp"
 
@@ -157,7 +159,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="25dp"
-                    android:text="149"
                     android:textColor="@color/red_price"
                     android:textSize="15sp"
 
@@ -181,11 +182,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp"
-                android:text="2017-10-20  15:30-16:30"
                 android:textColor="@color/txt_black"
                 android:textSize="15sp"
 
                 />
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -197,55 +198,58 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/txt_course_room"
+            <LinearLayout
+                android:id="@+id/layout_course_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
-                android:text="xxkdskdskdjkjsdsd"
-                android:textColor="@color/black"
-                android:textSize="13sp" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txt_course_location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
-                android:drawableLeft="@drawable/icon_ticket"
-                android:drawablePadding="8dp"
-                android:gravity="center_vertical"
-                android:text="xxkdskdskdjkjsdsd"
-                android:textColor="@color/c9"
-                android:textSize="12sp" />
 
+                <TextView
+                    android:id="@+id/txt_course_room"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/black"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/txt_course_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:drawableLeft="@drawable/icon_course_location"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/c9"
+                    android:textSize="12sp" />
+
+
+            </LinearLayout>
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_marginLeft="15dp"
                 android:src="@color/mine_divider" />
-            <TextView
+            <!--<TextView-->
 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
-                android:text="@string/course_intro"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:layout_marginTop="15dp"-->
+            <!--android:text="@string/course_intro"-->
+            <!--android:textColor="@color/black"-->
+            <!--android:textSize="18sp"-->
+            <!--android:textStyle="bold" />-->
 
-            <TextView
-                android:id="@+id/tv_desc"
+
+            <com.leyuan.aidong.widget.richtext.RichWebView
+                android:id="@+id/web_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="@dimen/left_margin"
-                android:layout_marginRight="@dimen/right_margin"
-                android:text="“钢管舞属于动作技巧相结合的舞蹈，运动量远远大于其他舞 蹈项目，而钢管舞动作形式决定了钢管舞属于高消耗运动, 健 身价值遍及身体每个部位，尤其对身体腰部、腹部及蝴蝶袖, 等减肥效果非常好。钢管舞属于全身性舞蹈健身项目， 需要 每个部位的相互配合才能完成动作." />
-
-
+                android:layout_marginBottom="55dp" />
 
         </LinearLayout>
     </ScrollView>
@@ -300,7 +304,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:text="2222222"
             android:textColor="@color/white"
             android:textSize="16sp" />
     </LinearLayout>

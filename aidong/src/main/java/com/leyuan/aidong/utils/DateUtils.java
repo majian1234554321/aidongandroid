@@ -27,6 +27,22 @@ public class DateUtils {
     public static final String NEWS_ITEM_DATE_FORMAT = "hh:mm M月d日 yyyy";
     public static final String WeiBo_ITEM_DATE_FORMAT = "EEE MMM d HH:mm:ss Z yyyy";
 
+    private static SimpleDateFormat SecondFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+    public static long compareLongTime(String time) {
+        long sysSecond = System.currentTimeMillis();
+
+        try {
+            Date date = SecondFormat.parse(time);
+//            Logger.i("time", "time = " + time + ", data time = " + date.getTime() + ", current = " + sysSecond);
+            return date.getTime() - sysSecond;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
 
     public static String dateToString(Date date, String pattern)
             throws Exception {

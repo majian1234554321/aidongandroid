@@ -67,7 +67,7 @@
                         android:layout_alignRight="@+id/imageView_head"
                         android:layout_margin="5dp"
                         android:src="@drawable/icon_girl"
-                        android:visibility="gone"/>
+                        android:visibility="gone" />
 
 
                     <TextView
@@ -187,169 +187,249 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="95dp"
+                android:layout_height="90dp"
                 android:background="@color/white"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:id="@+id/layout_appoint_course"
+                    android:layout_width="@dimen/pref_0.5dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_course_appoint" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="我的课程"
+                        android:textColor="@color/typeface_seven"
+                        android:textSize="@dimen/length22" />
 
 
-                <RelativeLayout
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/relativeLayout_yuyue"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/pref_0.5dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center">
-
+                    android:gravity="center"
+                    android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/imageView_yy"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/mine_reservation" />
+                        android:src="@drawable/icon_event_appoint" />
 
                     <TextView
-                        android:id="@+id/textView_yy"
-                        android:layout_width="wrap_content"
-                        android:layout_height="5dp"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/imageView_yy"
-                        android:text="" />
-
-                    <TextView
-                        android:id="@+id/textView_yysl"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_above="@+id/textView_yy"
-                        android:layout_alignLeft="@+id/textView_yy"
-                        android:text="0"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/length34" />
-
-                    <TextView
-                        android:id="@+id/textView86"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignLeft="@+id/textView_yy"
-                        android:layout_below="@+id/textView_yy"
-                        android:text="我的预约"
+                        android:layout_marginTop="5dp"
+                        android:text="我的活动"
                         android:textColor="@color/typeface_seven"
                         android:textSize="@dimen/length22" />
 
 
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignTop="@+id/textView86"
-                        android:layout_marginLeft="5dp"
-                        android:layout_toRightOf="@+id/textView86">
+                </LinearLayout>
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/mine_prompt"
-                            android:textColor="@color/white" />
-
-                        <TextView
-                            android:id="@+id/textView_yyjrw"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:gravity="center"
-                            android:text="0"
-                            android:textColor="@color/white" />
-
-
-                    </RelativeLayout>
-
-
-                </RelativeLayout>
-
-
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/relativeLayout_dingdang"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/pref_0.5dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center">
-
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignTop="@+id/textView144"
-                        android:layout_marginLeft="5dp"
-                        android:layout_toRightOf="@+id/textView144">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/mine_prompt"
-                            android:text="1"
-                            android:textColor="@color/white"
-
-                            />
-
-                        <TextView
-                            android:id="@+id/textView_ddjrw"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="5dp"
-                            android:text="0"
-                            android:textColor="@color/white" />
-
-
-                    </RelativeLayout>
+                    android:gravity="center"
+                    android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/imageView69"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/mine_order" />
+                        android:src="@drawable/icon_goods_order" />
 
                     <TextView
-                        android:id="@+id/textView60"
-                        android:layout_width="wrap_content"
-                        android:layout_height="5dp"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/imageView69"
-                        android:text="" />
-
-                    <TextView
-                        android:id="@+id/textView_dd"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_above="@+id/textView60"
-                        android:layout_alignLeft="@+id/textView60"
-                        android:text="0"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/length34" />
-
-                    <TextView
-                        android:id="@+id/textView144"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignLeft="@+id/textView60"
-                        android:layout_below="@+id/textView60"
-                        android:text="我的订单"
+                        android:layout_marginTop="5dp"
+                        android:text="我的商品"
                         android:textColor="@color/typeface_seven"
                         android:textSize="@dimen/length22" />
 
-
-                </RelativeLayout>
+                </LinearLayout>
 
             </LinearLayout>
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="95dp"-->
+                <!--android:background="@color/white"-->
+                <!--android:orientation="horizontal">-->
+
+
+                <!--<RelativeLayout-->
+                    <!--android:id="@+id/relativeLayout_yuyue"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center">-->
+
+
+                    <!--<ImageView-->
+                        <!--android:id="@+id/imageView_yy"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignParentLeft="true"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:src="@drawable/mine_reservation" />-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/textView_yy"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="5dp"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:layout_marginLeft="10dp"-->
+                        <!--android:layout_toRightOf="@+id/imageView_yy"-->
+                        <!--android:text="" />-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/textView_yysl"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_above="@+id/textView_yy"-->
+                        <!--android:layout_alignLeft="@+id/textView_yy"-->
+                        <!--android:text="0"-->
+                        <!--android:textColor="@color/black"-->
+                        <!--android:textSize="@dimen/length34" />-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/textView86"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignLeft="@+id/textView_yy"-->
+                        <!--android:layout_below="@+id/textView_yy"-->
+                        <!--android:text="我的预约"-->
+                        <!--android:textColor="@color/typeface_seven"-->
+                        <!--android:textSize="@dimen/length22" />-->
+
+
+                    <!--<RelativeLayout-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignTop="@+id/textView86"-->
+                        <!--android:layout_marginLeft="5dp"-->
+                        <!--android:layout_toRightOf="@+id/textView86">-->
+
+                        <!--<ImageView-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_centerHorizontal="true"-->
+                            <!--android:layout_centerVertical="true"-->
+                            <!--android:src="@drawable/mine_prompt"-->
+                            <!--android:textColor="@color/white" />-->
+
+                        <!--<TextView-->
+                            <!--android:id="@+id/textView_yyjrw"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_centerHorizontal="true"-->
+                            <!--android:layout_centerVertical="true"-->
+                            <!--android:gravity="center"-->
+                            <!--android:text="0"-->
+                            <!--android:textColor="@color/white" />-->
+
+
+                    <!--</RelativeLayout>-->
+
+
+                <!--</RelativeLayout>-->
+
+
+                <!--<RelativeLayout-->
+                    <!--android:id="@+id/relativeLayout_dingdang"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center">-->
+
+
+                    <!--<RelativeLayout-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignTop="@+id/textView144"-->
+                        <!--android:layout_marginLeft="5dp"-->
+                        <!--android:layout_toRightOf="@+id/textView144">-->
+
+                        <!--<ImageView-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_centerHorizontal="true"-->
+                            <!--android:layout_centerVertical="true"-->
+                            <!--android:src="@drawable/mine_prompt"-->
+                            <!--android:text="1"-->
+                            <!--android:textColor="@color/white"-->
+
+                            <!--/>-->
+
+                        <!--<TextView-->
+                            <!--android:id="@+id/textView_ddjrw"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_centerHorizontal="true"-->
+                            <!--android:layout_centerVertical="true"-->
+                            <!--android:layout_marginLeft="5dp"-->
+                            <!--android:text="0"-->
+                            <!--android:textColor="@color/white" />-->
+
+
+                    <!--</RelativeLayout>-->
+
+                    <!--<ImageView-->
+                        <!--android:id="@+id/imageView69"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignParentLeft="true"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:src="@drawable/mine_order" />-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/textView60"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="5dp"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:layout_marginLeft="10dp"-->
+                        <!--android:layout_toRightOf="@+id/imageView69"-->
+                        <!--android:text="" />-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/textView_dd"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_above="@+id/textView60"-->
+                        <!--android:layout_alignLeft="@+id/textView60"-->
+                        <!--android:text="0"-->
+                        <!--android:textColor="@color/black"-->
+                        <!--android:textSize="@dimen/length34" />-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/textView144"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignLeft="@+id/textView60"-->
+                        <!--android:layout_below="@+id/textView60"-->
+                        <!--android:text="我的订单"-->
+                        <!--android:textColor="@color/typeface_seven"-->
+                        <!--android:textSize="@dimen/length22" />-->
+
+
+                <!--</RelativeLayout>-->
+
+            <!--</LinearLayout>-->
 
             <ImageView
                 android:layout_width="match_parent"
@@ -364,6 +444,7 @@
                 app:divider_visible="true"
                 app:img_tag="@drawable/mine_love_coin"
                 app:txt_name="我的爱币" />
+
             <com.leyuan.aidong.widget.AidongMineItem
                 android:id="@+id/item_my_member_card"
                 android:layout_width="match_parent"
@@ -396,20 +477,20 @@
                 app:txt_name="收货地址" />
 
             <com.leyuan.aidong.widget.AidongMineItem
-                android:visibility="gone"
                 android:id="@+id/item_recommend_friend"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
 
                 app:divider_visible="true"
                 app:img_tag="@drawable/mine_add_friend"
                 app:txt_name="推荐好友" />
 
             <com.leyuan.aidong.widget.AidongMineItem
-                android:layout_marginTop="@dimen/pref_10dp"
                 android:id="@+id/item_after_sale"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/pref_10dp"
                 app:divider_visible="true"
                 app:img_tag="@drawable/mine_after_sale"
                 app:txt_name="售后/退款" />
@@ -455,9 +536,9 @@
             android:background="@drawable/mine_prompt"
             android:gravity="center"
             android:text="1"
-            android:visibility="gone"
             android:textColor="@color/white"
-            android:textSize="10sp" />
+            android:textSize="10sp"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/img_new_message"

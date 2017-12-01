@@ -1,5 +1,7 @@
 package com.leyuan.aidong.ui.mine.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.mine.fragment.AppointmentFragmentCourseNew;
 import com.leyuan.aidong.ui.mine.fragment.AppointmentFragmentEventNew;
 import com.leyuan.aidong.utils.Logger;
 
@@ -38,7 +41,7 @@ public class AppointmentMineActivityNew extends BaseActivity implements View.OnC
         findViewById(R.id.bt_event_appoint).setOnClickListener(this);
         viewPager = (ViewPager) findViewById(R.id.vp_content);
 
-        AppointmentFragmentEventNew course = new AppointmentFragmentEventNew();
+        AppointmentFragmentCourseNew course = new AppointmentFragmentCourseNew();
         AppointmentFragmentEventNew event = new AppointmentFragmentEventNew();
         mFragments.add(course);
         mFragments.add(event);
@@ -90,7 +93,7 @@ public class AppointmentMineActivityNew extends BaseActivity implements View.OnC
     }
 
     private void changeTitleTag(int i) {
-        Logger.i("appoint mine activity","changeTitleTag = " +i);
+        Logger.i("appoint mine activity", "changeTitleTag = " + i);
         switch (i) {
             case 0:
                 bt_course_appoint.setTextColor(getResources().getColor(R.color.white));
@@ -101,6 +104,12 @@ public class AppointmentMineActivityNew extends BaseActivity implements View.OnC
                 bt_event_appoint.setTextColor(getResources().getColor(R.color.white));
                 break;
         }
+    }
+
+    public static void start(Context context, String appointType) {
+        Intent intent = new Intent(context, AppointmentMineActivityNew.class);
+        intent.putExtra("appointType", appointType);
+        context.startActivity(intent);
     }
 
     class MyPageChangeListener implements ViewPager.OnPageChangeListener {
@@ -120,7 +129,6 @@ public class AppointmentMineActivityNew extends BaseActivity implements View.OnC
 
         }
     }
-
 
 
 }

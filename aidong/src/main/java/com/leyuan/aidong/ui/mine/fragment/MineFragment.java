@@ -54,12 +54,14 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
     private View rootView;
     private LinearLayout layout_no_login, linearLayout_guanzhu, linearLayout_beiguanzhu, layout_hot;
     private ImageButton button_login, btn_shop_car, btn_message;
-    private RelativeLayout relativeLayout_my_logo, relativeLayout_yuyue, relativeLayout_dingdang;
+    private RelativeLayout relativeLayout_my_logo;
+    private LinearLayout relativeLayout_yuyue, relativeLayout_dingdang;
     private ImageView imageView_head, img_new_message, img_new_shop;
     private ImageView imageView_xinbie;
-    private TextView textView_name, textView_guanzhushu, textView_beiguanzhushu, textView_popularity, textView_yysl, textView_yyjrw, textView_dd, textView_ddjrw;
+    private TextView textView_name, textView_guanzhushu, textView_beiguanzhushu, textView_popularity;
+//    , textView_yysl, textView_yyjrw, textView_dd, textView_ddjrw
     private AidongMineItem item_my_coin, item_my_coupon, item_sport_timing, item_address,
-            item_recommend_friend, item_after_sale, item_setting,item_my_member_card;
+            item_recommend_friend, item_after_sale, item_setting, item_my_member_card;
     private UserCoach user;
     private ChatMessageReceiver chatMessageReceiver;
     private MineInfoPresenterImpl presenter;
@@ -71,6 +73,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
             refreshLoginState();
         }
     };
+    private LinearLayout layout_appoint_course;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -111,8 +114,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
         txt_new_shop = (TextView) rootView.findViewById(R.id.txt_new_shop);
 
         relativeLayout_my_logo = (RelativeLayout) rootView.findViewById(R.id.relativeLayout_my_logo);
-        relativeLayout_yuyue = (RelativeLayout) rootView.findViewById(R.id.relativeLayout_yuyue);
-        relativeLayout_dingdang = (RelativeLayout) rootView.findViewById(R.id.relativeLayout_dingdang);
+        relativeLayout_yuyue = (LinearLayout) rootView.findViewById(R.id.relativeLayout_yuyue);
+        relativeLayout_dingdang = (LinearLayout) rootView.findViewById(R.id.relativeLayout_dingdang);
+        layout_appoint_course= (LinearLayout) rootView.findViewById(R.id.layout_appoint_course);
 
         imageView_head = (ImageView) rootView.findViewById(R.id.imageView_head);
         imageView_xinbie = (ImageView) rootView.findViewById(R.id.imageView_xinbie);
@@ -121,10 +125,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
         textView_guanzhushu = (TextView) rootView.findViewById(R.id.textView_guanzhushu);
         textView_beiguanzhushu = (TextView) rootView.findViewById(R.id.textView_beiguanzhushu);
         textView_popularity = (TextView) rootView.findViewById(R.id.textView_popularity);
-        textView_yysl = (TextView) rootView.findViewById(R.id.textView_yysl);
-        textView_yyjrw = (TextView) rootView.findViewById(R.id.textView_yyjrw);
-        textView_dd = (TextView) rootView.findViewById(R.id.textView_dd);
-        textView_ddjrw = (TextView) rootView.findViewById(R.id.textView_ddjrw);
+//        textView_yysl = (TextView) rootView.findViewById(R.id.textView_yysl);
+//        textView_yyjrw = (TextView) rootView.findViewById(R.id.textView_yyjrw);
+//        textView_dd = (TextView) rootView.findViewById(R.id.textView_dd);
+//        textView_ddjrw = (TextView) rootView.findViewById(R.id.textView_ddjrw);
 
         item_my_coin = (AidongMineItem) rootView.findViewById(R.id.item_my_coin);
         item_my_member_card = (AidongMineItem) rootView.findViewById(R.id.item_my_member_card);
@@ -154,6 +158,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
         item_recommend_friend.setOnClickListener(this);
         item_after_sale.setOnClickListener(this);
         item_setting.setOnClickListener(this);
+        layout_appoint_course.setOnClickListener(this);
 
     }
 
@@ -185,10 +190,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
             txt_new_shop.setVisibility(View.GONE);
             textView_guanzhushu.setText("0");
             textView_beiguanzhushu.setText("0");
-            textView_yysl.setText("0");
-            textView_yyjrw.setText("0");
-            textView_dd.setText("0");
-            textView_ddjrw.setText("0");
+//            textView_yysl.setText("0");
+//            textView_yyjrw.setText("0");
+//            textView_dd.setText("0");
+//            textView_ddjrw.setText("0");
             textView_popularity.setText("0");
         }
     }
@@ -210,7 +215,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
                 UserInfoActivity.start(getContext(), String.valueOf(App.mInstance.getUser().getId()));
                 break;
             case R.id.relativeLayout_yuyue:
-//                UiManager.activityCheckLoginJump(getActivity(), AppointmentActivity.class);
+
+                UiManager.activityCheckLoginJump(getActivity(), AppointmentMineActivityNew.class);
+                break;
+            case R.id.layout_appoint_course:
                 UiManager.activityCheckLoginJump(getActivity(), AppointmentMineActivityNew.class);
                 break;
             case R.id.relativeLayout_dingdang:
@@ -270,6 +278,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
 
     @Override
     public void onGetMineInfo(MineInfoBean mineInfoBean) {
+
         if (mineInfoBean.getCart_items_count() > 0) {
             txt_new_shop.setVisibility(View.VISIBLE);
             txt_new_shop.setText(String.valueOf(mineInfoBean.getCart_items_count()));
@@ -279,10 +288,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
 //        img_new_shop.setVisibility(mineInfoBean.getCart_items_count() > 0 ? View.VISIBLE : View.GONE);
         textView_guanzhushu.setText(mineInfoBean.getFollowings_count() + "");
         textView_beiguanzhushu.setText(mineInfoBean.getFollowers_count() + "");
-        textView_yysl.setText(mineInfoBean.getAppointed_count() + "");
-        textView_yyjrw.setText(mineInfoBean.getAppointing_count() + "");
-        textView_dd.setText(mineInfoBean.getPaid_orders_count() + "");
-        textView_ddjrw.setText(mineInfoBean.getUnpay_orders_count() + "");
+//        textView_yysl.setText(mineInfoBean.getAppointed_count() + "");
+//        textView_yyjrw.setText(mineInfoBean.getAppointing_count() + "");
+//        textView_dd.setText(mineInfoBean.getPaid_orders_count() + "");
+//        textView_ddjrw.setText(mineInfoBean.getUnpay_orders_count() + "");
         textView_popularity.setText(mineInfoBean.getView_count());
     }
 }

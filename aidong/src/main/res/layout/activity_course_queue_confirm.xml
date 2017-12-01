@@ -6,13 +6,14 @@
     android:orientation="vertical">
 
     <com.leyuan.aidong.widget.CommonTitleLayout
+        android:id="@+id/layout_title"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         app:txtTitle="@string/queue_confirm" />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="100">
 
         <LinearLayout
@@ -33,141 +34,20 @@
 
                 />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="120dp">
+            <include
+                android:id="@+id/layout_course_coach"
+                layout="@layout/inc_course_image_text" />
 
-                <ImageView
-                    android:id="@+id/img_course"
-                    android:layout_width="@dimen/pref_100dp"
-                    android:layout_height="@dimen/pref_100dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
-                    android:src="@color/black"
-
-                    />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="135dp"
-                    android:layout_marginRight="50dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/txt_course_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Dian Shang"
-                        android:textColor="@color/black"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-
-                        />
-
-                    <TextView
-                        android:id="@+id/txt_coach_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="13dp"
-                        android:text="Jan chen"
-                        android:textColor="@color/black"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/txt_course_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="10-20 周二 15:30-16:30"
-                        android:textColor="@color/black"
-                        android:textSize="15sp" />
+            <include
+                android:id="@+id/layout_course_location"
+                layout="@layout/inc_course_location_phone" />
 
 
-                </LinearLayout>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="15dp"
-                    android:src="@drawable/icon_right_arrow" />
 
-            </RelativeLayout>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/pref_0.5dp"
-                android:layout_marginLeft="15dp"
-                android:src="@color/common_divider_color" />
 
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="107dp"
-                android:layout_marginLeft="15dp"
-
-                >
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="100dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Location"
-                        android:textColor="@color/black"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-
-                        />
-
-                    <TextView
-                        android:id="@+id/txt_room_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="13dp"
-                        android:text="Jan chen"
-                        android:textColor="@color/black"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/txt_course_location"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="111111111111111111"
-                        android:drawableLeft="@drawable/icon_address"
-                        android:drawablePadding="10dp"
-                        android:gravity="center"
-                        android:textColor="@color/black"
-                        android:textSize="15sp" />
-
-
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="15dp"
-                    android:src="@drawable/telephone_number" />
-
-            </RelativeLayout>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/pref_0.5dp"
-                android:layout_marginLeft="15dp"
-                android:src="@color/common_divider_color" />
-
-            <RelativeLayout
+                android:id="@+id/layout_course_coupon"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_marginLeft="15dp">
@@ -184,11 +64,10 @@
                     />
 
                 <RelativeLayout
-                    android:layout_alignParentBottom="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                   >
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="15dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -198,13 +77,14 @@
                         android:textSize="14sp" />
 
                     <TextView
+                        android:id="@+id/txt_coupon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="15dp"
-                        android:text="请选择"
-                        android:drawableRight="@drawable/icon_right_arrow"
                         android:drawablePadding="10dp"
+                        android:drawableRight="@drawable/icon_right_arrow"
+                        android:text="请选择"
                         android:textColor="@color/c9"
                         android:textSize="14sp" />
 
@@ -219,7 +99,6 @@
                     android:src="@color/common_divider_color" />
 
             </RelativeLayout>
-
 
             <TextView
                 android:layout_width="wrap_content"
@@ -247,6 +126,7 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/txt_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -272,6 +152,7 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/txt_price_total"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -297,11 +178,12 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/txt_coupon_subtract"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="15dp"
-                    android:text="-￥20.00"
+                    android:text="-￥0"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -322,6 +204,7 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/txt_price_real"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -330,6 +213,7 @@
                     android:textColor="@color/course_oringe"
                     android:textSize="14sp" />
             </RelativeLayout>
+
 
             <ImageView
                 android:layout_width="match_parent"
@@ -353,7 +237,7 @@
     </ScrollView>
 
     <Button
-        android:id="@+id/bt_"
+        android:id="@+id/bt_queue_immediately"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/course_oringe"

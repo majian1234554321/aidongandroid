@@ -44,6 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
             android:text="DISQ Yoga"
+            android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="16sp" />
 

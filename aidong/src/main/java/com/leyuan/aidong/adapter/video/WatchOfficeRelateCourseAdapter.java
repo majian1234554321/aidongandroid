@@ -7,7 +7,7 @@ import android.widget.ImageView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.video.WatchOfficeCourseBean;
-import com.leyuan.aidong.ui.home.activity.CourseActivity;
+import com.leyuan.aidong.ui.home.activity.CourseListActivityNew;
 import com.leyuan.aidong.utils.GlideLoader;
 
 
@@ -36,7 +36,7 @@ public class WatchOfficeRelateCourseAdapter extends MyBaseAdapter<WatchOfficeCou
             @Override
             public void onClick(View v) {
 
-                CourseActivity.start(context,bean.getDictName());
+                CourseListActivityNew.start(context,bean.getDictName());
 //                Intent intent = new Intent(context, CourseActivity.class);
 //                intent.putExtra("code", bean.getConID());
 //                intent.putExtra("name", bean.getDictName());

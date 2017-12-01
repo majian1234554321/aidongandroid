@@ -10,6 +10,7 @@ public class CourseName {
     ArrayList<String> tuition;
     ArrayList<String> all;
     ArrayList<String> type = new ArrayList<>();
+    ArrayList<String> typeName = new ArrayList<>();
 
     public ArrayList<String> getFree() {
         return free;
@@ -38,9 +39,19 @@ public class CourseName {
     public ArrayList<String> getCourseTypePrice() {
         if (type.isEmpty()) {
             type.add("all");
-            type.add("free");
             type.add("tuition");
+            type.add("free");
         }
         return type;
+    }
+
+    public ArrayList<String> getCourseTypePriceName() {
+
+        if (typeName.isEmpty()) {
+            typeName.add("全部课程");
+            typeName.add("收费课程");
+            typeName.add("免费课程");
+        }
+        return typeName;
     }
 }

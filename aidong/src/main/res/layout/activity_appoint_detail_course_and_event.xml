@@ -10,7 +10,7 @@
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
-        app:stb_title="预约详情" />
+        app:stb_title="@string/appointment_detail" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,28 +26,233 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:orientation="vertical">
 
-                <!--预约状态布局-->
-                <include layout="@layout/inc_appointment_state_info_new" />
-                <!--富文本-->
+
+                <TextView
+                    android:id="@+id/tv_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="15dp"
+                    android:text="state"
+                    android:textColor="@color/main_red"
+                    android:textSize="15sp" />
+
+                <LinearLayout
+                    android:id="@+id/ll_timer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/appoint_pay_time"
+                        android:textColor="@color/main_red"
+                        android:textSize="14sp" />
+
+                    <cn.iwgang.countdownview.CountdownView
+                        android:id="@+id/timer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        app:isHideTimeBackground="true"
+                        app:isShowDay="false"
+                        app:isShowHour="true"
+                        app:isShowMillisecond="false"
+                        app:isShowMinute="true"
+                        app:isShowSecond="true"
+                        app:isTimeTextBold="false"
+                        app:suffixTextColor="@color/main_red"
+                        app:timeTextColor="@color/main_red"
+                        app:timeTextSize="14sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_order_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:text=":23232252"
+                    android:textColor="@color/c9"
+                    android:textSize="13sp" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/left_margin"
+                    android:layout_marginRight="@dimen/right_margin"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/line_black" />
+
+                <include
+                    android:id="@+id/layout_course_coach"
+                    layout="@layout/inc_course_image_text" />
 
 
-                <!--课程预约信息布局-->
+                <RelativeLayout
+                    android:id="@+id/rl_qr_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_qr_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="20dp"
+                        android:text="88777"
+                        android:textColor="@color/black"
+                        android:textSize="30sp"
+                        android:transitionName="@string/transition_code_num" />
+
+                    <ImageView
+                        android:id="@+id/dv_qr"
+                        android:layout_width="294dp"
+                        android:layout_height="73dp"
+                        android:layout_below="@+id/tv_qr_num"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="25dp"
+                        android:background="@color/line_color"
+                        android:transitionName="@string/transition_code" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:src="@drawable/icon_line" />
+                </RelativeLayout>
+
+                <include
+                    android:id="@+id/layout_course_location"
+                    layout="@layout/inc_course_location_phone" />
+
+                <com.leyuan.aidong.widget.richtext.RichWebView
+                    android:id="@+id/web_view"
+                    android:layout_marginBottom="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
 
-                <!--身份信息-->
+
+                <!--支付方式-->
+                <LinearLayout
+                    android:id="@+id/layout_pay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:visibility="gone"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="52dp"
+                        android:layout_marginLeft="@dimen/left_margin"
+                        android:gravity="center_vertical"
+                        android:text="@string/pay_type"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+
+                    <com.leyuan.aidong.widget.CustomNestRadioGroup
+
+                        android:id="@+id/radio_group"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="@dimen/left_margin"
+                            android:layout_marginRight="@dimen/right_margin"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:drawableLeft="@drawable/icon_ali_pay"
+                                android:drawablePadding="5dp"
+                                android:gravity="center_vertical"
+                                android:text="@string/zhifubao"
+                                android:textColor="@color/c3"
+                                android:textSize="14sp" />
+
+                            <RadioButton
+                                android:id="@+id/cb_alipay"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="true" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_marginLeft="@dimen/left_margin"
+                            android:layout_marginRight="@dimen/right_margin"
+                            android:background="@color/line_color" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="@dimen/left_margin"
+                            android:layout_marginRight="@dimen/right_margin"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:drawableLeft="@drawable/icon_weixin_pay"
+                                android:drawablePadding="5dp"
+                                android:gravity="center_vertical"
+                                android:text="@string/weixin"
+                                android:textColor="@color/c3"
+                                android:textSize="14sp" />
+
+                            <RadioButton
+                                android:id="@+id/cb_weixin"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+                    </com.leyuan.aidong.widget.CustomNestRadioGroup>
+
+                </LinearLayout>
+
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center"
+                    android:text="@string/course_order_hint"
+                    android:textColor="@color/c9"
+
+                    android:textSize="12sp" />
 
 
 
-                <!--订单信息-->
-
-
-                <!--支付信息-->
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
-    <!--底部操作按钮信息-->
+
     <LinearLayout
         android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
@@ -105,14 +310,14 @@
 
 
             <TextView
-                android:id="@+id/tv_cancel_pay"
+                android:id="@+id/tv_cancel_appoint"
                 android:layout_width="168dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/shape_solid_corner_white"
                 android:gravity="center"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
-                android:text="取消付款"
+                android:text="取消预约"
                 android:textColor="@color/c3"
                 android:textSize="14sp"
                 android:visibility="gone" />
@@ -126,7 +331,7 @@
                 android:gravity="center"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
-                android:text="确认参加"
+                android:text="立即支付"
                 android:textColor="@color/main_red"
                 android:textSize="14sp"
                 android:visibility="gone" />

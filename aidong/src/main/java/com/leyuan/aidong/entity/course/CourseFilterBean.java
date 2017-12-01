@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class CourseFilterBean {
     ArrayList<CourseBrand> company;
     CourseName course;
-    CourseBrand mine;
+    ArrayList<CourseBrand> mine;
 
     public CourseName getCourse() {
         return course;
@@ -19,11 +19,19 @@ public class CourseFilterBean {
     }
 
     public CourseBrand getMine() {
-        return mine;
+        if (mine != null && !mine.isEmpty()) {
+            return mine.get(0);
+        }
+        return null;
     }
 
+    @Deprecated
     public void setMine(CourseBrand mine) {
-        this.mine = mine;
+        if (this.mine == null) {
+            this.mine = new ArrayList<>();
+        }
+        this.mine.clear();
+        this.mine.add(mine);
     }
 
     public ArrayList<CourseBrand> getCompany() {

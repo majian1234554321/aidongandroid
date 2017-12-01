@@ -106,6 +106,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
 
     private FragmentPagerItemAdapter adapter;
     private boolean needRefreshFragment = false;
+    private String contact;
 
     public static void start(Context context, String userId) {
         Intent starter = new Intent(context, UserInfoActivity.class);
@@ -131,6 +132,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
         initView();
         setListener();
         userInfoPresent.getUserInfo(switcherLayout, userId);
+
     }
 
     private void initView() {
@@ -277,12 +279,12 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
                 }
                 break;
             case R.id.tv_call:
-                if(TextUtils.isEmpty(userInfoData.getProfile().getPhone())){
+                if (TextUtils.isEmpty(userInfoData.getProfile().getPhone())) {
                     ToastGlobal.showLong("该教练没有录入电话号码");
                     return;
                 }
                 showCallUpDialog(userInfoData.getProfile().getPhone());
-            break;
+                break;
             default:
                 break;
         }

@@ -17,7 +17,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Location"
+            android:text="位置"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -38,20 +38,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/icon_course_location"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/c9"
             android:text="111111111111111111"
-            android:textColor="@color/black"
             android:textSize="15sp" />
 
 
     </LinearLayout>
 
-    <ImageView
+    <ImageButton
+        android:id="@+id/img_telephone"
+        android:background="@color/transparent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="15dp"
-        android:src="@drawable/telephone_number" />
+        android:layout_marginRight="10dp"
+        android:padding="5dp"
+        android:src="@drawable/icon_course_telephone" />
 
     <ImageView
         android:layout_width="match_parent"

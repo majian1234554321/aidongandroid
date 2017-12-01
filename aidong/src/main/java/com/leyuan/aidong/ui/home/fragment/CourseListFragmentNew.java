@@ -17,6 +17,7 @@ import com.leyuan.aidong.ui.BasePageFragment;
 import com.leyuan.aidong.ui.home.activity.CourseListActivityNew;
 import com.leyuan.aidong.ui.mvp.presenter.CourseListPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CourseListView;
+import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -67,6 +68,7 @@ public class CourseListFragmentNew extends BasePageFragment implements OnRefresh
 
     @Override
     public void fetchData() {
+//        DialogUtils.showDialog(getActivity(),"",false);
         coursePresent.pullRefreshCourseList(store, course, time, date);
     }
 
@@ -106,6 +108,7 @@ public class CourseListFragmentNew extends BasePageFragment implements OnRefresh
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
+
             if (scrolledDistance > HIDE_THRESHOLD && filterViewVisible) {           //手指向上滑动
                 ((CourseListActivityNew) getActivity()).animatedHide(); //todo 设置回调无效
                 filterViewVisible = false;
@@ -147,11 +150,13 @@ public class CourseListFragmentNew extends BasePageFragment implements OnRefresh
 
     @Override
     public void onGetRefreshCourseList(ArrayList<CourseBeanNew> courseList) {
+        DialogUtils.dismissDialog();
         if (refreshLayout.isRefreshing()) {
             refreshLayout.setRefreshing(false);
         }
         data.clear();
-        data.addAll(courseList);
+        if (courseList != null)
+            data.addAll(courseList);
         courseAdapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();
         switcherLayout.showContentLayout();
@@ -159,7 +164,9 @@ public class CourseListFragmentNew extends BasePageFragment implements OnRefresh
 
     @Override
     public void onGetMoreCourseList(ArrayList<CourseBeanNew> courseList) {
-        data.addAll(courseList);
+        DialogUtils.dismissDialog();
+        if (courseList != null)
+            data.addAll(courseList);
         courseAdapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();
     }
@@ -170,5 +177,11 @@ public class CourseListFragmentNew extends BasePageFragment implements OnRefresh
 
     public void resetCourseCategory(String currentCoursePriceType, String currentCourseCategory) {
         this.course = currentCoursePriceType + "," + currentCourseCategory;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        DialogUtils.releaseDialog();
     }
 }

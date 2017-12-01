@@ -49,12 +49,13 @@ public class CourseListAdapterNew extends RecyclerView.Adapter<CourseListAdapter
 
     @Override
     public void onBindViewHolder(CourseViewHolder holder, int position) {
+
         final CourseBeanNew courseBean = data.get(position);
         GlideLoader.getInstance().displayImage(courseBean.getCoach().getAvatar(), holder.imgCoach);
         holder.txtCoachName.setText(courseBean.getCoach().getName());
         holder.txtCourseName.setText(courseBean.getName());
         holder.txtCourseTime.setText(courseBean.getClass_time());
-        holder.txtCourseDesc.setText(courseBean.getTags());
+        holder.txtCourseDesc.setText(courseBean.getTagString());
 
         holder.txtCourseDifficulty.setText("难度系数: " + courseBean.getStrength());
         holder.txtCourseOriginPrice.setText("￥ " + courseBean.getPrice());
@@ -65,34 +66,53 @@ public class CourseListAdapterNew extends RecyclerView.Adapter<CourseListAdapter
             case CourseBeanNew.NORMAL:
                 holder.imgCourseState.setVisibility(View.GONE);
                 break;
+
             case CourseBeanNew.APPOINTED:
                 holder.imgCourseState.setVisibility(View.GONE);
                 break;
+
             case CourseBeanNew.APPOINTED_NO_PAY:
                 holder.imgCourseState.setVisibility(View.GONE);
                 break;
+
             case CourseBeanNew.QUEUED:
                 holder.imgCourseState.setVisibility(View.GONE);
                 break;
+
             case CourseBeanNew.FEW:
                 holder.imgCourseState.setVisibility(View.VISIBLE);
                 holder.imgCourseState.setImageResource(R.drawable.icon_course_few);
                 break;
+
             case CourseBeanNew.QUEUEABLE:
                 holder.imgCourseState.setVisibility(View.VISIBLE);
                 holder.imgCourseState.setImageResource(R.drawable.icon_course_queue);
                 break;
+
             case CourseBeanNew.FULL:
                 holder.imgCourseState.setVisibility(View.VISIBLE);
                 holder.imgCourseState.setImageResource(R.drawable.icon_course_full);
                 break;
+
             case CourseBeanNew.END:
                 holder.imgCourseState.setVisibility(View.VISIBLE);
                 holder.imgCourseState.setImageResource(R.drawable.icon_course_end);
                 break;
+
             default:
                 holder.imgCourseState.setVisibility(View.GONE);
                 break;
+        }
+
+        if(courseBean.getReservable() != 1 && courseBean.getStatus()!=CourseBeanNew.END){
+            //无需预约
+            holder.imgCourseState.setVisibility(View.GONE);
+        }
+
+        if(courseBean.isMember_only()){
+            //只有会员可以
+            holder.txtCourseOriginPrice.setText("");
+            holder.txtCourseMemberPrice.setText("会员专享");
         }
 
         holder.rootView.setOnClickListener(new View.OnClickListener() {

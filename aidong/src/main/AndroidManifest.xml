@@ -251,6 +251,13 @@
             android:name=".ui.mine.activity.AppointCourseDetailActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.mine.activity.AppointDetailCourseAndEventActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.home.activity.ConfirmOrderCourseActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.mine.activity.UserInfoActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -515,7 +522,13 @@
             android:name=".ui.home.activity.CourseChooseSeat"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.ConfirmOrderCourseActivity"
+            android:name=".ui.home.activity.CourseQueueConfirmActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.activity.CourseQueueSuccessActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.activity.CourseQueueDetailActivity"
             android:screenOrientation="portrait" />
         <!-- <activity -->
         <!-- android:name=".ui.discover.activity.DiscoverUserActivityTest" -->

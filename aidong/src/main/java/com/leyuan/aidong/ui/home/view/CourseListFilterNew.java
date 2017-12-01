@@ -27,6 +27,7 @@ import com.leyuan.aidong.utils.Logger;
 import java.util.ArrayList;
 
 import static com.leyuan.aidong.R.id.layout_store_content_all;
+import static com.leyuan.aidong.R.id.tv_store_all;
 
 /**
  * 课程列表筛选控件
@@ -56,8 +57,10 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
     private ListView listStoreMiddleAll;
     private ListView listStoreRightAll;
     private LinearLayout layoutStoreContentMine;
+
     private ListView listStoreLeftMine;
     private ListView listStoreRightMine;
+
     private LinearLayout layoutCourseContent;
     private ListView listCourseLeft;
     private ListView listCourseRight;
@@ -74,7 +77,7 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
     private ArrayList<CourseBrand> courseBrands;
     private CourseBrand mineCourseBrand;
 
-    private boolean storeContentAllIsShowing, storeContentMineIsShowing, courseIsShowing, timeIsShowing;
+    private boolean storeContentRootIsShowing, storeContentAllIsShowing, storeContentMineIsShowing, courseIsShowing, timeIsShowing;
 
     private CourseArea currentArea;
     private CourseStore currentStore;
@@ -86,6 +89,13 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
     private String currentCoursePriceType;
     private ArrayList<String> currentCourseCategoryList;
     private String currentCourseCategory;
+
+    private ArrayList<CourseArea> currentMineAreaList;
+    private CourseArea currentMineArea;
+    private ArrayList<CourseStore> currentMineStoreList;
+    private CourseStore currentMineStore;
+    private CourseAreaFilterAdapter adapterMineArea;
+    private CourseStoreFilterAdapter adapterMineStore;
 
     public CourseListFilterNew(Context context) {
         this(context, null);
@@ -118,7 +128,7 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
         ivFilterArrow = (ImageView) view.findViewById(R.id.iv_filter_arrow);
         layoutStoreContentRoot = (RelativeLayout) view.findViewById(R.id.layout_store_content_root);
         layoutStoreBelong = (LinearLayout) view.findViewById(R.id.layout_store_belong);
-        tvStoreAll = (TextView) view.findViewById(R.id.tv_store_all);
+        tvStoreAll = (TextView) view.findViewById(tv_store_all);
         tvStoreMine = (TextView) view.findViewById(R.id.tv_store_mine);
         layoutStoreContentAll = (LinearLayout) view.findViewById(layout_store_content_all);
         listStoreLeftAll = (ListView) view.findViewById(R.id.list_store_left_all);
@@ -139,7 +149,8 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
         llCourseName.setOnClickListener(this);
         llTimeFrame.setOnClickListener(this);
         view_mask_bg.setOnClickListener(this);
-
+        tvStoreAll.setOnClickListener(this);
+        tvStoreMine.setOnClickListener(this);
     }
 
 
@@ -147,26 +158,46 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_store:
-                if (storeContentAllIsShowing) {
+
+                if (storeContentRootIsShowing) {
                     hidePopup();
                 } else if (isPopupShowing()) {
                     hidePopup();
-                    layoutStoreContentAll.setVisibility(VISIBLE);
-                    storeContentAllIsShowing = true;
+                    view_mask_bg.setVisibility(VISIBLE);
+                    layoutStoreContentRoot.setVisibility(VISIBLE);
+                    storeContentRootIsShowing = true;
                 } else {
-                    layoutStoreContentAll.setVisibility(VISIBLE);
-                    storeContentAllIsShowing = true;
+                    view_mask_bg.setVisibility(VISIBLE);
+                    layoutStoreContentRoot.setVisibility(VISIBLE);
+                    storeContentRootIsShowing = true;
                 }
 
                 break;
+            case R.id.tv_store_all:
+                tvStoreAll.setTextColor(R.color.main_red);
+                tvStoreMine.setTextColor(R.color.c3);
+                layoutStoreContentAll.setVisibility(VISIBLE);
+                layoutStoreContentMine.setVisibility(GONE);
+                break;
+            case R.id.tv_store_mine:
+
+                tvStoreAll.setTextColor(R.color.c3);
+                tvStoreMine.setTextColor(R.color.main_red);
+                layoutStoreContentAll.setVisibility(GONE);
+                layoutStoreContentMine.setVisibility(VISIBLE);
+
+                break;
+
             case R.id.ll_course_name:
                 if (courseIsShowing) {
                     hidePopup();
                 } else if (isPopupShowing()) {
                     hidePopup();
+                    view_mask_bg.setVisibility(VISIBLE);
                     layoutCourseContent.setVisibility(VISIBLE);
                     courseIsShowing = true;
                 } else {
+                    view_mask_bg.setVisibility(VISIBLE);
                     layoutCourseContent.setVisibility(VISIBLE);
                     courseIsShowing = true;
                 }
@@ -195,23 +226,57 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
         this.mineCourseBrand = courseFilterConfig.getMine();
         this.courseType = courseFilterConfig.getCourse();
         Logger.i("Course", courseFilterConfig.toString());
-        resetCurrentCategorySate(0, 0);
 
-        adapterTypePrice = new CourseTypePriceFilterAdapter(context, courseType.getCourseTypePrice(), courseTypeItemClickListener);
-        adapterCategoty = new CourseCategoryFilterAdapter(context, currentCourseCategoryList, courseCategoryListener);
-        listCourseLeft.setAdapter(adapterTypePrice);
-        listCourseRight.setAdapter(adapterCategoty);
+        if (courseType != null) {
+            resetCurrentCategorySate(0, 0);
+            adapterTypePrice = new CourseTypePriceFilterAdapter(context, courseType.getCourseTypePriceName(), courseTypeItemClickListener);
+            adapterCategoty = new CourseCategoryFilterAdapter(context, currentCourseCategoryList, courseCategoryListener);
+            listCourseLeft.setAdapter(adapterTypePrice);
+            listCourseRight.setAdapter(adapterCategoty);
+        }
 
-        resetCurrentStoreState(0, 0, 0);
 
-        adapterAllBrand = new CourseBrandFilterAdapter(context, courseBrands, allBrandItemClickLister);
-        adapterAllArea = new CourseAreaFilterAdapter(context, currentAreaList, allAreaItemCLickLister);
-        adapterAllStore = new CourseStoreFilterAdapter(context, currentStoreList, allStoreItemClickListener);
+        if (mineCourseBrand != null) {
+            resetCurrentMineStoreState(0, 0);
+            adapterMineArea = new CourseAreaFilterAdapter(context, currentMineAreaList, mineAreaItemCLickLister);
+            adapterMineStore = new CourseStoreFilterAdapter(context, currentMineStoreList, mineStoreItemClickListener);
+            listStoreLeftMine.setAdapter(adapterMineArea);
+            listStoreRightMine.setAdapter(adapterMineStore);
+        } else {
+            layoutStoreBelong.setVisibility(GONE);
+        }
 
-        listStoreLeftAll.setAdapter(adapterAllBrand);
-        listStoreMiddleAll.setAdapter(adapterAllArea);
-        listStoreRightAll.setAdapter(adapterAllStore);
+        if (courseBrands != null) {
+            resetCurrentStoreState(0, 0, 0);
+            adapterAllBrand = new CourseBrandFilterAdapter(context, courseBrands, allBrandItemClickLister);
+            adapterAllArea = new CourseAreaFilterAdapter(context, currentAreaList, allAreaItemCLickLister);
+            adapterAllStore = new CourseStoreFilterAdapter(context, currentStoreList, allStoreItemClickListener);
+
+            listStoreLeftAll.setAdapter(adapterAllBrand);
+            listStoreMiddleAll.setAdapter(adapterAllArea);
+            listStoreRightAll.setAdapter(adapterAllStore);
+        }
+
+
     }
+
+    private void resetCurrentMineStoreState(int areaPostion, int storePostion) {
+
+        if (mineCourseBrand != null) {
+            currentMineAreaList = mineCourseBrand.getArea();
+        }
+
+        if (currentMineAreaList != null && areaPostion > -1 && areaPostion < currentMineAreaList.size()) {
+            currentMineArea = currentMineAreaList.get(areaPostion);
+            currentMineStoreList = currentMineArea.getStore();
+        }
+
+        if (currentMineStoreList != null && storePostion > -1 && storePostion < currentMineStoreList.size()) {
+            currentMineStore = currentMineStoreList.get(storePostion);
+        }
+
+    }
+
 
     private CourseTypePriceFilterAdapter.OnLeftItemClickListener courseTypeItemClickListener = new CourseTypePriceFilterAdapter.OnLeftItemClickListener() {
         @Override
@@ -230,6 +295,7 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
             if (listener != null) {
                 listener.onCourseCategoryItemClick(currentCoursePriceType, currentCourseCategory);
             }
+            tvCourseName.setText(currentCourseCategory);
             hidePopup();
         }
     };
@@ -253,10 +319,10 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
                     currentCourseCategoryList = courseType.getAll();
                     break;
                 case 1:
-                    currentCourseCategoryList = courseType.getFree();
+                    currentCourseCategoryList = courseType.getTuition();
                     break;
                 case 2:
-                    currentCourseCategoryList = courseType.getTuition();
+                    currentCourseCategoryList = courseType.getFree();
                     break;
             }
         }
@@ -299,6 +365,45 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
     }
 
 
+    private void refreshMineStoreAdapater(int areaPostion, int storePostion) {
+        if (areaPostion > -1) {
+            adapterMineArea.refreshData(currentMineAreaList, areaPostion);
+        }
+
+        if (storePostion > -1) {
+            adapterMineStore.refreshData(currentMineStoreList, storePostion);
+        }
+    }
+
+
+    private CourseAreaFilterAdapter.OnLeftItemClickListener mineAreaItemCLickLister = new CourseAreaFilterAdapter.OnLeftItemClickListener() {
+        @Override
+        public void onClick(int position) {
+            //刷新门店adapter
+            resetCurrentMineStoreState(position, 0);
+            refreshMineStoreAdapater(position, 0);
+
+//            resetCurrentStoreState(-1, position, 0);
+//            refreshAllStoreAdapater(-1, position, 0);
+        }
+
+    };
+
+    private CourseStoreFilterAdapter.OnLeftItemClickListener mineStoreItemClickListener = new CourseStoreFilterAdapter.OnLeftItemClickListener() {
+        @Override
+        public void onClick(int position) {
+
+            resetCurrentMineStoreState(-1, position);
+            refreshMineStoreAdapater(-1, position);
+            if (listener != null) {
+                listener.onAllStoreItemClick(mineCourseBrand, currentMineArea, currentMineStore);
+            }
+            tvStore.setText(currentMineStore.getName());
+            hidePopup();
+        }
+    };
+
+
     private CourseBrandFilterAdapter.OnLeftItemClickListener allBrandItemClickLister = new CourseBrandFilterAdapter.OnLeftItemClickListener() {
         @Override
         public void onClick(int position) {
@@ -329,22 +434,27 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
             if (listener != null) {
                 listener.onAllStoreItemClick(currentBrand, currentArea, currentStore);
             }
+            tvStore.setText(currentStore.getName());
             hidePopup();
         }
     };
 
     public boolean isPopupShowing() {
-        return storeContentAllIsShowing || storeContentMineIsShowing || courseIsShowing || timeIsShowing;
+        return storeContentRootIsShowing || courseIsShowing || timeIsShowing;
+//        storeContentAllIsShowing || storeContentMineIsShowing ||
     }
 
     public void hidePopup() {
-        layoutStoreBelong.setVisibility(GONE);
-        layoutStoreContentMine.setVisibility(GONE);
+        layoutStoreContentRoot.setVisibility(GONE);
+//        layoutStoreBelong.setVisibility(GONE);
+//        layoutStoreContentMine.setVisibility(GONE);
+//        layoutCourseContent.setVisibility(GONE);
         layoutCourseContent.setVisibility(GONE);
-        layoutStoreContentAll.setVisibility(GONE);
+        view_mask_bg.setVisibility(GONE);
 
-        storeContentAllIsShowing = false;
-        storeContentMineIsShowing = false;
+        storeContentRootIsShowing = false;
+//        storeContentAllIsShowing = false;
+//        storeContentMineIsShowing = false;
         courseIsShowing = false;
         timeIsShowing = false;
     }

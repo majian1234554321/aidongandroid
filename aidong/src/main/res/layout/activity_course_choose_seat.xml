@@ -12,6 +12,7 @@
         android:orientation="vertical">
 
         <com.leyuan.aidong.widget.CommonTitleLayout
+            android:id="@+id/layout_title"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             app:txtTitle="@string/a_cache" />
@@ -24,6 +25,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/txt_class_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="WerErShi"
@@ -31,6 +33,7 @@
                 android:textSize="15sp" />
 
             <TextView
+                android:id="@+id/txt_course_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
@@ -40,34 +43,55 @@
 
         </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="6dp"
-            android:text="@string/coach"
-            android:textColor="@color/white"
-            android:textSize="15sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
+        <android.support.v4.widget.NestedScrollView
             android:layout_weight="1"
-            android:orientation="horizontal">
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:scrollbars="none">
 
-            <android.support.v7.widget.RecyclerView
-                android:layout_width="15dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp" />
-
-            <android.support.v7.widget.RecyclerView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="6dp"
+                    android:text="@string/coach"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="40dp"
+                    android:orientation="horizontal">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerView_left"
+                        android:layout_width="15dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerView_right"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp" />
 
 
-        </LinearLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -80,7 +104,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/ic_launcher" />
+                android:src="@drawable/icon_course_choose_available" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -94,7 +118,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/ic_launcher" />
+                android:src="@drawable/icon_course_choose_yixuan" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -108,19 +132,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/ic_launcher" />
+                android:src="@drawable/icon_course_choose_yizhan" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="@string/choosable"
+                android:text="@string/yizhan"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
         </LinearLayout>
 
-        <TextView
+        <Button
+            android:id="@+id/txt_confirm_choose"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@color/main_red"

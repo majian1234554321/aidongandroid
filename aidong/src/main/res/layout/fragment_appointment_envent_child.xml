@@ -18,11 +18,11 @@
         android:id="@+id/rl_empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="gone">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="暂无预约信息"
+            android:text=""
             android:drawablePadding="20dp"
             android:textColor="@color/c9"
             android:textSize="15sp"
