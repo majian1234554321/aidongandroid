@@ -42,7 +42,7 @@
             android:layout_height="86dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="48dp"
-            android:src="@drawable/icon_pay_success" />
+            android:src="@drawable/icon_course_queue_success" />
 
         <TextView
             android:layout_width="wrap_content"

@@ -35,6 +35,7 @@ import com.leyuan.aidong.widget.CustomNestRadioGroup;
 import java.util.List;
 
 import static com.leyuan.aidong.R.id.layout_course_coupon;
+import static com.leyuan.aidong.R.id.txt_queue_location;
 import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_COUPON;
 
 /**
@@ -70,6 +71,7 @@ public class CourseQueueConfirmActivity extends BaseActivity implements View.OnC
     private List<CouponBean> usableCoupons;
     private String couponId;
     private String selectedUserCouponId;
+    private TextView txtQueueLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +89,7 @@ public class CourseQueueConfirmActivity extends BaseActivity implements View.OnC
         layoutTitle = (CommonTitleLayout) findViewById(R.id.layout_title);
         layoutCourseCoach = (RelativeLayout) findViewById(R.id.layout_course_coach);
 
+        txtQueueLocation = (TextView) findViewById(txt_queue_location);
         imgCourse = (ImageView) findViewById(R.id.img_course);
         txtCourseName = (TextView) findViewById(R.id.txt_course_name);
         txtCoachName = (TextView) findViewById(R.id.txt_coach_name);
@@ -125,7 +128,7 @@ public class CourseQueueConfirmActivity extends BaseActivity implements View.OnC
         confirmOrderCoursePresent = new ConfirmCourseQueuePresentImpl(this, this);
         confirmOrderCoursePresent.getCourseAvaliableCoupons(course.getId());
 
-
+        txtQueueLocation.setText("当前排队:第"+course.getMyQueue_number()+"位");
         txtCourseName.setText(course.getName());
         txtCoachName.setText(course.getCoach().getName());
         GlideLoader.getInstance().displayImage(course.getCoach().getAvatar(), imgCourse);
@@ -153,6 +156,7 @@ public class CourseQueueConfirmActivity extends BaseActivity implements View.OnC
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_queue_immediately:
+                DialogUtils.showDialog(this,"",false);
                 confirmOrderCoursePresent.submitCourseQueue(course.getId(), couponId);
                 break;
             case R.id.img_left:
@@ -193,6 +197,7 @@ public class CourseQueueConfirmActivity extends BaseActivity implements View.OnC
 
     @Override
     public void onGetsubmitCourseQueue(CourseQueueBean queue) {
+        DialogUtils.dismissDialog();
         if (queue != null) {
             ToastGlobal.showLongConsecutive("排队成功");
             startActivity(new Intent(this, CourseQueueSuccessActivity.class));

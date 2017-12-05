@@ -57,9 +57,47 @@ public class CourseListAdapterNew extends RecyclerView.Adapter<CourseListAdapter
         holder.txtCourseTime.setText(courseBean.getClass_time());
         holder.txtCourseDesc.setText(courseBean.getTagString());
 
-        holder.txtCourseDifficulty.setText("难度系数: " + courseBean.getStrength());
+//        holder.txtCourseDifficulty.setText("难度系数: " + courseBean.getStrength());
         holder.txtCourseOriginPrice.setText("￥ " + courseBean.getPrice());
         holder.txtCourseMemberPrice.setText("会员价: ￥" + courseBean.getMember_price());
+
+        for (int i = 0; i < 5; i++) {
+            if (i < courseBean.getStrength()) {
+                holder.starList.get(i).setVisibility(View.VISIBLE);
+            } else {
+                holder.starList.get(i).setVisibility(View.GONE);
+            }
+        }
+
+//        resetStart(holder);
+//
+//        switch (courseBean.getStrength()){
+//            case "5":
+//                resetStart(holder);
+//                break;
+//            case "4":
+//                holder.img_star_five.setVisibility(View.GONE);
+//
+//                break;
+//            case "3:":
+//
+//                holder.img_star_five.setVisibility(View.GONE);
+//                holder.img_star_four.setVisibility(View.GONE);
+//                break;
+//
+//            case "2":
+//                holder.img_star_five.setVisibility(View.GONE);
+//                holder.img_star_four.setVisibility(View.GONE);
+//                holder.img_star_three.setVisibility(View.GONE);
+//
+//                break;
+//            case "1":
+//                holder.img_star_five.setVisibility(View.GONE);
+//                holder.img_star_four.setVisibility(View.GONE);
+//                holder.img_star_three.setVisibility(View.GONE);
+//                holder.img_star_second.setVisibility(View.GONE);
+//                break;
+//        }
 
         switch (courseBean.getStatus()) {
 
@@ -68,15 +106,18 @@ public class CourseListAdapterNew extends RecyclerView.Adapter<CourseListAdapter
                 break;
 
             case CourseBeanNew.APPOINTED:
-                holder.imgCourseState.setVisibility(View.GONE);
+                holder.imgCourseState.setVisibility(View.VISIBLE);
+                holder.imgCourseState.setImageResource(R.drawable.icon_course_appointed);
                 break;
 
             case CourseBeanNew.APPOINTED_NO_PAY:
+
                 holder.imgCourseState.setVisibility(View.GONE);
                 break;
 
             case CourseBeanNew.QUEUED:
-                holder.imgCourseState.setVisibility(View.GONE);
+                holder.imgCourseState.setVisibility(View.VISIBLE);
+                holder.imgCourseState.setImageResource(R.drawable.icon_course_queueing_tag);
                 break;
 
             case CourseBeanNew.FEW:
@@ -104,12 +145,12 @@ public class CourseListAdapterNew extends RecyclerView.Adapter<CourseListAdapter
                 break;
         }
 
-        if(courseBean.getReservable() != 1 && courseBean.getStatus()!=CourseBeanNew.END){
+        if (courseBean.getReservable() != 1 && courseBean.getStatus() != CourseBeanNew.END) {
             //无需预约
             holder.imgCourseState.setVisibility(View.GONE);
         }
 
-        if(courseBean.isMember_only()){
+        if (courseBean.isMember_only()) {
             //只有会员可以
             holder.txtCourseOriginPrice.setText("");
             holder.txtCourseMemberPrice.setText("会员专享");
@@ -124,6 +165,14 @@ public class CourseListAdapterNew extends RecyclerView.Adapter<CourseListAdapter
 
     }
 
+//    private void resetStart(CourseViewHolder holder) {
+//        holder.img_star_first.setVisibility(View.VISIBLE);
+//        holder.img_star_second.setVisibility(View.VISIBLE);
+//        holder.img_star_three.setVisibility(View.VISIBLE);
+//        holder.img_star_four.setVisibility(View.VISIBLE);
+//        holder.img_star_five.setVisibility(View.VISIBLE);
+//    }
+
     class CourseViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView imgCoach;
@@ -132,7 +181,9 @@ public class CourseListAdapterNew extends RecyclerView.Adapter<CourseListAdapter
         private TextView txtCourseTime;
         private TextView txtCourseDesc;
         private TextView txtCourseDifficulty;
+        private ArrayList<ImageView> starList = new ArrayList<>();
         private ImageView imgCourseState;
+        // ,img_star_first,img_star_second,img_star_three,img_star_four,img_star_five;
         private TextView txtCourseOriginPrice;
         private TextView txtCourseMemberPrice;
         private LinearLayout rootView;
@@ -148,6 +199,18 @@ public class CourseListAdapterNew extends RecyclerView.Adapter<CourseListAdapter
             imgCourseState = (ImageView) view.findViewById(R.id.img_course_state);
             txtCourseOriginPrice = (TextView) view.findViewById(R.id.txt_course_origin_price);
             txtCourseMemberPrice = (TextView) view.findViewById(R.id.txt_course_member_price);
+
+            starList.add((ImageView) view.findViewById(R.id.img_star_first));
+            starList.add((ImageView) view.findViewById(R.id.img_star_second));
+            starList.add((ImageView) view.findViewById(R.id.img_star_three));
+            starList.add((ImageView) view.findViewById(R.id.img_star_four));
+            starList.add((ImageView) view.findViewById(R.id.img_star_five));
+//            img_star_first = (ImageView) view.findViewById(R.id.img_star_first);
+//            img_star_second = (ImageView) view.findViewById(R.id.img_star_second);
+//            img_star_three = (ImageView) view.findViewById(R.id.img_star_three);
+//            img_star_four = (ImageView) view.findViewById(R.id.img_star_four);
+//            img_star_five = (ImageView) view.findViewById(R.id.img_star_five);
+
             rootView = (LinearLayout) view.findViewById(R.id.rootView);
         }
     }

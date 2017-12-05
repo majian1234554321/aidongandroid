@@ -44,9 +44,9 @@
         </LinearLayout>
 
         <android.support.v4.widget.NestedScrollView
-            android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_weight="1"
             android:scrollbars="none">
 
             <LinearLayout
@@ -67,9 +67,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    android:layout_marginBottom="40dp"
                     android:layout_marginTop="20dp"
                     android:layout_weight="1"
-                    android:layout_marginBottom="40dp"
                     android:orientation="horizontal">
 
                     <android.support.v7.widget.RecyclerView
@@ -92,57 +92,96 @@
 
         </android.support.v4.widget.NestedScrollView>
 
+        <RelativeLayout
 
-        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:background="@color/white">
 
-            <ImageView
+            <LinearLayout
+                android:id="@+id/layout_course_choosed"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/icon_course_choose_available" />
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:orientation="horizontal"
+                android:background="@drawable/shape_stroke_corner_gray_three_radius"
+                android:padding="5dp"
+                android:visibility="gone"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/txt_seat_choosed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1232132132"
+                    />
+                <ImageButton
+                    android:id="@+id/bt_clear_choosed"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:background="@color/transparent"
+                    android:src="@drawable/icon_close"
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="@string/choosable"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
+                    />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/icon_course_choose_yixuan" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="@string/choosed"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
+            </LinearLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/icon_course_choose_yizhan" />
+            <LinearLayout
+                android:visibility="visible"
+                android:id="@+id/layout_show_choose_type"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="@string/yizhan"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/icon_course_choose_available" />
 
-        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/choosable"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/icon_course_choose_yixuan" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/choosed"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/icon_course_choose_yizhan" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/yizhan"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
 
         <Button
             android:id="@+id/txt_confirm_choose"

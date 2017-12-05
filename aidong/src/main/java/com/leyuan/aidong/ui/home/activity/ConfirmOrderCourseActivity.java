@@ -224,11 +224,12 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
         @Override
         public void onSuccess(String code, Object object) {
             DialogUtils.dismissDialog();
+            LocalBroadcastManager.getInstance(ConfirmOrderCourseActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS));
 
             AppointSuccessActivity.start(ConfirmOrderCourseActivity.this, course.getClass_time(), true, null);
             Toast.makeText(ConfirmOrderCourseActivity.this, "支付成功", Toast.LENGTH_LONG).show();
             finish();
-            LocalBroadcastManager.getInstance(ConfirmOrderCourseActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS));
+
         }
 
         @Override
@@ -236,19 +237,23 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
             super.onFail(code, object);
             DialogUtils.dismissDialog();
 
-            Toast.makeText(ConfirmOrderCourseActivity.this, "支付失败", Toast.LENGTH_LONG).show();
-            startActivity(new Intent(ConfirmOrderCourseActivity.this, AppointmentMineActivityNew.class));
-            finish();
             LocalBroadcastManager.getInstance(ConfirmOrderCourseActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_PAY_SFAIL));
+
+            Toast.makeText(ConfirmOrderCourseActivity.this, "支付失败", Toast.LENGTH_LONG).show();
+
+            AppointmentMineActivityNew.start(ConfirmOrderCourseActivity.this,0);
+            finish();
+
         }
 
         @Override
         public void onFree() {
             DialogUtils.dismissDialog();
+            LocalBroadcastManager.getInstance(ConfirmOrderCourseActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS));
             AppointSuccessActivity.start(ConfirmOrderCourseActivity.this, course.getClass_time(), true, null);
             Toast.makeText(ConfirmOrderCourseActivity.this, "预约成功", Toast.LENGTH_LONG).show();
             finish();
-            LocalBroadcastManager.getInstance(ConfirmOrderCourseActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS));
+
         }
     };
 

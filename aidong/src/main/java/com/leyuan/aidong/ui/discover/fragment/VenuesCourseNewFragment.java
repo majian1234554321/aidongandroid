@@ -27,8 +27,8 @@ import java.util.List;
  * 场馆详情-课程
  * Created by song on 2016/8/27.
  */
-public class VenuesCourseFragment extends BaseFragment implements CourseDateAdapter.ItemClickListener, CourseListView {
-    private static final java.lang.String TAG = "VenuesCourseFragment";
+public class VenuesCourseNewFragment extends BaseFragment implements CourseDateAdapter.ItemClickListener, CourseListView {
+    private static final String TAG = "VenuesCourseFragment";
     private SwitcherLayout switcherLayout;
 //    private VenuesCourseAdapter courseAdapter;
 //    private String id;
@@ -44,7 +44,7 @@ public class VenuesCourseFragment extends BaseFragment implements CourseDateAdap
     private String date, store, course, time;
 
     private CourseListPresentImpl coursePresent;
-
+    private String name;
 
 
     @Override
@@ -61,10 +61,10 @@ public class VenuesCourseFragment extends BaseFragment implements CourseDateAdap
         coursePresent = new CourseListPresentImpl(getContext(), this);
 
 //        venuesPresent = new VenuesPresentImpl(getContext(), this);
-//        Bundle bundle = getArguments();
-//        if (bundle != null) {
-//            id = bundle.getString("id");
-//        }
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            name = bundle.getString("id");
+        }
         initView(view);
 
         coursePresent.pullRefreshCourseList(store, null, null, days.get(0));

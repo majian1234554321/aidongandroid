@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.home.view;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -220,19 +221,35 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
         }
     }
 
-    public void setData(CourseFilterBean courseFilterConfig) {
+    public void setData(CourseFilterBean courseFilterConfig, String category) {
         if (courseFilterConfig == null) return;
         this.courseBrands = courseFilterConfig.getCompany();
         this.mineCourseBrand = courseFilterConfig.getMine();
         this.courseType = courseFilterConfig.getCourse();
         Logger.i("Course", courseFilterConfig.toString());
 
+
         if (courseType != null) {
-            resetCurrentCategorySate(0, 0);
+            int startPosition = courseType.getCategoryByCategoryName(category);
+
+            resetCurrentCategorySate(0, startPosition);
             adapterTypePrice = new CourseTypePriceFilterAdapter(context, courseType.getCourseTypePriceName(), courseTypeItemClickListener);
             adapterCategoty = new CourseCategoryFilterAdapter(context, currentCourseCategoryList, courseCategoryListener);
             listCourseLeft.setAdapter(adapterTypePrice);
             listCourseRight.setAdapter(adapterCategoty);
+
+            refreshtCategoryAdapater(-1, startPosition);
+            tvCourseName.setText(currentCourseCategory);
+            if (listener != null) {
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        listener.onCourseCategoryItemClick(currentCoursePriceType, currentCourseCategory);
+                    }
+                },500);
+            }
+
         }
 
 
@@ -398,7 +415,12 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
             if (listener != null) {
                 listener.onAllStoreItemClick(mineCourseBrand, currentMineArea, currentMineStore);
             }
-            tvStore.setText(currentMineStore.getName());
+            if(position == 0){
+                tvStore.setText(currentMineArea.getName()+currentMineStore.getName());
+            }else{
+                tvStore.setText(currentMineStore.getName());
+            }
+
             hidePopup();
         }
     };
@@ -425,17 +447,26 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
 
     };
 
-
     private CourseStoreFilterAdapter.OnLeftItemClickListener allStoreItemClickListener = new CourseStoreFilterAdapter.OnLeftItemClickListener() {
         @Override
         public void onClick(int position) {
+
             resetCurrentStoreState(-1, -1, position);
-            refreshAllStoreAdapater(1, -1, position);
+
+            refreshAllStoreAdapater(-1, -1, position);
+
             if (listener != null) {
                 listener.onAllStoreItemClick(currentBrand, currentArea, currentStore);
             }
-            tvStore.setText(currentStore.getName());
+            if(position == 0){
+                tvStore.setText(currentArea.getName()+currentStore.getName());
+            }else {
+                tvStore.setText(currentStore.getName());
+            }
+
+
             hidePopup();
+
         }
     };
 

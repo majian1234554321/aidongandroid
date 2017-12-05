@@ -151,14 +151,16 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/txt_black"
                     android:textSize="15sp"
+                    android:text="11"
+                    android:layout_marginRight="25dp"
 
                     />
 
                 <TextView
+                    android:text="22"
                     android:id="@+id/txt_member_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
                     android:textColor="@color/red_price"
                     android:textSize="15sp"
 

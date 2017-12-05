@@ -1,10 +1,13 @@
 package com.leyuan.aidong.ui.home.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -25,7 +28,9 @@ import com.leyuan.aidong.ui.home.fragment.CourseListFragmentNew;
 import com.leyuan.aidong.ui.home.view.CourseListFilterNew;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CourseConfigPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CourseFilterCallback;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DateUtils;
+import com.leyuan.aidong.utils.Logger;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
@@ -40,6 +45,7 @@ import java.util.List;
  * Created by song on 2016/10/31.
  */
 public class CourseListActivityNew extends BaseActivity implements SmartTabLayout.TabProvider, View.OnClickListener, CourseFilterCallback {
+    private static final java.lang.String TAG = "CourseListActivityNew";
     //todo 使用SmartTabLayout使Activity和Fragment传值失效,设置回调无效??
     private ImageView ivBack;
     private SmartTabLayout tabLayout;
@@ -51,16 +57,45 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
     private ViewPager viewPager;
 
 
-
 //    private DrawerLayout drawerLayout;
 //    private LinearLayout filterLayout;
 //    private TextView tvFinishFilter;
 
 //    private CourseListSideFilterView courseListSideFilterView;
 
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action == null) return;
+
+            switch (action) {
+                case Constant.BROADCAST_ACTION_LOGIN_SUCCESS:
+                    refreshFragmentData();
+                    break;
+                case Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS:
+                    refreshFragmentData();
+                    break;
+                case Constant.BROADCAST_ACTION_COURSE_PAY_SFAIL:
+                    refreshFragmentData();
+                    break;
+                case Constant.BROADCAST_ACTION_COURSE_QUEUE_SUCCESS:
+                    refreshFragmentData();
+                    break;
+                case Constant.BROADCAST_ACTION_COURSE_QUEUE_CANCELED:
+                    refreshFragmentData();
+                    break;
+                case Constant.BROADCAST_ACTION_COURSE_QUEUE_DELETED:
+                    break;
+            }
+        }
+    };
+
+
     public static void start(Context context, String category) {
         Intent starter = new Intent(context, CourseListActivityNew.class);
         starter.putExtra("category", category);
+        Logger.i(TAG, "start CourseListActivityNew by " + category);
         context.startActivity(starter);
     }
 
@@ -68,6 +103,7 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
 
         setContentView(R.layout.activity_course_list_new);
         if (getIntent() != null) {
@@ -151,6 +187,18 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
         ivBack.setOnClickListener(backListener);
 //        tvFinishFilter.setOnClickListener(this);
 //        filterView.setOnFilterClickListener(new MyOnFilterClickListener());
+
+
+        IntentFilter filter = new IntentFilter();
+
+        filter.addAction(Constant.BROADCAST_ACTION_LOGIN_SUCCESS);
+        filter.addAction(Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS);
+        filter.addAction(Constant.BROADCAST_ACTION_COURSE_PAY_SFAIL);
+        filter.addAction(Constant.BROADCAST_ACTION_COURSE_QUEUE_SUCCESS);
+        filter.addAction(Constant.BROADCAST_ACTION_COURSE_QUEUE_CANCELED);
+        filter.addAction(Constant.BROADCAST_ACTION_COURSE_QUEUE_DELETED);
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
     }
 
     private View.OnClickListener backListener = new View.OnClickListener() {
@@ -159,21 +207,6 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
             finish();
         }
     };
-
-
-//    @Override
-//    public void setScrollPosition(String date) {
-//        int index = 0;
-//        for (int i = 0; i < days.size(); i++) {
-//            if (days.get(i).equals(date)) {
-//                index = i;
-//                break;
-//            }
-//        }
-//        if (index != 0) {
-//            viewPager.setCurrentItem(index);
-//        }
-//    }
 
     @Override
     public View createTabView(ViewGroup container, int position, PagerAdapter adapter) {
@@ -197,34 +230,8 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
 
     @Override
     public void onGetCourseFilterConfig(CourseFilterBean courseFilterConfig) {
-        filterView.setData(courseFilterConfig);
+        filterView.setData(courseFilterConfig, category);
     }
-
-//    private class MyOnFilterClickListener implements CourseListFilterView.OnFilterClickListener {
-//
-//        @Override
-//        public void onCategoryItemClick(String category) {
-//            for (int i = 0; i < days.size(); i++) {
-//                Fragment page = adapter.getPage(i);
-//                ((CourseListFragmentNew) page).resetCategory(category);
-//                ((CourseListFragmentNew) page).fetchData();
-//            }
-//        }
-//
-//        @Override
-//        public void onBusinessCircleItemClick(String address) {
-//            for (int i = 0; i < days.size(); i++) {
-//                Fragment page = adapter.getPage(i);
-//                ((CourseListFragmentNew) page).resetCircle(address);
-//                ((CourseListFragmentNew) page).fetchData();
-//            }
-//        }
-//
-//        @Override
-//        public void onFilterItemClick() {
-////            drawerLayout.openDrawer(filterLayout);
-//        }
-//    }
 
     public void animatedShow() {
         filterView.animate().translationY(0).setInterpolator
@@ -242,7 +249,7 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
 
             for (int i = 0; i < days.size(); i++) {
                 Fragment page = adapter.getPage(i);
-                ((CourseListFragmentNew) page).resetCurrentStore(currentBrand,currentArea,currentStore);
+                ((CourseListFragmentNew) page).resetCurrentStore(currentBrand, currentArea, currentStore);
                 ((CourseListFragmentNew) page).fetchData();
             }
 
@@ -252,13 +259,29 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
         public void onCourseCategoryItemClick(String currentCoursePriceType, String currentCourseCategory) {
             for (int i = 0; i < days.size(); i++) {
                 Fragment page = adapter.getPage(i);
-                ((CourseListFragmentNew) page).resetCourseCategory(currentCoursePriceType,currentCourseCategory);
+                if (page == null) return;
+                ((CourseListFragmentNew) page).resetCourseCategory(currentCoursePriceType, currentCourseCategory);
                 ((CourseListFragmentNew) page).fetchData();
             }
         }
     };
 
-//    private class SimpleDrawerDrawerListener extends DrawerLayout.SimpleDrawerListener {
+
+    public void refreshFragmentData() {
+        for (int i = 0; i < days.size(); i++) {
+            Fragment page = adapter.getPage(i);
+            if (page != null)
+                ((CourseListFragmentNew) page).fetchData();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+    }
+
+    //    private class SimpleDrawerDrawerListener extends DrawerLayout.SimpleDrawerListener {
 //        @Override
 //        public void onDrawerOpened(View drawerView) {
 //            super.onDrawerOpened(drawerView);

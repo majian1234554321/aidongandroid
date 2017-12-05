@@ -35,11 +35,13 @@ import com.leyuan.aidong.ui.mvp.view.AppointmentCourseDetailView;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.DensityUtil;
+import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.ImageRectUtils;
 import com.leyuan.aidong.utils.QRCodeUtil;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.utils.TelephoneManager;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.CustomNestRadioGroup;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.leyuan.aidong.widget.richtext.RichWebView;
@@ -309,6 +311,7 @@ public class AppointDetailCourseAndEventActivity extends BaseActivity implements
 
                 break;
             case R.id.tv_cancel_appoint:
+                DialogUtils.showDialog(this,"",false);
                 appointmentCourseDetailPresenter.cancelCourseAppoint(appointBean.getId());
 
                 break;
@@ -316,6 +319,7 @@ public class AppointDetailCourseAndEventActivity extends BaseActivity implements
 
                 break;
             case R.id.tv_delete:
+                DialogUtils.showDialog(this,"",false);
                 appointmentCourseDetailPresenter.deleteCourseAppoint(appointBean.getId());
 
                 break;
@@ -329,8 +333,11 @@ public class AppointDetailCourseAndEventActivity extends BaseActivity implements
     }
 
     private PayInterface.PayListener payListener = new SimplePayListener(this) {
+
         @Override
         public void onSuccess(String code, Object object) {
+
+            LocalBroadcastManager.getInstance(AppointDetailCourseAndEventActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS));
 
             AppointSuccessActivity.start(AppointDetailCourseAndEventActivity.this, appointBean.getTimetable().getClass_time(), true, null);
             Toast.makeText(AppointDetailCourseAndEventActivity.this, "支付成功", Toast.LENGTH_LONG).show();
@@ -340,13 +347,18 @@ public class AppointDetailCourseAndEventActivity extends BaseActivity implements
         @Override
         public void onFail(String code, Object object) {
             super.onFail(code, object);
+
+            LocalBroadcastManager.getInstance(AppointDetailCourseAndEventActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS));
+
             Toast.makeText(AppointDetailCourseAndEventActivity.this, "支付失败", Toast.LENGTH_LONG).show();
-            startActivity(new Intent(AppointDetailCourseAndEventActivity.this, AppointmentMineActivityNew.class));
+//            startActivity(new Intent(AppointDetailCourseAndEventActivity.this, AppointmentMineActivityNew.class));
             finish();
         }
 
         @Override
         public void onFree() {
+            LocalBroadcastManager.getInstance(AppointDetailCourseAndEventActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS));
+
             AppointSuccessActivity.start(AppointDetailCourseAndEventActivity.this, appointBean.getTimetable().getClass_time(), true, null);
             Toast.makeText(AppointDetailCourseAndEventActivity.this, "预约成功", Toast.LENGTH_LONG).show();
             finish();
@@ -356,18 +368,24 @@ public class AppointDetailCourseAndEventActivity extends BaseActivity implements
 
     @Override
     public void oncancelCourseAppointResult(BaseBean baseBean) {
+        DialogUtils.dismissDialog();
         if (baseBean != null && baseBean.getStatus() == 1) {
             appointmentCourseDetailPresenter.getCourseAppointDetail(appointBean.getId());
             LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_APPOINT_CANCEL));
+        }else {
+            ToastGlobal.showShortConsecutive(baseBean.getMessage());
         }
 
     }
 
     @Override
     public void onDeleteCourseAppoint(boolean courseAppointResult) {
+        DialogUtils.dismissDialog();
         if (courseAppointResult) {
             LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_APPOINT_DELETE));
             finish();
+        }else {
+            ToastGlobal.showShortConsecutive("删除失败");
         }
     }
 
@@ -383,5 +401,11 @@ public class AppointDetailCourseAndEventActivity extends BaseActivity implements
             default:
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        DialogUtils.releaseDialog();
     }
 }

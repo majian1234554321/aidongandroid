@@ -31,6 +31,16 @@ public class AppointmentFragmentCourseNew extends BaseFragment implements View.O
 
     private ArrayList<Fragment> mFragments = new ArrayList<>();
 
+    private int tranPosition;
+
+    public static AppointmentFragmentCourseNew newInstance(int tranPosition ) {
+        AppointmentFragmentCourseNew fragment = new AppointmentFragmentCourseNew();
+        Bundle bundle = new Bundle();
+        bundle.putInt("tranPosition", tranPosition);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,13 +51,19 @@ public class AppointmentFragmentCourseNew extends BaseFragment implements View.O
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Logger.i(TAG, "onCreateView");
-        return inflater.inflate(R.layout.fragment_appointment_event, null);
+        return inflater.inflate(R.layout.fragment_appointment_course, null);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Logger.i(TAG, "onViewCreated");
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            tranPosition = bundle.getInt("tranPosition",0);
+            Logger.i(TAG,"tranPosition = "+tranPosition);
+            if(tranPosition <0 || tranPosition > 2) tranPosition = 0;
+        }
 
         btAll = (TextView) view.findViewById(R.id.bt_all);
         btJoinNo = (TextView) view.findViewById(R.id.bt_join_no);
@@ -80,6 +96,7 @@ public class AppointmentFragmentCourseNew extends BaseFragment implements View.O
         });
 
         viewPager.addOnPageChangeListener(new MyPageChangeListener());
+        viewPager.setCurrentItem(tranPosition);
     }
 
     @Override

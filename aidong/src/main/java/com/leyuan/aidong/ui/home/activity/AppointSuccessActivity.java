@@ -115,8 +115,7 @@ public class AppointSuccessActivity extends BaseActivity implements View.OnClick
                 finish();
                 break;
             case R.id.tv_appointment:
-                String appointType = null;
-                AppointmentMineActivityNew.start(this,appointType);
+                AppointmentMineActivityNew.start(this,0);
                 finish();
 
 //                startActivity(new Intent(this, AppointmentActivity.class));

@@ -22,16 +22,20 @@ import java.util.ArrayList;
  * Created by song on 2016/8/31.
  */
 public class AppointmentMineActivityNew extends BaseActivity implements View.OnClickListener {
+    private static final java.lang.String TAG = "AppointmentMineActivityNew";
     private ViewPager viewPager;
     private int currentItem;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private TextView bt_course_appoint, bt_event_appoint;
+    private int tranPosition;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        tranPosition = getIntent().getIntExtra("tranPosition", 0);
+        Logger.i(TAG,"tranPosition = "+tranPosition);
         setContentView(R.layout.activity_appointment_mine);
         bt_course_appoint = (TextView) findViewById(R.id.bt_course_appoint);
         bt_event_appoint = (TextView) findViewById(R.id.bt_event_appoint);
@@ -41,8 +45,10 @@ public class AppointmentMineActivityNew extends BaseActivity implements View.OnC
         findViewById(R.id.bt_event_appoint).setOnClickListener(this);
         viewPager = (ViewPager) findViewById(R.id.vp_content);
 
-        AppointmentFragmentCourseNew course = new AppointmentFragmentCourseNew();
-        AppointmentFragmentEventNew event = new AppointmentFragmentEventNew();
+
+        AppointmentFragmentCourseNew course = AppointmentFragmentCourseNew.newInstance(tranPosition);
+
+        AppointmentFragmentEventNew event =  AppointmentFragmentEventNew.newInstance(tranPosition-3);
         mFragments.add(course);
         mFragments.add(event);
 
@@ -60,7 +66,7 @@ public class AppointmentMineActivityNew extends BaseActivity implements View.OnC
 
         viewPager.addOnPageChangeListener(new MyPageChangeListener());
 
-//        viewPager.setCurrentItem(currentItem);
+        viewPager.setCurrentItem(tranPosition / 3);
 
     }
 
@@ -106,9 +112,9 @@ public class AppointmentMineActivityNew extends BaseActivity implements View.OnC
         }
     }
 
-    public static void start(Context context, String appointType) {
+    public static void start(Context context, int tranPosition) {
         Intent intent = new Intent(context, AppointmentMineActivityNew.class);
-        intent.putExtra("appointType", appointType);
+        intent.putExtra("tranPosition", tranPosition);
         context.startActivity(intent);
     }
 

@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
@@ -26,6 +27,9 @@ public class CourseChooseSeat extends BaseActivity implements View.OnClickListen
     private TextView txtCourseTime;
     private RecyclerView recyclerViewLeft;
     private RecyclerView recyclerViewRight;
+    private LinearLayout layoutCourseChoosed;
+    private TextView txtSeatChoosed;
+    private LinearLayout layoutShowChooseType;
 
     CourseBeanNew course;
     private CourseChooseSeatIndexAdapter adapterIndex ;
@@ -56,9 +60,17 @@ public class CourseChooseSeat extends BaseActivity implements View.OnClickListen
         recyclerViewLeft = (RecyclerView) findViewById(R.id.recyclerView_left);
         recyclerViewRight = (RecyclerView) findViewById(R.id.recyclerView_right);
         findViewById(R.id.txt_confirm_choose).setOnClickListener(this);
+
+        layoutCourseChoosed = (LinearLayout) findViewById(R.id.layout_course_choosed);
+        txtSeatChoosed = (TextView) findViewById(R.id.txt_seat_choosed);
+        findViewById(R.id.bt_clear_choosed).setOnClickListener(this);
+        layoutShowChooseType = (LinearLayout) findViewById(R.id.layout_show_choose_type);
     }
 
     private void initData() {
+        layoutShowChooseType.setVisibility(View.VISIBLE);
+        layoutCourseChoosed.setVisibility(View.GONE);
+
         layoutTitle.setTxtTitle(course.getName());
         txtClassName.setText(course.getClass_room());
         txtCourseTime.setText(course.getClass_time());
@@ -94,6 +106,15 @@ public class CourseChooseSeat extends BaseActivity implements View.OnClickListen
                 }
                 ConfirmOrderCourseActivity.start(this, course);
                 break;
+            case R.id.bt_clear_choosed:
+                adapterSeat.resetChoosedState();
+                layoutShowChooseType.setVisibility(View.VISIBLE);
+                layoutCourseChoosed.setVisibility(View.GONE);
+
+                course.setSeatChoosed(null);
+                this.positionSeat = null;
+
+                break;
         }
     }
 
@@ -101,5 +122,8 @@ public class CourseChooseSeat extends BaseActivity implements View.OnClickListen
     public void onSeatChoosed(String positionSeat) {
         course.setSeatChoosed(positionSeat);
         this.positionSeat = positionSeat;
+        txtSeatChoosed.setText("已选"+positionSeat);
+        layoutShowChooseType.setVisibility(View.GONE);
+        layoutCourseChoosed.setVisibility(View.VISIBLE);
     }
 }

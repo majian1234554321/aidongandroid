@@ -24,7 +24,7 @@ public class CourseBeanNew implements Parcelable {
     String name;// 课程名
     String class_time;//  上课时间 - 下课时间
     ArrayList<String> tags;//  ["标签"]
-    String strength;// 强度
+    int strength;// 强度
     CoachBean coach;
 
     boolean reservable = true;// 　是否可以预约#0-否　１-是
@@ -47,7 +47,7 @@ public class CourseBeanNew implements Parcelable {
 
     int status; //0-正常 1-已预约 2-已预约，未付款 3-已排队 4-紧张 5-可排队 6-已满员 7-已结束
     String seatChoosed;
-
+    int queue_number;//排队位置
 
     private StringBuffer tagString = new StringBuffer();
 
@@ -73,7 +73,7 @@ public class CourseBeanNew implements Parcelable {
         name = in.readString();
         class_time = in.readString();
         tags = in.createStringArrayList();
-        strength = in.readString();
+        strength = in.readInt();
         coach = in.readParcelable(CoachBean.class.getClassLoader());
         reservable = in.readByte() != 0;
         member_only =  in.readByte() != 0;
@@ -93,6 +93,7 @@ public class CourseBeanNew implements Parcelable {
         class_store = in.readString();
         status = in.readInt();
         seatChoosed = in.readString();
+        queue_number = in.readInt();
     }
 
     public static final Creator<CourseBeanNew> CREATOR = new Creator<CourseBeanNew>() {
@@ -192,11 +193,11 @@ public class CourseBeanNew implements Parcelable {
         this.tags = tag;
     }
 
-    public String getStrength() {
+    public int getStrength() {
         return strength;
     }
 
-    public void setStrength(String strength) {
+    public void setStrength(int strength) {
         this.strength = strength;
     }
 
@@ -301,6 +302,14 @@ public class CourseBeanNew implements Parcelable {
         this.class_store = class_store;
     }
 
+    public int getQueue_number() {
+        return queue_number;
+    }
+
+    public void setQueue_number(int queue_number) {
+        this.queue_number = queue_number;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -312,7 +321,7 @@ public class CourseBeanNew implements Parcelable {
         dest.writeString(name);
         dest.writeString(class_time);
         dest.writeStringList(tags);
-        dest.writeString(strength);
+        dest.writeInt(strength);
         dest.writeParcelable(coach, flags);
         dest.writeByte((byte) (reservable ? 1 : 0));
         dest.writeByte((byte) (member_only ? 1 : 0));
@@ -331,5 +340,10 @@ public class CourseBeanNew implements Parcelable {
         dest.writeString(class_store);
         dest.writeInt(status);
         dest.writeString(seatChoosed);
+        dest.writeInt(queue_number);
+    }
+
+    public int getMyQueue_number() {
+        return queue_number+1;
     }
 }

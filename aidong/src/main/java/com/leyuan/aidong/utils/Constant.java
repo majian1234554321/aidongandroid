@@ -100,6 +100,8 @@ public class Constant {
     public static final String BROADCAST_ACTION_COURSE_QUEUE_SUCCESS = "broadcast_action_course_queue_success";
     public static final String BROADCAST_ACTION_COURSE_APPOINT_CANCEL = "broadcast_action_course_appoint_cancel";
     public static final String BROADCAST_ACTION_COURSE_APPOINT_DELETE = "broadcast_action_course_appoint_delete";
+    public static final String BROADCAST_ACTION_COURSE_QUEUE_CANCELED = "broadcast_action_course_queue_canceled";
+    public static final String BROADCAST_ACTION_COURSE_QUEUE_DELETED = "broadcast_action_course_queue_deleted";
 
     public static List<VenuesBean> gyms;
     public static SystemBean systemInfoBean;

@@ -18,7 +18,7 @@ import com.leyuan.aidong.entity.VenuesDetailBean;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.discover.fragment.VenuesCoachFragment;
-import com.leyuan.aidong.ui.discover.fragment.VenuesCourseFragment;
+import com.leyuan.aidong.ui.discover.fragment.VenuesCourseNewFragment;
 import com.leyuan.aidong.ui.discover.fragment.VenuesDetailFragment;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.utils.Logger;
@@ -68,7 +68,7 @@ public class VenuesDetailActivity extends BaseActivity implements SmartTabLayout
 
         FragmentPagerItems pages = new FragmentPagerItems(this);
         VenuesDetailFragment detail = new VenuesDetailFragment();
-        VenuesCourseFragment course = new VenuesCourseFragment();
+        VenuesCourseNewFragment course = new VenuesCourseNewFragment();
         VenuesCoachFragment coach = new VenuesCoachFragment();
         pages.add(FragmentPagerItem.of(null, detail.getClass(), new Bundler().putString("id", id).get()));
         pages.add(FragmentPagerItem.of(null, course.getClass(), new Bundler().putString("id", id).get()));

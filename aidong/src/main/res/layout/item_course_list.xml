@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="115dp"
-    android:id="@+id/rootView"
     android:background="@color/white"
     android:orientation="horizontal">
 
@@ -43,8 +43,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
-            android:text="DISQ Yoga"
             android:singleLine="true"
+            android:text="DISQ Yoga"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
@@ -56,6 +56,7 @@
             android:text="14:30-15:30"
             android:textColor="@color/course_oringe"
             android:textSize="14sp" />
+
         <TextView
             android:id="@+id/txt_course_desc"
             android:layout_width="wrap_content"
@@ -65,54 +66,99 @@
             android:textColor="@color/text_color_common"
             android:textSize="13sp" />
 
-        <TextView
-            android:id="@+id/txt_course_difficulty"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="9dp"
-            android:text="难度系数: "
-            android:textColor="@color/text_color_common"
-            android:textSize="13sp" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txt_course_difficulty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="难度系数: "
+                android:textColor="@color/text_color_common"
+                android:textSize="13sp" />
+
+            <ImageView
+                android:id="@+id/img_star_first"
+                android:layout_marginLeft="1dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_star_bar"
+                />
+            <ImageView
+                android:id="@+id/img_star_second"
+                android:layout_marginLeft="1dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_star_bar"
+                />
+            <ImageView
+                android:id="@+id/img_star_three"
+                android:layout_marginLeft="1dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_star_bar"
+                />
+            <ImageView
+                android:id="@+id/img_star_four"
+                android:layout_marginLeft="1dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_star_bar"
+                />
+            <ImageView
+                android:id="@+id/img_star_five"
+                android:layout_marginLeft="1dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_star_bar"
+                />
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="80dp"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
+
         <ImageView
             android:id="@+id/img_course_state"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@color/red_origin"
             android:layout_alignParentRight="true"
-            />
+            android:src="@color/red_origin" />
+
         <LinearLayout
-            android:layout_centerVertical="true"
-            android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/txt_course_origin_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/course_black"
-                android:textSize="14sp"
                 android:text="￥ 69"
-                />
+                android:textColor="@color/course_black"
+                android:textSize="14sp" />
+
             <TextView
                 android:id="@+id/txt_course_member_price"
-                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/course_oringe"
-                android:textSize="12sp"
+                android:layout_marginTop="10dp"
                 android:text="会员价: ￥9"
-                />
+                android:textColor="@color/course_oringe"
+                android:textSize="12sp" />
 
 
         </LinearLayout>
-        
+
     </RelativeLayout>
 
 </LinearLayout>

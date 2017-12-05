@@ -30,6 +30,17 @@ public class AppointmentFragmentEventNew extends BaseFragment implements View.On
 
     private ArrayList<Fragment> mFragments = new ArrayList<>();
 
+
+    private int tranPosition;
+
+    public static AppointmentFragmentEventNew newInstance(int tranPosition ) {
+        AppointmentFragmentEventNew fragment = new AppointmentFragmentEventNew();
+        Bundle bundle = new Bundle();
+        bundle.putInt("tranPosition", tranPosition);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +58,13 @@ public class AppointmentFragmentEventNew extends BaseFragment implements View.On
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Logger.i(TAG, "onViewCreated");
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            tranPosition = bundle.getInt("tranPosition",0);
+            Logger.i(TAG,"tranPosition = "+tranPosition);
+
+            if(tranPosition <0 || tranPosition > 2) tranPosition = 0;
+        }
 
         btAll = (TextView) view.findViewById(R.id.bt_all);
         btJoinNo = (TextView) view.findViewById(R.id.bt_join_no);
@@ -79,6 +97,7 @@ public class AppointmentFragmentEventNew extends BaseFragment implements View.On
         });
 
         viewPager.addOnPageChangeListener(new MyPageChangeListener());
+        viewPager.setCurrentItem(tranPosition);
     }
 
     @Override

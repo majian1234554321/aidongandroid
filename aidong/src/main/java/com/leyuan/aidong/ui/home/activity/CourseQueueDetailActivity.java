@@ -3,6 +3,7 @@ package com.leyuan.aidong.ui.home.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -14,12 +15,16 @@ import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.course.CourseBeanNew;
 import com.leyuan.aidong.entity.course.CourseQueueBean;
+import com.leyuan.aidong.entity.course.CourseStore;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.AppointmentCoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CourseQueueView;
+import com.leyuan.aidong.utils.Constant;
+import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.TelephoneManager;
 import com.leyuan.aidong.widget.CommonTitleLayout;
 import com.leyuan.aidong.widget.CustomNestRadioGroup;
 
@@ -119,19 +124,28 @@ public class CourseQueueDetailActivity extends BaseActivity implements View.OnCl
     private void initData() {
         layoutCourseCoupon.setVisibility(View.GONE);
         button = (Button) findViewById(R.id.bt_queue_immediately);
+
+        layoutTitle.setLeftIconListener(this);
         findViewById(R.id.bt_queue_immediately).setOnClickListener(this);
+        findViewById(R.id.layout_course_coach).setOnClickListener(this);
+        findViewById(R.id.layout_course_location).setOnClickListener(this);
+        findViewById(R.id.img_telephone).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
+
+
         switch (view.getId()) {
             case R.id.bt_queue_immediately:
                 if (queue == null) return;
                 switch (queue.getStatus()) {
                     case CourseQueueBean.queued:
+                        DialogUtils.showDialog(this, "", false);
                         coursePresent.cancelCourseQueue(queue.getId());
                         break;
                     case CourseQueueBean.canceled:
+                        DialogUtils.showDialog(this, "", false);
                         coursePresent.deleteCourseQueue(queue.getId());
 
                         break;
@@ -142,6 +156,30 @@ public class CourseQueueDetailActivity extends BaseActivity implements View.OnCl
                 }
 
                 break;
+
+
+            case R.id.img_left:
+                finish();
+                break;
+            case R.id.layout_course_coach:
+                if (course != null)
+                    CourseDetailNewActivity.start(this, course.getId());
+                break;
+            case R.id.layout_course_location:
+                if (course != null) {
+                    CourseStore store = course.getStore();
+                    if (store != null) {
+                        MapActivity.start(this, course.getName(), store.getName(), store.getAddress(),
+                                store.getCoordinate()[0] + "", store.getCoordinate()[1] + "");
+                    }
+                }
+
+                break;
+            case R.id.img_telephone:
+                if (course != null && course.getStore() != null) {
+                    TelephoneManager.callImmediate(this, course.getStore().getTel());
+                }
+                break;
         }
     }
 
@@ -151,7 +189,6 @@ public class CourseQueueDetailActivity extends BaseActivity implements View.OnCl
     public void ongetCourseQueueDetail(CourseQueueBean queue) {
         if (queue == null) return;
         this.queue = queue;
-
 
 
         UserCoach userCoach = App.getInstance().getUser();
@@ -166,14 +203,14 @@ public class CourseQueueDetailActivity extends BaseActivity implements View.OnCl
         txtCourseLocation.setText(course.getStore().getAddress());
         txtPhone.setText(userCoach.getMobile());
 
-        txtCouponSubtract.setText("-￥" +queue.getCoupon());
+        txtCouponSubtract.setText("-￥" + queue.getCoupon());
         txtPriceTotal.setText("￥" + queue.getTotal());
         txtPriceReal.setText("￥" + queue.getPay_amount());
 
 
         switch (queue.getStatus()) {
             case CourseQueueBean.queued:
-                txtqueuelocation.setText("当前排队: 第"+queue.getPosition()+"位");
+                txtqueuelocation.setText("当前排队: 第" + (queue.getPosition()+1) + "位");
                 button.setText(R.string.cancel_queue);
                 break;
             case CourseQueueBean.canceled:
@@ -191,17 +228,32 @@ public class CourseQueueDetailActivity extends BaseActivity implements View.OnCl
 
     @Override
     public void onCancelCourseQueue(BaseBean baseBean) {
-        if (baseBean != null && baseBean.getStatus() ==1 ) {
+        DialogUtils.dismissDialog();
+        if (baseBean != null && baseBean.getStatus() == 1) {
             button.setText(R.string.delete);
             txtqueuelocation.setText("排队已取消");
             queue.setStatus(CourseQueueBean.canceled);
+
+            LocalBroadcastManager.getInstance(CourseQueueDetailActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_QUEUE_CANCELED));
+
         }
     }
 
     @Override
     public void onDeleteCourseQueue(boolean b) {
+        DialogUtils.dismissDialog();
         if (b) {
+
+            LocalBroadcastManager.getInstance(CourseQueueDetailActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_QUEUE_DELETED));
+
             finish();
         }
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        DialogUtils.releaseDialog();
     }
 }

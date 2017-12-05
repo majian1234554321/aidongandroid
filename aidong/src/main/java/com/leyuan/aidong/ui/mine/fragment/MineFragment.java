@@ -215,11 +215,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
                 UserInfoActivity.start(getContext(), String.valueOf(App.mInstance.getUser().getId()));
                 break;
             case R.id.relativeLayout_yuyue:
-
-                UiManager.activityCheckLoginJump(getActivity(), AppointmentMineActivityNew.class);
+                AppointmentMineActivityNew.start(getActivity(),3);
                 break;
             case R.id.layout_appoint_course:
-                UiManager.activityCheckLoginJump(getActivity(), AppointmentMineActivityNew.class);
+                AppointmentMineActivityNew.start(getActivity(),0);
                 break;
             case R.id.relativeLayout_dingdang:
                 UiManager.activityCheckLoginJump(getActivity(), OrderActivity.class);

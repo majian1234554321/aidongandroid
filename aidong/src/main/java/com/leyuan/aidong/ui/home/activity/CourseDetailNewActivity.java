@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,6 +32,7 @@ import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.richtext.RichWebView;
+import com.zzhoujay.richtext.RichText;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 
@@ -74,10 +76,26 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if(action ==null) return;
-            switch (action){
+            if (action == null) return;
+
+            switch (action) {
                 case Constant.BROADCAST_ACTION_LOGIN_SUCCESS:
                     coursePresent.getCourseDetail(code);
+                    break;
+                case Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS:
+                    finish();
+                    break;
+                case Constant.BROADCAST_ACTION_COURSE_PAY_SFAIL:
+                    finish();
+                    break;
+                case Constant.BROADCAST_ACTION_COURSE_QUEUE_SUCCESS:
+                    finish();
+                    break;
+                case Constant.BROADCAST_ACTION_COURSE_QUEUE_CANCELED:
+                    finish();
+                    break;
+                case Constant.BROADCAST_ACTION_COURSE_QUEUE_DELETED:
+                    finish();
                     break;
             }
         }
@@ -135,9 +153,15 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
     private void setListener() {
 
         IntentFilter filter = new IntentFilter();
-        filter.addAction(Constant.BROADCAST_ACTION_LOGIN_SUCCESS);
-        LocalBroadcastManager.getInstance(this).registerReceiver(receiver,filter);
 
+        filter.addAction(Constant.BROADCAST_ACTION_LOGIN_SUCCESS);
+        filter.addAction(Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS);
+        filter.addAction(Constant.BROADCAST_ACTION_COURSE_PAY_SFAIL);
+        filter.addAction(Constant.BROADCAST_ACTION_COURSE_QUEUE_SUCCESS);
+        filter.addAction(Constant.BROADCAST_ACTION_COURSE_QUEUE_CANCELED);
+        filter.addAction(Constant.BROADCAST_ACTION_COURSE_QUEUE_DELETED);
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
 
 
         ivBack.setOnClickListener(this);
@@ -185,6 +209,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
 
                 if (course.isMember_only() && !course.isMember()) {
                     ToastGlobal.showShortConsecutive("该课程只有会员才能预约");
+                    return;
                 }
 
                 switch (course.getStatus()) {
@@ -209,7 +234,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
                     case CourseBeanNew.QUEUED:
 
                         //跳查看排队
-                        CourseQueueDetailActivity.startFromCourse(this,course.getId());
+                        CourseQueueDetailActivity.startFromCourse(this, course.getId());
 
                         break;
 
@@ -235,9 +260,17 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
         this.course = course;
         banner.setData(course.getImage(), null);
         txtCourseName.setText(course.getName());
-        txtCoachName.setText(course.getCoach().getName());
-        txtCoachDesc.setText(course.getCoach().getIntroduce());
-        GlideLoader.getInstance().displayImage(course.getCoach().getAvatar(), imgCoachAvatar);
+
+
+        if (course.getCoach() != null) {
+            txtCoachName.setText(course.getCoach().getName());
+            if (!TextUtils.isEmpty(course.getCoach().getIntroduce())) {
+                RichText.from(course.getCoach().getIntroduce()).placeHolder(R.drawable.place_holder_logo)
+                        .error(R.drawable.place_holder_logo).into(txtCoachDesc);
+            }
+            GlideLoader.getInstance().displayImage(course.getCoach().getAvatar(), imgCoachAvatar);
+        }
+
         txtNormalPrice.setText("￥ " + course.getPrice());
         txtMemberPrice.setText("会员价: ￥" + course.getMember_price());
         txtCourseTime.setText(course.getClass_time());
@@ -325,10 +358,15 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
             llApply.setClickable(false);
         }
 
-        if (course.isMember_only() && course.isMember()) {
+        if (course.isMember_only()) {
             txtNormalPrice.setVisibility(View.GONE);
+
             tvPrice.setText("￥ " + course.getMember_price());
 
+        }
+
+        if (course.isMember()) {
+            tvPrice.setText("￥ " + course.getMember_price());
         }
 
         if (course.getReservable() == 0) {
@@ -338,7 +376,6 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
             llApply.setBackgroundColor(getResources().getColor(R.color.list_line_color));
             llApply.setClickable(false);
         }
-
 
 
     }

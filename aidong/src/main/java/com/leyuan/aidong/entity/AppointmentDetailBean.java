@@ -33,6 +33,9 @@ public class AppointmentDetailBean {
         private String status;
         private String verify_no; //"核销码"
         private String verify_status;//"核销状态 undo-未核销 done-已核销",
+        String lat;
+        String lng;
+        String organizer_mobile;
 
         public String getVerify_no() {
             return verify_no+"";
@@ -128,6 +131,30 @@ public class AppointmentDetailBean {
 
         public boolean isVerified() {
             return "done".equals(getVerify_status());
+        }
+
+        public String getLat() {
+            return lat;
+        }
+
+        public void setLat(String lat) {
+            this.lat = lat;
+        }
+
+        public String getLng() {
+            return lng;
+        }
+
+        public void setLng(String lng) {
+            this.lng = lng;
+        }
+
+        public String getOrganizer_mobile() {
+            return organizer_mobile;
+        }
+
+        public void setOrganizer_mobile(String organizer_mobile) {
+            this.organizer_mobile = organizer_mobile;
         }
     }
 

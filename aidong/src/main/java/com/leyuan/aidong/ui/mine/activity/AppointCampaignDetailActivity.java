@@ -22,6 +22,7 @@ import com.leyuan.aidong.module.pay.WeiXinPay;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.home.activity.AppointSuccessActivity;
 import com.leyuan.aidong.ui.home.activity.CampaignDetailActivity;
+import com.leyuan.aidong.ui.home.activity.MapActivity;
 import com.leyuan.aidong.ui.mvp.presenter.AppointmentPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.AppointmentPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointmentDetailActivityView;
@@ -34,6 +35,7 @@ import com.leyuan.aidong.utils.ImageRectUtils;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.QRCodeUtil;
 import com.leyuan.aidong.utils.SystemInfoUtils;
+import com.leyuan.aidong.utils.TelephoneManager;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.constant.PayType;
 import com.leyuan.aidong.widget.CustomNestRadioGroup;
@@ -47,6 +49,7 @@ import com.leyuan.aidong.widget.dialog.DialogDoubleButton;
 
 import cn.iwgang.countdownview.CountdownView;
 
+import static com.leyuan.aidong.R.id.txt_course_time;
 import static com.leyuan.aidong.ui.App.context;
 import static com.leyuan.aidong.utils.Constant.PAY_ALI;
 import static com.leyuan.aidong.utils.Constant.PAY_WEIXIN;
@@ -127,6 +130,10 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
     private String campaignId;
     private boolean fromDetail = false;
     private String status;
+    private TextView txtCourseTime;
+
+    private TextView txtRoomName;
+    private TextView txtCourseLocation;
 
     public static void start(Context context, String orderId) {
         Intent starter = new Intent(context, AppointCampaignDetailActivity.class);
@@ -173,6 +180,11 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         campaignLayout = (RelativeLayout) findViewById(R.id.rl_detail);
         ivCover = (ImageView) findViewById(R.id.dv_goods_cover);
         tvCampaignName = (TextView) findViewById(R.id.tv_name);
+        txtCourseTime = (TextView) findViewById(txt_course_time);
+
+        txtRoomName = (TextView) findViewById(R.id.txt_room_name);
+        txtCourseLocation = (TextView) findViewById(R.id.txt_course_location);
+
         tvInfo = (TextView) findViewById(R.id.tv_info);
         codeLayout = (RelativeLayout) findViewById(R.id.rl_qr_code);
         tvCodeNum = (TextView) findViewById(R.id.tv_qr_num);
@@ -220,9 +232,12 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         campaignLayout.setOnClickListener(this);
         timer.setOnCountdownEndListener(this);
         ivCode.setOnClickListener(this);
+        txtRoomName.setOnClickListener(this);
+        txtCourseLocation.setOnClickListener(this);
+        findViewById(R.id.img_telephone).setOnClickListener(this);
     }
 
-    private void getCampaignDetailData(){
+    private void getCampaignDetailData() {
         if (fromDetail) {
             present.getCampaignAppointDetail(switcherLayout, campaignId);
         } else {
@@ -245,11 +260,16 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         //与订单状态无关: 订单信息
         GlideLoader.getInstance().displayImage(bean.getCover(), ivCover);
         tvCampaignName.setText(bean.getName());
-        tvInfo.setText(bean.getSubName());
+        txtCourseTime.setText(bean.getAppoint().getClassTime());
+
         tvUserName.setRightContent(bean.getAppoint().getName());
         tvPhone.setRightContent(bean.getAppoint().getMobile());
         tvCampaignOrganization.setRightContent(bean.getAppoint().getOrganizer());
         tvCampaignTime.setRightContent(bean.getAppoint().getClassTime());
+        txtCourseLocation.setText(bean.getAppoint().getAddress());
+        txtRoomName.setText("");
+        tvInfo.setText(bean.getSubName());
+
         tvCampaignAddress.setRightContent(bean.getAppoint().getAddress());
         tvPrice.setText(String.format(getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.getPay().getPayAmount())));
@@ -265,8 +285,8 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         tvPayType.setRightContent(PAY_ALI.equals(bean.getPay().getPayType()) ? "支付宝" : "微信");
 
 
-        Logger.i("appointdetail","appoint status = " +bean.getAppoint().getStatus()+",bean.getAppoint().getVerify_no() = " +bean.getAppoint().getVerify_no()+
-        "bean.getAppoint().getVerify_status = " +bean.getAppoint().getVerify_status());
+        Logger.i("appointdetail", "appoint status = " + bean.getAppoint().getStatus() + ",bean.getAppoint().getVerify_no() = " + bean.getAppoint().getVerify_no() +
+                "bean.getAppoint().getVerify_status = " + bean.getAppoint().getVerify_status());
         //todo 通过组合控件来实现底部按钮
         //与订单状态有关: 预约状态信息 课程预约信息/活动预约信息 支付方式信息 底部预约操作状态及价格信息
         switch (bean.getAppoint().getStatus()) {
@@ -303,11 +323,11 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
 
 
                 tvCodeNum.setText(bean.getAppoint().getVerify_no());
-                if(bean.getAppoint().isVerified()){
+                if (bean.getAppoint().isVerified()) {
                     tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                 }
-                tvCodeNum.setTextColor( bean.getAppoint().getverifyColor());
-                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this,bean.getAppoint().getverifyColorQr(),bean.getAppoint().getVerify_no(),
+                tvCodeNum.setTextColor(bean.getAppoint().getverifyColor());
+                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, bean.getAppoint().getverifyColorQr(), bean.getAppoint().getVerify_no(),
                         DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
                 break;
             case JOINED:            //已参加
@@ -330,13 +350,12 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 tvPayType.setVisibility(View.VISIBLE);
 
 
-
                 tvCodeNum.setText(bean.getAppoint().getVerify_no());
-                if(bean.getAppoint().isVerified()){
+                if (bean.getAppoint().isVerified()) {
                     tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                 }
-                tvCodeNum.setTextColor( bean.getAppoint().getverifyColor());
-                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this,bean.getAppoint().getverifyColorQr(),bean.getAppoint().getVerify_no(),
+                tvCodeNum.setTextColor(bean.getAppoint().getverifyColor());
+                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, bean.getAppoint().getverifyColorQr(), bean.getAppoint().getVerify_no(),
                         DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
                 break;
             case CLOSE:             //已关闭
@@ -374,11 +393,11 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
 
 
                 tvCodeNum.setText(bean.getAppoint().getVerify_no());
-                if(bean.getAppoint().isVerified()){
+                if (bean.getAppoint().isVerified()) {
                     tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                 }
-                tvCodeNum.setTextColor( bean.getAppoint().getverifyColor());
-                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this,bean.getAppoint().getverifyColorQr(),bean.getAppoint().getVerify_no(),
+                tvCodeNum.setTextColor(bean.getAppoint().getverifyColor());
+                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, bean.getAppoint().getverifyColorQr(), bean.getAppoint().getVerify_no(),
                         DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
                 break;
             case REFUNDED:             //已退款
@@ -401,13 +420,12 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 tvPayType.setVisibility(View.VISIBLE);
 
 
-
                 tvCodeNum.setText(bean.getAppoint().getVerify_no());
-                if(bean.getAppoint().isVerified()){
+                if (bean.getAppoint().isVerified()) {
                     tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                 }
-                tvCodeNum.setTextColor( bean.getAppoint().getverifyColor());
-                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this,bean.getAppoint().getverifyColorQr(),bean.getAppoint().getVerify_no(),
+                tvCodeNum.setTextColor(bean.getAppoint().getverifyColor());
+                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, bean.getAppoint().getverifyColorQr(), bean.getAppoint().getVerify_no(),
                         DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
                 break;
             default:
@@ -443,7 +461,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                     new DialogDoubleButton(this)
                             .setLeftButton(getString(R.string.no_attend))
                             .setRightButton(getString(R.string.have_attend))
-                            .setContentDesc(getString(R.string.are_you_sure_have_to_attend)  )
+                            .setContentDesc(getString(R.string.are_you_sure_have_to_attend))
                             .setBtnCancelListener(new ButtonCancelListener() {
                                 @Override
                                 public void onClick(BaseDialog dialog) {
@@ -467,9 +485,21 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 CampaignDetailActivity.start(this, bean.getLinkId());
                 break;
             case R.id.dv_qr:
-                if(UN_JOIN.equals(status)) {
+                if (UN_JOIN.equals(status)) {
                     BarcodeActivity.start(this, bean.getId(), ImageRectUtils.getDrawableBoundsInView(ivCode));
                 }
+                break;
+            case R.id.txt_course_room:
+            case R.id.txt_course_location:
+                MapActivity.start(this, bean.getName(),bean.getAppoint().getOrganizer(), bean.getAppoint().getAddress(),
+                        bean.getAppoint().getLat(), bean.getAppoint().getLng());
+
+
+                break;
+
+            case R.id.img_telephone:
+                TelephoneManager.callImmediate(this, bean.getAppoint().getOrganizer_mobile());
+
                 break;
             default:
                 break;

@@ -82,6 +82,12 @@ public class CourseChooseSeatAdapter extends RecyclerView.Adapter<CourseChooseSe
         return seat.getCol() * seat.getRow();
     }
 
+    public void resetChoosedState() {
+        notifyItemChanged(positionSelected);
+
+        positionSelected = -1;
+    }
+
     class ViewHoder extends RecyclerView.ViewHolder {
         ImageView img_seat;
 

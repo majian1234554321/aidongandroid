@@ -393,4 +393,12 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
+    <style name="RadingStyle" parent="@android:style/Widget.RatingBar">
+        <!-- 定义星星图片 -->
+        <item name="android:progressDrawable">@drawable/layer_live_rating_bar</item>
+        <item name="android:thumb">@null</item>
+        <item name="android:isIndicator">true</item>
+\
+    </style>
+
 </resources>

@@ -175,6 +175,7 @@ public class UserInfoActivity extends BaseActivity implements UserInfoActivityVi
     @Override
     public void updateUserInfo(UserInfoData userInfoData) {
         this.userInfoData = userInfoData;
+        userId = userInfoData.getProfile().getId();
         setView();
         setFragments();
     }
