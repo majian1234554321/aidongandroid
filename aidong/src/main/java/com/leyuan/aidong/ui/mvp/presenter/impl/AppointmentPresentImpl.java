@@ -153,7 +153,6 @@ public class AppointmentPresentImpl implements AppointmentPresent {
                     switcherLayout.showContentLayout();
                     appointmentDetailActivityView.setAppointmentDetail(appointmentDetailBean);
 
-
                 } else {
                     switcherLayout.showEmptyLayout();
                 }

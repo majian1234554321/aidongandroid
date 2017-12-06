@@ -511,6 +511,9 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         public void onSuccess(String code, Object object) {
             ToastGlobal.showLong("支付成功");
             AppointSuccessActivity.start(AppointCampaignDetailActivity.this, null, false, present.getShareInfo());
+
+
+
         }
 
         @Override

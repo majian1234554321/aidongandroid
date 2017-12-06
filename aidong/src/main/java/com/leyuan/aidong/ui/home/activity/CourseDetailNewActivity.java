@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.ApplicantAdapter;
+import com.leyuan.aidong.config.ConstantUrl;
 import com.leyuan.aidong.entity.course.CourseBeanNew;
 import com.leyuan.aidong.entity.course.CourseStore;
 import com.leyuan.aidong.module.share.SharePopupWindow;
@@ -203,6 +204,13 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
                 finish();
                 break;
             case R.id.iv_share:
+                String  image = "";
+                if(course.getImage()!=null && course.getImage().size() > 0){
+                    image = course.getImage().get(0);
+                }
+
+                sharePopupWindow.showAtBottom(course.getName(), course.getIntroduce(),
+                      image  , ConstantUrl.URL_SHARE_COURSE+course.getId()+"/course");
 
                 break;
             case R.id.layout_course_location:
@@ -263,6 +271,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
                 }
                 break;
         }
+
     }
 
     @Override
@@ -397,5 +406,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
         super.onDestroy();
         DialogUtils.releaseDialog();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+        RichText.clear(this);
+        sharePopupWindow.release();
     }
 }
