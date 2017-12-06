@@ -327,7 +327,7 @@
     <string name="signed">已签到</string>
     <string name="queueing">正在排队</string>
     <string name="with_sign_in">待签到</string>
-    <string name="suspended">停课</string>
+    <string name="suspended">已停课</string>
     <string name="queue_delete">删除排队</string>
     <string name="look_queue">查看排队</string>
     <string name="yizhan">已占</string>
@@ -338,4 +338,5 @@
     <string name="member_only">会员专享</string>
     <string name="appointment_choose_seat">预约选座</string>
     <string name="store_all">全部门店</string>
+    <string name="wait_pay_appointed">待付款-已预约</string>
 </resources>

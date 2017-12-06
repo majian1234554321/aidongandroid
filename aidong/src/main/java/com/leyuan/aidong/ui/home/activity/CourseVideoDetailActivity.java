@@ -1,10 +1,13 @@
 package com.leyuan.aidong.ui.home.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -80,6 +83,22 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
         context.startActivity(starter);
     }
 
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action == null) return;
+
+            switch (action) {
+                case Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS:
+                case Constant.BROADCAST_ACTION_COURSE_PAY_SFAIL:
+                case Constant.BROADCAST_ACTION_COURSE_QUEUE_SUCCESS:
+                    finish();
+                    break;
+            }
+        }
+    };
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,6 +152,13 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
         ivStart.setOnClickListener(this);
         ivUpArrow.setOnClickListener(this);
         adapter.setListener(this);
+
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS);
+        filter.addAction(Constant.BROADCAST_ACTION_COURSE_PAY_SFAIL);
+        filter.addAction(Constant.BROADCAST_ACTION_COURSE_QUEUE_SUCCESS);
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
     }
 
     @Override
@@ -218,4 +244,9 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
         switcherLayout.showContentLayout();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+    }
 }

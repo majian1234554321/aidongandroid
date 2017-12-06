@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -46,6 +47,8 @@ public class VenuesDetailActivity extends BaseActivity implements SmartTabLayout
     private VenuesDetailBean venuesBean;
     private List<View> allTabView = new ArrayList<>();
     private int currentPosition;
+    //    private VenuesCourseNewFragment courseFragment;
+    private FragmentPagerItemAdapter adapter;
 
     public static void start(Context context, String id) {
         Intent starter = new Intent(context, VenuesDetailActivity.class);
@@ -68,13 +71,13 @@ public class VenuesDetailActivity extends BaseActivity implements SmartTabLayout
 
         FragmentPagerItems pages = new FragmentPagerItems(this);
         VenuesDetailFragment detail = new VenuesDetailFragment();
-        VenuesCourseNewFragment course = new VenuesCourseNewFragment();
+        VenuesCourseNewFragment courseFragment = new VenuesCourseNewFragment();
         VenuesCoachFragment coach = new VenuesCoachFragment();
         pages.add(FragmentPagerItem.of(null, detail.getClass(), new Bundler().putString("id", id).get()));
-        pages.add(FragmentPagerItem.of(null, course.getClass(), new Bundler().putString("id", id).get()));
+        pages.add(FragmentPagerItem.of(null, courseFragment.getClass(), new Bundler().putString("id", id).get()));
         pages.add(FragmentPagerItem.of(null, coach.getClass(), new Bundler().putString("id", id).get()));
 
-        final FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);
+        adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);
         viewPager.setAdapter(adapter);
         tabLayout.setCustomTabView(this);
         tabLayout.setViewPager(viewPager);
@@ -92,6 +95,11 @@ public class VenuesDetailActivity extends BaseActivity implements SmartTabLayout
                     tvAppointment.setVisibility(View.VISIBLE);
                 } else {
                     tvAppointment.setVisibility(View.GONE);
+                }
+
+                if (position == 1) {
+                    Fragment page = adapter.getPage(1);
+                    ((VenuesCourseNewFragment) page).freshData(venuesBean);
                 }
                 currentPosition = position;
             }
@@ -133,8 +141,21 @@ public class VenuesDetailActivity extends BaseActivity implements SmartTabLayout
 
     public void loadFinish(VenuesDetailBean bean) {
         venuesBean = bean;
+
         if (currentPosition == 0) {
             tvAppointment.setVisibility(View.VISIBLE);
         }
+//        courseFragment.freshData(venuesBean);
+//        Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//                Fragment page = adapter.getPage(2);
+//                ((VenuesCourseNewFragment) page).freshData(venuesBean);
+//            }
+//        },500);
+
+
     }
 }

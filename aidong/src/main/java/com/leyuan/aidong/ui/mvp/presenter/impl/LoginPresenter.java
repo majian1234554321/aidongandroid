@@ -17,6 +17,7 @@ import com.leyuan.aidong.ui.mvp.view.LoginExitView;
 import com.leyuan.aidong.ui.mvp.view.LoginViewInterface;
 import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.utils.RequestResponseCount;
 
 public class LoginPresenter implements LoginPresenterInterface {
 
@@ -27,6 +28,7 @@ public class LoginPresenter implements LoginPresenterInterface {
     //    private QQLogin qqLogin;
     private ThirdLoginUtils thirdLoginUtils;
     private LoginExitView exitLoginListener;
+    private RequestResponseCount requestResponse;
 
     public LoginPresenter(Activity context, ThirdLoginUtils.OnThirdPartyLogin thirdLoginListner) {
         this.context = context;
@@ -180,4 +182,7 @@ public class LoginPresenter implements LoginPresenterInterface {
         }
     };
 
+    public void setOnRequestResponse(RequestResponseCount requestResponse) {
+        this.requestResponse = requestResponse;
+    }
 }

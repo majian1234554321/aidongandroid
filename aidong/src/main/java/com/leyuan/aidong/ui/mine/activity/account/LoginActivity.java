@@ -21,6 +21,7 @@ import com.leyuan.aidong.module.thirdpartylogin.ThirdLoginUtils;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.activity.CouponNewcomerActivity;
 import com.leyuan.aidong.ui.mine.activity.setting.PhoneBindingThirdLoginActivity;
+import com.leyuan.aidong.ui.mvp.presenter.impl.CourseConfigPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.FollowPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.LoginPresenter;
 import com.leyuan.aidong.ui.mvp.presenter.impl.MineInfoPresenterImpl;
@@ -62,6 +63,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         }
     };
     private UserCoach user;
+    private int requestCounts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -193,6 +195,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             systemPresent.setOnRequestResponse(requestResponse);
             systemPresent.getSystemInfo("android");
 
+            CourseConfigPresentImpl coursePresentNew = new CourseConfigPresentImpl(this);
+            coursePresentNew.setOnRequestResponse(requestResponse);
+            coursePresentNew.getCourseFilterConfig();
+
+            requestCounts = 4;
+
+
             sendBroadcast(new Intent(Constant.BROADCAST_ACTION_REGISTER_SUCCESS));
             LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_LOGIN_SUCCESS));
         }
@@ -299,7 +308,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     @Override
     public void onRequestCount(int requestCount) {
         Logger.i("requestCount = " + requestCount);
-        if (requestCount >= 3) {
+        if (requestCount >= requestCounts) {
             DialogUtils.dismissDialog();
             finishSelf();
         }

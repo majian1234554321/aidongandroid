@@ -91,11 +91,19 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
                 case Constant.BROADCAST_ACTION_COURSE_QUEUE_SUCCESS:
                     finish();
                     break;
+
+
+                case Constant.BROADCAST_ACTION_COURSE_APPOINT_CANCEL:
+                    coursePresent.getCourseDetail(code);
+                    break;
+                case Constant.BROADCAST_ACTION_COURSE_APPOINT_DELETE:
+                    coursePresent.getCourseDetail(code);
+                    break;
                 case Constant.BROADCAST_ACTION_COURSE_QUEUE_CANCELED:
-                    finish();
+                    coursePresent.getCourseDetail(code);
                     break;
                 case Constant.BROADCAST_ACTION_COURSE_QUEUE_DELETED:
-                    finish();
+                    coursePresent.getCourseDetail(code);
                     break;
             }
         }
@@ -157,6 +165,10 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
         filter.addAction(Constant.BROADCAST_ACTION_LOGIN_SUCCESS);
         filter.addAction(Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS);
         filter.addAction(Constant.BROADCAST_ACTION_COURSE_PAY_SFAIL);
+
+        filter.addAction(Constant.BROADCAST_ACTION_COURSE_APPOINT_CANCEL);
+        filter.addAction(Constant.BROADCAST_ACTION_COURSE_APPOINT_DELETE);
+
         filter.addAction(Constant.BROADCAST_ACTION_COURSE_QUEUE_SUCCESS);
         filter.addAction(Constant.BROADCAST_ACTION_COURSE_QUEUE_CANCELED);
         filter.addAction(Constant.BROADCAST_ACTION_COURSE_QUEUE_DELETED);
@@ -306,7 +318,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
                 break;
             case CourseBeanNew.APPOINTED_NO_PAY:
                 tvPrice.setVisibility(View.GONE);
-                tvState.setText(R.string.no_pay_appointmented);
+                tvState.setText(R.string.wait_pay_appointed);
                 tvPrice.setTextColor(getResources().getColor(R.color.white));
                 tvState.setTextColor(getResources().getColor(R.color.white));
                 llApply.setBackgroundColor(getResources().getColor(R.color.main_red));

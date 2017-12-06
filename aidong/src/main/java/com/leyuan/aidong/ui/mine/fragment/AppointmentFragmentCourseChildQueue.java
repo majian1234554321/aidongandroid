@@ -1,7 +1,12 @@
 package com.leyuan.aidong.ui.mine.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,6 +22,7 @@ import com.leyuan.aidong.entity.course.CourseAppointBean;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.mvp.presenter.impl.AppointmentCoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointmentCourseListView;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -52,6 +58,23 @@ public class AppointmentFragmentCourseChildQueue extends BaseFragment implements
         return fragment;
     }
 
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action == null) return;
+
+            switch (action) {
+                case Constant.BROADCAST_ACTION_COURSE_QUEUE_SUCCESS:
+                case Constant.BROADCAST_ACTION_COURSE_QUEUE_CANCELED:
+                case Constant.BROADCAST_ACTION_COURSE_QUEUE_DELETED:
+                    refreshData();
+                    break;
+            }
+        }
+    };
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +106,18 @@ public class AppointmentFragmentCourseChildQueue extends BaseFragment implements
 
         present = new AppointmentCoursePresentImpl(getContext(), this);
         present.getFirstPageCourseAppointList(type);
+        setListener();
+    }
+
+    private void setListener() {
+
+        IntentFilter filter = new IntentFilter();
+
+        filter.addAction(Constant.BROADCAST_ACTION_COURSE_QUEUE_SUCCESS);
+        filter.addAction(Constant.BROADCAST_ACTION_COURSE_QUEUE_CANCELED);
+        filter.addAction(Constant.BROADCAST_ACTION_COURSE_QUEUE_DELETED);
+
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(receiver, filter);
     }
 
     private void initView(View view) {
@@ -99,11 +134,15 @@ public class AppointmentFragmentCourseChildQueue extends BaseFragment implements
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-                currPage = 1;
-                RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-                present.getFirstPageCourseAppointList(type);
+                refreshData();
             }
         });
+    }
+
+    public void refreshData() {
+        currPage = 1;
+        RecyclerViewStateUtils.resetFooterViewState(recyclerView);
+        present.getFirstPageCourseAppointList(type);
     }
 
     private void initRecyclerView(View view) {
@@ -151,6 +190,7 @@ public class AppointmentFragmentCourseChildQueue extends BaseFragment implements
     public void onDestroy() {
         super.onDestroy();
         Logger.i(TAG, "onDestroy");
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(receiver);
     }
 
     @Override
@@ -172,10 +212,7 @@ public class AppointmentFragmentCourseChildQueue extends BaseFragment implements
 
     @Override
     public void oncancelCourseAppointResult(BaseBean courseAppointResult) {
-        if (courseAppointResult != null) {
-            present.getFirstPageCourseAppointList(type);
-            Toast.makeText(getContext(), "取消成功", Toast.LENGTH_LONG).show();
-        }
+
     }
 
     @Override
@@ -185,13 +222,18 @@ public class AppointmentFragmentCourseChildQueue extends BaseFragment implements
 
     @Override
     public void onCancelCourseQueue(BaseBean baseBean) {
+        if (baseBean != null && baseBean.getStatus() == 1) {
 
+            LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_QUEUE_CANCELED));
+//            present.getFirstPageCourseAppointList(type);
+            Toast.makeText(getContext(), "取消成功", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
     public void onDeleteCourseQueue(boolean courseQueueResult) {
         if (courseQueueResult) {
-            present.getFirstPageCourseAppointList(type);
+            LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_QUEUE_DELETED));
             Toast.makeText(getContext(), "删除成功", Toast.LENGTH_LONG).show();
         }
     }
@@ -229,4 +271,5 @@ public class AppointmentFragmentCourseChildQueue extends BaseFragment implements
 
         }
     }
+
 }

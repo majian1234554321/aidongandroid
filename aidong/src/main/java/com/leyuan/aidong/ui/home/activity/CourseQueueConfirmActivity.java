@@ -112,7 +112,7 @@ public class CourseQueueConfirmActivity extends BaseActivity implements View.OnC
 
 
     private void initData() {
-        if (course.isMember_only() && course.isMember()) {
+        if (course.isMember()) {
             realPrice = course.getMember_price();
             txtPriceTotal.setText("￥" + course.getMember_price());
             txtPriceReal.setText("￥" + realPrice);

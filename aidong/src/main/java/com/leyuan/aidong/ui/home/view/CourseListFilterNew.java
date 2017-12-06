@@ -1,7 +1,7 @@
 package com.leyuan.aidong.ui.home.view;
 
 import android.content.Context;
-import android.os.Handler;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -240,15 +240,15 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
 
             refreshtCategoryAdapater(-1, startPosition);
             tvCourseName.setText(currentCourseCategory);
-            if (listener != null) {
-                new Handler().postDelayed(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        listener.onCourseCategoryItemClick(currentCoursePriceType, currentCourseCategory);
-                    }
-                },500);
-            }
+//            if (listener != null) {
+//                new Handler().postDelayed(new Runnable() {
+//
+//                    @Override
+//                    public void run() {
+//                        listener.onCourseCategoryItemClick(currentCoursePriceType, currentCourseCategory);
+//                    }
+//                },500);
+//            }
 
         }
 
@@ -415,9 +415,14 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
             if (listener != null) {
                 listener.onAllStoreItemClick(mineCourseBrand, currentMineArea, currentMineStore);
             }
-            if(position == 0){
-                tvStore.setText(currentMineArea.getName()+currentMineStore.getName());
-            }else{
+
+            if(TextUtils.equals(currentMineStore.getName(),"全部门店" ) ){
+                if(TextUtils.equals(currentMineArea.getName(),"全部区域")){
+                    tvStore.setText("我的"+currentMineStore.getName());
+                }else {
+                    tvStore.setText(currentMineArea.getName()+currentMineStore.getName());
+                }
+            }else {
                 tvStore.setText(currentMineStore.getName());
             }
 
@@ -458,11 +463,17 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
             if (listener != null) {
                 listener.onAllStoreItemClick(currentBrand, currentArea, currentStore);
             }
-            if(position == 0){
-                tvStore.setText(currentArea.getName()+currentStore.getName());
+
+            if(TextUtils.equals(currentStore.getName(),"全部门店" ) ){
+                if(TextUtils.equals(currentArea.getName(),"全部区域")){
+                    tvStore.setText(currentBrand.getName()+currentStore.getName());
+                }else {
+                    tvStore.setText(currentArea.getName()+currentStore.getName());
+                }
             }else {
                 tvStore.setText(currentStore.getName());
             }
+
 
 
             hidePopup();

@@ -222,6 +222,13 @@ public class AppointDetailCourseAndEventActivity extends BaseActivity implements
                 rlQrCode.setVisibility(View.VISIBLE);
                 llTimer.setVisibility(View.VISIBLE);
                 timer.start(DateUtils.getCountdown(appointBean.getCreated_at(), appointCountdownMill));
+                timer.setOnCountdownEndListener(new CountdownView.OnCountdownEndListener() {
+                    @Override
+                    public void onEnd(CountdownView cv) {
+                        appointmentCourseDetailPresenter.getCourseAppointDetail(appointBean.getId());
+                    }
+                });
+
                 tvOrderNum.setVisibility(View.GONE);
                 tvState.setText(getString(R.string.un_paid));
                 tv_cancel_appoint.setVisibility(View.VISIBLE);
@@ -239,7 +246,12 @@ public class AppointDetailCourseAndEventActivity extends BaseActivity implements
             case CourseAppointBean.canceled:
                 rlQrCode.setVisibility(View.GONE);
                 tvState.setText(getString(R.string.canceled));
+
                 tv_cancel_appoint.setVisibility(View.GONE);
+                llTimer.setVisibility(View.GONE);
+                layout_pay.setVisibility(View.GONE);
+                tvPay.setVisibility(View.GONE);
+
                 tvDelete.setVisibility(View.VISIBLE);
 
                 break;
@@ -369,6 +381,7 @@ public class AppointDetailCourseAndEventActivity extends BaseActivity implements
     @Override
     public void oncancelCourseAppointResult(BaseBean baseBean) {
         DialogUtils.dismissDialog();
+
         if (baseBean != null && baseBean.getStatus() == 1) {
             appointmentCourseDetailPresenter.getCourseAppointDetail(appointBean.getId());
             LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_APPOINT_CANCEL));

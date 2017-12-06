@@ -29,7 +29,9 @@ public class CourseQueueSuccessActivity extends BaseActivity implements View.OnC
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.tv_home:
+                CourseListActivityNew.start(this,null);
                 finish();
+
                 break;
             case R.id.tv_look_queue:
                 AppointmentMineActivityNew.start(this,1);

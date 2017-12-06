@@ -174,7 +174,7 @@ public class AppointmentCourseListQueueAdapter extends RecyclerView.Adapter<Appo
                 break;
             case CourseAppointBean.suspended:
 
-                holder.state.setText(context.getString(R.string.ended));
+                holder.state.setText(context.getString(R.string.suspended));
                 holder.txt_appoint_or_queue_number.setVisibility(View.VISIBLE);
                 holder.txt_appoint_or_queue_number.setText("预约码：" + bean.getId());
                 holder.timerLayout.setVisibility(View.GONE);

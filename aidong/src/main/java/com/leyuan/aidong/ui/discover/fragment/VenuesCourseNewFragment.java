@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.discover.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,11 +11,15 @@ import android.view.ViewGroup;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.discover.CourseDateAdapter;
 import com.leyuan.aidong.adapter.home.CourseListAdapterNew;
+import com.leyuan.aidong.entity.VenuesDetailBean;
 import com.leyuan.aidong.entity.course.CourseBeanNew;
+import com.leyuan.aidong.entity.course.CourseFilterBean;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.mvp.presenter.CourseListPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CourseListView;
 import com.leyuan.aidong.utils.DateUtils;
+import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.utils.SharePrefUtils;
 import com.leyuan.aidong.widget.CustomLayoutManager;
 import com.leyuan.aidong.widget.SwitcherLayout;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
@@ -41,11 +46,17 @@ public class VenuesCourseNewFragment extends BaseFragment implements CourseDateA
     private CourseListAdapterNew courseAdapter;
     private HeaderAndFooterRecyclerViewAdapter wrapperAdapter;
     private ArrayList<CourseBeanNew> data = new ArrayList<>();
-    private String date, store, course, time;
+    private String date, store ="-1,-1,-1", course, time;
 
     private CourseListPresentImpl coursePresent;
     private String name;
+    private boolean setStore;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        days = DateUtils.getSevenDate();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,7 +67,7 @@ public class VenuesCourseNewFragment extends BaseFragment implements CourseDateA
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        days = DateUtils.getSevenDate();
+
 
         coursePresent = new CourseListPresentImpl(getContext(), this);
 
@@ -85,10 +96,26 @@ public class VenuesCourseNewFragment extends BaseFragment implements CourseDateA
         dateAdapter.setItemClickListener(this);
     }
 
+    public void freshData(VenuesDetailBean venuesBean){
+        CourseFilterBean courseFilterConfig = SharePrefUtils.getCourseFilterConfig(getActivity());
+        if(courseFilterConfig != null ){
+            store = courseFilterConfig.getStoreByVenuesBean(venuesBean.getBrand_name(),venuesBean.getName());
+        }
+
+        Logger.i(TAG,"store = " +store);
+//        if(days == null){
+//            days = DateUtils.getSevenDate();
+//        }
+        if(!setStore){
+            coursePresent.pullRefreshCourseList(store, null, null, days.get(0));
+            setStore = true;
+        }
+    }
 
     @Override
     public void onItemClick(int position) {
 //        venuesPresent.getCourses(switcherLayout, id, days.get(position));
+        Logger.i(TAG,"onItemClick store = " +store);
         coursePresent.pullRefreshCourseList(store, course, time, days.get(position));
     }
 

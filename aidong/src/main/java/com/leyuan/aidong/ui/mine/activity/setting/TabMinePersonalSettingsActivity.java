@@ -25,16 +25,19 @@ import com.leyuan.aidong.ui.mine.activity.BingdingCommunityActivity;
 import com.leyuan.aidong.ui.mine.activity.PrivacyActivity;
 import com.leyuan.aidong.ui.mine.activity.account.ChangePasswordActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
+import com.leyuan.aidong.ui.mvp.presenter.impl.CourseConfigPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.LoginPresenter;
 import com.leyuan.aidong.ui.mvp.view.LoginExitView;
+import com.leyuan.aidong.ui.mvp.view.RequestCountInterface;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DataCleanManager;
 import com.leyuan.aidong.utils.Md5Utils;
+import com.leyuan.aidong.utils.RequestResponseCount;
 import com.leyuan.aidong.utils.TelephoneManager;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.UiManager;
 
-public class TabMinePersonalSettingsActivity extends BaseActivity implements LoginExitView {
+public class TabMinePersonalSettingsActivity extends BaseActivity implements LoginExitView, RequestCountInterface {
     private ImageView layout_tab_mine_personal_settings_title_img_back;
     private RelativeLayout layout_tab_mine_personal_settings_update_password_rel;
     private Intent intent;
@@ -58,8 +61,10 @@ public class TabMinePersonalSettingsActivity extends BaseActivity implements Log
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loginPresenter = new LoginPresenter(this);
-        loginPresenter.setExitLoginListener(this);
+
+
+
+
 
         setupView();
         initData();
@@ -275,12 +280,7 @@ public class TabMinePersonalSettingsActivity extends BaseActivity implements Log
     }
 
 
-    private void loginOut() {
 
-        loginPresenter.exitLogin();
-
-
-    }
 
     private void clean() {
         DataCleanManager.clearAllCache(getApplicationContext());
@@ -296,11 +296,27 @@ public class TabMinePersonalSettingsActivity extends BaseActivity implements Log
         super.onActivityResult(request, result, arg2);
     }
 
+    private void loginOut() {
+
+
+
+        RequestResponseCount requestResponse = new RequestResponseCount(this);
+
+        loginPresenter = new LoginPresenter(this);
+        loginPresenter.setOnRequestResponse(requestResponse);
+        loginPresenter.setExitLoginListener(this);
+        loginPresenter.exitLogin();
+
+    }
+
     @Override
     public void onExitLoginResult(boolean result) {
         if (result) {
             App.getInstance().exitLogin();
             LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_EXIT_LOGIN));
+
+            CourseConfigPresentImpl coursePresentNew = new CourseConfigPresentImpl(App.getInstance());
+            coursePresentNew.getCourseFilterConfig();
 
             EmChatLoginManager.loginOut();
             App.getInstance().clearCMDMessage();
@@ -310,5 +326,10 @@ public class TabMinePersonalSettingsActivity extends BaseActivity implements Log
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void onRequestCount(int requestCount) {
+
     }
 }

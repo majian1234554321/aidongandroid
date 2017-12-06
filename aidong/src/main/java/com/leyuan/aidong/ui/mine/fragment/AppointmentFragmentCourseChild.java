@@ -1,7 +1,12 @@
 package com.leyuan.aidong.ui.mine.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,7 +22,9 @@ import com.leyuan.aidong.entity.course.CourseAppointBean;
 import com.leyuan.aidong.ui.BaseFragment;
 import com.leyuan.aidong.ui.mvp.presenter.impl.AppointmentCoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.AppointmentCourseListView;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.endlessrecyclerview.EndlessRecyclerOnScrollListener;
 import com.leyuan.aidong.widget.endlessrecyclerview.HeaderAndFooterRecyclerViewAdapter;
 import com.leyuan.aidong.widget.endlessrecyclerview.utils.RecyclerViewStateUtils;
@@ -52,6 +59,22 @@ public class AppointmentFragmentCourseChild extends BaseFragment implements Appo
         return fragment;
     }
 
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action == null) return;
+
+            switch (action) {
+                case Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS:
+                case Constant.BROADCAST_ACTION_COURSE_APPOINT_CANCEL:
+                case Constant.BROADCAST_ACTION_COURSE_APPOINT_DELETE:
+                    refreshData();
+                    break;
+            }
+        }
+    };
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +105,18 @@ public class AppointmentFragmentCourseChild extends BaseFragment implements Appo
 
         present = new AppointmentCoursePresentImpl(getContext(), this);
         present.getFirstPageCourseAppointList(type);
+        setListener();
+    }
+
+    private void setListener() {
+
+        IntentFilter filter = new IntentFilter();
+
+        filter.addAction(Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS);
+        filter.addAction(Constant.BROADCAST_ACTION_COURSE_APPOINT_CANCEL);
+        filter.addAction(Constant.BROADCAST_ACTION_COURSE_APPOINT_DELETE);
+
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(receiver, filter);
     }
 
     private void initView(View view) {
@@ -98,11 +133,15 @@ public class AppointmentFragmentCourseChild extends BaseFragment implements Appo
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-                currPage = 1;
-                RecyclerViewStateUtils.resetFooterViewState(recyclerView);
-                present.getFirstPageCourseAppointList(type);
+             refreshData();
             }
         });
+    }
+
+    public void refreshData(){
+        currPage = 1;
+        RecyclerViewStateUtils.resetFooterViewState(recyclerView);
+        present.getFirstPageCourseAppointList(type);
     }
 
     private void initRecyclerView(View view) {
@@ -151,6 +190,7 @@ public class AppointmentFragmentCourseChild extends BaseFragment implements Appo
     public void onDestroy() {
         super.onDestroy();
         Logger.i(TAG, "onDestroy");
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(receiver);
     }
 
     @Override
@@ -173,8 +213,10 @@ public class AppointmentFragmentCourseChild extends BaseFragment implements Appo
     @Override
     public void oncancelCourseAppointResult(BaseBean baseBean) {
         if (baseBean != null && baseBean.getStatus() == 1) {
-            present.getFirstPageCourseAppointList(type);
+            LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_APPOINT_CANCEL));
             Toast.makeText(getContext(), "取消成功", Toast.LENGTH_LONG).show();
+        }else {
+            ToastGlobal.showShortConsecutive(baseBean.getMessage());
         }
 
     }
@@ -182,8 +224,10 @@ public class AppointmentFragmentCourseChild extends BaseFragment implements Appo
     @Override
     public void onDeleteCourseAppoint(boolean courseAppointResult) {
         if (courseAppointResult) {
-            present.getFirstPageCourseAppointList(type);
+            LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_APPOINT_DELETE));
             Toast.makeText(getContext(), "删除成功", Toast.LENGTH_LONG).show();
+        }  else {
+            ToastGlobal.showShortConsecutive("删除失败");
         }
     }
 
@@ -230,4 +274,6 @@ public class AppointmentFragmentCourseChild extends BaseFragment implements Appo
             appointmentAdapter.notifyDataSetChanged();
         }
     }
+
+
 }

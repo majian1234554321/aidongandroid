@@ -19,6 +19,7 @@ public class VenuesBean implements Parcelable {
     private String price;           //价格
     private CoordinateBean coordinate;
     private String admission;
+    private String brand_name;
 
     public String getAdmission() {
         return admission;
@@ -102,6 +103,14 @@ public class VenuesBean implements Parcelable {
         this.price = price;
     }
 
+    public String getBrand_name() {
+        return brand_name;
+    }
+
+    public void setBrand_name(String brand_name) {
+        this.brand_name = brand_name;
+    }
+
     @Override
     public String toString() {
         return "VenuesBean{" +
@@ -133,6 +142,7 @@ public class VenuesBean implements Parcelable {
         dest.writeParcelable(this.coordinate, flags);
         dest.writeString(this.admission);
         dest.writeByte(this.isChecked ? (byte) 1 : (byte) 0);
+        dest.writeString(brand_name);
     }
 
     protected VenuesBean(Parcel in) {
@@ -145,6 +155,7 @@ public class VenuesBean implements Parcelable {
         this.coordinate = in.readParcelable(CoordinateBean.class.getClassLoader());
         this.admission = in.readString();
         this.isChecked = in.readByte() != 0;
+        this.brand_name = in.readString();
     }
 
     public static final Creator<VenuesBean> CREATOR = new Creator<VenuesBean>() {

@@ -14,7 +14,6 @@ import com.leyuan.aidong.entity.course.CourseBeanNew;
 import com.leyuan.aidong.entity.course.CourseBrand;
 import com.leyuan.aidong.entity.course.CourseStore;
 import com.leyuan.aidong.ui.BasePageFragment;
-import com.leyuan.aidong.ui.home.activity.CourseListActivityNew;
 import com.leyuan.aidong.ui.mvp.presenter.CourseListPresentImpl;
 import com.leyuan.aidong.ui.mvp.view.CourseListView;
 import com.leyuan.aidong.utils.DialogUtils;
@@ -59,6 +58,7 @@ public class CourseListFragmentNew extends BasePageFragment implements OnRefresh
         View view = inflater.inflate(R.layout.fragment_course, container, false);
         if (getArguments() != null) {
             date = getArguments().getString("date");
+            course = getArguments().getString("category");
         }
         coursePresent = new CourseListPresentImpl(getContext(), this);
         initRefreshLayout(view);
@@ -105,24 +105,24 @@ public class CourseListFragmentNew extends BasePageFragment implements OnRefresh
             }
         }
 
-        @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-            super.onScrolled(recyclerView, dx, dy);
-
-            if (scrolledDistance > HIDE_THRESHOLD && filterViewVisible) {           //手指向上滑动
-                ((CourseListActivityNew) getActivity()).animatedHide(); //todo 设置回调无效
-                filterViewVisible = false;
-                scrolledDistance = 0;
-
-            } else if (scrolledDistance < -HIDE_THRESHOLD && !filterViewVisible) {   //手指向下滑动
-                ((CourseListActivityNew) getActivity()).animatedShow();
-                scrolledDistance = 0;
-                filterViewVisible = true;
-            }
-            if ((filterViewVisible && dy > 0) || (!filterViewVisible && dy < 0)) {
-                scrolledDistance += dy;
-            }
-        }
+//        @Override
+//        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//            super.onScrolled(recyclerView, dx, dy);
+//
+//            if (scrolledDistance > HIDE_THRESHOLD && filterViewVisible) {           //手指向上滑动
+//                ((CourseListActivityNew) getActivity()).animatedHide(); //todo 设置回调无效
+//                filterViewVisible = false;
+//                scrolledDistance = 0;
+//
+//            } else if (scrolledDistance < -HIDE_THRESHOLD && !filterViewVisible) {   //手指向下滑动
+//                ((CourseListActivityNew) getActivity()).animatedShow();
+//                scrolledDistance = 0;
+//                filterViewVisible = true;
+//            }
+//            if ((filterViewVisible && dy > 0) || (!filterViewVisible && dy < 0)) {
+//                scrolledDistance += dy;
+//            }
+//        }
     };
 
 //    @Override

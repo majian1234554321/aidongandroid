@@ -152,6 +152,9 @@ public class CourseQueueDetailActivity extends BaseActivity implements View.OnCl
                     case CourseQueueBean.appointed:
                         break;
                     case CourseQueueBean.suspended:
+                        DialogUtils.showDialog(this, "", false);
+                        coursePresent.deleteCourseQueue(queue.getId());
+
                         break;
                 }
 
@@ -206,11 +209,11 @@ public class CourseQueueDetailActivity extends BaseActivity implements View.OnCl
         txtCouponSubtract.setText("-￥" + queue.getCoupon());
         txtPriceTotal.setText("￥" + queue.getTotal());
         txtPriceReal.setText("￥" + queue.getPay_amount());
-
+        button.setVisibility(View.VISIBLE);
 
         switch (queue.getStatus()) {
             case CourseQueueBean.queued:
-                txtqueuelocation.setText("当前排队: 第" + (queue.getPosition()+1) + "位");
+                txtqueuelocation.setText("当前排队: 第" + queue.getPosition() + "位");
                 button.setText(R.string.cancel_queue);
                 break;
             case CourseQueueBean.canceled:
@@ -219,8 +222,14 @@ public class CourseQueueDetailActivity extends BaseActivity implements View.OnCl
 
                 break;
             case CourseQueueBean.appointed:
+                txtqueuelocation.setText(R.string.appointed);
+                button.setVisibility(View.GONE);
+
                 break;
             case CourseQueueBean.suspended:
+                txtqueuelocation.setText(R.string.suspended);
+                button.setText(R.string.delete);
+
                 break;
         }
 

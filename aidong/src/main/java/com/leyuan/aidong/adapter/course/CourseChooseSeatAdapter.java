@@ -46,6 +46,10 @@ public class CourseChooseSeatAdapter extends RecyclerView.Adapter<CourseChooseSe
             state = 1;
         } else if (seat.getReserved() != null && seat.getReserved().contains(positionSeat)) {
             holder.img_seat.setVisibility(View.VISIBLE);
+            holder.img_seat.setImageResource(R.drawable.icon_course_choose_yizhan);
+            state = 1;
+        }else {
+            holder.img_seat.setVisibility(View.VISIBLE);
             holder.img_seat.setImageResource(R.drawable.icon_course_choose_available);
             state = 2;
         }

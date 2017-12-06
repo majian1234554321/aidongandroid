@@ -73,23 +73,23 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
                 case Constant.BROADCAST_ACTION_LOGIN_SUCCESS:
                     refreshFragmentData();
                     break;
+
                 case Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS:
-                    refreshFragmentData();
-                    break;
                 case Constant.BROADCAST_ACTION_COURSE_PAY_SFAIL:
-                    refreshFragmentData();
-                    break;
                 case Constant.BROADCAST_ACTION_COURSE_QUEUE_SUCCESS:
-                    refreshFragmentData();
+                    finish();
                     break;
+
+                case Constant.BROADCAST_ACTION_COURSE_APPOINT_DELETE:
+                case Constant.BROADCAST_ACTION_COURSE_APPOINT_CANCEL:
                 case Constant.BROADCAST_ACTION_COURSE_QUEUE_CANCELED:
-                    refreshFragmentData();
-                    break;
                 case Constant.BROADCAST_ACTION_COURSE_QUEUE_DELETED:
+                    refreshFragmentData();
                     break;
             }
         }
     };
+    private String allcategory;
 
 
     public static void start(Context context, String category) {
@@ -132,11 +132,15 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
         viewPager = (ViewPager) findViewById(R.id.view_pager);
 
         days = DateUtils.getSevenDate();
+        if(category != null ){
+            allcategory = "all,"+category;
+        }
+
         FragmentPagerItems pages = new FragmentPagerItems(this);
         for (int i = 0; i < days.size(); i++) {
             CourseListFragmentNew courseFragment = new CourseListFragmentNew();
             pages.add(FragmentPagerItem.of(null, courseFragment.getClass(),
-                    new Bundler().putString("date", days.get(i)).get()
+                    new Bundler().putString("date", days.get(i)).putString("category",allcategory).get()
             ));
 
 //            if (!TextUtils.isEmpty(category)) {
@@ -195,8 +199,12 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
         filter.addAction(Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS);
         filter.addAction(Constant.BROADCAST_ACTION_COURSE_PAY_SFAIL);
         filter.addAction(Constant.BROADCAST_ACTION_COURSE_QUEUE_SUCCESS);
+
+        filter.addAction(Constant.BROADCAST_ACTION_COURSE_APPOINT_CANCEL);
+        filter.addAction(Constant.BROADCAST_ACTION_COURSE_APPOINT_DELETE);
         filter.addAction(Constant.BROADCAST_ACTION_COURSE_QUEUE_CANCELED);
         filter.addAction(Constant.BROADCAST_ACTION_COURSE_QUEUE_DELETED);
+
 
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
     }

@@ -23,7 +23,6 @@ import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.mine.activity.AppointmentMineActivityNew;
 import com.leyuan.aidong.ui.mine.activity.SelectCouponActivity;
-import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.ConfirmOrderCoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.ConfirmOrderCourseView;
 import com.leyuan.aidong.utils.Constant;
@@ -149,14 +148,20 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
         layoutCourseCoach.setOnClickListener(this);
         layoutCourseLocation.setOnClickListener(this);
         img_telephone.setOnClickListener(this);
+        layoutTitle.setLeftIconListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.img_left:
+                finish();
+                break;
             case R.id.layout_course_coach:
-                if (course.getCoach() != null)
-                    UserInfoActivity.start(this, course.getCoach().getContact());
+                CourseDetailNewActivity.start(this,course.getId());
+
+//                if (course.getCoach() != null)
+//                    UserInfoActivity.start(this, course.getCoach().getContact());
                 break;
             case R.id.layout_course_location:
                 CourseStore store = course.getStore();
@@ -235,6 +240,7 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
         @Override
         public void onFail(String code, Object object) {
             super.onFail(code, object);
+
             DialogUtils.dismissDialog();
 
             LocalBroadcastManager.getInstance(ConfirmOrderCourseActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_PAY_SFAIL));

@@ -1,5 +1,7 @@
 package com.leyuan.aidong.entity.course;
 
+import android.text.TextUtils;
+
 import java.util.ArrayList;
 
 /**
@@ -48,5 +50,23 @@ public class CourseFilterBean {
                 "company=" + company +
                 ", course=" + course +
                 '}';
+    }
+
+    public String getStoreByVenuesBean(String brand_name, String name) {
+        if (company != null) {
+            for (CourseBrand courseBrand : company) {
+                if (TextUtils.equals(courseBrand.getName(), brand_name)) {
+                    for (CourseArea courseArea : courseBrand.getArea()) {
+                        for (CourseStore courseStore : courseArea.getStore()) {
+                            if (TextUtils.equals(courseStore.getName(), name)) {
+                                return courseBrand.getId() + "," + courseArea.getName() + "," + courseStore.getId();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return "-1,-1,-1";
     }
 }

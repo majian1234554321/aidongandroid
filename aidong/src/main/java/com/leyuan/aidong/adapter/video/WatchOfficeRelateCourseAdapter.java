@@ -34,7 +34,7 @@ public class WatchOfficeRelateCourseAdapter extends MyBaseAdapter<WatchOfficeCou
         GlideLoader.getInstance().displayImage(bean.getConUrl(), cover);
         cover.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+         public void onClick(View v) {
 
                 CourseListActivityNew.start(context,bean.getDictName());
 //                Intent intent = new Intent(context, CourseActivity.class);

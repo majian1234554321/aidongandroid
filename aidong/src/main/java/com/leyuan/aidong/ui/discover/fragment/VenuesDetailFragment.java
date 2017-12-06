@@ -77,6 +77,7 @@ public class VenuesDetailFragment extends BaseFragment implements View.OnClickLi
         if (bundle != null) {
             id = bundle.getString("id");
         }
+
         initView(view);
         setListener();
         venuesPresent.getVenuesDetail(switcherLayout, id);
@@ -196,6 +197,8 @@ public class VenuesDetailFragment extends BaseFragment implements View.OnClickLi
         });
 
         bannerLayout.setData(venues.getPhoto(), null);
+
+
     }
 
     @Override
