@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -13,7 +14,8 @@ import android.widget.Toast;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CouponBean;
-import com.leyuan.aidong.entity.course.CourseAppointBean;
+import com.leyuan.aidong.entity.course.CouponCourseShareBean;
+import com.leyuan.aidong.entity.course.CourseAppointResult;
 import com.leyuan.aidong.entity.course.CourseBeanNew;
 import com.leyuan.aidong.entity.course.CourseStore;
 import com.leyuan.aidong.entity.model.UserCoach;
@@ -78,6 +80,7 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
     private List<CouponBean> usableCoupons;
     private String couponId;
     private String selectedUserCouponId;
+    private CouponCourseShareBean courseShareBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,9 +137,12 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
 
         txtCourseName.setText(course.getName());
         txtCoachName.setText(course.getCoach().getName());
-        GlideLoader.getInstance().displayImage(course.getCoach().getAvatar(), imgCourse);
+        if(course.getImage() != null && course.getImage().size() > 0){
+            GlideLoader.getInstance().displayImage( course.getImage().get(0), imgCourse);
+        }
+
         txtCourseTime.setText(course.getClass_time());
-        txtRoomName.setText(course.getStore().getName());
+        txtRoomName.setText(course.getStore().getName()+"-"+course.getStore().getClassroom() + (TextUtils.isEmpty(course.getSeatChoosed())?"":course.getSeatChoosed()));
         txtCourseLocation.setText(course.getStore().getAddress());
 
         if (userCoach != null)
@@ -207,8 +213,11 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
     }
 
     @Override
-    public void onCourseAppointResult(CourseAppointBean appointment) {
+    public void onCourseAppointResult(CourseAppointResult appointment) {
         DialogUtils.dismissDialog();
+        if(appointment != null){
+            this.courseShareBean = appointment.getShare();
+        }
     }
 
     @Override
@@ -231,7 +240,7 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
             DialogUtils.dismissDialog();
             LocalBroadcastManager.getInstance(ConfirmOrderCourseActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS));
 
-            AppointSuccessActivity.start(ConfirmOrderCourseActivity.this, course.getClass_time(), true, null);
+            AppointCourseSuccessActivity.start(ConfirmOrderCourseActivity.this, course.getClass_time(), true, courseShareBean);
             Toast.makeText(ConfirmOrderCourseActivity.this, "支付成功", Toast.LENGTH_LONG).show();
             finish();
 
@@ -256,7 +265,7 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
         public void onFree() {
             DialogUtils.dismissDialog();
             LocalBroadcastManager.getInstance(ConfirmOrderCourseActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS));
-            AppointSuccessActivity.start(ConfirmOrderCourseActivity.this, course.getClass_time(), true, null);
+            AppointCourseSuccessActivity.start(ConfirmOrderCourseActivity.this, course.getClass_time(), true, courseShareBean);
             Toast.makeText(ConfirmOrderCourseActivity.this, "预约成功", Toast.LENGTH_LONG).show();
             finish();
 

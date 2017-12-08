@@ -28,7 +28,12 @@ public class ConfirmCourseQueuePresentImpl {
         model.submitCourseQueue(new BaseSubscriber<CourseQueueResult>(context) {
             @Override
             public void onNext(CourseQueueResult courseQueueResult) {
-                callback.onGetsubmitCourseQueue(courseQueueResult.getQueue());
+                if(courseQueueResult != null && courseQueueResult.getQueue() != null){
+                    callback.onGetsubmitCourseQueue(courseQueueResult.getQueue());
+                }else  if(courseQueueResult != null && courseQueueResult.getAppointment() != null){
+                    callback.onQueueAppointSuccess(courseQueueResult.getAppointment());
+                }
+
             }
 
             @Override

@@ -131,7 +131,7 @@ public class AppointmentCourseListQueueAdapter extends RecyclerView.Adapter<Appo
 
                 holder.state.setText(context.getString(R.string.canceled));
                 holder.txt_appoint_or_queue_number.setVisibility(View.VISIBLE);
-                holder.txt_appoint_or_queue_number.setText("预约码：" + bean.getId());
+                holder.txt_appoint_or_queue_number.setText("当前排队: 已取消");
                 holder.timerLayout.setVisibility(View.GONE);
 
                 holder.tvDelete.setVisibility(View.VISIBLE);
@@ -146,7 +146,7 @@ public class AppointmentCourseListQueueAdapter extends RecyclerView.Adapter<Appo
             case CourseAppointBean.absent:
                 holder.state.setText(context.getString(R.string.absent));
                 holder.txt_appoint_or_queue_number.setVisibility(View.VISIBLE);
-                holder.txt_appoint_or_queue_number.setText("预约码：" + bean.getId());
+                holder.txt_appoint_or_queue_number.setText("当前排队: 已旷课");
                 holder.timerLayout.setVisibility(View.GONE);
 
                 holder.tvDelete.setVisibility(View.VISIBLE);
@@ -161,7 +161,7 @@ public class AppointmentCourseListQueueAdapter extends RecyclerView.Adapter<Appo
             case CourseAppointBean.signed:
                 holder.state.setText(context.getString(R.string.signed));
                 holder.txt_appoint_or_queue_number.setVisibility(View.VISIBLE);
-                holder.txt_appoint_or_queue_number.setText("预约码：" + bean.getId());
+                holder.txt_appoint_or_queue_number.setText("当前排队: 已签到");
                 holder.timerLayout.setVisibility(View.GONE);
 
                 holder.tvDelete.setVisibility(View.VISIBLE);
@@ -176,7 +176,7 @@ public class AppointmentCourseListQueueAdapter extends RecyclerView.Adapter<Appo
 
                 holder.state.setText(context.getString(R.string.suspended));
                 holder.txt_appoint_or_queue_number.setVisibility(View.VISIBLE);
-                holder.txt_appoint_or_queue_number.setText("预约码：" + bean.getId());
+                holder.txt_appoint_or_queue_number.setText("当前排队: 已停课");
                 holder.timerLayout.setVisibility(View.GONE);
 
                 holder.tvDelete.setVisibility(View.VISIBLE);
@@ -211,10 +211,7 @@ public class AppointmentCourseListQueueAdapter extends RecyclerView.Adapter<Appo
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 CourseQueueDetailActivity.startFromAppoint(context,bean.getId());
-
-
 
             }
         });

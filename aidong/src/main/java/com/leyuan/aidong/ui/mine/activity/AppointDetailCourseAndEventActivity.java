@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.BaseBean;
 import com.leyuan.aidong.entity.PayOptionBean;
+import com.leyuan.aidong.entity.course.CouponCourseShareBean;
 import com.leyuan.aidong.entity.course.CourseAppointBean;
 import com.leyuan.aidong.entity.course.CourseAppointResult;
 import com.leyuan.aidong.entity.course.CourseBeanNew;
@@ -27,7 +28,7 @@ import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.module.pay.PayUtils;
 import com.leyuan.aidong.module.pay.SimplePayListener;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.home.activity.AppointSuccessActivity;
+import com.leyuan.aidong.ui.home.activity.AppointCourseSuccessActivity;
 import com.leyuan.aidong.ui.home.activity.CourseDetailNewActivity;
 import com.leyuan.aidong.ui.home.activity.MapActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.AppointmentCoursePresentImpl;
@@ -36,6 +37,7 @@ import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.DensityUtil;
 import com.leyuan.aidong.utils.DialogUtils;
+import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.ImageRectUtils;
 import com.leyuan.aidong.utils.QRCodeUtil;
@@ -97,6 +99,7 @@ public class AppointDetailCourseAndEventActivity extends BaseActivity implements
     private PayOptionBean payOptionBean;
     private LinearLayout layout_pay;
     private CourseBeanNew course;
+    private CouponCourseShareBean courseShareBean;
 
 
     public static void appointStart(Context context, String appointId) {
@@ -195,6 +198,7 @@ public class AppointDetailCourseAndEventActivity extends BaseActivity implements
         this.appointBean = appointResult.getAppointment();
         this.course = appointBean.getTimetable();
         payOptionBean = appointResult.getPayment();
+        this.courseShareBean = appointResult.getShare();
         if (appointBean == null) {
             //show Empty Layout
             return;
@@ -207,14 +211,15 @@ public class AppointDetailCourseAndEventActivity extends BaseActivity implements
 
         txtCourseTime.setText(appointBean.getTimetable().getClass_time());
         webView.setRichText(appointBean.getIntroduce());
-        txtRoomName.setText(appointBean.getTimetable().getStore().getRoom());
-        txtCourseLocation.setText(appointBean.getTimetable().getStore().getAddress());
+        txtRoomName.setText(appointBean.getTimetable().getStore().getRoom()+" ("+ (appointBean.getSeat()==null?"":appointBean.getSeat())+")");
+        txtCourseLocation.setText(appointBean.getTimetable().getStore().getAddress() );
         tvPrice.setText(appointBean.getPay_amount());
         llTimer.setVisibility(View.GONE);
 
         tvQrNum.setText(appointBean.getId());
         dvQr.setImageBitmap(QRCodeUtil.createBarcode(this, Color.BLACK, appointBean.getId(),
                 DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
+        tv_cancel_appoint.setText("取消预约");
 
         switch (appointBean.getFinalStatus()) {
 
@@ -241,6 +246,12 @@ public class AppointDetailCourseAndEventActivity extends BaseActivity implements
                 rlQrCode.setVisibility(View.VISIBLE);
                 tvState.setText(getString(R.string.with_sign_in));
                 tv_cancel_appoint.setVisibility(View.VISIBLE);
+
+                if(FormatUtil.parseDouble(appointBean.getPay_amount()) > 0){
+                    tv_cancel_appoint.setText("取消预约-申请退款");
+                }else {
+                    tv_cancel_appoint.setText("取消预约");
+                }
                 break;
 
             case CourseAppointBean.canceled:
@@ -257,10 +268,13 @@ public class AppointDetailCourseAndEventActivity extends BaseActivity implements
                 break;
 
             case CourseAppointBean.absent:
+                tvQrNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                dvQr.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFFebebeb, appointBean.getId(),
+                        DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
+
                 rlQrCode.setVisibility(View.VISIBLE);
                 tvState.setText(getString(R.string.absent));
                 tvDelete.setVisibility(View.VISIBLE);
-
 
                 break;
             case CourseAppointBean.signed:
@@ -351,7 +365,7 @@ public class AppointDetailCourseAndEventActivity extends BaseActivity implements
 
             LocalBroadcastManager.getInstance(AppointDetailCourseAndEventActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS));
 
-            AppointSuccessActivity.start(AppointDetailCourseAndEventActivity.this, appointBean.getTimetable().getClass_time(), true, null);
+            AppointCourseSuccessActivity.start(AppointDetailCourseAndEventActivity.this, appointBean.getTimetable().getClass_time(), true,courseShareBean );
             Toast.makeText(AppointDetailCourseAndEventActivity.this, "支付成功", Toast.LENGTH_LONG).show();
             finish();
         }
@@ -371,7 +385,7 @@ public class AppointDetailCourseAndEventActivity extends BaseActivity implements
         public void onFree() {
             LocalBroadcastManager.getInstance(AppointDetailCourseAndEventActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS));
 
-            AppointSuccessActivity.start(AppointDetailCourseAndEventActivity.this, appointBean.getTimetable().getClass_time(), true, null);
+            AppointCourseSuccessActivity.start(AppointDetailCourseAndEventActivity.this, appointBean.getTimetable().getClass_time(), true, courseShareBean);
             Toast.makeText(AppointDetailCourseAndEventActivity.this, "预约成功", Toast.LENGTH_LONG).show();
             finish();
         }

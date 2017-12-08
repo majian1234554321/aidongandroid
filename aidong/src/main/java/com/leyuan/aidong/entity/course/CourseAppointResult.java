@@ -12,6 +12,7 @@ public class CourseAppointResult {
     CourseAppointBean appointment;
     PayCourseOptionBean payment;
     PayOptionBean realPayment;
+    CouponCourseShareBean share;
 
     public PayOptionBean getPayment() {
         if(payment != null&& realPayment == null){
@@ -44,5 +45,13 @@ public class CourseAppointResult {
         public WeiXinPayBean getWx() {
             return wx;
         }
+    }
+
+    public CouponCourseShareBean getShare() {
+        return share;
+    }
+
+    public void setShare(CouponCourseShareBean share) {
+        this.share = share;
     }
 }

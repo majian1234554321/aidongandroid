@@ -12,14 +12,15 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.CouponBean;
+import com.leyuan.aidong.entity.course.CourseAppointBean;
 import com.leyuan.aidong.entity.course.CourseBeanNew;
 import com.leyuan.aidong.entity.course.CourseQueueBean;
 import com.leyuan.aidong.entity.course.CourseStore;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.mine.activity.AppointDetailCourseAndEventActivity;
 import com.leyuan.aidong.ui.mine.activity.SelectCouponActivity;
-import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.ConfirmCourseQueuePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.ConfirmCourseQueueView;
 import com.leyuan.aidong.utils.Constant;
@@ -128,10 +129,14 @@ public class CourseQueueConfirmActivity extends BaseActivity implements View.OnC
         confirmOrderCoursePresent = new ConfirmCourseQueuePresentImpl(this, this);
         confirmOrderCoursePresent.getCourseAvaliableCoupons(course.getId());
 
-        txtQueueLocation.setText("当前排队:第"+course.getMyQueue_number()+"位");
+        txtQueueLocation.setText("当前排队:第" + course.getMyQueue_number() + "位");
         txtCourseName.setText(course.getName());
         txtCoachName.setText(course.getCoach().getName());
-        GlideLoader.getInstance().displayImage(course.getCoach().getAvatar(), imgCourse);
+
+        if (course.getImage() != null && course.getImage().size() > 0) {
+            GlideLoader.getInstance().displayImage(course.getImage().get(0), imgCourse);
+        }
+
         txtCourseTime.setText(course.getClass_time());
         txtRoomName.setText(course.getStore().getName());
         txtCourseLocation.setText(course.getStore().getAddress());
@@ -156,15 +161,16 @@ public class CourseQueueConfirmActivity extends BaseActivity implements View.OnC
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_queue_immediately:
-                DialogUtils.showDialog(this,"",false);
+                DialogUtils.showDialog(this, "", false);
                 confirmOrderCoursePresent.submitCourseQueue(course.getId(), couponId);
                 break;
             case R.id.img_left:
                 finish();
                 break;
             case R.id.layout_course_coach:
-                if (course.getCoach() != null)
-                    UserInfoActivity.start(this, course.getCoach().getContact());
+                if (course != null)
+                    CourseDetailNewActivity.start(this, course.getId());
+//                    UserInfoActivity.start(this, course.getCoach().getContact());
                 break;
             case R.id.layout_course_location:
                 CourseStore store = course.getStore();
@@ -209,6 +215,13 @@ public class CourseQueueConfirmActivity extends BaseActivity implements View.OnC
     @Override
     public void onGetCourseAvaliableCoupons(List<CouponBean> coupon) {
         this.usableCoupons = coupon;
+    }
+
+    @Override
+    public void onQueueAppointSuccess(CourseAppointBean appointment) {
+        if (appointment != null) {
+            AppointDetailCourseAndEventActivity.appointStart(this, appointment.getId());
+        }
     }
 
 

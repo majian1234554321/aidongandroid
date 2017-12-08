@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
@@ -31,6 +32,7 @@ import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.GlideLoader;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.richtext.RichWebView;
 import com.zzhoujay.richtext.RichText;
@@ -43,6 +45,7 @@ import cn.bingoogolapple.bgabanner.BGABanner;
 
 public class CourseDetailNewActivity extends BaseActivity implements View.OnClickListener, CourseDetailViewNew {
 
+    private static final java.lang.String TAG = "CourseDetailNewActivity";
     private ScrollView scrollView;
     private BGABanner banner;
     private TextView txtCourseName;
@@ -73,6 +76,8 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
     private ApplicantAdapter applicantAdapter;
     private SharePopupWindow sharePopupWindow;
     private CourseBeanNew course;
+    private Handler handler = new Handler();
+
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -246,10 +251,12 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
                     case CourseBeanNew.APPOINTED:
                         //跳查看预约
                         AppointDetailCourseAndEventActivity.courseStart(this, course.getId());
+
                         break;
                     case CourseBeanNew.APPOINTED_NO_PAY:
                         ///跳查看预约
                         AppointDetailCourseAndEventActivity.courseStart(this, course.getId());
+
                         break;
                     case CourseBeanNew.QUEUED:
 
@@ -292,6 +299,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
             GlideLoader.getInstance().displayImage(course.getCoach().getAvatar(), imgCoachAvatar);
         }
 
+        tvPrice.setVisibility(View.VISIBLE);
         txtNormalPrice.setText("￥ " + course.getPrice());
         txtMemberPrice.setText("会员价: ￥" + course.getMember_price());
         txtCourseTime.setText(course.getClass_time());
@@ -372,11 +380,19 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
 
 
         if (DateUtils.compareLongTime(course.getReserve_time()) > 0) {
-            tvPrice.setText("");
+            tvPrice.setVisibility(View.GONE);
             tvState.setText("预约开始时间:" + course.getReserve_time());
             tvState.setTextColor(getResources().getColor(R.color.white));
             llApply.setBackgroundColor(getResources().getColor(R.color.black));
             llApply.setClickable(false);
+
+            Logger.i(TAG,"DateUtils.compareLongTime(course.getReserve_time()) = " + DateUtils.compareLongTime(course.getReserve_time()));
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    coursePresent.getCourseDetail(code);
+                }
+            },DateUtils.compareLongTime(course.getReserve_time())+2000);
         }
 
         if (course.isMember_only()) {
@@ -408,5 +424,6 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
         RichText.clear(this);
         sharePopupWindow.release();
+        handler.removeCallbacksAndMessages(null);
     }
 }

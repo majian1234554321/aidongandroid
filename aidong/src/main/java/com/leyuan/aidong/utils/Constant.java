@@ -103,6 +103,12 @@ public class Constant {
     public static final String BROADCAST_ACTION_COURSE_QUEUE_CANCELED = "broadcast_action_course_queue_canceled";
     public static final String BROADCAST_ACTION_COURSE_QUEUE_DELETED = "broadcast_action_course_queue_deleted";
 
+    public static final String BROADCAST_ACTION_CAMPAIGN_PAY_SUCCESS = "broadcast_action_campaign_pay_success";
+    public static final String BROADCAST_ACTION_CAMPAIGN_PAY_FAILED = "broadcast_action_campaign_pay_fail";
+    public static final String BROADCAST_ACTION_CAMPAIGN_APPOINT_CANCEL = "broadcast_action_campaign_appoint_cancel";
+    public static final String BROADCAST_ACTION_CAMPAIGN_APPOINT_DELETE = "broadcast_action_campaign_appoint_delete";
+    public static final String BROADCAST_ACTION_CAMPAIGN_APPOINT_CONFIRM = "broadcast_action_campaign_appoint_confirm";
+
     public static List<VenuesBean> gyms;
     public static SystemBean systemInfoBean;
     public static String activityOnLogin; //课程视频底部提示文字(登录状态下)

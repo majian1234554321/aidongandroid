@@ -17,6 +17,24 @@ public class AppointmentBean {
     private String status;                  //订单状态
     private String little_time;             //订单剩余支付时间
     private String created_at;
+    private String no;
+    private int pay_type;
+
+    public String getNo() {
+        return no;
+    }
+
+    public void setNo(String no) {
+        this.no = no;
+    }
+
+    public int getPay_type() {
+        return pay_type;
+    }
+
+    public void setPay_type(int pay_type) {
+        this.pay_type = pay_type;
+    }
 
     public String getId() {
         return id;

@@ -258,6 +258,9 @@
             android:name=".ui.home.activity.ConfirmOrderCourseActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.home.activity.AppointCourseSuccessActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.mine.activity.UserInfoActivity"
             android:screenOrientation="portrait" />
         <activity

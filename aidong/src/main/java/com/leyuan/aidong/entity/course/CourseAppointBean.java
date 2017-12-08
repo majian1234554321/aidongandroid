@@ -34,7 +34,7 @@ public class CourseAppointBean {
     CourseBeanNew timetable;
     CourseStore store;
     String introduce;
-
+    String seat;
     PayOptionBean payment;
     String pay_amount; //付款金额
     String order_status; //订单状态: canceled-已取消，pending-待支付，paid-已支付，refunded-已退款
@@ -75,6 +75,14 @@ public class CourseAppointBean {
 
     public void setStore(CourseStore store) {
         this.store = store;
+    }
+
+    public String getSeat() {
+        return seat;
+    }
+
+    public void setSeat(String seat) {
+        this.seat = seat;
     }
 
     public PayOptionBean getPayment() {

@@ -52,7 +52,7 @@ public class ConfirmOrderCoursePresentImpl {
                     @Override
                     public void onNext(CourseAppointResult courseAppointResult) {
 
-                        callback.onCourseAppointResult(courseAppointResult.getAppointment());
+                        callback.onCourseAppointResult(courseAppointResult);
                         if (courseAppointResult.getAppointment() != null &&
                                 courseAppointResult.getAppointment().getFinalStatus().equals(CourseAppointBean.paid)) {
                             listener.onFree();

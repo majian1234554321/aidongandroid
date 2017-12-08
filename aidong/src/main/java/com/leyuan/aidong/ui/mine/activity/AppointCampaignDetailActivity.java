@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -267,8 +268,8 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         tvCampaignOrganization.setRightContent(bean.getAppoint().getOrganizer());
         tvCampaignTime.setRightContent(bean.getAppoint().getClassTime());
         txtCourseLocation.setText(bean.getAppoint().getAddress());
-        txtRoomName.setText("");
-        tvInfo.setText(bean.getSubName());
+        txtRoomName.setText(bean.getSubName());
+        tvInfo.setText(bean.getAppoint().getOrganizer());
 
         tvCampaignAddress.setRightContent(bean.getAppoint().getAddress());
         tvPrice.setText(String.format(getString(R.string.rmb_price_double),
@@ -511,6 +512,8 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         public void onSuccess(String code, Object object) {
             ToastGlobal.showLong("支付成功");
             AppointSuccessActivity.start(AppointCampaignDetailActivity.this, null, false, present.getShareInfo());
+            LocalBroadcastManager.getInstance(AppointCampaignDetailActivity.this)
+                    .sendBroadcast(new Intent(Constant.BROADCAST_ACTION_CAMPAIGN_PAY_SUCCESS));
 
 
 
@@ -518,6 +521,8 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
 
         @Override
         public void onFree() {
+            LocalBroadcastManager.getInstance(AppointCampaignDetailActivity.this)
+                    .sendBroadcast(new Intent(Constant.BROADCAST_ACTION_CAMPAIGN_PAY_SUCCESS));
             AppointSuccessActivity.start(AppointCampaignDetailActivity.this, bean.getAppoint().getClassTime(), false, present.getShareInfo());
         }
     };
@@ -541,6 +546,8 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         if (baseBean.getStatus() == Constant.OK) {
             getCampaignDetailData();
             ToastGlobal.showLong("取消成功");
+            LocalBroadcastManager.getInstance(AppointCampaignDetailActivity.this)
+                    .sendBroadcast(new Intent(Constant.BROADCAST_ACTION_CAMPAIGN_APPOINT_CANCEL));
         } else {
             ToastGlobal.showLong(baseBean.getMessage());
         }
@@ -551,6 +558,8 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         if (baseBean.getStatus() == Constant.OK) {
             getCampaignDetailData();
             ToastGlobal.showLong("确认成功");
+            LocalBroadcastManager.getInstance(AppointCampaignDetailActivity.this)
+                    .sendBroadcast(new Intent(Constant.BROADCAST_ACTION_CAMPAIGN_APPOINT_CONFIRM));
         } else {
             ToastGlobal.showLong(baseBean.getMessage());
         }
@@ -559,8 +568,12 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
     @Override
     public void deleteAppointmentResult(BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
-            finish();
             ToastGlobal.showLong("删除成功");
+            LocalBroadcastManager.getInstance(AppointCampaignDetailActivity.this)
+                    .sendBroadcast(new Intent(Constant.BROADCAST_ACTION_CAMPAIGN_APPOINT_DELETE));
+            finish();
+
+
         } else {
             ToastGlobal.showLong(baseBean.getMessage());
         }

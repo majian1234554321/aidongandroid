@@ -47,6 +47,8 @@ import static com.leyuan.aidong.utils.Constant.REQUEST_SELECT_COUPON;
  * Created by song on 2016/9/12.
  */
 //todo 与活动预约界面合成一个界面
+
+@Deprecated
 public class AppointCourseActivity extends BaseActivity implements View.OnClickListener,
         CustomNestRadioGroup.OnCheckedChangeListener, AppointCourseActivityView {
     private SimpleTitleBar titleBar;

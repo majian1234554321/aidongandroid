@@ -420,7 +420,7 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
                 if(TextUtils.equals(currentMineArea.getName(),"全部区域")){
                     tvStore.setText("我的"+currentMineStore.getName());
                 }else {
-                    tvStore.setText(currentMineArea.getName()+currentMineStore.getName());
+                    tvStore.setText("我的"+currentMineArea.getName()+currentMineStore.getName());
                 }
             }else {
                 tvStore.setText(currentMineStore.getName());

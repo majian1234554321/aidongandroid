@@ -1,7 +1,7 @@
 package com.leyuan.aidong.ui.mvp.view;
 
 import com.leyuan.aidong.entity.CouponBean;
-import com.leyuan.aidong.entity.course.CourseAppointBean;
+import com.leyuan.aidong.entity.course.CourseAppointResult;
 
 import java.util.List;
 
@@ -11,5 +11,5 @@ import java.util.List;
 public interface ConfirmOrderCourseView {
     void onGetCourseAvaliableCoupons(List<CouponBean> coupon);
 
-    void onCourseAppointResult(CourseAppointBean appointment);
+    void onCourseAppointResult(CourseAppointResult appointment);
 }

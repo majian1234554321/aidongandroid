@@ -1,8 +1,11 @@
 package com.leyuan.aidong.ui.home.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +20,7 @@ import com.leyuan.aidong.adapter.course.CourseChooseSeatIndexAdapter;
 import com.leyuan.aidong.entity.course.CourseBeanNew;
 import com.leyuan.aidong.entity.course.CourseSeat;
 import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.widget.CommonTitleLayout;
 
@@ -36,6 +40,26 @@ public class CourseChooseSeat extends BaseActivity implements View.OnClickListen
     private CourseChooseSeatAdapter adapterSeat;
     private String positionSeat;
 
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action == null) return;
+
+            switch (action) {
+                case Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS:
+                    finish();
+                    break;
+                case Constant.BROADCAST_ACTION_COURSE_PAY_SFAIL:
+                    finish();
+                    break;
+                case Constant.BROADCAST_ACTION_COURSE_QUEUE_SUCCESS:
+                    finish();
+                    break;
+            }
+        }
+    };
+
     public static void start(Context context, CourseBeanNew course) {
         Intent intent = new Intent(context, CourseChooseSeat.class);
         intent.putExtra("course", course);
@@ -50,6 +74,7 @@ public class CourseChooseSeat extends BaseActivity implements View.OnClickListen
 
         initView();
         initData();
+        setListener();
     }
 
     private void initView() {
@@ -65,6 +90,17 @@ public class CourseChooseSeat extends BaseActivity implements View.OnClickListen
         txtSeatChoosed = (TextView) findViewById(R.id.txt_seat_choosed);
         findViewById(R.id.bt_clear_choosed).setOnClickListener(this);
         layoutShowChooseType = (LinearLayout) findViewById(R.id.layout_show_choose_type);
+    }
+
+    private void setListener() {
+
+        IntentFilter filter = new IntentFilter();
+
+        filter.addAction(Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS);
+        filter.addAction(Constant.BROADCAST_ACTION_COURSE_PAY_SFAIL);
+        filter.addAction(Constant.BROADCAST_ACTION_COURSE_QUEUE_SUCCESS);
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
     }
 
     private void initData() {
@@ -125,5 +161,12 @@ public class CourseChooseSeat extends BaseActivity implements View.OnClickListen
         txtSeatChoosed.setText("已选"+positionSeat);
         layoutShowChooseType.setVisibility(View.GONE);
         layoutCourseChoosed.setVisibility(View.VISIBLE);
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
     }
 }

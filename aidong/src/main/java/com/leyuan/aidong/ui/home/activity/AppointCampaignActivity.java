@@ -17,7 +17,7 @@ import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.module.pay.SimplePayListener;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mine.activity.AppointmentActivity;
+import com.leyuan.aidong.ui.mine.activity.AppointmentMineActivityNew;
 import com.leyuan.aidong.ui.mine.activity.SelectCouponActivity;
 import com.leyuan.aidong.ui.mine.activity.setting.PhoneBindingActivity;
 import com.leyuan.aidong.ui.mine.activity.setting.PhoneUnBindingActivity;
@@ -213,7 +213,9 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
         @Override
         public void onFail(String code, Object object) {
             super.onFail(code, object);
-            startActivity(new Intent(AppointCampaignActivity.this, AppointmentActivity.class));
+            AppointmentMineActivityNew.start(AppointCampaignActivity.this,3);
+
+//            startActivity(new Intent(AppointCampaignActivity.this, AppointmentActivity.class));
             finish();
         }
 

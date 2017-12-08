@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.mvp.view;
 
 import com.leyuan.aidong.entity.CouponBean;
+import com.leyuan.aidong.entity.course.CourseAppointBean;
 import com.leyuan.aidong.entity.course.CourseQueueBean;
 
 import java.util.List;
@@ -12,4 +13,6 @@ public interface ConfirmCourseQueueView {
     void onGetsubmitCourseQueue(CourseQueueBean queue);
 
     void onGetCourseAvaliableCoupons(List<CouponBean> coupon);
+
+    void onQueueAppointSuccess(CourseAppointBean appointment);
 }
