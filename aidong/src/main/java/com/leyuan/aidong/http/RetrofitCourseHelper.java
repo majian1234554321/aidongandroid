@@ -3,8 +3,10 @@ package com.leyuan.aidong.http;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.leyuan.aidong.config.UrlConfig;
 import com.leyuan.aidong.ui.App;
+import com.leyuan.aidong.utils.DeviceManager;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
@@ -53,12 +55,12 @@ public class RetrofitCourseHelper {
                             if (App.getInstance().getUser().getMobile() != null)
                                 builder.addHeader("mobile", App.getInstance().getUser().getMobile());
                         }
-//                        builder.addHeader("city", URLEncoder.encode(App.getInstance().getSelectedCity(), "UTF-8"));
-//                        builder.addHeader("lat", String.valueOf(App.lat));
-//                        builder.addHeader("lng", String.valueOf(App.lon));
-//                        builder.addHeader("device", "android");
-//                        builder.addHeader("ver", App.getInstance().getVersionName());
-//                        builder.addHeader("os", DeviceManager.getPhoneBrand());
+                        builder.addHeader("city", URLEncoder.encode(App.getInstance().getSelectedCity(), "UTF-8"));
+                        builder.addHeader("lat", String.valueOf(App.lat));
+                        builder.addHeader("lng", String.valueOf(App.lon));
+                        builder.addHeader("device", "android");
+                        builder.addHeader("ver", App.getInstance().getVersionName());
+                        builder.addHeader("os", DeviceManager.getPhoneBrand());
 
                         Request authorised = builder.build();
                         return chain.proceed(authorised);

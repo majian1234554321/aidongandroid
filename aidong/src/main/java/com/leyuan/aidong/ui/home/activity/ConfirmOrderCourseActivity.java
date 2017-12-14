@@ -23,7 +23,7 @@ import com.leyuan.aidong.module.pay.PayInterface;
 import com.leyuan.aidong.module.pay.SimplePayListener;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mine.activity.AppointmentMineActivityNew;
+import com.leyuan.aidong.ui.mine.activity.AppointmentMineCourseActivityNew;
 import com.leyuan.aidong.ui.mine.activity.SelectCouponActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.ConfirmOrderCoursePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.ConfirmOrderCourseView;
@@ -119,7 +119,7 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
 
     private void initData() {
 
-        if (course.isMember_only() && course.isMember()) {
+        if ( course.isMember()) {
             realPrice = course.getMember_price();
             txtPriceTotal.setText("￥" + course.getMember_price());
             txtPriceReal.setText("￥" + realPrice);
@@ -172,7 +172,7 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
             case R.id.layout_course_location:
                 CourseStore store = course.getStore();
                 if (store != null) {
-                    MapActivity.start(this, course.getName(), store.getName(), store.getAddress(),
+                    MapActivity.start(this, store.getName(), store.getName(), store.getAddress(),
                             store.getCoordinate()[0] + "", store.getCoordinate()[1] + "");
                 }
                 break;
@@ -256,7 +256,7 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
 
             Toast.makeText(ConfirmOrderCourseActivity.this, "支付失败", Toast.LENGTH_LONG).show();
 
-            AppointmentMineActivityNew.start(ConfirmOrderCourseActivity.this,0);
+            AppointmentMineCourseActivityNew.start(ConfirmOrderCourseActivity.this,0);
             finish();
 
         }

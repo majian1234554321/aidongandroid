@@ -33,7 +33,8 @@ public class CourseChooseSeatAdapter extends RecyclerView.Adapter<CourseChooseSe
 
     @Override
     public void onBindViewHolder(final ViewHoder holder, final int position) {
-        final String positionSeat = seat.transformePositionToSeat(position);
+         String positionSeat = seat.transformePositionToSeatX(position);
+      final  String positionSeatS = seat.transformePositionToSeatS(position);
 
         int state = -1;
 //        Logger.i("seat", "positionSeat = " + positionSeat+",positionSelected = " +positionSelected);
@@ -69,12 +70,12 @@ public class CourseChooseSeatAdapter extends RecyclerView.Adapter<CourseChooseSe
 
                     positionSelected = position;
                     holder.img_seat.setImageResource(R.drawable.icon_course_choose_yixuan);
-                    listener.onSeatChoosed(positionSeat);
+                    listener.onSeatChoosed(positionSeatS);
                 } else {
                     ToastGlobal.showShortConsecutive("该位置不可选");
                 }
 
-                Logger.i("seat", "setOnClickListener = " + positionSeat + ",positionSelected = " + positionSelected);
+                Logger.i("seat", "setOnClickListener = " + positionSeatS + ",positionSelected = " + positionSelected);
             }
         });
     }

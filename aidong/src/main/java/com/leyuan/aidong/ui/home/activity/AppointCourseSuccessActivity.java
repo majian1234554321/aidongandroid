@@ -15,7 +15,7 @@ import com.leyuan.aidong.entity.GoodsBean;
 import com.leyuan.aidong.entity.course.CouponCourseShareBean;
 import com.leyuan.aidong.ui.BaseActivity;
 import com.leyuan.aidong.ui.MainActivity;
-import com.leyuan.aidong.ui.mine.activity.AppointmentMineActivityNew;
+import com.leyuan.aidong.ui.mine.activity.AppointmentMineCourseActivityNew;
 import com.leyuan.aidong.ui.mine.activity.CouponShareActivity;
 import com.leyuan.aidong.ui.mvp.presenter.RecommendPresent;
 import com.leyuan.aidong.ui.mvp.presenter.impl.RecommendPresentImpl;
@@ -124,7 +124,8 @@ public class AppointCourseSuccessActivity extends BaseActivity implements View.O
                 finish();
                 break;
             case R.id.tv_appointment:
-                AppointmentMineActivityNew.start(this, 0);
+
+                AppointmentMineCourseActivityNew.start(this, 0);
                 finish();
 
 //                startActivity(new Intent(this, AppointmentActivity.class));

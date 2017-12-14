@@ -43,6 +43,8 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  * 课程详情
  * Created by song on 2016/11/15.
  */
+
+@Deprecated
 public class CourseDetailActivity extends BaseActivity implements View.OnClickListener, CourseDetailActivityView {
     private static final String STATUS_APPOINT = "1";       //马上预约
     private static final String STATUS_NOT_START = "2";     //即将开始预约

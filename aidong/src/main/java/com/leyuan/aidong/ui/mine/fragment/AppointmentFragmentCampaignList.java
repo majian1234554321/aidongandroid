@@ -44,7 +44,7 @@ import java.util.List;
  * 预约
  * Created by song on 2016/8/31.
  */
-public class AppointmentFragment extends BaseLazyFragment implements AppointmentFragmentView {
+public class AppointmentFragmentCampaignList extends BaseLazyFragment implements AppointmentFragmentView {
     public static final String ALL = "all";
     public static final String JOINED = "signed";
     public static final String UN_JOIN = "unsigned";
@@ -80,8 +80,8 @@ public class AppointmentFragment extends BaseLazyFragment implements Appointment
     };
 
 
-    public static AppointmentFragment newInstance(String type) {
-        AppointmentFragment fragment = new AppointmentFragment();
+    public static AppointmentFragmentCampaignList newInstance(String type) {
+        AppointmentFragmentCampaignList fragment = new AppointmentFragmentCampaignList();
         Bundle bundle = new Bundle();
         bundle.putString("type", type);
         fragment.setArguments(bundle);

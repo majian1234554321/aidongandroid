@@ -10,11 +10,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.video.WatchOfficeCourseBean;
-import com.leyuan.aidong.ui.App;
-import com.leyuan.aidong.ui.home.activity.CourseActivity;
-import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.utils.GlideLoader;
-import com.leyuan.aidong.utils.UiManager;
 
 import java.util.List;
 

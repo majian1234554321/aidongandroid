@@ -1,6 +1,7 @@
 package com.leyuan.aidong.ui.mvp.presenter.impl;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.leyuan.aidong.entity.course.CourseAppointBean;
 import com.leyuan.aidong.entity.course.CourseAppointResult;
@@ -54,7 +55,8 @@ public class ConfirmOrderCoursePresentImpl {
 
                         callback.onCourseAppointResult(courseAppointResult);
                         if (courseAppointResult.getAppointment() != null &&
-                                courseAppointResult.getAppointment().getFinalStatus().equals(CourseAppointBean.paid)) {
+                                TextUtils.equals(courseAppointResult.getAppointment().getOrder_status(),CourseAppointBean.paid)){
+//                                courseAppointResult.getAppointment().getOrder_status().equals(CourseAppointBean.paid)) {
                             listener.onFree();
                         } else {
                             PayUtils.pay(context, payType, courseAppointResult.getPayment(), listener);

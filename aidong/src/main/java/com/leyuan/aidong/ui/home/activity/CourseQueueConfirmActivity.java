@@ -19,7 +19,7 @@ import com.leyuan.aidong.entity.course.CourseStore;
 import com.leyuan.aidong.entity.model.UserCoach;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mine.activity.AppointDetailCourseAndEventActivity;
+import com.leyuan.aidong.ui.mine.activity.AppointDetailCourseNewActivity;
 import com.leyuan.aidong.ui.mine.activity.SelectCouponActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.ConfirmCourseQueuePresentImpl;
 import com.leyuan.aidong.ui.mvp.view.ConfirmCourseQueueView;
@@ -175,7 +175,7 @@ public class CourseQueueConfirmActivity extends BaseActivity implements View.OnC
             case R.id.layout_course_location:
                 CourseStore store = course.getStore();
                 if (store != null) {
-                    MapActivity.start(this, course.getName(), store.getName(), store.getAddress(),
+                    MapActivity.start(this, store.getName(), store.getName(), store.getAddress(),
                             store.getCoordinate()[0] + "", store.getCoordinate()[1] + "");
                 }
                 break;
@@ -220,7 +220,7 @@ public class CourseQueueConfirmActivity extends BaseActivity implements View.OnC
     @Override
     public void onQueueAppointSuccess(CourseAppointBean appointment) {
         if (appointment != null) {
-            AppointDetailCourseAndEventActivity.appointStart(this, appointment.getId());
+            AppointDetailCourseNewActivity.appointStart(this, appointment.getId());
         }
     }
 

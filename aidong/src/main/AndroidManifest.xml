@@ -251,14 +251,16 @@
             android:name=".ui.mine.activity.AppointCourseDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.AppointDetailCourseAndEventActivity"
+            android:name=".ui.mine.activity.AppointDetailCourseNewActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.home.activity.ConfirmOrderCourseActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.home.activity.AppointCourseSuccessActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mine.activity.AppointmentMineCampaignActivityNew"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.mine.activity.UserInfoActivity"
@@ -585,7 +587,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar" -->
         <receiver
             android:name=".receivers.WeixinRegisterReceiver"
@@ -839,7 +841,7 @@
                 android:resource="@xml/file_provider" />
         </provider>
 
-
+        <activity android:name=".ui.mine.activity.AppointmentMineCourseActivityNew"></activity>
     </application>
 
 </manifest>

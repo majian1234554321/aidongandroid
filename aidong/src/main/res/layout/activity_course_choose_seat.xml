@@ -28,7 +28,9 @@
                 android:id="@+id/txt_class_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="WerErShi"
+                android:singleLine="true"
+                android:maxWidth="200dp"
+
                 android:textColor="@color/black"
                 android:textSize="15sp" />
 
@@ -37,7 +39,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:text="1027-10-23 13:55-14:55"
                 android:textColor="@color/main_red"
                 android:textSize="12sp" />
 
@@ -54,15 +55,22 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
-
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="6dp"
-                    android:text="@string/coach"
-                    android:textColor="@color/white"
-                    android:textSize="15sp" />
+                    android:src="@drawable/icon_course_choose_seat_coach"
+                    />
+
+                <!--<TextView-->
+
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center_horizontal"-->
+                    <!--android:layout_marginTop="6dp"-->
+                    <!--android:text="@string/coach"-->
+                    <!--android:textColor="@color/white"-->
+                    <!--android:textSize="15sp" />-->
 
                 <LinearLayout
                     android:layout_width="match_parent"

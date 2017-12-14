@@ -52,6 +52,7 @@ import static com.leyuan.aidong.utils.Constant.PAY_WEIXIN;
  * Created by song on 2016/9/2.
  */
 //todo 与活动预约详情界面合成一个界面
+@Deprecated
 public class AppointCourseDetailActivity extends BaseActivity implements AppointmentDetailActivityView,
         View.OnClickListener, CustomNestRadioGroup.OnCheckedChangeListener, CountdownView.OnCountdownEndListener {
     private static final String UN_PAID = "pending";         //待付款

@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.transition.ChangeTransform;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -61,5 +62,12 @@ public class BarcodeActivity extends BaseActivity{
         Bitmap barcode = QRCodeUtil.createBarcode(this, 0xFF000000, code, width, DensityUtil.dp2px(this, 125), false);
         Bitmap bitmap = Utils.rotateBitmap(barcode, 90);
         ivCode.setImageBitmap(bitmap);
+
+        ivCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }

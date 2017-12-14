@@ -77,7 +77,7 @@ public class AppointmentCourseListQueueAdapter extends RecyclerView.Adapter<Appo
 //
 //        }
 
-        switch (bean.getFinalStatus()) {
+        switch (bean.getQueueFinalStatus()) {
             case CourseAppointBean.queued:
                 holder.state.setText(context.getString(R.string.queueing));
                 holder.txt_appoint_or_queue_number.setVisibility(View.VISIBLE);

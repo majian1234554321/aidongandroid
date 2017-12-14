@@ -103,7 +103,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
     private ExtendTextView tvAiDou;
     private ExtendTextView tvStartTime;
     private ExtendTextView tvPayTime;
-    private ExtendTextView tvPayType;
+    private ExtendTextView tvPayType,tv_appoint_phone;
 
     //支付方式信息
     private LinearLayout payLayout;
@@ -206,6 +206,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
         tvStartTime = (ExtendTextView) findViewById(R.id.tv_start_time);
         tvPayTime = (ExtendTextView) findViewById(R.id.tv_pay_time);
         tvPayType = (ExtendTextView) findViewById(R.id.tv_pay_type);
+        tv_appoint_phone = (ExtendTextView) findViewById(R.id.tv_appoint_phone);
 
         payLayout = (LinearLayout) findViewById(R.id.ll_pay);
         payGroup = (CustomNestRadioGroup) findViewById(R.id.radio_group);
@@ -282,6 +283,8 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 FormatUtil.parseDouble(bean.getPay().getIntegral())));
         tvTotalPrice.setRightContent(String.format(getString(R.string.rmb_price_double),
                 FormatUtil.parseDouble(bean.getPay().getTotal())));
+        tv_appoint_phone.setRightContent(bean.getAppoint().getMobile());
+
         tvStartTime.setRightContent(bean.getPay().getCreatedAt());
         tvPayType.setRightContent(PAY_ALI.equals(bean.getPay().getPayType()) ? "支付宝" : "微信");
 
@@ -487,7 +490,7 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
                 break;
             case R.id.dv_qr:
                 if (UN_JOIN.equals(status)) {
-                    BarcodeActivity.start(this, bean.getId(), ImageRectUtils.getDrawableBoundsInView(ivCode));
+                    BarcodeActivity.start(this, bean.getAppoint().getVerify_no(), ImageRectUtils.getDrawableBoundsInView(ivCode));
                 }
                 break;
             case R.id.txt_course_room:

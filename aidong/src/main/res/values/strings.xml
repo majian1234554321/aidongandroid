@@ -339,4 +339,7 @@
     <string name="appointment_choose_seat">预约选座</string>
     <string name="store_all">全部门店</string>
     <string name="wait_pay_appointed">待付款-已预约</string>
+    <string name="my_course">我的课程</string>
+    <string name="my_campaign">我的活动</string>
+    <string name="immediately_appoint_course">立即约课</string>
 </resources>

@@ -22,6 +22,7 @@ import java.util.List;
  * 场馆详情界面课程列表适配器
  * Created by song on 2016/8/29.
  */
+@Deprecated
 public class VenuesCourseAdapter extends RecyclerView.Adapter<VenuesCourseAdapter.CourseHolder> {
     private Context context;
     private List<CourseBean> data = new ArrayList<>();

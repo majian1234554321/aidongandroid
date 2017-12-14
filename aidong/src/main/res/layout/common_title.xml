@@ -15,6 +15,8 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center"
+        android:singleLine="true"
+        android:maxWidth="200dp"
         android:textColor="#fff"
         android:textSize="18sp"/>
 

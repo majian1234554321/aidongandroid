@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mine.fragment.AppointmentFragment;
+import com.leyuan.aidong.ui.mine.fragment.AppointmentFragmentCampaignList;
 import com.leyuan.aidong.widget.SimpleTitleBar;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.Bundler;
@@ -45,15 +45,15 @@ public class AppointmentActivity extends BaseActivity implements SmartTabLayout.
         viewPager = (ViewPager) findViewById(R.id.vp_content);
 
         FragmentPagerItems pages = new FragmentPagerItems(this);
-        AppointmentFragment all = new AppointmentFragment();
-        AppointmentFragment joined = new AppointmentFragment();
-        AppointmentFragment unJoined = new AppointmentFragment();
+        AppointmentFragmentCampaignList all = new AppointmentFragmentCampaignList();
+        AppointmentFragmentCampaignList joined = new AppointmentFragmentCampaignList();
+        AppointmentFragmentCampaignList unJoined = new AppointmentFragmentCampaignList();
         pages.add(FragmentPagerItem.of(null, all.getClass(),
-                new Bundler().putString("type",AppointmentFragment.ALL).get()));
+                new Bundler().putString("type", AppointmentFragmentCampaignList.ALL).get()));
         pages.add(FragmentPagerItem.of(null,unJoined.getClass(),
-                new Bundler().putString("type", AppointmentFragment.UN_JOIN).get()));
+                new Bundler().putString("type", AppointmentFragmentCampaignList.UN_JOIN).get()));
         pages.add(FragmentPagerItem.of(null,joined.getClass(),
-                new Bundler().putString("type",AppointmentFragment.JOINED).get()));
+                new Bundler().putString("type", AppointmentFragmentCampaignList.JOINED).get()));
         adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(),pages);
 
         viewPager.setAdapter(adapter);
@@ -84,8 +84,8 @@ public class AppointmentActivity extends BaseActivity implements SmartTabLayout.
     protected void onResume() {
         super.onResume();
         Fragment page = adapter.getPage(currentItem);
-        if(page != null && page instanceof AppointmentFragment){
-            ((AppointmentFragment) page).fetchData();
+        if(page != null && page instanceof AppointmentFragmentCampaignList){
+            ((AppointmentFragmentCampaignList) page).fetchData();
         }
     }
 

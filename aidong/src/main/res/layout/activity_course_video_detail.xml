@@ -25,10 +25,10 @@
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:background="@color/text_veiw_red"
-        android:text="@string/appoint_course_immediately"
+        android:text="@string/immediately_appoint_course"
         android:textColor="@color/white"
         android:textSize="16sp"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"

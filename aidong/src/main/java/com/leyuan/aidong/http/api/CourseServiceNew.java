@@ -43,7 +43,7 @@ public interface CourseServiceNew {
     @FormUrlEncoded
     @POST("app/api/timetables/{id}/appointment")
     Observable<BaseBean<CourseAppointResult>> confirmAppointCourse(@Path("id") String courseId,
-                                                                   @Field("coupon_id ") String coupon_id,
+                                                                   @Field("coupon_id") String coupon_id,
                                                                    @Field("seat") String seat);
 
     @GET("app/api/timetables/{id}/appointment")

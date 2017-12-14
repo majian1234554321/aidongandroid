@@ -100,10 +100,16 @@ public class CourseSeat implements Parcelable {
         dest.writeStringList(reserved);
         dest.writeStringList(appointed);
     }
+    public String transformePositionToSeatX(int position) {
+        int pRow = position / col +1;
+        int pCol = position % col +1;
+        return pRow+"_"+pCol;
+    }
 
-    public String transformePositionToSeat(int position) {
+
+    public String transformePositionToSeatS(int position) {
             int pRow = position / col +1;
             int pCol = position % col +1;
-        return pRow+"_"+pCol;
+        return pRow+"排"+pCol+"座";
     }
 }

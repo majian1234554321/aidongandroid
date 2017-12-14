@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.entity.course.CourseAppointBean;
-import com.leyuan.aidong.ui.mine.activity.AppointDetailCourseAndEventActivity;
+import com.leyuan.aidong.ui.mine.activity.AppointDetailCourseNewActivity;
 import com.leyuan.aidong.utils.DateUtils;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
@@ -77,7 +77,7 @@ public class AppointmentCourseListAdapter extends RecyclerView.Adapter<Appointme
 //
 //        }
 
-        switch (bean.getFinalStatus()) {
+        switch (bean.getCourseFinalStatus()) {
             case CourseAppointBean.queued:
                 holder.state.setText(context.getString(R.string.queueing));
                 holder.txt_appoint_or_queue_number.setVisibility(View.VISIBLE);
@@ -202,7 +202,7 @@ public class AppointmentCourseListAdapter extends RecyclerView.Adapter<Appointme
 //                    appointmentListener.onPayOrder("course", bean.getId());
 //                }
 
-                AppointDetailCourseAndEventActivity.appointStart(context, bean.getId());
+                AppointDetailCourseNewActivity.appointStart(context, bean.getId());
             }
         });
 
@@ -228,7 +228,7 @@ public class AppointmentCourseListAdapter extends RecyclerView.Adapter<Appointme
             @Override
             public void onClick(View v) {
 
-                AppointDetailCourseAndEventActivity.appointStart(context, bean.getId());
+                AppointDetailCourseNewActivity.appointStart(context, bean.getId());
                 if (appointmentListener != null) {
                     appointmentListener.onSignImmedialtely(position);
                 }
@@ -238,7 +238,7 @@ public class AppointmentCourseListAdapter extends RecyclerView.Adapter<Appointme
         holder.tvPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppointDetailCourseAndEventActivity.appointStart(context, bean.getId());
+                AppointDetailCourseNewActivity.appointStart(context, bean.getId());
                 if (appointmentListener != null) {
                     appointmentListener.onPayOrder("course", bean.getId());
                 }

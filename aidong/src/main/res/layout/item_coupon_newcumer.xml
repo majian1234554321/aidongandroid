@@ -5,7 +5,7 @@
     android:layout_marginTop="10dp">
 
     <RelativeLayout
-        android:layout_width="185dp"
+        android:layout_width="190dp"
         android:layout_height="42.5dp"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/bg_white_rectangle_red_stroke">
@@ -25,18 +25,20 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="5dp"
                 android:text="¥"
+                android:layout_marginTop="4dp"
                 android:textColor="@color/main_red"
                 android:textSize="11sp"
                 android:visibility="visible" />
 
             <TextView
+                android:textStyle="bold"
                 android:id="@+id/tv_coupon_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
-                android:text="2"
+                android:text="100.00"
                 android:textColor="@color/main_red"
-                android:textSize="30sp" />
+                android:textSize="23sp" />
 
 
             <TextView
@@ -44,11 +46,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="9dp"
+                android:layout_marginLeft="3dp"
                 android:text="折"
                 android:textColor="@color/main_red"
-                android:textSize="30sp"
+                android:textSize="23sp"
                 android:visibility="gone" />
         </LinearLayout>
 
@@ -65,8 +66,8 @@
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="新人抵用用劵"
-                android:maxWidth="140dp"
+                android:text="新人抵用用劵11111111111111111111111111111"
+                android:maxWidth="65dp"
                 android:singleLine="true"
                 android:ellipsize="end"
                 android:textColor="@color/c3"
@@ -77,10 +78,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
-                android:maxWidth="140dp"
+                android:maxWidth="65dp"
                 android:singleLine="true"
                 android:ellipsize="end"
-                android:text="指定特殊产品可用"
+                android:text="指定特殊产品可用1111111"
                 android:textColor="@color/c3"
                 android:textSize="8sp" />
 
@@ -89,7 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
-                android:maxWidth="140dp"
+                android:maxWidth="65dp"
                 android:singleLine="true"
                 android:ellipsize="end"
                 android:text="满300元可用"

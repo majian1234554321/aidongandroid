@@ -90,7 +90,6 @@ public class CourseQueueDetailActivity extends BaseActivity implements View.OnCl
             coursePresent.getCourseQueueDetailFromCourse(courseId);
         }
 
-
         initData();
     }
 
@@ -172,7 +171,7 @@ public class CourseQueueDetailActivity extends BaseActivity implements View.OnCl
                 if (course != null) {
                     CourseStore store = course.getStore();
                     if (store != null) {
-                        MapActivity.start(this, course.getName(), store.getName(), store.getAddress(),
+                        MapActivity.start(this, store.getName(), store.getName(), store.getAddress(),
                                 store.getCoordinate()[0] + "", store.getCoordinate()[1] + "");
                     }
                 }
@@ -198,7 +197,7 @@ public class CourseQueueDetailActivity extends BaseActivity implements View.OnCl
         course = queue.getTimetable();
         realPrice = course.getPrice();
         txtCourseName.setText(course.getName());
-        txtCoachName.setText(course.getStore().getName());
+        txtCoachName.setText(course.getCoach().getName());
         GlideLoader.getInstance().displayImage(course.getCover(), imgCourse);
 
         txtCourseTime.setText(course.getClass_time());

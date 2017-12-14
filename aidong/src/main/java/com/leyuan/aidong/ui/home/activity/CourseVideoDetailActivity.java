@@ -34,7 +34,6 @@ import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.ScreenUtil;
-import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.utils.ToastGlobal;
 import com.leyuan.aidong.utils.Utils;
 import com.leyuan.aidong.widget.SwitcherLayout;
@@ -116,8 +115,8 @@ public class CourseVideoDetailActivity extends BaseActivity implements CourseVid
     @Override
     protected void onResume() {
         super.onResume();
-        btAppoint.setText(App.mInstance.isLogin() ? Constant.activityOnLogin
-                : SystemInfoUtils.getCourseVideoTipOnLogout());
+//        btAppoint.setText(App.mInstance.isLogin() ? Constant.activityOnLogin
+//                : SystemInfoUtils.getCourseVideoTipOnLogout());
     }
 
     private void initView() {

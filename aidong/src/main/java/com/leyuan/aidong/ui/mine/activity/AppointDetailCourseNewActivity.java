@@ -40,6 +40,7 @@ import com.leyuan.aidong.utils.DialogUtils;
 import com.leyuan.aidong.utils.FormatUtil;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.ImageRectUtils;
+import com.leyuan.aidong.utils.Logger;
 import com.leyuan.aidong.utils.QRCodeUtil;
 import com.leyuan.aidong.utils.SystemInfoUtils;
 import com.leyuan.aidong.utils.TelephoneManager;
@@ -58,8 +59,9 @@ import static com.leyuan.aidong.utils.Constant.PAY_WEIXIN;
  * Created by user on 2017/11/2.
  */
 
-public class AppointDetailCourseAndEventActivity extends BaseActivity implements AppointmentCourseDetailView, View.OnClickListener, CustomNestRadioGroup.OnCheckedChangeListener {
+public class AppointDetailCourseNewActivity extends BaseActivity implements AppointmentCourseDetailView, View.OnClickListener, CustomNestRadioGroup.OnCheckedChangeListener {
 
+    private static final java.lang.String TAG = "AppointDetailCourseAndEventActivity";
     private SimpleTitleBar titleBar;
     private ScrollView scrollView;
     private TextView tvState;
@@ -103,14 +105,14 @@ public class AppointDetailCourseAndEventActivity extends BaseActivity implements
 
 
     public static void appointStart(Context context, String appointId) {
-        Intent intent = new Intent(context, AppointDetailCourseAndEventActivity.class);
+        Intent intent = new Intent(context, AppointDetailCourseNewActivity.class);
         intent.putExtra("appointId", appointId);
         intent.putExtra("type", "appoint");
         context.startActivity(intent);
     }
 
     public static void courseStart(Context context, String courseId) {
-        Intent intent = new Intent(context, AppointDetailCourseAndEventActivity.class);
+        Intent intent = new Intent(context, AppointDetailCourseNewActivity.class);
         intent.putExtra("courseId", courseId);
         intent.putExtra("type", "course");
         context.startActivity(intent);
@@ -211,8 +213,13 @@ public class AppointDetailCourseAndEventActivity extends BaseActivity implements
 
         txtCourseTime.setText(appointBean.getTimetable().getClass_time());
         webView.setRichText(appointBean.getIntroduce());
-        txtRoomName.setText(appointBean.getTimetable().getStore().getRoom()+" ("+ (appointBean.getSeat()==null?"":appointBean.getSeat())+")");
-        txtCourseLocation.setText(appointBean.getTimetable().getStore().getAddress() );
+        String seat = "";
+        if (!TextUtils.isEmpty(appointBean.getSeat())) {
+            seat = " (" + appointBean.getSeat() + ")";
+        }
+
+        txtRoomName.setText(appointBean.getTimetable().getStore().getName()+"-" +appointBean.getTimetable().getStore().getRoom() + seat);
+        txtCourseLocation.setText(appointBean.getTimetable().getStore().getAddress());
         tvPrice.setText(appointBean.getPay_amount());
         llTimer.setVisibility(View.GONE);
 
@@ -221,7 +228,7 @@ public class AppointDetailCourseAndEventActivity extends BaseActivity implements
                 DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
         tv_cancel_appoint.setText("取消预约");
 
-        switch (appointBean.getFinalStatus()) {
+        switch (appointBean.getCourseFinalStatus()) {
 
             case CourseAppointBean.pending:
                 rlQrCode.setVisibility(View.VISIBLE);
@@ -242,14 +249,16 @@ public class AppointDetailCourseAndEventActivity extends BaseActivity implements
 
                 break;
 
+            case CourseAppointBean.paid:
             case CourseAppointBean.appointed:
                 rlQrCode.setVisibility(View.VISIBLE);
                 tvState.setText(getString(R.string.with_sign_in));
                 tv_cancel_appoint.setVisibility(View.VISIBLE);
 
-                if(FormatUtil.parseDouble(appointBean.getPay_amount()) > 0){
+                Logger.i(TAG, FormatUtil.parseDouble(appointBean.getPay_amount()) + "");
+                if (FormatUtil.parseDouble(appointBean.getPay_amount()) > 0) {
                     tv_cancel_appoint.setText("取消预约-申请退款");
-                }else {
+                } else {
                     tv_cancel_appoint.setText("取消预约");
                 }
                 break;
@@ -292,11 +301,12 @@ public class AppointDetailCourseAndEventActivity extends BaseActivity implements
                 tvState.setText(getString(R.string.suspended));
                 tvDelete.setVisibility(View.VISIBLE);
                 break;
-            case CourseAppointBean.paid:
-                rlQrCode.setVisibility(View.VISIBLE);
-                tvState.setText(getString(R.string.with_sign_in));
-                tv_cancel_appoint.setVisibility(View.VISIBLE);
-                break;
+//            case CourseAppointBean.paid:
+//
+//                rlQrCode.setVisibility(View.VISIBLE);
+//                tvState.setText(getString(R.string.with_sign_in));
+//                tv_cancel_appoint.setVisibility(View.VISIBLE);
+//                break;
         }
     }
 
@@ -305,14 +315,15 @@ public class AppointDetailCourseAndEventActivity extends BaseActivity implements
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.dv_qr:
-                if (!TextUtils.equals(appointBean.getFinalStatus(), CourseAppointBean.signed)) {
+                if (!TextUtils.equals(appointBean.getCourseFinalStatus(), CourseAppointBean.signed)
+                        && !TextUtils.equals(appointBean.getCourseFinalStatus(), CourseAppointBean.absent)) {
                     BarcodeActivity.start(this, appointBean.getId(), ImageRectUtils.getDrawableBoundsInView(dvQr));
                 }
 
                 break;
             case R.id.layout_course_coach:
-                if (course != null ){
-                    CourseDetailNewActivity.start(this,course.getId());
+                if (course != null) {
+                    CourseDetailNewActivity.start(this, course.getId());
                 }
 //                    UserInfoActivity.start(this, course.getCoach().getContact());
 
@@ -320,7 +331,7 @@ public class AppointDetailCourseAndEventActivity extends BaseActivity implements
             case R.id.layout_course_location:
                 if (course != null && course.getStore() != null) {
                     CourseStore store = course.getStore();
-                    MapActivity.start(this, course.getName(), store.getName(), store.getAddress(),
+                    MapActivity.start(this, store.getName(), store.getName(), store.getAddress(),
                             store.getCoordinate()[0] + "", store.getCoordinate()[1] + "");
                 }
 
@@ -337,7 +348,7 @@ public class AppointDetailCourseAndEventActivity extends BaseActivity implements
 
                 break;
             case R.id.tv_cancel_appoint:
-                DialogUtils.showDialog(this,"",false);
+                DialogUtils.showDialog(this, "", false);
                 appointmentCourseDetailPresenter.cancelCourseAppoint(appointBean.getId());
 
                 break;
@@ -345,7 +356,7 @@ public class AppointDetailCourseAndEventActivity extends BaseActivity implements
 
                 break;
             case R.id.tv_delete:
-                DialogUtils.showDialog(this,"",false);
+                DialogUtils.showDialog(this, "", false);
                 appointmentCourseDetailPresenter.deleteCourseAppoint(appointBean.getId());
 
                 break;
@@ -363,10 +374,10 @@ public class AppointDetailCourseAndEventActivity extends BaseActivity implements
         @Override
         public void onSuccess(String code, Object object) {
 
-            LocalBroadcastManager.getInstance(AppointDetailCourseAndEventActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS));
+            LocalBroadcastManager.getInstance(AppointDetailCourseNewActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS));
 
-            AppointCourseSuccessActivity.start(AppointDetailCourseAndEventActivity.this, appointBean.getTimetable().getClass_time(), true,courseShareBean );
-            Toast.makeText(AppointDetailCourseAndEventActivity.this, "支付成功", Toast.LENGTH_LONG).show();
+            AppointCourseSuccessActivity.start(AppointDetailCourseNewActivity.this, appointBean.getTimetable().getClass_time(), true, courseShareBean);
+            Toast.makeText(AppointDetailCourseNewActivity.this, "支付成功", Toast.LENGTH_LONG).show();
             finish();
         }
 
@@ -374,19 +385,19 @@ public class AppointDetailCourseAndEventActivity extends BaseActivity implements
         public void onFail(String code, Object object) {
             super.onFail(code, object);
 
-            LocalBroadcastManager.getInstance(AppointDetailCourseAndEventActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS));
+            LocalBroadcastManager.getInstance(AppointDetailCourseNewActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS));
 
-            Toast.makeText(AppointDetailCourseAndEventActivity.this, "支付失败", Toast.LENGTH_LONG).show();
+            Toast.makeText(AppointDetailCourseNewActivity.this, "支付失败", Toast.LENGTH_LONG).show();
 //            startActivity(new Intent(AppointDetailCourseAndEventActivity.this, AppointmentMineActivityNew.class));
             finish();
         }
 
         @Override
         public void onFree() {
-            LocalBroadcastManager.getInstance(AppointDetailCourseAndEventActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS));
+            LocalBroadcastManager.getInstance(AppointDetailCourseNewActivity.this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_PAY_SUCCESS));
 
-            AppointCourseSuccessActivity.start(AppointDetailCourseAndEventActivity.this, appointBean.getTimetable().getClass_time(), true, courseShareBean);
-            Toast.makeText(AppointDetailCourseAndEventActivity.this, "预约成功", Toast.LENGTH_LONG).show();
+            AppointCourseSuccessActivity.start(AppointDetailCourseNewActivity.this, appointBean.getTimetable().getClass_time(), true, courseShareBean);
+            Toast.makeText(AppointDetailCourseNewActivity.this, "预约成功", Toast.LENGTH_LONG).show();
             finish();
         }
     };
@@ -399,7 +410,7 @@ public class AppointDetailCourseAndEventActivity extends BaseActivity implements
         if (baseBean != null && baseBean.getStatus() == 1) {
             appointmentCourseDetailPresenter.getCourseAppointDetail(appointBean.getId());
             LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_APPOINT_CANCEL));
-        }else {
+        } else {
             ToastGlobal.showShortConsecutive(baseBean.getMessage());
         }
 
@@ -411,7 +422,7 @@ public class AppointDetailCourseAndEventActivity extends BaseActivity implements
         if (courseAppointResult) {
             LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_COURSE_APPOINT_DELETE));
             finish();
-        }else {
+        } else {
             ToastGlobal.showShortConsecutive("删除失败");
         }
     }

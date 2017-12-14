@@ -1,25 +1,24 @@
-package com.leyuan.aidong.ui.mine.fragment;
+package com.leyuan.aidong.ui.mine.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.leyuan.aidong.R;
-import com.leyuan.aidong.ui.BaseFragment;
+import com.leyuan.aidong.ui.BaseActivity;
+import com.leyuan.aidong.ui.mine.fragment.AppointmentFragmentCampaignList;
 import com.leyuan.aidong.utils.Logger;
+import com.leyuan.aidong.widget.CommonTitleLayout;
 
 import java.util.ArrayList;
 
-/**
- * Created by user on 2017/11/14.
- */
-public class AppointmentFragmentEventNew extends BaseFragment implements View.OnClickListener {
+public class AppointmentMineCampaignActivityNew extends BaseActivity implements View.OnClickListener {
+
     protected static final String TAG = "AppointmentFragmentEventNew";
     private ViewPager viewPager;
     private int currentItem;
@@ -32,45 +31,38 @@ public class AppointmentFragmentEventNew extends BaseFragment implements View.On
 
 
     private int tranPosition;
+    private CommonTitleLayout layoutTitle;
 
-    public static AppointmentFragmentEventNew newInstance(int tranPosition ) {
-        AppointmentFragmentEventNew fragment = new AppointmentFragmentEventNew();
-        Bundle bundle = new Bundle();
-        bundle.putInt("tranPosition", tranPosition);
-        fragment.setArguments(bundle);
-        return fragment;
+    public static void start(Context context,  int tranPosition) {
+        Intent intent = new Intent(context, AppointmentMineCampaignActivityNew.class);
+        intent.putExtra("tranPosition", tranPosition);
+        context.startActivity(intent);
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Logger.i(TAG, "onCreate");
-    }
+        setContentView(R.layout.activity_appointment_mine_campaign_new);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        Logger.i(TAG, "onCreateView");
-        return inflater.inflate(R.layout.fragment_appointment_event, null);
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         Logger.i(TAG, "onViewCreated");
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            tranPosition = bundle.getInt("tranPosition",0);
-            Logger.i(TAG,"tranPosition = "+tranPosition);
 
-            if(tranPosition <0 || tranPosition > 2) tranPosition = 0;
-        }
+        tranPosition = getIntent().getIntExtra("tranPosition", 0);
+        Logger.i(TAG, "tranPosition = " + tranPosition);
+        if (tranPosition < 0 || tranPosition > 2) tranPosition = 0;
 
-        btAll = (TextView) view.findViewById(R.id.bt_all);
-        btJoinNo = (TextView) view.findViewById(R.id.bt_join_no);
-        btJoined = (TextView) view.findViewById(R.id.bt_joined);
-        viewPager = (ViewPager) view.findViewById(R.id.vp_content);
+        layoutTitle = (CommonTitleLayout) findViewById(R.id.layout_title);
 
+        btAll = (TextView) findViewById(R.id.bt_all);
+        btJoinNo = (TextView) findViewById(R.id.bt_join_no);
+        btJoined = (TextView) findViewById(R.id.bt_joined);
+        viewPager = (ViewPager) findViewById(R.id.vp_content);
+
+        layoutTitle.setLeftIconListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         btAll.setOnClickListener(this);
         btJoinNo.setOnClickListener(this);
         btJoined.setOnClickListener(this);
@@ -84,7 +76,7 @@ public class AppointmentFragmentEventNew extends BaseFragment implements View.On
         mFragments.add(joined);
         mFragments.add(unJoined);
 
-        viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
+        viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int i) {
                 return mFragments.get(i);
@@ -100,23 +92,17 @@ public class AppointmentFragmentEventNew extends BaseFragment implements View.On
         viewPager.setCurrentItem(tranPosition);
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        Logger.i(TAG, "onActivityCreated");
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        Logger.i(TAG, "setUserVisibleHint = " + isVisibleToUser);
-    }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+//            case R.id.img_left:
+//                finish();
+//
+//                break;
+
             case R.id.bt_all:
+
                 currentItem = 0;
                 viewPager.setCurrentItem(currentItem);
 

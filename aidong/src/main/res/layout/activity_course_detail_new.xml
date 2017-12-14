@@ -48,7 +48,7 @@
                 android:gravity="center"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
-                android:text="1"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -91,6 +91,8 @@
                             android:layout_height="wrap_content"
                             android:textColor="@color/black"
                             android:textSize="16sp"
+                            android:maxWidth="200dp"
+                            android:singleLine="true"
                             android:textStyle="bold" />
 
                         <ImageView
@@ -118,7 +120,7 @@
                     android:layout_height="50dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:src="@color/black" />
+                    />
 
             </RelativeLayout>
 
@@ -151,13 +153,11 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/txt_black"
                     android:textSize="15sp"
-                    android:text="11"
                     android:layout_marginRight="25dp"
 
                     />
 
                 <TextView
-                    android:text="22"
                     android:id="@+id/txt_member_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -282,13 +282,13 @@
             android:src="@drawable/icon_share"
             android:visibility="visible" />
     </RelativeLayout>
-
+    <!--android:background="@color/course_oringe"-->
     <LinearLayout
         android:id="@+id/ll_apply"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="bottom"
-        android:background="@color/course_oringe"
+
         android:gravity="center"
         android:orientation="horizontal"
         android:visibility="visible">
@@ -297,7 +297,6 @@
             android:id="@+id/tv_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/rmb_price"
             android:textColor="@color/white"
             android:textSize="16sp" />
 

@@ -39,6 +39,7 @@ import java.util.List;
  * 小团体课列表
  * Created by song on 2016/10/31.
  */
+@Deprecated
 public class CourseActivity extends BaseActivity implements CourseActivityView, SmartTabLayout.TabProvider {
     //todo 使用SmartTabLayout使Activity和Fragment传值失效,设置回调无效??
     private ImageView ivBack;

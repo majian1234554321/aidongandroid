@@ -23,7 +23,7 @@ import com.leyuan.aidong.entity.course.CourseStore;
 import com.leyuan.aidong.module.share.SharePopupWindow;
 import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mine.activity.AppointDetailCourseAndEventActivity;
+import com.leyuan.aidong.ui.mine.activity.AppointDetailCourseNewActivity;
 import com.leyuan.aidong.ui.mine.activity.UserInfoActivity;
 import com.leyuan.aidong.ui.mine.activity.account.LoginActivity;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CourseDetailPresentImpl;
@@ -221,7 +221,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
             case R.id.layout_course_location:
                 CourseStore store = course.getStore();
                 if (store != null) {
-                    MapActivity.start(this, course.getName(), store.getName(), store.getAddress(),
+                    MapActivity.start(this, store.getName(), store.getName(), store.getAddress(),
                             store.getCoordinate()[0] + "", store.getCoordinate()[1] + "");
                 }
 
@@ -250,12 +250,12 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
                         break;
                     case CourseBeanNew.APPOINTED:
                         //跳查看预约
-                        AppointDetailCourseAndEventActivity.courseStart(this, course.getId());
+                        AppointDetailCourseNewActivity.courseStart(this, course.getId());
 
                         break;
                     case CourseBeanNew.APPOINTED_NO_PAY:
                         ///跳查看预约
-                        AppointDetailCourseAndEventActivity.courseStart(this, course.getId());
+                        AppointDetailCourseNewActivity.courseStart(this, course.getId());
 
                         break;
                     case CourseBeanNew.QUEUED:

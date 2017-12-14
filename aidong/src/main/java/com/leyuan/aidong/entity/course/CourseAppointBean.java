@@ -156,4 +156,20 @@ public class CourseAppointBean {
             return status;
         }
     }
+
+    public String getCourseFinalStatus() {
+//        if (order_status == null) {
+//            return status;
+//        } else
+        if (pending.equals(order_status)) {
+            return order_status;
+        } else {
+            return status;
+        }
+    }
+
+    public String getQueueFinalStatus() {
+        return status;
+    }
+
 }

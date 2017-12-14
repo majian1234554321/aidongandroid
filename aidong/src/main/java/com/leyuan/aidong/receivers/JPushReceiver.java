@@ -12,6 +12,7 @@ import com.leyuan.aidong.ui.MainActivity;
 import com.leyuan.aidong.ui.home.activity.CampaignDetailActivity;
 import com.leyuan.aidong.ui.mine.activity.AppointCampaignDetailActivity;
 import com.leyuan.aidong.ui.mine.activity.AppointCourseDetailActivity;
+import com.leyuan.aidong.ui.mine.activity.AppointDetailCourseNewActivity;
 import com.leyuan.aidong.ui.mine.activity.OrderDetailMultiplePackagesActivity;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.LogAidong;
@@ -118,6 +119,7 @@ public class JPushReceiver extends BroadcastReceiver {
 
                 break;
             case Constant.COURSE:
+                AppointDetailCourseNewActivity.appointStart(context,info.getLink_id());
                 intent = new Intent(context, AppointCourseDetailActivity.class);
                 intent.putExtra("orderId", info.getLink_id());
 

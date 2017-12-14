@@ -33,6 +33,7 @@
 
                 <!--活动预约信息布局-->
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -95,6 +96,13 @@
                     android:textSize="16sp" />
 
                 <include layout="@layout/inc_line_black" />
+
+                <com.leyuan.aidong.widget.ExtendTextView
+                    android:id="@+id/tv_appoint_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:left_text="预约手机号:"
+                    app:line_color="@color/transparent" />
 
                 <com.leyuan.aidong.widget.ExtendTextView
                     android:id="@+id/tv_total_price"

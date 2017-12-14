@@ -108,7 +108,7 @@ public class CourseChooseSeat extends BaseActivity implements View.OnClickListen
         layoutCourseChoosed.setVisibility(View.GONE);
 
         layoutTitle.setTxtTitle(course.getName());
-        txtClassName.setText(course.getClass_room());
+        txtClassName.setText(course.getStore().getName()+"("  +course.getStore().getClassroom()+")");
         txtCourseTime.setText(course.getClass_time());
 
         CourseSeat seat = course.getSeat();

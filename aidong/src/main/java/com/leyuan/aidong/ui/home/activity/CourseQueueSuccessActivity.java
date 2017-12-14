@@ -6,7 +6,7 @@ import android.view.View;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.ui.BaseActivity;
-import com.leyuan.aidong.ui.mine.activity.AppointmentMineActivityNew;
+import com.leyuan.aidong.ui.mine.activity.AppointmentMineCourseActivityNew;
 
 /**
  * Created by user on 2017/10/31.
@@ -34,7 +34,7 @@ public class CourseQueueSuccessActivity extends BaseActivity implements View.OnC
 
                 break;
             case R.id.tv_look_queue:
-                AppointmentMineActivityNew.start(this,1);
+                AppointmentMineCourseActivityNew.start(this,1);
                 finish();
                 break;
         }
