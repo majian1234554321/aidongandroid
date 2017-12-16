@@ -10,7 +10,6 @@
         android:layout_height="@dimen/pref_100dp"
         android:layout_centerVertical="true"
         android:layout_marginLeft="15dp"
-        android:src="@color/black"
 
         />
 
@@ -26,7 +25,6 @@
             android:id="@+id/txt_course_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dian Shang"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -38,7 +36,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="13dp"
-            android:text="Jan chen"
             android:textColor="@color/black"
             android:textSize="15sp" />
 
@@ -47,7 +44,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="10-20 15:30-16:30"
             android:textColor="@color/black"
             android:textSize="15sp" />
 

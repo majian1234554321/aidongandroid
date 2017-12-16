@@ -26,7 +26,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="14dp"
-            android:text="class name"
+            android:singleLine="true"
+            android:maxWidth="90dp"
             android:textColor="@color/txt_black"
             android:textSize="12sp" />
 
@@ -44,7 +45,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
             android:singleLine="true"
-            android:text="DISQ Yoga"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
@@ -53,7 +53,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="9dp"
-            android:text="14:30-15:30"
             android:textColor="@color/course_oringe"
             android:textSize="14sp" />
 
@@ -62,7 +61,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="9dp"
-            android:text="塑形 | 塑形 | 塑形 111111111111111111111111111"
             android:textColor="@color/text_color_common"
             android:singleLine="true"
             android:textSize="13sp" />
@@ -132,7 +130,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
-            android:src="@color/red_origin" />
+            />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -144,7 +142,6 @@
                 android:id="@+id/txt_course_origin_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="￥ 69"
                 android:textColor="@color/course_black"
                 android:textSize="14sp" />
 
@@ -153,7 +150,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="会员价: ￥9"
                 android:textColor="@color/course_oringe"
                 android:textSize="12sp" />
 

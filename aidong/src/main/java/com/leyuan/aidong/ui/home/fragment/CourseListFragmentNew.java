@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.leyuan.aidong.R;
 import com.leyuan.aidong.adapter.home.CourseListAdapterNew;
@@ -38,6 +39,7 @@ public class CourseListFragmentNew extends BasePageFragment implements OnRefresh
     private SwitcherLayout switcherLayout;
     private CustomRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
+    RelativeLayout rl_empty;
 
     private int currPage = 1;
     private CourseListAdapterNew courseAdapter;
@@ -61,6 +63,7 @@ public class CourseListFragmentNew extends BasePageFragment implements OnRefresh
             course = getArguments().getString("category");
         }
         coursePresent = new CourseListPresentImpl(getContext(), this);
+
         initRefreshLayout(view);
         initRecyclerView(view);
         return view;
@@ -73,6 +76,8 @@ public class CourseListFragmentNew extends BasePageFragment implements OnRefresh
     }
 
     private void initRefreshLayout(View view) {
+        rl_empty = (RelativeLayout) view.findViewById(R.id.rl_empty);
+
         refreshLayout = (CustomRefreshLayout) view.findViewById(R.id.refreshLayout);
         switcherLayout = new SwitcherLayout(getContext(), refreshLayout);
         refreshLayout.setProgressViewOffset(true, 50, 100);
@@ -155,8 +160,13 @@ public class CourseListFragmentNew extends BasePageFragment implements OnRefresh
             refreshLayout.setRefreshing(false);
         }
         data.clear();
-        if (courseList != null)
+        if (courseList != null && !courseList.isEmpty()){
             data.addAll(courseList);
+            rl_empty.setVisibility(View.GONE);
+        }else {
+            rl_empty.setVisibility(View.VISIBLE);
+        }
+
         courseAdapter.setData(data);
         wrapperAdapter.notifyDataSetChanged();
         switcherLayout.showContentLayout();

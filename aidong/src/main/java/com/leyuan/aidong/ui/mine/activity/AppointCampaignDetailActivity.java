@@ -2,6 +2,7 @@ package com.leyuan.aidong.ui.mine.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
@@ -425,11 +426,11 @@ public class AppointCampaignDetailActivity extends BaseActivity implements Appoi
 
 
                 tvCodeNum.setText(bean.getAppoint().getVerify_no());
-                if (bean.getAppoint().isVerified()) {
+//                if (bean.getAppoint().isVerified()) {
                     tvCodeNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-                }
-                tvCodeNum.setTextColor(bean.getAppoint().getverifyColor());
-                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, bean.getAppoint().getverifyColorQr(), bean.getAppoint().getVerify_no(),
+//                }
+                tvCodeNum.setTextColor(Color.parseColor("#ebebeb"));
+                ivCode.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFFebebeb, bean.getAppoint().getVerify_no(),
                         DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
                 break;
             default:

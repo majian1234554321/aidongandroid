@@ -289,7 +289,6 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
         banner.setData(course.getImage(), null);
         txtCourseName.setText(course.getName());
 
-
         if (course.getCoach() != null) {
             txtCoachName.setText(course.getCoach().getName());
             if (!TextUtils.isEmpty(course.getCoach().getIntroduce())) {
@@ -300,10 +299,10 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
         }
 
         tvPrice.setVisibility(View.VISIBLE);
-        txtNormalPrice.setText("￥ " + course.getPrice());
-        txtMemberPrice.setText("会员价: ￥" + course.getMember_price());
+        txtNormalPrice.setText( String.format(getString(R.string.rmb_price_double),  course.getPrice()));
+        txtMemberPrice.setText("会员价: "+String.format(getString(R.string.rmb_price_double),  course.getMember_price()));
         txtCourseTime.setText(course.getClass_time());
-        txtCourseRoom.setText(course.getStore().getName());
+        txtCourseRoom.setText(course.getStore().getName()+"-"+course.getStore().getClassroom());
         txtCourseLocation.setText(course.getStore().getAddress());
         webView.setRichText(course.getIntroduce());
 
@@ -312,7 +311,7 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
             case CourseBeanNew.NORMAL:
             case CourseBeanNew.FEW:
                 tvPrice.setVisibility(View.VISIBLE);
-                tvPrice.setText("￥ " + course.getPrice());
+                tvPrice.setText(String.format(getString(R.string.rmb_price_double),  course.getPrice()));
                 tvState.setText(R.string.appointment_immediately);
                 tvPrice.setTextColor(getResources().getColor(R.color.white));
                 tvState.setTextColor(getResources().getColor(R.color.white));
@@ -398,12 +397,12 @@ public class CourseDetailNewActivity extends BaseActivity implements View.OnClic
         if (course.isMember_only()) {
             txtNormalPrice.setVisibility(View.GONE);
 
-            tvPrice.setText("￥ " + course.getMember_price());
+            tvPrice.setText(String.format(getString(R.string.rmb_price_double),  course.getMember_price()));
 
         }
 
         if (course.isMember()) {
-            tvPrice.setText("￥ " + course.getMember_price());
+            tvPrice.setText(String.format(getString(R.string.rmb_price_double),  course.getMember_price()));
         }
 
         if (course.getReservable() == 0) {

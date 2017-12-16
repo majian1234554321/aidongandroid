@@ -130,7 +130,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="15dp"
-                    android:text="15301702750"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -156,7 +155,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="15dp"
-                    android:text="$89"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -182,7 +180,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="15dp"
-                    android:text="-￥0"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -208,7 +205,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="15dp"
-                    android:text="￥69.00"
                     android:textColor="@color/course_oringe"
                     android:textSize="14sp" />
             </RelativeLayout>

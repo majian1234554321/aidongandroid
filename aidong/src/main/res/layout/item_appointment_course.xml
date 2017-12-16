@@ -152,6 +152,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_marginBottom="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
@@ -228,7 +229,7 @@
             android:text="立即支付"
             android:textColor="@color/main_red"
             android:textSize="14sp"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
     </LinearLayout>
 </LinearLayout>

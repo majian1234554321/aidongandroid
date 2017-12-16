@@ -58,8 +58,10 @@ public class CourseListAdapterNew extends RecyclerView.Adapter<CourseListAdapter
         holder.txtCourseDesc.setText(courseBean.getTagString());
 
 //        holder.txtCourseDifficulty.setText("难度系数: " + courseBean.getStrength());
-        holder.txtCourseOriginPrice.setText("￥ " + courseBean.getPrice());
-        holder.txtCourseMemberPrice.setText("会员价: ￥" + courseBean.getMember_price());
+
+
+        holder.txtCourseOriginPrice.setText( String.format(context.getString(R.string.rmb_price_double),  courseBean.getPrice()));
+        holder.txtCourseMemberPrice.setText("会员价: " + String.format(context.getString(R.string.rmb_price_double),  courseBean.getMember_price()));
 
         for (int i = 0; i < 5; i++) {
             if (i < courseBean.getStrength()) {

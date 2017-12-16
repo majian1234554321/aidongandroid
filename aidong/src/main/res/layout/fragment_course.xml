@@ -20,4 +20,22 @@
 
     </com.leyuan.custompullrefresh.CustomRefreshLayout>
 
+    <RelativeLayout
+        android:id="@+id/rl_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:drawablePadding="20dp"
+            android:drawableTop="@drawable/empty_course"
+            android:gravity="center_horizontal"
+            android:text="暂无课程"
+            android:textColor="@color/c9"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
 </RelativeLayout>

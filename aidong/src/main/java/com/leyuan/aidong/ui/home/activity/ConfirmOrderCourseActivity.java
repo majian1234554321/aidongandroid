@@ -119,6 +119,11 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
 
     private void initData() {
 
+        confirmOrderCoursePresent = new ConfirmOrderCoursePresentImpl(this, this);
+
+        DialogUtils.showDialog(this,"",false);
+        confirmOrderCoursePresent.getCourseAvaliableCoupons(course.getId());
+
         if ( course.isMember()) {
             realPrice = course.getMember_price();
             txtPriceTotal.setText("￥" + course.getMember_price());
@@ -132,8 +137,7 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
         payType = PAY_ALI;
         UserCoach userCoach = App.getInstance().getUser();
 
-        confirmOrderCoursePresent = new ConfirmOrderCoursePresentImpl(this, this);
-        confirmOrderCoursePresent.getCourseAvaliableCoupons(course.getId());
+
 
         txtCourseName.setText(course.getName());
         txtCoachName.setText(course.getCoach().getName());
@@ -206,9 +210,12 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
 
     @Override
     public void onGetCourseAvaliableCoupons(List<CouponBean> coupon) {
+        DialogUtils.dismissDialog();
         this.usableCoupons = coupon;
         if(coupon ==null || coupon.isEmpty()){
             txtCoupon.setText("无可用优惠券");
+        }else {
+            txtCoupon.setText("请选择");
         }
     }
 
@@ -285,7 +292,7 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
                 txtCouponSubtract.setText(String.format(getString(R.string.rmb_minus_price_double),
                         FormatUtil.parseDouble(couponBean.getActual())));
                 txtPriceReal.setText(String.format(getString(R.string.rmb_price_double),
-                        course.getPrice() - FormatUtil.parseDouble(couponBean.getActual())));
+                        realPrice - FormatUtil.parseDouble(couponBean.getActual())));
             }
         }
     }

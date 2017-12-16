@@ -23,8 +23,9 @@ import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
 import com.leyuan.aidong.utils.GlideLoader;
 import com.leyuan.aidong.utils.UiManager;
 
-import static com.leyuan.aidong.utils.Constant.GOODS_EQUIPMENT;
+import static com.leyuan.aidong.utils.Constant.GOODS_FOODS;
 import static com.leyuan.aidong.utils.Constant.GOODS_NUTRITION;
+import static com.leyuan.aidong.utils.Constant.GOODS_TICKET;
 
 /**
  * Created by user on 2017/5/5.
@@ -107,7 +108,7 @@ public class AdvertisementActivity extends BaseActivity implements View.OnClickL
     }
 
     private Intent getBannerIntent(BannerBean startingBanner) {
-        Intent intentBanner = null;
+        Intent intentBanner ;
         switch (startingBanner.getType()) {
             case "10":
                 intentBanner = new Intent(this, WebViewActivity.class);
@@ -138,13 +139,19 @@ public class AdvertisementActivity extends BaseActivity implements View.OnClickL
                 intentBanner = new Intent(this, CampaignDetailActivity.class);
                 intentBanner.putExtra("id", startingBanner.getLink());
                 break;
-            case "24":
+            case "25":
                 intentBanner = new Intent(this, GoodsDetailActivity.class);
                 intentBanner.putExtra("goodsId", startingBanner.getLink());
-                intentBanner.putExtra("goodsType", GOODS_EQUIPMENT);
+                intentBanner.putExtra("goodsType", GOODS_FOODS);
                 break;
+            case "26":
+                intentBanner = new Intent(this, GoodsDetailActivity.class);
+                intentBanner.putExtra("goodsId", startingBanner.getLink());
+                intentBanner.putExtra("goodsType", GOODS_TICKET);
+                break;
+
             default:
-                intentBanner = new Intent();
+                intentBanner = new Intent(this, CourseListActivityNew.class);
                 break;
         }
         return intentBanner;

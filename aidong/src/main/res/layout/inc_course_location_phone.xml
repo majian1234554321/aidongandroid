@@ -29,7 +29,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="13dp"
-            android:text="Jan chen"
             android:textColor="@color/black"
             android:textSize="15sp" />
 
@@ -42,7 +41,6 @@
             android:drawablePadding="8dp"
             android:gravity="center_vertical"
             android:textColor="@color/c9"
-            android:text="111111111111111111"
             android:textSize="15sp" />
 
 

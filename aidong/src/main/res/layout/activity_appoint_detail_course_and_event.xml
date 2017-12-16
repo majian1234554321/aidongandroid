@@ -36,7 +36,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="15dp"
-                    android:text="state"
                     android:textColor="@color/main_red"
                     android:textSize="15sp" />
 
@@ -82,7 +81,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
-                    android:text=":23232252"
                     android:textColor="@color/c9"
                     android:textSize="13sp" />
 
@@ -112,7 +110,6 @@
                         android:layout_centerHorizontal="true"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="20dp"
-                        android:text="88777"
                         android:textColor="@color/black"
                         android:textSize="30sp"
                         android:transitionName="@string/transition_code_num" />
@@ -284,7 +281,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="¥300.00"
                 android:textColor="@color/c3"
                 android:textSize="17sp" />
         </LinearLayout>
