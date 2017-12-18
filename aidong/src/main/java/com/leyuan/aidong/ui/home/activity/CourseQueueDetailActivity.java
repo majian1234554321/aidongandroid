@@ -37,7 +37,7 @@ import static com.leyuan.aidong.R.id.txt_queue_location;
 public class CourseQueueDetailActivity extends BaseActivity implements View.OnClickListener, CourseQueueView {
 
     private CommonTitleLayout layoutTitle;
-    private RelativeLayout layoutCourseCoach;
+    private RelativeLayout layoutCourseCoach,rl_empty;
     private RelativeLayout layoutCourseLocation;
     private RelativeLayout layoutCourseCoupon;
     private TextView txtCoupon;
@@ -96,6 +96,7 @@ public class CourseQueueDetailActivity extends BaseActivity implements View.OnCl
 
     private void initView() {
         layoutTitle = (CommonTitleLayout) findViewById(R.id.layout_title);
+        rl_empty = (RelativeLayout) findViewById(R.id.rl_empty);
         txtqueuelocation = (TextView) findViewById(txt_queue_location);
 
         layoutCourseCoach = (RelativeLayout) findViewById(R.id.layout_course_coach);
@@ -189,7 +190,15 @@ public class CourseQueueDetailActivity extends BaseActivity implements View.OnCl
 
     @Override
     public void ongetCourseQueueDetail(CourseQueueBean queue) {
-        if (queue == null) return;
+        if (queue == null) {
+            rl_empty.setVisibility(View.VISIBLE);
+            button.setVisibility(View.GONE);
+            return;
+        }
+
+        rl_empty.setVisibility(View.GONE);
+        button.setVisibility(View.VISIBLE);
+
         this.queue = queue;
 
 

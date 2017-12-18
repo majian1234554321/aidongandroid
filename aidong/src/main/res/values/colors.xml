@@ -63,6 +63,7 @@
     <color name="color_title">#FFFFFF</color>
     <color name="line_color">#ebebeb</color>
     <color name="bg_gray">#ebebeb</color>
+    <color name="txt_appoint_num_gray">#ffebebeb</color>
     <color name="half_transparent">#8f000000</color>
     <color name="main_gray">#c8c7cc</color>
     <color name="main_red">#D51121</color>

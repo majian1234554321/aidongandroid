@@ -130,6 +130,7 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
         initData();
 
         appointmentCourseDetailPresenter = new AppointmentCoursePresentImpl(this, this);
+        DialogUtils.showDialog(this,"",false);
         if ("appoint".equals(type)) {
             appointmentCourseDetailPresenter.getCourseAppointDetail(appointId);
         } else {
@@ -196,6 +197,7 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
 
     @Override
     public void onGetAppointDetailResult(CourseAppointResult appointResult) {
+        DialogUtils.dismissDialog();
         if (appointResult == null) return;
         this.appointBean = appointResult.getAppointment();
         this.course = appointBean.getTimetable();
@@ -224,6 +226,7 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
         llTimer.setVisibility(View.GONE);
 
         tvQrNum.setText(appointBean.getId());
+        tvQrNum.setTextColor(Color.BLACK);
         dvQr.setImageBitmap(QRCodeUtil.createBarcode(this, Color.BLACK, appointBean.getId(),
                 DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
         tv_cancel_appoint.setText("取消预约");
@@ -278,6 +281,7 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
 
             case CourseAppointBean.absent:
                 tvQrNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                tvQrNum.setTextColor(getResources().getColor(R.color.txt_appoint_num_gray));
                 dvQr.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFFebebeb, appointBean.getId(),
                         DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
 
@@ -288,9 +292,9 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
                 break;
             case CourseAppointBean.signed:
                 tvQrNum.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                tvQrNum.setTextColor(getResources().getColor(R.color.txt_appoint_num_gray));
                 dvQr.setImageBitmap(QRCodeUtil.createBarcode(this, 0xFFebebeb, appointBean.getId(),
                         DensityUtil.dp2px(this, 294), DensityUtil.dp2px(this, 73), false));
-
 
                 rlQrCode.setVisibility(View.VISIBLE);
                 tvState.setText(getString(R.string.signed));
@@ -302,7 +306,6 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
                 tvDelete.setVisibility(View.VISIBLE);
                 break;
 //            case CourseAppointBean.paid:
-//
 //                rlQrCode.setVisibility(View.VISIBLE);
 //                tvState.setText(getString(R.string.with_sign_in));
 //                tv_cancel_appoint.setVisibility(View.VISIBLE);

@@ -5,12 +5,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.leyuan.aidong.ui.App;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.Logger;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
@@ -145,14 +147,17 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
             finish();
             return;
         }
+        SimpleTarget target = new SimpleTarget<Bitmap>(80, 80) {
+            @Override
+            public void onResourceReady(final Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                Logger.i("share", "shareWeb  resource getWidth = " + resource.getWidth() + ",  height = " + resource.getHeight());
 
-        Glide.with(this).load(imageUrl).asBitmap()
-                .into(new SimpleTarget<Bitmap>(50, 50) {
-                    @Override
-                    public void onResourceReady(final Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                        shareWeb(title, desc, resource, url, isCircleOfFriends);
-                    }
-                });
+                shareWeb(title, desc,  createBitmapThumbnail(resource), url, isCircleOfFriends);
+            }
+        };
+
+        Glide.with(App.context).load(imageUrl).asBitmap()
+                .into(target);
 
     }
 
@@ -198,6 +203,24 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         }
 
         return result;
+    }
+
+    public Bitmap createBitmapThumbnail(Bitmap bitMap) {
+        int width = bitMap.getWidth();
+        int height = bitMap.getHeight();
+        // 设置想要的大小
+        int newWidth = 99;
+        int newHeight = 99;
+        // 计算缩放比例
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        // 取得想要缩放的matrix参数
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth, scaleHeight);
+        // 得到新的图片
+        Bitmap newBitMap = Bitmap.createBitmap(bitMap, 0, 0, width, height,
+                matrix, true);
+        return newBitMap;
     }
 
 

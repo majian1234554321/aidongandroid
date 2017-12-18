@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+   >
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="100">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -235,13 +236,33 @@
         android:id="@+id/bt_queue_immediately"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_gravity="bottom"
         android:background="@color/course_oringe"
         android:gravity="center"
+        android:visibility="visible"
         android:text="@string/cancel_queue"
         android:textColor="@color/white"
         android:textSize="16sp" />
+    <RelativeLayout
+        android:id="@+id/rl_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffffff"
+        android:layout_marginTop="45dp"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:drawablePadding="20dp"
+            android:drawableTop="@drawable/empty_course"
+            android:gravity="center_horizontal"
+            android:text="无排队信息,请返回列表重试"
+            android:textColor="@color/c9"
+            android:textSize="15sp" />
+    </RelativeLayout>
 
 
 
-
-</LinearLayout>
+</FrameLayout>

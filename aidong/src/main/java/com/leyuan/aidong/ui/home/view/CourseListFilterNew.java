@@ -175,15 +175,15 @@ public class CourseListFilterNew extends LinearLayout implements View.OnClickLis
 
                 break;
             case R.id.tv_store_all:
-                tvStoreAll.setTextColor(R.color.main_red);
-                tvStoreMine.setTextColor(R.color.c3);
+                tvStoreAll.setTextColor(getResources().getColor( R.color.main_red));
+                tvStoreMine.setTextColor(getResources().getColor(R.color.c3) );
                 layoutStoreContentAll.setVisibility(VISIBLE);
                 layoutStoreContentMine.setVisibility(GONE);
                 break;
             case R.id.tv_store_mine:
 
-                tvStoreAll.setTextColor(R.color.c3);
-                tvStoreMine.setTextColor(R.color.main_red);
+                tvStoreAll.setTextColor(getResources().getColor(R.color.c3));
+                tvStoreMine.setTextColor(getResources().getColor( R.color.main_red));
                 layoutStoreContentAll.setVisibility(GONE);
                 layoutStoreContentMine.setVisibility(VISIBLE);
 

@@ -29,6 +29,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/iv_image"
                 android:layout_centerHorizontal="true"
+                android:maxWidth="100dp"
+                android:singleLine="true"
                 android:text="@string/store_all"
                 android:textColor="@color/c3"
                 android:textSize="13sp" />
