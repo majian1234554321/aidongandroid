@@ -139,6 +139,7 @@ public class CartPresentImpl implements CartPresent{
         },skuCode,amount,gymId,recommendId);
     }
 
+    @Deprecated
     @Override
     public void payCart(String integral, String coin, String coupon, String payType, String pickUpId,
                         String pickUpDate, final PayInterface.PayListener listener, String... id) {

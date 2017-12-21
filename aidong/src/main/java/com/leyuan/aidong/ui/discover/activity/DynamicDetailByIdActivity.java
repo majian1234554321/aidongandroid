@@ -6,6 +6,7 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -122,6 +123,7 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
         if (dynamicId != null) {
             dynamicPresent.getDynamicDetail(dynamicId);
         }
+        findViewById(R.id.iv_back).setOnClickListener(this);
     }
 
     private void initView() {
@@ -385,6 +387,7 @@ public class DynamicDetailByIdActivity extends BaseActivity implements DynamicDe
     @Override
     public void deleteDynamicResult(BaseBean baseBean) {
         if (baseBean.getStatus() == Constant.OK) {
+            LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Constant.BROADCAST_ACTION_DELETE_DYNAMIC_SUCCESS));
             ToastGlobal.showLong("删除成功");
             setResult(RESULT_DELETE, null);
             finish();

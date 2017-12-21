@@ -209,7 +209,7 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
         }
 
         GlideLoader.getInstance().displayImage(appointBean.getTimetable().getCover(), imgCourse);
-        tvOrderNum.setText("预约号: " + appointBean.getId());
+        tvOrderNum.setText("预约码: " + appointBean.getId());
         txtCourseName.setText(appointBean.getTimetable().getName());
         txtCoachName.setText(appointBean.getTimetable().getCoach().getName());
 

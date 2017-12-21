@@ -108,6 +108,7 @@ public class Constant {
     public static final String BROADCAST_ACTION_CAMPAIGN_APPOINT_CANCEL = "broadcast_action_campaign_appoint_cancel";
     public static final String BROADCAST_ACTION_CAMPAIGN_APPOINT_DELETE = "broadcast_action_campaign_appoint_delete";
     public static final String BROADCAST_ACTION_CAMPAIGN_APPOINT_CONFIRM = "broadcast_action_campaign_appoint_confirm";
+    public static final String BROADCAST_ACTION_DELETE_DYNAMIC_SUCCESS = "broadcast_action_delete_dynamic_success";
 
     public static List<VenuesBean> gyms;
     public static SystemBean systemInfoBean;

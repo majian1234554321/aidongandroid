@@ -232,13 +232,13 @@ public class CourseQueueConfirmActivity extends BaseActivity implements View.OnC
                 CouponBean couponBean = data.getParcelableExtra("coupon");
                 selectedUserCouponId = couponBean.getUser_coupon_id();
                 couponId = couponBean.getId();
-                txtCoupon.setText(FormatUtil.parseDouble(couponBean.getActual()) != 0
+                txtCoupon.setText(FormatUtil.parseDouble(couponBean.getActual()) >= 0
                         ? String.format(getString(R.string.rmb_minus_price_double),
                         FormatUtil.parseDouble(couponBean.getActual())) : getString(R.string.please_select));
                 txtCouponSubtract.setText(String.format(getString(R.string.rmb_minus_price_double),
                         FormatUtil.parseDouble(couponBean.getActual())));
                 txtPriceReal.setText(String.format(getString(R.string.rmb_price_double),
-                        course.getPrice() - FormatUtil.parseDouble(couponBean.getActual())));
+                        realPrice - FormatUtil.parseDouble(couponBean.getActual())));
             }
         }
     }

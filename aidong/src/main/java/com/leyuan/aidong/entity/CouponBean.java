@@ -44,7 +44,8 @@ public class CouponBean implements Parcelable {
     }
 
     public String getUser_coupon_id() {
-        return user_coupon_id;
+//        return user_coupon_id;
+        return id;
     }
 
     public void setUser_coupon_id(String user_coupon_id) {

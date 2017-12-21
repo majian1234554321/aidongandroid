@@ -520,7 +520,7 @@ public class ConfirmOrderGoodsActivity extends BaseActivity implements View.OnCl
                 Logger.i("coupon", "onActivityResult selectedUserCouponId = " + selectedUserCouponId);
                 couponId = couponBean.getId();
                 couponPrice = couponBean.getActual();
-                tvCoupon.setText(FormatUtil.parseDouble(couponPrice) != 0
+                tvCoupon.setText(FormatUtil.parseDouble(couponPrice) >= 0
                         ? String.format(getString(R.string.rmb_minus_price_double),
                         FormatUtil.parseDouble(couponBean.getActual())) : getString(R.string.please_select));
                 tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double), FormatUtil.parseDouble(couponPrice)));

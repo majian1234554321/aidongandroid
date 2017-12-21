@@ -258,7 +258,7 @@ public class AppointCampaignActivity extends BaseActivity implements View.OnClic
                 CouponBean couponBean = data.getParcelableExtra("coupon");
                 selectedUserCouponId = couponBean.getUser_coupon_id();
                 couponId = couponBean.getId();
-                tvCoupon.setText(FormatUtil.parseDouble(couponBean.getActual()) != 0
+                tvCoupon.setText(FormatUtil.parseDouble(couponBean.getActual()) >= 0
                         ? String.format(getString(R.string.rmb_minus_price_double),
                         FormatUtil.parseDouble(couponBean.getActual())) : getString(R.string.please_select));
                 tvCouponPrice.setRightContent(String.format(getString(R.string.rmb_minus_price_double),

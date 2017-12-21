@@ -212,7 +212,7 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
     public void onGetCourseAvaliableCoupons(List<CouponBean> coupon) {
         DialogUtils.dismissDialog();
         this.usableCoupons = coupon;
-        if(coupon ==null || coupon.isEmpty()){
+        if(coupon == null || coupon.isEmpty()){
             txtCoupon.setText("无可用优惠券");
         }else {
             txtCoupon.setText("请选择");
@@ -286,7 +286,7 @@ public class ConfirmOrderCourseActivity extends BaseActivity implements View.OnC
                 CouponBean couponBean = data.getParcelableExtra("coupon");
                 selectedUserCouponId = couponBean.getUser_coupon_id();
                 couponId = couponBean.getId();
-                txtCoupon.setText(FormatUtil.parseDouble(couponBean.getActual()) != 0
+                txtCoupon.setText(FormatUtil.parseDouble(couponBean.getActual()) >= 0
                         ? String.format(getString(R.string.rmb_minus_price_double),
                         FormatUtil.parseDouble(couponBean.getActual())) : getString(R.string.please_select));
                 txtCouponSubtract.setText(String.format(getString(R.string.rmb_minus_price_double),

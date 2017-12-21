@@ -104,7 +104,6 @@ public class CourseListActivityNew extends BaseActivity implements SmartTabLayou
 
         super.onCreate(savedInstanceState);
 
-
         setContentView(R.layout.activity_course_list_new);
         if (getIntent() != null) {
             category = getIntent().getStringExtra("category");
