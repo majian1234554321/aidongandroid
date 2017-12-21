@@ -259,7 +259,7 @@ public class AppointDetailCourseNewActivity extends BaseActivity implements Appo
                 tv_cancel_appoint.setVisibility(View.VISIBLE);
 
                 Logger.i(TAG, FormatUtil.parseDouble(appointBean.getPay_amount()) + "");
-                if (FormatUtil.parseDouble(appointBean.getPay_amount()) > 0) {
+                if (FormatUtil.parseDouble(appointBean.getTotal()) > 0) {
                     tv_cancel_appoint.setText("取消预约-申请退款");
                 } else {
                     tv_cancel_appoint.setText("取消预约");

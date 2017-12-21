@@ -36,7 +36,9 @@ public class CourseAppointBean {
     String introduce;
     String seat;
     PayOptionBean payment;
+
     String pay_amount; //付款金额
+    String total;//课程总额
     String order_status; //订单状态: canceled-已取消，pending-待支付，paid-已支付，refunded-已退款
 
     String position;//排在第几位
@@ -91,6 +93,14 @@ public class CourseAppointBean {
 
     public void setPayment(PayOptionBean payment) {
         this.payment = payment;
+    }
+
+    public String getTotal() {
+        return total;
+    }
+
+    public void setTotal(String total) {
+        this.total = total;
     }
 
     public String getId() {

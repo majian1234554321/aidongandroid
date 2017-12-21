@@ -78,10 +78,10 @@ public class SelectCouponAdapter extends RecyclerView.Adapter<SelectCouponAdapte
 
         if(TextUtils.equals( bean.getUser_coupon_id(),selectedCouponId)){
             Logger.i("coupon","TextUtils.equals selectedUserCouponId = " + selectedCouponId+", getUser_coupon_id = " + bean.getUser_coupon_id());
-//            holder.itemView.setBackgroundResource(R.drawable.bg_coupon_red_fold);
+            holder.itemView.setBackgroundResource(R.drawable.bg_coupon_red_fold);
             holder.img_coupon_selected.setVisibility(View.VISIBLE);
         }else {
-//            holder.itemView.setBackgroundResource(R.drawable.bg_coupon_black_fold);
+            holder.itemView.setBackgroundResource(R.drawable.bg_coupon_black_fold);
             holder.img_coupon_selected.setVisibility(View.GONE);
         }
 
