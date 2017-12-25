@@ -13,6 +13,7 @@ public class GoodsDetailBean {
     public String price;            //商品价格
     public String floor_price;
     public String market_price;     //商品市场价
+    public boolean is_virtual; //是否虚拟
 
 
     public String introduce;        //商品更多详情
