@@ -29,10 +29,10 @@
         android:id="@+id/iv_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/icon_search"
+        android:src="@drawable/icon_camera"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:padding="12dp"
-        android:visibility="gone"/>
+        android:visibility="visible"/>
 
 </RelativeLayout>

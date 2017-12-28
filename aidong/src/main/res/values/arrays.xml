@@ -113,6 +113,11 @@
         <item>常见问题</item>
         <item>售后服务</item>
     </string-array>
+    <string-array name="homeTab">
+        <item>热门推荐</item>
+        <item>关注</item>
+        <item>爱动广场</item>
+    </string-array>
 
     <string-array name="reportType">
         <item>色情</item>

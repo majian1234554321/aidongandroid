@@ -31,6 +31,7 @@ import com.leyuan.aidong.ui.mine.fragment.MineFragment;
 import com.leyuan.aidong.ui.mvp.presenter.impl.CouponPresentImpl;
 import com.leyuan.aidong.ui.mvp.presenter.impl.VersionPresenterImpl;
 import com.leyuan.aidong.ui.mvp.view.CouponFragmentView;
+import com.leyuan.aidong.ui.video.fragment.VideoHomeFragment;
 import com.leyuan.aidong.utils.Constant;
 import com.leyuan.aidong.utils.LocatinCityManager;
 import com.leyuan.aidong.utils.Logger;
@@ -46,12 +47,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+public class MainActivityOld extends BaseActivity implements View.OnClickListener {
 
     private RelativeLayout tabNearLayout;
     private RelativeLayout tabFoundLayout;
     private RelativeLayout tabStoreLayout;
-//    private RelativeLayout tabDiscoverLayout;
+    private RelativeLayout tabDiscoverLayout;
     private RelativeLayout tabMineLayout;
     private ImageView img_new_message;
     private ImageView img_new_circle_message;
@@ -65,23 +66,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private NewPushMessageReceiver newPushMessageReceiver;
     private int index;
 
-
-    private BroadcastReceiver mainActivityReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_RECEIVER_CMD_MESSAGE)) {
-                img_new_circle_message.setVisibility(View.VISIBLE);
-            } else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_CLEAR_CMD_MESSAGE)) {
-                img_new_circle_message.setVisibility(View.GONE);
-            } else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_NEW_USER_REGISTER)) {
-                getNewUserCouponInfo();
-            }
-            Logger.i("mainActivityReceiver", "onReceive action = " + intent.getAction());
-        }
-    };
-
     public static void start(Context context, int index) {
-        Intent starter = new Intent(context, MainActivity.class);
+        Intent starter = new Intent(context, MainActivityOld.class);
         starter.putExtra("index", index);
         context.startActivity(starter);
     }
@@ -96,7 +82,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         LocatinCityManager.checkLocationCity(this);
         new VersionPresenterImpl(this).checkVersionAndShow();
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_old);
         if (getIntent() != null) {
             index = getIntent().getIntExtra("index", 0);
         }
@@ -112,7 +98,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         tabFoundLayout = (RelativeLayout) findViewById(R.id.tabFoundLayout);
         tabStoreLayout = (RelativeLayout) findViewById(R.id.tabStoreLayout);
 
-//        tabDiscoverLayout = (RelativeLayout) findViewById(R.id.tabContactorLayout);
+        tabDiscoverLayout = (RelativeLayout) findViewById(R.id.tabContactorLayout);
         tabMineLayout = (RelativeLayout) findViewById(R.id.tabMineLayout);
         img_new_message = (ImageView) findViewById(R.id.img_new_message);
         img_new_circle_message = (ImageView) findViewById(R.id.img_new_circle_message);
@@ -126,26 +112,36 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         tabNearLayout.setOnClickListener(this);
         tabFoundLayout.setOnClickListener(this);
         tabStoreLayout.setOnClickListener(this);
-//        tabDiscoverLayout.setOnClickListener(this);
+        tabDiscoverLayout.setOnClickListener(this);
         tabMineLayout.setOnClickListener(this);
     }
 
     private void initFragments() {
-
         fm = getSupportFragmentManager();
         mFragments.add(new HomeFragment());
-//        mFragments.add(new VideoHomeFragment());
+        mFragments.add(new VideoHomeFragment());
         mFragments.add(new StoreFragment());
         mFragments.add(new DiscoverHomeFragment());
         mFragments.add(new MineFragment());
-
-//        mFragments.add( )
-
-
         setTabSelection(index);
         showFragment(index);
     }
 
+    private BroadcastReceiver mainActivityReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_RECEIVER_CMD_MESSAGE)) {
+                img_new_circle_message.setVisibility(View.VISIBLE);
+            } else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_CLEAR_CMD_MESSAGE)) {
+                img_new_circle_message.setVisibility(View.GONE);
+            } else if (TextUtils.equals(intent.getAction(), Constant.BROADCAST_ACTION_NEW_USER_REGISTER)) {
+                getNewUserCouponInfo();
+
+
+            }
+            Logger.i("mainActivityReceiver", "onReceive action = " + intent.getAction());
+        }
+    };
 
     private void getNewUserCouponInfo() {
 
@@ -154,7 +150,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             public void updateRecyclerView(List<CouponBean> couponBeanList) {
 
                 if(couponBeanList != null && !couponBeanList.isEmpty()){
-                    CouponNewcomerActivity.start(MainActivity.this, (ArrayList<CouponBean>) couponBeanList);
+                    CouponNewcomerActivity.start(MainActivityOld.this, (ArrayList<CouponBean>) couponBeanList);
                 }
             }
 
@@ -203,7 +199,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     .setBtnOkListener(new ButtonOkListener() {
                         @Override
                         public void onClick(BaseDialog dialog) {
-                            CheckAutoStartUtils.skipToAutoStartView(MainActivity.this);
+                            CheckAutoStartUtils.skipToAutoStartView(MainActivityOld.this);
                             dialog.dismiss();
                         }
                     })
@@ -236,16 +232,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 setTabSelection(2);
                 showFragment(2);
                 break;
-            case R.id.tabMineLayout:
+            case R.id.tabContactorLayout:
                 setTabSelection(3);
                 showFragment(3);
-                img_new_message.setVisibility(View.GONE);
                 break;
-//            case R.id.tabMineLayout:
-//                setTabSelection(4);
-//                showFragment(4);
-//
-//                break;
+            case R.id.tabMineLayout:
+                setTabSelection(4);
+                showFragment(4);
+                img_new_message.setVisibility(View.GONE);
+
+                break;
             default:
                 break;
         }
@@ -287,15 +283,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 tabStoreLayout.setSelected(true);
                 tabStoreLayout.setClickable(false);
                 break;
-
             case 3:
+                tabDiscoverLayout.setSelected(true);
+                tabDiscoverLayout.setClickable(false);
+                break;
+            case 4:
                 tabMineLayout.setSelected(true);
                 tabMineLayout.setClickable(false);
                 break;
-//            case 3:
-//                tabDiscoverLayout.setSelected(true);
-//                tabDiscoverLayout.setClickable(false);
-//                break;
         }
     }
 
@@ -303,13 +298,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         tabNearLayout.setSelected(false);
         tabFoundLayout.setSelected(false);
         tabStoreLayout.setSelected(false);
-//        tabDiscoverLayout.setSelected(false);
+        tabDiscoverLayout.setSelected(false);
         tabMineLayout.setSelected(false);
 
         tabNearLayout.setClickable(true);
         tabFoundLayout.setClickable(true);
         tabStoreLayout.setClickable(true);
-//        tabDiscoverLayout.setClickable(true);
+        tabDiscoverLayout.setClickable(true);
         tabMineLayout.setClickable(true);
     }
 
@@ -317,7 +312,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onResume() {
         super.onResume();
         img_new_message.setVisibility(EmMessageManager.isHaveUnreadMessage() ? View.VISIBLE : View.GONE);
-        CouponData couponData = SharePrefUtils.getNewUserCoupon(MainActivity.this);
+        CouponData couponData = SharePrefUtils.getNewUserCoupon(MainActivityOld.this);
         if(couponData != null && couponData.getCoupon()!= null &&! couponData.getCoupon().isEmpty()){
             CouponNewcomerActivity.start(this, (ArrayList<CouponBean>) couponData.getCoupons());
             SharePrefUtils.putNewUserCoupon(this,null);
