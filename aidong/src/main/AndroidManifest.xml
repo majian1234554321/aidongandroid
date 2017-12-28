@@ -248,9 +248,6 @@
             android:name=".ui.mine.activity.ApplyServiceNextActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.activity.AppointCourseDetailActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.mine.activity.AppointDetailCourseNewActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -299,13 +296,7 @@
             android:name=".ui.home.activity.PastCampaignActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.home.activity.CourseActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.home.activity.CourseListActivityNew"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.home.activity.CourseDetailActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.home.activity.CourseDetailNewActivity"
@@ -319,9 +310,6 @@
             android:theme="@style/SearchTheme" />
         <activity
             android:name=".ui.home.activity.CampaignDetailActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.home.activity.GoodsFilterActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.home.activity.GoodsListActivity"
@@ -341,10 +329,6 @@
         <activity
             android:name=".ui.mine.activity.AppointCampaignDetailActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.home.activity.AppointCourseActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ui.home.activity.EquipmentActivity"
             android:screenOrientation="portrait" />
@@ -513,6 +497,9 @@
         <activity
             android:name=".ui.home.activity.MapActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".ui.mine.activity.AppointmentMineCourseActivityNew"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".ui.mine.activity.BarcodeActivity"
             android:screenOrientation="portrait"
@@ -841,7 +828,7 @@
                 android:resource="@xml/file_provider" />
         </provider>
 
-        <activity android:name=".ui.mine.activity.AppointmentMineCourseActivityNew"></activity>
+
     </application>
 
 </manifest>

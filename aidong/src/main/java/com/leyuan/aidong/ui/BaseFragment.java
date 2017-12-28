@@ -13,7 +13,7 @@ import android.view.View;
 import com.leyuan.aidong.entity.BannerBean;
 import com.leyuan.aidong.ui.discover.activity.VenuesDetailActivity;
 import com.leyuan.aidong.ui.home.activity.CampaignDetailActivity;
-import com.leyuan.aidong.ui.home.activity.CourseDetailActivity;
+import com.leyuan.aidong.ui.home.activity.CourseListActivityNew;
 import com.leyuan.aidong.ui.home.activity.GoodsDetailActivity;
 import com.leyuan.aidong.utils.Logger;
 
@@ -59,7 +59,7 @@ public class BaseFragment extends Fragment implements EasyPermissions.Permission
                 GoodsDetailActivity.start(getContext(), bannerBean.getLink(), GOODS_NUTRITION);
                 break;
             case "22":
-                CourseDetailActivity.start(getContext(), bannerBean.getLink());
+                CourseListActivityNew.start(getContext(), bannerBean.getLink());
                 break;
             case "23":
                 CampaignDetailActivity.start(getContext(), bannerBean.getLink());

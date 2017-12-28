@@ -54,4 +54,7 @@ public interface GoodsService {
                                                            @Field("pick_up_date") String pickUpDate,
                                                            @Field("pick_up_period") String pick_up_period,
                                                            @Field("is_food") String is_food);
+
+    @GET("exapi/virtual_products")
+    Observable<BaseBean> getVirtualGoodsList();
 }
